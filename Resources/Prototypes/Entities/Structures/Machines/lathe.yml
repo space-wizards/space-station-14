@@ -223,6 +223,7 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh  
+      - SynthesizerInstrument
       - RPED
       - HolofanProjector
 

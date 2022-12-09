@@ -1,6 +1,6 @@
 - type: entity
   id: BaseMagazineMagnum
-  name: "Lamia magazine (.40 magnum)"
+  name: "Lamia magazine (.45 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   id: BaseMagazineMagnumSubMachineGun
-  name: "Vector magazine (.40 magnum)"
+  name: "Vector magazine (.45 magnum)"
   parent: BaseItem
   abstract: true
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   id: MagazineMagnum
-  name: "Lamia magazine (.40 magnum)"
+  name: "Lamia magazine (.45 magnum)"
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -80,7 +80,7 @@
 
 - type: entity
   id: MagazineMagnumHighVelocity
-  name: "Lamia magazine (.40 magnum high-velocity)"
+  name: "Lamia magazine (.45 magnum high-velocity)"
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -94,7 +94,7 @@
 
 - type: entity
   id: MagazineMagnumPractice
-  name: "Lamia magazine (.40 magnum practice)"
+  name: "Lamia magazine (.45 magnum practice)"
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -108,7 +108,7 @@
 
 - type: entity
   id: MagazineMagnumRubber
-  name: "Lamia magazine (.40 magnum rubber)"
+  name: "Lamia magazine (.45 magnum rubber)"
   parent: BaseMagazineMagnum
   components:
   - type: BallisticAmmoProvider
@@ -122,7 +122,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGun
-  name: "Vector magazine (.40 magnum)"
+  name: "Vector magazine (.45 magnum)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -136,7 +136,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunHighVelocity
-  name: "Vector magazine (.40 magnum High-Velocity)"
+  name: "Vector magazine (.45 magnum High-Velocity)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -150,7 +150,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunPractice
-  name: "Vector magazine (.40 magnum practice)"
+  name: "Vector magazine (.45 magnum practice)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
@@ -164,7 +164,7 @@
 
 - type: entity
   id: MagazineMagnumSubMachineGunRubber
-  name: "Vector magazine (.40 magnum rubber)"
+  name: "Vector magazine (.45 magnum rubber)"
   parent: BaseMagazineMagnumSubMachineGun
   components:
   - type: BallisticAmmoProvider
