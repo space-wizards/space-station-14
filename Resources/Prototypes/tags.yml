@@ -97,9 +97,6 @@
   id: CartridgeMagnum
 
 - type: Tag
-  id: CartridgeMagnumHC
-
-- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -253,6 +250,9 @@
   id: Gauze
 
 - type: Tag
+  id: GeigerCounter
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -278,6 +278,12 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag
+  id: HolofanProjector
+
+- type: Tag
+  id: HolosignProjector
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -512,9 +518,6 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
-
-- type: Tag
-  id: SpeedLoaderMagnumHC
 
 - type: Tag
   id: SpeedLoaderPistol

@@ -53,7 +53,7 @@
 
 - type: latheRecipe
   id: PillCanister
-  icon: Objects/Specific/Chemistry/pills_canister.rsi/pill_canister.png
+  icon: { sprite: Objects/Specific/Chemistry/pills_canister.rsi, state: pill_canister }
   result: PillCanister
   completetime: 2
   materials:

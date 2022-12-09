@@ -27,7 +27,7 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnum
-  name: ammunition box (.40 magnum)
+  name: ammunition box (.45 magnum)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnum
@@ -41,7 +41,7 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumHighVelocity
-  name: ammunition box (.40 magnum high-velocity)
+  name: ammunition box (.45 magnum high-velocity)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumHighVelocity
@@ -56,7 +56,7 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumPractice
-  name: ammunition box (.40 magnum practice)
+  name: ammunition box (.45 magnum practice)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumPractice
@@ -71,7 +71,7 @@
 - type: entity
   parent: BaseMagazineBoxMagnum
   id: MagazineBoxMagnumRubber
-  name: ammunition box (.40 magnum rubber)
+  name: ammunition box (.45 magnum rubber)
   components:
   - type: BallisticAmmoProvider
     proto: CartridgeMagnumRubber
