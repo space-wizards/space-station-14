@@ -22,7 +22,7 @@ namespace Content.Client.Lathe.UI
             base.Open();
 
             _menu = new LatheMenu(this);
-            _queueMenu = new LatheQueueMenu(this);
+            _queueMenu = new LatheQueueMenu();
 
             _menu.OnClose += Close;
 

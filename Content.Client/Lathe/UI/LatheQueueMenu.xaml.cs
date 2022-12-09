@@ -13,7 +13,7 @@ namespace Content.Client.Lathe.UI
         [Dependency] private readonly IEntityManager _entityManager = default!;
         private readonly SpriteSystem _spriteSystem;
 
-        public LatheQueueMenu(LatheBoundUserInterface owner)
+        public LatheQueueMenu()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -26,7 +26,7 @@ namespace Content.Client.Lathe.UI
         {
             if (recipe != null)
             {
-                Icon.Texture = _spriteSystem.Frame0(recipe.Icon);
+                Icon.Texture = _spriteSystem.GetPrototypeIcon(recipe.EntitySpriteOverride ?? recipe.Result).Default;
                 NameLabel.Text = recipe.Name;
                 Description.Text = recipe.Description;
             }
@@ -44,7 +44,7 @@ namespace Content.Client.Lathe.UI
             var idx = 1;
             foreach (var recipe in queue)
             {
-                QueueList.AddItem($"{idx}. {recipe.Name}", _spriteSystem.Frame0(recipe.Icon));
+                QueueList.AddItem($"{idx}. {recipe.Name}", _spriteSystem.GetPrototypeIcon(recipe.EntitySpriteOverride ?? recipe.Result).Default);
                 idx++;
             }
         }
