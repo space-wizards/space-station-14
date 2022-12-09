@@ -121,6 +121,8 @@ namespace Content.Client.Voting
                 @new = true;
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AudioSystem>()
                     .PlayGlobal("/Audio/Effects/voteding.ogg", Filter.Local(), false);
+                // TODO: It would be better if this used a per-state container, i.e. a container
+                // for the lobby and each HUD layout.
                 SetPopupContainer(_userInterfaceManager.WindowRoot);
 
                 // New vote from the server.
