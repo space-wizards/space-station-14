@@ -1,27 +1,27 @@
 ﻿- type: stack
   id: Ointment
   name: ointment
-  icon: "/Textures/Objects/Specific/Medical/medical.rsi/ointment.png"
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: ointment }
   spawn: Ointment
   maxCount: 10
 
 - type: stack
   id: AloeCream
   name: aloe cream
-  icon: "/Textures/Objects/Specific/Hydroponics/aloe.rsi/cream.png"
+  icon: { sprite: "/Textures/Objects/Specific/Hydroponics/aloe.rsi", state: cream }
   spawn: AloeCream
   maxCount: 10
 
 - type: stack
   id: Gauze
   name: gauze
-  icon: "/Textures/Objects/Specific/Medical/medical.rsi/gauze.png"
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Gauze
   maxCount: 10
 
 - type: stack
   id: Brutepack
   name: brutepack
-  icon: "/Textures/Objects/Specific/Medical/medical.rsi/gauze.png"
+  icon: { sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: gauze }
   spawn: Brutepack
   maxCount: 10
