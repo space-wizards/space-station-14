@@ -2,39 +2,33 @@
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
 
-public sealed class BlockingUserSystem : EntitySystem
+public sealed partial class BlockingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly BlockingSystem _blockingSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    public override void Initialize()
+    private void InitializeUser()
     {
-        base.Initialize();
-
         SubscribeLocalEvent<BlockingUserComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<BlockingUserComponent, DamageModifyEvent>(OnUserDamageModified);
 
         SubscribeLocalEvent<BlockingUserComponent, EntParentChangedMessage>(OnParentChanged);
         SubscribeLocalEvent<BlockingUserComponent, ContainerGettingInsertedAttemptEvent>(OnInsertAttempt);
         SubscribeLocalEvent<BlockingUserComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+        SubscribeLocalEvent<BlockingUserComponent, EntityTerminatingEvent>(OnEntityTerminating);
     }
 
     private void OnParentChanged(EntityUid uid, BlockingUserComponent component, ref EntParentChangedMessage args)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        UserStopBlocking(uid, component);
     }
 
     private void OnInsertAttempt(EntityUid uid, BlockingUserComponent component, ContainerGettingInsertedAttemptEvent args)
     {
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        UserStopBlocking(uid, component);
     }
 
     private void OnAnchorChanged(EntityUid uid, BlockingUserComponent component, ref AnchorStateChangedEvent args)
@@ -42,8 +36,7 @@ public sealed class BlockingUserSystem : EntitySystem
         if (args.Anchored)
             return;
 
-        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
-            _blockingSystem.StopBlocking(component.BlockingItem.Value, blockComp, uid);
+        UserStopBlocking(uid, component);
     }
 
     private void OnDamageChanged(EntityUid uid, BlockingUserComponent component, DamageChangedEvent args)
@@ -65,5 +58,26 @@ public sealed class BlockingUserSystem : EntitySystem
                 _audio.PlayPvs(blockingComponent.BlockSound, component.Owner, AudioParams.Default.WithVariation(0.2f));
             }
         }
+    }
+
+    private void OnEntityTerminating(EntityUid uid, BlockingUserComponent component, ref EntityTerminatingEvent args)
+    {
+        if (!TryComp<BlockingComponent>(component.BlockingItem, out var blockingComponent))
+            return;
+
+        StopBlockingHelper(component.BlockingItem.Value, blockingComponent, uid);
+
+    }
+
+    /// <summary>
+    /// Check for the shield and has the user stop blocking
+    /// Used where you'd like the user to stop blocking, but also don't want to remove the <see cref="BlockingUserComponent"/>
+    /// </summary>
+    /// <param name="uid">The user blocking</param>
+    /// <param name="component">The <see cref="BlockingUserComponent"/></param>
+    private void UserStopBlocking(EntityUid uid, BlockingUserComponent component)
+    {
+        if (TryComp<BlockingComponent>(component.BlockingItem, out var blockComp) && blockComp.IsBlocking)
+            StopBlocking(component.BlockingItem.Value, blockComp, uid);
     }
 }
