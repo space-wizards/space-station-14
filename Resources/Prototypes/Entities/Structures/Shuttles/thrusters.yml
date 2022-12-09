@@ -44,9 +44,11 @@
 
 - type: entity
   id: Thruster
-  parent: BaseThruster
+  parent: [ BaseThruster, ConstructibleMachine ]
   components:
   - type: Thruster
+  - type: Machine
+    board: ThrusterMachineCircuitboard
   - type: Sprite
     sprite: Structures/Shuttles/thruster.rsi
     layers:
@@ -85,7 +87,7 @@
 
 - type: entity
   id: Gyroscope
-  parent: BaseThruster
+  parent: [ BaseThruster, ConstructibleMachine ]
   components:
   - type: Thruster
     thrusterType: Angular
@@ -114,28 +116,33 @@
     autoRot: true
     offset: "0, 0.1" # shine from the top, not bottom of the computer
     color: "#4246b3"
+  - type: Machine
+    board: GyroscopeMachineCircuitboard
   - type: StaticPrice
     price: 2000
 
 - type: entity
   id: DebugGyroscope
-  parent: Gyroscope
+  parent: BaseThruster
   suffix: DEBUG
   components:
-    - type: Thruster
-      requireSpace: false
-    - type: ApcPowerReceiver
-      needsPower: false
-      powerLoad: 0
-    - type: Sprite
-      sprite: Structures/Shuttles/gyroscope.rsi
-      layers:
-        - state: base
-          map: ["enum.ThrusterVisualLayers.Base"]
-        - state: thrust
-          map: ["enum.ThrusterVisualLayers.ThrustOn"]
-          shader: unshaded
-        - state: thrust_burn_unshaded
-          map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
-          shader: unshaded
-          offset: 0, 1
+  - type: Thruster
+    thrusterType: Angular
+    requireSpace: false
+    thrust: 5000
+  - type: ApcPowerReceiver
+    needsPower: false
+    powerLoad: 0
+  - type: Sprite
+    sprite: Structures/Shuttles/gyroscope.rsi
+    snapCardinals: true
+    layers:
+    - state: base
+      map: ["enum.ThrusterVisualLayers.Base"]
+    - state: thrust
+      map: ["enum.ThrusterVisualLayers.ThrustOn"]
+      shader: unshaded
+    - state: thrust_burn_unshaded
+      map: ["enum.ThrusterVisualLayers.ThrustingUnshaded"]
+      shader: unshaded
+      offset: 0, 1

@@ -450,6 +450,32 @@
         CableHV: 5
 
 - type: entity
+  id: ThrusterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: thruster machine board
+  components:
+  - type: MachineBoard
+    prototype: Thruster
+    requirements:
+      Laser: 4
+      Capacitor: 1
+    materialRequirements:
+      Steel: 5
+
+- type: entity
+  id: GyroscopeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: gyroscope machine board
+  components:
+  - type: MachineBoard
+    prototype: Gyroscope
+    requirements:
+      ScanningModule: 2
+      Capacitor: 1
+    materialRequirements:
+      Glass: 2
+
+- type: entity
   id: GeneratorUraniumMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: generator (uranium) machine board
