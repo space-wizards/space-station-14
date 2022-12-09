@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Body.Prototypes;
 
@@ -34,7 +35,8 @@ public sealed class BodyPrototype : IPrototype
 [DataRecord]
 public sealed record BodyPrototypeSlot
 {
-    [DataField("part")] public readonly string? Part;
+    [DataField("part", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public readonly string? Part;
     public readonly HashSet<string> Connections = new();
     public readonly Dictionary<string, string> Organs = new();
 
