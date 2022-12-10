@@ -7,6 +7,10 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Mech.Systems;
 
+/// <summary>
+/// Handles <see cref="MechAssemblyComponent"/> and the insertion
+/// and removal of parts from the assembly.
+/// </summary>
 public sealed class MechAssemblySystem : EntitySystem
 {
     [Dependency] private readonly ContainerSystem _container = default!;

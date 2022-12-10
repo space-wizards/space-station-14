@@ -7,6 +7,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Mech.Systems;
 
+/// <summary>
+/// Handles the insertion of mech equipment into mechs.
+/// </summary>
 public sealed class MechEquipmentSystem : EntitySystem
 {
     [Dependency] private readonly MechSystem _mech = default!;

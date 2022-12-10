@@ -24,6 +24,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Mech.EntitySystems;
 
+/// <summary>
+/// Handles all of the interactions, UI handling, and items shennanigans for <see cref="SharedMechComponent"/>
+/// </summary>
 public abstract class SharedMechSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -184,6 +187,11 @@ public abstract class SharedMechSystem : EntitySystem
         _actions.RemoveProvidedActions(pilot, mech);
     }
 
+    /// <summary>
+    /// Destroys the mech, removing the user and ejecting all installed equipment.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public virtual void BreakMech(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -200,6 +208,11 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateAppearance(uid, component);
     }
 
+    /// <summary>
+    /// Cycles through the currently selected equipment.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public void CycleEquipment(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -228,12 +241,25 @@ public abstract class SharedMechSystem : EntitySystem
         Dirty(component);
     }
 
+    /// <summary>
+    /// Inserts an equipment item into the mech.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="toInsert"></param>
+    /// <param name="component"></param>
+    /// <param name="equipmentComponent"></param>
     public void InsertEquipment(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         if (!Resolve(toInsert, ref equipmentComponent))
+            return;
+
+        if (component.EquipmentContainer.ContainedEntities.Count >= component.MaxEquipmentAmount)
+            return;
+
+        if (component.EquipmentWhitelist != null && !component.EquipmentWhitelist.IsValid(uid))
             return;
 
         equipmentComponent.EquipmentOwner = uid;
@@ -243,6 +269,14 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Removes an equipment item from a mech.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="toRemove"></param>
+    /// <param name="component"></param>
+    /// <param name="equipmentComponent"></param>
+    /// <param name="forced">Whether or not the removal can be cancelled</param>
     public void RemoveEquipment(EntityUid uid, EntityUid toRemove, SharedMechComponent? component = null, MechEquipmentComponent? equipmentComponent = null, bool forced = false)
     {
         if (!Resolve(uid, ref component))
@@ -270,6 +304,13 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Attempts to change the amount of energy in the mech.
+    /// </summary>
+    /// <param name="uid">The mech itself</param>
+    /// <param name="delta">The change in energy</param>
+    /// <param name="component"></param>
+    /// <returns>If the energy was successfully changed.</returns>
     public virtual bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -284,6 +325,12 @@ public abstract class SharedMechSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Sets the integrity of the mech.
+    /// </summary>
+    /// <param name="uid">The mech itself</param>
+    /// <param name="value">The value the integrity will be set at</param>
+    /// <param name="component"></param>
     public void SetIntegrity(EntityUid uid, FixedPoint2 value, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -305,11 +352,23 @@ public abstract class SharedMechSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    /// <summary>
+    /// Checks if the pilot is present
+    /// </summary>
+    /// <param name="component"></param>
+    /// <returns>Whether or not the pilot is present</returns>
     public bool IsEmpty(SharedMechComponent component)
     {
         return component.PilotSlot.ContainedEntity == null;
     }
 
+    /// <summary>
+    /// Checks if an entity can be inserted into the mech.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="toInsert"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
     public bool CanInsert(EntityUid uid, EntityUid toInsert, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -318,6 +377,9 @@ public abstract class SharedMechSystem : EntitySystem
         return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<BodyComponent>(toInsert);
     }
 
+    /// <summary>
+    /// Updates the user interface
+    /// </summary>
     /// <remarks>
     /// This is defined here so that UI updates can be accessed from shared.
     /// </remarks>
@@ -326,6 +388,13 @@ public abstract class SharedMechSystem : EntitySystem
 
     }
 
+    /// <summary>
+    /// Attempts to insert a pilot into the mech.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="toInsert"></param>
+    /// <param name="component"></param>
+    /// <returns>Whether or not the entity was inserted</returns>
     public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -343,6 +412,12 @@ public abstract class SharedMechSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Attempts to eject the current pilot from the mech
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <returns>Whether or not the pilot was ejected.</returns>
     public virtual bool TryEject(EntityUid uid, SharedMechComponent? component = null)
     {
         if (!Resolve(uid, ref component))

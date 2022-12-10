@@ -3,6 +3,10 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Mech;
 
+/// <summary>
+/// Handles the sprite state changes while
+/// constructing mech assemblies.
+/// </summary>
 public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,

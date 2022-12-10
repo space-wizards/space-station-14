@@ -19,6 +19,9 @@ namespace Content.Shared.Interaction.Events
         }
     }
 
+    /// <summary>
+    /// Raised directed at an entity to check if they can attack while inside of a container.
+    /// </summary>
     public sealed class CanAttackFromContainerEvent : EntityEventArgs
     {
         public EntityUid Uid;

@@ -10,7 +10,7 @@ public sealed class MechBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IEntityManager _ent = default!;
 
-    private EntityUid _mech;
+    private readonly EntityUid _mech;
 
     private MechMenu? _menu;
 

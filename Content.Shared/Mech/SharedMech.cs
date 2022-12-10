@@ -40,8 +40,11 @@ public readonly record struct MechEquipmentRemovedEvent(EntityUid Mech)
     public readonly EntityUid Mech = Mech;
 }
 
+/// <summary>
+/// Raised on the mech equipment before it is going to be removed.
+/// </summary>
 [ByRefEvent]
-public record struct AttemptRemoveMechEquipmentEvent()
+public record struct AttemptRemoveMechEquipmentEvent
 {
     public bool Cancelled = false;
 }
