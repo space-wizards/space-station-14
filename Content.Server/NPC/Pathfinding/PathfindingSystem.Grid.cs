@@ -458,10 +458,11 @@ public sealed partial class PathfindingSystem
                                 continue;
 
                             // TODO: Inefficient af
-                            foreach (var (_, fixture) in fixtures.Fixtures)
+                            foreach (var fixture in fixtures.Fixtures.Values)
                             {
                                 // Don't need to re-do it.
-                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                if (!fixture.Hard ||
+                                    (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                     continue;
 

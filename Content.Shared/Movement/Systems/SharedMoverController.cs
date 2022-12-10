@@ -17,6 +17,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mech.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -413,6 +414,12 @@ namespace Content.Shared.Movement.Systems
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
 
             mobMover.StepSoundDistance -= distanceNeeded;
+
+            if (TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
+            {
+                sound = moverModifier.Sound;
+                return true;
+            }
 
             if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
