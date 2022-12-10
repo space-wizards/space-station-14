@@ -1,11 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
-  - {message: 'Instead of directly shoving over, pushover procs now deal stamina damage.',
-    type: Tweak}
-  id: 2241
-  time: '2022-09-06T02:19:33.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: 'When a privileged ID card is the only card inserted in an ID card computer,
@@ -2939,3 +2932,8 @@ Entries:
   - {message: Toy ammunition boxes can be re-filled again., type: Fix}
   id: 2740
   time: '2022-12-10T03:43:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Rat servants will pathfind under doors again., type: Fix}
+  id: 2741
+  time: '2022-12-10T09:31:03.0000000+00:00'
