@@ -12,16 +12,16 @@ air-alarm-ui-window-device-count-label = Всего устройств
 air-alarm-ui-window-resync-devices-label = Ресинхр
 air-alarm-ui-window-mode-label = Режим
 air-alarm-ui-window-pressure = { $pressure } кПа
-air-alarm-ui-window-pressure-indicator = Давление: [color={$color}]{$pressure} кПа[/color]
+air-alarm-ui-window-pressure-indicator = Давление: [color={ $color }]{ $pressure } кПа[/color]
 air-alarm-ui-window-temperature = { $tempC } °C ({ $temperature } K)
-air-alarm-ui-window-temperature-indicator = Температура: [color={$color}]{$tempC} C ({$temperature} K)[/color]
-air-alarm-ui-window-alarm-state = [color={$color}]{$state}[/color]
-air-alarm-ui-window-alarm-state-indicator = Состояние: [color={$color}]{$state}[/color]
+air-alarm-ui-window-temperature-indicator = Температура: [color={ $color }]{ $tempC } C ({ $temperature } K)[/color]
+air-alarm-ui-window-alarm-state = [color={ $color }]{ $state }[/color]
+air-alarm-ui-window-alarm-state-indicator = Состояние: [color={ $color }]{ $state }[/color]
 air-alarm-ui-window-tab-vents = Вентиляции
 air-alarm-ui-window-tab-scrubbers = Скрубберы
 air-alarm-ui-window-tab-sensors = Сенсоры
 air-alarm-ui-gases = { $gas }: { $amount } моль ({ $percentage }%)
-air-alarm-ui-gases-indicator = {$gas}: [color={$color}]{$amount} моль ({$percentage}%)[/color]
+air-alarm-ui-gases-indicator = { $gas }: [color={ $color }]{ $amount } моль ({ $percentage }%)[/color]
 air-alarm-ui-mode-filtering = Фильтрация
 air-alarm-ui-mode-wide-filtering = Фильтрация (широкая)
 air-alarm-ui-mode-fill = Заполнение

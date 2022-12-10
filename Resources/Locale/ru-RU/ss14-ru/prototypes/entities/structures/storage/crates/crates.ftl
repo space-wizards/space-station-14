@@ -64,3 +64,6 @@ ent-CrateCommandSecure = командный ящик
 ent-CrateLivestock = ящик для скота
     .desc = { ent-CrateGeneric.desc }
     .suffix = { "" }
+ent-CrateRodentCage = клетка для хомяка
+    .desc = { ent-CrateGeneric.desc }
+    .suffix = { "" }

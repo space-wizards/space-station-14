@@ -40,3 +40,6 @@ ent-MobRaccoonMorticia = Мортиша
 ent-MobFoxRenault = Алиса
     .desc = Верная лиса капитана.
     .suffix = { "" }
+ent-MobHamsterHamlet = Гамлет
+    .desc = Сварливый маленький комочек шерсти.
+    .suffix = { "" }
