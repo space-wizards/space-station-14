@@ -1,18 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client.Audio
 {
@@ -167,12 +163,13 @@ namespace Content.Client.Audio
 
         private void ClearSounds()
         {
-            foreach (var (_, (stream, _)) in _playingSounds)
+            foreach (var (stream, _) in _playingSounds.Values)
             {
                 stream?.Stop();
             }
 
             _playingSounds.Clear();
+            _playingCount.Clear();
         }
 
         private Dictionary<string, List<(float Importance, AmbientSoundComponent)>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
@@ -266,15 +263,18 @@ namespace Content.Client.Audio
                         .WithMaxDistance(comp.Range);
 
                     var stream = _audio.PlayPvs(comp.Sound, comp.Owner, audioParams);
-                    if (stream != null)
-                        _playingSounds[comp] = (stream, key);
+                    if (stream == null)
+                        continue;
 
+                    _playingSounds[comp] = (stream, key);
                     playingCount++;
+
                     if (_playingSounds.Count >= _maxAmbientCount)
                         break;
                 }
 
-                _playingCount[key] = playingCount;
+                if (playingCount != 0)
+                    _playingCount[key] = playingCount;
             }
 
             DebugTools.Assert(_playingCount.All(x => x.Value == PlayingCount(x.Key)));
