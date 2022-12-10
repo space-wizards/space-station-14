@@ -792,11 +792,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
-        if (/*!RuleAdded ||*/ Configuration is not NukeopsRuleConfiguration nukeOpsConfig)
+        if (!RuleAdded || Configuration is not NukeopsRuleConfiguration nukeOpsConfig)
             return;
 
         _nukeopsRuleConfig = nukeOpsConfig;
-        return;
         var minPlayers = nukeOpsConfig.MinPlayers;
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
