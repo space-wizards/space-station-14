@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping will now work even if you don't have control of your mob.,
-    type: Fix}
-  id: 2244
-  time: '2022-09-06T02:28:59.0000000+00:00'
 - author: Rane
   changes:
   - {message: Special job components like mime powers or the ability to use bibles
@@ -2934,3 +2928,9 @@ Entries:
   - {message: Fixed a server error when spawning nuke ops., type: Fix}
   id: 2743
   time: '2022-12-10T20:58:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed ripley grabbing items through walls, type: Fix}
+  - {message: Fixed ripley grabber becoming unusable after failed grabs, type: Fix}
+  id: 2744
+  time: '2022-12-10T21:00:04.0000000+00:00'
