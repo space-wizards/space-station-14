@@ -147,6 +147,31 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        // Handle bluespace "lockers"
+        if (component.BluespaceLinks is { Count: > 0 })
+        {
+            // Select target
+            var targetContainerComponent = component.BluespaceLinks.ToArray()[new Random().Next(0, component.BluespaceLinks.Count)];
+
+            // Close target if it is open
+            if (targetContainerComponent.Open)
+                CloseStorage(targetContainerComponent.Owner, targetContainerComponent);
+
+            // Apply bluespace effects if target is not a bluespace locker, otherwise let it handle it
+            if (targetContainerComponent.BluespaceLinks is not { Count: > 0 })
+            {
+                // Move contained items
+                foreach (var entity in targetContainerComponent.Contents.ContainedEntities.ToArray())
+                {
+                    component.Contents.Insert(entity, EntityManager);
+                }
+
+                // Move contained air
+                component.Air.CopyFromMutable(targetContainerComponent.Air);
+                targetContainerComponent.Air.Clear();
+            }
+        }
+
         component.Open = true;
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
@@ -192,6 +217,35 @@ public sealed class EntityStorageSystem : EntitySystem
         _audio.PlayPvs(component.CloseSound, component.Owner);
         component.LastInternalOpenAttempt = default;
         RaiseLocalEvent(uid, new StorageAfterCloseEvent());
+
+        // Handle bluespace "lockers"
+        if (component.BluespaceLinks is { Count: > 0 })
+        {
+            // Select target
+            var targetContainerComponent = component.BluespaceLinks.ToArray()[new Random().Next(0, component.BluespaceLinks.Count)];
+
+            // Move contained items
+            foreach (var entity in component.Contents.ContainedEntities.ToArray())
+            {
+                targetContainerComponent.Contents.Insert(entity, EntityManager);
+            }
+
+            // Move contained air
+            targetContainerComponent.Air.CopyFromMutable(component.Air);
+            component.Air.Clear();
+
+            // Open and empty target
+            targetContainerComponent.IsWeldedShut = false;
+            if (targetContainerComponent.Open)
+            {
+                EmptyContents(targetContainerComponent.Owner, targetContainerComponent);
+                ReleaseGas(targetContainerComponent.Owner, targetContainerComponent);
+            }
+            else
+            {
+                OpenStorage(targetContainerComponent.Owner, targetContainerComponent);
+            }
+        }
     }
 
     public bool Insert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
