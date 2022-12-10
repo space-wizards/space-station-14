@@ -640,7 +640,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, _nukieOutpost.Value);
+            _shuttleSystem.TryFTLDock(shuttle, _nukieOutpost.Value);
         }
 
         _nukiePlanet = mapId;
