@@ -80,8 +80,11 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);
 
         light.Color = component.LightColor;
-        light.Energy = Math.Clamp(component.LightEnergyPerStack * fireStacks, 2, component.MaxLightEnergy);
-        light.Radius = Math.Clamp(component.LightRadiusPerStack * fireStacks, 2, component.MaxLightRadius);
+
+        // light needs a minimum radius to be visible at all, hence the + 1.5f
+        light.Radius = Math.Clamp(1.5f + component.LightRadiusPerStack * fireStacks, 0f, component.MaxLightRadius);
+        light.Energy = Math.Clamp(1 + component.LightEnergyPerStack * fireStacks, 0f, component.MaxLightEnergy);
+
         // TODO flickering animation? Or just add a noise mask to the light? But that requires an engine PR.
     }
 }

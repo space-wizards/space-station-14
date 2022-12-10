@@ -20,10 +20,10 @@ public sealed class FireVisualsComponent : Component
     public string? Sprite;
 
     [DataField("lightEnergyPerStack")]
-    public float LightEnergyPerStack = 1f;
+    public float LightEnergyPerStack = 0.5f;
 
     [DataField("lightRadiusPerStack")]
-    public float LightRadiusPerStack = 0.5f;
+    public float LightRadiusPerStack = 0.3f;
 
     [DataField("maxLightEnergy")]
     public float MaxLightEnergy = 10f;
