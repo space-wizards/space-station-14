@@ -20,7 +20,7 @@ namespace Content.Shared.Decals
             IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<DecalGridComponent.DecalGridChunkCollection>? _ = default)
         {
-            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, Dictionary<uint, Decal>>>(node, context, skipHook, notNullableOverride: true);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();
