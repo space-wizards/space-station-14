@@ -56,7 +56,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
 
         foreach (var entry in prototype.Components.Values)
         {
-            var comp = (Component) _serialization.CreateCopy(entry.Component);
+            var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
             comp.Owner = humanoid;
             EntityManager.AddComponent(humanoid, comp, true);
         }
