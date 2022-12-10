@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.Server.Mind.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 
@@ -41,14 +42,20 @@ public sealed class BluespaceLockerSystem : EntitySystem
             targetContainerBluespaceComponent.BluespaceLinks is not { Count: > 0 })
         {
             // Move contained items
-            foreach (var entity in targetContainerStorageComponent.Contents.ContainedEntities.ToArray())
-            {
-                entityStorageComponent.Contents.Insert(entity, EntityManager);
-            }
+            if (component.TransportEntities)
+                foreach (var entity in targetContainerStorageComponent.Contents.ContainedEntities.ToArray())
+                {
+                    if (!component.AllowSentient && EntityManager.HasComponent<MindComponent>(entity))
+                        continue;
+                    entityStorageComponent.Contents.Insert(entity, EntityManager);
+                }
 
             // Move contained air
-            entityStorageComponent.Air.CopyFromMutable(targetContainerStorageComponent.Air);
-            targetContainerStorageComponent.Air.Clear();
+            if (component.TransportGas)
+            {
+                entityStorageComponent.Air.CopyFromMutable(targetContainerStorageComponent.Air);
+                targetContainerStorageComponent.Air.Clear();
+            }
         }
     }
 
@@ -66,14 +73,20 @@ public sealed class BluespaceLockerSystem : EntitySystem
         var targetContainerStorageComponent = component.BluespaceLinks.ToArray()[new Random().Next(0, component.BluespaceLinks.Count)];
 
         // Move contained items
-        foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
-        {
-            targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
-        }
+        if (component.TransportEntities)
+            foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
+            {
+                if (!component.AllowSentient && EntityManager.HasComponent<MindComponent>(entity))
+                    continue;
+                targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
+            }
 
         // Move contained air
-        targetContainerStorageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
-        entityStorageComponent.Air.Clear();
+        if (component.TransportGas)
+        {
+            targetContainerStorageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
+            entityStorageComponent.Air.Clear();
+        }
 
         // Open and empty target
         if (targetContainerStorageComponent.IsWeldedShut)
