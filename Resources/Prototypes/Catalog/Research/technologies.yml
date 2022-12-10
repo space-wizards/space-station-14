@@ -1,5 +1,5 @@
-# In order to make this list somewhat organized, please place new technologies underneath their overarching "base" technology.
-# The technology tree is using this layout - https://tgstation13.org/wiki//images/thumb/f/f4/ResearchTree.png/800px-ResearchTree.png
+# In order to make this list somewhat organized, please place 
+# new technologies underneath their overarching "base" technology.
 
 # Base Technology
 
@@ -23,12 +23,12 @@
     state: mopbucket
   requiredPoints: 5000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - Bucket
-    - MopItem
-    - SprayBottle
-    - BodyBag
+  - Bucket
+  - MopItem
+  - SprayBottle
+  - BodyBag
 
 # Biological Technology Tree
 
@@ -41,17 +41,14 @@
     state: applebush
   requiredPoints: 10000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - HydroponicsToolScythe
-    - HydroponicsToolHatchet
-    - KitchenKnife
-    - HandheldHealthAnalyzer
-    - ClothingHandsGlovesLatex
-    - ClothingHandsGlovesNitrile
-    - ClothingMaskSterile
-    - DiseaseSwab
-    - Implanter
+  - HydroponicsToolScythe
+  - HydroponicsToolHatchet
+  - Shovel
+  - ButchCleaver
+  - KitchenKnife
+  - MicrowaveMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-botany
@@ -62,32 +59,32 @@
     state: seed
   requiredPoints: 15000
   requiredTechnologies:
-    - BiologicalTechnology
+  - BiologicalTechnology
   unlockedRecipes:
-    - Shovel
-    - ButchCleaver
-    - MicrowaveMachineCircuitboard
-    - SeedExtractorMachineCircuitboard
+  - SeedExtractorMachineCircuitboard
+  - HydroponicsTrayMachineCircuitboard
+  - HandheldHealthAnalyzer
+  - Implanter
 
 - type: technology
-  name: technologies-advanced-surgery
-  id: AdvancedSugery
-  description: technologies-advanced-surgery-description
+  name: technologies-virology
+  id: Virology
+  description: technologies-virology-description
   icon:
-    sprite: Objects/Specific/Medical/Surgery/saw.rsi
-    state: saw
-  requiredPoints: 15000
+    sprite: Clothing/Mask/sterile.rsi
+    state: icon
+  requiredPoints: 10000
   requiredTechnologies:
-    - BiologicalTechnology
+  - BiologicalTechnology
   unlockedRecipes:
-    - Scalpel
-    - Retractor
-    - Cautery
-    - Drill
-    - Saw
-    - Hemostat
+  - ClothingHandsGlovesLatex
+  - ClothingHandsGlovesNitrile
+  - ClothingMaskSterile
+  - DiseaseSwab
+  - VaccinatorMachineCircuitboard
+  - DiagnoserMachineCircuitboard
 
-# Chemistry Technology Tree
+# Medical Technology Tree
 
 - type: technology
   name: technologies-chemistry-technology
@@ -98,18 +95,35 @@
     state: beakerlarge
   requiredPoints: 10000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - Beaker
-    - LargeBeaker
-    - CryostasisBeaker
-    - Dropper
-    - Syringe
-    - ReagentGrinderMachineCircuitboard
-    - PillCanister
-    - ChemistryEmptyBottle01
-    - TimerTrigger
-    - ChemicalPayload
+  - Beaker
+  - LargeBeaker
+  - CryostasisBeaker
+  - Dropper
+  - Syringe
+  - ReagentGrinderMachineCircuitboard
+  - PillCanister
+  - ChemistryEmptyBottle01
+  - ChemicalPayload
+
+- type: technology
+  name: technologies-advanced-surgery
+  id: AdvancedSugery
+  description: technologies-advanced-surgery-description
+  icon:
+    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    state: saw
+  requiredPoints: 7500
+  requiredTechnologies:
+  - BiologicalTechnology
+  unlockedRecipes:
+  - Scalpel
+  - Retractor
+  - Cautery
+  - Drill
+  - Saw
+  - Hemostat
 
 - type: technology
   name: technologies-medical-machinery
@@ -120,16 +134,14 @@
     state: industrial-working
   requiredPoints: 10000
   requiredTechnologies:
-    - BiologicalTechnology
-    - ChemistryTechnology
+  - BiologicalTechnology
+  - ChemistryTechnology
   unlockedRecipes:
-    - ChemMasterMachineCircuitboard
-    - ChemDispenserMachineCircuitboard
-    - CrewMonitoringComputerCircuitboard
-    - VaccinatorMachineCircuitboard
-    - DiagnoserMachineCircuitboard
-    - HandheldCrewMonitor
-    - BiomassReclaimerMachineCircuitboard
+  - ChemMasterMachineCircuitboard
+  - ChemDispenserMachineCircuitboard
+  - CrewMonitoringComputerCircuitboard
+  - HandheldCrewMonitor
+  - BiomassReclaimerMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-life-support
@@ -140,18 +152,34 @@
     state: pod_0
   requiredPoints: 20000
   requiredTechnologies:
-    - MedicalMachinery
-    - AdvancedSugery
+  - MedicalMachinery
+  - Virology
   unlockedRecipes:
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
-    - StasisBedMachineCircuitboard
-    - CloningConsoleComputerCircuitboard
+  - CloningPodMachineCircuitboard
+  - MedicalScannerMachineCircuitboard
+  - StasisBedMachineCircuitboard
+  - CloningConsoleComputerCircuitboard
 
 # Security Technology Tree
 
-# Empty, as all the security tech is now available
-# roundstart in the security techfab.
+- type: technology
+  name: technologies-surveillance
+  id: SurveillanceTechnology
+  description: technologies-surveillance-description
+  icon:
+    sprite: Structures/Wallmounts/camera.rsi
+    state: cameracase
+  requiredPoints: 12500
+  requiredTechnologies:
+  - BasicResearch
+  unlockedRecipes:
+  - SurveillanceCameraRouterCircuitboard
+  - SurveillanceCameraWirelessRouterCircuitboard
+  - SurveillanceWirelessCameraMovableCircuitboard
+  - SurveillanceWirelessCameraAnchoredCircuitboard
+  - SurveillanceCameraMonitorCircuitboard
+  - SurveillanceWirelessCameraMonitorCircuitboard
+  - ComputerTelevisionCircuitboard
 
 #- type: technology
 #   name: "ballistic technology"
@@ -197,18 +225,39 @@
 #   requiredTechnologies:
 #     - SecurityTechnology
 
-# Data Theory Technology Tree
+# Salvage Technology Tree
 
-# - type: technology
-#   name: "data theory"
-#   id: DataTheory
-#   description: Just like regular data, but in space!
-#   icon:
-#     sprite: Structures/Machines/computers.rsi
-#     state: computer-datatheory
-#   requiredPoints: 10000
-#   requiredTechnologies:
-#     - BasicResearch
+- type: technology
+  name: technologies-salvage-equipment
+  id: SalvageEquipment
+  description: technologies-salvage-equipment-description
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  requiredPoints: 7500
+  requiredTechnologies:
+  - BasicResearch
+  unlockedRecipes:
+  - AppraisalTool
+#TODO- MiningDrill
+  - OreProcessorMachineCircuitboard
+
+- type: technology
+  name: technologies-spacefaring
+  id: SpacefaringTechnology
+  description: technologies-spacefaring-description
+  icon:
+    sprite: Structures/Shuttles/gyroscope.rsi
+    state: base
+  requiredPoints: 10000
+  requiredTechnologies:
+  - SalvageEquipment
+  - IndustrialEngineering
+  unlockedRecipes:
+  - ShuttleConsoleCircuitboard
+  - RadarConsoleCircuitboard
+#TODO- Gyroscope
+#TODO- Thruster
 
 # Industrial Engineering Technology Tree
 
@@ -221,79 +270,34 @@
     state: icon
   requiredPoints: 10000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - AppraisalTool
-    - ConveyorBeltAssembly
-    - RCD
-    - RCDAmmo
-    - FlashlightLantern
-    - FireExtinguisher
-    - AutolatheMachineCircuitboard
-    - EmitterCircuitboard
-    - ProtolatheMachineCircuitboard
-    - OreProcessorMachineCircuitboard
-    - CircuitImprinterMachineCircuitboard
-    - UniformPrinterMachineCircuitboard
-    - SurveillanceCameraRouterCircuitboard
-    - SurveillanceCameraWirelessRouterCircuitboard
-    - SurveillanceWirelessCameraMovableCircuitboard
-    - SurveillanceWirelessCameraAnchoredCircuitboard
-    - SurveillanceCameraMonitorCircuitboard
-    - SurveillanceWirelessCameraMonitorCircuitboard
-    - ComputerTelevisionCircuitboard
-    - AirAlarmElectronics
-    - FireAlarmElectronics
-    - MailingUnitElectronics
-    - HolofanProjector
-    - RPED
+  - ConveyorBeltAssembly
+  - FlashlightLantern
+  - FireExtinguisher
+  - FirelockElectronics
+  - DoorElectronics
+  - AutolatheMachineCircuitboard
+  - ProtolatheMachineCircuitboard
+  - CircuitImprinterMachineCircuitboard
+  - UniformPrinterMachineCircuitboard
+  - AirAlarmElectronics
+  - FireAlarmElectronics
+  - MailingUnitElectronics
 
 - type: technology
   name: technologies-material-sheet-printing
   id: Sheets
   description: technologies-material-sheet-printing-description
   icon: Objects/Materials/Sheets/researchicon.png
-  requiredPoints: 2500
-  requiredTechnologies:
-    - IndustrialEngineering
-  unlockedRecipes:
-    - SheetSteel
-    - SheetPlastic
-    - SheetRGlass
-    - SheetGlass1
-
-- type: technology
-  name: technologies-advanced-atmospherics-technology
-  id: AdvancedAtmosTechnology
-  description: technologies-advanced-atmospherics-technology-description
-  icon:
-    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-    state: freezer_off
-  requiredPoints: 3000
+  requiredPoints: 5000
   requiredTechnologies:
   - IndustrialEngineering
   unlockedRecipes:
-  - ThermomachineFreezerMachineCircuitBoard
-  - PortableScrubberMachineCircuitBoard
-  - GasRecyclerMachineCircuitboard
-
-# Avionics Circuitry Technology Tree
-
-- type: technology
-  name: technologies-avionics-systems
-  id: AvionicsSystems
-  description: technologies-avionics-systems-description
-  icon:
-    sprite: Structures/Machines/computers.rsi
-    state: avionics-systems
-  requiredPoints: 10000
-  requiredTechnologies:
-    - IndustrialEngineering
-    - RoboticsTechnology
-  unlockedRecipes:
-    - ShuttleConsoleCircuitboard
-    - Drone
-    - RadarConsoleCircuitboard
+  - SheetSteel
+  - SheetPlastic
+  - SheetRGlass
+  - SheetGlass1
 
 # Electromagnetic Theory Technology Tree
 
@@ -306,57 +310,84 @@
     state: apc0
   requiredPoints: 10000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - CableStack
-    - CableMVStack
-    - CableHVStack
-    - LightBulb
-    - LightTube
-    - FirelockElectronics
-    - DoorElectronics
-    - APCElectronics
-    - SMESMachineCircuitboard
-    - SubstationMachineCircuitboard
-    - HydroponicsTrayMachineCircuitboard
-    - SolarControlComputerCircuitboard
-    - PowerComputerCircuitboard
-    - GeneratorPlasmaMachineCircuitboard
-    - AnalysisComputerCircuitboard
-    - ArtifactAnalyzerMachineCircuitboard
-    - Signaller
-    - SignalTrigger
-    - VoiceTrigger
+  - CableStack
+  - CableMVStack
+  - CableHVStack
+  - LightBulb
+  - LightTube
+  - APCElectronics
+  - SubstationMachineCircuitboard
+  - Signaller
+  - SignalTrigger
+  - VoiceTrigger
+  - TimerTrigger
+
+- type: technology
+  name: technologies-electrical-engineering
+  id: ElectricalEngineering
+  description: technologies-electrical-engineering-description
+  icon:
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
+    state: emitter1
+  requiredPoints: 15000
+  requiredTechnologies:
+  - ElectromagneticTheory
+  - IndustrialEngineering
+  unlockedRecipes:
+  - RCD
+  - RCDAmmo
+  - SMESMachineCircuitboard
+  - PowerComputerCircuitboard
+  - GeneratorPlasmaMachineCircuitboard
+  - GeneratorUraniumMachineCircuitboard
+  - SolarControlComputerCircuitboard
+  - EmitterCircuitboard
+
+- type: technology
+  name: technologies-advanced-atmospherics-technology
+  id: AdvancedAtmosTechnology
+  description: technologies-advanced-atmospherics-technology-description
+  icon:
+    sprite: Structures/Piping/Atmospherics/thermomachine.rsi
+    state: freezer_off
+  requiredPoints: 7500
+  requiredTechnologies:
+  - ElectricalEngineering
+  unlockedRecipes:
+  - HolofanProjector
+  - ThermomachineFreezerMachineCircuitBoard
+  - PortableScrubberMachineCircuitBoard
+  - GasRecyclerMachineCircuitboard
+
+- type: technology
+  name: technologies-rapid-upgrade
+  id: RapidUpgrade
+  description: technologies-rapid-upgrade-description
+  icon: 
+    sprite: Objects/Specific/Research/rped.rsi
+    state: icon
+  requiredPoints: 7500
+  requiredTechnologies:
+  - ElectricalEngineering
+  unlockedRecipes:
+  - RPED
 
 - type: technology
   name: technologies-compact-power-technology
   id: CompactPowerTechnology
   description: technologies-compact-power-technology-description
   icon:
-    sprite: Structures/Power/apc.rsi
-    state: apc0
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    state: panel
   requiredPoints: 5000
   requiredTechnologies:
-    - ElectromagneticTheory
+  - ElectromagneticTheory
   unlockedRecipes:
-    - WallmountSubstationElectronics
-    - WallmountGeneratorElectronics
-    - WallmountGeneratorAPUElectronics
-    - GeneratorUraniumMachineCircuitboard
-
-- type: technology
-  name: technologies-applied-musicology
-  id: AppliedMusicology
-  description: technologies-applied-musicology-description
-  icon:
-    sprite: Objects/Fun/Instruments/guitar.rsi
-    state: icon
-  requiredPoints: 10000
-  requiredTechnologies:
-    - ElectromagneticTheory
-  unlockedRecipes:
-    - SynthesizerInstrument
-    - DawInstrumentMachineCircuitboard
+  - WallmountSubstationElectronics
+  - WallmountGeneratorElectronics
+  - WallmountGeneratorAPUElectronics
 
 - type: technology
   name: technologies-basic-powercell-printing
@@ -367,9 +398,9 @@
     state: small
   requiredPoints: 2500
   requiredTechnologies:
-    - ElectromagneticTheory
+  - ElectromagneticTheory
   unlockedRecipes:
-    - PowerCellSmall
+  - PowerCellSmall
 
 - type: technology
   name: technologies-advanced-powercell-printing
@@ -380,9 +411,9 @@
     state: medium
   requiredPoints: 5000
   requiredTechnologies:
-    - PowerCellBasic
+  - PowerCellBasic
   unlockedRecipes:
-    - PowerCellMedium
+  - PowerCellMedium
 
 - type: technology
   name: technologies-super-powercell-printing
@@ -391,29 +422,46 @@
   icon:
     sprite: Objects/Power/power_cells.rsi
     state: high
-  requiredPoints: 10000
+  requiredPoints: 7500
   requiredTechnologies:
-    - PowerCellAdvanced
+  - PowerCellAdvanced
   unlockedRecipes:
-    - PowerCellHigh
-# Basic Parts Technology Tree
+  - PowerCellHigh
+
+# Entertainment Technology Tree
 
 - type: technology
-  name: technologies-basic-parts-technology
-  id: BasicPartsTechnology
-  description: technologies-basic-parts-technology-description
+  name: technologies-applied-musicology
+  id: AppliedMusicology
+  description: technologies-applied-musicology-description
+  icon:
+    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
+    state: icon
+  requiredPoints: 5000
+  requiredTechnologies:
+  - BasicResearch
+  unlockedRecipes:
+  - SynthesizerInstrument
+  - DawInstrumentMachineCircuitboard
+
+# Science Technology Tree
+
+- type: technology
+  name: technologies-scientific-technology
+  id: ScientificTechnology
+  description: technologies-scientific-technology-description
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_mani
-  requiredPoints: 3000
+  requiredPoints: 5000
   requiredTechnologies:
-    - BasicResearch
+  - BasicResearch
   unlockedRecipes:
-    - CapacitorStockPart
-    - MatterBinStockPart
-    - MicroLaserStockPart
-    - MicroManipulatorStockPart
-    - ScanningModuleStockPart
+  - CapacitorStockPart
+  - MatterBinStockPart
+  - MicroLaserStockPart
+  - MicroManipulatorStockPart
+  - ScanningModuleStockPart
 
 - type: technology
   name: technologies-robotics-technology
@@ -422,14 +470,30 @@
   icon:
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
+  requiredPoints: 7500
+  requiredTechnologies:
+  - ScientificTechnology
+  unlockedRecipes:
+  - ProximitySensor
+  - LeftArmBorg
+  - RightArmBorg
+  - Drone
+  - ExosuitFabricatorMachineCircuitboard
+
+- type: technology
+  name: technologies-archaeology
+  id: ArchaeologicalEquipment
+  description: technologies-archaeology-description
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano01
   requiredPoints: 10000
   requiredTechnologies:
-    - CompactPowerTechnology
+  - ScientificTechnology
   unlockedRecipes:
-    - ExosuitFabricatorMachineCircuitboard
-    - ProximitySensor
-    - LeftArmBorg
-    - RightArmBorg
+  - AnalysisComputerCircuitboard
+  - ArtifactAnalyzerMachineCircuitboard
+  - TraversalDistorterMachineCircuitboard
 
 - type: technology
   name: technologies-adv-parts-technology
@@ -438,27 +502,13 @@
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: adv_capacitor
-  requiredPoints: 8000
+  requiredPoints: 15000
   requiredTechnologies:
-    - BasicPartsTechnology
-    - PowerCellBasic
+  - ScientificTechnology
+  - CompactPowerTechnology
   unlockedRecipes:
-    - AdvancedCapacitorStockPart
-    - AdvancedMatterBinStockPart
-    - HighPowerMicroLaserStockPart
-    - NanoManipulatorStockPart
-    - AdvancedScanningModuleStockPart
-    - TraversalDistorterMachineCircuitboard #sigh
-
-# Bluespace Theory Technology Tree
-
-# - type: technology
-#   name: "basic bluespace theory"
-#   id: BluespaceTheory
-#   description: An experimental course on the mysterious technology known as bluespace.
-#   icon:
-#     sprite: Objects/Misc/skub.rsi
-#     state: icon
-#   requiredPoints: 999999
-#   requiredTechnologies:
-#     - BasicResearch
+  - AdvancedCapacitorStockPart
+  - AdvancedMatterBinStockPart
+  - HighPowerMicroLaserStockPart
+  - NanoManipulatorStockPart
+  - AdvancedScanningModuleStockPart
