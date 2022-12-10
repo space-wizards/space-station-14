@@ -55,9 +55,9 @@ namespace Content.Client.Launcher
 
         private void ConnectFailReasonChanged(string? reason)
         {
-            ConnectFailReason.Text = reason == null
-                ? null
-                : Loc.GetString("connecting-fail-reason", ("reason", reason));
+            ConnectFailReason.SetMessage(reason == null
+                ? ""
+                : Loc.GetString("connecting-fail-reason", ("reason", reason)));
         }
 
         private void LastNetDisconnectedArgsChanged(NetDisconnectedArgs? args)

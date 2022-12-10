@@ -22,7 +22,7 @@ ban-banned-1 = You, or another user of this computer or connection, are banned f
 ban-banned-2 = The ban reason is: "{$reason}"
 
 soft-player-cap-full = The server is full!
-panic-bunker-account-denied = This server is in Panic mode and you were rejected. Contact the server administrator for help.
-panic-bunker-account-denied-reason = This server is in Panic mode and you were rejected. Reason: "{$reason}"
-panic-bunker-account-reason-account = Age of account must be more that {$minutes} minutes
-panic-bunker-account-reason-overall = Minimum required overall playing time {$hours} hours
+panic-bunker-account-denied = This server is in panic bunker mode. New connections are not being accepted at this time. Try again later
+panic-bunker-account-denied-reason = This server is in panic bunker mode and you were rejected. Reason: "{$reason}"
+panic-bunker-account-reason-account = The account's age must be older than {$minutes} minutes
+panic-bunker-account-reason-overall = The account's overall playtime must be greater than {$hours} hours

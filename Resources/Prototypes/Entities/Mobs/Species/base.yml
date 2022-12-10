@@ -177,6 +177,7 @@
     species: Human
   - type: Body
     prototype: Human
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -366,6 +367,7 @@
       species: Human
     - type: Body
       prototype: Human
+      requiredLegs: 2
     - type: Damageable
       damageContainer: Biological
     - type: MobState
