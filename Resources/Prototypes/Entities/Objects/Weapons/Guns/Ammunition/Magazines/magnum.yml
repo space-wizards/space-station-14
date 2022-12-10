@@ -8,6 +8,7 @@
     tags:
       - MagazineMagnum
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeMagnum
@@ -41,6 +42,7 @@
     tags:
       - MagazineMagnumSubMachineGun
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeMagnum

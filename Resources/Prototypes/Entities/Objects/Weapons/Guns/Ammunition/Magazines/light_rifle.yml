@@ -9,6 +9,7 @@
     tags:
       - MagazineLightRifle
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeLightRifle

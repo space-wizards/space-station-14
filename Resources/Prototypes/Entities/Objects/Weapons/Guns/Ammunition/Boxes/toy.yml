@@ -5,6 +5,7 @@
   name: foamdart box
   components:
   - type: BallisticAmmoProvider
+    mayTransfer: true
     capacity: 30
   - type: Sprite
     netsync: false

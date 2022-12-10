@@ -11,6 +11,7 @@
   - type: Item
     size: 5
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeRifle
