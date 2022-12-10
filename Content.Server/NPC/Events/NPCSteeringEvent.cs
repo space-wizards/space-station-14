@@ -1,3 +1,5 @@
+using Content.Shared.NPC;
+
 namespace Content.Server.NPC.Events;
 
 /// <summary>
@@ -6,15 +8,13 @@ namespace Content.Server.NPC.Events;
 [ByRefEvent]
 public readonly record struct NPCSteeringEvent(
     Vector2[] Directions,
-    float[] InterestMap,
-    float[] DangerMap,
+    NPCSteeringContext Context,
     float AgentRadius,
     Angle OffsetRotation,
     Vector2 WorldPosition)
 {
     public readonly Vector2[] Directions = Directions;
-    public readonly float[] InterestMap = InterestMap;
-    public readonly float[] DangerMap = DangerMap;
+    public readonly NPCSteeringContext Context = Context;
 
     public readonly float AgentRadius = AgentRadius;
     public readonly Angle OffsetRotation = OffsetRotation;

@@ -3,6 +3,7 @@ using Content.Server.CPUJob.JobQueues;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.NPC;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.NPC.Components;
 
@@ -20,10 +21,10 @@ public sealed class NPCSteeringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float Radius = 0.35f;
 
-    public readonly float[] DangerMap = new float[SharedNPCSteeringSystem.InterestDirections];
+    [ViewVariables]
+    public NPCSteeringContext Context = new();
 
-    public readonly float[] InterestMap = new float[SharedNPCSteeringSystem.InterestDirections];
-
+    // TODO: Update radius, also danger points debug only
     public readonly List<Vector2> DangerPoints = new();
 
     #endregion
