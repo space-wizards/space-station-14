@@ -1,4 +1,4 @@
-# In order to make this list somewhat organized, please place 
+# In order to make this list somewhat organized, please place
 # new technologies underneath their overarching "base" technology.
 
 # Base Technology
@@ -234,12 +234,12 @@
   icon:
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
-  requiredPoints: 7500
+  requiredPoints: 10000
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
   - AppraisalTool
-#TODO- MiningDrill
+  - MiningDrill
   - OreProcessorMachineCircuitboard
 
 - type: technology
@@ -346,6 +346,22 @@
   - EmitterCircuitboard
 
 - type: technology
+  name: technologies-adv-tools-technology
+  id: AdvancedTools
+  description: technologies-adv-tools-technology-description
+  icon:
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: jaws_cutter
+  requiredPoints: 30000 # real endgame
+  requiredTechnologies:
+    - ElectricalEngineering
+    - PowerCellAdvanced
+    - AdvancedPartsTechnology
+  unlockedRecipes:
+    - JawsOfLife
+    - PowerDrill
+
+- type: technology
   name: technologies-advanced-atmospherics-technology
   id: AdvancedAtmosTechnology
   description: technologies-advanced-atmospherics-technology-description
@@ -365,7 +381,7 @@
   name: technologies-rapid-upgrade
   id: RapidUpgrade
   description: technologies-rapid-upgrade-description
-  icon: 
+  icon:
     sprite: Objects/Specific/Research/rped.rsi
     state: icon
   requiredPoints: 7500

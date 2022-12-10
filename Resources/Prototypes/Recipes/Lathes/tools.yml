@@ -100,17 +100,6 @@
     Plastic: 200
 
 - type: latheRecipe
-  id: PowerDrill
-  icon:
-    sprite: Objects/Tools/drill.rsi
-    state: drill_screw
-  result: PowerDrill
-  completetime: 2
-  materials:
-    Steel: 600
-    Plastic: 200
-
-- type: latheRecipe
   id: RCD
   icon:
     sprite: Objects/Tools/rcd.rsi
@@ -201,3 +190,43 @@
     Steel: 650
     Plastic: 150
     Gold: 50
+
+#These are rather unique things and are not supposed to be cheaply copied
+- type: latheRecipe
+  id: JawsOfLife
+  icon:
+    sprite: Objects/Tools/jaws_of_life.rsi
+    state: jaws_cutter
+  result: JawsOfLife
+  completetime: 30
+  # expensive as hell
+  materials:
+    Steel: 2000
+    Plastic: 1000
+    Gold: 200
+    Silver: 200
+
+- type: latheRecipe
+  id: PowerDrill
+  icon:
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  result: PowerDrill
+  completetime: 20
+  # expensive as heaven
+  materials:
+    Steel: 600
+    Plastic: 200
+
+- type: latheRecipe
+  id: MiningDrill
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  result: MiningDrill
+  completetime: 5
+  # need to mine some rocks and stones
+  materials:
+    Steel: 1200
+    Plastic: 400
+    Gold: 200

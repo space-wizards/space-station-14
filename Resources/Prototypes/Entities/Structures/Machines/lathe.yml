@@ -169,6 +169,7 @@
       - CableHVStack
       - ConveyorBeltAssembly
       - AppraisalTool
+      - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -221,10 +222,12 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - HolofanProjector
+      - JawsOfLife
+      - PowerDrill
 
 - type: entity
   parent: Protolathe

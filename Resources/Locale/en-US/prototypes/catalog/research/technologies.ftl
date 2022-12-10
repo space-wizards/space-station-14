@@ -78,3 +78,6 @@ technologies-archaeology-description = Advanced equipment for uncovering the sec
 
 technologies-adv-parts-technology = Advanced parts technology
 technologies-adv-parts-technology-description = Like the previous ones, but better!
+
+technologies-adv-tools-technology = Advanced tool technology
+technologies-adv-tools-technology-description = Create best tools for engineering
