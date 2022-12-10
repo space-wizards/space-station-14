@@ -1,9 +1,5 @@
 ﻿using Content.Server.Disease;
 using Content.Server.MobState;
-using Content.Shared.Audio;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Traits.Assorted;
@@ -15,7 +11,6 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     /// <inheritdoc/>
@@ -48,10 +43,7 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
             if (_mobStateSystem.IsDead(snough.Owner))
                 continue;
 
-            if (snough.SnoughSound != null)
-                _audioSystem.PlayPvs(snough.SnoughSound, snough.Owner);
-
-            _diseaseSystem.SneezeCough(snough.Owner, null, snough.SnoughMessage, false);
+            _diseaseSystem.SneezeCough(snough.Owner, null, snough.SnoughMessage, snough.SnoughSound, false);
         }
     }
 }

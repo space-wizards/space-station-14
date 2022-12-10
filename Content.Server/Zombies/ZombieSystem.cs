@@ -6,6 +6,7 @@ using Content.Server.Drone.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.MobState.Components;
 using Content.Server.Disease;
+using Content.Server.Disease.Events;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Server.Inventory;
@@ -37,7 +38,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
-
+            SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
         }
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
@@ -52,6 +53,11 @@ namespace Content.Server.Zombies
         {
             if (args.DamageIncreased)
                 DoGroan(uid, component);
+        }
+
+        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, AttemptSneezeCoughEvent args)
+        {
+            args.Cancelled = true;
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
