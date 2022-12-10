@@ -3,11 +3,11 @@ nukeops-description = Ядерные оперативники нацелилис
 nukeops-welcome =
     Вы ядерный оперативник. Ваша задача - взорвать { $station } и убедиться, что от неё осталась лишь груда обломков. Ваше руководство, Синдикат, снабдило вас всем необходимым для выполнения этой задачи.
     Смерть NanoTrasen!
-nukeops-opsmajor = Крупная победа Синдиката!
-nukeops-opsminor = Скромная победа Синдиката!
-nukeops-neutral = Ничейный исход!
-nukeops-crewminor = Малая победа экипажа!
-nukeops-crewmajor = Разгромная победа экипажа!
+nukeops-opsmajor = [color=crimson]Крупная победа Синдиката![/color]
+nukeops-opsminor = [color=crimson]Скромная победа Синдиката![/color]
+nukeops-neutral = [color=yellow]Ничейный исход![/color]
+nukeops-crewminor = [color=green]Малая победа экипажа![/color]
+nukeops-crewmajor = [color=green]Разгромная победа экипажа![/color]
 nukeops-cond-nukeexplodedoncorrectstation = Ядерным оперативникам удалось взорвать станцию.
 nukeops-cond-nukeexplodedonnukieoutpost = Аванпост ядерных оперативников был уничтожен ядерным взрывом.
 nukeops-cond-nukeexplodedonincorrectlocation = Ядерная бомба взорвалась вне станции.
@@ -19,7 +19,8 @@ nukeops-cond-nukiesabandoned = Ядерные оперативники были 
 nukeops-cond-allnukiesdead = Все ядерные оперативники погибли.
 nukeops-cond-somenukiesalive = Несколько ядерных оперативников погибли.
 nukeops-cond-allnukiesalive = Все ядерные оперативники выжили.
-nukeops-list-start = Ядерными оперативниками были:
+nukeops-list-start = Оперативниками были:
+nukeops-list-name = - [color=White]{$name}[/color] ([color=gray]{$user}[/color])
 nukeops-not-enough-ready-players = Недостаточно игроков готовы к игре! { $readyPlayersCount } игроков из необходимых { $minimumPlayers } готовы. Нельзя начать Ядерные оперативники.
 nukeops-no-one-ready = Нет готовых игроков! Нельзя начать Ядерные оперативники.
 nukeops-role-commander = Командир
