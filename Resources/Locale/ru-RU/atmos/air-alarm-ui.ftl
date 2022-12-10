@@ -15,7 +15,7 @@ air-alarm-ui-window-pressure = { $pressure } кПа
 air-alarm-ui-window-pressure-indicator = Давление: [color={ $color }]{ $pressure } кПа[/color]
 air-alarm-ui-window-temperature = { $tempC } °C ({ $temperature } К)
 air-alarm-ui-window-temperature-indicator = Температура: [color={ $color }]{ $tempC } °C ({ $temperature } К)[/color]
-air-alarm-ui-window-alarm-state = [color={$color}]{$state}[/color]
+air-alarm-ui-window-alarm-state = [color={ $color }]{ $state }[/color]
 air-alarm-ui-window-alarm-state-indicator = Статус: [color={ $color }]{ $state }[/color]
 air-alarm-ui-window-tab-vents = Вентиляции
 air-alarm-ui-window-tab-scrubbers = Скрубберы
