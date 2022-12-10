@@ -88,6 +88,9 @@ public partial class SharedBodySystem
         foreach (var connection in connections)
         {
             var childSlot = prototype.Slots[connection];
+            if (childSlot.Part == null)
+                continue;
+
             var childPart = Spawn(childSlot.Part, coordinates);
             var childPartComponent = Comp<BodyPartComponent>(childPart);
             var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
