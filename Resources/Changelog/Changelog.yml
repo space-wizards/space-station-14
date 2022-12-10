@@ -1,22 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'The wires in airlocks and windoors are now more secure, and require
-      you to actually cut wires in order to remove the board. Try not to bolt it!',
-    type: Tweak}
-  id: 2238
-  time: '2022-09-06T01:41:39.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Pills and bottles no longer sell for any spacebucks, type: Fix}
-  id: 2239
-  time: '2022-09-06T01:43:04.0000000+00:00'
-- author: Elijahrane
-  changes:
-  - {message: Opening the strip UI no longer has a doafter. All item stripping times
-      have been increased by 1 second to account for this., type: Tweak}
-  id: 2240
-  time: '2022-09-06T02:15:49.0000000+00:00'
 - author: Rane
   changes:
   - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
@@ -2941,3 +2923,19 @@ Entries:
   - {message: Ban reason text no longer clips off screen., type: Fix}
   id: 2737
   time: '2022-12-08T02:05:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Restructured and rebalanced the entire Science tech tree., type: Tweak}
+  - {message: Synthesizers are now properly printable in protolathes., type: Fix}
+  id: 2738
+  time: '2022-12-09T03:06:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Revamped the Nuke Ops round end screen., type: Tweak}
+  id: 2739
+  time: '2022-12-10T02:08:40.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Toy ammunition boxes can be re-filled again., type: Fix}
+  id: 2740
+  time: '2022-12-10T03:43:19.0000000+00:00'
