@@ -1,6 +1,5 @@
 using Content.Server.GameTicking;
 using Content.Shared.Traits;
-using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 
@@ -38,7 +37,7 @@ public sealed class TraitSystem : EntitySystem
             // Add all components required by the prototype
             foreach (var entry in traitPrototype.Components.Values)
             {
-                var comp = (Component) _serializationManager.CreateCopy(entry.Component);
+                var comp = (Component) _serializationManager.CreateCopy(entry.Component, notNullableOverride: true);
                 comp.Owner = args.Mob;
                 EntityManager.AddComponent(args.Mob, comp);
             }

@@ -57,7 +57,7 @@ namespace Content.Shared.Decals
             bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);
+            return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context, notNullableOverride: true);
         }
     }
 }
