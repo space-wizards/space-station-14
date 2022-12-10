@@ -98,13 +98,6 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public GasMixture Air { get; set; } = new (GasMixVolume);
-
-    /// <summary>
-    /// If length > 0, when something is added to the storage, it will instead be teleported to a random storage
-    /// from the list and the other storage will be opened.
-    /// </summary>
-    [DataField("bluespaceLinks"), ViewVariables(VVAccess.ReadOnly)]
-    public HashSet<EntityStorageComponent> BluespaceLinks = new();
 }
 
 public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs { }
@@ -121,6 +114,7 @@ public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
         Silent = silent;
     }
 }
+public sealed class StorageBeforeOpenEvent : EventArgs { }
 public sealed class StorageAfterOpenEvent : EventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
