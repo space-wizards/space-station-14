@@ -36,7 +36,7 @@ public sealed class NPCSteeringComponent : Component
     /// <summary>
     /// How far does the last node in the path need to be before considering re-pathfinding.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 1.2f;
+    [ViewVariables(VVAccess.ReadWrite)] public float RepathRange = 1.5f;
 
     public const int FailedPathLimit = 3;
 

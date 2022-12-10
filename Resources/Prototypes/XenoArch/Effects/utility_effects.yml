@@ -109,9 +109,9 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-      - CartridgeMagnumHC
-      - SpeedLoaderMagnumHC
-    proto: CartridgeMagnumHC
+      - CartridgeMagnum
+      - SpeedLoaderMagnum
+    proto: CartridgeMagnum
     capacity: 7
     chambers: [ True, True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null, null ]
@@ -138,6 +138,12 @@
   permanentComponents:
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+  - type: LatticeCutting
   - type: Tool
     qualities:
     - Screwing

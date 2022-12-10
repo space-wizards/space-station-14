@@ -149,6 +149,15 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
 
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+
+        if (mousePos.MapId == MapId.Nullspace)
+        {
+            if (gun.ShotCounter != 0)
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gun.Owner });
+
+            return;
+        }
+
         EntityCoordinates coordinates;
 
         // Bro why would I want a ternary here

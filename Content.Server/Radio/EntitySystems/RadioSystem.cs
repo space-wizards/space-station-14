@@ -1,22 +1,23 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
-using Content.Server.Speech;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
+using Robust.Shared.Replays;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems;
 
 /// <summary>
-///     This system handles radio speakers and microphones (which together form a hand-held radio).
+///     This system handles intrinsic radios and the general process of converting radio messages into chat messages.
 /// </summary>
 public sealed class RadioSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IReplayRecordingManager _replay = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -56,13 +57,12 @@ public sealed class RadioSystem : EntitySystem
         name = FormattedMessage.EscapeText(name);
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
-        var chatMsg = new MsgChatMessage
-        {
-            Channel = ChatChannel.Radio,
-            Message = message,
-            //Square brackets are added here to avoid issues with escaping
-            WrappedMessage = Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message)))
-        };
+        var chat = new ChatMessage(
+            ChatChannel.Radio,
+            message,
+            Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
+            EntityUid.Invalid);
+        var chatMsg = new MsgChatMessage { Message = chat };
 
         var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
         var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);
@@ -84,6 +84,7 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(radio.Owner, ev);
         }
 
+        _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
     }
 }

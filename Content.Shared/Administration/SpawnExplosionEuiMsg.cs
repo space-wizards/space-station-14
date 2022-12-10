@@ -40,9 +40,9 @@ public static class SpawnExplosionEuiMsg
     {
         public readonly float Slope;
         public readonly float TotalIntensity;
-        public readonly ExplosionEvent Explosion;
+        public readonly ExplosionVisualsState Explosion;
 
-        public PreviewData(ExplosionEvent explosion, float slope, float totalIntensity)
+        public PreviewData(ExplosionVisualsState explosion, float slope, float totalIntensity)
         {
             Slope = slope;
             TotalIntensity = totalIntensity;
