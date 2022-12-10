@@ -75,12 +75,12 @@
     id: GasLeak
     startAnnouncement: station-event-gas-leak-start-announcement
     startAudio:
-      path: /Audio/Announcements/gasleak_start.ogg
+      path: /Audio/Announcements/gasleak_start.ogg # Corvax-Announcements
       params:
         volume: -4
     endAnnouncement: station-event-gas-leak-end-announcement
     endAudio:
-      path: /Audio/Announcements/gasleak_end.ogg
+      path: /Audio/Announcements/gasleak_end.ogg # Corvax-Announcements
       params:
         volume: -4
     earliestStart: 10

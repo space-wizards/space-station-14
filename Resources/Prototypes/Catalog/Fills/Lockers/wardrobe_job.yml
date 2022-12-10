@@ -159,7 +159,7 @@
          amount: 1
        - id: ClothingEyesGlassesSecurity
          amount: 1
-       - id: ClothingHeadHelmetHelmet
+       - id: ClothingHeadHelmetHelmet  # Corvax-Resprite
          amount: 1
        - id: ClothingOuterVestKevlar
          amount: 1

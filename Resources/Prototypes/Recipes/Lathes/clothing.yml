@@ -684,7 +684,7 @@
     Cloth: 150
     Durathread: 150
 
-- type: latheRecipe
+- type: latheRecipe # Corvax-Resprite: Old HOS mantle
   id: ClothingNeckMantleHOSShoulder
   icon:
     sprite: Clothing/Neck/mantles/hosmantle_shoulder.rsi

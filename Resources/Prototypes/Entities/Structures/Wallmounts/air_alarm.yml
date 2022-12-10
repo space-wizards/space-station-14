@@ -28,8 +28,8 @@
     layerMap: "airAlarmBase"
     alarmStates:
       Normal: alarm0
-      Warning: alarm1
-      Danger: alarm2
+      Warning: alarm1  # Corvax-Resprite
+      Danger: alarm2 # Corvax-Resprite
     setOnDepowered:
       airAlarmBase: alarmp
   - type: Tag

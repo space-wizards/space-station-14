@@ -42,7 +42,7 @@
   id: MaterialPlasma
   icon:
     sprite: Objects/Materials/Sheets/other.rsi
-    state: plasma
+    state: plasma # Corvax-Resprite
   product: CrateMaterialPlasma
   cost: 2000
   category: Materials

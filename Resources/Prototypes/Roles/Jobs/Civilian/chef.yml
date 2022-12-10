@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 3600
+      time: 3600 # Corvax-RoleTime
   startingGear: ChefGear
   icon: "Chef"
   supervisors: job-supervisors-hop

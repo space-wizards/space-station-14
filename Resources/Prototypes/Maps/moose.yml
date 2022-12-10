@@ -8,6 +8,7 @@
   stations:
     Moose:
       mapNameTemplate: '{0} Moose {1}'
+      emergencyShuttlePath: /Maps/Shuttles/corvax_emergency.yml # Corvax-EmergencyShuttle
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
@@ -23,7 +24,7 @@
         Janitor: [ 1, 1 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
-        IAA: [ 1, 1 ]
+        IAA: [ 1, 1 ] # Corvax-IAA
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 2, 3 ]
@@ -38,7 +39,7 @@
         Chaplain: [ 1, 1 ]
         Librarian: [ 1, 1 ]
         Musician: [ 1, 1 ]
-        Lawyer: [ 0, 0 ]
+        Lawyer: [ 0, 0 ] # Corvax-IAA
         SalvageSpecialist: [ 1, 2 ]
         Quartermaster: [ 1, 1 ]
         TechnicalAssistant: [ 2, 2 ]

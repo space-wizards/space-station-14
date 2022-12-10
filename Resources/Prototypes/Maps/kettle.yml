@@ -22,7 +22,7 @@
         Janitor: [ 3, 3 ]
         Mime: [ 1, 2 ]
         Captain: [ 1, 1 ]
-        IAA: [ 1, 1 ]
+        IAA: [ 1, 1 ] # Corvax-IAA
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 4, 6 ]
@@ -36,7 +36,7 @@
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Lawyer: [ 0, 0 ]
+        Lawyer: [ 0, 0 ] # Corvax-IAA
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 3, 4 ]
         Musician: [ 1, 2 ]

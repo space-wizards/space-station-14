@@ -130,9 +130,9 @@
   description: High-quality nitrile gloves. Expensive medical PPE.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/nitrile.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi # Corvax-Resprite
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/nitrile.rsi
+    sprite: Clothing/Hands/Gloves/nitrile.rsi # Corvax-Resprite
   - type: DiseaseProtection
     protection: 0.15
   - type: Fiber
@@ -212,9 +212,9 @@
   description: These tactical gloves are fireproof and shock resistant.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/combat.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi # Corvax-Resprite
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/combat.rsi
+    sprite: Clothing/Hands/Gloves/combat.rsi # Corvax-Resprite
   - type: GloveHeatResistance
     heatResistance: 1400
   - type: Insulated

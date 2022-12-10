@@ -26,12 +26,13 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     netsync: false
     layers:
-    - state: emitter
+    - state: emitter # Corvax-Resprite
     - state: beam
       shader: unshaded
       visible: false
-    - state: unlock
+    - state: unlock # Corvax-Resprite
       shader: unshaded
+#      visible: false # Corvax-Resprite
   - type: Emitter
   - type: PowerConsumer
     voltage: Medium

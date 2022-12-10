@@ -2,7 +2,7 @@
   id: Scientist
   name: job-name-scientist
   playTimeTracker: JobScientist
-  requirements:
+  requirements:  # Corvax-RoleTime
     - !type:OverallPlaytimeRequirement
       time: 18000
   startingGear: ScientistGear

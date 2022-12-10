@@ -352,10 +352,10 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
-    stampState: "paper_stamp-approve"
+    stampState: "paper_stamp-approve" # Corvax-Resprite: Use correct state
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    state: stamp-approve
+    state: stamp-approve # Corvax-Resprite
 
 - type: entity
   name: head of personnel's rubber stamp

@@ -19,6 +19,7 @@ namespace Content.Server.GameTicking
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
+
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             var session = args.Session;

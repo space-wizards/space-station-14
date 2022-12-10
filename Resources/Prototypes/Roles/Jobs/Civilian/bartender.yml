@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Civilian
-      time: 3600
+      time: 3600 # Corvax-RoleTime
   startingGear: BartenderGear
   icon: "Bartender"
   supervisors: job-supervisors-hop

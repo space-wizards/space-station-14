@@ -20,6 +20,6 @@
     pocket1: d10Dice
   inhand:
     right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtLibrarian # Corvax
+  innerclothingskirt: ClothingUniformJumpskirtLibrarian # Corvax-Resprite
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

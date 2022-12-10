@@ -15,6 +15,7 @@
   - Clown
   - HeadOfPersonnel
   - Janitor
+#  - Lawyer # Corvax-IAA
   - Librarian
   - MedicalIntern
   - Mime
@@ -30,7 +31,7 @@
   id: Command
   roles:
   - Captain
-  - IAA
+  - IAA # Corvax-IAA
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer

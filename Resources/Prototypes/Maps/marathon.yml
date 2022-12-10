@@ -7,6 +7,7 @@
   stations:
     Marathon:
       mapNameTemplate: '{0} Marathon Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/corvax_emergency.yml # Corvax-EmergencyShuttle
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
@@ -22,7 +23,7 @@
         Janitor: [ 1, 2 ]
         Mime: [ 1, 1 ]
         Captain: [ 1, 1 ]
-        IAA: [ 1, 1 ]
+        IAA: [ 1, 1 ] # Corvax-IAA
         HeadOfPersonnel: [ 1, 1 ]
         ChiefEngineer: [ 1, 1 ]
         StationEngineer: [ 4, 6 ]
@@ -36,7 +37,7 @@
         Chaplain: [ 1, 1 ]
         Warden: [ 1, 1 ]
         Librarian: [ 1, 1 ]
-        Lawyer: [ 0, 0 ]
+        Lawyer: [ 0, 0 ] # Corvax-IAA
         Quartermaster: [ 1, 1 ]
         SalvageSpecialist: [ 3, 3 ]
         Musician: [ 1, 1 ]

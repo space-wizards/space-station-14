@@ -8,7 +8,6 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Client.Utility;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BoxContainer;

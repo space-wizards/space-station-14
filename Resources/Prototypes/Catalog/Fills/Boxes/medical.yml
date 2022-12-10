@@ -10,7 +10,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: syringe
 
 - type: entity
@@ -25,7 +25,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: pillbox
 
 - type: entity
@@ -55,7 +55,7 @@
         amount: 6
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: sterile
 
 - type: entity
@@ -70,9 +70,9 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: latex
-
+      
 - type: entity
   name: nitrile gloves box
   parent: BoxCardboard
@@ -85,7 +85,7 @@
         amount: 4
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: nitrile
 
 - type: entity
@@ -110,7 +110,7 @@
         amount: 5
   - type: Sprite
     layers:
-      - state: box_medical
+      - state: box_medical # Corvax-Resprite
       - state: bodybags
     whitelist:
       tags:

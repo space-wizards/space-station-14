@@ -216,6 +216,7 @@
   noSpawn: true
   components:
   - type: Sprite
+#    color: "#ffff33" # Corvax-Resprite
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     layers:
       - state: projectile

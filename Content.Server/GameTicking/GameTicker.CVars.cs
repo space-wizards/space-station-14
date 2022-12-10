@@ -25,6 +25,7 @@ namespace Content.Server.GameTicking
 
         [ViewVariables]
         public float MaxStationOffset { get; private set; } = 0f;
+
 #if EXCEPTION_TOLERANCE
         [ViewVariables]
         public int RoundStartFailShutdownCount { get; private set; } = 0;

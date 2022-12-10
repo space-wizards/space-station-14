@@ -68,9 +68,16 @@
   - type: Stack
     stackType: Plasma
   - type: Sprite
-    state: plasma
+    state: plasma # Corvax-Resprite
   - type: Item
     heldPrefix: plasma
+#  - type: Appearance
+#    visuals:
+#    - type: StackVisualizer
+#      stackLayers:
+#      - plasma
+#      - plasma_2
+#      - plasma_3
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager

@@ -198,7 +198,6 @@ namespace Content.Server.Preferences.Managers
                 async Task LoadPrefs()
                 {
                     var prefs = await GetOrCreatePreferencesAsync(session.UserId);
-                    
                     // Corvax-Sponsors-Start: Remove sponsor markings from expired sponsors
                     foreach (var (_, profile) in prefs.Characters)
                     {
@@ -206,7 +205,6 @@ namespace Content.Server.Preferences.Managers
                         profile.EnsureValid(allowedMarkings);
                     }
                     // Corvax-Sponsors-End
-                    
                     prefsData.Prefs = prefs;
                     prefsData.PrefsLoaded = true;
 

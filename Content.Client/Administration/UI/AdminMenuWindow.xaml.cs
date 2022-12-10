@@ -9,7 +9,7 @@ namespace Content.Client.Administration.UI
     {
         public AdminMenuWindow()
         {
-            MinSize = (600, 250);
+            MinSize = (600, 250); // Corvax-Resize
             Title = Loc.GetString("admin-menu-title");
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);

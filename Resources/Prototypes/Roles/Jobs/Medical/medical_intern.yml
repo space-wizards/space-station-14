@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 36000
+      time: 36000 # Corvax-RoleTime
       inverted: true # stop playing intern if you're good at med!
   startingGear: MedicalInternGear
   icon: "MedicalIntern"

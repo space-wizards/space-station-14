@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 18000
+      time: 18000 # Corvax-RoleTime
   startingGear: StationEngineerGear
   icon: "StationEngineer"
   supervisors: job-supervisors-ce

@@ -5,7 +5,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 36000
+      time: 36000 # Corvax-RoleTime
   startingGear: AtmosphericTechnicianGear
   icon: "AtmosphericTechnician"
   supervisors: job-supervisors-ce

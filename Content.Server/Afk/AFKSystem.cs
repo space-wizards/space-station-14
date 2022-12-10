@@ -75,7 +75,7 @@ public sealed class AFKSystem : EntitySystem
 
         foreach (var session in Filter.GetAllPlayers())
         {
-            if (session.Status != SessionStatus.InGame) continue;
+            if (session.Status != SessionStatus.InGame) continue; // Corvax-Queue: Don't kick players in queue
 
             var pSession = (IPlayerSession) session;
             var isAfk = _afkManager.IsAfk(pSession);

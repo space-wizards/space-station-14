@@ -67,7 +67,7 @@
         acts: [ "Destruction" ]
   - type: Airtight
   - type: IconSmooth
-    key: walls
+    key: walls  # Corvax-Resprite
     base: window
   - type: InteractionPopup
     interactSuccessString: comp-window-knock

@@ -5,15 +5,15 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 18000
+      time: 18000 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 18000
+      time: 18000 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 18000
+      time: 18000 # Corvax-RoleTime
     - !type:OverallPlaytimeRequirement
-      time: 180000
+      time: 180000 # Corvax-RoleTime
   weight: 20
   startingGear: HoPGear
   icon: "HeadOfPersonnel"

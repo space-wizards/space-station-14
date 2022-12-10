@@ -84,7 +84,7 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
-  icon: { sprite: Clothing/Hands/Gloves/nitrile.rsi, state: icon }
+  icon: { sprite: Clothing/Hands/Gloves/nitrile.rsi, state: icon } # Corvax-Resprite
   result: ClothingHandsGlovesNitrile
   completetime: 2
   materials:

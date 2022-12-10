@@ -172,7 +172,7 @@
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
-      - id: ClothingOuterCoatHoSGreatcoat # Corvax
+      - id: ClothingOuterCoatHoSGreatcoat  # Corvax-Resprite
       - id: ClothingUniformJumpskirtHoSAlt
       - id: ClothingUniformJumpsuitHoSAlt
       - id: ClothingUniformJumpsuitHoSBlue

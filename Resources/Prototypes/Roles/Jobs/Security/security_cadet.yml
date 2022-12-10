@@ -3,11 +3,11 @@
   name: job-name-cadet
   playTimeTracker: JobSecurityCadet
   requirements:
-    - !type:OverallPlaytimeRequirement
+    - !type:OverallPlaytimeRequirement # Corvax-RoleTime
       time: 18000
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000
+      time: 36000 # Corvax-RoleTime
       inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "SecurityCadet"

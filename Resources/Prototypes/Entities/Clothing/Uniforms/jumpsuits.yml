@@ -98,8 +98,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficial
-  name: CentCom officer's suit
-  description: It's a suit worn by CentCom's highest-tier Commanders.
+  name: CentCom officer's suit # Corvax-Resprite
+  description: It's a suit worn by CentCom's highest-tier Commanders. # Corvax-Resprite
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcom_official.rsi
@@ -109,8 +109,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitCentcomOfficer
-  name: CentCom turtleneck suit
-  description: A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe.
+  name: CentCom turtleneck suit # Corvax-Resprite
+  description: A casual, yet refined green turtleneck, used by CentCom Officials. It has a fragrance of aloe. # Corvax-Resprite
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/centcom_officer.rsi
@@ -648,8 +648,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitLibrarian
-  name: sensible suit
-  description: It's very... sensible.
+  name: sensible suit # Corvax-Resprite
+  description: It's very... sensible. # Corvax-Resprite
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/librarian.rsi
@@ -879,8 +879,8 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMusician
-  name: carpskin suit
-  description: An luxurious suit made with only the finest scales, perfect for any lounge act!
+  name: carpskin suit # Corvax-Resprite
+  description: An luxurious suit made with only the finest scales, perfect for any lounge act! # Corvax-Resprite
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi

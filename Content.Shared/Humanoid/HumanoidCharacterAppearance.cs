@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Shared.Corvax.Sponsors;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;

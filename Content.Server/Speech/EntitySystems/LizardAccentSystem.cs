@@ -29,6 +29,7 @@ public sealed class LizardAccentSystem : EntitySystem
         // eckS
         message = Regex.Replace(message, @"\bX([\-|r|R]|\b)", "ECKS$1");
 
+        // Corvax-Localization-Start
         // c => ссс
         message = Regex.Replace(
             message,
@@ -77,7 +78,7 @@ public sealed class LizardAccentSystem : EntitySystem
             "Ч+",
             _random.Pick(new List<string>() { "Щщ", "Щщщ" })
         );
-
+        // Corvax-Localization-End
         args.Message = message;
     }
 }

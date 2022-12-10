@@ -184,8 +184,8 @@ namespace Content.Client.Doors
                     if (_openUnlitVisible && !_simpleVisuals)
                     {
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
-                        sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_open_unlit");
-                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_open_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_open_unlit"); // Corvax-Resprite-Airlocks
+                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_open_unlit"); // Corvax-Resprite-Airlocks
                     }
                     break;
                 case DoorState.Closed:
@@ -194,7 +194,7 @@ namespace Content.Client.Doors
                     {
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                         sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
-                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseEmergencyAccess, "emergency_unlit"); // Corvax-Resprite-Airlocks
                     }
                     break;
                 case DoorState.Opening:
@@ -224,6 +224,7 @@ namespace Content.Client.Doors
             var boltedVisible = false;
             var emergencyLightsVisible = false;
             var unlitVisible = false;
+            // Corvax-Resprite-Airlocks-Start: Big logic rewrite
             var baseVisible = true;
 
             if (component.TryGetData(DoorVisuals.Powered, out bool powered) && powered)
@@ -251,6 +252,7 @@ namespace Content.Client.Doors
                         && state != DoorState.Opening
                         && state != DoorState.Closing);
             }
+            // Corvax-Resprite-Airlocks-End
         }
     }
 

@@ -13,8 +13,8 @@ namespace Content.Client.Singularity.Visualizers
     {
         private const string OverlayBeam = "beam";
         private const string OverlayUnderPowered = "underpowered";
-        private const string OverlayLocked = "lock";
-        private const string OverlayUnlocked = "unlock";
+        private const string OverlayLocked = "lock"; // Corvax-Resprite
+        private const string OverlayUnlocked = "unlock"; // Corvax-Resprite
 
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
@@ -51,7 +51,7 @@ namespace Content.Client.Singularity.Visualizers
                     throw new ArgumentOutOfRangeException();
             }
 
-            sprite.LayerSetState(2, locked ? OverlayLocked : OverlayUnlocked);
+            sprite.LayerSetState(2, locked ? OverlayLocked : OverlayUnlocked); // Corvax-Resprite
         }
     }
 }

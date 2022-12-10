@@ -126,7 +126,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: id
+      - state: id # Corvax-Resprite
   - type: Storage
     capacity: 60
     whitelist:
