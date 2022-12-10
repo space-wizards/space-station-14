@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
@@ -16,6 +16,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -39,6 +40,8 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {
@@ -155,11 +158,18 @@ public sealed class MagicSystem : EntitySystem
             return;
 
         var xform = Transform(ev.Performer);
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
-            var ent = Spawn(ev.Prototype, pos.SnapToGrid(EntityManager, _mapManager));
-            _gunSystem.ShootProjectile(ent,ev.Target.Position - Transform(ent).MapPosition.Position, ev.Performer);
+            // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
+            var mapPos = pos.ToMap(EntityManager);
+            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
+                ? pos.WithEntityId(grid.Owner, EntityManager)
+                : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
+
+            var ent = Spawn(ev.Prototype, spawnCoords);
+            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
         }
     }
 
@@ -232,9 +242,9 @@ public sealed class MagicSystem : EntitySystem
 
         var transform = Transform(args.Performer);
 
-        if (transform.MapID != args.Target.MapId) return;
+        if (transform.MapID != args.Target.GetMapId(EntityManager)) return;
 
-        transform.WorldPosition = args.Target.Position;
+        _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
         SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
@@ -323,14 +333,14 @@ public sealed class MagicSystem : EntitySystem
     /// offset
     /// </remarks>
     /// <param name="entityEntries"> The list of Entities to spawn in</param>
-    /// <param name="mapCoords"> Map Coordinates where the entities will spawn</param>
+    /// <param name="entityCoords"> Map Coordinates where the entities will spawn</param>
     /// <param name="lifetime"> Check to see if the entities should self delete</param>
     /// <param name="offsetVector2"> A Vector2 offset that the entities will spawn in</param>
-    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, MapCoordinates mapCoords, float? lifetime, Vector2 offsetVector2)
+    private void SpawnSpellHelper(List<EntitySpawnEntry> entityEntries, EntityCoordinates entityCoords, float? lifetime, Vector2 offsetVector2)
     {
         var getProtos = EntitySpawnCollection.GetSpawns(entityEntries, _random);
 
-        var offsetCoords = mapCoords;
+        var offsetCoords = entityCoords;
         foreach (var proto in getProtos)
         {
             // TODO: Share this code with instant because they're both doing similar things for positioning.
