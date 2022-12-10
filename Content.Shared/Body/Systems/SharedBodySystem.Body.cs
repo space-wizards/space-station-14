@@ -164,6 +164,32 @@ public partial class SharedBodySystem
         }
     }
 
+    /// <summary>
+    /// Returns all body part slots in the graph, including ones connected by
+    /// body parts which are null.
+    /// </summary>
+    /// <param name="partId"></param>
+    /// <param name="part"></param>
+    /// <returns></returns>
+    public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        foreach (var slot in part.Children.Values)
+        {
+            if (!TryComp<BodyPartComponent>(slot.Child, out var childPart))
+                continue;
+
+            yield return slot;
+
+            foreach (var child in GetAllBodyPartSlots(slot.Child.Value, childPart))
+            {
+                yield return child;
+            }
+        }
+    }
+
     public virtual HashSet<EntityUid> GibBody(EntityUid? partId, bool gibOrgans = false,
         BodyComponent? body = null, bool deleteItems = false)
     {
