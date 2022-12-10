@@ -18,6 +18,9 @@
     interfaces:
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
+  - type: Tag
+    tags:
+      - Book
 
 - type: entity
   parent: BookBase
