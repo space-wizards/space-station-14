@@ -235,7 +235,14 @@ public sealed class EntityStorageSystem : EntitySystem
             component.Air.Clear();
 
             // Open and empty target
-            targetContainerComponent.IsWeldedShut = false;
+            if (targetContainerComponent.IsWeldedShut)
+            {
+                // It gets bluespaced open...
+                if (EntityManager.TrySystem<WeldableSystem>(out var weldableSystem))
+                    weldableSystem.ForceWeldedState(targetContainerComponent.Owner, false);
+                else
+                    targetContainerComponent.IsWeldedShut = false;
+            }
             if (targetContainerComponent.Open)
             {
                 EmptyContents(targetContainerComponent.Owner, targetContainerComponent);
