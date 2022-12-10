@@ -1,10 +1,4 @@
 Entries:
-- author: Elijahrane
-  changes:
-  - {message: Opening the strip UI no longer has a doafter. All item stripping times
-      have been increased by 1 second to account for this., type: Tweak}
-  id: 2240
-  time: '2022-09-06T02:15:49.0000000+00:00'
 - author: Rane
   changes:
   - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
@@ -2940,3 +2934,8 @@ Entries:
   - {message: Revamped the Nuke Ops round end screen., type: Tweak}
   id: 2739
   time: '2022-12-10T02:08:40.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Toy ammunition boxes can be re-filled again., type: Fix}
+  id: 2740
+  time: '2022-12-10T03:43:19.0000000+00:00'
