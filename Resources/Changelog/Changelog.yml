@@ -1,33 +1,6 @@
 Entries:
 - author: Rane
   changes:
-  - {message: Base disarm fail chance raised to 75% from 40%., type: Tweak}
-  - {message: 'Instead of directly shoving over, pushover procs now deal stamina damage.',
-    type: Tweak}
-  id: 2241
-  time: '2022-09-06T02:19:33.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: 'When a privileged ID card is the only card inserted in an ID card computer,
-      its details will now show.', type: Fix}
-  id: 2242
-  time: '2022-09-06T02:20:01.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: 'Deconstructing reinforced walls now leads to the creation of a reinforced
-      girder instead of a normal one, and it drops 2 plasteel sheets.', type: Tweak}
-  - {message: Deconstructing reinforced girders now only requires cutting for 2 seconds
-      and drops 2 plasteel sheets., type: Tweak}
-  id: 2243
-  time: '2022-09-06T02:28:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping will now work even if you don't have control of your mob.,
-    type: Fix}
-  id: 2244
-  time: '2022-09-06T02:28:59.0000000+00:00'
-- author: Rane
-  changes:
   - {message: Special job components like mime powers or the ability to use bibles
       are no longer lost on cloning., type: Fix}
   id: 2245
@@ -2939,3 +2912,25 @@ Entries:
   - {message: Toy ammunition boxes can be re-filled again., type: Fix}
   id: 2740
   time: '2022-12-10T03:43:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Rat servants will pathfind under doors again., type: Fix}
+  id: 2741
+  time: '2022-12-10T09:31:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Ripley, Cargo''s favorite mechanized machine of destruc-- I mean,
+      mechanized machine of honest cargo transfer.', type: Add}
+  id: 2742
+  time: '2022-12-10T17:05:40.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed a server error when spawning nuke ops., type: Fix}
+  id: 2743
+  time: '2022-12-10T20:58:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed ripley grabbing items through walls, type: Fix}
+  - {message: Fixed ripley grabber becoming unusable after failed grabs, type: Fix}
+  id: 2744
+  time: '2022-12-10T21:00:04.0000000+00:00'

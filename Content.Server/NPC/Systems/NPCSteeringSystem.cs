@@ -30,6 +30,7 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
         private const float TileTolerance = 0.40f;
