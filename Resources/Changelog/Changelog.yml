@@ -1,12 +1,6 @@
 Entries:
 - author: Carbonhell
   changes:
-  - {message: 'When a privileged ID card is the only card inserted in an ID card computer,
-      its details will now show.', type: Fix}
-  id: 2242
-  time: '2022-09-06T02:20:01.0000000+00:00'
-- author: Carbonhell
-  changes:
   - {message: 'Deconstructing reinforced walls now leads to the creation of a reinforced
       girder instead of a normal one, and it drops 2 plasteel sheets.', type: Tweak}
   - {message: Deconstructing reinforced girders now only requires cutting for 2 seconds
@@ -2937,3 +2931,9 @@ Entries:
   - {message: Rat servants will pathfind under doors again., type: Fix}
   id: 2741
   time: '2022-12-10T09:31:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added Ripley, Cargo''s favorite mechanized machine of destruc-- I mean,
+      mechanized machine of honest cargo transfer.', type: Add}
+  id: 2742
+  time: '2022-12-10T17:05:40.0000000+00:00'
