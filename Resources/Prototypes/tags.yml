@@ -25,6 +25,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Book
+
+- type: Tag
   id: BorgArm
 
 - type: Tag
@@ -593,6 +596,3 @@
 
 - type: Tag
   id: SubdermalImplant
-
-- type: Tag
-  id: Book
