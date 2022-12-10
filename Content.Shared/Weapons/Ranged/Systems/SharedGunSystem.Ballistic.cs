@@ -108,26 +108,35 @@ public abstract partial class SharedGunSystem
         // There's still ammo left in the provider, but it isn't spawned.
         else if (component.UnspawnedCount > 0)
         {
-            // TODO There is as of yet no way to check an EntityWhitelist
-            // against an unspawned prototype, so let's spawn one in null space
-            // to check, then use it if it's actually compatible.
-            var testEntity = Spawn(component.FillProto, MapCoordinates.Nullspace);
-
-            if (!targetComponent.Whitelist.IsValid(testEntity))
+            // Optimize for the case where both ammo providers have the same fill prototype.
+            if (component.FillProto == targetComponent.FillProto)
             {
-                ReportInvalidAmmo(testEntity, args.Target.Value);
-                Del(testEntity);
-                return;
+                component.UnspawnedCount--;
+                targetComponent.UnspawnedCount++;
             }
-
-            component.UnspawnedCount--;
-
-            // The server will spawn an entity, and we'll have to pick up on
-            // that instead of spawning one for the client.
-            if (!testEntity.IsClientSide())
-                cartridge = testEntity;
             else
-                Del(testEntity);
+            {
+                // TODO There is as of yet no way to check an EntityWhitelist
+                // against an unspawned prototype, so let's spawn one in null space
+                // to check, then use it if it's actually compatible.
+                var testEntity = Spawn(component.FillProto, MapCoordinates.Nullspace);
+
+                if (!targetComponent.Whitelist.IsValid(testEntity))
+                {
+                    ReportInvalidAmmo(testEntity, args.Target.Value);
+                    Del(testEntity);
+                    return;
+                }
+
+                component.UnspawnedCount--;
+
+                // The server will spawn an entity, and we'll have to pick up on
+                // that instead of spawning one for the client.
+                if (!testEntity.IsClientSide())
+                    cartridge = testEntity;
+                else
+                    Del(testEntity);
+            }
         }
         // There's no ammo left.
         else
