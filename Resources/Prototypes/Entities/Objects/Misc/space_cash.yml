@@ -45,7 +45,6 @@
   id: Credit
   name: spacebuck
   stackEntity: SpaceCash
-  stack: Credit
   icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   price: 1
 
