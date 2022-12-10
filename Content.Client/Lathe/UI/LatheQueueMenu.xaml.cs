@@ -26,7 +26,9 @@ namespace Content.Client.Lathe.UI
         {
             if (recipe != null)
             {
-                Icon.Texture = _spriteSystem.GetPrototypeIcon(recipe.EntitySpriteOverride ?? recipe.Result).Default;
+                Icon.Texture = recipe.Icon == null
+                    ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
+                    : _spriteSystem.Frame0(recipe.Icon);
                 NameLabel.Text = recipe.Name;
                 Description.Text = recipe.Description;
             }
@@ -44,7 +46,10 @@ namespace Content.Client.Lathe.UI
             var idx = 1;
             foreach (var recipe in queue)
             {
-                QueueList.AddItem($"{idx}. {recipe.Name}", _spriteSystem.GetPrototypeIcon(recipe.EntitySpriteOverride ?? recipe.Result).Default);
+                var icon =recipe.Icon == null
+                    ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
+                    : _spriteSystem.Frame0(recipe.Icon);
+                QueueList.AddItem($"{idx}. {recipe.Name}", icon);
                 idx++;
             }
         }

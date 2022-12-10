@@ -3,6 +3,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Research.Prototypes
 {
@@ -28,8 +29,8 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     An entity whose sprite is displayed in the ui in place of the actual recipe result.
         /// </summary>
-        [DataField("entitySpriteOverride", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? EntitySpriteOverride;
+        [DataField("icon")]
+        public SpriteSpecifier? Icon;
 
         [DataField("completetime")]
         private TimeSpan _completeTime = TimeSpan.FromSeconds(5);
