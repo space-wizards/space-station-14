@@ -3417,8 +3417,6 @@ entities:
     pos: -9.5,13.5
     parent: 512
     type: Transform
-  - enabled: False
-    type: Thruster
 - uid: 474
   type: Grille
   components:
@@ -3679,7 +3677,7 @@ entities:
   components:
   - type: MetaData
   - pos: 2.2710133,-2.4148211
-    parent: 603
+    parent: null
     type: Transform
   - chunks:
       -1,0:
@@ -4900,7 +4898,6 @@ entities:
     type: Transform
   - devices:
     - 3
-    - null
     type: DeviceList
 - uid: 585
   type: CableApcExtension
@@ -5034,13 +5031,4 @@ entities:
     pos: -0.5,9.5
     parent: 512
     type: Transform
-- uid: 603
-  components:
-  - type: MetaData
-  - type: Transform
-  - index: 2
-    type: Map
-  - type: PhysicsMap
-  - type: Broadphase
-  - type: OccluderTree
 ...

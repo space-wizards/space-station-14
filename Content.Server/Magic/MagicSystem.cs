@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
@@ -16,6 +16,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -39,7 +40,9 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly GunSystem _gunSystem = default!;
+    [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -155,11 +158,18 @@ public sealed class MagicSystem : EntitySystem
             return;
 
         var xform = Transform(ev.Performer);
+        var userVelocity = _physics.GetMapLinearVelocity(ev.Performer);
 
         foreach (var pos in GetSpawnPositions(xform, ev.Pos))
         {
-            var ent = Spawn(ev.Prototype, pos.SnapToGrid(EntityManager, _mapManager));
-            _gunSystem.ShootProjectile(ent, ev.Target.Position - Transform(ent).Coordinates.Position, ev.Performer);
+            // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
+            var mapPos = pos.ToMap(EntityManager);
+            EntityCoordinates spawnCoords = _mapManager.TryFindGridAt(mapPos, out var grid)
+                ? pos.WithEntityId(grid.Owner, EntityManager)
+                : new(_mapManager.GetMapEntityId(mapPos.MapId), mapPos.Position);
+
+            var ent = Spawn(ev.Prototype, spawnCoords);
+            _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
         }
     }
 
