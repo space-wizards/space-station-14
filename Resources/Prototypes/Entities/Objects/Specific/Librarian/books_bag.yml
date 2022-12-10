@@ -22,13 +22,3 @@
       whitelist:
         tags:
           - Book
-
-- type: entity
-  id: BooksBagStartingFilled
-  suffix: Starting
-  parent: BooksBag
-  components:
-    - type: StorageFill
-      contents:
-        - id: BookRandom
-          amount: 5

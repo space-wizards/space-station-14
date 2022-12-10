@@ -18,7 +18,7 @@
     id: LibrarianPDA
     ears: ClothingHeadsetService
     pocket1: d10Dice
-    belt: BooksBagStartingFilled # not every map has enoung
+    belt: BooksBag
     pocket2: HandLabeler # for making named bestsellers
   inhand:
     right hand: BriefcaseBrownFilled
