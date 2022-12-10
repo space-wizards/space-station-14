@@ -15,6 +15,9 @@ gun-FullAuto = full-auto
 gun-ballistic-cycle = Cycle
 gun-ballistic-cycled = Cycled
 gun-ballistic-cycled-empty = Cycled (empty)
+gun-ballistic-transfer-invalid = {THE($ammoEntity)} won't fit inside {$targetEntity}!
+gun-ballistic-transfer-empty = {THE($entity)} is empty.
+gun-ballistic-transfer-target-full = {THE($entity)} is already fully loaded.
 
 # CartridgeAmmo
 gun-cartridge-spent = It is [color=red]spent[/color].
