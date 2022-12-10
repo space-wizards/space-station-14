@@ -12,9 +12,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.NPC;
 using Content.Shared.NPC.Events;
 using Content.Shared.Weapons.Melee;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -276,12 +274,16 @@ namespace Content.Server.NPC.Systems
 
             steering.LastTimeSteer = _timing.CurTime;
             var uid = mover.Owner;
-
-            // TODO: SHITCODE AAAA
-            // TODO: Stackalloc?
+            var interest = steering.Interest;
+            var danger = steering.Danger;
             var directions = new Vector2[InterestDirections];
-            ref var context = ref steering.Context;
-            context.Clear();
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                steering.Interest[i] = 0f;
+                steering.Danger[i] = 0f;
+                directions[i] = new Angle(InterestRadians * i).ToVec();
+            }
 
             var agentRadius = steering.Radius;
             var (worldPos, worldRot) = xform.GetWorldPositionRotation();
@@ -298,24 +300,24 @@ namespace Content.Server.NPC.Systems
             // TODO: Have them hover around some preferred engagement range per-NPC, then they duck out (if target has melee(?))
             // TODO: Have them strafe around the target for some random time then strafe the other direction.
 
-            if (!TrySeek(uid, mover, steering, body, xform, offsetRot, ref context, directions, bodyQuery, modifierQuery, frameTime))
+            if (!TrySeek(uid, mover, steering, body, xform, offsetRot, interest, directions, bodyQuery, modifierQuery, frameTime))
             {
                 SetDirection(mover, steering, Vector2.Zero);
                 return;
             }
 
-            DebugTools.Assert(!float.IsNaN(context.Interest[0]));
+            DebugTools.Assert(!float.IsNaN(interest[0]));
             // TODO: Query
             var dangerPoints = steering.DangerPoints;
             dangerPoints.Clear();
 
-            StaticAvoid(uid, offsetRot, worldPos, agentRadius, tickMove, body, xform, ref context, dangerPoints, directions, bodyQuery, xformQuery);
-            DebugTools.Assert(!float.IsNaN(context.Danger[0]));
+            StaticAvoid(uid, offsetRot, agentRadius, body, xform, danger, dangerPoints, directions, bodyQuery, xformQuery);
+            DebugTools.Assert(!float.IsNaN(danger[0]));
             // TODO: Avoid anything not considered hostile
-            DynamicAvoid(uid, worldPos, agentRadius, body, xform, ref context, bodyQuery, xformQuery);
+            DynamicAvoid(uid, worldPos, agentRadius, body, xform, interest, directions, bodyQuery, xformQuery);
 
             // TODO: Refs
-            var ev = new NPCSteeringEvent(directions, context, agentRadius, offsetRot, worldPos);
+            var ev = new NPCSteeringEvent(directions, interest, danger, agentRadius, offsetRot, worldPos);
             RaiseLocalEvent(uid, ref ev);
             var adjustedInterestMap = new float[InterestDirections];
 

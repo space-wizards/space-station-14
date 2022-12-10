@@ -24,7 +24,7 @@ public sealed partial class NPCSteeringSystem
             PhysicsComponent body,
             TransformComponent xform,
             Angle offsetRot,
-            ref NPCSteeringContext context,
+            float[] interest,
             Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<MovementSpeedModifierComponent> modifierQuery,
@@ -178,21 +178,21 @@ public sealed partial class NPCSteeringSystem
                 var result = Vector2.Dot(norm, directions[i]);
                 var adjustedResult = (result + 1f) * 0.5f * weight;
 
-                context.Interest[i] = MathF.Max(context.Interest[i], adjustedResult);
+                interest[i] = MathF.Max(interest[i], adjustedResult);
             }
 
             // Prefer our current direction
             if (weight > 0f && body.LinearVelocity.LengthSquared > 0f)
             {
-                var sameDirectionWeight = 0.1f;
+                const float SameDirectionWeight = 0.1f;
                 norm = body.LinearVelocity.Normalized;
 
                 for (var i = 0; i < InterestDirections; i++)
                 {
                     var result = Vector2.Dot(norm, directions[i]);
-                    var adjustedResult = (result + 1f) * 0.5f * weight;
+                    var adjustedResult = (result + 1f) * 0.5f * SameDirectionWeight;
 
-                    context.Interest[i] = MathF.Max(context.Interest[i], adjustedResult);
+                    interest[i] = MathF.Max(interest[i], adjustedResult);
                 }
             }
 
@@ -286,10 +286,8 @@ public sealed partial class NPCSteeringSystem
                 var mapped = (value - minValue) / (maxValue - minValue);
                 return Math.Clamp(mapped, 0f, 1f);
             }
-            else
-            {
-                return value >= minValue ? 1f : 0f;
-            }
+
+            return value >= minValue ? 1f : 0f;
         }
 
         #endregion
@@ -302,19 +300,16 @@ public sealed partial class NPCSteeringSystem
         private void StaticAvoid(
             EntityUid uid,
             Angle offsetRot,
-            Vector2 worldPos,
             float agentRadius,
-            float moveSpeed,
             PhysicsComponent body,
             TransformComponent xform,
-            ref NPCSteeringContext context,
+            float[] danger,
             List<Vector2> dangerPoints,
             Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
         {
             var detectionRadius = agentRadius * 1.5f;
-            var away = new Vector2();
 
             foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
             {
@@ -347,8 +342,7 @@ public sealed partial class NPCSteeringSystem
                 for (var i = 0; i < InterestDirections; i++)
                 {
                     var result = Vector2.Dot(norm, directions[i]);
-                    var factor = 1f - (displacement.Length / agentRadius);
-                    away += displacement.Normalized * factor;
+                    danger[i] = MathF.Max(danger[i], result * weight);
                 }
             }
         }
@@ -366,7 +360,8 @@ public sealed partial class NPCSteeringSystem
             float agentRadius,
             PhysicsComponent body,
             TransformComponent xform,
-            ref NPCSteeringContext context,
+            float[] interest,
+            Vector2[] directions,
             EntityQuery<PhysicsComponent> bodyQuery,
             EntityQuery<TransformComponent> xformQuery)
         {
@@ -412,7 +407,18 @@ public sealed partial class NPCSteeringSystem
                 }
             }
 
-            context.Seek(away, 1f);
+            if (away == Vector2.Zero)
+                return;
+
+            var norm = away.Normalized;
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                var result = Vector2.Dot(norm, directions[i]);
+                var adjustedResult = (result + 1f) * 0.5f;
+
+                interest[i] = MathF.Max(interest[i], adjustedResult);
+            }
         }
 
         #endregion

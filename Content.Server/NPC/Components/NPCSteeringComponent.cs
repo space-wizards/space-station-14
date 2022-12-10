@@ -22,7 +22,10 @@ public sealed class NPCSteeringComponent : Component
     public float Radius = 0.35f;
 
     [ViewVariables]
-    public NPCSteeringContext Context = new();
+    public readonly float[] Interest = new float[SharedNPCSteeringSystem.InterestDirections];
+
+    [ViewVariables]
+    public readonly float[] Danger = new float[SharedNPCSteeringSystem.InterestDirections];
 
     // TODO: Update radius, also danger points debug only
     public readonly List<Vector2> DangerPoints = new();
