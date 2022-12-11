@@ -50,6 +50,7 @@
         Piercing: 8
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
@@ -225,6 +226,7 @@
         Piercing: 3
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
   - type: Hunger # probably should be prototyped
     thresholds:
       Overfed: 200
