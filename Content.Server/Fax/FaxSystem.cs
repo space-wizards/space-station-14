@@ -67,43 +67,8 @@ public sealed class FaxSystem : EntitySystem
 
         foreach (var comp in EntityQuery<FaxMachineComponent>())
         {
-            var isPowered = this.IsPowered(comp.Owner, EntityManager);
-            
-            // Printing animation
-            if (isPowered)
-            {
-                if (comp.PrintingTimeRemaining > 0)
-                {
-                    comp.PrintingTimeRemaining -= frameTime;
-                    UpdateAppearance(comp.Owner, comp);
-
-                    var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
-                    if (isAnimationEnd)
-                    {
-                        SpawnPaperFromQueue(comp.Owner, comp);
-                        UpdateUserInterface(comp.Owner, comp);
-                    }
-                }
-                else if (comp.PrintingQueue.Count > 0 && isPowered)
-                {
-                    comp.PrintingTimeRemaining = comp.PrintingTime;
-                    _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
-                }
-            }
-
-            // Inserting animation
-            if (comp.InsertingTimeRemaining > 0 && isPowered)
-            {
-                comp.InsertingTimeRemaining -= frameTime;
-                UpdateAppearance(comp.Owner, comp);
-
-                var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
-                if (isAnimationEnd)
-                {
-                    _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-                    UpdateUserInterface(comp.Owner, comp);
-                }
-            }
+            ProcessPrintingAnimation(frameTime, comp);
+            ProcessInsertingAnimation(frameTime, comp);
 
             // Sending timeout
             if (comp.SendTimeoutRemaining > 0)
@@ -113,6 +78,50 @@ public sealed class FaxSystem : EntitySystem
                 if (comp.SendTimeoutRemaining <= 0)
                     UpdateUserInterface(comp.Owner, comp);
             }
+        }
+    }
+
+    private void ProcessPrintingAnimation(float frameTime, FaxMachineComponent comp)
+    {
+        if (!this.IsPowered(comp.Owner, EntityManager))
+            return;
+
+        if (comp.PrintingTimeRemaining > 0)
+        {
+            comp.PrintingTimeRemaining -= frameTime;
+            UpdateAppearance(comp.Owner, comp);
+
+            var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
+            if (isAnimationEnd)
+            {
+                SpawnPaperFromQueue(comp.Owner, comp);
+                UpdateUserInterface(comp.Owner, comp);
+            }
+            
+            return;
+        }
+
+        if (comp.PrintingQueue.Count > 0)
+        {
+            comp.PrintingTimeRemaining = comp.PrintingTime;
+            _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
+        }
+    }
+
+    private void ProcessInsertingAnimation(float frameTime, FaxMachineComponent comp)
+    {
+        if (!this.IsPowered(comp.Owner, EntityManager) ||
+            comp.InsertingTimeRemaining <= 0)
+            return;
+
+        comp.InsertingTimeRemaining -= frameTime;
+        UpdateAppearance(comp.Owner, comp);
+
+        var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
+        if (isAnimationEnd)
+        {
+            _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
+            UpdateUserInterface(comp.Owner, comp);
         }
     }
 
