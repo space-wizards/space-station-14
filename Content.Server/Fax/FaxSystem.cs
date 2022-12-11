@@ -6,6 +6,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
@@ -46,6 +47,7 @@ public sealed class FaxSystem : EntitySystem
         
         SubscribeLocalEvent<FaxMachineComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<FaxMachineComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
+        SubscribeLocalEvent<FaxMachineComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<FaxMachineComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         
         // Interaction
@@ -68,9 +70,9 @@ public sealed class FaxSystem : EntitySystem
             var isPowered = this.IsPowered(comp.Owner, EntityManager);
             
             // Printing animation
-            if (comp.PrintingTimeRemaining > 0)
+            if (isPowered)
             {
-                if (isPowered)
+                if (comp.PrintingTimeRemaining > 0)
                 {
                     comp.PrintingTimeRemaining -= frameTime;
                     UpdateAppearance(comp.Owner, comp);
@@ -82,41 +84,24 @@ public sealed class FaxSystem : EntitySystem
                         UpdateUserInterface(comp.Owner, comp);
                     }
                 }
-                else // Interrupted by power off
+                else if (comp.PrintingQueue.Count > 0 && isPowered)
                 {
-                    comp.PrintingTimeRemaining = 0f;
-                    UpdateAppearance(comp.Owner, comp);
+                    comp.PrintingTimeRemaining = comp.PrintingTime;
+                    _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
                 }
-            }
-            else if (comp.PrintingQueue.Count > 0 && isPowered)
-            {
-                comp.PrintingTimeRemaining = comp.PrintingTime;
-                _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
             }
 
             // Inserting animation
-            if (comp.InsertingTimeRemaining > 0)
+            if (comp.InsertingTimeRemaining > 0 && isPowered)
             {
-                if (isPowered)
-                {
-                    comp.InsertingTimeRemaining -= frameTime;
-                    UpdateAppearance(comp.Owner, comp);
+                comp.InsertingTimeRemaining -= frameTime;
+                UpdateAppearance(comp.Owner, comp);
 
-                    var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
-                    if (isAnimationEnd)
-                    {
-                        _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-                        UpdateUserInterface(comp.Owner, comp);
-                    }
-                }
-                else // Interrupted by power off
+                var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
+                if (isAnimationEnd)
                 {
-                    comp.InsertingTimeRemaining = 0f;
-                    UpdateAppearance(comp.Owner, comp);
-                    
-                    // Drop paper from slot
                     _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-                    _itemSlotsSystem.TryEject(comp.Owner, comp.PaperSlot, null, out var _, true);
+                    UpdateUserInterface(comp.Owner, comp);
                 }
             }
 
@@ -164,6 +149,30 @@ public sealed class FaxSystem : EntitySystem
         }
 
         UpdateUserInterface(uid, component);
+    }
+
+    private void OnPowerChanged(EntityUid uid, FaxMachineComponent component, ref PowerChangedEvent args)
+    {
+        var isInsertInterrupted = !args.Powered && component.InsertingTimeRemaining > 0;
+        if (isInsertInterrupted)
+        {
+            component.InsertingTimeRemaining = 0f; // Reset animation
+
+            // Drop from slot because animation did not play completely
+            _itemSlotsSystem.SetLock(uid, component.PaperSlot, false);
+            _itemSlotsSystem.TryEject(uid, component.PaperSlot, null, out var _, true);
+        }
+
+        var isPrintInterrupted = !args.Powered && component.PrintingTimeRemaining > 0;
+        if (isPrintInterrupted)
+        {
+            component.PrintingTimeRemaining = 0f; // Reset animation
+        }
+        
+        if (isInsertInterrupted || isPrintInterrupted)
+            UpdateAppearance(component.Owner, component);
+
+        _itemSlotsSystem.SetLock(uid, component.PaperSlot, !args.Powered); // Lock slot when power is off
     }
     
     private void OnInteractUsing(EntityUid uid, FaxMachineComponent component, InteractUsingEvent args)
