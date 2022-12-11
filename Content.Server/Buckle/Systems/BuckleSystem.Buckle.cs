@@ -102,12 +102,12 @@ public sealed partial class BuckleSystem
             args.Cancel();
     }
 
-    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, CanDropEvent args)
+    private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, ref CanDropEvent args)
     {
         args.Handled = HasComp<StrapComponent>(args.Target);
     }
 
-    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, DragDropEvent args)
+    private void OnBuckleDragDrop(EntityUid uid, BuckleComponent component, ref DragDropEvent args)
     {
         args.Handled = TryBuckle(uid, args.User, args.Target, component);
     }

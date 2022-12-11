@@ -85,7 +85,7 @@ public abstract partial class SharedBuckleSystem
         return _interactions.InRangeUnobstructed(target, buckleId, buckle.Range, predicate: Ignored);
     }
 
-    private void OnStrapCanDragDropOn(EntityUid uid, SharedStrapComponent strap, CanDropOnEvent args)
+    private void OnStrapCanDragDropOn(EntityUid uid, SharedStrapComponent strap, ref CanDropOnEvent args)
     {
         args.CanDrop = StrapCanDragDropOn(uid, args.User, uid, args.Dragged, strap);
         args.Handled = true;

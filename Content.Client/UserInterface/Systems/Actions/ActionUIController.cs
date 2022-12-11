@@ -51,6 +51,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private ActionButtonContainer? _container;
     private readonly List<ActionPage> _pages = new();
     private int _currentPageIndex = DefaultPageIndex;
+    private readonly DragDropHelper<ActionButton> _menuDragHelper;
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
 
