@@ -4,7 +4,7 @@ using Content.Shared.Nutrition.Components;
 
 namespace Content.Shared.Kitchen;
 
-public abstract partial class SharedKitchenSpikeSystem : EntitySystem
+public abstract class SharedKitchenSpikeSystem : EntitySystem
 {
     public override void Initialize()
     {
@@ -14,6 +14,9 @@ public abstract partial class SharedKitchenSpikeSystem : EntitySystem
 
     private void OnCanDrop(EntityUid uid, SharedKitchenSpikeComponent component, ref CanDropOnEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Handled = true;
 
         if (!HasComp<ButcherableComponent>(args.Dragged))

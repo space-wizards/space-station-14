@@ -14,11 +14,12 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Kitchen;
 using Content.Shared.Popups;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    public sealed class KitchenSpikeSystem : EntitySystem
+    public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
