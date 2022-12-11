@@ -20,7 +20,7 @@ public abstract class SharedStrippableSystem : EntitySystem
         if (args.Handled || args.Target != args.User)
             return;
 
-        StartOpeningStripper(uid, component);
+        StartOpeningStripper(args.User, component);
         args.Handled = true;
     }
 
