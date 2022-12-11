@@ -1,9 +1,4 @@
 Entries:
-- author: 25203
-  changes:
-  - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
-  id: 2247
-  time: '2022-09-06T02:48:36.0000000+00:00'
 - author: lapatison
   changes:
   - {message: CBURN equipment has been improved, type: Tweak}
@@ -2935,3 +2930,8 @@ Entries:
       destroyed., type: Fix}
   id: 2746
   time: '2022-12-11T11:31:55.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Removed NSS Pillar., type: Remove}
+  id: 2747
+  time: '2022-12-11T11:33:37.0000000+00:00'
