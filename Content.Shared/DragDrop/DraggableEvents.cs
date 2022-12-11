@@ -6,15 +6,19 @@ namespace Content.Shared.DragDrop;
 [ByRefEvent]
 public record struct CanDragEvent
 {
-    public bool Cancelled;
+    /// <summary>
+    /// Null or false if we are unable to drag this entity.
+    /// </summary>
+    public bool? Handled;
 }
 
 /// <summary>
 /// Raised directed on a dragged entity to indicate whether it has interactions with the target entity.
 /// </summary>
 [ByRefEvent]
-public record struct CanDropEvent(EntityUid Target)
+public record struct CanDropEvent(EntityUid User, EntityUid Target)
 {
+    public readonly EntityUid User = User;
     public readonly EntityUid Target = Target;
     public bool Handled = false;
 
@@ -27,8 +31,10 @@ public record struct CanDropEvent(EntityUid Target)
 /// <summary>
 /// Raised directed on the target entity to indicate whether it has interactions with the dragged entity.
 /// </summary>
-public record struct CanDropOnEvent(EntityUid Dragged)
+[ByRefEvent]
+public record struct CanDropOnEvent(EntityUid User, EntityUid Dragged)
 {
+    public readonly EntityUid User = User;
     public readonly EntityUid Dragged = Dragged;
     public bool Handled = false;
 
@@ -42,7 +48,20 @@ public record struct CanDropOnEvent(EntityUid Dragged)
 /// Raised directed on a dragged entity when it is dropped on a target entity.
 /// </summary>
 [ByRefEvent]
-public readonly record struct DragDropEvent(EntityUid Target)
+public record struct DragDropEvent(EntityUid User, EntityUid Target)
 {
+    public readonly EntityUid User = User;
     public readonly EntityUid Target = Target;
+    public bool Handled = false;
+}
+
+/// <summary>
+/// Raised directed on the target entity when a dragged entity is dragged onto it.
+/// </summary>
+[ByRefEvent]
+public record struct DragDropOnEvent(EntityUid User, EntityUid Dragged)
+{
+    public readonly EntityUid User = User;
+    public readonly EntityUid Dragged = Dragged;
+    public bool Handled = false;
 }

@@ -243,8 +243,8 @@ public abstract partial class InventorySystem
         // that requires server/client specific code.
         // Uhhh TODO, fix this. This doesn't even fucking check if the target item is IN the targets inventory.
         return actor != target &&
-            HasComp<SharedStrippableComponent>(target) &&
-            HasComp<SharedStrippingComponent>(actor) &&
+            HasComp<StrippableComponent>(target) &&
+            HasComp<StrippingComponent>(actor) &&
             HasComp<SharedHandsComponent>(actor);
     }
 

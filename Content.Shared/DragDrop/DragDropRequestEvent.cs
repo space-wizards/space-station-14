@@ -11,16 +11,16 @@ namespace Content.Shared.DragDrop
         /// <summary>
         ///     Entity that was dragged and dropped.
         /// </summary>
-        public EntityUid Dropped { get; }
+        public EntityUid Dragged { get; }
 
         /// <summary>
         ///     Entity that was drag dropped on.
         /// </summary>
         public EntityUid Target { get; }
 
-        public DragDropRequestEvent(EntityUid dropped, EntityUid target)
+        public DragDropRequestEvent(EntityUid dragged, EntityUid target)
         {
-            Dropped = dropped;
+            Dragged = dragged;
             Target = target;
         }
     }

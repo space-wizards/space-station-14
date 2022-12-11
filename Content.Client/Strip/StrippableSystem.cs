@@ -3,14 +3,15 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Strip;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Strip;
 
 /// <summary>
-///     This is the client-side stripping system, which just triggers UI updates on events. 
+///     This is the client-side stripping system, which just triggers UI updates on events.
 /// </summary>
-public sealed class StrippableSystem : EntitySystem
+public sealed class StrippableSystem : SharedStrippableSystem
 {
     public override void Initialize()
     {

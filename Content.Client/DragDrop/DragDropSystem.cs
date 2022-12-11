@@ -200,12 +200,11 @@ namespace Content.Client.DragDrop
                 return false;
             }
 
-            var canDrag = false;
             var ev = new CanDragEvent();
 
             RaiseLocalEvent(args.EntityUid, ref ev);
 
-            if (ev.Cancelled)
+            if (ev.Handled != true)
                 return false;
 
             _draggedEntity = args.EntityUid;

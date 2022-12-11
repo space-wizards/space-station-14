@@ -14,6 +14,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
 using Content.Server.Construction;
 using Content.Server.MobState;
+using Content.Shared.Body.Components;
 using Robust.Server.Containers;
 
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...
@@ -41,11 +42,26 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
-            SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
+            SubscribeLocalEvent<MedicalScannerComponent, DragDropOnEvent>(OnDragDropOn);
             SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<MedicalScannerComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MedicalScannerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<MedicalScannerComponent, CanDropOnEvent>(OnCanDragDropOn);
+        }
+
+        private void OnCanDragDropOn(EntityUid uid, MedicalScannerComponent component, ref CanDropOnEvent args)
+        {
+            args.Handled = true;
+            args.CanDrop |= CanScannerInsert(uid, args.Dragged, component);
+        }
+
+        public bool CanScannerInsert(EntityUid uid, EntityUid target, MedicalScannerComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return false;
+
+            return HasComp<BodyComponent>(target);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -69,7 +85,7 @@ namespace Content.Server.Medical
                 !args.CanAccess ||
                 !args.CanInteract ||
                 IsOccupied(component) ||
-                !component.CanInsert(args.Using.Value))
+                !CanScannerInsert(uid, args.Using.Value, component))
                 return;
 
             string name = "Unknown";
@@ -103,7 +119,7 @@ namespace Content.Server.Medical
 
             // Self-insert verb
             if (!IsOccupied(component) &&
-                component.CanInsert(args.User) &&
+                CanScannerInsert(uid, args.User, component) &&
                 _blocker.CanMove(args.User))
             {
                 AlternativeVerb verb = new();
@@ -118,7 +134,7 @@ namespace Content.Server.Medical
             EjectBody(uid, scannerComponent);
         }
 
-        private void HandleDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, DragDropEvent args)
+        private void OnDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, ref DragDropOnEvent args)
         {
             InsertBody(uid, args.Dragged, scannerComponent);
         }

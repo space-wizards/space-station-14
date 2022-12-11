@@ -13,7 +13,7 @@ public abstract partial class SharedBuckleSystem
     {
         SubscribeLocalEvent<SharedStrapComponent, MoveEvent>(OnStrapRotate);
         SubscribeLocalEvent<SharedStrapComponent, ComponentHandleState>(OnStrapHandleState);
-        SubscribeLocalEvent<SharedStrapComponent, CanDragDropOnEvent>(OnStrapCanDragDropOn);
+        SubscribeLocalEvent<SharedStrapComponent, CanDropOnEvent>(OnStrapCanDragDropOn);
     }
 
     private void OnStrapHandleState(EntityUid uid, SharedStrapComponent component, ref ComponentHandleState args)
@@ -85,9 +85,9 @@ public abstract partial class SharedBuckleSystem
         return _interactions.InRangeUnobstructed(target, buckleId, buckle.Range, predicate: Ignored);
     }
 
-    private void OnStrapCanDragDropOn(EntityUid uid, SharedStrapComponent strap, CanDragDropOnEvent args)
+    private void OnStrapCanDragDropOn(EntityUid uid, SharedStrapComponent strap, CanDropOnEvent args)
     {
-        args.CanDrop = StrapCanDragDropOn(args.Target, args.User, args.Target, args.Dragged, strap);
+        args.CanDrop = StrapCanDragDropOn(uid, args.User, uid, args.Dragged, strap);
         args.Handled = true;
     }
 }
