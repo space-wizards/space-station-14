@@ -18,6 +18,8 @@ using Robust.Client.State;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -42,6 +44,7 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly InputSystem _inputSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -55,23 +58,45 @@ namespace Content.Client.DragDrop
         private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
         private const string ShaderDropTargetOutOfRange = "SelectionOutline";
 
-        // entity performing the drag action
+        /// <summary>
+        /// Current entity being dragged around.
+        /// </summary>
+        private EntityUid? _draggedEntity;
 
-        private EntityUid _dragger;
-        private readonly List<IDraggable> _draggables = new();
-        private EntityUid _dragShadow;
+        /// <summary>
+        /// If an entity is being dragged is there a drag shadow.
+        /// </summary>
+        private EntityUid? _dragShadow;
 
-        // time since mouse down over the dragged entity
+        /// <summary>
+        /// Time since mouse down over the dragged entity
+        /// </summary>
         private float _mouseDownTime;
-        // how much time since last recheck of all possible targets
+
+        /// <summary>
+        /// how much time since last recheck of all possible targets
+        /// </summary>
         private float _targetRecheckTime;
-        // reserved initial mousedown event so we can replay it if no drag ends up being performed
+
+        /// <summary>
+        /// Reserved initial mousedown event so we can replay it if no drag ends up being performed
+        /// </summary>
         private PointerInputCmdHandler.PointerInputCmdArgs? _savedMouseDown;
-        // whether we are currently replaying the original mouse down, so we
-        // can ignore any events sent to this system
+
+        /// <summary>
+        /// Whether we are currently replaying the original mouse down, so we
+        /// can ignore any events sent to this system
+        /// </summary>
         private bool _isReplaying;
 
-        private DragDropHelper<EntityUid> _dragDropHelper = default!;
+        private float _deadzone;
+
+        private DragState _state = DragState.NotDragging;
+
+        /// <summary>
+        /// screen pos where the mouse down began for the drag
+        /// </summary>
+        private ScreenCoordinates? _mouseDownScreenPos;
 
         private ShaderInstance? _dropTargetInRangeShader;
         private ShaderInstance? _dropTargetOutOfRangeShader;
@@ -83,7 +108,6 @@ namespace Content.Client.DragDrop
             UpdatesOutsidePrediction = true;
             UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
-            _dragDropHelper = new DragDropHelper<EntityUid>(OnBeginDrag, OnContinueDrag, OnEndDrag);
             _cfgMan.OnValueChanged(CCVars.DragDropDeadZone, SetDeadZone, true);
 
             _dropTargetInRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetInRange).Instance();
@@ -96,13 +120,12 @@ namespace Content.Client.DragDrop
 
         private void SetDeadZone(float deadZone)
         {
-            _dragDropHelper.Deadzone = deadZone;
+            _deadzone = deadZone;
         }
 
         public override void Shutdown()
         {
             _cfgMan.UnsubValueChanged(CCVars.DragDropDeadZone, SetDeadZone);
-            _dragDropHelper.EndDrag();
             CommandBinds.Unregister<DragDropSystem>();
             base.Shutdown();
         }
@@ -110,22 +133,46 @@ namespace Content.Client.DragDrop
         private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             // not currently predicted
-            if (_inputSystem.Predicted) return false;
+            if (_inputSystem.Predicted)
+                return false;
 
             // currently replaying a saved click, don't handle this because
             // we already decided this click doesn't represent an actual drag attempt
-            if (_isReplaying) return false;
+            if (_isReplaying)
+                return false;
 
             if (args.State == BoundKeyState.Down)
             {
                 return OnUseMouseDown(args);
             }
-            else if (args.State == BoundKeyState.Up)
+
+            if (args.State == BoundKeyState.Up)
             {
                 return OnUseMouseUp(args);
             }
 
             return false;
+        }
+
+        private void EndDrag()
+        {
+            if (_state == DragState.NotDragging)
+                return;
+
+            if (_dragShadow != null)
+            {
+                Del(_dragShadow.Value);
+                _dragShadow = null;
+            }
+
+            _draggedEntity = null;
+            _state = DragState.NotDragging;
+            _mouseDownScreenPos = null;
+
+            RemoveHighlights();
+            _outline.SetEnabled(true);
+            _mouseDownTime = 0;
+            _savedMouseDown = null;
         }
 
         private bool OnUseMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -138,11 +185,11 @@ namespace Content.Client.DragDrop
 
             // cancel any current dragging if there is one (shouldn't be because they would've had to have lifted
             // the mouse, canceling the drag, but just being cautious)
-            _dragDropHelper.EndDrag();
+            EndDrag();
 
             // possibly initiating a drag
             // check if the clicked entity is draggable
-            if (!EntityManager.EntityExists(args.EntityUid))
+            if (!Exists(args.EntityUid))
             {
                 return false;
             }
@@ -154,27 +201,16 @@ namespace Content.Client.DragDrop
             }
 
             var canDrag = false;
-            foreach (var draggable in EntityManager.GetComponents<IDraggable>(args.EntityUid))
-            {
-                var dragEventArgs = new StartDragDropEvent(dragger, args.EntityUid);
+            var ev = new CanDragEvent();
 
-                if (!draggable.CanStartDrag(dragEventArgs))
-                {
-                    continue;
-                }
+            RaiseLocalEvent(args.EntityUid, ref ev);
 
-                _draggables.Add(draggable);
-                canDrag = true;
-            }
-
-            if (!canDrag)
-            {
+            if (ev.Cancelled)
                 return false;
-            }
 
-            // wait to initiate a drag
-            _dragDropHelper.MouseDown(args.EntityUid);
-            _dragger = dragger;
+            _draggedEntity = args.EntityUid;
+            _state = DragState.MouseDown;
+            _mouseDownScreenPos = _inputManager.MouseScreenPosition;
             _mouseDownTime = 0;
 
             // don't want anything else to process the click,
@@ -186,21 +222,23 @@ namespace Content.Client.DragDrop
 
         }
 
-        private bool OnBeginDrag()
+        private void StartDrag()
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged))
+            if (!Exists(_draggedEntity))
             {
                 // something happened to the clicked entity or we moved the mouse off the target so
                 // we shouldn't replay the original click
-                return false;
+                return;
             }
 
-            if (EntityManager.TryGetComponent<SpriteComponent?>(_dragDropHelper.Dragged, out var draggedSprite))
+            DebugTools.Assert(_dragShadow == null);
+
+            if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
             {
                 // pop up drag shadow under mouse
-                var mousePos = _eyeManager.ScreenToMap(_dragDropHelper.MouseScreenPosition);
+                var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
                 _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
-                var dragSprite = EntityManager.GetComponent<SpriteComponent>(_dragShadow);
+                var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
                 dragSprite.CopyFrom(draggedSprite);
                 dragSprite.RenderOrder = EntityManager.CurrentTick.Value;
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
@@ -208,43 +246,41 @@ namespace Content.Client.DragDrop
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
                 if (!dragSprite.NoRotation)
                 {
-                    EntityManager.GetComponent<TransformComponent>(_dragShadow).WorldRotation = EntityManager.GetComponent<TransformComponent>(_dragDropHelper.Dragged).WorldRotation;
+                    Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
                 }
 
                 HighlightTargets();
                 _outline.SetEnabled(false);
 
                 // drag initiated
-                return true;
+                return;
             }
 
             Logger.Warning("Unable to display drag shadow for {0} because it" +
-                           " has no sprite component.", EntityManager.GetComponent<MetaDataComponent>(_dragDropHelper.Dragged).EntityName);
-            return false;
+                           " has no sprite component.", EntityManager.GetComponent<MetaDataComponent>(_draggedEntity.Value).EntityName);
         }
 
-        private bool OnContinueDrag(float frameTime)
+        private bool UpdateDrag(float frameTime)
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
-                _combatMode.IsInCombatMode())
+            if (!Exists(_draggedEntity) || _combatMode.IsInCombatMode())
             {
+                EndDrag();
                 return false;
             }
 
-            DebugTools.AssertNotNull(_dragger);
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
 
             // still in range of the thing we are dragging?
-            if (!_interactionSystem.InRangeUnobstructed(_dragger, _dragDropHelper.Dragged))
+            if (player == null || !_interactionSystem.InRangeUnobstructed(player.Value, _draggedEntity.Value))
             {
                 return false;
             }
 
-            // TODO: would use MapPosition instead if it had a setter, but it has no setter.
-            // is that intentional, or should we add a setter for Transform.MapPosition?
-            if (_dragShadow == default)
+            if (_dragShadow == null)
                 return false;
 
             _targetRecheckTime += frameTime;
+
             if (_targetRecheckTime > TargetRecheckInterval)
             {
                 HighlightTargets();
@@ -254,25 +290,9 @@ namespace Content.Client.DragDrop
             return true;
         }
 
-        private void OnEndDrag()
-        {
-            RemoveHighlights();
-            if (_dragShadow != default)
-            {
-                EntityManager.DeleteEntity(_dragShadow);
-            }
-
-            _outline.SetEnabled(true);
-            _dragShadow = default;
-            _draggables.Clear();
-            _dragger = default;
-            _mouseDownTime = 0;
-            _savedMouseDown = null;
-        }
-
         private bool OnUseMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (_dragDropHelper.IsDragging == false || _dragDropHelper.Dragged == default)
+            if (_state == DragState.MouseDown)
             {
                 // haven't started the drag yet, quick mouseup, definitely treat it as a normal click by
                 // replaying the original cmd
@@ -292,13 +312,16 @@ namespace Content.Client.DragDrop
 
                     _isReplaying = false;
                 }
-                _dragDropHelper.EndDrag();
+
+                EndDrag();
                 return false;
             }
 
-            if (_dragger == default)
+            var localPlayer = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (localPlayer == null || !Exists(_draggedEntity))
             {
-                _dragDropHelper.EndDrag();
+                EndDrag();
                 return false;
             }
 
@@ -314,60 +337,55 @@ namespace Content.Client.DragDrop
             }
 
             var outOfRange = false;
+            var user = localPlayer.Value;
 
             foreach (var entity in entities)
             {
-                if (entity == _dragDropHelper.Dragged) continue;
+                if (entity == _draggedEntity)
+                    continue;
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEvent(_dragger, args.Coordinates, _dragDropHelper.Dragged, entity);
+                var valid = ValidDragDrop(user, _draggedEntity.Value, entity);
 
-                // TODO: Cache valid CanDragDrops
-                if (ValidDragDrop(dropArgs) != true) continue;
+                if (valid != true) continue;
 
-                if (!_interactionSystem.InRangeUnobstructed(dropArgs.User, dropArgs.Target)
-                    || !_interactionSystem.InRangeUnobstructed(dropArgs.User, dropArgs.Dragged))
+                if (!_interactionSystem.InRangeUnobstructed(user, entity)
+                    || !_interactionSystem.InRangeUnobstructed(user, _draggedEntity.Value))
                 {
                     outOfRange = true;
                     continue;
                 }
 
-                foreach (var draggable in _draggables)
-                {
-                    if (!draggable.CanDrop(dropArgs)) continue;
-
-                    // tell the server about the drop attempt
-                    RaiseNetworkEvent(new DragDropRequestEvent(args.Coordinates, _dragDropHelper.Dragged,
-                        entity));
-
-                    draggable.Drop(dropArgs);
-
-                    _dragDropHelper.EndDrag();
-                    return true;
-                }
+                // tell the server about the drop attempt
+                RaiseNetworkEvent(new DragDropRequestEvent(_draggedEntity.Value, entity));
+                EndDrag();
+                return true;
             }
 
-            if (outOfRange &&
-                _playerManager.LocalPlayer?.ControlledEntity is { } player &&
-                player.IsValid())
+            if (outOfRange)
             {
-                player.PopupMessage(Loc.GetString("drag-drop-system-out-of-range-text"));
+                _popup.PopupEntity(Loc.GetString("drag-drop-system-out-of-range-text"), _draggedEntity.Value, Filter.Local());
             }
 
-            _dragDropHelper.EndDrag();
+            EndDrag();
             return false;
         }
 
         // TODO make this just use TargetOutlineSystem
         private void HighlightTargets()
         {
-            if (_dragDropHelper.Dragged == default || Deleted(_dragDropHelper.Dragged) ||
-                _dragShadow == default || Deleted(_dragShadow))
+            if (!Exists(_draggedEntity) ||
+                !Exists(_dragShadow))
             {
                 Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
                                "dragging anything or dragged entity / shadow was deleted.");
                 return;
             }
+
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (user == null)
+                return;
 
             // highlights the possible targets which are visible
             // and able to be dropped on by the current dragged entity
@@ -380,29 +398,36 @@ namespace Content.Client.DragDrop
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
             var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
-            foreach (var pvsEntity in pvsEntities)
+            var spriteQuery = GetEntityQuery<SpriteComponent>();
+
+            foreach (var entity in pvsEntities)
             {
-                if (!EntityManager.TryGetComponent(pvsEntity, out SpriteComponent? inRangeSprite) ||
+                if (!spriteQuery.TryGetComponent(entity, out var inRangeSprite) ||
                     !inRangeSprite.Visible ||
-                    pvsEntity == _dragDropHelper.Dragged) continue;
+                    entity == _draggedEntity)
+                {
+                    continue;
+                }
+
+                var valid = ValidDragDrop(user.Value, _draggedEntity.Value, entity);
 
                 // check if it's able to be dropped on by current dragged entity
-                var dropArgs = new DragDropEvent(_dragger, EntityManager.GetComponent<TransformComponent>(pvsEntity).Coordinates, _dragDropHelper.Dragged, pvsEntity);
-
-                var valid = ValidDragDrop(dropArgs);
-                if (valid == null) continue;
+                if (valid == null)
+                    continue;
 
                 // We'll do a final check given server-side does this before any dragdrop can take place.
                 if (valid.Value)
                 {
-                    valid = _interactionSystem.InRangeUnobstructed(dropArgs.Target, dropArgs.Dragged)
-                        && _interactionSystem.InRangeUnobstructed(dropArgs.Target, dropArgs.Target);
+                    valid = _interactionSystem.InRangeUnobstructed(user.Value, _draggedEntity.Value)
+                        && _interactionSystem.InRangeUnobstructed(user.Value, entity);
                 }
 
                 if (inRangeSprite.PostShader != null &&
                     inRangeSprite.PostShader != _dropTargetInRangeShader &&
                     inRangeSprite.PostShader != _dropTargetOutOfRangeShader)
-                    return;
+                {
+                    continue;
+                }
 
                 // highlight depending on whether its in or out of range
                 inRangeSprite.PostShader = valid.Value ? _dropTargetInRangeShader : _dropTargetOutOfRangeShader;
@@ -428,57 +453,60 @@ namespace Content.Client.DragDrop
         /// <summary>
         ///     Are these args valid for drag-drop?
         /// </summary>
-        /// <param name="eventArgs"></param>
-        /// <returns>null if the target doesn't support IDragDropOn</returns>
-        private bool? ValidDragDrop(DragDropEvent eventArgs)
+        /// <returns>
+        /// Returns null if no interactions are available. Returns false if interactions exist but are not available currently.
+        /// </returns>
+        private bool? ValidDragDrop(EntityUid user, EntityUid dragged, EntityUid target)
         {
-            if (!_actionBlockerSystem.CanInteract(eventArgs.User, eventArgs.Target))
-            {
+            if (!_actionBlockerSystem.CanInteract(user, target))
                 return false;
-            }
 
             // CanInteract() doesn't support checking a second "target" entity.
             // Doing so manually:
-            var ev = new GettingInteractedWithAttemptEvent(eventArgs.User, eventArgs.Dragged);
-            RaiseLocalEvent(eventArgs.Dragged, ev, true);
+            var ev = new GettingInteractedWithAttemptEvent(user, dragged);
+            RaiseLocalEvent(dragged, ev, true);
+
             if (ev.Cancelled)
                 return false;
 
-            var valid = CheckDragDropOn(eventArgs);
+            var dropEv = new CanDropEvent(target);
 
-            foreach (var comp in EntityManager.GetComponents<IDragDropOn>(eventArgs.Target))
-            {
-                if (!comp.CanDragDropOn(eventArgs))
-                {
-                    valid = false;
-                    // dragDropOn.Add(comp);
-                    continue;
-                }
+            RaiseLocalEvent(dragged, ref dropEv);
 
-                valid = true;
-                break;
-            }
+            if (dropEv.Handled)
+                return dropEv.CanDrop;
 
-            if (valid != true) return valid;
+            var dropEv2 = new CanDropOnEvent(dragged);
 
-            // Need at least one IDraggable to return true or else we can't do shit
-            valid = false;
+            RaiseLocalEvent(target, ref dropEv2);
 
-            foreach (var comp in EntityManager.GetComponents<IDraggable>(eventArgs.User))
-            {
-                if (!comp.CanDrop(eventArgs)) continue;
-                valid = true;
-                break;
-            }
+            if (dropEv2.Handled)
+                return dropEv2.CanDrop;
 
-            return valid;
+            return null;
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            _dragDropHelper.Update(frameTime);
+            switch (_state)
+            {
+                // check if dragging should begin
+                case DragState.MouseDown:
+                {
+                    var screenPos = _inputManager.MouseScreenPosition;
+                    if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length > _deadzone)
+                    {
+                        StartDrag();
+                    }
+
+                    break;
+                }
+                case DragState.Dragging:
+                    UpdateDrag(frameTime);
+                    break;
+            }
         }
 
         public override void FrameUpdate(float frameTime)
@@ -486,11 +514,27 @@ namespace Content.Client.DragDrop
             base.FrameUpdate(frameTime);
 
             // Update position every frame to make it smooth.
-            if (_dragDropHelper.IsDragging)
+            if (Exists(_dragShadow))
             {
                 var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-                Transform(_dragShadow).WorldPosition = mousePos.Position;
+                Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
             }
+        }
+
+        private enum DragState : byte
+        {
+            NotDragging,
+
+            /// <summary>
+            /// Not dragging yet, waiting to see
+            /// if they hold for long enough
+            /// </summary>
+            MouseDown,
+
+            /// <summary>
+            /// Currently dragging something
+            /// </summary>
+            Dragging,
         }
     }
 }
