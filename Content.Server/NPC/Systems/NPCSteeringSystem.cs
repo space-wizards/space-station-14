@@ -50,16 +50,19 @@ namespace Content.Server.NPC.Systems
 
         private bool _pathfinding = true;
 
-        /// <summary>
-        /// How much do we round static obstacle avoidance by.
-        /// </summary>
-        private const byte StaticRounding = 5;
+        private static readonly Vector2[] Directions = new Vector2[InterestDirections];
 
         private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
         public override void Initialize()
         {
             base.Initialize();
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                Directions[i] = new Angle(InterestRadians * i).ToVec();
+            }
+
             UpdatesBefore.Add(typeof(SharedPhysicsSystem));
             InitializeAvoidance();
             _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
@@ -206,7 +209,8 @@ namespace Content.Server.NPC.Systems
                     data.Add(new NPCSteeringDebugData(
                         mover.Owner,
                         mover.CurTickSprintMovement,
-                        steering.Context,
+                        steering.Interest,
+                        steering.Danger,
                         steering.DangerPoints));
                 }
 
@@ -276,15 +280,6 @@ namespace Content.Server.NPC.Systems
             var uid = mover.Owner;
             var interest = steering.Interest;
             var danger = steering.Danger;
-            var directions = new Vector2[InterestDirections];
-
-            for (var i = 0; i < InterestDirections; i++)
-            {
-                steering.Interest[i] = 0f;
-                steering.Danger[i] = 0f;
-                directions[i] = new Angle(InterestRadians * i).ToVec();
-            }
-
             var agentRadius = steering.Radius;
             var (worldPos, worldRot) = xform.GetWorldPositionRotation();
 
@@ -294,40 +289,59 @@ namespace Content.Server.NPC.Systems
             var moveSpeed = GetSprintSpeed(steering.Owner);
             var tickMove = moveSpeed * frameTime;
             var body = bodyQuery.GetComponent(uid);
+            var dangerPoints = steering.DangerPoints;
+            dangerPoints.Clear();
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                steering.Interest[i] = 0f;
+                steering.Danger[i] = 0f;
+            }
 
             // TODO: Have some time delay on NPC combat in range before swinging (e.g. 50-200ms) that is a limit.
             // TODO: Have some kind of way to control them avoiding when melee on cd.
             // TODO: Have them hover around some preferred engagement range per-NPC, then they duck out (if target has melee(?))
             // TODO: Have them strafe around the target for some random time then strafe the other direction.
 
-            if (!TrySeek(uid, mover, steering, body, xform, offsetRot, interest, directions, bodyQuery, modifierQuery, frameTime))
+            if (!TrySeek(uid, mover, steering, body, xform, offsetRot, interest, bodyQuery, modifierQuery, frameTime))
             {
                 SetDirection(mover, steering, Vector2.Zero);
                 return;
             }
-
             DebugTools.Assert(!float.IsNaN(interest[0]));
-            // TODO: Query
-            var dangerPoints = steering.DangerPoints;
-            dangerPoints.Clear();
 
-            StaticAvoid(uid, offsetRot, agentRadius, body, xform, danger, dangerPoints, directions, bodyQuery, xformQuery);
+            // Avoid static objects like walls
+            StaticAvoid(uid, offsetRot, agentRadius, body, xform, danger, dangerPoints, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(danger[0]));
-            // TODO: Avoid anything not considered hostile
-            DynamicAvoid(uid, worldPos, agentRadius, body, xform, interest, directions, bodyQuery, xformQuery);
+
+            Separation(uid, worldPos, agentRadius, body, xform, interest, bodyQuery, xformQuery);
 
             // TODO: Refs
-            var ev = new NPCSteeringEvent(directions, interest, danger, agentRadius, offsetRot, worldPos);
+            var ev = new NPCSteeringEvent(Directions, interest, danger, agentRadius, offsetRot, worldPos);
             RaiseLocalEvent(uid, ref ev);
             var adjustedInterestMap = new float[InterestDirections];
 
             // Remove the danger map from the interest map.
+            var desiredDirection = -1;
+            var desiredValue = 0f;
+
             for (var i = 0; i < InterestDirections; i++)
             {
-                adjustedInterestMap[i] = Math.Clamp(context.Interest[i] - context.Danger[i], 0f, 1f);
+                adjustedInterestMap[i] = Math.Clamp(interest[i] - danger[i], 0f, 1f);
+
+                if (adjustedInterestMap[i] > desiredValue)
+                {
+                    desiredDirection = i;
+                    desiredValue = adjustedInterestMap[i];
+                }
             }
 
-            var resultDirection = context.GetDesiredNormal();
+            var resultDirection = Vector2.Zero;
+
+            if (desiredDirection != -1)
+            {
+                resultDirection = new Angle(desiredDirection * InterestRadians).ToVec();
+            }
 
             DebugTools.Assert(!float.IsNaN(resultDirection.X));
             SetDirection(mover, steering, resultDirection, false);

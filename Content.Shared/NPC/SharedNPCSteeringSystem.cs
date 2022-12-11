@@ -7,11 +7,10 @@ public abstract class SharedNPCSteeringSystem : EntitySystem
     /// <summary>
     /// How many radians between each interest direction.
     /// </summary>
-    public const double InterestRadians = MathF.Tau / InterestDirections;
+    public const float InterestRadians = MathF.Tau / InterestDirections;
 
     /// <summary>
     /// How many degrees between each interest direction.
     /// </summary>
     public const float InterestDegrees = 360f / InterestDirections;
-}
 }

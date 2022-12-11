@@ -72,8 +72,8 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
 
             var comp = EnsureComp<NPCSteeringComponent>(data.EntityUid);
             comp.Direction = data.Direction;
-            comp.DangerMap = data.DangerMap;
-            comp.InterestMap = data.InterestMap;
+            comp.DangerMap = data.Danger;
+            comp.InterestMap = data.Interest;
             comp.DangerPoints = data.DangerPoints;
         }
     }

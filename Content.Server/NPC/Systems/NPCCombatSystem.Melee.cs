@@ -53,7 +53,7 @@ public sealed partial class NPCCombatSystem
                 if (result < 0f)
                     continue;
 
-                args.DangerMap[i] = MathF.Max(args.DangerMap[i], result);
+                args.Danger[i] = MathF.Max(args.Danger[i], result);
             }
 
             for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
@@ -63,7 +63,7 @@ public sealed partial class NPCCombatSystem
                 if (result < 0f)
                     continue;
 
-                args.InterestMap[i] = result;
+                args.Interest[i] = result;
             }
         }
     }
