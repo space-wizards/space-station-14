@@ -1,10 +1,8 @@
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Outline;
-using Content.Client.Viewport;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -105,6 +103,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
     public override void Initialize()
     {
+        base.Initialize();
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
@@ -232,6 +231,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         _state = DragState.Dragging;
         DebugTools.Assert(_dragShadow == null);
+        _outline.SetEnabled(false);
+        HighlightTargets();
 
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
         {
@@ -248,9 +249,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
             {
                 Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
             }
-
-            HighlightTargets();
-            _outline.SetEnabled(false);
 
             // drag initiated
             return;
