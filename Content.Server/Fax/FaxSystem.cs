@@ -65,8 +65,11 @@ public sealed class FaxSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var comp in EntityQuery<FaxMachineComponent>())
+        foreach (var (comp, receiver) in EntityQuery<FaxMachineComponent, ApcPowerReceiverComponent>())
         {
+            if (!receiver.Powered)
+                continue;
+
             ProcessPrintingAnimation(frameTime, comp);
             ProcessInsertingAnimation(frameTime, comp);
             ProcessSendingTimeout(frameTime, comp);
@@ -75,9 +78,6 @@ public sealed class FaxSystem : EntitySystem
 
     private void ProcessPrintingAnimation(float frameTime, FaxMachineComponent comp)
     {
-        if (!this.IsPowered(comp.Owner, EntityManager))
-            return;
-
         if (comp.PrintingTimeRemaining > 0)
         {
             comp.PrintingTimeRemaining -= frameTime;
@@ -102,8 +102,7 @@ public sealed class FaxSystem : EntitySystem
 
     private void ProcessInsertingAnimation(float frameTime, FaxMachineComponent comp)
     {
-        if (!this.IsPowered(comp.Owner, EntityManager) ||
-            comp.InsertingTimeRemaining <= 0)
+        if (comp.InsertingTimeRemaining <= 0)
             return;
 
         comp.InsertingTimeRemaining -= frameTime;
