@@ -69,15 +69,7 @@ public sealed class FaxSystem : EntitySystem
         {
             ProcessPrintingAnimation(frameTime, comp);
             ProcessInsertingAnimation(frameTime, comp);
-
-            // Sending timeout
-            if (comp.SendTimeoutRemaining > 0)
-            {
-                comp.SendTimeoutRemaining -= frameTime;
-                
-                if (comp.SendTimeoutRemaining <= 0)
-                    UpdateUserInterface(comp.Owner, comp);
-            }
+            ProcessSendingTimeout(frameTime, comp);
         }
     }
 
@@ -122,6 +114,17 @@ public sealed class FaxSystem : EntitySystem
         {
             _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
             UpdateUserInterface(comp.Owner, comp);
+        }
+    }
+
+    private void ProcessSendingTimeout(float frameTime, FaxMachineComponent comp)
+    {
+        if (comp.SendTimeoutRemaining > 0)
+        {
+            comp.SendTimeoutRemaining -= frameTime;
+
+            if (comp.SendTimeoutRemaining <= 0)
+                UpdateUserInterface(comp.Owner, comp);
         }
     }
 
