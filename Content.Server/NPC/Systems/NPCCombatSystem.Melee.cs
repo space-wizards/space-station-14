@@ -36,11 +36,14 @@ public sealed partial class NPCCombatSystem
             var idealDistance = weapon.Range * 1.25f;
             var obstacleDirection = pointB - args.WorldPosition;
             var obstacleDistance = obstacleDirection.Length;
-            args.Steering.CanSeek = false;
 
             if (obstacleDistance > idealDistance)
+            {
+                // Don't want to get too far.
                 return;
+            }
 
+            args.Steering.CanSeek = false;
             obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
 
