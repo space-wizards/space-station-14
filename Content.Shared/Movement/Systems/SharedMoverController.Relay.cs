@@ -54,7 +54,8 @@ public abstract partial class SharedMoverController
         if (!TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
             return;
 
-        if (TryComp<MovementRelayTargetComponent>(component.RelayEntity, out var targetComp))
+        if (TryComp<MovementRelayTargetComponent>(component.RelayEntity, out var targetComp) &&
+            targetComp.LifeStage < ComponentLifeStage.Stopped)
         {
             targetComp.Entities.Remove(uid);
 
