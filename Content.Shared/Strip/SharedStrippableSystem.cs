@@ -16,7 +16,12 @@ public abstract class SharedStrippableSystem : EntitySystem
 
     private void OnDragDrop(EntityUid uid, StrippableComponent component, ref DragDropEvent args)
     {
-        StartOpeningStripper(args.User, component);
+        // If the user drags a strippable thing onto themselves.
+        if (args.Handled || args.Target != args.User)
+            return;
+
+        StartOpeningStripper(uid, component);
+        args.Handled = true;
     }
 
     public virtual void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
