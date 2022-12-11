@@ -453,7 +453,6 @@ namespace Content.Server.Disease
                 _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
             if (snoughSound != null)
-                //_audioSystem.PlayPvs(snoughSound, uid, AudioParams.Default.WithVariation(0.2f));
                 _audioSystem.PlayPvs(snoughSound, uid);
 
             if (disease is not { Infectious: true } || !airTransmit)
