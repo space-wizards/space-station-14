@@ -56,7 +56,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
-        SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnClimbableDragDrop);
+        SubscribeLocalEvent<ClimbableComponent, DragDropOnEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
@@ -66,17 +66,17 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, ref CanDropOnEvent args)
     {
-        base.OnCanDragDropOn(uid, component, args);
+        base.OnCanDragDropOn(uid, component, ref args);
 
         if (!args.CanDrop)
             return;
 
         string reason;
         var canVault = args.User == args.Dragged
-            ? CanVault(component, args.User, args.Target, out reason)
-            : CanVault(component, args.User, args.Dragged, args.Target, out reason);
+            ? CanVault(component, args.User, uid, out reason)
+            : CanVault(component, args.User, args.Dragged, uid, out reason);
 
         if (!canVault)
             _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
@@ -104,9 +104,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         });
     }
 
-    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, DragDropEvent args)
+    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropOnEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, args.Target);
+        TryMoveEntity(component, args.User, args.Dragged, uid);
     }
 
     private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,

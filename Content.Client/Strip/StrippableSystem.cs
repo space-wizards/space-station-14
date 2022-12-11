@@ -4,6 +4,7 @@ using Content.Shared.Ensnaring.Components;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Strip;
+using Content.Shared.Strip.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Strip;

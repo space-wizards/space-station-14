@@ -25,15 +25,15 @@ public sealed class ClimbSystem : SharedClimbSystem
         component.OwnerIsTransitioning = climbModeState.IsTransitioning;
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, ref CanDropOnEvent args)
     {
-        base.OnCanDragDropOn(uid, component, args);
+        base.OnCanDragDropOn(uid, component, ref args);
 
         if (!args.CanDrop)
             return;
 
         var user = args.User;
-        var target = args.Target;
+        var target = uid;
         var dragged = args.Dragged;
         bool Ignored(EntityUid entity) => entity == target || entity == user || entity == dragged;
 

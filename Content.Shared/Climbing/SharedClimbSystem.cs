@@ -10,7 +10,7 @@ public abstract class SharedClimbSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SharedClimbingComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
-        SubscribeLocalEvent<SharedClimbableComponent, CanDragDropOnEvent>(OnCanDragDropOn);
+        SubscribeLocalEvent<SharedClimbableComponent, CanDropOnEvent>(OnCanDragDropOn);
     }
 
     private static void HandleMoveAttempt(EntityUid uid, SharedClimbingComponent component, UpdateCanMoveEvent args)
@@ -22,8 +22,9 @@ public abstract class SharedClimbSystem : EntitySystem
             args.Cancel();
     }
 
-    protected virtual void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
+    protected virtual void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, ref CanDropOnEvent args)
     {
+        args.Handled = true;
         args.CanDrop = HasComp<SharedClimbingComponent>(args.Dragged);
     }
 }
