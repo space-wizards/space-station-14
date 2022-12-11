@@ -5,13 +5,13 @@ using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;
@@ -25,8 +25,8 @@ public sealed class BodySystem : SharedBodySystem
 {
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-
     [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
@@ -40,8 +40,7 @@ public sealed class BodySystem : SharedBodySystem
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
     {
-        if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
-            mobState.IsDead() &&
+        if (_mobState.IsDead(uid) &&
             EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
             mind.HasMind)
         {
@@ -119,13 +118,14 @@ public sealed class BodySystem : SharedBodySystem
     protected override void InitBody(BodyComponent body, BodyPrototype prototype)
     {
         var root = prototype.Slots[prototype.Root];
+        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
+        if (root.Part == null)
+            return;
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
         var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
         body.Root = slot;
         partComponent.Body = bodyId;
-
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
 
         AttachPart(bodyId, slot, partComponent);
         InitPart(partComponent, prototype, prototype.Root);
@@ -136,7 +136,7 @@ public sealed class BodySystem : SharedBodySystem
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body);
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
 
         var xform = Transform(bodyId.Value);
         var coordinates = xform.Coordinates;
@@ -157,7 +157,7 @@ public sealed class BodySystem : SharedBodySystem
                     }
                     else
                     {
-                        cont.ForceRemove(ent);
+                        cont.Remove(ent, EntityManager, force: true);
                         Transform(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);
                     }

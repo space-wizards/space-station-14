@@ -14,6 +14,10 @@ namespace Content.Shared.Eye.Blinding
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<BlindableComponent, ComponentGetState>(OnGetBlindableState);
+            SubscribeLocalEvent<BlindableComponent, ComponentHandleState>(OnHandleBlindableState);
+
             SubscribeLocalEvent<BlindfoldComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BlindfoldComponent, GotUnequippedEvent>(OnUnequipped);
 
@@ -26,6 +30,19 @@ namespace Content.Shared.Eye.Blinding
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
+        }
+
+        private void OnGetBlindableState(EntityUid uid, BlindableComponent component, ref ComponentGetState args)
+        {
+            args.State = new BlindableComponentState(component.Sources);
+        }
+
+        private void OnHandleBlindableState(EntityUid uid, BlindableComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not BlindableComponentState cast)
+                return;
+
+            component.Sources = cast.Sources;
         }
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)

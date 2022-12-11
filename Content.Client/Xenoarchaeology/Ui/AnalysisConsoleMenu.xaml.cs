@@ -97,17 +97,21 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             return;
         }
 
-        if (!state.AnalyzerConnected) //no analyzer connected
-            message.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
-        else if (!state.CanScan) //no artifact
-            message.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
-        else if (state.Artifact == null) //ready to go
-            message.AddMarkup(Loc.GetString("analysis-console-info-ready"));
-
         UpdateArtifactIcon(state.Artifact);
 
-        if (state.ScanReport != null)
+        if (state.ScanReport == null)
+        {
+            if (!state.AnalyzerConnected) //no analyzer connected
+                message.AddMarkup(Loc.GetString("analysis-console-info-no-scanner"));
+            else if (!state.CanScan) //no artifact
+                message.AddMarkup(Loc.GetString("analysis-console-info-no-artifact"));
+            else if (state.Artifact == null) //ready to go
+                message.AddMarkup(Loc.GetString("analysis-console-info-ready"));
+        }
+        else
+        {
             message.AddMessage(state.ScanReport);
+        }
 
         Information.SetMessage(message);
     }
