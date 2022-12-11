@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Conveyor;
 using Content.Server.Gravity.EntitySystems;
 using Content.Server.MachineLinking.Events;
@@ -18,7 +17,6 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Threading;
 
 namespace Content.Server.Physics.Controllers;
 
@@ -33,7 +31,6 @@ public sealed class ConveyorController : VirtualController
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IParallelManager _parallel = default!;
 
     public const string ConveyorFixture = "conveyor";
 
@@ -220,14 +217,6 @@ public sealed class ConveyorController : VirtualController
 
         var direction = conveyorRot.ToWorldVec();
 
-        var options = new ParallelOptions()
-        {
-            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
-        };
-
-
-        //TODO: Looks like you can handle this here?
-        //TODO: An array pool of what's needed?
         foreach (var (entity, transform, body) in GetEntitiesToMove(comp, xform, xformQuery, bodyQuery))
         {
             if (!conveyed.Add(entity))
@@ -240,8 +229,8 @@ public sealed class ConveyorController : VirtualController
             transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            body.Awake = true;
-            body.SleepTime = 0f;
+            _physics.SetAwake(body, true);
+            _physics.SetSleepTime(body, 0f);
         }
     }
 
