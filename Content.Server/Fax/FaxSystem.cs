@@ -221,10 +221,12 @@ public sealed class FaxSystem : EntitySystem
 
                     break;
                 case FaxConstants.FaxPrintCommand:
-                    if (!args.Data.TryGetValue(FaxConstants.FaxContentData, out string? content))
+                    if (!args.Data.TryGetValue(FaxConstants.FaxPaperNameData, out string? name) ||
+                        !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
-                    Receive(uid, content, args.SenderAddress);
+                    var printout = new FaxPrintout(content, name);
+                    Receive(uid, printout, args.SenderAddress);
 
                     break;
             }
@@ -333,13 +335,15 @@ public sealed class FaxSystem : EntitySystem
         if (!component.KnownFaxes.TryGetValue(component.DestinationFaxAddress, out var faxName))
             return;
 
-        if (!TryComp<PaperComponent>(sendEntity, out var paper))
+        if (!TryComp<MetaDataComponent>(sendEntity, out var metadata) ||
+            !TryComp<PaperComponent>(sendEntity, out var paper))
             return;
 
         var payload = new NetworkPayload()
         {
             { DeviceNetworkConstants.Command, FaxConstants.FaxPrintCommand },
-            { FaxConstants.FaxContentData, paper.Content }
+            { FaxConstants.FaxPaperNameData, metadata.EntityName },
+            { FaxConstants.FaxPaperContentData, paper.Content },
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
@@ -354,7 +358,7 @@ public sealed class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, string content, string? fromAddress, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -369,7 +373,7 @@ public sealed class FaxSystem : EntitySystem
         if (component.NotifyAdmins)
             NotifyAdmins(faxName);
 
-        component.PrintingQueue.Enqueue(content);
+        component.PrintingQueue.Enqueue(printout);
     }
 
     private void SpawnPaperFromQueue(EntityUid uid, FaxMachineComponent? component = null)
@@ -377,10 +381,14 @@ public sealed class FaxSystem : EntitySystem
         if (!Resolve(uid, ref component) || component.PrintingQueue.Count == 0)
             return;
 
-        var content = component.PrintingQueue.Dequeue();
+        var printout = component.PrintingQueue.Dequeue();
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
+
         if (TryComp<PaperComponent>(printed, out var paper))
-            _paperSystem.SetContent(printed, content);
+            _paperSystem.SetContent(printed, printout.Content);
+
+        if (TryComp<MetaDataComponent>(printed, out var metadata))
+            metadata.EntityName = printout.Name;
     }
 
     private void NotifyAdmins(string faxName)

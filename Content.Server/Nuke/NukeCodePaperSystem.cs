@@ -55,7 +55,8 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                _faxSystem.Receive(fax.Owner, paperContent, null, fax);
+                var printout = new FaxPrintout(paperContent, Loc.GetString("nuke-codes-fax-paper-name"));
+                _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;
             }

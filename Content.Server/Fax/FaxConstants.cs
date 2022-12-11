@@ -22,6 +22,7 @@ public static class FaxConstants
     // Data
 
     public const string FaxNameData = "fax_data_name";
-    public const string FaxContentData = "fax_data_content";
+    public const string FaxPaperNameData = "fax_data_title";
+    public const string FaxPaperContentData = "fax_data_content";
     public const string FaxSyndicateData = "fax_data_i_am_syndicate";
 }

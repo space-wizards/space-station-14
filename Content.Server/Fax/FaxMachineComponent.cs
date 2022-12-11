@@ -84,7 +84,7 @@ public sealed class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("printingQueue")]
-    public Queue<string> PrintingQueue { get; } = new();
+    public Queue<FaxPrintout> PrintingQueue { get; } = new();
 
     /// <summary>
     /// Message sending timeout
@@ -123,4 +123,16 @@ public sealed class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     public float PrintingTime = 2.3f;
+}
+
+public sealed class FaxPrintout
+{
+    public string Name { get; }
+    public string Content { get; }
+
+    public FaxPrintout(string content, string name)
+    {
+        Content = content;
+        Name = name;
+    }
 }
