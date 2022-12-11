@@ -1,7 +1,9 @@
 ﻿using System.Linq;
+using Content.Server.Lock;
 using Content.Server.Mind.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
+using Microsoft.Extensions.DependencyModel;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -9,6 +11,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 {
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
+    [Dependency] private readonly LockSystem _lockSystem = default!;
 
     public override void Initialize()
     {
@@ -89,13 +92,6 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
 
         // Open and empty target
-        if (targetContainerStorageComponent.IsWeldedShut)
-        {
-            // It gets bluespaced open...
-            _weldableSystem.ForceWeldedState(targetContainerStorageComponent.Owner, false);
-            if (targetContainerStorageComponent.IsWeldedShut)
-                targetContainerStorageComponent.IsWeldedShut = false;
-        }
         if (targetContainerStorageComponent.Open)
         {
             _entityStorage.EmptyContents(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
@@ -103,6 +99,17 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
         else
         {
+            if (targetContainerStorageComponent.IsWeldedShut)
+            {
+                // It gets bluespaced open...
+                _weldableSystem.ForceWeldedState(targetContainerStorageComponent.Owner, false);
+                if (targetContainerStorageComponent.IsWeldedShut)
+                    targetContainerStorageComponent.IsWeldedShut = false;
+            }
+            LockComponent? lockComponent = null;
+            if (Resolve(targetContainerStorageComponent.Owner, ref lockComponent, false) && lockComponent.Locked)
+                _lockSystem.Unlock(lockComponent.Owner, lockComponent.Owner, lockComponent);
+
             _entityStorage.OpenStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
         }
     }
