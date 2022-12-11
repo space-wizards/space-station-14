@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using ShuttleSystem = Content.Server.Shuttles.Systems.ShuttleSystem;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -202,11 +200,11 @@ namespace Content.IntegrationTests.Tests
                 var memberQuery = entManager.GetEntityQuery<StationMemberComponent>();
 
                 var grids = mapManager.GetAllMapGrids(mapId).ToList();
-                var gridUids = grids.Select(o => o.GridEntityId).ToList();
+                var gridUids = grids.Select(o => o.Owner).ToList();
 
                 foreach (var grid in grids)
                 {
-                    if (!memberQuery.HasComponent(grid.GridEntityId))
+                    if (!memberQuery.HasComponent(grid.Owner))
                         continue;
 
                     var area = grid.LocalAABB.Width * grid.LocalAABB.Height;
@@ -214,7 +212,7 @@ namespace Content.IntegrationTests.Tests
                     if (area > largest)
                     {
                         largest = area;
-                        targetGrid = grid.GridEntityId;
+                        targetGrid = grid.Owner;
                     }
                 }
 

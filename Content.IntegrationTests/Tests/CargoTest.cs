@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
@@ -58,7 +58,7 @@ public sealed class CargoTest
         {
             var mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            var coord = new EntityCoordinates(grid.GridEntityId, 0, 0);
+            var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p=>!p.Abstract)

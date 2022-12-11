@@ -2,7 +2,6 @@
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.Containers;
 
 namespace Content.Client.Commands
 {
@@ -15,6 +14,7 @@ namespace Content.Client.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
+            var containerSystem = IoCManager.Resolve<ContainerSystem>();
             var organs = entityManager.EntityQuery<OrganComponent>(true);
 
             foreach (var part in organs)
@@ -27,7 +27,7 @@ namespace Content.Client.Commands
                 sprite.ContainerOccluded = false;
 
                 var tempParent = part.Owner;
-                while (tempParent.TryGetContainer(out var container))
+                while (containerSystem.TryGetContainingContainer(tempParent, out var container))
                 {
                     if (!container.ShowContents)
                     {

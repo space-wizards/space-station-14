@@ -47,7 +47,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] protected readonly SharedContainerSystem ContainerSystem = default!;
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
@@ -102,7 +102,7 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            if (!ContainerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
             {
                 ev.Cancel();
                 return;
@@ -258,7 +258,7 @@ namespace Content.Shared.Interaction
             // Also checks if the item is accessible via some storage UI (e.g., open backpack)
             if (checkAccess
                 && target != null
-                && !_containerSystem.IsInSameOrParentContainer(user, target.Value)
+                && !ContainerSystem.IsInSameOrParentContainer(user, target.Value)
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
@@ -856,7 +856,7 @@ namespace Content.Shared.Interaction
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)
-            if (checkAccess && !_containerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
+            if (checkAccess && !ContainerSystem.IsInSameOrParentContainer(user, used) && !CanAccessViaStorage(user, used))
                 return false;
 
             // Does the user have hands?

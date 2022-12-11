@@ -1,6 +1,5 @@
 #nullable enable
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Server.Fluids.EntitySystems;
@@ -58,7 +57,7 @@ public sealed class FluidSpill
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.GridEntityId;
+            gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {
@@ -125,7 +124,7 @@ public sealed class FluidSpill
         {
             mapId = mapManager.CreateMap();
             var grid = mapManager.CreateGrid(mapId);
-            gridId = grid.GridEntityId;
+            gridId = grid.Owner;
 
             for (var x = 0; x < 3; x++)
             {

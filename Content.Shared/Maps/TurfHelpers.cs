@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -258,7 +258,7 @@ namespace Content.Shared.Maps
 
             if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
-                var gridRot = entManager.GetComponent<TransformComponent>(tileGrid.GridEntityId).WorldRotation;
+                var gridRot = entManager.GetComponent<TransformComponent>(tileGrid.Owner).WorldRotation;
 
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

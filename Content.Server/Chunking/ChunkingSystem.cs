@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Decals;
 using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
@@ -6,7 +7,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.Chunking;
 
@@ -89,13 +89,13 @@ public sealed class ChunkingSystem : EntitySystem
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds, true))
             {
-                if (!chunks.TryGetValue(grid.GridEntityId, out var set))
+                if (!chunks.TryGetValue(grid.Owner, out var set))
                 {
-                    chunks[grid.GridEntityId] = set = indexPool.Get();
+                    chunks[grid.Owner] = set = indexPool.Get();
                     DebugTools.Assert(set.Count == 0);
                 }
 
-                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.GridEntityId, xformQuery).TransformBox(bounds), chunkSize);
+                var enumerator = new ChunkIndicesEnumerator(_transform.GetInvWorldMatrix(grid.Owner, xformQuery).TransformBox(bounds), chunkSize);
 
                 while (enumerator.MoveNext(out var indices))
                 {

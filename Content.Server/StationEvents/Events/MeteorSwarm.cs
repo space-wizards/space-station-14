@@ -1,4 +1,3 @@
-using Content.Server.GameTicking;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -70,7 +69,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in MapManager.GetAllMapGrids(mapId))
             {
-                if (!TryComp<PhysicsComponent>(grid.GridEntityId, out var gridBody))
+                if (!TryComp<PhysicsComponent>(grid.Owner, out var gridBody))
                 {
                     continue;
                 }

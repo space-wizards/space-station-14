@@ -37,7 +37,7 @@ namespace Content.Shared.Hands.Components
             _blockingEntity = pullState.BlockingEntity;
 
             // update hands GUI with new entity.
-            if (Owner.TryGetContainer(out _))
+            if (IoCManager.Resolve<SharedContainerSystem>().TryGetContainingContainer(Owner, out _))
                 EntitySystem.Get<SharedItemSystem>().VisualsChanged(Owner);
         }
 

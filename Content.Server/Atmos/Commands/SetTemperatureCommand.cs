@@ -2,12 +2,8 @@ using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Robust.Server.GameObjects;
 using Robust.Shared.Console;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using SharpZstd.Interop;
 
 namespace Content.Server.Atmos.Commands
 {
@@ -43,8 +39,8 @@ namespace Content.Server.Atmos.Commands
 
             var atmospheres = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            
-            var tile = atmospheres.GetTileMixture(grid.GridEntityId, null, indices, true);
+
+            var tile = atmospheres.GetTileMixture(grid.Owner, null, indices, true);
 
             if (tile == null)
             {

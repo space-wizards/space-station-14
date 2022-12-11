@@ -1,10 +1,8 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
@@ -35,13 +33,13 @@ namespace Content.IntegrationTests.Tests
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
@@ -61,7 +59,7 @@ namespace Content.IntegrationTests.Tests
             {
                 {
                     if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid) ||
-                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
                     {
                         Assert.Fail();
                         return;
@@ -73,7 +71,7 @@ namespace Content.IntegrationTests.Tests
                 }
                 {
                     if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid) ||
-                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var gridXform))
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
                     {
                         Assert.Fail();
                         return;

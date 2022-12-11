@@ -3,7 +3,6 @@ using Content.Server.Administration;
 using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
-using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -128,12 +127,12 @@ public sealed partial class AtmosphereSystem
         if (playerMap == null)
             return CompletionResult.FromOptions(options);
 
-        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.GridEntityId))
+        foreach (var grid in _mapManager.GetAllMapGrids(playerMap.Value).OrderBy(o => o.Owner))
         {
-            if (!TryComp<TransformComponent>(grid.GridEntityId, out var gridXform))
+            if (!TryComp<TransformComponent>(grid.Owner, out var gridXform))
                 continue;
 
-            options.Add(new CompletionOption(grid.GridEntityId.ToString(), $"{MetaData(grid.GridEntityId).EntityName} - Map {gridXform.MapID}"));
+            options.Add(new CompletionOption(grid.Owner.ToString(), $"{MetaData(grid.Owner).EntityName} - Map {gridXform.MapID}"));
         }
 
         return CompletionResult.FromOptions(options);

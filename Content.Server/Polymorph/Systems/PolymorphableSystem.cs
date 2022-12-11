@@ -11,7 +11,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
-using Robust.Shared.Containers;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -32,6 +32,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly HumanoidSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -83,9 +84,9 @@ namespace Content.Server.Polymorph.Systems
         /// <param name="proto">The polymorph prototype</param>
         public EntityUid? PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
-            /// This is the big papa function. This handles the transformation, moving the old entity
-            /// logic and conditions specified in the prototype, and everything else that may be needed.
-            /// I am clinically insane - emo
+            // This is the big papa function. This handles the transformation, moving the old entity
+            // logic and conditions specified in the prototype, and everything else that may be needed.
+            // I am clinically insane - emo
 
             // if it's already morphed, don't allow it again with this condition active.
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
@@ -125,18 +126,24 @@ namespace Content.Server.Polymorph.Systems
                 _inventory.TransferEntityInventories(target, child);
                 foreach (var hand in _sharedHands.EnumerateHeld(target))
                 {
-                    hand.TryRemoveFromContainer();
+                    _container.TryRemoveFromContainer(hand);
                     _sharedHands.TryPickupAnyHand(child, hand);
                 }
             }
             else if (proto.Inventory == PolymorphInventoryChange.Drop)
             {
-                if(_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
+                if (_inventory.TryGetContainerSlotEnumerator(target, out var enumerator))
+                {
                     while (enumerator.MoveNext(out var slot))
-                        slot.EmptyContainer();
+                    {
+                        _container.EmptyContainer(slot);
+                    }
+                }
 
                 foreach (var hand in _sharedHands.EnumerateHeld(target))
-                    hand.TryRemoveFromContainer();
+                {
+                    _container.TryRemoveFromContainer(hand);
+                }
             }
 
             if (proto.TransferName &&
@@ -154,10 +161,11 @@ namespace Content.Server.Polymorph.Systems
             if (TryComp<MindComponent>(target, out var mind) && mind.Mind != null)
                     mind.Mind.TransferTo(child);
 
+
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
-            if (PausedMap != null)
-                targetTransformComp.AttachParent(Transform(PausedMap.Value));
+            if (PausedMap.HasValue)
+                _transform.SetParent(targetTransformComp, PausedMap.Value);
 
             return child;
         }

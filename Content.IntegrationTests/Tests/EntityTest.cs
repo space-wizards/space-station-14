@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -41,7 +39,7 @@ namespace Content.IntegrationTests.Tests
                 {
                     var mapId = mapManager.CreateMap();
                     var grid = mapManager.CreateGrid(mapId);
-                    var coord = new EntityCoordinates(grid.GridEntityId, 0, 0);
+                    var coord = new EntityCoordinates(grid.Owner, 0, 0);
                     entityMan.SpawnEntity(protoId, coord);
                 }
             });
@@ -83,7 +81,7 @@ namespace Content.IntegrationTests.Tests
                     .ToList();
                 var mapId = mapManager.CreateMap();
                 var grid = mapManager.CreateGrid(mapId);
-                var coord = new EntityCoordinates(grid.GridEntityId, 0, 0);
+                var coord = new EntityCoordinates(grid.Owner, 0, 0);
                 foreach (var protoId in protoIds)
                 {
                     entityMan.SpawnEntity(protoId, coord);
