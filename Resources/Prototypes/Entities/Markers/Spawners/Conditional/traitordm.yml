@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Structures/Machines/traitordm.rsi/redemption.png
+        - sprite: Structures/Machines/traitordm.rsi
+          state: redemption
     - type: ConditionalSpawner
       prototypes:
         - TraitorDMRedemptionMachine

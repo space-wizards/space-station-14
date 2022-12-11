@@ -15,6 +15,7 @@
     state: full
   - type: Body
     prototype: Diona
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona

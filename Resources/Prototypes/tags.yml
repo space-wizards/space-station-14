@@ -97,9 +97,6 @@
   id: CartridgeMagnum
 
 - type: Tag
-  id: CartridgeMagnumHC
-
-- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -253,6 +250,9 @@
   id: Gauze
 
 - type: Tag
+  id: GeigerCounter
+
+- type: Tag
   id: GlassBeaker
 
 - type: Tag
@@ -278,6 +278,12 @@
 
 - type: Tag
   id: Hoe
+
+- type: Tag
+  id: HolofanProjector
+
+- type: Tag
+  id: HolosignProjector
 
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
@@ -452,12 +458,30 @@
 - type: Tag
   id: RawMaterial
 
+- type: Tag
+  id: RCDDeconstructWhitelist
+
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
 
 - type: Tag
-  id: RCDDeconstructWhitelist
+  id: RipleyCentralControlModule
+
+- type: Tag
+  id: RipleyPeripheralsControlModule
+
+- type: Tag
+  id: RipleyLArm
+
+- type: Tag
+  id: RipleyLLeg
+
+- type: Tag
+  id: RipleyRLeg
+
+- type: Tag
+  id: RipleyRArm
 
 - type: Tag
   id: RodMetal1
@@ -512,9 +536,6 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
-
-- type: Tag
-  id: SpeedLoaderMagnumHC
 
 - type: Tag
   id: SpeedLoaderPistol

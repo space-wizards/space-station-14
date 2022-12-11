@@ -30802,7 +30802,7 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -60817,7 +60817,7 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -61512,7 +61512,7 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -69096,7 +69096,7 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light

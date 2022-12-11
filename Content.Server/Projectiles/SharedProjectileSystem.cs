@@ -42,27 +42,27 @@ namespace Content.Server.Projectiles
                 return;
 
             var otherEntity = args.OtherFixture.Body.Owner;
+            var otherName = ToPrettyString(otherEntity);
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
             var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
             component.DamagedEntity = true;
+            var deleted = Deleted(otherEntity);
 
             if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
             {
-                if (modifiedDamage.Total > FixedPoint2.Zero)
+                if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
                 {
                     RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {otherEntity}), Filter.Pvs(otherEntity, entityManager: EntityManager));
                 }
 
                 _adminLogger.Add(LogType.BulletHit,
                     HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
-                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {ToPrettyString(otherEntity):target} and dealt {modifiedDamage.Total:damage} damage");
+                    $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
             }
 
-            _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
-
-            // Damaging it can delete it
-            if (HasComp<CameraRecoilComponent>(otherEntity))
+            if (!deleted)
             {
+                _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
                 _sharedCameraRecoil.KickCamera(otherEntity, direction);
             }
 
