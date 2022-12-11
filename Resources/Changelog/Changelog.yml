@@ -1,9 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
-  id: 2249
-  time: '2022-09-06T02:52:58.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed wood planks and sliceable food sometimes getting "stuck" to a
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Fix duplicate mech footstep sounds., type: Fix}
   id: 2748
   time: '2022-12-11T13:18:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs have a chance to miss in melee combat., type: Add}
+  id: 2749
+  time: '2022-12-11T13:37:10.0000000+00:00'
