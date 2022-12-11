@@ -84,7 +84,7 @@ namespace Content.Server.Physics.Controllers
                 }
 
                 PhysicsComponent? body = null;
-                TransformComponent? xformMover = xform;
+                var xformMover = xform;
 
                 if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
                 {
