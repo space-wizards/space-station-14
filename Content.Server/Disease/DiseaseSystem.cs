@@ -443,15 +443,18 @@ namespace Content.Server.Disease
         {
             if (!Resolve(uid, ref xform)) return false;
 
+            if (_mobStateSystem.IsDead(uid)) return false;
+
             var attemptSneezeCoughEvent = new AttemptSneezeCoughEvent(uid, snoughMessage, snoughSound);
-            RaiseLocalEvent(uid, attemptSneezeCoughEvent);
+            RaiseLocalEvent(uid, ref attemptSneezeCoughEvent);
             if (attemptSneezeCoughEvent.Cancelled) return false;
 
             if (!string.IsNullOrEmpty(snoughMessage))
                 _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
             if (snoughSound != null)
-                _audioSystem.PlayPvs(snoughSound, uid, AudioParams.Default.WithVariation(0.2f));
+                //_audioSystem.PlayPvs(snoughSound, uid, AudioParams.Default.WithVariation(0.2f));
+                _audioSystem.PlayPvs(snoughSound, uid);
 
             if (disease is not { Infectious: true } || !airTransmit)
                 return true;

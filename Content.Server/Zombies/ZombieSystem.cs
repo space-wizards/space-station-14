@@ -55,7 +55,7 @@ namespace Content.Server.Zombies
                 DoGroan(uid, component);
         }
 
-        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, AttemptSneezeCoughEvent args)
+        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, ref AttemptSneezeCoughEvent args)
         {
             args.Cancelled = true;
         }

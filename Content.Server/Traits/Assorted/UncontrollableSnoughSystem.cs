@@ -39,9 +39,6 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
             // Set the new time.
             snough.NextIncidentTime +=
                 _random.NextFloat(snough.TimeBetweenIncidents.X, snough.TimeBetweenIncidents.Y);
-            
-            if (_mobStateSystem.IsDead(snough.Owner))
-                continue;
 
             _diseaseSystem.SneezeCough(snough.Owner, null, snough.SnoughMessage, snough.SnoughSound, false);
         }
