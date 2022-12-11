@@ -278,6 +278,7 @@ namespace Content.Server.NPC.Systems
             }
 
             // TODO: Pause time
+            // Need it on the paused event which needs an engine PR.
             var nextSteer = steering.LastTimeSteer + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteerFrequency);
 
             if (nextSteer > _timing.CurTime)
