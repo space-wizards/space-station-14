@@ -1,9 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: The security belt can now hold seclites., type: Tweak}
-  id: 2246
-  time: '2022-09-06T02:46:30.0000000+00:00'
 - author: 25203
   changes:
   - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
@@ -2934,3 +2929,9 @@ Entries:
       manner, type: Tweak}
   id: 2745
   time: '2022-12-10T22:55:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The contents of a hydraulic clamp are now spit out when the mech is
+      destroyed., type: Fix}
+  id: 2746
+  time: '2022-12-11T11:31:55.0000000+00:00'
