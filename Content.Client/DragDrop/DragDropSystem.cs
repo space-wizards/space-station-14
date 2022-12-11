@@ -230,6 +230,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return;
         }
 
+        _state = DragState.Dragging;
         DebugTools.Assert(_dragShadow == null);
 
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
@@ -473,7 +474,10 @@ public sealed class DragDropSystem : SharedDragDropSystem
         RaiseLocalEvent(dragged, ref dropEv);
 
         if (dropEv.Handled)
-            return dropEv.CanDrop;
+        {
+            if (!dropEv.CanDrop)
+                return false;
+        }
 
         var dropEv2 = new CanDropOnEvent(user, dragged);
 

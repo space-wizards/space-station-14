@@ -106,7 +106,7 @@ namespace Content.Server.Strip
 
         public override void StartOpeningStripper(EntityUid user, StrippableComponent component, bool openInCombat = false)
         {
-            base.Initialize();
+            base.StartOpeningStripper(user, component, openInCombat);
 
             if (TryComp<SharedCombatModeComponent>(user, out var mode) && mode.IsInCombatMode && !openInCombat)
                 return;
