@@ -227,7 +227,6 @@ namespace Content.Shared.Containers.ItemSlots
             Whitelist = other.Whitelist;
             InsertSound = other.InsertSound;
             EjectSound = other.EjectSound;
-
             SoundOptions = other.SoundOptions;
             Name = other.Name;
             Locked = other.Locked;
