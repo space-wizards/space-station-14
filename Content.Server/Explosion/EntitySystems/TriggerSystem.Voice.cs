@@ -23,7 +23,7 @@ namespace Content.Server.Explosion.EntitySystems
             if (component.IsListening)
                 EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
             else
-                RemCompDeferred<ActiveListenerComponent>(uid); 
+                RemCompDeferred<ActiveListenerComponent>(uid);
         }
 
         private void OnListen(EntityUid uid, TriggerOnVoiceComponent component, ListenEvent args)
@@ -66,7 +66,6 @@ namespace Content.Server.Explosion.EntitySystems
             if (string.IsNullOrWhiteSpace(component.KeyPhrase))
                 return;
 
-            
             args.Verbs.Add(new AlternativeVerb()
             {
                 Text = Loc.GetString("verb-trigger-voice-clear"),
@@ -112,13 +111,11 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnVoiceExamine(EntityUid uid, TriggerOnVoiceComponent component, ExaminedEvent args)
         {
-            args.PushText(Loc.GetString("examine-trigger-voice"));
             if (args.IsInDetailsRange)
             {
-                if (component.KeyPhrase == null)
                 args.PushText(string.IsNullOrWhiteSpace(component.KeyPhrase)
-                    ? Loc.GetString("examine-trigger-voice-blank")
-                    : Loc.GetString("examine-trigger-voice-keyphrase", ("keyphrase", component.KeyPhrase)));
+                    ? Loc.GetString("trigger-voice-uninitialized")
+                    : Loc.GetString("examine-trigger-voice", ("keyphrase", component.KeyPhrase)));
             }
         }
     }

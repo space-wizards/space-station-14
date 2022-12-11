@@ -141,7 +141,7 @@ namespace Content.Server.Body.Systems
 
                 foreach (var group in meta.MetabolismGroups)
                 {
-                    if (!proto.Metabolisms.Keys.Contains(group.Id))
+                    if (!proto.Metabolisms.ContainsKey(group.Id))
                         continue;
 
                     var entry = proto.Metabolisms[group.Id];

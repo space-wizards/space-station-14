@@ -82,3 +82,57 @@
         amount: 1
       - id: ClothingMaskSterile
         amount: 3
+
+- type: entity
+  id: CrateEmergencyBurnKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitBurnFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyToxinKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitToxinFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyO2Kit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitOxygenFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyBruteKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitBruteFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyAdvancedKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitAdvancedFilled
+        amount: 4
+
+- type: entity
+  id: CrateEmergencyRadiationKit
+  parent: CrateMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitRadiationFilled
+        amount: 4

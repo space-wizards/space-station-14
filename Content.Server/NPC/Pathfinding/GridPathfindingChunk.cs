@@ -14,6 +14,11 @@ public sealed class GridPathfindingChunk
     public readonly List<PathPoly>[] Polygons = new List<PathPoly>[SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.ChunkSize];
 
     /// <summary>
+    /// Store the recalculated polygons to know what needs changing.
+    /// </summary>
+    internal readonly List<PathPoly>[] BufferPolygons = new List<PathPoly>[SharedPathfindingSystem.ChunkSize * SharedPathfindingSystem.ChunkSize];
+
+    /// <summary>
     /// The relevant polygon for this chunk's portals
     /// </summary>
     public readonly Dictionary<PathPortal, PathPoly> PortalPolys = new();
@@ -28,6 +33,7 @@ public sealed class GridPathfindingChunk
         for (var x = 0; x < Polygons.Length; x++)
         {
             Polygons[x] = new List<PathPoly>();
+            BufferPolygons[x] = new List<PathPoly>();
         }
     }
 }

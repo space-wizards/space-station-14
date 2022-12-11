@@ -7,7 +7,6 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
-using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 
@@ -15,7 +14,10 @@ namespace Content.Server.Prayer;
 /// <summary>
 /// System to handle subtle messages and praying
 /// </summary>
-public sealed class PrayerSystem : SharedPrayerSystem
+/// <remarks>
+/// Rain is a professional developer and this did not take 2 PRs to fix subtle messages
+/// </remarks>
+public sealed class PrayerSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
@@ -34,24 +36,29 @@ public sealed class PrayerSystem : SharedPrayerSystem
         if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
             return;
 
+        // this is to prevent ghosts from using it
         if (!args.CanAccess)
             return;
 
-        ActivationVerb prayerVerb = new();
-        prayerVerb.Text = Loc.GetString("prayer-verbs-pray");
-        prayerVerb.IconTexture = "/Textures/Interface/pray.svg.png";
-        prayerVerb.Act = () =>
+        var prayerVerb = new ActivationVerb
         {
-            if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
+            Text = Loc.GetString("prayer-verbs-pray"),
+            IconTexture = "/Textures/Interface/pray.svg.png",
+            Act = () =>
             {
-                _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, Filter.Empty().AddPlayer(actor.PlayerSession), PopupType.Large);
-                return;
-            }
+                if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
+                {
+                    _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-locked"), uid, Filter.Empty().AddPlayer(actor.PlayerSession), PopupType.Large);
+                    return;
+                }
 
-            _quickDialog.OpenDialog(actor.PlayerSession, "Pray", "Message", (string message) =>
-            {
-                Pray(actor.PlayerSession, message);
-            });
+                _quickDialog.OpenDialog(actor.PlayerSession, "Pray", "Message", (string message) =>
+                {
+                    Pray(actor.PlayerSession, message);
+                });
+            },
+            Impact = LogImpact.Low,
+
         };
         prayerVerb.Impact = LogImpact.Low;
         args.Verbs.Add(prayerVerb);
@@ -68,8 +75,10 @@ public sealed class PrayerSystem : SharedPrayerSystem
         if (target.AttachedEntity == null)
             return;
 
+        var message = popupMessage == "" ? "" : popupMessage + $" \"{messageString}\"";
+
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, Filter.Empty().AddPlayer(target), PopupType.Large);
-        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, popupMessage + " \"{message}\"", EntityUid.Invalid, false, target.ConnectedClient);
+        _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.ConnectedClient);
     }
 
     /// <summary>
@@ -86,10 +95,9 @@ public sealed class PrayerSystem : SharedPrayerSystem
         if (sender.AttachedEntity == null)
             return;
 
+
         _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, Filter.Empty().AddPlayer(sender), PopupType.Medium);
 
-        var networkMessage = new PrayerTextMessage(Loc.GetString("prayer-chat-notify", ("message", message)));
-
-        RaiseNetworkEvent(networkMessage, sender);
+        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
     }
 }

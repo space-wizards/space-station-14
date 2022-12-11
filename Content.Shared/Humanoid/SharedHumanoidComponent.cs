@@ -1,8 +1,4 @@
-using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
-using Content.Shared.Preferences;
-using Robust.Shared.Enums;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -15,13 +11,13 @@ public abstract class SharedHumanoidComponent : Component
     ///     base humanoid to spawn, etc.
     /// </summary>
     [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
-    public string Species { get; set; } = default!;
+    public string Species { get; set; } = string.Empty;
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
     [DataField("initial", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidProfilePrototype>))]
-    public string Initial { get; } = default!;
+    public string? Initial { get; }
 
     /// <summary>
     ///     Skin color of this humanoid.

@@ -10,6 +10,9 @@ technologies-biological-technology-description = Investigations into the natural
 technologies-advanced-botany = Advanced botany
 technologies-advanced-botany-description = A better understanding of botany.
 
+technologies-virology = Virology
+technologies-virology-description = The secrets of the immune system.
+
 technologies-advanced-surgery = Advanced surgery
 technologies-advanced-surgery-description = Research new surgical procedures.
 
@@ -22,20 +25,32 @@ technologies-medical-machinery-description = Machines any self-respecting medbay
 technologies-advanced-life-support = Advanced life support systems
 technologies-advanced-life-support-description = The cutting edge of life and death.
 
+technologies-salvage-equipment = Salvage equipment
+technologies-salvage-equipment-description = Newer and faster resource collection.
+
+technologies-spacefaring = Spacefaring technology
+technologies-spacefaring-description = Able to bring you into the stars!
+
+technologies-surveillance = Surveillance technology
+technologies-surveillance-description = Retro-styled cameras straight from the year 1984!
+
 technologies-industrial-engineering = Industrial engineering
 technologies-industrial-engineering-description = A refresher course on modern engineering technology.
+
+technologies-rapid-upgrade = Rapid upgrade
+technologies-rapid-upgrade-description = The ability to quickly upgrade the station like never before.
 
 technologies-material-sheet-printing = Material sheet printing
 technologies-material-sheet-printing-description = Print those sheets!
 
-technologies-advanced-atmospherics-technology = Advanced atmospherics technology
-technologies-advanced-atmospherics-technology-description = As if it can get more advanced.
-
-technologies-avionics-systems = Avionics systems
-technologies-avionics-systems-description = The latest in fly-by-LV-wire technology
-
 technologies-electromagnetic-theory = Electromagnetic theory
 technologies-electromagnetic-theory-description = Try not to fry yourself.
+
+technologies-electrical-engineering = Electrical engineering
+technologies-electrical-engineering-description = Machinery used to keep the station stable.
+
+technologies-advanced-atmospherics-technology = Advanced atmospherics technology
+technologies-advanced-atmospherics-technology-description = As if it can get more advanced.
 
 technologies-compact-power-technology = Compact power technology
 technologies-compact-power-technology-description = Power, but smaller.
@@ -52,11 +67,17 @@ technologies-advanced-powercell-printing-description = Print advanced powercells
 technologies-super-powercell-printing = Super powercell printing
 technologies-super-powercell-printing-description = Print super powercells.
 
-technologies-basic-parts-technology = Basic parts technology
-technologies-basic-parts-technology-description = They aren't great, but at least they're something.
-
-technologies-adv-parts-technology = Advanced parts technology
-technologies-adv-parts-technology-description = Good for upgrading machines.
+technologies-scientific-technology = Scientific technology
+technologies-scientific-technology-description = The basics of a research team's supplies.
 
 technologies-robotics-technology = Robotics technology
-technologies-robotics-technology-description = Robot parts.
+technologies-robotics-technology-description = Parts needed for constructing mechanized friends.
+
+technologies-archaeology = Archeological equipment
+technologies-archaeology-description = Advanced equipment for uncovering the secrets of artifacts.
+
+technologies-ripley-technology = Exosuit: Ripley
+technologies-ripley-technology-description = The latest and greatest in mechanized cargo construction.
+
+technologies-adv-parts-technology-description = Like the previous ones, but better!
+technologies-adv-parts-technology = Advanced parts technology

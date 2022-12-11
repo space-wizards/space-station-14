@@ -18,4 +18,20 @@ namespace Content.Shared.Interaction.Events
             Target = target;
         }
     }
+
+    /// <summary>
+    /// Raised directed at an entity to check if they can attack while inside of a container.
+    /// </summary>
+    public sealed class CanAttackFromContainerEvent : EntityEventArgs
+    {
+        public EntityUid Uid;
+        public EntityUid? Target;
+        public bool CanAttack = false;
+
+        public CanAttackFromContainerEvent(EntityUid uid, EntityUid? target = null)
+        {
+            Uid = uid;
+            Target = target;
+        }
+    }
 }
