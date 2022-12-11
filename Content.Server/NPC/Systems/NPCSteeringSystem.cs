@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
@@ -27,7 +28,16 @@ namespace Content.Server.NPC.Systems
 {
     public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
-        // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        /*
+         * We use context steering to determine which way to move.
+         * This involves creating an array of possible directions and assigning a value for the desireability of each direction.
+         *
+         * There's multiple ways to implement this, e.g. you can average all directions, or you can choose the highest direction
+         * , or you can remove the danger map entirely and only having an interest map (AKA game endeavour).
+         * See http://www.gameaipro.com/GameAIPro2/GameAIPro2_Chapter18_Context_Steering_Behavior-Driven_Steering_at_the_Macro_Scale.pdf
+         * (though in their case it was for an F1 game so used context steering across the width of the road).
+         */
+
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
@@ -50,7 +60,7 @@ namespace Content.Server.NPC.Systems
 
         private bool _pathfinding = true;
 
-        private static readonly Vector2[] Directions = new Vector2[InterestDirections];
+        public static readonly Vector2[] Directions = new Vector2[InterestDirections];
 
         private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
@@ -192,13 +202,13 @@ namespace Content.Server.NPC.Systems
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
 
-            // TODO: Do this in parallel.
-            // Main obstacle is requesting a new path needs to be done synchronously
-            foreach (var (steering, _, mover, xform) in npcs)
+            Parallel.For(0, npcs.Length, i =>
             {
+                var (steering, _, mover, xform) = npcs[i];
+
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
                 steering.LastSteer = mover.CurTickSprintMovement;
-            }
+            });
 
             if (_subscribedSessions.Count > 0)
             {
@@ -281,12 +291,12 @@ namespace Content.Server.NPC.Systems
             var interest = steering.Interest;
             var danger = steering.Danger;
             var agentRadius = steering.Radius;
-            var (worldPos, worldRot) = xform.GetWorldPositionRotation();
+            var worldPos = xform.WorldPosition;
 
             // Use rotation relative to parent to rotate our context vectors by.
             var offsetRot = -_mover.GetParentGridAngle(mover);
-            // TODO: AAA
-            var moveSpeed = GetSprintSpeed(steering.Owner);
+            modifierQuery.TryGetComponent(uid, out var modifier);
+            var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
             var tickMove = moveSpeed * frameTime;
             var body = bodyQuery.GetComponent(uid);
             var dangerPoints = steering.DangerPoints;
@@ -298,12 +308,10 @@ namespace Content.Server.NPC.Systems
                 steering.Danger[i] = 0f;
             }
 
-            // TODO: Have some time delay on NPC combat in range before swinging (e.g. 50-200ms) that is a limit.
-            // TODO: Have some kind of way to control them avoiding when melee on cd.
-            // TODO: Have them hover around some preferred engagement range per-NPC, then they duck out (if target has melee(?))
-            // TODO: Have them strafe around the target for some random time then strafe the other direction.
+            var ev = new NPCSteeringEvent(steering, interest, danger, agentRadius, offsetRot, worldPos);
+            RaiseLocalEvent(uid, ref ev);
 
-            if (!TrySeek(uid, mover, steering, body, xform, offsetRot, interest, bodyQuery, modifierQuery, frameTime))
+            if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, bodyQuery,  frameTime))
             {
                 SetDirection(mover, steering, Vector2.Zero);
                 return;
@@ -311,15 +319,10 @@ namespace Content.Server.NPC.Systems
             DebugTools.Assert(!float.IsNaN(interest[0]));
 
             // Avoid static objects like walls
-            StaticAvoid(uid, offsetRot, agentRadius, body, xform, danger, dangerPoints, bodyQuery, xformQuery);
+            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, tickMove, body, xform, danger, dangerPoints, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(danger[0]));
 
-            Separation(uid, worldPos, agentRadius, body, xform, interest, bodyQuery, xformQuery);
-
-            // TODO: Refs
-            var ev = new NPCSteeringEvent(Directions, interest, danger, agentRadius, offsetRot, worldPos);
-            RaiseLocalEvent(uid, ref ev);
-            var adjustedInterestMap = new float[InterestDirections];
+            Separation(uid, offsetRot, worldPos, agentRadius, body, xform, interest, danger, bodyQuery, xformQuery);
 
             // Remove the danger map from the interest map.
             var desiredDirection = -1;
@@ -327,12 +330,12 @@ namespace Content.Server.NPC.Systems
 
             for (var i = 0; i < InterestDirections; i++)
             {
-                adjustedInterestMap[i] = Math.Clamp(interest[i] - danger[i], 0f, 1f);
+                var adjustedValue = Math.Clamp(interest[i] - danger[i], 0f, 1f);
 
-                if (adjustedInterestMap[i] > desiredValue)
+                if (adjustedValue > desiredValue)
                 {
                     desiredDirection = i;
-                    desiredValue = adjustedInterestMap[i];
+                    desiredValue = adjustedValue;
                 }
             }
 
@@ -379,7 +382,7 @@ namespace Content.Server.NPC.Systems
 
             var flags = _pathfindingSystem.GetFlags(steering.Owner);
 
-            var result = await _pathfindingSystem.GetPath(
+            var result = await _pathfindingSystem.GetPathSafe(
                 steering.Owner,
                 xform.Coordinates,
                 steering.Coordinates,

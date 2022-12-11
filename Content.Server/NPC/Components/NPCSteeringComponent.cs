@@ -1,9 +1,7 @@
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.NPC;
 using Robust.Shared.Map;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.NPC.Components;
 
@@ -14,6 +12,12 @@ namespace Content.Server.NPC.Components;
 public sealed class NPCSteeringComponent : Component
 {
     #region Context Steering
+
+    /// <summary>
+    /// Used to override seeking behavior for context steering.
+    /// </summary>
+    [ViewVariables]
+    public bool CanSeek = true;
 
     /// <summary>
     /// Radius for collision avoidance.

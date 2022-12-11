@@ -20,27 +20,29 @@ public sealed partial class NPCCombatSystem
 
     private void OnMeleeSteering(EntityUid uid, NPCMeleeCombatComponent component, ref NPCSteeringEvent args)
     {
-        if (false && TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
+        args.Steering.CanSeek = true;
+
+        if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
             var cdRemaining = weapon.NextAttack - _timing.CurTime;
 
-            if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.25f)
-                return;
-
             // If CD remaining then backup.
+            if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.5f)
+                return;
+
             if (!_physics.TryGetNearestPoints(uid, component.Target, out _, out var pointB))
-            {
                 return;
-            }
 
-            var obstacleDirection = args.OffsetRotation.RotateVec(pointB - args.WorldPosition);
+            var idealDistance = weapon.Range * 1.25f;
+            var obstacleDirection = pointB - args.WorldPosition;
             var obstacleDistance = obstacleDirection.Length;
+            args.Steering.CanSeek = false;
 
-            if (obstacleDistance == 0f)
+            if (obstacleDistance > idealDistance)
                 return;
 
+            obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
-            var idealDistance = weapon.Range * 0.75f;
 
             var weight = (obstacleDistance <= args.AgentRadius
                 ? 1f
@@ -48,22 +50,12 @@ public sealed partial class NPCCombatSystem
 
             for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
             {
-                var result = Vector2.Dot(norm, args.Directions[i]) * weight * 0.2f;
+                var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
 
                 if (result < 0f)
                     continue;
 
-                args.Danger[i] = MathF.Max(args.Danger[i], result);
-            }
-
-            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
-            {
-                var result = -Vector2.Dot(norm, args.Directions[i]) * weight;
-
-                if (result < 0f)
-                    continue;
-
-                args.Interest[i] = result;
+                args.Interest[i] = MathF.Max(args.Interest[i], result);
             }
         }
     }
