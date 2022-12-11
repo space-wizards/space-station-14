@@ -104,7 +104,7 @@ namespace Content.Client.Changelog
                     return new List<ChangelogEntry>();
 
                 var node = (MappingDataNode)yamlData.Documents[0].RootNode.ToDataNode();
-                return _serialization.Read<List<ChangelogEntry>>(node["Entries"]);
+                return _serialization.Read<List<ChangelogEntry>>(node["Entries"], notNullableOverride: true);
             });
         }
 

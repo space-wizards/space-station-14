@@ -76,5 +76,8 @@ technologies-robotics-technology-description = Parts needed for constructing mec
 technologies-archaeology = Archeological equipment
 technologies-archaeology-description = Advanced equipment for uncovering the secrets of artifacts.
 
-technologies-adv-parts-technology = Advanced parts technology
+technologies-ripley-technology = Exosuit: Ripley
+technologies-ripley-technology-description = The latest and greatest in mechanized cargo construction.
+
 technologies-adv-parts-technology-description = Like the previous ones, but better!
+technologies-adv-parts-technology = Advanced parts technology
