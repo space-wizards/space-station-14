@@ -21,6 +21,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
+using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -42,11 +43,12 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IParallelManager _parallel = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DoorSystem _doors = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FactionSystem _faction = default!;
-        [Dependency] private readonly MetaDataSystem _metadata = default!;
+        // [Dependency] private readonly MetaDataSystem _metadata = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
         [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
@@ -201,8 +203,12 @@ namespace Content.Server.NPC.Systems
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
+            var options = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
 
-            Parallel.For(0, npcs.Length, i =>
+            Parallel.For(0, npcs.Length, options, i =>
             {
                 var (steering, _, mover, xform) = npcs[i];
 

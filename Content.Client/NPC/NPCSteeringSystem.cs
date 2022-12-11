@@ -51,13 +51,6 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
     {
         base.Initialize();
         SubscribeNetworkEvent<NPCSteeringDebugEvent>(OnDebugEvent);
-        DebugEnabled = true;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        DebugEnabled = false;
     }
 
     private void OnDebugEvent(NPCSteeringDebugEvent ev)
