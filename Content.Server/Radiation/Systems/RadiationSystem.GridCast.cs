@@ -1,4 +1,5 @@
 using Content.Server.Radiation.Components;
+using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Collections;
@@ -82,6 +83,9 @@ public partial class RadiationSystem
             if (rads > 0)
                 IrradiateEntity(receiver.Owner, rads,GridcastUpdateRate);
         }
+
+        // raise broadcast event that radiation system has updated
+        RaiseLocalEvent(new RadiationSystemUpdatedEvent());
     }
 
     private RadiationRay? Irradiate(EntityUid sourceUid, TransformComponent sourceTrs, Vector2 sourceWorld,

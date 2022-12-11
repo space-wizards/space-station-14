@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: FirelockElectronics
-  icon: Objects/Misc/module.rsi/mainboard.png
+  icon: { sprite: Objects/Misc/module.rsi, state: mainboard }
   result: FirelockElectronics
   completetime: 2
   materials:
@@ -9,7 +9,7 @@
 
 - type: latheRecipe
   id: MailingUnitElectronics
-  icon: Objects/Misc/module.rsi/net_wired.png
+  icon: { sprite: Objects/Misc/module.rsi, state: net_wired }
   result: MailingUnitElectronics
   completetime: 4
   materials:
@@ -18,7 +18,7 @@
 
 - type: latheRecipe
   id: DoorElectronics
-  icon: Objects/Misc/module.rsi/door_electronics.png
+  icon: { sprite: Objects/Misc/module.rsi, state: door_electronics }
   result: DoorElectronics
   completetime: 2
   materials:
@@ -27,7 +27,7 @@
 
 - type: latheRecipe
   id: AirAlarmElectronics
-  icon: Objects/Misc/module.rsi/airalarm_electronics.png
+  icon: { sprite: Objects/Misc/module.rsi, state: airalarm_electronics }
   result: AirAlarmElectronics
   completetime: 2
   materials:
@@ -36,7 +36,7 @@
 
 - type: latheRecipe
   id: FireAlarmElectronics
-  icon: Objects/Misc/module.rsi/door_electronics.png
+  icon: { sprite: Objects/Misc/module.rsi, state: door_electronics }
   result: FireAlarmElectronics
   completetime: 2
   materials:
@@ -45,7 +45,7 @@
 
 - type: latheRecipe
   id: CloningPodMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: CloningPodMachineCircuitboard
   completetime: 4
   materials:
@@ -55,7 +55,7 @@
 
 - type: latheRecipe
   id: ThermomachineFreezerMachineCircuitBoard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ThermomachineFreezerMachineCircuitBoard
   completetime: 4
   materials:
@@ -65,7 +65,7 @@
 
 - type: latheRecipe
   id: PortableScrubberMachineCircuitBoard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: PortableScrubberMachineCircuitBoard
   completetime: 4
   materials:
@@ -75,7 +75,7 @@
 
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: MedicalScannerMachineCircuitboard
   completetime: 4
   materials:
@@ -84,7 +84,7 @@
 
 - type: latheRecipe
   id: ChemMasterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ChemMasterMachineCircuitboard
   completetime: 4
   materials:
@@ -93,7 +93,7 @@
 
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ChemDispenserMachineCircuitboard
   completetime: 4
   materials:
@@ -103,7 +103,7 @@
 
 - type: latheRecipe
   id: BiomassReclaimerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: BiomassReclaimerMachineCircuitboard
   completetime: 4
   materials:
@@ -113,7 +113,7 @@
 
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: HydroponicsTrayMachineCircuitboard
   completetime: 4
   materials:
@@ -122,7 +122,7 @@
 
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: AutolatheMachineCircuitboard
   completetime: 4
   materials:
@@ -131,7 +131,7 @@
 
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ProtolatheMachineCircuitboard
   completetime: 4
   materials:
@@ -140,7 +140,7 @@
 
 - type: latheRecipe
   id: CircuitImprinterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: CircuitImprinterMachineCircuitboard
   completetime: 4
   materials:
@@ -149,7 +149,7 @@
 
 - type: latheRecipe
   id: ExosuitFabricatorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/science.png
+  icon: { sprite: Objects/Misc/module.rsi, state: science }
   result: ExosuitFabricatorMachineCircuitboard
   completetime: 5
   materials:
@@ -158,7 +158,7 @@
 
 - type: latheRecipe
   id: UniformPrinterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: UniformPrinterMachineCircuitboard
   completetime: 4
   materials:
@@ -167,7 +167,7 @@
 
 - type: latheRecipe
   id: VaccinatorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: VaccinatorMachineCircuitboard
   completetime: 4
   materials:
@@ -177,7 +177,7 @@
 
 - type: latheRecipe
   id: DiagnoserMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: DiagnoserMachineCircuitboard
   completetime: 4
   materials:
@@ -187,7 +187,7 @@
 
 - type: latheRecipe
   id: ArtifactAnalyzerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/science.png
+  icon: { sprite: Objects/Misc/module.rsi, state: science }
   result: ArtifactAnalyzerMachineCircuitboard
   completetime: 4
   materials:
@@ -197,7 +197,7 @@
 
 - type: latheRecipe
   id: TraversalDistorterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/science.png
+  icon: { sprite: Objects/Misc/module.rsi, state: science }
   result: TraversalDistorterMachineCircuitboard
   completetime: 4
   materials:
@@ -207,7 +207,7 @@
 
 - type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ReagentGrinderMachineCircuitboard
   completetime: 4
   materials:
@@ -216,7 +216,7 @@
 
 - type: latheRecipe
   id: AnalysisComputerCircuitboard
-  icon: Objects/Misc/module.rsi/cpu_science.png
+  icon: { sprite: Objects/Misc/module.rsi, state: cpu_science }
   result: AnalysisComputerCircuitboard
   completetime: 4
   materials:
@@ -226,7 +226,7 @@
 
 - type: latheRecipe
   id: CrewMonitoringComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: CrewMonitoringComputerCircuitboard
   completetime: 4
   materials:
@@ -235,7 +235,7 @@
 
 - type: latheRecipe
   id: ShuttleConsoleCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ShuttleConsoleCircuitboard
   completetime: 4
   materials:
@@ -245,7 +245,7 @@
 
 - type: latheRecipe
   id: RadarConsoleCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: RadarConsoleCircuitboard
   completetime: 4
   materials:
@@ -254,7 +254,7 @@
 
 - type: latheRecipe
   id: DawInstrumentMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: DawInstrumentMachineCircuitboard
   completetime: 4
   materials:
@@ -263,7 +263,7 @@
 
 - type: latheRecipe
   id: StasisBedMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: StasisBedMachineCircuitboard
   completetime: 4
   materials:
@@ -273,17 +273,38 @@
 
 - type: latheRecipe
   id: OreProcessorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: OreProcessorMachineCircuitboard
   completetime: 4
   materials:
     Steel: 100
     Glass: 900
     Gold: 100
+
+- type: latheRecipe
+  id: RipleyCentralElectronics
+  icon: Objects/Misc/module.rsi/mainboard.png
+  result: RipleyCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: RipleyPeripheralsElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: RipleyPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
-  icon: Objects/Misc/module.rsi/charger_APC.png
+  icon: { sprite: Objects/Misc/module.rsi, state: charger_APC }
   result: APCElectronics
   completetime: 2
   materials:
@@ -292,7 +313,7 @@
 
 - type: latheRecipe
   id: SubstationMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SubstationMachineCircuitboard
   completetime: 4
   materials:
@@ -301,7 +322,7 @@
 
 - type: latheRecipe
   id: WallmountSubstationElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: WallmountSubstationElectronics
   completetime: 4
   materials:
@@ -310,7 +331,7 @@
 
 - type: latheRecipe
   id: SMESMachineCircuitboard
-  icon: Objects/Misc/module.rsi/power_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: power_mod }
   result: SMESMachineCircuitboard
   completetime: 4
   materials:
@@ -319,7 +340,7 @@
 
 - type: latheRecipe
   id: GeneratorPlasmaMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: GeneratorPlasmaMachineCircuitboard
   completetime: 4
   materials:
@@ -328,7 +349,7 @@
 
 - type: latheRecipe
   id: GeneratorUraniumMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: GeneratorUraniumMachineCircuitboard
   completetime: 4
   materials:
@@ -337,7 +358,7 @@
 
 - type: latheRecipe
   id: WallmountGeneratorElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: WallmountGeneratorElectronics
   completetime: 4
   materials:
@@ -346,7 +367,7 @@
 
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: WallmountGeneratorAPUElectronics
   completetime: 4
   materials:
@@ -355,7 +376,7 @@
 
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SolarControlComputerCircuitboard
   completetime: 4
   materials:
@@ -364,7 +385,7 @@
 
 - type: latheRecipe
   id: PowerComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: PowerComputerCircuitboard
   completetime: 4
   materials:
@@ -373,7 +394,7 @@
 
 - type: latheRecipe
   id: CloningConsoleComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: CloningConsoleComputerCircuitboard
   completetime: 4
   materials:
@@ -382,7 +403,7 @@
 
 - type: latheRecipe
   id: MicrowaveMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: MicrowaveMachineCircuitboard
   completetime: 4
   materials:
@@ -391,7 +412,7 @@
 
 - type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceCameraRouterCircuitboard
   completetime: 4
   materials:
@@ -400,7 +421,7 @@
 
 - type: latheRecipe
   id: SurveillanceCameraWirelessRouterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceCameraWirelessRouterCircuitboard
   completetime: 4
   materials:
@@ -409,7 +430,7 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraAnchoredCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceWirelessCameraAnchoredCircuitboard
   completetime: 4
   materials:
@@ -418,7 +439,7 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraMovableCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceWirelessCameraMovableCircuitboard
   completetime: 4
   materials:
@@ -427,7 +448,7 @@
 
 - type: latheRecipe
   id: SurveillanceCameraMonitorCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceCameraMonitorCircuitboard
   completetime: 4
   materials:
@@ -436,7 +457,7 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraMonitorCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SurveillanceWirelessCameraMonitorCircuitboard
   completetime: 4
   materials:
@@ -445,7 +466,7 @@
 
 - type: latheRecipe
   id: ComputerTelevisionCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: ComputerTelevisionCircuitboard
   completetime: 4
   materials:
@@ -454,7 +475,7 @@
 
 - type: latheRecipe
   id: EmitterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: EmitterCircuitboard
   completetime: 4
   materials:
@@ -463,7 +484,7 @@
 
 - type: latheRecipe
   id: GasRecyclerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: GasRecyclerMachineCircuitboard
   completetime: 4
   materials:
@@ -472,7 +493,7 @@
 
 - type: latheRecipe
   id: SeedExtractorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: SeedExtractorMachineCircuitboard
   completetime: 4
   materials:
