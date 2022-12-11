@@ -295,7 +295,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("action", out var actionNode))
                     continue;
 
-                var action = _serialization.Read<ActionType>(actionNode);
+                var action = _serialization.Read<ActionType>(actionNode, notNullableOverride: true);
 
                 if (PlayerActions.Actions.TryGetValue(action, out var existingAction))
                 {
@@ -310,7 +310,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
 
-                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode);
+                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode, notNullableOverride: true);
 
                 foreach (var index in nodeAssignments)
                 {

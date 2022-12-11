@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: Special job components like mime powers or the ability to use bibles
-      are no longer lost on cloning., type: Fix}
-  id: 2245
-  time: '2022-09-06T02:29:40.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: The security belt can now hold seclites., type: Tweak}
@@ -2934,3 +2928,9 @@ Entries:
   - {message: Fixed ripley grabber becoming unusable after failed grabs, type: Fix}
   id: 2744
   time: '2022-12-10T21:00:04.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: All NT personnel have been trained to apply handcuffs in an aggressive
+      manner, type: Tweak}
+  id: 2745
+  time: '2022-12-10T22:55:18.0000000+00:00'

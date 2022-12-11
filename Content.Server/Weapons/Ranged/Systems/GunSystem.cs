@@ -192,27 +192,34 @@ public sealed partial class GunSystem : SharedGunSystem
 
                         var dmg = hitscan.Damage;
 
+                        bool deleted = false;
+                        string hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
 
+                        // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)
                         {
-                            if (dmg.Total > FixedPoint2.Zero)
-                            {
-                                RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {result.HitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
-                            }
+                            deleted = Deleted(hitEntity);
 
-                            PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            if (!deleted)
+                            {
+                                if (dmg.Total > FixedPoint2.Zero)
+                                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {result.HitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
+
+                                // TODO get fallback position for playing hit sound.
+                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            }
 
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"Hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                         }
                     }
@@ -301,19 +308,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
     {
-        if (Deleted(otherEntity))
-            return;
+        DebugTools.Assert(!Deleted(otherEntity), "Impact sound entity was deleted");
 
         // Like projectiles and melee,
         // 1. Entity specific sound
         // 2. Ammo's sound
         // 3. Nothing
         var playedSound = false;
-
-        // woops the other entity is deleted
-        // someone needs to handle this better. for now i'm just gonna make it not crash the server -rane
-        if (Deleted(otherEntity))
-            return;
 
         if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
         {
