@@ -50,4 +50,4 @@
 
 - type: entity
   id: SalvageShuttleMarker
-
+  parent: FTLPoint
