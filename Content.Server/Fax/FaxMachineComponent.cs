@@ -1,4 +1,4 @@
-﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Fax;
@@ -125,9 +125,13 @@ public sealed class FaxMachineComponent : Component
     public float PrintingTime = 2.3f;
 }
 
+[DataDefinition]
 public sealed class FaxPrintout
 {
+    [DataField("name")]
     public string Name { get; }
+
+    [DataField("content")]
     public string Content { get; }
 
     public FaxPrintout(string content, string name)
