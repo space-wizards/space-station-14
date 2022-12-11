@@ -549,7 +549,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             var name = session.AttachedEntity == null
                 ? string.Empty
                 : MetaData(session.AttachedEntity.Value).EntityName;
-            _operativePlayers.Add(name, session);
+            // TODO: Fix this being able to have duplicates
+            _operativePlayers[name] = session;
         }
     }
 

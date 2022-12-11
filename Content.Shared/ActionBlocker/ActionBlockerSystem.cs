@@ -4,7 +4,6 @@ using Content.Shared.Emoting;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
@@ -148,7 +147,11 @@ namespace Content.Shared.ActionBlocker
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
             if (_container.IsEntityInContainer(uid))
-                return false;
+            {
+                var containerEv = new CanAttackFromContainerEvent(uid, target);
+                RaiseLocalEvent(uid, containerEv);
+                return containerEv.CanAttack;
+            }
 
             var ev = new AttackAttemptEvent(uid, target);
             RaiseLocalEvent(uid, ev);
