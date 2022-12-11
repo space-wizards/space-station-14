@@ -6,6 +6,7 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
 using Content.Shared.Containers.ItemSlots;
@@ -64,20 +65,30 @@ public sealed class FaxSystem : EntitySystem
 
         foreach (var comp in EntityQuery<FaxMachineComponent>())
         {
+            var isPowered = this.IsPowered(comp.Owner, EntityManager);
+            
             // Printing animation
             if (comp.PrintingTimeRemaining > 0)
             {
-                comp.PrintingTimeRemaining -= frameTime;
-                UpdateAppearance(comp.Owner, comp);
-
-                var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
-                if (isAnimationEnd)
+                if (isPowered)
                 {
-                    SpawnPaperFromQueue(comp.Owner, comp);
-                    UpdateUserInterface(comp.Owner, comp);
+                    comp.PrintingTimeRemaining -= frameTime;
+                    UpdateAppearance(comp.Owner, comp);
+
+                    var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
+                    if (isAnimationEnd)
+                    {
+                        SpawnPaperFromQueue(comp.Owner, comp);
+                        UpdateUserInterface(comp.Owner, comp);
+                    }
+                }
+                else // Interrupted by power off
+                {
+                    comp.PrintingTimeRemaining = 0f;
+                    UpdateAppearance(comp.Owner, comp);
                 }
             }
-            else if (comp.PrintingQueue.Count > 0)
+            else if (comp.PrintingQueue.Count > 0 && isPowered)
             {
                 comp.PrintingTimeRemaining = comp.PrintingTime;
                 _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
@@ -86,14 +97,26 @@ public sealed class FaxSystem : EntitySystem
             // Inserting animation
             if (comp.InsertingTimeRemaining > 0)
             {
-                comp.InsertingTimeRemaining -= frameTime;
-                UpdateAppearance(comp.Owner, comp);
-
-                var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
-                if (isAnimationEnd)
+                if (isPowered)
                 {
+                    comp.InsertingTimeRemaining -= frameTime;
+                    UpdateAppearance(comp.Owner, comp);
+
+                    var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
+                    if (isAnimationEnd)
+                    {
+                        _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
+                        UpdateUserInterface(comp.Owner, comp);
+                    }
+                }
+                else // Interrupted by power off
+                {
+                    comp.InsertingTimeRemaining = 0f;
+                    UpdateAppearance(comp.Owner, comp);
+                    
+                    // Drop paper from slot
                     _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-                    UpdateUserInterface(comp.Owner, comp);
+                    _itemSlotsSystem.TryEject(comp.Owner, comp.PaperSlot, null, out var _, true);
                 }
             }
 
