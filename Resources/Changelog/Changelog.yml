@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: CBURN equipment has been improved, type: Tweak}
-  - {message: new ERT/BURN pda sprite added, type: Add}
-  id: 2248
-  time: '2022-09-06T02:49:56.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
@@ -2935,3 +2929,8 @@ Entries:
   - {message: Removed NSS Pillar., type: Remove}
   id: 2747
   time: '2022-12-11T11:33:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix duplicate mech footstep sounds., type: Fix}
+  id: 2748
+  time: '2022-12-11T13:18:25.0000000+00:00'
