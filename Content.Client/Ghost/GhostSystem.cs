@@ -16,6 +16,7 @@ namespace Content.Client.Ghost
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly ILightManager _lightManager = default!;
+        [Dependency] private readonly IEyeManager _eye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -66,7 +67,8 @@ namespace Content.Client.Ghost
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
 
-            SubscribeLocalEvent<GhostComponent, DisableLightingActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleLightingActionEvent>(OnToggleLighting);
+            SubscribeLocalEvent<GhostComponent, ToggleFoVActionEvent>(OnToggleFoV);
             SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
@@ -77,16 +79,26 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, component.DisableLightingAction, null);
+            _actions.AddAction(uid, component.ToggleLightingAction, null);
+            _actions.AddAction(uid, component.ToggleFoVAction, null);
             _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
 
-        private void OnActionPerform(EntityUid uid, GhostComponent component, DisableLightingActionEvent args)
+        private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
                 return;
 
             _lightManager.Enabled = !_lightManager.Enabled;
+            args.Handled = true;
+        }
+
+        private void OnToggleFoV(EntityUid uid, GhostComponent component, ToggleFoVActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            _eye.CurrentEye.DrawFov = !_eye.CurrentEye.DrawFov;
             args.Handled = true;
         }
 
@@ -101,7 +113,8 @@ namespace Content.Client.Ghost
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
-            _actions.RemoveAction(uid, component.DisableLightingAction);
+            _actions.RemoveAction(uid, component.ToggleLightingAction);
+            _actions.RemoveAction(uid, component.ToggleFoVAction);
             _actions.RemoveAction(uid, component.ToggleGhostsAction);
             _lightManager.Enabled = true;
 

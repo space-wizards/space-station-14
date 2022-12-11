@@ -11,6 +11,7 @@ using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
@@ -43,6 +44,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -228,7 +230,6 @@ namespace Content.Server.NPC.Pathfinding
 
         public async Task<PathResultEvent> GetRandomPath(
             EntityUid entity,
-            float range,
             float maxRange,
             CancellationToken cancelToken,
             int limit = 40,
@@ -240,13 +241,12 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<PhysicsComponent>(entity, out var body))
+            if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                layer = body.CollisionLayer;
-                mask = body.CollisionMask;
+                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
             }
 
-            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, range, layer, mask, cancelToken);
+            var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, layer, mask, cancelToken);
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
@@ -387,10 +387,9 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<PhysicsComponent>(entity, out var body))
+            if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                layer = body.CollisionLayer;
-                mask = body.CollisionMask;
+                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
             }
 
             return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);

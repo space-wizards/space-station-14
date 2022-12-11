@@ -45,13 +45,13 @@
   id: Credit
   name: spacebuck
   stack: Credit
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   price: 1
 
 - type: stack
   id: Credit
   name: spacebuck
-  icon: /Textures/Objects/Economy/cash.rsi/cash.png
+  icon: { sprite: /Textures/Objects/Economy/cash.rsi, state: cash }
   spawn: SpaceCash
 
 - type: entity
