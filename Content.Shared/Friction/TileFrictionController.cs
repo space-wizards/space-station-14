@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
@@ -198,6 +199,14 @@ namespace Content.Shared.Friction
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
                 var tile = grid.GetTileRef(xform.Coordinates);
+
+                // If it's a map but on an empty tile then just assume it has gravity.
+                if (tile.Tile.IsEmpty && HasComp<MapComponent>(xform.GridUid) &&
+                    (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
+                {
+                    return DefaultFriction;
+                }
+
                 var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
                 return tileDef.Friction;
             }

@@ -8,6 +8,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -25,7 +26,7 @@ namespace Content.Server.Atmos.EntitySystems
         private readonly TileAtmosphere[] _depressurizeSpaceTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
         private readonly TileAtmosphere[] _depressurizeProgressionOrder = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit * 2];
 
-        private void EqualizePressureInZone(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        private void EqualizePressureInZone(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -354,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_equalizeQueue, 0, Atmospherics.MonstermosTileLimit);
         }
 
-        private void ExplosivelyDepressurize(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        private void ExplosivelyDepressurize(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -479,7 +480,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
-                var gridPhysics = Comp<PhysicsComponent>(mapGrid.GridEntityId);
+                var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
 
                 // TODO ATMOS: Come up with better values for these.
                 gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
@@ -521,10 +522,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, tile.GridIndices);
-            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, other.GridIndices);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref tileEv);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref otherEv);
+            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, tile.GridIndices);
+            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, other.GridIndices);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref tileEv);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref otherEv);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices);
             InvalidateVisuals(other.GridIndex, other.GridIndices);
         }
@@ -603,7 +604,7 @@ namespace Content.Server.Atmos.EntitySystems
             adj.MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
         {
             if (!MonstermosRipTiles)
                 return;

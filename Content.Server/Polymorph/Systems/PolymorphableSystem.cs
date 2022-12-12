@@ -1,5 +1,5 @@
 using Content.Server.Actions;
-using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
@@ -23,6 +23,7 @@ namespace Content.Server.Polymorph.Systems
         private readonly ISawmill _saw = default!;
 
         [Dependency] private readonly ActionsSystem _actions = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IComponentFactory _compFact = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
@@ -91,8 +92,7 @@ namespace Content.Server.Polymorph.Systems
                 return null;
 
             // mostly just for vehicles
-            if (TryComp<BuckleComponent>(target, out var buckle))
-                buckle.TryUnbuckle(target, true);
+            _buckle.TryUnbuckle(target, target, true);
 
             var targetTransformComp = Transform(target);
 

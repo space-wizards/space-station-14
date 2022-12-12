@@ -36,7 +36,6 @@ public sealed class AbsorbentComponent : Component
     /// <summary>
     ///     Multiplier for the do_after delay for how quickly the mopping happens.
     /// </summary>
-    [ViewVariables]
     [DataField("mopSpeed")] public float MopSpeed = 1;
 
     /// <summary>

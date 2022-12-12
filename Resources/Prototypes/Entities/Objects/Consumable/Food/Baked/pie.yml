@@ -392,7 +392,7 @@
 # Tastes like nothing.
 
 - type: entity
-  name: golden apple streusal tart
+  name: golden apple streusel tart
   parent: FoodPieBase
   id: FoodTartGapple
   description: A tasty dessert that won't make it through a metal detector.

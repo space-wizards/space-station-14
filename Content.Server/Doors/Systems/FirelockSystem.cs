@@ -13,6 +13,7 @@ using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
@@ -233,7 +234,7 @@ namespace Content.Server.Doors.Systems
             if (!TryComp(xform.ParentUid, out GridAtmosphereComponent? gridAtmosphere))
                 return (false, false);
 
-            var grid = Comp<MapGridComponent>(xform.ParentUid).Grid;
+            var grid = Comp<MapGridComponent>(xform.ParentUid);
             var pos = grid.CoordinatesToTile(xform.Coordinates);
             var minPressure = float.MaxValue;
             var maxPressure = float.MinValue;
@@ -249,10 +250,6 @@ namespace Content.Server.Doors.Systems
             // achieving all this using existing atmos functions, and the functionality is too specialized to bother
             // adding new public atmos system functions.
 
-
-            // TODO redo this with planet/map atmospheres
-            // there is probably a faster way of doing this. tbh I kinda hate the atmos method events for making
-            // accessing tile data directly such a pain. Dealting with maps will make it even more painful.
             List<Vector2i> tiles = new(4);
             List<AtmosDirection> directions = new(4);
             for (var i = 0; i < Atmospherics.Directions; i++)
@@ -270,7 +267,7 @@ namespace Content.Server.Doors.Systems
             if (airtight.AirBlockedDirection != AtmosDirection.All)
                 tiles.Add(pos);
 
-            var gasses = _atmosSystem.GetTileMixtures(gridAtmosphere.Owner, null, tiles);
+            var gasses = _atmosSystem.GetTileMixtures(gridAtmosphere.Owner, xform.MapUid, tiles);
             if (gasses == null)
                 return (false, false);
 

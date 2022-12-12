@@ -56,7 +56,7 @@ namespace Content.Server.Construction.Commands
                 return;
             }
 
-            if (!entityManager.EntityExists(grid.GridEntityId))
+            if (!entityManager.EntityExists(grid.Owner))
             {
                 shell.WriteError($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
@@ -65,7 +65,7 @@ namespace Content.Server.Construction.Commands
             var changed = 0;
             var tagSystem = entityManager.EntitySysManager.GetEntitySystem<TagSystem>();
 
-            foreach (var child in xformQuery.GetComponent(grid.GridEntityId).ChildEntities)
+            foreach (var child in xformQuery.GetComponent(grid.Owner).ChildEntities)
             {
                 if (!entityManager.EntityExists(child))
                 {

@@ -142,8 +142,8 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!TileData.TryGetValue(mapGrid.GridEntityId, out var gridData) ||
-                    !xformQuery.TryGetComponent(mapGrid.GridEntityId, out var gridXform))
+                if (!TileData.TryGetValue(mapGrid.Owner, out var gridData) ||
+                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
                     continue;
 
                 var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
@@ -166,7 +166,7 @@ namespace Content.Client.Atmos.Overlays
 
                     while (enumerator.MoveNext(out var gas))
                     {
-                        if (gas.Value.Opacity == null)
+                        if (gas.Opacity == null!)
                             continue;
 
                         var tilePosition = chunk.Origin + (enumerator.X, enumerator.Y);
@@ -175,7 +175,7 @@ namespace Content.Client.Atmos.Overlays
 
                         for (var i = 0; i < _gasCount; i++)
                         {
-                            var opacity = gas.Value.Opacity[i];
+                            var opacity = gas.Opacity[i];
                             if (opacity > 0)
                                 drawHandle.DrawTexture(_frames[i][_frameCounter[i]], tilePosition, Color.White.WithAlpha(opacity));
                         }
@@ -190,14 +190,14 @@ namespace Content.Client.Atmos.Overlays
 
                     while (enumerator.MoveNext(out var gas))
                     {
-                        if (gas.Value.FireState == 0)
+                        if (gas.FireState == 0)
                             continue;
 
                         var index = chunk.Origin + (enumerator.X, enumerator.Y);
                         if (!localBounds.Contains(index))
                             continue;
 
-                        var state = gas.Value.FireState - 1;
+                        var state = gas.FireState - 1;
                         var texture = _fireFrames[state][_fireFrameCounter[state]];
                         drawHandle.DrawTexture(texture, index);
                     }

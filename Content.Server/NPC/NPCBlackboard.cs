@@ -20,6 +20,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"IdleRange", 7f},
         {"MaximumIdleTime", 7f},
         {MedibotInjectRange, 4f},
+        {MeleeMissChance, 0.3f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
         {"MovementRange", 1.5f},
@@ -67,7 +68,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Tries to get the blackboard data for a particular key. Returns default if not found
     /// </summary>
-    public T? GetValueOrDefault<T>(string key, IEntityManager? entManager = null)
+    public T? GetValueOrDefault<T>(string key, IEntityManager entManager)
     {
         if (_blackboard.TryGetValue(key, out var value))
         {
@@ -90,7 +91,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// <summary>
     /// Tries to get the blackboard data for a particular key.
     /// </summary>
-    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value, IEntityManager? entManager = null)
+    public bool TryGetValue<T>(string key, [NotNullWhen(true)] out T? value, IEntityManager entManager)
     {
         if (_blackboard.TryGetValue(key, out var data))
         {
@@ -130,17 +131,15 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         DebugTools.Assert(false, $"Tried to write to an NPC blackboard that is readonly!");
     }
 
-    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value, IEntityManager? entManager = null)
+    private bool TryGetEntityDefault(string key, [NotNullWhen(true)] out object? value, IEntityManager entManager)
     {
-        // TODO: Pass this in
-        IoCManager.Resolve(ref entManager);
         value = default;
         EntityUid owner;
 
         switch (key)
         {
             case Access:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
@@ -149,7 +148,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 value = access.FindAccessTags(owner);
                 return true;
             case CanMove:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
@@ -158,7 +157,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
                 value = blocker.CanMove(owner);
                 return true;
             case OwnerCoordinates:
-                if (!TryGetValue(Owner, out owner))
+                if (!TryGetValue(Owner, out owner, entManager))
                 {
                     return false;
                 }
@@ -192,6 +191,9 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string CanMove = "CanMove";
     public const string FollowTarget = "FollowTarget";
     public const string MedibotInjectRange = "MedibotInjectRange";
+
+    public const string MeleeMissChance = "MeleeMissChance";
+
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";
@@ -218,7 +220,6 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
-    public const float MeleeRange = 1f;
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {

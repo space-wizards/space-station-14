@@ -11,6 +11,7 @@ using Content.Shared.Maps;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.RCD.Systems
@@ -138,12 +139,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 default:
                     args.Handled = true;
@@ -155,7 +156,7 @@ namespace Content.Server.RCD.Systems
             args.Handled = true;
         }
 
-        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, IMapGrid mapGrid, TileRef tile, RcdMode startingMode)
+        private bool IsRCDStillValid(RCDComponent rcd, AfterInteractEvent eventArgs, MapGridComponent mapGrid, TileRef tile, RcdMode startingMode)
         {
             //Less expensive checks first. Failing those ones, we need to check that the tile isn't obstructed.
             if (rcd.CurrentAmmo <= 0)

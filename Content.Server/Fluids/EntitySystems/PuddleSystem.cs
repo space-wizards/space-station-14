@@ -1,17 +1,20 @@
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.StepTrigger;
+using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.GameObjects;
+using Solution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -21,6 +24,9 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
+        [Dependency] private readonly SlipperySystem _slipSystem = default!;
+        [Dependency] private readonly EvaporationSystem _evaporationSystem = default!;
+
 
         public override void Initialize()
         {
@@ -55,8 +61,10 @@ namespace Content.Server.Fluids.EntitySystems
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = puddle.CurrentVolume.Float() / puddle.OverflowVolume.Float() * puddle.OpacityModifier;
-            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddle.SolutionName);
+            var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
+                              puddleComponent.OverflowVolume.Float() *
+                              puddleComponent.OpacityModifier;
+            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
             bool isEvaporating;
 
@@ -76,12 +84,12 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
             if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
-                 puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
+                 CurrentVolume(puddleComponent.Owner, puddleComponent) < puddleComponent.SlipThreshold) &&
                 TryComp(entityUid, out StepTriggerComponent? stepTrigger))
             {
                 _stepTrigger.SetActive(entityUid, false, stepTrigger);
             }
-            else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
+            else if (CurrentVolume(puddleComponent.Owner, puddleComponent) >= puddleComponent.SlipThreshold)
             {
                 var comp = EnsureComp<StepTriggerComponent>(entityUid);
                 _stepTrigger.SetActive(entityUid, true, comp);
@@ -124,7 +132,7 @@ namespace Content.Server.Fluids.EntitySystems
         }
 
         /// <summary>
-        ///
+        /// Try to add solution to <paramref name="puddleUid"/>.
         /// </summary>
         /// <param name="puddleUid">Puddle to which we add</param>
         /// <param name="addedSolution">Solution that is added to puddleComponent</param>
@@ -143,23 +151,15 @@ namespace Content.Server.Fluids.EntitySystems
 
             if (addedSolution.TotalVolume == 0 ||
                 !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner, puddleComponent.SolutionName,
-                    out var puddleSolution))
+                    out var solution))
             {
                 return false;
             }
 
-            var result = _solutionContainerSystem
-                .TryMixAndOverflow(puddleComponent.Owner, puddleSolution, addedSolution, puddleComponent.OverflowVolume,
-                    out var overflowSolution);
-
-            if (checkForOverflow && overflowSolution != null)
+            solution.AddSolution(addedSolution);
+            if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
-                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent, overflowSolution);
-            }
-
-            if (!result)
-            {
-                return false;
+                _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
 
             RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
@@ -175,6 +175,46 @@ namespace Content.Server.Fluids.EntitySystems
         }
 
         /// <summary>
+        /// Given a large srcPuddle and smaller destination puddles, this method will equalize their <see cref="Solution.CurrentVolume"/>
+        /// </summary>
+        /// <param name="srcPuddle">puddle that donates liquids to other puddles</param>
+        /// <param name="destinationPuddles">List of puddles that we want to equalize, their puddle <see cref="Solution.CurrentVolume"/> should be less than sourcePuddleComponent</param>
+        /// <param name="totalVolume">Total volume of src and destination puddle</param>
+        /// <param name="stillOverflowing">optional parameter, that after equalization adds all still overflowing puddles.</param>
+        /// <param name="sourcePuddleComponent">puddleComponent for <paramref name="srcPuddle"/></param>
+        public void EqualizePuddles(EntityUid srcPuddle, List<PuddleComponent> destinationPuddles,
+            FixedPoint2 totalVolume,
+            HashSet<EntityUid>? stillOverflowing = null,
+            PuddleComponent? sourcePuddleComponent = null)
+        {
+            if (!Resolve(srcPuddle, ref sourcePuddleComponent)
+                || !_solutionContainerSystem.TryGetSolution(srcPuddle, sourcePuddleComponent.SolutionName,
+                    out var srcSolution))
+                return;
+
+            var dividedVolume = totalVolume / (destinationPuddles.Count + 1);
+
+            foreach (var destPuddle in destinationPuddles)
+            {
+                if (!_solutionContainerSystem.TryGetSolution(destPuddle.Owner, destPuddle.SolutionName,
+                        out var destSolution))
+                    continue;
+
+                var takeAmount = FixedPoint2.Max(0, dividedVolume - destSolution.CurrentVolume);
+                TryAddSolution(destPuddle.Owner, srcSolution.SplitSolution(takeAmount), false, false, destPuddle);
+                if (stillOverflowing != null && IsOverflowing(destPuddle.Owner, destPuddle))
+                {
+                    stillOverflowing.Add(destPuddle.Owner);
+                }
+            }
+
+            if (stillOverflowing != null && srcSolution.CurrentVolume > sourcePuddleComponent.OverflowVolume)
+            {
+                stillOverflowing.Add(srcPuddle);
+            }
+        }
+
+        /// <summary>
         ///     Whether adding this solution to this puddle would overflow.
         /// </summary>
         /// <param name="uid">Uid of owning entity</param>
@@ -186,7 +226,34 @@ namespace Content.Server.Fluids.EntitySystems
             if (!Resolve(uid, ref puddle))
                 return false;
 
-            return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
+            return CurrentVolume(uid, puddle) + solution.TotalVolume > puddle.OverflowVolume;
+        }
+
+        /// <summary>
+        ///     Whether adding this solution to this puddle would overflow.
+        /// </summary>
+        /// <param name="uid">Uid of owning entity</param>
+        /// <param name="puddle">Puddle ref param</param>
+        /// <returns></returns>
+        private bool IsOverflowing(EntityUid uid, PuddleComponent? puddle = null)
+        {
+            if (!Resolve(uid, ref puddle))
+                return false;
+
+            return CurrentVolume(uid, puddle) > puddle.OverflowVolume;
+        }
+
+        public PuddleComponent SpawnPuddle(EntityUid srcUid, EntityCoordinates pos, PuddleComponent? srcPuddleComponent = null)
+        {
+            MetaDataComponent? metadata = null;
+            Resolve(srcUid, ref srcPuddleComponent, ref metadata);
+
+            var prototype = metadata?.EntityPrototype?.ID ?? "PuddleSmear"; // TODO Spawn a entity based on another entity
+
+            var destUid = EntityManager.SpawnEntity(prototype, pos);
+            var destPuddle = EntityManager.EnsureComponent<PuddleComponent>(destUid);
+
+            return destPuddle;
         }
     }
 }

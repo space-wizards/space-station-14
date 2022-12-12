@@ -17,6 +17,7 @@ namespace Content.Server.Entry
             "CableVisualizer",
             "PuddleVisualizer"
             "CartridgeUi",
+            "UIFragment",
             "PDABorderColor",
         };
     }
