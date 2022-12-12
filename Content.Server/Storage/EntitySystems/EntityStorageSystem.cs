@@ -46,8 +46,9 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
         SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
-        SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
+        SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestruction);
 
+        SubscribeLocalEvent<InsideEntityStorageComponent, EntGotRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
@@ -115,11 +116,13 @@ public sealed class EntityStorageSystem : EntitySystem
             args.Cancelled = true;
     }
 
-    private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
+    private void OnDestruction(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
     {
         component.Open = true;
         if (!component.DeleteContentsOnDestruction)
+        {
             EmptyContents(uid, component);
+        }
     }
 
     public void ToggleOpen(EntityUid user, EntityUid target, EntityStorageComponent? component = null)
@@ -146,12 +149,7 @@ public sealed class EntityStorageSystem : EntitySystem
         var containedArr = component.Contents.ContainedEntities.ToArray();
         foreach (var contained in containedArr)
         {
-            if (!component.Contents.Remove(contained))
-                continue;
-
-            RemComp<InsideEntityStorageComponent>(contained);
-            Transform(contained).WorldPosition =
-                uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
+            Remove(contained, uid, component, uidXform);
         }
     }
 
@@ -218,15 +216,18 @@ public sealed class EntityStorageSystem : EntitySystem
             return true;
         }
 
+        AddComp<InsideEntityStorageComponent>(toInsert);
         return component.Contents.Insert(toInsert, EntityManager);
     }
 
-    public bool Remove(EntityUid toRemove, EntityUid container, EntityStorageComponent? component = null)
+    public bool Remove(EntityUid toRemove, EntityUid container, EntityStorageComponent? component = null, TransformComponent? xform = null)
     {
-        if (!Resolve(container, ref component))
+        if (!Resolve(container, ref component, ref xform, false))
             return false;
 
-        return component.Contents.Remove(toRemove, EntityManager);
+        component.Contents.Remove(toRemove, EntityManager);
+        Transform(toRemove).WorldPosition = xform.WorldPosition + xform.WorldRotation.RotateVec(component.EnteringOffset);
+        return true;
     }
 
     public bool CanInsert(EntityUid container, EntityStorageComponent? component = null)
@@ -432,6 +433,13 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         return null;
+    }
+
+    private void OnRemoved(EntityUid uid, InsideEntityStorageComponent component, EntGotRemovedFromContainerMessage args)
+    {
+        if (args.Container.Owner != component.Storage)
+            return;
+        RemComp(uid, component);
     }
 
     #region Gas mix event handlers
