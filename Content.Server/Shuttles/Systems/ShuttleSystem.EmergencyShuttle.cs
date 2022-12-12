@@ -165,7 +165,7 @@ public sealed partial class ShuttleSystem
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.GridEntityId != targetGrid))
+                           dockedBounds).Any(o => o.Owner != targetGrid))
                    {
                        continue;
                    }

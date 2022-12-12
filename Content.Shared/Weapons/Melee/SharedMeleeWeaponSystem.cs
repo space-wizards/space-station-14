@@ -261,6 +261,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return null;
     }
 
+    public void AttemptLightAttackMiss(EntityUid user, MeleeWeaponComponent weapon, EntityCoordinates coordinates)
+    {
+        AttemptAttack(user, weapon, new LightAttackEvent(null, weapon.Owner, coordinates), null);
+    }
+
     public void AttemptLightAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
     {
         if (!TryComp<TransformComponent>(target, out var targetXform))
@@ -419,7 +424,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
             {
-                _stamina.TakeStaminaDamage(ev.Target.Value, (bluntDamage * component.BluntStaminaDamageFactor).Float());
+                _stamina.TakeStaminaDamage(ev.Target.Value, (bluntDamage * component.BluntStaminaDamageFactor).Float(), source:user, with:(component.Owner == user ? null : component.Owner));
             }
 
             if (component.Owner == user)
