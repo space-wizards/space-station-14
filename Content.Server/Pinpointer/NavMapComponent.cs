@@ -1,3 +1,4 @@
+using Content.Shared.Pinpointer;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Pinpointer;
@@ -6,10 +7,10 @@ namespace Content.Server.Pinpointer;
 /// Used to store grid poly data to be used for UIs.
 /// </summary>
 [RegisterComponent]
-public sealed class NavMapComponent : Component
+public sealed class NavMapComponent : SharedNavMapComponent
 {
     [ViewVariables]
-    public Dictionary<Vector2i, NavMapChunk> Chunks = new();
+    public readonly Dictionary<Vector2i, NavMapChunk> Chunks = new();
 }
 
 public sealed class NavMapChunk

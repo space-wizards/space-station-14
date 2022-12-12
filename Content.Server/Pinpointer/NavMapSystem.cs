@@ -1,4 +1,5 @@
 using Content.Shared.Pinpointer;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -23,11 +24,35 @@ public sealed class NavMapSystem : SharedNavMapSystem
         base.Initialize();
         SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+        SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
     }
 
     private void OnGridInit(GridInitializeEvent ev)
     {
         EnsureComp<NavMapComponent>(ev.EntityUid);
+    }
+
+    private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
+    {
+        var data = new Dictionary<Vector2i, List<Vector2[]>>(component.Chunks.Count);
+
+        foreach (var (index, chunk) in component.Chunks)
+        {
+            var tileData = new List<Vector2[]>(chunk.TileData.Count);
+
+            foreach (var tile in chunk.TileData.Values)
+            {
+                tileData.Add(tile);
+            }
+
+            data.Add(index, tileData);
+        }
+
+        // TODO: Dear lord this will need diffs.
+        args.State = new NavMapComponentState()
+        {
+            TileData = data,
+        };
     }
 
     private void OnAnchorChange(ref AnchorStateChangedEvent ev)
@@ -36,13 +61,13 @@ public sealed class NavMapSystem : SharedNavMapSystem
             !TryComp<MapGridComponent>(ev.Transform.GridUid, out var grid))
             return;
 
-        // TODO: Refresh tile.
         var tile = grid.LocalToTile(ev.Transform.Coordinates);
         var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
         if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
         {
             chunk = new NavMapChunk(chunkOrigin);
+            navMap.Chunks[chunkOrigin] = chunk;
         }
 
         RefreshTile(grid, navMap, chunk, tile);
