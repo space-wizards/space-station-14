@@ -1,0 +1,82 @@
+using Content.Shared.Pinpointer;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Utility;
+
+namespace Content.Server.Pinpointer;
+
+/// <summary>
+/// Handles data to be used for in-grid map displays.
+/// </summary>
+public sealed class NavMapSystem : SharedNavMapSystem
+{
+    public const byte ChunkSize = 8;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
+        SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+    }
+
+    private void OnGridInit(GridInitializeEvent ev)
+    {
+        EnsureComp<NavMapComponent>(ev.EntityUid);
+    }
+
+    private void OnAnchorChange(ref AnchorStateChangedEvent ev)
+    {
+        if (!TryComp<NavMapComponent>(ev.Transform.GridUid, out var navMap) ||
+            !TryComp<MapGridComponent>(ev.Transform.GridUid, out var grid))
+            return;
+
+        // TODO: Refresh tile.
+        var tile = grid.LocalToTile(ev.Transform.Coordinates);
+        var chunk = navMap.Chunks.GetOrNew(SharedMapSystem.GetChunkIndices(tile, ChunkSize));
+
+        RefreshTile(grid, chunk, tile);
+    }
+
+    private void RefreshTile(MapGridComponent grid, NavMapChunk chunk, Vector2i tile)
+    {
+        var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
+
+        chunk.TileData.Remove(relative);
+
+        var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
+        // TODO: Use something to get convex poly.
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var fixturesQuery = GetEntityQuery<FixturesComponent>();
+
+        while (enumerator.MoveNext(out var ent))
+        {
+            if (!bodyQuery.TryGetComponent(ent, out var body) ||
+                !body.CanCollide ||
+                !body.Hard ||
+                !fixturesQuery.TryGetComponent(ent, out var manager))
+            {
+                continue;
+            }
+
+            foreach (var fixture in manager.Fixtures.Values)
+            {
+                if (fixture.Shape is not PolygonShape poly)
+                    continue;
+
+                var data = new Vector2[poly.VertexCount];
+
+                for (var i = 0; i < poly.VertexCount; i++)
+                {
+                    data[i] = poly.Vertices[i] + tile * grid.TileSize;
+                }
+
+                chunk.TileData.Add(relative, data);
+                break;
+            }
+
+            break;
+        }
+    }
+}

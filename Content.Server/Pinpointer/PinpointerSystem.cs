@@ -6,7 +6,7 @@ using Content.Server.Shuttles.Events;
 
 namespace Content.Server.Pinpointer
 {
-    public sealed class ServerPinpointerSystem : SharedPinpointerSystem
+    public sealed class PinpointerSystem : SharedPinpointerSystem
     {
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
