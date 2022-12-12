@@ -1,0 +1,106 @@
+﻿- type: entity
+  parent: BaseMachinePowered
+  id: FaxMachineBase
+  name: long range fax machine
+  description: Bluespace technologies on the application of bureaucracy.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/fax_machine.rsi
+    netsync: false
+    layers:
+    - state: icon
+      map: ["base"]
+  - type: Icon
+    sprite: Structures/Machines/fax_machine.rsi
+    state: icon
+  - type: Appearance
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+      density: 25
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
+  - type: ActivatableUI
+    key: enum.FaxUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.FaxUiKey.Key
+      type: FaxBoundUi
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: FaxMachine
+    paperSlot:
+      insertSound: /Audio/Machines/scanning.ogg
+      ejectSound: /Audio/Machines/tray_eject.ogg
+      whitelist:
+        components:
+          - Paper
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        base:
+          True: { state: idle }
+          False: { state: icon }
+      enum.FaxMachineVisuals.VisualState:
+        base:
+          Inserting: { state: inserting }
+          Printing: { state: printing }
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Paper: !type:ContainerSlot
+  - type: DeviceNetworkRequiresPower
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: Fax
+    transmitFrequencyId: Fax
+
+# Special
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineCentcom
+  name: centcom long range fax machine
+  suffix: Centcom
+  components:
+  - type: Sprite
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#bfe3ff"
+  - type: FaxMachine
+    name: "Central Command"
+    notifyAdmins: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineSyndie
+  name: syndicate long range fax machine
+  suffix: Syndicate
+  components:
+  - type: Sprite
+    layers:
+      - state: icon
+        map: [ "base" ]
+        color: "#a3a3a3"
+  - type: FaxMachine
+    name: "ERR*?*%!"
+    responsePings: false
+    emagged: true
+    notifyAdmins: true
+
+- type: entity
+  parent: FaxMachineBase
+  id: FaxMachineCaptain
+  name: captain long range fax machine
+  suffix: Centcom
+  components:
+    - type: FaxMachine
+      name: "Captain's Office"
+      receiveNukeCodes: true

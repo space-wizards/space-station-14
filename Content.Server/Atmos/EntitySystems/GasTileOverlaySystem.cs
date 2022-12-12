@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
@@ -233,11 +235,17 @@ namespace Content.Server.Atmos.EntitySystems
             // Afterwards we reset all the chunk data for the next time we tick.
             var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
             var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };
-            Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick));
+            var mainThread = Thread.CurrentThread;
+            var parentDeps = IoCManager.Instance!;
+            Parallel.ForEach(players, opts, p => UpdatePlayer(p, curTick, mainThread, parentDeps));
         }
 
-        private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)
+        private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick, Thread mainThread, IDependencyCollection parentDeps)
         {
+            // Thjs exists JUST to be able to resolve IRobustStringSerializer for networked message sending.
+            if (mainThread != Thread.CurrentThread)
+                IoCManager.InitThread(parentDeps.FromParent(parentDeps), true);
+
             var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
             var previouslySent = _lastSentChunks[playerSession];

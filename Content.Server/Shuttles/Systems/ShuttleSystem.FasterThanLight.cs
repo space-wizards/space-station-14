@@ -460,13 +460,22 @@ public sealed partial class ShuttleSystem
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
+        Box2 targetLocalAABB;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
         // Can't just get an AABB of every grid as we may spawn very far away.
-        var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
-            .TransformBox(Comp<MapGridComponent>(targetUid).LocalAABB).Enlarged(shuttleAABB.Size.Length);
+        if (TryComp<MapGridComponent>(targetUid, out var targetGrid))
+        {
+            targetLocalAABB = targetGrid.LocalAABB;
+        }
+        else
+        {
+            targetLocalAABB = new Box2();
+        }
 
+        var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
+            .TransformBox(targetLocalAABB).Enlarged(shuttleAABB.Size.Length);
         var nearbyGrids = new HashSet<EntityUid>(1) { targetUid };
         var iteration = 0;
         var lastCount = 1;

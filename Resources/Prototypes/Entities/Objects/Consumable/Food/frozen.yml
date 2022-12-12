@@ -59,7 +59,7 @@
   name: cornuto
   parent: FoodFrozenBase
   id: FoodFrozenCornuto
-  description: A neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
+  description: A Neapolitan vanilla and chocolate ice-cream cone. It menaces with a sprinkling of caramelized nuts.
   components:
   - type: Sprite
     state: cornuto

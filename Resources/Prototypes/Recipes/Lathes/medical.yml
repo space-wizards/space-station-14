@@ -1,6 +1,6 @@
 - type: latheRecipe
   id: Scalpel
-  icon: Objects/Specific/Medical/Surgery/scalpel.rsi/scalpel.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/scalpel.rsi, state: scalpel }
   result: Scalpel
   completetime: 2
   materials:
@@ -8,7 +8,7 @@
 
 - type: latheRecipe
   id: Retractor
-  icon: Objects/Specific/Medical/Surgery/scissors.rsi/retractor.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/scissors.rsi, state: retractor }
   result: Scalpel
   completetime: 2
   materials:
@@ -16,7 +16,7 @@
 
 - type: latheRecipe
   id: Cautery
-  icon: Objects/Specific/Medical/Surgery/cautery.rsi/cautery.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/cautery.rsi, state: cautery }
   result: Cautery
   completetime: 2
   materials:
@@ -24,7 +24,7 @@
 
 - type: latheRecipe
   id: Drill
-  icon: Objects/Specific/Medical/Surgery/drill.rsi/drill.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/drill.rsi, state: drill }
   result: Drill
   completetime: 2
   materials:
@@ -33,7 +33,7 @@
 
 - type: latheRecipe
   id: Saw
-  icon: Objects/Specific/Medical/Surgery/saw.rsi/saw.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/saw.rsi, state: saw }
   result: Saw
   completetime: 2
   materials:
@@ -41,7 +41,7 @@
 
 - type: latheRecipe
   id: Hemostat
-  icon: Objects/Specific/Medical/Surgery/scissors.rsi/hemostat.png
+  icon: { sprite: Objects/Specific/Medical/Surgery/scissors.rsi, state: hemostat }
   result: Hemostat
   completetime: 2
   materials:
@@ -49,7 +49,7 @@
 
 - type: latheRecipe
   id: BodyBag
-  icon: Objects/Specific/Medical/Morgue/bodybags.rsi/bag_folded.png
+  icon: { sprite: Objects/Specific/Medical/Morgue/bodybags.rsi, state: bag_folded }
   result: BodyBag_Folded
   completetime: 2
   materials:
@@ -57,7 +57,7 @@
 
 - type: latheRecipe
   id: HandheldCrewMonitor
-  icon: Objects/Specific/Medical/handheldcrewmonitor.rsi/icon.png
+  icon: { sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi, state: icon }
   result: HandheldCrewMonitor
   completetime: 2
   materials:
@@ -67,7 +67,7 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  icon: Objects/Specific/Medical/healthanalyzer.rsi/icon.png
+  icon: { sprite: Objects/Specific/Medical/healthanalyzer.rsi, state: icon }
   result: HandheldHealthAnalyzer
   completetime: 4
   materials:
@@ -76,7 +76,7 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesLatex
-  icon: Clothing/Hands/Gloves/latex.rsi/icon.png
+  icon: { sprite: Clothing/Hands/Gloves/latex.rsi, state: icon }
   result: ClothingHandsGlovesLatex
   completetime: 2
   materials:
@@ -84,7 +84,7 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
-  icon: Clothing/Hands/Gloves/Color/blue.rsi/icon.png
+  icon: { sprite: Clothing/Hands/Gloves/Color/blue.rsi, state: icon }
   result: ClothingHandsGlovesNitrile
   completetime: 2
   materials:
@@ -93,7 +93,7 @@
 
 - type: latheRecipe
   id: ClothingMaskSterile
-  icon: Clothing/Mask/sterile.rsi/icon.png
+  icon: { sprite: Clothing/Mask/sterile.rsi, state: icon }
   result: ClothingMaskSterile
   completetime: 2
   materials:
@@ -101,7 +101,7 @@
 
 - type: latheRecipe
   id: DiseaseSwab
-  icon: Objects/Specific/Medical/mouth_swab.rsi/icon.png
+  icon: { sprite: Objects/Specific/Medical/mouth_swab.rsi, state: icon }
   result: DiseaseSwab
   completetime: 1
   materials:
@@ -110,7 +110,7 @@
 
 - type: latheRecipe
   id: Implanter
-  icon: Objects/Specific/Chemistry/syringe.rsi/syringe_base0.png
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
   result: Implanter
   completetime: 1
   materials:

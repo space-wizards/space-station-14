@@ -24,6 +24,8 @@ verb-categories-split = Split
 verb-categories-instrument-style = Instrument Style
 verb-categories-set-sensor = Sensor
 verb-categories-timer = Set Delay
+verb-categories-lever = Lever
+verb-categories-fax = Set Destination
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close

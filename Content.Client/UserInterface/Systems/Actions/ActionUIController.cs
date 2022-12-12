@@ -205,7 +205,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        var coords = args.Coordinates.ToMap(_entities);
+        var coords = args.Coordinates;
 
         if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
         {

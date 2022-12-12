@@ -77,5 +77,7 @@ namespace Content.Shared.Verbs
             new("verb-categories-instrument-style", null);
 
         public static readonly VerbCategory SetSensor = new("verb-categories-set-sensor", null);
+        
+        public static readonly VerbCategory Lever = new("verb-categories-lever", null);
     }
 }

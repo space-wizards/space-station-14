@@ -426,10 +426,17 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled
+           || CentComMap == null
+           || component.EmergencyShuttle != null
+           || component.StationConfig == null)
+       {
+           return;
+       }
 
        // Load escape shuttle
-       var shuttle = _map.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var shuttlePath = component.StationConfig.EmergencyShuttlePath;
+       var shuttle = _map.LoadGrid(CentComMap.Value, shuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
@@ -437,7 +444,7 @@ public sealed partial class ShuttleSystem
 
        if (shuttle == null)
        {
-           _sawmill.Error($"Unable to spawn emergency shuttle {component.EmergencyShuttlePath} for {ToPrettyString(component.Owner)}");
+           _sawmill.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(component.Owner)}");
            return;
        }
 

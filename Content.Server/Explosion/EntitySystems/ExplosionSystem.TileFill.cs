@@ -313,7 +313,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         return (grids, referenceGrid, radius);
     }
 
-    public ExplosionEvent? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
+    public ExplosionVisualsState? GenerateExplosionPreview(SpawnExplosionEuiMsg.PreviewRequest request)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -332,7 +332,19 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         Logger.Info($"Generated explosion preview with {area} tiles in {stopwatch.Elapsed.TotalMilliseconds}ms");
 
-        // the explosion event that **would** be sent to all clients, if it were a real explosion.
-        return GetExplosionEvent(request.Epicenter, request.TypeId, spaceMatrix, spaceData, gridData.Values, iterationIntensity);
+        Dictionary<EntityUid, Dictionary<int, List<Vector2i>>> tileLists = new();
+        foreach (var (grid, data) in gridData)
+        {
+            tileLists.Add(grid, data.TileLists);
+        }
+
+        return new ExplosionVisualsState(
+            request.Epicenter,
+            request.TypeId,
+            iterationIntensity,
+            spaceData?.TileLists,
+            tileLists, spaceMatrix,
+            spaceData?.TileSize ?? DefaultTileSize
+            );
     }
 }
