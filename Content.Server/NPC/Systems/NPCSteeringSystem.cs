@@ -299,6 +299,7 @@ namespace Content.Server.NPC.Systems
             var danger = steering.Danger;
             var agentRadius = steering.Radius;
             var worldPos = xform.WorldPosition;
+            var (layer, mask) = _physics.GetHardCollision(uid);
 
             // Use rotation relative to parent to rotate our context vectors by.
             var offsetRot = -_mover.GetParentGridAngle(mover);
@@ -326,10 +327,10 @@ namespace Content.Server.NPC.Systems
             DebugTools.Assert(!float.IsNaN(interest[0]));
 
             // Avoid static objects like walls
-            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, tickMove, body, xform, danger, dangerPoints, bodyQuery, xformQuery);
+            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, tickMove, layer, mask, xform, danger, dangerPoints, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(danger[0]));
 
-            Separation(uid, offsetRot, worldPos, agentRadius, body, xform, interest, danger, bodyQuery, xformQuery);
+            Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger, bodyQuery, xformQuery);
 
             // Remove the danger map from the interest map.
             var desiredDirection = -1;
