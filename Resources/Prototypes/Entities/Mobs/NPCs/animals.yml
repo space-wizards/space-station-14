@@ -711,6 +711,7 @@
     speechSounds: Monkey
   - type: Body
     prototype: Primate
+    requiredLegs: 1 # TODO: More than 1 leg
   - type: DamageStateVisuals
     states:
       Alive:

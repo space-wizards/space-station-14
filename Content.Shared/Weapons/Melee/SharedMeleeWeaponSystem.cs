@@ -19,7 +19,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -227,6 +226,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         MeleeWeaponComponent? melee;
 
+        var ev = new GetMeleeWeaponEvent();
+        RaiseLocalEvent(entity, ev);
+        if (ev.Handled)
+        {
+            return EntityManager.GetComponentOrNull<MeleeWeaponComponent>(ev.Weapon);
+        }
+
         // Use inhands entity if we got one.
         if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
@@ -253,6 +259,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         return null;
+    }
+
+    public void AttemptLightAttackMiss(EntityUid user, MeleeWeaponComponent weapon, EntityCoordinates coordinates)
+    {
+        AttemptAttack(user, weapon, new LightAttackEvent(null, weapon.Owner, coordinates), null);
     }
 
     public void AttemptLightAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
