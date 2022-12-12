@@ -196,9 +196,6 @@ public sealed class EntityStorageSystem : EntitySystem
             if (!AddToContents(entity, uid, component))
                 continue;
 
-            var inside = EnsureComp<InsideEntityStorageComponent>(entity);
-            inside.Storage = uid;
-
             count++;
             if (count >= component.Capacity)
                 break;
@@ -222,7 +219,8 @@ public sealed class EntityStorageSystem : EntitySystem
             return true;
         }
 
-        AddComp<InsideEntityStorageComponent>(toInsert);
+        var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
+        inside.Storage = container;
         return component.Contents.Insert(toInsert, EntityManager);
     }
 
@@ -231,6 +229,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(container, ref component, ref xform, false))
             return false;
 
+        RemComp<InsideEntityStorageComponent>(toRemove);
         component.Contents.Remove(toRemove, EntityManager);
         Transform(toRemove).WorldPosition = xform.WorldPosition + xform.WorldRotation.RotateVec(component.EnteringOffset);
         return true;
