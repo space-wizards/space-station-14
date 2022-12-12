@@ -142,8 +142,8 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!TileData.TryGetValue(mapGrid.GridEntityId, out var gridData) ||
-                    !xformQuery.TryGetComponent(mapGrid.GridEntityId, out var gridXform))
+                if (!TileData.TryGetValue(mapGrid.Owner, out var gridData) ||
+                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
                     continue;
 
                 var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();

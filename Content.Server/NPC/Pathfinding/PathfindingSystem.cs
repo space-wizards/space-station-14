@@ -60,7 +60,7 @@ namespace Content.Server.NPC.Pathfinding
         private const int PathTickLimit = 256;
 
         private int _portalIndex;
-        private Dictionary<int, PathPortal> _portals = new();
+        private readonly Dictionary<int, PathPortal> _portals = new();
 
         public override void Initialize()
         {
@@ -318,6 +318,21 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         /// <summary>
+        /// Gets a path in a thread-safe way.
+        /// </summary>
+        public async Task<PathResultEvent> GetPathSafe(
+            EntityUid entity,
+            EntityCoordinates start,
+            EntityCoordinates end,
+            float range,
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
+        {
+            var request = GetRequest(entity, start, end, range, cancelToken, flags);
+            return await GetPath(request, true);
+        }
+
+        /// <summary>
         /// Asynchronously gets a path.
         /// </summary>
         public async Task<PathResultEvent> GetPath(
@@ -428,12 +443,22 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         private async Task<PathResultEvent> GetPath(
-            PathRequest request)
+            PathRequest request, bool safe = false)
         {
             // We could maybe try an initial quick run to avoid forcing time-slicing over ticks.
             // For now it seems okay and it shouldn't block on 1 NPC anyway.
 
-            _pathRequests.Add(request);
+            if (safe)
+            {
+                lock (_pathRequests)
+                {
+                    _pathRequests.Add(request);
+                }
+            }
+            else
+            {
+                _pathRequests.Add(request);
+            }
 
             await request.Task;
 

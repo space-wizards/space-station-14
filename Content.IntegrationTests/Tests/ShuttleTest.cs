@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests
             {
                 var mapId = mapMan.CreateMap();
                 var grid = mapMan.CreateGrid(mapId);
-                gridEnt = grid.GridEntityId;
+                gridEnt = grid.Owner;
 
                 Assert.That(sEntities.HasComponent<ShuttleComponent>(gridEnt));
                 Assert.That(sEntities.TryGetComponent<PhysicsComponent>(gridEnt, out var physicsComponent));
