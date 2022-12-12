@@ -1,6 +1,7 @@
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using Content.Shared.Power;
+using Content.Shared.Power.Events;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.EntitySystems

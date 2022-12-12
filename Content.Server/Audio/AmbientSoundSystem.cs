@@ -1,6 +1,6 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Audio;
+using Content.Shared.Power.Events;
 
 namespace Content.Server.Audio
 {

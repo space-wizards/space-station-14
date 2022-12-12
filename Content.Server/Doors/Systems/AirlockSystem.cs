@@ -1,13 +1,13 @@
 using Content.Server.Doors.Components;
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Shared.Tools.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Power.Events;
+using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Doors.Systems

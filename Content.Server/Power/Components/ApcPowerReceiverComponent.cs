@@ -67,14 +67,4 @@ namespace Content.Server.Power.Components
             base.OnRemove();
         }
     }
-
-    /// <summary>
-    /// Raised whenever an ApcPowerReceiver becomes powered / unpowered.
-    /// </summary>
-    [ByRefEvent]
-    public readonly record struct PowerChangedEvent(bool Powered, float ReceivingPower)
-    {
-        public readonly bool Powered = Powered;
-        public readonly float ReceivingPower = ReceivingPower;
-    }
 }

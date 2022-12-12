@@ -1,7 +1,8 @@
-using Content.Shared.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Wires;
+using Content.Shared.Popups;
+using Content.Shared.Power.Events;
 using JetBrains.Annotations;
 
 namespace Content.Server.Power.EntitySystems

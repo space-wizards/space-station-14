@@ -1,13 +1,10 @@
-using Content.Server.Physics.Controllers;
-using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
-using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Conveyor;
+namespace Content.Shared.Conveyor;
 
 [RegisterComponent]
-[Access(typeof(ConveyorController))]
 public sealed class ConveyorComponent : Component
 {
     /// <summary>
@@ -30,6 +27,9 @@ public sealed class ConveyorComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public ConveyorState State;
 
+    [ViewVariables]
+    public bool Powered;
+
     [DataField("forwardPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
     public string ForwardPort = "Forward";
 
@@ -41,5 +41,19 @@ public sealed class ConveyorComponent : Component
 
     [ViewVariables]
     public readonly HashSet<EntityUid> Intersecting = new();
+}
+
+[Serializable, NetSerializable]
+public enum ConveyorVisuals
+{
+    State
+}
+
+[Serializable, NetSerializable]
+public enum ConveyorState
+{
+    Off,
+    Forward,
+    Reverse
 }
 

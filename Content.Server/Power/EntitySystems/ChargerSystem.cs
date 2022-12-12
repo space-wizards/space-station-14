@@ -1,12 +1,13 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
+using Content.Shared.Power;
+using Content.Shared.Power.Events;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Content.Shared.Power;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Power.EntitySystems;
 
@@ -50,7 +51,7 @@ internal sealed class ChargerSystem : EntitySystem
             TransferPower(charger.Owner, slot.Item!.Value, charger, frameTime);
         }
     }
-    
+
     private void OnPowerChanged(EntityUid uid, ChargerComponent component, ref PowerChangedEvent args)
     {
         UpdateStatus(uid, component);
@@ -63,7 +64,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         if (args.Container.ID != component.SlotId)
             return;
-        
+
         UpdateStatus(uid, component);
     }
 

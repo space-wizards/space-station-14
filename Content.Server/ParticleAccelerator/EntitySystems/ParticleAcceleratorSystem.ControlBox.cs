@@ -1,5 +1,5 @@
 using Content.Server.ParticleAccelerator.Components;
-using Content.Server.Power.Components;
+using Content.Shared.Power.Events;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 

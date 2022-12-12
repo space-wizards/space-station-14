@@ -4,12 +4,11 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.Power.Components;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Power.Events;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 

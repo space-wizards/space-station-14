@@ -13,6 +13,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Audio;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.Popups;
+using Content.Shared.Power.Events;
 using Content.Shared.Research.Components;
 using Content.Shared.Xenoarchaeology.Equipment;
 using JetBrains.Annotations;
