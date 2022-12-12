@@ -306,7 +306,8 @@ public sealed partial class NPCSteeringSystem
         Vector2 worldPos,
         float agentRadius,
         float moveSpeed,
-        PhysicsComponent body,
+        int layer,
+        int mask,
         TransformComponent xform,
         float[] danger,
         List<Vector2> dangerPoints,
@@ -322,8 +323,8 @@ public sealed partial class NPCSteeringSystem
                 !bodyQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
-                ((body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
-                (body.CollisionLayer & otherBody.CollisionMask) == 0x0))
+                (mask & otherBody.CollisionLayer) == 0x0 &&
+                (layer & otherBody.CollisionMask) == 0x0)
             {
                 continue;
             }
@@ -331,10 +332,10 @@ public sealed partial class NPCSteeringSystem
             if (!_physics.TryGetNearestPoints(uid, ent, out var pointA, out var pointB, xform, xformQuery.GetComponent(ent)))
                 continue;
 
-            var obstacleDirection = (pointB - worldPos);
+            var obstacleDirection = pointB - worldPos;
             var obstableDistance = obstacleDirection.Length;
 
-            if (obstableDistance > detectionRadius)
+            if (obstableDistance > detectionRadius || obstableDistance == 0f)
                 continue;
 
             dangerPoints.Add(pointB);
@@ -363,9 +364,10 @@ public sealed partial class NPCSteeringSystem
         Angle offsetRot,
         Vector2 worldPos,
         float agentRadius,
+        int layer,
+        int mask,
         PhysicsComponent body,
         TransformComponent xform,
-        float[] interest,
         float[] danger,
         EntityQuery<PhysicsComponent> bodyQuery,
         EntityQuery<TransformComponent> xformQuery)
@@ -382,8 +384,8 @@ public sealed partial class NPCSteeringSystem
                 !bodyQuery.TryGetComponent(ent, out var otherBody) ||
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
-                (body.CollisionMask & otherBody.CollisionLayer) == 0x0 &&
-                (body.CollisionLayer & otherBody.CollisionMask) == 0x0 ||
+                (mask & otherBody.CollisionLayer) == 0x0 &&
+                (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
                 !_faction.IsFriendly(uid, ent, ourFaction, otherFaction) ||
                 Vector2.Dot(otherBody.LinearVelocity, ourVelocity) < 0f)
@@ -398,10 +400,10 @@ public sealed partial class NPCSteeringSystem
                 continue;
             }
 
-            var obstacleDirection = (pointB - worldPos);
+            var obstacleDirection = pointB - worldPos;
             var obstableDistance = obstacleDirection.Length;
 
-            if (obstableDistance > detectionRadius)
+            if (obstableDistance > detectionRadius || obstableDistance == 0f)
                 continue;
 
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
