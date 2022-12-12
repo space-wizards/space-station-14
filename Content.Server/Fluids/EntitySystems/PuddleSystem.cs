@@ -51,20 +51,27 @@ namespace Content.Server.Fluids.EntitySystems
             UpdateAppearance(uid, component);
         }
 
-        private void UpdateAppearance(EntityUid uid, PuddleComponent? puddle = null, AppearanceComponent? appearance = null)
+        private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null, AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref puddle, ref appearance, false)
-                || EmptyHolder(uid, puddle))
+            if (!Resolve(uid, ref puddleComponent, ref appearance, false)
+                || EmptyHolder(uid, puddleComponent))
             {
                 return;
             }
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
-                              puddleComponent.OverflowVolume.Float() *
-                              puddleComponent.OpacityModifier;
+
+            //Conflict zone
+            // var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
+            //                   puddleComponent.OverflowVolume.Float() *
+            //                   puddleComponent.OpacityModifier;
+            // var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
+
+            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float() * puddleComponent.OpacityModifier;
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
+
+            // End conflict zone
 
             bool isEvaporating;
 
@@ -76,7 +83,7 @@ namespace Content.Server.Fluids.EntitySystems
             else isEvaporating = false;
 
             appearance.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearance.SetData(PuddleVisuals.CurrentVolume, puddle.CurrentVolume);
+            appearance.SetData(PuddleVisuals.CurrentVolume, puddleComponent.CurrentVolume);
             appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
             appearance.SetData(PuddleVisuals.IsEvaporatingVisual, isEvaporating);
         }
