@@ -4,6 +4,7 @@
   id: DrinkBaseCup
   name: base cup
   abstract: true
+  canMix: true
   components:
   - type: SolutionContainerManager
     solutions:

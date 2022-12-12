@@ -10,6 +10,8 @@ public sealed class ReactionMixerComponent : Component
     /// <summary>
     ///     A list of IDs for categories of reactions that can be mixed (i.e. HOLY for a bible, DRINK for a spoon)
     /// </summary>
+    [ViewVariables]
+    [DataField("reactionTypes")]
     public List<string> ReactionTypes = default!;
 
 

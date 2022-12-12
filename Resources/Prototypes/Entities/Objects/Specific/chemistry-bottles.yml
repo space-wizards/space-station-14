@@ -4,6 +4,7 @@
   id: BaseChemistryEmptyBottle
   abstract: true
   description: A small bottle.
+  canMix: true
   components:
   - type: Tag
     tags:

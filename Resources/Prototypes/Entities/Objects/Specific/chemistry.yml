@@ -2,6 +2,7 @@
   parent: BaseItem
   id: BaseBeaker
   abstract: true
+  canMix: true
   components:
   - type: Tag
     tags:
