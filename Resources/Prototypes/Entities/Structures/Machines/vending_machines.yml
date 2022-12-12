@@ -80,16 +80,22 @@
   name: Condiment Station
   description: Slather these thick gooey substances on your food for a full flavor effect.
   components:
-  - type: Sprite
-    sprite: Structures/dispensers.rsi
-    drawdepth: SmallObjects
-    state: condiment
-    netsync: false
-  - type: Advertise
-    pack: AmmoVendAds
-  - type: Speech
   - type: VendingMachine
     pack: CondimentInventory
+    offState: off
+    normalState: normal-unshaded
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/condiments.rsi
+    drawdepth: SmallObjects
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+  - type: Advertise
+    pack: CondimentVendAds
+  - type: Speech
   - type: Transform
     noRot: false 
 
