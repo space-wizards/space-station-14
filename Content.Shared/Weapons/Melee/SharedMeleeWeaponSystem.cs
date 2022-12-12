@@ -261,6 +261,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         return null;
     }
 
+    public void AttemptLightAttackMiss(EntityUid user, MeleeWeaponComponent weapon, EntityCoordinates coordinates)
+    {
+        AttemptAttack(user, weapon, new LightAttackEvent(null, weapon.Owner, coordinates), null);
+    }
+
     public void AttemptLightAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
     {
         if (!TryComp<TransformComponent>(target, out var targetXform))

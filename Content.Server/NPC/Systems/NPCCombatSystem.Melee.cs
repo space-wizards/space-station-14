@@ -4,6 +4,8 @@ using Content.Server.NPC.Events;
 using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.NPC.Systems;
 
@@ -88,6 +90,8 @@ public sealed partial class NPCCombatSystem
     {
         var combatQuery = GetEntityQuery<CombatModeComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+        var curTime = _timing.CurTime;
 
         foreach (var (comp, _) in EntityQuery<NPCMeleeCombatComponent, ActiveNPCComponent>())
         {
@@ -97,17 +101,14 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            Attack(comp, xformQuery);
+            Attack(comp, curTime, physicsQuery, xformQuery);
         }
     }
 
-    private void Attack(NPCMeleeCombatComponent component, EntityQuery<TransformComponent> xformQuery)
+    private void Attack(NPCMeleeCombatComponent component, TimeSpan curTime, EntityQuery<PhysicsComponent> physicsQuery, EntityQuery<TransformComponent> xformQuery)
     {
         component.Status = CombatStatus.Normal;
 
-        // TODO:
-        // Also need some blackboard data for stuff like juke frequency, assigning target slots (to surround targets), etc.
-        // miss %
         if (!TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
         {
             component.Status = CombatStatus.NoWeapon;
@@ -152,7 +153,18 @@ public sealed partial class NPCCombatSystem
         // Gets unregistered on component shutdown.
         _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero), steering);
 
-        if (Enabled)
+        if (weapon.NextAttack > curTime || !Enabled)
+            return;
+
+        if (_random.Prob(component.MissChance) &&
+            physicsQuery.TryGetComponent(component.Target, out var targetPhysics) &&
+            targetPhysics.LinearVelocity.LengthSquared != 0f)
+        {
+            _melee.AttemptLightAttackMiss(component.Owner, weapon, targetXform.Coordinates.Offset(_random.NextVector2(0.5f)));
+        }
+        else
+        {
             _melee.AttemptLightAttack(component.Owner, weapon, component.Target);
+        }
     }
 }
