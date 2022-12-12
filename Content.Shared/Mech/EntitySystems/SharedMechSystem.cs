@@ -292,15 +292,14 @@ public abstract class SharedMechSystem : EntitySystem
             if (attemptev.Cancelled)
                 return;
         }
-
-        equipmentComponent.EquipmentOwner = null;
-        component.EquipmentContainer.Remove(toRemove, EntityManager);
         var ev = new MechEquipmentRemovedEvent(uid);
         RaiseLocalEvent(toRemove, ref ev);
 
         if (component.CurrentSelectedEquipment == toRemove)
             CycleEquipment(uid, component);
 
+        equipmentComponent.EquipmentOwner = null;
+        component.EquipmentContainer.Remove(toRemove, EntityManager);
         UpdateUserInterface(uid, component);
     }
 

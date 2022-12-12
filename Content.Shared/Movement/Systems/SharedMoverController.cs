@@ -287,7 +287,18 @@ namespace Content.Shared.Movement.Systems
                         .WithVolume(FootstepVolume * soundModifier)
                         .WithVariation(sound.Params.Variation ?? FootstepVariation);
 
-                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    // If we're a relay target then predict the sound for all relays.
+                    if (TryComp<MovementRelayTargetComponent>(mover.Owner, out var targetComp))
+                    {
+                        foreach (var ent in targetComp.Entities)
+                        {
+                            _audio.PlayPredicted(sound, mover.Owner, ent, audioParams);
+                        }
+                    }
+                    else
+                    {
+                        _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    }
                 }
             }
 

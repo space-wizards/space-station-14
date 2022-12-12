@@ -36,6 +36,9 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (!TryComp<MechComponent>(mech, out var mechComp))
             return;
 
+        if (mechComp.Broken)
+            return;
+
         if (args.User == mechComp.PilotSlot.ContainedEntity)
             return;
 
@@ -62,7 +65,6 @@ public sealed class MechEquipmentSystem : EntitySystem
     {
         component.TokenSource = null;
         _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Mech, Filter.Pvs(args.Mech));
-
         _mech.InsertEquipment(args.Mech, uid);
     }
 
