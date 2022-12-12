@@ -75,6 +75,9 @@
   bodyPart: Eyes
   markingCategory: Head
   speciesRestriction: [Human, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type: FollowEyeColor
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_r
@@ -84,6 +87,9 @@
   bodyPart: Eyes
   markingCategory: Head
   speciesRestriction: [Human, SlimePerson, Reptilian]
+  coloring:
+    default:
+      type: FollowEyeColor
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l

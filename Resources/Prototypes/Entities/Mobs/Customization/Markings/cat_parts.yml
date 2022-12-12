@@ -3,6 +3,13 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type: FollowHairColor
+    layers:
+      - name: ears_cat_inner
+        properties:
+          type: Color
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_outer
@@ -14,6 +21,9 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Human]
+  coloring:
+    default:
+      type: FollowHairColor
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat

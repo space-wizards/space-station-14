@@ -94,11 +94,13 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
         SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, profile.Appearance.EyeColor, false);
+        humanoid.CachedEyeColor = profile.Appearance.EyeColor;
 
         humanoid.CurrentMarkings.Clear();
 
         // Hair/facial hair - this may eventually be deprecated.
 
+        humanoid.CachedHairColor = profile.Appearance.HairColor;
         AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
         AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
 
@@ -528,6 +530,6 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        humanoid.CurrentMarkings.EnsureDefault(humanoid.SkinColor, _markingManager);
+        humanoid.CurrentMarkings.EnsureDefault(humanoid.SkinColor, humanoid.CachedEyeColor, humanoid.CachedHairColor, _markingManager);
     }
 }

@@ -38,7 +38,7 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var markings = new MarkingSet(profile.Appearance.Markings, speciesPrototype.MarkingPoints, _markingManager,
             _prototypeManager);
-        markings.EnsureDefault(profile.Appearance.SkinColor, _markingManager);
+        markings.EnsureDefault(profile.Appearance.SkinColor, profile.Appearance.EyeColor, profile.Appearance.HairColor, _markingManager);
 
         // legacy: remove in the future?
         markings.RemoveCategory(MarkingCategories.Hair);

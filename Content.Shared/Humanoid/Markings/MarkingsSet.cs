@@ -201,9 +201,11 @@ public sealed class MarkingSet
     /// <summary>
     ///     Ensures that the default markings as defined by the marking point set in this marking set are applied.
     /// </summary>
-    /// <param name="skinColor">Color to apply.</param>
+    /// <param name="skinColor">Skin color for marking coloring.</param>
+    /// <param name="eyeColor">Eye color for marking coloring.</param>
+    /// <param name="hairColor">Hair color for marking coloring.</param>
     /// <param name="markingManager">Marking manager.</param>
-    public void EnsureDefault(Color? skinColor = null, MarkingManager? markingManager = null)
+    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, Color? hairColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
 
@@ -219,22 +221,23 @@ public sealed class MarkingSet
             {
                 if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
-                    Marking marking;
-                    if (skinColor == null)
-                    {
-                        marking = new Marking(points.DefaultMarkings[index], prototype.Sprites.Count);
-                    }
-                    else
-                    {
-                        var colors = new List<Color>();
+                    var colors = new List<Color>();
 
-                        for (var i = 0; i < prototype.Sprites.Count; i++)
-                        {
-                            colors.Add(skinColor.Value);
-                        }
+                    for (var i = 0; i < prototype.Sprites.Count; i++)
+                    {
+                        var name = prototype.Sprites[i];
 
-                        marking = new Marking(points.DefaultMarkings[index], colors);
+                        Color marking_color = MarkingColoring.GetMarkingColor(
+                                prototype.Coloring.Default.Type,
+                                skinColor, eyeColor, hairColor, hairColor,
+                                prototype.Coloring.Default.Color,
+                                false
+                            );
+                        colors.Add(marking_color);
+                        Logger.DebugS("mrkc", $"Marking '{points.DefaultMarkings[index]}', Name: '{name}', Color: {marking_color.ToHex()}");
                     }
+
+                    Marking marking = new Marking(points.DefaultMarkings[index], colors);
 
                     AddBack(category, marking);
                 }
