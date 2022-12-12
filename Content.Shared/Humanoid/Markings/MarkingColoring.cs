@@ -30,29 +30,8 @@ public sealed class MarkingColors
     /// Layers with their own coloring type and properties
     /// </summary>
     [DataField("layers", true)]
-    public List<MarkingColorEntry>? Layers;
+    public Dictionary<string, ColoringProperties>? Layers;
 }
-
-/// <summary>
-/// Prototype entry to layer coloring
-/// </summary>
-[DataDefinition]
-[Serializable, NetSerializable]
-public sealed class MarkingColorEntry
-{
-    /// <summary>
-    /// Name of sprite layer
-    /// </summary>
-    [DataField("name", true, required: true)]
-    public string Name { get; private set; } = default!;
-
-    /// <summary>
-    /// Coloring properties
-    /// </summary>
-    [DataField("properties", true, required: true)]
-    public ColoringProperties Properties { get; } = default!;
-}
-
 
 /// <summary>
 /// Properties for coloring. 

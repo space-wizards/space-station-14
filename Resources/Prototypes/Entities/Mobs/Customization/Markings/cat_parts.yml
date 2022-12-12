@@ -7,9 +7,8 @@
     default:
       type: FollowHairColor
     layers:
-      - name: ears_cat_inner
-        properties:
-          type: Color
+      ears_cat_inner:
+        type: Color
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_outer

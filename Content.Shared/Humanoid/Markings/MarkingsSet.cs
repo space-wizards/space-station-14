@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
 
@@ -221,23 +222,66 @@ public sealed class MarkingSet
             {
                 if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
-                    var colors = new List<Color>();
+                    // Coloring from default properties
+                    Color default_color = MarkingColoring.GetMarkingColor(
+                        prototype.Coloring.Default.Type,
+                        skinColor, eyeColor, hairColor, hairColor,
+                        prototype.Coloring.Default.Color,
+                        false
+                    );
 
-                    for (var i = 0; i < prototype.Sprites.Count; i++)
+                    Marking marking;
+                    if(prototype.Coloring.Layers == null)
                     {
-                        var name = prototype.Sprites[i];
-
-                        Color marking_color = MarkingColoring.GetMarkingColor(
-                                prototype.Coloring.Default.Type,
-                                skinColor, eyeColor, hairColor, hairColor,
-                                prototype.Coloring.Default.Color,
-                                false
-                            );
-                        colors.Add(marking_color);
-                        Logger.DebugS("mrkc", $"Marking '{points.DefaultMarkings[index]}', Name: '{name}', Color: {marking_color.ToHex()}");
+                        // If layers is not specified, then every layer must be default
+                        var colors = new List<Color>();
+                        for (var i = 0; i < prototype.Sprites.Count; i++)
+                        {
+                            colors.Add(default_color);
+                        }
+                        marking = new Marking(points.DefaultMarkings[index], colors);
                     }
+                    else
+                    {
+                        // If some layers are specified.
+                        var colors = new List<Color>();
+                        for (var i = 0; i < prototype.Sprites.Count; i++)
+                        {
+                            // Getting layer name
+                            string name;
+                            switch (prototype.Sprites[i])
+                            {
+                                case SpriteSpecifier.Rsi rsi:
+                                    name = rsi.RsiState;
+                                    break;
+                                case SpriteSpecifier.Texture texture:
+                                    name = texture.TexturePath.Filename;
+                                    break;
+                                default:
+                                    colors.Add(default_color);
+                                    continue;
+                            }
 
-                    Marking marking = new Marking(points.DefaultMarkings[index], colors);
+                            // All specified layers must be colored separately, all unspecified must depend on default coloring
+                            if(prototype.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
+                            {
+                                Color marking_color = MarkingColoring.GetMarkingColor(
+                                    properties.Type,
+                                    skinColor, eyeColor, hairColor, hairColor,
+                                    properties.Color,
+                                    false
+                                );
+                                colors.Add(marking_color);
+                            }
+                            else
+                            {
+                                colors.Add(default_color);
+                            }
+                            Logger.DebugS("mrkc", $"Marking '{points.DefaultMarkings[index]}', Name: '{name}'");
+                        }
+
+                        marking = new Marking(points.DefaultMarkings[index], colors);
+                    }
 
                     AddBack(category, marking);
                 }
