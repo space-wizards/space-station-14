@@ -549,7 +549,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             var name = session.AttachedEntity == null
                 ? string.Empty
                 : MetaData(session.AttachedEntity.Value).EntityName;
-            _operativePlayers.Add(name, session);
+            // TODO: Fix this being able to have duplicates
+            _operativePlayers[name] = session;
         }
     }
 
@@ -621,8 +622,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var mapId = _mapManager.CreateMap();
+        var options = new MapLoadOptions()
+        {
+            LoadMap = true,
+        };
 
-        if (!_map.TryLoad(mapId, path.ToString(), out var outpostGrids) || outpostGrids.Count == 0)
+        if (!_map.TryLoad(mapId, path.ToString(), out var outpostGrids, options) || outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return false;

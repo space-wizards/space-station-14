@@ -59,9 +59,9 @@ public sealed partial class RevenantSystem
 
     private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
     {
-        var target = args.Target;
-        if (target == args.User)
+        if (args.Target == args.User || args.Target == null)
             return;
+        var target = args.Target.Value;
 
         if (HasComp<PoweredLightComponent>(target))
         {
@@ -70,9 +70,6 @@ public sealed partial class RevenantSystem
         }
 
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
-            return;
-
-        if (!_interact.InRangeUnobstructed(uid, target))
             return;
 
         args.Handled = true;
