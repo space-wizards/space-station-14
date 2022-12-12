@@ -70,7 +70,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in MapManager.GetAllMapGrids(mapId))
             {
-                if (!TryComp<PhysicsComponent>(grid.GridEntityId, out var gridBody))
+                if (!TryComp<PhysicsComponent>(grid.Owner, out var gridBody))
                 {
                     continue;
                 }

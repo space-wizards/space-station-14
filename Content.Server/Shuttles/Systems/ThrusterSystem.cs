@@ -146,7 +146,7 @@ namespace Content.Server.Shuttles.Systems
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
+                !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent))
             {
                 return;
             }
@@ -245,7 +245,7 @@ namespace Content.Server.Shuttles.Systems
 
             component.IsOn = true;
 
-            if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+            if (!EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent)) return;
 
             // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
@@ -316,7 +316,7 @@ namespace Content.Server.Shuttles.Systems
 
             component.IsOn = false;
 
-            if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+            if (!EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent)) return;
 
             // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 

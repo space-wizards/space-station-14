@@ -1,6 +1,6 @@
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
 using Content.Server.NPC.Pathfinding;
+using Content.Shared.NPC;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.Components;
@@ -11,6 +11,43 @@ namespace Content.Server.NPC.Components;
 [RegisterComponent]
 public sealed class NPCSteeringComponent : Component
 {
+    #region Context Steering
+
+    /// <summary>
+    /// Used to override seeking behavior for context steering.
+    /// </summary>
+    [ViewVariables]
+    public bool CanSeek = true;
+
+    /// <summary>
+    /// Radius for collision avoidance.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float Radius = 0.35f;
+
+    [ViewVariables]
+    public readonly float[] Interest = new float[SharedNPCSteeringSystem.InterestDirections];
+
+    [ViewVariables]
+    public readonly float[] Danger = new float[SharedNPCSteeringSystem.InterestDirections];
+
+    // TODO: Update radius, also danger points debug only
+    public readonly List<Vector2> DangerPoints = new();
+
+    #endregion
+
+    /// <summary>
+    /// How many times per second we're allowed to update our steering frequency.
+    /// </summary>
+    public const byte SteerFrequency = 10;
+
+    /// <summary>
+    /// Last time the NPC steered.
+    /// </summary>
+    public TimeSpan LastTimeSteer;
+
+    public Vector2 LastSteer;
+
     /// <summary>
     /// Have we currently requested a path.
     /// </summary>
