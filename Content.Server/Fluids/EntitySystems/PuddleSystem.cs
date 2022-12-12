@@ -61,17 +61,10 @@ namespace Content.Server.Fluids.EntitySystems
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-
-            //Conflict zone
-            // var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
-            //                   puddleComponent.OverflowVolume.Float() *
-            //                   puddleComponent.OpacityModifier;
-            // var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
-
-            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float() * puddleComponent.OpacityModifier;
+            var volumeScale = CurrentVolume(puddleComponent.Owner, puddleComponent).Float() /
+                              puddleComponent.OverflowVolume.Float() *
+                              puddleComponent.OpacityModifier;
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
-
-            // End conflict zone
 
             bool isEvaporating;
 
