@@ -3,7 +3,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Utility;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Pinpointer;
 
@@ -12,6 +12,10 @@ namespace Content.Server.Pinpointer;
 /// </summary>
 public sealed class NavMapSystem : SharedNavMapSystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
+
     public const byte ChunkSize = 8;
 
     public override void Initialize()
@@ -34,15 +38,21 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         // TODO: Refresh tile.
         var tile = grid.LocalToTile(ev.Transform.Coordinates);
-        var chunk = navMap.Chunks.GetOrNew(SharedMapSystem.GetChunkIndices(tile, ChunkSize));
+        var chunkOrigin = SharedMapSystem.GetChunkIndices(tile, ChunkSize);
 
-        RefreshTile(grid, chunk, tile);
+        if (!navMap.Chunks.TryGetValue(chunkOrigin, out var chunk))
+        {
+            chunk = new NavMapChunk(chunkOrigin);
+        }
+
+        RefreshTile(grid, navMap, chunk, tile);
     }
 
-    private void RefreshTile(MapGridComponent grid, NavMapChunk chunk, Vector2i tile)
+    private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
 
+        // TODO: Diff existing data.
         chunk.TileData.Remove(relative);
 
         var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
@@ -55,6 +65,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (!bodyQuery.TryGetComponent(ent, out var body) ||
                 !body.CanCollide ||
                 !body.Hard ||
+                body.BodyType != BodyType.Static ||
                 !fixturesQuery.TryGetComponent(ent, out var manager))
             {
                 continue;
@@ -78,5 +89,15 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
             break;
         }
+
+        Dirty(component);
+
+        if (chunk.TileData.Count == 0)
+        {
+            component.Chunks.Remove(chunk.Origin);
+            return;
+        }
+
+        chunk.LastUpdate = _timing.CurTick;
     }
 }
