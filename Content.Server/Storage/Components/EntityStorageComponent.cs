@@ -61,7 +61,7 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("occludesLight")]
     public bool OccludesLight = true;
 
-    [DataField("deleteContentsOnDestruction")]
+    [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteContentsOnDestruction = false;
 
     /// <summary>

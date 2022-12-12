@@ -122,6 +122,12 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!component.DeleteContentsOnDestruction)
         {
             EmptyContents(uid, component);
+            return;
+        }
+
+        foreach (var ent in new List<EntityUid>(component.Contents.ContainedEntities))
+        {
+            EntityManager.DeleteEntity(ent);
         }
     }
 
