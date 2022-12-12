@@ -1,12 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: The syndicate infiltrator ship now has automatic turrets that shoot
-      intruders., type: Add}
-  - {message: 'The syndicate discovered grinders, now nukies have it at the outpost.',
-    type: Add}
-  id: 2253
-  time: '2022-09-06T08:20:33.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added 10 new paintings to be found around the station. The old ones
@@ -2935,3 +2927,8 @@ Entries:
     type: Tweak}
   id: 2752
   time: '2022-12-12T03:33:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Burning entities now emit light., type: Add}
+  id: 2753
+  time: '2022-12-12T03:35:33.0000000+00:00'
