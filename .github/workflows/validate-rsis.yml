@@ -13,6 +13,5 @@ jobs:
       - name: Pull engine updates
         uses: space-wizards/submodule-dependency@v0.1.5
       - name: Validate RSIs
-        uses: space-wizards/json-schema-validator@v1.0.2
         run: |
           python3 RobustToolbox/Schemas/validate_rsis.py Resources/
