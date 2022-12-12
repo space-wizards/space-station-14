@@ -115,12 +115,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false)
+    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
-            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume);
+            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
         }
 
         UpdateAppearance(uid, solutionHolder);
