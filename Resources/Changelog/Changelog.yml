@@ -1,37 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: The security belt can now hold seclites., type: Tweak}
-  id: 2246
-  time: '2022-09-06T02:46:30.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Insulated glove users are no longer safe from licoxide., type: Fix}
-  id: 2247
-  time: '2022-09-06T02:48:36.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: CBURN equipment has been improved, type: Tweak}
-  - {message: new ERT/BURN pda sprite added, type: Add}
-  id: 2248
-  time: '2022-09-06T02:49:56.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Added Pax, a drug that disables people''s combat mode.', type: Add}
-  id: 2249
-  time: '2022-09-06T02:52:58.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed wood planks and sliceable food sometimes getting "stuck" to a
-      player after cutting., type: Fix}
-  id: 2250
-  time: '2022-09-06T05:08:19.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Firelocks will now properly warn users that try to open them if they
-      are holding back an inferno or the cold vacuum of space., type: Fix}
-  id: 2251
-  time: '2022-09-06T05:55:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Entities that are shot will now show a red effect., type: Add}
@@ -2934,3 +2901,36 @@ Entries:
       manner, type: Tweak}
   id: 2745
   time: '2022-12-10T22:55:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The contents of a hydraulic clamp are now spit out when the mech is
+      destroyed., type: Fix}
+  id: 2746
+  time: '2022-12-11T11:31:55.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Removed NSS Pillar., type: Remove}
+  id: 2747
+  time: '2022-12-11T11:33:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix duplicate mech footstep sounds., type: Fix}
+  id: 2748
+  time: '2022-12-11T13:18:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs have a chance to miss in melee combat., type: Add}
+  id: 2749
+  time: '2022-12-11T13:37:10.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Nanotrasen has resumed long-range fax production! Expect these at your
+      station as well., type: Add}
+  id: 2750
+  time: '2022-12-11T18:06:11.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed screen freeze when clicking certain UI elements with scrollbars.,
+    type: Fix}
+  id: 2751
+  time: '2022-12-12T00:01:27.0000000+00:00'
