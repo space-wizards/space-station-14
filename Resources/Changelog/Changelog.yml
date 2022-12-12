@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Entities that are shot will now show a red effect., type: Add}
-  id: 2252
-  time: '2022-09-06T08:01:35.0000000+00:00'
 - author: DogZeroX
   changes:
   - {message: The syndicate infiltrator ship now has automatic turrets that shoot
@@ -2934,3 +2929,9 @@ Entries:
     type: Fix}
   id: 2751
   time: '2022-12-12T00:01:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will be smarter about steering around and should stack much less.,
+    type: Tweak}
+  id: 2752
+  time: '2022-12-12T03:33:43.0000000+00:00'
