@@ -4,6 +4,7 @@ device-frequency-prototype-name-suit-sensors = Сенсоры костюмов
 device-frequency-prototype-name-lights = Умное освещение
 device-frequency-prototype-name-mailing-units = Почтовый блок
 device-frequency-prototype-name-pdas = КПК
+device-frequency-prototype-name-fax = Факс
 # prefixes for randomly generated device addresses
 device-address-prefix-vent = Вент-
 device-address-prefix-scrubber = Скр-

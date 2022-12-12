@@ -22,6 +22,7 @@ verb-categories-instrument-style = Стиль инструмента
 verb-categories-set-sensor = Датчики
 verb-categories-timer = Установить задержку
 verb-categories-lever = Рычаг
+verb-categories-fax = Установить назначение
 verb-common-toggle-light = Переключить свет
 verb-common-close = Закрыть
 verb-common-open = Открыть
