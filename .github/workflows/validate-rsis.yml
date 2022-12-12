@@ -12,6 +12,9 @@ jobs:
         run: git submodule update --init
       - name: Pull engine updates
         uses: space-wizards/submodule-dependency@v0.1.5
+      - name: Install Python dependencies
+        run: |
+          pip3 install --user pillow jsonschema
       - name: Validate RSIs
         run: |
           python3 RobustToolbox/Schemas/validate_rsis.py Resources/
