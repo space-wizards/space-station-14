@@ -155,8 +155,7 @@ namespace Content.Server.GameTicking
 
             var playerEntity = mind.CurrentEntity;
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.HasComponent<GhostComponent>(playerEntity))
+            if (HasComp<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -180,7 +179,7 @@ namespace Content.Server.GameTicking
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (mobState.IsCritical())
+                if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
@@ -191,7 +190,10 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var ghost = Spawn("MobObserver", position.ToMap(entities));
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var coords = _transform.GetMoverCoordinates(position, xformQuery);
+
+            var ghost = Spawn("MobObserver", coords);
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
