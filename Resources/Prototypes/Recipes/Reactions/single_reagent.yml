@@ -14,7 +14,7 @@
   requiredMixerCategories:
   - Holy
   reactants:
-    Blood
+    Blood:
       amount: 1
   products:
     Wine: 1

@@ -2,7 +2,6 @@
   parent: BaseItem
   id: BaseBeaker
   abstract: true
-  canMix: true
   components:
   - type: Tag
     tags:
@@ -21,6 +20,7 @@
     solutions:
       beaker:
         maxVol: 50
+        canMix: true
   - type: FitsInDispenser
     solution: beaker
   - type: RefillableSolution

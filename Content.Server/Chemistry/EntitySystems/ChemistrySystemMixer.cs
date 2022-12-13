@@ -1,6 +1,7 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Weapons.Melee;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
@@ -25,13 +26,9 @@ public sealed partial class ChemistrySystem
     {
         if (!args.Target.HasValue || !args.CanReach)
             return;
-
-        if (!_solutions.TryGetSolution(component.Owner, "reagents", out var solution))
-            return;
-
-        // no chaplain, you can't turn someones blood into wine while it's in their body
-        if (!solution.CanMix)
-            return;
+        Solution? solution = null;
+        if (!_solutions.TryGetMixableSolution(args.Target.Value, out solution))
+              return;
 
         _solutions.UpdateChemicals(args.Target.Value, solution, true, component);
     }

@@ -4,12 +4,12 @@
   id: DrinkBaseCup
   name: base cup
   abstract: true
-  canMix: true
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 10
+        canMix: true
   - type: FitsInDispenser
     solution: drink
   - type: DrawableSolution
