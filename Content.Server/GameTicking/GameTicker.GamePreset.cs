@@ -153,7 +153,7 @@ namespace Content.Server.GameTicking
             if (handleEv.Handled)
                 return handleEv.Result;
 
-            if (mind.OwnedComponent is { PreventGhosting: true })
+            if (mind.PreventGhosting)
             {
                 if (mind.Session != null)
                     // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
