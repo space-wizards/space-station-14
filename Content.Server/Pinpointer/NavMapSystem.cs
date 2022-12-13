@@ -17,7 +17,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
 
-    public const byte ChunkSize = 4;
+    public const byte ChunkSize = 8;
 
     public override void Initialize()
     {
@@ -34,18 +34,11 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
-        var data = new Dictionary<Vector2i, List<Vector2[]>>(component.Chunks.Count);
+        var data = new Dictionary<Vector2i, long>(component.Chunks.Count);
 
         foreach (var (index, chunk) in component.Chunks)
         {
-            var tileData = new List<Vector2[]>(chunk.TileData.Count);
-
-            foreach (var tile in chunk.TileData.Values)
-            {
-                tileData.Add(tile);
-            }
-
-            data.Add(index, tileData);
+            data.Add(index, chunk.TileData);
         }
 
         // TODO: Dear lord this will need diffs.
@@ -73,12 +66,22 @@ public sealed class NavMapSystem : SharedNavMapSystem
         RefreshTile(grid, navMap, chunk, tile);
     }
 
+    /// <summary>
+    /// Converts the chunk's tile into a bitflag for the slot.
+    /// </summary>
+    private long GetFlag(Vector2i relativeTile)
+    {
+        return 1 << (relativeTile.X + relativeTile.Y * ChunkSize);
+    }
+
     private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
 
         // TODO: Diff existing data.
-        chunk.TileData.Remove(relative);
+        var flag = GetFlag(relative);
+
+        chunk.TileData &= ~flag;
 
         var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
         // TODO: Use something to get convex poly.
@@ -108,7 +111,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
                     data[i] = poly.Vertices[i] + tile * grid.TileSize;
                 }
 
-                chunk.TileData.Add(relative, data);
+                chunk.TileData |= flag;
                 break;
             }
 
@@ -117,7 +120,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         Dirty(component);
 
-        if (chunk.TileData.Count == 0)
+        if (chunk.TileData == 0)
         {
             component.Chunks.Remove(chunk.Origin);
             return;

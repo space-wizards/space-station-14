@@ -26,7 +26,10 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         foreach (var (origin, data) in state.TileData)
         {
-            component.Chunks.Add(origin, data);
+            component.Chunks.Add(origin, new NavMapChunk(origin)
+            {
+                TileData = data,
+            });
         }
     }
 }
