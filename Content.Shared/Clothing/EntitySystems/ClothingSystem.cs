@@ -1,7 +1,9 @@
 using Content.Shared.Clothing.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
@@ -9,6 +11,8 @@ namespace Content.Shared.Clothing.EntitySystems;
 public abstract class ClothingSystem : EntitySystem
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
 
     public override void Initialize()
     {
@@ -23,11 +27,15 @@ public abstract class ClothingSystem : EntitySystem
     protected virtual void OnGotEquipped(EntityUid uid, ClothingComponent component, GotEquippedEvent args)
     {
         component.InSlot = args.Slot;
+        if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, false);
     }
 
     protected virtual void OnGotUnequipped(EntityUid uid, ClothingComponent component, GotUnequippedEvent args)
     {
         component.InSlot = null;
+        if (args.Slot == "head" && _tagSystem.HasTag(args.Equipment, "HidesHair"))
+            _humanoidSystem.SetLayerVisibility(args.Equipee, HumanoidVisualLayers.Hair, true);
     }
 
     private void OnGetState(EntityUid uid, ClothingComponent component, ref ComponentGetState args)

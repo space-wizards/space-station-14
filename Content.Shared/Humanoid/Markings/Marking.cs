@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings
 {
+    [DataDefinition]
     [Serializable, NetSerializable]
     public sealed class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>
     {
@@ -54,7 +55,7 @@ namespace Content.Shared.Humanoid.Markings
         /// <summary>
         ///     If this marking is currently visible.
         /// </summary>
-        [ViewVariables]
+        [DataField("visible")]
         public bool Visible = true;
 
         /// <summary>

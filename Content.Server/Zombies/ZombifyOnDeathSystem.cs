@@ -46,7 +46,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly HumanoidSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
@@ -125,7 +125,7 @@ namespace Content.Server.Zombies
             Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
-            if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);

@@ -128,7 +128,7 @@ namespace Content.Client.Lobby.UI
                     _viewBox.AddChild(viewWest);
                     _viewBox.AddChild(viewEast);
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
+                    EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy.Value, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy.Value, selectedCharacter);
                 }
             }

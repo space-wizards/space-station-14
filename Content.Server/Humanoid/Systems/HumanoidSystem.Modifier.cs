@@ -7,12 +7,12 @@ using Robust.Server.Player;
 
 namespace Content.Server.Humanoid;
 
-public sealed partial class HumanoidSystem
+public sealed partial class HumanoidAppearanceSystem
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
-    private void OnVerbsRequest(EntityUid uid, HumanoidComponent component, GetVerbsEvent<Verb> args)
+    private void OnVerbsRequest(EntityUid uid, HumanoidAppearanceComponent component, GetVerbsEvent<Verb> args)
     {
         if (!TryComp<ActorComponent>(args.User, out var actor))
         {
@@ -35,12 +35,12 @@ public sealed partial class HumanoidSystem
                 _uiSystem.TrySetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
-                    new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                    new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
             }
         });
     }
 
-    private void OnBaseLayersSet(EntityUid uid, HumanoidComponent component,
+    private void OnBaseLayersSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierBaseLayersSetMessage message)
     {
         if (message.Session is not IPlayerSession player
@@ -55,24 +55,21 @@ public sealed partial class HumanoidSystem
         }
         else
         {
-            if (!component.CustomBaseLayers.TryAdd(message.Layer, message.Info))
-            {
-                component.CustomBaseLayers[message.Layer] = message.Info;
-            }
+            component.CustomBaseLayers[message.Layer] = message.Info.Value;
         }
 
-        Synchronize(uid, component);
+        Dirty(component);
 
         if (message.ResendState)
         {
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
         }
     }
 
-    private void OnMarkingsSet(EntityUid uid, HumanoidComponent component,
+    private void OnMarkingsSet(EntityUid uid, HumanoidAppearanceComponent component,
         HumanoidMarkingModifierMarkingSetMessage message)
     {
         if (message.Session is not IPlayerSession player
@@ -81,15 +78,15 @@ public sealed partial class HumanoidSystem
             return;
         }
 
-        component.CurrentMarkings = message.MarkingSet;
-        Synchronize(uid, component);
+        component.MarkingSet = message.MarkingSet;
+        Dirty(component);
 
         if (message.ResendState)
         {
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.MarkingSet, component.Species, component.SkinColor, component.CustomBaseLayers));
         }
 
     }

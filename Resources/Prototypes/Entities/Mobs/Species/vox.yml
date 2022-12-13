@@ -90,7 +90,7 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Humanoid
+  - type:  HumanoidAppearance
     species: Vox
     # canColorHair: false
     # canColorFacialHair: false
@@ -107,7 +107,7 @@
   parent: MobHumanDummy
   noSpawn: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Vox
   - type: Body
     prototype: Vox

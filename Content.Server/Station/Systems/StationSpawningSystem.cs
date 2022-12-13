@@ -34,7 +34,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
-    [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PDASystem _pdaSystem = default!;
@@ -106,7 +106,7 @@ public sealed class StationSpawningSystem : EntitySystem
         }
 
         var entity = EntityManager.SpawnEntity(
-            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidSystem.DefaultSpecies).Prototype,
+            _prototypeManager.Index<SpeciesPrototype>(profile?.Species ?? HumanoidAppearanceSystem.DefaultSpecies).Prototype,
             coordinates);
 
         if (job?.StartingGear != null)

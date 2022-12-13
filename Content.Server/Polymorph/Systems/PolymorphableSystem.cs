@@ -30,7 +30,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly HumanoidSystem _humanoid = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
