@@ -13408,11 +13408,31 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 12
+  - index: 2
     type: Map
   - type: PhysicsMap
   - type: Broadphase
   - type: OccluderTree
+  - parallax: Sky
+    type: Parallax
+  - space: False
+    mixture:
+      volume: 2500
+      temperature: 248.15
+      moles:
+      - 21.824879
+      - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    type: MapAtmosphere
 - uid: 1320
   type: SurveillanceCameraGeneral
   components:

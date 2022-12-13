@@ -232,7 +232,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsBodyRelevant(PhysicsComponent body)
     {
-        if (!body.Hard || !body.CanCollide || body.BodyType != BodyType.Static)
+        if (!body.Hard || body.BodyType != BodyType.Static)
         {
             return false;
         }
@@ -262,7 +262,8 @@ public sealed partial class PathfindingSystem
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if (IsBodyRelevant(ev.Component) &&
+        if (ev.Component.CanCollide &&
+            IsBodyRelevant(ev.Component) &&
             TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {
@@ -457,10 +458,11 @@ public sealed partial class PathfindingSystem
                                 continue;
 
                             // TODO: Inefficient af
-                            foreach (var (_, fixture) in fixtures.Fixtures)
+                            foreach (var fixture in fixtures.Fixtures.Values)
                             {
                                 // Don't need to re-do it.
-                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                if (!fixture.Hard ||
+                                    (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                     continue;
 
@@ -594,13 +596,13 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = new HashSet<PathPoly>();
-                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid.Owner, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }
 
         // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
-        SendBreadcrumbs(chunk, grid.GridEntityId);
+        SendBreadcrumbs(chunk, grid.Owner);
     }
 
     /// <summary>
