@@ -151,6 +151,7 @@
       allowMovement: true
       allowSpeech: true
       makeSentient: true
+      whitelistRequired: false
       name: Sentient Carp
       description: Help the dragon flood the station with carps!
     - type: HTN

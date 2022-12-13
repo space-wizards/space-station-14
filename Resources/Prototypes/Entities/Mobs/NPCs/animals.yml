@@ -743,6 +743,7 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
+    whitelistRequired: false
     name: ghost-role-information-mouse-name
     description: ghost-role-information-mouse-description
   - type: Speech
@@ -1318,6 +1319,7 @@
       rootTask: SimpleHostileCompound
     - type: GhostTakeoverAvailable
       makeSentient: true
+      whitelistRequired: false
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
 
@@ -1902,6 +1904,7 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
+    whitelistRequired: false
     name: ghost-role-information-hamster-name
     description: ghost-role-information-hamster-description
   - type: Speech

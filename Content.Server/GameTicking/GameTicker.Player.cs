@@ -1,4 +1,5 @@
 using Content.Server.Players;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
 using Content.Shared.Preferences;
@@ -14,7 +15,7 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTrackingManager = default!;
         private void InitializePlayer()
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -99,6 +100,7 @@ namespace Content.Server.GameTicking
             {
                 await _userDb.WaitLoadComplete(session);
                 session.ContentData()!.Whitelisted = await _db.GetWhitelistStatusAsync(session.UserId);
+                _playTimeTrackingManager.SendWhitelist(session);
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 

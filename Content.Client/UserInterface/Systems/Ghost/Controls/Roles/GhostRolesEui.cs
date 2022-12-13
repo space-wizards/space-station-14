@@ -1,7 +1,10 @@
 using System.Linq;
 using Content.Client.Eui;
+using Content.Client.Players.PlayTimeTracking;
 using Content.Shared.Eui;
 using Content.Shared.Ghost.Roles;
+using Content.Shared.CCVar;
+using Robust.Shared.Configuration;
 using JetBrains.Annotations;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
@@ -64,15 +67,29 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             if (state is not GhostRolesEuiState ghostState) return;
             _window.ClearEntries();
 
+            var cfg = IoCManager.Resolve<IConfigurationManager>();
+            var playTime =  IoCManager.Resolve<PlayTimeTrackingManager>();
+
             var groupedRoles = ghostState.GhostRoles.GroupBy(
-                role => (role.Name, role.Description));
+                role => (role.Name, role.Description, role.WhitelistRequired));
+
+            int denied = 0;
+
             foreach (var group in groupedRoles)
             {
+                if (group.Key.WhitelistRequired && cfg.GetCVar(CCVars.WhitelistEnabled) && !playTime.IsWhitelisted())
+                {
+                    denied = denied + 1;
+                    continue;
+                }
+
                 var name = group.Key.Name;
                 var description = group.Key.Description;
 
                 _window.AddEntry(name, description, group);
             }
+
+            _window.AddDenied(denied);
 
             var closeRulesWindow = ghostState.GhostRoles.All(role => role.Identifier != _windowRulesId);
             if (closeRulesWindow)

@@ -400,6 +400,7 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
+    whitelistRequired: false
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
   - type: InteractionPopup

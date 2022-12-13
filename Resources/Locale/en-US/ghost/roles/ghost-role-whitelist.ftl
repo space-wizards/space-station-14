@@ -1,3 +1,4 @@
-ghost-role-whitelist-title = Whitelist required
-ghost-role-whitelist-text = To play ghost roles, you need to be whitelisted.
-ghost-role-whitelist-OK = OK
+ghost-role-whitelist-text = {$num} roles are not shown because they
+                            require whitelisting to play.
+ghost-role-whitelist-text-one = One role is not shown because it
+                                requires whitelisting to play.

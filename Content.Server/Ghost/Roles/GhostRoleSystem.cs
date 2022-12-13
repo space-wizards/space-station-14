@@ -5,11 +5,10 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
-using Content.Server.Database;
-using Content.Server.Books;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Follower;
+using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
@@ -21,6 +20,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Configuration;
 
 namespace Content.Server.Ghost.Roles
 {
@@ -32,8 +32,7 @@ namespace Content.Server.Ghost.Roles
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly BookSystem _bookSystem = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;
@@ -99,16 +98,6 @@ namespace Content.Server.Ghost.Roles
             var eui = _openUis[session] = new GhostRolesEui();
             _euiManager.OpenEui(eui, session);
             eui.StateDirty();
-        }
-
-        public void OpenWhitelistEUI(IPlayerSession session)
-        {
-            if (session.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.HasComponent<GhostComponent>(attached))
-                return;
-
-            var eui = new GhostRoleWhitelistEui(_bookSystem, session);
-            _euiManager.OpenEui(eui, session);
         }
 
         public void OpenMakeGhostRoleEui(IPlayerSession session, EntityUid uid)
@@ -193,14 +182,11 @@ namespace Content.Server.Ghost.Roles
 
         public void Takeover(IPlayerSession player, uint identifier)
         {
-            // TODO: Whitelist required per ghost role...
-            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && !player.ContentData()!.Whitelisted)
-            {
-                CloseEui(player);
-                return;
-            }
-
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
+
+            if (role.WhitelistRequired && _cfg.GetCVar(CCVars.WhitelistEnabled) && !player.ContentData()!.Whitelisted)
+                return;
+
             if (!role.Take(player)) return;
 
             if (player.AttachedEntity != null)
@@ -243,7 +229,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = (role.RoleRules)};
+                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules, WhitelistRequired = role.WhitelistRequired};
                 i++;
             }
 
@@ -295,7 +281,7 @@ namespace Content.Server.Ghost.Roles
             }
 
             if (role.RoleRules == "")
-                role.RoleRules = (Loc.GetString("ghost-role-component-default-rules"));
+                role.RoleRules = Loc.GetString("ghost-role-component-default-rules");
             RegisterGhostRole(role);
         }
 
@@ -308,21 +294,13 @@ namespace Content.Server.Ghost.Roles
     [AnyCommand]
     public sealed class GhostRoles : IConsoleCommand
     {
-        [Dependency] private readonly IServerDbManager _db = default!;
         public string Command => "ghostroles";
         public string Description => "Opens the ghost role request window.";
         public string Help => $"{Command}";
-        public async void Execute(IConsoleShell shell, string argStr, string[] args)
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if(shell.Player != null)
-            {
-                var cfg = IoCManager.Resolve<IConfigurationManager>();
-                // TODO: remove async... this one is weird about getting the content data...
-                if (cfg.GetCVar(CCVars.WhitelistEnabled) && !await _db.GetWhitelistStatusAsync(shell.Player.UserId))
-                    EntitySystem.Get<GhostRoleSystem>().OpenWhitelistEUI((IPlayerSession)shell.Player);
-                else
-                    EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
-            }
+                EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
         }
