@@ -4,7 +4,7 @@ nuke-component-announcement-armed = Внимание! Механизм само�
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!
 nuke-component-announcement-send-codes = Внимание! Запрошенные коды самоуничтожения были отправлены на консоли связи.
 nuke-component-doafter-warning = Вы начинаете перебирать провода и кнопки, в попытке обезвредить ядерную бомбу. Это может занять некоторое время.
-nuke-user-interface-title = Ядерная Боеголовка
+nuke-user-interface-title = Ядерная боеголовка
 nuke-user-interface-arm-button = ВЗВЕСТИ
 nuke-user-interface-anchor-button = ЗАКРЕПИТЬ
 nuke-user-interface-eject-button = ИЗВЛЕЧЬ
@@ -33,6 +33,6 @@ nuke-label-syndicate = SYN-{ $serial }
 # Codes
 
 nuke-codes-message =
-    [color=red]TOP SECRET![/color]
-    Nuclear device activation code: { $name } - { $code }
-nuke-codes-fax-paper-name = nuclear authentication codes
+    [color=red]СОВЕРШЕННО СЕКРЕТНО![/color]
+    Код активации ядерной боеголовки: { $name } - { $code }
+nuke-codes-fax-paper-name = коды ядерной аутентификации
