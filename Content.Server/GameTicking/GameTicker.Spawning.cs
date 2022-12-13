@@ -105,6 +105,7 @@ namespace Content.Server.GameTicking
 
             if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
                 return;
+
             SpawnPlayer(player, character, station, jobId, lateJoin);
         }
 
@@ -150,6 +151,9 @@ namespace Content.Server.GameTicking
             var jobBans = _roleBanManager.GetJobBans(player.UserId);
             if(jobBans != null) restrictedRoles.UnionWith(jobBans);
 
+            if (jobId != null && !_playTimeTrackings.IsAllowed(player, jobId))
+                return;
+
             // Pick best job best on prefs.
             jobId ??= _stationJobs.PickBestAvailableJobWithPriority(station, character.JobPriorities, true,
                 restrictedRoles);
@@ -183,8 +187,10 @@ namespace Content.Server.GameTicking
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
+            if (jobPrototype.AlwaysUseSpawner)
+                lateJoin = false;
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character, lateJoin: lateJoin);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 

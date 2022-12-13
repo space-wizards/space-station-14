@@ -98,6 +98,7 @@ namespace Content.Server.GameTicking
             async void SpawnWaitDb()
             {
                 await _userDb.WaitLoadComplete(session);
+                session.ContentData()!.Whitelisted = await _db.GetWhitelistStatusAsync(session.UserId);
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 

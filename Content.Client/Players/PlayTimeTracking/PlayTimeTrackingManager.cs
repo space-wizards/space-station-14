@@ -20,10 +20,12 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
+    private bool _whitelisted = false;
 
     public void Initialize()
     {
         _net.RegisterNetMessage<MsgPlayTime>(RxPlayTime);
+        _net.RegisterNetMessage<MsgWhitelist>(RxWhitelist);
 
         _client.RunLevelChanged += ClientOnRunLevelChanged;
     }
@@ -54,6 +56,11 @@ public sealed class PlayTimeTrackingManager
         }*/
     }
 
+    private void RxWhitelist(MsgWhitelist message)
+    {
+        _whitelisted = message.Whitelisted;
+    }
+
     public bool IsAllowed(JobPrototype job, [NotNullWhen(false)] out string? reason)
     {
         reason = null;
@@ -82,7 +89,20 @@ public sealed class PlayTimeTrackingManager
             reasonBuilder.AppendLine(reason);
         }
 
+        if (_cfg.GetCVar(CCVars.WhitelistEnabled) && !_whitelisted)
+        {
+            if (reasonBuilder.Length > 0)
+                reasonBuilder.Append('\n');
+
+            reasonBuilder.AppendLine(Loc.GetString("playtime-deny-reason-not-whitelisted"));
+        }
+
         reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
         return reason == null;
+    }
+
+    public bool IsWhitelisted()
+    {
+        return _whitelisted;
     }
 }

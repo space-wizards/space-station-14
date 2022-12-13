@@ -35,6 +35,11 @@ namespace Content.Server.Players
         /// </summary>
         public bool ExplicitlyDeadminned { get; set; }
 
+        /// <summary>
+        ///     Are they whitelisted? Lets us avoid async.
+        /// </summary>
+        public bool Whitelisted { get; set; }
+
         public void WipeMind()
         {
             Mind?.TransferTo(null);

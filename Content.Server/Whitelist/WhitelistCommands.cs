@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration;
 using Content.Server.Database;
+using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Robust.Server.Player;
@@ -22,6 +23,7 @@ public sealed class AddWhitelistCommand : IConsoleCommand
 
         var db = IoCManager.Resolve<IServerDbManager>();
         var loc = IoCManager.Resolve<IPlayerLocator>();
+        var player = IoCManager.Resolve<IPlayerManager>();
 
         var name = args[0];
         var data = await loc.LookupIdByNameAsync(name);
@@ -37,6 +39,10 @@ public sealed class AddWhitelistCommand : IConsoleCommand
             }
 
             await db.AddToWhitelistAsync(guid);
+
+            if (player.TryGetPlayerDataByUsername(name, out var playerData))
+                playerData.ContentData()!.Whitelisted = true;
+
             shell.WriteLine(Loc.GetString("command-whitelistadd-added", ("username", data.Username)));
             return;
         }
@@ -58,6 +64,7 @@ public sealed class RemoveWhitelistCommand : IConsoleCommand
 
         var db = IoCManager.Resolve<IServerDbManager>();
         var loc = IoCManager.Resolve<IPlayerLocator>();
+        var player = IoCManager.Resolve<IPlayerManager>();
 
         var name = args[0];
         var data = await loc.LookupIdByNameAsync(name);
@@ -73,6 +80,10 @@ public sealed class RemoveWhitelistCommand : IConsoleCommand
             }
 
             await db.RemoveFromWhitelistAsync(guid);
+
+            if (player.TryGetPlayerDataByUsername(name, out var playerData))
+                playerData.ContentData()!.Whitelisted = false;
+
             shell.WriteLine(Loc.GetString("command-whitelistremove-removed", ("username", data.Username)));
             return;
         }

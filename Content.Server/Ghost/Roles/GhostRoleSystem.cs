@@ -191,9 +191,10 @@ namespace Content.Server.Ghost.Roles
             UpdateAllEui();
         }
 
-        public async void Takeover(IPlayerSession player, uint identifier)
+        public void Takeover(IPlayerSession player, uint identifier)
         {
-            if (!await _db.GetWhitelistStatusAsync(player.UserId))
+            // TODO: Whitelist required per ghost role...
+            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && !player.ContentData()!.Whitelisted)
             {
                 CloseEui(player);
                 return;
@@ -315,10 +316,12 @@ namespace Content.Server.Ghost.Roles
         {
             if(shell.Player != null)
             {
-                if (await _db.GetWhitelistStatusAsync(shell.Player.UserId))
-                    EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
-                else
+                var cfg = IoCManager.Resolve<IConfigurationManager>();
+                // TODO: remove async... this one is weird about getting the content data...
+                if (cfg.GetCVar(CCVars.WhitelistEnabled) && !await _db.GetWhitelistStatusAsync(shell.Player.UserId))
                     EntitySystem.Get<GhostRoleSystem>().OpenWhitelistEUI((IPlayerSession)shell.Player);
+                else
+                    EntitySystem.Get<GhostRoleSystem>().OpenEui((IPlayerSession)shell.Player);
             }
             else
                 shell.WriteLine("You can only open the ghost roles UI on a client.");
