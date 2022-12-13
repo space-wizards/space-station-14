@@ -1,23 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Entities that are shot will now show a red effect., type: Add}
-  id: 2252
-  time: '2022-09-06T08:01:35.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: The syndicate infiltrator ship now has automatic turrets that shoot
-      intruders., type: Add}
-  - {message: 'The syndicate discovered grinders, now nukies have it at the outpost.',
-    type: Add}
-  id: 2253
-  time: '2022-09-06T08:20:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added 10 new paintings to be found around the station. The old ones
-      look better too., type: Add}
-  id: 2254
-  time: '2022-09-07T01:54:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Zombie move speed should no longer mispredict., type: Fix}
@@ -2934,3 +2915,20 @@ Entries:
     type: Fix}
   id: 2751
   time: '2022-12-12T00:01:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will be smarter about steering around and should stack much less.,
+    type: Tweak}
+  id: 2752
+  time: '2022-12-12T03:33:43.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Burning entities now emit light., type: Add}
+  id: 2753
+  time: '2022-12-12T03:35:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: RD no longer starts with artifact analyzer and analysis console boards.,
+    type: Remove}
+  id: 2754
+  time: '2022-12-12T10:19:38.0000000+00:00'

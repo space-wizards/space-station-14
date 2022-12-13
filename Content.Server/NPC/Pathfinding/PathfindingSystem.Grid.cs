@@ -596,13 +596,13 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = new HashSet<PathPoly>();
-                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid.Owner, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }
 
         // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
-        SendBreadcrumbs(chunk, grid.GridEntityId);
+        SendBreadcrumbs(chunk, grid.Owner);
     }
 
     /// <summary>

@@ -139,12 +139,12 @@ namespace Content.Server.RCD.Systems
                 case RcdMode.Walls:
                     var ent = EntityManager.SpawnEntity("WallSolid", mapGrid.GridTileToLocal(snapPos));
                     Transform(ent).LocalRotation = Angle.Zero; // Walls always need to point south.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(ent)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 case RcdMode.Airlock:
                     var airlock = EntityManager.SpawnEntity("Airlock", mapGrid.GridTileToLocal(snapPos));
                     Transform(airlock).LocalRotation = Transform(rcd.Owner).LocalRotation; //Now apply icon smoothing.
-                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.GridEntityId}");
+                    _adminLogger.Add(LogType.RCD, LogImpact.High, $"{ToPrettyString(args.User):user} used RCD to spawn {ToPrettyString(airlock)} at {snapPos} on grid {mapGrid.Owner}");
                     break;
                 default:
                     args.Handled = true;
