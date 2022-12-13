@@ -103,15 +103,14 @@ namespace Content.Client.Fluids
         {
             sprite.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
             sprite.Color = sprite.Color.WithAlpha(alpha);
+            sprite.LayerSetAutoAnimated(0, false);
             sprite.LayerSetAutoAnimated(0, true); //fixes a bug where the sparkle effect would sometimes freeze on a single frame.
-            Logger.Debug("Wet Floor effect should now be animated");
         }
 
         private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)
         {
             RandomizeState(sprite, originalRSI);
             sprite.LayerSetAutoAnimated(0, false);
-            Logger.Debug("Wet Floor effect should now be stopped");
         }
 
         private void RandomizeState(SpriteComponent sprite, RSI? rsi)
