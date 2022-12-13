@@ -36,6 +36,9 @@ public sealed partial class MarkingPicker : Control
 
     private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
     public Color CurrentSkinColor = Color.White;
+    public Color CurrentEyeColor = Color.Black;
+    public Color CurrentHairColor = Color.Black;
+    public Color CurrentFacialHairColor = Color.Black;
 
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
@@ -74,7 +77,7 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
-    public void SetData(List<Marking> newMarkings, string species, Color skinColor)
+    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor, Color hairColor, Color facialHairColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
@@ -87,12 +90,15 @@ public sealed partial class MarkingPicker : Control
 
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
+        CurrentEyeColor = eyeColor;
+        CurrentHairColor = hairColor;
+        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();
     }
 
-    public void SetData(MarkingSet set, string species, Color skinColor)
+    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor, Color hairColor, Color facialHairColor)
     {
         _currentMarkings = set;
 
@@ -103,12 +109,18 @@ public sealed partial class MarkingPicker : Control
 
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
+        CurrentEyeColor = eyeColor;
+        CurrentHairColor = hairColor;
+        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();
     }
 
     public void SetSkinColor(Color color) => CurrentSkinColor = color;
+    public void SetEyeColor(Color color) => CurrentEyeColor = color;
+    public void SetHairColor(Color color) => CurrentHairColor = color;
+    public void SetFacialHairColor(Color color) => CurrentFacialHairColor = color;
 
     public MarkingPicker()
     {
@@ -413,9 +425,62 @@ public sealed partial class MarkingPicker : Control
 
 
         var markingObject = marking.AsMarking();
-        for (var i = 0; i < markingObject.MarkingColors.Count; i++)
+
+        // Coloring from default properties
+        Color default_color = MarkingColoring.GetMarkingColor(
+            marking.Coloring.Default,
+            CurrentSkinColor,
+            CurrentEyeColor,
+            CurrentHairColor,
+            CurrentFacialHairColor
+        );
+
+
+        if (marking.Coloring.Layers != null)
         {
-            markingObject.SetColor(i, CurrentSkinColor);
+            // If some layers are specified.
+            for (var i = 0; i < marking.Sprites.Count; i++)
+            {
+                // Getting layer name
+                string name;
+                switch (marking.Sprites[i])
+                {
+                    case SpriteSpecifier.Rsi rsi:
+                        name = rsi.RsiState;
+                        break;
+                    case SpriteSpecifier.Texture texture:
+                        name = texture.TexturePath.Filename;
+                        break;
+                    default:
+                        markingObject.SetColor(i, default_color);
+                        continue;
+                }
+
+                // All specified layers must be colored separately, all unspecified must depend on default coloring
+                if(marking.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
+                {
+                    Color marking_color = MarkingColoring.GetMarkingColor(
+                        properties,
+                        CurrentSkinColor,
+                        CurrentEyeColor,
+                        CurrentHairColor,
+                        CurrentFacialHairColor
+                    );
+                    markingObject.SetColor(i, marking_color);
+                }
+                else
+                {
+                    markingObject.SetColor(i, default_color);
+                }
+            }
+        }
+        else
+        {
+            // If layers is not specified, then every layer must be default
+            for (var i = 0; i < markingObject.MarkingColors.Count; i++)
+            {
+                markingObject.SetColor(i, default_color);
+            }
         }
 
         markingObject.Forced = Forced;

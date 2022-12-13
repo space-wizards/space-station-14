@@ -51,9 +51,16 @@ public sealed partial class HumanoidMarkingModifierWindow : DefaultWindow
         MarkingPickerWidget.IgnoreSpecies = MarkingForced.Pressed;
     }
 
-    public void SetState(MarkingSet markings, string species, Color skinColor, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> info)
+    public void SetState(MarkingSet markings, string species, Color skinColor,
+    Color eyeColor, Color hairColor, Color facialHairColor,
+    Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> info)
     {
-        MarkingPickerWidget.SetData(markings, species, skinColor);
+        MarkingPickerWidget.SetData(markings, species,
+                skinColor,
+                eyeColor,
+                hairColor,
+                facialHairColor
+            );
 
         foreach (var (layer, modifier) in _modifiers)
         {

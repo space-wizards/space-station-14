@@ -68,10 +68,10 @@ public sealed class ColoringProperties
 
 public static class MarkingColoring
 {
-    public static Color GetMarkingColor(MarkingColoringType type, Color? skinColor, Color? eyeColor, Color? hairColor, Color? facialHairColor, Color? defaultColor, bool negative = false)
+    public static Color GetMarkingColor(ColoringProperties properties, Color? skinColor, Color? eyeColor, Color? hairColor, Color? facialHairColor)
     {
-        Color? color = defaultColor;
-        switch (type)
+        Color? color = null;
+        switch (properties.Type)
         {
             case MarkingColoringType.Color:
                 color = Color();

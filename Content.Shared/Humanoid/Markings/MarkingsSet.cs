@@ -224,10 +224,8 @@ public sealed class MarkingSet
                 {
                     // Coloring from default properties
                     Color default_color = MarkingColoring.GetMarkingColor(
-                        prototype.Coloring.Default.Type,
-                        skinColor, eyeColor, hairColor, hairColor,
-                        prototype.Coloring.Default.Color,
-                        false
+                        prototype.Coloring.Default,
+                        skinColor, eyeColor, hairColor, hairColor
                     );
 
                     Marking marking;
@@ -266,10 +264,8 @@ public sealed class MarkingSet
                             if(prototype.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
                             {
                                 Color marking_color = MarkingColoring.GetMarkingColor(
-                                    properties.Type,
-                                    skinColor, eyeColor, hairColor, hairColor,
-                                    properties.Color,
-                                    false
+                                    properties,
+                                    skinColor, eyeColor, hairColor, hairColor
                                 );
                                 colors.Add(marking_color);
                             }
@@ -277,7 +273,6 @@ public sealed class MarkingSet
                             {
                                 colors.Add(default_color);
                             }
-                            Logger.DebugS("mrkc", $"Marking '{points.DefaultMarkings[index]}', Name: '{name}'");
                         }
 
                         marking = new Marking(points.DefaultMarkings[index], colors);

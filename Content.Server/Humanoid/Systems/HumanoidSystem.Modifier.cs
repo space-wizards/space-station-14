@@ -35,7 +35,13 @@ public sealed partial class HumanoidSystem
                 _uiSystem.TrySetUiState(
                     uid,
                     HumanoidMarkingModifierKey.Key,
-                    new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                    new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species,
+                        component.SkinColor,
+                        component.CachedEyeColor,
+                        component.CachedHairColor,
+                        component.CachedHairColor,
+                        component.CustomBaseLayers
+                    ));
             }
         });
     }
@@ -68,7 +74,13 @@ public sealed partial class HumanoidSystem
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species,
+                        component.SkinColor,
+                        component.CachedEyeColor,
+                        component.CachedHairColor,
+                        component.CachedHairColor,
+                        component.CustomBaseLayers
+                    ));
         }
     }
 
@@ -89,7 +101,13 @@ public sealed partial class HumanoidSystem
             _uiSystem.TrySetUiState(
                 uid,
                 HumanoidMarkingModifierKey.Key,
-                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species, component.SkinColor, component.CustomBaseLayers));
+                new HumanoidMarkingModifierState(component.CurrentMarkings, component.Species,
+                        component.SkinColor,
+                        component.CachedEyeColor,
+                        component.CachedHairColor,
+                        component.CachedHairColor,
+                        component.CustomBaseLayers
+                    ));
         }
 
     }

@@ -124,7 +124,7 @@
   speciesRestriction: [Reptilian]
   coloring:
     default:
-      type: FollowSkinColor
+      type: FollowEyeColor
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth

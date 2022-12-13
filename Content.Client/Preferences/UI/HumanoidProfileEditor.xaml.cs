@@ -344,6 +344,7 @@ namespace Content.Client.Preferences.UI
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithEyeColor(newColor));
                 IsDirty = true;
+                UpdateEyePickers();
             };
 
             #endregion Eyes
@@ -940,7 +941,12 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
-            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species, Profile.Appearance.SkinColor);
+            CMarkings.SetData(Profile.Appearance.Markings, Profile.Species,
+                Profile.Appearance.SkinColor,
+                Profile.Appearance.EyeColor,
+                Profile.Appearance.HairColor,
+                Profile.Appearance.FacialHairColor
+            );
         }
 
         private void UpdateSpecies()
@@ -1002,6 +1008,9 @@ namespace Content.Client.Preferences.UI
                 _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
             };
 
+            CMarkings.CurrentHairColor = Profile.Appearance.HairColor;
+            CMarkings.CurrentFacialHairColor = Profile.Appearance.FacialHairColor;
+
             _hairPicker.UpdateData(
                 hairMarking,
                 Profile.Species,
@@ -1019,6 +1028,7 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
+            CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
             _eyesPicker.SetData(Profile.Appearance.EyeColor);
         }
 

@@ -40,16 +40,30 @@ public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInter
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
-    public HumanoidMarkingModifierState(MarkingSet markingSet, string species, Color skinColor, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers)
+    public HumanoidMarkingModifierState(
+        MarkingSet markingSet,
+        string species,
+        Color skinColor,
+        Color eyeColor,
+        Color hairColor,
+        Color facialHairColor,
+        Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers
+    )
     {
         MarkingSet = markingSet;
         Species = species;
         SkinColor = skinColor;
+        EyeColor = eyeColor;
+        HairColor = hairColor;
+        FacialHairColor = facialHairColor;
         CustomBaseLayers = customBaseLayers;
     }
 
     public MarkingSet MarkingSet { get; }
     public string Species { get; }
     public Color SkinColor { get; }
+    public Color EyeColor { get; }
+    public Color HairColor { get; }
+    public Color FacialHairColor { get; }
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers { get; }
 }
