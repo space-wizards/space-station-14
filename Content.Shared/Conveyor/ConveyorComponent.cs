@@ -45,13 +45,13 @@ public sealed class ConveyorComponent : Component
 }
 
 [Serializable, NetSerializable]
-public enum ConveyorVisuals
+public enum ConveyorVisuals : byte
 {
     State
 }
 
 [Serializable, NetSerializable]
-public enum ConveyorState
+public enum ConveyorState : byte
 {
     Off,
     Forward,
