@@ -17,7 +17,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
 
-    public const byte ChunkSize = 8;
+    public const byte ChunkSize = 4;
 
     public override void Initialize()
     {
