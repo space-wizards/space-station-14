@@ -3405,3 +3405,13 @@ Entries:
     type: Add
   id: 406
   time: '2022-12-11T07:00:42.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u043E \u0432\u0435\u0441\
+      \u0435\u043B\u044C\u0435!"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u043E \u0432\u0435\u0441\u0435\u043B\u044C\
+      \u0435!"
+    type: Remove
+  id: 407
+  time: '2022-12-13T14:07:50.0000000+00:00'
