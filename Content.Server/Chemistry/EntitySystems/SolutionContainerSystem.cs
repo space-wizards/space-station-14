@@ -346,7 +346,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         var tryGetSolution = solutionsMgr.Solutions.FirstOrNull(x => x.Value.CanMix);
-        if(tryGetSolution.HasValue)
+        if (tryGetSolution.HasValue)
         {
             solution = tryGetSolution.Value.Value;
             return true;
