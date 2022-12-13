@@ -1,0 +1,20 @@
+- type: entity
+  id: StationMap
+  name: station map
+  desc: a
+  parent: BaseItem
+  components:
+    - type: Sprite
+      netsync: false
+      sprite: Objects/Devices/timer.rsi
+      layers:
+        - state: timer
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      # verbText: verb-instrument-openui
+      key: enum.StationMapUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.StationMapUiKey.Key
+          type: StationMapBoundUserInterface
