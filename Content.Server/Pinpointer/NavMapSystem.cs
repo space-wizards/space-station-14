@@ -17,8 +17,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
 
-    public const byte ChunkSize = 8;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -34,7 +32,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
-        var data = new Dictionary<Vector2i, long>(component.Chunks.Count);
+        var data = new Dictionary<Vector2i, int>(component.Chunks.Count);
 
         foreach (var (index, chunk) in component.Chunks)
         {
@@ -64,14 +62,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
         }
 
         RefreshTile(grid, navMap, chunk, tile);
-    }
-
-    /// <summary>
-    /// Converts the chunk's tile into a bitflag for the slot.
-    /// </summary>
-    private long GetFlag(Vector2i relativeTile)
-    {
-        return 1 << (relativeTile.X + relativeTile.Y * ChunkSize);
     }
 
     private void RefreshTile(MapGridComponent grid, NavMapComponent component, NavMapChunk chunk, Vector2i tile)

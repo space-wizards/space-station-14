@@ -21,7 +21,7 @@ public sealed class NavMapChunk
     /// <summary>
     /// Bitmask for tiles, 1 for occupied and 0 for empty.
     /// </summary>
-    public long TileData;
+    public int TileData;
 
     public NavMapChunk(Vector2i origin)
     {
