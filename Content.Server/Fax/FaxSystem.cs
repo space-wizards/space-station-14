@@ -268,7 +268,10 @@ public sealed class FaxSystem : EntitySystem
                         !args.Data.TryGetValue(FaxConstants.FaxPaperContentData, out string? content))
                         return;
 
-                    var printout = new FaxPrintout(content, name);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<string>? stampedBy);
+
+                    var printout = new FaxPrintout(content, name, stampState, stampedBy);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -388,6 +391,13 @@ public sealed class FaxSystem : EntitySystem
             { FaxConstants.FaxPaperNameData, metadata.EntityName },
             { FaxConstants.FaxPaperContentData, paper.Content },
         };
+
+        if (paper.StampState != null)
+        {
+            payload[FaxConstants.FaxPaperStampStateData] = paper.StampState;
+            payload[FaxConstants.FaxPaperStampedByData] = paper.StampedBy;
+        }
+        
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         component.SendTimeoutRemaining += component.SendTimeout;
@@ -428,7 +438,18 @@ public sealed class FaxSystem : EntitySystem
         var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
+        {
             _paperSystem.SetContent(printed, printout.Content);
+
+            // Apply stamps
+            if (printout.StampState != null)
+            {
+                foreach (var stampedBy in printout.StampedBy)
+                {
+                    _paperSystem.TryStamp(printed, stampedBy, printout.StampState);
+                }
+            }
+        }
 
         if (TryComp<MetaDataComponent>(printed, out var metadata))
             metadata.EntityName = printout.Name;

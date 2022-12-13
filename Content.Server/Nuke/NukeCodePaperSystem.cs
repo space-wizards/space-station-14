@@ -1,10 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
-using Content.Server.Communications;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nuke
 {
@@ -14,6 +15,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
+        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public override void Initialize()
         {
@@ -55,7 +57,11 @@ namespace Content.Server.Nuke
                     continue;
                 }
 
-                var printout = new FaxPrintout(paperContent, Loc.GetString("nuke-codes-fax-paper-name"));
+                var printout = new FaxPrintout(
+                    paperContent,
+                    Loc.GetString("nuke-codes-fax-paper-name"),
+                    "paper_stamp-cent",
+                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;
