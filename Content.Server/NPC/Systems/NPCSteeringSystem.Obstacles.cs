@@ -4,7 +4,6 @@ using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
-using Content.Shared.Weapons.Melee;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -115,13 +114,9 @@ public sealed partial class NPCSteeringSystem
             {
                 var meleeWeapon = _melee.GetWeapon(component.Owner);
 
-                if (meleeWeapon != null)
+                if (meleeWeapon != null && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(component.Owner, out var combatMode))
                 {
-                    if (TryComp<CombatModeComponent>(component.Owner, out var combatMode))
-                    {
-                        combatMode.IsInCombatMode = true;
-                    }
-
+                    combatMode.IsInCombatMode = true;
                     var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
                     // TODO: This is a hack around grilles and windows.
@@ -133,12 +128,16 @@ public sealed partial class NPCSteeringSystem
                         if (destructibleQuery.HasComponent(ent))
                         {
                             _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
-                            return SteeringObstacleStatus.Continuing;
+                            break;
                         }
                     }
 
+                    combatMode.IsInCombatMode = false;
+
                     if (obstacleEnts.Count == 0)
                         return SteeringObstacleStatus.Completed;
+
+                    return SteeringObstacleStatus.Continuing;
                 }
             }
 
