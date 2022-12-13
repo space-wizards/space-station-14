@@ -1,10 +1,11 @@
 using Content.Shared.MachineLinking;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Conveyor;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class ConveyorComponent : Component
 {
     /// <summary>
