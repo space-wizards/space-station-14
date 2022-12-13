@@ -1,7 +1,3 @@
-using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
-
 namespace Content.Shared.Chemistry.Reaction;
 
 [RegisterComponent]
