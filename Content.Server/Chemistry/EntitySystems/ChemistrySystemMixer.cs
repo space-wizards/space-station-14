@@ -17,13 +17,21 @@ public sealed partial class ChemistrySystem
     {
         if (!args.Target.HasValue || !args.CanReach)
             return;
+
+        var mixAttemptEvent = new MixingAttemptEvent(uid);
+        RaiseLocalEvent(uid, ref mixAttemptEvent);
+        if(mixAttemptEvent.Cancelled)
+        {
+            return;
+        }
+
         Solution? solution = null;
         if (!_solutions.TryGetMixableSolution(args.Target.Value, out solution))
               return;
 
         _solutions.UpdateChemicals(args.Target.Value, solution, true, component);
 
-        var ev = new AfterMixingEvent(uid, args.Target.Value);
-        RaiseLocalEvent(uid, ev);
+        var afterMixingEvent = new AfterMixingEvent(uid, args.Target.Value);
+        RaiseLocalEvent(uid, afterMixingEvent);
     }
 }

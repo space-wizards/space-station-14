@@ -339,10 +339,19 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
+
         if (!Resolve(uid, ref solutionsMgr, false))
         {
             solution = null;
             return false;
+        }
+
+        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
+        RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
+        if(getMixableSolutionAttempt.MixedSolution != null)
+        {
+            solution = getMixableSolutionAttempt.MixedSolution;
+            return true;
         }
 
         var tryGetSolution = solutionsMgr.Solutions.FirstOrNull(x => x.Value.CanMix);
