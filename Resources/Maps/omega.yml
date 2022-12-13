@@ -98,7 +98,7 @@ entities:
   components:
   - type: MetaData
   - pos: 2.2710133,-2.4148211
-    parent: null
+    parent: 473
     type: Transform
   - chunks:
       -1,0:
@@ -181,7 +181,7 @@ entities:
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       1,-2:
         ind: 1,-2
-        tiles: WAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABXAAAAWAAAADQAAAA0AAAANAAAADQAAAA0AAAAPgAAAz4AAAE+AAADWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAAD4AAAM+AAACPgAAA1gAAABYAAAAFQAAAFgAAABYAAAAWAAAAFcAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAA+AAABPgAAAD4AAANYAAAAPgAAAxUAAAFYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAj4AAAE+AAABWAAAAEsAAAAVAAABWAAAAD4AAAI+AAABWAAAAD4AAAI+AAAASwAAAEsAAAFLAAAAPgAAAD4AAAI+AAAAPgAAA1gAAABLAAACFQAAAlgAAAA+AAABPgAAAlgAAAA+AAAAPgAAAUsAAAFLAAACSwAAAD4AAAA+AAABPgAAAj4AAABLAAAASwAAAxUAAAMVAAAAPgAAAD4AAAM+AAAAPgAAAT4AAAI+AAABPgAAAj4AAAM+AAACPgAAAT4AAAI+AAACWAAAAEsAAAEVAAADWAAAAD4AAAA+AAADWAAAAD4AAAI+AAABPgAAAD4AAAA+AAABPgAAAT4AAAI+AAADPgAAAlgAAABLAAABWAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAhUAAAAVAAABFQAAABUAAAMVAAADFQAAAhUAAAJYAAAAWAAAABUAAAIVAAADFQAAABUAAAE+AAACPgAAAz4AAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAQAAAEVAAAAFQAAABUAAAAVAAADPgAAAD4AAAE+AAADVQAAAVUAAAFVAAADVQAAAFUAAABVAAADWAAAAAQAAAEEAAABWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABVAAAAVQAAA1UAAAJVAAABVQAAA1gAAAAEAAACBAAAAVgAAABYAAAAVQAAAFUAAANVAAABWAAAAAQAAAFYAAAAVQAAAlUAAABVAAABVQAAA1UAAAFYAAAABAAAAgQAAABYAAAAVQAAAlUAAABVAAABVQAAAVgAAAAEAAACWAAAAFgAAABVAAADVQAAAFUAAAJYAAAAWAAAAAQAAAAAAAAAWAAAAFgAAABVAAACVQAAAFUAAAFYAAAABAAAAAQAAAFYAAAAWAAAAFgAAABYAAAAWAAAAAUAAAAEAAAAAAAAAA==
+        tiles: WAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABXAAAAWAAAADQAAAA0AAAANAAAADQAAAA0AAAAPgAAAz4AAAE+AAADWAAAAEgAAABYAAAAWAAAAFgAAABYAAAAVwAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAAD4AAAM+AAACPgAAA1gAAABYAAAAFQAAAFgAAABYAAAAWAAAAFcAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAA+AAABPgAAAD4AAANYAAAAPgAAAxUAAAFYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAPgAAAj4AAAE+AAABWAAAAEsAAAAVAAABWAAAAD4AAAI+AAABWAAAAD4AAAJLAAAASwAAAEsAAAA+AAAAPgAAAD4AAAI+AAAAPgAAA1gAAABLAAACFQAAAlgAAAA+AAABPgAAAlgAAAA+AAAASwAAAEsAAABLAAAAPgAAAD4AAAA+AAABPgAAAj4AAABLAAAASwAAAxUAAAMVAAAAPgAAAD4AAAM+AAAAPgAAAT4AAAI+AAABPgAAAj4AAAM+AAACPgAAAT4AAAI+AAACWAAAAEsAAAEVAAADWAAAAD4AAAA+AAADWAAAAD4AAAI+AAABPgAAAD4AAAA+AAABPgAAAT4AAAI+AAADPgAAAlgAAABLAAABWAAAAFgAAABYAAAAWAAAAFgAAAA+AAABPgAAAhUAAAAVAAABFQAAABUAAAMVAAADFQAAAhUAAAJYAAAAWAAAABUAAAIVAAADFQAAABUAAAE+AAACPgAAAz4AAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAQAAAEVAAAAFQAAABUAAAAVAAADPgAAAD4AAAE+AAADVQAAAVUAAAFVAAADVQAAAFUAAABVAAADWAAAAAQAAAEEAAABWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABVAAAAVQAAA1UAAAJVAAABVQAAA1gAAAAEAAACBAAAAVgAAABYAAAAVQAAAFUAAANVAAABWAAAAAQAAAFYAAAAVQAAAlUAAABVAAABVQAAA1UAAAFYAAAABAAAAgQAAABYAAAAVQAAAlUAAABVAAABVQAAAVgAAAAEAAACWAAAAFgAAABVAAADVQAAAFUAAAJYAAAAWAAAAAQAAAAAAAAAWAAAAFgAAABVAAACVQAAAFUAAAFYAAAABAAAAAQAAAFYAAAAWAAAAFgAAABYAAAAWAAAAAUAAAAEAAAAAAAAAA==
       2,-2:
         ind: 2,-2
         tiles: WAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAQAAAIAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAABXAAAAAAAAAFgAAABYAAAAWAAAAAQAAAIEAAACBAAAAgQAAAEEAAAAVwAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAFcAAABYAAAAPgAAA1gAAABYAAAAWAAAAAQAAAIEAAAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAz4AAAI+AAACPgAAAlgAAAAEAAABBAAAAAQAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEsAAAFLAAACSwAAAUsAAAFYAAAABAAAAAQAAAAEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABLAAAASwAAAUsAAANLAAACWAAAAAQAAAAEAAACBAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASwAAA0sAAANLAAAASwAAA1gAAAAEAAABBAAAAgQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEsAAAFLAAAASwAAAUsAAANYAAAABAAAAgQAAAAEAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABLAAAASwAAAUsAAANLAAAAWAAAAAQAAAAEAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAEAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAQQAAAIEAAACBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAQQAAAIEAAACBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
@@ -12624,8 +12624,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -12654,8 +12654,8 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -12699,8 +12699,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 16.429127
-      - 61.804813
+      - 15.521976
+      - 58.3922
       - 0
       - 0
       - 0
@@ -16061,6 +16061,15 @@ entities:
     type: Transform
   - color: '#FF1212FF'
     type: AtmosPipeColor
+- uid: 473
+  components:
+  - type: MetaData
+  - type: Transform
+  - index: 8
+    type: Map
+  - type: PhysicsMap
+  - type: Broadphase
+  - type: OccluderTree
 - uid: 474
   type: GasPipeStraight
   components:
@@ -30802,7 +30811,9 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      icon:
+        sprite: Objects/Tools/flashlight.rsi
+        state: flashlight
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -50464,15 +50475,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 5513
-  type: WallReinforced
+  type: VendingMachineSciDrobe
   components:
-  - pos: 22.5,-27.5
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: 25.5,-26.5
     parent: 0
     type: Transform
 - uid: 5514
-  type: WallReinforced
+  type: SignSpace
   components:
-  - pos: 23.5,-27.5
+  - pos: 21.5,-27.5
     parent: 0
     type: Transform
 - uid: 5515
@@ -51021,9 +51034,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 5597
-  type: SignSpace
+  type: ReinforcedWindow
   components:
-  - pos: 22.5,-27.5
+  - pos: 23.5,-27.5
     parent: 0
     type: Transform
 - uid: 5598
@@ -55937,11 +55950,9 @@ entities:
         ents: []
     type: ContainerContainer
 - uid: 6311
-  type: VendingMachineSciDrobe
+  type: ReinforcedWindow
   components:
-  - flags: SessionSpecific
-    type: MetaData
-  - pos: 22.5,-26.5
+  - pos: 22.5,-27.5
     parent: 0
     type: Transform
 - uid: 6312
@@ -55954,77 +55965,88 @@ entities:
     parent: 0
     type: Transform
 - uid: 6313
-  type: TableReinforced
+  type: ComputerAnalysisConsole
   components:
-  - pos: 23.5,-26.5
+  - rot: 1.5707963267948966 rad
+    pos: 22.5,-26.5
     parent: 0
     type: Transform
+  - outputs:
+      ArtifactAnalyzerSender:
+      - port: ArtifactAnalyzerReceiver
+        uid: 6319
+    type: SignalTransmitter
 - uid: 6314
-  type: TableReinforced
-  components:
-  - pos: 23.5,-25.5
-    parent: 0
-    type: Transform
-- uid: 6315
-  type: TableReinforced
+  type: Table
   components:
   - pos: 24.5,-26.5
     parent: 0
     type: Transform
-- uid: 6316
-  type: TableReinforced
+- uid: 6315
+  type: Grille
   components:
-  - pos: 25.5,-26.5
+  - pos: 23.5,-27.5
+    parent: 0
+    type: Transform
+- uid: 6316
+  type: Grille
+  components:
+  - pos: 22.5,-27.5
     parent: 0
     type: Transform
 - uid: 6317
-  type: TableReinforced
+  type: WindowReinforcedDirectional
   components:
-  - pos: 25.5,-25.5
+  - rot: 1.5707963267948966 rad
+    pos: 24.5,-26.5
     parent: 0
     type: Transform
 - uid: 6318
-  type: WindowReinforcedDirectional
+  type: GasAnalyzer
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 23.5,-26.5
+  - pos: 24.527384,-25.4941
     parent: 0
     type: Transform
 - uid: 6319
-  type: WindowReinforcedDirectional
+  type: MachineArtifactAnalyzer
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 23.5,-25.5
+  - pos: 22.5,-29.5
     parent: 0
     type: Transform
+  - inputs:
+      ArtifactAnalyzerReceiver:
+      - port: ArtifactAnalyzerSender
+        uid: 6313
+    type: SignalReceiver
 - uid: 6320
-  type: RemoteSignaller
+  type: ChairOfficeDark
   components:
-  - pos: 23.552073,-26.304932
+  - pos: 23.5,-26.5
     parent: 0
     type: Transform
 - uid: 6321
-  type: GasAnalyzer
+  type: WindowReinforcedDirectional
   components:
-  - pos: 25.442698,-26.383057
+  - rot: 1.5707963267948966 rad
+    pos: 24.5,-25.5
     parent: 0
     type: Transform
 - uid: 6322
   type: GasAnalyzer
   components:
-  - pos: 25.239573,-26.429932
+  - pos: 24.418009,-25.447226
     parent: 0
     type: Transform
 - uid: 6323
-  type: Wrench
+  type: Table
   components:
-  - pos: 25.489573,-25.508057
+  - pos: 24.5,-25.5
     parent: 0
     type: Transform
 - uid: 6324
-  type: Stool
+  type: RandomArtifactSpawner
   components:
-  - pos: 24.5,-25.5
+  - pos: 22.5,-30.5
     parent: 0
     type: Transform
 - uid: 6325
@@ -60817,7 +60839,9 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      icon:
+        sprite: Objects/Tools/flashlight.rsi
+        state: flashlight
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -61512,7 +61536,9 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      icon:
+        sprite: Objects/Tools/flashlight.rsi
+        state: flashlight
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -69096,7 +69122,9 @@ entities:
     parent: 0
     type: Transform
   - toggleAction:
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      icon:
+        sprite: Objects/Tools/flashlight.rsi
+        state: flashlight
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -96798,32 +96826,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 12387
-  type: MachineArtifactAnalyzer
+  type: ExosuitFabricator
   components:
-  - pos: 29.5,-29.5
+  - pos: 4.5,-28.5
     parent: 0
     type: Transform
-  - inputs:
-      ArtifactAnalyzerReceiver:
-      - port: ArtifactAnalyzerSender
-        uid: 12388
-    type: SignalReceiver
 - uid: 12388
-  type: ComputerAnalysisConsole
+  type: FaxMachineCaptain
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 27.5,-30.5
+  - pos: -6.5,34.5
     parent: 0
     type: Transform
-  - outputs:
-      ArtifactAnalyzerSender:
-      - port: ArtifactAnalyzerReceiver
-        uid: 12387
-    type: SignalTransmitter
-- uid: 12389
-  type: RandomArtifactSpawner
-  components:
-  - pos: 22.5,-29.5
-    parent: 0
-    type: Transform
+  - name: Bridge
+    type: FaxMachine
 ...
