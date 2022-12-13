@@ -9,6 +9,4 @@ public sealed class ReactionMixerComponent : Component
     [ViewVariables]
     [DataField("reactionTypes")]
     public List<string> ReactionTypes = default!;
-
-
 }
