@@ -115,8 +115,6 @@ namespace Content.Shared.Chemistry.Reaction
                 return false;
             }
 
-
-
             if((mixerComponent == null && reaction.MixingCategories != null) ||
                 mixerComponent != null && reaction.MixingCategories != null && reaction.MixingCategories.Except(mixerComponent.ReactionTypes).Any())
             {
