@@ -14,6 +14,8 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
+        
+        private const string CentcomFaxPrototypeId = "FaxMachineCentcom";
 
         public override void Initialize()
         {
@@ -46,8 +48,23 @@ namespace Content.Server.Nuke
                 return false;
             }
 
-            var wasSent = false;
             var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+
+            string? centcomFaxAddress = null;
+            foreach (var fax in faxes)
+            {
+                if (!TryComp<MetaDataComponent>(fax.Owner, out var metadata) ||
+                    metadata.EntityPrototype?.ID != CentcomFaxPrototypeId ||
+                    !TryComp<DeviceNetworkComponent>(fax.Owner, out var device))
+                {
+                    continue;
+                }
+
+                centcomFaxAddress = device.Address;
+                break;
+            }
+
+            var wasSent = false;
             foreach (var fax in faxes)
             {
                 if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(fax.Owner, out var paperContent, station))
@@ -60,7 +77,7 @@ namespace Content.Server.Nuke
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     "paper_stamp-cent",
                     new() { Loc.GetString("stamp-component-stamped-name-centcom") });
-                _faxSystem.Receive(fax.Owner, printout, null, fax);
+                _faxSystem.Receive(fax.Owner, printout, centcomFaxAddress, fax);
 
                 wasSent = true;
             }
