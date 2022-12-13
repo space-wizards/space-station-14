@@ -10,3 +10,5 @@ public sealed class ReactionMixerComponent : Component
     [DataField("reactionTypes")]
     public List<string> ReactionTypes = default!;
 }
+
+public readonly record struct AfterMixingEvent(EntityUid Mixed, EntityUid Mixer);
