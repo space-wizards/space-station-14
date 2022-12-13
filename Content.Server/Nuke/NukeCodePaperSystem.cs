@@ -5,7 +5,6 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nuke
 {
@@ -15,7 +14,6 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
-        [Dependency] private readonly IPrototypeManager _proto = default!;
 
         public override void Initialize()
         {
