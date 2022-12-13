@@ -336,8 +336,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     }
 
     public bool TryGetMixableSolution(EntityUid uid,
-    [NotNullWhen(true)] out Solution? solution,
-    SolutionContainerManagerComponent? solutionsMgr = null)
+        [NotNullWhen(true)] out Solution? solution,
+        SolutionContainerManagerComponent? solutionsMgr = null)
     {
         if (!Resolve(uid, ref solutionsMgr, false))
         {
