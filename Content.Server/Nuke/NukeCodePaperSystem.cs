@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
@@ -49,21 +48,6 @@ namespace Content.Server.Nuke
             }
 
             var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
-
-            string? centcomFaxAddress = null;
-            foreach (var fax in faxes)
-            {
-                if (!TryComp<MetaDataComponent>(fax.Owner, out var metadata) ||
-                    metadata.EntityPrototype?.ID != CentcomFaxPrototypeId ||
-                    !TryComp<DeviceNetworkComponent>(fax.Owner, out var device))
-                {
-                    continue;
-                }
-
-                centcomFaxAddress = device.Address;
-                break;
-            }
-
             var wasSent = false;
             foreach (var fax in faxes)
             {
@@ -77,7 +61,7 @@ namespace Content.Server.Nuke
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     "paper_stamp-cent",
                     new() { Loc.GetString("stamp-component-stamped-name-centcom") });
-                _faxSystem.Receive(fax.Owner, printout, centcomFaxAddress, fax);
+                _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;
             }
