@@ -1,5 +1,6 @@
 using System.Linq;
 using Robust.Shared.Random;
+
 using Content.Server.Body.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
@@ -12,6 +13,7 @@ using Content.Server.Inventory;
 using Robust.Shared.Prototypes;
 using Content.Server.Speech;
 using Content.Server.Chat.Systems;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Weapons.Melee.Events;
@@ -37,7 +39,13 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
+            SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
 
+        }
+
+        private void OnSleepAttempt(EntityUid uid, ActiveZombieComponent component, ref TryingToSleepEvent args)
+        {
+            args.Cancelled = true;
         }
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)

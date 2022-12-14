@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
@@ -53,8 +54,15 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+            SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
             SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
+        }
+
+        private void OnSleepAttempt(EntityUid uid, MobStateComponent component, ref TryingToSleepEvent args)
+        {
+            if(IsDead(uid, component))
+                args.Cancelled = true;
         }
 
         private void OnGettingStripped(EntityUid uid, MobStateComponent component, BeforeGettingStrippedEvent args)
