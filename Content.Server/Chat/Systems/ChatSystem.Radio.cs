@@ -14,9 +14,9 @@ public sealed partial class ChatSystem
     /// </summary>
     private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
 
-    // Dict so we can look up the keycode using channel names later
-    private Dictionary<string, char> _channelNames = new();
-    private char _defaultChannelCode = '\0';
+    // Dict so we can look up the channels via channel IDs later
+    private Dictionary<string, RadioChannelPrototype> _channels = new();
+
     private void InitializeRadio()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
@@ -31,12 +31,12 @@ public sealed partial class ChatSystem
     private void CacheRadios()
     {
         _keyCodes.Clear();
-        _channelNames.Clear();
+        _channels.Clear();
 
         foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
         {
             _keyCodes.Add(proto.KeyCode, proto);
-            _channelNames.Add(proto.ID, proto.KeyCode);
+            _channels.Add(proto.ID, proto);
         }
 
 
@@ -53,32 +53,8 @@ public sealed partial class ChatSystem
         var isRadioMessage = false;
         RadioChannelPrototype? channel = null;
 
-        // If message starts with :h, then replace keycode in message with defaultChannel's keycode
-        var locChannelMessage = message.StartsWith(":h") || message.StartsWith(".h");
-        if (locChannelMessage && message.Length >= 2)
-        {
-            if (_inventory.TryGetSlotEntity(source, "ears", out var _headsetUid) && TryComp<HeadsetComponent>(_headsetUid, out var _headsetComponent) && _headsetComponent.defaultChannel != null)
-            {
-                //Remove :h prefix 
-                message = message[2..].TrimStart();
-
-                // Add keycode for specific Channel, looked up in _channelNames from earlier
-                _defaultChannelCode = _channelNames[_headsetComponent.defaultChannel];
-
-                // Needs special code to handle Common channel because otherwise it would end up like ";:"
-                if (_defaultChannelCode == ';')
-                {
-                    message = "; " + message;
-                }
-                else
-                {
-                    message = ":" + _defaultChannelCode + " " + message;
-                }
-
-            }
-        }
-
-
+        // Check if have headset and grab headset UID for later
+        var hasHeadset = _inventory.TryGetSlotEntity(source, "ears", out var entityUid) & TryComp<HeadsetComponent>(entityUid, out var _headsetComponent);
 
         // First check if this is a message to the base radio frequency
         if (message.StartsWith(';'))
@@ -88,11 +64,24 @@ public sealed partial class ChatSystem
             message = message[1..].TrimStart();
             isRadioMessage = true;
         }
-        // Check now if the remaining message is a targeted radio message
+
+
+        // Check now if the remaining message is a radio message
         if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
+            // Redirect to defaultChannel of headset if it goes to "h" channel code
+            if (message.Substring(1,1) == "h" && _headsetComponent != null && _headsetComponent.defaultChannel != string.Empty)
+            {
+                // try and grab headset default channel
+                _channels.TryGetValue(_headsetComponent.defaultChannel, out channel);
+
+            }
+            else // otherwise it's a normal, targeted channel keycode
+            {
+                _keyCodes.TryGetValue(message[1], out channel);
+            }
+
             // Strip remaining message prefix.
-            _keyCodes.TryGetValue(message[1], out channel);
             message = message[2..].TrimStart();
             isRadioMessage = true;
         }
@@ -104,7 +93,8 @@ public sealed partial class ChatSystem
         if (message.Length <= 1)
             return (string.Empty, null);
 
-        if (channel == null)
+        // Check for headset before no-such-channel, otherwise you can get two PopupEntities if no headset and no channel
+        if (hasHeadset & channel == null )
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
             channel = null;
@@ -113,7 +103,7 @@ public sealed partial class ChatSystem
         // Re-capitalize message since we removed the prefix.
         message = SanitizeMessageCapital(message);
 
-        var hasHeadset = _inventory.TryGetSlotEntity(source, "ears", out var entityUid)  && HasComp<HeadsetComponent>(entityUid);
+        
 
         if (!hasHeadset && !HasComp<IntrinsicRadioTransmitterComponent>(source))
         {
