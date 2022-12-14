@@ -13,7 +13,33 @@ public sealed partial class ChatSystem
     /// Cache of the keycodes for faster lookup.
     /// </summary>
     private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
-
+    //Dict of Headset IDs and what their "defaults" are
+    //probably should be put into the yml files themselves down the line
+    private Dictionary<string, string> headsetCommonDict = new()
+            {
+                { "ClothingHeadsetQM", ":u "},
+                { "ClothingHeadsetCargo", ":u "},
+                { "ClothingHeadsetAltCargo", ":u "},
+                { "ClothingHeadsetMining", ":u "},
+                { "ClothingHeadsetCentCom", ":y "},
+                { "ClothingHeadsetAltCentCom", ":y "},
+                { "ClothingHeadsetCommand", ":c "},
+                { "ClothingHeadsetAltCommand", ":c "},
+                { "ClothingHeadsetCE", ":e "},
+                { "ClothingHeadsetEngineering", ":e "},
+                { "ClothingHeadsetAltEngineering", ":e "},
+                { "ClothingHeadsetMedical", ":m "},
+                { "ClothingHeadsetAltMedical", ":m "},
+                { "ClothingHeadsetMedicalScience", ":m "},
+                { "ClothingHeadsetRD", ":n "},
+                { "ClothingHeadsetRobotics", ":n "},
+                { "ClothingHeadsetScience", ":n "},
+                { "ClothingHeadsetAltScience", ":n "},
+                { "ClothingHeadsetSecurity", ":s "},
+                { "ClothingHeadsetAltSecurity", ":s "},
+                { "ClothingHeadsetService", ":v "},
+                { "ClothingHeadsetAltSyndicate", ":t " },
+            };
     private void InitializeRadio()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
@@ -45,6 +71,25 @@ public sealed partial class ChatSystem
         // TODO: Turn common into a true frequency and support multiple aliases.
         var isRadioMessage = false;
         RadioChannelPrototype? channel = null;
+
+        // Replaces :h with whatevs the headset's "default" is
+        var locChannelMessage = message.StartsWith(":h") || message.StartsWith(".h");
+        if (locChannelMessage && message.Length >= 2)
+        {
+            if (_inventory.TryGetSlotEntity(source, "ears", out var headsetUid) && HasComp<HeadsetComponent>(headsetUid))
+            {
+                message = message[2..].TrimStart();
+                var headsetUid2 = headsetUid ?? default(EntityUid);
+                var entityPrototype = Prototype(headsetUid2) ?? default(EntityPrototype);
+                if (entityPrototype != null)
+                {
+                    var entityId = entityPrototype.ID;
+                    message = headsetCommonDict[entityId] + message;
+                }
+
+            }
+        }
+
         // First check if this is a message to the base radio frequency
         if (message.StartsWith(';'))
         {
