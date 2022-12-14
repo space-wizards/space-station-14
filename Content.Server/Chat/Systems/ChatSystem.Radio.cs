@@ -13,33 +13,10 @@ public sealed partial class ChatSystem
     /// Cache of the keycodes for faster lookup.
     /// </summary>
     private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
-    //Dict of Headset IDs and what their "defaults" are
-    //probably should be put into the yml files themselves down the line
-    private Dictionary<string, string> headsetCommonDict = new()
-            {
-                { "ClothingHeadsetQM", ":u "},
-                { "ClothingHeadsetCargo", ":u "},
-                { "ClothingHeadsetAltCargo", ":u "},
-                { "ClothingHeadsetMining", ":u "},
-                { "ClothingHeadsetCentCom", ":y "},
-                { "ClothingHeadsetAltCentCom", ":y "},
-                { "ClothingHeadsetCommand", ":c "},
-                { "ClothingHeadsetAltCommand", ":c "},
-                { "ClothingHeadsetCE", ":e "},
-                { "ClothingHeadsetEngineering", ":e "},
-                { "ClothingHeadsetAltEngineering", ":e "},
-                { "ClothingHeadsetMedical", ":m "},
-                { "ClothingHeadsetAltMedical", ":m "},
-                { "ClothingHeadsetMedicalScience", ":m "},
-                { "ClothingHeadsetRD", ":n "},
-                { "ClothingHeadsetRobotics", ":n "},
-                { "ClothingHeadsetScience", ":n "},
-                { "ClothingHeadsetAltScience", ":n "},
-                { "ClothingHeadsetSecurity", ":s "},
-                { "ClothingHeadsetAltSecurity", ":s "},
-                { "ClothingHeadsetService", ":v "},
-                { "ClothingHeadsetAltSyndicate", ":t " },
-            };
+
+    // Dict so we can look up the keycode using channel names later
+    private Dictionary<string, char> _channelNames = new();
+    private char _defaultChannelCode = '\0';
     private void InitializeRadio()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
@@ -54,11 +31,15 @@ public sealed partial class ChatSystem
     private void CacheRadios()
     {
         _keyCodes.Clear();
+        _channelNames.Clear();
 
         foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
         {
             _keyCodes.Add(proto.KeyCode, proto);
+            _channelNames.Add(proto.ID, proto.KeyCode);
         }
+
+
     }
 
     private void ShutdownRadio()
@@ -72,23 +53,36 @@ public sealed partial class ChatSystem
         var isRadioMessage = false;
         RadioChannelPrototype? channel = null;
 
-        // Replaces :h with whatevs the headset's "default" is
+        // If message starts with :h, then replace keycode in message with defaultChannel's keycode
         var locChannelMessage = message.StartsWith(":h") || message.StartsWith(".h");
         if (locChannelMessage && message.Length >= 2)
         {
-            if (_inventory.TryGetSlotEntity(source, "ears", out var headsetUid) && HasComp<HeadsetComponent>(headsetUid))
+            if (_inventory.TryGetSlotEntity(source, "ears", out var _headsetUid) && TryComp<HeadsetComponent>(_headsetUid, out var _headsetComponent) && _headsetComponent.defaultChannel != null)
             {
+                //Remove :h prefix 
                 message = message[2..].TrimStart();
-                var headsetUid2 = headsetUid ?? default(EntityUid);
-                var entityPrototype = Prototype(headsetUid2) ?? default(EntityPrototype);
-                if (entityPrototype != null)
+                Logger.Info("Message with no h: " + message);
+
+                // Add keycode for specific Channel, looked up in _channelNames from earlier
+                _defaultChannelCode = _channelNames[_headsetComponent.defaultChannel];
+                Logger.Info("Default Channel Code Lookup: " + _defaultChannelCode);
+
+                // Needs special code to handle Common channel because otherwise it would end up like ";:"
+                if (_defaultChannelCode == ';')
                 {
-                    var entityId = entityPrototype.ID;
-                    message = headsetCommonDict[entityId] + message;
+                    message = "; " + message;
+                }
+                else
+                {
+                    message = ":" + _defaultChannelCode + " " + message;
+                    Logger.Info("Replaced :h with channel code: " + _defaultChannelCode);
+                    Logger.Info("New modified message: " + message);
                 }
 
             }
         }
+
+
 
         // First check if this is a message to the base radio frequency
         if (message.StartsWith(';'))
@@ -98,10 +92,11 @@ public sealed partial class ChatSystem
             message = message[1..].TrimStart();
             isRadioMessage = true;
         }
-
+        Logger.Info("message being parsed like normal now: " + message);
         // Check now if the remaining message is a targeted radio message
         if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
+            Logger.Info("message recognized as being radio");
             // Strip remaining message prefix.
             _keyCodes.TryGetValue(message[1], out channel);
             message = message[2..].TrimStart();
