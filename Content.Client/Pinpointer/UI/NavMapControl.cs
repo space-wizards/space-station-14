@@ -3,7 +3,11 @@ using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
+using Robust.Shared.Input;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
@@ -18,10 +22,43 @@ public sealed class NavMapControl : MapGridControl
 
     public EntityUid? Uid;
 
-    public NavMapControl() : base(4f, 64f, 32f)
+    private Vector2 _offset;
+    private bool _draggin;
+
+    public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
         RectClipContent = true;
+    }
+
+    protected override void KeyBindDown(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindDown(args);
+
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            _draggin = true;
+        }
+    }
+
+    protected override void KeyBindUp(GUIBoundKeyEventArgs args)
+    {
+        base.KeyBindUp(args);
+
+        if (args.Function == EngineKeyFunctions.Use)
+        {
+            _draggin = false;
+        }
+    }
+
+    protected override void MouseMove(GUIMouseMoveEventArgs args)
+    {
+        base.MouseMove(args);
+
+        if (!_draggin)
+            return;
+
+        _offset -= new Vector2(args.Relative.X, -args.Relative.Y) / MidPoint * WorldRange;
     }
 
     protected override void Draw(DrawingHandleScreen handle)
@@ -35,13 +72,37 @@ public sealed class NavMapControl : MapGridControl
             return;
         }
 
-        var offset = Vector2.Zero;
+        var offset = _offset;
+        var tileColor = new Color(30, 67, 30);
+        var lineColor = new Color(102, 217, 102);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(Uid, out var physics))
         {
-            offset = physics.LocalCenter;
+            offset += physics.LocalCenter;
         }
 
+        // Draw tiles
+        if (_entManager.TryGetComponent<FixturesComponent>(Uid, out var manager))
+        {
+            Span<Vector2> verts = new Vector2[8];
+
+            foreach (var fixture in manager.Fixtures.Values)
+            {
+                if (fixture.Shape is not PolygonShape poly)
+                    continue;
+
+                for (var i = 0; i < poly.VertexCount; i++)
+                {
+                    var vert = poly.Vertices[i] - offset;
+
+                    verts[i] = Scale(new Vector2(vert.X, -vert.Y));
+                }
+
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], tileColor);
+            }
+        }
+
+        // Draw the wall data
         var area = new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(offset);
         var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
 
@@ -88,7 +149,7 @@ public sealed class NavMapControl : MapGridControl
 
                     if (!neighbor)
                     {
-                        handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + tileSize), Color.Aqua);
+                        handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + tileSize), lineColor);
                     }
 
                     // East edge
@@ -106,7 +167,7 @@ public sealed class NavMapControl : MapGridControl
 
                     if (!neighbor)
                     {
-                        handle.DrawLine(Scale(position + tileSize), Scale(position + new Vector2(grid.TileSize, 0f)), Color.Aqua);
+                        handle.DrawLine(Scale(position + tileSize), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
                     }
 
                     // South edge
@@ -124,7 +185,7 @@ public sealed class NavMapControl : MapGridControl
 
                     if (!neighbor)
                     {
-                        handle.DrawLine(Scale(position + new Vector2(grid.TileSize, 0f)), Scale(position), Color.Aqua);
+                        handle.DrawLine(Scale(position + new Vector2(grid.TileSize, 0f)), Scale(position), lineColor);
                     }
 
                     // West edge
@@ -142,11 +203,11 @@ public sealed class NavMapControl : MapGridControl
 
                     if (!neighbor)
                     {
-                        handle.DrawLine(Scale(position), Scale(position + new Vector2(0f, -grid.TileSize)), Color.Aqua);
+                        handle.DrawLine(Scale(position), Scale(position + new Vector2(0f, -grid.TileSize)), lineColor);
                     }
 
                     // Draw a diagonal line for interiors.
-                    handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), Color.Aqua);
+                    handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
                 }
             }
         }
