@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Engineering.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using NUnit.Framework;
@@ -62,7 +63,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                     if (reactionPrototype.MixingCategories != null)
                     {
-                        var mixerComponent = new ReactionMixerComponent();
+                        var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
+                        var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
                         mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
                         solutionSystem.UpdateChemicals(beaker, component, true, mixerComponent);
                     }
