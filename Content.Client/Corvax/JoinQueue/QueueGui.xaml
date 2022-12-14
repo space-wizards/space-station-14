@@ -26,6 +26,9 @@
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>
+            <BoxContainer Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0 20 0 0">
+                <Button Name="PriorityJoinButton" Text="{Loc 'queue-priority-join'}" HorizontalExpand="True" StyleClasses="OpenRight" />
+            </BoxContainer>
         </BoxContainer>
     </Control>
 </Control>
