@@ -19,6 +19,7 @@ verb-categories-tricks = Трюки
 verb-categories-transfer = Установить значение перемещения
 verb-categories-split = Разделить
 verb-categories-instrument-style = Стиль инструмента
+verb-categories-channel-select = Выбрать канал
 verb-categories-set-sensor = Датчики
 verb-categories-timer = Установить задержку
 verb-categories-lever = Рычаг
