@@ -23,8 +23,8 @@ public class DockingControl : Control
     private const float GridLinesDistance = 32f;
 
     private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((RadarControl.MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (RadarControl.MinimapRadius * UIScale);
+    private int SizeFull => (int) ((RadarControl.UIDisplayRadius + MinimapMargin) * 2 * UIScale);
+    private int ScaledMinimapRadius => (int) (RadarControl.UIDisplayRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
 
     public EntityUid? ViewedDock;

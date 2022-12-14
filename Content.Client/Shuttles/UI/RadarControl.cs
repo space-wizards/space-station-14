@@ -1,4 +1,4 @@
-using Content.Client.Stylesheets;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Components;
 using Robust.Client.Graphics;
@@ -8,7 +8,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Shuttles.UI;
@@ -16,16 +15,11 @@ namespace Content.Client.Shuttles.UI;
 /// <summary>
 /// Displays nearby grids inside of a control.
 /// </summary>
-public sealed class RadarControl : Control
+public sealed class RadarControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
 
-    private const float ScrollSensitivity = 8f;
-
-    public const int MinimapRadius = 320;
-    private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
     /// <summary>
@@ -34,25 +28,6 @@ public sealed class RadarControl : Control
     private EntityCoordinates? _coordinates;
 
     private Angle? _rotation;
-
-    private float _radarMinRange = 64f;
-    private float _radarMaxRange = 256f;
-    public float RadarRange { get; private set; } = 256f;
-
-    /// <summary>
-    /// We'll lerp between the radarrange and actual range
-    /// </summary>
-    private float _actualRadarRange = 256f;
-
-    /// <summary>
-    /// Controls the maximum distance that IFF labels will display.
-    /// </summary>
-    public float MaxRadarRange { get; private set; } = 256f * 10f;
-
-    private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
-    private float MinimapScale => RadarRange != 0 ? ScaledMinimapRadius / RadarRange : 0f;
 
     /// <summary>
     /// Shows a label on each radar object.
@@ -69,13 +44,9 @@ public sealed class RadarControl : Control
     /// </summary>
     public EntityUid? HighlightedDock;
 
-    public Action<float>? OnRadarRangeChanged;
-
-    public RadarControl()
+    public RadarControl() : base(64f, 256f, 256f)
     {
-        IoCManager.InjectDependencies(this);
-        MinSize = (SizeFull, SizeFull);
-        RectClipContent = true;
+
     }
 
     public void SetMatrix(EntityCoordinates? coordinates, Angle? angle)
@@ -86,15 +57,15 @@ public sealed class RadarControl : Control
 
     public void UpdateState(RadarConsoleBoundInterfaceState ls)
     {
-        _radarMaxRange = ls.MaxRange;
+        WorldMaxRange = ls.MaxRange;
 
-        if (_radarMaxRange < RadarRange)
+        if (WorldMaxRange < WorldRange)
         {
-            _actualRadarRange = _radarMaxRange;
+            ActualRadarRange = WorldMaxRange;
         }
 
-        if (_radarMaxRange < _radarMinRange)
-            _radarMinRange = _radarMaxRange;
+        if (WorldMaxRange < WorldMinRange)
+            WorldMinRange = WorldMaxRange;
 
         _docks.Clear();
 
@@ -106,27 +77,9 @@ public sealed class RadarControl : Control
         }
     }
 
-    protected override void MouseWheel(GUIMouseWheelEventArgs args)
-    {
-        base.MouseWheel(args);
-        AddRadarRange(-args.Delta.Y * 1f / ScrollSensitivity * RadarRange);
-    }
-
-    public void AddRadarRange(float value)
-    {
-        _actualRadarRange = Math.Clamp(_actualRadarRange + value, _radarMinRange, _radarMaxRange);
-    }
-
     protected override void Draw(DrawingHandleScreen handle)
     {
-        if (!_actualRadarRange.Equals(RadarRange))
-        {
-            var diff = _actualRadarRange - RadarRange;
-            var lerpRate = 10f;
-
-            RadarRange += (float) Math.Clamp(diff, -lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds, lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds);
-            OnRadarRangeChanged?.Invoke(RadarRange);
-        }
+        base.Draw(handle);
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
@@ -142,7 +95,7 @@ public sealed class RadarControl : Control
 
         var gridLines = new Color(0.08f, 0.08f, 0.08f);
         var gridLinesRadial = 8;
-        var gridLinesEquatorial = (int) Math.Floor(RadarRange / GridLinesDistance);
+        var gridLinesEquatorial = (int) Math.Floor(WorldRange / GridLinesDistance);
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
@@ -324,7 +277,7 @@ public sealed class RadarControl : Control
                 var position = state.Coordinates.Position;
                 var uiPosition = matrix.Transform(position);
 
-                if (uiPosition.Length > RadarRange - DockScale) continue;
+                if (uiPosition.Length > WorldRange - DockScale) continue;
 
                 var color = HighlightedDock == ent ? state.HighlightedColor : state.Color;
 
@@ -363,7 +316,7 @@ public sealed class RadarControl : Control
             {
                 var vert = matrix.Transform(poly.Vertices[i]);
 
-                if (vert.Length > RadarRange)
+                if (vert.Length > WorldRange)
                 {
                     invalid = true;
                     break;

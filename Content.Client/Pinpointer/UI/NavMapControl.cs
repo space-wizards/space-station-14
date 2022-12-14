@@ -1,41 +1,24 @@
+using System.Numerics;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
+using Robust.Client.Player;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics.Components;
+using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.Pinpointer.UI;
 
 /// <summary>
 /// Displays the nav map data of the specified grid.
 /// </summary>
-public sealed class NavMapControl : Control
+public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     public EntityUid? Uid;
 
-    public const int MinimapRadius = 320;
-    private const int MinimapMargin = 4;
-
-    private float _radarMinRange = 64f;
-    private float _radarMaxRange = 256f;
-    public float RadarRange { get; private set; } = 32f;
-
-    /// <summary>
-    /// We'll lerp between the radarrange and actual range
-    /// </summary>
-    private float _actualRadarRange = 256f;
-
-    /// <summary>
-    /// Controls the maximum distance that IFF labels will display.
-    /// </summary>
-    public float MaxRadarRange { get; private set; } = 256f * 10f;
-    private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
-    private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
-    private float MinimapScale => RadarRange != 0 ? ScaledMinimapRadius / RadarRange : 0f;
-
-    public NavMapControl()
+    public NavMapControl() : base(4f, 64f, 32f)
     {
         IoCManager.InjectDependencies(this);
         RectClipContent = true;
@@ -43,6 +26,8 @@ public sealed class NavMapControl : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        base.Draw(handle);
+
         if (!_entManager.TryGetComponent<NavMapComponent>(Uid, out var navMap) ||
             !_entManager.TryGetComponent<TransformComponent>(Uid, out var xform) ||
             !_entManager.TryGetComponent<MapGridComponent>(Uid, out var grid))
@@ -50,11 +35,18 @@ public sealed class NavMapControl : Control
             return;
         }
 
-        var area = new Box2(-RadarRange, -RadarRange, RadarRange, RadarRange);
+        var offset = Vector2.Zero;
 
-        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        if (_entManager.TryGetComponent<PhysicsComponent>(Uid, out var physics))
         {
-            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
+            offset = physics.LocalCenter;
+        }
+
+        var area = new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(offset);
+
+        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right + 1); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        {
+            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top + 1); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
             {
                 var floored = new Vector2i((int) x, (int) y);
 
@@ -73,15 +65,26 @@ public sealed class NavMapControl : Control
                     if (mask == 0x0)
                         continue;
 
-                    var tile = chunk.Origin * SharedNavMapSystem.ChunkSize + SharedNavMapSystem.GetTile(mask);
-                    tile = new Vector2i(tile.X, tile.Y * -1);
-                    handle.DrawRect(new UIBox2(Scale(tile * grid.TileSize), Scale((tile + 1) * grid.TileSize)), Color.Aqua, false);
+                    var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + SharedNavMapSystem.GetTile(mask)) * grid.TileSize - offset;
+                    var position = new Vector2(tile.X, tile.Y * -1);
+                    handle.DrawRect(new UIBox2(Scale(position), Scale(position + grid.TileSize)), Color.Aqua, false);
                 }
             }
         }
+
+        // TODO: Hacky bullshit
+        var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+
+        if (_entManager.TryGetComponent<TransformComponent>(player, out var playerXform))
+        {
+            var position = xform.InvWorldMatrix.Transform(playerXform.WorldPosition) - offset;
+            position = Scale(new Vector2(position.X, -position.Y));
+
+            handle.DrawCircle(position, MinimapScale, Color.Red);
+        }
     }
 
-    private Vector2 Scale(Vector2i position)
+    private Vector2 Scale(Vector2 position)
     {
         return position * MinimapScale + MidPoint;
     }
