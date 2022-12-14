@@ -61,11 +61,9 @@ public sealed partial class ChatSystem
             {
                 //Remove :h prefix 
                 message = message[2..].TrimStart();
-                Logger.Info("Message with no h: " + message);
 
                 // Add keycode for specific Channel, looked up in _channelNames from earlier
                 _defaultChannelCode = _channelNames[_headsetComponent.defaultChannel];
-                Logger.Info("Default Channel Code Lookup: " + _defaultChannelCode);
 
                 // Needs special code to handle Common channel because otherwise it would end up like ";:"
                 if (_defaultChannelCode == ';')
@@ -75,8 +73,6 @@ public sealed partial class ChatSystem
                 else
                 {
                     message = ":" + _defaultChannelCode + " " + message;
-                    Logger.Info("Replaced :h with channel code: " + _defaultChannelCode);
-                    Logger.Info("New modified message: " + message);
                 }
 
             }
@@ -92,11 +88,9 @@ public sealed partial class ChatSystem
             message = message[1..].TrimStart();
             isRadioMessage = true;
         }
-        Logger.Info("message being parsed like normal now: " + message);
         // Check now if the remaining message is a targeted radio message
         if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
-            Logger.Info("message recognized as being radio");
             // Strip remaining message prefix.
             _keyCodes.TryGetValue(message[1], out channel);
             message = message[2..].TrimStart();
