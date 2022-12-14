@@ -9,7 +9,7 @@ namespace Content.Client.UserInterface.Controls;
 /// </summary>
 public abstract class MapGridControl : Control
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
 
     protected const float ScrollSensitivity = 8f;
 
@@ -72,7 +72,7 @@ public abstract class MapGridControl : Control
             var diff = ActualRadarRange - WorldRange;
             const float lerpRate = 10f;
 
-            WorldRange += (float) Math.Clamp(diff, -lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds, lerpRate * MathF.Abs(diff) * _timing.FrameTime.TotalSeconds);
+            WorldRange += (float) Math.Clamp(diff, -lerpRate * MathF.Abs(diff) * Timing.FrameTime.TotalSeconds, lerpRate * MathF.Abs(diff) * Timing.FrameTime.TotalSeconds);
             WorldRangeChanged?.Invoke(WorldRange);
         }
     }

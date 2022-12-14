@@ -43,6 +43,7 @@ public sealed class NavMapControl : MapGridControl
         }
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(offset);
+        var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
 
         for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right + 1); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
         {
@@ -66,21 +67,25 @@ public sealed class NavMapControl : MapGridControl
                         continue;
 
                     var tile = (chunk.Origin * SharedNavMapSystem.ChunkSize + SharedNavMapSystem.GetTile(mask)) * grid.TileSize - offset;
-                    var position = new Vector2(tile.X, tile.Y * -1);
-                    handle.DrawRect(new UIBox2(Scale(position), Scale(position + grid.TileSize)), Color.Aqua, false);
+                    var position = new Vector2(tile.X, -tile.Y);
+
+                    handle.DrawRect(new UIBox2(Scale(position), Scale(position + tileSize)), Color.Aqua, false);
                 }
             }
         }
 
         // TODO: Hacky bullshit
         var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
+        var curTime = Timing.RealTime;
+        var blinkFrequency = 1f / 1f;
+        var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        if (_entManager.TryGetComponent<TransformComponent>(player, out var playerXform))
+        if (lit && _entManager.TryGetComponent<TransformComponent>(player, out var playerXform))
         {
             var position = xform.InvWorldMatrix.Transform(playerXform.WorldPosition) - offset;
             position = Scale(new Vector2(position.X, -position.Y));
 
-            handle.DrawCircle(position, MinimapScale, Color.Red);
+            handle.DrawCircle(position, MinimapScale / 2f, Color.Red);
         }
     }
 
