@@ -40141,6 +40141,8 @@ entities:
   - type: PhysicsMap
   - type: Broadphase
   - type: OccluderTree
+  - parallax: KettleStation
+    type: Parallax  
 - uid: 85
   type: WallSolid
   components:
