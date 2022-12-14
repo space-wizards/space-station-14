@@ -33,7 +33,7 @@ public sealed class NavMapControl : MapGridControl
     private readonly Label _zoom = new()
     {
         VerticalAlignment = VAlignment.Top,
-        Margin = new Thickness(4f, 2f),
+        Margin = new Thickness(8f, 2f),
     };
 
     private readonly Button _recenter = new()
@@ -159,12 +159,12 @@ public sealed class NavMapControl : MapGridControl
         }
 
         // Draw the wall data
-        var area = new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(offset);
+        var area = new Box2(-WorldRange, -WorldRange, WorldRange + 1f, WorldRange + 1f).Translated(offset);
         var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
 
-        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right + 1); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
+        for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
         {
-            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top + 1); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
+            for (var y = Math.Floor(area.Bottom); y <= Math.Ceiling(area.Top); y += SharedNavMapSystem.ChunkSize * grid.TileSize)
             {
                 var floored = new Vector2i((int) x, (int) y);
 
