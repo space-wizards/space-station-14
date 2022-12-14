@@ -61,7 +61,7 @@ public sealed partial class PathfindingSystem
         DirtyChunk(ev.Entity, Comp<MapGridComponent>(ev.Entity).GridTileToLocal(ev.NewTile.GridIndices));
     }
 
-    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityPausedEvent args)
+    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityUnpausedEvent args)
     {
         component.NextUpdate += args.PausedTime;
     }
