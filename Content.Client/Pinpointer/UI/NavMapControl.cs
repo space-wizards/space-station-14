@@ -1,9 +1,10 @@
-using System.Numerics;
+using System.Globalization;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -25,10 +26,36 @@ public sealed class NavMapControl : MapGridControl
     private Vector2 _offset;
     private bool _draggin;
 
+    private bool _recentering = false;
+
+    private float _recenterMinimum = 0.05f;
+
+    private readonly Label _zoom = new()
+    {
+        VerticalAlignment = VAlignment.Top,
+        Margin = new Thickness(4f, 2f),
+    };
+
+    private readonly Button _recenter = new()
+    {
+        Text = "Recentre",
+        VerticalAlignment = VAlignment.Top,
+        HorizontalAlignment = HAlignment.Right,
+        Margin = new Thickness(4f, 2f),
+        Disabled = true,
+    };
+
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
         RectClipContent = true;
+        AddChild(_zoom);
+        AddChild(new Control());
+        AddChild(_recenter);
+        _recenter.OnPressed += args =>
+        {
+            _recentering = true;
+        };
     }
 
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
@@ -58,12 +85,41 @@ public sealed class NavMapControl : MapGridControl
         if (!_draggin)
             return;
 
+        _recentering = false;
         _offset -= new Vector2(args.Relative.X, -args.Relative.Y) / MidPoint * WorldRange;
+
+        if (_offset != Vector2.Zero)
+        {
+            _recenter.Disabled = false;
+        }
+        else
+        {
+            _recenter.Disabled = true;
+        }
     }
 
     protected override void Draw(DrawingHandleScreen handle)
     {
         base.Draw(handle);
+
+        if (_recentering)
+        {
+            var frameTime = Timing.FrameTime;
+            var diff = _offset * (float) frameTime.TotalSeconds;
+
+            if (_offset.LengthSquared < _recenterMinimum)
+            {
+                _offset = Vector2.Zero;
+                _recentering = false;
+                _recenter.Disabled = true;
+            }
+            else
+            {
+                _offset -= diff * 5f;
+            }
+        }
+
+        _zoom.Text = $"Zoom: {(WorldRange / WorldMaxRange * 100f):0.00}%";
 
         if (!_entManager.TryGetComponent<NavMapComponent>(Uid, out var navMap) ||
             !_entManager.TryGetComponent<TransformComponent>(Uid, out var xform) ||

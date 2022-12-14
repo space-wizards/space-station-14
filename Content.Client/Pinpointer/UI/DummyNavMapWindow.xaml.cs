@@ -11,7 +11,10 @@ public sealed partial class DummyNavMapWindow : FancyWindow
     {
         RobustXamlLoader.Load(this);
         NavMapScreen.Uid = uid;
-        SetSize = NavMapScreen.SetSize;
-        Resizable = false;
+
+        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MetaDataComponent>(uid, out var metadata))
+        {
+            Title = metadata.EntityName;
+        }
     }
 }
