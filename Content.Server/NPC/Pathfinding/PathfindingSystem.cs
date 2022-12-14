@@ -11,6 +11,7 @@ using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
@@ -43,6 +44,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -58,7 +60,7 @@ namespace Content.Server.NPC.Pathfinding
         private const int PathTickLimit = 256;
 
         private int _portalIndex;
-        private Dictionary<int, PathPortal> _portals = new();
+        private readonly Dictionary<int, PathPortal> _portals = new();
 
         public override void Initialize()
         {
@@ -239,10 +241,9 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<PhysicsComponent>(entity, out var body))
+            if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                layer = body.CollisionLayer;
-                mask = body.CollisionMask;
+                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
             }
 
             var request = new BFSPathRequest(maxRange, limit, start.Coordinates, flags, layer, mask, cancelToken);
@@ -317,6 +318,21 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         /// <summary>
+        /// Gets a path in a thread-safe way.
+        /// </summary>
+        public async Task<PathResultEvent> GetPathSafe(
+            EntityUid entity,
+            EntityCoordinates start,
+            EntityCoordinates end,
+            float range,
+            CancellationToken cancelToken,
+            PathFlags flags = PathFlags.None)
+        {
+            var request = GetRequest(entity, start, end, range, cancelToken, flags);
+            return await GetPath(request, true);
+        }
+
+        /// <summary>
         /// Asynchronously gets a path.
         /// </summary>
         public async Task<PathResultEvent> GetPath(
@@ -386,10 +402,9 @@ namespace Content.Server.NPC.Pathfinding
             var layer = 0;
             var mask = 0;
 
-            if (TryComp<PhysicsComponent>(entity, out var body))
+            if (TryComp<FixturesComponent>(entity, out var fixtures))
             {
-                layer = body.CollisionLayer;
-                mask = body.CollisionMask;
+                (layer, mask) = _physics.GetHardCollision(entity, fixtures);
             }
 
             return new AStarPathRequest(start, end, flags, range, layer, mask, cancelToken);
@@ -428,12 +443,22 @@ namespace Content.Server.NPC.Pathfinding
         }
 
         private async Task<PathResultEvent> GetPath(
-            PathRequest request)
+            PathRequest request, bool safe = false)
         {
             // We could maybe try an initial quick run to avoid forcing time-slicing over ticks.
             // For now it seems okay and it shouldn't block on 1 NPC anyway.
 
-            _pathRequests.Add(request);
+            if (safe)
+            {
+                lock (_pathRequests)
+                {
+                    _pathRequests.Add(request);
+                }
+            }
+            else
+            {
+                _pathRequests.Add(request);
+            }
 
             await request.Task;
 
