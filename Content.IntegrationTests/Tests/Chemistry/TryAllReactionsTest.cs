@@ -23,7 +23,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50";
+        maxVol: 50
+        canMix: true";
         [Test]
         public async Task TryAllTest()
         {
@@ -58,6 +59,13 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     }
 
                     solutionSystem.SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
+
+                    if (reactionPrototype.MixingCategories != null)
+                    {
+                        var mixerComponent = new ReactionMixerComponent();
+                        mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
+                        solutionSystem.UpdateChemicals(beaker, component, true, mixerComponent);
+                    }
                 });
 
                 await server.WaitIdleAsync();
