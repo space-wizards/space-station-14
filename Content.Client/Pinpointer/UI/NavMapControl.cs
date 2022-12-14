@@ -44,7 +44,6 @@ public sealed class NavMapControl : MapGridControl
 
         var area = new Box2(-WorldRange, -WorldRange, WorldRange, WorldRange).Translated(offset);
         var tileSize = new Vector2(grid.TileSize, -grid.TileSize);
-        Span<Vector2> verts = stackalloc Vector2[4];
 
         for (var x = Math.Floor(area.Left); x <= Math.Ceiling(area.Right + 1); x += SharedNavMapSystem.ChunkSize * grid.TileSize)
         {
@@ -146,8 +145,8 @@ public sealed class NavMapControl : MapGridControl
                         handle.DrawLine(Scale(position), Scale(position + new Vector2(0f, -grid.TileSize)), Color.Aqua);
                     }
 
-
-                    // handle.DrawRect(new UIBox2(Scale(position), Scale(position + tileSize)), Color.Aqua, false);
+                    // Draw a diagonal line for interiors.
+                    handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), Color.Aqua);
                 }
             }
         }
