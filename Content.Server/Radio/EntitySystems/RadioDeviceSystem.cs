@@ -173,25 +173,17 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (HasComp<RadioSpeakerComponent>(args.Source))
             return; // no feedback loops please.
 
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
-            return;
-
         if (_recentlySent.Add((args.Message, args.Source)))
             _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
     private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
     {
-        if (!component.UnobstructedRequired)
-            return;
-
-        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
-            return;
-
-        if (_interaction.InRangeUnobstructed(args.Source, uid, 0))
-            return;
-
-        args.Cancel();
+        if (component.PowerRequired && !this.IsPowered(uid, EntityManager)
+            || component.UnobstructedRequired && !_interaction.InRangeUnobstructed(args.Source, uid, 0))
+        {
+            args.Cancel();
+        }
     }
 
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
