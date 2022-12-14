@@ -23,7 +23,7 @@
   - type: Summonable
     specialItem: SpawnPointGhostRemilia
   - type: ReactionMixer
-    mixMessage: "You bless the {0} with the {1}"
+    mixMessage: "bible-mixing-success"
     reactionTypes:
     - Holy
   - type: ItemCooldown

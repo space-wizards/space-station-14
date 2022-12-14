@@ -13,12 +13,11 @@ public sealed class ReactionMixerComponent : Component
     public List<string> ReactionTypes = default!;
 
     /// <summary>
-    ///     A string which is shown to the user upon attempting to mix.
-    ///     0 is the name of the entity being mixed, 1 is the name of the entity doing the mixing.
+    ///     A string which identifies the string to be sent when successfully mixing a solution
     /// </summary>
     [ViewVariables]
     [DataField("mixMessage")]
-    public string MixMessage = "You mix the {0} with the {1}";
+    public string MixMessage = "default-mixing-success";
 }
 
 [ByRefEvent]

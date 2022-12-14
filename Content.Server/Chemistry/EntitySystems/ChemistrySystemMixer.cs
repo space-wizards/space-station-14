@@ -1,8 +1,10 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -28,6 +30,8 @@ public sealed partial class ChemistrySystem
         Solution? solution = null;
         if (!_solutions.TryGetMixableSolution(args.Target.Value, out solution))
               return;
+
+        _popup.PopupEntity(Loc.GetString(component.MixMessage, ("mixed", Identity.Entity(args.Target.Value, EntityManager)), ("mixer", Identity.Entity(uid, EntityManager))), args.User, Filter.Entities(args.User)); ;
 
         _solutions.UpdateChemicals(args.Target.Value, solution, true, component);
 
