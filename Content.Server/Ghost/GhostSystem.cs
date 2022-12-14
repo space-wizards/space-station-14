@@ -119,6 +119,7 @@ namespace Content.Server.Ghost
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
 
+            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
             if (component.Action.UseDelay != null)
                 component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
             _actions.AddAction(uid, component.Action, null);
