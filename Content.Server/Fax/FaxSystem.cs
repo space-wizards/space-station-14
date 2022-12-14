@@ -10,7 +10,9 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
@@ -33,6 +35,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
     public const string PaperSlotId = "Paper";
 
@@ -213,6 +216,8 @@ public sealed class FaxSystem : EntitySystem
                 return;
             }
 
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):user} renamed {ToPrettyString(uid)} from \"{component.FaxName}\" to \"{newName}\"");
             component.FaxName = newName;
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid, Filter.Pvs(uid));
             UpdateUserInterface(uid, component);
@@ -283,7 +288,7 @@ public sealed class FaxSystem : EntitySystem
     
     private void OnSendButtonPressed(EntityUid uid, FaxMachineComponent component, FaxSendMessage args)
     {
-        Send(uid, component);
+        Send(uid, component, args.Session.AttachedEntity);
     }
     
     private void OnRefreshButtonPressed(EntityUid uid, FaxMachineComponent component, FaxRefreshMessage args)
@@ -363,7 +368,7 @@ public sealed class FaxSystem : EntitySystem
     ///     Sends message to addressee if paper is set and a known fax is selected
     ///     A timeout is set after sending
     /// </summary>
-    public void Send(EntityUid uid, FaxMachineComponent? component = null)
+    public void Send(EntityUid uid, FaxMachineComponent? component = null, EntityUid? sender = null)
     {
         if (!Resolve(uid, ref component))
             return;
@@ -389,6 +394,8 @@ public sealed class FaxSystem : EntitySystem
             { FaxConstants.FaxPaperContentData, paper.Content },
         };
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
+
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} sent fax from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
 
         component.SendTimeoutRemaining += component.SendTimeout;
         
@@ -432,6 +439,8 @@ public sealed class FaxSystem : EntitySystem
 
         if (TryComp<MetaDataComponent>(printed, out var metadata))
             metadata.EntityName = printout.Name;
+
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {printout.Content}");
     }
 
     private void NotifyAdmins(string faxName)

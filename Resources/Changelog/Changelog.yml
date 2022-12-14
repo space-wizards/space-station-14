@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Zombie move speed should no longer mispredict., type: Fix}
-  id: 2255
-  time: '2022-09-07T01:59:27.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: Sleeping should behave more as expected with critical and dead mobs.,
-    type: Fix}
-  id: 2256
-  time: '2022-09-07T04:37:33.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Armors shows their armor values when examined!, type: Add}
@@ -2932,3 +2921,13 @@ Entries:
     type: Remove}
   id: 2754
   time: '2022-12-12T10:19:38.0000000+00:00'
+- author: tgrkzus
+  changes:
+  - {message: Radio chat now supports department specific radio prefixes, type: Add}
+  id: 2755
+  time: '2022-12-14T01:24:49.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added wallmounted intercoms, useful for radioing a department.', type: Add}
+  id: 2756
+  time: '2022-12-14T01:39:55.0000000+00:00'

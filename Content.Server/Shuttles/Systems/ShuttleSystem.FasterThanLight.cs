@@ -73,7 +73,7 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<FTLDestinationComponent, EntityPausedEvent>(OnDestinationPause);
     }
 
-    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, EntityPausedEvent args)
+    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, ref EntityPausedEvent args)
     {
         _console.RefreshShuttleConsoles();
     }
