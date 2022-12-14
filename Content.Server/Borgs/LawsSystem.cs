@@ -91,7 +91,6 @@ namespace Content.Server.Borgs
             if (index < 0)
                 return;
 
-            Logger.Error("Attempting to remove law at index " + index);
             component.Laws.RemoveAt((int) index);
             Dirty(component);
         }
