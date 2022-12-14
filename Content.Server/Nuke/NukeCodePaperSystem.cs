@@ -13,8 +13,6 @@ namespace Content.Server.Nuke
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly PaperSystem _paper = default!;
         [Dependency] private readonly FaxSystem _faxSystem = default!;
-        
-        private const string CentcomFaxPrototypeId = "FaxMachineCentcom";
 
         public override void Initialize()
         {
