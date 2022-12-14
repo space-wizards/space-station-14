@@ -5,30 +5,32 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
 
-public sealed class RotationVisualsSystem : VisualizerSystem<RotationVisualsComponent>
+public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsComponent>
 {
     protected override void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if(args.Sprite != null && args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+        if(args.Sprite == null || !args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
         {
-            switch (state)
-            {
-                case RotationState.Vertical:
-                    AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
-                    break;
-                case RotationState.Horizontal:
-                    AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
-                    break;
-            }
+            return;
+        }
+
+        switch (state)
+        {
+            case RotationState.Vertical:
+                AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
+                break;
+            case RotationState.Horizontal:
+                AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                break;
         }
     }
 
     /// <summary>
     ///     Rotates a sprite between two animated keyframes given a certain time.
     /// </summary>
-    public void AnimateSpriteRotation(SpriteComponent sprite, Angle rotation, float animationTime = 0.125f)
+    public void AnimateSpriteRotation(SpriteComponent sprite, Angle rotation, float animationTime)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
 

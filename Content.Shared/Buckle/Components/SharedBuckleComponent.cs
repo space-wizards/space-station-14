@@ -46,9 +46,3 @@ public sealed class BuckleChangeEvent : EntityEventArgs
     public EntityUid BuckledEntity;
     public bool Buckling;
 }
-
-[Serializable, NetSerializable]
-public enum BuckleVisuals
-{
-    Buckled
-}
