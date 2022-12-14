@@ -537,6 +537,11 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
+        /// <summary>
+        /// Should NPCs pathfind when steering. For debug purposes.
+        /// </summary>
+        public static readonly CVarDef<bool> NPCPathfinding = CVarDef.Create("npc.pathfinding", true);
+
         public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
 
         /*
@@ -1161,12 +1166,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
 
-        /// <summary>
-        /// How long seconds a client can go after being detected as AFK before being kicked.
-        /// </summary>
-        public static readonly CVarDef<float> AfkKickTime =
-            CVarDef.Create("afk.kick_time", 600f, CVar.SERVERONLY);
-
         /*
          * IC
          */
@@ -1348,5 +1347,51 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float>
             PlayTimeSaveInterval = CVarDef.Create("playtime.save_interval", 900f, CVar.SERVERONLY);
+
+        /*
+         * INFOLINKS
+         */
+
+        /// <summary>
+        /// Link to Discord server to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksDiscord =
+            CVarDef.Create("infolinks.discord", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to website to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksForum =
+            CVarDef.Create("infolinks.forum", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to GitHub page to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksGithub =
+            CVarDef.Create("infolinks.github", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to website to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksWebsite =
+            CVarDef.Create("infolinks.website", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to wiki to show in the launcher.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksWiki =
+            CVarDef.Create("infolinks.wiki", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to Patreon. Not shown in the launcher currently.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksPatreon =
+            CVarDef.Create("infolinks.patreon", "", CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
+        /// Link to the bug report form.
+        /// </summary>
+        public static readonly CVarDef<string> InfoLinksBugReport =
+            CVarDef.Create("infolinks.bug_report", "", CVar.SERVER | CVar.REPLICATED);
     }
 }

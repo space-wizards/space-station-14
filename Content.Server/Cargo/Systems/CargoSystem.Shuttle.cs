@@ -393,7 +393,7 @@ public sealed partial class CargoSystem
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            var worldAABB = xformQuery.GetComponent(grid.Owner).WorldMatrix.TransformBox(grid.LocalAABB);
             aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 

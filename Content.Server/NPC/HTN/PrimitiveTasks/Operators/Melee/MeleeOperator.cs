@@ -31,6 +31,7 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.MissChance = blackboard.GetValueOrDefault<float>(NPCBlackboard.MeleeMissChance, _entManager);
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 

@@ -25,12 +25,12 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
         protected override void EnteredTree()
         {
             // Fill out grids
-            _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.GridEntityId != 0);
+            _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Owner != 0);
             foreach (var grid in _gridData)
             {
                 var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
                 var playerGrid = IoCManager.Resolve<IEntityManager>().GetComponentOrNull<TransformComponent>(player)?.GridUid;
-                GridOptions.AddItem($"{grid.GridEntityId} {(playerGrid == grid.GridEntityId ? " (Current)" : "")}");
+                GridOptions.AddItem($"{grid.Owner} {(playerGrid == grid.Owner ? " (Current)" : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
@@ -53,7 +53,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
                 return;
 
             var gridList = _gridData.ToList();
-            var gridIndex = gridList[GridOptions.SelectedId].GridEntityId;
+            var gridIndex = gridList[GridOptions.SelectedId].Owner;
 
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;

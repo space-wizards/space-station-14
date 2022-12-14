@@ -6,5 +6,5 @@
   targetNode: torch
   category: construction-category-tools
   description: A torch fashioned from some wood.
-  icon: Objects/Misc/torch.rsi/icon.png
+  icon: { sprite: Objects/Misc/torch.rsi, state: icon }
   objectType: Item
