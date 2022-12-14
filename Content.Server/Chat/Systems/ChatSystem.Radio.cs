@@ -70,7 +70,7 @@ public sealed partial class ChatSystem
         if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
             // Redirect to defaultChannel of headset if it goes to "h" channel code
-            if (message.Substring(1,1) == "h" && _headsetComponent != null && _headsetComponent.defaultChannel != string.Empty)
+            if (message[1] == 'h' && _headsetComponent != null && _headsetComponent.defaultChannel != string.Empty)
             {
                 // try and grab headset default channel
                 _channels.TryGetValue(_headsetComponent.defaultChannel, out channel);
