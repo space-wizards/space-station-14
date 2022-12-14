@@ -1,7 +1,7 @@
 using Content.Server.CombatMode;
 using Content.Server.NPC.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Server.NPC.Events;
+using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -17,6 +17,52 @@ public sealed partial class NPCCombatSystem
     {
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentStartup>(OnMeleeStartup);
         SubscribeLocalEvent<NPCMeleeCombatComponent, ComponentShutdown>(OnMeleeShutdown);
+        SubscribeLocalEvent<NPCMeleeCombatComponent, NPCSteeringEvent>(OnMeleeSteering);
+    }
+
+    private void OnMeleeSteering(EntityUid uid, NPCMeleeCombatComponent component, ref NPCSteeringEvent args)
+    {
+        args.Steering.CanSeek = true;
+
+        if (TryComp<MeleeWeaponComponent>(component.Weapon, out var weapon))
+        {
+            var cdRemaining = weapon.NextAttack - _timing.CurTime;
+
+            // If CD remaining then backup.
+            if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.5f)
+                return;
+
+            if (!_physics.TryGetNearestPoints(uid, component.Target, out _, out var pointB))
+                return;
+
+            var idealDistance = weapon.Range * 1.25f;
+            var obstacleDirection = pointB - args.WorldPosition;
+            var obstacleDistance = obstacleDirection.Length;
+
+            if (obstacleDistance > idealDistance || obstacleDistance == 0f)
+            {
+                // Don't want to get too far.
+                return;
+            }
+
+            args.Steering.CanSeek = false;
+            obstacleDirection = args.OffsetRotation.RotateVec(obstacleDirection);
+            var norm = obstacleDirection.Normalized;
+
+            var weight = (obstacleDistance <= args.AgentRadius
+                ? 1f
+                : (idealDistance - obstacleDistance) / idealDistance);
+
+            for (var i = 0; i < SharedNPCSteeringSystem.InterestDirections; i++)
+            {
+                var result = -Vector2.Dot(norm, NPCSteeringSystem.Directions[i]) * weight;
+
+                if (result < 0f)
+                    continue;
+
+                args.Interest[i] = MathF.Max(args.Interest[i], result);
+            }
+        }
     }
 
     private void OnMeleeShutdown(EntityUid uid, NPCMeleeCombatComponent component, ComponentShutdown args)
@@ -107,7 +153,7 @@ public sealed partial class NPCCombatSystem
         // Gets unregistered on component shutdown.
         _steering.TryRegister(component.Owner, new EntityCoordinates(component.Target, Vector2.Zero), steering);
 
-        if (weapon.NextAttack > curTime)
+        if (weapon.NextAttack > curTime || !Enabled)
             return;
 
         if (_random.Prob(component.MissChance) &&

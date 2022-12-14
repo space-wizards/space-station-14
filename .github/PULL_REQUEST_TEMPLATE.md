@@ -16,8 +16,7 @@ If you're unsure whether your PR will require media, ask a maintainer.
 Check one of the boxes below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
 -->
 
-- [ ] I have added screenshots/videos to this PR showcasing its changes ingame
-- [ ] This PR does not require an ingame showcase
+- [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase
 
 **Changelog**
 <!--

@@ -103,7 +103,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -179,7 +179,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
             }
             else
             {

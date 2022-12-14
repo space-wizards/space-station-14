@@ -292,6 +292,9 @@
   id: Ingot
 
 - type: Tag
+  id: IntercomElectronics
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag

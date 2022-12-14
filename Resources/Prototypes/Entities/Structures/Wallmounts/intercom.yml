@@ -1,0 +1,189 @@
+- type: entity
+  id: Intercom
+  name: intercom
+  description: An intercom. For when the station just needs to know something.
+  components:
+  - type: WallMount
+  - type: ApcPowerReceiver
+  - type: Electrified
+    enabled: false
+    usesApcPower: true
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+  - type: ExtensionCableReceiver
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Appearance
+  - type: Sprite
+    sprite: Structures/Wallmounts/intercom.rsi
+    layers:
+    - state: base
+    - state: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Wires
+    BoardName: "Intercom"
+    LayoutId: Intercom
+  - type: Construction
+    graph: Intercom
+    node: intercom
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: IntercomAssesmbly
+  name: intercom assembly
+  description: An intercom. It doesn't seem very helpful right now.
+  components:
+  - type: WallMount
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/intercom.rsi
+    state: build
+  - type: Construction
+    graph: Intercom
+    node: assembly
+  - type: Transform
+    anchored: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: IntercomCommand
+  parent: Intercom
+  suffix: Command
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Command
+
+- type: entity
+  id: IntercomEngineering
+  parent: Intercom
+  suffix: Engineering
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Engineering
+
+- type: entity
+  id: IntercomMedical
+  parent: Intercom
+  suffix: Medical
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Medical
+
+- type: entity
+  id: IntercomScience
+  parent: Intercom
+  suffix: Science
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Science
+
+- type: entity
+  id: IntercomSecurity
+  parent: Intercom
+  suffix: Security
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Security
+
+- type: entity
+  id: IntercomService
+  parent: Intercom
+  suffix: Service
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Service
+
+- type: entity
+  id: IntercomSupply
+  parent: Intercom
+  suffix: Supply
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Supply
+
+- type: entity
+  id: IntercomAll
+  parent: Intercom
+  suffix: All
+  components:
+  - type: RadioMicrophone
+    powerRequired: true
+    unobstructedRequired: true
+    listenRange: 2
+    supportedChannels:
+    - Common
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
