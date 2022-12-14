@@ -537,6 +537,11 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> NPCEnabled = CVarDef.Create("npc.enabled", true);
 
+        /// <summary>
+        /// Should NPCs pathfind when steering. For debug purposes.
+        /// </summary>
+        public static readonly CVarDef<bool> NPCPathfinding = CVarDef.Create("npc.pathfinding", true);
+
         public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
 
         /*
@@ -1160,12 +1165,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
-
-        /// <summary>
-        /// How long seconds a client can go after being detected as AFK before being kicked.
-        /// </summary>
-        public static readonly CVarDef<float> AfkKickTime =
-            CVarDef.Create("afk.kick_time", 600f, CVar.SERVERONLY);
 
         /*
          * IC

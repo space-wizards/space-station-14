@@ -1,11 +1,14 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Interaction;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
 using Content.Server.Speech.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -20,6 +23,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid)> _recentlySent = new();
@@ -31,6 +35,8 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ExaminedEvent>(OnExamine);
         SubscribeLocalEvent<RadioMicrophoneComponent, ActivateInWorldEvent>(OnActivateMicrophone);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
+        SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
+        SubscribeLocalEvent<RadioMicrophoneComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -80,6 +86,9 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
+            return;
+
         component.Enabled = !component.Enabled;
 
         if (!quiet)
@@ -93,6 +102,39 @@ public sealed class RadioDeviceSystem : EntitySystem
             EnsureComp<ActiveListenerComponent>(uid).Range = component.ListenRange;
         else
             RemCompDeferred<ActiveListenerComponent>(uid);
+    }
+
+    private void OnGetVerbs(EntityUid uid, RadioMicrophoneComponent component, GetVerbsEvent<Verb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+            return;
+
+        if (component.SupportedChannels == null || component.SupportedChannels.Count <= 1)
+            return;
+
+        if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
+            return;
+
+        foreach (var channel in component.SupportedChannels)
+        {
+            var proto = _protoMan.Index<RadioChannelPrototype>(channel);
+
+            var v = new Verb
+            {
+                Text = proto.LocalizedName,
+                Priority = 1,
+                Category = VerbCategory.ChannelSelect,
+                Disabled = component.BroadcastChannel == channel,
+                DoContactInteraction = true,
+                Act = () =>
+                {
+                    component.BroadcastChannel = channel;
+                    _popup.PopupEntity(Loc.GetString("handheld-radio-component-channel-set",
+                        ("channel", channel)), uid, Filter.Entities(args.User));
+                }
+            };
+            args.Verbs.Add(v);
+        }
     }
 
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
@@ -121,8 +163,9 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        var freq = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel).Frequency;
-        args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", freq)));
+        var proto = _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel);
+        args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine", ("frequency", proto.Frequency)));
+        args.PushMarkup(Loc.GetString("handheld-radio-component-chennel-examine", ("channel", proto.LocalizedName)));
     }
 
     private void OnListen(EntityUid uid, RadioMicrophoneComponent component, ListenEvent args)
@@ -134,6 +177,15 @@ public sealed class RadioDeviceSystem : EntitySystem
             _radio.SendRadioMessage(args.Source, args.Message, _protoMan.Index<RadioChannelPrototype>(component.BroadcastChannel));
     }
 
+    private void OnAttemptListen(EntityUid uid, RadioMicrophoneComponent component, ListenAttemptEvent args)
+    {
+        if (component.PowerRequired && !this.IsPowered(uid, EntityManager)
+            || component.UnobstructedRequired && !_interaction.InRangeUnobstructed(args.Source, uid, 0))
+        {
+            args.Cancel();
+        }
+    }
+
     private void OnReceiveRadio(EntityUid uid, RadioSpeakerComponent component, RadioReceiveEvent args)
     {
         var nameEv = new TransformSpeakerNameEvent(args.Source, Name(args.Source));
@@ -143,6 +195,6 @@ public sealed class RadioDeviceSystem : EntitySystem
             ("originalName", nameEv.Name));
 
         var hideGlobalGhostChat = true; // log to chat so people can identity the speaker/source, but avoid clogging ghost chat if there are many radios
-        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGlobalGhostChat:hideGlobalGhostChat, checkRadioPrefix: false); 
+        _chat.TrySendInGameICMessage(uid, args.Message, InGameICChatType.Speak, false, nameOverride: name, hideGlobalGhostChat:hideGlobalGhostChat, checkRadioPrefix: false);
     }
 }

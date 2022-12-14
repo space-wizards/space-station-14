@@ -35,6 +35,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: IntercomElectronics
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: IntercomElectronics
+  completetime: 2
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
   id: FireAlarmElectronics
   icon: { sprite: Objects/Misc/module.rsi, state: door_electronics }
   result: FireAlarmElectronics
@@ -280,6 +289,27 @@
     Steel: 100
     Glass: 900
     Gold: 100
+
+- type: latheRecipe
+  id: RipleyCentralElectronics
+  icon: Objects/Misc/module.rsi/mainboard.png
+  result: RipleyCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: RipleyPeripheralsElectronics
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: RipleyPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
