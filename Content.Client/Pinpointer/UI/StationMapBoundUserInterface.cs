@@ -5,7 +5,7 @@ namespace Content.Client.Pinpointer.UI;
 
 public sealed class StationMapBoundUserInterface : BoundUserInterface
 {
-    private DummyNavMapWindow? _window = null;
+    private StationMapWindow? _window;
 
     public StationMapBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
@@ -23,7 +23,7 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
             gridUid = xform.GridUid;
         }
 
-        _window = new DummyNavMapWindow(gridUid);
+        _window = new StationMapWindow(gridUid, Owner.Owner);
         _window.OpenCentered();
         _window.OnClose += Close;
     }

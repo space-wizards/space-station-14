@@ -1,8 +1,6 @@
-using System.Globalization;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
-using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -21,7 +19,8 @@ public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    public EntityUid? Uid;
+    public EntityUid? MapUid;
+    public EntityUid? TrackedEntity;
 
     private Vector2 _offset;
     private bool _draggin;
@@ -121,9 +120,9 @@ public sealed class NavMapControl : MapGridControl
 
         _zoom.Text = $"Zoom: {(WorldRange / WorldMaxRange * 100f):0.00}%";
 
-        if (!_entManager.TryGetComponent<NavMapComponent>(Uid, out var navMap) ||
-            !_entManager.TryGetComponent<TransformComponent>(Uid, out var xform) ||
-            !_entManager.TryGetComponent<MapGridComponent>(Uid, out var grid))
+        if (!_entManager.TryGetComponent<NavMapComponent>(MapUid, out var navMap) ||
+            !_entManager.TryGetComponent<TransformComponent>(MapUid, out var xform) ||
+            !_entManager.TryGetComponent<MapGridComponent>(MapUid, out var grid))
         {
             return;
         }
@@ -132,13 +131,13 @@ public sealed class NavMapControl : MapGridControl
         var tileColor = new Color(30, 67, 30);
         var lineColor = new Color(102, 217, 102);
 
-        if (_entManager.TryGetComponent<PhysicsComponent>(Uid, out var physics))
+        if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
         {
             offset += physics.LocalCenter;
         }
 
         // Draw tiles
-        if (_entManager.TryGetComponent<FixturesComponent>(Uid, out var manager))
+        if (_entManager.TryGetComponent<FixturesComponent>(MapUid, out var manager))
         {
             Span<Vector2> verts = new Vector2[8];
 
@@ -268,13 +267,11 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
-        // TODO: Hacky bullshit
-        var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        if (lit && _entManager.TryGetComponent<TransformComponent>(player, out var playerXform))
+        if (lit && _entManager.TryGetComponent<TransformComponent>(TrackedEntity, out var playerXform))
         {
             var position = xform.InvWorldMatrix.Transform(playerXform.WorldPosition) - offset;
             position = Scale(new Vector2(position.X, -position.Y));
