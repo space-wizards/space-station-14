@@ -17,7 +17,6 @@ using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
 
-
 namespace Content.Server.ParticleAccelerator.Components
 {
     // This component is in control of the PA's logic because it's the one to contain the wires for hacking.
