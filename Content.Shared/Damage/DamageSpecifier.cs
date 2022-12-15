@@ -16,6 +16,15 @@ namespace Content.Shared.Damage
     [DataDefinition]
     public sealed class DamageSpecifier : IEquatable<DamageSpecifier>
     {
+        // These exist solely so the wiki works. Please do not touch them or use them.
+        [JsonPropertyName("types")]
+        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
+        private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
+
+        [JsonPropertyName("groups")]
+        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
+        private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
+    
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
