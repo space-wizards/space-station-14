@@ -2,6 +2,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -95,7 +96,7 @@ public class GunComponent : Component
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
-    [DataField("nextFire")]
+    [DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>

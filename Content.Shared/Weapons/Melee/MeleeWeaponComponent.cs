@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee;
@@ -25,7 +26,7 @@ public sealed class MeleeWeaponComponent : Component
     /// <summary>
     /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextAttack;
 
     /*
