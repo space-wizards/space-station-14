@@ -102,7 +102,7 @@ namespace Content.Server.Chat
             }
 
             // Suicide by nearby entity (ex: Microwave)
-            foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Anchored))
+            foreach (var entity in _entityLookupSystem.GetEntitiesInRange(victim, 1, LookupFlags.Approximate | LookupFlags.Static))
             {
                 // Skip any nearby items that can be picked up, we already checked the active held item above
                 if (itemQuery.HasComponent(entity))
