@@ -7,15 +7,16 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
+// using Content.Server.WireHacking;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timing.Timer;
-// using Content.Server.WireHacking;
 // using static Content.Shared.Wires.SharedWiresComponent;
+using Timer = Robust.Shared.Timing.Timer;
+
 
 namespace Content.Server.ParticleAccelerator.Components
 {
