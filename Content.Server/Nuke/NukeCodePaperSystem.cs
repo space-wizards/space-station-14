@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chat.Systems;
 using Content.Server.Communications;
+using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
@@ -10,8 +12,8 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly StationSystem _station = default!;
-
-        private const string NukePaperPrototype = "NukeCodePaper";
+        [Dependency] private readonly PaperSystem _paper = default!;
+        [Dependency] private readonly FaxSystem _faxSystem = default!;
 
         public override void Initialize()
         {
@@ -25,34 +27,18 @@ namespace Content.Server.Nuke
             SetupPaper(uid);
         }
 
-        private void SetupPaper(EntityUid uid, EntityUid? station = null, PaperComponent? paper = null)
+        private void SetupPaper(EntityUid uid, EntityUid? station = null)
         {
-            if (!Resolve(uid, ref paper))
+            if (TryGetRelativeNukeCode(uid, out var paperContent, station))
             {
-                return;
-            }
-
-            var owningStation = station ?? _station.GetOwningStation(uid);
-            var transform = Transform(uid);
-
-            // Find the first nuke that matches the paper's location.
-            foreach (var nuke in EntityQuery<NukeComponent>())
-            {
-                if (owningStation == null && nuke.OriginMapGrid != (transform.MapID, transform.GridUid)
-                    || nuke.OriginStation != owningStation)
-                {
-                    continue;
-                }
-
-                paper.Content += $"{MetaData(nuke.Owner).EntityName} - {nuke.Code}";
-                break;
+                _paper.SetContent(uid, paperContent);
             }
         }
 
         /// <summary>
-        ///     Send a nuclear code to all communication consoles
+        ///     Send a nuclear code to all faxes on that station which are authorized to receive nuke codes.
         /// </summary>
-        /// <returns>True if at least one console received codes</returns>
+        /// <returns>True if at least one fax received codes</returns>
         public bool SendNukeCodes(EntityUid station)
         {
             if (!HasComp<StationDataComponent>(station))
@@ -60,20 +46,17 @@ namespace Content.Server.Nuke
                 return false;
             }
 
-            // todo: this should probably be handled by fax system
             var wasSent = false;
-            var consoles = EntityQuery<CommunicationsConsoleComponent, TransformComponent>();
-            foreach (var (console, transform) in consoles)
+            var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            foreach (var fax in faxes)
             {
-                var owningStation = _station.GetOwningStation(console.Owner);
-                if (owningStation == null || owningStation != station)
+                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(fax.Owner, out var paperContent, station))
                 {
                     continue;
                 }
 
-                var consolePos = transform.MapPosition;
-                var uid = Spawn(NukePaperPrototype, consolePos);
-                SetupPaper(uid, station);
+                var printout = new FaxPrintout(paperContent, Loc.GetString("nuke-codes-fax-paper-name"));
+                _faxSystem.Receive(fax.Owner, printout, null, fax);
 
                 wasSent = true;
             }
@@ -85,6 +68,36 @@ namespace Content.Server.Nuke
             }
 
             return wasSent;
+        }
+
+        private bool TryGetRelativeNukeCode(
+            EntityUid uid,
+            [NotNullWhen(true)] out string? nukeCode,
+            EntityUid? station = null,
+            TransformComponent? transform = null)
+        {
+            nukeCode = null;
+            if (!Resolve(uid, ref transform))
+            {
+                return false;
+            }
+            
+            var owningStation = station ?? _station.GetOwningStation(uid);
+            
+            // Find the first nuke that matches the passed location.
+            foreach (var nuke in EntityQuery<NukeComponent>())
+            {
+                if (owningStation == null && nuke.OriginMapGrid != (transform.MapID, transform.GridUid)
+                    || nuke.OriginStation != owningStation)
+                {
+                    continue;
+                }
+
+                nukeCode = Loc.GetString("nuke-codes-message", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code));
+                return true;
+            }
+
+            return false;
         }
     }
 }

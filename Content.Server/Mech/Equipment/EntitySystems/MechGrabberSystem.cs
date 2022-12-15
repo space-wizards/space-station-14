@@ -134,6 +134,9 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.Token != null)
             return;
 
+        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+            return;
+
         args.Handled = true;
         component.Token = new();
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
@@ -142,7 +145,7 @@ public sealed class MechGrabberSystem : EntitySystem
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             UsedFinishedEvent = new MechGrabberGrabFinishedEvent(args.Target.Value),
-            UserCancelledEvent = new MechGrabberGrabCancelledEvent()
+            UsedCancelledEvent = new MechGrabberGrabCancelledEvent()
         });
     }
 

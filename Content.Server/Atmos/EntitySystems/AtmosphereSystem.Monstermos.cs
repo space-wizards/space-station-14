@@ -480,7 +480,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
-                var gridPhysics = Comp<PhysicsComponent>(mapGrid.GridEntityId);
+                var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
 
                 // TODO ATMOS: Come up with better values for these.
                 gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
@@ -522,10 +522,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, tile.GridIndices);
-            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, other.GridIndices);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref tileEv);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref otherEv);
+            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, tile.GridIndices);
+            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, other.GridIndices);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref tileEv);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref otherEv);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices);
             InvalidateVisuals(other.GridIndex, other.GridIndices);
         }

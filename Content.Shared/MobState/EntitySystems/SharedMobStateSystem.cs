@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.FixedPoint;
@@ -29,6 +31,7 @@ namespace Content.Shared.MobState.EntitySystems
         [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly StatusEffectsSystem Status = default!;
         [Dependency] private   readonly StandingStateSystem _standing = default!;
+        [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -325,6 +328,7 @@ namespace Content.Shared.MobState.EntitySystems
             ExitState(component, old);
 
             component.CurrentState = state;
+            _adminLogger.Add(LogType.Damaged, state == DamageState.Alive ? LogImpact.Low : LogImpact.Medium, $"{ToPrettyString(component.Owner):user} state changed from {old} to {state}");
 
             EnterState(component, state);
             UpdateState(component, state, threshold);

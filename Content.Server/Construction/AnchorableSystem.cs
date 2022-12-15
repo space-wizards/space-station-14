@@ -238,10 +238,16 @@ namespace Content.Server.Construction
             if (transform.Anchored)
             {
                 TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
+
+                // Log unanchor attempt
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
             }
             else
             {
                 TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
+
+                // Log anchor attempt
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
             }
         }
 
