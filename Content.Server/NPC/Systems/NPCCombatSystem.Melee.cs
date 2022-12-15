@@ -39,7 +39,7 @@ public sealed partial class NPCCombatSystem
             var obstacleDirection = pointB - args.WorldPosition;
             var obstacleDistance = obstacleDirection.Length;
 
-            if (obstacleDistance > idealDistance)
+            if (obstacleDistance > idealDistance || obstacleDistance == 0f)
             {
                 // Don't want to get too far.
                 return;
