@@ -1,6 +1,6 @@
-using Content.Shared.Rotation;
 using Robust.Client.GameObjects;
 using Robust.Client.Animations;
+using Content.Shared.Rotation;
 using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
@@ -11,7 +11,8 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if(args.Sprite == null || !args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state))
+        if (!args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state) ||
+        args.Sprite == null)
         {
             return;
         }

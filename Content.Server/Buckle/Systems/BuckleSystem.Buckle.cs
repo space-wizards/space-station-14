@@ -250,6 +250,9 @@ public sealed partial class BuckleSystem
             return false;
         }
 
+        if (TryComp<AppearanceComponent>(buckleId, out var appearance))
+            _appearance.SetData(buckleId, BuckleVisuals.Buckled, true, appearance);
+
         ReAttach(buckleId, strap, buckle);
         SetBuckledTo(buckle, strap);
 
@@ -329,6 +332,9 @@ public sealed partial class BuckleSystem
             if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
                 xform.Coordinates = oldBuckledXform.Coordinates.Offset(oldBuckledTo.UnbuckleOffset);
         }
+
+        if (TryComp(buckleId, out AppearanceComponent? appearance))
+            _appearance.SetData(buckleId, BuckleVisuals.Buckled, false, appearance);
 
         if ((TryComp<MobStateComponent>(buckleId, out var mobState) && _mobState.IsIncapacitated(buckleId, mobState)) ||
             HasComp<KnockedDownComponent>(buckleId))
