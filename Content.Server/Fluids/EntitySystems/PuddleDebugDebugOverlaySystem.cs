@@ -59,7 +59,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
             foreach (var grid in _mapManager.FindGridsIntersecting(transform.MapID, worldBounds))
             {
                 var data = new List<PuddleDebugOverlayData>();
-                var gridUid = grid.GridEntityId;
+                var gridUid = grid.Owner;
 
                 if (!Exists(gridUid))
                     continue;

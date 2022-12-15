@@ -4,6 +4,7 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
 using Content.Shared.Weapons.Melee;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.NPC.Systems;
@@ -35,20 +36,29 @@ public sealed partial class NPCSteeringSystem
         if (poly.Data.IsFreeSpace)
             return SteeringObstacleStatus.Completed;
 
-        if (!bodyQuery.TryGetComponent(component.Owner, out var body))
-            return SteeringObstacleStatus.Failed;
-
         // TODO: Store PathFlags on the steering comp
         // and be able to re-check it.
 
+        var layer = 0;
+        var mask = 0;
+
+        if (TryComp<FixturesComponent>(component.Owner, out var manager))
+        {
+            (layer, mask) = _physics.GetHardCollision(component.Owner, manager);
+        }
+        else
+        {
+            return SteeringObstacleStatus.Failed;
+        }
+
         // TODO: Should cache the fact we're doing this somewhere.
         // See https://github.com/space-wizards/space-station-14/issues/11475
-        if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
-            (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
+        if ((poly.Data.CollisionLayer & mask) != 0x0 ||
+            (poly.Data.CollisionMask & layer) != 0x0)
         {
             var obstacleEnts = new List<EntityUid>();
 
-            GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer, bodyQuery, obstacleEnts);
+            GetObstacleEntities(poly, mask, layer, bodyQuery, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 

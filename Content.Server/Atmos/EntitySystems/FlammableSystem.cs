@@ -23,7 +23,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    internal sealed class FlammableSystem : EntitySystem
+    public sealed class FlammableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -35,11 +35,11 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private const float MinimumFireStacks = -10f;
-        private const float MaximumFireStacks = 20f;
+        public const float MinimumFireStacks = -10f;
+        public const float MaximumFireStacks = 20f;
         private const float UpdateTime = 1f;
 
-        private const float MinIgnitionTemperature = 373.15f;
+        public const float MinIgnitionTemperature = 373.15f;
         public const string FlammableFixtureID = "flammable";
 
         private float _timer = 0f;

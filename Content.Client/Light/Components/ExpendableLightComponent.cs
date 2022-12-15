@@ -1,6 +1,5 @@
-﻿using Content.Shared.Light.Component;
+using Content.Shared.Light.Component;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Light.Components
 {
