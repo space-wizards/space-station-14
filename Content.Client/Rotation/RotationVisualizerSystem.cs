@@ -11,20 +11,20 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state) ||
-        args.Sprite == null)
+        if (args.Sprite != null)
         {
-            return;
-        }
+            // if TryGetData fails, state defaults to RotationState.Vertical.
+            args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state);
 
-        switch (state)
-        {
-            case RotationState.Vertical:
-                AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
-                break;
-            case RotationState.Horizontal:
-                AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
-                break;
+            switch (state)
+            {
+                case RotationState.Vertical:
+                    AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
+                    break;
+                case RotationState.Horizontal:
+                    AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                    break;
+            }
         }
     }
 

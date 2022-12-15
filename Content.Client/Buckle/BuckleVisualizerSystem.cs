@@ -9,7 +9,7 @@ public sealed class BuckleVisualizer : VisualizerSystem<BuckleComponent>
     protected override void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
     {
         if (!args.Component.TryGetData<int>(StrapVisuals.RotationAngle, out var angle) ||
-        !args.Component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) && !buckled ||
+        !args.Component.TryGetData<bool>(BuckleVisuals.Buckled, out var buckled) || !buckled ||
         args.Sprite == null)
         {
             return;
