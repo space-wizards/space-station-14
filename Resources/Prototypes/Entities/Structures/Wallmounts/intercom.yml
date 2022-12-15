@@ -17,14 +17,18 @@
   - type: InteractionOutline
   - type: Appearance
   - type: Sprite
+    noRot: false
     sprite: Structures/Wallmounts/intercom.rsi
     layers:
     - state: base
     - state: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: broadcasting
+      map: ["enum.RadioDeviceVisualLayers.Broadcasting"]
       shader: unshaded
+      visible: false
   - type: Transform
-    noRot: true
+    noRot: false
     anchored: true
   - type: Wires
     BoardName: "Intercom"
@@ -50,6 +54,10 @@
     visuals:
       enum.PowerDeviceVisuals.Powered:
         enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.RadioDeviceVisuals.Broadcasting:
+        enum.RadioDeviceVisualLayers.Broadcasting:
           True: { visible: true }
           False: { visible: false }
   placement:

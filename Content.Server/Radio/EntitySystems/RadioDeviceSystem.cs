@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Interaction;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Radio.Components;
 using Content.Server.Speech;
@@ -9,6 +10,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Radio;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
@@ -24,6 +26,7 @@ public sealed class RadioDeviceSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     // Used to prevent a shitter from using a bunch of radios to spam chat.
     private HashSet<(string, EntityUid)> _recentlySent = new();
@@ -37,6 +40,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenEvent>(OnListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, ListenAttemptEvent>(OnAttemptListen);
         SubscribeLocalEvent<RadioMicrophoneComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
+        SubscribeLocalEvent<RadioMicrophoneComponent, PowerChangedEvent>(OnPowerChanged);
 
         SubscribeLocalEvent<RadioSpeakerComponent, ComponentInit>(OnSpeakerInit);
         SubscribeLocalEvent<RadioSpeakerComponent, ActivateInWorldEvent>(OnActivateSpeaker);
@@ -89,7 +93,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         if (component.PowerRequired && !this.IsPowered(uid, EntityManager))
             return;
 
-        component.Enabled = !component.Enabled;
+        SetMicrophoneEnabled(uid, !component.Enabled, component);
 
         if (!quiet)
         {
@@ -135,6 +139,22 @@ public sealed class RadioDeviceSystem : EntitySystem
             };
             args.Verbs.Add(v);
         }
+    }
+
+    private void OnPowerChanged(EntityUid uid, RadioMicrophoneComponent component, ref PowerChangedEvent args)
+    {
+        if (args.Powered)
+            return;
+        SetMicrophoneEnabled(uid, false, component);
+    }
+
+    public void SetMicrophoneEnabled(EntityUid uid, bool enabled, RadioMicrophoneComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
+
+        component.Enabled = enabled;
+        _appearance.SetData(uid, RadioDeviceVisuals.Broadcasting, component.Enabled);
     }
 
     public void ToggleRadioSpeaker(EntityUid uid, EntityUid user, bool quiet = false, RadioSpeakerComponent? component = null)
