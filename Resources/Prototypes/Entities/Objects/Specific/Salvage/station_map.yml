@@ -1,14 +1,16 @@
 - type: entity
   id: StationMap
   name: station map
-  desc: a
+  desc: Displays a readout of the current station.
   parent: BaseItem
   components:
     - type: Sprite
       netsync: false
-      sprite: Objects/Devices/timer.rsi
+      sprite: Objects/Devices/tablets.rsi
       layers:
-        - state: timer
+        - state: tablet
+        - state: generic
+          shader: unshaded
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true
