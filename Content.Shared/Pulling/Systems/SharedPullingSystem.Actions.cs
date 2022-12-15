@@ -107,9 +107,6 @@ namespace Content.Shared.Pulling
 
             _pullSm.ForceRelationship(null, pullable);
 
-            if (user != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low,
-                    $"{ToPrettyString(user.Value):user} stopped pulling {ToPrettyString(pullable.Owner):target}");
             return true;
         }
 
