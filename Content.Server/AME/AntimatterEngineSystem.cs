@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.AME.Components;
+using Content.Server.Power.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
