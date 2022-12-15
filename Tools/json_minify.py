@@ -11,11 +11,11 @@ def main():
 
     for fn in a.rglob("**/meta.json"):
         try:
-            with fn.open("r+", encoding="utf-8-sig") as f:
+            # Read and write are separate so we can fix file formats
+            with fn.open("r", encoding="utf-8-sig") as f:
                 loaded = load(f)
-                f.seek(0)
+            with fn.open("w", encoding="utf-8") as f:
                 dump(loaded, f, separators=(",", ":"))
-                f.truncate()
         except JSONDecodeError:
             errors.append(fn)
 
