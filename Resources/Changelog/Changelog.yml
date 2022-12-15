@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Default camera rotations have been inverted., type: Tweak}
-  id: 2260
-  time: '2022-09-08T22:06:39.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: External airlocks now show the correct direction relative to their rotation.,
@@ -2932,3 +2927,8 @@ Entries:
   - {message: NPCs will now smash and pry correctly., type: Fix}
   id: 2759
   time: '2022-12-15T04:30:28.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Dead people can no longer sleep, type: Fix}
+  id: 2760
+  time: '2022-12-15T21:34:44.0000000+00:00'
