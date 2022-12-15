@@ -82,7 +82,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var lowest = new List<(int DrawDepth, uint RenderOrder, EntityUid Entity)>();
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Anchored))
+            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
             {
                 if (!bodyQuery.HasComponent(ent) ||
                     !TryComp<ClickableComponent>(ent, out var clickable) ||
