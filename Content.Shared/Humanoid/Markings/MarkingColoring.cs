@@ -49,27 +49,24 @@ public sealed class ColoringProperties
     public MarkingColoringType Type { get; } = MarkingColoringType.SkinColor;
 
     /// <summary>
-    /// Color that will be used if coloring type can't be performed or used "Color" type
+    /// Color that will be used if coloring type can't be performed or used "SimpleColor" type
     /// </summary>
     [DataField("color", true)]
-    public Color Color { get; } = new (1f, 1f, 1f, 1f);
+    public Color Color { get; } = Color.White;
 
     /// <summary>
     /// Makes output color negative if true (in e.x. Different Eyes)
     /// </summary>
     [DataField("negative", true)]
     public bool Negative { get; } = false;
-
-    /// <summary>
-    /// Makes marking unchangeable in preferences
-    /// </summary>
-    [DataField("forced", true)]
-    public bool Forced { get; } = false;
 }
 
 
 public static class MarkingColoring
 {
+    /// <summary>
+    /// Returns list of colors for marking layers
+    /// </summary>
     public static List<Color> GetMarkingLayerColors
     (
         MarkingPrototype prototype,
@@ -139,7 +136,6 @@ public static class MarkingColoring
             return colors;
         }
     }
-
 
     public static Color GetMarkingColor
     (
