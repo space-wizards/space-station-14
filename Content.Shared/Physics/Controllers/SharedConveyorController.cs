@@ -24,8 +24,48 @@ public abstract class SharedConveyorController : VirtualController
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
 
+        SubscribeLocalEvent<ConveyorComponent, ConveyorRunEvent>(OnConveyorRun);
+
         base.Initialize();
     }
+
+    private void OnConveyorRun(EntityUid uid, ConveyorComponent component, ConveyorRunEvent args)
+    {
+        if (!args.CanRun)
+            return;
+
+        var speed = component.Speed;
+
+        if (speed <= 0f || !args.XFormQuery.TryGetComponent(component.Owner, out var xform) || xform.GridUid == null)
+            return;
+
+        var conveyorPos = xform.LocalPosition;
+        var conveyorRot = xform.LocalRotation;
+
+        conveyorRot += component.Angle;
+
+        if (component.State == ConveyorState.Reverse)
+            conveyorRot += MathF.PI;
+
+        var direction = conveyorRot.ToWorldVec();
+
+        foreach (var (entity, transform, body) in GetEntitiesToMove(component, xform, args.XFormQuery, args.BodyQuery))
+        {
+            if (!args.Conveyed.Add(entity))
+                continue;
+
+            var localPos = transform.LocalPosition;
+            var itemRelative = conveyorPos - localPos;
+
+            localPos += Convey(direction, speed, args.FrameTime, itemRelative);
+            transform.LocalPosition = localPos;
+
+            // Force it awake for collisionwake reasons.
+            _physics.SetAwake(body, true);
+            _physics.SetSleepTime(body, 0f);
+        }
+    }
+
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
     {
@@ -57,7 +97,10 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
         {
-            Convey(comp, xformQuery, bodyQuery, conveyed, frameTime);
+            var canRun = comp.State != ConveyorState.Off && comp.Powered;
+            var ev = new ConveyorRunEvent(xformQuery, bodyQuery, conveyed, frameTime, canRun);
+            RaiseLocalEvent(comp.Owner, ev);
+            //Convey(comp, xformQuery, bodyQuery, conveyed, frameTime);
         }
     }
 

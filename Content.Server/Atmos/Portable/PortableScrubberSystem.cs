@@ -7,12 +7,12 @@ using Content.Server.Construction;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Atmos.Visuals;
 using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Examine;
-using Content.Shared.Power.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 

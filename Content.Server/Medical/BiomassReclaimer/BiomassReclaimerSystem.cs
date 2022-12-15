@@ -21,7 +21,6 @@ using Content.Shared.Jittering;
 using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Power.Events;
 using Content.Shared.Throwing;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;

@@ -1,5 +1,5 @@
 using Content.Server.Arcade.Components;
-using Content.Shared.Power.Events;
+using Content.Server.Power.Components;
 
 namespace Content.Server.Arcade;
 

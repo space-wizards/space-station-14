@@ -4,7 +4,6 @@ using Content.Server.PowerCell;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Power;
-using Content.Shared.Power.Events;
 using Content.Shared.PowerCell.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;

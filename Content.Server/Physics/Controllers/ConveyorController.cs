@@ -1,12 +1,12 @@
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
+using Content.Server.Power.Components;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
-using Content.Shared.Power.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -73,6 +73,7 @@ public sealed class ConveyorController : SharedConveyorController
     {
         component.Powered = args.Powered;
         UpdateAppearance(component);
+
     }
 
     private void UpdateAppearance(ConveyorComponent component)

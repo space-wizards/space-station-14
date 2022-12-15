@@ -5,6 +5,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Buckle.Components;
 using Content.Server.Construction;
 using Content.Server.MobState;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Bed;
@@ -13,7 +14,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
-using Content.Shared.Power.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

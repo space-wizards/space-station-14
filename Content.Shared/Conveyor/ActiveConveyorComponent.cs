@@ -5,7 +5,7 @@ namespace Content.Shared.Conveyor;
 /// <summary>
 /// Used to track which conveyors are relevant in case there's a lot of them.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
 public sealed class ActiveConveyorComponent : Component
 {
 

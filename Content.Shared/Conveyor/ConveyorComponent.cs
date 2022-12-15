@@ -1,5 +1,6 @@
 using Content.Shared.MachineLinking;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -42,6 +43,25 @@ public sealed class ConveyorComponent : Component
 
     [ViewVariables]
     public readonly HashSet<EntityUid> Intersecting = new();
+}
+
+public sealed class ConveyorRunEvent : EntityEventArgs
+{
+    public readonly EntityQuery<TransformComponent> XFormQuery;
+    public readonly EntityQuery<PhysicsComponent> BodyQuery;
+    public readonly HashSet<EntityUid> Conveyed;
+    public readonly float FrameTime;
+    public readonly bool CanRun;
+
+    public ConveyorRunEvent(EntityQuery<TransformComponent> xFormQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime, bool canRun)
+    {
+        XFormQuery = xFormQuery;
+        BodyQuery = bodyQuery;
+        Conveyed = conveyed;
+        FrameTime = frameTime;
+        CanRun = canRun;
+    }
+
 }
 
 [Serializable, NetSerializable]

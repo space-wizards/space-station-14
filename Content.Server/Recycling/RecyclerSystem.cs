@@ -12,7 +12,6 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Power.Events;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;

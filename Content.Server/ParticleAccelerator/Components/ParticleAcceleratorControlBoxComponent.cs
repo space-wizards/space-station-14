@@ -7,7 +7,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
-using Content.Shared.Power.Events;
 using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

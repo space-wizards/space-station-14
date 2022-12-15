@@ -8,7 +8,6 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
-using Content.Shared.Power.Events;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
 

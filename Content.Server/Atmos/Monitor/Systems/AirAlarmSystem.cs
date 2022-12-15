@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Wires;
 using Content.Shared.Access.Components;
@@ -15,7 +16,6 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.Interaction;
-using Content.Shared.Power.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 
