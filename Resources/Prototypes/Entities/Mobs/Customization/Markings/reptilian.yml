@@ -122,9 +122,6 @@
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Reptilian]
-  coloring:
-    default:
-      type: SkinColor
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth

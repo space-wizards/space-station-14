@@ -3,6 +3,9 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [Diona]
+  coloring:
+    default:
+      type: SkinColor
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_head
@@ -12,6 +15,9 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Diona]
+  coloring:
+    default:
+      type: SkinColor
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: thorns_body
@@ -21,6 +27,9 @@
   bodyPart: Head
   markingCategory: Head
   speciesRestriction: [Diona]
+  coloring:
+    default:
+      type: SimpleColor
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: flowers_head
@@ -30,6 +39,9 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Diona]
+  coloring:
+    default:
+      type: SimpleColor
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: flowers_body
@@ -39,6 +51,9 @@
   bodyPart: Chest
   markingCategory: Chest
   speciesRestriction: [Diona]
+  coloring:
+    default:
+      type: SkinColor
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: leaf_cover
