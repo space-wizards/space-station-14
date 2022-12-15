@@ -86,7 +86,7 @@ public sealed partial class NPCSteeringSystem
         }
         else
         {
-            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.8f;
+            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.65f;
         }
 
         // Check if mapids match.
@@ -105,9 +105,15 @@ public sealed partial class NPCSteeringSystem
         if (direction.Length <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node))
+            if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
             {
-                var status = TryHandleFlags(steering, node, bodyQuery);
+                SteeringObstacleStatus status;
+
+                // Breaking behaviours and the likes.
+                lock (_obstacles)
+                {
+                    status = TryHandleFlags(steering, node, bodyQuery);
+                }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
                 switch (status)

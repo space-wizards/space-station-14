@@ -45,18 +45,16 @@ public sealed partial class PathfindingSystem
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-        SubscribeLocalEvent<GridPathfindingComponent, EntityPausedEvent>(OnGridPathPause);
+        SubscribeLocalEvent<GridPathfindingComponent, EntityUnpausedEvent>(OnGridPathPause);
         SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
     }
 
-    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, EntityPausedEvent args)
+    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityUnpausedEvent args)
     {
-        // TODO: Need the offsets + time serializer. Mainly just need this here to ensure it gets update after load
-        if (!args.Paused && component.NextUpdate < _timing.CurTime)
-            component.NextUpdate = _timing.CurTime;
+        component.NextUpdate += args.PausedTime;
     }
 
     private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
