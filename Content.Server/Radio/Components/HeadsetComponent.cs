@@ -2,6 +2,7 @@ using Content.Server.Radio.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Radio.Components;
 
@@ -19,8 +20,10 @@ public sealed class HeadsetComponent : Component
     // [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     // public readonly HashSet<string> defaultChannel = new();
 
-    [DataField("defaultChannel")]
-    public string defaultChannel = string.Empty;
+
+
+    [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public readonly string? defaultChannel;
 
     [DataField("enabled")]
     public bool Enabled = true;

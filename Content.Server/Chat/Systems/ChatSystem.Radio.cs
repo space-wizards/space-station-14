@@ -14,9 +14,6 @@ public sealed partial class ChatSystem
     /// </summary>
     private Dictionary<char, RadioChannelPrototype> _keyCodes = new();
 
-    // Dict so we can look up the channels via channel IDs later
-    private Dictionary<string, RadioChannelPrototype> _channels = new();
-
     private void InitializeRadio()
     {
         _prototypeManager.PrototypesReloaded += OnPrototypeReload;
@@ -31,12 +28,10 @@ public sealed partial class ChatSystem
     private void CacheRadios()
     {
         _keyCodes.Clear();
-        _channels.Clear();
 
         foreach (var proto in _prototypeManager.EnumeratePrototypes<RadioChannelPrototype>())
         {
             _keyCodes.Add(proto.KeyCode, proto);
-            _channels.Add(proto.ID, proto);
         }
 
 
@@ -69,12 +64,14 @@ public sealed partial class ChatSystem
         // Check now if the remaining message is a radio message
         if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
         {
-            // Redirect to defaultChannel of headset if it goes to "h" channel code
-            if (message[1] == 'h' && _headsetComponent != null && _headsetComponent.defaultChannel != string.Empty)
+            // Redirect to defaultChannel of headsetComp if it goes to "h" channel code after making sure defaultChannel exists
+            if (message[1] == 'h'
+                && _headsetComponent != null
+                && _headsetComponent.defaultChannel != null
+                && _prototypeManager.TryIndex(_headsetComponent.defaultChannel, out RadioChannelPrototype? protoDefaultChannel))
             {
-                // try and grab headset default channel
-                _channels.TryGetValue(_headsetComponent.defaultChannel, out channel);
-
+                // Set Channel to headset defaultChannel
+                channel = protoDefaultChannel;
             }
             else // otherwise it's a normal, targeted channel keycode
             {
