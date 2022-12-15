@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -20,7 +21,9 @@ public sealed class NavMapControl : MapGridControl
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     public EntityUid? MapUid;
-    public EntityUid? TrackedEntity;
+
+
+    public List<(EntityCoordinates Coordinates, Color Color)> TrackedCoordinates = new();
 
     private Vector2 _offset;
     private bool _draggin;
@@ -271,12 +274,20 @@ public sealed class NavMapControl : MapGridControl
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        if (lit && _entManager.TryGetComponent<TransformComponent>(TrackedEntity, out var playerXform))
+        foreach (var coord in TrackedCoordinates)
         {
-            var position = xform.InvWorldMatrix.Transform(playerXform.WorldPosition) - offset;
-            position = Scale(new Vector2(position.X, -position.Y));
+            if (lit)
+            {
+                var mapPos = coord.Coordinates.ToMap(_entManager);
 
-            handle.DrawCircle(position, MinimapScale / 2f, Color.Red);
+                if (mapPos.MapId != MapId.Nullspace)
+                {
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
+                    position = Scale(new Vector2(position.X, -position.Y));
+
+                    handle.DrawCircle(position, MinimapScale / 2f, Color.Red);
+                }
+            }
         }
     }
 

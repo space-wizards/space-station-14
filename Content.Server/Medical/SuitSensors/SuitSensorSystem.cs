@@ -44,24 +44,20 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Update(frameTime);
 
-            // check update rate
-            _updateDif += frameTime;
-            if (_updateDif < UpdateRate)
-                return;
-
-            _updateDif -= UpdateRate;
-
             var curTime = _gameTiming.CurTime;
-            var sensors = EntityManager.EntityQuery<SuitSensorComponent, DeviceNetworkComponent>();
-            foreach (var (sensor, device) in sensors)
+            var sensors = EntityManager.EntityQueryEnumerator<SuitSensorComponent, DeviceNetworkComponent>();
+
+            while (sensors.MoveNext(out var sensor, out var device))
             {
-                if (device.TransmitFrequency is not uint frequency)
+                if (device.TransmitFrequency is null)
                     continue;
 
                 // check if sensor is ready to update
-                if (curTime - sensor.LastUpdate < sensor.UpdateRate)
+                if (curTime < sensor.NextUpdate)
                     continue;
-                sensor.LastUpdate = curTime;
+
+                // TODO: This would cause imprecision at different tick rates.
+                sensor.NextUpdate = curTime + sensor.UpdateRate;
 
                 // get sensor status
                 var status = GetSensorState(sensor.Owner, sensor);
@@ -268,7 +264,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = transform.MapPosition;
+                    status.Coordinates = transform.Coordinates;
                     break;
             }
 
@@ -291,7 +287,7 @@ namespace Content.Server.Medical.SuitSensors
             if (status.TotalDamage != null)
                 payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
             if (status.Coordinates != null)
-                payload.Add(SuitSensorConstants.NET_CORDINATES, status.Coordinates);
+                payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
 
             return payload;
         }
@@ -314,7 +310,7 @@ namespace Content.Server.Medical.SuitSensors
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-            payload.TryGetValue(SuitSensorConstants.NET_CORDINATES, out MapCoordinates? cords);
+            payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out EntityCoordinates? cords);
 
             var status = new SuitSensorStatus(name, job)
             {

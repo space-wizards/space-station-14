@@ -15,10 +15,9 @@ public sealed class StationMapBoundUserInterface : BoundUserInterface
     {
         base.Open();
         _window?.Close();
-        var player = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity;
         EntityUid? gridUid = null;
 
-        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(player, out var xform))
+        if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
         {
             gridUid = xform.GridUid;
         }

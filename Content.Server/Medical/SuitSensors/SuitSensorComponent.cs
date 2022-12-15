@@ -1,4 +1,5 @@
 using Content.Shared.Medical.SuitSensor;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Server.Medical.SuitSensors
 {
@@ -53,8 +54,9 @@ namespace Content.Server.Medical.SuitSensors
         public EntityUid? User = null;
 
         /// <summary>
-        ///     Last time when sensor updated owners status
+        ///     Next time when sensor updated owners status
         /// </summary>
-        public TimeSpan LastUpdate = TimeSpan.Zero;
+        [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+        public TimeSpan NextUpdate = TimeSpan.Zero;
     }
 }

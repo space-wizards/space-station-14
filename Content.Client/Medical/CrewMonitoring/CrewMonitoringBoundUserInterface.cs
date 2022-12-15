@@ -15,7 +15,15 @@ namespace Content.Client.Medical.CrewMonitoring
 
         protected override void Open()
         {
-            _menu = new CrewMonitoringWindow();
+            EntityUid? gridUid = null;
+
+            if (IoCManager.Resolve<IEntityManager>().TryGetComponent<TransformComponent>(Owner.Owner, out var xform))
+            {
+                gridUid = xform.GridUid;
+            }
+
+            _menu = new CrewMonitoringWindow(gridUid);
+
             _menu.OpenCentered();
             _menu.OnClose += Close;
         }

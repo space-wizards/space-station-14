@@ -1,23 +1,27 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
-            Title="{Loc 'crew-monitoring-user-interface-title'}"
+               xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
+               Title="{Loc 'crew-monitoring-user-interface-title'}"
             SetSize="775 400">
-    <ScrollContainer HorizontalExpand="True"
-                     VerticalExpand="True">
-        <GridContainer Name="SensorsTable"
-                       HorizontalExpand="True"
-                       VerticalExpand="True"
-                       HSeparationOverride="5"
-                       VSeparationOverride="20"
-                       Columns="3">
-            <!-- Table header -->
-            <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
-                   StyleClasses="LabelHeading"/>
-            <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
-                   StyleClasses="LabelHeading"/>
-            <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
-                   StyleClasses="LabelHeading"/>
+    <BoxContainer Orientation="Horizontal">
+        <ScrollContainer HorizontalExpand="True"
+                         VerticalExpand="True">
+            <GridContainer Name="SensorsTable"
+                           HorizontalExpand="True"
+                           VerticalExpand="True"
+                           HSeparationOverride="5"
+                           VSeparationOverride="20"
+                           Columns="3">
+                <!-- Table header -->
+                <Label Text="{Loc 'crew-monitoring-user-interface-name'}"
+                       StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-status'}"
+                       StyleClasses="LabelHeading"/>
+                <Label Text="{Loc 'crew-monitoring-user-interface-location'}"
+                       StyleClasses="LabelHeading"/>
 
-            <!-- Table rows are filled by code -->
-        </GridContainer>
-    </ScrollContainer>
+                <!-- Table rows are filled by code -->
+            </GridContainer>
+        </ScrollContainer>
+        <ui:NavMapControl Name="NavMap"/>
+    </BoxContainer>
 </DefaultWindow>

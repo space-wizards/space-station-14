@@ -17,14 +17,26 @@ namespace Content.Client.Medical.CrewMonitoring
     {
         private List<Control> _rowsContent = new();
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
+        private readonly IEntityManager _entManager;
         private readonly IEyeManager _eye;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 
-        public CrewMonitoringWindow()
+        public CrewMonitoringWindow(EntityUid? mapUid)
         {
             RobustXamlLoader.Load(this);
             _eye = IoCManager.Resolve<IEyeManager>();
+            _entManager = IoCManager.Resolve<IEntityManager>();
+
+            if (_entManager.TryGetComponent<TransformComponent>(mapUid, out var xform))
+            {
+                NavMap.MapUid = xform.GridUid;
+                NavMap.MinSize = Size;
+            }
+            else
+            {
+                NavMap.Visible = false;
+            }
         }
 
         public void ShowSensors(List<SuitSensorStatus> stSensors, Vector2 worldPosition, bool snap, float precision)
@@ -69,10 +81,15 @@ namespace Content.Client.Medical.CrewMonitoring
                 var box = GetPositionBox(sensor.Coordinates, worldPosition, snap, precision);
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
+
+                if (sensor.Coordinates != null && NavMap.Visible)
+                {
+                    NavMap.TrackedCoordinates.Add((sensor.Coordinates.Value, Color.Red));
+                }
             }
         }
 
-        private BoxContainer GetPositionBox(MapCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
+        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
         {
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
@@ -89,15 +106,18 @@ namespace Content.Client.Medical.CrewMonitoring
             else
             {
                 // todo: add locations names (kitchen, bridge, etc)
-                var pos = (Vector2i) coordinates.Value.Position;
+                // TODO: Fix this to actually use entitycoordinates properly.
+                var position = coordinates.Value.ToMapPos(_entManager);
+
+                var displayPos = (Vector2i) position;
                 var dirIcon = new DirectionIcon(snap, precision)
                 {
                     SetSize = (IconSize, IconSize),
                     Margin = new(0, 0, 4, 0)
                 };
                 box.AddChild(dirIcon);
-                box.AddChild(new Label() { Text = pos.ToString() });
-                _directionIcons.Add((dirIcon, coordinates.Value.Position - sensorPosition));
+                box.AddChild(new Label() { Text = displayPos.ToString() });
+                _directionIcons.Add((dirIcon, position - sensorPosition));
             }
 
             return box;
