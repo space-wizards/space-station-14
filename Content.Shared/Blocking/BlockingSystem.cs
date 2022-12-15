@@ -1,17 +1,17 @@
-﻿using Content.Shared.Actions;
+﻿using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Buckle;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
@@ -21,26 +21,25 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Blocking;
 
-public sealed class BlockingSystem : EntitySystem
+public sealed partial class BlockingSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckleSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        InitializeUser();
 
         SubscribeLocalEvent<BlockingComponent, GotEquippedHandEvent>(OnEquip);
         SubscribeLocalEvent<BlockingComponent, GotUnequippedHandEvent>(OnUnequip);
+        SubscribeLocalEvent<BlockingComponent, DroppedEvent>(OnDrop);
 
         SubscribeLocalEvent<BlockingComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<BlockingComponent, ToggleActionEvent>(OnToggleAction);
@@ -53,8 +52,7 @@ public sealed class BlockingSystem : EntitySystem
         component.User = args.User;
 
         //To make sure that this bodytype doesn't get set as anything but the original
-        if (TryComp<PhysicsComponent>(args.User, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static
-                                                                          && !TryComp<BlockingUserComponent>(args.User, out var blockingUserComponent))
+        if (TryComp<PhysicsComponent>(args.User, out var physicsComponent) && physicsComponent.BodyType != BodyType.Static && !HasComp<BlockingUserComponent>(args.User))
         {
             var userComp = EnsureComp<BlockingUserComponent>(args.User);
             userComp.BlockingItem = uid;
@@ -64,16 +62,18 @@ public sealed class BlockingSystem : EntitySystem
 
     private void OnUnequip(EntityUid uid, BlockingComponent component, GotUnequippedHandEvent args)
     {
-        BlockingShutdownHelper(uid, component, args.User);
+        StopBlockingHelper(uid, component, args.User);
+    }
+
+    private void OnDrop(EntityUid uid, BlockingComponent component, DroppedEvent args)
+    {
+        StopBlockingHelper(uid, component, args.User);
     }
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
-        if (component.BlockingToggleAction == null
-            && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
-        {
+        if (component.BlockingToggleAction == null && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
             component.BlockingToggleAction = new(act);
-        }
 
         if (component.BlockingToggleAction != null)
             args.Actions.Add(component.BlockingToggleAction);
@@ -84,11 +84,20 @@ public sealed class BlockingSystem : EntitySystem
         if(args.Handled)
             return;
 
-        foreach (var shield in _handsSystem.EnumerateHeld(args.Performer))
+        var blockQuery = GetEntityQuery<BlockingComponent>();
+        var handQuery = GetEntityQuery<SharedHandsComponent>();
+
+        if (!handQuery.TryGetComponent(args.Performer, out var hands))
+            return;
+
+        var shields = _handsSystem.EnumerateHeld(args.Performer, hands).ToArray();
+
+        foreach (var shield in shields)
         {
             if (shield == uid)
                 continue;
-            if (TryComp<BlockingComponent>(shield, out var otherBlockComp) && otherBlockComp.IsBlocking)
+
+            if (blockQuery.TryGetComponent(shield, out var otherBlockComp) && otherBlockComp.IsBlocking)
             {
                 CantBlockError(args.Performer);
                 return;
@@ -109,7 +118,7 @@ public sealed class BlockingSystem : EntitySystem
         if (component.User != null)
         {
             _actionsSystem.RemoveProvidedActions(component.User.Value, uid);
-            BlockingShutdownHelper(uid, component, component.User.Value);
+            StopBlockingHelper(uid, component, component.User.Value);
         }
     }
 
@@ -213,7 +222,8 @@ public sealed class BlockingSystem : EntitySystem
     /// <returns></returns>
     public bool StopBlocking(EntityUid item, BlockingComponent component, EntityUid user)
     {
-        if (!component.IsBlocking) return false;
+        if (!component.IsBlocking)
+            return false;
 
         var xform = Transform(user);
 
@@ -251,14 +261,22 @@ public sealed class BlockingSystem : EntitySystem
     /// <param name="uid"> The item the component is attached to</param>
     /// <param name="component"> The <see cref="BlockingComponent"/> </param>
     /// <param name="user"> The person holding the blocking item </param>
-    private void BlockingShutdownHelper(EntityUid uid, BlockingComponent component, EntityUid user)
+    private void StopBlockingHelper(EntityUid uid, BlockingComponent component, EntityUid user)
     {
         if (component.IsBlocking)
             StopBlocking(uid, component, user);
 
-        foreach (var shield in _handsSystem.EnumerateHeld(user))
+        var userQuery = GetEntityQuery<BlockingUserComponent>();
+        var handQuery = GetEntityQuery<SharedHandsComponent>();
+
+        if (!handQuery.TryGetComponent(user, out var hands))
+            return;
+
+        var shields = _handsSystem.EnumerateHeld(user, hands).ToArray();
+
+        foreach (var shield in shields)
         {
-            if (HasComp<BlockingComponent>(shield) && TryComp<BlockingUserComponent>(user, out var blockingUserComponent))
+            if (HasComp<BlockingComponent>(shield) && userQuery.TryGetComponent(user, out var blockingUserComponent))
             {
                 blockingUserComponent.BlockingItem = shield;
                 return;
