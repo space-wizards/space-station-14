@@ -1,11 +1,6 @@
 Entries:
 - author: rolfero
   changes:
-  - {message: Armors shows their armor values when examined!, type: Add}
-  id: 2257
-  time: '2022-09-08T04:11:22.0000000+00:00'
-- author: rolfero
-  changes:
   - {message: 'You can examine hardsuits, magboots, etc to find out how much your
       speed is decreased from them.', type: Add}
   id: 2258
@@ -2931,3 +2926,10 @@ Entries:
   - {message: 'Added wallmounted intercoms, useful for radioing a department.', type: Add}
   id: 2756
   time: '2022-12-14T01:39:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Intercoms now have a light indicating they are broadcasting., type: Add}
+  - {message: Intercoms no longer stay on when the power shuts off., type: Fix}
+  - {message: Intercoms can now be rotated properly., type: Fix}
+  id: 2757
+  time: '2022-12-15T04:13:02.0000000+00:00'
