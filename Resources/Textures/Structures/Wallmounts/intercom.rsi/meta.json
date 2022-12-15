@@ -12,6 +12,10 @@
             "directions": 4
         },
         {
+            "name": "broadcasting",
+            "directions": 4
+        },
+        {
             "name": "build",
             "directions": 4
         },
