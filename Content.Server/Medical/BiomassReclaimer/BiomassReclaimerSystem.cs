@@ -155,10 +155,6 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
                 return;
 
-            Logger.Debug($"user {ToPrettyString(args.User)}");
-            Logger.Debug($"used {ToPrettyString(args.Used)}");
-            Logger.Debug($"target {ToPrettyString(args.Target.Value)}");
-
             component.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 7f, component.CancelToken.Token, args.Target, args.Used)
             {
