@@ -1,5 +1,4 @@
 using Content.Server.Actions;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Sound.Components;
 using Content.Shared.Actions.ActionTypes;
@@ -30,7 +29,6 @@ namespace Content.Server.Bed.Sleep
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
