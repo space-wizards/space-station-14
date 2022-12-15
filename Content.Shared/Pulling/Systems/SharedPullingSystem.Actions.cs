@@ -106,7 +106,6 @@ namespace Content.Shared.Pulling
             }
 
             _pullSm.ForceRelationship(null, pullable);
-
             return true;
         }
 
