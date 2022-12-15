@@ -41,7 +41,10 @@ public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterfa
         }
 
         _window.SetState(cast.MarkingSet, cast.Species,
-            cast.SkinColor, cast.EyeColor, cast.HairColor, cast.FacialHairColor,
+            cast.SkinColor,
+            cast.EyeColor,
+            cast.HairColor,
+            cast.FacialHairColor,
             cast.CustomBaseLayers
         );
     }

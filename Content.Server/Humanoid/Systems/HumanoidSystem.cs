@@ -530,6 +530,6 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             return;
         }
 
-        humanoid.CurrentMarkings.EnsureDefault(humanoid.SkinColor, humanoid.CachedEyeColor, humanoid.CachedHairColor, _markingManager);
+        humanoid.CurrentMarkings.EnsureDefault(humanoid.SkinColor, humanoid.CachedEyeColor, humanoid.CachedHairColor, humanoid.CachedFacialHairColor, _markingManager);
     }
 }

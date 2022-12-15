@@ -23,6 +23,9 @@ namespace Content.Shared.Humanoid.Markings
         [DataField("followSkinColor")]
         public bool FollowSkinColor { get; } = false;
 
+        [DataField("forcedColoring")]
+        public bool ForcedColoring { get; } = false;
+
         [DataField("coloring")]
         public MarkingColors Coloring { get; } = new();
 

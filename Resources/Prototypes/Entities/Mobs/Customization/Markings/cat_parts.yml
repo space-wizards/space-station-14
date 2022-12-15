@@ -5,10 +5,10 @@
   speciesRestriction: [Human]
   coloring:
     default:
-      type: FollowHairColor
+      type: HairColor
     layers:
       ears_cat_inner:
-        type: Color
+        type: SimpleColor
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: ears_cat_outer
@@ -22,7 +22,7 @@
   speciesRestriction: [Human]
   coloring:
     default:
-      type: FollowHairColor
+      type: HairColor
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat

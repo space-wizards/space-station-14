@@ -274,6 +274,18 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         visible &= humanoid.BaseLayers.TryGetValue(markingPrototype.BodyPart, out var setting)
            && setting.AllowsMarkings;
 
+        // Marking coloring
+        
+        var skinColor = humanoid.SkinColor;
+        if (visible && setting != null) skinColor.A = setting.LayerAlpha;
+        List<Color> marking_colors = MarkingColoring.GetMarkingLayerColors(
+                markingPrototype,
+                skinColor,
+                humanoid.CachedEyeColor,
+                humanoid.CachedHairColor,
+                humanoid.CachedFacialHairColor
+            );
+
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
             if (markingPrototype.Sprites[j] is not SpriteSpecifier.Rsi rsi)
@@ -296,13 +308,14 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             {
                 continue;
             }
-
-            if (markingPrototype.FollowSkinColor || colors == null || setting.MarkingsMatchSkin)
+            
+            if (setting.MarkingsMatchSkin) // Slimes use this for hair
             {
-                var skinColor = humanoid.SkinColor;
-                skinColor.A = setting.LayerAlpha;
-
                 sprite.LayerSetColor(layerId, skinColor);
+            }
+            else if (markingPrototype.ForcedColoring || colors == null )
+            {
+                sprite.LayerSetColor(layerId, marking_colors[j]);
             }
             else
             {

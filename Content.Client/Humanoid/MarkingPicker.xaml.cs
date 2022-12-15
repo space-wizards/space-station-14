@@ -346,7 +346,7 @@ public sealed partial class MarkingPicker : Control
         _selectedMarking = CMarkingsUsed[item.ItemIndex];
         var prototype = (MarkingPrototype) _selectedMarking.Metadata!;
 
-        if (prototype.FollowSkinColor)
+        if (prototype.ForcedColoring)
         {
             CMarkingColors.Visible = false;
 
@@ -422,65 +422,19 @@ public sealed partial class MarkingPicker : Control
         }
 
         var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
-
-
         var markingObject = marking.AsMarking();
 
-        // Coloring from default properties
-        Color default_color = MarkingColoring.GetMarkingColor(
-            marking.Coloring.Default,
+        // Coloring
+        List<Color> colors = MarkingColoring.GetMarkingLayerColors(
+            marking,
             CurrentSkinColor,
             CurrentEyeColor,
             CurrentHairColor,
             CurrentFacialHairColor
         );
-
-
-        if (marking.Coloring.Layers != null)
+        for (var i = 0; i < colors.Count; i++)
         {
-            // If some layers are specified.
-            for (var i = 0; i < marking.Sprites.Count; i++)
-            {
-                // Getting layer name
-                string name;
-                switch (marking.Sprites[i])
-                {
-                    case SpriteSpecifier.Rsi rsi:
-                        name = rsi.RsiState;
-                        break;
-                    case SpriteSpecifier.Texture texture:
-                        name = texture.TexturePath.Filename;
-                        break;
-                    default:
-                        markingObject.SetColor(i, default_color);
-                        continue;
-                }
-
-                // All specified layers must be colored separately, all unspecified must depend on default coloring
-                if(marking.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
-                {
-                    Color marking_color = MarkingColoring.GetMarkingColor(
-                        properties,
-                        CurrentSkinColor,
-                        CurrentEyeColor,
-                        CurrentHairColor,
-                        CurrentFacialHairColor
-                    );
-                    markingObject.SetColor(i, marking_color);
-                }
-                else
-                {
-                    markingObject.SetColor(i, default_color);
-                }
-            }
-        }
-        else
-        {
-            // If layers is not specified, then every layer must be default
-            for (var i = 0; i < markingObject.MarkingColors.Count; i++)
-            {
-                markingObject.SetColor(i, default_color);
-            }
+            markingObject.SetColor(i, colors[i]);
         }
 
         markingObject.Forced = Forced;

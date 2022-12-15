@@ -206,7 +206,7 @@ public sealed class MarkingSet
     /// <param name="eyeColor">Eye color for marking coloring.</param>
     /// <param name="hairColor">Hair color for marking coloring.</param>
     /// <param name="markingManager">Marking manager.</param>
-    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, Color? hairColor = null, MarkingManager? markingManager = null)
+    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, Color? hairColor = null, Color? facialHairColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
 
@@ -222,61 +222,14 @@ public sealed class MarkingSet
             {
                 if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
-                    // Coloring from default properties
-                    Color default_color = MarkingColoring.GetMarkingColor(
-                        prototype.Coloring.Default,
-                        skinColor, eyeColor, hairColor, hairColor
-                    );
-
-                    Marking marking;
-                    if(prototype.Coloring.Layers == null)
-                    {
-                        // If layers is not specified, then every layer must be default
-                        var colors = new List<Color>();
-                        for (var i = 0; i < prototype.Sprites.Count; i++)
-                        {
-                            colors.Add(default_color);
-                        }
-                        marking = new Marking(points.DefaultMarkings[index], colors);
-                    }
-                    else
-                    {
-                        // If some layers are specified.
-                        var colors = new List<Color>();
-                        for (var i = 0; i < prototype.Sprites.Count; i++)
-                        {
-                            // Getting layer name
-                            string name;
-                            switch (prototype.Sprites[i])
-                            {
-                                case SpriteSpecifier.Rsi rsi:
-                                    name = rsi.RsiState;
-                                    break;
-                                case SpriteSpecifier.Texture texture:
-                                    name = texture.TexturePath.Filename;
-                                    break;
-                                default:
-                                    colors.Add(default_color);
-                                    continue;
-                            }
-
-                            // All specified layers must be colored separately, all unspecified must depend on default coloring
-                            if(prototype.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
-                            {
-                                Color marking_color = MarkingColoring.GetMarkingColor(
-                                    properties,
-                                    skinColor, eyeColor, hairColor, hairColor
-                                );
-                                colors.Add(marking_color);
-                            }
-                            else
-                            {
-                                colors.Add(default_color);
-                            }
-                        }
-
-                        marking = new Marking(points.DefaultMarkings[index], colors);
-                    }
+                    List<Color> colors = MarkingColoring.GetMarkingLayerColors(
+                            prototype,
+                            skinColor,
+                            eyeColor,
+                            hairColor,
+                            facialHairColor
+                        );
+                    Marking marking = new Marking(points.DefaultMarkings[index], colors);
 
                     AddBack(category, marking);
                 }

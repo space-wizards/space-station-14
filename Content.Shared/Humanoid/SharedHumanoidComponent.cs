@@ -26,14 +26,19 @@ public abstract class SharedHumanoidComponent : Component
     public Color SkinColor { get; set;  } = Color.FromHex("#C0967F");
 
     /// <summary>
-    ///     Hair color of this humanoid. Used to avoid looping through all markings to get hair color
+    ///     Hair color of this humanoid. Used to avoid looping through all markings
     /// </summary>
-    public Color CachedHairColor { get; set;  } = Color.FromHex("#000000");
+    public Color CachedHairColor { get; set;  } = Color.Black;
+
+    /// <summary>
+    ///     Facial Hair color of this humanoid. Used to avoid looping through all markings
+    /// </summary>
+    public Color CachedFacialHairColor { get; set;  } = Color.Black;
 
     /// <summary>
     ///     Eye color of this humanoid.
     /// </summary>
-    public Color CachedEyeColor { get; set;  } = Color.FromHex("#000000");
+    public Color CachedEyeColor { get; set;  } = Color.Black;
 
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite

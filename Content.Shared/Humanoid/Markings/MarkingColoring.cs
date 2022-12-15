@@ -1,18 +1,20 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Humanoid.Markings;
 
 [Serializable, NetSerializable]
 public enum MarkingColoringType : byte
 {
-    Color,
-    FollowSkinColor,
-    FollowHairColor,
-    FollowFacialHairColor,
-    FollowAnyHairColor,
-    FollowEyeColor
+    SimpleColor,
+    SkinColor,
+    HairColor,
+    FacialHairColor,
+    AnyHairColor,
+    Tattoo,
+    EyeColor
 }
 
 
@@ -44,16 +46,16 @@ public sealed class ColoringProperties
     /// Coloring type that will be used on that layer
     /// </summary>
     [DataField("type", true, required: true)]
-    public MarkingColoringType Type { get; } = MarkingColoringType.FollowSkinColor;
+    public MarkingColoringType Type { get; } = MarkingColoringType.SkinColor;
 
     /// <summary>
-    /// Color that will be used if coloring type can't be performed
+    /// Color that will be used if coloring type can't be performed or used "Color" type
     /// </summary>
     [DataField("color", true)]
     public Color Color { get; } = new (1f, 1f, 1f, 1f);
 
     /// <summary>
-    /// Makes color negative if true (in e.x. Different Eyes)
+    /// Makes output color negative if true (in e.x. Different Eyes)
     /// </summary>
     [DataField("negative", true)]
     public bool Negative { get; } = false;
@@ -68,61 +70,162 @@ public sealed class ColoringProperties
 
 public static class MarkingColoring
 {
-    public static Color GetMarkingColor(ColoringProperties properties, Color? skinColor, Color? eyeColor, Color? hairColor, Color? facialHairColor)
+    public static List<Color> GetMarkingLayerColors
+    (
+        MarkingPrototype prototype,
+        Color? skinColor,
+        Color? eyeColor,
+        Color? hairColor,
+        Color? facialHairColor
+    )
     {
-        Color? color = null;
+        List<Color> colors = new List<Color>();
+
+        // Coloring from default properties
+        Color default_color = MarkingColoring.GetMarkingColor(
+            prototype.Coloring.Default,
+            skinColor,
+            eyeColor,
+            hairColor,
+            facialHairColor
+        );
+
+        if (prototype.Coloring.Layers == null)
+        {
+            // If layers is not specified, then every layer must be default
+            for (var i = 0; i < prototype.Sprites.Count; i++)
+            {
+                colors.Add(default_color);
+            }
+            return colors;
+        }
+        else
+        {
+            // If some layers are specified.
+            for (var i = 0; i < prototype.Sprites.Count; i++)
+            {
+                // Getting layer name
+                string name;
+                switch (prototype.Sprites[i])
+                {
+                    case SpriteSpecifier.Rsi rsi:
+                        name = rsi.RsiState;
+                        break;
+                    case SpriteSpecifier.Texture texture:
+                        name = texture.TexturePath.Filename;
+                        break;
+                    default:
+                        colors.Add(default_color);
+                        continue;
+                }
+            
+                // All specified layers must be colored separately, all unspecified must depend on default coloring
+                if (prototype.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
+                {
+                    Color marking_color = MarkingColoring.GetMarkingColor(
+                        properties,
+                        skinColor,
+                        eyeColor,
+                        hairColor,
+                        facialHairColor
+                    );
+                    colors.Add(marking_color);
+                }
+                else
+                {
+                    colors.Add(default_color);
+                }
+            }
+            return colors;
+        }
+    }
+
+
+    public static Color GetMarkingColor
+    (
+        ColoringProperties properties,
+        Color? skinColor,
+        Color? eyeColor,
+        Color? hairColor,
+        Color? facialHairColor
+    )
+    {
+        Color out_color;
         switch (properties.Type)
         {
-            case MarkingColoringType.Color:
-                color = Color();
+            case MarkingColoringType.SimpleColor:
+                out_color = SimpleColor(properties.Color);
                 break;
-            case MarkingColoringType.FollowSkinColor:
-                color = FollowSkinColor(skinColor);
+            case MarkingColoringType.SkinColor:
+                out_color = SkinColor(skinColor);
                 break;
-            case MarkingColoringType.FollowHairColor:
-                color = FollowHairColor(skinColor, hairColor);
+            case MarkingColoringType.HairColor:
+                out_color = HairColor(skinColor, hairColor);
                 break;
-            case MarkingColoringType.FollowFacialHairColor:
-                color = FollowHairColor(skinColor, facialHairColor);
+            case MarkingColoringType.FacialHairColor:
+                out_color = HairColor(skinColor, facialHairColor);
                 break;
-            case MarkingColoringType.FollowAnyHairColor:
-                color = FollowAnyHairColor(skinColor, hairColor, facialHairColor);
+            case MarkingColoringType.AnyHairColor:
+                out_color = AnyHairColor(skinColor, hairColor, facialHairColor);
                 break;
-            case MarkingColoringType.FollowEyeColor:
-                color = FollowEyeColor(eyeColor);
+            case MarkingColoringType.EyeColor:
+                out_color = EyeColor(eyeColor);
+                break;
+            case MarkingColoringType.Tattoo:
+                out_color = Tattoo(skinColor);
+                break;
+            default:
+                out_color = properties.Color;
                 break;
         }
 
-        return color ?? new (1f, 1f, 1f, 1f);
+        // Negative color
+        if (properties.Negative)
+        {
+            out_color.R = 1f-out_color.R;
+            out_color.G = 1f-out_color.G;
+            out_color.B = 1f-out_color.B;
+        }
+
+        return out_color;
     }
 
-    public static Color FollowAnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)
+    public static Color AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)
     {
-        return hairColor ?? facialHairColor ?? new (1f, 1f, 1f, 1f);
+        return hairColor ?? facialHairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
     }
 
-    public static Color FollowHairColor(Color? skinColor, Color? hairColor)
+    public static Color HairColor(Color? skinColor, Color? hairColor)
     {
         return hairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
     }
 
-    public static Color FollowFacialHairColor(Color? skinColor, Color? facialHairColor)
+    public static Color FacialHairColor(Color? skinColor, Color? facialHairColor)
     {
         return facialHairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
     }
 
-    public static Color FollowSkinColor(Color? skinColor)
+    public static Color SkinColor(Color? skinColor)
     {
         return skinColor ?? new (1f, 1f, 1f, 1f);
     }
+    
+    public static Color Tattoo(Color? skinColor)
+    {
+        var newColor = Color.ToHsv(skinColor ?? new (1f, 1f, 1f, 1f));
+        newColor.Y = .15f;
+        newColor.Z = .20f;
 
-    public static Color FollowEyeColor(Color? eyeColor)
+        return Color.FromHsv(newColor);
+    }
+
+    public static Color EyeColor(Color? eyeColor)
     {
         return eyeColor ?? new (1f, 1f, 1f, 1f);
     }
 
-    public static Color Color()
+    public static Color SimpleColor(Color? color)
     {
-        return new Color(1f, 1f, 1f, 1f);
+        return color ?? new Color(1f, 1f, 1f, 1f);
     }
 }
