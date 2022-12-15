@@ -17,6 +17,7 @@ public sealed partial class QueueGui : Control
     public QueueGui()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         LayoutContainer.SetAnchorPreset(this, LayoutContainer.LayoutPreset.Wide);
         
         QuitButton.OnPressed += (_) => QuitPressed?.Invoke();
