@@ -222,8 +222,10 @@ public sealed class FaxSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-name-set"), uid, Filter.Pvs(uid));
             UpdateUserInterface(uid, component);
         });
+
         args.Handled = true;
     }
+
     private void OnEmagged(EntityUid uid, FaxMachineComponent component, GotEmaggedEvent args)
     {
         if (component.Emagged)

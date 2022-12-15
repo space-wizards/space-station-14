@@ -66,7 +66,7 @@ internal sealed class ChargerSystem : EntitySystem
 
         UpdateStatus(uid, component);
     }
-    
+
     private void OnRemoved(EntityUid uid, ChargerComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != component.SlotId)
