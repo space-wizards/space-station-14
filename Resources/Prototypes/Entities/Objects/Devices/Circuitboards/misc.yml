@@ -1,0 +1,11 @@
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: StationMapCircuitboard
+  name: station map computer board
+  description: A printed circuit board for a station map.
+  components:
+    - type: MachineBoard
+      prototype: Autolathe
+      materialRequirements:
+        Glass: 2
+        Cable: 2

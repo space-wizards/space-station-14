@@ -15,31 +15,9 @@
     - type: ActivatableUI
       inHandsOnly: true
       singleUser: true
-      # verbText: verb-instrument-openui
       key: enum.StationMapUiKey.Key
-    - type: UserInterface
-      interfaces:
-        - key: enum.StationMapUiKey.Key
-          type: StationMapBoundUserInterface
-
-- type: entity
-  id: WallStationMap
-  name: station map
-  desc: Displays a readout of the current station.
-  suffix: Wall
-  placement:
-    mode: SnapgridCenter
-  components:
-    - type: InteractionOutline
-    - type: Clickable
-    - type: Sprite
-      netsync: false
-      sprite: Structures/Machines/station_map.rsi
-      layers:
-        - state: station_map
-    - type: ActivatableUI
-      # verbText: verb-instrument-openui
-      key: enum.StationMapUiKey.Key
+    - type: Damageable
+      damageContainer: Inorganic
     - type: UserInterface
       interfaces:
         - key: enum.StationMapUiKey.Key
