@@ -1,21 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Armors shows their armor values when examined!, type: Add}
-  id: 2257
-  time: '2022-09-08T04:11:22.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: 'You can examine hardsuits, magboots, etc to find out how much your
-      speed is decreased from them.', type: Add}
-  id: 2258
-  time: '2022-09-08T11:09:34.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: Nanotrasen has unlocked the gas analyzer's full potential and it can
-      now be used to analyze atmospheric equipment, type: Tweak}
-  id: 2259
-  time: '2022-09-08T14:22:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Default camera rotations have been inverted., type: Tweak}
@@ -2931,3 +2914,21 @@ Entries:
   - {message: 'Added wallmounted intercoms, useful for radioing a department.', type: Add}
   id: 2756
   time: '2022-12-14T01:39:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Intercoms now have a light indicating they are broadcasting., type: Add}
+  - {message: Intercoms no longer stay on when the power shuts off., type: Fix}
+  - {message: Intercoms can now be rotated properly., type: Fix}
+  id: 2757
+  time: '2022-12-15T04:13:02.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed electrified grilles electrocuting players despite being blocked
+      by windows., type: Fix}
+  id: 2758
+  time: '2022-12-15T04:29:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will now smash and pry correctly., type: Fix}
+  id: 2759
+  time: '2022-12-15T04:30:28.0000000+00:00'
