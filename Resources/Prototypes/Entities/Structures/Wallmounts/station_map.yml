@@ -40,11 +40,17 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: Transform
+      anchored: true
     - type: Sprite
       layers:
-        - state: station_map
+        - state: station_map0
+        - state: unshaded
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+          shader: unshaded
     - type: ApcPowerReceiver
       powerLoad: 200
+      priority: Low
     - type: ExtensionCableReceiver
     - type: ActivatableUIRequiresPower
     - type: ActivatableUI
