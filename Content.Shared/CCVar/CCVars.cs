@@ -542,8 +542,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> NPCPathfinding = CVarDef.Create("npc.pathfinding", true);
 
-        public static readonly CVarDef<bool> NPCCollisionAvoidance = CVarDef.Create("npc.collision_avoidance", true);
-
         /*
          * Net
          */

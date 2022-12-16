@@ -41,6 +41,7 @@ namespace Content.Server.NPC.Systems
 
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IDependencyCollection _dependencies = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IParallelManager _parallel = default!;
@@ -66,6 +67,8 @@ namespace Content.Server.NPC.Systems
 
         private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
+        private object _obstacles = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -76,7 +79,6 @@ namespace Content.Server.NPC.Systems
             }
 
             UpdatesBefore.Add(typeof(SharedPhysicsSystem));
-            InitializeAvoidance();
             _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
             _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
 
@@ -114,7 +116,6 @@ namespace Content.Server.NPC.Systems
         public override void Shutdown()
         {
             base.Shutdown();
-            ShutdownAvoidance();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
         }
 
@@ -131,6 +132,7 @@ namespace Content.Server.NPC.Systems
 
         private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
         {
+            // Cancel any active pathfinding jobs as they're irrelevant.
             component.PathfindToken?.Cancel();
         }
 
@@ -151,7 +153,6 @@ namespace Content.Server.NPC.Systems
                 component.Flags = _pathfindingSystem.GetFlags(uid);
             }
 
-            EnsureComp<NPCRVOComponent>(uid);
             component.Coordinates = coordinates;
             return component;
         }
@@ -185,7 +186,6 @@ namespace Content.Server.NPC.Systems
 
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
-            RemComp<NPCRVOComponent>(uid);
             RemComp<NPCSteeringComponent>(uid);
         }
 
@@ -203,7 +203,7 @@ namespace Content.Server.NPC.Systems
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
-            var options = new ParallelOptions()
+            var options = new ParallelOptions
             {
                 MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
             };
@@ -261,6 +261,8 @@ namespace Content.Server.NPC.Systems
             EntityQuery<TransformComponent> xformQuery,
             float frameTime)
         {
+            IoCManager.InitThread(_dependencies, replaceExisting: true);
+
             if (Deleted(steering.Coordinates.EntityId))
             {
                 SetDirection(mover, steering, Vector2.Zero);
