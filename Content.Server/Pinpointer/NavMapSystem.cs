@@ -3,7 +3,6 @@ using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
@@ -33,41 +32,9 @@ public sealed class NavMapSystem : SharedNavMapSystem
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
         var data = new Dictionary<Vector2i, int>(component.Chunks.Count);
-        var isDiff = false;
-
         foreach (var (index, chunk) in component.Chunks)
         {
-            if (chunk.LastUpdate < args.FromTick)
-            {
-                isDiff = true;
-                continue;
-            }
-
             data.Add(index, chunk.TileData);
-        }
-
-        var deleted = new List<Vector2i>();
-
-        foreach (var (chunk, tick) in component.DeletedChunks)
-        {
-            if (tick < args.FromTick)
-            {
-                continue;
-            }
-
-            deleted.Add(chunk);
-        }
-
-        if (isDiff)
-        {
-            args.State
-        }
-        else
-        {
-            args.State = new NavMapComponentState()
-            {
-                TileData = data,
-            };
         }
 
         // TODO: Diffs
@@ -132,7 +99,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         if (chunk.TileData == 0)
         {
-            component.DeletedChunks.Add(chunk.Origin, _timing.CurTick);
             component.Chunks.Remove(chunk.Origin);
             return;
         }
