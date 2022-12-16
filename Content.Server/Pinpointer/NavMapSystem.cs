@@ -78,13 +78,16 @@ public sealed class NavMapSystem : SharedNavMapSystem
         var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
         // TODO: Use something to get convex poly.
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var tagQuery = GetEntityQuery<TagComponent>();
 
         while (enumerator.MoveNext(out var ent))
         {
             if (!bodyQuery.TryGetComponent(ent, out var body) ||
                 !body.CanCollide ||
                 !body.Hard ||
-                body.BodyType != BodyType.Static)
+                body.BodyType != BodyType.Static ||
+                (!_tags.HasTag(ent.Value, "Wall", tagQuery) &&
+                 !_tags.HasTag(ent.Value, "Window", tagQuery)))
             {
                 continue;
             }
