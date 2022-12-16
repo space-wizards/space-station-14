@@ -21,14 +21,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Bed.Sleep
 {
-    public sealed class SleepingSystem : EntitySystem
+    public sealed class SleepingSystem : SharedSleepingSystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -141,15 +142,7 @@ namespace Content.Server.Bed.Sleep
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
             args.Handled = true;
-
-            var curTime = _gameTiming.CurTime;
-            if (curTime < component.CoolDownEnd)
-            {
-                return;
-            }
-
             TryWaking(args.Target, user: args.User);
-            component.CoolDownEnd = curTime + component.Cooldown;
         }
 
         private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)
@@ -192,13 +185,25 @@ namespace Content.Server.Bed.Sleep
         /// <summary>
         /// Try to wake up.
         /// </summary>
-        public bool TryWaking(EntityUid uid, bool force = false, EntityUid? user = null)
+        public bool TryWaking(EntityUid uid, SleepingComponent? component = null, bool force = false, EntityUid? user = null)
         {
+            if (!Resolve(uid, ref component))
+                return false;
+
+            var curTime = _gameTiming.CurTime;
+
+            if (!force && curTime < component.CoolDownEnd)
+            {
+                return false;
+            }
+
+            component.CoolDownEnd = curTime + component.Cooldown;
+
             if (!force && HasComp<ForcedSleepingComponent>(uid))
             {
                 if (user != null)
                 {
-                    SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                    _audio.PlayPvs("/Audio/Effects/thudswoosh.ogg", uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
                     _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
                 }
                 return false;
@@ -206,7 +211,7 @@ namespace Content.Server.Bed.Sleep
 
             if (user != null)
             {
-                SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
+                _audio.PlayPvs("/Audio/Effects/thudswoosh.ogg", uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
                 _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value));
             }
             RemComp<SleepingComponent>(uid);
