@@ -1,13 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: External airlocks now show the correct direction relative to their rotation.,
-    type: Fix}
-  - {message: 'External airlock assemblies can now be rotated. This is particularly
-      useful when building shuttles, for docking: you can now have docks that face
-      in any of the four cardinal directions.', type: Tweak}
-  id: 2261
-  time: '2022-09-08T22:21:26.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Hitscan guns, gun cartridges, and melee weapons are now examinable
@@ -2932,3 +2923,8 @@ Entries:
   - {message: Dead people can no longer sleep, type: Fix}
   id: 2760
   time: '2022-12-15T21:34:44.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Dead bodies no longer sneeze and cough, type: Fix}
+  id: 2761
+  time: '2022-12-16T17:33:34.0000000+00:00'
