@@ -141,6 +141,15 @@
   physicalDesc: reagent-physical-desc-acrid
   flavor: bitter
   color: "#215263"
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 4
+        refresh: false
 
 - type: reagent
   id: SpaceDrugs
