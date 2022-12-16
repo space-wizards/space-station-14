@@ -89,7 +89,7 @@ namespace Content.Server.Bed.Sleep
                 return;
 
             if (args.DamageDelta.Total >= component.WakeThreshold)
-                TryWaking(uid);
+                TryWaking(uid, component);
         }
 
         private void OnSleepAction(EntityUid uid, MobStateComponent component, SleepActionEvent args)
@@ -99,7 +99,11 @@ namespace Content.Server.Bed.Sleep
 
         private void OnWakeAction(EntityUid uid, MobStateComponent component, WakeActionEvent args)
         {
-            TryWaking(uid);
+            if (!TryWakeCooldown(uid))
+                return;
+
+            if (TryWaking(uid))
+                args.Handled = true;
         }
 
         /// <summary>
@@ -127,7 +131,10 @@ namespace Content.Server.Bed.Sleep
             {
                 Act = () =>
                 {
-                   TryWaking(args.Target, user: args.User);
+                    if (!TryWakeCooldown(uid))
+                        return;
+
+                    TryWaking(args.Target, user: args.User);
                 },
                 Text = Loc.GetString("action-name-wake"),
                 Priority = 2
@@ -141,6 +148,9 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
         {
+            if (!TryWakeCooldown(uid))
+                return;
+
             args.Handled = true;
             TryWaking(args.Target, user: args.User);
         }
@@ -182,6 +192,22 @@ namespace Content.Server.Bed.Sleep
             return true;
         }
 
+        private bool TryWakeCooldown(EntityUid uid, SleepingComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return false;
+
+            var curTime = _gameTiming.CurTime;
+
+            if (curTime < component.CoolDownEnd)
+            {
+                return false;
+            }
+
+            component.CoolDownEnd = curTime + component.Cooldown;
+            return true;
+        }
+
         /// <summary>
         /// Try to wake up.
         /// </summary>
@@ -189,15 +215,6 @@ namespace Content.Server.Bed.Sleep
         {
             if (!Resolve(uid, ref component))
                 return false;
-
-            var curTime = _gameTiming.CurTime;
-
-            if (!force && curTime < component.CoolDownEnd)
-            {
-                return false;
-            }
-
-            component.CoolDownEnd = curTime + component.Cooldown;
 
             if (!force && HasComp<ForcedSleepingComponent>(uid))
             {
