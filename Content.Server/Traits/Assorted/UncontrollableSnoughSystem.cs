@@ -1,5 +1,4 @@
 ﻿using Content.Server.Disease;
-using Content.Server.MobState;
 using Robust.Shared.Random;
 
 namespace Content.Server.Traits.Assorted;
@@ -11,7 +10,6 @@ public sealed class UncontrollableSnoughSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

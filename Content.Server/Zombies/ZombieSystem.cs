@@ -1,22 +1,22 @@
 using System.Linq;
-using Robust.Shared.Random;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
+using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
+using Content.Server.Inventory;
+using Content.Server.Speech;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.MobState.Components;
-using Content.Server.Disease;
-using Content.Server.Disease.Events;
+using Content.Shared.Damage;
+using Content.Shared.Disease.Events;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
-using Content.Server.Inventory;
-using Robust.Shared.Prototypes;
-using Content.Server.Speech;
-using Content.Server.Chat.Systems;
-using Content.Shared.Bed.Sleep;
-using Content.Shared.Damage;
+using Content.Shared.MobState.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Zombies
 {

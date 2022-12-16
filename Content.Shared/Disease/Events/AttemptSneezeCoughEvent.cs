@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Disease.Events;
+namespace Content.Shared.Disease.Events;
 
 /// <summary>
 ///     Raised by an entity about to sneeze/cough.

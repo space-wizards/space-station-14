@@ -11,7 +11,6 @@ namespace Content.Server.Disease
     [UsedImplicitly]
     public sealed class DiseaseSnough : DiseaseEffect
     {
-        [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
         
         /// <summary>
         /// Message to play when snoughing
