@@ -92,17 +92,15 @@ public sealed class NavMapSystem : SharedNavMapSystem
             break;
         }
 
+        if (chunk.TileData == 0)
+        {
+            component.Chunks.Remove(chunk.Origin);
+        }
+
         if (existing == chunk.TileData)
             return;
 
         Dirty(component);
-
-        if (chunk.TileData == 0)
-        {
-            component.Chunks.Remove(chunk.Origin);
-            return;
-        }
-
         chunk.LastUpdate = _timing.CurTick;
     }
 }
