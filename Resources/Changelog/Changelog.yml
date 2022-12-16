@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Hitscan guns, gun cartridges, and melee weapons are now examinable
-      for their damage values.', type: Add}
-  id: 2262
-  time: '2022-09-08T23:08:14.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'We have surgically implanted tiny bio-engineered sensors into your
@@ -2928,3 +2922,8 @@ Entries:
   - {message: Dead bodies no longer sneeze and cough, type: Fix}
   id: 2761
   time: '2022-12-16T17:33:34.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Salvage magnets now correctly appear powered, type: Fix}
+  id: 2762
+  time: '2022-12-16T22:56:46.0000000+00:00'
