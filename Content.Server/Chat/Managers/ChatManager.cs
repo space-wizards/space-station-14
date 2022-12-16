@@ -191,7 +191,7 @@ namespace Content.Server.Chat.Managers
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
-            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients.ToList());
+            ChatMessageToMany(ChatChannel.AdminChat, message, wrappedMessage, default, false, true, clients.ToList());
 
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
