@@ -150,8 +150,12 @@ public sealed class HeadsetSystem : EntitySystem
     {
         src.Channels.Clear();
         foreach (EntityUid i in src.KeyContainer.ContainedEntities)
+        {
             if (TryComp<EncryptionKeyComponent>(i, out var key))
+            {
                 UploadChannelsFromKey(src, key);
+            }
+        }
     }
 
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
@@ -163,49 +167,67 @@ public sealed class HeadsetSystem : EntitySystem
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
         {
             if (component.KeySlotsAmount > component.KeyContainer.ContainedEntities.Count)
+            {
                 if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Entities(args.User));
                     _audio.PlayPvs(component.KeyInsertionSound, args.Target);
                 }
+            }
             else
+            {
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Entities(args.User));
-        } 
+            }
+        }
         if (TryComp<ToolComponent>(args.Used, out var tool))
         {
             if (component.KeyContainer.ContainedEntities.Count > 0)
+            {
                 if (_toolSystem.UseTool(
-                    args.Used, args.User, uid,
-                    0f, 0f, new String[] {"Screwing"},
-                    doAfterCompleteEvent: null, toolComponent: tool)
-                )
+                args.Used, args.User, uid,
+                0f, 0f, new String[] { "Screwing" },
+                doAfterCompleteEvent: null, toolComponent: tool))
                 {
                     var contained = new List<EntityUid>();
                     foreach (var i in component.KeyContainer.ContainedEntities)
+                    {
                         contained.Add(i);
+                    }
                     foreach (var i in contained)
+                    {
                         if (HasComp<EncryptionKeyComponent>(i))
+                        {
                             component.KeyContainer.Remove(i);
+                        }
+                    }
                     component.Channels.Clear();
 
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extrated"), uid, Filter.Entities(args.User));
                     _audio.PlayPvs(component.KeyExtractionSound, args.Target);
                 }
+            }
             else
+            {
                 _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Entities(args.User));
+            }
         }
     }
 
     private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
     {
-        if (args.Container.ID == HeadsetComponent.KeyContainerName)
-            if(args.Container.ContainedEntities.Contains(args.Entity))
-                if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
-                {
-                    UploadChannelsFromKey(component, added);
-                    PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
-                }
-            else
-                RecalculateChannels(component);
+        if (args.Container.ID != HeadsetComponent.KeyContainerName)
+        {
+            return;
+        }
+        if (args.Container.ContainedEntities.Contains(args.Entity))
+        {
+            if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
+            {
+                UploadChannelsFromKey(component, added);
+                PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
+            }
+            return;
+        }
+        RecalculateChannels(component);
     }
 }
