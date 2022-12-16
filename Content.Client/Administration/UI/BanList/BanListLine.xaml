@@ -8,11 +8,11 @@
                   SizeFlagsStretchRatio="1"
                   HorizontalExpand="True"
                   RectClipContent="True">
-        <Label Name="IdsHidden"
-               Text="{Loc 'ban-list-hidden'}"
-               HorizontalExpand="True"
-               VerticalExpand="True"
-               MouseFilter="Pass"/>
+        <Button Name="IdsHidden"
+                Text="{Loc 'ban-list-view'}"
+                HorizontalExpand="True"
+                VerticalExpand="True"
+                MouseFilter="Pass"/>
     </BoxContainer>
     <cc:VSeparator/>
     <Label Name="Reason"

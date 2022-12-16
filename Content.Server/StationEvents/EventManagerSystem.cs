@@ -30,10 +30,6 @@ public sealed class EventManagerSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("events");
 
-#if DEBUG
-        _configurationManager.OverrideDefault(CCVars.EventsEnabled, false);
-#endif
-
         _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
     }
 

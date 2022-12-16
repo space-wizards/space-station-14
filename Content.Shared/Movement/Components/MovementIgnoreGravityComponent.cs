@@ -70,7 +70,7 @@ namespace Content.Shared.Movement.Components
                     return false;
             }
 
-            if (!entityManager.GetComponent<GravityComponent>(grid.GridEntityId).EnabledVV)
+            if (!entityManager.GetComponent<GravityComponent>(grid.Owner).EnabledVV)
             {
                 return true;
             }

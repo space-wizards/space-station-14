@@ -9,6 +9,5 @@ public sealed class EnsnareableComponent : SharedEnsnareableComponent
     /// <summary>
     /// The container where the <see cref="EnsnaringComponent"/> entity will be stored
     /// </summary>
-    [DataField("container")]
     public Container Container = default!;
 }

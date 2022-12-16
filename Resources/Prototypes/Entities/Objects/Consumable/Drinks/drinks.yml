@@ -668,7 +668,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: ErikaSuprise
+        - ReagentId: ErikaSurprise
           Quantity: 50
   - type: Drink
   - type: Sprite
@@ -1666,7 +1666,7 @@
   parent: DrinkGlassBase
   id: DrinkSoyLatte
   name: soy latte
-  description: A nice and refrshing beverage while you are reading.
+  description: A nice and refreshing beverage while you are reading.
   components:
   - type: SolutionContainerManager
     solutions:

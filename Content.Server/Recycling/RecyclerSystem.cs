@@ -3,11 +3,13 @@ using Content.Server.Body.Systems;
 using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Recycling;
@@ -28,14 +30,25 @@ namespace Content.Server.Recycling
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
+        [Dependency] private readonly AudioSystem _soundSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
+        private const string RecyclerColliderName = "brrt";
 
         private const float RecyclerSoundCooldown = 0.8f;
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<RecyclerComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<RecyclerComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<RecyclerComponent, GotEmaggedEvent>(OnEmagged);
             SubscribeLocalEvent<RecyclerComponent, SuicideEvent>(OnSuicide);
+            SubscribeLocalEvent<RecyclerComponent, PowerChangedEvent>(OnPowerChanged);
+        }
+
+        private void OnExamined(EntityUid uid, RecyclerComponent component, ExaminedEvent args)
+        {
+            args.PushMarkup(Loc.GetString("recycler-count-items", ("items", component.ItemsProcessed)));
         }
 
         private void OnSuicide(EntityUid uid, RecyclerComponent component, SuicideEvent args)
@@ -70,7 +83,16 @@ namespace Content.Server.Recycling
             if (component.Enabled) return;
 
             component.Enabled = true;
-            _ambience.SetAmbience(component.Owner, true);
+
+            if (TryComp(component.Owner, out ApcPowerReceiverComponent? apcPower))
+            {
+                _ambience.SetAmbience(component.Owner, apcPower.Powered);
+            }
+            else
+            {
+                _ambience.SetAmbience(component.Owner, true);
+            }
+
         }
 
         public void DisableRecycler(RecyclerComponent component)
@@ -81,9 +103,24 @@ namespace Content.Server.Recycling
             _ambience.SetAmbience(component.Owner, false);
         }
 
+        private void OnPowerChanged(EntityUid uid, RecyclerComponent component, ref PowerChangedEvent args)
+        {
+            if (component.Enabled)
+            {
+                _ambience.SetAmbience(uid, args.Powered);
+            }
+        }
+
         private void OnCollide(EntityUid uid, RecyclerComponent component, ref StartCollideEvent args)
         {
-            if (component.Enabled && args.OurFixture.ID != "brrt") return;
+            if (component.Enabled && args.OurFixture.ID != RecyclerColliderName)
+                return;
+
+            if (TryComp(uid, out ApcPowerReceiverComponent? apcPower))
+            {
+                if (!apcPower.Powered)
+                    return;
+            }
 
             Recycle(component, args.OtherFixture.Body.Owner);
         }
@@ -116,9 +153,11 @@ namespace Content.Server.Recycling
 
             if (component.Sound != null && (_timing.CurTime - component.LastSound).TotalSeconds > RecyclerSoundCooldown)
             {
-                SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
+                _soundSystem.PlayPvs(component.Sound, component.Owner, AudioHelpers.WithVariation(0.01f).WithVolume(-3));
                 component.LastSound = _timing.CurTime;
             }
+
+            component.ItemsProcessed++;
         }
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
@@ -131,7 +170,7 @@ namespace Content.Server.Recycling
         {
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(RecyclerVisuals.Bloody, true);
+                _appearanceSystem.SetData(component.Owner, RecyclerVisuals.Bloody, true, appearance);
             }
         }
 

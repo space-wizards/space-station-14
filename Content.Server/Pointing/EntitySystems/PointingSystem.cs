@@ -1,9 +1,12 @@
+using System;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -19,6 +22,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Pointing.EntitySystems
@@ -26,6 +30,7 @@ namespace Content.Server.Pointing.EntitySystems
     [UsedImplicitly]
     internal sealed class PointingSystem : SharedPointingSystem
     {
+        [Dependency] private readonly IReplayRecordingManager _replay = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
@@ -34,6 +39,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -72,8 +78,10 @@ namespace Content.Server.Pointing.EntitySystems
                         ? viewerPointedAtMessage
                         : viewerMessage;
 
-                _popup.PopupEntity(message, source, Filter.Entities(viewerEntity));
+                RaiseNetworkEvent(new PopupEntityEvent(message, PopupType.Small, source), viewerEntity);
             }
+
+            _replay.QueueReplayMessage(new PopupEntityEvent(viewerMessage, PopupType.Small, source));
         }
 
         public bool InRange(EntityUid pointer, EntityCoordinates coordinates)
@@ -184,13 +192,17 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }
             else
             {
                 TileRef? tileRef = null;
+                string? position = null;
 
                 if (_mapManager.TryFindGridAt(mapCoords, out var grid))
                 {
+                    position = $"EntId={grid.Owner} {grid.WorldToTile(mapCoords.Position)}";
                     tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
                 }
 
@@ -199,6 +211,8 @@ namespace Content.Server.Pointing.EntitySystems
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.Name));
 
                 viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
+
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {tileDef.Name} {(position == null ? mapCoords : position)}");
             }
 
             _pointers[session] = _gameTiming.CurTime;

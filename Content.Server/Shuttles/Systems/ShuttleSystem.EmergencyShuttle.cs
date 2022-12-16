@@ -17,6 +17,7 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -54,9 +55,6 @@ public sealed partial class ShuttleSystem
 
    private void InitializeEscape()
    {
-#if !FULL_RELEASE
-       _configManager.OverrideDefault(CCVars.EmergencyShuttleEnabled, false);
-#endif
        _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
        // Don't immediately invoke as roundstart will just handle it.
        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
@@ -115,7 +113,7 @@ public sealed partial class ShuttleSystem
    /// </summary>
    private bool ValidSpawn(MapGridComponent grid, Box2 area)
    {
-       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+       return !grid.GetLocalTilesIntersecting(area).Any();
    }
 
    private DockingConfig? GetDockingConfig(ShuttleComponent component, EntityUid targetGrid)
@@ -131,7 +129,7 @@ public sealed partial class ShuttleSystem
        var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(component.Owner);
-       var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
+       var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
 
@@ -164,7 +162,7 @@ public sealed partial class ShuttleSystem
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.GridEntityId != targetGrid))
+                           dockedBounds).Any(o => o.Owner != targetGrid))
                    {
                        continue;
                    }
@@ -425,10 +423,17 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled
+           || CentComMap == null
+           || component.EmergencyShuttle != null
+           || component.StationConfig == null)
+       {
+           return;
+       }
 
        // Load escape shuttle
-       var shuttle = _map.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var shuttlePath = component.StationConfig.EmergencyShuttlePath;
+       var shuttle = _map.LoadGrid(CentComMap.Value, shuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
@@ -436,7 +441,7 @@ public sealed partial class ShuttleSystem
 
        if (shuttle == null)
        {
-           _sawmill.Error($"Unable to spawn emergency shuttle {component.EmergencyShuttlePath} for {ToPrettyString(component.Owner)}");
+           _sawmill.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(component.Owner)}");
            return;
        }
 

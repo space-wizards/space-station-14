@@ -1,13 +1,14 @@
 ﻿using Content.Client.Gameplay;
 using Content.Client.Info;
-using Content.Client.Links;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Info;
+using Content.Shared.CCVar;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
@@ -20,6 +21,7 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 {
     [Dependency] private readonly IClientConsoleHost _console = default!;
     [Dependency] private readonly IUriOpener _uri = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ChangelogUIController _changelog = default!;
     [Dependency] private readonly InfoUIController _info = default!;
     [Dependency] private readonly OptionsUIController _options = default!;
@@ -93,8 +95,11 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         _escapeWindow.WikiButton.OnPressed += _ =>
         {
-            _uri.OpenUri(UILinks.Wiki);
+            _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksWiki));
         };
+
+        // Hide wiki button if we don't have a link for it.
+        _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
 
         CommandBinds.Builder
             .Bind(EngineKeyFunctions.EscapeMenu,

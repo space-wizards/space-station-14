@@ -159,7 +159,7 @@
     DriestMartini: 2
 
 - type: reaction
-  id: ErikaSuprise
+  id: ErikaSurprise
   reactants:
     Ale:
       amount: 2
@@ -172,7 +172,7 @@
     Whiskey:
       amount: 1
   products:
-    ErikaSuprise: 6
+    ErikaSurprise: 6
 
 - type: reaction
   id: FourteenLoko

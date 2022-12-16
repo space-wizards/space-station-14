@@ -23,6 +23,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
         [Dependency] private readonly ChunkingSystem _chunking = default!;
+        [Dependency] private readonly IDependencyCollection _dependencies = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -407,6 +408,8 @@ namespace Content.Server.Decals
 
         public void UpdatePlayer(IPlayerSession player)
         {
+            IoCManager.InitThread(_dependencies, replaceExisting: true);
+
             var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();
@@ -522,7 +525,7 @@ namespace Content.Server.Decals
             }
 
             if (updatedDecals.Count != 0 || staleChunks.Count != 0)
-                RaiseNetworkEvent(new DecalChunkUpdateEvent{Data = updatedDecals, RemovedChunks = staleChunks}, Filter.SinglePlayer(session));
+                RaiseNetworkEvent(new DecalChunkUpdateEvent{Data = updatedDecals, RemovedChunks = staleChunks}, session);
 
             ReturnToPool(updatedChunks);
             ReturnToPool(staleChunks);
