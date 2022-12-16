@@ -296,6 +296,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
   color: "#77b58e"
+  metabolisms:
       Narcotic:
       effects:
       - !type:GenericStatusEffect
