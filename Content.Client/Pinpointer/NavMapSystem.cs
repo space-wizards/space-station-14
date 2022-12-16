@@ -16,7 +16,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
         base.Initialize();
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<NavMapComponent, ComponentHandleState>(OnHandleState);
-        _overlay.AddOverlay(new NavMapOverlay(EntityManager, _mapManager));
     }
 
     private void OnGridInit(GridInitializeEvent ev)

@@ -51,6 +51,8 @@ public sealed class NavMapControl : MapGridControl
     {
         IoCManager.InjectDependencies(this);
         RectClipContent = true;
+        HorizontalExpand = true;
+        VerticalExpand = true;
         AddChild(_zoom);
         AddChild(new Control());
         AddChild(_recenter);

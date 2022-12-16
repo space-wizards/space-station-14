@@ -1,7 +1,8 @@
 ﻿<DefaultWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
-            SetSize="775 400">
+            SetSize="1130 700"
+               MinSize="1130 700">
     <BoxContainer Orientation="Horizontal">
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True">
