@@ -11,6 +11,8 @@ public sealed class NavMapComponent : Component
 {
     [ViewVariables]
     public readonly Dictionary<Vector2i, NavMapChunk> Chunks = new();
+
+    public readonly Dictionary<Vector2i, GameTick> DeletedChunks = new ();
 }
 
 public sealed class NavMapChunk

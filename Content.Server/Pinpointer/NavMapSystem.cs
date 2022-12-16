@@ -17,8 +17,6 @@ public sealed class NavMapSystem : SharedNavMapSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly TagSystem _tags = default!;
 
-    // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
-
     public override void Initialize()
     {
         base.Initialize();
@@ -35,13 +33,44 @@ public sealed class NavMapSystem : SharedNavMapSystem
     private void OnGetState(EntityUid uid, NavMapComponent component, ref ComponentGetState args)
     {
         var data = new Dictionary<Vector2i, int>(component.Chunks.Count);
+        var isDiff = false;
 
         foreach (var (index, chunk) in component.Chunks)
         {
+            if (chunk.LastUpdate < args.FromTick)
+            {
+                isDiff = true;
+                continue;
+            }
+
             data.Add(index, chunk.TileData);
         }
 
-        // TODO: Dear lord this will need diffs.
+        var deleted = new List<Vector2i>();
+
+        foreach (var (chunk, tick) in component.DeletedChunks)
+        {
+            if (tick < args.FromTick)
+            {
+                continue;
+            }
+
+            deleted.Add(chunk);
+        }
+
+        if (isDiff)
+        {
+            args.State
+        }
+        else
+        {
+            args.State = new NavMapComponentState()
+            {
+                TileData = data,
+            };
+        }
+
+        // TODO: Diffs
         args.State = new NavMapComponentState()
         {
             TileData = data,
@@ -103,6 +132,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         if (chunk.TileData == 0)
         {
+            component.DeletedChunks.Add(chunk.Origin, _timing.CurTick);
             component.Chunks.Remove(chunk.Origin);
             return;
         }

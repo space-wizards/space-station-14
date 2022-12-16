@@ -35,4 +35,11 @@ public abstract class SharedNavMapSystem : EntitySystem
     {
         public Dictionary<Vector2i, int> TileData = new();
     }
+
+    [Serializable, NetSerializable]
+    protected sealed class NavMapDiffComponentState : ComponentState
+    {
+        public Dictionary<Vector2i, int> TileData = new();
+        public List<Vector2i> RemovedChunks = new();
+    }
 }
