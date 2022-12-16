@@ -68,6 +68,7 @@
     cooldownTime: 60
   - type: ApcPowerReceiver
     powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
+  - type: Electromagnet
 
 # For Knightship
 - type: entity

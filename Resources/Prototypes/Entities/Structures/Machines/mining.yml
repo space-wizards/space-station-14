@@ -1,0 +1,19 @@
+- type: entity
+  id: Electromagnet
+  parent: BaseMachinePowered
+  name: electromagnet
+  description: "Generates a magnetic field when powered."
+  components:
+  - type: Sprite
+    layers:
+      - sprite: Structures/Machines/electromagnet.rsi
+        state: icon
+  - type: Rotatable
+  - type: Transform
+    noRot: false
+  - type: ApcPowerReceiver
+    powerLoad: 2500
+  - type: Electromagnet
+    force: 200.0
+    minDist: 0.9
+    range: 2.0
