@@ -24,6 +24,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -267,7 +268,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = transform.Coordinates;
+                    status.Coordinates = _transform.GetMoverCoordinates(transform, GetEntityQuery<TransformComponent>());
                     break;
             }
 

@@ -14,7 +14,7 @@ public sealed partial class StationMapWindow : FancyWindow
         NavMapScreen.MapUid = mapUid;
 
         if (trackedEntity != null)
-            NavMapScreen.TrackedCoordinates.Add(new (new EntityCoordinates(trackedEntity.Value, Vector2.Zero), Color.Red));
+            NavMapScreen.TrackedCoordinates.Add(new EntityCoordinates(trackedEntity.Value, Vector2.Zero), (true, Color.Red));
 
         if (IoCManager.Resolve<IEntityManager>().TryGetComponent<MetaDataComponent>(mapUid, out var metadata))
         {

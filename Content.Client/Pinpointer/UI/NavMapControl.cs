@@ -23,7 +23,7 @@ public sealed class NavMapControl : MapGridControl
     public EntityUid? MapUid;
 
 
-    public List<(EntityCoordinates Coordinates, Color Color)> TrackedCoordinates = new();
+    public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
 
     private Vector2 _offset;
     private bool _draggin;
@@ -276,18 +276,18 @@ public sealed class NavMapControl : MapGridControl
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
 
-        foreach (var coord in TrackedCoordinates)
+        foreach (var (coord, value) in TrackedCoordinates)
         {
-            if (lit)
+            if (lit && value.Visible)
             {
-                var mapPos = coord.Coordinates.ToMap(_entManager);
+                var mapPos = coord.ToMap(_entManager);
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
                     var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
-                    handle.DrawCircle(position, MinimapScale / 2f, Color.Red);
+                    handle.DrawCircle(position, MinimapScale / 2f, value.Color);
                 }
             }
         }
