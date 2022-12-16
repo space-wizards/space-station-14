@@ -101,5 +101,4 @@
       - FullTileMask
       - Opaque
   - type: Appearance
-    visuals:
-    - type: VaporVisualizer
+  - type: VaporVisuals

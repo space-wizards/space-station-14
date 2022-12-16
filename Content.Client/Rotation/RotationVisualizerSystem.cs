@@ -1,6 +1,6 @@
-using Robust.Client.GameObjects;
-using Robust.Client.Animations;
 using Content.Shared.Rotation;
+using Robust.Client.Animations;
+using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
@@ -33,22 +33,21 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     /// </summary>
     public void AnimateSpriteRotation(SpriteComponent sprite, Angle rotation, float animationTime)
     {
-        var entMan = IoCManager.Resolve<IEntityManager>();
-
         if (sprite.Rotation.Equals(rotation))
         {
             return;
         }
 
-        if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
+        if (!TryComp<AnimationPlayerComponent>(sprite.Owner, out var animation))
         {
             sprite.Rotation = rotation;
             return;
         }
 
-        if (animation.HasRunningAnimation("rotate"))
+        const string animationKey = "rotate";
+        if (animation.HasRunningAnimation(animationKey))
         {
-            animation.Stop("rotate");
+            animation.Stop(animationKey);
         }
 
         animation.Play(new Animation
@@ -68,6 +67,6 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
                     }
                 }
             }
-        }, "rotate");
+        }, animationKey);
     }
 }
