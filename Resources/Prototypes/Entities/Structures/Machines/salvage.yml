@@ -1,6 +1,6 @@
 - type: entity
   id: SalvageMagnet
-  parent: BaseMachine
+  parent: BaseMachinePowered
   name: salvage magnet
   description: "Pulls in salvage."
   components:
