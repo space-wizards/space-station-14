@@ -62,7 +62,7 @@ public sealed class PlanetCommand : IConsoleCommand
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
         atmos.Space = false;
-        var moles = new float[Atmospherics.TotalNumberOfGases];
+        var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 

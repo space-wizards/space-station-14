@@ -58,7 +58,7 @@ namespace Content.Server.Construction
             _popup.PopupEntity(Loc.GetString("anchorable-unanchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
             _adminLogger.Add(
-                LogType.Action,
+                LogType.Unanchor,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} unanchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
             );
@@ -100,7 +100,7 @@ namespace Content.Server.Construction
             _popup.PopupEntity(Loc.GetString("anchorable-anchored"), uid, Filter.Pvs(uid, entityManager: EntityManager));
 
             _adminLogger.Add(
-                LogType.Action,
+                LogType.Anchor,
                 LogImpact.Low,
                 $"{EntityManager.ToPrettyString(args.User):user} anchored {EntityManager.ToPrettyString(uid):anchored} using {EntityManager.ToPrettyString(args.Using):using}"
             );
@@ -196,7 +196,7 @@ namespace Content.Server.Construction
             anchorable.CancelToken = new CancellationTokenSource();
 
             _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryAnchorCompletedEvent(), new TryAnchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
+                new TryAnchorCompletedEvent(userUid, usingUid), new TryAnchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Content.Server.Construction
             anchorable.CancelToken = new CancellationTokenSource();
 
             _tool.UseTool(usingUid, userUid, uid, 0f, anchorable.Delay, usingTool.Qualities,
-                new TryUnanchorCompletedEvent(), new TryUnanchorCancelledEvent(), uid, cancelToken: anchorable.CancelToken.Token);
+                new TryUnanchorCompletedEvent(userUid, usingUid), new TryUnanchorCancelledEvent(userUid, usingUid), uid, cancelToken: anchorable.CancelToken.Token);
         }
 
         /// <summary>
@@ -238,10 +238,16 @@ namespace Content.Server.Construction
             if (transform.Anchored)
             {
                 TryUnAnchor(uid, userUid, usingUid, anchorable, transform, usingTool);
+
+                // Log unanchor attempt
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to unanchor {ToPrettyString(uid):entity} from {transform.Coordinates:targetlocation}");
             }
             else
             {
                 TryAnchor(uid, userUid, usingUid, anchorable, transform, pullable, usingTool);
+
+                // Log anchor attempt
+                _adminLogger.Add(LogType.Anchor, LogImpact.Low, $"{ToPrettyString(userUid):user} is trying to anchor {ToPrettyString(uid):entity} to {transform.Coordinates:targetlocation}");
             }
         }
 
@@ -249,26 +255,40 @@ namespace Content.Server.Construction
         {
             public EntityUid User;
             public EntityUid Using;
+
+            protected AnchorEvent(EntityUid userUid, EntityUid usingUid)
+            {
+                User = userUid;
+                Using = usingUid;
+            }
         }
 
         private sealed class TryUnanchorCompletedEvent : AnchorEvent
         {
-
+            public TryUnanchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
+            {
+            }
         }
 
         private sealed class TryUnanchorCancelledEvent : AnchorEvent
         {
-
+            public TryUnanchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
+            {
+            }
         }
 
         private sealed class TryAnchorCompletedEvent : AnchorEvent
         {
-
+            public TryAnchorCompletedEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
+            {
+            }
         }
 
         private sealed class TryAnchorCancelledEvent : AnchorEvent
         {
-
+            public TryAnchorCancelledEvent(EntityUid userUid, EntityUid usingUid) : base(userUid, usingUid)
+            {
+            }
         }
     }
 }

@@ -168,6 +168,7 @@ public partial class ChatBox : UIWidget
         if (args.Function == EngineKeyFunctions.TextReleaseFocus)
         {
             ChatInput.Input.ReleaseKeyboardFocus();
+            ChatInput.Input.Clear();
             args.Handle();
             return;
         }

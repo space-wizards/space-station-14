@@ -1,18 +1,14 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Client.Audio
 {
@@ -167,17 +163,18 @@ namespace Content.Client.Audio
 
         private void ClearSounds()
         {
-            foreach (var (_, (stream, _)) in _playingSounds)
+            foreach (var (stream, _) in _playingSounds.Values)
             {
                 stream?.Stop();
             }
 
             _playingSounds.Clear();
+            _playingCount.Clear();
         }
 
-        private Dictionary<string, SortedList<float, AmbientSoundComponent>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
+        private Dictionary<string, List<(float Importance, AmbientSoundComponent)>> GetNearbySources(TransformComponent playerXform, MapCoordinates coords, EntityQuery<TransformComponent> xformQuery)
         {
-            var sourceDict = new Dictionary<string, SortedList<float, AmbientSoundComponent>>(16);
+            var sourceDict = new Dictionary<string, List<(float, AmbientSoundComponent)>>(16);
             var ambientQuery = GetEntityQuery<AmbientSoundComponent>();
 
             // TODO add variant of GetComponentsInRange that also returns the transform component.
@@ -205,7 +202,7 @@ namespace Content.Client.Audio
                 var list = sourceDict.GetOrNew(key);
 
                 // Prioritize far away & loud sounds.
-                list.Add(-range * (ambientComp.Volume + 32), ambientComp);
+                list.Add((range * (ambientComp.Volume + 32), ambientComp));
             }
 
             return sourceDict;
@@ -252,7 +249,9 @@ namespace Content.Client.Audio
                 if (_playingCount.TryGetValue(key, out var playingCount) && playingCount >= MaxSingleSound)
                     continue;
 
-                foreach (var comp in sources.Values)
+                sources.Sort(static (a, b) => b.Importance.CompareTo(a.Importance));
+
+                foreach (var (_, comp) in sources)
                 {
                     if (_playingSounds.ContainsKey(comp))
                         continue;
@@ -264,15 +263,18 @@ namespace Content.Client.Audio
                         .WithMaxDistance(comp.Range);
 
                     var stream = _audio.PlayPvs(comp.Sound, comp.Owner, audioParams);
-                    if (stream != null)
-                        _playingSounds[comp] = (stream, key);
+                    if (stream == null)
+                        continue;
 
+                    _playingSounds[comp] = (stream, key);
                     playingCount++;
+
                     if (_playingSounds.Count >= _maxAmbientCount)
                         break;
                 }
 
-                _playingCount[key] = playingCount;
+                if (playingCount != 0)
+                    _playingCount[key] = playingCount;
             }
 
             DebugTools.Assert(_playingCount.All(x => x.Value == PlayingCount(x.Key)));

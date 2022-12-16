@@ -38,7 +38,7 @@
   description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
   productEntity: WeaponSniperMosin
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkWeapons
 
@@ -94,7 +94,7 @@
   id: UplinkSyndieMiniBomb
   productEntity: SyndieMiniBomb
   cost:
-    Telecrystal: 7
+    Telecrystal: 6
   categories:
     - UplinkExplosives
 
@@ -153,7 +153,7 @@
 # For the Inspector
 - type: listing
   id: UplinkSpeedLoaderMagnum
-  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi/base.png
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: base }
   productEntity: SpeedLoaderMagnum
   cost:
     Telecrystal: 2
@@ -176,7 +176,7 @@
   id: UplinkHoloparaKit
   name: Holoparasite Kit
   description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
-  icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
+  icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
   productEntity: BoxHoloparasite
   cost:
     Telecrystal: 14
@@ -194,7 +194,7 @@
   description: A deep shoulder holster capable of holding many types of ballistics.
   productEntity: ClothingBeltSyndieHolster
   cost:
-    Telecrystal: 2
+    Telecrystal: 1
   categories:
   - UplinkUtility
 
@@ -224,7 +224,7 @@
   description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
   productEntity: JetpackBlack
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -233,9 +233,9 @@
   name: Reinforcement Teleporter
   description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
   productEntity: ReinforcementTeleporterSyndicate
-  icon: Objects/Devices/communication.rsi/old-radio.png
+  icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
-    Telecrystal: 25
+    Telecrystal: 20
   categories:
   - UplinkUtility
 
@@ -266,7 +266,7 @@
   description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
   productEntity: Hypopen
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkUtility
 
@@ -276,7 +276,7 @@
   description: A gas mask that lets you adjust your voice to whoever you can think of.
   productEntity: ClothingMaskGasVoiceMasker
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkUtility
 
@@ -284,7 +284,7 @@
 
 - type: listing
   id: UplinkStorageImplanter
-  icon: /Textures/Clothing/Back/Backpacks/backpack.rsi/icon.png
+  icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
   name: Storage Implanter
   description: Hide goodies inside of yourself with new bluespace technology!
   productEntity: StorageImplanter
@@ -300,7 +300,7 @@
 
 - type: listing
   id: UplinkFreedomImplanter
-  icon: /Textures/Actions/Implants/implants.rsi/freedom.png
+  icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
   name: Freedom Implanter
   description: Get away from those nasty sec officers with this three use implant!
   productEntity: FreedomImplanter
@@ -316,7 +316,7 @@
 
 - type: listing
   id: UplinkMacroBombImplanter
-  icon: /Textures/Actions/Implants/implants.rsi/explosive.png
+  icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
   name: Macro Bomb Implanter
   description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
   productEntity: MacroBombImplanter
@@ -338,7 +338,7 @@
 
 - type: listing
   id: UplinkC20RBundle
-  icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
+  icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   cost:
     Telecrystal: 25
@@ -347,7 +347,7 @@
 
 - type: listing
   id: UplinkBulldogBundle
-  icon: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi/icon.png
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
   cost:
     Telecrystal: 25
@@ -356,7 +356,7 @@
 
 - type: listing
   id: UplinkGrenadeLauncherBundle
-  icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
     Telecrystal: 30
@@ -365,7 +365,7 @@
 
 - type: listing
   id: UplinkL6SawBundle
-  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
+  icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   cost:
     Telecrystal: 40
@@ -374,7 +374,7 @@
 
 - type: listing
   id: UplinkZombieBundle
-  icon: /Textures/Structures/Wallmounts/signs.rsi/bio.png
+  icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
   productEntity: ClothingBackpackDuffelZombieBundle
   cost:
     Telecrystal: 40
@@ -458,7 +458,7 @@
   id: UplinkPowerSink
   productEntity: PowerSink
   cost:
-    Telecrystal: 5
+    Telecrystal: 8
   categories:
   - UplinkTools
 
@@ -466,7 +466,7 @@
   id: UplinkCarpDehydrated
   productEntity: DehydratedSpaceCarp
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkTools
 
@@ -477,7 +477,7 @@
   description: And who says guns don't grow on trees?
   productEntity: GatfruitSeeds
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
   - UplinkJob
   conditions:
@@ -490,7 +490,7 @@
   description: An unholy book capable of summoning a demonic familiar.
   productEntity: BibleNecronomicon
   cost:
-    Telecrystal: 6
+    Telecrystal: 4
   categories:
   - UplinkJob
   conditions:
@@ -509,9 +509,9 @@
   name: Chameleon Kit
   description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
   productEntity: ClothingBackpackChameleonFill
-  icon: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi/icon.png
+  icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   cost:
-    Telecrystal: 4
+    Telecrystal: 6
   categories:
     - UplinkArmor
 
@@ -539,7 +539,7 @@
   id: UplinkClothingOuterVestWeb
   productEntity: ClothingOuterVestWeb
   cost:
-    Telecrystal: 5
+    Telecrystal: 4
   categories:
   - UplinkArmor
 
@@ -566,7 +566,7 @@
   description: A simple EVA suit that offers no protection other than what's needed to survive in space.
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
-    Telecrystal: 4
+    Telecrystal: 2
   categories:
   - UplinkArmor
 
@@ -586,7 +586,7 @@
   description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
   productEntity: CyberPen
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkMisc
 
@@ -623,14 +623,6 @@
     Telecrystal: 2
   categories:
   - UplinkMisc
-
-#- type: listing
-#  id: UplinkCostumeCentcom
-#  productEntity: ClothingBackpackDuffelSyndicateCostumeCentcom
-#  cost:
-#    Telecrystal: 4
-#  categories:
-#  - UplinkMisc
 
 # - type: listing
 #   id: UplinkGigacancerScanner
