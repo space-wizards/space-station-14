@@ -1,4 +1,5 @@
 using Content.Shared.Pinpointer;
+using Content.Shared.Tag;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -14,6 +15,7 @@ namespace Content.Server.Pinpointer;
 public sealed class NavMapSystem : SharedNavMapSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
 
     // TODO: Chuck it in shared IG with diffs IG? Seems the least bandwidth intensive overall.
 
@@ -68,7 +70,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
     {
         var relative = SharedMapSystem.GetChunkRelative(tile, ChunkSize);
 
-        // TODO: Diff existing data.
+        var existing = chunk.TileData;
         var flag = GetFlag(relative);
 
         chunk.TileData &= ~flag;
@@ -76,37 +78,23 @@ public sealed class NavMapSystem : SharedNavMapSystem
         var enumerator = grid.GetAnchoredEntitiesEnumerator(tile);
         // TODO: Use something to get convex poly.
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var fixturesQuery = GetEntityQuery<FixturesComponent>();
 
         while (enumerator.MoveNext(out var ent))
         {
             if (!bodyQuery.TryGetComponent(ent, out var body) ||
                 !body.CanCollide ||
                 !body.Hard ||
-                body.BodyType != BodyType.Static ||
-                !fixturesQuery.TryGetComponent(ent, out var manager))
+                body.BodyType != BodyType.Static)
             {
                 continue;
             }
 
-            foreach (var fixture in manager.Fixtures.Values)
-            {
-                if (fixture.Shape is not PolygonShape poly)
-                    continue;
-
-                var data = new Vector2[poly.VertexCount];
-
-                for (var i = 0; i < poly.VertexCount; i++)
-                {
-                    data[i] = poly.Vertices[i] + tile * grid.TileSize;
-                }
-
-                chunk.TileData |= flag;
-                break;
-            }
-
+            chunk.TileData |= flag;
             break;
         }
+
+        if (existing == chunk.TileData)
+            return;
 
         Dirty(component);
 
