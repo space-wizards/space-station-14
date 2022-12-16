@@ -255,6 +255,14 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   color: "#5f959c"
   metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
     Poison:
       effects:
       - !type:HealthChange
@@ -288,6 +296,14 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: bitter
   color: "#77b58e"
+      Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
   plantMetabolism:
   - !type:PlantAdjustToxins
     amount: 10
