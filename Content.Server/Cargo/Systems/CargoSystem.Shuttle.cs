@@ -60,9 +60,6 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
-#if !FULL_RELEASE
-        _configManager.OverrideDefault(CCVars.CargoShuttles, false);
-#endif
         _enabled = _configManager.GetCVar(CCVars.CargoShuttles);
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
