@@ -8,18 +8,14 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    sealed class OSay : IConsoleCommand
+    sealed class OSay : LocalizedCommands
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public string Command => "osay";
+        public override string Command => "osay";
 
-        public string Description => Loc.GetString("osay-command-description");
-
-        public string Help => Loc.GetString("osay-command-help-text", ("command", Command));
-
-        public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
         {
             if (args.Length == 1)
             {
@@ -40,7 +36,7 @@ namespace Content.Server.Administration.Commands
             return CompletionResult.Empty;
         }
 
-        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length < 3)
             {
