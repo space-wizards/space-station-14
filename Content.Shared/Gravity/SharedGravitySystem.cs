@@ -82,7 +82,7 @@ namespace Content.Shared.Gravity
             args.State = new GravityComponentState(component.EnabledVV);
         }
 
-        private void OnGravityChange(GravityChangedEvent ev)
+        private void OnGravityChange(ref GravityChangedEvent ev)
         {
             foreach (var (comp, xform) in EntityQuery<AlertsComponent, TransformComponent>(true))
             {

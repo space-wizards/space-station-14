@@ -22,7 +22,6 @@ namespace Content.Server.Gravity
             if (!Resolve(uid, ref gravity))
                 return;
 
-            DebugTools.Assert(HasComp<MapComponent>(uid) || HasComp<MapGridComponent>(uid));
             var enabled = false;
 
             foreach (var (comp, xform) in EntityQuery<GravityGeneratorComponent, TransformComponent>(true))
@@ -37,7 +36,8 @@ namespace Content.Server.Gravity
             if (enabled != gravity.Enabled)
             {
                 gravity.Enabled = enabled;
-                RaiseLocalEvent(uid, new GravityChangedEvent(uid, enabled));
+                var ev = new GravityChangedEvent(uid, enabled);
+                RaiseLocalEvent(uid, ref ev, true);
                 Dirty(gravity);
 
                 if (HasComp<MapGridComponent>(uid))
@@ -61,7 +61,8 @@ namespace Content.Server.Gravity
                 return;
 
             gravity.Enabled = true;
-            RaiseLocalEvent(uid, new GravityChangedEvent(uid, true), true);
+            var ev = new GravityChangedEvent(uid, true);
+            RaiseLocalEvent(uid, ref ev, true);
             Dirty(gravity);
 
             if (HasComp<MapGridComponent>(uid))
