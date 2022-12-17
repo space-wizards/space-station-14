@@ -61,7 +61,7 @@ namespace Content.Server.Administration.Commands
             if (string.IsNullOrEmpty(message))
                 return;
 
-            var chatSystem = EntitySystem.Get<ChatSystem>();
+            var chatSystem = _entityManager.System<ChatSystem>();
             chatSystem.TrySendInGameICMessage(source, message, chatType, false);
             _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(shell.Player != null ? shell.Player.Name : "An administrator")} forced {_entityManager.ToPrettyString(source)} to {args[1]}: {message}");
         }
