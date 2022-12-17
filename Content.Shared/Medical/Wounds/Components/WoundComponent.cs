@@ -14,8 +14,12 @@ public sealed class WoundComponent : Component
     //wounds should NEVER exist without a parent so this will always have a value
     public EntityUid Parent = default;
 
-    [DataField("scarWound", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    //what wound should be created if this wound is healed normally?
+    [DataField("scarWound", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string? ScarWound;
+
+    //This is the prototypeId of a wound, this should be populated by the wounding system when the wound is created!
+    [ViewVariables] public string prototypeId = string.Empty;
 
     [DataField("healthDamage")] public FixedPoint2 HealthCapDamage;
 

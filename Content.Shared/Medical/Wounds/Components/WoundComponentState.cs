@@ -8,6 +8,7 @@ public sealed class WoundComponentState : ComponentState
 {
     public EntityUid Parent;
     public string? ScarWound;
+    public string PrototypeId;
     public FixedPoint2 HealthCapDamage;
     public FixedPoint2 IntegrityDamage;
     public FixedPoint2 Severity;
@@ -15,13 +16,16 @@ public sealed class WoundComponentState : ComponentState
     public FixedPoint2 HealingModifier;
     public FixedPoint2 HealingMultiplier;
 
-    public WoundComponentState(EntityUid parent, string? scarWound, FixedPoint2 healthCapDamage, FixedPoint2 integrityDamage, FixedPoint2 severity, FixedPoint2 baseHealingRate, FixedPoint2 healingModifier, FixedPoint2 healingMultiplier)
+    public WoundComponentState(EntityUid parent, string? scarWound, string prototypeId, FixedPoint2 healthCapDamage,
+        FixedPoint2 integrityDamage, FixedPoint2 severity, FixedPoint2 baseHealingRate, FixedPoint2 healingModifier,
+        FixedPoint2 healingMultiplier)
     {
         Parent = parent;
         ScarWound = scarWound;
         HealthCapDamage = healthCapDamage;
         IntegrityDamage = integrityDamage;
         Severity = severity;
+        PrototypeId = prototypeId;
         BaseHealingRate = baseHealingRate;
         HealingModifier = healingModifier;
         HealingMultiplier = healingMultiplier;

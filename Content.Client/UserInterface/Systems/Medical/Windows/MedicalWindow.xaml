@@ -2,8 +2,23 @@
     xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Medical.Windows"
+    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     Name="MedicalDisplay"
     HorizontalExpand="True"
     Title="Medical"
     VerticalExpand="True">
+    <TabContainer>
+        <BoxContainer
+            Name="Status"
+            Orientation="Vertical" >
+                <controls:MedicalStatus Name="StatusDisplay" Access="Internal" VerticalAlignment="Top"/>
+                <cc:HLine/>
+                <Label Text="Wounds" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                <controls:WoundList Name="Wounds" Access="Internal"/>
+            </BoxContainer>
+        <BoxContainer
+            Name="Stabilize" />
+        <BoxContainer
+            Name="Surgery" />
+    </TabContainer>
 </windows:MedicalWindow>

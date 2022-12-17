@@ -76,6 +76,7 @@ public sealed partial class WoundSystem : EntitySystem
         args.State = new WoundComponentState(
             wound.Parent,
             wound.ScarWound,
+            wound.prototypeId,
             wound.HealthCapDamage,
             wound.IntegrityDamage,
             wound.Severity,

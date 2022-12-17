@@ -1,0 +1,32 @@
+﻿<controls:BasicStatus
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
+    Orientation="Vertical"
+    VerticalAlignment="Top"
+>
+    <BoxContainer
+        Orientation="Horizontal"
+        >
+        <Label Text="Condition: "/>
+        <Label Name="Condition" Text="Normal" Access="Internal"/>
+    </BoxContainer>
+    <BoxContainer
+        Orientation="Horizontal"
+    >
+        <Label Text="Breathing: "/>
+        <Label Name="Breathing" Text="??" Access="Internal"/>
+    </BoxContainer>
+    <BoxContainer
+        Orientation="Horizontal"
+    >
+        <Label Text="Pulse: "/>
+        <Label Name="Pulse" Text="??" Access="Internal"/>
+    </BoxContainer>
+    <BoxContainer
+        Orientation="Horizontal"
+    >
+        <Label Text="Health: "/>
+        <Label Name="Health" Text="Good" Access="Internal"/>
+    </BoxContainer>
+
+</controls:BasicStatus>

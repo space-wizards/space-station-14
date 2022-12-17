@@ -120,13 +120,15 @@ public sealed partial class WoundSystem
         if (!wounds.Insert(woundId))
             return false;
         wound.Parent = woundableId;
+        wound.prototypeId = woundPrototypeId;
         Dirty(wound);
         woundable.HealthCapDamage += wound.Severity * wound.HealthCapDamage;
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
         return true;
     }
 
-    public bool ApplyRawWoundDamage(EntityUid woundableId, FixedPoint2 woundDamage, WoundableComponent? woundable = null)
+    public bool ApplyRawWoundDamage(EntityUid woundableId, FixedPoint2 woundDamage,
+        WoundableComponent? woundable = null)
     {
         if (!Resolve(woundableId, ref woundable, false))
             return false;
@@ -183,7 +185,8 @@ public sealed partial class WoundSystem
         wound.Severity = newSeverity;
     }
 
-    public bool RemoveWound(EntityUid woundableId, EntityUid woundId,bool makeScar = false, WoundableComponent? woundable = null,
+    public bool RemoveWound(EntityUid woundableId, EntityUid woundId, bool makeScar = false,
+        WoundableComponent? woundable = null,
         WoundComponent? wound = null)
     {
         if (!Resolve(woundableId, ref woundable, false) ||
