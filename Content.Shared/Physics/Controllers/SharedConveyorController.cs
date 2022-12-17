@@ -76,11 +76,11 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
         {
-            Convey(comp, xformQuery, bodyQuery, conveyed, frameTime);
+            Convey(comp, xformQuery, bodyQuery, conveyed, frameTime, prediction);
         }
     }
 
-    private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime)
+    private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime, bool prediction)
     {
         // Use an event for conveyors to know what needs to run
         if (!CanRun(comp))
@@ -103,7 +103,7 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var (entity, transform, body) in GetEntitiesToMove(comp, xform, xformQuery, bodyQuery))
         {
-            if (!conveyed.Add(entity))
+            if (!conveyed.Add(entity) || prediction && !body.Predict)
                 continue;
 
             var localPos = transform.LocalPosition;
