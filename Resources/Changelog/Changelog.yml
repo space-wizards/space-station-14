@@ -1,32 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: External airlocks now show the correct direction relative to their rotation.,
-    type: Fix}
-  - {message: 'External airlock assemblies can now be rotated. This is particularly
-      useful when building shuttles, for docking: you can now have docks that face
-      in any of the four cardinal directions.', type: Tweak}
-  id: 2261
-  time: '2022-09-08T22:21:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Hitscan guns, gun cartridges, and melee weapons are now examinable
-      for their damage values.', type: Add}
-  id: 2262
-  time: '2022-09-08T23:08:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'We have surgically implanted tiny bio-engineered sensors into your
-      little mouths so that you can get more out of what you eat! In other words,
-      we have given you taste buds! The power of surgery and bioprinting!', type: Add}
-  id: 2263
-  time: '2022-09-08T23:14:49.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Only ghosts can see warp point information while examining nuke disk.,
-    type: Fix}
-  id: 2264
-  time: '2022-09-09T03:42:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
@@ -2932,3 +2904,24 @@ Entries:
   - {message: Dead people can no longer sleep, type: Fix}
   id: 2760
   time: '2022-12-15T21:34:44.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Dead bodies no longer sneeze and cough, type: Fix}
+  id: 2761
+  time: '2022-12-16T17:33:34.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Salvage magnets now correctly appear powered, type: Fix}
+  id: 2762
+  time: '2022-12-16T22:56:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's no longer possible to attack subfloor entities., type: Fix}
+  id: 2763
+  time: '2022-12-17T03:47:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring no longer allowed on non-collidable but occupied tiles (e.g.
+      conveyors)., type: Tweak}
+  id: 2764
+  time: '2022-12-17T03:51:31.0000000+00:00'

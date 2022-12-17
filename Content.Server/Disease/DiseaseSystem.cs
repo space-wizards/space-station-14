@@ -9,6 +9,7 @@ using Content.Server.Popups;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
+using Content.Shared.Disease.Events;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -17,6 +18,8 @@ using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Content.Shared.Rejuvenate;
+using Robust.Shared.Audio;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -31,6 +34,7 @@ namespace Content.Server.Disease
     /// </summary>
     public sealed class DiseaseSystem : EntitySystem
     {
+        [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ISerializationManager _serializationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -264,7 +268,7 @@ namespace Content.Server.Disease
         {
             if (TryComp<DiseaseCarrierComponent>(uid, out var carrier))
             {
-                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty);
+                SneezeCough(uid, _random.Pick(carrier.Diseases), string.Empty, null);
             }
         }
 
@@ -430,24 +434,34 @@ namespace Content.Server.Disease
         }
 
         /// <summary>
-        /// Plays a sneeze/cough popup if applicable
+        /// Raises an event for systems to cancel the snough if needed
+        /// Plays a sneeze/cough sound and popup if applicable
         /// and then tries to infect anyone in range
         /// if the snougher is not wearing a mask.
         /// </summary>
-        public void SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, bool airTransmit = true, TransformComponent? xform = null)
+        public bool SneezeCough(EntityUid uid, DiseasePrototype? disease, string snoughMessage, SoundSpecifier? snoughSound, bool airTransmit = true, TransformComponent? xform = null)
         {
-            if (!Resolve(uid, ref xform)) return;
+            if (!Resolve(uid, ref xform)) return false;
+
+            if (_mobStateSystem.IsDead(uid)) return false;
+
+            var attemptSneezeCoughEvent = new AttemptSneezeCoughEvent(uid, snoughMessage, snoughSound);
+            RaiseLocalEvent(uid, ref attemptSneezeCoughEvent);
+            if (attemptSneezeCoughEvent.Cancelled) return false;
 
             if (!string.IsNullOrEmpty(snoughMessage))
                 _popupSystem.PopupEntity(Loc.GetString(snoughMessage, ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
 
+            if (snoughSound != null)
+                _audioSystem.PlayPvs(snoughSound, uid);
+
             if (disease is not { Infectious: true } || !airTransmit)
-                return;
+                return true;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
                 EntityManager.TryGetComponent<IngestionBlockerComponent>(maskUid, out var blocker) &&
                 blocker.Enabled)
-                return;
+                return true;
 
             var carrierQuery = GetEntityQuery<DiseaseCarrierComponent>();
 
@@ -458,6 +472,7 @@ namespace Content.Server.Disease
 
                 TryInfect(carrier, disease, 0.3f);
             }
+            return true;
         }
 
         /// <summary>
