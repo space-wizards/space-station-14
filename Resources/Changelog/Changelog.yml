@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Only ghosts can see warp point information while examining nuke disk.,
-    type: Fix}
-  id: 2264
-  time: '2022-09-09T03:42:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
@@ -2925,3 +2919,9 @@ Entries:
   - {message: It's no longer possible to attack subfloor entities., type: Fix}
   id: 2763
   time: '2022-12-17T03:47:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring no longer allowed on non-collidable but occupied tiles (e.g.
+      conveyors)., type: Tweak}
+  id: 2764
+  time: '2022-12-17T03:51:31.0000000+00:00'
