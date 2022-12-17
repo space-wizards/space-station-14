@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'We have surgically implanted tiny bio-engineered sensors into your
-      little mouths so that you can get more out of what you eat! In other words,
-      we have given you taste buds! The power of surgery and bioprinting!', type: Add}
-  id: 2263
-  time: '2022-09-08T23:14:49.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Only ghosts can see warp point information while examining nuke disk.,
@@ -2927,3 +2920,8 @@ Entries:
   - {message: Salvage magnets now correctly appear powered, type: Fix}
   id: 2762
   time: '2022-12-16T22:56:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's no longer possible to attack subfloor entities., type: Fix}
+  id: 2763
+  time: '2022-12-17T03:47:15.0000000+00:00'
