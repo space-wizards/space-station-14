@@ -38,6 +38,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -191,15 +192,18 @@ namespace Content.Server.Chat.Managers
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
-            ChatMessageToMany(ChatChannel.AdminChat,
-                message,
-                wrappedMessage,
-                default,
-                false,
-                true,
-                clients.ToList(),
-                audioPath: _configurationManager.GetCVar(CCVars.AdminChatSoundPath),
-                audioVolume: _configurationManager.GetCVar(CCVars.AdminChatSoundVolume));
+            foreach (var client in clients)
+            {
+                var isSource = client != player.ConnectedClient;
+                ChatMessageToOne(ChatChannel.AdminChat,
+                    message,
+                    wrappedMessage,
+                    default,
+                    false,
+                    client,
+                    audioPath: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundPath) : default,
+                    audioVolume: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundVolume) : default);
+            }
 
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
