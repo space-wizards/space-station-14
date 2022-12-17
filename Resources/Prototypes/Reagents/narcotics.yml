@@ -154,7 +154,7 @@
         key: SeeingRainbows
         component: SeeingRainbows
         type: Add
-        time: 4
+        time: 2
         refresh: false
 
 - type: reagent
