@@ -289,7 +289,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var entity in comp.Intersecting)
             {
                 if (!xformQuery.TryGetComponent(entity, out var entityXform) ||
-                    entityXform.ParentUid != grid.GridEntityId)
+                    entityXform.ParentUid != grid.Owner)
                 {
                     continue;
                 }

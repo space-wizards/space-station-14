@@ -19,7 +19,7 @@
   targetNode: cuffscable
   category: construction-category-tools
   description: "Homemade handcuffs crafted from spare cables."
-  icon: Objects/Misc/cablecuffs.rsi/cuff.png
+  icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
   objectType: Item
 
 - type: construction

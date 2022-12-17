@@ -63,8 +63,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         var tolerance = new float[_explosionTypes.Count];
         var blockedDirections = AtmosDirection.Invalid;
 
-        if (!_airtightMap.ContainsKey(grid.GridEntityId))
-            _airtightMap[grid.GridEntityId] = new();
+        if (!_airtightMap.ContainsKey(grid.Owner))
+            _airtightMap[grid.Owner] = new();
 
         query ??= EntityManager.GetEntityQuery<AirtightComponent>();
         var damageQuery = EntityManager.GetEntityQuery<DamageableComponent>();
@@ -84,9 +84,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         }
 
         if (blockedDirections != AtmosDirection.Invalid)
-            _airtightMap[grid.GridEntityId][tile] = new(tolerance, blockedDirections);
+            _airtightMap[grid.Owner][tile] = new(tolerance, blockedDirections);
         else
-            _airtightMap[grid.GridEntityId].Remove(tile);
+            _airtightMap[grid.Owner].Remove(tile);
     }
 
     /// <summary>
