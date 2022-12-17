@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Server.GameStates;
 
 using Content.Shared.Singularity.Components;
@@ -21,6 +22,7 @@ namespace Content.Server.Singularity.EntitySystems;
 public sealed class SingularitySystem : SharedSingularitySystem
 {
 #region Dependencies
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PVSOverrideSystem _pvs = default!;
 #endregion Dependencies
@@ -52,15 +54,16 @@ public sealed class SingularitySystem : SharedSingularitySystem
         SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
         SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
 
-        var vvHandle = _vvm.GetTypeHandler<SingularityComponent>();
+        var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
         vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
+        vvHandle.AddPath(nameof(SingularityComponent.TargetUpdatePeriod), (_, comp) => comp.TargetUpdatePeriod, SetUpdatePeriod);
     }
 
     public override void Shutdown()
     {
-        _vvm.GetTypeHandler<SingularityComponent>()
-            .RemovePath(nameof(SingularityComponent.Energy));
-
+        var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
+        vvHandle.RemovePath(nameof(SingularityComponent.Energy));
+        vvHandle.RemovePath(nameof(SingularityComponent.TargetUpdatePeriod));
         base.Shutdown();
     }
 
@@ -70,46 +73,64 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="frameTime">The amount of time since the last set of updates.</param>
     public override void Update(float frameTime)
     {
+        if(!_timing.IsFirstTimePredicted)
+            return;
+
         foreach(var singularity in EntityManager.EntityQuery<SingularityComponent>())
         {
-            if ((singularity.TimeSinceLastUpdate += frameTime) > singularity.UpdatePeriod)
-                Update(singularity, singularity.TimeSinceLastUpdate);
+            var curTime = _timing.CurTime;
+            if (singularity.NextUpdateTime <= curTime)
+                Update(singularity.Owner, curTime - singularity.LastUpdateTime, singularity);
         }
-    }
-
-    /// <summary>
-    /// Handles the gradual energy loss and dissipation of a singularity.
-    /// </summary>
-    /// <param name="singularity">The singularity to update the energy of.</param>
-    /// <param name="frameTime">The amount of time to consider as having passed since the last update.</param>
-    public void Update(SingularityComponent singularity, float frameTime)
-    {
-        singularity.TimeSinceLastUpdate = 0.0f;
-        AdjustEnergy(singularity, -singularity.EnergyDrain * frameTime);
     }
 
     /// <summary>
     /// Handles the gradual energy loss and dissipation of singularity.
     /// </summary>
-    /// <param name="singularity">The singularity to update the energy of</param>
-    public void Update(SingularityComponent singularity)
-        => Update(singularity, singularity.TimeSinceLastUpdate);
+    /// <param name="uid">The uid of the singularity to update.</param>
+    /// <param name="singularity">The state of the singularity to update.</param>
+    public void Update(EntityUid uid, SingularityComponent? singularity = null)
+    {
+        if (Resolve(uid, ref singularity))
+            Update(uid, _timing.CurTime - singularity.LastUpdateTime, singularity);
+    }
+
+    /// <summary>
+    /// Handles the gradual energy loss and dissipation of a singularity.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to update.</param>
+    /// <param name="frameTime">The amount of time that has elapsed since the last update.</param>
+    /// <param name="singularity">The state of the singularity to update.</param>
+    public void Update(EntityUid uid, TimeSpan frameTime, SingularityComponent? singularity = null)
+    {
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        singularity.LastUpdateTime = _timing.CurTime;
+        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
+        AdjustEnergy(uid, -singularity.EnergyDrain * (float)frameTime.TotalSeconds, singularity: singularity);
+    }
 
 #region Getters/Setters
+
     /// <summary>
     /// Setter for <see cref="SingularityComponent.Energy"/>.
     /// Also updates the level of the singularity accordingly.
     /// </summary>
-    /// <param name="singularity">The singularity to set the energy of.</param>
+    /// <param name="uid">The uid of the singularity to set the energy of.</param>
     /// <param name="value">The amount of energy for the singularity to have.</param>
-    public void SetEnergy(SingularityComponent singularity, float value)
+    /// <param name="singularity">The state of the singularity to set the energy of.</param>
+    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
     {
+        if(!Resolve(uid, ref singularity))
+            return;
+
         var oldValue = singularity.Energy;
         if (oldValue == value)
             return;
 
         singularity.Energy = value;
-        SetLevel(singularity, value switch {
+        SetLevel(uid, value switch {
                 >= 1500 => 6,
                 >= 1000 => 5,
                 >= 600 => 4,
@@ -117,42 +138,58 @@ public sealed class SingularitySystem : SharedSingularitySystem
                 >= 200 => 2,
                 > 0 => 1,
                 _ => 0
-        });
+        }, singularity);
     }
 
     /// <summary>
     /// Adjusts the amount of energy the singularity has accumulated.
     /// </summary>
-    /// <param name="singularity">The singularity to adjust the energy of.</param>
+    /// <param name="uid">The uid of the singularity to adjust the energy of.</param>
     /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
     /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="hardMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
     /// <param name="hardMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
-    public void AdjustEnergy(SingularityComponent singularity, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true)
+    /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
+    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
+        if(!Resolve(uid, ref singularity))
+            return;
+
         var newValue = singularity.Energy + delta;
         if((!snapMin && newValue < min)
         || (!snapMax && newValue > max))
             return;
-        SetEnergy(singularity, MathHelper.Clamp(newValue, min, max));
+        SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
     }
-#region VV
+
     /// <summary>
-    /// VV Setter for <see cref="SingularityComponent.Energy"/>.
-    /// Also updates the level of the singularity accordingly.
+    /// Setter for <see cref="SingularityComponent.TargetUpdatePeriod"/>.
+    /// If the new target time implies that the singularity should have updated it does so immediately.
     /// </summary>
-    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
-    /// <param name="value">The amount of energy for the singularity to have.</param>
-    /// <param name="comp">The singularity to set the energy of.</param>
-    private void SetEnergy(EntityUid uid, float value, SingularityComponent? comp)
+    /// <param name="uid">The uid of the singularity to set the update period for.</param>
+    /// <param name="value">The new update period for the singularity.</param>
+    /// <param name="singularity">The state of the singularity to set the update period for.</param>
+    public void SetUpdatePeriod(EntityUid uid, TimeSpan value, SingularityComponent? singularity = null)
     {
-        if (Resolve(uid, ref comp))
-            SetEnergy(comp, value);
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        if (MathHelper.CloseTo(singularity.TargetUpdatePeriod.TotalSeconds, value.TotalSeconds))
+            return;
+
+        singularity.TargetUpdatePeriod = value;
+        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
+
+        var curTime = _timing.CurTime;
+        if (singularity.NextUpdateTime <= curTime)
+            Update(uid, curTime - singularity.LastUpdateTime, singularity);
     }
-#endregion VV
+
 #endregion Getters/Setters
+
 #region Event Handlers
+
     /// <summary>
     /// Handles playing the startup sounds when a singulo forms.
     /// Always sets up the ambient singularity rumble.
@@ -163,12 +200,15 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
     {
+        comp.LastUpdateTime = _timing.CurTime;
+        comp.NextUpdateTime = comp.LastUpdateTime + comp.TargetUpdatePeriod;
+
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
             _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
 
         comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
-        UpdateSingularityLevel(comp);
+        UpdateSingularityLevel(uid, comp);
     }
 
     /// <summary>
@@ -219,7 +259,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, EntityConsumedByEventHorizonEvent args)
     {
-        AdjustEnergy(comp, BaseEntityEnergy);
+        AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
     }
 
     /// <summary>
@@ -230,7 +270,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, TilesConsumedByEventHorizonEvent args)
     {
-        AdjustEnergy(comp, args.Tiles.Count * BaseTileEnergy);
+        AdjustEnergy(uid, args.Tiles.Count * BaseTileEnergy, singularity: comp);
     }
 
     /// <summary>
@@ -244,8 +284,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
         {
-            AdjustEnergy(singulo, comp.Energy);
-            SetEnergy(comp, 0.0f);
+            AdjustEnergy(singulo.Owner, comp.Energy, singularity: singulo);
+            SetEnergy(uid, 0.0f, comp);
         }
     }
 
@@ -258,7 +298,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, EventHorizonConsumedEntityEvent args)
     {
         if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
-            AdjustEnergy(singulo, comp.Energy);
+            AdjustEnergy(args.EventHorizon.Owner, comp.Energy, singularity: singulo);
     }
 
     /// <summary>
@@ -305,5 +345,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
         comp.MaxRange = GravPulseRange(singulos);
         (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
     }
+
 #endregion Event Handlers
 }

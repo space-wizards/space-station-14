@@ -43,17 +43,29 @@ public sealed class GravityWellComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseTangentialAcceleration = 0.0f;
 
-    /// <summary>
-    /// The amount of time between gravitational pulses this emits.
-    /// </summary>
-    [DataField("gravPulsePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float GravPulsePeriod = 0.5f;
+    #region Update Timing
 
     /// <summary>
-    /// The time elapsed since the last gravitational pulse this emitted.
+    /// The amount of time that should elapse between automated updates to this gravity well.
+    /// </summary>
+    [DataField("gravPulsePeriod")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(GravityWellSystem))]
+    public TimeSpan TargetPulsePeriod { get; internal set; } = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// The next time at which this gravity well should pulse.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(friends:typeof(GravityWellSystem))]
-    public float TimeSinceLastGravPulse = 0.0f;
+    [Access(typeof(GravityWellSystem))]
+    public TimeSpan NextPulseTime { get; internal set; } = default!;
+
+    /// <summary>
+    /// The last time this gravity well pulsed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(GravityWellSystem))]
+    public TimeSpan LastPulseTime { get; internal set; } = default!;
+
+    #endregion Update Timing
 }

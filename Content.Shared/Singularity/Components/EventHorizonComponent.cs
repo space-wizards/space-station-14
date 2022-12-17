@@ -43,17 +43,29 @@ public sealed class EventHorizonComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public bool BeingConsumedByAnotherEventHorizon = false;
 
-    /// <summary>
-    /// The amount of time between the moments when the event horizon consumes everything it overlaps in seconds.
-    /// </summary>
-    [DataField("consumePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float ConsumePeriod = 0.5f;
+    #region Update Timing
 
     /// <summary>
-    /// The amount of time that has passed since the last moment when the event horizon consumed eveything it overlapped in seconds.
+    /// The amount of time that should elapse between this event horizon consuming everything it overlaps with.
+    /// </summary>
+    [DataField("consumePeriod")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(SharedEventHorizonSystem))]
+    public TimeSpan TargetConsumePeriod { get; set; } = TimeSpan.FromSeconds(0.5);
+
+    /// <summary>
+    /// The last time at which this consumed everything it overlapped with.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(friends:typeof(SharedEventHorizonSystem))]
-    public float TimeSinceLastConsumeWave = float.PositiveInfinity;
+    [Access(typeof(SharedEventHorizonSystem))]
+    public TimeSpan LastConsumeWaveTime { get; set; } = default!;
+
+    /// <summary>
+    /// The next time at which this consumed everything it overlapped with.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(SharedEventHorizonSystem))]
+    public TimeSpan NextConsumeWaveTime { get; set; } = default!;
+
+    #endregion Update Timing
 }

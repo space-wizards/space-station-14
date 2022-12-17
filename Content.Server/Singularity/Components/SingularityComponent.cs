@@ -27,21 +27,8 @@ public sealed class SingularityComponent : SharedSingularityComponent
     [ViewVariables(VVAccess.ReadWrite)]
     public float EnergyDrain;
 
-    /// <summary>
-    /// The amount of time between energy level updates.
-    /// </summary>
-    [DataField("updatePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float UpdatePeriod = 1.0f;
+    #region Audio
 
-    /// <summary>
-    /// The amount of time that has elapsed since the last energy level update.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
-    [Access(friends:typeof(SingularitySystem))]
-    public float TimeSinceLastUpdate = 0f;
-
-#region Audio
     /// <summary>
     /// The sound that this singularity produces by existing.
     /// </summary>
@@ -74,5 +61,32 @@ public sealed class SingularityComponent : SharedSingularityComponent
         "/Audio/Effects/singularity_collapse.ogg",
         AudioParams.Default
     );
-#endregion Audio
+
+    #endregion Audio
+
+    #region Update Timing
+
+    /// <summary>
+    /// The amount of time that should elapse between automated updates to this singularity.
+    /// </summary>
+    [DataField("updatePeriod")]
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(SingularitySystem))]
+    public TimeSpan TargetUpdatePeriod { get; internal set; } = TimeSpan.FromSeconds(1.0);
+
+    /// <summary>
+    /// The next time this singularity should be updated by <see cref="SingularitySystem"/>
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(SingularitySystem))]
+    public TimeSpan NextUpdateTime { get; internal set; } = default!;
+
+    /// <summary>
+    /// The last time this singularity was be updated by <see cref="SingularitySystem"/>
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(SingularitySystem))]
+    public TimeSpan LastUpdateTime { get; internal set; } = default!;
+
+    #endregion Update Timing
 }

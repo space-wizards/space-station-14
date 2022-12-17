@@ -28,6 +28,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
         if (args.Current is not SingularityComponentState state)
             return;
 
-        SetLevel(comp, state.Level);
+        SetLevel(uid, state.Level, comp);
     }
 }

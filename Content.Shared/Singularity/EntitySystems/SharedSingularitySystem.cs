@@ -19,7 +19,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly IViewVariablesManager _vvm = default!;
+    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -53,14 +53,14 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
 
-        var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
+        var vvHandle = Vvm.GetTypeHandler<SharedSingularityComponent>();
         vvHandle.AddPath(nameof(SharedSingularityComponent.Level), (_, comp) => comp.Level, SetLevel);
         vvHandle.AddPath(nameof(SharedSingularityComponent.RadsPerLevel), (_, comp) => comp.RadsPerLevel, SetRadsPerLevel);
     }
 
     public override void Shutdown()
     {
-        var vvHandle = _vvm.GetTypeHandler<SharedSingularityComponent>();
+        var vvHandle = Vvm.GetTypeHandler<SharedSingularityComponent>();
         vvHandle.RemovePath(nameof(SharedSingularityComponent.Level));
         vvHandle.RemovePath(nameof(SharedSingularityComponent.RadsPerLevel));
 
@@ -68,21 +68,25 @@ public abstract class SharedSingularitySystem : EntitySystem
     }
 
 #region Getters/Setters
+
     /// <summary>
     /// Setter for <see cref="SharedSingularityComponent.Level"/>
     /// Also sends out an event alerting that the singularities level has changed.
     /// </summary>
     /// <param name="singularity">The singularity to change the level of.</param>
     /// <param name="value">The value of the new level the singularity should have.</param>
-    public void SetLevel(SharedSingularityComponent singularity, byte value)
+    public void SetLevel(EntityUid uid, byte value, SharedSingularityComponent? singularity = null)
     {
+        if(!Resolve(uid, ref singularity))
+            return;
+
         value = MathHelper.Clamp(value, MinSingularityLevel, MaxSingularityLevel);
         var oldValue = singularity.Level;
         if (oldValue == value)
             return;
 
         singularity.Level = value;
-        UpdateSingularityLevel(singularity, oldValue);
+        UpdateSingularityLevel(uid, oldValue, singularity);
         if(!EntityManager.Deleted(singularity.Owner))
             EntityManager.Dirty(singularity);
     }
@@ -93,8 +97,11 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// </summary>
     /// <param name="singularity">The singularity to change the radioactivity of.</param>
     /// <param name="value">The new amount of radiation the singularity should emit per its level.</param>
-    public void SetRadsPerLevel(SharedSingularityComponent singularity, float value)
+    public void SetRadsPerLevel(EntityUid uid, float value, SharedSingularityComponent? singularity = null)
     {
+        if(!Resolve(uid, ref singularity))
+            return;
+
         var oldValue = singularity.RadsPerLevel;
         if (oldValue == value)
             return;
@@ -109,9 +116,12 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// </summary>
     /// <param name="singularity">The singularity to update the level of.</param>
     /// <param name="oldValue">The previous level of the singularity.</param>
-    public void UpdateSingularityLevel(SharedSingularityComponent singularity, byte oldValue)
+    public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SharedSingularityComponent? singularity = null)
     {
-        RaiseLocalEvent(singularity.Owner, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
             EntityManager.DeleteEntity(singularity.Owner);
     }
@@ -121,8 +131,11 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// Used to sync components when the singularity component is added to an entity.
     /// </summary>
     /// <param name="singularity">The singularity to update the level of.</param>
-    public void UpdateSingularityLevel(SharedSingularityComponent singularity)
-        => UpdateSingularityLevel(singularity, singularity.Level);
+    public void UpdateSingularityLevel(EntityUid uid, SharedSingularityComponent? singularity = null)
+    {
+        if (Resolve(uid, ref singularity))
+            UpdateSingularityLevel(uid, singularity.Level, singularity);
+    }
 
     /// <summary>
     /// Updates the amount of radiation the singularity emits.
@@ -135,33 +148,9 @@ public abstract class SharedSingularitySystem : EntitySystem
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
-#region VV
-    /// <summary>
-    /// VV Setter for <see cref="SharedSingularityComponent.Level"/>
-    /// Also sends out an event alerting that the singularities level has changed.
-    /// </summary>
-    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
-    /// <param name="value">The value of the new level the singularity should have.</param>
-    /// <param name="comp">The singularity to change the level of.</param>
-    private void SetLevel(EntityUid uid, byte value, SharedSingularityComponent? comp)
-    {
-        if (Resolve(uid, ref comp))
-            SetLevel(comp, value);
-    }
 
-    /// <summary>
-    /// VV Setter for <see cref="SharedSingularityComponent.RadsPerLevel"/>
-    /// </summary>
-    /// <param name="uid">The entity hosting the singularity that is being modified.</param>
-    /// <param name="value">The new amount of radiation the singularity should emit per its level.</param>
-    /// <param name="comp">The singularity to change the radioactivity of.</param>
-    private void SetRadsPerLevel(EntityUid uid, float value, SharedSingularityComponent? comp)
-    {
-        if (Resolve(uid, ref comp))
-            SetRadsPerLevel(comp, value);
-    }
-#endregion VV
 #endregion Getters/Setters
+
 #region Derivations
     /// <summary>
     /// The scaling factor for the size of a singularities gravity well.
@@ -275,9 +264,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="uid">The entity that is becoming a singularity.</param>
     /// <param name="comp">The singularity component that is being added to the entity.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnSingularityStartup(EntityUid uid, SharedSingularityComponent comp, ComponentStartup args)
+    protected virtual void OnSingularityStartup(EntityUid uid, SharedSingularityComponent comp, ComponentStartup args)
     {
-        UpdateSingularityLevel(comp);
+        UpdateSingularityLevel(uid, comp);
     }
 
     // TODO: Figure out which systems should have control of which coupling.
@@ -290,9 +279,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     private void UpdateEventHorizon(EntityUid uid, EventHorizonComponent comp, SingularityLevelChangedEvent args)
     {
         var singulo = args.Singularity;
-        _horizons.SetRadius(comp, EventHorizonRadius(singulo), false);
-        _horizons.SetCanBreachContainment(comp, CanBreachContainment(singulo), false);
-        _horizons.UpdateEventHorizonFixture(comp);
+        _horizons.SetRadius(uid, EventHorizonRadius(singulo), false, comp);
+        _horizons.SetCanBreachContainment(uid, CanBreachContainment(singulo), false, comp);
+        _horizons.UpdateEventHorizonFixture(uid, eventHorizon: comp);
     }
 
     /// <summary>
@@ -359,7 +348,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
     {
-        comp.BodyStatus = (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround;
+        _physics.SetBodyStatus(comp, (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround);
         if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
             _physics.SetLinearVelocity(comp, Vector2.Zero); // No idea how stopping the singularities movement keeps it from getting stuck though.
     }

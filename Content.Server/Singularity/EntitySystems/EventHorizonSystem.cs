@@ -1,4 +1,5 @@
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
@@ -21,6 +22,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 {
 #region Dependencies
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapMan = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 #endregion Dependencies
@@ -48,6 +50,17 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonAttemptConsumeEntityEvent>(OnAnotherEventHorizonAttemptConsumeThisEventHorizon);
         SubscribeLocalEvent<EventHorizonComponent, EventHorizonConsumedEntityEvent>(OnAnotherEventHorizonConsumedThisEventHorizon);
         SubscribeLocalEvent<ContainerManagerComponent, EventHorizonConsumedEntityEvent>(OnContainerConsumed);
+
+        var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
+        vvHandle.AddPath(nameof(EventHorizonComponent.TargetConsumePeriod), (_, comp) => comp.TargetConsumePeriod, SetConsumePeriod);
+    }
+
+    public override void Shutdown()
+    {
+        var vvHandle = Vvm.GetTypeHandler<EventHorizonComponent>();
+        vvHandle.RemovePath(nameof(EventHorizonComponent.TargetConsumePeriod));
+
+        base.Shutdown();
     }
 
     /// <summary>
@@ -57,9 +70,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="frameTime">The amount of time that has elapsed since the last cooldown update.</param>
     public override void Update(float frameTime)
     {
+        if(!_timing.IsFirstTimePredicted)
+            return;
+
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
         {
-            if ((eventHorizon.TimeSinceLastConsumeWave += frameTime) > eventHorizon.ConsumePeriod)
+            var curTime = _timing.CurTime;
+            if (eventHorizon.NextConsumeWaveTime <= curTime)
                 Update(eventHorizon.Owner, eventHorizon, xform);
         }
     }
@@ -70,9 +87,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="uid">The uid of the event horizon consuming everything nearby.</param>
     /// <param name="eventHorizon">The event horizon we want to consume nearby things.</param>
     /// <param name="xform">The transform of the event horizon.</param>
-    public void Update(EntityUid uid, EventHorizonComponent eventHorizon, TransformComponent? xform = null)
+    public void Update(EntityUid uid, EventHorizonComponent? eventHorizon = null, TransformComponent? xform = null)
     {
-        eventHorizon.TimeSinceLastConsumeWave = 0.0f;
+        if(!Resolve(uid, ref eventHorizon))
+            return;
+
+        eventHorizon.LastConsumeWaveTime = _timing.CurTime;
+        eventHorizon.NextConsumeWaveTime = eventHorizon.LastConsumeWaveTime + eventHorizon.TargetConsumePeriod;
         if (eventHorizon.BeingConsumedByAnotherEventHorizon)
             return;
         if(!Resolve(uid, ref xform))
@@ -311,6 +332,26 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     }
 
 #endregion Consume
+
+    #region Getters/Setters
+
+    public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
+    {
+        if(!Resolve(uid, ref eventHorizon))
+            return;
+
+        if (MathHelper.CloseTo(eventHorizon.TargetConsumePeriod.TotalSeconds, value.TotalSeconds))
+            return;
+
+        eventHorizon.TargetConsumePeriod = value;
+        eventHorizon.NextConsumeWaveTime = eventHorizon.LastConsumeWaveTime + eventHorizon.TargetConsumePeriod;
+
+        var curTime = _timing.CurTime;
+        if (eventHorizon.NextConsumeWaveTime < curTime)
+            Update(uid, eventHorizon);
+    }
+
+    #endregion Getters/Setters
 
 #region Event Handlers
 
