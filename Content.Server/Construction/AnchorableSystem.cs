@@ -11,6 +11,7 @@ using Content.Shared.Examine;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 
@@ -122,7 +123,7 @@ namespace Content.Server.Construction
             {
                 if (!bodyQuery.TryGetComponent(ent, out var body) ||
                     !body.CanCollide ||
-                    !body.Hard)
+                    (!body.Hard && body.BodyType != BodyType.Static))
                 {
                     continue;
                 }
