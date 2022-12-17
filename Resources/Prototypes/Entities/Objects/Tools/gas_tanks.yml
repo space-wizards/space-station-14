@@ -35,6 +35,9 @@
     damage:
       types:
         Blunt: 10
+  - type: Tag
+    tags:
+    - Metal
 
 - type: entity
   parent: GasTankBase

@@ -57,6 +57,9 @@
     price: 0
   - type: StackPrice
     price: 5
+  - type: Tag
+    tags:
+    - Metal
 
 - type: entity
   parent: PartRodMetal
@@ -68,6 +71,7 @@
     tags:
     - RodMetal1
     - DroneUsable
+    - Metal
   - type: Sprite
     state: rods
   - type: Stack

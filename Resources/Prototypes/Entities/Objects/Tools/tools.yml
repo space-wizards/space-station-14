@@ -11,6 +11,7 @@
     tags:
     - PlantSampleTaker
     - Wirecutter
+    - Metal
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     netsync: false
@@ -89,6 +90,7 @@
   - type: Tag
     tags:
     - Wrench
+    - Metal
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
@@ -121,6 +123,7 @@
   - type: Tag
     tags:
     - Crowbar
+    - Metal
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
@@ -151,6 +154,7 @@
     tags:
     - Crowbar
     - CrowbarRed
+    - Metal
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: red-icon

@@ -90,6 +90,9 @@
       access: [["Atmospherics"], ["ResearchDirector"]]
     - type: Lock
       locked: false
+    - type: Tag
+      tags:
+      - Metal
 
 - type: entity
   parent: GasCanister

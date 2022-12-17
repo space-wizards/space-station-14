@@ -77,6 +77,9 @@
   components:
   - type: Weldable
   - type: ResistLocker
+  - type: Tag
+    tags:
+    - Metal
 
 - type: entity
   parent: CrateGeneric

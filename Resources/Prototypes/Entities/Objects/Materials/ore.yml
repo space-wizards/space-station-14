@@ -60,6 +60,9 @@
   - type: Material
     materials:
       Steel: 500
+  - type: Tag
+    tags:
+    - Metal
 
 - type: entity
   id: SteelOre1
