@@ -273,7 +273,7 @@
 - type: reaction
   id: Desoxyephedrine
   impact: Medium
-  minTemp: 370
+  minTemp: 180
   reactants:
     Ephedrine:
       amount: 1
