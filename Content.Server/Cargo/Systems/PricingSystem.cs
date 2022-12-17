@@ -66,7 +66,7 @@ public sealed class PricingSystem : EntitySystem
 
             List<(double, EntityUid)> mostValuable = new();
 
-            var value = AppraiseGrid(mapGrid.GridEntityId, null, (uid, price) =>
+            var value = AppraiseGrid(mapGrid.Owner, null, (uid, price) =>
             {
                 mostValuable.Add((price, uid));
                 mostValuable.Sort((i1, i2) => i2.Item1.CompareTo(i1.Item1));
