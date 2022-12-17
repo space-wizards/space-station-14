@@ -134,7 +134,7 @@ public sealed class RadioDeviceSystem : EntitySystem
                 {
                     component.BroadcastChannel = channel;
                     _popup.PopupEntity(Loc.GetString("handheld-radio-component-channel-set",
-                        ("channel", channel)), uid, Filter.Entities(args.User));
+                        ("channel", channel)), uid, args.User);
                 }
             };
             args.Verbs.Add(v);
