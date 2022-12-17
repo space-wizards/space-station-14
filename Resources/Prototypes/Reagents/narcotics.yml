@@ -144,6 +144,12 @@
   metabolisms:
     Narcotic:
       effects:
+      - !type:MovespeedModifier
+        walkSpeedModifier: 0.85
+        sprintSpeedModifier: 0.85
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
       - !type:GenericStatusEffect
         key: SeeingRainbows
         component: SeeingRainbows
