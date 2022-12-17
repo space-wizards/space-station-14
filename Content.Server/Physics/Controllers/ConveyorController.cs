@@ -7,7 +7,6 @@ using Content.Shared.Conveyor;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Controllers;
-using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
@@ -18,13 +17,10 @@ namespace Content.Server.Physics.Controllers;
 
 public sealed class ConveyorController : SharedConveyorController
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly RecyclerSystem _recycler = default!;
     [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
     [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
@@ -32,6 +28,8 @@ public sealed class ConveyorController : SharedConveyorController
         UpdatesAfter.Add(typeof(MoverController));
         SubscribeLocalEvent<ConveyorComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<ConveyorComponent, ComponentShutdown>(OnConveyorShutdown);
+
+
         SubscribeLocalEvent<ConveyorComponent, SignalReceivedEvent>(OnSignalReceived);
         SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
 
@@ -118,6 +116,7 @@ public sealed class ConveyorController : SharedConveyorController
         }
 
         UpdateAppearance(component);
+        Dirty(component);
     }
 
     /// <summary>

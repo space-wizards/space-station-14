@@ -1,6 +1,5 @@
 using Content.Shared.MachineLinking;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -43,6 +42,21 @@ public sealed class ConveyorComponent : Component
 
     [ViewVariables]
     public readonly HashSet<EntityUid> Intersecting = new();
+}
+
+[Serializable, NetSerializable]
+public sealed class ConveyorComponentState : ComponentState
+{
+    public Angle Angle;
+    public float Speed;
+    public ConveyorState State;
+
+    public ConveyorComponentState(Angle angle, float speed, ConveyorState state)
+    {
+        Angle = angle;
+        Speed = speed;
+        State = state;
+    }
 }
 
 [Serializable, NetSerializable]

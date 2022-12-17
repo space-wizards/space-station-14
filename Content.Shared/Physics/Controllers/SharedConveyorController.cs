@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Conveyor;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -12,19 +13,37 @@ namespace Content.Shared.Physics.Controllers;
 
 public abstract class SharedConveyorController : VirtualController
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] protected readonly IMapManager _mapManager = default!;
+    [Dependency] protected readonly EntityLookupSystem _lookup = default!;
+    [Dependency] protected readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
-    public const string ConveyorFixture = "conveyor";
+    protected const string ConveyorFixture = "conveyor";
     public override void Initialize()
     {
         UpdatesAfter.Add(typeof(SharedMoverController));
+        SubscribeLocalEvent<ConveyorComponent, ComponentGetState>(OnConveyorGetState);
+        SubscribeLocalEvent<ConveyorComponent, ComponentHandleState>(OnConveyorHandleState);
+
         SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnConveyorStartCollide);
         SubscribeLocalEvent<ConveyorComponent, EndCollideEvent>(OnConveyorEndCollide);
 
         base.Initialize();
+    }
+
+    private void OnConveyorGetState(EntityUid uid, ConveyorComponent component, ref ComponentGetState args)
+    {
+        args.State = new ConveyorComponentState(component.Angle, component.Speed, component.State);
+    }
+
+    private void OnConveyorHandleState(EntityUid uid, ConveyorComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ConveyorComponentState state)
+            return;
+
+        component.Angle = state.Angle;
+        component.Speed = state.Speed;
+        component.State = state.State;
     }
 
     private void OnConveyorStartCollide(EntityUid uid, ConveyorComponent component, ref StartCollideEvent args)
@@ -97,6 +116,7 @@ public abstract class SharedConveyorController : VirtualController
             _physics.SetAwake(body, true);
             _physics.SetSleepTime(body, 0f);
         }
+        Dirty(comp);
     }
 
     private static Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelative)
@@ -145,7 +165,7 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var entity in comp.Intersecting)
         {
-            if (!xformQuery.TryGetComponent(entity, out var entityXform) || entityXform.ParentUid != grid.GridEntityId)
+            if (!xformQuery.TryGetComponent(entity, out var entityXform) || entityXform.ParentUid != grid.Owner)
                 continue;
 
             if (!bodyQuery.TryGetComponent(entity, out var physics) || physics.BodyType == BodyType.Static || physics.BodyStatus == BodyStatus.InAir || _gravity.IsWeightless(entity, physics, entityXform))
