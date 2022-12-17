@@ -158,18 +158,8 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
         }
 
-        EntityCoordinates coordinates;
-
-        // Bro why would I want a ternary here
-        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-        if (MapManager.TryFindGridAt(mousePos, out var grid))
-        {
-            coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
-        }
-        else
-        {
-            coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
-        }
+        // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
+        var coordinates = EntityCoordinates.FromMap(entity, mousePos, EntityManager);
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 

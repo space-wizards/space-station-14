@@ -1,41 +1,41 @@
 - type: stack
   id: Biomass
   name: biomass
-  icon: /Textures/Objects/Misc/monkeycube.rsi/cube.png
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: MaterialBiomass1
   maxCount: 100
 
 - type: stack
   id: WoodPlank
   name: wood plank
-  icon: /Textures/Objects/Materials/materials.rsi/wood.png
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: wood }
   spawn: MaterialWoodPlank1
   maxCount: 30
 
 - type: stack
   id: Cloth
   name: cloth
-  icon: /Textures/Objects/Materials/materials.rsi/cloth.png
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   spawn: MaterialCloth1
   maxCount: 30
 
 - type: stack
   id: Durathread
   name: durathread
-  icon: /Textures/Objects/Materials/materials.rsi/durathread.png
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   spawn: MaterialDurathread1
   maxCount: 30
 
 - type: stack
   id: Diamond
   name: diamond
-  icon: /Textures/Objects/Materials/materials.rsi/diamond.png
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: diamond }
   spawn: MaterialDiamond1
   maxCount: 30
 
 - type: stack
   id: Cotton
   name: cotton
-  icon: /Textures/Objects/Materials/materials.rsi/cotton.png
+  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
   maxCount: 30

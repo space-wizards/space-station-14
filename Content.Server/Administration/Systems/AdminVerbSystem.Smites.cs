@@ -147,7 +147,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Fuck you. Burn Forever.
-                    flammable.FireStacks = 99999.9f;
+                    flammable.FireStacks = FlammableSystem.MaximumFireStacks;
                     _flammableSystem.Ignite(args.Target);
                     var xform = Transform(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target,

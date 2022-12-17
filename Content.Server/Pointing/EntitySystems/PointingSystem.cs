@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
@@ -37,6 +39,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly SharedMobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -189,13 +192,17 @@ namespace Content.Server.Pointing.EntitySystems
                     : Loc.GetString("pointing-system-point-at-other-others", ("otherName", playerName), ("other", pointedName));
 
                 viewerPointedAtMessage = Loc.GetString("pointing-system-point-at-you-other", ("otherName", playerName));
+
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {ToPrettyString(pointed):target} {Transform(pointed).Coordinates}");
             }
             else
             {
                 TileRef? tileRef = null;
+                string? position = null;
 
                 if (_mapManager.TryFindGridAt(mapCoords, out var grid))
                 {
+                    position = $"EntId={grid.Owner} {grid.WorldToTile(mapCoords.Position)}";
                     tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
                 }
 
@@ -204,6 +211,8 @@ namespace Content.Server.Pointing.EntitySystems
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.Name));
 
                 viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
+
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {tileDef.Name} {(position == null ? mapCoords : position)}");
             }
 
             _pointers[session] = _gameTiming.CurTime;

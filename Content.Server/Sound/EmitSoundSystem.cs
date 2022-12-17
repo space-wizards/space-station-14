@@ -79,14 +79,16 @@ namespace Content.Server.Sound
             args.Handled = true;
         }
 
-        private void HandleEmitSoundOnLand(EntityUid eUI, BaseEmitSoundComponent component, LandEvent arg)
+        private void HandleEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, LandEvent arg)
         {
-            if (!TryComp<TransformComponent>(eUI, out var xform) ||
+            if (!TryComp<TransformComponent>(uid, out var xform) ||
                 !_mapManager.TryGetGrid(xform.GridUid, out var grid)) return;
 
             var tile = grid.GetTileRef(xform.Coordinates);
 
-            if (tile.IsSpace(_tileDefMan)) return;
+            // Handle maps being grids (we'll still emit the sound).
+            if (xform.GridUid != xform.MapUid && tile.IsSpace(_tileDefMan))
+                return;
 
             TryEmitSound(component);
         }
