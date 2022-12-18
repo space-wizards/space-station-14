@@ -142,8 +142,8 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!overlayQuery.TryGetComponent(mapGrid.GridEntityId, out var comp) ||
-                    !xformQuery.TryGetComponent(mapGrid.GridEntityId, out var gridXform))
+                if (!overlayQuery.TryGetComponent(mapGrid.Owner, out var comp) ||
+                    !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
                 {
                     continue;
                 }

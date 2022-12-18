@@ -202,17 +202,17 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.GridEntityId == ourGridId)
+            if (grid.Owner == ourGridId)
                 continue;
 
-            var gridBody = bodyQuery.GetComponent(grid.GridEntityId);
+            var gridBody = bodyQuery.GetComponent(grid.Owner);
             if (gridBody.Mass < 10f)
             {
-                ClearLabel(grid.GridEntityId);
+                ClearLabel(grid.Owner);
                 continue;
             }
 
-            _entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff);
+            _entManager.TryGetComponent<IFFComponent>(grid.Owner, out var iff);
 
             // Hide it entirely.
             if (iff != null &&
@@ -221,14 +221,14 @@ public sealed class RadarControl : Control
                 continue;
             }
 
-            shown.Add(grid.GridEntityId);
-            var name = metaQuery.GetComponent(grid.GridEntityId).EntityName;
+            shown.Add(grid.Owner);
+            var name = metaQuery.GetComponent(grid.Owner).EntityName;
 
             if (name == string.Empty)
                 name = Loc.GetString("shuttle-console-unknown");
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-            var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
+            var gridFixtures = fixturesQuery.GetComponent(grid.Owner);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
             var color = iff?.Color ?? IFFComponent.IFFColor;
@@ -240,14 +240,14 @@ public sealed class RadarControl : Control
                 var gridBounds = grid.LocalAABB;
                 Label label;
 
-                if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
+                if (!_iffControls.TryGetValue(grid.Owner, out var control))
                 {
                     label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
                     };
 
-                    _iffControls[grid.GridEntityId] = label;
+                    _iffControls[grid.Owner] = label;
                     AddChild(label);
                 }
                 else
@@ -277,13 +277,13 @@ public sealed class RadarControl : Control
             }
             else
             {
-                ClearLabel(grid.GridEntityId);
+                ClearLabel(grid.Owner);
             }
 
             // Detailed view
             DrawGrid(handle, matty, gridFixtures, color);
 
-            DrawDocks(handle, grid.GridEntityId, matty);
+            DrawDocks(handle, grid.Owner, matty);
         }
 
         foreach (var (ent, _) in _iffControls)

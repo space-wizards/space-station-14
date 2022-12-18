@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(mapGridComp.Owner).MapID);
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(((Component) mapGridComp).Owner).MapID);
 
             var volume = GetVolumeForTiles(mapGridComp, 1);
 
@@ -60,7 +60,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (!atmosphere.Tiles.TryGetValue(indices, out var tile))
                 {
-                    tile = new TileAtmosphere(mapGridComp.GridEntityId, indices,
+                    tile = new TileAtmosphere(mapGridComp.Owner, indices,
                         new GasMixture(volume) { Temperature = Atmospherics.T20C });
                     atmosphere.Tiles[indices] = tile;
                 }
@@ -128,7 +128,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(mapGridComp.GridEntityId, indices, visuals);
+                InvalidateVisuals(mapGridComp.Owner, indices, visuals);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {

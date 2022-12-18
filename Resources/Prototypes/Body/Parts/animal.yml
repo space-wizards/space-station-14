@@ -37,6 +37,7 @@
   components:
   - type: BodyPart
     partType: Leg
+  - type: MovementSpeedModifier
 
 - type: entity
   id: FeetAnimal
