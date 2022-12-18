@@ -92,7 +92,7 @@ namespace Content.Client.Gameplay
                 Box2.CenteredAround(coordinates.Position, (1, 1)), LookupFlags.Uncontained | LookupFlags.Approximate);
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float top)>();
+            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float bottom)>();
             var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
             var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
             var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
@@ -136,7 +136,7 @@ namespace Content.Client.Gameplay
                     return cmp;
                 }
 
-                cmp = x.bottom.CompareTo(y.bottom);
+                cmp = y.bottom.CompareTo(x.bottom);
 
                 if (cmp != 0)
                 {
