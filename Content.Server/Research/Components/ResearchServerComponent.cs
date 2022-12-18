@@ -7,19 +7,17 @@ namespace Content.Server.Research.Components
     [RegisterComponent]
     public sealed class ResearchServerComponent : Component
     {
-        [ViewVariables(VVAccess.ReadWrite)] public string ServerName => _serverName;
+        [DataField("servername"), ViewVariables(VVAccess.ReadWrite)]
+        public string ServerName = "RDSERVER";
 
-        [DataField("servername")]
-        private string _serverName = "RDSERVER";
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("points")]
-        public int Points = 0;
+        [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
+        public int Points;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public int Id { get; set; }
+        public int Id;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public List<ResearchClientComponent> Clients { get; } = new();
+        public List<EntityUid> Clients = new();
 
         [DataField("nextUpdateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan NextUpdateTime = TimeSpan.Zero;

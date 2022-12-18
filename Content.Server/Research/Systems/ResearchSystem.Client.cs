@@ -77,7 +77,7 @@ public sealed partial class ResearchSystem
 
     private bool RegisterClientServer(ResearchClientComponent component, ResearchServerComponent? server = null)
     {
-        return server != null && RegisterServerClient(server, component);
+        return server != null && RegisterServerClient(server, component.Owner, component);
     }
 
     private void UnregisterClientServer(ResearchClientComponent component)
@@ -85,6 +85,6 @@ public sealed partial class ResearchSystem
         if (component.Server == null)
             return;
 
-        UnregisterServerClient(component.Server, component);
+        UnregisterServerClient(component.Server, component.Owner, component);
     }
 }

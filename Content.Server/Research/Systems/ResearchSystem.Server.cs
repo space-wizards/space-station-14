@@ -18,18 +18,24 @@ public sealed partial class ResearchSystem
         ChangePointsOnServer(component.Owner, PointsPerSecond(component) * time, component);
     }
 
-    public bool RegisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    public bool RegisterServerClient(ResearchServerComponent component, EntityUid client, ResearchClientComponent? clientComponent = null)
     {
-        if (component.Clients.Contains(clientComponent))
+        if (!Resolve(client, ref clientComponent))
             return false;
-        component.Clients.Add(clientComponent);
+
+        if (component.Clients.Contains(client))
+            return false;
+        component.Clients.Add(client);
         clientComponent.Server = component;
         return true;
     }
 
-    public void UnregisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    public void UnregisterServerClient(ResearchServerComponent component, EntityUid client, ResearchClientComponent? clientComponent = null)
     {
-        component.Clients.Remove(clientComponent);
+        if (!Resolve(client, ref clientComponent))
+            return;
+
+        component.Clients.Remove(client);
         clientComponent.Server = null;
     }
 
@@ -77,7 +83,7 @@ public sealed partial class ResearchSystem
         var ev = new ResearchServerGetPointsPerSecondEvent(component.Owner, points);
         foreach (var client in component.Clients)
         {
-            RaiseLocalEvent(client.Owner, ref ev);
+            RaiseLocalEvent(client, ref ev);
         }
 
         return ev.Points;
@@ -91,7 +97,7 @@ public sealed partial class ResearchSystem
         var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
         foreach (var client in component.Clients)
         {
-            RaiseLocalEvent(client.Owner, ref ev);
+            RaiseLocalEvent(client, ref ev);
         }
     }
 }
