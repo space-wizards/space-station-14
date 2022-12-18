@@ -130,7 +130,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     /// <summary>
     /// Disconnects and clears _activeServer if the server losing power is the currently active one
     /// </summary>
-    private void OnPowerChanged(EntityUid uid, CrewMonitoringServerComponent component, PowerChangedEvent args)
+    private void OnPowerChanged(EntityUid uid, CrewMonitoringServerComponent component, ref PowerChangedEvent args)
     {
         component.Available = args.Powered;
 
