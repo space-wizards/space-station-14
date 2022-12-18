@@ -1,8 +1,9 @@
-﻿using Content.Client.Construction.UI;
+using Content.Client.Construction.UI;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Crafting;
@@ -50,11 +51,16 @@ public sealed class CraftingUIController : UIController, IOnStateChanged<Gamepla
 
     public void LoadButton()
     {
-        if (CraftingButton == null || _presenter == null)
+        if (CraftingButton == null)
         {
             return;
         }
 
-        CraftingButton.OnToggled += _presenter.OnHudCraftingButtonToggled;
+        CraftingButton.OnToggled += ButtonToggled;
+    }
+
+    private void ButtonToggled(BaseButton.ButtonToggledEventArgs obj)
+    {
+        _presenter?.OnHudCraftingButtonToggled(obj);
     }
 }

@@ -1,0 +1,21 @@
+- type: entity
+  id: RandomVending
+  name: random vending machine spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/VendingMachines/coffee.rsi
+        state: off
+  - type: RandomSpawner
+    prototypes:
+      - VendingMachineCigs
+      - VendingMachineCoffee
+      - VendingMachineCola
+      - VendingMachineDiscount
+      - VendingMachineSnack
+      - VendingMachineSovietSoda
+      - VendingMachineChang
+      - VendingMachineDonut
+    chance: 1

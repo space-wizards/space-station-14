@@ -8,6 +8,7 @@
   - type: Tag
     tags:
     - Spray
+    - Trash
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -38,6 +39,9 @@
   suffix: Filled
   parent: SprayBottle
   components:
+  - type: Tag
+    tags:
+    - Spray
   - type: SolutionContainerManager
     solutions:
       spray:

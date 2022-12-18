@@ -3,6 +3,8 @@ device-frequency-prototype-name-atmos = Atmospheric Devices
 device-frequency-prototype-name-suit-sensors = Suit Sensors
 device-frequency-prototype-name-lights = Smart Lights
 device-frequency-prototype-name-mailing-units = Mailing Units
+device-frequency-prototype-name-pdas = PDAs
+device-frequency-prototype-name-fax = Fax
 
 ## camera frequencies
 device-frequency-prototype-name-surveillance-camera-test = Subnet Test
@@ -20,7 +22,18 @@ device-frequency-prototype-name-surveillance-camera-entertainment = Entertainmen
 device-address-prefix-vent = Vnt-
 device-address-prefix-scrubber = Scr-
 device-address-prefix-sensor = Sns-
+
+#PDAs and terminals
+device-address-prefix-console = Cls-
 device-address-prefix-fire-alarm = Fir-
 device-address-prefix-air-alarm = Air-
 
 device-address-examine-message = The device's address is {$address}.
+
+#Device net ID names
+device-net-id-private = Private
+device-net-id-wired = Wired
+device-net-id-wireless = Wireless
+device-net-id-apc = Apc
+device-net-id-atmos-devices = Atmos Devices
+device-net-id-reserved = Reserved

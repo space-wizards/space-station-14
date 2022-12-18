@@ -1,0 +1,112 @@
+- type: entity
+  id: RandomDrinkGlass
+  name: random drink spawner
+  suffix: Glass
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Drinks/beerglass.rsi
+        state: icon
+  - type: RandomSpawner
+  #small item
+    prototypes:
+      - DrinkAbsintheGlass
+      - DrinkAleGlass
+      - DrinkAloe
+      - DrinkAndalusia
+      - DrinkAntifreeze
+      - DrinkB52Glass
+      - DrinkBahamaMama
+      - DrinkBananaHonkGlass
+      - DrinkBarefootGlass
+      - DrinkBeerglass
+      - DrinkBerryJuice
+      - DrinkBilkGlass
+      - DrinkBlackRussianGlass
+      - DrinkBlueCuracaoGlass
+      - DrinkBloodyMaryGlass
+      - DrinkBooger
+      - DrinkBraveBullGlass
+      - DrinkCarrotJuice
+      - DrinkChocolateGlass
+      - DrinkCafeLatte
+      - DrinkCognacGlass
+      - DrinkCubaLibreGlass
+      - DrinkDeadRumGlass
+      - DrinkDevilsKiss
+      - DrinkDriestMartiniGlass
+      - DrinkDrGibbGlass
+      - DrinkErikaSurprise
+      - DrinkFourteenLokoGlass
+      - DrinkGargleBlasterGlass
+      - DrinkGinFizzGlass
+      - DrinkGinGlass
+      - DrinkGinTonicglass
+      - DrinkGoldschlagerGlass
+      - DrinkGrapeJuice
+      - DrinkGreenTeaGlass
+      - DrinkGrogGlass
+      - DrinkHippiesDelightGlass
+      - DrinkIcedCoffeeGlass
+      - DrinkIcedGreenTeaGlass
+      - DrinkIcedBeerGlass
+      - DrinkIceCreamGlass
+      - DrinkIrishCarBomb
+      - DrinkIrishCoffeeGlass
+      - DrinkLemonadeGlass
+      - DrinkKiraSpecial
+      - DrinkLongIslandIcedTeaGlass
+      - DrinkManhattanGlass
+      - DrinkManlyDorfGlass
+      - DrinkMargaritaGlass
+      - DrinkMartiniGlass
+      - DrinkMeadGlass
+      - DrinkMilkshake
+      - DrinkMojito
+      - DrinkNTCahors
+      - DrinkPatronGlass
+      - DrinkRedMeadGlass
+      - DrinkRewriter
+      - DrinkRootBeerFloatGlass
+      - DrinkRumGlass
+      - DrinkSakeGlass
+      - DrinkSbitenGlass
+      - DrinkScrewdriverCocktailGlass
+      - DrinkSuiDreamGlass
+      - DrinkSingulo
+      - DrinkSoyLatte
+      - DrinkSyndicatebomb
+      - DrinkTequilaSunriseGlass
+      - DrinkThreeMileIslandGlass
+      - DrinkToxinsSpecialGlass
+      - DrinkVodkaMartiniGlass
+      - DrinkVodkaTonicGlass
+      - DrinkWatermelonJuice
+      - DrinkWhiskeyColaGlass
+      - DrinkWhiskeySodaGlass
+      - DrinkWhiteRussianGlass
+      - DrinkWineGlass
+      - DrinkShakeBlue
+      - DrinkShakeWhite
+    chance: 0.8
+    offset: 0.0
+    #rare
+    rarePrototypes:
+      - DrinkAcidSpitGlass
+      - DrinkAlliesCocktail
+      - DrinkAmasecGlass
+      - DrinkAtomicBombGlass
+      - DrinkDemonsBlood
+      - DrinkDoctorsDelightGlass
+      - DrinkNeurotoxinGlass
+      - DrinkNuclearColaGlass
+      - DrinkSilencerGlass
+      - DrinkShakeMeat
+      - DrinkShakeRobo
+      - DrinkHoochGlass
+      - DrinkBeepskySmashGlass
+    rareChance: 0.05

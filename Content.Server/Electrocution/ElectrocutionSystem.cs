@@ -109,7 +109,7 @@ namespace Content.Server.Electrocution
                     if (actual != null)
                     {
                         _adminLogger.Add(LogType.Electrocution,
-                            $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                            $"{ToPrettyString(finished.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(finished.Source):source}");
                     }
                 }
 
@@ -168,7 +168,7 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
                 {
                     if (_tagSystem.HasTag(entity, "Window"))
                         return false;
@@ -246,7 +246,7 @@ namespace Content.Server.Electrocution
             Node? TryNode(string? id)
             {
                 if (id != null && nodeContainer.TryGetNode<Node>(id, out var tryNode)
-                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastAvailableSupplySum: >0 } })
+                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } })
                 {
                     return tryNode;
                 }
@@ -375,7 +375,7 @@ namespace Content.Server.Electrocution
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
                 }
             }
 

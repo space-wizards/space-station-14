@@ -10,7 +10,7 @@ namespace Content.Client.Clickable
     {
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
 
-        [ViewVariables] [DataField("bounds")] public DirBoundData? Bounds;
+        [DataField("bounds")] public DirBoundData? Bounds;
 
         /// <summary>
         /// Used to check whether a click worked. Will first check if the click falls inside of some explicit bounding
@@ -132,11 +132,11 @@ namespace Content.Client.Clickable
         [DataDefinition]
         public sealed class DirBoundData
         {
-            [ViewVariables] [DataField("all")] public Box2 All;
-            [ViewVariables] [DataField("north")] public Box2 North;
-            [ViewVariables] [DataField("south")] public Box2 South;
-            [ViewVariables] [DataField("east")] public Box2 East;
-            [ViewVariables] [DataField("west")] public Box2 West;
+            [DataField("all")] public Box2 All;
+            [DataField("north")] public Box2 North;
+            [DataField("south")] public Box2 South;
+            [DataField("east")] public Box2 East;
+            [DataField("west")] public Box2 West;
         }
     }
 }

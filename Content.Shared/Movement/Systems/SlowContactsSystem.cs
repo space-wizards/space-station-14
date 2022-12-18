@@ -75,7 +75,7 @@ public sealed class SlowContactsSystem : EntitySystem
             if (!TryComp<SlowContactsComponent>(ent, out var slowContactsComponent))
                 continue;
 
-            if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(ent))
+            if (slowContactsComponent.IgnoreWhitelist != null && slowContactsComponent.IgnoreWhitelist.IsValid(uid))
                 continue;
 
             walkSpeed = Math.Min(walkSpeed, slowContactsComponent.WalkSpeedModifier);

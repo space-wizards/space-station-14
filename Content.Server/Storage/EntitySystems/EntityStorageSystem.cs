@@ -45,11 +45,13 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
+        SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
+
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -100,6 +102,17 @@ public sealed class EntityStorageSystem : EntitySystem
     private void OnWelded(EntityUid uid, EntityStorageComponent component, WeldableChangedEvent args)
     {
         component.IsWeldedShut = args.IsWelded;
+    }
+
+    private void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, ref LockToggleAttemptEvent args)
+    {
+        // Cannot (un)lock open lockers.
+        if (target.Open)
+            args.Cancelled = true;
+
+        // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
+        if (target.Contents.Contains(args.User))
+            args.Cancelled = true;
     }
 
     private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
@@ -163,7 +176,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
@@ -326,7 +339,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
+        var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
         var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 

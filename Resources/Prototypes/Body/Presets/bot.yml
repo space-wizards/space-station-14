@@ -1,5 +1,0 @@
-- type: bodyPreset
-  name: "bot"
-  id: BotPreset
-  partIDs:
-    hand 1: LeftArmBorg

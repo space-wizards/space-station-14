@@ -26,7 +26,6 @@ namespace Content.Server.Cabinet
         /// <summary>
         ///     Whether the cabinet is currently open or not.
         /// </summary>
-        [ViewVariables]
         [DataField("opened")]
         public bool Opened { get; set; } = false;
     }

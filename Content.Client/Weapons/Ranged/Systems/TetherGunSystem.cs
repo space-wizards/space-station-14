@@ -84,7 +84,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             var gameState = IoCManager.Resolve<IStateManager>().CurrentState;
             EntityUid? uid;
 
-            if (gameState is GameplayState game)
+            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
             {
                 uid = game.GetEntityUnderPosition(mousePos);
 

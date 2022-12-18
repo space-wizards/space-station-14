@@ -11,7 +11,7 @@ namespace Content.Shared.Research.Prototypes
     public sealed class LatheRecipePrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -42,7 +42,6 @@ namespace Content.Shared.Research.Prototypes
             {
                 if (_name.Trim().Length != 0) return _name;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
                 protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Name != null)
                     _name = prototype.Name;
@@ -60,7 +59,6 @@ namespace Content.Shared.Research.Prototypes
             {
                 if (_description.Trim().Length != 0) return _description;
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
-                if (protoMan == null) return _description;
                 protoMan.TryIndex(_result, out EntityPrototype? prototype);
                 if (prototype?.Description != null)
                     _description = prototype.Description;
@@ -98,5 +96,8 @@ namespace Content.Shared.Research.Prototypes
         /// </summary>
         [ViewVariables]
         public TimeSpan CompleteTime => _completeTime;
+
+        [DataField("applyMaterialDiscount")]
+        public bool ApplyMaterialDiscount = true;
     }
 }

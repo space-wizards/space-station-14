@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     What we fill our prototype with if we want to pre-spawn with grenades.
         /// </summary>
-        [ViewVariables] [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("fillPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? FillPrototype;
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Content.Server.Explosion.Components
         /// <summary>
         ///     Maximum grenades in the container.
         /// </summary>
-        [ViewVariables] [DataField("maxGrenadesCount")]
+        [DataField("maxGrenadesCount")]
         public int MaxGrenades = 3;
 
         /// <summary>

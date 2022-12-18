@@ -588,6 +588,8 @@ namespace Content.Server.Botany.Components
                 var light = _entMan.EnsureComponent<PointLightComponent>(Owner);
                 light.Radius = Seed.BioluminescentRadius;
                 light.Color = Seed.BioluminescentColor;
+                light.CastShadows = false; // this is expensive, and botanists make lots of plants
+                light.Dirty();
             }
             else
             {

@@ -29,8 +29,6 @@
       state: "torso_m"
     - type: BodyPart
       partType: Torso
-      size: 14
-      compatibility: Biological
 
 - type: entity
   id: HeadSkeleton
@@ -47,14 +45,14 @@
       state: "skull_icon"
     - type: BodyPart
       partType: Head
-      size: 7
-      compatibility: Biological
     - type: Input
       context: "human"
     - type: MovementSpeedModifier
       baseWalkSpeed: 0
       baseSprintSpeed: 0
     - type: Speech
+    - type: SkeletonAccent
+    - type: Actions
     - type: Vocal
       maleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
       femaleScream: /Audio/Voice/Skeleton/skeleton_scream.ogg
@@ -64,7 +62,6 @@
         proper: true
     - type: Examiner
     - type: DoAfter
-    - type: Actions
     - type: MobState
       thresholds:
         0: Alive
@@ -87,8 +84,6 @@
       state: "l_arm"
     - type: BodyPart
       partType: Arm
-      size: 5
-      compatibility: Biological
       symmetry: Left
 
 - type: entity
@@ -105,8 +100,6 @@
       state: "r_arm"
     - type: BodyPart
       partType: Arm
-      size: 5
-      compatibility: Biological
       symmetry: Right
 
 - type: entity
@@ -123,8 +116,6 @@
       state: "l_hand"
     - type: BodyPart
       partType: Hand
-      size: 3
-      compatibility: Biological
       symmetry: Left
 
 - type: entity
@@ -141,8 +132,6 @@
       state: "r_hand"
     - type: BodyPart
       partType: Hand
-      size: 3
-      compatibility: Biological
       symmetry: Right
 
 - type: entity
@@ -159,7 +148,8 @@
       state: "l_leg"
     - type: BodyPart
       partType: Leg
-      size: 6
+      symmetry: Left
+    - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegSkeleton
@@ -175,9 +165,8 @@
       state: "r_leg"
     - type: BodyPart
       partType: Leg
-      size: 6
-      compatibility: Biological
       symmetry: Right
+    - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootSkeleton
@@ -193,8 +182,6 @@
       state: "l_foot"
     - type: BodyPart
       partType: Foot
-      size: 2
-      compatibility: Biological
       symmetry: Left
 
 - type: entity
@@ -211,6 +198,4 @@
       state: "r_foot"
     - type: BodyPart
       partType: Foot
-      size: 2
-      compatibility: Biological
       symmetry: Right

@@ -50,17 +50,19 @@ public sealed class ChatUIController : UIController
     public const char AliasLocal = '.';
     public const char AliasConsole = '/';
     public const char AliasDead = '\\';
+    public const char AliasLOOC = '(';
     public const char AliasOOC = '[';
     public const char AliasEmotes = '@';
     public const char AliasAdmin = ']';
     public const char AliasRadio = ';';
     public const char AliasWhisper = ',';
 
-    private static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
+    public static readonly Dictionary<char, ChatSelectChannel> PrefixToChannel = new()
     {
         {AliasLocal, ChatSelectChannel.Local},
         {AliasWhisper, ChatSelectChannel.Whisper},
         {AliasConsole, ChatSelectChannel.Console},
+        {AliasLOOC, ChatSelectChannel.LOOC},
         {AliasOOC, ChatSelectChannel.OOC},
         {AliasEmotes, ChatSelectChannel.Emotes},
         {AliasAdmin, ChatSelectChannel.Admin},
@@ -68,7 +70,7 @@ public sealed class ChatUIController : UIController
         {AliasDead, ChatSelectChannel.Dead}
     };
 
-    private static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes =
+    public static readonly Dictionary<ChatSelectChannel, char> ChannelPrefixes =
         PrefixToChannel.ToDictionary(kv => kv.Value, kv => kv.Key);
 
     /// <summary>
@@ -107,6 +109,7 @@ public sealed class ChatUIController : UIController
         = new();
 
     private readonly HashSet<ChatBox> _chats = new();
+    public IReadOnlySet<ChatBox> Chats => _chats;
 
     /// <summary>
     ///     The max amount of characters an entity can send in one message
@@ -119,7 +122,7 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    public readonly List<StoredChatMessage> History = new();
+    public readonly List<ChatMessage> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -140,7 +143,7 @@ public sealed class ChatUIController : UIController
     public event Action<ChatChannel>? FilterableChannelsChanged;
     public event Action<ChatSelectChannel>? SelectableChannelsChanged;
     public event Action<ChatChannel, int?>? UnreadMessageCountsUpdated;
-    public event Action<StoredChatMessage>? MessageAdded;
+    public event Action<ChatMessage>? MessageAdded;
 
     public override void Initialize()
     {
@@ -283,7 +286,7 @@ public sealed class ChatUIController : UIController
         UpdateChannelPermissions();
     }
 
-    private void AddSpeechBubble(MsgChatMessage msg, SpeechBubble.SpeechType speechType)
+    private void AddSpeechBubble(ChatMessage msg, SpeechBubble.SpeechType speechType)
     {
         if (!_entities.EntityExists(msg.SenderEntity))
         {
@@ -291,7 +294,8 @@ public sealed class ChatUIController : UIController
             return;
         }
 
-        var messages = SplitMessage(FormattedMessage.RemoveMarkup(msg.Message));
+        // msg.Message should be the string that a user sent over text, without any added markup.
+        var messages = SplitMessage(msg.Message);
 
         foreach (var message in messages)
         {
@@ -369,23 +373,6 @@ public sealed class ChatUIController : UIController
         return channelSelector.ToString();
     }
 
-    public static char GetChannelSelectorPrefix(ChatSelectChannel channelSelector)
-    {
-        return channelSelector switch
-        {
-            ChatSelectChannel.Local => '.',
-            ChatSelectChannel.Whisper => ',',
-            ChatSelectChannel.Radio => ';',
-            ChatSelectChannel.LOOC => '(',
-            ChatSelectChannel.OOC => '[',
-            ChatSelectChannel.Emotes => '@',
-            ChatSelectChannel.Dead => '\\',
-            ChatSelectChannel.Admin => ']',
-            ChatSelectChannel.Console => '/',
-            _ => ' '
-        };
-    }
-
     private void UpdateChannelPermissions()
     {
         CanSendChannels = default;
@@ -436,7 +423,7 @@ public sealed class ChatUIController : UIController
             CanSendChannels |= ChatSelectChannel.Admin;
         }
 
-        SelectableChannels = CanSendChannels & ~ChatSelectChannel.Console;
+        SelectableChannels = CanSendChannels;
 
         // Necessary so that we always have a channel to fall back to.
         DebugTools.Assert((CanSendChannels & ChatSelectChannel.OOC) != 0, "OOC must always be available");
@@ -649,18 +636,19 @@ public sealed class ChatUIController : UIController
         box.ChatInput.Input.ReleaseKeyboardFocus();
     }
 
-    private void OnChatMessage(MsgChatMessage msg)
+    private void OnChatMessage(MsgChatMessage message) => ProcessChatMessage(message.Message);
+
+    public void ProcessChatMessage(ChatMessage msg)
     {
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
         {
-            var storedMessage = new StoredChatMessage(msg);
-            History.Add(storedMessage);
-            MessageAdded?.Invoke(storedMessage);
+            History.Add(msg);
+            MessageAdded?.Invoke(msg);
 
-            if (!storedMessage.Read)
+            if (!msg.Read)
             {
-                _sawmill.Debug($"Message filtered: {storedMessage.Channel}: {storedMessage.Message}");
+                _sawmill.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
                 if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
                     count = 0;
 

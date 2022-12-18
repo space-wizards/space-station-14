@@ -690,3 +690,19 @@
     Medicine:
       effects:
       - !type:ChemHealEyeDamage
+
+- type: reagent
+  id: Cognizine
+  name: reagent-name-cognizine
+  desc: reagent-desc-cognizine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
+  color: "#b50ee8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5

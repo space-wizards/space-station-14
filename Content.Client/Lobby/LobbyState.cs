@@ -128,7 +128,8 @@ namespace Content.Client.Lobby
             if (_gameTicker.IsGameStarted)
             {
                 _lobby!.StartTime.Text = string.Empty;
-                _lobby!.StationTime.Text = Loc.GetString("lobby-state-player-status-station-time", ("stationTime", _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan).ToString("hh\\:mm")));
+                var roundTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+                _lobby!.StationTime.Text = Loc.GetString("lobby-state-player-status-round-time", ("hours", roundTime.Hours), ("minutes", roundTime.Minutes));
                 return;
             }
 
@@ -152,7 +153,7 @@ namespace Content.Client.Lobby
                 }
             }
 
-            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-station-time", ("stationTime", TimeSpan.Zero.ToString("hh\\:mm")));
+            _lobby!.StationTime.Text =  Loc.GetString("lobby-state-player-status-round-not-started");
             _lobby!.StartTime.Text = Loc.GetString("lobby-state-round-start-countdown-text", ("timeLeft", text));
         }
 
@@ -179,7 +180,7 @@ namespace Content.Client.Lobby
             else
             {
                 _lobby!.StartTime.Text = string.Empty;
-                _lobby!.ReadyButton.Text = Loc.GetString("lobby-state-ready-button-ready-up-state");
+                _lobby!.ReadyButton.Text = Loc.GetString(_lobby!.ReadyButton.Pressed ? "lobby-state-player-status-ready": "lobby-state-player-status-not-ready");
                 _lobby!.ReadyButton.ToggleMode = true;
                 _lobby!.ReadyButton.Disabled = false;
                 _lobby!.ReadyButton.Pressed = _gameTicker.AreWeReady;

@@ -192,6 +192,8 @@
       - id: ClothingShoesBootsJack
       - id: CigarGoldCase
         prob: 0.50
+      - id: PlushieSharkPink
+        prob: 0.1
       - id: DoorRemoteSecurity
       - id: ClothingUniformJumpskirtHosFormal
       - id: ClothingUniformJumpsuitHosFormal

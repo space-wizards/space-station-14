@@ -1,6 +1,7 @@
 name: Update Wiki
 
 on:
+  workflow_dispatch:
   push:
     branches: [ master, jsondump ]
     paths:
@@ -18,37 +19,37 @@ jobs:
     name: Build and Publish JSON blobs to wiki
     runs-on: ubuntu-latest
 
-    steps:    
+    steps:
     - name: Checkout Master
       uses: actions/checkout@v2
-      
+
     - name: Setup Submodule
       run: |
         git submodule update --init --recursive
-    
+
     - name: Pull Engine Updates
       uses: space-wizards/submodule-dependency@v0.1.5
-    
+
     - name: Update Engine Submodules
       run: |
         cd RobustToolbox/
         git submodule update --init --recursive
-    
+
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.100
-   
+
     - name: Install Dependencies
       run: dotnet restore
-    
+
     - name: Build Project
       run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
-    
+
     - name: Generate JSON blobs for prototypes
       run: dotnet ./bin/Content.Server/Content.Server.dll --cvar autogen.destination_file=prototypes.json
       continue-on-error: true
-    
+
     - name: Upload chem_prototypes.json to wiki
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:
@@ -58,7 +59,7 @@ jobs:
         api_url: https://wiki.spacestation14.io/w/api.php
         username: ${{ secrets.WIKI_BOT_USER }}
         password: ${{ secrets.WIKI_BOT_PASS }}
-    
+
     - name: Upload react_prototypes.json to wiki
       uses: jtmullen/mediawiki-edit-action@v0.1.1
       with:

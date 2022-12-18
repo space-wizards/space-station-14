@@ -3,6 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.SubFloor
@@ -30,6 +31,13 @@ namespace Content.Shared.SubFloor
             // Like 80% sure this doesn't need to handle re-anchoring.
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
+        }
+
+        private void OnAttackAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingAttackedAttemptEvent args)
+        {
+            if (component.BlockInteractions && component.IsUnderCover)
+                args.Cancelled = true;
         }
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, GettingInteractedWithAttemptEvent args)
@@ -107,14 +115,14 @@ namespace Content.Shared.SubFloor
             UpdateAppearance(uid, component);
         }
 
-        public bool HasFloorCover(IMapGrid grid, Vector2i position)
+        public bool HasFloorCover(MapGridComponent grid, Vector2i position)
         {
             // TODO Redo this function. Currently wires on an asteroid are always "below the floor"
             var tileDef = (ContentTileDefinition) _tileDefinitionManager[grid.GetTileRef(position).Tile.TypeId];
             return !tileDef.IsSubFloor;
         }
 
-        private void UpdateTile(IMapGrid grid, Vector2i position)
+        private void UpdateTile(MapGridComponent grid, Vector2i position)
         {
             var covered = HasFloorCover(grid, position);
 

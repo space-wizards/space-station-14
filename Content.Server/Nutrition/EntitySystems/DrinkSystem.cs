@@ -55,7 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, GetVerbsEvent<AlternativeVerb>>(AddDrinkVerb);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<DrinkComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-            SubscribeLocalEvent<SharedBodyComponent, DrinkEvent>(OnDrink);
+            SubscribeLocalEvent<BodyComponent, DrinkEvent>(OnDrink);
             SubscribeLocalEvent<DrinkCancelledEvent>(OnDrinkCancelled);
         }
 
@@ -225,7 +225,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return true;
             }
 
-            if (!EntityManager.HasComponent<SharedBodyComponent>(target))
+            if (!EntityManager.HasComponent<BodyComponent>(target))
                 return false;
 
             if (!drink.Opened)
@@ -261,6 +261,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 // logging
                 _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
+            else
+            {
+                // log voluntary drinking
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+            }
 
             drink.CancelToken = new CancellationTokenSource();
             var moveBreak = user != target;
@@ -286,7 +291,7 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         ///     Raised directed at a victim when someone has force fed them a drink.
         /// </summary>
-        private void OnDrink(EntityUid uid, SharedBodyComponent body, DrinkEvent args)
+        private void OnDrink(EntityUid uid, BodyComponent body, DrinkEvent args)
         {
             if (args.Drink.Deleted)
                 return;
@@ -297,7 +302,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceDrink = uid != args.User;
 
-            if (!_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(uid, out var stomachs, body))
+            if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs, body))
             {
                 _popupSystem.PopupEntity(
                     forceDrink ?
@@ -351,6 +356,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
                     args.User, Filter.Entities(args.User));
+
+                // log successful forced drinking
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
             }
             else
             {
@@ -359,6 +367,9 @@ namespace Content.Server.Nutrition.EntitySystems
                     Filter.Entities(args.User));
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User));
+
+                // log successful voluntary drinking
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(args.Drink.Owner):drink}");
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
@@ -380,8 +391,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User, out SharedBodyComponent? body) ||
-                !_bodySystem.TryGetComponentsOnMechanisms<StomachComponent>(ev.User, out var stomachs, body))
+                !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
+                !_bodySystem.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
             if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())

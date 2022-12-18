@@ -1,10 +1,9 @@
+using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Interaction;
-using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -15,7 +14,6 @@ using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -30,7 +28,6 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using SharpZstd.Interop;
 
 namespace Content.Server.Climbing;
 
@@ -39,6 +36,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
@@ -286,9 +284,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
 
         if (!HasComp<ClimbingComponent>(user)
-            || !TryComp(user, out SharedBodyComponent? body)
-            || !body.HasPartOfType(BodyPartType.Leg)
-            || !body.HasPartOfType(BodyPartType.Foot))
+            || !TryComp(user, out BodyComponent? body)
+            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;

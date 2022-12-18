@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris at commit 4e0bbe682d0a00192d24708fdb7031008aa03f18 and bee station at commit https://github.com/BeeStation/BeeStation-Hornet/commit/13dd5ac712385642574138f6d7b30eea7c2fab9c, except numerical signs which were created by discord: brainfood#7460",
     "states": [
         {
             "name": "ai",
@@ -1269,6 +1269,86 @@
         },
         {
             "name": "atmominsky",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "one",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "two",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "three",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "four",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "five",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "six",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "seven",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "eight",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "nine",
+            "delays": [
+                [
+                    1
+                ]
+            ]
+        },
+        {
+            "name": "zero",
             "delays": [
                 [
                     1

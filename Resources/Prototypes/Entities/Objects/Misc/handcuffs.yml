@@ -15,6 +15,11 @@
   - type: Tag
     tags:
     - Handcuffs
+  - type: MeleeWeapon
+    animation: WeaponArcDisarm
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   name: makeshift handcuffs

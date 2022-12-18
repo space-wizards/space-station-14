@@ -1,10 +1,13 @@
 ﻿using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Body.Components;
+using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
-using Content.Shared.Materials;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Stack;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Materials;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -21,6 +24,9 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    [Dependency] private readonly BodySystem _bodySystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -28,6 +34,7 @@ public sealed class PricingSystem : EntitySystem
         SubscribeLocalEvent<StaticPriceComponent, PriceCalculationEvent>(CalculateStaticPrice);
         SubscribeLocalEvent<StackPriceComponent, PriceCalculationEvent>(CalculateStackPrice);
         SubscribeLocalEvent<MobPriceComponent, PriceCalculationEvent>(CalculateMobPrice);
+        SubscribeLocalEvent<SolutionContainerManagerComponent, PriceCalculationEvent>(CalculateSolutionPrice);
 
         _consoleHost.RegisterCommand("appraisegrid",
             "Calculates the total value of the given grids.",
@@ -59,7 +66,7 @@ public sealed class PricingSystem : EntitySystem
 
             List<(double, EntityUid)> mostValuable = new();
 
-            var value = AppraiseGrid(mapGrid.GridEntityId, null, (uid, price) =>
+            var value = AppraiseGrid(mapGrid.Owner, null, (uid, price) =>
             {
                 mostValuable.Add((price, uid));
                 mostValuable.Sort((i1, i2) => i2.Item1.CompareTo(i1.Item1));
@@ -84,8 +91,8 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partList = body.Slots.ToList();
-        var totalPartsPresent = partList.Sum(x => x.Part != null ? 1 : 0);
+        var partList = _bodySystem.GetBodyAllSlots(uid, body).ToList();
+        var totalPartsPresent = partList.Sum(x => x.Child != null ? 1 : 0);
         var totalParts = partList.Count;
 
         var partRatio = totalPartsPresent / (double) totalParts;
@@ -103,6 +110,22 @@ public sealed class PricingSystem : EntitySystem
         }
 
         args.Price += stack.Count * component.Price;
+    }
+
+    private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
+    {
+        var price = 0f;
+
+        foreach (var solution in component.Solutions.Values)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                    continue;
+                price += (float) reagent.Quantity * reagentProto.PricePerUnit;
+            }
+        }
+        args.Price += price;
     }
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
