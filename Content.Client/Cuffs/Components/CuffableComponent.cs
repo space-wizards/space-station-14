@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Humanoid;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
@@ -52,6 +52,9 @@ namespace Content.Client.Cuffs.Components
                     }
                 }
             }
+
+            var ev = new CuffedStateChangeEvent();
+            _entityManager.EventBus.RaiseLocalEvent(Owner, ref ev);
         }
 
         protected override void OnRemove()

@@ -11,8 +11,9 @@ namespace Content.Shared.Construction.Conditions
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
-            var tagSystem = EntitySystem.Get<TagSystem>();
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Anchored))
+            var tagSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TagSystem>();
+
+            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static))
             {
                 if (tagSystem.HasTag(entity, "Window"))
                     return false;
@@ -21,9 +22,9 @@ namespace Content.Shared.Construction.Conditions
             return true;
         }
 
-        public ConstructionGuideEntry? GenerateGuideEntry()
+        public ConstructionGuideEntry GenerateGuideEntry()
         {
-            return new ConstructionGuideEntry()
+            return new ConstructionGuideEntry
             {
                 Localization = "construction-step-condition-no-windows-in-tile"
             };

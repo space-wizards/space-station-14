@@ -1,0 +1,31 @@
+﻿<pda:PDAWindow  xmlns="https://spacestation14.io"
+                xmlns:pda="clr-namespace:Content.Client.PDA"
+                MouseFilter="Stop">
+    <PanelContainer Name="Background" Access="Public" StyleClasses="PDABackgroundRect" />
+    <!-- The negative markin fixes a gap between the window edges and the decorative panel -->
+    <PanelContainer Name="AccentH" Margin="-1 170 -2 170" Access="Public" StyleClasses="PDABackground" />
+    <PanelContainer Name="AccentV" Margin="220 -1 220 -1" Access="Public" StyleClasses="PDABackground" />
+    <PanelContainer Name="Border" StyleClasses="PDABorderRect" />
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+        <!--Heading-->
+        <BoxContainer SetHeight="26" Margin="4 2 8 0" Orientation="Horizontal">
+            <Control HorizontalExpand="True"/>
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"
+                           VerticalAlignment="Center" Margin="0 4 4 0"/>
+        </BoxContainer>
+        <!--Content-->
+        <Control Margin="18 0" RectClipContent="True" VerticalExpand="true"
+                 HorizontalExpand="True">
+            <PanelContainer Name="ContentBorder" StyleClasses="PDABackground"/>
+            <Control Margin="3 3">
+                <PanelContainer Name="ContentBackground" StyleClasses="PDAContentBackground"/>
+                <BoxContainer Access="Public" Name="ContentsContainer" Orientation="Vertical" StyleClasses="PDAContent"/>
+
+            </Control>
+        </Control>
+        <!--Footer-->
+        <BoxContainer Orientation="Horizontal" SetHeight="28">
+            <Label Text="Personal Digital Assistant" StyleClasses="PDAWindowFooterText" Margin="32 0 0 6"/>
+        </BoxContainer>
+    </BoxContainer>
+</pda:PDAWindow>

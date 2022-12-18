@@ -10,6 +10,9 @@
     {
       "name": "icon"
     },
+	{
+	  "name": "icon_open"
+	},
     {
       "name": "inhand-right",
       "directions": 4,

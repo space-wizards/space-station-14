@@ -44,8 +44,6 @@ namespace Content.Server.Mind.Commands
 
         public static void MakeSentient(EntityUid uid, IEntityManager entityManager, bool allowMovement = true, bool allowSpeech = true)
         {
-            entityManager.RemoveComponent<NPCComponent>(uid);
-
             entityManager.EnsureComponent<MindComponent>(uid);
             if (allowMovement)
             {

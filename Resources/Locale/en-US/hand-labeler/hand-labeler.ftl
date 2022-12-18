@@ -9,3 +9,7 @@ hand-labeler-successfully-removed = Removed label successfully
 
 # Appended to the description of an object with a label on input
 hand-labeler-has-label = This object has a label on it, which reads '{$label}'
+
+# Verb text
+hand-labeler-remove-label-text = Remove label
+hand-labeler-add-label-text = Apply label

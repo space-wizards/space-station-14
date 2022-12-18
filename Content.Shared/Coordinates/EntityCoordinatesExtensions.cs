@@ -1,32 +1,38 @@
 ﻿using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Shared.Coordinates
 {
     public static class EntityCoordinatesExtensions
     {
+        public static EntityCoordinates ToCoordinates(this EntityUid id)
+        {
+            return new EntityCoordinates(id, new Vector2(0, 0));
+        }
+
         public static EntityCoordinates ToCoordinates(this EntityUid id, Vector2 offset)
         {
-            return new(id, offset);
+            return new EntityCoordinates(id, offset);
         }
 
         public static EntityCoordinates ToCoordinates(this EntityUid id, float x, float y)
         {
-            return new(id, x, y);
+            return new EntityCoordinates(id, x, y);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid, Vector2 offset)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, Vector2 offset)
         {
-            return ToCoordinates(grid.GridEntityId, offset);
+            return ToCoordinates(grid.Owner, offset);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid, float x, float y)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
         {
-            return ToCoordinates(grid.GridEntityId, x, y);
+            return ToCoordinates(grid.Owner, x, y);
         }
 
-        public static EntityCoordinates ToCoordinates(this IMapGrid grid)
+        public static EntityCoordinates ToCoordinates(this MapGridComponent grid)
         {
-            return ToCoordinates(grid.GridEntityId, Vector2.Zero);
+            return ToCoordinates(grid.Owner, Vector2.Zero);
         }
     }
 }

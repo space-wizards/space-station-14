@@ -12,6 +12,7 @@ using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
@@ -342,9 +343,9 @@ namespace Content.Server.ParticleAccelerator.Components
             var xform = _entMan.GetComponent<TransformComponent>(Owner);
 
             // Find fuel chamber first by scanning cardinals.
-            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out IMapGridComponent? grid))
+            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
             {
-                foreach (var maybeFuel in grid.Grid.GetCardinalNeighborCells(xform.Coordinates))
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(xform.Coordinates))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
@@ -662,7 +663,7 @@ namespace Content.Server.ParticleAccelerator.Components
             appearanceComponent.SetData(ParticleAcceleratorVisuals.VisualState, state);
         }
 
-        public override void Rotated()
+        public override void Moved()
         {
             // We rotate OURSELVES when scanning for parts, so don't actually run rescan on rotate.
             // That would be silly.

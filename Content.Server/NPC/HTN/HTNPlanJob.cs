@@ -131,7 +131,7 @@ public sealed class HTNPlanJob : Job<HTNPlan>
             return false;
         }
 
-        var (valid, effects) = await primitive.Operator.Plan(blackboard);
+        var (valid, effects) = await primitive.Operator.Plan(blackboard, Cancellation);
 
         if (!valid)
             return false;

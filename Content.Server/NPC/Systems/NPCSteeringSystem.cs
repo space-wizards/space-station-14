@@ -1,48 +1,89 @@
 using System.Linq;
 using System.Threading;
-using Content.Server.CPUJob.JobQueues;
+using System.Threading.Tasks;
+using Content.Server.Administration.Managers;
+using Content.Server.Doors.Systems;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.Events;
 using Content.Server.NPC.Pathfinding;
-using Content.Server.NPC.Pathfinding.Pathfinders;
-using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
+using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Systems;
+using Content.Shared.NPC;
+using Content.Shared.NPC.Events;
+using Content.Shared.Weapons.Melee;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Random;
+using Robust.Shared.Threading;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems
 {
-    public sealed partial class NPCSteeringSystem : EntitySystem
+    public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     {
-        // http://www.red3d.com/cwr/papers/1999/gdc99steer.html for a steering overview
+        /*
+         * We use context steering to determine which way to move.
+         * This involves creating an array of possible directions and assigning a value for the desireability of each direction.
+         *
+         * There's multiple ways to implement this, e.g. you can average all directions, or you can choose the highest direction
+         * , or you can remove the danger map entirely and only having an interest map (AKA game endeavour).
+         * See http://www.gameaipro.com/GameAIPro2/GameAIPro2_Chapter18_Context_Steering_Behavior-Driven_Steering_at_the_Macro_Scale.pdf
+         * (though in their case it was for an F1 game so used context steering across the width of the road).
+         */
+
+        [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private readonly IDependencyCollection _dependencies = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly IParallelManager _parallel = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly DoorSystem _doors = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
+        [Dependency] private readonly FactionSystem _faction = default!;
+        // [Dependency] private readonly MetaDataSystem _metadata = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
+        [Dependency] private readonly SharedMoverController _mover = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         // This will likely get moved onto an abstract pathfinding node that specifies the max distance allowed from the coordinate.
-        private const float TileTolerance = 0.4f;
+        private const float TileTolerance = 0.40f;
 
         private bool _enabled;
+
+        private bool _pathfinding = true;
+
+        public static readonly Vector2[] Directions = new Vector2[InterestDirections];
+
+        private readonly HashSet<ICommonSession> _subscribedSessions = new();
+
+        private object _obstacles = new();
 
         public override void Initialize()
         {
             base.Initialize();
-            InitializeAvoidance();
-            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+
+            for (var i = 0; i < InterestDirections; i++)
+            {
+                Directions[i] = new Angle(InterestRadians * i).ToVec();
+            }
+
+            UpdatesBefore.Add(typeof(SharedPhysicsSystem));
+            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
-        }
-
-        private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
-        {
-            component.PathfindToken?.Cancel();
+            SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
         }
 
         private void SetNPCEnabled(bool obj)
@@ -58,32 +99,76 @@ namespace Content.Server.NPC.Systems
             _enabled = obj;
         }
 
+        private void SetNPCPathfinding(bool value)
+        {
+            _pathfinding = value;
+
+            if (!_pathfinding)
+            {
+                foreach (var comp in EntityQuery<NPCSteeringComponent>(true))
+                {
+                    comp.PathfindToken?.Cancel();
+                    comp.PathfindToken = null;
+                }
+            }
+        }
+
         public override void Shutdown()
         {
             base.Shutdown();
-            ShutdownAvoidance();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+        }
+
+        private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
+        {
+            if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+                return;
+
+            if (msg.Enabled)
+                _subscribedSessions.Add(args.SenderSession);
+            else
+                _subscribedSessions.Remove(args.SenderSession);
+        }
+
+        private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
+        {
+            // Cancel any active pathfinding jobs as they're irrelevant.
+            component.PathfindToken?.Cancel();
         }
 
         /// <summary>
         /// Adds the AI to the steering system to move towards a specific target
         /// </summary>
-        public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates)
+        public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent? component = null)
         {
-            if (TryComp<NPCSteeringComponent>(uid, out var comp))
+            if (Resolve(uid, ref component, false))
             {
-                comp.PathfindToken?.Cancel();
-                comp.PathfindToken = null;
-                comp.CurrentPath.Clear();
+                component.PathfindToken?.Cancel();
+                component.PathfindToken = null;
+                component.CurrentPath.Clear();
             }
             else
             {
-                comp = AddComp<NPCSteeringComponent>(uid);
+                component = AddComp<NPCSteeringComponent>(uid);
+                component.Flags = _pathfindingSystem.GetFlags(uid);
             }
 
-            EnsureComp<NPCRVOComponent>(uid);
-            comp.Coordinates = coordinates;
-            return comp;
+            component.Coordinates = coordinates;
+            return component;
+        }
+
+        /// <summary>
+        /// Attempts to register the entity. Does nothing if the coordinates already registered.
+        /// </summary>
+        public bool TryRegister(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent? component = null)
+        {
+            if (Resolve(uid, ref component, false) && component.Coordinates.Equals(coordinates))
+            {
+                return false;
+            }
+
+            Register(uid, coordinates, component);
+            return true;
         }
 
         /// <summary>
@@ -101,8 +186,6 @@ namespace Content.Server.NPC.Systems
 
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
-            component.Pathfind = null;
-            RemComp<NPCRVOComponent>(uid);
             RemComp<NPCSteeringComponent>(uid);
         }
 
@@ -116,19 +199,51 @@ namespace Content.Server.NPC.Systems
             // Not every mob has the modifier component so do it as a separate query.
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
+            var xformQuery = GetEntityQuery<TransformComponent>();
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
-
-            // TODO: Do this in parallel. This will require pathfinder refactor to not use jobqueue.
-            foreach (var (steering, _, mover, xform) in npcs)
+            var options = new ParallelOptions
             {
-                Steer(steering, mover, xform, modifierQuery, bodyQuery, frameTime);
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
+
+            Parallel.For(0, npcs.Length, options, i =>
+            {
+                var (steering, _, mover, xform) = npcs[i];
+
+                Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
+                steering.LastSteer = mover.CurTickSprintMovement;
+            });
+
+            if (_subscribedSessions.Count > 0)
+            {
+                var data = new List<NPCSteeringDebugData>(npcs.Length);
+
+                foreach (var (steering, _, mover, _) in npcs)
+                {
+                    data.Add(new NPCSteeringDebugData(
+                        mover.Owner,
+                        mover.CurTickSprintMovement,
+                        steering.Interest,
+                        steering.Danger,
+                        steering.DangerPoints));
+                }
+
+                var filter = Filter.Empty();
+                filter.AddPlayers(_subscribedSessions);
+
+                RaiseNetworkEvent(new NPCSteeringDebugEvent(data), filter);
             }
         }
 
-        private void SetDirection(InputMoverComponent component, Vector2 value)
+        private void SetDirection(InputMoverComponent component, NPCSteeringComponent steering, Vector2 value, bool clear = true)
         {
+            if (clear && value.Equals(Vector2.Zero))
+            {
+                steering.CurrentPath.Clear();
+            }
+
             component.CurTickSprintMovement = value;
             component.LastInputTick = _timing.CurTick;
             component.LastInputSubTick = ushort.MaxValue;
@@ -143,261 +258,168 @@ namespace Content.Server.NPC.Systems
             TransformComponent xform,
             EntityQuery<MovementSpeedModifierComponent> modifierQuery,
             EntityQuery<PhysicsComponent> bodyQuery,
+            EntityQuery<TransformComponent> xformQuery,
             float frameTime)
         {
-            var ourCoordinates = xform.Coordinates;
-            var destinationCoordinates = steering.Coordinates;
+            IoCManager.InitThread(_dependencies, replaceExisting: true);
 
-            // We've arrived, nothing else matters.
-            if (xform.Coordinates.TryDistance(EntityManager, destinationCoordinates, out var distance) &&
-                distance <= steering.Range)
+            if (Deleted(steering.Coordinates.EntityId))
             {
-                SetDirection(mover, Vector2.Zero);
-                steering.Status = SteeringStatus.InRange;
+                SetDirection(mover, steering, Vector2.Zero);
+                steering.Status = SteeringStatus.NoPath;
+                return;
+            }
+
+            // No path set from pathfinding or the likes.
+            if (steering.Status == SteeringStatus.NoPath)
+            {
+                SetDirection(mover, steering, Vector2.Zero);
                 return;
             }
 
             // Can't move at all, just noop input.
             if (!mover.CanMove)
             {
-                SetDirection(mover, Vector2.Zero);
-                steering.Status = SteeringStatus.Moving;
-                return;
-            }
-
-            // If we were pathfinding then try to update our path.
-            if (steering.Pathfind != null)
-            {
-                switch (steering.Pathfind.Status)
-                {
-                    case JobStatus.Waiting:
-                    case JobStatus.Running:
-                    case JobStatus.Pending:
-                    case JobStatus.Paused:
-                        break;
-                    case JobStatus.Finished:
-                        steering.CurrentPath.Clear();
-
-                        if (steering.Pathfind.Result != null)
-                        {
-                            PrunePath(ourCoordinates, steering.Pathfind.Result);
-
-                            foreach (var node in steering.Pathfind.Result)
-                            {
-                                steering.CurrentPath.Enqueue(node);
-                            }
-                        }
-
-                        steering.Pathfind = null;
-                        steering.PathfindToken = null;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-            }
-
-            // Grab the target position, either the path or our end goal.
-            // TODO: Some situations we may not want to move at our target without a path.
-            var targetCoordinates = GetTargetCoordinates(steering);
-            var arrivalDistance = TileTolerance;
-
-            if (targetCoordinates.Equals(steering.Coordinates))
-            {
-                // What's our tolerance for arrival.
-                // If it's a pathfinding node it might be different to the destination.
-                arrivalDistance = steering.Range;
-            }
-
-            // Check if mapids match.
-            var targetMap = targetCoordinates.ToMap(EntityManager);
-            var ourMap = ourCoordinates.ToMap(EntityManager);
-
-            if (targetMap.MapId != ourMap.MapId)
-            {
-                SetDirection(mover, Vector2.Zero);
+                SetDirection(mover, steering, Vector2.Zero);
                 steering.Status = SteeringStatus.NoPath;
-                steering.CurrentTarget = targetCoordinates;
                 return;
             }
 
-            var direction = targetMap.Position - ourMap.Position;
+            // TODO: Pause time
+            // Need it on the paused event which needs an engine PR.
+            var nextSteer = steering.LastTimeSteer + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteerFrequency);
 
-            // Are we in range
-            if (direction.Length <= arrivalDistance)
+            if (nextSteer > _timing.CurTime)
             {
-                // It was just a node, not the target, so grab the next destination (either the target or next node).
-                if (steering.CurrentPath.Count > 0)
-                {
-                    steering.CurrentPath.Dequeue();
-
-                    // Alright just adjust slightly and grab the next node so we don't stop moving for a tick.
-                    // TODO: If it's the last node just grab the target instead.
-                    targetCoordinates = GetTargetCoordinates(steering);
-                    targetMap = targetCoordinates.ToMap(EntityManager);
-
-                    // Can't make it again.
-                    if (ourMap.MapId != targetMap.MapId)
-                    {
-                        SetDirection(mover, Vector2.Zero);
-                        steering.Status = SteeringStatus.NoPath;
-                        steering.CurrentTarget = targetCoordinates;
-                        return;
-                    }
-
-                    // Gonna resume now business as usual
-                    direction = targetMap.Position - ourMap.Position;
-                }
-                else
-                {
-                    // This probably shouldn't happen as we check above but eh.
-                    SetDirection(mover, Vector2.Zero);
-                    steering.Status = SteeringStatus.InRange;
-                    steering.CurrentTarget = targetCoordinates;
-                    return;
-                }
+                SetDirection(mover, steering, steering.LastSteer, false);
+                return;
             }
 
-            // Do we have no more nodes to follow OR has the target moved sufficiently? If so then re-path.
-            var needsPath = steering.CurrentPath.Count == 0;
+            steering.LastTimeSteer = _timing.CurTime;
+            var uid = mover.Owner;
+            var interest = steering.Interest;
+            var danger = steering.Danger;
+            var agentRadius = steering.Radius;
+            var worldPos = xform.WorldPosition;
+            var (layer, mask) = _physics.GetHardCollision(uid);
 
-            // TODO: Probably need partial planning support i.e. patch from the last node to where the target moved to.
-
-            if (!needsPath)
-            {
-                var lastNode = steering.CurrentPath.Last();
-                // I know this is bad and doesn't account for tile size
-                // However with the path I'm going to change it to return pathfinding nodes which include coordinates instead.
-                var lastCoordinate = new EntityCoordinates(lastNode.GridUid, (Vector2) lastNode.GridIndices + 0.5f);
-
-                if (lastCoordinate.TryDistance(EntityManager, steering.Coordinates, out var lastDistance) &&
-                    lastDistance > steering.RepathRange)
-                {
-                    needsPath = true;
-                }
-            }
-
-            // Request the new path.
-            if (needsPath && bodyQuery.TryGetComponent(steering.Owner, out var body))
-            {
-                RequestPath(steering, xform, body);
-            }
-
-            modifierQuery.TryGetComponent(steering.Owner, out var modifier);
+            // Use rotation relative to parent to rotate our context vectors by.
+            var offsetRot = -_mover.GetParentGridAngle(mover);
+            modifierQuery.TryGetComponent(uid, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
+            var tickMove = moveSpeed * frameTime;
+            var body = bodyQuery.GetComponent(uid);
+            var dangerPoints = steering.DangerPoints;
+            dangerPoints.Clear();
 
-            var input = direction.Normalized;
-
-            // If we're going to overshoot then... don't.
-            // TODO: For tile / movement we don't need to get bang on, just need to make sure we don't overshoot the far end.
-            var tickMovement = moveSpeed * frameTime;
-
-            if (tickMovement.Equals(0f))
+            for (var i = 0; i < InterestDirections; i++)
             {
-                SetDirection(mover, Vector2.Zero);
-                steering.Status = SteeringStatus.NoPath;
-                steering.CurrentTarget = targetCoordinates;
+                steering.Interest[i] = 0f;
+                steering.Danger[i] = 0f;
+            }
+
+            var ev = new NPCSteeringEvent(steering, interest, danger, agentRadius, offsetRot, worldPos);
+            RaiseLocalEvent(uid, ref ev);
+
+            if (steering.CanSeek && !TrySeek(uid, mover, steering, body, xform, offsetRot, moveSpeed, interest, bodyQuery,  frameTime))
+            {
+                SetDirection(mover, steering, Vector2.Zero);
                 return;
             }
+            DebugTools.Assert(!float.IsNaN(interest[0]));
 
-            // We may overshoot slightly but still be in the arrival distance which is okay.
-            var maxDistance = direction.Length + arrivalDistance;
+            // Avoid static objects like walls
+            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, tickMove, layer, mask, xform, danger, dangerPoints, bodyQuery, xformQuery);
+            DebugTools.Assert(!float.IsNaN(danger[0]));
 
-            if (tickMovement > maxDistance)
+            Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger, bodyQuery, xformQuery);
+
+            // Remove the danger map from the interest map.
+            var desiredDirection = -1;
+            var desiredValue = 0f;
+
+            for (var i = 0; i < InterestDirections; i++)
             {
-                input *= maxDistance / tickMovement;
-            }
+                var adjustedValue = Math.Clamp(interest[i] - danger[i], 0f, 1f);
 
-            // TODO: This isn't going to work for space.
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
-            {
-                input = (-grid.WorldRotation).RotateVec(input);
-            }
-
-            SetDirection(mover, input);
-            steering.CurrentTarget = targetCoordinates;
-        }
-
-        /// <summary>
-        /// We may be pathfinding and moving at the same time in which case early nodes may be out of date.
-        /// </summary>
-        /// <param name="coordinates">Our coordinates we are pruning from</param>
-        /// <param name="nodes">Path we're pruning</param>
-        public void PrunePath(EntityCoordinates coordinates, Queue<TileRef> nodes)
-        {
-            if (nodes.Count == 0)
-                return;
-
-            // Right now the pathfinder gives EVERY TILE back but ideally it won't someday, it'll just give straightline ones.
-            // For now, we just prune up until the closest node + 1 extra.
-            var closest = ((Vector2) nodes.Peek().GridIndices + 0.5f - coordinates.Position).Length;
-            // TODO: Need to handle multi-grid and stuff.
-
-            while (nodes.TryPeek(out var node))
-            {
-                // TODO: Tile size
-                var nodePosition = (Vector2) node.GridIndices + 0.5f;
-                var length = (coordinates.Position - nodePosition).Length;
-
-                if (length < closest)
+                if (adjustedValue > desiredValue)
                 {
-                    closest = length;
-                    nodes.Dequeue();
-                    continue;
+                    desiredDirection = i;
+                    desiredValue = adjustedValue;
                 }
-
-                nodes.Dequeue();
-                break;
             }
+
+            var resultDirection = Vector2.Zero;
+
+            if (desiredDirection != -1)
+            {
+                resultDirection = new Angle(desiredDirection * InterestRadians).ToVec();
+            }
+
+            DebugTools.Assert(!float.IsNaN(resultDirection.X));
+            SetDirection(mover, steering, resultDirection, false);
         }
 
-        /// <summary>
-        /// Get the coordinates we should be heading towards.
-        /// </summary>
-        private EntityCoordinates GetTargetCoordinates(NPCSteeringComponent steering)
+        private EntityCoordinates GetCoordinates(PathPoly poly)
         {
-            // Depending on what's going on we may return the target or a pathfind node.
+            if (!poly.IsValid())
+                return EntityCoordinates.Invalid;
 
-            // Even if we're at the last node may not be able to head to target in case we get stuck on a corner or the likes.
-            if (steering.CurrentPath.Count >= 1 && steering.CurrentPath.TryPeek(out var nextTarget))
-            {
-                return new EntityCoordinates(nextTarget.GridUid, (Vector2) nextTarget.GridIndices + 0.5f);
-            }
-
-            return steering.Coordinates;
+            return new EntityCoordinates(poly.GraphUid, poly.Box.Center);
         }
 
         /// <summary>
         /// Get a new job from the pathfindingsystem
         /// </summary>
-        private void RequestPath(NPCSteeringComponent steering, TransformComponent xform, PhysicsComponent? body)
+        private async void RequestPath(NPCSteeringComponent steering, TransformComponent xform, float targetDistance)
         {
             // If we already have a pathfinding request then don't grab another.
-            if (steering.Pathfind != null)
+            // If we're in range then just beeline them; this can avoid stutter stepping and is an easy way to look nicer.
+            if (steering.Pathfind || targetDistance < steering.RepathRange)
                 return;
 
-            if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
-                return;
+            // Short-circuit with no path.
+            var targetPoly = _pathfindingSystem.GetPoly(steering.Coordinates);
 
-            steering.PathfindToken = new CancellationTokenSource();
-            var startTile = grid.GetTileRef(xform.Coordinates);
-            var endTile = grid.GetTileRef(steering.Coordinates);
-            var collisionMask = 0;
-
-            if (body != null)
+            if (targetPoly != null && steering.Coordinates.Position.Equals(Vector2.Zero) && _interaction.InRangeUnobstructed(steering.Owner, steering.Coordinates.EntityId))
             {
-                collisionMask = body.CollisionMask;
+                steering.CurrentPath.Clear();
+                steering.CurrentPath.Enqueue(targetPoly);
+                return;
             }
 
-            var access = _accessReader.FindAccessTags(steering.Owner);
+            steering.PathfindToken = new CancellationTokenSource();
 
-            steering.Pathfind = _pathfindingSystem.RequestPath(new PathfindingArgs(
+            var flags = _pathfindingSystem.GetFlags(steering.Owner);
+
+            var result = await _pathfindingSystem.GetPathSafe(
                 steering.Owner,
-                access,
-                collisionMask,
-                startTile,
-                endTile,
-                steering.Range
-            ), steering.PathfindToken.Token);
+                xform.Coordinates,
+                steering.Coordinates,
+                steering.Range,
+                steering.PathfindToken.Token,
+                flags);
+
+            if (result.Result == PathResult.NoPath)
+            {
+                steering.CurrentPath.Clear();
+                steering.PathfindToken = null;
+                steering.FailedPathCount++;
+
+                if (steering.FailedPathCount >= NPCSteeringComponent.FailedPathLimit)
+                {
+                    steering.Status = SteeringStatus.NoPath;
+                }
+
+                return;
+            }
+
+            var targetPos = steering.Coordinates.ToMap(EntityManager);
+            var ourPos = xform.MapPosition;
+
+            PrunePath(ourPos, targetPos.Position - ourPos.Position, result.Path);
+            steering.CurrentPath = result.Path;
+            steering.PathfindToken = null;
         }
 
         // TODO: Move these to movercontroller

@@ -1,7 +1,6 @@
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
-using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -12,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Actions.Events;
+using Content.Shared.Weapons.Melee.Events;
 
 
 namespace Content.Server.Wieldable
@@ -37,7 +37,7 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
             SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
-            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
         private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
@@ -233,7 +233,7 @@ namespace Content.Server.Wieldable
                 AttemptUnwield(args.BlockingEntity, component, args.User);
         }
 
-        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
         {
             if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
             {

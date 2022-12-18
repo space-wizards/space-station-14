@@ -20,11 +20,6 @@ namespace Content.Shared.Construction.Steps
                 return typeof(ToolConstructionGraphStep);
             }
 
-            if (node.Has("prototype"))
-            {
-                return typeof(PrototypeConstructionGraphStep);
-            }
-
             if (node.Has("component"))
             {
                 return typeof(ComponentConstructionGraphStep);
@@ -47,7 +42,8 @@ namespace Content.Shared.Construction.Steps
             MappingDataNode node,
             IDependencyCollection dependencies,
             bool skipHook,
-            ISerializationContext? context = null, ConstructionGraphStep? _ = null)
+            ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<ConstructionGraphStep>? instanceProvider = null)
         {
             var type = GetType(node) ??
                        throw new ArgumentException(
@@ -62,7 +58,8 @@ namespace Content.Shared.Construction.Steps
         {
             var type = GetType(node);
 
-            if (type == null) return new ErrorNode(node, "No construction graph step type found.", true);
+            if (type == null)
+                return new ErrorNode(node, "No construction graph step type found.");
 
             return serializationManager.ValidateNode(type, node, context);
         }

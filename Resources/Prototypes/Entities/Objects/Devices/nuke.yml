@@ -18,11 +18,12 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 80 #It has wheels and bluespace tech to make it lighter.
       mask:
       - MachineMask
       layer:
       - HalfWallLayer
+  - type: NukeLabel
   - type: Nuke
     explosionType: Default
     maxIntensity: 100
@@ -69,6 +70,7 @@
   suffix: keg
   description: You probably shouldn't stick around to see if this is armed. It has a tap on the side.
   components:
+  - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
     netsync: false
@@ -80,7 +82,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.45
-      mass: 150
+      density: 80
       mask:
       - TabletopMachineMask
       layer:

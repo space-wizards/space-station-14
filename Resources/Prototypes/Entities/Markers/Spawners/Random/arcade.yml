@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Structures/Machines/arcade.rsi/icon.png
+      - sprite: Structures/Machines/arcade.rsi
+        state: icon
   - type: RandomSpawner
     prototypes:
       - BlockGameArcade

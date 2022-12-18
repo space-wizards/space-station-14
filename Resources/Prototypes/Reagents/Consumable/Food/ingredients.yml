@@ -155,12 +155,14 @@
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:
+    Food:
+      effects:
+        - !type:SatiateHunger # spicy foods satiate hunger better
+          factor: 1.5
     Poison:
       effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Caustic: 0.5
+        - !type:AdjustTemperature
+          amount: 250 # thermal energy, not temp
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold

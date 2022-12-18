@@ -51,7 +51,7 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ThrusterComponent, PowerChangedEvent>(OnPowerChange);
             SubscribeLocalEvent<ThrusterComponent, AnchorStateChangedEvent>(OnAnchorChange);
             SubscribeLocalEvent<ThrusterComponent, ReAnchorEvent>(OnThrusterReAnchor);
-            SubscribeLocalEvent<ThrusterComponent, RotateEvent>(OnRotate);
+            SubscribeLocalEvent<ThrusterComponent, MoveEvent>(OnRotate);
             SubscribeLocalEvent<ThrusterComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<ThrusterComponent, StartCollideEvent>(OnStartCollide);
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
@@ -64,9 +64,7 @@ namespace Content.Server.Shuttles.Systems
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
         {
             // Powered is already handled by other power components
-            var enabled = Loc.GetString("thruster-comp-enabled",
-                ("enabledColor", component.Enabled ? "green": "red"),
-                ("enabled", component.Enabled ? "on": "off"));
+            var enabled = Loc.GetString(component.Enabled ? "thruster-comp-enabled" : "thruster-comp-disabled");
 
             args.PushMarkup(enabled);
 
@@ -81,9 +79,7 @@ namespace Content.Server.Shuttles.Systems
 
                 var exposed = NozzleExposed(xform);
 
-                var nozzleText = Loc.GetString("thruster-comp-nozzle-exposed",
-                    ("exposedColor", exposed ? "green" : "red"),
-                    ("exposed", exposed ? "is": "is not"));
+                var nozzleText = Loc.GetString(exposed ? "thruster-comp-nozzle-exposed" : "thruster-comp-nozzle-not-exposed");
 
                 args.PushMarkup(nozzleText);
             }
@@ -143,7 +139,7 @@ namespace Content.Server.Shuttles.Systems
         /// <summary>
         /// If the thruster rotates change the direction where the linear thrust is applied
         /// </summary>
-        private void OnRotate(EntityUid uid, ThrusterComponent component, ref RotateEvent args)
+        private void OnRotate(EntityUid uid, ThrusterComponent component, ref MoveEvent args)
         {
             // TODO: Disable visualizer for old direction
 
@@ -151,7 +147,7 @@ namespace Content.Server.Shuttles.Systems
                 component.Type != ThrusterType.Linear ||
                 !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
                 !_mapManager.TryGetGrid(xform.GridUid, out var grid) ||
-                !EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent))
+                !EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent))
             {
                 return;
             }
@@ -227,7 +223,7 @@ namespace Content.Server.Shuttles.Systems
             DisableThruster(uid, component);
         }
 
-        private void OnPowerChange(EntityUid uid, ThrusterComponent component, PowerChangedEvent args)
+        private void OnPowerChange(EntityUid uid, ThrusterComponent component, ref PowerChangedEvent args)
         {
             if (args.Powered && CanEnable(uid, component))
             {
@@ -250,7 +246,7 @@ namespace Content.Server.Shuttles.Systems
 
             component.IsOn = true;
 
-            if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+            if (!EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent)) return;
 
             // Logger.DebugS("thruster", $"Enabled thruster {uid}");
 
@@ -321,7 +317,7 @@ namespace Content.Server.Shuttles.Systems
 
             component.IsOn = false;
 
-            if (!EntityManager.TryGetComponent(grid.GridEntityId, out ShuttleComponent? shuttleComponent)) return;
+            if (!EntityManager.TryGetComponent(grid.Owner, out ShuttleComponent? shuttleComponent)) return;
 
             // Logger.DebugS("thruster", $"Disabled thruster {uid}");
 

@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
@@ -12,4 +14,9 @@ public sealed class SpillableComponent : Component
     /// </summary>
     [DataField("spillWorn")]
     public bool SpillWorn = true;
+
+    [DataField("spillDelay")]
+    public float? SpillDelay;
+
+    public CancellationTokenSource? CancelToken;
 }

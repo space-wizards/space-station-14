@@ -6,10 +6,7 @@ namespace Content.Shared.Alert;
 
 public abstract class AlertsSystem : EntitySystem
 {
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
-
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
 

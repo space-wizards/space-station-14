@@ -32,7 +32,6 @@
     bumpOpen: false
     closeTimeTwo: 0.4
     openTimeTwo: 0.4
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 15

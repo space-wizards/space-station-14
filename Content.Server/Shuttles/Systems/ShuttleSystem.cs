@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -17,6 +18,8 @@ namespace Content.Server.Shuttles.Systems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private ISawmill _sawmill = default!;
@@ -35,6 +38,7 @@ namespace Content.Server.Shuttles.Systems
             InitializeEscape();
             InitializeFTL();
             InitializeIFF();
+            InitializeImpact();
 
             SubscribeLocalEvent<ShuttleComponent, ComponentAdd>(OnShuttleAdd);
             SubscribeLocalEvent<ShuttleComponent, ComponentStartup>(OnShuttleStartup);
@@ -85,7 +89,7 @@ namespace Content.Server.Shuttles.Systems
 
             foreach (var fixture in args.NewFixtures)
             {
-                _fixtures.SetMass(fixture, fixture.Area * TileMassMultiplier, manager, false);
+                _physics.SetDensity(fixture, TileMassMultiplier, manager, false);
                 _fixtures.SetRestitution(fixture, 0.1f, manager, false);
             }
 
@@ -99,7 +103,7 @@ namespace Content.Server.Shuttles.Systems
 
         private void OnShuttleStartup(EntityUid uid, ShuttleComponent component, ComponentStartup args)
         {
-            if (!EntityManager.HasComponent<IMapGridComponent>(component.Owner))
+            if (!EntityManager.HasComponent<MapGridComponent>(component.Owner))
             {
                 return;
             }
@@ -158,16 +162,6 @@ namespace Content.Server.Shuttles.Systems
             }
 
             Disable(physicsComponent);
-
-            if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent))
-            {
-                return;
-            }
-
-            foreach (var fixture in fixturesComponent.Fixtures.Values)
-            {
-                fixture.Mass = 0f;
-            }
         }
     }
 }

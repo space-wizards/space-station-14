@@ -148,23 +148,14 @@ namespace Content.Server.Lock
         /// <summary>
         ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
         /// </summary>
-        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true)
+        public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
         {
-            if (!Resolve(uid, ref storage, logMissing: false))
-                return true;
-
             if (!HasComp<SharedHandsComponent>(user))
                 return false;
 
-            // Cannot lock if the entity is currently opened.
-            if (storage.Open)
-                return false;
-
-            // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
-            if (storage.Contents.Contains(user))
-                return false;
-
-            return true;
+            var ev = new LockToggleAttemptEvent(user, quiet);
+            RaiseLocalEvent(uid, ref ev, true);
+            return !ev.Cancelled;
         }
 
         private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)
@@ -193,7 +184,7 @@ namespace Content.Server.Lock
                 () => TryUnlock(uid, args.User, component) :
                 () => TryLock(uid, args.User, component);
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
-            // TODO VERB ICONS need padlock open/close icons.
+            verb.IconTexture = component.Locked ? "/Textures/Interface/VerbIcons/unlock.svg.192dpi.png" : "/Textures/Interface/VerbIcons/lock.svg.192dpi.png";
             args.Verbs.Add(verb);
         }
 

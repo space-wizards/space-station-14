@@ -16,7 +16,6 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Tabletop
 {
@@ -39,10 +38,11 @@ namespace Content.Client.Tabletop
 
         public override void Initialize()
         {
+            base.Initialize();
             UpdatesOutsidePrediction = true;
 
             CommandBinds.Builder
-                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
+                        .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true))
                         .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
@@ -56,12 +56,8 @@ namespace Content.Client.Tabletop
                 StopDragging(false);
         }
 
-        public override void Update(float frameTime)
+        public override void FrameUpdate(float frameTime)
         {
-            // don't send network messages when doing prediction.
-            if (!_gameTiming.IsFirstTimePredicted)
-                return;
-
             if (_window == null)
                 return;
 
@@ -109,7 +105,7 @@ namespace Content.Client.Tabletop
             // Only send new position to server when Delay is reached
             if (_timePassed >= Delay && _table != null)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
+                RaisePredictiveEvent(new TabletopMoveEvent(_draggedEntity.Value, clampedCoords, _table.Value));
                 _timePassed -= Delay;
             }
         }
@@ -168,6 +164,9 @@ namespace Content.Client.Tabletop
 
         private bool OnUse(in PointerInputCmdArgs args)
         {
+            if (!_gameTiming.IsFirstTimePredicted)
+                return false;
+
             return args.State switch
             {
                 BoundKeyState.Down => OnMouseDown(args),
@@ -215,13 +214,7 @@ namespace Content.Client.Tabletop
         /// <param name="viewport">The viewport in which we are dragging.</param>
         private void StartDragging(EntityUid draggedEntity, ScalingViewport viewport)
         {
-            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, true));
-
-            if (EntityManager.TryGetComponent<AppearanceComponent>(draggedEntity, out var appearance))
-            {
-                appearance.SetData(TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f));
-                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1);
-            }
+            RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity, true));
 
             _draggedEntity = draggedEntity;
             _viewport = viewport;
@@ -236,7 +229,8 @@ namespace Content.Client.Tabletop
             // Set the dragging player on the component to noone
             if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
             {
-                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, false));
+                RaisePredictiveEvent(new TabletopMoveEvent(_draggedEntity.Value, Transform(_draggedEntity.Value).MapPosition, _table!.Value));
+                RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Value, false));
             }
 
             _draggedEntity = null;

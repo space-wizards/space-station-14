@@ -296,6 +296,12 @@
   beginMonth: October
 
 - type: holiday
+  id: NationalComingOutDay
+  name: holiday-name-national-coming-out-day
+  beginDay: 11
+  beginMonth: October
+
+- type: holiday
   id: CanadianThanksgiving
   name: holiday-name-canadian-thanksgiving
   beginMonth: October

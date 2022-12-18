@@ -1,3 +1,6 @@
+using System.Linq;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Actions;
 using Content.Shared.Buckle.Components;
@@ -6,7 +9,11 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Serialization;
-using Robust.Shared.Timing;
+using Robust.Shared.Containers;
+using Content.Shared.Tag;
+using Content.Shared.Audio;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
 
 namespace Content.Shared.Vehicle;
 
@@ -19,7 +26,12 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 {
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _modifier = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
+
+    private const string KeySlot = "key_slot";
 
     public override void Initialize()
     {
@@ -28,8 +40,46 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         SubscribeLocalEvent<RiderComponent, PullAttemptEvent>(OnRiderPull);
         SubscribeLocalEvent<VehicleComponent, RefreshMovementSpeedModifiersEvent>(OnVehicleModifier);
         SubscribeLocalEvent<VehicleComponent, ComponentStartup>(OnVehicleStartup);
-        SubscribeLocalEvent<VehicleComponent, RotateEvent>(OnVehicleRotate);
+        SubscribeLocalEvent<VehicleComponent, MoveEvent>(OnVehicleRotate);
+        SubscribeLocalEvent<VehicleComponent, EntInsertedIntoContainerMessage>(OnEntInserted);
+        SubscribeLocalEvent<VehicleComponent, EntRemovedFromContainerMessage>(OnEntRemoved);
+        SubscribeLocalEvent<VehicleComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
+    }
 
+    /// <summary>
+    /// Handle adding keys to the ignition, give stuff the InVehicleComponent so it can't be picked
+    /// up by people not in the vehicle.
+    /// </summary>
+    private void OnEntInserted(EntityUid uid, VehicleComponent component, EntInsertedIntoContainerMessage args)
+    {
+        if (args.Container.ID != KeySlot ||
+            !_tagSystem.HasTag(args.Entity, "VehicleKey")) return;
+
+        // Enable vehicle
+        var inVehicle = EnsureComp<InVehicleComponent>(args.Entity);
+        inVehicle.Vehicle = component;
+
+        component.HasKey = true;
+
+        // Audiovisual feedback
+        _ambientSound.SetAmbience(uid, true);
+        _tagSystem.AddTag(uid, "DoorBumpOpener");
+        _modifier.RefreshMovementSpeedModifiers(uid);
+    }
+
+    /// <summary>
+    /// Turn off the engine when key is removed.
+    /// </summary>
+    private void OnEntRemoved(EntityUid uid, VehicleComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != KeySlot || !RemComp<InVehicleComponent>(args.Entity))
+            return;
+
+        // Disable vehicle
+        component.HasKey = false;
+        _ambientSound.SetAmbience(uid, false);
+        _tagSystem.RemoveTag(uid, "DoorBumpOpener");
+        _modifier.RefreshMovementSpeedModifiers(uid);
     }
 
     private void OnVehicleModifier(EntityUid uid, VehicleComponent component, RefreshMovementSpeedModifiersEvent args)
@@ -47,8 +97,11 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     }
 
     // TODO: Shitcode, needs to use sprites instead of actual offsets.
-    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref RotateEvent args)
+    private void OnVehicleRotate(EntityUid uid, VehicleComponent component, ref MoveEvent args)
     {
+        if (args.NewRotation == args.OldRotation)
+            return;
+
         // This first check is just for safety
         if (!HasComp<InputMoverComponent>(uid))
         {
@@ -129,6 +182,17 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             var buckleXform = Transform(buckledEntity);
             _transform.SetLocalPositionNoLerp(buckleXform, strap.BuckleOffset);
         }
+    }
+
+    private void OnGetAdditionalAccess(EntityUid uid, VehicleComponent component, ref GetAdditionalAccessEvent args)
+    {
+        if (component.Rider == null)
+            return;
+        var rider = component.Rider.Value;
+
+        args.Entities.Add(rider);
+        _access.FindAccessItemsInventory(rider, out var items);
+        args.Entities = args.Entities.Union(items).ToHashSet();
     }
 
     /// <summary>

@@ -1,5 +1,7 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -55,7 +57,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// </summary>
         [DataField("baseMinTemperature")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float BaseMinTemperature = 96.625f; // Selected so that tier-1 parts can reach 73.15k 
+        public float BaseMinTemperature = 96.625f; // Selected so that tier-1 parts can reach 73.15k
 
         /// <summary>
         ///     Maximum temperature the device can reach with a 0 total laser quality. Usually the quality will be at
@@ -78,5 +80,17 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("maxTemperatureDelta")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxTemperatureDelta = 300;
+
+        /// <summary>
+        ///     The machine part that affects the heat capacity.
+        /// </summary>
+        [DataField("machinePartHeatCapacity", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartHeatCapacity = "MatterBin";
+
+        /// <summary>
+        ///     The machine part that affects the temperature range.
+        /// </summary>
+        [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartTemperature = "Laser";
     }
 }

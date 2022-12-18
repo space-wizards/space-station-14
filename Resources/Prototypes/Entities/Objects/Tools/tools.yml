@@ -61,9 +61,10 @@
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Piercing: 10
+        Piercing: 7
   - type: Tool
     qualities:
       - Screwing
@@ -96,9 +97,10 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Blunt: 10
+        Blunt: 6.5
   - type: Tool
     qualities:
       - Anchoring
@@ -220,6 +222,7 @@
     qualities:
       - Screwing
     speed: 1.5
+    useSound: /Audio/Items/drill_use.ogg
   - type: MultipleTool
     statusShowBehavior: true
     entries:
@@ -314,10 +317,17 @@
     size: 20
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing
     speed: 1.2 # Kept for future adjustments. Currently 1.2x for balance
+    useSound: /Audio/Items/drill_use.ogg
+  - type: LatticeCutting
   - type: MultipleTool
     statusShowBehavior: true
     entries:

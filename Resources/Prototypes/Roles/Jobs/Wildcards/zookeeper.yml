@@ -1,0 +1,23 @@
+- type: job
+  id: Zookeeper
+  name: job-name-zookeeper
+  playTimeTracker: JobZookeeper
+  startingGear: ZookeeperGear
+  icon: "Zookeeper"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: ZookeeperGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSafari
+    back: ClothingBackpackFilled
+    head: ClothingHeadSafari
+    shoes: ClothingShoesColorWhite
+    id: ZookeeperPDA
+    ears: ClothingHeadsetService
+  innerclothingskirt: ClothingUniformJumpsuitSafari
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

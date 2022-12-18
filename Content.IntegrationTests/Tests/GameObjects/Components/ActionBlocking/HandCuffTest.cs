@@ -26,9 +26,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   - type: Cuffable
   - type: Hands
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
 
 - type: entity
   name: HandcuffsDummy
@@ -36,10 +34,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
   components:
   - type: Handcuff
 ";
+
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             EntityUid human;
@@ -63,18 +63,21 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition = entityManager.GetComponent<TransformComponent>(otherHuman).WorldPosition;
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition =
+                    entityManager.GetComponent<TransformComponent>(otherHuman).WorldPosition;
 
                 // Test for components existing
-                Assert.True(entityManager.TryGetComponent(human, out cuffed!), $"Human has no {nameof(CuffableComponent)}");
+                Assert.True(entityManager.TryGetComponent(human, out cuffed!),
+                    $"Human has no {nameof(CuffableComponent)}");
                 Assert.True(entityManager.TryGetComponent(human, out hands!), $"Human has no {nameof(HandsComponent)}");
-                Assert.True(entityManager.TryGetComponent(human, out SharedBodyComponent? _), $"Human has no {nameof(SharedBodyComponent)}");
+                Assert.True(entityManager.TryGetComponent(human, out BodyComponent? _), $"Human has no {nameof(BodyComponent)}");
                 Assert.True(entityManager.TryGetComponent(cuffs, out HandcuffComponent? _), $"Handcuff has no {nameof(HandcuffComponent)}");
                 Assert.True(entityManager.TryGetComponent(secondCuffs, out HandcuffComponent? _), $"Second handcuffs has no {nameof(HandcuffComponent)}");
 
                 // Test to ensure cuffed players register the handcuffs
                 cuffed.TryAddNewCuffs(human, cuffs);
-                Assert.True(cuffed.CuffedHandCount > 0, "Handcuffing a player did not result in their hands being cuffed");
+                Assert.True(cuffed.CuffedHandCount > 0,
+                    "Handcuffing a player did not result in their hands being cuffed");
 
                 // Test to ensure a player with 4 hands will still only have 2 hands cuffed
                 AddHand(cuffed.Owner);
@@ -86,7 +89,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 // Test to give a player with 4 hands 2 sets of cuffs
                 cuffed.TryAddNewCuffs(human, secondCuffs);
                 Assert.True(cuffed.CuffedHandCount == 4, "Player doesn't have correct amount of hands cuffed");
-
             });
 
             await pairTracker.CleanReturnAsync();

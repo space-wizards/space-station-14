@@ -1,4 +1,4 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
@@ -53,6 +53,7 @@ public sealed class StickySystem : EntitySystem
 
         args.Verbs.Add(new Verb
         {
+            DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
             Act = () => StartUnsticking(uid, args.User, component)

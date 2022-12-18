@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
@@ -28,14 +29,16 @@ namespace Content.Client.Verbs.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
+        private readonly CombatModeSystem _combatMode;
         private readonly VerbSystem _verbSystem;
 
         public EntityUid CurrentTarget;
         public SortedSet<Verb> CurrentVerbs = new();
 
-        public VerbMenuPresenter(VerbSystem verbSystem)
+        public VerbMenuPresenter(CombatModeSystem combatMode, VerbSystem verbSystem)
         {
             IoCManager.InjectDependencies(this);
+            _combatMode = combatMode;
             _verbSystem = verbSystem;
         }
 
@@ -46,7 +49,8 @@ namespace Content.Client.Verbs.UI
         /// <param name="force">Used to force showing all verbs (mostly for admins).</param>
         public void OpenVerbMenu(EntityUid target, bool force = false)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user)
+            if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
+                _combatMode.IsInCombatMode(user))
                 return;
 
             Close();

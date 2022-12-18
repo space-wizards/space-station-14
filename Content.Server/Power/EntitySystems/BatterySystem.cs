@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -12,6 +13,7 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<ExaminableBatteryComponent, ExaminedEvent>(OnExamine);
+            SubscribeLocalEvent<BatteryComponent, PriceCalculationEvent>(CalculateBatteryPrice);
 
             SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
             SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
@@ -63,6 +65,14 @@ namespace Content.Server.Power.EntitySystems
                 if (batt.IsFullyCharged) continue;
                 batt.CurrentCharge += comp.AutoRechargeRate * frameTime;
             }
+        }
+
+        /// <summary>
+        /// Gets the price for the power contained in an entity's battery.
+        /// </summary>
+        private void CalculateBatteryPrice(EntityUid uid, BatteryComponent component, ref PriceCalculationEvent args)
+        {
+            args.Price += component.CurrentCharge * component.PricePerJoule;
         }
     }
 }

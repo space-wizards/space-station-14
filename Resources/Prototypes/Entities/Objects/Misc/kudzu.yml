@@ -26,7 +26,7 @@
     - type: Fixtures
       fixtures:
       - hard: false
-        mass: 7
+        density: 7
         shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"

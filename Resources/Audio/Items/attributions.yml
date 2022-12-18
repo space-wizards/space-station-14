@@ -7,3 +7,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Time immemorial"
   source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/trayhit2.ogg"
+
+- files: ["rped.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Time immemorial"
+  source: "https://github.com/tgstation/tgstation/blob/172b533d0257fcc1f8a05406f1c9fad514c14d88/sound/items/rped.ogg"

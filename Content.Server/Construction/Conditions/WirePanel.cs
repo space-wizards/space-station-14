@@ -13,8 +13,9 @@ namespace Content.Server.Construction.Conditions
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
+            //if it doesn't have a wire panel, then just let it work.
             if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
-                return false;
+                return true;
 
             return wires.IsPanelOpen == Open;
         }

@@ -9,10 +9,11 @@
     sprite: Objects/Weapons/Melee/armblade.rsi
     state: icon
   - type: MeleeWeapon
+    attackRate: 0.75
     damage:
       types:
-        Slash: 20
-        Piercing: 10
+        Slash: 25
+        Piercing: 15
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/armblade.rsi

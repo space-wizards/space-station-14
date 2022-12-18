@@ -1,4 +1,3 @@
-using Content.Server.Power.EntitySystems;
 using Content.Server.Power.NodeGroups;
 using Content.Shared.APC;
 using Robust.Shared.Audio;
@@ -18,7 +17,6 @@ public sealed class ApcComponent : BaseApcNetComponent
     /// <summary>
     ///     Is the panel open for this entity's APC?
     /// </summary>
-    [ViewVariables]
     [DataField("open")]
     public bool IsApcOpen { get; set; }
 

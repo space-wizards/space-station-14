@@ -4,8 +4,6 @@ using Content.Shared.Ghost.Roles;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.Player;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles

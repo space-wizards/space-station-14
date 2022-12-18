@@ -1,5 +1,6 @@
 using Content.Server.AlertLevel;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -32,6 +33,17 @@ public sealed class FireAlarmSystem : EntitySystem
 
     private void OnDeviceListSync(EntityUid uid, FireAlarmComponent component, DeviceListUpdateEvent args)
     {
+        var query = GetEntityQuery<DeviceNetworkComponent>();
+        foreach (var device in args.OldDevices)
+        {
+            if (!query.TryGetComponent(device, out var deviceNet))
+            {
+                continue;
+            }
+
+            _atmosDevNet.Deregister(uid, deviceNet.Address);
+        }
+
         _atmosDevNet.Register(uid, null);
         _atmosDevNet.Sync(uid, null);
     }

@@ -22,7 +22,7 @@ namespace Content.Client.VendingMachines
             base.Open();
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var vendingMachineSys = EntitySystem.Get<VendingMachineSystem>();
+            var vendingMachineSys = entMan.System<VendingMachineSystem>();
 
             _cachedInventory = vendingMachineSys.GetAllInventory(Owner.Owner);
 
@@ -50,7 +50,7 @@ namespace Content.Client.VendingMachines
 
         private void OnItemSelected(ItemList.ItemListSelectedEventArgs args)
         {
-            if (_cachedInventory == null || _cachedInventory.Count == 0)
+            if (_cachedInventory.Count == 0)
                 return;
 
             var selectedItem = _cachedInventory.ElementAtOrDefault(args.ItemIndex);

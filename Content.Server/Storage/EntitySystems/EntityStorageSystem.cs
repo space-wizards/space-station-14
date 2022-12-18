@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Popups;
@@ -11,9 +12,9 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -23,12 +24,16 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed class EntityStorageSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly IMapManager _map = default!;
 
     public const string ContainerName = "entity_storage";
 
@@ -40,7 +45,13 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
+        SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
+
+        SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
+        SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
+        SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
+
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -54,6 +65,13 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<PlaceableSurfaceComponent>(uid, out var placeable))
             _placeableSurface.SetPlaceable(uid, component.Open, placeable);
+
+        if (!component.Open)
+        {
+            // If we're closed on spawn, we need to pull some air into our environment from where we spawned,
+            // so that we have -something-. For example, if you bought an animal crate or something.
+            TakeGas(uid, component);
+        }
     }
 
     private void OnInteract(EntityUid uid, EntityStorageComponent component, ActivateInWorldEvent args)
@@ -84,6 +102,17 @@ public sealed class EntityStorageSystem : EntitySystem
     private void OnWelded(EntityUid uid, EntityStorageComponent component, WeldableChangedEvent args)
     {
         component.IsWeldedShut = args.IsWelded;
+    }
+
+    private void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, ref LockToggleAttemptEvent args)
+    {
+        // Cannot (un)lock open lockers.
+        if (target.Open)
+            args.Cancelled = true;
+
+        // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
+        if (target.Contents.Contains(args.User))
+            args.Cancelled = true;
     }
 
     private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
@@ -117,11 +146,12 @@ public sealed class EntityStorageSystem : EntitySystem
         var containedArr = component.Contents.ContainedEntities.ToArray();
         foreach (var contained in containedArr)
         {
-            if (component.Contents.Remove(contained))
-            {
-                Transform(contained).WorldPosition =
-                    uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
-            }
+            if (!component.Contents.Remove(contained))
+                continue;
+
+            RemComp<InsideEntityStorageComponent>(contained);
+            Transform(contained).WorldPosition =
+                uidXform.WorldPosition + uidXform.WorldRotation.RotateVec(component.EnteringOffset);
         }
     }
 
@@ -133,7 +163,8 @@ public sealed class EntityStorageSystem : EntitySystem
         component.Open = true;
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
-        SoundSystem.Play(component.OpenSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
+        _audio.PlayPvs(component.OpenSound, component.Owner);
+        ReleaseGas(uid, component);
         RaiseLocalEvent(uid, new StorageAfterOpenEvent());
     }
 
@@ -145,7 +176,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
@@ -161,13 +192,17 @@ public sealed class EntityStorageSystem : EntitySystem
             if (!AddToContents(entity, uid, component))
                 continue;
 
+            var inside = EnsureComp<InsideEntityStorageComponent>(entity);
+            inside.Storage = uid;
+
             count++;
             if (count >= component.Capacity)
                 break;
         }
 
+        TakeGas(uid, component);
         ModifyComponents(uid, component);
-        SoundSystem.Play(component.CloseSound.GetSound(), Filter.Pvs(uid), uid);
+        _audio.PlayPvs(component.CloseSound, component.Owner);
         component.LastInternalOpenAttempt = default;
         RaiseLocalEvent(uid, new StorageAfterCloseEvent());
     }
@@ -245,15 +280,13 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.
-        if (component.EnteringOffset != (0, 0)) //if the entering position is offset
+        if (component.EnteringOffset != (0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
-            var targetXform = Transform(target);
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
-            if (!_interactionSystem.InRangeUnobstructed(target, newCoords, collisionMask: component.EnteringOffsetCollisionFlags))
+            if (!_interactionSystem.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
                 if (!silent)
                     _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target, Filter.Pvs(target));
-
                 return false;
             }
         }
@@ -281,8 +314,10 @@ public sealed class EntityStorageSystem : EntitySystem
             return false;
 
         if (TryComp<IPhysBody>(toAdd, out var phys))
+        {
             if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
                 return false;
+        }
 
         return Insert(toAdd, container, component);
     }
@@ -304,12 +339,9 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
+        var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
-
-        var allowedToEat = whitelist == null
-            ? HasComp<ItemComponent>(toInsert)
-            : whitelist.IsValid(toInsert);
+        var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
@@ -359,10 +391,82 @@ public sealed class EntityStorageSystem : EntitySystem
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
             _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
+        _appearance.SetData(uid, StorageVisuals.Open, component.Open);
+        _appearance.SetData(uid, StorageVisuals.HasContents, component.Contents.ContainedEntities.Count > 0);
+    }
+
+    private void TakeGas(EntityUid uid, EntityStorageComponent component)
+    {
+        if (!component.Airtight)
+            return;
+
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
         {
-            appearance.SetData(StorageVisuals.Open, component.Open);
-            appearance.SetData(StorageVisuals.HasContents, component.Contents.ContainedEntities.Any());
+            _atmos.Merge(component.Air, environment.RemoveVolume(EntityStorageComponent.GasMixVolume));
         }
     }
+
+    private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
+    {
+        if (!component.Airtight)
+            return;
+
+        var tile = GetOffsetTileRef(uid, component);
+
+        if (tile != null && _atmos.GetTileMixture(tile.Value.GridUid, null, tile.Value.GridIndices, true) is {} environment)
+        {
+            _atmos.Merge(environment, component.Air);
+            component.Air.Clear();
+        }
+    }
+
+    private TileRef? GetOffsetTileRef(EntityUid uid, EntityStorageComponent component)
+    {
+        var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager);
+
+        if (_map.TryFindGridAt(targetCoordinates, out var grid))
+        {
+            return grid.GetTileRef(targetCoordinates);
+        }
+
+        return null;
+    }
+
+    #region Gas mix event handlers
+
+    private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
+    {
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
+        {
+            args.Gas = storage.Air;
+        }
+    }
+
+    private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
+    {
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
+        {
+            args.Gas = storage.Air;
+        }
+    }
+
+    private void OnInsideExposed(EntityUid uid, InsideEntityStorageComponent component, ref AtmosExposedGetAirEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
+        {
+            if (!storage.Airtight)
+                return;
+
+            args.Gas = storage.Air;
+        }
+
+        args.Handled = true;
+    }
+
+    #endregion
 }

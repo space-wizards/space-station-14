@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Tools;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
@@ -21,6 +22,17 @@ namespace Content.Server.Power.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<CableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+            SubscribeLocalEvent<CableComponent, AfterInteractUsingEvent>(OnAfterInteractUsing);
+        }
+
+        private void OnAfterInteractUsing(EntityUid uid, CableComponent component, AfterInteractUsingEvent args)
+        {
+            if (args.Handled || args.Target == null || !args.CanReach || !_toolSystem.HasQuality(args.Used, "Pulsing"))
+                return;
+
+            var markup = FormattedMessage.FromMarkup(GenerateCableMarkup(uid));
+            _examineSystem.SendExamineTooltip(args.User, uid, markup, false, false);
+            args.Handled = true;
         }
 
         private void OnGetExamineVerbs(EntityUid uid, CableComponent component, GetVerbsEvent<ExamineVerb> args)

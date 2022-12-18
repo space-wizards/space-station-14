@@ -5,6 +5,7 @@
   id: BaseMobOrganic
   noSpawn: true
   components:
+  - type: LagCompensation
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -96,35 +97,17 @@
     drawdepth: Mobs
     layers:
       - map: [ "enum.HumanoidVisualLayers.Chest" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: torso_m
       - map: [ "enum.HumanoidVisualLayers.Head" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: head_m
+      - map: [ "enum.HumanoidVisualLayers.Snout" ]
       - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-        color: "#008800"
-        sprite: Mobs/Customization/eyes.rsi
-        state: eyes
       - map: [ "enum.HumanoidVisualLayers.RArm" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_arm
       - map: [ "enum.HumanoidVisualLayers.LArm" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_arm
       - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_leg
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_leg
       - shader: StencilClear
-        sprite: Mobs/Species/Human/parts.rsi
+        sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
+        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
+        # sprite refactor when
         state: l_leg
       - shader: StencilMask
         map: [ "enum.HumanoidVisualLayers.StencilMask" ]
@@ -132,23 +115,10 @@
         state: female_full
         visible: false
       - map: [ "jumpsuit" ]
-        shader: StencilDraw
       - map: [ "enum.HumanoidVisualLayers.LHand" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_hand
       - map: [ "enum.HumanoidVisualLayers.RHand" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_hand
       - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_foot
       - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_foot
       - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
         color: "#ffffff"
         sprite: Objects/Misc/handcuffs.rsi
@@ -164,32 +134,14 @@
       - map: [ "neck" ]
       - map: [ "back" ]
       - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-        state: shaved
-        sprite: Mobs/Customization/human_facial_hair.rsi
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
-        state: bald
-        sprite: Mobs/Customization/human_hair.rsi
+      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+      - map: [ "enum.HumanoidVisualLayers.Tail" ]
       - map: [ "mask" ]
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
-  - type: Markings
-    layerPoints:
-      Tail:
-        points: 0
-        required: false
-      HeadTop:
-        points: 0
-        required: false
-      Chest:
-        points: 1
-        required: false
-      Legs:
-        points: 2
-        required: false
-      Arms:
-        points: 2
-        required: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -197,7 +149,7 @@
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
           - MobMask
@@ -221,12 +173,14 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: HumanoidAppearance
+  - type: Humanoid
+    species: Human
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    prototype: Human
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
+  - type: RadiationReceiver
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -271,32 +225,30 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
     visuals:
-      - type: RotationVisualizer
-      - type: BuckleVisualizer
       - type: CreamPiedVisualizer
         state: creampie_human
+  - type: RotationVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
     alternateState: Standing
     fireStackAlternateState: 3
-  - type: EnsnareableVisualizer
   - type: CombatMode
+    canDisarm: true
   - type: Climbing
   - type: Cuffable
   - type: Ensnareable
     sprite: Objects/Misc/ensnare.rsi
     state: icon
-  - type: CharacterInfo
   - type: AnimationPlayer
   - type: Buckle
   - type: MeleeWeapon
     hidden: true
-    hitSound:
+    soundHit:
       collection: Punch
-    range: 0.8
-    arcwidth: 30
-    arc: fist
+    angle: 30
+    animation: WeaponArcFist
+    attackRate: 1
     damage:
       types:
         Blunt: 5
@@ -307,6 +259,10 @@
   - type: Strippable
   - type: UserInterface
     interfaces:
+      - key: enum.VoiceMaskUIKey.Key
+        type: VoiceMaskBoundUserInterface
+      - key: enum.HumanoidMarkingModifierKey.Key
+        type: HumanoidMarkingModifierBoundUserInterface
       - key: enum.StrippingUiKey.Key
         type: StrippableBoundUserInterface
   - type: Puller
@@ -329,7 +285,6 @@
   - type: MobPrice
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
-  - type: Perishable
 
 - type: entity
   save: false
@@ -350,85 +305,50 @@
       noRot: true
       # TODO BODY Turn these into individual body parts?
       layers:
-      - map: ["enum.HumanoidVisualLayers.Chest"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: torso_m
-      - map: ["enum.HumanoidVisualLayers.Head"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: head_m
-      - map: ["enum.HumanoidVisualLayers.Eyes"]
-        color: "#008800"
-        sprite: Mobs/Customization/eyes.rsi
-        state: eyes
-      - map: ["enum.HumanoidVisualLayers.RArm"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_arm
-      - map: ["enum.HumanoidVisualLayers.LArm"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_arm
-      - map: ["enum.HumanoidVisualLayers.RLeg"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_leg
-      - map: ["enum.HumanoidVisualLayers.LLeg"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_leg
-      - map: [ "enum.HumanoidVisualLayers.LFoot" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_foot
-      - map: [ "enum.HumanoidVisualLayers.RFoot" ]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_foot
-      - shader: StencilClear
-      - shader: StencilMask
-        map: ["enum.HumanoidVisualLayers.StencilMask"]
-        sprite: Mobs/Customization/masking_helpers.rsi
-        state: female_full
-        visible: false
-      - map: ["jumpsuit"]
-        shader: StencilDraw
-      - map: ["enum.HumanoidVisualLayers.LHand"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: l_hand
-      - map: ["enum.HumanoidVisualLayers.RHand"]
-        color: "#e8b59b"
-        sprite: Mobs/Species/Human/parts.rsi
-        state: r_hand
-      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-        color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
-        visible: false
-      - map: ["id"]
-      - map: ["gloves"]
-      - map: ["shoes"]
-      - map: ["ears"]
-      - map: ["outerClothing"]
-      - map: ["eyes"]
-      - map: ["belt"]
-      - map: ["neck"]
-      - map: ["back"]
-      - map: ["enum.HumanoidVisualLayers.FacialHair"]
-        state: shaved
-        sprite: Mobs/Customization/human_facial_hair.rsi
-      - map: ["enum.HumanoidVisualLayers.Hair"]
-        state: bald
-        sprite: Mobs/Customization/human_hair.rsi
-      - map: ["mask"]
-      - map: ["head"]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
-      - map: ["hand-left"]
-      - map: ["hand-right"]
-    - type: Markings
+        - map: [ "enum.HumanoidVisualLayers.Chest" ]
+        - map: [ "enum.HumanoidVisualLayers.Head" ]
+        - map: [ "enum.HumanoidVisualLayers.Snout" ]
+        - map: [ "enum.HumanoidVisualLayers.Eyes" ]
+        - map: [ "enum.HumanoidVisualLayers.RArm" ]
+        - map: [ "enum.HumanoidVisualLayers.LArm" ]
+        - map: [ "enum.HumanoidVisualLayers.RLeg" ]
+        - map: [ "enum.HumanoidVisualLayers.LLeg" ]
+        - shader: StencilClear
+          sprite: Mobs/Species/Human/parts.rsi
+          state: l_leg
+        - shader: StencilMask
+          map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+          sprite: Mobs/Customization/masking_helpers.rsi
+          state: female_full
+          visible: false
+        - map: [ "jumpsuit" ]
+        - map: [ "enum.HumanoidVisualLayers.LHand" ]
+        - map: [ "enum.HumanoidVisualLayers.RHand" ]
+        - map: [ "enum.HumanoidVisualLayers.LFoot" ]
+        - map: [ "enum.HumanoidVisualLayers.RFoot" ]
+        - map: [ "enum.HumanoidVisualLayers.Handcuffs" ]
+          color: "#ffffff"
+          sprite: Objects/Misc/handcuffs.rsi
+          state: body-overlay-2
+          visible: false
+        - map: [ "id" ]
+        - map: [ "gloves" ]
+        - map: [ "shoes" ]
+        - map: [ "ears" ]
+        - map: [ "outerClothing" ]
+        - map: [ "eyes" ]
+        - map: [ "belt" ]
+        - map: [ "neck" ]
+        - map: [ "back" ]
+        - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
+        - map: [ "enum.HumanoidVisualLayers.Hair" ]
+        - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
+        - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
+        - map: [ "enum.HumanoidVisualLayers.Tail" ]
+        - map: [ "mask" ]
+        - map: [ "head" ]
+        - map: [ "pocket1" ]
+        - map: [ "pocket2" ]
     - type: Physics
       bodyType: Dynamic
     - type: Fixtures
@@ -436,16 +356,18 @@
       - shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
-        mass: 70
+        density: 185
         restitution: 0.0
         mask:
         - MobMask
         layer:
         - MobLayer
-    - type: HumanoidAppearance
+    - type: Humanoid
+      species: Human
     - type: Body
-      template: HumanoidTemplate
-      preset: HumanPreset
+      prototype: Human
+      requiredLegs: 2
+    - type: Appearance
     - type: Damageable
       damageContainer: Biological
     - type: MobState
@@ -453,6 +375,7 @@
         0: Alive
         100: Critical
         200: Dead
-    - type: Appearance
-      visuals:
-      - type: RotationVisualizer
+    - type: UserInterface
+      interfaces:
+        - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too
+          type: HumanoidMarkingModifierBoundUserInterface

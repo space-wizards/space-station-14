@@ -17,6 +17,11 @@ binds:
   type: State
   key: MouseLeft
   canFocus: true
+- function: UseSecondary
+  type: State
+  key: MouseRight
+  canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: ShowDebugMonitors
   type: Toggle
   key: F3
@@ -189,15 +194,10 @@ binds:
 - function: ReleasePulledObject
   type: State
   key: H
-- function: OpenContextMenu
-  type: State
-  key: MouseRight
-  canFocus: true
-  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G
-- function: OpenInfo
+- function: OpenAHelp
   type: State
   key: F1
 - function: OpenInventoryMenu
@@ -226,6 +226,16 @@ binds:
   type: State
   key: Right
   canRepeat: true
+- function: TextCursorUp
+  type: State
+  key: Up
+  canRepeat: true
+  priority: 2
+- function: TextCursorDown
+  type: State
+  key: Down
+  canRepeat: true
+  priority: 2
 - function: TextCursorWordLeft
   type: State
   key: Left
@@ -257,6 +267,18 @@ binds:
   mod1: Shift
   canRepeat: true
   allowSubCombs: true
+- function: TextCursorSelectUp
+  type: State
+  key: Up
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
+- function: TextCursorSelectDown
+  type: State
+  key: Down
+  mod1: Shift
+  canRepeat: true
+  allowSubCombs: true
 - function: TextCursorSelectWordLeft
   type: State
   key: Left
@@ -285,6 +307,14 @@ binds:
 - function: TextBackspace
   type: State
   key: BackSpace
+  canRepeat: true
+- function: TextNewline
+  type: State
+  key: Return
+  canRepeat: true
+- function: TextNewline
+  type: State
+  key: NumpadEnter
   canRepeat: true
 - function: TextSubmit
   type: State
@@ -429,6 +459,10 @@ binds:
 - function: Hotbar9
   type: State
   key: Num9
+- function: Loadout0
+  type: State
+  key: Num0
+  mod1: Shift
 - function: Loadout1
   type: State
   key: Num1

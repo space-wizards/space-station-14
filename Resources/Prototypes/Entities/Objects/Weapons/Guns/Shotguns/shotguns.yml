@@ -50,7 +50,7 @@
   # Don't parent to BaseWeaponShotgun because it differs significantly
   parent: BaseItem
   id: WeaponShotgunBulldog
-  description: It's a magazine-fed shotgun designed for close quarters combat.
+  description: It's a magazine-fed shotgun designed for close quarters combat. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/bulldog.rsi
@@ -105,7 +105,7 @@
   name: double-barreled shotgun
   parent: BaseWeaponShotgun
   id: WeaponShotgunDoubleBarreled
-  description: An immortal classic.
+  description: An immortal classic. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
@@ -121,7 +121,7 @@
   name: Enforcer
   parent: BaseWeaponShotgun
   id: WeaponShotgunEnforcer
-  description: A next-generation Frozen Star shotgun.
+  description: A next-generation Frozen Star shotgun. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
@@ -133,7 +133,7 @@
   name: Kammerer
   parent: BaseWeaponShotgun
   id: WeaponShotgunKammerer
-  description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds.
+  description: When an old Remington design meets modern materials, this is the result. A favourite weapon of militia forces throughout many worlds. Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/pump.rsi
@@ -146,7 +146,7 @@
   name: sawn-off shotgun
   parent: BaseWeaponShotgun
   id: WeaponShotgunSawn
-  description: Groovy!
+  description: Groovy! Uses .50 shotgun shells.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Shotguns/sawn.rsi

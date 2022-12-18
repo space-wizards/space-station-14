@@ -2,7 +2,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -45,9 +44,9 @@ public sealed class CartridgeAmmoComponent : AmmoComponent
     /// <summary>
     /// Caseless ammunition.
     /// </summary>
-    [ViewVariables, DataField("deleteOnSpawn")]
+    [DataField("deleteOnSpawn")]
     public bool DeleteOnSpawn;
 
-    [ViewVariables, DataField("soundEject")]
+    [DataField("soundEject")]
     public SoundSpecifier? EjectSound = new SoundCollectionSpecifier("CasingEject");
 }

@@ -7,6 +7,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using System.Linq;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -24,7 +26,7 @@ namespace Content.Server.Atmos.EntitySystems
         private readonly TileAtmosphere[] _depressurizeSpaceTiles = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit];
         private readonly TileAtmosphere[] _depressurizeProgressionOrder = new TileAtmosphere[Atmospherics.MonstermosHardTileLimit * 2];
 
-        private void EqualizePressureInZone(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        private void EqualizePressureInZone(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             if (tile.Air == null || (tile.MonstermosInfo.LastCycle >= cycleNum))
                 return; // Already done.
@@ -353,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
             Array.Clear(_equalizeQueue, 0, Atmospherics.MonstermosTileLimit);
         }
 
-        private void ExplosivelyDepressurize(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
+        private void ExplosivelyDepressurize(MapGridComponent mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int cycleNum)
         {
             // Check if explosive depressurization is enabled and if the tile is valid.
             if (!MonstermosDepressurization || tile.Air == null)
@@ -478,7 +480,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = ((Vector2)_depressurizeTiles[tileCount - 1].GridIndices - tile.GridIndices).Normalized;
 
-                var gridPhysics = Comp<PhysicsComponent>(mapGrid.GridEntityId);
+                var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
 
                 // TODO ATMOS: Come up with better values for these.
                 gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
@@ -520,10 +522,10 @@ namespace Content.Server.Atmos.EntitySystems
             if (!reconsiderAdjacent)
                 return;
 
-            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, tile.GridIndices);
-            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.GridEntityId, other.GridIndices);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref tileEv);
-            GridUpdateAdjacent(mapGrid.GridEntityId, gridAtmosphere, ref otherEv);
+            var tileEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, tile.GridIndices);
+            var otherEv = new UpdateAdjacentMethodEvent(mapGrid.Owner, other.GridIndices);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref tileEv);
+            GridUpdateAdjacent(mapGrid.Owner, gridAtmosphere, ref otherEv);
             InvalidateVisuals(tile.GridIndex, tile.GridIndices);
             InvalidateVisuals(other.GridIndex, other.GridIndices);
         }
@@ -582,12 +584,27 @@ namespace Content.Server.Atmos.EntitySystems
             DebugTools.AssertNotNull(tile);
             DebugTools.Assert(tile.AdjacentBits.IsFlagSet(direction));
             DebugTools.Assert(tile.AdjacentTiles[direction.ToIndex()] != null);
-            tile.MonstermosInfo[direction] += amount;
             // Every call to this method already ensures that the adjacent tile won't be null.
-            tile.AdjacentTiles[direction.ToIndex()]!.MonstermosInfo[direction.GetOpposite()] -= amount;
+
+            // Turns out: no they don't. Temporary debug checks to figure out which caller is causing problems:
+            if (tile == null)
+            {
+                Logger.Error($"Encountered null-tile in {nameof(AdjustEqMovement)}. Trace: {Environment.StackTrace}");
+                return;
+            }
+            var adj = tile.AdjacentTiles[direction.ToIndex()];
+            if (adj == null)
+            {
+                var nonNull = tile.AdjacentTiles.Where(x => x != null).Count();
+                Logger.Error($"Encountered null adjacent tile in {nameof(AdjustEqMovement)}. Dir: {direction}, Tile: {tile.Tile}, non-null adj count: {nonNull}, Trace: {Environment.StackTrace}");
+                return;
+            }
+
+            tile.MonstermosInfo[direction] += amount;
+            adj.MonstermosInfo[direction.GetOpposite()] -= amount;
         }
 
-        private void HandleDecompressionFloorRip(IMapGrid mapGrid, TileAtmosphere tile, float sum)
+        private void HandleDecompressionFloorRip(MapGridComponent mapGrid, TileAtmosphere tile, float sum)
         {
             if (!MonstermosRipTiles)
                 return;

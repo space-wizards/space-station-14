@@ -9,6 +9,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -24,6 +25,7 @@ namespace Content.Server.StationEvents.Events
         [Dependency] protected readonly IAdminLogManager AdminLogManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
         [Dependency] protected readonly ChatSystem ChatSystem = default!;
         [Dependency] protected readonly StationSystem StationSystem = default!;
 
@@ -144,14 +146,12 @@ namespace Content.Server.StationEvents.Events
 
             targetGrid = RobustRandom.Pick(possibleTargets);
 
-            if (!TryComp<IMapGridComponent>(targetGrid, out var gridComp))
+            if (!TryComp<MapGridComponent>(targetGrid, out var gridComp))
                 return false;
-            var grid = gridComp.Grid;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
             var found = false;
-            var gridBounds = grid.WorldAABB;
-            var gridPos = grid.WorldPosition;
+            var (gridPos, _, gridMatrix) = Transform(targetGrid).GetWorldPositionRotationMatrix();
+            var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
 
             for (var i = 0; i < 10; i++)
             {
@@ -159,10 +159,15 @@ namespace Content.Server.StationEvents.Events
                 var randomY = RobustRandom.Next((int) gridBounds.Bottom, (int) gridBounds.Top);
 
                 tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-                if (atmosphereSystem.IsTileSpace(grid.GridEntityId, Transform(targetGrid).MapUid, tile, mapGridComp:gridComp)
-                    || atmosphereSystem.IsTileAirBlocked(grid.GridEntityId, tile, mapGridComp:gridComp)) continue;
+                if (_atmosphere.IsTileSpace(gridComp.Owner, Transform(targetGrid).MapUid, tile,
+                        mapGridComp: gridComp)
+                    || _atmosphere.IsTileAirBlocked(gridComp.Owner, tile, mapGridComp: gridComp))
+                {
+                    continue;
+                }
+
                 found = true;
-                targetCoords = grid.GridTileToLocal(tile);
+                targetCoords = gridComp.GridTileToLocal(tile);
                 break;
             }
 
@@ -179,6 +184,26 @@ namespace Content.Server.StationEvents.Events
                 .Where(p => p.Configuration is StationEventRuleConfiguration).ToArray());
         }
 
+        public float GetSeverityModifier()
+        {
+            var ev = new GetSeverityModifierEvent();
+            RaiseLocalEvent(ev);
+            return ev.Modifier;
+        }
+
         #endregion
+    }
+
+    /// <summary>
+    ///     Raised broadcast to determine what the severity modifier should be for an event, some positive number that can be multiplied with various things.
+    ///     Handled by usually other game rules (like the ramping scheduler).
+    ///     Most events should try and make use of this if possible.
+    /// </summary>
+    public sealed class GetSeverityModifierEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     Should be multiplied/added to rather than set, for commutativity.
+        /// </summary>
+        public float Modifier = 1.0f;
     }
 }

@@ -23,7 +23,7 @@
         doAfter: 1
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
@@ -45,7 +45,7 @@
         doAfter: 1
     - to: assembly
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
       steps:
@@ -102,7 +102,7 @@
         doAfter: 1
     - to: start
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: SheetSteel1
         amount: 2
       - !type:DeleteEntity {}
@@ -124,7 +124,7 @@
         doAfter: 1
     - to: assembly
       completed:
-      - !type:SpawnPrototype
+      - !type:GivePrototype
         prototype: CableApcStack1
         amount: 2
       steps:

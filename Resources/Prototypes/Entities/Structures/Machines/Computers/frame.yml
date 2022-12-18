@@ -10,8 +10,8 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.25,-0.5,0.25,0.5"
-      mass: 25
+        bounds: "-0.25,-0.35,0.25,0.35"
+      density: 190
       mask:
       - MachineMask
       layer:

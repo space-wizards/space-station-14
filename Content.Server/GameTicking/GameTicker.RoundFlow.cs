@@ -19,11 +19,15 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Database;
+using Robust.Shared.Asynchronous;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly ITaskManager _taskManager = default!;
+
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
             "ss14_round_number",
             "Round number.");
@@ -78,7 +82,29 @@ namespace Content.Server.GameTicking
             DefaultMap = _mapManager.CreateMap();
             _mapManager.AddUninitializedMap(DefaultMap);
             var startTime = _gameTiming.RealTime;
-            var maps = new List<GameMapPrototype>() { _gameMapManager.GetSelectedMapChecked(true, true) };
+
+            var maps = new List<GameMapPrototype>();
+
+            // the map might have been force-set by something
+            // (i.e. votemap or forcemap)
+            var mainStationMap = _gameMapManager.GetSelectedMap();
+            if (mainStationMap == null)
+            {
+                // otherwise set the map using the config rules
+                _gameMapManager.SelectMapByConfigRules();
+                mainStationMap = _gameMapManager.GetSelectedMap();
+            }
+
+            // Small chance the above could return no map.
+            // ideally SelectMapByConfigRules will always find a valid map
+            if (mainStationMap != null)
+            {
+                maps.Add(mainStationMap);
+            }
+            else
+            {
+                throw new Exception("invalid config; couldn't select a valid station map!");
+            }
 
             // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
@@ -110,7 +136,7 @@ namespace Content.Server.GameTicking
         /// <param name="loadOptions">Map loading options, includes offset.</param>
         /// <param name="stationName">Name to assign to the loaded station.</param>
         /// <returns>All loaded entities and grids.</returns>
-        public (IReadOnlyList<EntityUid> Entities, IReadOnlyList<EntityUid> Grids) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
+        public IReadOnlyList<EntityUid> LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
             // Okay I specifically didn't set LoadMap here because this is typically called onto a new map.
             // whereas the command can also be used on an existing map.
@@ -119,12 +145,12 @@ namespace Content.Server.GameTicking
             var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
             RaiseLocalEvent(ev);
 
-            var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
+            var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            var gridUids = gridIds.Select(g => g).ToList();
-            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
+            var gridUids = gridIds.ToList();
+            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
-            return (entities, gridUids);
+            return gridUids;
         }
 
         public void StartRound(bool force = false)
@@ -146,22 +172,28 @@ namespace Content.Server.GameTicking
 
             LoadMaps();
 
+            // map has been selected so update the lobby info text
+            // applies to players who didn't ready up
+            UpdateInfoText();
+
             StartGamePresetRules();
 
             RoundLengthMetric.Set(0);
 
             var playerIds = _playerGameStatuses.Keys.Select(player => player.UserId).ToArray();
             var serverName = _configurationManager.GetCVar(CCVars.AdminLogsServerName);
+
             // TODO FIXME AAAAAAAAAAAAAAAAAAAH THIS IS BROKEN
             // Task.Run as a terrible dirty workaround to avoid synchronization context deadlock from .Result here.
             // This whole setup logic should be made asynchronous so we can properly wait on the DB AAAAAAAAAAAAAH
-#pragma warning disable RA0004
-            RoundId = Task.Run(async () =>
+            var task = Task.Run(async () =>
             {
                 var server = await _db.AddOrGetServer(serverName);
                 return await _db.AddNewRound(server, playerIds);
-            }).Result;
-#pragma warning restore RA0004
+            });
+
+            _taskManager.BlockWaitOnTask(task);
+            RoundId = task.GetAwaiter().GetResult();
 
             var startingEvent = new RoundStartingEvent(RoundId);
             RaiseLocalEvent(startingEvent);
@@ -212,6 +244,7 @@ namespace Content.Server.GameTicking
             ReqWindowAttentionAll();
             UpdateLateJoinStatus();
             AnnounceRound();
+            UpdateInfoText();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -263,6 +296,9 @@ namespace Content.Server.GameTicking
 
         public void ShowRoundEndScoreboard(string text = "")
         {
+            // Log end of round
+            _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
+
             //Tell every client the round has ended.
             var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
@@ -418,6 +454,8 @@ namespace Content.Server.GameTicking
 
             _roleBanManager.Restart();
 
+            _gameMapManager.ClearSelectedMap();
+
             // Clear up any game rules.
             ClearGameRules();
 
@@ -566,15 +604,13 @@ namespace Content.Server.GameTicking
     {
         public readonly GameMapPrototype GameMap;
         public readonly MapId Map;
-        public readonly IReadOnlyList<EntityUid> Entities;
         public readonly IReadOnlyList<EntityUid> Grids;
         public readonly string? StationName;
 
-        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> entities, IReadOnlyList<EntityUid> grids, string? stationName)
+        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> grids, string? stationName)
         {
             GameMap = gameMap;
             Map = map;
-            Entities = entities;
             Grids = grids;
             StationName = stationName;
         }

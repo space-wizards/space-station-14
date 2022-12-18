@@ -16,8 +16,12 @@ public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        _menu = new CargoShuttleMenu(IoCManager.Resolve<IGameTiming>(), IoCManager.Resolve<IPrototypeManager>(), EntitySystem.Get<SpriteSystem>());
+        var collection = IoCManager.Instance;
 
+        if (collection == null)
+            return;
+
+        _menu = new CargoShuttleMenu(collection.Resolve<IGameTiming>(), collection.Resolve<IPrototypeManager>(), collection.Resolve<IEntitySystemManager>().GetEntitySystem<SpriteSystem>());
         _menu.ShuttleCallRequested += OnShuttleCall;
         _menu.ShuttleRecallRequested += OnShuttleRecall;
         _menu.OnClose += Close;

@@ -1,5 +1,5 @@
-using Content.Shared.CharacterAppearance;
 using Content.Shared.Dataset;
+using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;
@@ -15,21 +15,14 @@ namespace Content.Client.Preferences.UI
         private void RandomizeEverything()
         {
             Profile = HumanoidCharacterProfile.Random();
-            UpdateSexControls();
-            UpdateGenderControls();
-            UpdateClothingControls();
-            UpdateAgeEdit();
-            UpdateNameEdit();
-            UpdateHairPickers();
-            UpdateEyePickers();
-
-            _skinColor.Value = _random.Next(0, 100);
+            UpdateControls();
+            IsDirty = true;
         }
 
         private void RandomizeName()
         {
             if (Profile == null) return;
-            var name = Profile.Sex.GetName(Profile.Species, _prototypeManager, _random);
+            var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();
         }

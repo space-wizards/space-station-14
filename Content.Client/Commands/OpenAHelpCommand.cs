@@ -1,7 +1,10 @@
 using System;
 using Content.Client.Administration;
 using Content.Client.Administration.Systems;
+using Content.Client.UserInterface.Systems.Bwoink;
+using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Shared.Administration;
+using Robust.Client.UserInterface;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
@@ -24,13 +27,14 @@ namespace Content.Client.Commands
             }
             if (args.Length == 0)
             {
-                EntitySystem.Get<BwoinkSystem>().Open();
+                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<AHelpUIController>().Open();
             }
             else
             {
                 if (Guid.TryParse(args[0], out var guid))
                 {
-                    EntitySystem.Get<BwoinkSystem>().Open(new NetUserId(guid));
+                    var targetUser = new NetUserId(guid);
+                    IoCManager.Resolve<IUserInterfaceManager>().GetUIController<AHelpUIController>().Open(targetUser);
                 }
                 else
                 {

@@ -98,6 +98,9 @@ public sealed class AtmosMonitorSystem : EntitySystem
             case AtmosDeviceNetworkSystem.RegisterDevice:
                 component.RegisteredDevices.Add(args.SenderAddress);
                 break;
+            case AtmosDeviceNetworkSystem.DeregisterDevice:
+                component.RegisteredDevices.Remove(args.SenderAddress);
+                break;
             case AtmosAlarmableSystem.ResetAll:
                 Reset(uid);
                 // Don't clear alarm states here.
@@ -139,7 +142,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
         }
     }
 
-    private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, PowerChangedEvent args)
+    private void OnPowerChangedEvent(EntityUid uid, AtmosMonitorComponent component, ref PowerChangedEvent args)
     {
         if (TryComp<AtmosDeviceComponent>(uid, out var atmosDeviceComponent))
         {
@@ -334,7 +337,7 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         if (!monitor.NetEnabled) return;
 
-        if (!Resolve(monitor.Owner, ref tags))
+        if (!Resolve(monitor.Owner, ref tags, false))
         {
             return;
         }

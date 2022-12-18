@@ -13,6 +13,7 @@ namespace Content.Shared.Storage.EntitySystems
     [UsedImplicitly]
     public abstract class SharedItemMapperSystem : EntitySystem
     {
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
         /// <inheritdoc />
@@ -34,27 +35,28 @@ namespace Content.Shared.Storage.EntitySystems
             if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComponent))
             {
                 var list = new List<string>(component.MapLayers.Keys);
-                appearanceComponent.SetData(StorageMapVisuals.InitLayers, new ShowLayerData(list));
+                _appearance.SetData(component.Owner, StorageMapVisuals.InitLayers, new ShowLayerData(list), appearanceComponent);
             }
         }
 
         private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
-            if (EntityManager.TryGetComponent(itemMapper.Owner, out AppearanceComponent? appearanceComponent)
-                && TryGetLayers(args, itemMapper, out var containedLayers))
-            {
-                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
-            }
+            UpdateAppearance(uid, itemMapper, args);
         }
 
         private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
+            UpdateAppearance(uid, itemMapper, args);
+        }
+
+        private void UpdateAppearance(EntityUid uid, ItemMapperComponent itemMapper, ContainerModifiedMessage message)
+        {
             if (EntityManager.TryGetComponent(itemMapper.Owner, out AppearanceComponent? appearanceComponent)
-                && TryGetLayers(args, itemMapper, out var containedLayers))
+                && TryGetLayers(message, itemMapper, out var containedLayers))
             {
-                appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
+                _appearance.SetData(itemMapper.Owner, StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers), appearanceComponent);
             }
         }
 

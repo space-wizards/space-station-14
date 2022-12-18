@@ -17,7 +17,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.3,0.4,0.3"
-      mass: 25
+      density: 190
       mask:
       - TabletopMachineMask
       layer:
@@ -48,16 +48,17 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: ReagentDispenser
-    beakerSlot:
-      whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
-      whitelist:
-        components:
-        - FitsInDispenser
   - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelistFailPopup: reagent-dispenser-component-cannot-put-entity-message
+        whitelist:
+          components:
+          - FitsInDispenser
   - type: ContainerContainer
     containers:
       machine_board: !type:Container
       machine_parts: !type:Container
-      ReagentDispenser-beaker: !type:ContainerSlot
+      beakerSlot: !type:ContainerSlot
   - type: StaticPrice
     price: 1000

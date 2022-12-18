@@ -24,9 +24,11 @@ namespace Content.Client.Options.UI.Tabs
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
             DefaultButton.OnPressed += OnDefaultButtonPressed;
+            NetPredictCheckbox.OnToggled += OnPredictToggled;
             NetInterpRatioSlider.OnValueChanged += OnSliderChanged;
             NetInterpRatioSlider.MinValue = _stateMan.MinBufferSize;
             NetPredictTickBiasSlider.OnValueChanged += OnSliderChanged;
+            NetPvsSpawnSlider.OnValueChanged += OnSliderChanged;
             NetPvsEntrySlider.OnValueChanged += OnSliderChanged;
             NetPvsLeaveSlider.OnValueChanged += OnSliderChanged;
 
@@ -38,11 +40,18 @@ namespace Content.Client.Options.UI.Tabs
             ApplyButton.OnPressed -= OnApplyButtonPressed;
             ResetButton.OnPressed -= OnResetButtonPressed;
             DefaultButton.OnPressed -= OnDefaultButtonPressed;
+            NetPredictCheckbox.OnToggled -= OnPredictToggled;
             NetInterpRatioSlider.OnValueChanged -= OnSliderChanged;
             NetPredictTickBiasSlider.OnValueChanged -= OnSliderChanged;
+            NetPvsSpawnSlider.OnValueChanged -= OnSliderChanged;
             NetPvsEntrySlider.OnValueChanged -= OnSliderChanged;
             NetPvsLeaveSlider.OnValueChanged -= OnSliderChanged;
             base.Dispose(disposing);
+        }
+
+        private void OnPredictToggled(BaseButton.ButtonToggledEventArgs obj)
+        {
+            UpdateChanges();
         }
 
         private void OnSliderChanged(Robust.Client.UserInterface.Controls.Range range)
@@ -54,8 +63,10 @@ namespace Content.Client.Options.UI.Tabs
         {
             _cfg.SetCVar(CVars.NetBufferSize, (int) NetInterpRatioSlider.Value - _stateMan.MinBufferSize);
             _cfg.SetCVar(CVars.NetPredictTickBias, (int) NetPredictTickBiasSlider.Value);
-            _cfg.SetCVar(CVars.NetPVSEntityBudget, (int) NetPvsEntrySlider.Value);
+            _cfg.SetCVar(CVars.NetPVSEntityBudget, (int) NetPvsSpawnSlider.Value);
+            _cfg.SetCVar(CVars.NetPVSEntityEnterBudget, (int) NetPvsEntrySlider.Value);
             _cfg.SetCVar(CVars.NetPVSEntityExitBudget, (int) NetPvsLeaveSlider.Value);
+            _cfg.SetCVar(CVars.NetPredict, NetPredictCheckbox.Pressed);
 
             _cfg.SaveToFile();
             UpdateChanges();
@@ -69,7 +80,8 @@ namespace Content.Client.Options.UI.Tabs
         private void OnDefaultButtonPressed(BaseButton.ButtonEventArgs obj)
         {
             NetPredictTickBiasSlider.Value = CVars.NetPredictTickBias.DefaultValue;
-            NetPvsEntrySlider.Value = CVars.NetPVSEntityBudget.DefaultValue;
+            NetPvsSpawnSlider.Value = CVars.NetPVSEntityBudget.DefaultValue;
+            NetPvsEntrySlider.Value = CVars.NetPVSEntityEnterBudget.DefaultValue;
             NetPvsLeaveSlider.Value = CVars.NetPVSEntityExitBudget.DefaultValue;
 
             // Apparently default value doesn't get updated when using override defaults, so using a const
@@ -82,8 +94,10 @@ namespace Content.Client.Options.UI.Tabs
         {
             NetInterpRatioSlider.Value = _cfg.GetCVar(CVars.NetBufferSize) + _stateMan.MinBufferSize;
             NetPredictTickBiasSlider.Value = _cfg.GetCVar(CVars.NetPredictTickBias);
-            NetPvsEntrySlider.Value = _cfg.GetCVar(CVars.NetPVSEntityBudget);
+            NetPvsSpawnSlider.Value = _cfg.GetCVar(CVars.NetPVSEntityBudget);
+            NetPvsEntrySlider.Value = _cfg.GetCVar(CVars.NetPVSEntityEnterBudget);
             NetPvsLeaveSlider.Value = _cfg.GetCVar(CVars.NetPVSEntityExitBudget);
+            NetPredictCheckbox.Pressed = _cfg.GetCVar(CVars.NetPredict);
             UpdateChanges();
         }
 
@@ -92,15 +106,21 @@ namespace Content.Client.Options.UI.Tabs
             var isEverythingSame =
                 NetInterpRatioSlider.Value == _cfg.GetCVar(CVars.NetBufferSize) + _stateMan.MinBufferSize &&
                 NetPredictTickBiasSlider.Value == _cfg.GetCVar(CVars.NetPredictTickBias) &&
-                NetPvsEntrySlider.Value == _cfg.GetCVar(CVars.NetPVSEntityBudget) &&
+                NetPredictCheckbox.Pressed == _cfg.GetCVar(CVars.NetPredict) &&
+                NetPvsSpawnSlider.Value == _cfg.GetCVar(CVars.NetPVSEntityBudget) &&
+                NetPvsEntrySlider.Value == _cfg.GetCVar(CVars.NetPVSEntityEnterBudget) &&
                 NetPvsLeaveSlider.Value == _cfg.GetCVar(CVars.NetPVSEntityExitBudget);
 
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             NetInterpRatioLabel.Text = NetInterpRatioSlider.Value.ToString();
             NetPredictTickBiasLabel.Text = NetPredictTickBiasSlider.Value.ToString();
+            NetPvsSpawnLabel.Text = NetPvsSpawnSlider.Value.ToString();
             NetPvsEntryLabel.Text = NetPvsEntrySlider.Value.ToString();
             NetPvsLeaveLabel.Text = NetPvsLeaveSlider.Value.ToString();
+
+            // TODO disable / grey-out the predict and interp sliders if prediction is disabled.
+            // Currently no option to do this, but should be added to the slider control in general
         }
     }
 }

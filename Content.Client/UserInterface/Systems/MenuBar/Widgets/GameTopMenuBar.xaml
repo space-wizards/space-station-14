@@ -1,0 +1,96 @@
+﻿<widgets:GameTopMenuBar xmlns="https://spacestation14.io"
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+           xmlns:style="clr-namespace:Content.Client.Stylesheets"
+           xmlns:ic="clr-namespace:Robust.Shared.Input;assembly=Robust.Shared"
+           xmlns:is="clr-namespace:Content.Shared.Input;assembly=Content.Shared"
+           xmlns:xe="clr-namespace:Content.Client.UserInterface.XamlExtensions"
+           xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+           xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.MenuBar.Widgets"
+           Name = "MenuButtons"
+           VerticalExpand="False"
+           Orientation="Horizontal"
+           HorizontalAlignment="Left"
+           VerticalAlignment="Top"
+           SeparationOverride="5"
+>
+    <ui:MenuButton
+        Name="EscapeButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/hamburger.svg.192dpi.png'}"
+        BoundKey = "{x:Static ic:EngineKeyFunctions.EscapeMenu}"
+        ToolTip="{Loc 'game-hud-open-escape-menu-button-tooltip'}"
+        MinSize="70 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenRight}"
+        />
+    <ui:MenuButton
+        Name="CharacterButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/character.svg.192dpi.png'}"
+        ToolTip="{Loc 'game-hud-open-character-menu-button-tooltip'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenCharacterMenu}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="InventoryButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/inventory.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenInventoryMenu}"
+        ToolTip="{Loc 'game-hud-open-inventory-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="CraftingButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/hammer.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenCraftingMenu}"
+        ToolTip="{Loc 'game-hud-open-crafting-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="ActionButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/fist.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenActionsMenu}"
+        ToolTip="{Loc 'game-hud-open-actions-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="AdminButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/gavel.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenAdminMenu}"
+        ToolTip="{Loc 'game-hud-open-admin-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="SandboxButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/sandbox.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenSandboxWindow}"
+        ToolTip="{Loc 'game-hud-open-sandbox-menu-button-tooltip'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonSquare}"
+        />
+    <ui:MenuButton
+        Name="AHelpButton"
+        Access="Internal"
+        Icon="{xe:Tex '/Textures/Interface/info.svg.192dpi.png'}"
+        BoundKey = "{x:Static is:ContentKeyFunctions.OpenAHelp}"
+        ToolTip="{Loc 'ui-options-function-open-a-help'}"
+        MinSize="42 64"
+        HorizontalExpand="True"
+        AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"
+        />
+</widgets:GameTopMenuBar>

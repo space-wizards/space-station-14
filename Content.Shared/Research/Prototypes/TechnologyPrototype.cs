@@ -18,7 +18,6 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     The name this technology will have on user interfaces.
         /// </summary>
-        [ViewVariables]
         [DataField("name")]
         public string Name
         {
@@ -37,7 +36,6 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     A short description of the technology.
         /// </summary>
-        [ViewVariables]
         [DataField("description")]
         public string Description
         {
@@ -50,7 +48,6 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///    The required research points to unlock this technology.
         /// </summary>
-        [ViewVariables]
         [DataField("requiredPoints")]
         public int RequiredPoints { get; }
 
@@ -63,7 +60,6 @@ namespace Content.Shared.Research.Prototypes
         /// <summary>
         ///     A list of recipe IDs this technology unlocks.
         /// </summary>
-        [ViewVariables]
         [DataField("unlockedRecipes", customTypeSerializer:typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
         public List<string> UnlockedRecipes { get; } = new();
     }

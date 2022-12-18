@@ -1,0 +1,126 @@
+﻿- type: entity
+  id: BaseBigBox
+  name: cardboard box
+  description: Huh? Just a box...
+  components:
+    - type: Transform
+      noRot: true
+    - type: Clickable
+    - type: Physics
+      bodyType: KinematicController
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          density: 100
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+          hard: true
+    - type: Pullable
+    - type: CardboardBox
+      effectSound: /Audio/Effects/chime.ogg
+    - type: InputMover
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+      airtight: true #true for now until it doesn't make a vacuum
+      capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+    - type: Damageable
+      damageContainer: Box
+    - type: Sprite
+      noRot: true
+      netsync: false
+      sprite: Structures/Storage/closet.rsi
+      layers:
+      - state: cardboard
+      - state: cardboard_open
+        map: ["enum.StorageVisualLayers.Door"]
+    - type: Appearance
+      visuals:
+      - type: StorageVisualizer
+        state: cardboard
+        state_open: cardboard_open
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+
+- type: entity
+  id: StealthBox
+  suffix: stealth
+  parent: BaseBigBox
+  name: cardboard box #it's still just a box
+  description: Kept ya waiting, huh?
+  components:
+    - type: CardboardBox
+      effectSound: /Audio/Effects/chime.ogg
+    - type: Damageable
+      damageContainer: Box
+      damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+    - type: Sprite
+      noRot: true
+      netsync: false
+      sprite: Structures/Storage/closet.rsi
+      layers:
+        - state: agentbox
+        - state: cardboard_open
+          map: ["enum.StorageVisualLayers.Door"]
+    - type: Appearance
+      visuals:
+        - type: StorageVisualizer
+          state: agentbox
+          state_open: cardboard_open
+    - type: Stealth
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.37
+      movementVisibilityRate: 0.20
+
+#For admin spawning only
+- type: entity
+  id: GhostBox
+  parent: StealthBox
+  suffix: ""
+  name: ghost box
+  description: Beware!
+  components:
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          mask:
+            - MobMask
+          layer:
+            - SlipLayer
+          hard: false #It's a ghostly box, it can go through walls
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+      airtight: true #whoever's inside should probably breath
+
+#Exclamation effect for box opening
+- type: entity
+  id: Exclamation
+  name: exclamation
+  noSpawn: true
+  save: false
+  components:
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      drawdepth: Effects
+      noRot: true
+      netsync: false
+      layers:
+        - state: "cardboard_special"
+    - type: TimedDespawn
+      lifetime: 1
+    - type: Tag
+      tags:
+        - HideContextMenu

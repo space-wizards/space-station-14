@@ -30,10 +30,10 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.8
-      mass: 200
+      density: 100
       hard: true
       id: projectile
-      # Didn't use MapGrid for now as the bounds are stuffed.
+      # Didn't use MapGridComponent for now as the bounds are stuffed.
       layer:
       - LargeMobLayer
       mask:

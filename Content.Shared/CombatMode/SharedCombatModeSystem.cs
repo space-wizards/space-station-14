@@ -1,20 +1,19 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Targeting;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.CombatMode
 {
     public abstract class SharedCombatModeSystem : EntitySystem
     {
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeNetworkEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
-            SubscribeLocalEvent<CombatModeSystemMessages.SetCombatModeActiveMessage>(CombatModeActiveHandler);
 
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<SharedCombatModeComponent, ComponentShutdown>(OnShutdown);
@@ -31,30 +30,17 @@ namespace Content.Shared.CombatMode
 
             if (component.CombatToggleAction != null)
                 _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
-
-            if (component.DisarmAction == null
-                && component.CanDisarm
-                && _protoMan.TryIndex(component.DisarmActionId, out EntityTargetActionPrototype? disarmProto))
-            {
-                component.DisarmAction = new(disarmProto);
-            }
-
-            if (component.DisarmAction != null && component.CanDisarm)
-                _actionsSystem.AddAction(uid, component.DisarmAction, null);
         }
 
         private void OnShutdown(EntityUid uid, SharedCombatModeComponent component, ComponentShutdown args)
         {
             if (component.CombatToggleAction != null)
                 _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
-
-            if (component.DisarmAction != null)
-                _actionsSystem.RemoveAction(uid, component.DisarmAction);
         }
 
-        public bool IsInCombatMode(EntityUid entity)
+        public bool IsInCombatMode(EntityUid? entity, SharedCombatModeComponent? component = null)
         {
-            return TryComp<SharedCombatModeComponent>(entity, out var combatMode) && combatMode.IsInCombatMode;
+            return entity != null && Resolve(entity.Value, ref component, false) && component.IsInCombatMode;
         }
 
         private void OnActionPerform(EntityUid uid, SharedCombatModeComponent component, ToggleCombatActionEvent args)
@@ -66,17 +52,19 @@ namespace Content.Shared.CombatMode
             args.Handled = true;
         }
 
-        private void CombatModeActiveHandler(CombatModeSystemMessages.SetCombatModeActiveMessage ev, EntitySessionEventArgs eventArgs)
+        [Serializable, NetSerializable]
+        protected sealed class CombatModeComponentState : ComponentState
         {
-            var entity = eventArgs.SenderSession.AttachedEntity;
+            public bool IsInCombatMode { get; }
+            public TargetingZone TargetingZone { get; }
 
-            if (entity == null || !EntityManager.TryGetComponent(entity, out SharedCombatModeComponent? combatModeComponent))
-                return;
-
-            combatModeComponent.IsInCombatMode = ev.Active;
+            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
+            {
+                IsInCombatMode = isInCombatMode;
+                TargetingZone = targetingZone;
+            }
         }
     }
 
     public sealed class ToggleCombatActionEvent : InstantActionEvent { }
-    public sealed class DisarmActionEvent : EntityTargetActionEvent { }
 }

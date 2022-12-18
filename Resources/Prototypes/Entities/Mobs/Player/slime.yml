@@ -4,7 +4,7 @@
   id: MobSlimePerson
   components:
     - type: CombatMode
-      canDisarm: true
+      disarm: null
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic

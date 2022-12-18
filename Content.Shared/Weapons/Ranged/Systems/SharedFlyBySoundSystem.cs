@@ -47,7 +47,11 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, FlyBySoundComponent component, ComponentShutdown args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body) ||
+            MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+        {
+            return;
+        }
 
         _fixtures.DestroyFixture(body, FlyByFixture);
     }

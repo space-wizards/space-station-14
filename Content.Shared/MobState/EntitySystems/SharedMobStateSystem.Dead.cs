@@ -8,28 +8,25 @@ public abstract partial class SharedMobStateSystem
     public virtual void EnterDeadState(EntityUid uid)
     {
         EnsureComp<CollisionWakeComponent>(uid);
-        Standing.Down(uid);
+        _standing.Down(uid);
 
-        if (Standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+        if (_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
         {
-            physics.CanCollide = false;
+            _physics.SetCanCollide(physics, false);
         }
 
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-        {
-            appearance.SetData(DamageStateVisuals.State, DamageState.Dead);
-        }
+        _appearance.SetData(uid, DamageStateVisuals.State, DamageState.Dead);
     }
 
     public virtual void ExitDeadState(EntityUid uid)
     {
         RemComp<CollisionWakeComponent>(uid);
 
-        Standing.Stand(uid);
+        _standing.Stand(uid);
 
-        if (!Standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+        if (!_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
         {
-            physics.CanCollide = true;
+            _physics.SetCanCollide(physics, true);
         }
     }
 

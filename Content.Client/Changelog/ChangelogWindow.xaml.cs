@@ -205,7 +205,7 @@ namespace Content.Client.Changelog
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().ToggleWindow();
+            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().OpenWindow();
         }
     }
 }

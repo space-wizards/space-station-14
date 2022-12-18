@@ -12,3 +12,12 @@ ent-EngineeringCableBulk = { ent-CrateEngineeringCableBulk }
 
 ent-EngineeringElectricalSupplies = { ent-CrateEngineeringElectricalSupplies }
     .desc = { ent-CrateEngineeringElectricalSupplies.desc }
+
+ent-EngineeringJetpack = { ent-CrateEngineeringJetpack }
+    .desc = { ent-CrateEngineeringJetpack.desc }
+
+ent-EngineeringMiniJetpack = { ent-CrateEngineeringMiniJetpack }
+    .desc = { ent-CrateEngineeringMiniJetpack.desc }
+
+ent-AirlockKit = { ent-CrateAirlockKit }
+    .desc = { ent-CrateAirlockKit.desc }

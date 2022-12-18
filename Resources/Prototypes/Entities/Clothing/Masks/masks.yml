@@ -103,6 +103,15 @@
         Heat: 0.95
 
 - type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasVoiceMasker
+  name: gas mask
+  suffix: Voice Mask
+  description: A face-covering mask that can be connected to an air supply. There are switches and knobs underneath the mask.
+  components:
+    - type: VoiceMasker
+
+- type: entity
   parent: ClothingMaskPullableBase
   id: ClothingMaskBreathMedical
   name: medical mask
@@ -116,6 +125,9 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.10
+  - type: Tag
+    tags:
+    - PetWearable
 
 - type: entity
   parent: ClothingMaskPullableBase
@@ -131,6 +143,10 @@
   - type: IngestionBlocker
   - type: DiseaseProtection
     protection: 0.05
+  - type: Tag
+    tags:
+    - PetWearable
+  - type: Recyclable
 
 - type: entity
   parent: ClothingMaskBase
@@ -198,6 +214,9 @@
     - type: AddAccentClothing
       accent: ReplacementAccent
       replacement: mumble
+    - type: Construction
+      graph: Muzzle
+      node: muzzle
 
 - type: entity
   parent: ClothingMaskPullableBase

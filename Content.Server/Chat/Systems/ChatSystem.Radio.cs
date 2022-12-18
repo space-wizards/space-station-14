@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Server.Headset;
+using Content.Server.Radio.Components;
 using Content.Shared.Radio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -43,49 +43,49 @@ public sealed partial class ChatSystem
     private (string, RadioChannelPrototype?) GetRadioPrefix(EntityUid source, string message)
     {
         // TODO: Turn common into a true frequency and support multiple aliases.
-        var channelMessage = message.StartsWith(':') || message.StartsWith('.');
-        var radioMessage = message.StartsWith(';') || channelMessage;
-        if (!radioMessage) return (message, null);
+        var isRadioMessage = false;
+        RadioChannelPrototype? channel = null;
+        // First check if this is a message to the base radio frequency
+        if (message.StartsWith(';'))
+        {
+            // First Remove semicolon
+            channel = _prototypeManager.Index<RadioChannelPrototype>("Common");
+            message = message[1..].TrimStart();
+            isRadioMessage = true;
+        }
+
+        // Check now if the remaining message is a targeted radio message
+        if ((message.StartsWith(':') || message.StartsWith('.')) && message.Length >= 2)
+        {
+            // Strip remaining message prefix.
+            _keyCodes.TryGetValue(message[1], out channel);
+            message = message[2..].TrimStart();
+            isRadioMessage = true;
+        }
+
+        // If not a radio message at all
+        if (!isRadioMessage) return (message, null);
 
         // Special case for empty messages
         if (message.Length <= 1)
             return (string.Empty, null);
 
-        // Look for a prefix indicating a destination radio channel.
-        RadioChannelPrototype? chan;
-        if (channelMessage && message.Length >= 2)
+        if (channel == null)
         {
-            _keyCodes.TryGetValue(message[1], out chan);
-
-            if (chan == null)
-            {
-                _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
-                chan = null;
-            }
-
-            // Strip message prefix.
-            message = message[2..].TrimStart();
-        }
-        else
-        {
-            // Remove semicolon
-            message = message[1..].TrimStart();
-            chan = _prototypeManager.Index<RadioChannelPrototype>("Common");
+            _popup.PopupEntity(Loc.GetString("chat-manager-no-such-channel"), source, Filter.Entities(source));
+            channel = null;
         }
 
         // Re-capitalize message since we removed the prefix.
         message = SanitizeMessageCapital(message);
 
-        if (_inventory.TryGetSlotEntity(source, "ears", out var entityUid) &&
-            TryComp(entityUid, out HeadsetComponent? headset))
-        {
-            headset.RadioRequested = true;
-        }
-        else
+        var hasHeadset = _inventory.TryGetSlotEntity(source, "ears", out var entityUid)  && HasComp<HeadsetComponent>(entityUid);
+
+        if (!hasHeadset && !HasComp<IntrinsicRadioTransmitterComponent>(source))
         {
             _popup.PopupEntity(Loc.GetString("chat-manager-no-headset-on-message"), source, Filter.Entities(source));
         }
 
-        return (message, chan);
+        return (message, channel);
     }
 }

@@ -21,7 +21,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.1,0.45,0.1"
-      mass: 100
+      density: 550
       mask:
       - MachineMask
       layer:
@@ -117,7 +117,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.25
-      mass: 75
+      density: 375
       mask:
       - MachineMask
       layer:
@@ -160,7 +160,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
-      mass: 100
+      density: 100
       mask:
       - MachineMask
       layer:

@@ -49,3 +49,9 @@
   id: MedicalScannerSender
   name: signal-port-name-med-scanner-sender
   description: signal-port-description-med-scanner-sender
+
+- type: transmitterPort
+  id: ArtifactAnalyzerSender
+  name: signal-port-name-artifact-analyzer-sender
+  description: signal-port-description-artifact-analyzer-sender
+  defaultLinks: [ ArtifactAnalyzerReceiver ]

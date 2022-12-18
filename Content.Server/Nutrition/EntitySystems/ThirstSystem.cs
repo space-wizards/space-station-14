@@ -30,9 +30,13 @@ namespace Content.Server.Nutrition.EntitySystems
         }
         private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
         {
-            component.CurrentThirst = _random.Next(
-                (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
-                (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+            // Do not change behavior unless starting value is explicitly defined
+            if (component.CurrentThirst < 0)
+            {
+                component.CurrentThirst = _random.Next(
+                    (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
+                    (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+            }
             component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
             component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.
@@ -72,7 +76,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateThirst(ThirstComponent component, float amount)
         {
-            component.CurrentThirst = Math.Min(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.OverHydrated]);
+            component.CurrentThirst = Math.Clamp(component.CurrentThirst + amount, component.ThirstThresholds[ThirstThreshold.Dead], component.ThirstThresholds[ThirstThreshold.OverHydrated]);
         }
 
         public void ResetThirst(ThirstComponent component)
@@ -153,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
                 {
-                    component.CurrentThirst -= component.ActualDecayRate;
+                    UpdateThirst(component, - component.ActualDecayRate);
                     var calculatedThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
                     if (calculatedThirstThreshold != component.CurrentThirstThreshold)
                     {

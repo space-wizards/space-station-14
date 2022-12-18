@@ -1,5 +1,6 @@
-﻿using Content.Shared.Ensnaring.Components;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ensnaring;
 
@@ -16,6 +17,25 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareEvent>(OnEnsnare);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
         SubscribeLocalEvent<SharedEnsnareableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
+        SubscribeLocalEvent<SharedEnsnareableComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<SharedEnsnareableComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnHandleState(EntityUid uid, SharedEnsnareableComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not EnsnareableComponentState state)
+            return;
+
+        if (state.IsEnsnared == component.IsEnsnared)
+            return;
+
+        component.IsEnsnared = state.IsEnsnared;
+        RaiseLocalEvent(uid, new EnsnaredChangedEvent(component.IsEnsnared));
+    }
+
+    private void OnGetState(EntityUid uid, SharedEnsnareableComponent component, ref ComponentGetState args)
+    {
+        args.State = new EnsnareableComponentState(component.IsEnsnared);
     }
 
     private void OnEnsnare(EntityUid uid, SharedEnsnareableComponent component, EnsnareEvent args)

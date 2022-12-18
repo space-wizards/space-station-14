@@ -18,7 +18,6 @@ namespace Content.Shared.Chemistry.Components
     public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
-        [ViewVariables]
         [DataField("reagents")]
         public List<ReagentQuantity> Contents = new(2);
 
@@ -90,7 +89,7 @@ namespace Content.Shared.Chemistry.Components
                 return "";
             }
 
-            var majorReagent = Contents.OrderByDescending(reagent => reagent.Quantity).First();
+            var majorReagent = Contents.MaxBy(reagent => reagent.Quantity);
             return majorReagent.ReagentId;
         }
 
@@ -134,9 +133,11 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="scale">The scalar to modify the solution by.</param>
         public void ScaleSolution(float scale)
         {
-            if (scale == 1) return;
+            if (scale.Equals(1f))
+                return;
+
             var tempContents = new List<ReagentQuantity>(Contents);
-            foreach(ReagentQuantity current in tempContents)
+            foreach(var current in tempContents)
             {
                 if(scale > 1)
                 {
@@ -231,7 +232,7 @@ namespace Content.Shared.Chemistry.Components
                 Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
             }
 
-            TotalVolume = TotalVolume * ratio;
+            TotalVolume *= ratio;
         }
 
         public void RemoveAllSolution()
@@ -381,14 +382,10 @@ namespace Content.Shared.Chemistry.Components
             return newSolution;
         }
 
+        [Obsolete("Use ReactiveSystem.DoEntityReaction")]
         public void DoEntityReaction(EntityUid uid, ReactionMethod method)
         {
-            var chemistry = EntitySystem.Get<ReactiveSystem>();
-
-            foreach (var (reagentId, quantity) in Contents.ToArray())
-            {
-                chemistry.ReactionEntity(uid, method, reagentId, quantity, this);
-            }
+            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ReactiveSystem>().DoEntityReaction(uid, this, method);
         }
 
         [Serializable, NetSerializable]

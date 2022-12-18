@@ -27,7 +27,7 @@
     - shape:
         !type:PhysShapeCircle
         radius: 0.5
-      mass: 1
+      density: 1
       hard: false
       layer:
       - Impassable

@@ -19,9 +19,17 @@
         - shape:
             !type:PhysShapeCircle
             radius: 0.45
-          mass: 50
+          density: 80
           mask:
             - MachineMask
+    - type: SurveillanceCameraMicrophone
+      blacklist:
+        components:
+          - SurveillanceCamera
+          - SurveillanceCameraMonitor
+          - RadioSpeaker
+    - type: ActiveListener
+      range: 10
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraSetupUiKey.Camera

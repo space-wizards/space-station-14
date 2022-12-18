@@ -61,7 +61,7 @@ namespace Content.Server.Pointing.EntitySystems
                 if (component.Chasing is not {Valid: true} chasing || Deleted(chasing))
                 {
                     EntityManager.QueueDeleteEntity(uid);
-                    return;
+                    continue;
                 }
 
                 component.TurningDelay -= frameTime;
@@ -73,10 +73,10 @@ namespace Content.Server.Pointing.EntitySystems
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
 
-                    transform.LocalRotation = newAngle;
+                    transform.WorldRotation = newAngle;
 
                     UpdateAppearance(uid, component, transform);
-                    return;
+                    continue;
                 }
 
                 transform.WorldRotation += Angle.FromDegrees(20);
@@ -91,8 +91,10 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.ChasingTime > 0)
                 {
-                    return;
+                    continue;
                 }
+
+
                 _explosion.QueueExplosion(uid, ExplosionSystem.DefaultExplosionPrototypeId, 50, 3, 10);
                 EntityManager.QueueDeleteEntity(uid);
             }
