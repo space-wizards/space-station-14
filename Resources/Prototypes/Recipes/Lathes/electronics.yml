@@ -35,6 +35,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: IntercomElectronics
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: IntercomElectronics
+  completetime: 2
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
   id: FireAlarmElectronics
   icon: { sprite: Objects/Misc/module.rsi, state: door_electronics }
   result: FireAlarmElectronics

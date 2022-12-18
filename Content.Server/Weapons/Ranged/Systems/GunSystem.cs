@@ -188,7 +188,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
 
                         if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage);
+                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source:user);
 
                         var dmg = hitscan.Damage;
 

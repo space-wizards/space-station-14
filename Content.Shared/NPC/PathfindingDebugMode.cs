@@ -23,24 +23,26 @@ public enum PathfindingDebugMode : ushort
     /// <summary>
     /// Shows all of the pathfinding polys.
     /// </summary>
-    Polys = 1 << 6,
+    Polys = 1 << 3,
 
     /// <summary>
     /// Shows the edges between pathfinding polys.
     /// </summary>
-    PolyNeighbors = 1 << 7,
+    PolyNeighbors = 1 << 4,
 
     /// <summary>
     /// Shows the nearest poly to the mouse cursor.
     /// </summary>
-    Poly = 1 << 8,
+    Poly = 1 << 5,
 
     /// <summary>
     /// Gets a path from the current attached entity to the mouse cursor.
     /// </summary>
-    Path = 1 << 9,
+    // Path = 1 << 6,
 
-    Routes = 1 << 10,
+    Routes = 1 << 6,
 
-    RouteCosts = 1 << 11,
+    RouteCosts = 1 << 7,
+
+    Steering = 1 << 8,
 }
