@@ -226,6 +226,7 @@
       - SynthesizerInstrument
       - RPED
       - HolofanProjector
+      - Vape
 
 - type: entity
   parent: Protolathe

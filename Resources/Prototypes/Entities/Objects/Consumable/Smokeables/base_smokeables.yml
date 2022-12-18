@@ -63,3 +63,20 @@
     solutions:
       smokable:
         maxVol: 20
+
+- type: entity
+  parent: BaseSmokable
+  id: BaseVape
+  abstract: true
+  components:
+  - type: Smokable
+    exposeTemperature: 1173.15
+  - type: Vape
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 10
+  - type: RefillableSolution
+    solution: smokable
+  - type: ExaminableSolution
+    solution: smokable

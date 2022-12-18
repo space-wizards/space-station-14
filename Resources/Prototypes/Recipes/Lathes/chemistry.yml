@@ -68,3 +68,14 @@
   completetime: 2
   materials:
     Glass: 200
+
+- type: latheRecipe
+  id: Vape
+  icon:
+    sprite: Objects/Consumable/Smokeables/Vapes/vape-standart.rsi
+    state: icon
+  result: Vape
+  completetime: 2
+  materials:
+    Plastic: 100
+    Steel: 250
