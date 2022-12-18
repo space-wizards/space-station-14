@@ -261,8 +261,6 @@ namespace Content.Server.NPC.Systems
             EntityQuery<TransformComponent> xformQuery,
             float frameTime)
         {
-            IoCManager.InitThread(_dependencies, replaceExisting: true);
-
             if (Deleted(steering.Coordinates.EntityId))
             {
                 SetDirection(mover, steering, Vector2.Zero);
