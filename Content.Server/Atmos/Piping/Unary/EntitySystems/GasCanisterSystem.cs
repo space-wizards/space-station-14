@@ -228,7 +228,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
             {
-                _popupSystem.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, args.User);
                 if (component.AccessDeniedSound != null)
                     _audioSys.PlayPvs(component.AccessDeniedSound, uid);
                 return;

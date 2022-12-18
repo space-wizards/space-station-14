@@ -6,9 +6,11 @@ using Content.Server.Labels.Components;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -35,6 +37,7 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         private const string PillPrototypeId = "Pill";
 
@@ -209,6 +212,19 @@ namespace Content.Server.Chemistry.EntitySystems
 
                 if (TryComp<SpriteComponent>(item, out var spriteComp))
                     spriteComp.LayerSetState(0, "pill" + (chemMaster.PillType + 1));
+
+                if (user.HasValue)
+                {
+                    // Log pill creation by a user
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"{ToPrettyString(user.Value):user} printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution)}");
+                }
+                else
+                {
+                    // Log pill creation by magic? This should never happen... right?
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"Unknown printed {ToPrettyString(item):pill} {SolutionContainerSystem.ToPrettyString(itemSolution)}");
+                }
             }
 
             UpdateUiState(chemMaster);
@@ -242,6 +258,19 @@ namespace Content.Server.Chemistry.EntitySystems
             _solutionContainerSystem.TryAddSolution(
                 container, solution, withdrawal);
 
+            if (user.HasValue)
+            {
+                // Log bottle creation by a user
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"{ToPrettyString(user.Value):user} bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
+            }
+            else
+            {
+                // Log bottle creation by magic? This should never happen... right?
+                _adminLogger.Add(LogType.Action, LogImpact.Low,
+                    $"Unknown bottled {ToPrettyString(container):bottle} {SolutionContainerSystem.ToPrettyString(solution)}");
+            }
+
             UpdateUiState(chemMaster);
             ClickSound(chemMaster);
         }
@@ -259,17 +288,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            var filter = user.HasValue ? Filter.Entities(user.Value) : Filter.Empty();
             if (solution.TotalVolume == 0)
             {
-                _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), filter);
+                if (user.HasValue)
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
                 return false;
             }
 
             // ReSharper disable once InvertIf
             if (neededVolume > solution.CurrentVolume)
             {
-                _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), filter);
+                if (user.HasValue)
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
                 return false;
             }
 
