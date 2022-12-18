@@ -1169,3 +1169,20 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+
+- type: reagent
+  id: DemomanSpecial
+  name: reagent-name-demomanspecial
+  parent: BaseAlcohol
+  desc: reagent-desc-demomanspecial
+  physicalDesc: reagent-physical-desc-demomanspecial
+  flavor: demomanspecial
+  color: "#fadba5"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 1

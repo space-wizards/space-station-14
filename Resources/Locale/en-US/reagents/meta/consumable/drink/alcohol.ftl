@@ -243,3 +243,6 @@ reagent-desc-whiskey-soda = For the more refined griffon.
 
 reagent-name-white-russian = white russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
+
+reagent-name-demomanspecial = demoman special
+reagent-desc-demomanspecial = An indescribably hot drink. If you were a bad demoman, you would consume this.

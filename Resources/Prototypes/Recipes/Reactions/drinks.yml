@@ -562,3 +562,15 @@
       amount: 1
   products:
     Pilk: 2
+
+- type: reaction
+  id: DemomanSpecial
+  reactants:
+    Moonshine:
+      amount: 1
+    Ethanol:
+      amount: 1
+    Thermite:
+      amount: 1
+  products:
+    DemomanSpecial: 3

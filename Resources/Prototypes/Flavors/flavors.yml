@@ -648,3 +648,8 @@
   id: watermelon
   flavorType: Complex
   description: flavor-complex-watermelon
+
+- type: flavor
+  id: demomanspecial
+  flavorType: Complex
+  description: flavor-complex-demomanspecial
