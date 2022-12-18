@@ -1,10 +1,4 @@
 Entries:
-- author: Rolfero
-  changes:
-  - {message: 'APCs can now be properly constructed using APC electronics, as well
-      as deconstructed', type: Add}
-  id: 2266
-  time: '2022-09-10T03:27:41.0000000+00:00'
 - author: moony
   changes:
   - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
@@ -2924,3 +2918,8 @@ Entries:
   - {message: Grids can now handle multiple gravity generators., type: Fix}
   id: 2765
   time: '2022-12-18T05:03:23.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixed flavor message for copypasta, type: Fix}
+  id: 2766
+  time: '2022-12-18T08:21:44.0000000+00:00'
