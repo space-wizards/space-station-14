@@ -499,19 +499,19 @@ public sealed partial class CargoSystem
 
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, args.Entity);
             return;
         }
 
         if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
         {
-            _popup.PopupEntity(reason, args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(reason, args.Entity, args.Entity);
             return;
         }
 
         if (IsBlocked(shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, Filter.Entities(player.Value));
+            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
             SoundSystem.Play(component.DenySound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
             return;
         };

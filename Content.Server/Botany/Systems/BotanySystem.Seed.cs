@@ -119,13 +119,11 @@ public sealed partial class BotanySystem : EntitySystem
     {
         if (proto.ProductPrototypes.Count == 0 || proto.Yield <= 0)
         {
-            _popupSystem.PopupCursor(Loc.GetString("botany-harvest-fail-message"),
-                Filter.Entities(user), PopupType.Medium);
+            _popupSystem.PopupCursor(Loc.GetString("botany-harvest-fail-message"), user, PopupType.Medium);
             return Enumerable.Empty<EntityUid>();
         }
 
-        _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", proto.DisplayName)),
-            Filter.Entities(user), PopupType.Medium);
+        _popupSystem.PopupCursor(Loc.GetString("botany-harvest-success-message", ("name", proto.DisplayName)), user, PopupType.Medium);
         return GenerateProduct(proto, Transform(user).Coordinates, yieldMod);
     }
 

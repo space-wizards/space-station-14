@@ -88,7 +88,7 @@ namespace Content.Server.Botany.Systems
             {
                 // Pick up pollen
                 args.Swab.SeedData = args.Plant.Seed;
-                _popupSystem.PopupEntity(Loc.GetString("botany-swab-from"), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("botany-swab-from"), args.Target.Value, args.User);
             }
             else
             {
@@ -97,7 +97,7 @@ namespace Content.Server.Botany.Systems
                     return;
                 args.Plant.Seed = _mutationSystem.Cross(args.Swab.SeedData, old); // Cross-pollenate
                 args.Swab.SeedData = old; // Transfer old plant pollen to swab
-                _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("botany-swab-to"), args.Target.Value, args.User);
             }
 
             if (args.Swab.CancelToken != null)

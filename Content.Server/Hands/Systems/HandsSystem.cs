@@ -250,7 +250,7 @@ namespace Content.Server.Hands.Systems
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
+                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, session);
                 return;
             }
 
@@ -262,7 +262,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
+                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt,  session);
                 }
                 else
                 {
