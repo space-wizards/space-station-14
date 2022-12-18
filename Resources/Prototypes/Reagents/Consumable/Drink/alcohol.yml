@@ -1169,3 +1169,21 @@
       - !type:AdjustReagent
         reagent: Ethanol
         amount: 0.15
+
+- type: reagent
+  id: DumbBitchJuice
+  name: reagent-name-dumb-bitch-juice
+  parent: BaseAlcohol
+  desc: reagent-desc-dumb-bitch-juice
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: regret
+  color: "#7E4043"
+  spritePath: wineglass.rsi
+  metabolisms:
+      Drink:
+        effects:
+        - !type:SatiateThirst
+          factor: 2
+        - !type:AdjustReagent
+          reagent: Ethanol
+          amount: 0.15

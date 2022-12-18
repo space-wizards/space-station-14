@@ -243,3 +243,6 @@ reagent-desc-whiskey-soda = For the more refined griffon.
 
 reagent-name-white-russian = white russian
 reagent-desc-white-russian = That's just, like, your opinion, man...
+
+reagent-name-dumbbitchjuice = dumb bitch juice
+reagent-desc-dumbbitchjuice = A drink of many regrets.

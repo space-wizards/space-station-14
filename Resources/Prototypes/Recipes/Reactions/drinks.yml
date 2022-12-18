@@ -562,3 +562,15 @@
       amount: 1
   products:
     Pilk: 2
+
+- type: reaction
+  id: DumbBitchJuice
+  reactants:
+    Wine:
+      amount: 1
+    Vodka:
+      amount: 1
+    Pilk:
+      amount: 1
+  products:
+    DumbBitchJuice: 2

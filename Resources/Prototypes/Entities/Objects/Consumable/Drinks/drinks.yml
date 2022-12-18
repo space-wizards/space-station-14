@@ -2134,3 +2134,20 @@
               Quantity: 50
     - type: Sprite
       sprite: Objects/Consumable/Drinks/kvass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkDumbBitchJuiceGlass
+  name: dumb bitch juice glass
+  description: test description
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DumbBitchJuice
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/wineglass.rsi
