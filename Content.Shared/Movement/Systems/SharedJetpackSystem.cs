@@ -44,7 +44,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         args.CanMove = true;
     }
 
-    private void OnJetpackUserGravityChanged(GravityChangedEvent ev)
+    private void OnJetpackUserGravityChanged(ref GravityChangedEvent ev)
     {
         var gridUid = ev.ChangedGridIndex;
         var jetpackQuery = GetEntityQuery<JetpackComponent>();

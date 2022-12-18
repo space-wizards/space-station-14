@@ -1,29 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'We have surgically implanted tiny bio-engineered sensors into your
-      little mouths so that you can get more out of what you eat! In other words,
-      we have given you taste buds! The power of surgery and bioprinting!', type: Add}
-  id: 2263
-  time: '2022-09-08T23:14:49.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Only ghosts can see warp point information while examining nuke disk.,
-    type: Fix}
-  id: 2264
-  time: '2022-09-09T03:42:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
-    type: Fix}
-  id: 2265
-  time: '2022-09-09T14:39:22.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: 'APCs can now be properly constructed using APC electronics, as well
-      as deconstructed', type: Add}
-  id: 2266
-  time: '2022-09-10T03:27:41.0000000+00:00'
 - author: moony
   changes:
   - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
@@ -2927,3 +2902,24 @@ Entries:
   - {message: Salvage magnets now correctly appear powered, type: Fix}
   id: 2762
   time: '2022-12-16T22:56:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's no longer possible to attack subfloor entities., type: Fix}
+  id: 2763
+  time: '2022-12-17T03:47:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring no longer allowed on non-collidable but occupied tiles (e.g.
+      conveyors)., type: Tweak}
+  id: 2764
+  time: '2022-12-17T03:51:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids can now handle multiple gravity generators., type: Fix}
+  id: 2765
+  time: '2022-12-18T05:03:23.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixed flavor message for copypasta, type: Fix}
+  id: 2766
+  time: '2022-12-18T08:21:44.0000000+00:00'
