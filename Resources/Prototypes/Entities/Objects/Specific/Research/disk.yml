@@ -35,5 +35,4 @@
   description: A disk for the R&D server containing all the points you could ever need.
   components:
   - type: ResearchDisk
-    points: 10000
     unlockAllTech: true
