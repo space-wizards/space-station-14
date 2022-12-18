@@ -13,7 +13,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Botany
+namespace Content.Server.Botany.Systems
 {
     public sealed class BotanySwabSystem : EntitySystem
     {
