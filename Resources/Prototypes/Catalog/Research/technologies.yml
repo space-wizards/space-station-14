@@ -97,6 +97,7 @@
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
+  - Vape
   - Beaker
   - LargeBeaker
   - CryostasisBeaker
