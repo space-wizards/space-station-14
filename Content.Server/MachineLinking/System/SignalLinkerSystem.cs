@@ -288,7 +288,7 @@ namespace Content.Server.MachineLinking.System
                 !receiver.Inputs.TryGetValue(args.ReceiverPort, out var linkedTransmitters))
                 return false;
 
-            quiet &= user.HasValue;
+            quiet |= !user.HasValue;
 
             // Does the link already exist? Under the assumption that nothing has broken, lets only check the
             // transmitter ports.
