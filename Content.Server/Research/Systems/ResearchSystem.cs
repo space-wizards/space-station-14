@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Research.Components;
+using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -8,7 +9,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Research.Systems
 {
     [UsedImplicitly]
-    public sealed partial class ResearchSystem : EntitySystem
+    public sealed partial class ResearchSystem : SharedResearchSystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -21,6 +22,7 @@ namespace Content.Server.Research.Systems
             InitializeConsole();
             InitializeSource();
             InitializeTechnology();
+            InitializeServer();
         }
 
         public ResearchServerComponent? GetServerById(int id)

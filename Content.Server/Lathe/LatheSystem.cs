@@ -202,14 +202,7 @@ namespace Content.Server.Lathe
             if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent) || latheComponent.DynamicRecipes == null)
                 return;
 
-            //gets all of the techs that are unlocked and also in the DynamicRecipes list
-            var allTechs = (from technology in from tech in component.TechnologyIds
-                    select _proto.Index<TechnologyPrototype>(tech)
-                from recipe in technology.UnlockedRecipes
-                where latheComponent.DynamicRecipes.Contains(recipe)
-                select recipe).ToList();
-
-            args.Recipes = args.Recipes.Union(allTechs).ToList();
+            args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
         }
 
         /// <summary>
