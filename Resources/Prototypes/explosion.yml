@@ -59,6 +59,16 @@
   fireStates: 3
 
 - type: explosion
+  parent: Default
+  id: Nuclear
+  damagePerIntensity:
+    types:
+      Heat: 5
+      Blunt: 5
+      Piercing: 5
+      Radiation: 5
+
+- type: explosion
   id: Cryo
   damagePerIntensity:
     types:
