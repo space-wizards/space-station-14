@@ -27,7 +27,6 @@ using Content.Shared.Roles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -40,7 +39,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
@@ -144,8 +142,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
+    ///     Stores the session as well as the entity name
     /// </summary>
-    private readonly HashSet<IPlayerSession> _operativePlayers = new();
+    private readonly Dictionary<string, IPlayerSession> _operativePlayers = new();
 
 
     public override void Initialize()
@@ -172,8 +171,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         var session = mindComponent.Mind?.Session;
+        var name = MetaData(uid).EntityName;
         if (session != null)
-            _operativePlayers.Add(session);
+            _operativePlayers.Add(name, session);
     }
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
@@ -331,7 +331,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _winConditions.Add(WinCondition.SomeNukiesAlive);
 
         var diskAtCentCom = false;
-        foreach (var (comp, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
+        foreach (var (_, transform) in EntityManager.EntityQuery<NukeDiskComponent, TransformComponent>())
         {
             var diskMapId = transform.MapID;
             diskAtCentCom = _shuttleSystem.CentComMap == diskMapId;
@@ -373,9 +373,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         ev.AddLine(Loc.GetString("nukeops-list-start"));
-        foreach (var nukeop in _operativePlayers)
+        foreach (var (name, session) in _operativePlayers)
         {
-            ev.AddLine($"- {nukeop.Name}");
+            var listing = Loc.GetString("nukeops-list-name", ("name", name), ("user", session.Name));
+            ev.AddLine(listing);
         }
     }
 
@@ -545,7 +546,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             ev.PlayerPool.Remove(session);
             GameTicker.PlayerJoinGame(session);
-            _operativePlayers.Add(session);
+            var name = session.AttachedEntity == null
+                ? string.Empty
+                : MetaData(session.AttachedEntity.Value).EntityName;
+            // TODO: Fix this being able to have duplicates
+            _operativePlayers[name] = session;
         }
     }
 
@@ -580,8 +585,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (!mind.TryGetSession(out var playerSession))
             return;
+        if (_operativePlayers.ContainsValue(playerSession))
+            return;
 
-        _operativePlayers.Add(playerSession);
+        var name = MetaData(uid).EntityName;
+
+        _operativePlayers.Add(name, playerSession);
 
         if (_ticker.RunLevel != GameRunLevel.InRound)
             return;
@@ -613,9 +622,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         }
 
         var mapId = _mapManager.CreateMap();
+        var options = new MapLoadOptions()
+        {
+            LoadMap = true,
+        };
 
-        var outpostGrids = _map.LoadMap(mapId, path.ToString());
-        if (outpostGrids.Count == 0)
+        if (!_map.TryLoad(mapId, path.ToString(), out var outpostGrids, options) || outpostGrids.Count == 0)
         {
             Logger.ErrorS("nukies", $"Error loading map {path} for nukies!");
             return false;
@@ -625,10 +637,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _nukieOutpost = outpostGrids[0];
 
         // Listen I just don't want it to overlap.
-        var shuttleId = _map.LoadGrid(mapId, shuttlePath.ToString(), new MapLoadOptions()
+        if (!_map.TryLoad(mapId, shuttlePath.ToString(), out var grids, new MapLoadOptions {Offset = Vector2.One*1000f}) || !grids.Any())
         {
-            Offset = Vector2.One * 1000f,
-        });
+            Logger.ErrorS("nukies", $"Error loading grid {shuttlePath} for nukies!");
+            return false;
+        }
+
+        var shuttleId = grids.First();
 
         // Naughty, someone saved the shuttle as a map.
         if (Deleted(shuttleId))
@@ -640,7 +655,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
         if (TryComp<ShuttleComponent>(shuttleId, out var shuttle))
         {
-            IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ShuttleSystem>().TryFTLDock(shuttle, _nukieOutpost.Value);
+            _shuttleSystem.TryFTLDock(shuttle, _nukieOutpost.Value);
         }
 
         _nukiePlanet = mapId;
@@ -691,7 +706,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             _stationSpawningSystem.EquipStartingGear(mob, gearPrototype, profile);
 
         _faction.RemoveFaction(mob, "NanoTrasen", false);
-        _faction.AddFaction(mob, "Syndicate", true);
+        _faction.AddFaction(mob, "Syndicate");
     }
 
     private void SpawnOperatives(int spawnCount, List<IPlayerSession> sessions, bool addSpawnPoints)
@@ -786,7 +801,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             return;
 
         _nukeopsRuleConfig = nukeOpsConfig;
-
         var minPlayers = nukeOpsConfig.MinPlayers;
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
@@ -841,8 +855,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var query = EntityQuery<NukeOperativeComponent, MindComponent>(true);
         foreach (var (_, mindComp) in query)
         {
-            if (mindComp.Mind != null && mindComp.Mind.TryGetSession(out var session) == true)
-                _operativePlayers.Add(session);
+            if (mindComp.Mind == null || !mindComp.Mind.TryGetSession(out var session))
+                continue;
+            var name = MetaData(mindComp.Owner).EntityName;
+            _operativePlayers.Add(name, session);
         }
 
         if (GameTicker.RunLevel == GameRunLevel.InRound)

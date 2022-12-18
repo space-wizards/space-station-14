@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
 
-public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>
+public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>, ITypeCopier<NPCBlackboard>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -79,5 +79,22 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         }
 
         return value;
+    }
+
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        NPCBlackboard source,
+        ref NPCBlackboard target,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        target.Clear();
+        using var enumerator = source.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            var current = enumerator.Current;
+            target.SetValue(current.Key, current.Value);
+        }
     }
 }

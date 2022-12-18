@@ -532,7 +532,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             var mapManager = IoCManager.Resolve<IMapManager>();
             mapData.MapId = mapManager.CreateMap();
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.GridEntityId, 0, 0);
+            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.Owner, 0, 0);
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);

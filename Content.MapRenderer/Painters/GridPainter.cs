@@ -49,19 +49,19 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            if (!_entities.TryGetValue(grid.GridEntityId, out var entities))
+            if (!_entities.TryGetValue(grid.Owner, out var entities))
             {
-                Console.WriteLine($"No entities found on grid {grid.GridEntityId}");
+                Console.WriteLine($"No entities found on grid {grid.Owner}");
                 return;
             }
 
             // Decals are always painted before entities, and are also optional.
-            if (_decals.TryGetValue(grid.GridEntityId, out var decals))
+            if (_decals.TryGetValue(grid.Owner, out var decals))
                 _decalPainter.Run(gridCanvas, decals);
 
 
             _entityPainter.Run(gridCanvas, entities);
-            Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.GridEntityId} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+            Console.WriteLine($"{nameof(GridPainter)} painted grid {grid.Owner} in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
         }
 
         private ConcurrentDictionary<EntityUid, List<EntityData>> GetEntities()
@@ -120,14 +120,14 @@ namespace Content.MapRenderer.Painters
                 // actually has the correct z-indices for decals for some reason when the server doesn't,
                 // BUT can't do that yet because the client hasn't actually received everything yet
                 // for some reason decal moment i guess.
-                if (_sEntityManager.TryGetComponent<DecalGridComponent>(grid.GridEntityId, out var comp))
+                if (_sEntityManager.TryGetComponent<DecalGridComponent>(grid.Owner, out var comp))
                 {
                     foreach (var (_, list) in comp.ChunkCollection.ChunkCollection)
                     {
                         foreach (var (_, decal) in list)
                         {
                             var (x, y) = TransformLocalPosition(decal.Coordinates, grid);
-                            decals.GetOrNew(grid.GridEntityId).Add(new DecalData(decal, x, y));
+                            decals.GetOrNew(grid.Owner).Add(new DecalData(decal, x, y));
                         }
                     }
                 }
