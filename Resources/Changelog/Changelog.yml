@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
-  id: 2267
-  time: '2022-09-10T07:36:33.0000000+00:00'
 - author: LordEclipse
   changes:
   - {message: Quartermaster is now shown as part of command when viewed in the crew
@@ -2923,3 +2918,8 @@ Entries:
   - {message: Fixed flavor message for copypasta, type: Fix}
   id: 2766
   time: '2022-12-18T08:21:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix click sorting for entities with the same drawdepth., type: Fix}
+  id: 2767
+  time: '2022-12-18T19:41:05.0000000+00:00'
