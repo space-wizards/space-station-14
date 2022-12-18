@@ -59,7 +59,7 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
 
-            SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefrehParts);
+            SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             _mapManager.TileChanged += OnTileChange;
@@ -519,7 +519,7 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        private void OnRefrehParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
+        private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
         {
             var thrustRating = args.PartRatings[component.MachinePartThrust];
 
