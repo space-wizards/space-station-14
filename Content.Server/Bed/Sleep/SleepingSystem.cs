@@ -178,6 +178,10 @@ namespace Content.Server.Bed.Sleep
             if (!HasComp<MobStateComponent>(uid))
                 return false;
 
+            var tryingToSleepEvent = new TryingToSleepEvent(uid);
+            RaiseLocalEvent(uid, ref tryingToSleepEvent);
+            if (tryingToSleepEvent.Cancelled) return false;
+
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
                 _actionsSystem.RemoveAction(uid, sleepAction);
 

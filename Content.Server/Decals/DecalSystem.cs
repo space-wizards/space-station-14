@@ -13,7 +13,6 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -30,6 +29,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IDependencyCollection _dependencies = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -482,6 +482,8 @@ namespace Content.Server.Decals
 
         public void UpdatePlayer(IPlayerSession player)
         {
+            IoCManager.InitThread(_dependencies, replaceExisting: true);
+
             var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();

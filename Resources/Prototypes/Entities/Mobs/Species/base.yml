@@ -177,6 +177,7 @@
     species: Human
   - type: Body
     prototype: Human
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -224,10 +225,9 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
     visuals:
-      - type: RotationVisualizer
-      - type: BuckleVisualizer
       - type: CreamPiedVisualizer
         state: creampie_human
+  - type: RotationVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -366,6 +366,8 @@
       species: Human
     - type: Body
       prototype: Human
+      requiredLegs: 2
+    - type: Appearance
     - type: Damageable
       damageContainer: Biological
     - type: MobState
@@ -373,9 +375,6 @@
         0: Alive
         100: Critical
         200: Dead
-    - type: Appearance
-      visuals:
-      - type: RotationVisualizer
     - type: UserInterface
       interfaces:
         - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too

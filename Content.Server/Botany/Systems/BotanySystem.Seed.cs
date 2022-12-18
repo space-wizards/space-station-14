@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Botany.Components;
-using Content.Server.Mind.Commands;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
+using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
@@ -12,15 +13,24 @@ using Content.Shared.StepTrigger.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed partial class BotanySystem
+public sealed partial class BotanySystem : EntitySystem
 {
-    public void InitializeSeeds()
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
+    public override void Initialize()
     {
+        base.Initialize();
+
         SubscribeLocalEvent<SeedComponent, ExaminedEvent>(OnExamined);
     }
 
@@ -90,7 +100,7 @@ public sealed partial class BotanySystem
             sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(proto.PlantRsi, "seed"));
         }
 
-        string val = Loc.GetString("botany-seed-packet-name", ("seedName", proto.Name), ("seedNoun", proto.Noun));
+        var val = Loc.GetString("botany-seed-packet-name", ("seedName", proto.Name), ("seedNoun", proto.Noun));
         MetaData(seed).EntityName = val;
 
         return seed;
@@ -150,10 +160,7 @@ public sealed partial class BotanySystem
             produce.Seed = proto;
             ProduceGrown(entity, produce);
 
-            if (TryComp<AppearanceComponent>(entity, out var appearance))
-            {
-                appearance.SetData(ProduceVisuals.Potency, proto.Potency);
-            }
+            _appearance.SetData(entity, ProduceVisuals.Potency, proto.Potency);
 
             if (proto.Mysterious)
             {
@@ -168,7 +175,7 @@ public sealed partial class BotanySystem
                 light.Radius = proto.BioluminescentRadius;
                 light.Color = proto.BioluminescentColor;
                 light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                light.Dirty();
+                Dirty(light);
             }
 
             if (proto.Slip)

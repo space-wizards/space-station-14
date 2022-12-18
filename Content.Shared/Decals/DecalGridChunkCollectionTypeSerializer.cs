@@ -21,7 +21,7 @@ namespace Content.Shared.Decals
             IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<DecalGridComponent.DecalGridChunkCollection>? _ = default)
         {
-            var dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, context, skipHook: skipHook);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, context, skipHook: skipHook, notNullableOverride: true);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();
@@ -58,7 +58,7 @@ namespace Content.Shared.Decals
             bool alwaysWrite = false,
             ISerializationContext? context = null)
         {
-            return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context);
+            return serializationManager.WriteValue(value.ChunkCollection, alwaysWrite, context, notNullableOverride: true);
         }
     }
 }
