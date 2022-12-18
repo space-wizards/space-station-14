@@ -82,14 +82,18 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         if (_dragging == null)
         {
             var gameState = IoCManager.Resolve<IStateManager>().CurrentState;
-            EntityUid? uid;
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
+            if (gameState is GameplayState game)
             {
-                uid = game.GetEntityUnderPosition(mousePos);
+                EntityUid? uid;
 
-                if (uid != null)
-                    StartDragging(uid.Value, mousePos);
+                foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
+                {
+                    uid = game.GetEntityUnderPosition(mousePos);
+
+                    if (uid != null)
+                        StartDragging(uid.Value, mousePos);
+                }
             }
 
             if (_dragging == null)

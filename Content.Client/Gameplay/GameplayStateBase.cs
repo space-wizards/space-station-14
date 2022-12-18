@@ -23,6 +23,7 @@ namespace Content.Client.Gameplay
     [Virtual]
     public class GameplayStateBase : State, IEntityEventSubscriber
     {
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -64,7 +65,7 @@ namespace Content.Client.Gameplay
         {
             _vvm.RegisterDomain("enthover", ResolveVVHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
-            _comparer = new ClickableEntityComparer(_entityManager);
+            _comparer = new ClickableEntityComparer();
         }
 
         protected override void Shutdown()
@@ -96,13 +97,16 @@ namespace Content.Client.Gameplay
             var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
             var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            // TODO: Smelly
+            var eye = _eyeManager.CurrentEye;
 
             foreach (var entity in entities)
             {
-                if (_entityManager.TryGetComponent<ClickableComponent?>(entity, out var component)
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
+                if (clickQuery.TryGetComponent(entity, out var component) &&
+                    spriteQuery.TryGetComponent(entity, out var sprite) &&
+                    component.CheckClick(sprite, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
-                    foundEntities.Add((entity, drawDepthClicked, renderOrder, top));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder, bottom));
                 }
             }
 
@@ -110,45 +114,36 @@ namespace Content.Client.Gameplay
                 return Array.Empty<EntityUid>();
 
             foundEntities.Sort(_comparer);
-            foundEntities.Reverse();
             // 0 is the top element.
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
-        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float top)>
+        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom)>
         {
-            private readonly IEntityManager _entities;
-
-            public ClickableEntityComparer(IEntityManager entities)
+            public int Compare((EntityUid clicked, int depth, uint renderOrder, float bottom) x,
+                (EntityUid clicked, int depth, uint renderOrder, float bottom) y)
             {
-                _entities = entities;
-            }
-
-            public int Compare((EntityUid clicked, int depth, uint renderOrder, float top) x,
-                (EntityUid clicked, int depth, uint renderOrder, float top) y)
-            {
-                var cmp = x.depth.CompareTo(y.depth);
+                var cmp = y.depth.CompareTo(x.depth);
                 if (cmp != 0)
                 {
                     return cmp;
                 }
 
-                cmp = x.renderOrder.CompareTo(y.renderOrder);
+                cmp = y.renderOrder.CompareTo(x.renderOrder);
 
                 if (cmp != 0)
                 {
                     return cmp;
                 }
 
-                // compare the top of the sprite's BB for y-sorting. Because screen coordinates are flipped, the "top" of the BB is actually the "bottom".
-                cmp = x.top.CompareTo(y.top);
+                cmp = x.bottom.CompareTo(y.bottom);
 
                 if (cmp != 0)
                 {
                     return cmp;
                 }
 
-                return x.clicked.CompareTo(y.clicked);
+                return y.clicked.CompareTo(x.clicked);
             }
         }
 
