@@ -156,3 +156,53 @@
         Technicians have the option to filter or space the waste gasses. While spacing is faster, filtering allows for the gasses to be reused for recycling or selling.
 
         The waste network can also be used to diagnose atmospheric issues on the station. High levels of a waste gas may suggest a large leak, while the presence of non-waste gases may indicate a scrubber configuration or physical connection issue. If the gases are at a high temperature, it could indicate a fire.
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosAirAlarms
+  name: "Newton's Guide to Atmos: Air Alarms"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: |
+        Air alarms are located throughout stations to allow management and monitoring of the local atmosphere.
+
+        The air alarm interface provides technicians with a list of connected sensors, their readings, and the ability to adjust thresholds. These thresholds are used to determine the alarm condition of the air alarm. Technicians can also use the interface to set target pressures for vents and configure the operating speeds and targeted gases for scrubbers.
+
+        While the interface allows for fine-tuning of the devices under the air alarm's control, there are also several modes available for rapid configuration of the alarm. These modes are automatically switched to when the alarm state changes:
+        - Filtering: The default mode
+        - Filtering (wide): A filtering mode that modifies the operation of scrubbers to scrub a wider area
+        - Fill: Disables scrubbers and sets vents to their maximum pressure
+        - Panic: Disables vents and sets scrubbers to siphon
+
+        A multitool can be used to link devices to air alarms.
+
+- type: entity
+  parent: BookBase
+  id: BookAtmosVentsMore
+  name: "Newton's Guide to Atmos: Vents and More"
+  description: There are endless illegible notes scribbled in the margins. Most of the text is covered in handwritten question marks.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/books.rsi
+      layers:
+        - state: book5
+    - type: Paper
+      content: |
+        Below is a quick reference guide to several atmospheric devices:
+
+        Passive Vents:
+        These vents don't require any power, they just allow gas to flow between the attached pipe network and the environment.
+
+        Active Vents:
+        These are the most common vents on the station. When connected to an air alarm, they can be set to target a specific internal or external pressure.
+
+        Air Scrubbers:
+        These devices allow gases to be removed from the environment and put into the connected pipe network. They can be configured to select specific gases when connected to an air alarm.
+
+        Air Injectors:
+        These devices are similar to active vents in that they pump gas into the environment. However, unlike vents, they can't be configured and will continue pumping gas into the environment until they reach their pressure limit, which is much higher than the limit for active vents.
