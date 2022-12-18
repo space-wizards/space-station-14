@@ -33,6 +33,19 @@ namespace Content.Shared.Atmos
             }
         }
 
+        public GasOverlayChunk(GasOverlayChunk data)
+        {
+            Index = data.Index;
+            Origin = data.Origin;
+            for (int i = 0; i < ChunkSize; i++)
+            {
+                // This does not clone the opacity array. However, this chunk cloning is only used by the client,
+                // which never modifies that directly. So this should be fine.
+                var array = TileData[i] = new GasOverlayData[ChunkSize];
+                Array.Copy(data.TileData[i], array, ChunkSize);
+            }
+        }
+
         public ref GasOverlayData GetData(Vector2i gridIndices)
         {
             DebugTools.Assert(InBounds(gridIndices));

@@ -70,10 +70,10 @@ namespace Content.Server.Cuffs
         {
             if (args.Target is not {Valid: true} target)
                 return;
-            
+
             if (!args.CanReach)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-too-far-away-error"), args.User, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-too-far-away-error"), args.User, args.User);
                 return;
             }
 
@@ -88,31 +88,31 @@ namespace Content.Server.Cuffs
 
             if (component.Broken)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), user, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), user, user);
                 return;
             }
 
             if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", target)), user, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", target)), user, user);
                 return;
             }
 
             if (cuffed.CuffedHandCount >= hands.Count)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", target)), user, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-free-hands-error",("targetName", target)), user, user);
                 return;
             }
 
             // TODO these messages really need third-party variants. I.e., "{$user} starts cuffing {$target}!"
             if (target == user)
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-target-self"), user, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-target-self"), user, user);
             }
             else
             {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", target)), user, Filter.Entities(user));
-                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", user)), target, Filter.Entities(target));
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", target)), user, user);
+                _popup.PopupEntity(Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", user)), target, target);
             }
 
             _audio.PlayPvs(component.StartCuffSound, handcuff);
@@ -121,7 +121,7 @@ namespace Content.Server.Cuffs
         }
 
         private void OnCuffMeleeHit(EntityUid uid, HandcuffComponent component, MeleeHitEvent args)
-        {   
+        {
             if (!args.HitEntities.Any())
                 return;
 
@@ -166,7 +166,7 @@ namespace Content.Server.Cuffs
             }
             if (args.Cancelled)
             {
-                _popup.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, args.User);
             }
         }
 

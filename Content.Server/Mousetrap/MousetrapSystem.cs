@@ -30,7 +30,7 @@ public sealed class MousetrapSystem : EntitySystem
             ? Loc.GetString("mousetrap-on-activate")
             : Loc.GetString("mousetrap-on-deactivate"),
             uid,
-            Filter.Entities(args.User));
+            args.User);
 
         UpdateVisuals(uid);
     }
