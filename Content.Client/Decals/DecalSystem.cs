@@ -100,9 +100,11 @@ namespace Content.Client.Decals
                 }
             }
 
-            RemoveChunks(gridUid, gridComp, removedChunks);
-            UpdateChunks(gridUid, gridComp, state.Chunks);
-            return;
+            if (removedChunks.Count > 0)
+                RemoveChunks(gridUid, gridComp, removedChunks);
+
+            if (state.Chunks.Count > 0)
+                UpdateChunks(gridUid, gridComp, state.Chunks);
         }
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
@@ -138,9 +140,14 @@ namespace Content.Client.Decals
         private void UpdateChunks(EntityUid gridId, DecalGridComponent gridComp, Dictionary<Vector2i, DecalChunk> updatedGridChunks)
         {
             var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
-            var chunkIndex = ChunkIndex[gridId];
-            var renderIndex = DecalRenderIndex[gridId];
-            var zIndexIndex = _decalZIndexIndex[gridId];
+
+            if (!ChunkIndex.TryGetValue(gridId, out var chunkIndex) ||
+                !DecalRenderIndex.TryGetValue(gridId, out var renderIndex) ||
+                !_decalZIndexIndex.TryGetValue(gridId, out var zIndexIndex))
+            {
+                Logger.Error($"Grid missing from dictionaries while updating decal chunks for grid {ToPrettyString(gridId)}");
+                return;
+            }
 
             // Update any existing data / remove decals we didn't receive data for.
             foreach (var (indices, newChunkData) in updatedGridChunks)
@@ -173,7 +180,12 @@ namespace Content.Client.Decals
         private void RemoveChunks(EntityUid gridId, DecalGridComponent gridComp, IEnumerable<Vector2i> chunks)
         {
             var chunkCollection = gridComp.ChunkCollection.ChunkCollection;
-            var chunkIndex = ChunkIndex[gridId];
+
+            if (!ChunkIndex.TryGetValue(gridId, out var chunkIndex))
+            {
+                Logger.Error($"Missing grid in ChunkIndex dictionary while removing chunks from grid {ToPrettyString(gridId)}");
+                return;
+            }
 
             foreach (var index in chunks)
             {
