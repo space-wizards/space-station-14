@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
-    type: Fix}
-  id: 2265
-  time: '2022-09-09T14:39:22.0000000+00:00'
 - author: Rolfero
   changes:
   - {message: 'APCs can now be properly constructed using APC electronics, as well
@@ -2925,3 +2919,8 @@ Entries:
       conveyors)., type: Tweak}
   id: 2764
   time: '2022-12-17T03:51:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids can now handle multiple gravity generators., type: Fix}
+  id: 2765
+  time: '2022-12-18T05:03:23.0000000+00:00'
