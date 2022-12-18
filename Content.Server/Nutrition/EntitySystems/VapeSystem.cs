@@ -32,16 +32,16 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _solutionContainerSystem.TryGetRefillableSolution(uid, out var solution);
 
-            if(solution == null)
+            var delay = comp.Delay;
+
+            if(!TryComp<BloodstreamComponent>(args.Target, out var bloodstream)
+            || solution == null
+            || !args.CanReach
+            || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
                 return;
-            if(!TryComp<BloodstreamComponent>(args.Target, out var bloodstream))
-                return;
-            if(!args.CanReach)
-                return;
-            if(_foodSystem.IsMouthBlocked(args.Target.Value, args.User))
-                return;
+
             if(args.Target == args.User)
-                comp.Delay /= 2;
+                delay = comp.UserDelay;
             
             var entMan = IoCManager.Resolve<IEntityManager>();
 
@@ -53,10 +53,10 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             comp.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, comp.Delay, comp.CancelToken.Token, args.Target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target)
             {
                 BreakOnTargetMove = true,
-                BreakOnUserMove = true,
+                BreakOnUserMove = false,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BroadcastFinishedEvent = new VapingEvent(args.User, args.Target.Value, uid, comp, solution, bloodstream)
@@ -68,8 +68,6 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             args.VapeComponent.CancelToken = null;
 
-            _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
-
             if(args.Solution.AvailableVolume < 3)
             {
                 args.Solution.MaxVolume += 3;
@@ -78,6 +76,10 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else if(args.Solution.CurrentVolume != 0)
                 CreateSmoke(args.Item, args.Solution);
+
+            args.Solution.RemoveSolution(args.Solution.CurrentVolume / 2);
+
+            _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
 
             args.Solution.RemoveAllSolution();
         }
