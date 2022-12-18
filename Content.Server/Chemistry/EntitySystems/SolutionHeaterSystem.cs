@@ -16,6 +16,7 @@ public sealed class SolutionHeaterSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SolutionHeaterComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<SolutionHeaterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
     }
 
     private void OnRefreshParts(EntityUid uid, SolutionHeaterComponent component, RefreshPartsEvent args)
@@ -23,6 +24,11 @@ public sealed class SolutionHeaterSystem : EntitySystem
         var heatRating = args.PartRatings[component.MachinePartHeatPerSecond] - 1;
 
         component.HeatMultiplier = MathF.Pow(component.PartRatingHeatMultiplier, heatRating);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, SolutionHeaterComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("solution-heater-upgrade-heat", component.HeatMultiplier);
     }
 
     public override void Update(float frameTime)

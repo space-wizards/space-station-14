@@ -1,8 +1,8 @@
 - type: entity
-  id: ChemistryHotPlate
+  id: ChemistryHotplate
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: hot plate
-  description: "The descendent of the microwaves, our newest invention in beaker heating technology: the hot plate!"
+  name: hotplate
+  description: "The descendent of the microwaves, our newest invention in beaker heating technology: the hotplate!"
   components:
   - type: Transform
     anchored: true
@@ -42,7 +42,7 @@
           - FitsInDispenser
   - type: SolutionHeater
   - type: Machine
-    board: HotPlateMachineCircuitboard
+    board: HotplateMachineCircuitboard
   - type: Appearance
   - type: ContainerContainer
     containers:
