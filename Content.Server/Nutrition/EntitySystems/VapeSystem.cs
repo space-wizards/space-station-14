@@ -8,7 +8,6 @@ using System.Threading;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -79,6 +78,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             args.Solution.RemoveSolution(args.Solution.CurrentVolume / 2);
 
+            //Smoking kills(your lungs, but there is no organ damage yet)
+            args.Solution.AddReagent("Thermite", 1);
             _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
 
             args.Solution.RemoveAllSolution();

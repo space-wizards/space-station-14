@@ -13,6 +13,7 @@ namespace Content.Server.Nutrition.Components
         [DataField("userdelay")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float UserDelay { get; set; } = 2;
+
         public CancellationTokenSource? CancelToken;
     }
 }
