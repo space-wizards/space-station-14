@@ -362,13 +362,3 @@
       amount: 1
   products:
     NorepinephricAcid: 2
-
-- type: reaction
-  id: Water
-  reactants:
-    Oxygen:
-      amount: 1
-    Hydrogen:
-      amount: 2
-  products:
-    Water: 3
