@@ -10,8 +10,14 @@ public abstract partial class SharedGravitySystem
 
     private void InitializeShake()
     {
+        SubscribeLocalEvent<GravityShakeComponent, EntityUnpausedEvent>(OnShakeUnpaused);
         SubscribeLocalEvent<GravityShakeComponent, ComponentGetState>(OnShakeGetState);
         SubscribeLocalEvent<GravityShakeComponent, ComponentHandleState>(OnShakeHandleState);
+    }
+
+    private void OnShakeUnpaused(EntityUid uid, GravityShakeComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextShake += args.PausedTime;
     }
 
     private void UpdateShake()
