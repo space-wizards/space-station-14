@@ -4,7 +4,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Foam;
+using Content.Shared.Chemistry;
 using Content.Shared.Inventory;
 
 namespace Content.Server.Chemistry.Components
@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
+                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
         }
 
@@ -75,9 +75,11 @@ namespace Content.Server.Chemistry.Components
         {
             if (_entMan.Deleted(Owner))
                 return;
+
+            // TODO Replace this with ComponentShutdown at ChemistryEffectVisualizerSystem once this atrocity gets ECS
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(FoamVisuals.State, true);
+                appearance.SetData(ChemistryEffectVisuals.FoamShutdown, true);
             }
 
             Owner.SpawnTimer(600, () =>

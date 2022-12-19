@@ -8,7 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
-using Content.Shared.Vapor;
+using Content.Shared.Chemistry;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -105,8 +105,7 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.Color.WithAlpha(1f));
-                appearance.SetData(VaporVisuals.State, true);
+                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color.WithAlpha(1f));
             }
 
             // Add the solution to the vapor and actually send the thing

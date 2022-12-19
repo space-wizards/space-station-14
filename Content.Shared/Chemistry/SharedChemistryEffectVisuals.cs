@@ -1,12 +1,11 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared.Vapor
+namespace Content.Shared.Chemistry
 {
     [Serializable, NetSerializable]
-    public enum VaporVisuals
+    public enum ChemistryEffectVisuals
     {
-        Rotation,
+        FoamShutdown,
         Color,
-        State,
     }
 }

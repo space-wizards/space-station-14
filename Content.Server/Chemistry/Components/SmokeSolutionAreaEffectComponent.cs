@@ -6,7 +6,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
-using Content.Shared.Smoking;
+using Content.Shared.Chemistry;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, solution.Color);
+                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color);
             }
         }
 

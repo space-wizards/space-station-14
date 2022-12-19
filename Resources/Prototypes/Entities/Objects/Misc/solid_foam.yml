@@ -1,0 +1,63 @@
+- type: entity
+  id: BaseFoamedMetal
+  name: base foamed metal
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+      - WallLayer
+      mask:
+      - WallLayer
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: Transform
+    anchored: true
+  - type: Airtight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: FoamedIronMetal
+  name: foamed iron metal
+  description: "For sealing hull breaches."
+  parent: BaseFoamedMetal
+  components:
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: ironfoam
+
+- type: entity
+  id: FoamedAluminiumMetal
+  name: foamed aluminium metal
+  description: "For sealing hull breaches."
+  parent: BaseFoamedMetal
+  components:
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: metalfoam

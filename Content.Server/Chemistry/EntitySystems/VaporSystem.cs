@@ -6,7 +6,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Throwing;
-using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
