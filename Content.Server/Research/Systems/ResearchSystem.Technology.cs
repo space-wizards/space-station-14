@@ -86,9 +86,9 @@ public sealed partial class ResearchSystem
             return;
         foreach (var client in server.Clients)
         {
-            if (!TryComp<ResearchConsoleComponent>(client.Owner, out var console))
+            if (!TryComp<ResearchConsoleComponent>(client, out var console))
                 continue;
-            UpdateConsoleInterface(console, client);
+            UpdateConsoleInterface(console);
         }
     }
 

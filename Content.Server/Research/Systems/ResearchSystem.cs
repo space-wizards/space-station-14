@@ -21,8 +21,6 @@ namespace Content.Server.Research.Systems
             InitializeClient();
             InitializeConsole();
             InitializeSource();
-            InitializeTechnology();
-            InitializeServer();
         }
 
         public ResearchServerComponent? GetServerById(int id)
