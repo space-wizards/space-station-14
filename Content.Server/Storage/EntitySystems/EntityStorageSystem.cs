@@ -94,7 +94,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Contents.Contains(args.User))
         {
             var msg = Loc.GetString("entity-storage-component-already-contains-user-message");
-            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
     }
@@ -274,7 +274,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.IsWeldedShut)
         {
             if (!silent && !component.Contents.Contains(user))
-                _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target, Filter.Pvs(target));
+                _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target);
 
             return false;
         }
@@ -286,7 +286,7 @@ public sealed class EntityStorageSystem : EntitySystem
             if (!_interactionSystem.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
                 if (!silent)
-                    _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target, Filter.Pvs(target));
+                    _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
         }

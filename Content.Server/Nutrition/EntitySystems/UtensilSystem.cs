@@ -44,7 +44,7 @@ namespace Content.Server.Nutrition.EntitySystems
             //Prevents food usage with a wrong utensil
             if ((food.Utensil & component.Types) == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("food-system-wrong-utensil", ("food", food.Owner), ("utensil", component.Owner)), user, user);
                 return false;
             }
 

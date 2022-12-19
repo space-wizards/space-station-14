@@ -79,7 +79,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gun.Owner);
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
 
-                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value, Filter.Pvs(user.Value, entityManager: EntityManager));
+                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
                     Del(gun.Owner);
                     return;
                 }

@@ -272,7 +272,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (msg == null)
             return;
 
-        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
+        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid);
         _paper.SetContent(report, msg.ToMarkup());
         UpdateUserInterface(uid, component);
     }
@@ -351,7 +351,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
 
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-destroy-popup"),
-            component.AnalyzerEntity.Value, Filter.Pvs(component.AnalyzerEntity.Value), PopupType.Large);
+            component.AnalyzerEntity.Value, PopupType.Large);
 
         UpdateUserInterface(uid, component);
     }

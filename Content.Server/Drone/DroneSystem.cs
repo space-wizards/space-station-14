@@ -94,8 +94,7 @@ namespace Content.Server.Drone
         private void OnMindAdded(EntityUid uid, DroneComponent drone, MindAddedMessage args)
         {
             UpdateDroneAppearance(uid, DroneStatus.On);
-            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid,
-                Filter.Pvs(uid), PopupType.Large);
+            _popupSystem.PopupEntity(Loc.GetString("drone-activated"), uid, PopupType.Large);
         }
 
         private void OnMindRemoved(EntityUid uid, DroneComponent drone, MindRemovedMessage args)
@@ -135,7 +134,7 @@ namespace Content.Server.Drone
                     if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
                     return true;
                 }
             }

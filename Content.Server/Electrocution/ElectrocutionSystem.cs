@@ -109,7 +109,7 @@ namespace Content.Server.Electrocution
                     if (actual != null)
                     {
                         _adminLogger.Add(LogType.Electrocution,
-                            $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                            $"{ToPrettyString(finished.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(finished.Source):source}");
                     }
                 }
 
@@ -168,7 +168,7 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
                 {
                     if (_tagSystem.HasTag(entity, "Window"))
                         return false;
@@ -375,7 +375,7 @@ namespace Content.Server.Electrocution
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
                 }
             }
 
@@ -383,23 +383,21 @@ namespace Content.Server.Electrocution
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
                 statusEffects);
 
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,
-                Filter.Entities(uid).Unpredicted());
+            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
-            var filter = Filter.Pvs(uid, 2f, EntityManager).RemoveWhereAttachedEntity(puid => puid == uid)
-                .Unpredicted();
+            var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
             // TODO: Allow being able to pass EntityUid to Loc...
             if (sourceUid != null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
+                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
                 PlayElectrocutionSound(uid, sourceUid.Value);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                    ("mob", uid)), uid, filter);
+                    ("mob", uid)), uid, filter, true);
             }
 
             return true;
