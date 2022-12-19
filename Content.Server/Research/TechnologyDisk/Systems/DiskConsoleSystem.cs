@@ -66,7 +66,7 @@ public sealed class DiskConsoleSystem : EntitySystem
 
     public void UpdateUserInterface(EntityUid uid, DiskConsoleComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         var totalPoints = 0;
