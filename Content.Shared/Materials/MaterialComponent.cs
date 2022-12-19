@@ -12,7 +12,6 @@ namespace Content.Shared.Materials
     [RegisterComponent, NetworkedComponent]
     public sealed class MaterialComponent : Component
     {
-        [ViewVariables]
         [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local
         public readonly Dictionary<string, int> _materials = new();

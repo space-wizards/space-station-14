@@ -1,4 +1,4 @@
-﻿using Content.Shared.Whitelist;
+using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
@@ -23,6 +23,9 @@ public sealed class SlotDefinition
 
     [DataField("uiWindowPos", required: true)]
     public Vector2i UIWindowPosition { get; }
+
+    [DataField("strippingWindowPos", required: true)]
+    public Vector2i StrippingWindowPos { get; }
 
     [DataField("dependsOn")] public string? DependsOn { get; }
 

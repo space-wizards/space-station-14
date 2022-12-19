@@ -80,7 +80,7 @@
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   parent: BodyBag_Container
-  suffix: Folded
+  suffix: folded
   components:
   - type: Foldable
     folded: true

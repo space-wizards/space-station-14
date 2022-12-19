@@ -1,8 +1,6 @@
-#nullable enable
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
-using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Administration.UI.Tabs.AdminTab;
 using Content.Client.Stylesheets;
@@ -57,7 +55,12 @@ namespace Content.Client.Administration.UI
             ChannelSelector.OverrideText += (info, text) =>
             {
                 var sb = new StringBuilder();
-                sb.Append(info.Connected ? '●' : '○');
+
+                if (info.Connected)
+                    sb.Append('●');
+                else
+                    sb.Append(info.ActiveThisRound ? '○' : '·');
+
                 sb.Append(' ');
                 if (_adminAHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
                 {
@@ -68,7 +71,7 @@ namespace Content.Client.Administration.UI
                     sb.Append(' ');
                 }
 
-                if (info.Antag)
+                if (info.Antag && info.ActiveThisRound)
                     sb.Append(new Rune(0x1F5E1)); // 🗡
 
                 sb.AppendFormat("\"{0}\"", text);
@@ -78,18 +81,33 @@ namespace Content.Client.Administration.UI
 
             ChannelSelector.Comparison = (a, b) =>
             {
-                var aChannelExists = _adminAHelpHelper.TryGetChannel(a.SessionId, out var ach);
-                var bChannelExists = _adminAHelpHelper.TryGetChannel(b.SessionId, out var bch);
-                if (!aChannelExists && !bChannelExists)
-                    return 0;
+                var ach = _adminAHelpHelper.EnsurePanel(a.SessionId);
+                var bch = _adminAHelpHelper.EnsurePanel(b.SessionId);
 
-                if (!aChannelExists)
-                    return 1;
+                // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
+                // status, not number of unread messages, so that more recent unread messages take priority.
+                var aUnread = ach.Unread > 0;
+                var bUnread = bch.Unread > 0;
+                if (aUnread != bUnread)
+                    return aUnread ? -1 : 1;
 
-                if (!bChannelExists)
-                    return -1;
+                // Next, sort by connection status. Any disconnected players are grouped towards the end.
+                if (a.Connected != b.Connected)
+                    return a.Connected ? -1 : 1;
 
+                // Next, group by whether or not the players have participated in this round.
+                // The ahelp window shows all players that have connected since server restart, this groups them all towards the bottom.
+                if (a.ActiveThisRound != b.ActiveThisRound)
+                    return a.ActiveThisRound ? -1 : 1;
+
+                // Finally, sort by the most recent message.
                 return bch!.LastMessage.CompareTo(ach!.LastMessage);
+            };
+
+            Bans.OnPressed += _ =>
+            {
+                if (_currentPlayer is not null)
+                    _console.ExecuteCommand($"banlist \"{_currentPlayer.SessionId}\"");
             };
 
             Notes.OnPressed += _ =>
@@ -134,6 +152,8 @@ namespace Content.Client.Administration.UI
                 if (_currentPlayer is not null)
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
+
+            OnOpen += () => ChannelSelector.PopulateList();
         }
 
         private Dictionary<Control, (CancellationTokenSource cancellation, string? originalText)> Confirmations { get; } = new();
@@ -154,6 +174,9 @@ namespace Content.Client.Administration.UI
 
         private void FixButtons()
         {
+            Bans.Visible = _adminManager.HasFlag(AdminFlags.Ban);
+            Bans.Disabled = !Bans.Visible;
+
             Notes.Visible = _adminManager.HasFlag(AdminFlags.ViewNotes);
             Notes.Disabled = !Notes.Visible;
 

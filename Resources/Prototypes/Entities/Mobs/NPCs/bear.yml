@@ -32,6 +32,8 @@
     thresholds:
       0: Alive
       150: Dead
+  - type: Stamina
+    excess: 150
   - type: Appearance
   - type: DamageStateVisuals
     states:

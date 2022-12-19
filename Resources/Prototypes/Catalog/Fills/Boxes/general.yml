@@ -133,6 +133,25 @@
       components:
       - IdCard
 
+- type: entity
+  name: headset box
+  parent: BoxCardboard
+  id: BoxHeadset
+  description: A box of spare passenger headsets.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadsetGrey
+        amount: 6
+  - type: Sprite
+    layers:
+      - state: box
+      - state: headset
+  - type: Storage
+    capacity: 60
+    whitelist:
+      components:
+      - Headset
 
 - type: entity
   name: meson box

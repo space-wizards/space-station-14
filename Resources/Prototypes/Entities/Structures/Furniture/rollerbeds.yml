@@ -59,6 +59,14 @@
       price: 200
 
 - type: entity
+  parent: RollerBed
+  id: RollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+
+- type: entity
   id: CheapRollerBed
   name: rollerbed
   parent: RollerBed
@@ -76,6 +84,14 @@
       key: cheap_rollerbed
 
 - type: entity
+  parent: CheapRollerBed
+  id: CheapRollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true
+
+- type: entity
   id: EmergencyRollerBed
   name: rollerbed
   parent: RollerBed
@@ -91,3 +107,11 @@
       key: emergency_rollerbed
     - type: RollerbedVisualizer
       key: emergency_rollerbed
+
+- type: entity
+  parent: EmergencyRollerBed
+  id: EmergencyRollerBedSpawnFolded
+  suffix: folded
+  components:
+  - type: Foldable
+    folded: true

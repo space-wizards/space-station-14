@@ -14,6 +14,8 @@ public abstract class SharedHandheldLightSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly ClothingSystem _clothingSys = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -52,9 +54,9 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (makeNoise)
         {
             var sound = component.Activated ? component.TurnOnSound : component.TurnOffSound;
-            SoundSystem.Play(sound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
+            _audio.PlayPvs(sound, component.Owner);
         }
-            
+
         Dirty(component);
         UpdateVisuals(uid, component);
     }
@@ -74,6 +76,6 @@ public abstract class SharedHandheldLightSystem : EntitySystem
         if (component.ToggleAction != null)
             _actionSystem.SetToggled(component.ToggleAction, component.Activated);
 
-        appearance.SetData(ToggleableLightVisuals.Enabled, component.Activated);
+        _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearance);
     }
 }

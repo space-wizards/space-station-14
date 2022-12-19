@@ -9,6 +9,7 @@ using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -39,7 +40,7 @@ namespace Content.Server.Temperature.Systems
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
-            SubscribeLocalEvent<TemperatureProtectionComponent, ModifyChangedTemperatureEvent>(OnTemperatureChangeAttempt);
+            SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(OnTemperatureChangeAttempt);
         }
 
         public override void Update(float frameTime)
@@ -204,9 +205,9 @@ namespace Content.Server.Temperature.Systems
             }
         }
 
-        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, ModifyChangedTemperatureEvent args)
+        private void OnTemperatureChangeAttempt(EntityUid uid, TemperatureProtectionComponent component, InventoryRelayedEvent<ModifyChangedTemperatureEvent> args)
         {
-            args.TemperatureDelta *= component.Coefficient;
+            args.Args.TemperatureDelta *= component.Coefficient;
         }
     }
 
@@ -221,18 +222,6 @@ namespace Content.Server.Temperature.Systems
             CurrentTemperature = current;
             LastTemperature = last;
             TemperatureDelta = delta;
-        }
-    }
-
-    public sealed class ModifyChangedTemperatureEvent : EntityEventArgs, IInventoryRelayEvent
-    {
-        public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
-
-        public float TemperatureDelta;
-
-        public ModifyChangedTemperatureEvent(float temperature)
-        {
-            TemperatureDelta = temperature;
         }
     }
 }

@@ -16,6 +16,10 @@
     size: 60
   - type: StaticPrice
     price: 500
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: china lake
@@ -69,7 +73,7 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Cartridge
+        - CartridgeRocket
     proto: CartridgeRocket
     capacity: 1
     soundInsert:
@@ -114,3 +118,30 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+
+# Admeme
+- type: entity
+  name: meteor launcher
+  parent: WeaponLauncherMultipleRocket
+  id: WeaponLauncherAdmemeMeteorLarge
+  suffix: Admeme
+  description: It fires large meteors
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: MeteorLarge
+
+- type: entity
+  name: immovable rod launcher
+  parent: WeaponLauncherAdmemeMeteorLarge
+  id: WeaponLauncherAdmemeImmovableRodSlow
+  suffix: Admeme
+  description: It fires slow immovable rods.
+  components:
+  - type: BallisticAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeRocket
+    proto: ImmovableRodSlow

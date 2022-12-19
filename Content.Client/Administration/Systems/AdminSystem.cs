@@ -28,27 +28,12 @@ namespace Content.Client.Administration.Systems
             InitializeOverlay();
             SubscribeNetworkEvent<FullPlayerListEvent>(OnPlayerListChanged);
             SubscribeNetworkEvent<PlayerInfoChangedEvent>(OnPlayerInfoChanged);
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             ShutdownOverlay();
-        }
-
-        private void OnRoundRestartCleanup(RoundRestartCleanupEvent msg, EntitySessionEventArgs args)
-        {
-            if (_playerList == null)
-                return;
-
-            foreach (var (id, playerInfo) in _playerList.ToArray())
-            {
-                if (playerInfo.Connected)
-                    continue;
-                _playerList.Remove(id);
-            }
-            PlayerListChanged?.Invoke(_playerList.Values.ToList());
         }
 
         private void OnPlayerInfoChanged(PlayerInfoChangedEvent ev)

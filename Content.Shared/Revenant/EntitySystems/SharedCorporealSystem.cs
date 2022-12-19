@@ -3,6 +3,7 @@ using Robust.Shared.Physics;
 using System.Linq;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Revenant.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Revenant.EntitySystems;
 
@@ -15,6 +16,7 @@ public abstract class SharedCorporealSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -38,8 +40,8 @@ public abstract class SharedCorporealSystem : EntitySystem
         {
             var fixture = fixtures.Fixtures.Values.First();
 
-            fixture.CollisionMask = (int) (CollisionGroup.SmallMobMask | CollisionGroup.GhostImpassable);
-            fixture.CollisionLayer = (int) CollisionGroup.SmallMobLayer;
+            _physics.SetCollisionMask(fixture, (int) (CollisionGroup.SmallMobMask | CollisionGroup.GhostImpassable));
+            _physics.SetCollisionLayer(fixture, (int) CollisionGroup.SmallMobLayer);
         }
         _movement.RefreshMovementSpeedModifiers(uid);
     }
@@ -52,8 +54,8 @@ public abstract class SharedCorporealSystem : EntitySystem
         {
             var fixture = fixtures.Fixtures.Values.First();
 
-            fixture.CollisionMask = (int) CollisionGroup.GhostImpassable;
-            fixture.CollisionLayer = 0;
+            _physics.SetCollisionMask(fixture, (int) CollisionGroup.GhostImpassable);
+            _physics.SetCollisionLayer(fixture, 0);
         }
         component.MovementSpeedDebuff = 1; //just so we can avoid annoying code elsewhere
         _movement.RefreshMovementSpeedModifiers(uid);

@@ -27,9 +27,10 @@
   - type: Input
     context: "ghost"
   - type: Examiner
-    DoRangeCheck: false
+    skipChecks: true
   - type: Ghost
-  - type: IntrinsicRadio
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
     channels:
     - Common
     - Command

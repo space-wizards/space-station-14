@@ -1,17 +1,16 @@
-using System.Threading;
-using Content.Shared.Verbs;
-using Content.Shared.Inventory.Events;
-using Content.Shared.MobState.Components;
-using Content.Shared.FixedPoint;
-using Content.Shared.Damage;
-using Content.Shared.Actions;
-using Content.Server.Clothing.Components;
-using Content.Server.Medical.Components;
-using Content.Server.Popups;
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
+using Content.Server.Medical.Components;
+using Content.Server.Popups;
+using Content.Shared.Actions;
+using Content.Shared.Clothing.Components;
+using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
+using Content.Shared.Inventory.Events;
+using Content.Shared.MobState.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
+using System.Threading;
 
 namespace Content.Server.Medical
 {
@@ -138,7 +137,7 @@ namespace Content.Server.Medical
             /// The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
             if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || mobState.IsDead())
             {
-                _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, user);
                 return;
             }
 
@@ -150,7 +149,7 @@ namespace Content.Server.Medical
 
             var message = GetDamageMessage(value);
 
-            _popupSystem.PopupEntity(Loc.GetString(message), target, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(message), target, user);
         }
 
         private string GetDamageMessage(FixedPoint2 totalOxyloss)

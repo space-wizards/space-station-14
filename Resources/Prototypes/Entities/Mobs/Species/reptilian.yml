@@ -13,8 +13,8 @@
     sprite: Mobs/Species/Reptilian/parts.rsi
     state: full
   - type: Body
-    template: HumanoidTemplate
-    preset: ReptilianPreset
+    prototype: Reptilian
+    requiredLegs: 2
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
@@ -28,7 +28,7 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcFist
+    animation: WeaponArcPunch
     damage:
       types:
         Piercing: 5
@@ -46,6 +46,7 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.7
     baseSprintSpeed : 4.5
+  - type: Perishable
 
 - type: entity
   save: false

@@ -7,3 +7,13 @@
   cost: 500
   category: Science
   group: market
+
+- type: cargoProduct
+  id: RandomArtifact
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano13
+  product: RandomArtifactSpawner
+  cost: 2000
+  category: Science
+  group: market

@@ -1,0 +1,1 @@
+skeleton-suffix = ACK ACK!

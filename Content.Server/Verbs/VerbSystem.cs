@@ -76,7 +76,7 @@ namespace Content.Server.Verbs
             {
                 // Send an informative pop-up message
                 if (!string.IsNullOrWhiteSpace(verb.Message))
-                    _popupSystem.PopupEntity(verb.Message, user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(verb.Message, user, user);
 
                 return;
             }
@@ -84,17 +84,7 @@ namespace Content.Server.Verbs
             // first, lets log the verb. Just in case it ends up crashing the server or something.
             LogVerb(verb, user, target, forced);
 
-            // then invoke any relevant actions
-            verb.Act?.Invoke();
-
-            // Maybe raise a local event
-            if (verb.ExecutionEventArgs != null)
-            {
-                if (verb.EventTarget.IsValid())
-                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs, true);
-                else
-                    RaiseLocalEvent(verb.ExecutionEventArgs);
-            }
+            base.ExecuteVerb(verb, user, target, forced);
         }
 
         public void LogVerb(Verb verb, EntityUid user, EntityUid target, bool forced)

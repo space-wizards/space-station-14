@@ -6,6 +6,8 @@ using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
+using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -40,34 +42,7 @@ namespace Content.Client.Popups
                 .RemoveOverlay<PopupOverlay>();
         }
 
-        #region Actual Implementation
-
-        public void PopupCursor(string message, PopupType type = PopupType.Small)
-        {
-            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
-            {
-                Text = message,
-                Type = type,
-            };
-
-            _aliveCursorLabels.Add(label);
-        }
-
-        public void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type=PopupType.Small)
-        {
-            // Even if it's not in our map still get it (e.g. different viewports).
-            PopupMessage(message, type, coordinates);
-        }
-
-        public void PopupEntity(string message, EntityUid uid, PopupType type=PopupType.Small)
-        {
-            if (Deleted(uid))
-                return;
-
-            PopupMessage(message, type, new EntityCoordinates(uid, Vector2.Zero));
-        }
-
-        private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates)
+        private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates, EntityUid? entity = null)
         {
             var label = new WorldPopupLabel(coordinates)
             {
@@ -78,32 +53,77 @@ namespace Content.Client.Popups
             _aliveWorldLabels.Add(label);
         }
 
-        #endregion
-
         #region Abstract Method Implementations
-
-        public override void PopupCursor(string message, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
-
-            PopupCursor(message, type);
+            PopupMessage(message, type, coordinates, null);
         }
 
-        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, ICommonSession recipient, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
-                return;
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupMessage(message, type, coordinates, null);
+        }
 
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupMessage(message, type, coordinates, null);
+        }
+        
+        public override void PopupCursor(string message, PopupType type = PopupType.Small)
+        {
+            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            {
+                Text = message,
+                StyleClasses = { GetStyleClass(type) },
+            };
+            _userInterfaceManager.PopupRoot.AddChild(label);
+            _aliveCursorLabels.Add(label);
+        }
+
+        public override void PopupCursor(string message, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupCursor(string message, EntityUid recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter, bool replayRecord, PopupType type = PopupType.Small)
+        {
             PopupCoordinates(message, coordinates, type);
         }
 
-        public override void PopupEntity(string message, EntityUid uid, Filter filter, PopupType type=PopupType.Small)
+        public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
-            if (!filter.CheckPrediction)
+            if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
+        {
+            if (_playerManager.LocalPlayer?.Session == recipient)
+                PopupCursor(message, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)
+        {
+            PopupEntity(message, uid, type);
+        }
+
+        public override void PopupEntity(string message, EntityUid uid, PopupType type = PopupType.Small)
+        {
+            if (!EntityManager.EntityExists(uid))
                 return;
 
-            PopupEntity(message, uid, type);
+            var transform = EntityManager.GetComponent<TransformComponent>(uid);
+
+            PopupMessage(message, type, transform.Coordinates, uid);
         }
 
         #endregion

@@ -89,15 +89,11 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Maintenance
-    - Janitor
   - type: UnpoweredFlashlight
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -180,12 +176,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Security
-    - Brig
-    - Maintenance
-    - Service
   - type: Strap
     buckleOffset: "0.15, -0.05"
     maxBuckleDistance: 1
@@ -230,10 +220,6 @@
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     netsync: false
     noRot: true
-  - type: Access
-    tags:
-    - Cargo
-    - Maintenance
   - type: RandomMetadata
     descriptionSegments: [ATVDescriptions]
   - type: MovementSpeedModifier
@@ -248,7 +234,7 @@
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -290,10 +276,6 @@
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
       netsync: false
       noRot: true
-    - type: Access
-      tags:
-        - Maintenance
-        - Service
     - type: Strap
       buckleOffset: "0.15, -0.05"
       maxBuckleDistance: 1
@@ -312,6 +294,57 @@
             tags:
               - VehicleKey
               - SyndicateSegwayKeys
+          insertSound:
+            path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+            params:
+              volume: -3
+
+- type: entity
+  parent: BaseVehicle
+  id: VehicleSkeletonMotorcycle
+  name: skeleton motorcycle
+  description: Bad to the Bone.
+  components:
+    - type: Vehicle
+      northOverride: -0.1
+      southOverride: 0.1
+    - type: Sprite
+      sprite: Objects/Vehicles/motorbike.rsi
+      layers:
+        - state: vehicle
+          map: ["enum.VehicleVisualLayers.AutoAnimate"]
+      netsync: false
+      noRot: true
+    - type: Strap
+      buckleOffset: "0.1, -0.05"
+      maxBuckleDistance: 1
+    - type: MovementSpeedModifier
+      acceleration: 2
+      friction: 1.5
+      baseWalkSpeed: 4.5
+      baseSprintSpeed: 7
+    - type: UnpoweredFlashlight
+      toggleAction:
+        name: action-name-toggle-light
+        description: action-description-toggle-light
+        icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+        event: !type:ToggleActionEvent
+    - type: PointLight
+      enabled: false
+      radius: 3.5
+      softness: 2
+      mask: /Textures/Effects/LightMasks/cone.png
+      autoRot: true
+    - type: ItemSlots
+      slots:
+        key_slot:
+          name: Keys
+          whitelist:
+            requireAll: true
+            tags:
+              - VehicleKey
+              - SkeletonMotorcycleKeys
           insertSound:
             path: /Audio/Effects/Vehicle/vehiclestartup.ogg
             params:

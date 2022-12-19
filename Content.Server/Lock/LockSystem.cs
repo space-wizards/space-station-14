@@ -66,7 +66,7 @@ namespace Content.Server.Lock
             if (component.Locked)
             {
                 if (!args.Silent)
-                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
                 args.Cancel();
             }
@@ -148,23 +148,14 @@ namespace Content.Server.Lock
         /// <summary>
         ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
         /// </summary>
-        public bool CanToggleLock(EntityUid uid, EntityUid user, EntityStorageComponent? storage = null, bool quiet = true)
+        public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
         {
-            if (!Resolve(uid, ref storage, logMissing: false))
-                return true;
-
             if (!HasComp<SharedHandsComponent>(user))
                 return false;
 
-            // Cannot lock if the entity is currently opened.
-            if (storage.Open)
-                return false;
-
-            // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
-            if (storage.Contents.Contains(user))
-                return false;
-
-            return true;
+            var ev = new LockToggleAttemptEvent(user, quiet);
+            RaiseLocalEvent(uid, ref ev, true);
+            return !ev.Cancelled;
         }
 
         private bool HasUserAccess(EntityUid uid, EntityUid user, AccessReaderComponent? reader = null, bool quiet = true)

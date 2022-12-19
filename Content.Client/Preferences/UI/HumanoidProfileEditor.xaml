@@ -58,8 +58,7 @@
                                 <prefUi:HighlightedContainer>
                                     <BoxContainer Orientation="Horizontal">
                                         <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
-                                        <Button Name="CSexMale" Text="{Loc 'humanoid-profile-editor-sex-male-button'}" />
-                                        <Button Name="CSexFemale" Text="{Loc 'humanoid-profile-editor-sex-female-button'}" />
+                                        <OptionButton Name="CSexButton" />
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
                                 <!-- Age -->

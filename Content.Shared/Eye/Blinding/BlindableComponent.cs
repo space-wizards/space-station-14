@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Eye.Blinding
 {
@@ -26,7 +27,7 @@ namespace Content.Shared.Eye.Blinding
 
         /// <summary>
         /// Whether eye damage has accumulated enough to blind them.
-        /// <summary>
+        /// </summary>
         [ViewVariables]
         public bool EyeTooDamaged = false;
 
@@ -40,5 +41,16 @@ namespace Content.Shared.Eye.Blinding
         /// Gives an extra frame of blindness to reenable light manager during
         /// </description>
         public bool GraceFrame = false;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class BlindableComponentState : ComponentState
+    {
+        public readonly int Sources;
+
+        public BlindableComponentState(int sources)
+        {
+            Sources = sources;
+        }
     }
 }

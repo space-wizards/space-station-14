@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
+using Content.Client.Construction;
 using Content.Client.DragDrop;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
@@ -12,7 +13,9 @@ using Content.Client.UserInterface.Systems.Actions.Windows;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Input;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
@@ -37,10 +40,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 {
     [Dependency] private readonly IEntityManager _entities = default!;
     [Dependency] private readonly IOverlayManager _overlays = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    [UISystemDependency] private readonly ActionsSystem _actionsSystem = default!;
-    [UISystemDependency] private readonly InteractionOutlineSystem _interactionOutline = default!;
-    [UISystemDependency] private readonly TargetOutlineSystem _targetOutline = default!;
+    [UISystemDependency] private readonly ActionsSystem? _actionsSystem = default;
+    [UISystemDependency] private readonly InteractionOutlineSystem? _interactionOutline = default;
+    [UISystemDependency] private readonly TargetOutlineSystem? _targetOutline = default;
 
     private const int DefaultPageIndex = 0;
     private ActionButtonContainer? _container;
@@ -50,8 +55,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private readonly TextureRect _dragShadow;
     private ActionsWindow? _window;
 
-    private ActionsBar? _actionsBar;
-    private MenuButton? _actionButton;
+    private ActionsBar? ActionsBar => UIManager.GetActiveUIWidgetOrNull<ActionsBar>();
+    private MenuButton? ActionButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.ActionButton;
     private ActionPage CurrentPage => _pages[_currentPageIndex];
 
     public bool IsDragging => _menuDragHelper.IsDragging;
@@ -59,7 +64,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// <summary>
     /// Action slot we are currently selecting a target for.
     /// </summary>
-    public ActionButton? SelectingTargetFor { get; private set; }
+    public TargetedAction? SelectingTargetFor { get; private set; } = null;
 
     public ActionUIController()
     {
@@ -85,21 +90,28 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
+
         _window = UIManager.CreateWindow<ActionsWindow>();
-        _actionButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().ActionButton;
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
-        _window.OnClose += () => { _actionButton.Pressed = false; };
-        _window.OnOpen += () => { _actionButton.Pressed = true; };
+
+        _window.OnOpen += OnWindowOpened;
+        _window.OnClose += OnWindowClosed;
         _window.ClearButton.OnPressed += OnClearPressed;
         _window.SearchBar.OnTextChanged += OnSearchChanged;
         _window.FilterButton.OnItemSelected += OnFilterSelected;
+
+
+        if (_actionsSystem != null)
+        {
+            _actionsSystem.ActionAdded += OnActionAdded;
+            _actionsSystem.ActionRemoved += OnActionRemoved;
+            _actionsSystem.ActionReplaced += OnActionReplaced;
+            _actionsSystem.ActionsUpdated += OnActionsUpdated;
+        }
+
         UpdateFilterLabel();
         SearchAndDisplay();
 
-        _actionsBar = UIManager.GetActiveUIWidget<ActionsBar>();
-        _actionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
-        _actionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
-        _actionButton.OnPressed += ActionButtonPressed;
         _dragShadow.Orphan();
         UIManager.PopupRoot.AddChild(_dragShadow);
 
@@ -131,27 +143,182 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         builder
             .Bind(ContentKeyFunctions.OpenActionsMenu,
                 InputCmdHandler.FromDelegate(_ => ToggleWindow()))
+            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(TargetingOnUse, outsidePrediction: true),
+                    typeof(ConstructionSystem), typeof(DragDropSystem))
+                .BindBefore(EngineKeyFunctions.UIRightClick, new PointerInputCmdHandler(TargetingCancel, outsidePrediction: true))
             .Register<ActionUIController>();
+    }
+
+    private bool TargetingCancel(in PointerInputCmdArgs args)
+    {
+        if (!_timing.IsFirstTimePredicted)
+            return false;
+
+        // only do something for actual target-based actions
+        if (SelectingTargetFor == null)
+            return false;
+
+        StopTargeting();
+        return true;
+    }
+
+    /// <summary>
+    ///     If the user clicked somewhere, and they are currently targeting an action, try and perform it.
+    /// </summary>
+    private bool TargetingOnUse(in PointerInputCmdArgs args)
+    {
+        if (!_timing.IsFirstTimePredicted || _actionsSystem == null || SelectingTargetFor is not { } action)
+            return false;
+
+        if (_playerManager.LocalPlayer?.ControlledEntity is not EntityUid user)
+            return false;
+
+        if (!_entities.TryGetComponent(user, out ActionsComponent? comp))
+            return false;
+
+        // Is the action currently valid?
+        if (!action.Enabled
+            || action.Charges != null && action.Charges == 0
+            || action.Cooldown.HasValue && action.Cooldown.Value.End > _timing.CurTime)
+        {
+            // The user is targeting with this action, but it is not valid. Maybe mark this click as
+            // handled and prevent further interactions.
+            return !action.InteractOnMiss;
+        }
+
+        switch (action)
+        {
+            case WorldTargetAction mapTarget:
+                    return TryTargetWorld(args, mapTarget, user, comp) || !action.InteractOnMiss;
+
+            case EntityTargetAction entTarget:
+                    return TryTargetEntity(args, entTarget, user, comp) || !action.InteractOnMiss;
+
+            default:
+                Logger.Error($"Unknown targeting action: {action.GetType()}");
+                return false;
+        }
+    }
+
+    private bool TryTargetWorld(in PointerInputCmdArgs args, WorldTargetAction action, EntityUid user, ActionsComponent actionComp)
+    {
+        if (_actionsSystem == null)
+            return false;
+
+        var coords = args.Coordinates;
+
+        if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
+        {
+            // Invalid target.
+            if (action.DeselectOnMiss)
+                StopTargeting();
+
+            return false;
+        }
+
+        if (action.ClientExclusive)
+        {
+            if (action.Event != null)
+            {
+                action.Event.Target = coords;
+                action.Event.Performer = user;
+            }
+
+            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+        }
+        else
+            _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
+
+        if (!action.Repeat)
+            StopTargeting();
+
+        return true;
+    }
+
+    private bool TryTargetEntity(in PointerInputCmdArgs args, EntityTargetAction action, EntityUid user, ActionsComponent actionComp)
+    {
+        if (_actionsSystem == null)
+            return false;
+
+        if (!_actionsSystem.ValidateEntityTarget(user, args.EntityUid, action))
+        {
+            if (action.DeselectOnMiss)
+                StopTargeting();
+
+            return false;
+        }
+
+        if (action.ClientExclusive)
+        {
+            if (action.Event != null)
+            {
+                action.Event.Target = args.EntityUid;
+                action.Event.Performer = user;
+            }
+
+            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+        }
+        else
+            _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));
+
+        if (!action.Repeat)
+            StopTargeting();
+
+        return true;
+    }
+
+    public void UnloadButton()
+    {
+        if (ActionButton == null)
+        {
+            return;
+        }
+
+        ActionButton.OnPressed -= ActionButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (ActionButton == null)
+        {
+            return;
+        }
+
+        ActionButton.OnPressed += ActionButtonPressed;
+    }
+
+    private void OnWindowOpened()
+    {
+        if (ActionButton != null)
+            ActionButton.Pressed = true;
+    }
+
+    private void OnWindowClosed()
+    {
+        if (ActionButton != null)
+            ActionButton.Pressed = false;
     }
 
     public void OnStateExited(GameplayState state)
     {
+        if (_actionsSystem != null)
+        {
+            _actionsSystem.ActionAdded -= OnActionAdded;
+            _actionsSystem.ActionRemoved -= OnActionRemoved;
+            _actionsSystem.ActionReplaced -= OnActionReplaced;
+            _actionsSystem.ActionsUpdated -= OnActionsUpdated;
+        }
+
         if (_window != null)
         {
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
+
             _window.Dispose();
             _window = null;
-        }
-
-        if (_actionsBar != null)
-        {
-            _actionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
-            _actionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
-        }
-
-        if (_actionButton != null)
-        {
-            _actionButton.OnPressed -= ActionButtonPressed;
-            _actionButton.Pressed = false;
         }
 
         CommandBinds.Unregister<ActionUIController>();
@@ -162,7 +329,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (CurrentPage[index] is not { } type)
             return;
 
-        _actionsSystem.TriggerAction(type);
+        if (type is TargetedAction action)
+            ToggleTargeting(action);
+        else
+            _actionsSystem?.TriggerAction(type);
     }
 
     private void ChangePage(int index)
@@ -181,7 +351,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var page = _pages[_currentPageIndex];
         _container?.SetActionData(page);
 
-        _actionsBar!.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
+        ActionsBar!.PageButtons.Label.Text = $"{_currentPageIndex + 1}";
     }
 
     private void OnLeftArrowPressed(ButtonEventArgs args)
@@ -192,6 +362,101 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     private void OnRightArrowPressed(ButtonEventArgs args)
     {
         ChangePage(_currentPageIndex + 1);
+    }
+
+    private void AppendAction(ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action != null)
+                continue;
+
+            SetAction(button, action);
+            return;
+        }
+
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                var pageAction = page[i];
+                if (pageAction != null)
+                    continue;
+
+                page[i] = action;
+                return;
+            }
+        }
+    }
+
+    private void OnActionAdded(ActionType action)
+    {
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                if (page[i] == action)
+                {
+                    return;
+                }
+            }
+        }
+
+        AppendAction(action);
+        SearchAndDisplay();
+    }
+
+    private void OnActionRemoved(ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action == action)
+            {
+                SetAction(button, null);
+            }
+        }
+
+        foreach (var page in _pages)
+        {
+            for (var i = 0; i < page.Size; i++)
+            {
+                if (page[i] == action)
+                {
+                    page[i] = null;
+                }
+            }
+        }
+
+        SearchAndDisplay();
+    }
+
+    private void OnActionReplaced(ActionType existing, ActionType action)
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            if (button.Action == existing)
+                button.UpdateData(action);
+        }
+    }
+
+    private void OnActionsUpdated()
+    {
+        if (_container == null)
+            return;
+
+        foreach (var button in _container.GetButtons())
+        {
+            button.UpdateIcons();
+        }
     }
 
     private void ActionButtonPressed(ButtonEventArgs args)
@@ -235,8 +500,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         return filter switch
         {
             Filters.Enabled => action.Enabled,
-            Filters.Item => action.Provider != null && action.Provider != _actionsSystem.PlayerActions?.Owner,
-            Filters.Innate => action.Provider == null || action.Provider == _actionsSystem.PlayerActions?.Owner,
+            Filters.Item => action.Provider != null && action.Provider != _actionsSystem?.PlayerActions?.Owner,
+            Filters.Innate => action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner,
             Filters.Instant => action is InstantAction,
             Filters.Targeted => action is TargetedAction,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
@@ -245,7 +510,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void ClearList()
     {
-        _window?.ResultsGrid.RemoveAllChildren();
+        if (_window?.Disposed == false)
+            _window.ResultsGrid.RemoveAllChildren();
     }
 
     private void PopulateActions(IEnumerable<ActionType> actions)
@@ -259,7 +525,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             var button = new ActionButton {Locked = true};
 
-            button.UpdateData(_entities, action);
+            button.UpdateData(action);
             button.ActionPressed += OnWindowActionPressed;
             button.ActionUnpressed += OnWindowActionUnPressed;
             button.ActionFocusExited += OnWindowActionFocusExisted;
@@ -268,7 +534,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         }
     }
 
-    private void SearchAndDisplay()
+    private void SearchAndDisplay(ActionsComponent? component = null)
     {
         if (_window == null)
             return;
@@ -276,7 +542,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         var search = _window.SearchBar.Text;
         var filters = _window.FilterButton.SelectedKeys;
 
-        IEnumerable<ActionType>? actions = _actionsSystem.PlayerActions?.Actions;
+        IEnumerable<ActionType>? actions = (component ?? _actionsSystem?.PlayerActions)?.Actions;
         actions ??= Array.Empty<ActionType>();
 
         if (filters.Count == 0 && string.IsNullOrWhiteSpace(search))
@@ -293,14 +559,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.Keywords.Any(keyword => search.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
                 return true;
 
-            if (action.DisplayName.Contains((string) search, StringComparison.OrdinalIgnoreCase))
+            if (action.DisplayName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Provider == null || action.Provider == _actionsSystem.PlayerActions?.Owner)
+            if (action.Provider == null || action.Provider == _actionsSystem?.PlayerActions?.Owner)
                 return false;
 
             var name = _entities.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
-            return name.Contains((string) search, StringComparison.OrdinalIgnoreCase);
+            return name.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
         PopulateActions(actions);
@@ -321,7 +587,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
         }
 
-        if (button.TryReplaceWith(_entities, type) &&
+        if (button.TryReplaceWith(type) &&
             _container != null &&
             _container.TryGetButtonIndex(button, out position))
         {
@@ -416,19 +682,20 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (UIManager.CurrentlyHovered == button)
         {
-            if (button.Action is not InstantAction)
+            _menuDragHelper.EndDrag();
+
+            if (button.Action is TargetedAction action)
             {
                 // for target actions, we go into "select target" mode, we don't
                 // message the server until we actually pick our target.
 
                 // if we're clicking the same thing we're already targeting for, then we simply cancel
                 // targeting
-                ToggleTargeting(button);
+                ToggleTargeting(action);
                 return;
             }
 
-            _actionsSystem.TriggerAction(button.Action);
-            _menuDragHelper.EndDrag();
+            _actionsSystem?.TriggerAction(button.Action);
         }
         else
         {
@@ -440,7 +707,23 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool OnMenuBeginDrag()
     {
-        _dragShadow.Texture = _menuDragHelper.Dragged?.IconTexture;
+        if (_menuDragHelper.Dragged?.Action is { } action)
+        {
+            if (action.EntityIcon != null)
+            {
+                _dragShadow.Texture = _entities.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
+                    .GetFrame(RSI.State.Direction.South, 0);
+            }
+            else if (action.Icon != null)
+            {
+                _dragShadow.Texture = action.Icon!.Frame0();
+            }
+            else
+            {
+                _dragShadow.Texture = null;
+            }
+        }
+
         LayoutContainer.SetPosition(_dragShadow, UIManager.MousePositionScaled.Position - (32, 32));
         return true;
     }
@@ -454,15 +737,51 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private void OnMenuEndDrag()
     {
+        _dragShadow.Texture = null;
         _dragShadow.Visible = false;
+    }
+
+    public void ReloadActionContainer()
+    {
+        UnloadGui();
+        LoadGui();
+    }
+
+    public void UnloadGui()
+    {
+        _actionsSystem?.UnlinkAllActions();
+
+        if (ActionsBar == null)
+        {
+            return;
+        }
+
+        ActionsBar.PageButtons.LeftArrow.OnPressed -= OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed -= OnRightArrowPressed;
+    }
+
+    public void LoadGui()
+    {
+        if (ActionsBar == null)
+        {
+            return;
+        }
+
+        ActionsBar.PageButtons.LeftArrow.OnPressed += OnLeftArrowPressed;
+        ActionsBar.PageButtons.RightArrow.OnPressed += OnRightArrowPressed;
+
+
+        RegisterActionContainer(ActionsBar.ActionsContainer);
+
+        _actionsSystem?.LinkAllActions();
     }
 
     public void RegisterActionContainer(ActionButtonContainer container)
     {
         if (_container != null)
         {
-            Logger.Warning("Action container already defined for UI controller");
-            return;
+            _container.ActionPressed -= OnActionPressed;
+            _container.ActionUnpressed -= OnActionPressed;
         }
 
         _container = container;
@@ -492,18 +811,18 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     public void OnSystemLoaded(ActionsSystem system)
     {
-        _actionsSystem.OnLinkActions += OnComponentLinked;
-        _actionsSystem.OnUnlinkActions += OnComponentUnlinked;
-        _actionsSystem.ClearAssignments += ClearActions;
-        _actionsSystem.AssignSlot += AssignSlots;
+        system.LinkActions += OnComponentLinked;
+        system.UnlinkActions += OnComponentUnlinked;
+        system.ClearAssignments += ClearActions;
+        system.AssignSlot += AssignSlots;
     }
 
     public void OnSystemUnloaded(ActionsSystem system)
     {
-        _actionsSystem.OnLinkActions -= OnComponentLinked;
-        _actionsSystem.OnUnlinkActions -= OnComponentUnlinked;
-        _actionsSystem.ClearAssignments -= ClearActions;
-        _actionsSystem.AssignSlot -= AssignSlots;
+        system.LinkActions -= OnComponentLinked;
+        system.UnlinkActions -= OnComponentUnlinked;
+        system.ClearAssignments -= ClearActions;
+        system.AssignSlot -= AssignSlots;
     }
 
     public override void FrameUpdate(FrameEventArgs args)
@@ -515,12 +834,14 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         LoadDefaultActions(component);
         _container?.SetActionData(_pages[DefaultPageIndex]);
+        SearchAndDisplay(component);
     }
 
     private void OnComponentUnlinked()
     {
         _container?.ClearActionData();
-        //TODO: Clear button data
+        SearchAndDisplay();
+        StopTargeting();
     }
 
     private void LoadDefaultActions(ActionsComponent component)
@@ -566,32 +887,26 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// targeting with the specified slot.
     /// </summary>
     /// <param name="slot"></param>
-    public void ToggleTargeting(ActionButton slot)
+    public void ToggleTargeting(TargetedAction action)
     {
-        if (SelectingTargetFor == slot)
+        if (SelectingTargetFor == action)
         {
             StopTargeting();
             return;
         }
 
-        StartTargeting(slot);
+        StartTargeting(action);
     }
 
     /// <summary>
     /// Puts us in targeting mode, where we need to pick either a target point or entity
     /// </summary>
-    private void StartTargeting(ActionButton actionSlot)
+    private void StartTargeting(TargetedAction action)
     {
-        if (actionSlot.Action == null)
-            return;
-
         // If we were targeting something else we should stop
         StopTargeting();
 
-        SelectingTargetFor = actionSlot;
-
-        if (actionSlot.Action is not TargetedAction action)
-            return;
+        SelectingTargetFor = action;
 
         // override "held-item" overlay
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
@@ -621,8 +936,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         var range = entityAction.CheckCanAccess ? action.Range : -1;
 
-        _interactionOutline.SetEnabled(false);
-        _targetOutline.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
+        _interactionOutline?.SetEnabled(false);
+        _targetOutline?.Enable(range, entityAction.CheckCanAccess, predicate, entityAction.Whitelist, null);
     }
 
     /// <summary>
@@ -634,8 +949,8 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         SelectingTargetFor = null;
-        _targetOutline.Disable();
-        _interactionOutline.SetEnabled(true);
+        _targetOutline?.Disable();
+        _interactionOutline?.SetEnabled(true);
 
         if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay) || handOverlay == null)
             return;

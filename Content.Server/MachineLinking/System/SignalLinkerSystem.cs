@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
+using Content.Server.Tools;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
@@ -11,6 +12,7 @@ using Robust.Shared.Player;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
 using Content.Shared.MachineLinking.Events;
+using Content.Server.Database;
 
 namespace Content.Server.MachineLinking.System
 {
@@ -19,6 +21,7 @@ namespace Content.Server.MachineLinking.System
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
+        [Dependency] private readonly ToolSystem _tools = default!;
 
         public override void Initialize()
         {
@@ -69,7 +72,8 @@ namespace Content.Server.MachineLinking.System
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker) ||
+                !IsLinkerInteractable(args.Using.Value, linker))
                 return;
 
             AlternativeVerb verb = new()
@@ -86,7 +90,7 @@ namespace Content.Server.MachineLinking.System
                     var msg = TryLinkDefaults(uid, linker.SavedTransmitter.Value, args.User, component)
                         ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedTransmitter.Value))
                         : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedTransmitter.Value));
-                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(msg, uid, args.User);
                 };
                 return;
             }
@@ -100,7 +104,8 @@ namespace Content.Server.MachineLinking.System
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!TryComp(args.Using, out SignalLinkerComponent? linker))
+            if (!TryComp(args.Using, out SignalLinkerComponent? linker)
+                || !IsLinkerInteractable(args.Using.Value, linker))
                 return;
 
             AlternativeVerb verb = new()
@@ -117,7 +122,7 @@ namespace Content.Server.MachineLinking.System
                     var msg = TryLinkDefaults(linker.SavedReceiver.Value, uid, args.User, null, component)
                         ? Loc.GetString("signal-linking-verb-success", ("machine", linker.SavedReceiver.Value))
                         : Loc.GetString("signal-linking-verb-fail", ("machine", linker.SavedReceiver.Value));
-                    _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(msg, uid, args.User);
                 };
                 return;
             }
@@ -200,7 +205,7 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!TryComp(args.Used, out SignalLinkerComponent? linker) ||
+            if (!TryComp(args.Used, out SignalLinkerComponent? linker) || !IsLinkerInteractable(args.Used, linker) ||
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
@@ -209,7 +214,7 @@ namespace Content.Server.MachineLinking.System
             if (!TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User), PopupType.Medium);
+                    args.User, PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -226,7 +231,7 @@ namespace Content.Server.MachineLinking.System
         {
             if (args.Handled) return;
 
-            if (!TryComp(args.Used, out SignalLinkerComponent? linker) ||
+            if (!TryComp(args.Used, out SignalLinkerComponent? linker) || !IsLinkerInteractable(args.Used, linker) ||
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
@@ -235,7 +240,7 @@ namespace Content.Server.MachineLinking.System
             if (!TryComp(linker.SavedTransmitter, out SignalTransmitterComponent? transmitter))
             {
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-saved", ("machine", uid)),
-                    Filter.Entities(args.User), PopupType.Medium);
+                    args.User, PopupType.Medium);
                 args.Handled = true;
                 return;
             }
@@ -283,8 +288,7 @@ namespace Content.Server.MachineLinking.System
                 !receiver.Inputs.TryGetValue(args.ReceiverPort, out var linkedTransmitters))
                 return false;
 
-            // Accounts for possibly missing user & the quiet option.
-            var alertFilter = (!quiet && user != null) ? Filter.Entities(user.Value) : null;
+            quiet |= !user.HasValue;
 
             // Does the link already exist? Under the assumption that nothing has broken, lets only check the
             // transmitter ports.
@@ -296,9 +300,8 @@ namespace Content.Server.MachineLinking.System
 
             if (checkRange && !IsInRange(transmitter, receiver))
             {
-                if (alertFilter != null)
-                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"),
-                        alertFilter);
+                if (!quiet)
+                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-out-of-range"), user!.Value);
                 return false;
             }
 
@@ -307,27 +310,25 @@ namespace Content.Server.MachineLinking.System
             RaiseLocalEvent(transmitter.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (alertFilter != null)
-                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", transmitter.Owner)),
-                        alertFilter);
+                if (!quiet)
+                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", transmitter.Owner)), user!.Value);
                 return false;
             }
             RaiseLocalEvent(receiver.Owner, linkAttempt, true);
             if (linkAttempt.Cancelled)
             {
-                if (alertFilter != null)
-                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", receiver.Owner)),
-                        alertFilter);
+                if (!quiet)
+                    _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-connection-refused", ("machine", receiver.Owner)), user!.Value);
                 return false;
             }
 
             linkedReceivers.Add(new(receiver.Owner, args.ReceiverPort));
             linkedTransmitters.Add(new(transmitter.Owner, args.TransmitterPort));
-            if (alertFilter != null)
+            if (!quiet)
                 _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-linked-port",
                     ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                     ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
-                    alertFilter, PopupType.Medium);
+                    user!.Value, PopupType.Medium);
 
             var newLink = new NewLinkEvent(user, transmitter.Owner, args.TransmitterPort, receiver.Owner, args.ReceiverPort);
             RaiseLocalEvent(receiver.Owner, newLink);
@@ -358,7 +359,7 @@ namespace Content.Server.MachineLinking.System
                     _popupSystem.PopupCursor(Loc.GetString("signal-linker-component-unlinked-port",
                         ("machine1", transmitter.Owner), ("port1", PortName<TransmitterPortPrototype>(args.TransmitterPort)),
                         ("machine2", receiver.Owner), ("port2", PortName<ReceiverPortPrototype>(args.ReceiverPort))),
-                        Filter.Entities(attached), PopupType.Medium);
+                        attached, PopupType.Medium);
                 }
                 else
                 { // something weird happened
@@ -472,6 +473,12 @@ namespace Content.Server.MachineLinking.System
 
             return Comp<TransformComponent>(transmitterComponent.Owner).MapPosition.InRange(
                    Comp<TransformComponent>(receiverComponent.Owner).MapPosition, transmitterComponent.TransmissionRange);
+        }
+
+        private bool IsLinkerInteractable(EntityUid uid, SignalLinkerComponent linkerComponent)
+        {
+            var quality = linkerComponent.RequiredQuality;
+            return quality == null || _tools.HasQuality(uid, quality);
         }
     }
 }

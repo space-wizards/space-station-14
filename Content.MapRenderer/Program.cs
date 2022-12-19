@@ -25,8 +25,14 @@ namespace Content.MapRenderer
 
         internal static async Task Main(string[] args)
         {
-            if (args.Length == 0)
+
+            if (!CommandLineArguments.TryParse(args, out var arguments))
+                return;
+
+            if (arguments.Maps.Count == 0)
             {
+                Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
+
                 await using var server = await PoolManager.GetServerClient();
                 var mapIds = server.Pair.Server
                     .ResolveDependency<IPrototypeManager>()
@@ -36,8 +42,10 @@ namespace Content.MapRenderer
 
                 Array.Sort(mapIds);
 
-                Console.WriteLine("Didn't specify any maps to paint, select one, multiple separated by commas or \"all\":");
-                Console.WriteLine(string.Join('\n', mapIds.Select((id, i) => $"({i}): {id}")));
+                Console.WriteLine("Map List");
+                Console.WriteLine(string.Join('\n', mapIds.Select((id, i) => $"{i,3}: {id}")));
+                Console.WriteLine("Select one, multiple separated by commas or \"all\":");
+                Console.Write("> ");
                 var input = Console.ReadLine();
                 if (input == null)
                 {
@@ -83,9 +91,7 @@ namespace Content.MapRenderer
                     selectedMapPrototypes.Add(mapIds[id]);
                 }
 
-                var argsLength = args.Length;
-                Array.Resize(ref args, argsLength + selectedMapPrototypes.Count);
-                selectedMapPrototypes.CopyTo(args, argsLength);
+                arguments.Maps.AddRange(selectedMapPrototypes);
 
                 if (selectedMapPrototypes.Count == 0)
                 {
@@ -96,8 +102,37 @@ namespace Content.MapRenderer
                 Console.WriteLine($"Selected maps: {string.Join(", ", selectedMapPrototypes)}");
             }
 
-            if (!CommandLineArguments.TryParse(args, out var arguments))
-                return;
+            if (arguments.ArgumentsAreFileNames)
+            {
+                Console.WriteLine("Retrieving map ids by map file names...");
+
+                Console.Write("Fetching map prototypes... ");
+                await using var server = await PoolManager.GetServerClient();
+                var mapPrototypes = server.Pair.Server
+                    .ResolveDependency<IPrototypeManager>()
+                    .EnumeratePrototypes<GameMapPrototype>()
+                    .ToArray();
+                Console.WriteLine("[Done]");
+
+                var ids = new List<string>();
+
+                foreach (var mapPrototype in mapPrototypes)
+                {
+                    if (arguments.Maps.Contains(mapPrototype.MapPath.Filename))
+                    {
+                        ids.Add(mapPrototype.ID);
+                        Console.WriteLine($"Found map: {mapPrototype.MapName}");
+                    }
+                }
+
+                if (ids.Count == 0)
+                {
+                    await Console.Error.WriteLineAsync("Found no maps for the given file names!");
+                    return;
+                }
+
+                arguments.Maps = ids;
+            }
 
             await Run(arguments);
         }
@@ -119,44 +154,52 @@ namespace Content.MapRenderer
 
                 mapViewerData.ParallaxLayers.Add(LayerGroup.DefaultParallax());
                 var directory = Path.Combine(arguments.OutputPath, map);
-                Directory.CreateDirectory(directory);
 
                 var i = 0;
-                await foreach (var renderedGrid in MapPainter.Paint(map))
+                try
                 {
-                    var grid = renderedGrid.Image;
-                    Directory.CreateDirectory(directory);
-
-                    var fileName = Path.GetFileNameWithoutExtension(map);
-                    var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format.ToString()}";
-
-                    Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
-
-                    switch (arguments.Format)
+                    await foreach (var renderedGrid in MapPainter.Paint(map))
                     {
-                        case OutputFormat.webp:
-                            var encoder = new WebpEncoder
-                            {
-                                Method = WebpEncodingMethod.BestQuality,
-                                FileFormat = WebpFileFormatType.Lossless,
-                                TransparentColorMode = WebpTransparentColorMode.Preserve
-                            };
+                        var grid = renderedGrid.Image;
+                        Directory.CreateDirectory(directory);
 
-                            await grid.SaveAsync(savePath, encoder);
-                            break;
+                        var fileName = Path.GetFileNameWithoutExtension(map);
+                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format.ToString()}";
 
-                        default:
-                        case OutputFormat.png:
-                            await grid.SaveAsPngAsync(savePath);
-                            break;
+                        Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
+
+                        switch (arguments.Format)
+                        {
+                            case OutputFormat.webp:
+                                var encoder = new WebpEncoder
+                                {
+                                    Method = WebpEncodingMethod.BestQuality,
+                                    FileFormat = WebpFileFormatType.Lossless,
+                                    TransparentColorMode = WebpTransparentColorMode.Preserve
+                                };
+
+                                await grid.SaveAsync(savePath, encoder);
+                                break;
+
+                            default:
+                            case OutputFormat.png:
+                                await grid.SaveAsPngAsync(savePath);
+                                break;
+                        }
+
+                        grid.Dispose();
+
+                        mapViewerData.Grids.Add(new GridLayer(renderedGrid, Path.Combine(map, Path.GetFileName(savePath))));
+
+                        mapNames.Add(fileName);
+                        i++;
                     }
-
-                    grid.Dispose();
-
-                    mapViewerData.Grids.Add(new GridLayer(renderedGrid,  Path.Combine(map, Path.GetFileName(savePath))));
-
-                    mapNames.Add(fileName);
-                    i++;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Painting map {map} failed due to an internal exception:");
+                    Console.WriteLine(ex);
+                    continue;
                 }
 
                 if (arguments.ExportViewerJson)
@@ -168,7 +211,8 @@ namespace Content.MapRenderer
 
             var mapNamesString = $"[{string.Join(',', mapNames.Select(s => $"\"{s}\""))}]";
             Console.WriteLine($@"::set-output name=map_names::{mapNamesString}");
-            Console.WriteLine($"Created {arguments.Maps.Count} map images.");
+            Console.WriteLine($"Processed {arguments.Maps.Count} maps.");
+            Console.WriteLine($"It's now safe to manually exit the process (automatic exit in a few moments...)");
         }
     }
 }

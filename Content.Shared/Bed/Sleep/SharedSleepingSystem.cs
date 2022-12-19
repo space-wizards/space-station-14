@@ -19,15 +19,15 @@ namespace Content.Server.Bed.Sleep
         private void OnInit(EntityUid uid, SleepingComponent component, ComponentInit args)
         {
             var ev = new SleepStateChangedEvent(true);
-            RaiseLocalEvent(uid, ev, false);
-            _blindingSystem.AdjustBlindSources(uid, true);
+            RaiseLocalEvent(uid, ev);
+            _blindingSystem.AdjustBlindSources(uid, 1);
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)
         {
             var ev = new SleepStateChangedEvent(false);
-            RaiseLocalEvent(uid, ev, false);
-            _blindingSystem.AdjustBlindSources(uid, false);
+            RaiseLocalEvent(uid, ev);
+            _blindingSystem.AdjustBlindSources(uid, -1);
         }
 
         private void OnSpeakAttempt(EntityUid uid, SleepingComponent component, SpeakAttemptEvent args)

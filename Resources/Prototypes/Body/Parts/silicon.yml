@@ -28,8 +28,6 @@
     state: "l_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological ##Does this do anything? Revisit when surgery is in
     symmetry: Left
   - type: Tag
     tags:
@@ -51,8 +49,6 @@
     state: "r_hand"
   - type: BodyPart
     partType: Hand
-    size: 3
-    compatibility: Biological
     symmetry: Right
   - type: Tag
     tags:

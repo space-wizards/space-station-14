@@ -60,8 +60,6 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
-    - type: StaticPrice
-      price: 750
 
 # SMES' in use
 

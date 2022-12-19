@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            EntitySystem.Get<StackSystem>().SetCount(uid, Amount);
+            entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount(uid, Amount);
         }
     }
 }

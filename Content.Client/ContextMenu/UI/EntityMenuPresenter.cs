@@ -7,6 +7,7 @@ using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.CombatMode;
+using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -20,6 +21,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
@@ -47,6 +49,7 @@ namespace Content.Client.ContextMenu.UI
 
         private readonly VerbSystem _verbSystem;
         private readonly ExamineSystem _examineSystem;
+        private readonly TransformSystem _xform;
         private readonly SharedCombatModeSystem _combatMode;
 
         /// <summary>
@@ -64,6 +67,7 @@ namespace Content.Client.ContextMenu.UI
             _verbSystem = verbSystem;
             _examineSystem = _entityManager.EntitySysManager.GetEntitySystem<ExamineSystem>();
             _combatMode = _entityManager.EntitySysManager.GetEntitySystem<CombatModeSystem>();
+            _xform = _entityManager.EntitySysManager.GetEntitySystem<TransformSystem>();
 
             _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
@@ -191,9 +195,24 @@ namespace Content.Client.ContextMenu.UI
             var ignoreFov = !_eyeManager.CurrentEye.DrawFov ||
                 (_verbSystem.Visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov;
 
+            _entityManager.TryGetComponent(player, out ExaminerComponent? examiner);
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (_entityManager.Deleted(entity) || !ignoreFov && !_examineSystem.CanExamine(player, entity))
+                if (!xformQuery.TryGetComponent(entity, out var xform))
+                {
+                    // entity was deleted
+                    RemoveEntity(entity);
+                    continue;
+                }
+
+                if (ignoreFov)
+                    continue;
+
+                var pos = new MapCoordinates(_xform.GetWorldPosition(xform, xformQuery), xform.MapID);
+
+                if (!_examineSystem.CanExamine(player, pos, e => e == player || e == entity, entity, examiner))
                     RemoveEntity(entity);
             }
         }

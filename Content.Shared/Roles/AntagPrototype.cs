@@ -10,6 +10,7 @@ namespace Content.Shared.Roles
     {
         private string _name = string.Empty;
         private string _objective = string.Empty;
+        private string? _description = string.Empty;
 
         [ViewVariables]
         [IdDataFieldAttribute]
@@ -23,6 +24,16 @@ namespace Content.Shared.Roles
         {
             get => _name;
             private set => _name = Loc.GetString(value);
+        }
+
+        /// <summary>
+        ///     The description of this antag shown in a tooltip.
+        /// </summary>
+        [DataField("description")]
+        public string? Description
+        {
+            get => _description;
+            private set => _description = value is null ? null : Loc.GetString(value);
         }
 
         /// <summary>

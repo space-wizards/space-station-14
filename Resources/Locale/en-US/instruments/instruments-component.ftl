@@ -7,7 +7,10 @@ instruments-component-menu-no-midi-support = MIDI support is currently not
                                              If on Linux, you may need to install
                                              FluidSynth or a development package
                                              for FluidSynth.
+instruments-component-menu-input-button = MIDI Input
+instruments-component-menu-play-button = Play MIDI File
+instruments-component-menu-loop-button = Loop
+instruments-component-menu-stop-button = Stop
 
 # SwappableInstrumentComponent
 swappable-instrument-component-style-set = Style set to "{$style}"
-

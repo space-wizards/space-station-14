@@ -2,7 +2,7 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
-using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.Disease.Components;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
@@ -14,7 +14,6 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
@@ -153,7 +152,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         var percent = GetInfectedPercentage(out var num);
         if (num.Count == 1) //only one human left. spooky
-           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
+           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], num[0]);
         if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
@@ -236,7 +235,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null)
+            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
             {
                 playerList.Add(player);
 
@@ -299,15 +298,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
             if (mind.Session != null)
             {
-                var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+                var message = Loc.GetString("zombie-patientzero-role-greeting");
+                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
                 //gets the names now in case the players leave.
                 //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
                 _initialInfectedNames.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),
-                   messageWrapper, default, false, mind.Session.ConnectedClient, Color.Plum);
+                // You got a free T-shirt!?!?
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
+                   wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
             }
         }
     }

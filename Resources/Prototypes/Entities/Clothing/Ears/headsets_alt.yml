@@ -86,6 +86,51 @@
 
 - type: entity
   parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltEngineering
+  name: engineering over-ear headset
+  components:
+  - type: Headset
+    channels:
+    - Command
+    - Common
+    - Engineering
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/engineering.rsi
+ 
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltScience
+  name: science over-ear headset
+  components:
+  - type: Headset
+    channels:
+    - Command
+    - Common
+    - Science
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/science.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/science.rsi
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltCargo
+  name: cargo over-ear headset
+  components:
+  - type: Headset
+    channels:
+    - Command
+    - Common
+    - Supply
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/cargo.rsi
+
+- type: entity
+  parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
   name: syndicate over-ear headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys. Protects ears from flashbangs.

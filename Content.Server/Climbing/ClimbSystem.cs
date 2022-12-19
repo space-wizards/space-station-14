@@ -1,10 +1,9 @@
+using Content.Server.Body.Systems;
 using Content.Server.Climbing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Interaction;
-using Content.Server.Interaction.Components;
 using Content.Server.Popups;
 using Content.Server.Stunnable;
-using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
@@ -15,7 +14,6 @@ using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -30,7 +28,6 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using SharpZstd.Interop;
 
 namespace Content.Server.Climbing;
 
@@ -39,6 +36,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
@@ -81,7 +79,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             : CanVault(component, args.User, args.Dragged, args.Target, out reason);
 
         if (!canVault)
-            _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(reason, args.User, args.User);
 
         args.CanDrop = canVault;
         args.Handled = true;
@@ -120,13 +118,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (TryBonk(component, user))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable, user)
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            UserFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
+            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
     }
 
@@ -286,9 +284,9 @@ public sealed class ClimbSystem : SharedClimbSystem
         }
 
         if (!HasComp<ClimbingComponent>(user)
-            || !TryComp(user, out SharedBodyComponent? body)
-            || !body.HasPartOfType(BodyPartType.Leg)
-            || !body.HasPartOfType(BodyPartType.Foot))
+            || !TryComp(user, out BodyComponent? body)
+            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Leg, body)
+            || !_bodySystem.BodyHasChildOfType(user, BodyPartType.Foot, body))
         {
             reason = Loc.GetString("comp-climbable-cant-climb");
             return false;
@@ -370,7 +368,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
             Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
-            Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
+            Filter.PvsExcept(args.Climber), true);
     }
 
     /// <summary>

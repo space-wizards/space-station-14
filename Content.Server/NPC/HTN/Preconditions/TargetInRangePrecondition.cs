@@ -9,20 +9,20 @@ public sealed class TargetInRangePrecondition : HTNPrecondition
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
-    [ViewVariables, DataField("targetKey", required: true)] public string TargetKey = default!;
+    [DataField("targetKey", required: true)] public string TargetKey = default!;
 
-    [ViewVariables, DataField("rangeKey", required: true)]
+    [DataField("rangeKey", required: true)]
     public string RangeKey = default!;
 
     public override bool IsMet(NPCBlackboard blackboard)
     {
-        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
             return false;
 
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target) ||
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager) ||
             !_entManager.TryGetComponent<TransformComponent>(target, out var targetXform))
             return false;
 
-        return coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey));
+        return coordinates.InRange(_entManager, targetXform.Coordinates, blackboard.GetValueOrDefault<float>(RangeKey, _entManager));
     }
 }

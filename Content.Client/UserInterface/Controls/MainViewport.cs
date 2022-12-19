@@ -1,6 +1,7 @@
 ﻿using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
 
 namespace Content.Client.UserInterface.Controls
@@ -9,7 +10,7 @@ namespace Content.Client.UserInterface.Controls
     ///     Wrapper for <see cref="ScalingViewport"/> that listens to configuration variables.
     ///     Also does NN-snapping within tolerances.
     /// </summary>
-    public sealed class MainViewport : Control
+    public sealed class MainViewport : UIWidget
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly ViewportManager _vpManager = default!;

@@ -140,14 +140,14 @@ public sealed partial class NPCCombatSystem
 
             // TODO: Check if we can face
 
-            if (!_gun.CanShoot(gun))
+            if (!Enabled || !_gun.CanShoot(gun))
                 continue;
 
             EntityCoordinates targetCordinates;
 
             if (_mapManager.TryFindGridAt(xform.MapID, targetPos, out var mapGrid))
             {
-                targetCordinates = new EntityCoordinates(mapGrid.GridEntityId, mapGrid.WorldToLocal(targetSpot));
+                targetCordinates = new EntityCoordinates(mapGrid.Owner, mapGrid.WorldToLocal(targetSpot));
             }
             else
             {

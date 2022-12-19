@@ -45,11 +45,13 @@ public sealed class EntityStorageSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageComponent, ActivateInWorldEvent>(OnInteract);
         SubscribeLocalEvent<EntityStorageComponent, WeldableAttemptEvent>(OnWeldableAttempt);
         SubscribeLocalEvent<EntityStorageComponent, WeldableChangedEvent>(OnWelded);
+        SubscribeLocalEvent<EntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<EntityStorageComponent, DestructionEventArgs>(OnDestroy);
 
         SubscribeLocalEvent<InsideEntityStorageComponent, InhaleLocationEvent>(OnInsideInhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, ExhaleLocationEvent>(OnInsideExhale);
         SubscribeLocalEvent<InsideEntityStorageComponent, AtmosExposedGetAirEvent>(OnInsideExposed);
+
     }
 
     private void OnInit(EntityUid uid, EntityStorageComponent component, ComponentInit args)
@@ -92,7 +94,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.Contents.Contains(args.User))
         {
             var msg = Loc.GetString("entity-storage-component-already-contains-user-message");
-            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(msg, args.User, args.User);
             args.Cancel();
         }
     }
@@ -100,6 +102,17 @@ public sealed class EntityStorageSystem : EntitySystem
     private void OnWelded(EntityUid uid, EntityStorageComponent component, WeldableChangedEvent args)
     {
         component.IsWeldedShut = args.IsWelded;
+    }
+
+    private void OnLockToggleAttempt(EntityUid uid, EntityStorageComponent target, ref LockToggleAttemptEvent args)
+    {
+        // Cannot (un)lock open lockers.
+        if (target.Open)
+            args.Cancelled = true;
+
+        // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
+        if (target.Contents.Contains(args.User))
+            args.Cancelled = true;
     }
 
     private void OnDestroy(EntityUid uid, EntityStorageComponent component, DestructionEventArgs args)
@@ -163,7 +176,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset);
 
-        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate);
+        var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
         var ev = new StorageBeforeCloseEvent(uid, entities);
         RaiseLocalEvent(uid, ev, true);
@@ -261,7 +274,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (component.IsWeldedShut)
         {
             if (!silent && !component.Contents.Contains(user))
-                _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target, Filter.Pvs(target));
+                _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target);
 
             return false;
         }
@@ -273,7 +286,7 @@ public sealed class EntityStorageSystem : EntitySystem
             if (!_interactionSystem.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
                 if (!silent)
-                    _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target, Filter.Pvs(target));
+                    _popupSystem.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
         }
@@ -326,7 +339,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (attemptEvent.Cancelled)
             return false;
 
-        var targetIsMob = HasComp<SharedBodyComponent>(toInsert);
+        var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
         var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 
@@ -384,7 +397,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void TakeGas(EntityUid uid, EntityStorageComponent component)
     {
-        if (!component.AirTight)
+        if (!component.Airtight)
             return;
 
         var tile = GetOffsetTileRef(uid, component);
@@ -397,7 +410,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
-        if (!component.AirTight)
+        if (!component.Airtight)
             return;
 
         var tile = GetOffsetTileRef(uid, component);
@@ -425,7 +438,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideInhale(EntityUid uid, InsideEntityStorageComponent component, InhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.AirTight)
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -433,7 +446,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
     private void OnInsideExhale(EntityUid uid, InsideEntityStorageComponent component, ExhaleLocationEvent args)
     {
-        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.AirTight)
+        if (TryComp<EntityStorageComponent>(component.Storage, out var storage) && storage.Airtight)
         {
             args.Gas = storage.Air;
         }
@@ -446,7 +459,7 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<EntityStorageComponent>(component.Storage, out var storage))
         {
-            if (!storage.AirTight)
+            if (!storage.Airtight)
                 return;
 
             args.Gas = storage.Air;

@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring.Components;
 using Content.Shared.Alert;
@@ -64,6 +64,7 @@ public sealed partial class EnsnareableSystem
         component.Ensnared = target;
         ensnareable.Container.Insert(component.Owner);
         ensnareable.IsEnsnared = true;
+        Dirty(ensnareable);
 
         UpdateAlert(ensnareable);
         var ev = new EnsnareEvent(component.WalkSpeed, component.SprintSpeed);
@@ -109,11 +110,11 @@ public sealed partial class EnsnareableSystem
         _doAfter.DoAfter(doAfterEventArgs);
 
         if (isOwner)
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, Filter.Entities(target));
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, target);
 
         if (!isOwner && user != null)
         {
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", component.Owner), ("user", Identity.Entity(target, EntityManager))), user.Value, Filter.Entities(user.Value));
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", component.Owner), ("user", Identity.Entity(target, EntityManager))), user.Value, user.Value);
         }
     }
 
@@ -127,6 +128,7 @@ public sealed partial class EnsnareableSystem
 
         ensnareable.Container.ForceRemove(component.Owner);
         ensnareable.IsEnsnared = false;
+        Dirty(ensnareable);
         component.Ensnared = null;
 
         UpdateAlert(ensnareable);

@@ -20,6 +20,8 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "[:", "chatsan-smiles" },
         { "(=", "chatsan-smiles" },
         { "[=", "chatsan-smiles" },
+        { "^^", "chatsan-smiles" },
+        { "^-^", "chatsan-smiles" },
         { ":(", "chatsan-frowns" },
         { ":[", "chatsan-frowns" },
         { "=(", "chatsan-frowns" },

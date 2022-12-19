@@ -23,7 +23,7 @@ namespace Content.Server.Research.Disk
                 return;
 
             server.Points += component.Points;
-            _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
             EntityManager.QueueDeleteEntity(uid);
         }
     }

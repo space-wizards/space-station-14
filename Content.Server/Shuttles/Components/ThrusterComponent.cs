@@ -44,7 +44,6 @@ namespace Content.Server.Shuttles.Components
         [DataField("thrust")]
         public float Thrust = 750f;
 
-        [ViewVariables]
         [DataField("thrusterType")]
         public ThrusterType Type = ThrusterType.Linear;
 
@@ -59,9 +58,9 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// How much damage is done per second to anything colliding with our thrust.
         /// </summary>
-        [ViewVariables] [DataField("damage")] public DamageSpecifier? Damage = new();
+        [DataField("damage")] public DamageSpecifier? Damage = new();
 
-        [ViewVariables] [DataField("requireSpace")]
+        [DataField("requireSpace")]
         public bool RequireSpace = true;
 
         // Used for burns
