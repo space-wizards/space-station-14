@@ -9,3 +9,7 @@
 -   type: entityFlag
     id: Unconscious
     groupId: MedicalConditions
+
+-   type: entityFlag
+    id: Electroshock
+    groupId: MedicalConditions
