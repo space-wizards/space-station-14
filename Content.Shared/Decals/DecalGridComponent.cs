@@ -1,5 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.Decals.DecalGridComponent;
@@ -23,7 +24,7 @@ namespace Content.Shared.Decals
         [Serializable, NetSerializable]
         public sealed class DecalChunk
         {
-            [DataField("decals")]
+            [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
             public Dictionary<uint, Decal> Decals;
 
             [NonSerialized]
