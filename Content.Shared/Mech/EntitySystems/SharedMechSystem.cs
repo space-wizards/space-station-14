@@ -237,7 +237,8 @@ public abstract class SharedMechSystem : EntitySystem
             : Loc.GetString("mech-equipment-select-none-popup");
 
         if (_timing.IsFirstTimePredicted)
-            _popup.PopupEntity(popupString, uid, Filter.Pvs(uid));
+            _popup.PopupEntity(popupString, uid);
+
         Dirty(component);
     }
 

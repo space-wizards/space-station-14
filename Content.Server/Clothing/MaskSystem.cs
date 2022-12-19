@@ -59,9 +59,9 @@ namespace Content.Server.Clothing
             _identity.QueueIdentityUpdate(args.Performer);
 
             if (mask.IsToggled)
-                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, Filter.Entities(args.Performer));
+                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-down-popup-message", ("mask", mask.Owner)), args.Performer, args.Performer);
             else
-                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-up-popup-message", ("mask", mask.Owner)), args.Performer, Filter.Entities(args.Performer));
+                _popupSystem.PopupEntity(Loc.GetString("action-mask-pull-up-popup-message", ("mask", mask.Owner)), args.Performer, args.Performer);
 
             ToggleMaskComponents(uid, mask, args.Performer);
         }

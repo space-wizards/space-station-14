@@ -97,6 +97,6 @@ namespace Content.Server.Remotes
         }
 
         private void ShowPopupToUser(string messageId, EntityUid user) =>
-            _popupSystem.PopupEntity(Loc.GetString(messageId), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(messageId), user, user);
     }
 }

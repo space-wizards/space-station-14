@@ -4,6 +4,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
@@ -32,7 +33,7 @@ namespace Content.Shared.Decals
             ChunkIndex[msg.EntityUid] = new();
             foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
             {
-                foreach (var uid in decals.Keys)
+                foreach (var uid in decals.Decals.Keys)
                 {
                     ChunkIndex[msg.EntityUid][uid] = indices;
                 }
@@ -47,13 +48,13 @@ namespace Content.Shared.Decals
             return comp.ChunkCollection;
         }
 
-        protected Dictionary<Vector2i, Dictionary<uint, Decal>>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
         {
             var collection = DecalGridChunkCollection(gridEuid, comp);
             return collection?.ChunkCollection;
         }
 
-        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices) {}
+        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk) {}
 
         protected bool RemoveDecalInternal(EntityUid gridId, uint uid)
         {
@@ -65,16 +66,16 @@ namespace Content.Shared.Decals
             }
 
             var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null || !chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Remove(uid))
+            if (chunkCollection == null || !chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Decals.Remove(uid))
             {
                 return false;
             }
 
-            if (chunk.Count == 0)
+            if (chunk.Decals.Count == 0)
                 chunkCollection.Remove(indices);
 
             ChunkIndex[gridId].Remove(uid);
-            DirtyChunk(gridId, indices);
+            DirtyChunk(gridId, indices, chunk);
             return true;
         }
 
