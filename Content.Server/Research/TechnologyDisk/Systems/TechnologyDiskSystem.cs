@@ -34,8 +34,14 @@ public sealed class TechnologyDiskSystem : EntitySystem
         if (!HasComp<ResearchServerComponent>(target) || !TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
 
-        if (component.Recipe != null)
-            _research.AddLatheRecipe(database,  component.Recipe);
+        if (component.Recipes != null)
+        {
+            foreach (var recipe in component.Recipes)
+            {
+                _research.AddLatheRecipe(database, recipe, false);
+            }
+            Dirty(database);
+        }
         _popup.PopupEntity(Loc.GetString("tech-disk-inserted"), target, args.User);
         EntityManager.DeleteEntity(uid);
         args.Handled = true;
@@ -44,18 +50,21 @@ public sealed class TechnologyDiskSystem : EntitySystem
     private void OnExamine(EntityUid uid, TechnologyDiskComponent component, ExaminedEvent args)
     {
         var message = Loc.GetString("tech-disk-examine-none");
-        if (component.Recipe != null)
+        if (component.Recipes != null && component.Recipes.Any())
         {
-            var prototype = _prototype.Index<LatheRecipePrototype>(component.Recipe);
+            var prototype = _prototype.Index<LatheRecipePrototype>(component.Recipes[0]);
             var resultPrototype = _prototype.Index<EntityPrototype>(prototype.Result);
             message = Loc.GetString("tech-disk-examine", ("result", resultPrototype.Name));
+
+            if (component.Recipes.Count > 1) //idk how to do this well. sue me.
+                message += " " + Loc.GetString("tech-disk-examine-more");
         }
         args.PushMarkup(message);
     }
 
     private void OnMapInit(EntityUid uid, TechnologyDiskComponent component, MapInitEvent args)
     {
-        if (component.Recipe != null)
+        if (component.Recipes != null)
             return;
 
         //get a list of every distinct recipe in all the technologies.
@@ -78,6 +87,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         var validTechs = allTechs.Where(tech => !allUnlocked.Contains(tech)).ToList();
 
         //pick one
-        component.Recipe = _random.Pick(validTechs);
+        component.Recipes = new();
+        component.Recipes.Add(_random.Pick(validTechs));
     }
 }

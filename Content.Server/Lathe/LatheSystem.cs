@@ -310,7 +310,6 @@ namespace Content.Server.Lathe
 
         private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
         {
-            Logger.Debug("OnLatheServerSyncMessage");
             _researchSys.SyncWithServer(component);
             UpdateUserInterfaceState(uid);
         }

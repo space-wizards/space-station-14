@@ -1,0 +1,34 @@
+- type: entity
+  parent: BaseComputer
+  id: ComputerTechnologyDiskConsole
+  name: technology disk printer
+  description: A terminal used to print out technology disks.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/tech_disk_printer.rsi
+    layers:
+    - state: icon
+      map: ["enum.ComputerVisualizer+Layers.Body"]
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - state: printing
+      visible: false
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      screen: unshaded
+      key: ""
+      body: icon
+      bodyBroken: icon
+  - type: ResearchClient
+  - type: ActivatableUI #TODO: change
+    key: enum.ArtifactAnalzyerUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: ExtensionCableReceiver
+  - type: Computer
+    board: AnalysisComputerCircuitboard #TODO: change
+  - type: PointLight
+    radius: 0.8
+    energy: 0.5
+    color: "#b53ca1"

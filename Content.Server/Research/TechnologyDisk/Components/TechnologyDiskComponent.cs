@@ -4,8 +4,8 @@
 public sealed class TechnologyDiskComponent : Component
 {
     /// <summary>
-    /// The recipe that will be added. If null,
+    /// The recipe that will be added. If null, one will be randomly generated
     /// </summary>
-    [DataField("recipe")]
-    public string? Recipe;
+    [DataField("recipes")]
+    public List<string>? Recipes;
 }

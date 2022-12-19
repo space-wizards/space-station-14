@@ -92,12 +92,13 @@ public sealed partial class ResearchSystem
         }
     }
 
-    public void AddLatheRecipe(TechnologyDatabaseComponent component, string recipe)
+    public void AddLatheRecipe(TechnologyDatabaseComponent component, string recipe, bool dirty = true)
     {
         if (component.RecipeIds.Contains(recipe))
             return;
 
         component.RecipeIds.Add(recipe);
-        Dirty(component);
+        if (dirty)
+            Dirty(component);
     }
 }

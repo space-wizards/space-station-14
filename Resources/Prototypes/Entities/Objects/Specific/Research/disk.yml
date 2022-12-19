@@ -34,7 +34,7 @@
   description: A disk for the R&D server containing research technology.
   components:
   - type: Sprite
-    sprite: Objects/Misc/Module.rsi
+    sprite: Objects/Misc/module.rsi
     layers:
     - state: datadisk_base
       map: ["enum.DamageStateVisualLayers.Base"]
