@@ -187,7 +187,7 @@ public sealed partial class BuckleSystem
 
         if (!HasComp<SharedHandsComponent>(user))
         {
-            _popups.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, Filter.Entities(user));
+            _popups.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, user);
             return false;
         }
 
@@ -197,7 +197,7 @@ public sealed partial class BuckleSystem
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message",
                 ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
 
             return false;
         }
@@ -210,7 +210,7 @@ public sealed partial class BuckleSystem
                 var message = Loc.GetString(buckleId == user
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-                _popups.PopupEntity(message, user, Filter.Entities(user));
+                _popups.PopupEntity(message, user, user);
 
                 return false;
             }
@@ -223,7 +223,7 @@ public sealed partial class BuckleSystem
             var message = Loc.GetString(buckleId == user
                 ? "buckle-component-cannot-fit-message"
                 : "buckle-component-other-cannot-fit-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
 
             return false;
         }
@@ -246,7 +246,7 @@ public sealed partial class BuckleSystem
             var message = Loc.GetString(buckleId == user
                 ? "buckle-component-cannot-buckle-message"
                 : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
             return false;
         }
 

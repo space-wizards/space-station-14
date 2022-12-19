@@ -200,7 +200,7 @@ namespace Content.Server.VendingMachines
             {
                 if (!_accessReader.IsAllowed(sender.Value, accessReader) && !vendComponent.Emagged)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid);
                     Deny(uid, vendComponent);
                     return false;
                 }
@@ -229,14 +229,14 @@ namespace Content.Server.VendingMachines
 
             if (entry == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
                 Deny(uid, vendComponent);
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
                 Deny(uid, vendComponent);
                 return;
             }

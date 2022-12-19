@@ -129,8 +129,8 @@ public sealed class StaminaSystem : EntitySystem
         var targetEnt = Identity.Entity(args.Target, EntityManager);
         var sourceEnt = Identity.Entity(args.Source, EntityManager);
 
-        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), PopupType.LargeCaution);
-        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), Filter.Entities(args.Source), PopupType.Large);
+        _popup.PopupEntity(Loc.GetString("stunned-component-disarm-success-others", ("source", sourceEnt), ("target", targetEnt)), targetEnt, Filter.PvsExcept(args.Source), true, PopupType.LargeCaution);
+        _popup.PopupCursor(Loc.GetString("stunned-component-disarm-success", ("target", targetEnt)), args.Source, PopupType.Large);
 
         _adminLogger.Add(LogType.DisarmedKnockdown, LogImpact.Medium, $"{ToPrettyString(args.Source):user} knocked down {ToPrettyString(args.Target):target}");
 
@@ -178,7 +178,7 @@ public sealed class StaminaSystem : EntitySystem
             TakeStaminaDamage(comp.Owner, damage / toHit.Count, comp, source:args.User, with:component.Owner);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
-                _popup.PopupEntity(Loc.GetString("stamina-resist"), comp.Owner, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("stamina-resist"), comp.Owner, args.User);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using Content.Server.Singularity.Components;
+using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -89,7 +89,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, args.User, PopupType.LargeCaution);
                 return;
             }
             else
@@ -114,7 +114,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, args.User, PopupType.LargeCaution);
             args.Cancel();
         }
     }
@@ -123,14 +123,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         component.Enabled = true;
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner);
     }
 
     private void TurnOff(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = false;
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner);
     }
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
@@ -163,7 +163,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         component.IsConnected = false;
         ChangeOnLightVisualizer(component);
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, PopupType.LargeCaution);
     }
 
     #endregion
@@ -275,7 +275,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         ChangeFieldVisualizer(component);
         UpdateConnectionLights(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner);
         return true;
     }
 

@@ -152,7 +152,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
         var percent = GetInfectedPercentage(out var num);
         if (num.Count == 1) //only one human left. spooky
-           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
+           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], num[0]);
         if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
