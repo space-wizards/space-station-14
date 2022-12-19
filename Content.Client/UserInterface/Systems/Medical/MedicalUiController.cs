@@ -1,5 +1,4 @@
 ﻿using Content.Client.Gameplay;
-using Content.Client.Humanoid;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Medical.Windows;
 using Content.Shared.Body.Components;
@@ -12,6 +11,8 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Map;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Client.UserInterface.Systems.Medical;
 
@@ -20,10 +21,14 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
     IOnSystemChanged<WoundSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly PlayerManager _playerManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [UISystemDependency] private readonly WoundSystem _woundSystem = default!;
 
-    private EntityUid? _medicalFocus;
+
+    private EntityUid medicalDummyEntity = EntityUid.Invalid;
+    private SpriteView? medicalDummy;
+    private EntityUid _medicalFocus = EntityUid.Invalid;
 
     private MenuButton? MedicalButton =>
         UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.MedicalButton;
@@ -32,8 +37,14 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
 
     public void OnStateEntered(GameplayState state)
     {
+        CreateDummyEntities();
         _window = UIManager.CreateWindow<MedicalWindow>();
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.CenterTop);
+
+        //TODO: TEMP: Set the player as the focused entity
+        var player = _playerManager.LocalPlayer?.ControlledEntity;
+        if (player != null)
+            SetMedicalFocus(player.Value);
     }
 
     public void OnStateExited(GameplayState state)
@@ -43,6 +54,8 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
             _window.Dispose();
             _window = null;
         }
+
+        ClearDummyEntities();
     }
 
     public void OnSystemLoaded(WoundSystem system)
@@ -66,25 +79,40 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
         return Identity.Name(target, _entities);
     }
 
-    public void SetMedicalFocus(EntityUid target)
+    public void SetMedicalFocus(EntityUid? target)
     {
-        if (!HasMedicalOptions(target, out var bodyComp, out var woundableComp))
-            return; //if the target does not have a body or woundable components do not allow it to be set as a medical focus
-        UpdateMedicalFocus(target);
-    }
-
-    private bool TryGetDummySprites(EntityUid focusedEntity, out SpriteComponent? frontDummy,
-        out SpriteComponent? backDummy)
-    {
-        frontDummy = null;
-        backDummy = null;
-
-        if (_entities.TryGetComponent(focusedEntity, out HumanoidComponent? characterComp))
+        if (!target.HasValue)
         {
-            return true;
+            _medicalFocus = EntityUid.Invalid;
+            UpdateMedicalFocus(EntityUid.Invalid);
+            return;
         }
 
-        return false;
+        if (!HasMedicalOptions(target.Value, out var bodyComp, out var woundableComp))
+            return; //if the target does not have a body or woundable components do not allow it to be set as a medical focus
+        UpdateMedicalFocus(target.Value);
+    }
+
+    private void CreateDummyEntities()
+    {
+        medicalDummyEntity = _entities.SpawnEntity(null, MapCoordinates.Nullspace);
+        _entities.EnsureComponent<SpriteComponent>(medicalDummyEntity);
+    }
+
+    private void ClearDummyEntities()
+    {
+        if (medicalDummyEntity.Valid)
+        {
+            _entities.DeleteEntity(medicalDummyEntity);
+        }
+    }
+
+    private void UpdateMedicalDummy(EntityUid focus)
+    {
+        if (!medicalDummyEntity.Valid || !_entities.TryGetComponent(focus, out SpriteComponent? spriteComp))
+            return;
+        var dummySprite = _entities.GetComponent<SpriteComponent>(medicalDummyEntity);
+        _serialization.CopyTo(spriteComp, ref dummySprite);
     }
 
     private void UpdateMedicalFocus(EntityUid newFocus)
@@ -93,8 +121,9 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
         //TODO: refetch wounds for the focused entity
         if (_window == null)
             return;
-        TryGetDummySprites(newFocus, out var frontDummy, out var backDummy);
-        _window.StatusDisplay.UpdateUI(frontDummy, backDummy, GetMedicalFocusName(newFocus));
+
+        UpdateMedicalDummy(newFocus);
+        _window.StatusDisplay.UpdateUI(medicalDummy, GetMedicalFocusName(newFocus));
     }
 
 

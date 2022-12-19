@@ -7,8 +7,8 @@
     <BoxContainer
         Orientation="Horizontal"
         >
-        <Label Text="Condition: "/>
-        <Label Name="Condition" Text="Normal" Access="Internal"/>
+        <Label Text="Status: "/>
+        <Label Name="Status" Text="Healthy" Access="Internal"/>
     </BoxContainer>
     <BoxContainer
         Orientation="Horizontal"

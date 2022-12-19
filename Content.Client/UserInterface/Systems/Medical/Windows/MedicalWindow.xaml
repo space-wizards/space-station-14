@@ -13,9 +13,12 @@
             Orientation="Vertical" >
                 <controls:MedicalStatus Name="StatusDisplay" Access="Internal" VerticalAlignment="Top"/>
                 <cc:HLine/>
-                <Label Text="Wounds" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                <controls:WoundList Name="Wounds" Access="Internal"/>
-            </BoxContainer>
+                <Label Text = "Conditions" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <controls:WoundList Name="ConditionsList" Access="Internal"/>
+                <cc:HLine/>
+                <Label Text = "Wounds    " HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                <controls:WoundList Name="WoundsList" Access="Internal"/>
+        </BoxContainer>
         <BoxContainer
             Name="Stabilize" />
         <BoxContainer
