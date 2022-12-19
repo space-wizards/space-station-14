@@ -144,12 +144,12 @@ namespace Content.Server.Doors.Systems
             if (state.Fire)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
-                    uid, Filter.Pvs(uid, entityManager: EntityManager));
+                    uid);
             }
             else if (state.Pressure)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                    uid, Filter.Pvs(uid, entityManager: EntityManager));
+                    uid);
             }
 
             if (state.Fire || state.Pressure)

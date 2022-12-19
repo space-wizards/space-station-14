@@ -28,9 +28,9 @@ namespace Content.Server.Disease.Effects
             var popupSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedPopupSystem>();
 
             if (Type == PopupRecipients.Local)
-                popupSys.PopupEntity(Loc.GetString(Message), args.DiseasedEntity, Filter.Entities(args.DiseasedEntity), VisualType);
+                popupSys.PopupEntity(Loc.GetString(Message), args.DiseasedEntity, args.DiseasedEntity, VisualType);
             else if (Type == PopupRecipients.Pvs)
-                popupSys.PopupEntity(Loc.GetString(Message, ("person", Identity.Entity(args.DiseasedEntity, args.EntityManager))), args.DiseasedEntity, Filter.Pvs(args.DiseasedEntity), VisualType);
+                popupSys.PopupEntity(Loc.GetString(Message, ("person", Identity.Entity(args.DiseasedEntity, args.EntityManager))), args.DiseasedEntity, VisualType);
         }
 
     }
