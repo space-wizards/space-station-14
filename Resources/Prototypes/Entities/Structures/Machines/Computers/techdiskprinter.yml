@@ -25,6 +25,7 @@
       key: ""
       body: icon
       bodyBroken: icon
+  - type: DiskConsole
   - type: ResearchClient
   - type: ActivatableUI
     key: enum.DiskConsoleUiKey.Key
