@@ -61,6 +61,7 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+        - !type:EmptyAllContainersBehaviour
         - !type:ChangeConstructionNodeBehavior
           node: machineFrame
         - !type:DoActsBehavior

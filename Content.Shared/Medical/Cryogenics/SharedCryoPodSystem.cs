@@ -32,15 +32,6 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         cryoPodComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "scanner-body");
     }
 
-    protected void OnDestroyed(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, DestructionEventArgs args)
-    {
-        if (!Resolve(uid, ref cryoPodComponent))
-        {
-            return;
-        }
-        EjectBody(uid, cryoPodComponent);
-    }
-
     protected void UpdateAppearance(EntityUid uid, SharedCryoPodComponent? cryoPod = null, AppearanceComponent? appearance = null)
     {
         if (!Resolve(uid, ref cryoPod))
@@ -99,7 +90,8 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
             return;
 
         cryoPodComponent.BodyContainer.Remove(contained);
-        RemComp<InsideCryoPodComponent>(contained);
+        // InsideCryoPodComponent is removed automatically in its EntGotRemovedFromContainerMessage listener
+        // RemComp<InsideCryoPodComponent>(contained);
 
         // Restore the correct position of the patient. Checking the components manually feels hacky, but I did not find a better way for now.
         if (HasComp<KnockedDownComponent>(contained) || _mobStateSystem.IsIncapacitated(contained))

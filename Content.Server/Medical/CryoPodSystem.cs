@@ -55,7 +55,6 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         base.Initialize();
 
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<CryoPodComponent, DestructionEventArgs>(OnDestroyed);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
         SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
