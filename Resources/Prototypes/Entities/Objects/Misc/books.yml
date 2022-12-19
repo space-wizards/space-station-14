@@ -196,13 +196,13 @@
         Below is a quick reference guide to several atmospheric devices:
 
         Passive Vents:
-        These vents don't require any power, they just allow gas to flow between the attached pipe network and the environment.
+        These vents don't require power, they allow gases to flow freely both into and out of the pipe network they are attached to.
 
         Active Vents:
-        These are the most common vents on the station. When connected to an air alarm, they can be set to target a specific internal or external pressure.
+        These are the most common vents on the station. They have an internal pump, and require power. By default, they will only pump gases out of pipes, and only up to 101 kpa. However, they can be reconfigured using an air alarm. They will also lock out if the room is under 1 kpa, to prevent pumping gasses into space.
 
         Air Scrubbers:
         These devices allow gases to be removed from the environment and put into the connected pipe network. They can be configured to select specific gases when connected to an air alarm.
 
         Air Injectors:
-        These devices are similar to active vents in that they pump gas into the environment. However, unlike vents, they can't be configured and will continue pumping gas into the environment until they reach their pressure limit, which is much higher than the limit for active vents.
+        Injectors are similar to active vents, but they have no internal pump and do not require power. They cannot be configured, but they can continue to pump gasses up to much higher pressures.
