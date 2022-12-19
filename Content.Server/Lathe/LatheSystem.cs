@@ -43,12 +43,12 @@ namespace Content.Server.Lathe
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
-            SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<ResearchClientComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
@@ -301,11 +301,9 @@ namespace Content.Server.Lathe
             UpdateUserInterfaceState(uid, component);
         }
 
-        private void OnLatheServerSelectionMessage(EntityUid uid, LatheComponent component, LatheServerSelectionMessage args)
+        private void OnLatheServerSelectionMessage(EntityUid uid, ResearchClientComponent component, LatheServerSelectionMessage args)
         {
-            // TODO: one day, when you can open BUIs clientside, do that. Until then, picture Electro seething.
-            if (component.DynamicRecipes != null)
-                _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+            _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
         }
 
         private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
