@@ -50,6 +50,7 @@ namespace Content.Server.NPC.Pathfinding
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
+        [ViewVariables]
         private readonly List<PathRequest> _pathRequests = new(PathTickLimit);
 
         private static readonly TimeSpan PathTime = TimeSpan.FromMilliseconds(3);
