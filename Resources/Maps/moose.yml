@@ -15026,7 +15026,7 @@ entities:
       -31,-22: 0
       -31,-21: 0
       -31,-20: 0
-      -31,-19: 1
+      -31,-19: 6
       -31,-18: 0
       -31,-17: 0
       -30,-32: 0
@@ -15058,8 +15058,8 @@ entities:
       -29,-22: 0
       -29,-21: 0
       -29,-20: 0
-      -29,-19: 6
-      -29,-18: 6
+      -29,-19: 7
+      -29,-18: 8
       -29,-17: 0
       -28,-32: 0
       -28,-31: 0
@@ -15325,8 +15325,8 @@ entities:
       -12,-26: 0
       -12,-25: 0
       -12,-24: 0
-      -12,-23: 6
-      -12,-22: 6
+      -12,-23: 8
+      -12,-22: 8
       -12,-21: 0
       -12,-20: 0
       -12,-19: 0
@@ -15357,8 +15357,8 @@ entities:
       -10,-26: 0
       -10,-25: 0
       -10,-24: 0
-      -10,-23: 7
-      -10,-22: 7
+      -10,-23: 9
+      -10,-22: 9
       -10,-21: 0
       -10,-20: 0
       -10,-19: 0
@@ -17726,7 +17726,7 @@ entities:
       -15,-55: 0
       -15,-54: 0
       -15,-53: 0
-      -15,-52: 8
+      -15,-52: 10
       -15,-51: 0
       -15,-50: 0
       -15,-49: 0
@@ -19080,13 +19080,13 @@ entities:
       -45,6: 0
       -45,7: 0
       -45,8: 0
-      -45,9: 9
+      -45,9: 11
       -45,10: 0
-      -45,11: 10
+      -45,11: 12
       -45,12: 0
-      -45,13: 11
+      -45,13: 13
       -45,14: 0
-      -45,15: 11
+      -45,15: 13
       -44,0: 0
       -44,1: 0
       -44,2: 0
@@ -19096,13 +19096,13 @@ entities:
       -44,6: 0
       -44,7: 0
       -44,8: 0
-      -44,9: 9
+      -44,9: 11
       -44,10: 0
-      -44,11: 10
+      -44,11: 12
       -44,12: 0
-      -44,13: 11
+      -44,13: 13
       -44,14: 0
-      -44,15: 11
+      -44,15: 13
       -43,0: 0
       -43,1: 0
       -43,2: 0
@@ -19112,13 +19112,13 @@ entities:
       -43,6: 0
       -43,7: 0
       -43,8: 0
-      -43,9: 9
+      -43,9: 11
       -43,10: 0
-      -43,11: 10
+      -43,11: 12
       -43,12: 0
-      -43,13: 11
+      -43,13: 13
       -43,14: 0
-      -43,15: 11
+      -43,15: 13
       -42,0: 0
       -42,1: 0
       -42,2: 0
@@ -20449,9 +20449,9 @@ entities:
       -46,28: 0
       -46,29: 0
       -45,16: 0
-      -45,17: 12
+      -45,17: 14
       -45,18: 0
-      -45,19: 11
+      -45,19: 13
       -45,20: 0
       -45,21: 0
       -45,22: 0
@@ -20463,9 +20463,9 @@ entities:
       -45,28: 0
       -45,29: 0
       -44,16: 0
-      -44,17: 12
+      -44,17: 14
       -44,18: 0
-      -44,19: 11
+      -44,19: 13
       -44,20: 0
       -44,21: 0
       -44,22: 0
@@ -20477,9 +20477,9 @@ entities:
       -44,28: 0
       -44,29: 0
       -43,16: 0
-      -43,17: 12
+      -43,17: 14
       -43,18: 0
-      -43,19: 11
+      -43,19: 13
       -43,20: 0
       -43,21: 0
       -43,22: 0
@@ -20594,7 +20594,7 @@ entities:
       -36,23: 0
       -36,24: 0
       -36,25: 0
-      -36,26: 11
+      -36,26: 13
       -36,27: 0
       -36,28: 0
       -36,29: 0
@@ -20610,7 +20610,7 @@ entities:
       -35,23: 0
       -35,24: 0
       -35,25: 0
-      -35,26: 11
+      -35,26: 13
       -35,27: 0
       -35,28: 0
       -35,29: 0
@@ -20626,7 +20626,7 @@ entities:
       -34,23: 0
       -34,24: 0
       -34,25: 0
-      -34,26: 11
+      -34,26: 13
       -34,27: 0
       -34,28: 0
       -34,29: 0
@@ -22133,185 +22133,185 @@ entities:
       -85,-23: 0
       -15,16: 0
       -12,30: 0
-      -40,-64: 11
-      -39,-64: 11
-      -38,-64: 11
-      -37,-64: 11
-      -30,-65: 11
-      -41,-64: 11
-      -15,18: 11
-      -16,16: 11
-      -20,31: 11
-      -19,31: 11
-      -18,31: 11
-      -17,31: 11
-      -22,33: 11
-      -22,34: 11
-      -22,35: 11
-      -22,36: 11
-      -22,37: 11
-      -22,38: 11
-      -21,34: 11
-      -21,36: 11
-      -21,38: 11
-      -20,32: 11
-      -20,34: 11
-      -20,35: 11
-      -20,36: 11
-      -20,38: 11
-      -19,32: 11
-      -19,34: 11
-      -19,35: 11
-      -19,36: 11
-      -19,38: 11
-      -18,32: 11
-      -18,34: 11
-      -18,35: 11
-      -18,36: 11
-      -18,38: 11
-      -17,32: 11
-      -17,34: 11
-      -17,35: 11
-      -17,36: 11
-      -17,38: 11
-      -89,-35: 11
-      -89,-34: 11
-      -89,-33: 11
-      -88,-35: 11
-      -87,-35: 11
-      -87,-34: 11
-      -87,-33: 11
-      -86,-35: 11
-      -86,-33: 11
-      -91,-27: 11
-      -91,-26: 11
-      -91,-25: 11
-      -91,-24: 11
-      -91,-23: 11
-      -90,-27: 11
-      -90,-23: 11
-      -89,-32: 11
-      -89,-31: 11
-      -89,-30: 11
-      -89,-29: 11
-      -89,-28: 11
-      -89,-27: 11
-      -89,-25: 11
-      -89,-23: 11
-      -89,-22: 11
-      -89,-21: 11
-      -89,-20: 11
-      -89,-19: 11
-      -89,-18: 11
-      -89,-17: 11
-      -88,-25: 11
-      -87,-32: 11
-      -87,-31: 11
-      -87,-30: 11
-      -87,-29: 11
-      -87,-28: 11
-      -87,-27: 11
-      -87,-25: 11
-      -87,-23: 11
-      -87,-22: 11
-      -87,-21: 11
-      -87,-20: 11
-      -87,-19: 11
-      -87,-18: 11
-      -87,-17: 11
-      -86,-32: 11
-      -86,-31: 11
-      -86,-30: 11
-      -86,-29: 11
-      -86,-28: 11
-      -86,-21: 11
-      -86,-20: 11
-      -86,-19: 11
-      -86,-18: 11
-      -86,-17: 11
-      -89,-16: 11
-      -89,-15: 11
-      -89,-14: 11
-      -88,-14: 11
-      -87,-16: 11
-      -87,-15: 11
-      -87,-14: 11
-      -86,-16: 11
-      -86,-14: 11
-      -15,30: 11
-      -10,31: 11
-      -9,31: 11
-      -8,31: 11
-      -7,31: 11
-      -5,31: 11
-      -16,32: 11
-      -16,34: 11
-      -16,35: 11
-      -16,36: 11
-      -16,38: 11
-      -16,39: 11
-      -16,40: 11
-      -15,32: 11
-      -15,34: 11
-      -15,35: 11
-      -15,36: 11
-      -15,40: 11
-      -14,32: 11
-      -14,33: 11
-      -14,34: 11
-      -14,35: 11
-      -14,36: 11
-      -14,37: 11
-      -14,38: 11
-      -14,40: 11
-      -13,32: 11
-      -13,34: 11
-      -13,35: 11
-      -13,36: 11
-      -13,40: 11
-      -12,32: 11
-      -12,34: 11
-      -12,35: 11
-      -12,36: 11
-      -12,38: 11
-      -12,39: 11
-      -12,40: 11
-      -11,32: 11
-      -11,34: 11
-      -11,35: 11
-      -11,36: 11
-      -11,38: 11
-      -10,32: 11
-      -10,34: 11
-      -10,35: 11
-      -10,36: 11
-      -10,38: 11
-      -9,32: 11
-      -9,34: 11
-      -9,35: 11
-      -9,36: 11
-      -9,38: 11
-      -8,32: 11
-      -8,34: 11
-      -8,35: 11
-      -8,36: 11
-      -8,38: 11
-      -7,32: 11
-      -7,34: 11
-      -7,35: 11
-      -7,36: 11
-      -7,38: 11
-      -6,32: 11
-      -6,34: 11
-      -6,36: 11
-      -6,38: 11
-      -5,32: 11
-      -5,33: 11
-      -5,34: 11
-      -5,35: 11
-      -5,36: 11
-      -5,37: 11
-      -5,38: 11
+      -40,-64: 13
+      -39,-64: 13
+      -38,-64: 13
+      -37,-64: 13
+      -30,-65: 13
+      -41,-64: 13
+      -15,18: 13
+      -16,16: 13
+      -20,31: 13
+      -19,31: 13
+      -18,31: 13
+      -17,31: 13
+      -22,33: 13
+      -22,34: 13
+      -22,35: 13
+      -22,36: 13
+      -22,37: 13
+      -22,38: 13
+      -21,34: 13
+      -21,36: 13
+      -21,38: 13
+      -20,32: 13
+      -20,34: 13
+      -20,35: 13
+      -20,36: 13
+      -20,38: 13
+      -19,32: 13
+      -19,34: 13
+      -19,35: 13
+      -19,36: 13
+      -19,38: 13
+      -18,32: 13
+      -18,34: 13
+      -18,35: 13
+      -18,36: 13
+      -18,38: 13
+      -17,32: 13
+      -17,34: 13
+      -17,35: 13
+      -17,36: 13
+      -17,38: 13
+      -89,-35: 13
+      -89,-34: 13
+      -89,-33: 13
+      -88,-35: 13
+      -87,-35: 13
+      -87,-34: 13
+      -87,-33: 13
+      -86,-35: 13
+      -86,-33: 13
+      -91,-27: 13
+      -91,-26: 13
+      -91,-25: 13
+      -91,-24: 13
+      -91,-23: 13
+      -90,-27: 13
+      -90,-23: 13
+      -89,-32: 13
+      -89,-31: 13
+      -89,-30: 13
+      -89,-29: 13
+      -89,-28: 13
+      -89,-27: 13
+      -89,-25: 13
+      -89,-23: 13
+      -89,-22: 13
+      -89,-21: 13
+      -89,-20: 13
+      -89,-19: 13
+      -89,-18: 13
+      -89,-17: 13
+      -88,-25: 13
+      -87,-32: 13
+      -87,-31: 13
+      -87,-30: 13
+      -87,-29: 13
+      -87,-28: 13
+      -87,-27: 13
+      -87,-25: 13
+      -87,-23: 13
+      -87,-22: 13
+      -87,-21: 13
+      -87,-20: 13
+      -87,-19: 13
+      -87,-18: 13
+      -87,-17: 13
+      -86,-32: 13
+      -86,-31: 13
+      -86,-30: 13
+      -86,-29: 13
+      -86,-28: 13
+      -86,-21: 13
+      -86,-20: 13
+      -86,-19: 13
+      -86,-18: 13
+      -86,-17: 13
+      -89,-16: 13
+      -89,-15: 13
+      -89,-14: 13
+      -88,-14: 13
+      -87,-16: 13
+      -87,-15: 13
+      -87,-14: 13
+      -86,-16: 13
+      -86,-14: 13
+      -15,30: 13
+      -10,31: 13
+      -9,31: 13
+      -8,31: 13
+      -7,31: 13
+      -5,31: 13
+      -16,32: 13
+      -16,34: 13
+      -16,35: 13
+      -16,36: 13
+      -16,38: 13
+      -16,39: 13
+      -16,40: 13
+      -15,32: 13
+      -15,34: 13
+      -15,35: 13
+      -15,36: 13
+      -15,40: 13
+      -14,32: 13
+      -14,33: 13
+      -14,34: 13
+      -14,35: 13
+      -14,36: 13
+      -14,37: 13
+      -14,38: 13
+      -14,40: 13
+      -13,32: 13
+      -13,34: 13
+      -13,35: 13
+      -13,36: 13
+      -13,40: 13
+      -12,32: 13
+      -12,34: 13
+      -12,35: 13
+      -12,36: 13
+      -12,38: 13
+      -12,39: 13
+      -12,40: 13
+      -11,32: 13
+      -11,34: 13
+      -11,35: 13
+      -11,36: 13
+      -11,38: 13
+      -10,32: 13
+      -10,34: 13
+      -10,35: 13
+      -10,36: 13
+      -10,38: 13
+      -9,32: 13
+      -9,34: 13
+      -9,35: 13
+      -9,36: 13
+      -9,38: 13
+      -8,32: 13
+      -8,34: 13
+      -8,35: 13
+      -8,36: 13
+      -8,38: 13
+      -7,32: 13
+      -7,34: 13
+      -7,35: 13
+      -7,36: 13
+      -7,38: 13
+      -6,32: 13
+      -6,34: 13
+      -6,36: 13
+      -6,38: 13
+      -5,32: 13
+      -5,33: 13
+      -5,34: 13
+      -5,35: 13
+      -5,36: 13
+      -5,37: 13
+      -5,38: 13
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -22331,8 +22331,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 13.467232
-      - 50.662445
+      - 13.090149
+      - 49.243896
       - 0
       - 0
       - 0
@@ -22346,8 +22346,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.405577
-      - 69.24003
+      - 17.89022
+      - 67.30131
       - 0
       - 0
       - 0
@@ -22376,8 +22376,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -22406,6 +22406,36 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
+      - 13.467232
+      - 50.662445
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
       - 21.213781
       - 79.80423
       - 0
@@ -22421,8 +22451,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 15.087361
-      - 56.757217
+      - 14.664915
+      - 55.168015
       - 0
       - 0
       - 0
@@ -51087,7 +51117,7 @@ entities:
   - pos: -29.5,-52.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -220484.11
+  - SecondsUntilStateChange: -221913
     state: Opening
     type: Door
 - uid: 4422
@@ -53642,10 +53672,8 @@ entities:
     parent: 6
     type: Transform
 - uid: 4829
-  type: VendingMachineWallMedical
+  type: IntercomMedical
   components:
-  - flags: SessionSpecific
-    type: MetaData
   - pos: -24.5,-19.5
     parent: 6
     type: Transform
@@ -53901,13 +53929,13 @@ entities:
     parent: 6
     type: Transform
 - uid: 4871
-  type: DeployableBarrier
+  type: TableReinforced
   components:
   - pos: 14.5,1.5
     parent: 6
     type: Transform
 - uid: 4872
-  type: DeployableBarrier
+  type: TableReinforced
   components:
   - pos: 14.5,0.5
     parent: 6
@@ -58571,25 +58599,25 @@ entities:
 - uid: 5591
   type: ClothingBeltUtilityFilled
   components:
-  - pos: 12.51867,-42.286724
+  - pos: 13.270581,-42.52453
     parent: 6
     type: Transform
 - uid: 5592
   type: SheetSteel
   components:
-  - pos: 13.342199,-42.371872
+  - pos: 14.187247,-42.253696
     parent: 6
     type: Transform
 - uid: 5593
   type: SheetGlass
   components:
-  - pos: 13.739766,-42.400253
+  - pos: 14.5244465,-42.262287
     parent: 6
     type: Transform
 - uid: 5594
   type: SheetPlastic
   components:
-  - pos: 14.208325,-42.414444
+  - pos: 13.978914,-42.316196
     parent: 6
     type: Transform
 - uid: 5595
@@ -58610,7 +58638,7 @@ entities:
   - pos: 18.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -93405.32
+  - SecondsUntilStateChange: -94834.21
     state: Opening
     type: Door
   - inputs:
@@ -58626,7 +58654,7 @@ entities:
   - pos: 17.5,-39.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -93405.32
+  - SecondsUntilStateChange: -94834.21
     state: Opening
     type: Door
   - inputs:
@@ -63506,7 +63534,7 @@ entities:
 - uid: 6336
   type: RadioHandheld
   components:
-  - pos: -2.459987,9.6572895
+  - pos: -2.338426,9.537729
     parent: 6
     type: Transform
 - uid: 6337
@@ -72489,12 +72517,13 @@ entities:
     parent: 6
     type: Transform
 - uid: 7746
-  type: BookRandom
+  type: FaxMachineBase
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -20.352465,-40.71964
+  - pos: -19.5,-21.5
     parent: 6
     type: Transform
+  - name: Medbay
+    type: FaxMachine
 - uid: 7747
   type: BookRandom
   components:
@@ -72813,11 +72842,13 @@ entities:
     parent: 6
     type: Transform
 - uid: 7799
-  type: BriefcaseBrownFilled
+  type: FaxMachineBase
   components:
-  - pos: 8.383213,-15.343055
+  - pos: 8.5,-15.5
     parent: 6
     type: Transform
+  - name: Lawyer's Office
+    type: FaxMachine
 - uid: 7800
   type: ClothingEyesGlasses
   components:
@@ -74043,7 +74074,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 7998
-  type: ExtinguisherCabinetFilled
+  type: IntercomMedical
   components:
   - pos: -22.5,-28.5
     parent: 6
@@ -76433,7 +76464,7 @@ entities:
     pos: -20.5,-5.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95142.414
+  - SecondsUntilStateChange: -96571.305
     state: Opening
     type: Door
   - inputs:
@@ -76450,7 +76481,7 @@ entities:
     pos: -20.5,-4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95142.414
+  - SecondsUntilStateChange: -96571.305
     state: Opening
     type: Door
   - inputs:
@@ -109355,7 +109386,7 @@ entities:
     pos: -11.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109372,7 +109403,7 @@ entities:
     pos: -11.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109389,7 +109420,7 @@ entities:
     pos: 2.5,4.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109406,7 +109437,7 @@ entities:
     pos: 2.5,3.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109422,7 +109453,7 @@ entities:
   - pos: -8.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109438,7 +109469,7 @@ entities:
   - pos: -6.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109454,7 +109485,7 @@ entities:
   - pos: -7.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109470,7 +109501,7 @@ entities:
   - pos: -5.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109486,7 +109517,7 @@ entities:
   - pos: -3.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109502,7 +109533,7 @@ entities:
   - pos: -2.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109518,7 +109549,7 @@ entities:
   - pos: -1.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109534,7 +109565,7 @@ entities:
   - pos: -0.5,11.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95659.33
+  - SecondsUntilStateChange: -97088.22
     state: Opening
     type: Door
   - inputs:
@@ -109550,7 +109581,7 @@ entities:
   - pos: -3.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95654.83
+  - SecondsUntilStateChange: -97083.72
     state: Opening
     type: Door
   - inputs:
@@ -109566,7 +109597,7 @@ entities:
   - pos: -2.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95654.83
+  - SecondsUntilStateChange: -97083.72
     state: Opening
     type: Door
   - inputs:
@@ -109582,7 +109613,7 @@ entities:
   - pos: -1.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95654.83
+  - SecondsUntilStateChange: -97083.72
     state: Opening
     type: Door
   - inputs:
@@ -109598,7 +109629,7 @@ entities:
   - pos: -0.5,-8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95654.83
+  - SecondsUntilStateChange: -97083.72
     state: Opening
     type: Door
   - inputs:
@@ -109695,7 +109726,7 @@ entities:
   - pos: 13.5,9.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95473.516
+  - SecondsUntilStateChange: -96902.41
     state: Opening
     type: Door
   - inputs:
@@ -109711,7 +109742,7 @@ entities:
   - pos: 13.5,8.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95473.516
+  - SecondsUntilStateChange: -96902.41
     state: Opening
     type: Door
   - inputs:
@@ -109727,7 +109758,7 @@ entities:
   - pos: 13.5,7.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95473.516
+  - SecondsUntilStateChange: -96902.41
     state: Opening
     type: Door
   - inputs:
@@ -109805,7 +109836,7 @@ entities:
   - pos: 8.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95295.695
+  - SecondsUntilStateChange: -96724.586
     state: Opening
     type: Door
   - inputs:
@@ -109821,7 +109852,7 @@ entities:
   - pos: 9.5,-34.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95295.695
+  - SecondsUntilStateChange: -96724.586
     state: Opening
     type: Door
   - inputs:
@@ -109837,7 +109868,7 @@ entities:
   - pos: 11.5,-33.5
     parent: 6
     type: Transform
-  - SecondsUntilStateChange: -95295.695
+  - SecondsUntilStateChange: -96724.586
     state: Opening
     type: Door
   - inputs:
@@ -111265,9 +111296,10 @@ entities:
     parent: 6
     type: Transform
 - uid: 13145
-  type: PosterLegitDickGumshue
+  type: IntercomSecurity
   components:
-  - pos: -52.5,-48.5
+  - rot: 1.5707963267948966 rad
+    pos: -52.5,-48.5
     parent: 6
     type: Transform
 - uid: 13146
@@ -111415,9 +111447,10 @@ entities:
     parent: 6
     type: Transform
 - uid: 13170
-  type: PosterContrabandTools
+  type: Intercom
   components:
-  - pos: -17.5,5.5
+  - rot: 3.141592653589793 rad
+    pos: -17.5,5.5
     parent: 6
     type: Transform
 - uid: 13171
@@ -112925,9 +112958,10 @@ entities:
     parent: 6
     type: Transform
 - uid: 13411
-  type: RandomPosterAny
+  type: Intercom
   components:
-  - pos: -55.5,-16.5
+  - rot: 1.5707963267948966 rad
+    pos: -55.5,-16.5
     parent: 6
     type: Transform
 - uid: 13412
@@ -117365,7 +117399,7 @@ entities:
 - uid: 14041
   type: PresentRandom
   components:
-  - pos: -2.4776993,10.427449
+  - pos: -2.6476893,9.657034
     parent: 6
     type: Transform
 - uid: 14042
@@ -117522,6 +117556,534 @@ entities:
   type: Paper
   components:
   - pos: -3.442687,-1.2491313
+    parent: 6
+    type: Transform
+- uid: 14068
+  type: FaxMachineBase
+  components:
+  - pos: 12.5,-42.5
+    parent: 6
+    type: Transform
+  - name: Cargo
+    type: FaxMachine
+- uid: 14069
+  type: Paper
+  components:
+  - pos: 13.083081,-42.357864
+    parent: 6
+    type: Transform
+- uid: 14070
+  type: Paper
+  components:
+  - pos: 13.353914,-42.253696
+    parent: 6
+    type: Transform
+- uid: 14071
+  type: TableReinforcedGlass
+  components:
+  - pos: -12.5,-51.5
+    parent: 6
+    type: Transform
+- uid: 14072
+  type: Paper
+  components:
+  - pos: -11.342011,-56.299393
+    parent: 6
+    type: Transform
+- uid: 14073
+  type: Paper
+  components:
+  - pos: -11.487844,-56.424393
+    parent: 6
+    type: Transform
+- uid: 14074
+  type: FaxMachineBase
+  components:
+  - pos: -12.5,-51.5
+    parent: 6
+    type: Transform
+  - name: Science
+    type: FaxMachine
+- uid: 14075
+  type: TableWood
+  components:
+  - pos: 3.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 14076
+  type: FaxMachineBase
+  components:
+  - pos: 3.5,-5.5
+    parent: 6
+    type: Transform
+  - name: HoP
+    type: FaxMachine
+- uid: 14077
+  type: DeployableBarrier
+  components:
+  - pos: 13.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 14078
+  type: FaxMachineBase
+  components:
+  - pos: 14.5,1.5
+    parent: 6
+    type: Transform
+  - name: Security
+    type: FaxMachine
+- uid: 14079
+  type: Paper
+  components:
+  - pos: 14.275379,0.50964534
+    parent: 6
+    type: Transform
+- uid: 14080
+  type: Paper
+  components:
+  - pos: 14.525379,0.71797884
+    parent: 6
+    type: Transform
+- uid: 14081
+  type: Paper
+  components:
+  - pos: 14.650379,0.4679788
+    parent: 6
+    type: Transform
+- uid: 14082
+  type: Table
+  components:
+  - pos: 11.5,20.5
+    parent: 6
+    type: Transform
+- uid: 14083
+  type: FaxMachineBase
+  components:
+  - pos: 11.5,20.5
+    parent: 6
+    type: Transform
+  - name: Brig
+    type: FaxMachine
+- uid: 14084
+  type: FaxMachineBase
+  components:
+  - pos: -20.5,-40.5
+    parent: 6
+    type: Transform
+  - name: Library
+    type: FaxMachine
+- uid: 14085
+  type: Paper
+  components:
+  - pos: -18.299112,-21.610239
+    parent: 6
+    type: Transform
+- uid: 14086
+  type: Paper
+  components:
+  - pos: -18.174112,-21.422739
+    parent: 6
+    type: Transform
+- uid: 14087
+  type: TableReinforced
+  components:
+  - pos: -32.5,0.5
+    parent: 6
+    type: Transform
+- uid: 14088
+  type: TableReinforced
+  components:
+  - pos: -32.5,1.5
+    parent: 6
+    type: Transform
+- uid: 14089
+  type: Paper
+  components:
+  - pos: -32.707237,0.8036115
+    parent: 6
+    type: Transform
+- uid: 14090
+  type: Paper
+  components:
+  - pos: -32.60307,0.5327785
+    parent: 6
+    type: Transform
+- uid: 14091
+  type: Paper
+  components:
+  - pos: -32.332237,0.7202785
+    parent: 6
+    type: Transform
+- uid: 14092
+  type: FaxMachineBase
+  components:
+  - pos: -32.5,1.5
+    parent: 6
+    type: Transform
+  - name: Engineering
+    type: FaxMachine
+- uid: 14093
+  type: FaxMachineBase
+  components:
+  - pos: -2.5,10.5
+    parent: 6
+    type: Transform
+  - name: Bridge
+    type: FaxMachine
+- uid: 14094
+  type: Paper
+  components:
+  - pos: -2.6268563,9.844534
+    parent: 6
+    type: Transform
+- uid: 14095
+  type: Paper
+  components:
+  - pos: -2.4185233,9.740367
+    parent: 6
+    type: Transform
+- uid: 14096
+  type: IntercomAll
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,5.5
+    parent: 6
+    type: Transform
+- uid: 14097
+  type: IntercomCommand
+  components:
+  - pos: -4.5,-8.5
+    parent: 6
+    type: Transform
+- uid: 14098
+  type: IntercomAll
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-4.5
+    parent: 6
+    type: Transform
+- uid: 14099
+  type: IntercomSecurity
+  components:
+  - pos: 10.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 14100
+  type: IntercomSecurity
+  components:
+  - pos: 15.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 14101
+  type: IntercomCommand
+  components:
+  - pos: 11.5,10.5
+    parent: 6
+    type: Transform
+- uid: 14102
+  type: IntercomSecurity
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 16.5,8.5
+    parent: 6
+    type: Transform
+- uid: 14103
+  type: Intercom
+  components:
+  - pos: 13.5,21.5
+    parent: 6
+    type: Transform
+- uid: 14104
+  type: Intercom
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 39.5,1.5
+    parent: 6
+    type: Transform
+- uid: 14105
+  type: Intercom
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 34.5,1.5
+    parent: 6
+    type: Transform
+- uid: 14106
+  type: Intercom
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 26.5,-13.5
+    parent: 6
+    type: Transform
+- uid: 14107
+  type: Intercom
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 3.5,-23.5
+    parent: 6
+    type: Transform
+- uid: 14108
+  type: IntercomService
+  components:
+  - pos: -5.5,-22.5
+    parent: 6
+    type: Transform
+- uid: 14109
+  type: IntercomService
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,-17.5
+    parent: 6
+    type: Transform
+- uid: 14110
+  type: Intercom
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -4.5,-40.5
+    parent: 6
+    type: Transform
+- uid: 14111
+  type: IntercomSupply
+  components:
+  - pos: 10.5,-34.5
+    parent: 6
+    type: Transform
+- uid: 14112
+  type: IntercomCommand
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 11.5,-31.5
+    parent: 6
+    type: Transform
+- uid: 14113
+  type: IntercomSupply
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 15.5,-40.5
+    parent: 6
+    type: Transform
+- uid: 14114
+  type: IntercomSupply
+  components:
+  - pos: 19.5,-33.5
+    parent: 6
+    type: Transform
+- uid: 14115
+  type: IntercomSupply
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,-47.5
+    parent: 6
+    type: Transform
+- uid: 14116
+  type: IntercomSupply
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 1.5,-57.5
+    parent: 6
+    type: Transform
+- uid: 14117
+  type: Intercom
+  components:
+  - pos: -0.5,-42.5
+    parent: 6
+    type: Transform
+- uid: 14118
+  type: IntercomScience
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,-48.5
+    parent: 6
+    type: Transform
+- uid: 14119
+  type: IntercomScience
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -13.5,-51.5
+    parent: 6
+    type: Transform
+- uid: 14120
+  type: IntercomScience
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -3.5,-57.5
+    parent: 6
+    type: Transform
+- uid: 14121
+  type: IntercomScience
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -8.5,-77.5
+    parent: 6
+    type: Transform
+- uid: 14122
+  type: IntercomCommand
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -0.5,-51.5
+    parent: 6
+    type: Transform
+- uid: 14123
+  type: Intercom
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -30.5,-54.5
+    parent: 6
+    type: Transform
+- uid: 14124
+  type: Intercom
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -22.5,-41.5
+    parent: 6
+    type: Transform
+- uid: 14125
+  type: IntercomSecurity
+  components:
+  - pos: -16.5,-28.5
+    parent: 6
+    type: Transform
+- uid: 14126
+  type: PosterLegitDickGumshue
+  components:
+  - pos: -48.5,-52.5
+    parent: 6
+    type: Transform
+- uid: 14127
+  type: IntercomCommand
+  components:
+  - pos: -52.5,-42.5
+    parent: 6
+    type: Transform
+- uid: 14128
+  type: Intercom
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -44.5,-36.5
+    parent: 6
+    type: Transform
+- uid: 14129
+  type: RandomPosterAny
+  components:
+  - pos: -55.5,-17.5
+    parent: 6
+    type: Transform
+- uid: 14130
+  type: Intercom
+  components:
+  - pos: -59.5,-9.5
+    parent: 6
+    type: Transform
+- uid: 14131
+  type: IntercomCommand
+  components:
+  - pos: -67.5,-9.5
+    parent: 6
+    type: Transform
+- uid: 14132
+  type: Intercom
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -40.5,-13.5
+    parent: 6
+    type: Transform
+- uid: 14133
+  type: IntercomEngineering
+  components:
+  - pos: -25.5,-8.5
+    parent: 6
+    type: Transform
+- uid: 14134
+  type: IntercomEngineering
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -31.5,-5.5
+    parent: 6
+    type: Transform
+- uid: 14135
+  type: IntercomCommand
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -23.5,-3.5
+    parent: 6
+    type: Transform
+- uid: 14136
+  type: IntercomEngineering
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -35.5,-6.5
+    parent: 6
+    type: Transform
+- uid: 14137
+  type: IntercomEngineering
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -34.5,7.5
+    parent: 6
+    type: Transform
+- uid: 14138
+  type: PosterContrabandTools
+  components:
+  - pos: -18.5,5.5
+    parent: 6
+    type: Transform
+- uid: 14139
+  type: Intercom
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -13.5,-2.5
+    parent: 6
+    type: Transform
+- uid: 14140
+  type: IntercomService
+  components:
+  - pos: -13.5,-13.5
+    parent: 6
+    type: Transform
+- uid: 14141
+  type: IntercomService
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -8.5,-19.5
+    parent: 6
+    type: Transform
+- uid: 14142
+  type: IntercomMedical
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -27.5,-16.5
+    parent: 6
+    type: Transform
+- uid: 14143
+  type: IntercomMedical
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -35.5,-16.5
+    parent: 6
+    type: Transform
+- uid: 14144
+  type: ExtinguisherCabinetFilled
+  components:
+  - pos: -22.5,-26.5
+    parent: 6
+    type: Transform
+- uid: 14145
+  type: IntercomCommand
+  components:
+  - pos: -37.5,-16.5
+    parent: 6
+    type: Transform
+- uid: 14146
+  type: IntercomMedical
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -33.5,-23.5
+    parent: 6
+    type: Transform
+- uid: 14147
+  type: Intercom
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,5.5
     parent: 6
     type: Transform
 ...
