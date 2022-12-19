@@ -1,7 +1,7 @@
 - type: entity
   id: WallStationMapBroken
   name: station map
-  desc: A virtual map of the surrounding station.
+  description: A virtual map of the surrounding station.
   suffix: Wall broken
   placement:
     mode: SnapgridCenter
@@ -31,7 +31,6 @@
 - type: entity
   id: WallStationMap
   name: station map
-  desc: A virtual map of the surrounding station.
   parent: WallStationMapBroken
   suffix: Wall
   placement:
