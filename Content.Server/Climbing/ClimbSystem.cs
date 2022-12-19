@@ -118,13 +118,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (TryBonk(component, user))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable, user)
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            UserFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
+            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
     }
 
