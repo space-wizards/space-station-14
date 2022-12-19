@@ -1,13 +1,12 @@
-using Content.Client.Stylesheets;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -16,6 +15,10 @@ namespace Content.Client.Popups
     public sealed class PopupSystem : SharedPopupSystem
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IOverlayManager _overlay = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IResourceCache _resource = default!;
 
         public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
         public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
@@ -31,14 +34,14 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-            IoCManager.Resolve<IOverlayManager>()
-                .AddOverlay(new PopupOverlay(EntityManager, IoCManager.Resolve<IPrototypeManager>(), IoCManager.Resolve<IResourceCache>(), this));
+            _overlay
+                .AddOverlay(new PopupOverlay(EntityManager, _prototype, _resource, this));
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            IoCManager.Resolve<IOverlayManager>()
+            _overlay
                 .RemoveOverlay<PopupOverlay>();
         }
 
@@ -70,15 +73,15 @@ namespace Content.Client.Popups
             if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
                 PopupMessage(message, type, coordinates, null);
         }
-        
+
         public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {
             var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
             {
                 Text = message,
-                StyleClasses = { GetStyleClass(type) },
+                Type = type,
             };
-            _userInterfaceManager.PopupRoot.AddChild(label);
+
             _aliveCursorLabels.Add(label);
         }
 
