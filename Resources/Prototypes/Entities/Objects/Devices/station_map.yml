@@ -1,7 +1,7 @@
 - type: entity
   id: StationMap
   name: station map
-  desc: Displays a readout of the current station.
+  description: Displays a readout of the current station.
   parent: BaseItem
   suffix: Handheld
   components:
