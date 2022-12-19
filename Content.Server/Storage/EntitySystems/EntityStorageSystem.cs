@@ -178,8 +178,8 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
-        var ev = new StorageBeforeCloseEvent(uid, entities);
-        RaiseLocalEvent(uid, ev, true);
+        var ev = new StorageBeforeCloseEvent(entities);
+        RaiseLocalEvent(uid, ev);
         var count = 0;
         foreach (var entity in ev.Contents)
         {
