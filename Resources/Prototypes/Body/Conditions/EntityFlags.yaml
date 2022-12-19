@@ -1,0 +1,11 @@
+﻿-   type: entityFlag
+    id: Asphyxiating
+    groupId: MedicalConditions
+
+-   type: entityFlag
+    id: Bleeding
+    groupId: MedicalConditions
+
+-   type: entityFlag
+    id: Unconscious
+    groupId: MedicalConditions
