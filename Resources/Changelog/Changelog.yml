@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix minimum rotation speed for eye lerping., type: Fix}
-  id: 2271
-  time: '2022-09-10T21:51:41.0000000+00:00'
 - author: WPRobson
   changes:
   - {message: Added charcoal into the game. Heals poison damage and removes chemicals
@@ -2923,3 +2918,8 @@ Entries:
   - {message: Votes can once again be cast in-game, type: Fix}
   id: 2770
   time: '2022-12-19T01:13:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix tile decals not loading properly., type: Fix}
+  id: 2771
+  time: '2022-12-19T02:18:58.0000000+00:00'
