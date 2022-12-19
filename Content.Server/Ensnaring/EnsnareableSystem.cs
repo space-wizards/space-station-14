@@ -41,7 +41,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         ensnaring.Ensnared = null;
 
         _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.EnsnaringEntity)),
-            uid, Filter.Entities(uid), PopupType.Large);
+            uid, uid, PopupType.Large);
 
         UpdateAlert(component);
         var ev = new EnsnareRemoveEvent();
@@ -58,6 +58,6 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         ensnaring.CancelToken = null;
 
         _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.EnsnaringEntity)),
-            uid, Filter.Entities(uid), PopupType.Large);
+            uid, uid, PopupType.Large);
     }
 }

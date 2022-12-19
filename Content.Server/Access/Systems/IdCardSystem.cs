@@ -44,7 +44,7 @@ namespace Content.Server.Access.Systems
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
+                         transformComponent.Coordinates, PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
@@ -54,14 +54,12 @@ namespace Content.Server.Access.Systems
                 // If they're unlucky, brick their ID
                 if (randomPick <= 0.25f)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
-                        uid, Filter.Pvs(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
                     access.Tags.Clear();
                 }
                 else
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
-                        uid, Filter.Pvs(uid), PopupType.Medium);
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)), uid, PopupType.Medium);
                 }
 
                 // Give them a wonderful new access to compensate for everything

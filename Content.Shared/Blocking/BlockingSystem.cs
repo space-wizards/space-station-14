@@ -180,8 +180,8 @@ public sealed partial class BlockingSystem : EntitySystem
                 return false;
             }
             _actionsSystem.SetToggled(component.BlockingToggleAction, true);
-            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
-            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
+            _popupSystem.PopupEntity(msgUser, user, user);
+            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
@@ -204,13 +204,13 @@ public sealed partial class BlockingSystem : EntitySystem
     private void CantBlockError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-cant-block");
-        _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+        _popupSystem.PopupEntity(msgError, user, user);
     }
 
     private void TooCloseError(EntityUid user)
     {
         var msgError = Loc.GetString("action-popup-blocking-user-too-close");
-        _popupSystem.PopupEntity(msgError, user, Filter.Entities(user));
+        _popupSystem.PopupEntity(msgError, user, user);
     }
 
     /// <summary>
@@ -245,8 +245,8 @@ public sealed partial class BlockingSystem : EntitySystem
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
             _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
             _physics.SetBodyType(physicsComponent, blockingUserComponent.OriginalBodyType);
-            _popupSystem.PopupEntity(msgUser, user, Filter.Entities(user));
-            _popupSystem.PopupEntity(msgOther, user, Filter.Pvs(user).RemoveWhereAttachedEntity(e => e == user));
+            _popupSystem.PopupEntity(msgUser, user, user);
+            _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }
 
         component.IsBlocking = false;

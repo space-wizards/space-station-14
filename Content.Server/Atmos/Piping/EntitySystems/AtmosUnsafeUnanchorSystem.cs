@@ -40,7 +40,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 {
                     args.Delay += 2f;
                     _popup.PopupEntity(Loc.GetString("comp-atmos-unsafe-unanchor-warning"), pipe.Owner,
-                        Filter.Entities(args.User), PopupType.MediumCaution);
+                        args.User, PopupType.MediumCaution);
                     return; // Show the warning only once.
                 }
             }

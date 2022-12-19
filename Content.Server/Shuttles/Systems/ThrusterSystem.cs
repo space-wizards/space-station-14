@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Audio;
+using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -57,6 +58,9 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ThrusterComponent, EndCollideEvent>(OnEndCollide);
 
             SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
+
+            SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             _mapManager.TileChanged += OnTileChange;
         }
@@ -513,6 +517,18 @@ namespace Content.Server.Shuttles.Systems
                     appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
                 }
             }
+        }
+
+        private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
+        {
+            var thrustRating = args.PartRatings[component.MachinePartThrust];
+
+            component.Thrust = component.BaseThrust * MathF.Pow(component.PartRatingThrustMultiplier, thrustRating - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, ThrusterComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("thruster-comp-upgrade-thrust", component.Thrust / component.BaseThrust);
         }
 
         #endregion

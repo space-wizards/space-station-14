@@ -492,6 +492,24 @@
     Glass: 900
 
 - type: latheRecipe
+  id: ThrusterMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: ThrusterMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: GyroscopeMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: GyroscopeMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: GasRecyclerMachineCircuitboard
   icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: GasRecyclerMachineCircuitboard
