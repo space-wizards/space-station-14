@@ -54,6 +54,7 @@
   parent: BaseToolSurgery
   description: A surgical tool used to make incisions into flesh.
   components:
+  - type: Sharp
   - type: Utensil
     types:
       - Knife
