@@ -36,7 +36,7 @@ namespace Content.Server.Research.Systems
 
         public string[] GetServerNames()
         {
-            var allServers = EntityQuery<ResearchServerComponent>().ToArray();
+            var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
             var list = new string[allServers.Length];
 
             for (var i = 0; i < allServers.Length; i++)
@@ -49,7 +49,7 @@ namespace Content.Server.Research.Systems
 
         public int[] GetServerIds()
         {
-            var allServers = EntityQuery<ResearchServerComponent>().ToArray();
+            var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
             var list = new int[allServers.Length];
 
             for (var i = 0; i < allServers.Length; i++)

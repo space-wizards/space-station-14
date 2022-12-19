@@ -33,7 +33,7 @@ namespace Content.Server.Research.Components
     /// <param name="Total"></param>
     /// <param name="Delta"></param>
     [ByRefEvent]
-    public record struct ResearchServerPointsChangedEvent(EntityUid Server, int Total, int Delta);
+    public readonly record struct ResearchServerPointsChangedEvent(EntityUid Server, int Total, int Delta);
 
     /// <summary>
     /// Event raised every second to calculate the amount of points added to the server.

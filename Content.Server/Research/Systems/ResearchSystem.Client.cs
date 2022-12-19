@@ -51,7 +51,7 @@ public sealed partial class ResearchSystem
 
     private void OnClientStartup(EntityUid uid, ResearchClientComponent component, ComponentStartup args)
     {
-        var allServers = EntityQuery<ResearchServerComponent>().ToArray();
+        var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
         if (allServers.Length > 0)
             RegisterClientServer(component, allServers[0]);
     }
