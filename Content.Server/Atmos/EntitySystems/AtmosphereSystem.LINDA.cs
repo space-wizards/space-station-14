@@ -1,11 +1,12 @@
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
-        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount)
+        private void ProcessCell(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, int fireCount, GasTileOverlayComponent? visuals)
         {
             // Can't process a tile without air
             if (tile.Air == null)
@@ -100,7 +101,7 @@ namespace Content.Server.Atmos.EntitySystems
             if(tile.Air != null)
                 React(tile.Air, tile);
 
-            InvalidateVisuals(tile.GridIndex, tile.GridIndices);
+            InvalidateVisuals(tile.GridIndex, tile.GridIndices, visuals);
 
             var remove = true;
 
