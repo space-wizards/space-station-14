@@ -23,7 +23,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
             return false;
         _audio.PlayPvs(component.InsertingSound, component.Owner);
         _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
-            ("item", toInsert)), component.Owner, Filter.Pvs(component.Owner));
+            ("item", toInsert)), component.Owner);
         QueueDel(toInsert);
         return true;
     }

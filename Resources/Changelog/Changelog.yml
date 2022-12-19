@@ -1,86 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Default camera rotations have been inverted., type: Tweak}
-  id: 2260
-  time: '2022-09-08T22:06:39.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: External airlocks now show the correct direction relative to their rotation.,
-    type: Fix}
-  - {message: 'External airlock assemblies can now be rotated. This is particularly
-      useful when building shuttles, for docking: you can now have docks that face
-      in any of the four cardinal directions.', type: Tweak}
-  id: 2261
-  time: '2022-09-08T22:21:26.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Hitscan guns, gun cartridges, and melee weapons are now examinable
-      for their damage values.', type: Add}
-  id: 2262
-  time: '2022-09-08T23:08:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'We have surgically implanted tiny bio-engineered sensors into your
-      little mouths so that you can get more out of what you eat! In other words,
-      we have given you taste buds! The power of surgery and bioprinting!', type: Add}
-  id: 2263
-  time: '2022-09-08T23:14:49.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Only ghosts can see warp point information while examining nuke disk.,
-    type: Fix}
-  id: 2264
-  time: '2022-09-09T03:42:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
-    type: Fix}
-  id: 2265
-  time: '2022-09-09T14:39:22.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: 'APCs can now be properly constructed using APC electronics, as well
-      as deconstructed', type: Add}
-  id: 2266
-  time: '2022-09-10T03:27:41.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
-  id: 2267
-  time: '2022-09-10T07:36:33.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: Quartermaster is now shown as part of command when viewed in the crew
-      manifest., type: Add}
-  id: 2268
-  time: '2022-09-10T07:58:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Nuclear disk pinpointer should be working again., type: Fix}
-  id: 2269
-  time: '2022-09-10T08:49:02.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Windoors will now stay open if you open them by clicking., type: Tweak}
-  id: 2270
-  time: '2022-09-10T21:48:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix minimum rotation speed for eye lerping., type: Fix}
-  id: 2271
-  time: '2022-09-10T21:51:41.0000000+00:00'
-- author: WPRobson
-  changes:
-  - {message: Added charcoal into the game. Heals poison damage and removes chemicals
-      from the bloodstream, type: Add}
-  id: 2272
-  time: '2022-09-10T23:20:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a sussy lil friend to the station., type: Add}
-  id: 2273
-  time: '2022-09-11T00:08:17.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: Pipes with high pressure will warn you when unachoring them and take
@@ -2932,3 +2850,78 @@ Entries:
   - {message: NPCs will now smash and pry correctly., type: Fix}
   id: 2759
   time: '2022-12-15T04:30:28.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Dead people can no longer sleep, type: Fix}
+  id: 2760
+  time: '2022-12-15T21:34:44.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Dead bodies no longer sneeze and cough, type: Fix}
+  id: 2761
+  time: '2022-12-16T17:33:34.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Salvage magnets now correctly appear powered, type: Fix}
+  id: 2762
+  time: '2022-12-16T22:56:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: It's no longer possible to attack subfloor entities., type: Fix}
+  id: 2763
+  time: '2022-12-17T03:47:15.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anchoring no longer allowed on non-collidable but occupied tiles (e.g.
+      conveyors)., type: Tweak}
+  id: 2764
+  time: '2022-12-17T03:51:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids can now handle multiple gravity generators., type: Fix}
+  id: 2765
+  time: '2022-12-18T05:03:23.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixed flavor message for copypasta, type: Fix}
+  id: 2766
+  time: '2022-12-18T08:21:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix click sorting for entities with the same drawdepth., type: Fix}
+  id: 2767
+  time: '2022-12-18T19:41:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix magboots not working., type: Fix}
+  id: 2768
+  time: '2022-12-18T21:24:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug that would cause the doafter for dragging entities onto
+      tables and inserting entities into the biomass reclaimer to not cancel., type: Fix}
+  id: 2769
+  time: '2022-12-19T01:10:37.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Votes can once again be cast in-game, type: Fix}
+  id: 2770
+  time: '2022-12-19T01:13:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix tile decals not loading properly., type: Fix}
+  id: 2771
+  time: '2022-12-19T02:18:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Popups will now show in additional viewports (e.g. cameras, tabletop).',
+    type: Fix}
+  id: 2772
+  time: '2022-12-19T02:39:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mining drills and power drills can now be printed at the protolathe.,
+    type: Add}
+  - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
+  id: 2773
+  time: '2022-12-19T04:38:30.0000000+00:00'

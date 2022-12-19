@@ -1,8 +1,10 @@
 using Content.Client.Clickable;
+using Content.Client.Gameplay;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -79,27 +81,23 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         if (_dragging == null)
         {
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var lowest = new List<(int DrawDepth, uint RenderOrder, EntityUid Entity)>();
+            var gameState = IoCManager.Resolve<IStateManager>().CurrentState;
 
-            foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
+            if (gameState is GameplayState game)
             {
-                if (!bodyQuery.HasComponent(ent) ||
-                    !TryComp<ClickableComponent>(ent, out var clickable) ||
-                    !clickable.CheckClick(mousePos.Position, out var drawDepth, out var renderOrder)) continue;
+                EntityUid? uid;
 
-                lowest.Add((drawDepth, renderOrder, ent));
+                foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
+                {
+                    uid = game.GetEntityUnderPosition(mousePos);
+
+                    if (uid != null)
+                        StartDragging(uid.Value, mousePos);
+                }
             }
 
-            lowest.Sort((x, y) => y.DrawDepth == x.DrawDepth ? y.RenderOrder.CompareTo(x.RenderOrder) : y.DrawDepth.CompareTo(x.DrawDepth));
-
-            foreach (var ent in lowest)
-            {
-                StartDragging(ent.Entity, mousePos);
-                break;
-            }
-
-            if (_dragging == null) return;
+            if (_dragging == null)
+                return;
         }
 
         if (!TryComp<TransformComponent>(_dragging!.Value, out var xform) ||

@@ -59,12 +59,12 @@ namespace Content.Server.PAI
             // Check for pAI activation
             if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User), PopupType.Large);
+                _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, args.User, PopupType.Large);
                 return;
             }
             else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, args.User);
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace Content.Server.PAI
             ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
             ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
 
-            _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, args.User);
             UpdatePAIAppearance(uid, PAIStatus.Searching);
         }
 
@@ -148,7 +148,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<MindComponent>(uid))
                     {
                         EntityManager.RemoveComponent<MindComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User), PopupType.Large);
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, args.User, PopupType.Large);
                         PAITurningOff(uid);
                     }
                 };
@@ -164,7 +164,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, Filter.Entities(args.User));
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, args.User);
                         PAITurningOff(uid);
                     }
                 };

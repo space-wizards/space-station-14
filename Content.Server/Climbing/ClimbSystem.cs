@@ -79,7 +79,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             : CanVault(component, args.User, args.Dragged, args.Target, out reason);
 
         if (!canVault)
-            _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(reason, args.User, args.User);
 
         args.CanDrop = canVault;
         args.Handled = true;
@@ -118,13 +118,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (TryBonk(component, user))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable, user)
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            UserFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
+            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
     }
 
@@ -368,7 +368,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
             Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
-            Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
+            Filter.PvsExcept(args.Climber), true);
     }
 
     /// <summary>
