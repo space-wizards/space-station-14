@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseComputer
-  id: ComputerTechnologyDiskConsole
-  name: technology disk printer
+  id: ComputerTechnologyDiskTerminal
+  name: technology disk terminal
   description: A terminal used to print out technology disks.
   components:
   - type: Sprite
@@ -14,10 +14,6 @@
     - state: unshaded
       shader: unshaded
       map: ["enum.ComputerVisualizer+Layers.Screen"]
-    - state: printing
-      shader: Rainbow
-      visible: false
-      map: ["enum.DamageStateVisualLayers.Base"]
   - type: Appearance
     visuals:
     - type: ComputerVisualizer
@@ -38,7 +34,7 @@
       type: ResearchClientBoundUserInterface
   - type: ExtensionCableReceiver
   - type: Computer
-    board: AnalysisComputerCircuitboard #TODO: change
+    board: TechDiskComputerCircuitboard
   - type: PointLight
     radius: 0.8
     energy: 0.5

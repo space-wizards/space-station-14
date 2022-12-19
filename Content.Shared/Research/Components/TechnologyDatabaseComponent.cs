@@ -20,6 +20,7 @@ namespace Content.Shared.Research.Components
     {
         public List<string> Technologies;
         public List<string> Recipes;
+
         public TechnologyDatabaseState(List<string> technologies, List<string> recipes)
         {
             Technologies = technologies;

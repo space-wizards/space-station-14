@@ -1,9 +1,9 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                      xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-                     Title="{Loc 'research-console-menu-title'}"
-                     MinSize="300 260"
-                     SetSize="300 260">
+                     Title="{Loc 'tech-disk-ui-name'}"
+                     MinSize="400 260"
+                     SetSize="400 260">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True"
@@ -11,26 +11,26 @@
         <Button Name="ServerButton"
                 Text="{Loc 'lathe-menu-server-list'}"
                 HorizontalAlignment="Left"></Button>
-            <PanelContainer Margin="0 10 0 0" VerticalExpand="True">
-                <PanelContainer.PanelOverride>
-                    <graphics:StyleBoxFlat BackgroundColor="#000000FF"/>
-                </PanelContainer.PanelOverride>
-                <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Center">
-                    <Label Name="TotalLabel"
-                           HorizontalAlignment="Center">
-                    </Label>
-                    <Label Name="CostLabel"
-                           HorizontalAlignment="Center">
-                    </Label>
-                    <BoxContainer MinHeight="20"></BoxContainer>
-                    <Button
-                        Name="PrintButton"
-                        Text="{Loc 'tech-disk-ui-print-button'}"
-                        MaxWidth="120"
-                        HorizontalAlignment="Center"
-                        VerticalExpand="False">
-                    </Button>
-                </BoxContainer>
-            </PanelContainer>
-        </BoxContainer>
+        <PanelContainer Margin="0 10 0 0" VerticalExpand="True">
+            <PanelContainer.PanelOverride>
+                <graphics:StyleBoxFlat BackgroundColor="#000000FF"/>
+            </PanelContainer.PanelOverride>
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Center">
+                <Label Name="TotalLabel"
+                       HorizontalAlignment="Center">
+                </Label>
+                <Label Name="CostLabel"
+                       HorizontalAlignment="Center">
+                </Label>
+                <BoxContainer MinHeight="20"></BoxContainer>
+                <Button
+                    Name="PrintButton"
+                    Text="{Loc 'tech-disk-ui-print-button'}"
+                    MaxWidth="120"
+                    HorizontalAlignment="Center"
+                    VerticalExpand="False">
+                </Button>
+            </BoxContainer>
+        </PanelContainer>
+    </BoxContainer>
 </controls:FancyWindow>
