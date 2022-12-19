@@ -1,7 +1,9 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<ui:FancyWindow xmlns="https://spacestation14.io"
+            xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
             Title="{Loc 'law-window-title'}"
-            MinSize="800 400"
-            SetSize="800 400">
+            MinSize="400 100"
+            SetSize="500 500"
+            Resizable="true">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
@@ -10,16 +12,21 @@
                       VerticalExpand="True"
                       SizeFlagsStretchRatio="2"
                       SeparationOverride="10">
-            <BoxContainer Name="Laws"
+            <ScrollContainer
+                HScrollEnabled="False"
+                HorizontalExpand="True"
+                VerticalExpand="True">
+                <BoxContainer Name="Laws"
                           Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="{Loc 'silicon-laws-label'}" />
-            </BoxContainer>
+                    <Label Text="{Loc 'silicon-laws-label'}" />
+                </BoxContainer>
+            </ScrollContainer>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal"
                       HorizontalExpand="True"
-                      VerticalExpand="True"
+                      VerticalExpand="False"
                       SizeFlagsStretchRatio="2"
                       SeparationOverride="10">
             <BoxContainer Orientation="Vertical"
@@ -31,4 +38,4 @@
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
-</DefaultWindow>
+</ui:FancyWindow>

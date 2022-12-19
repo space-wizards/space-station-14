@@ -1,0 +1,26 @@
+<PanelContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Margin="16 13 16 13"
+    StyleClasses="BorderedWindowPanel"
+    VerticalExpand="True">
+
+    <BoxContainer
+         Orientation="Vertical"
+         HorizontalExpand="True"
+         VerticalExpand="True">
+        <Label Name="Title" Text="Law the first" Margin="6 2 0 2" StyleClasses="LabelBig"/>
+
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+            </PanelContainer.PanelOverride>
+            <controls:HSpacer Spacing="2"/>
+        </PanelContainer>
+
+        <RichTextLabel Name="Description" Margin="12 2 6 2" />
+    </BoxContainer>
+</PanelContainer>
