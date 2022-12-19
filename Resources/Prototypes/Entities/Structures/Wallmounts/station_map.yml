@@ -14,9 +14,6 @@
       drawdepth: WallMountedItems
       layers:
         - state: station_map_broken
-    - type: Construction
-      graph: StationMap
-      node: broken
     - type: Damageable
       damageContainer: Inorganic
     - type: Destructible
@@ -55,9 +52,6 @@
     - type: ActivatableUIRequiresPower
     - type: ActivatableUI
       key: enum.StationMapUiKey.Key
-    - type: Construction
-      graph: StationMap
-      node: start
     - type: Destructible
       thresholds:
         - trigger:
