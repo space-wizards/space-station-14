@@ -30,7 +30,7 @@ public sealed class ContainmentFieldSystem : EntitySystem
 
         if (TryComp<SpaceGarbageComponent>(otherBody, out var garbage))
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-field-vaporized", ("entity", otherBody)), component.Owner, PopupType.LargeCaution);
             QueueDel(garbage.Owner);
         }
 

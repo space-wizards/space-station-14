@@ -50,7 +50,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
                 _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
-                    ("target", component.Owner)), uid, Filter.Entities(args.User));
+                    ("target", component.Owner)), uid, args.User);
                 return;
             }
 
@@ -60,13 +60,13 @@ namespace Content.Server.Singularity.EntitySystems
                 {
                     SwitchOn(component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
-                        ("target", component.Owner)), component.Owner, Filter.Entities(args.User));
+                        ("target", component.Owner)), uid, args.User);
                 }
                 else
                 {
                     SwitchOff(component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
-                        ("target", component.Owner)), uid, Filter.Entities(args.User));
+                        ("target", component.Owner)), uid, args.User);
                 }
 
                 _adminLogger.Add(LogType.Emitter,
@@ -76,7 +76,7 @@ namespace Content.Server.Singularity.EntitySystems
             else
             {
                 _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
-                    ("target", component.Owner)), uid, Filter.Entities(args.User));
+                    ("target", component.Owner)), uid, args.User);
             }
         }
 

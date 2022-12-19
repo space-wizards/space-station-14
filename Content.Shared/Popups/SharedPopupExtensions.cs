@@ -17,7 +17,7 @@ namespace Content.Shared.Popups
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
 
-            popupSystem.PopupEntity(message, source, Filter.Entities(viewer));
+            popupSystem.PopupEntity(message, source, viewer);
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Content.Shared.Popups
         public static void PopupMessageCursor(this EntityUid viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCursor(message, Filter.Entities(viewer));
+            popupSystem.PopupCursor(message, viewer);
         }
     }
 }

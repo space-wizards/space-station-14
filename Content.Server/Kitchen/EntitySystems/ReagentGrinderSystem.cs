@@ -141,7 +141,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 if (!HasComp<FitsInDispenserComponent>(heldEnt))
                 {
                     // This is ugly but we can't use whitelistFailPopup because there are 2 containers with different whitelists.
-                    _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("reagent-grinder-component-cannot-put-entity-message"), uid, args.User);
                 }
 
                 // Entity did NOT pass the whitelist for grind/juice.

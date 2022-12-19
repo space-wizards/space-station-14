@@ -1,5 +1,6 @@
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -19,8 +20,6 @@ namespace Content.Client.Atmos.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
         private readonly ShaderInstance _shader;
-
-        public readonly Dictionary<EntityUid, Dictionary<Vector2i, GasOverlayChunk>> TileData = new();
 
         // Gas overlays
         private readonly float[] _timer;
@@ -139,12 +138,15 @@ namespace Content.Client.Atmos.Overlays
         {
             var drawHandle = args.WorldHandle;
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
+            var overlayQuery = _entManager.GetEntityQuery<GasTileOverlayComponent>();
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(args.MapId, args.WorldBounds))
             {
-                if (!TileData.TryGetValue(mapGrid.Owner, out var gridData) ||
+                if (!overlayQuery.TryGetComponent(mapGrid.Owner, out var comp) ||
                     !xformQuery.TryGetComponent(mapGrid.Owner, out var gridXform))
+                {
                     continue;
+                }
 
                 var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                 drawHandle.SetTransform(worldMatrix);
@@ -160,7 +162,7 @@ namespace Content.Client.Atmos.Overlays
                 // by chunk, even though its currently slower.
 
                 drawHandle.UseShader(null);
-                foreach (var chunk in gridData.Values)
+                foreach (var chunk in comp.Chunks.Values)
                 {
                     var enumerator = new GasChunkEnumerator(chunk);
 
@@ -184,7 +186,7 @@ namespace Content.Client.Atmos.Overlays
 
                 // And again for fire, with the unshaded shader
                 drawHandle.UseShader(_shader);
-                foreach (var chunk in gridData.Values)
+                foreach (var chunk in comp.Chunks.Values)
                 {
                     var enumerator = new GasChunkEnumerator(chunk);
 
