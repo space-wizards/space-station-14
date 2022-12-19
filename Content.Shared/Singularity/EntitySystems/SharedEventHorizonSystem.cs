@@ -48,9 +48,10 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// Setter for <see cref="EventHorizonComponent.Radius"/>
     /// May also update the fixture associated with the event horizon.
     /// </summary>
-    /// <param name="eventHorizon">The event horizon to change the radius of.</param>
+    /// <param name="uid">The uid of the event horizon to change the radius of.</param>
     /// <param name="value">The new radius of the event horizon.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing the radius of the event horizon.</param>
+    /// <param name="eventHorizon">The state of the event horizon to change the radius of.</param>
     public void SetRadius(EntityUid uid, float value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))
@@ -70,9 +71,10 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// Setter for <see cref="EventHorizonComponent.CanBreachContainment"/>
     /// May also update the fixture associated with the event horizon.
     /// </summary>
-    /// <param name="eventHorizon">The event horizon to make (in)capable of breaching containment.</param>
+    /// <param name="uid">The uid of the event horizon to make (in)capable of breaching containment.</param>
     /// <param name="value">Whether the event horizon should be able to breach containment.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
+    /// <param name="eventHorizon">The state of the event horizon to make (in)capable of breaching containment.</param>
     public void SetCanBreachContainment(EntityUid uid, bool value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))
@@ -92,9 +94,10 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// Setter for <see cref="EventHorizonComponent.HorizonFixtureId"/>
     /// May also update the fixture associated with the event horizon.
     /// </summary>
-    /// <param name="eventHorizon">The event horizon with the fixture ID to change.</param>
+    /// <param name="uid">The uid of the event horizon with the fixture ID to change.</param>
     /// <param name="value">The new fixture ID to associate the event horizon with.</param>
     /// <param name="updateFixture">Whether to update the associated fixture upon changing whether the event horizon can breach containment.</param>
+    /// <param name="eventHorizon">The state of the event horizon with the fixture ID to change.</param>
     public void SetHorizonFixtureId(EntityUid uid, string? value, bool updateFixture = true, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))
@@ -113,8 +116,9 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <summary>
     /// Updates the state of the fixture associated with the event horizon.
     /// </summary>
-    /// <param name="eventHorizon">The event horizon component associated with the fixture to update.</param>
+    /// <param name="eventHorizon">The uid of the event horizon associated with the fixture to update.</param>
     /// <param name="fixtures">The physics component containing the fixture to update.</param>
+    /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
     public void UpdateEventHorizonFixture(EntityUid uid, PhysicsComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))

@@ -70,8 +70,9 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// Makes a gravity well emit a gravitational pulse and puts it on cooldown.
     /// The longer since the last gravitational pulse the more force it applies on affected entities.
     /// </summary>
-    /// <param name="gravWell">The gravity well to make pulse.</param>
-    /// <param name="xform">The transform of the gravity well.</param>
+    /// <param name="uid">The uid of the gravity well to make pulse.</param>
+    /// <param name="gravWell">The state of the gravity well to make pulse.</param>
+    /// <param name="xform">The transform of the gravity well to make pulse.</param>
     private void Update(EntityUid uid, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref gravWell))
@@ -81,9 +82,10 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     /// <summary>
     /// Makes a gravity well emit a gravitational pulse and puts it on cooldown.
     /// </summary>
-    /// <param name="gravWell">The gravity well to pulse.</param>
+    /// <param name="uid">The uid of the gravity well to make pulse.</param>
+    /// <param name="gravWell">The state of the gravity well to make pulse.</param>
     /// <param name="frameTime">The amount to consider as having passed since the last gravitational pulse by the gravity well. Pulse force scales with this.</param>
-    /// <param name="xform">The transform of the gravity well entity.</param>
+    /// <param name="xform">The transform of the gravity well to make pulse.</param>
     private void Update(EntityUid uid, TimeSpan frameTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell))

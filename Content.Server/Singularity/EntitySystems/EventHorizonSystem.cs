@@ -163,9 +163,9 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="range">The distance of the center entity within which to consume all entities.</param>
     /// <param name="xform">The transform component attached to the center entity.</param>
     /// <param name="eventHorizon">The event horizon component attached to the center entity.</param>
-    public void ConsumeEntitiesInRange(EntityUid uid, float range, TransformComponent? xform, EventHorizonComponent? eventHorizon)
+    public void ConsumeEntitiesInRange(EntityUid uid, float range, TransformComponent? xform = null, EventHorizonComponent? eventHorizon = null)
     {
-        if(!Resolve(uid, ref xform) || !Resolve(uid, ref eventHorizon))
+        if(!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
         foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Uncontained))
@@ -335,6 +335,14 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
     #region Getters/Setters
 
+    /// <summary>
+    /// Sets how often an event horizon will scan for overlapping entities to consume.
+    /// The value is specifically how long the subsystem should wait between scans.
+    /// If the new scanning period would have already prompted a scan given the previous scan time one is prompted immediately.
+    /// </summary>
+    /// <param name="uid">The uid of the event horizon to set the consume wave period for.</param>
+    /// <param name="value">The amount of time that this subsystem should wait between scans.</param>
+    /// <param name="eventHorizon">The state of the event horizon to set the consume wave period for.</param>
     public void SetConsumePeriod(EntityUid uid, TimeSpan value, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))

@@ -73,8 +73,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// Setter for <see cref="SharedSingularityComponent.Level"/>
     /// Also sends out an event alerting that the singularities level has changed.
     /// </summary>
-    /// <param name="singularity">The singularity to change the level of.</param>
-    /// <param name="value">The value of the new level the singularity should have.</param>
+    /// <param name="uid">The uid of the singularity to change the level of.</param>
+    /// <param name="value">The new level the singularity should have.</param>
+    /// <param name="singularity">The state of the singularity to change the level of.</param>
     public void SetLevel(EntityUid uid, byte value, SharedSingularityComponent? singularity = null)
     {
         if(!Resolve(uid, ref singularity))
@@ -95,8 +96,9 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// Setter for <see cref="SharedSingularityComponent.RadsPerLevel"/>
     /// Also updates the radiation output of the singularity according to the new values.
     /// </summary>
-    /// <param name="singularity">The singularity to change the radioactivity of.</param>
-    /// <param name="value">The new amount of radiation the singularity should emit per its level.</param>
+    /// <param name="uid">The uid of the singularity to change the radioactivity of.</param>
+    /// <param name="value">The new radioactivity the singularity should have.</param>
+    /// <param name="singularity">The state of the singularity to change the radioactivity of.</param>
     public void SetRadsPerLevel(EntityUid uid, float value, SharedSingularityComponent? singularity = null)
     {
         if(!Resolve(uid, ref singularity))
@@ -107,15 +109,16 @@ public abstract class SharedSingularitySystem : EntitySystem
             return;
 
         singularity.RadsPerLevel = value;
-        UpdateRadiation(singularity);
+        UpdateRadiation(uid, singularity);
     }
 
     /// <summary>
     /// Alerts the entity hosting the singularity that the level of the singularity has changed.
     /// Usually follows a SharedSingularitySystem.SetLevel call, but is also used on component startup to sync everything.
     /// </summary>
-    /// <param name="singularity">The singularity to update the level of.</param>
-    /// <param name="oldValue">The previous level of the singularity.</param>
+    /// <param name="uid">The uid of the singularity which's level has changed.</param>
+    /// <param name="oldValue">The old level of the singularity. May be equal to <see cref="SharedSingularityComponent.Level"/> if the component is starting.</param>
+    /// <param name="singularity">The state of the singularity which's level has changed.</param>
     public void UpdateSingularityLevel(EntityUid uid, byte oldValue, SharedSingularityComponent? singularity = null)
     {
         if(!Resolve(uid, ref singularity))
@@ -130,7 +133,8 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// Alerts the entity hosting the singularity that the level of the singularity has changed without the level actually changing.
     /// Used to sync components when the singularity component is added to an entity.
     /// </summary>
-    /// <param name="singularity">The singularity to update the level of.</param>
+    /// <param name="uid">The uid of the singularity.</param>
+    /// <param name="singularity">The state of the singularity.</param>
     public void UpdateSingularityLevel(EntityUid uid, SharedSingularityComponent? singularity = null)
     {
         if (Resolve(uid, ref singularity))
@@ -138,13 +142,14 @@ public abstract class SharedSingularitySystem : EntitySystem
     }
 
     /// <summary>
-    /// Updates the amount of radiation the singularity emits.
+    /// Updates the amount of radiation the singularity emits to reflect a change in the level or radioactivity per level of the singularity.
     /// </summary>
-    /// <param name="singularity">The singularity to update the associated radiation of.</param>
-    /// <param name="rads">The radiation source associated with the same entity as the singularity.</param>
-    private void UpdateRadiation(SharedSingularityComponent singularity, RadiationSourceComponent? rads = null)
+    /// <param name="uid">The uid of the singularity to update the radiation of.</param>
+    /// <param name="singularity">The state of the singularity to update the radiation of.</param>
+    /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
+    private void UpdateRadiation(EntityUid uid, SharedSingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(singularity.Owner, ref rads, logMissing: false))
+        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
         rads.Intensity = singularity.Level * singularity.RadsPerLevel;
     }
@@ -372,7 +377,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateRadiation(EntityUid uid, RadiationSourceComponent comp, SingularityLevelChangedEvent args)
     {
-        UpdateRadiation(args.Singularity, comp);
+        UpdateRadiation(uid, args.Singularity, comp);
     }
 
 #endregion EventHandlers
