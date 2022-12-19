@@ -1,10 +1,4 @@
 Entries:
-- author: WPRobson
-  changes:
-  - {message: Added charcoal into the game. Heals poison damage and removes chemicals
-      from the bloodstream, type: Add}
-  id: 2272
-  time: '2022-09-10T23:20:44.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a sussy lil friend to the station., type: Add}
@@ -2923,3 +2917,9 @@ Entries:
   - {message: Fix tile decals not loading properly., type: Fix}
   id: 2771
   time: '2022-12-19T02:18:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Popups will now show in additional viewports (e.g. cameras, tabletop).',
+    type: Fix}
+  id: 2772
+  time: '2022-12-19T02:39:35.0000000+00:00'
