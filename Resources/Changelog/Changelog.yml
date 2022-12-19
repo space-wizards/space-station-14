@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Nuclear disk pinpointer should be working again., type: Fix}
-  id: 2269
-  time: '2022-09-10T08:49:02.0000000+00:00'
 - author: Visne
   changes:
   - {message: Windoors will now stay open if you open them by clicking., type: Tweak}
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Fix magboots not working., type: Fix}
   id: 2768
   time: '2022-12-18T21:24:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug that would cause the doafter for dragging entities onto
+      tables and inserting entities into the biomass reclaimer to not cancel., type: Fix}
+  id: 2769
+  time: '2022-12-19T01:10:37.0000000+00:00'
