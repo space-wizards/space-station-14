@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState.EntitySystems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.MobState.Components
@@ -23,44 +22,13 @@ namespace Content.Shared.MobState.Components
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
-        [DataField("thresholds")]
-        public readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
+        [DataField("thresholds")] public readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
 
         // TODO Remove Nullability?
-        [ViewVariables]
-        public DamageState? CurrentState { get; set; }
+        [ViewVariables] public DamageState? CurrentState { get; set; }
 
-        [ViewVariables]
-        public FixedPoint2? CurrentThreshold { get; set; }
+        [ViewVariables] public FixedPoint2? CurrentThreshold { get; set; }
 
         public IEnumerable<KeyValuePair<int, DamageState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsAlive()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsAlive(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsCritical()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsCritical(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsDead()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsDead(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsIncapacitated()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsIncapacitated(Owner, this);
-        }
     }
 }

@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
+using Content.Server.MobState;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -13,7 +13,6 @@ using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
 using Content.Shared.PDA;
@@ -38,6 +37,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
     public override string Prototype => "TraitorDeathMatch";
@@ -88,7 +88,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             var victimSlots = new[] {"id", "belt", "back"};
             foreach (var slot in victimSlots)
             {
-                if(_inventory.TryUnequip(owned, slot, out var entityUid, true, true))
+                if (_inventory.TryUnequip(owned, slot, out var entityUid, true, true))
                     Del(entityUid.Value);
             }
 
@@ -129,7 +129,8 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             // The station is too drained of air to safely continue.
             if (_safeToEndRound)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-death-match-station-is-too-unsafe-announcement"));
+                _chatManager.DispatchServerAnnouncement(
+                    Loc.GetString("traitor-death-match-station-is-too-unsafe-announcement"));
                 _restarter.RoundMaxTime = TimeSpan.FromMinutes(1);
                 _restarter.RestartTimer();
                 _safeToEndRound = false;
@@ -148,13 +149,13 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
         if (mind.OwnedEntity is {Valid: true} entity && TryComp(entity, out MobStateComponent? mobState))
         {
-            if (mobState.IsCritical())
+            if (_mobStateSystem.IsCritical(entity, mobState))
             {
                 // TODO BODY SYSTEM KILL
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
                 Get<DamageableSystem>().TryChangeDamage(entity, damage, true);
             }
-            else if (!mobState.IsDead())
+            else if (!_mobStateSystem.IsDead(entity, mobState))
             {
                 if (HasComp<HandsComponent>(entity))
                 {
@@ -163,6 +164,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
                 }
             }
         }
+
         var session = mind.Session;
         if (session == null)
         {
@@ -225,7 +227,8 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             if (TryComp(avoidMeEntity.Value, out MobStateComponent? mobState))
             {
                 // Does have mob state component; if critical or dead, they don't really matter for spawn checks
-                if (mobState.IsCritical() || mobState.IsDead())
+                if (_mobStateSystem.IsCritical(avoidMeEntity.Value, mobState) ||
+                    _mobStateSystem.IsDead(avoidMeEntity.Value, mobState))
                     continue;
             }
             else
@@ -233,6 +236,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
                 // Doesn't have mob state component. Assume something interesting is going on and don't count this as someone to avoid.
                 continue;
             }
+
             existingPlayerPoints.Add(Transform(avoidMeEntity.Value).Coordinates);
         }
 
@@ -263,6 +267,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
                 if (Transform(entity).Coordinates.TryDistance(EntityManager, existing, out var dist))
                     distanceFromNearest = Math.Min(distanceFromNearest, dist);
             }
+
             if (bestTargetDistanceFromNearest < distanceFromNearest)
             {
                 bestTarget = Transform(entity).Coordinates;
@@ -270,7 +275,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
                 foundATarget = true;
             }
         }
+
         return foundATarget;
     }
-
 }

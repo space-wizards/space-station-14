@@ -1,4 +1,5 @@
 using Content.Server.Interaction.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
@@ -15,6 +16,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
@@ -38,7 +40,8 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
 
         if (TryComp<MobStateComponent>(uid, out var state) // if it has a MobStateComponent,
-            && !state.IsAlive())                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
+            && !_mobStateSystem.IsAlive(uid,
+                state)) // AND if that state is not Alive (e.g. dead/incapacitated/critical)
             return;
 
         // TODO: Should be an attempt event
@@ -50,7 +53,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         if (_random.Prob(component.SuccessChance))
         {
             if (component.InteractSuccessString != null)
-                msg = Loc.GetString(component.InteractSuccessString, ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
+                msg = Loc.GetString(component.InteractSuccessString,
+                    ("target", Identity.Entity(uid, EntityManager))); // Success message (localized).
 
             if (component.InteractSuccessSound != null)
                 sfx = component.InteractSuccessSound.GetSound();
@@ -58,7 +62,8 @@ public sealed class InteractionPopupSystem : EntitySystem
         else
         {
             if (component.InteractFailureString != null)
-                msg = Loc.GetString(component.InteractFailureString, ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
+                msg = Loc.GetString(component.InteractFailureString,
+                    ("target", Identity.Entity(uid, EntityManager))); // Failure message (localized).
 
             if (component.InteractFailureSound != null)
                 sfx = component.InteractFailureSound.GetSound();
@@ -79,7 +84,8 @@ public sealed class InteractionPopupSystem : EntitySystem
             if (component.SoundPerceivedByOthers)
                 SoundSystem.Play(sfx, Filter.Pvs(args.Target), args.Target); //play for everyone in range
             else
-                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target), args.Target); //play only for the initiating entity and its target.
+                SoundSystem.Play(sfx, Filter.Entities(args.User, args.Target),
+                    args.Target); //play only for the initiating entity and its target.
         }
 
         component.LastInteractTime = curTime;

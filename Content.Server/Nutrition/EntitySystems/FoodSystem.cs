@@ -4,6 +4,7 @@ using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -36,6 +37,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -84,7 +86,8 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (food.Owner == user || //Suppresses self-eating
-                EntityManager.TryGetComponent<MobStateComponent>(food.Owner, out var mobState) && mobState.IsAlive()) // Suppresses eating alive mobs
+                EntityManager.TryGetComponent<MobStateComponent>(food.Owner, out var mobState) &&
+                _mobStateSystem.IsAlive(food.Owner, mobState)) // Suppresses eating alive mobs
                 return false;
 
             // Target can't be fed
@@ -123,17 +126,20 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, target);
 
                 // logging
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to eat {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
             else
             {
                 // log voluntary eating
-                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is eating {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low,
+                    $"{ToPrettyString(target):target} is eating {ToPrettyString(food.Owner):food} {SolutionContainerSystem.ToPrettyString(foodSolution)}");
             }
 
             var moveBreak = user != target;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay, food.CancelToken.Token, target, food.Owner)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceFeed ? food.ForceFeedDelay : food.Delay,
+                food.CancelToken.Token, target, food.Owner)
             {
                 BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
@@ -147,7 +153,6 @@ namespace Content.Server.Nutrition.EntitySystems
             });
 
             return true;
-
         }
 
         private void OnFeed(EntityUid uid, BodyComponent body, FeedEvent args)
@@ -177,9 +182,9 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _solutionContainerSystem.TryAddSolution(uid, args.FoodSolution, split);
                 _popupSystem.PopupEntity(
-                    forceFeed ?
-                        Loc.GetString("food-system-you-cannot-eat-any-more-other") :
-                        Loc.GetString("food-system-you-cannot-eat-any-more")
+                    forceFeed
+                        ? Loc.GetString("food-system-you-cannot-eat-any-more-other")
+                        : Loc.GetString("food-system-you-cannot-eat-any-more")
                     , uid, args.User);
                 return;
             }
@@ -193,21 +198,26 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 var targetName = Identity.Entity(uid, EntityManager);
                 var userName = Identity.Entity(args.User, EntityManager);
-                _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)),
+                _popupSystem.PopupEntity(
+                    Loc.GetString("food-system-force-feed-success", ("user", userName), ("flavors", flavors)),
                     uid, uid);
 
                 _popupSystem.PopupEntity(Loc.GetString("food-system-force-feed-success-user", ("target", targetName)),
                     args.User, args.User);
 
                 // log successful force feed
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(args.Food.Owner):food}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium,
+                    $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(args.Food.Owner):food}");
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner), ("flavors", flavors)), args.User, args.User);
+                _popupSystem.PopupEntity(
+                    Loc.GetString(args.Food.EatMessage, ("food", args.Food.Owner), ("flavors", flavors)), args.User,
+                    args.User);
 
                 // log successful voluntary eating
-                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} ate {ToPrettyString(args.Food.Owner):food}");
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low,
+                    $"{ToPrettyString(args.User):target} ate {ToPrettyString(args.Food.Owner):food}");
             }
 
             SoundSystem.Play(args.Food.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-1f));
@@ -258,7 +268,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
+                _mobStateSystem.IsAlive(uid, mobState))
                 return;
 
             AlternativeVerb verb = new()
@@ -278,7 +289,8 @@ namespace Content.Server.Nutrition.EntitySystems
         /// <summary>
         ///     Force feeds someone remotely. Does not require utensils (well, not the normal type anyways).
         /// </summary>
-        public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid? user, FoodComponent? food = null, BodyComponent? body = null)
+        public void ProjectileForceFeed(EntityUid uid, EntityUid target, EntityUid? user, FoodComponent? food = null,
+            BodyComponent? body = null)
         {
             // TODO: Combine with regular feeding because holy code duplication batman.
             if (!Resolve(uid, ref food, false) || !Resolve(target, ref body, false))
@@ -304,15 +316,18 @@ namespace Content.Server.Nutrition.EntitySystems
 
             // logging
             if (user == null)
-                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} was thrown into the mouth of {ToPrettyString(target):target}");
             else
-                _adminLogger.Add(LogType.ForceFeed, $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
+                _adminLogger.Add(LogType.ForceFeed,
+                    $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):food} {SolutionContainerSystem.ToPrettyString(foodSolution):solution} into the mouth of {ToPrettyString(target):target}");
 
             var filter = user == null ? Filter.Entities(target) : Filter.Entities(target, user.Value);
             _popupSystem.PopupEntity(Loc.GetString(food.EatMessage, ("food", food.Owner)), target, filter, true);
 
             foodSolution.DoEntityReaction(uid, ReactionMethod.Ingestion);
-            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution, firstStomach.Value.Comp);
+            _stomachSystem.TryTransferSolution(((IComponent) firstStomach.Value.Comp).Owner, foodSolution,
+                firstStomach.Value.Comp);
             SoundSystem.Play(food.UseSound.GetSound(), Filter.Pvs(target), target, AudioParams.Default.WithVolume(-1f));
 
             if (string.IsNullOrEmpty(food.TrashPrototype))
@@ -341,7 +356,8 @@ namespace Content.Server.Nutrition.EntitySystems
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?
-                    (usedTypes & utensil.Types) != utensil.Types) // Type is not used already? (removes usage of identical utensils)
+                    (usedTypes & utensil.Types) !=
+                    utensil.Types) // Type is not used already? (removes usage of identical utensils)
                 {
                     // Add to used list
                     usedTypes |= utensil.Types;
@@ -352,7 +368,9 @@ namespace Content.Server.Nutrition.EntitySystems
             // If "required" field is set, try to block eating without proper utensils used
             if (component.UtensilRequired && (usedTypes & component.Utensil) != component.Utensil)
             {
-                _popupSystem.PopupEntity(Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), user, user);
+                _popupSystem.PopupEntity(
+                    Loc.GetString("food-you-need-to-hold-utensil", ("utensil", component.Utensil ^ usedTypes)), user,
+                    user);
                 return false;
             }
 

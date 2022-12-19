@@ -3,6 +3,7 @@ using Content.Server.Drone.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Tools.Innate;
 using Content.Server.UserInterface;
@@ -19,7 +20,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
@@ -29,6 +29,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
@@ -58,7 +59,8 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnActivateUIAttempt(EntityUid uid, DroneComponent component, UserOpenActivatableUIAttemptEvent args)
+        private void OnActivateUIAttempt(EntityUid uid, DroneComponent component,
+            UserOpenActivatableUIAttemptEvent args)
         {
             if (!_tagSystem.HasTag(args.Target, "DroneUsable"))
             {
@@ -128,16 +130,22 @@ namespace Content.Server.Drone
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
                 // Return true if the entity is/was controlled by a player and is not a drone or ghost.
-                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
+                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) &&
+                    !HasComp<GhostComponent>(entity))
                 {
                     // Filter out dead ghost roles. Dead normal players are intended to block.
-                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && entityMobState.IsDead()))
+                    if ((TryComp<MobStateComponent>(entity, out var entityMobState) &&
+                         HasComp<GhostTakeoverAvailableComponent>(entity) &&
+                         _mobStateSystem.IsDead(entity, entityMobState)))
                         continue;
                     if (_gameTiming.IsFirstTimePredicted)
-                        _popupSystem.PopupEntity(Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid, uid);
+                        _popupSystem.PopupEntity(
+                            Loc.GetString("drone-too-close", ("being", Identity.Entity(entity, EntityManager))), uid,
+                            uid);
                     return true;
                 }
             }
+
             return false;
         }
     }

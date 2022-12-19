@@ -91,7 +91,7 @@ namespace Content.Server.GameTicking
         public void SetGamePreset(string preset, bool force = false)
         {
             var proto = FindGamePreset(preset);
-            if(proto != null)
+            if (proto != null)
                 SetGamePreset(proto, force);
         }
 
@@ -180,7 +180,7 @@ namespace Content.Server.GameTicking
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (mobState.IsCritical())
+                if (_mobStateSystem.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
@@ -197,7 +197,7 @@ namespace Content.Server.GameTicking
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
             var meta = MetaData(ghost);
-            if(!string.IsNullOrWhiteSpace(mind.CharacterName))
+            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
                 meta.EntityName = mind.CharacterName;
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                 meta.EntityName = mind.Session.Name;

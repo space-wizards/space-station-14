@@ -1,6 +1,8 @@
+using System.Threading;
 using Content.Server.Body.Components;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Clothing.Components;
@@ -9,8 +11,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
-using Robust.Shared.Player;
-using System.Threading;
 
 namespace Content.Server.Medical
 {
@@ -18,6 +18,7 @@ namespace Content.Server.Medical
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
@@ -61,7 +62,8 @@ namespace Content.Server.Medical
         /// This is raised when someone with WearingStethoscopeComponent requests verbs on an item.
         /// It returns if the target is not a mob.
         /// </summary>
-        private void AddStethoscopeVerb(EntityUid uid, WearingStethoscopeComponent component, GetVerbsEvent<InnateVerb> args)
+        private void AddStethoscopeVerb(EntityUid uid, WearingStethoscopeComponent component,
+            GetVerbsEvent<InnateVerb> args)
         {
             if (!args.CanInteract || !args.CanAccess)
                 return;
@@ -112,6 +114,7 @@ namespace Content.Server.Medical
                 return;
             ev.Component.CancelToken = null;
         }
+
         // construct the doafter and start it
         private void StartListening(EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
@@ -135,7 +138,8 @@ namespace Content.Server.Medical
         public void ExamineWithStethoscope(EntityUid user, EntityUid target)
         {
             /// The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
-            if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || mobState.IsDead())
+            if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) ||
+                _mobStateSystem.IsDead(target, mobState))
             {
                 _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, user);
                 return;
@@ -190,8 +194,9 @@ namespace Content.Server.Medical
                 Component = component;
             }
         }
-
     }
 
-    public sealed class StethoscopeActionEvent : EntityTargetActionEvent {}
+    public sealed class StethoscopeActionEvent : EntityTargetActionEvent
+    {
+    }
 }

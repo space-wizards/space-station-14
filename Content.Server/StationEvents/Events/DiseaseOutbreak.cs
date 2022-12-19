@@ -1,11 +1,12 @@
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Content.Server.Station.Systems;
+using Content.Server.MobState;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
+
 /// <summary>
 /// Infects a couple people
 /// with a random disease that isn't super deadly
@@ -13,7 +14,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class DiseaseOutbreak : StationEventSystem
 {
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
-
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     public override string Prototype => "DiseaseOutbreak";
 
     /// <summary>
@@ -42,9 +43,10 @@ public sealed class DiseaseOutbreak : StationEventSystem
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in EntityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
-            if (!mobState.IsDead())
+            if (!_mobStateSystem.IsDead(mobState.Owner, mobState))
                 aliveList.Add(carrier);
         }
+
         RobustRandom.Shuffle(aliveList);
 
         // We're going to filter the above out to only alive mobs. Might change after future mobstate rework
@@ -64,7 +66,8 @@ public sealed class DiseaseOutbreak : StationEventSystem
             _diseaseSystem.TryAddDisease(target.Owner, disease, target);
 
             var station = StationSystem.GetOwningStation(target.Owner);
-            if(station == null) continue;
+            if (station == null)
+                continue;
             stationsToNotify.Add((EntityUid) station);
         }
     }

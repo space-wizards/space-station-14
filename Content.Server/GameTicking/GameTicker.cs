@@ -1,11 +1,11 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Chat;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Database;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Server.MobState;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
@@ -16,24 +16,23 @@ using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-#if EXCEPTION_TOLERANCE
-using Robust.Shared.Exceptions;
-#endif
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+#if EXCEPTION_TOLERANCE
+using Robust.Shared.Exceptions;
+#endif
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
         [Dependency] private readonly MapLoaderSystem _map = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -58,7 +57,8 @@ namespace Content.Server.GameTicking
             InitializeLobbyMusic();
             InitializeLobbyBackground();
             InitializeGamePreset();
-            DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
+            DebugTools.Assert(
+                _prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
 

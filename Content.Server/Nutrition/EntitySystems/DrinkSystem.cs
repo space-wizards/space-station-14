@@ -5,6 +5,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -39,6 +40,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -61,7 +63,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
         {
-            if(!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component))
                 return true;
 
             return _solutionContainerSystem.DrainAvailable(uid) <= 0;
@@ -74,20 +76,24 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var color = IsEmpty(uid, component) ? "gray" : "yellow";
             var openedText =
-                Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
+                Loc.GetString(IsEmpty(uid, component)
+                    ? "drink-component-on-examine-is-empty"
+                    : "drink-component-on-examine-is-opened");
+            args.Message.AddMarkup(
+                $"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
             if (!IsEmpty(uid, component))
             {
                 if (TryComp<ExaminableSolutionComponent>(component.Owner, out var comp))
                 {
                     //provide exact measurement for beakers
-                    args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
+                    args.Message.AddMarkup(
+                        $" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", _solutionContainerSystem.DrainAvailable(uid)))}");
                 }
                 else
                 {
                     //general approximation
                     string remainingString;
-                    switch ((int)_solutionContainerSystem.PercentFull(uid))
+                    switch ((int) _solutionContainerSystem.PercentFull(uid))
                     {
                         case int perc when perc == 100:
                             remainingString = "drink-component-on-examine-is-full";
@@ -102,6 +108,7 @@ namespace Content.Server.Nutrition.EntitySystems
                             remainingString = "drink-component-on-examine-is-mostly-empty";
                             break;
                     }
+
                     args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
                 }
             }
@@ -109,7 +116,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
         {
-            if(!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component))
                 return;
 
             if (opened == component.Opened)
@@ -136,12 +143,14 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
             if (!component.Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                SoundSystem.Play(component.OpenSounds.GetSound(), Filter.Pvs(args.User), args.User, AudioParams.Default);
+                SoundSystem.Play(component.OpenSounds.GetSound(), Filter.Pvs(args.User), args.User,
+                    AudioParams.Default);
 
                 SetOpen(uid, true, component);
                 return;
@@ -163,7 +172,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
                 _spillableSystem.SpillAt(uid, solution, "PuddleSmear");
 
-                SoundSystem.Play(component.BurstSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(component.BurstSound.GetSound(), Filter.Pvs(uid), uid,
+                    AudioParams.Default.WithVolume(-4));
             }
         }
 
@@ -231,7 +241,8 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!drink.Opened)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-not-open",
-                    ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner, user);
+                        ("owner", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner,
+                    user);
                 return true;
             }
 
@@ -239,7 +250,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 drinkSolution.DrainAvailable <= 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty",
-                    ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner, user);
+                        ("entity", EntityManager.GetComponent<MetaDataComponent>(drink.Owner).EntityName)), drink.Owner,
+                    user);
                 return true;
             }
 
@@ -259,12 +271,14 @@ namespace Content.Server.Nutrition.EntitySystems
                     user, target);
 
                 // logging
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium,
+                    $"{ToPrettyString(user):user} is forcing {ToPrettyString(target):target} to drink {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
             else
             {
                 // log voluntary drinking
-                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(target):target} is drinking {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low,
+                    $"{ToPrettyString(target):target} is drinking {ToPrettyString(drink.Owner):drink} {SolutionContainerSystem.ToPrettyString(drinkSolution)}");
             }
 
             drink.CancelToken = new CancellationTokenSource();
@@ -272,7 +286,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(user, drinkSolution);
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay, drink.CancelToken.Token, target, drink.Owner)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, forceDrink ? drink.ForceFeedDelay : drink.Delay,
+                drink.CancelToken.Token, target, drink.Owner)
             {
                 BreakOnUserMove = moveBreak,
                 BreakOnDamage = true,
@@ -305,9 +320,9 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!_bodySystem.TryGetBodyOrganComponents<StomachComponent>(uid, out var stomachs, body))
             {
                 _popupSystem.PopupEntity(
-                    forceDrink ?
-                        Loc.GetString("drink-component-try-use-drink-cannot-drink-other") :
-                        Loc.GetString("drink-component-try-use-drink-had-enough"),
+                    forceDrink
+                        ? Loc.GetString("drink-component-try-use-drink-cannot-drink-other")
+                        : Loc.GetString("drink-component-try-use-drink-had-enough"),
                     uid, args.User);
 
                 if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
@@ -351,14 +366,16 @@ namespace Content.Server.Nutrition.EntitySystems
                 var userName = Identity.Entity(args.User, EntityManager);
 
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), uid, uid);
+                    Loc.GetString("drink-component-force-feed-success", ("user", userName), ("flavors", flavors)), uid,
+                    uid);
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("drink-component-force-feed-success-user", ("target", targetName)),
                     args.User, args.User);
 
                 // log successful forced drinking
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium,
+                    $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to drink {ToPrettyString(args.Drink.Owner):drink}");
             }
             else
             {
@@ -366,10 +383,12 @@ namespace Content.Server.Nutrition.EntitySystems
                     Loc.GetString("drink-component-try-use-drink-success-slurp-taste", ("flavors", flavors)), args.User,
                     args.User);
                 _popupSystem.PopupEntity(
-                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User, Filter.PvsExcept(args.User), true);
+                    Loc.GetString("drink-component-try-use-drink-success-slurp"), args.User,
+                    Filter.PvsExcept(args.User), true);
 
                 // log successful voluntary drinking
-                _adminLogger.Add(LogType.Ingestion, LogImpact.Low, $"{ToPrettyString(args.User):target} drank {ToPrettyString(args.Drink.Owner):drink}");
+                _adminLogger.Add(LogType.Ingestion, LogImpact.Low,
+                    $"{ToPrettyString(args.User):target} drank {ToPrettyString(args.Drink.Owner):drink}");
             }
 
             SoundSystem.Play(args.Drink.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
@@ -395,7 +414,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 !_bodySystem.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && mobState.IsAlive())
+            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) &&
+                _mobStateSystem.IsAlive(uid, mobState))
                 return;
 
             AlternativeVerb verb = new()
@@ -418,7 +438,11 @@ namespace Content.Server.Nutrition.EntitySystems
             string remainingString = "drink-component-on-examine-is-half-full";
 
             if (TryComp<MetaDataComponent>(args.Examiner, out var examiner) && examiner.EntityName.Length > 0
-                && string.Compare(examiner.EntityName.Substring(0, 1), "m", StringComparison.InvariantCultureIgnoreCase) > 0)
+                                                                            && string.Compare(
+                                                                                examiner.EntityName.Substring(0, 1),
+                                                                                "m",
+                                                                                StringComparison
+                                                                                    .InvariantCultureIgnoreCase) > 0)
                 remainingString = "drink-component-on-examine-is-half-empty";
 
             return remainingString;

@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Inventory;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -12,7 +13,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Polymorph.Systems
@@ -25,6 +25,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -35,7 +36,8 @@ namespace Content.Server.Polymorph.Systems
             SubscribeLocalEvent<PolymorphedEntityComponent, RevertPolymorphActionEvent>(OnRevertPolymorphActionEvent);
         }
 
-        private void OnRevertPolymorphActionEvent(EntityUid uid, PolymorphedEntityComponent component, RevertPolymorphActionEvent args)
+        private void OnRevertPolymorphActionEvent(EntityUid uid, PolymorphedEntityComponent component,
+            RevertPolymorphActionEvent args)
         {
             Revert(uid);
         }
@@ -57,7 +59,8 @@ namespace Content.Server.Polymorph.Systems
 
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
-                Logger.Error($"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                Logger.Error(
+                    $"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 return;
             }
 
@@ -105,8 +108,8 @@ namespace Content.Server.Polymorph.Systems
             }
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
-                ("parent", Identity.Entity(uid, EntityManager)),
-                ("child", Identity.Entity(component.Parent, EntityManager))),
+                    ("parent", Identity.Entity(uid, EntityManager)),
+                    ("child", Identity.Entity(component.Parent, EntityManager))),
                 component.Parent);
             QueueDel(uid);
         }
@@ -116,7 +119,8 @@ namespace Content.Server.Polymorph.Systems
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 // warning instead of error because of the all-comps one entity test.
-                Logger.Warning($"{nameof(PolymorphedEntitySystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
+                Logger.Warning(
+                    $"{nameof(PolymorphedEntitySystem)} encountered an improperly set up polymorph component while initializing. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
                 RemCompDeferred(uid, component);
                 return;
             }
@@ -131,7 +135,7 @@ namespace Content.Server.Polymorph.Systems
                 DisplayName = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
                 UseDelay = TimeSpan.FromSeconds(proto.Delay),
-           };
+            };
 
             _actions.AddAction(uid, act, null);
         }
@@ -146,23 +150,26 @@ namespace Content.Server.Polymorph.Systems
 
                 if (!_proto.TryIndex(comp.Prototype, out PolymorphPrototype? proto))
                 {
-                    Logger.Error($"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while updating. Entity {ToPrettyString(comp.Owner)}. Prototype: {comp.Prototype}");
+                    Logger.Error(
+                        $"{nameof(PolymorphedEntitySystem)} encountered an improperly initialized polymorph component while updating. Entity {ToPrettyString(comp.Owner)}. Prototype: {comp.Prototype}");
                     RemCompDeferred(comp.Owner, comp);
                     continue;
                 }
 
-                if(proto.Duration != null && comp.Time >= proto.Duration)
+                if (proto.Duration != null && comp.Time >= proto.Duration)
                     Revert(comp.Owner);
 
                 if (!TryComp<MobStateComponent>(comp.Owner, out var mob))
                     continue;
 
-                if ((proto.RevertOnDeath && mob.IsDead()) ||
-                    (proto.RevertOnCrit && mob.IsCritical()))
+                if ((proto.RevertOnDeath && _mobStateSystem.IsDead(mob.Owner, mob)) ||
+                    (proto.RevertOnCrit && _mobStateSystem.IsCritical(mob.Owner, mob)))
                     Revert(comp.Owner);
             }
         }
     }
 
-    public sealed class RevertPolymorphActionEvent : InstantActionEvent { };
+    public sealed class RevertPolymorphActionEvent : InstantActionEvent
+    {
+    };
 }

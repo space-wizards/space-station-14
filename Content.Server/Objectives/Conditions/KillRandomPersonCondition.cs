@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.MobState.Components;
 using JetBrains.Annotations;
@@ -14,6 +15,7 @@ namespace Content.Server.Objectives.Conditions
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
+            var mobStateMgr = IoCManager.Resolve<MobStateSystem>();
             var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
@@ -22,7 +24,7 @@ namespace Content.Server.Objectives.Conditions
                     return false;
 
                 return entityMgr.TryGetComponent(entity, out MobStateComponent? mobState) &&
-                       mobState.IsAlive() &&
+                       mobStateMgr.IsAlive(entity.Value, mobState) &&
                        mc.Mind != mind;
             }).Select(mc => mc.Mind).ToList();
 

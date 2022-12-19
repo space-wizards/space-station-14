@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -43,6 +43,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -103,7 +104,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
-            _chatManager.DispatchServerAnnouncement($"Not enough players readied up for the game! There were {ev.Players.Length} players readied up out of {minPlayers} needed.");
+            _chatManager.DispatchServerAnnouncement(
+                $"Not enough players readied up for the game! There were {ev.Players.Length} players readied up out of {minPlayers} needed.");
             ev.Cancel();
             return;
         }
@@ -130,10 +132,11 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         foreach (var player in list)
         {
-            if (!ev.Profiles.ContainsKey(player.UserId) || player.AttachedEntity is not {} attached)
+            if (!ev.Profiles.ContainsKey(player.UserId) || player.AttachedEntity is not { } attached)
             {
                 continue;
             }
+
             prefList.Add(player);
 
             attached.EnsureComponent<SuspicionRoleComponent>();
@@ -141,20 +144,22 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         // Max is players-1 so there's always at least one innocent.
         var numTraitors = MathHelper.Clamp(ev.Players.Length / playersPerTraitor,
-            minTraitors, ev.Players.Length-1);
+            minTraitors, ev.Players.Length - 1);
 
         var traitors = new List<SuspicionTraitorRole>();
 
         for (var i = 0; i < numTraitors; i++)
         {
             IPlayerSession traitor;
-            if(prefList.Count == 0)
+            if (prefList.Count == 0)
             {
                 if (list.Count == 0)
                 {
-                    Logger.InfoS("preset", "Insufficient ready players to fill up with traitors, stopping the selection.");
+                    Logger.InfoS("preset",
+                        "Insufficient ready players to fill up with traitors, stopping the selection.");
                     break;
                 }
+
                 traitor = _random.PickAndTake(list);
                 Logger.InfoS("preset", "Insufficient preferred traitors, picking at random.");
             }
@@ -164,6 +169,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 list.Remove(traitor);
                 Logger.InfoS("preset", "Selected a preferred traitor.");
             }
+
             var mind = traitor.Data.ContentData()?.Mind;
             var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorID);
 
@@ -205,7 +211,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-suspicion-added-announcement"));
 
         var filter = Filter.Empty()
-            .AddWhere(session => ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
+            .AddWhere(session =>
+                ((IPlayerSession) session).ContentData()?.Mind?.HasRole<SuspicionTraitorRole>() ?? false);
 
         SoundSystem.Play(_addedSound.GetSound(), filter, AudioParams.Default);
 
@@ -294,7 +301,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 continue;
             }
 
-            if (!mobState.IsAlive())
+            if (!_mobStateSystem.IsAlive(playerEntity, mobState))
             {
                 continue;
             }
@@ -356,7 +363,8 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
         GameTicker.EndRound(text);
 
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds", ("seconds", (int) RoundEndDelay.TotalSeconds)));
+        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",
+            ("seconds", (int) RoundEndDelay.TotalSeconds)));
         _checkTimerCancel.Cancel();
 
         Timer.Spawn(RoundEndDelay, () => GameTicker.RestartRound());
@@ -436,13 +444,15 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
 
     private void OnRoleAdded(EntityUid uid, SuspicionRoleComponent component, RoleAddedEvent args)
     {
-        if (args.Role is not SuspicionRole role) return;
+        if (args.Role is not SuspicionRole role)
+            return;
         component.Role = role;
     }
 
     private void OnRoleRemoved(EntityUid uid, SuspicionRoleComponent component, RoleRemovedEvent args)
     {
-        if (args.Role is not SuspicionRole) return;
+        if (args.Role is not SuspicionRole)
+            return;
         component.Role = null;
     }
 

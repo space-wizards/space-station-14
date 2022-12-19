@@ -2,6 +2,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Shared.Examine;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Map;
@@ -13,6 +14,7 @@ public sealed class MindSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
 
     public override void Initialize()
@@ -94,7 +96,8 @@ public sealed class MindSystem : EntitySystem
 
                     // Async this so that we don't throw if the grid we're on is being deleted.
                     var gridId = spawnPosition.GetGridUid(EntityManager);
-                    if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid || !_mapManager.GridExists(gridId))
+                    if (!spawnPosition.IsValid(EntityManager) || gridId == EntityUid.Invalid ||
+                        !_mapManager.GridExists(gridId))
                     {
                         spawnPosition = _gameTicker.GetObserverSpawnPoint();
                     }
@@ -102,7 +105,8 @@ public sealed class MindSystem : EntitySystem
                     // TODO refactor observer spawning.
                     if (!spawnPosition.IsValid(EntityManager))
                     {
-                        Logger.ErrorS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
+                        Logger.ErrorS("mind",
+                            $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
                         return;
                     }
 
@@ -111,7 +115,8 @@ public sealed class MindSystem : EntitySystem
                     _ghostSystem.SetCanReturnToBody(ghostComponent, false);
 
                     // Log these to make sure they're not causing the GameTicker round restart bugs...
-                    Logger.DebugS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
+                    Logger.DebugS("mind",
+                        $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
                     if (mind.Mind == null)
                         return;
@@ -131,21 +136,26 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
-        var dead = TryComp<MobStateComponent?>(uid, out var state) && state.IsDead();
+        var dead = TryComp<MobStateComponent?>(uid, out var state) && _mobStateSystem.IsDead(uid, state);
 
         if (dead)
         {
-            if (mind.Mind?.Session == null) {
+            if (mind.Mind?.Session == null)
+            {
                 // Player has no session attached and dead
-                args.PushMarkup($"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", uid))}[/color]");
-            } else {
+                args.PushMarkup(
+                    $"[color=yellow]{Loc.GetString("mind-component-no-mind-and-dead-text", ("ent", uid))}[/color]");
+            }
+            else
+            {
                 // Player is dead with session
                 args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
             }
         }
         else if (!mind.HasMind)
         {
-            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
+            args.PushMarkup(
+                $"[color=mediumpurple]{Loc.GetString("comp-mind-examined-catatonic", ("ent", uid))}[/color]");
         }
         else if (mind.Mind?.Session == null)
         {

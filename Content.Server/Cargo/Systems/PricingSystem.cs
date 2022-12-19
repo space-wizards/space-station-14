@@ -3,6 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.MobState;
 using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
@@ -24,6 +25,7 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
@@ -87,7 +89,8 @@ public sealed class PricingSystem : EntitySystem
     {
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
-            Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
+            Logger.ErrorS("pricing",
+                $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
             return;
         }
 
@@ -98,21 +101,24 @@ public sealed class PricingSystem : EntitySystem
         var partRatio = totalPartsPresent / (double) totalParts;
         var partPenalty = component.Price * (1 - partRatio) * component.MissingBodyPartPenalty;
 
-        args.Price += (component.Price - partPenalty) * (state.IsAlive() ? 1.0 : component.DeathPenalty);
+        args.Price += (component.Price - partPenalty) *
+                      (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
     private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
     {
         if (!TryComp<StackComponent>(uid, out var stack))
         {
-            Logger.ErrorS("pricing", $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
+            Logger.ErrorS("pricing",
+                $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
             return;
         }
 
         args.Price += stack.Count * component.Price;
     }
 
-    private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
+    private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component,
+        ref PriceCalculationEvent args)
     {
         var price = 0f;
 
@@ -125,6 +131,7 @@ public sealed class PricingSystem : EntitySystem
                 price += (float) reagent.Quantity * reagentProto.PricePerUnit;
             }
         }
+
         args.Price += price;
     }
 
@@ -149,7 +156,8 @@ public sealed class PricingSystem : EntitySystem
             price += staticComp.Price;
         }
 
-        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackPriceComponent)), out var stackpriceProto) &&
+        if (prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackPriceComponent)),
+                out var stackpriceProto) &&
             prototype.Components.TryGetValue(factory.GetComponentName(typeof(StackComponent)), out var stackProto))
         {
             var stackPrice = (StackPriceComponent) stackpriceProto.Component;
@@ -205,7 +213,8 @@ public sealed class PricingSystem : EntitySystem
     /// <param name="predicate">An optional predicate that controls whether or not the entity is counted toward the total.</param>
     /// <param name="afterPredicate">An optional predicate to run after the price has been calculated. Useful for high scores or similar.</param>
     /// <returns>The total value of the grid.</returns>
-    public double AppraiseGrid(EntityUid grid, Func<EntityUid, bool>? predicate = null, Action<EntityUid, double>? afterPredicate = null)
+    public double AppraiseGrid(EntityUid grid, Func<EntityUid, bool>? predicate = null,
+        Action<EntityUid, double>? afterPredicate = null)
     {
         var xform = Transform(grid);
         var price = 0.0;

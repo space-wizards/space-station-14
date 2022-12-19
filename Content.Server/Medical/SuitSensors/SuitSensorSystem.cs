@@ -2,6 +2,7 @@ using Content.Server.Access.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
@@ -11,7 +12,6 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -22,6 +22,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -220,7 +221,8 @@ namespace Content.Server.Medical.SuitSensors
             }
         }
 
-        public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null, TransformComponent? transform = null)
+        public SuitSensorStatus? GetSensorState(EntityUid uid, SuitSensorComponent? sensor = null,
+            TransformComponent? transform = null)
         {
             if (!Resolve(uid, ref sensor, ref transform))
                 return null;
@@ -244,7 +246,7 @@ namespace Content.Server.Medical.SuitSensors
             var isAlive = false;
             if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
             {
-                isAlive = mobState.IsAlive();
+                isAlive = _mobStateSystem.IsAlive(sensor.User.Value, mobState);
             }
 
             // get mob total damage
@@ -308,9 +310,12 @@ namespace Content.Server.Medical.SuitSensors
                 return null;
 
             // check name, job and alive
-            if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name)) return null;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job)) return null;
-            if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive)) return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_NAME, out string? name))
+                return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_JOB, out string? job))
+                return null;
+            if (!payload.TryGetValue(SuitSensorConstants.NET_IS_ALIVE, out bool? isAlive))
+                return null;
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
