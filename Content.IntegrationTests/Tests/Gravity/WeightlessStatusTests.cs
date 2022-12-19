@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Server.Gravity;
-using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
 using NUnit.Framework;

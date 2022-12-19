@@ -137,7 +137,7 @@ namespace Content.Server.Medical
             /// The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
             if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || mobState.IsDead())
             {
-                _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, user);
                 return;
             }
 
@@ -149,7 +149,7 @@ namespace Content.Server.Medical
 
             var message = GetDamageMessage(value);
 
-            _popupSystem.PopupEntity(Loc.GetString(message), target, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(message), target, user);
         }
 
         private string GetDamageMessage(FixedPoint2 totalOxyloss)

@@ -151,7 +151,7 @@ namespace Content.Server.Nuke
             if (component.Status == NukeStatus.ARMED)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
-                _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
+                _popups.PopupEntity(msg, uid, args.User);
 
                 args.Cancel();
             }
@@ -591,7 +591,7 @@ namespace Content.Server.Nuke
 
             _doAfterSystem.DoAfter(doafter);
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
-                Filter.Entities(user), PopupType.LargeCaution);
+                user, PopupType.LargeCaution);
         }
 
         private void NukeArmedAudio(NukeComponent component)
