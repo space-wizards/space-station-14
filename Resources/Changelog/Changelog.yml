@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added a sussy lil friend to the station., type: Add}
-  id: 2273
-  time: '2022-09-11T00:08:17.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: Pipes with high pressure will warn you when unachoring them and take
@@ -2923,3 +2918,10 @@ Entries:
     type: Fix}
   id: 2772
   time: '2022-12-19T02:39:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mining drills and power drills can now be printed at the protolathe.,
+    type: Add}
+  - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
+  id: 2773
+  time: '2022-12-19T04:38:30.0000000+00:00'
