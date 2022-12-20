@@ -67,6 +67,7 @@ public sealed partial class LatheMenu : DefaultWindow
             return;
 
         Materials.Clear();
+
         foreach (var (id, amount) in materials.Storage)
         {
             if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
@@ -76,6 +77,13 @@ public sealed partial class LatheMenu : DefaultWindow
                 ("material", name), ("amount", amount));
             Materials.AddItem(mat, _spriteSystem.Frame0(material.Icon), false);
         }
+
+        if (Materials.Count == 0)
+        {
+            var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
+            Materials.AddItem(noMaterialsMsg, null, false);
+        }
+
         PopulateRecipes(lathe);
     }
 
