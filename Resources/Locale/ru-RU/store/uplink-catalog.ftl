@@ -1,6 +1,6 @@
 # Weapons
 uplink-pistol-viper-name = Гадюка
-uplink-pistol-viper-desc = Небольшой, легко скрываемый, но маломощный пистолет. Использует патроны калибра .35 авто. 
+uplink-pistol-viper-desc = Небольшой, легко скрываемый, но маломощный пистолет. Использует патроны калибра .35 авто.
 uplink-revolver-python-name = Питон
 uplink-revolver-python-desc = Громкий и смертоносный револьвер. Использует Магнум .45.
 uplink-pistol-cobra-name = Кобра
@@ -37,7 +37,8 @@ uplink-mosin-ammo-name = Box of .30 rifle magazines
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
-uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
+uplink-holopara-kit-desc =
+    The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
     The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
 uplink-holster-name = Shoulder Holster
 uplink-holster-desc = A deep shoulder holster capable of holding many types of ballistics.
