@@ -27,7 +27,9 @@ namespace Content.Server.Research.Systems
 
         private void OnStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
         {
-            component.Id = EntityQuery<ResearchServerComponent>(true).Count();
+            var unusedId = EntityQuery<ResearchServerComponent>(true)
+                .Max(s => s.Id) + 1;
+            component.Id = unusedId;
         }
 
         public ResearchServerComponent? GetServerById(int id)

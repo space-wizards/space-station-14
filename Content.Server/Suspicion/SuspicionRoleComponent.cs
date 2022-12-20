@@ -13,7 +13,6 @@ namespace Content.Server.Suspicion
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         private Role? _role;
         [ViewVariables]
@@ -54,7 +53,7 @@ namespace Content.Server.Suspicion
         public bool IsDead()
         {
             return _entMan.TryGetComponent(Owner, out MobStateComponent? state) &&
-                   _mobStateSystem.IsDead(Owner, state);
+                   _entMan.EntitySysManager.GetEntitySystem<MobStateSystem>().IsDead(Owner, state);
         }
 
         public bool IsInnocent()

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Hands;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Popups;
@@ -33,8 +33,8 @@ public abstract class SharedMultiHandedItemSystem : EntitySystem
         args.Cancel();
         if (_timing.IsFirstTimePredicted)
         {
-            _popup.PopupEntity(Loc.GetString("multi-handed-item-pick-up-fail",
-                ("number", component.HandsNeeded - 1), ("item", uid)), args.User, Filter.Local());
+            _popup.PopupCursor(Loc.GetString("multi-handed-item-pick-up-fail",
+                ("number", component.HandsNeeded - 1), ("item", uid)), args.User);
         }
     }
 
