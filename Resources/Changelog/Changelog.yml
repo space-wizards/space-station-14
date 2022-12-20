@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: We have changed to the old airlock models with that soul sound some
-      people recognize., type: Add}
-  id: 2286
-  time: '2022-09-12T05:55:08.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Locks on cabinets actually work., type: Fix}
@@ -2932,3 +2926,11 @@ Entries:
       blood can be converted into wine using a bible at a ratio of 1:1', type: Add}
   id: 2785
   time: '2022-12-20T04:05:02.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: NT has begun distribution of 'Robert's Rules of Escalation' to stations,
+    type: Add}
+  - {message: NT has begun distribution of books from the 'Newton's Guide to Atmos'
+      series to stations, type: Add}
+  id: 2786
+  time: '2022-12-20T04:11:36.0000000+00:00'
