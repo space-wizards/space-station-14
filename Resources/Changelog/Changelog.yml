@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Clumsy for clowns has been fixed again., type: Fix}
-  id: 2290
-  time: '2022-09-13T13:52:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Clowns bonking on a table no longer get free movement., type: Fix}
   id: 2291
   time: '2022-09-13T13:53:03.0000000+00:00'
@@ -2942,3 +2937,8 @@ Entries:
       points for a random technology disk.', type: Add}
   id: 2789
   time: '2022-12-20T22:39:58.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: PA now activates the singularity generator again., type: Fix}
+  id: 2790
+  time: '2022-12-20T23:54:57.0000000+00:00'
