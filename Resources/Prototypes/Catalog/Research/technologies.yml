@@ -484,6 +484,7 @@
   - MicroLaserStockPart
   - MicroManipulatorStockPart
   - ScanningModuleStockPart
+  - NodeScanner
 
 - type: technology
   name: technologies-robotics-technology
