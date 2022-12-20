@@ -73,24 +73,16 @@ namespace Content.Client.Changelog
 
         public async Task<List<ChangelogEntry>> LoadChangelog()
         {
-            var paths = new List<ResourcePath>()
-            {
-                new ResourcePath("/Changelog/Changelog.yml"),
-                new ResourcePath("/Changelog/ChangelogSyndie.yml")
-            };
+            var paths = _resource.ContentFindFiles("/Changelog/")
+                .Where(filePath => filePath.Extension == "yml")
+                .ToArray();
 
             var result = new List<ChangelogEntry>();
             foreach (var path in paths)
             {
-                if (!_resource.ContentFileExists(path))
-                {
-                    continue;
-                }
-
                 var changelog = await LoadChangelogFile(path);
                 result = result.Union(changelog).ToList();
             }
-
             return result.OrderBy(x => x.Time).ToList();
         }
 
