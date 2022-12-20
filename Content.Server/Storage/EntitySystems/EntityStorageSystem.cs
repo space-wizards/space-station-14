@@ -164,6 +164,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        RaiseLocalEvent(uid, new StorageBeforeOpenEvent());
         component.Open = true;
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
@@ -414,7 +415,7 @@ public sealed class EntityStorageSystem : EntitySystem
         }
     }
 
-    private void ReleaseGas(EntityUid uid, EntityStorageComponent component)
+    public void ReleaseGas(EntityUid uid, EntityStorageComponent component)
     {
         if (!component.Airtight)
             return;
