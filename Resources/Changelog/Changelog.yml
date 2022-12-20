@@ -1,23 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: Pipes with high pressure will warn you when unachoring them and take
-      slightly longer., type: Fix}
-  id: 2274
-  time: '2022-09-11T06:30:10.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: Melee weapons that change damage now show their damage correctly., type: Fix}
-  - {message: Syndicate E-pens is no longer shown to be a weapon upon examination.,
-    type: Fix}
-  id: 2275
-  time: '2022-09-11T06:39:37.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: 'The job icon displayed for Quartermaster has been changed to a command
-      blue, to better represent where they stand on the station!', type: Tweak}
-  id: 2276
-  time: '2022-09-11T06:40:14.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Slipping should feel nicer., type: Fix}
@@ -2925,3 +2906,26 @@ Entries:
   - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
   id: 2773
   time: '2022-12-19T04:38:30.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Fixed tomato and vomit splats losing their color/sprite., type: Fix}
+  - {message: Fixed wet floor sparkles getting stuck on one animation frame., type: Fix}
+  - {message: Wet floor sparkles are now slightly more opaque and stay invisible for
+      less of their animation cycle., type: Tweak}
+  id: 2774
+  time: '2022-12-20T02:40:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Singularities now explicitly consume things in containers they consume
+      instead of it being implied. If they can't consume something inside of a container
+      they're consuming it will be dropped to the ground., type: Add}
+  - {message: Admins can now pick up singularities (if they bother to VV them into
+      being items) and wander around without drilling a chasm through the station.,
+    type: Add}
+  id: 2775
+  time: '2022-12-20T02:47:15.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: Added wares to the Nutrimax and Kitchenware machines., type: Add}
+  id: 2776
+  time: '2022-12-20T02:48:13.0000000+00:00'

@@ -28,14 +28,7 @@
       - SlipLayer
       hard: false
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
-
-- type: entity
-  name: puddle
-  id: PuddleGeneric
-  parent: PuddleSmear
+  - type: PuddleVisualizer
 
 - type: entity
   name: gibblets
@@ -48,6 +41,7 @@
     state: gibblet-0
     netsync: false
   - type: Puddle
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -55,8 +49,7 @@
         - ReagentId: Water
           Quantity: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -72,11 +65,9 @@
     state: smear-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -92,10 +83,9 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -113,16 +103,15 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: Evaporation
     evaporateTime: 400 # very slow
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
 
 - type: entity
   name: vomit
-  id: PuddleVomit # No parent because we don't want the visualizer
+  id: PuddleVomit # No parent because we don't want the VisualizerSystem to behave in the standard way
   description: Gross.
   components:
   - type: Transform
@@ -146,6 +135,7 @@
     netsync: false
   - type: Puddle
     slipThreshold: 5
+    recolor: false
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -158,9 +148,8 @@
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      customPuddleSprite: true
+  - type: PuddleVisualizer
+    customPuddleSprite: true
 
 - type: entity
   name: toxins vomit
@@ -182,8 +171,8 @@
         - ReagentId: Water
           Quantity: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
+    customPuddleSprite: true
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -201,8 +190,7 @@
   - type: Puddle
     evaporateTime: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
