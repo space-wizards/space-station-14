@@ -13,9 +13,7 @@
 - type: entity
   id: Present
   parent: [PresentBase, BaseStorageItem]
-  name: Present
   suffix: Empty
-  description: A little box with incredible surprises inside.
   components:
   - type: Item
     size: 30
@@ -25,9 +23,7 @@
 - type: entity
   id: PresentRandomUnsafe
   parent: [PresentBase, BaseItem]
-  name: Present
   suffix: Filled Unsafe
-  description: A little box with incredible surprises inside.
   components:
   - type: GiftPackin
     wrapper: PresentTrash
@@ -42,9 +38,7 @@
 - type: entity
   id: PresentRandomInsane
   parent: PresentRandomUnsafe
-  name: Present
   suffix: Filled Insane
-  description: A little box with incredible surprises inside.
   components:
     - type: GiftPackin
       insaneMode: true
@@ -52,9 +46,7 @@
 - type: entity
   id: PresentRandom
   parent: [PresentBase, BaseItem]
-  name: Present
   suffix: Filled Safe
-  description: A little box with incredible surprises inside.
   components:
   - type: SpawnItemsOnUse
     items:
