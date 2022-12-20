@@ -365,7 +365,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         // Can't attack yourself
         if (user == ev.Target ||
             // No deleted targets.
-            (ev.Target != null && Deleted(ev.Target)))
+            (ev.Target != null && Deleted(ev.Target.Value)))
         {
             Audio.PlayPredicted(component.SwingSound, component.Owner, user);
             return;
