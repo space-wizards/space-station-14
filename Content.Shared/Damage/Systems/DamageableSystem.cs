@@ -292,7 +292,7 @@ namespace Content.Shared.Damage
                 return false;
 
             int ent1DeadState = 0;
-            foreach (var state in oldstate._highestToLowestStates)
+            foreach (var state in oldstate.ThresholdsReverseLookup)
             {
                 if (state.Value == MobState.MobState.Dead)
                 {
@@ -301,7 +301,7 @@ namespace Content.Shared.Damage
             }
 
             int ent2DeadState = 0;
-            foreach (var state in newstate._highestToLowestStates)
+            foreach (var state in newstate.ThresholdsReverseLookup)
             {
                 if (state.Value == MobState.MobState.Dead)
                 {

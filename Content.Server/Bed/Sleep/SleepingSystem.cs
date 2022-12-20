@@ -105,7 +105,7 @@ namespace Content.Server.Bed.Sleep
         /// In crit, we wake up if we are not being forced to sleep.
         /// And, you can't sleep when dead...
         /// </summary>
-        private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, SleepingComponent component, ref MobStateChangedEvent args)
         {
             if (args.CurrentMobState == Shared.MobState.MobState.Dead)
             {

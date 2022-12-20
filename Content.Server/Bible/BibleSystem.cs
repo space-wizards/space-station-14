@@ -190,7 +190,7 @@ namespace Content.Server.Bible
         /// Starts up the respawn stuff when
         /// the chaplain's familiar dies.
         /// </summary>
-        private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
+        private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, ref MobStateChangedEvent args)
         {
             if (args.CurrentMobState != Shared.MobState.MobState.Dead || component.Source == null)
                 return;

@@ -54,7 +54,7 @@ namespace Content.Server.Ghost.Roles
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, ref MobStateChangedEvent args)
         {
             switch (args.CurrentMobState)
             {

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Bed.Sleep;
+﻿using Content.Shared.Alert;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Disease.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
@@ -12,11 +13,33 @@ using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.MobState.EntitySystems;
 
 public abstract partial class SharedMobStateSystem
 {
+
+    private void SubscribeMiscEvents()
+    {
+        SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
+        SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+        SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(OnUseAttempt);
+        SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
+        SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
+        SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
+        SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+        SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
+        SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
+        SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
+        SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
+        SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
+        SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+        SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
+        SubscribeLocalEvent<MobStateComponent, AttemptSneezeCoughEvent>(OnSneezeAttempt);
+    }
+
 
     private void OnSleepAttempt(EntityUid uid, MobStateComponent component, ref TryingToSleepEvent args)
     {
@@ -45,8 +68,68 @@ public abstract partial class SharedMobStateSystem
             args.Cancel();
     }
 
+    private void OnStateExitMiscSystems(MobStateComponent component, MobState state)
+    {
+        var uid = component.Owner;
+        switch (state)
+        {
+            case MobState.Alive:
+                //unused
+                break;
+            case MobState.Critical:
+                _standing.Stand(uid);
+                break;
+            case MobState.Dead:
+                RemComp<CollisionWakeComponent>(uid);
+                _standing.Stand(uid);
+                if (!_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+                {
+                    _physics.SetCanCollide(physics, true);
+                }
+                break;
+            case MobState.Invalid:
+                //unused
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
+    private void OnStateEnteredMiscSystems(MobStateComponent component, MobState state)
+    {
+        var uid = component.Owner;
+        switch (state)
+        {
+            case MobState.Alive:
+                _standing.Stand(uid);
+                _appearance.SetData(uid, MobStateVisuals.State, MobState.Alive);
+                break;
+            case MobState.Critical:
+                Alerts.ShowAlert(uid, AlertType.HumanCrit);
+                _standing.Down(uid);
+                _appearance.SetData(uid, MobStateVisuals.State, MobState.Critical);
+                break;
+            case MobState.Dead:
+                EnsureComp<CollisionWakeComponent>(uid);
+                _standing.Down(uid);
+
+                if (_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+                {
+                    _physics.SetCanCollide(physics, false);
+                }
+
+                _appearance.SetData(uid, MobStateVisuals.State, MobState.Dead);
+                break;
+            case MobState.Invalid:
+                //unused;
+                break;
+            default:
+                throw new NotImplementedException();
+        }
+    }
+
     #region ActionBlocker
-        private void OnStateChanged(MobStateChangedEvent ev)
+    private void BlockActions(ref MobStateChangedEvent ev)
         {
             _blocker.UpdateCanMove(ev.Entity);
         }

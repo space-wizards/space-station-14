@@ -165,7 +165,7 @@ namespace Content.Server.Atmos.Miasma
             ToggleDecomposition(uid, decompose);
         }
 
-        private void OnMobStateChanged(EntityUid uid, PerishableComponent component, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, PerishableComponent component, ref MobStateChangedEvent args)
         {
             if (_mobState.IsDead(uid))
             {

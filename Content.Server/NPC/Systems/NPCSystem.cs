@@ -126,7 +126,7 @@ namespace Content.Server.NPC.Systems
             _htn.UpdateNPC(ref _count, _maxUpdates, frameTime);
         }
 
-        private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
+        private void OnMobStateChange(EntityUid uid, NPCComponent component, ref MobStateChangedEvent args)
         {
             if (HasComp<ActorComponent>(uid))
                 return;

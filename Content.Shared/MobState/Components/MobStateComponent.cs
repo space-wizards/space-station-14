@@ -19,17 +19,15 @@ namespace Content.Shared.MobState.Components
     [Access(typeof(SharedMobStateSystem))]
     public sealed class MobStateComponent : Component
     {
-        /// <summary>
-        ///     States that this <see cref="MobStateComponent"/> mapped to
-        ///     the amount of damage at which they are triggered.
-        ///     A threshold is reached when the total damage of an entity is equal
-        ///     to or higher than the int key, but lower than the next threshold.
-        ///     Ordered from lowest to highest.
-        /// </summary>
-        [DataField("thresholds")] public readonly SortedDictionary<int, MobState> _lowestToHighestStates = new();
-
         //default mobstate is always the lowest state level
-        [ViewVariables] public MobState CurrentState { get; set; } = (MobState) 1;
+        [ViewVariables] public MobState CurrentState { get; set; } = MobState.Alive;
+
+        [DataField("allowedMobStates")] public HashSet<MobState> AllowedStates = new()
+            {
+                MobState.Alive,
+                MobState.Critical,
+                MobState.Dead
+            };
 
         /// <summary>
         /// Tickets that determine if we should be in a specific state. Tickets are checked from highest enum to lowest.
@@ -38,22 +36,18 @@ namespace Content.Shared.MobState.Components
         public ushort[]
             StateTickets =
                 new ushort[Enum.GetValues(typeof(MobState)).Length - 1]; //subtract 1 because invalid is not a state
-
-        [ViewVariables] public FixedPoint2? CurrentThreshold { get; set; }
-
-        public IEnumerable<KeyValuePair<int, MobState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
     }
 
     [Serializable, NetSerializable]
     public sealed class MobStateComponentState : ComponentState
     {
-        public readonly FixedPoint2? CurrentThreshold;
+        public readonly HashSet<MobState> AllowedStates;
         public readonly ushort[] StateTickets;
 
-        public MobStateComponentState(MobStateComponent comp)
+        public MobStateComponentState(HashSet<MobState> allowedStates, ushort[] stateTickets)
         {
-            CurrentThreshold = comp.CurrentThreshold;
-            StateTickets = comp.StateTickets;
+            AllowedStates = allowedStates;
+            StateTickets = stateTickets;
         }
     }
 }

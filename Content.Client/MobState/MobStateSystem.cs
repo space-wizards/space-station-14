@@ -46,12 +46,12 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
     {
         if (args.Current is not MobStateComponentState state) return;
 
-        if (component.CurrentThreshold == state.CurrentThreshold)
+        if (component.ActiveThreshold == state.CurrentThreshold)
            return;
 
         if (state.CurrentThreshold == null)
         {
-            RemoveState(component);
+            RemoveState(uid,component);
         }
         else
         {

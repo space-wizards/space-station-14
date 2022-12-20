@@ -80,7 +80,7 @@ namespace Content.Server.Drone
             }
         }
 
-        private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, DroneComponent drone, ref MobStateChangedEvent args)
         {
             if (args.CurrentMobState == Shared.MobState.MobState.Dead)
             {

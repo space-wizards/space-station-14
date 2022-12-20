@@ -62,7 +62,7 @@ namespace Content.Server.Zombies
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit
         /// </summary>
-        private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
+        private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, ref MobStateChangedEvent args)
         {
             if (args.CurrentMobState == Shared.MobState.MobState.Dead ||
                 args.CurrentMobState == Shared.MobState.MobState.Critical)

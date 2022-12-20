@@ -126,7 +126,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     ///     This is just checked if the last human somehow dies
     ///     by starving or flying off into space.
     /// </remarks>
-    private void OnMobStateChanged(MobStateChangedEvent ev)
+    private void OnMobStateChanged(ref MobStateChangedEvent ev)
     {
         if (!RuleAdded)
             return;

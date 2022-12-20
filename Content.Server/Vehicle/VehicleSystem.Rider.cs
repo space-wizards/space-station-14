@@ -46,7 +46,7 @@ namespace Content.Server.Vehicle
         /// <summary>
         /// Kick the rider off the vehicle if they go into crit or die.
         /// </summary>
-        private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, RiderComponent rider, ref MobStateChangedEvent args)
         {
             if (args.CurrentMobState is Shared.MobState.MobState.Critical or Shared.MobState.MobState.Dead)
             {

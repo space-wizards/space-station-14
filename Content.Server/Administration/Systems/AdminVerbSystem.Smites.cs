@@ -216,11 +216,11 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState._highestToLowestStates.Where(x => x.Value == Shared.MobState.MobState.Critical).FirstOrNull();
+                    var critState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Critical).FirstOrNull();
                     if (critState is null)
                     {
                         // We can't crit them so try killing them.
-                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == Shared.MobState.MobState.Dead).FirstOrNull();
+                        var deadState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Dead).FirstOrNull();
                         if (deadState is null)
                             return; // whelp.
 

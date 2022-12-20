@@ -88,7 +88,7 @@ namespace Content.Server.DoAfter
             args.State = new DoAfterComponentState(toAdd);
         }
 
-        private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
+        private void OnStateChanged(EntityUid uid, DoAfterComponent component, ref MobStateChangedEvent args)
         {
             if (!args.CurrentMobState.IsIncapacitated())
                 return;

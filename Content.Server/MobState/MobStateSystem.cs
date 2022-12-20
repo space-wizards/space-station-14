@@ -14,6 +14,6 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
     private void OnMobGetState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
     {
-        args.State = new MobStateComponentState(component.CurrentThreshold);
+        args.State = new MobStateComponentState(component.ActiveThreshold);
     }
 }
