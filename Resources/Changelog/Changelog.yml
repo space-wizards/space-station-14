@@ -1,11 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The fallback gamemode should something happen is now extended, not
-      sandbox.', type: Fix}
-  - {message: Removed fun!, type: Remove}
-  id: 2288
-  time: '2022-09-13T01:47:59.0000000+00:00'
 - author: themias
   changes:
   - {message: Handheld radios can now receive messages properly, type: Fix}
@@ -2935,3 +2928,14 @@ Entries:
       the dead move with ones that are at least barely bearable!, type: Fix}
   id: 2787
   time: '2022-12-20T22:24:50.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Christmas trees with gifts under them now grant gifts to all crew members!
+      No presents are provided before or after December., type: Add}
+  - {message: Ghosts can see the contents of gifts., type: Add}
+  - {message: Some gifts may have slightly absurd or game breaking content if you're
+      lucky., type: Add}
+  - {message: Admins will have an easier time running santa-related events (as santa
+      can see inside gifts), type: Add}
+  id: 2788
+  time: '2022-12-20T22:34:34.0000000+00:00'
