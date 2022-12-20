@@ -234,6 +234,16 @@
      Gold: 100
 
 - type: latheRecipe
+  id: TechDiskComputerCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: cpu_science }
+  result: TechDiskComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
   id: CrewMonitoringComputerCircuitboard
   icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
   result: CrewMonitoringComputerCircuitboard

@@ -36,3 +36,21 @@
   components:
   - type: ResearchDisk
     unlockAllTech: true
+
+- type: entity
+  parent: BaseItem
+  id: TechnologyDisk
+  name: technology disk
+  description: A disk for the R&D server containing research technology.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    layers:
+    - state: datadisk_base
+      map: ["enum.DamageStateVisualLayers.Base"]
+    - state: datadisk_label
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        datadisk_base: Sixteen
+  - type: TechnologyDisk
