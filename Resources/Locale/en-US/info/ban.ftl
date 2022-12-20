@@ -9,6 +9,6 @@ cmd-ban-hint-duration = [duration]
 
 # listbans
 cmd-banlist-desc = Lists a user's active bans.
-cmd-banlist-help = {$Command} <name or user ID>
+cmd-banlist-help = Usage: banlist <name or user ID>
 cmd-banlist-empty = No active bans found for {$user}
 cmd-ban-hint = <name/user ID>
