@@ -55,9 +55,11 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
     {
-        if (!component.MayTransfer ||
+        if (args.Handled ||
+            !component.MayTransfer ||
+            !Timing.IsFirstTimePredicted ||
             args.Target == null ||
-            uid == args.Target ||
+            args.Used == args.Target ||
             Deleted(args.Target) ||
             !TryComp(args.Target, out BallisticAmmoProviderComponent? targetComponent) ||
             targetComponent.Whitelist == null)
@@ -77,94 +79,50 @@ public abstract partial class SharedGunSystem
             return;
         }
 
-        void ReportInvalidAmmo(EntityUid ammo, EntityUid target)
-        {
-            Popup(
-                Loc.GetString("gun-ballistic-transfer-invalid",
-                    ("ammoEntity", ammo), ("targetEntity", target)),
-                args.Used,
-                args.User);
-        }
-
-        EntityUid? cartridge = null;
-
-        // The ammo provider has an already-spawned entity within it, so we
-        // have to match that against the target's whitelist.
-        if (component.Entities.Count > 0)
-        {
-            var top = component.Entities[^1];
-
-            if (!targetComponent.Whitelist.IsValid(top))
-            {
-                ReportInvalidAmmo(top, args.Target.Value);
-                return;
-            }
-
-            component.Entities.RemoveAt(component.Entities.Count - 1);
-            component.Container.Remove(top);
-
-            cartridge = top;
-        }
-        // There's still ammo left in the provider, but it isn't spawned.
-        else if (component.UnspawnedCount > 0)
-        {
-            // Optimize for the case where both ammo providers have the same fill prototype.
-            if (component.FillProto == targetComponent.FillProto)
-            {
-                component.UnspawnedCount--;
-                targetComponent.UnspawnedCount++;
-            }
-            else
-            {
-                // TODO There is as of yet no way to check an EntityWhitelist
-                // against an unspawned prototype, so let's spawn one in null space
-                // to check, then use it if it's actually compatible.
-                var testEntity = Spawn(component.FillProto, MapCoordinates.Nullspace);
-
-                if (!targetComponent.Whitelist.IsValid(testEntity))
-                {
-                    ReportInvalidAmmo(testEntity, args.Target.Value);
-                    Del(testEntity);
-                    return;
-                }
-
-                component.UnspawnedCount--;
-
-                // The server will spawn an entity, and we'll have to pick up on
-                // that instead of spawning one for the client.
-                if (!testEntity.IsClientSide())
-                    cartridge = testEntity;
-                else
-                    Del(testEntity);
-            }
-        }
-        // There's no ammo left.
-        else
+        if (component.Entities.Count + component.UnspawnedCount == 0)
         {
             Popup(
                 Loc.GetString("gun-ballistic-transfer-empty",
-                    ("entity", uid)),
+                    ("entity", args.Used)),
                 args.Used,
                 args.User);
             return;
         }
 
-        // Insert the cartridge into the target AmmoProvider from the server.
-        if (cartridge != null)
+        void SimulateInsertAmmo(EntityUid ammo, EntityUid ammoProvider, EntityCoordinates coordinates)
         {
-            EnsureComp<AmmoComponent>(cartridge.Value);
-            _transform.SetCoordinates(cartridge.Value, Transform(args.Target.Value).Coordinates);
-
-            targetComponent.Entities.Add(cartridge.Value);
-            targetComponent.Container.Insert(cartridge.Value);
+            var evInsert = new InteractUsingEvent(args.User, ammo, ammoProvider, coordinates);
+            RaiseLocalEvent(ammoProvider, evInsert);
         }
 
-        UpdateBallisticAppearance(component);
-        UpdateBallisticAppearance(targetComponent);
-        Dirty(component);
-        Dirty(targetComponent);
+        List<IShootable> ammo = new();
+        var evTakeAmmo = new TakeAmmoEvent(1, ammo, Transform(args.Used).Coordinates, args.User);
+        RaiseLocalEvent(args.Used, evTakeAmmo);
 
-        Audio.PlayPredicted(targetComponent.SoundInsert, args.Target.Value, args.User);
+        foreach (var shot in ammo)
+        {
+            if (shot is not AmmoComponent cast)
+                continue;
+
+            if (!targetComponent.Whitelist.IsValid(cast.Owner))
+            {
+                Popup(
+                    Loc.GetString("gun-ballistic-transfer-invalid",
+                        ("ammoEntity", cast.Owner),
+                        ("targetEntity", args.Target.Value)),
+                    args.Used,
+                    args.User);
+
+                // TODO: For better or worse, this will play a sound, but it's the
+                // more future-proof thing to do than copying the same code
+                // that OnBallisticInteractUsing has, sans sound.
+                SimulateInsertAmmo(cast.Owner, args.Used, Transform(args.Used).Coordinates);
+            }
+            else
+            {
+                SimulateInsertAmmo(cast.Owner, args.Target.Value, Transform(args.Target.Value).Coordinates);
+            }
+        }
     }
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
