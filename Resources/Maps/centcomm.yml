@@ -97,7 +97,7 @@ entities:
 - uid: 0
   components:
   - type: MetaData
-  - parent: null
+  - parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -8943,8 +8943,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
+      - 18.405577
+      - 69.24003
       - 0
       - 0
       - 0
@@ -9410,6 +9410,14 @@ entities:
   - pos: -2.5,2.5
     parent: 0
     type: Transform
+- uid: 76
+  type: FaxMachineCentcom
+  components:
+  - pos: -2.5,-2.5
+    parent: 0
+    type: Transform
+  - name: CentComm
+    type: FaxMachine
 - uid: 77
   type: ReinforcedWindow
   components:

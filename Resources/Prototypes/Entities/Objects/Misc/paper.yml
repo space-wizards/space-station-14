@@ -57,9 +57,6 @@
   components:
     - type: NukeCodePaper
     - type: Paper
-      content: |
-        [color=red]TOP SECRET![/color]
-        Nuclear device activation code:
 
 - type: entity
   name: pen

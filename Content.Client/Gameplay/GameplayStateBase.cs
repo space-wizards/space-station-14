@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Client.Clickable;
 using Content.Client.ContextMenu.UI;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -22,6 +23,7 @@ namespace Content.Client.Gameplay
     [Virtual]
     public class GameplayStateBase : State, IEntityEventSubscriber
     {
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
@@ -63,7 +65,7 @@ namespace Content.Client.Gameplay
         {
             _vvm.RegisterDomain("enthover", ResolveVVHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
-            _comparer = new ClickableEntityComparer(_entityManager);
+            _comparer = new ClickableEntityComparer();
         }
 
         protected override void Shutdown()
@@ -90,13 +92,21 @@ namespace Content.Client.Gameplay
                 Box2.CenteredAround(coordinates.Position, (1, 1)), LookupFlags.Uncontained | LookupFlags.Approximate);
 
             // Check the entities against whether or not we can click them
-            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder)>();
+            var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float bottom)>();
+            var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
+            var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
+            var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
+            var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
+            // TODO: Smelly
+            var eye = _eyeManager.CurrentEye;
+
             foreach (var entity in entities)
             {
-                if (_entityManager.TryGetComponent<ClickableComponent?>(entity, out var component)
-                    && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
+                if (clickQuery.TryGetComponent(entity, out var component) &&
+                    spriteQuery.TryGetComponent(entity, out var sprite) &&
+                    component.CheckClick(sprite, xformQuery, coordinates.Position, eye,  out var drawDepthClicked, out var renderOrder, out var bottom))
                 {
-                    foundEntities.Add((entity, drawDepthClicked, renderOrder));
+                    foundEntities.Add((entity, drawDepthClicked, renderOrder, bottom));
                 }
             }
 
@@ -105,46 +115,35 @@ namespace Content.Client.Gameplay
 
             foundEntities.Sort(_comparer);
             // 0 is the top element.
-            foundEntities.Reverse();
             return foundEntities.Select(a => a.clicked).ToList();
         }
 
-        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder)>
+        private sealed class ClickableEntityComparer : IComparer<(EntityUid clicked, int depth, uint renderOrder, float bottom)>
         {
-            private readonly IEntityManager _entities;
-
-            public ClickableEntityComparer(IEntityManager entities)
+            public int Compare((EntityUid clicked, int depth, uint renderOrder, float bottom) x,
+                (EntityUid clicked, int depth, uint renderOrder, float bottom) y)
             {
-                _entities = entities;
-            }
-
-            public int Compare((EntityUid clicked, int depth, uint renderOrder) x,
-                (EntityUid clicked, int depth, uint renderOrder) y)
-            {
-                var val = x.depth.CompareTo(y.depth);
-                if (val != 0)
+                var cmp = y.depth.CompareTo(x.depth);
+                if (cmp != 0)
                 {
-                    return val;
+                    return cmp;
                 }
 
-                // Turning this off it can make picking stuff out of lockers and such up a bit annoying.
-                /*
-                val = x.renderOrder.CompareTo(y.renderOrder);
-                if (val != 0)
-                {
-                    return val;
-                }
-                */
+                cmp = y.renderOrder.CompareTo(x.renderOrder);
 
-                var transX = _entities.GetComponent<TransformComponent>(x.clicked);
-                var transY = _entities.GetComponent<TransformComponent>(y.clicked);
-                val = transX.Coordinates.Y.CompareTo(transY.Coordinates.Y);
-                if (val != 0)
+                if (cmp != 0)
                 {
-                    return val;
+                    return cmp;
                 }
 
-                return x.clicked.CompareTo(y.clicked);
+                cmp = y.bottom.CompareTo(x.bottom);
+
+                if (cmp != 0)
+                {
+                    return cmp;
+                }
+
+                return y.clicked.CompareTo(x.clicked);
             }
         }
 

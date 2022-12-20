@@ -1,7 +1,8 @@
+using System.Linq;
 using Content.Server.Research.Components;
 using Content.Shared.Research.Components;
 
-namespace Content.Server.Research;
+namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
@@ -50,8 +51,9 @@ public sealed partial class ResearchSystem
 
     private void OnClientStartup(EntityUid uid, ResearchClientComponent component, ComponentStartup args)
     {
-        if (Servers.Count > 0)
-            RegisterClientServer(component, Servers[0]);
+        var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
+        if (allServers.Length > 0)
+            RegisterClientServer(component, allServers[0]);
     }
 
     private void OnClientShutdown(EntityUid uid, ResearchClientComponent component, ComponentShutdown args)
@@ -66,22 +68,23 @@ public sealed partial class ResearchSystem
 
     private void UpdateClientInterface(ResearchClientComponent component)
     {
-        var state = new ResearchClientBoundInterfaceState(Servers.Count, GetServerNames(),
+        var names = GetServerNames();
+        var state = new ResearchClientBoundInterfaceState(names.Length, names,
             GetServerIds(), component.ConnectedToServer ? component.Server!.Id : -1);
 
-        _uiSystem.GetUiOrNull(component.Owner, ResearchClientUiKey.Key)?.SetState(state);
+        _uiSystem.TrySetUiState(component.Owner, ResearchClientUiKey.Key, state);
     }
 
     private bool RegisterClientServer(ResearchClientComponent component, ResearchServerComponent? server = null)
     {
-        if (server == null) return false;
-        return RegisterServerClient(server, component);
+        return server != null && RegisterServerClient(server, component.Owner, component);
     }
 
     private void UnregisterClientServer(ResearchClientComponent component)
     {
-        if (component.Server == null) return;
+        if (component.Server == null)
+            return;
 
-        UnregisterServerClient(component.Server, component);
+        UnregisterServerClient(component.Server, component.Owner, component);
     }
 }

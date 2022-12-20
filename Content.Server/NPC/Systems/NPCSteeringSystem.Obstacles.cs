@@ -1,10 +1,12 @@
+using Content.Server.CombatMode;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Pathfinding;
 using Content.Shared.Doors.Components;
 using Content.Shared.NPC;
-using Content.Shared.Weapons.Melee;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
 
@@ -32,23 +34,30 @@ public sealed partial class NPCSteeringSystem
 
     private SteeringObstacleStatus TryHandleFlags(NPCSteeringComponent component, PathPoly poly, EntityQuery<PhysicsComponent> bodyQuery)
     {
-        if (poly.Data.IsFreeSpace)
-            return SteeringObstacleStatus.Completed;
-
-        if (!bodyQuery.TryGetComponent(component.Owner, out var body))
-            return SteeringObstacleStatus.Failed;
-
+        DebugTools.Assert(!poly.Data.IsFreeSpace);
         // TODO: Store PathFlags on the steering comp
         // and be able to re-check it.
 
+        var layer = 0;
+        var mask = 0;
+
+        if (TryComp<FixturesComponent>(component.Owner, out var manager))
+        {
+            (layer, mask) = _physics.GetHardCollision(component.Owner, manager);
+        }
+        else
+        {
+            return SteeringObstacleStatus.Failed;
+        }
+
         // TODO: Should cache the fact we're doing this somewhere.
         // See https://github.com/space-wizards/space-station-14/issues/11475
-        if ((poly.Data.CollisionLayer & body.CollisionMask) != 0x0 ||
-            (poly.Data.CollisionMask & body.CollisionLayer) != 0x0)
+        if ((poly.Data.CollisionLayer & mask) != 0x0 ||
+            (poly.Data.CollisionMask & layer) != 0x0)
         {
             var obstacleEnts = new List<EntityUid>();
 
-            GetObstacleEntities(poly, body.CollisionMask, body.CollisionLayer, bodyQuery, obstacleEnts);
+            GetObstacleEntities(poly, mask, layer, bodyQuery, obstacleEnts);
             var isDoor = (poly.Data.Flags & PathfindingBreadcrumbFlag.Door) != 0x0;
             var isAccess = (poly.Data.Flags & PathfindingBreadcrumbFlag.Access) != 0x0;
 
@@ -101,26 +110,35 @@ public sealed partial class NPCSteeringSystem
                     return SteeringObstacleStatus.Completed;
             }
             // Try smashing obstacles.
-            else if ((component.Flags & PathFlags.Smashing) != 0x0 && TryComp<NPCMeleeCombatComponent>(component.Owner, out var melee) &&
-                     TryComp<MeleeWeaponComponent>(melee.Weapon, out var meleeWeapon))
+            else if ((component.Flags & PathFlags.Smashing) != 0x0)
             {
-                var destructibleQuery = GetEntityQuery<DestructibleComponent>();
+                var meleeWeapon = _melee.GetWeapon(component.Owner);
 
-                // TODO: This is a hack around grilles and windows.
-                _random.Shuffle(obstacleEnts);
-
-                foreach (var ent in obstacleEnts)
+                if (meleeWeapon != null && meleeWeapon.NextAttack <= _timing.CurTime && TryComp<CombatModeComponent>(component.Owner, out var combatMode))
                 {
-                    // TODO: Validate we can damage it
-                    if (destructibleQuery.HasComponent(ent))
-                    {
-                        _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
-                        return SteeringObstacleStatus.Continuing;
-                    }
-                }
+                    combatMode.IsInCombatMode = true;
+                    var destructibleQuery = GetEntityQuery<DestructibleComponent>();
 
-                if (obstacleEnts.Count == 0)
-                    return SteeringObstacleStatus.Completed;
+                    // TODO: This is a hack around grilles and windows.
+                    _random.Shuffle(obstacleEnts);
+
+                    foreach (var ent in obstacleEnts)
+                    {
+                        // TODO: Validate we can damage it
+                        if (destructibleQuery.HasComponent(ent))
+                        {
+                            _melee.AttemptLightAttack(component.Owner, meleeWeapon, ent);
+                            break;
+                        }
+                    }
+
+                    combatMode.IsInCombatMode = false;
+
+                    if (obstacleEnts.Count == 0)
+                        return SteeringObstacleStatus.Completed;
+
+                    return SteeringObstacleStatus.Continuing;
+                }
             }
 
             return SteeringObstacleStatus.Failed;

@@ -131,7 +131,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     private UIFragment? RetrieveCartridgeUI(EntityUid? cartridgeUid)
     {
         var component = _entityManager?.GetComponentOrNull<UIFragmentComponent>(cartridgeUid);
-        component?.Ui?.Setup(this);
+        component?.Ui?.Setup(this, cartridgeUid);
         return component?.Ui;
     }
 }

@@ -149,6 +149,7 @@
 - type: entity
   id: CrateNPCHamster
   parent: CrateRodentCage
+  suffix: Filled
   components:
     - type: StorageFill
       contents:
@@ -157,6 +158,7 @@
 - type: entity
   id: CrateNPCHamlet
   parent: CrateRodentCage
+  suffix: Hamlet
   components:
     - type: StorageFill
       contents:
