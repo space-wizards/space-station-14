@@ -9,7 +9,7 @@ public abstract partial class SharedMobStateSystem
     {
         Alerts.ShowAlert(uid, AlertType.HumanCrit);
         _standing.Down(uid);
-        _appearance.SetData(uid, DamageStateVisuals.State, DamageState.Critical);
+        _appearance.SetData(uid, MobStateVisuals.State, MobState.Critical);
     }
 
     public virtual void ExitCritState(EntityUid uid)

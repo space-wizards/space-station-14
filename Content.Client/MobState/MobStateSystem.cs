@@ -55,7 +55,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         }
         else
         {
-            UpdateState(component, state.CurrentThreshold.Value);
+            CheckDamageThreshold(component, state.CurrentThreshold.Value);
         }
     }
 
@@ -79,13 +79,13 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
     private void ClearOverlay()
     {
-        _overlay.State = DamageState.Alive;
+        _overlay.State = Shared.MobState.MobState.Alive;
         _overlay.BruteLevel = 0f;
         _overlay.OxygenLevel = 0f;
         _overlay.CritLevel = 0f;
     }
 
-    protected override void UpdateState(MobStateComponent component, DamageState? state, FixedPoint2 threshold)
+    protected override void UpdateState(MobStateComponent component, Shared.MobState.MobState? state, FixedPoint2 threshold)
     {
         base.UpdateState(component, state, threshold);
         SetLevel(component, threshold);
@@ -104,8 +104,8 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
 
         switch (stateComponent.CurrentState)
         {
-            case DamageState.Dead:
-                _overlay.State = DamageState.Dead;
+            case Shared.MobState.MobState.Dead:
+                _overlay.State = Shared.MobState.MobState.Dead;
                 return;
         }
 
@@ -113,7 +113,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
         var oxyLevel = 0f;
         var critLevel = 0f;
 
-        if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
+        if (TryGetEarliestIncapacitatedThreshold(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
             if (damageable.DamagePerGroup.TryGetValue("Brute", out var bruteDamage))
             {
@@ -125,7 +125,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
                 oxyLevel = MathF.Min(1f, (oxyDamage / earliestThreshold).Float());
             }
 
-            if (threshold >= earliestThreshold && TryGetEarliestDeadState(stateComponent, threshold, out _, out var earliestDeadHold))
+            if (threshold >= earliestThreshold && TryGetEarliestDeadThreshold(stateComponent, threshold, out _, out var earliestDeadHold))
             {
                 critLevel = (float) Math.Clamp((damageable.TotalDamage - earliestThreshold).Double() / (earliestDeadHold - earliestThreshold).Double(), 0.1, 1);
             }
@@ -138,7 +138,7 @@ public sealed partial class MobStateSystem : SharedMobStateSystem
             bruteLevel = 0f;
         }
 
-        _overlay.State = critLevel > 0f ? DamageState.Critical : DamageState.Alive;
+        _overlay.State = critLevel > 0f ? Shared.MobState.MobState.Critical : Shared.MobState.MobState.Alive;
         _overlay.BruteLevel = bruteLevel;
         _overlay.OxygenLevel = oxyLevel;
         _overlay.CritLevel = critLevel;

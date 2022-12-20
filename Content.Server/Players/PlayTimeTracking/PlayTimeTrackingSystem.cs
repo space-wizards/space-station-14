@@ -74,7 +74,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!TryComp<MobStateComponent>(attached, out var state))
             return false;
 
-        return state.CurrentState is DamageState.Alive or DamageState.Critical;
+        return state.CurrentState is Shared.MobState.MobState.Alive or Shared.MobState.MobState.Critical;
     }
 
     public IEnumerable<string> GetTimedRoles(Mind.Mind mind)

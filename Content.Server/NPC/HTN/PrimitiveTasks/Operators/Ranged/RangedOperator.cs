@@ -21,7 +21,7 @@ public sealed class RangedOperator : HTNOperator
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
     [DataField("targetState")]
-    public DamageState TargetState = DamageState.Alive;
+    public Shared.MobState.MobState TargetState = Shared.MobState.MobState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
 

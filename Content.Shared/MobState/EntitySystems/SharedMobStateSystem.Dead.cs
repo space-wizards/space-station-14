@@ -15,7 +15,7 @@ public abstract partial class SharedMobStateSystem
             _physics.SetCanCollide(physics, false);
         }
 
-        _appearance.SetData(uid, DamageStateVisuals.State, DamageState.Dead);
+        _appearance.SetData(uid, MobStateVisuals.State, MobState.Dead);
     }
 
     public virtual void ExitDeadState(EntityUid uid)

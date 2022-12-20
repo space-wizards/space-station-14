@@ -50,11 +50,11 @@ namespace Content.Server.Contests
             float targetThreshold = 100f;
 
             if (TryComp<MobStateComponent>(roller, out var rollerState) &&
-                _mobStateSystem.TryGetEarliestIncapacitatedState(rollerState, 10000, out _, out var rollerCritThreshold))
+                _mobStateSystem.TryGetEarliestIncapacitatedThreshold(rollerState, 10000, out _, out var rollerCritThreshold))
                 rollerThreshold = (float) rollerCritThreshold;
 
             if (TryComp<MobStateComponent>(target, out var targetState) &&
-                _mobStateSystem.TryGetEarliestIncapacitatedState(targetState, 10000, out _, out var targetCritThreshold))
+                _mobStateSystem.TryGetEarliestIncapacitatedThreshold(targetState, 10000, out _, out var targetCritThreshold))
                 targetThreshold = (float) targetCritThreshold;
 
             // Next, we'll see how their damage compares

@@ -21,7 +21,7 @@ public sealed class DamageOverlay : Overlay
     private readonly ShaderInstance _oxygenShader;
     private readonly ShaderInstance _bruteShader;
 
-    public DamageState State = DamageState.Alive;
+    public Shared.MobState.MobState State = Shared.MobState.MobState.Alive;
 
     /// <summary>
     /// Handles the red pulsing overlay
@@ -79,7 +79,7 @@ public sealed class DamageOverlay : Overlay
         var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
 
         // If they just died then lerp out the white overlay.
-        if (State != DamageState.Dead)
+        if (State != Shared.MobState.MobState.Dead)
         {
             DeadLevel = 1f;
         }
@@ -169,7 +169,7 @@ public sealed class DamageOverlay : Overlay
             _oldBruteLevel = BruteLevel;
         }
 
-        level = State != DamageState.Critical ? _oldOxygenLevel : 1f;
+        level = State != Shared.MobState.MobState.Critical ? _oldOxygenLevel : 1f;
 
         if (level > 0f)
         {
@@ -215,7 +215,7 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = State != DamageState.Dead ? _oldCritLevel : DeadLevel;
+        level = State != Shared.MobState.MobState.Dead ? _oldCritLevel : DeadLevel;
 
         if (level > 0f)
         {

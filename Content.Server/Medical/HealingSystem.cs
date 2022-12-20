@@ -178,7 +178,7 @@ public sealed class HealingSystem : EntitySystem
         if (!TryComp<MobStateComponent>(uid, out var mobState) || !TryComp<DamageableComponent>(uid, out var damageable))
             return output;
 
-        _mobStateSystem.TryGetEarliestCriticalState(mobState, 0, out var _, out var amount);
+        _mobStateSystem.TryGetEarliestCriticalThreshold(mobState, 0, out var _, out var amount);
         var percentDamage = (float) (damageable.TotalDamage / amount);
         //basically make it scale from 1 to the multiplier.
         var modifier = percentDamage * (component.SelfHealPenaltyMultiplier - 1) + 1;

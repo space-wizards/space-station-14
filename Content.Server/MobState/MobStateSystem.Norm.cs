@@ -19,7 +19,7 @@ public sealed partial class MobStateSystem
 
         short modifier = 0;
 
-        if (TryGetEarliestIncapacitatedState(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
+        if (TryGetEarliestIncapacitatedThreshold(stateComponent, threshold, out _, out var earliestThreshold) && damageable.TotalDamage != 0)
         {
             modifier = (short)(damageable.TotalDamage / (earliestThreshold / 5) + 1);
         }

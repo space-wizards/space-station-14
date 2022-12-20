@@ -133,11 +133,11 @@ namespace Content.Server.NPC.Systems
 
             switch (args.CurrentMobState)
             {
-                case DamageState.Alive:
+                case Shared.MobState.MobState.Alive:
                     WakeNPC(uid, component);
                     break;
-                case DamageState.Critical:
-                case DamageState.Dead:
+                case Shared.MobState.MobState.Critical:
+                case Shared.MobState.MobState.Dead:
                     SleepNPC(uid, component);
                     break;
             }

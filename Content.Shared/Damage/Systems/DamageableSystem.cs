@@ -294,7 +294,7 @@ namespace Content.Shared.Damage
             int ent1DeadState = 0;
             foreach (var state in oldstate._highestToLowestStates)
             {
-                if (state.Value == DamageState.Dead)
+                if (state.Value == MobState.MobState.Dead)
                 {
                     ent1DeadState = state.Key;
                 }
@@ -303,7 +303,7 @@ namespace Content.Shared.Damage
             int ent2DeadState = 0;
             foreach (var state in newstate._highestToLowestStates)
             {
-                if (state.Value == DamageState.Dead)
+                if (state.Value == MobState.MobState.Dead)
                 {
                     ent2DeadState = state.Key;
                 }

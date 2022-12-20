@@ -7,7 +7,7 @@ public abstract partial class SharedMobStateSystem
     public virtual void EnterNormState(EntityUid uid)
     {
         _standing.Stand(uid);
-        _appearance.SetData(uid, DamageStateVisuals.State, DamageState.Alive);
+        _appearance.SetData(uid, MobStateVisuals.State, MobState.Alive);
     }
 
     public virtual void UpdateNormState(EntityUid entity, FixedPoint2 threshold) {}

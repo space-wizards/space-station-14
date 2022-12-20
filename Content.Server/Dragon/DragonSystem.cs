@@ -275,7 +275,7 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.CurrentMobState == Shared.MobState.MobState.Dead)
             {
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
@@ -365,8 +365,8 @@ namespace Content.Server.Dragon
             {
                 switch (targetState.CurrentState)
                 {
-                    case DamageState.Critical:
-                    case DamageState.Dead:
+                    case Shared.MobState.MobState.Critical:
+                    case Shared.MobState.MobState.Dead:
                         component.CancelToken = new CancellationTokenSource();
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)

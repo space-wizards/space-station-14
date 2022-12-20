@@ -82,7 +82,7 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.CurrentMobState == Shared.MobState.MobState.Dead)
             {
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);

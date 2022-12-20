@@ -6,7 +6,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Clothing.Components;
 using Content.Server.Damage.Systems;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
@@ -35,7 +34,6 @@ using Content.Shared.Disease;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
-using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -218,11 +216,11 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Critical).FirstOrNull();
+                    var critState = mobState._highestToLowestStates.Where(x => x.Value == Shared.MobState.MobState.Critical).FirstOrNull();
                     if (critState is null)
                     {
                         // We can't crit them so try killing them.
-                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Dead).FirstOrNull();
+                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == Shared.MobState.MobState.Dead).FirstOrNull();
                         if (deadState is null)
                             return; // whelp.
 

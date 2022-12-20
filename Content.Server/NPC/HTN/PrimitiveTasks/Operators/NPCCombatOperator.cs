@@ -91,7 +91,7 @@ public abstract class NPCCombatOperator : HTNOperator
                      .GetNearbyHostiles(owner, radius))
         {
             if (mobQuery.TryGetComponent(target, out var mobState) &&
-                mobState.CurrentState > DamageState.Alive ||
+                mobState.CurrentState > Shared.MobState.MobState.Alive ||
                 target == existingTarget ||
                 target == owner)
             {

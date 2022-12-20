@@ -92,7 +92,7 @@ namespace Content.Client.HealthOverlay.UI
 
             if (mobStateSystem.IsAlive(mobState.Owner, mobState))
             {
-                if (!mobStateSystem.TryGetEarliestCriticalState(mobState, damageable.TotalDamage, out _, out threshold))
+                if (!mobStateSystem.TryGetEarliestCriticalThreshold(mobState, damageable.TotalDamage, out _, out threshold))
                 {
                     CritBar.Visible = false;
                     HealthBar.Visible = false;
@@ -109,8 +109,8 @@ namespace Content.Client.HealthOverlay.UI
                 HealthBar.Ratio = 0;
                 HealthBar.Visible = false;
 
-                if (!mobStateSystem.TryGetPreviousCriticalState(mobState, damageable.TotalDamage, out _, out var critThreshold) ||
-                    !mobStateSystem.TryGetEarliestDeadState(mobState, damageable.TotalDamage, out _, out var deadThreshold))
+                if (!mobStateSystem.TryGetPreviousCriticalThreshold(mobState, damageable.TotalDamage, out _, out var critThreshold) ||
+                    !mobStateSystem.TryGetEarliestDeadThreshold(mobState, damageable.TotalDamage, out _, out var deadThreshold))
                 {
                     CritBar.Visible = false;
                     return;

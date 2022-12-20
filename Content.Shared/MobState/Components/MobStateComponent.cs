@@ -1,8 +1,10 @@
+using System.Collections;
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.EntitySystems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.MobState.Components
 {
@@ -24,16 +26,34 @@ namespace Content.Shared.MobState.Components
         ///     to or higher than the int key, but lower than the next threshold.
         ///     Ordered from lowest to highest.
         /// </summary>
-        [DataField("thresholds")]
-        public readonly SortedDictionary<int, DamageState> _lowestToHighestStates = new();
+        [DataField("thresholds")] public readonly SortedDictionary<int, MobState> _lowestToHighestStates = new();
 
-        // TODO Remove Nullability?
-        [ViewVariables]
-        public DamageState? CurrentState { get; set; }
+        //default mobstate is always the lowest state level
+        [ViewVariables] public MobState CurrentState { get; set; } = (MobState) 1;
 
-        [ViewVariables]
-        public FixedPoint2? CurrentThreshold { get; set; }
+        /// <summary>
+        /// Tickets that determine if we should be in a specific state. Tickets are checked from highest enum to lowest.
+        /// If tickets are present in a state, that state is switched to, unless that state is a lower enum value.
+        /// </summary>
+        public ushort[]
+            StateTickets =
+                new ushort[Enum.GetValues(typeof(MobState)).Length - 1]; //subtract 1 because invalid is not a state
 
-        public IEnumerable<KeyValuePair<int, DamageState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
+        [ViewVariables] public FixedPoint2? CurrentThreshold { get; set; }
+
+        public IEnumerable<KeyValuePair<int, MobState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class MobStateComponentState : ComponentState
+    {
+        public readonly FixedPoint2? CurrentThreshold;
+        public readonly ushort[] StateTickets;
+
+        public MobStateComponentState(MobStateComponent comp)
+        {
+            CurrentThreshold = comp.CurrentThreshold;
+            StateTickets = comp.StateTickets;
+        }
     }
 }

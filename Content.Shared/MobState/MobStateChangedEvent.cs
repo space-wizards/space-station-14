@@ -6,8 +6,8 @@ namespace Content.Shared.MobState
     {
         public MobStateChangedEvent(
             MobStateComponent component,
-            DamageState? oldMobState,
-            DamageState currentMobState, 
+            MobState? oldMobState,
+            MobState currentMobState, 
             EntityUid? origin)
         {
             Component = component;
@@ -20,9 +20,9 @@ namespace Content.Shared.MobState
 
         public MobStateComponent Component { get; }
 
-        public DamageState? OldMobState { get; }
+        public MobState? OldMobState { get; }
 
-        public DamageState CurrentMobState { get; }
+        public MobState CurrentMobState { get; }
 
         public EntityUid? Origin { get; }
     }
@@ -30,27 +30,27 @@ namespace Content.Shared.MobState
     public static class A
     {
         [Obsolete("Just check for the enum value instead")]
-        public static bool IsAlive(this DamageState state)
+        public static bool IsAlive(this MobState state)
         {
-            return state == DamageState.Alive;
+            return state == MobState.Alive;
         }
 
         [Obsolete("Just check for the enum value instead")]
-        public static bool IsCritical(this DamageState state)
+        public static bool IsCritical(this MobState state)
         {
-            return state == DamageState.Critical;
+            return state == MobState.Critical;
         }
 
         [Obsolete("Just check for the enum value instead")]
-        public static bool IsDead(this DamageState state)
+        public static bool IsDead(this MobState state)
         {
-            return state == DamageState.Dead;
+            return state == MobState.Dead;
         }
 
         [Obsolete("Just check for the enum value instead")]
-        public static bool IsIncapacitated(this DamageState state)
+        public static bool IsIncapacitated(this MobState state)
         {
-            return state is DamageState.Dead or DamageState.Critical;
+            return state is MobState.Dead or MobState.Critical;
         }
     }
 }

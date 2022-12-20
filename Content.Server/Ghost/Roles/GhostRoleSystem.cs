@@ -58,14 +58,14 @@ namespace Content.Server.Ghost.Roles
         {
             switch (args.CurrentMobState)
             {
-                case DamageState.Alive:
+                case Shared.MobState.MobState.Alive:
                 {
                     if (!component.Taken)
                         RegisterGhostRole(component);
                     break;
                 }
-                case DamageState.Critical:
-                case DamageState.Dead:
+                case Shared.MobState.MobState.Critical:
+                case Shared.MobState.MobState.Dead:
                     UnregisterGhostRole(component);
                     break;
             }
