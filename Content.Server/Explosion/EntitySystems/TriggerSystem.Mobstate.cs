@@ -43,7 +43,7 @@ public sealed partial class TriggerSystem
 
         if (component.PreventSuicide)
         {
-            _popupSystem.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, Filter.Entities(args.Victim));
+            _popupSystem.PopupEntity(Loc.GetString("suicide-prevented"), args.Victim, args.Victim);
             args.BlockSuicideAttempt(component.PreventSuicide);
         }
     }

@@ -1,126 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Item slots (such as reagent dispensers) won't spam popups anymore.,
-    type: Fix}
-  id: 2265
-  time: '2022-09-09T14:39:22.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: 'APCs can now be properly constructed using APC electronics, as well
-      as deconstructed', type: Add}
-  id: 2266
-  time: '2022-09-10T03:27:41.0000000+00:00'
-- author: moony
-  changes:
-  - {message: Significantly buffs food items and nerfs hunger decay., type: Tweak}
-  id: 2267
-  time: '2022-09-10T07:36:33.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: Quartermaster is now shown as part of command when viewed in the crew
-      manifest., type: Add}
-  id: 2268
-  time: '2022-09-10T07:58:26.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Nuclear disk pinpointer should be working again., type: Fix}
-  id: 2269
-  time: '2022-09-10T08:49:02.0000000+00:00'
-- author: Visne
-  changes:
-  - {message: Windoors will now stay open if you open them by clicking., type: Tweak}
-  id: 2270
-  time: '2022-09-10T21:48:04.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix minimum rotation speed for eye lerping., type: Fix}
-  id: 2271
-  time: '2022-09-10T21:51:41.0000000+00:00'
-- author: WPRobson
-  changes:
-  - {message: Added charcoal into the game. Heals poison damage and removes chemicals
-      from the bloodstream, type: Add}
-  id: 2272
-  time: '2022-09-10T23:20:44.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a sussy lil friend to the station., type: Add}
-  id: 2273
-  time: '2022-09-11T00:08:17.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: Pipes with high pressure will warn you when unachoring them and take
-      slightly longer., type: Fix}
-  id: 2274
-  time: '2022-09-11T06:30:10.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: Melee weapons that change damage now show their damage correctly., type: Fix}
-  - {message: Syndicate E-pens is no longer shown to be a weapon upon examination.,
-    type: Fix}
-  id: 2275
-  time: '2022-09-11T06:39:37.0000000+00:00'
-- author: LordEclipse
-  changes:
-  - {message: 'The job icon displayed for Quartermaster has been changed to a command
-      blue, to better represent where they stand on the station!', type: Tweak}
-  id: 2276
-  time: '2022-09-11T06:40:14.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Slipping should feel nicer., type: Fix}
-  id: 2277
-  time: '2022-09-11T06:49:10.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Added some more networking options to the options window., type: Add}
-  id: 2278
-  time: '2022-09-11T06:52:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing text in the uplink withdraw menu, type: Fix}
-  - {message: Fixed uplinks being able to brick themselves if currency was inserted
-      into them before it was opened., type: Fix}
-  id: 2279
-  time: '2022-09-11T06:54:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Gave Miasma a slightly spookier palette., type: Tweak}
-  id: 2280
-  time: '2022-09-11T07:00:43.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
-  id: 2281
-  time: '2022-09-11T09:19:27.0000000+00:00'
-- author: och
-  changes:
-  - {message: Examining people tells you their pronouns and approximate age, type: Add}
-  id: 2282
-  time: '2022-09-11T14:45:40.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Artifacts fits into artifact storage again, type: Fix}
-  id: 2283
-  time: '2022-09-11T22:24:00.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Gas recyclers can now convert waste carbon dioxide and nitrous oxide
-      into breathable gases., type: Add}
-  id: 2284
-  time: '2022-09-11T23:02:01.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Hot coffee and tea sprites show liquid level, type: Tweak}
-  id: 2285
-  time: '2022-09-12T03:53:48.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: We have changed to the old airlock models with that soul sound some
-      people recognize., type: Add}
-  id: 2286
-  time: '2022-09-12T05:55:08.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Locks on cabinets actually work., type: Fix}
@@ -2925,3 +2803,134 @@ Entries:
       conveyors)., type: Tweak}
   id: 2764
   time: '2022-12-17T03:51:31.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Grids can now handle multiple gravity generators., type: Fix}
+  id: 2765
+  time: '2022-12-18T05:03:23.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Fixed flavor message for copypasta, type: Fix}
+  id: 2766
+  time: '2022-12-18T08:21:44.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix click sorting for entities with the same drawdepth., type: Fix}
+  id: 2767
+  time: '2022-12-18T19:41:05.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix magboots not working., type: Fix}
+  id: 2768
+  time: '2022-12-18T21:24:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug that would cause the doafter for dragging entities onto
+      tables and inserting entities into the biomass reclaimer to not cancel., type: Fix}
+  id: 2769
+  time: '2022-12-19T01:10:37.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: Votes can once again be cast in-game, type: Fix}
+  id: 2770
+  time: '2022-12-19T01:13:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix tile decals not loading properly., type: Fix}
+  id: 2771
+  time: '2022-12-19T02:18:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Popups will now show in additional viewports (e.g. cameras, tabletop).',
+    type: Fix}
+  id: 2772
+  time: '2022-12-19T02:39:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mining drills and power drills can now be printed at the protolathe.,
+    type: Add}
+  - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
+  id: 2773
+  time: '2022-12-19T04:38:30.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Fixed tomato and vomit splats losing their color/sprite., type: Fix}
+  - {message: Fixed wet floor sparkles getting stuck on one animation frame., type: Fix}
+  - {message: Wet floor sparkles are now slightly more opaque and stay invisible for
+      less of their animation cycle., type: Tweak}
+  id: 2774
+  time: '2022-12-20T02:40:53.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Singularities now explicitly consume things in containers they consume
+      instead of it being implied. If they can't consume something inside of a container
+      they're consuming it will be dropped to the ground., type: Add}
+  - {message: Admins can now pick up singularities (if they bother to VV them into
+      being items) and wander around without drilling a chasm through the station.,
+    type: Add}
+  id: 2775
+  time: '2022-12-20T02:47:15.0000000+00:00'
+- author: Stealthbomber16
+  changes:
+  - {message: Added wares to the Nutrimax and Kitchenware machines., type: Add}
+  id: 2776
+  time: '2022-12-20T02:48:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug allowing players to control a moving cardboard box without
+      being inside of that box., type: Fix}
+  id: 2777
+  time: '2022-12-20T03:33:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: RCD is once again printable at protolathes. Unlock it in the Rapid Upgrades
+      tech., type: Add}
+  - {message: Freshly-printed RCDs now start with 0 charges., type: Tweak}
+  id: 2778
+  time: '2022-12-20T03:37:40.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added new parallax and intercoms to Kettle, type: Add}
+  id: 2779
+  time: '2022-12-20T03:40:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Cloning consoles, scanners, and cloning pods are now properly linked
+      on round start.', type: Fix}
+  id: 2780
+  time: '2022-12-20T03:42:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Faxes received a stamp scanning module, type: Add}
+  id: 2781
+  time: '2022-12-20T03:44:15.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Nanotrasen has begun experiments with advanced locker technology., type: Add}
+  id: 2782
+  time: '2022-12-20T03:47:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Node Scanner, which can identify the ID of an artifact''s
+      node with a single click.', type: Add}
+  id: 2783
+  time: '2022-12-20T03:53:54.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added a Party crate to cargo, type: Add}
+  id: 2784
+  time: '2022-12-20T04:02:02.0000000+00:00'
+- author: timothyteakettle
+  changes:
+  - {message: 'ability to mix reactions with certain entities, included example being
+      blood can be converted into wine using a bible at a ratio of 1:1', type: Add}
+  id: 2785
+  time: '2022-12-20T04:05:02.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: NT has begun distribution of 'Robert's Rules of Escalation' to stations,
+    type: Add}
+  - {message: NT has begun distribution of books from the 'Newton's Guide to Atmos'
+      series to stations, type: Add}
+  id: 2786
+  time: '2022-12-20T04:11:36.0000000+00:00'

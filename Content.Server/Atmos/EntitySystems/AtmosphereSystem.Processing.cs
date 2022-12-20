@@ -2,10 +2,12 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -36,7 +38,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         /// <param name="atmosphere">The grid atmosphere in question.</param>
         /// <returns>Whether the process succeeded or got paused due to time constrains.</returns>
-        private bool ProcessRevalidate(GridAtmosphereComponent atmosphere)
+        private bool ProcessRevalidate(GridAtmosphereComponent atmosphere, GasTileOverlayComponent? visuals)
         {
             if (!atmosphere.ProcessingPaused)
             {
@@ -126,7 +128,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 tile.ThermalConductivity = tileDef?.ThermalConductivity ?? 0.5f;
                 tile.HeatCapacity = tileDef?.HeatCapacity ?? float.PositiveInfinity;
-                InvalidateVisuals(mapGridComp.Owner, indices);
+                InvalidateVisuals(mapGridComp.Owner, indices, visuals);
 
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
@@ -149,7 +151,7 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessTileEqualize(GridAtmosphereComponent atmosphere)
+        private bool ProcessTileEqualize(GridAtmosphereComponent atmosphere, GasTileOverlayComponent? visuals)
         {
             if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
@@ -162,7 +164,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                EqualizePressureInZone(mapGridComp, atmosphere, tile, atmosphere.UpdateCounter);
+                EqualizePressureInZone(mapGridComp, atmosphere, tile, atmosphere.UpdateCounter, visuals);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -176,7 +178,7 @@ namespace Content.Server.Atmos.EntitySystems
             return true;
         }
 
-        private bool ProcessActiveTiles(GridAtmosphereComponent atmosphere)
+        private bool ProcessActiveTiles(GridAtmosphereComponent atmosphere, GasTileOverlayComponent? visuals)
         {
             if(!atmosphere.ProcessingPaused)
                 atmosphere.CurrentRunTiles = new Queue<TileAtmosphere>(atmosphere.ActiveTiles);
@@ -184,7 +186,7 @@ namespace Content.Server.Atmos.EntitySystems
             var number = 0;
             while (atmosphere.CurrentRunTiles.TryDequeue(out var tile))
             {
-                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter);
+                ProcessCell(atmosphere, tile, atmosphere.UpdateCounter, visuals);
 
                 if (number++ < LagCheckIterations) continue;
                 number = 0;
@@ -368,6 +370,7 @@ namespace Content.Server.Atmos.EntitySystems
             for (; _currentRunAtmosphereIndex < _currentRunAtmosphere.Count; _currentRunAtmosphereIndex++)
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
+                TryComp(atmosphere.Owner, out GasTileOverlayComponent? visuals);
 
                 if (atmosphere.LifeStage >= ComponentLifeStage.Stopping || Paused(atmosphere.Owner) || !atmosphere.Simulated)
                     continue;
@@ -383,7 +386,7 @@ namespace Content.Server.Atmos.EntitySystems
                 switch (atmosphere.State)
                 {
                     case AtmosphereProcessingState.Revalidate:
-                        if (!ProcessRevalidate(atmosphere))
+                        if (!ProcessRevalidate(atmosphere, visuals))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -398,7 +401,7 @@ namespace Content.Server.Atmos.EntitySystems
                             : AtmosphereProcessingState.ActiveTiles;
                         continue;
                     case AtmosphereProcessingState.TileEqualize:
-                        if (!ProcessTileEqualize(atmosphere))
+                        if (!ProcessTileEqualize(atmosphere, visuals))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
@@ -408,7 +411,7 @@ namespace Content.Server.Atmos.EntitySystems
                         atmosphere.State = AtmosphereProcessingState.ActiveTiles;
                         continue;
                     case AtmosphereProcessingState.ActiveTiles:
-                        if (!ProcessActiveTiles(atmosphere))
+                        if (!ProcessActiveTiles(atmosphere, visuals))
                         {
                             atmosphere.ProcessingPaused = true;
                             return;
