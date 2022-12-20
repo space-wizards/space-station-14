@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed missing text in the uplink withdraw menu, type: Fix}
-  - {message: Fixed uplinks being able to brick themselves if currency was inserted
-      into them before it was opened., type: Fix}
-  id: 2279
-  time: '2022-09-11T06:54:16.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Gave Miasma a slightly spookier palette., type: Tweak}
   id: 2280
   time: '2022-09-11T07:00:43.0000000+00:00'
@@ -2932,3 +2925,8 @@ Entries:
   - {message: Freshly-printed RCDs now start with 0 charges., type: Tweak}
   id: 2778
   time: '2022-12-20T03:37:40.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added new parallax and intercoms to Kettle, type: Add}
+  id: 2779
+  time: '2022-12-20T03:40:34.0000000+00:00'
