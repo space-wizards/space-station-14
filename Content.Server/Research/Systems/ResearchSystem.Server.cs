@@ -1,28 +1,11 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Research.Prototypes;
 
-namespace Content.Server.Research;
+namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-    private void InitializeServer()
-    {
-        SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
-        SubscribeLocalEvent<ResearchServerComponent, ComponentShutdown>(OnServerShutdown);
-    }
-
-    private void OnServerShutdown(EntityUid uid, ResearchServerComponent component, ComponentShutdown args)
-    {
-        UnregisterServer(component);
-    }
-
-    private void OnServerStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
-    {
-        RegisterServer(component);
-    }
-
     private bool CanRun(ResearchServerComponent component)
     {
         return this.IsPowered(component.Owner, EntityManager);
@@ -30,41 +13,37 @@ public sealed partial class ResearchSystem
 
     private void UpdateServer(ResearchServerComponent component, int time)
     {
-        if (!CanRun(component)) return;
-        component.Points += PointsPerSecond(component) * time;
+        if (!CanRun(component))
+            return;
+        ChangePointsOnServer(component.Owner, PointsPerSecond(component) * time, component);
     }
 
-    public bool RegisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    public bool RegisterServerClient(ResearchServerComponent component, EntityUid client, ResearchClientComponent? clientComponent = null)
     {
-        // TODO: This is shit but I'm just trying to fix RND for now until it gets bulldozed
-        if (TryComp<ResearchPointSourceComponent>(clientComponent.Owner, out var source))
-        {
-            if (component.PointSources.Contains(source)) return false;
-            component.PointSources.Add(source);
-            source.Server = component;
-        }
+        if (!Resolve(client, ref clientComponent))
+            return false;
 
-        if (component.Clients.Contains(clientComponent)) return false;
-        component.Clients.Add(clientComponent);
+        if (component.Clients.Contains(client))
+            return false;
+        component.Clients.Add(client);
         clientComponent.Server = component;
         return true;
     }
 
-    public void UnregisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    public void UnregisterServerClient(ResearchServerComponent component, EntityUid client, ResearchClientComponent? clientComponent = null)
     {
-        if (TryComp<ResearchPointSourceComponent>(clientComponent.Owner, out var source))
-        {
-            component.PointSources.Remove(source);
-        }
+        if (!Resolve(client, ref clientComponent))
+            return;
 
-        component.Clients.Remove(clientComponent);
+        component.Clients.Remove(client);
         clientComponent.Server = null;
     }
 
     public bool IsTechnologyUnlocked(ResearchServerComponent component, TechnologyPrototype prototype,
         TechnologyDatabaseComponent? databaseComponent = null)
     {
-        if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
+        if (!Resolve(component.Owner, ref databaseComponent, false))
+            return false;
         return databaseComponent.IsTechnologyUnlocked(prototype.ID);
     }
 
@@ -84,12 +63,14 @@ public sealed partial class ResearchSystem
     public bool UnlockTechnology(ResearchServerComponent component, TechnologyPrototype prototype,
         TechnologyDatabaseComponent? databaseComponent = null)
     {
-        if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
+        if (!Resolve(component.Owner, ref databaseComponent, false))
+            return false;
 
-        if (!CanUnlockTechnology(component, prototype, databaseComponent)) return false;
+        if (!CanUnlockTechnology(component, prototype, databaseComponent))
+            return false;
         var result = UnlockTechnology(databaseComponent, prototype);
         if (result)
-            component.Points -= prototype.RequiredPoints;
+            ChangePointsOnServer(component.Owner, -prototype.RequiredPoints, component);
         return result;
     }
 
@@ -97,14 +78,26 @@ public sealed partial class ResearchSystem
     {
         var points = 0;
 
-        if (CanRun(component))
+        if (!CanRun(component))
+            return points;
+        var ev = new ResearchServerGetPointsPerSecondEvent(component.Owner, points);
+        foreach (var client in component.Clients)
         {
-            foreach (var source in component.PointSources)
-            {
-                if (CanProduce(source)) points += source.PointsPerSecond;
-            }
+            RaiseLocalEvent(client, ref ev);
         }
 
-        return points;
+        return ev.Points;
+    }
+
+    public void ChangePointsOnServer(EntityUid uid, int points, ResearchServerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+        component.Points += points;
+        var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
+        foreach (var client in component.Clients)
+        {
+            RaiseLocalEvent(client, ref ev);
+        }
     }
 }

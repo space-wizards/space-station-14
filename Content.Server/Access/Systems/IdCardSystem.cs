@@ -48,6 +48,8 @@ namespace Content.Server.Access.Systems
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
                     EntityManager.QueueDeleteEntity(uid);
                     return;
                 }
@@ -56,6 +58,8 @@ namespace Content.Server.Access.Systems
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
                     access.Tags.Clear();
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
                 }
                 else
                 {
@@ -65,6 +69,9 @@ namespace Content.Server.Access.Systems
                 // Give them a wonderful new access to compensate for everything
                 var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
                 access.Tags.Add(random.ID);
+
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
             }
         }
 
@@ -92,6 +99,8 @@ namespace Content.Server.Access.Systems
                 jobTitle = null;
             }
 
+            if (id.JobTitle == jobTitle)
+                return true;
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
@@ -127,6 +136,8 @@ namespace Content.Server.Access.Systems
                 fullName = null;
             }
 
+            if (id.FullName == fullName)
+                return true;
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);
