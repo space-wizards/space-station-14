@@ -1,0 +1,13 @@
+﻿- type: trait
+  id: Tall
+  name: Taller
+  components:
+    - type: HeightAdjusted
+      height: 1.1
+
+- type: trait
+  id: Small
+  name: Smaller
+  components:
+    - type: HeightAdjusted
+      height: 0.9
