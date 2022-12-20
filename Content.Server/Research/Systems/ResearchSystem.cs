@@ -17,10 +17,17 @@ namespace Content.Server.Research.Systems
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnStartup);
+
             InitializeClient();
             InitializeConsole();
             InitializeSource();
             InitializeTechnology();
+        }
+
+        private void OnStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
+        {
+            component.Id = EntityQuery<ResearchServerComponent>(true).Count();
         }
 
         public ResearchServerComponent? GetServerById(int id)
