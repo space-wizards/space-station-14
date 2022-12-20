@@ -1,5 +1,6 @@
 # MindComponent localization
 
+comp-mind-ghosting-prevented = You are not able to ghost right now.
 
 ## Messages displayed when a body is examined and in a certain state
 
