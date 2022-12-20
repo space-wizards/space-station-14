@@ -13,6 +13,7 @@ namespace Content.Server.Holiday.Christmas;
 public sealed class LimitedItemGiverSystem : EntitySystem
 {
     [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly HolidaySystem _holiday = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,7 +26,7 @@ public sealed class LimitedItemGiverSystem : EntitySystem
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
-        if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId))
+        if (component.GrantedPlayers.Contains(actor.PlayerSession.UserId) || (component.RequiredHoliday is null || !_holiday.IsCurrentlyHoliday(component.RequiredHoliday)))
         {
             _popup.PopupEntity(Loc.GetString(component.DeniedPopup), uid, args.User);
             return;

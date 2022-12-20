@@ -359,6 +359,7 @@
         orGroup: present
     receivedPopup: christmas-tree-got-gift
     deniedPopup: christmas-tree-no-gift
+    requiredHoliday: FestiveSeason
 
 - type: entity
   parent: BaseTreeConifer

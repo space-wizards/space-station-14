@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Storage;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Holiday.Christmas;
 
@@ -31,4 +32,7 @@ public sealed class LimitedItemGiverComponent : Component
     /// </summary>
     [DataField("deniedPopup", required: true)]
     public string DeniedPopup = default!;
+
+    [DataField("requiredHoliday", customTypeSerializer: typeof(PrototypeIdSerializer<HolidayPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string? RequiredHoliday = null;
 }

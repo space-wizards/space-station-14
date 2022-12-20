@@ -2,6 +2,7 @@
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -14,6 +15,7 @@ namespace Content.Server.Holiday.Christmas;
 /// </summary>
 public sealed class GiftPackinSystem : EntitySystem
 {
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -57,8 +59,10 @@ public sealed class GiftPackinSystem : EntitySystem
             Spawn(component.Wrapper, coords);
 
         args.Handled = true;
+        _audio.PlayPvs(component.Sound, args.User);
         Del(uid);
         _hands.PickupOrDrop(args.User, handsEnt);
+
     }
 
     private void OnGiftMapInit(EntityUid uid, GiftPackinComponent component, MapInitEvent args)
