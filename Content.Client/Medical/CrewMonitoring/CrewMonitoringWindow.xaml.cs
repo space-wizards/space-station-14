@@ -66,17 +66,17 @@ namespace Content.Client.Medical.CrewMonitoring
 
                 // add users positions
                 // format: (x, y)
-                var box = GetPositionBox(sensor.Coordinates, worldPosition, snap, precision);
+                var box = GetPositionBox(sensor.Coordinates, sensor.MapCoordinates, worldPosition, snap, precision);
                 SensorsTable.AddChild(box);
                 _rowsContent.Add(box);
             }
         }
 
-        private BoxContainer GetPositionBox(MapCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
+        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, MapCoordinates? mapCoordinates, Vector2 sensorPosition, bool snap, float precision)
         {
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
-            if (coordinates == null)
+            if (coordinates == null || mapCoordinates == null)
             {
                 var dirIcon = new DirectionIcon()
                 {
@@ -97,7 +97,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 };
                 box.AddChild(dirIcon);
                 box.AddChild(new Label() { Text = pos.ToString() });
-                _directionIcons.Add((dirIcon, coordinates.Value.Position - sensorPosition));
+                _directionIcons.Add((dirIcon, mapCoordinates.Value.Position - sensorPosition));
             }
 
             return box;
