@@ -1,9 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Locks on cabinets actually work., type: Fix}
-  id: 2287
-  time: '2022-09-12T16:42:55.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The fallback gamemode should something happen is now extended, not
@@ -2934,3 +2929,9 @@ Entries:
       series to stations, type: Add}
   id: 2786
   time: '2022-12-20T04:11:36.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: NT has been convinced to replace the discomfortable beds that made even
+      the dead move with ones that are at least barely bearable!, type: Fix}
+  id: 2787
+  time: '2022-12-20T22:24:50.0000000+00:00'
