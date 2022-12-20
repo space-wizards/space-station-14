@@ -10,7 +10,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
-/// This handles...
+/// This handles granting players their gift.
 /// </summary>
 public sealed class GiftPackinSystem : EntitySystem
 {

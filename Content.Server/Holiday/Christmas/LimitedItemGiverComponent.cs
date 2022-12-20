@@ -14,12 +14,21 @@ public sealed class LimitedItemGiverComponent : Component
     /// </summary>
     public readonly HashSet<NetUserId> GrantedPlayers = new();
 
+    /// <summary>
+    /// Selects what entities can be given out by the giver.
+    /// </summary>
     [DataField("spawnEntries", required: true)]
     public List<EntitySpawnEntry> SpawnEntries = default!;
 
+    /// <summary>
+    /// The (localized) message shown upon receiving something.
+    /// </summary>
     [DataField("receivedPopup", required: true)]
     public string ReceivedPopup = default!;
 
+    /// <summary>
+    /// The (localized) message shown upon being denied.
+    /// </summary>
     [DataField("deniedPopup", required: true)]
     public string DeniedPopup = default!;
 }
