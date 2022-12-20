@@ -30,7 +30,7 @@ public sealed class RandomGiftComponent : Component
     public bool InsaneMode;
 
     /// <summary>
-    /// What entities are allowed to examine this gift to see it's contents.
+    /// What entities are allowed to examine this gift to see its contents.
     /// </summary>
     [DataField("contentsViewers", required: true)]
     public EntityWhitelist ContentsViewers = default!;
