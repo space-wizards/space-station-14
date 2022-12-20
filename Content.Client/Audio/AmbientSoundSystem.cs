@@ -250,7 +250,6 @@ namespace Content.Client.Audio
             var state = new QueryState(pos, playerXform, query);
             var worldAabb = new Box2(pos - _maxAmbientRange, pos + _maxAmbientRange);
             _treeSys.QueryAabb(ref state, Callback, mapPos.MapId, worldAabb);
-            Logger.Info($"{state.SourceDict.Sum(x => x.Value.Count())}");
 
             // Add in range ambiences
             foreach (var (key, sources) in state.SourceDict)
