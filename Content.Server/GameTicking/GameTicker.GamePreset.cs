@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
+using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -14,6 +15,8 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         public const float PresetFailedCooldownIncrease = 30f;
+
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public GamePresetPrototype? Preset { get; private set; }
 
@@ -180,7 +183,7 @@ namespace Content.Server.GameTicking
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (mobState.IsCritical())
+                if (_mobStateSystem.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
