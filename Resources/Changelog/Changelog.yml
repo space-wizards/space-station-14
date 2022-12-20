@@ -1,10 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: Pipes with high pressure will warn you when unachoring them and take
-      slightly longer., type: Fix}
-  id: 2274
-  time: '2022-09-11T06:30:10.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Melee weapons that change damage now show their damage correctly., type: Fix}
@@ -2925,3 +2919,11 @@ Entries:
   - {message: Thrusters and Gyroscopes can be built and upgraded., type: Add}
   id: 2773
   time: '2022-12-19T04:38:30.0000000+00:00'
+- author: Willhelm53
+  changes:
+  - {message: Fixed tomato and vomit splats losing their color/sprite., type: Fix}
+  - {message: Fixed wet floor sparkles getting stuck on one animation frame., type: Fix}
+  - {message: Wet floor sparkles are now slightly more opaque and stay invisible for
+      less of their animation cycle., type: Tweak}
+  id: 2774
+  time: '2022-12-20T02:40:53.0000000+00:00'
