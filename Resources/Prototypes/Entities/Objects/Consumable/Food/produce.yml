@@ -408,6 +408,7 @@
     state: puddle-0
     netsync: false
   - type: Puddle
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -417,8 +418,7 @@
   - type: Evaporation
     lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
 
 - type: entity
   name: eggplant

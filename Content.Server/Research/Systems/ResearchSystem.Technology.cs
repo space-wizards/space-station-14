@@ -3,7 +3,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Research;
+namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
@@ -22,13 +22,15 @@ public sealed partial class ResearchSystem
     ///     adding all technologies from the other that
     ///     this one doesn't have.
     /// </summary>
+    /// <param name="component"></param>
     /// <param name="otherDatabase">The other database</param>
     /// <param name="twoway">Whether the other database should be synced against this one too or not.</param>
     public void Sync(TechnologyDatabaseComponent component, TechnologyDatabaseComponent otherDatabase, bool twoway = true)
     {
         foreach (var tech in otherDatabase.TechnologyIds)
         {
-            if (!component.IsTechnologyUnlocked(tech)) AddTechnology(component, tech);
+            if (!component.IsTechnologyUnlocked(tech))
+                AddTechnology(component, tech);
         }
 
         if (twoway)
@@ -45,8 +47,10 @@ public sealed partial class ResearchSystem
     /// <returns>Whether it could sync or not</returns>
     public bool SyncWithServer(TechnologyDatabaseComponent component, ResearchClientComponent? clientComponent = null)
     {
-        if (!Resolve(component.Owner, ref clientComponent, false)) return false;
-        if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server?.Owner, out var clientDatabase)) return false;
+        if (!Resolve(component.Owner, ref clientComponent, false))
+            return false;
+        if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server?.Owner, out var clientDatabase))
+            return false;
 
         Sync(component, clientDatabase);
 
@@ -56,11 +60,13 @@ public sealed partial class ResearchSystem
     /// <summary>
     ///     If possible, unlocks a technology on this database.
     /// </summary>
+    /// <param name="component"></param>
     /// <param name="technology"></param>
     /// <returns></returns>
     public bool UnlockTechnology(TechnologyDatabaseComponent component, TechnologyPrototype technology)
     {
-        if (!component.CanUnlockTechnology(technology)) return false;
+        if (!component.CanUnlockTechnology(technology))
+            return false;
 
         AddTechnology(component, technology.ID);
         Dirty(component);
@@ -70,6 +76,7 @@ public sealed partial class ResearchSystem
     /// <summary>
     ///     Adds a technology to the database without checking if it could be unlocked.
     /// </summary>
+    /// <param name="component"></param>
     /// <param name="technology"></param>
     public void AddTechnology(TechnologyDatabaseComponent component, string technology)
     {

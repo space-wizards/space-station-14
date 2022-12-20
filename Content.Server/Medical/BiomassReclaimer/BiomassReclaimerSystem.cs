@@ -22,7 +22,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
@@ -153,19 +152,19 @@ namespace Content.Server.Medical.BiomassReclaimer
             if (component.CancelToken != null || args.Target == null)
                 return;
 
-            if (HasComp<MobStateComponent>(args.Used) && CanGib(uid, args.Used, component))
+            if (!HasComp<MobStateComponent>(args.Used) || !CanGib(uid, args.Used, component))
+                return;
+
+            component.CancelToken = new CancellationTokenSource();
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 7f, component.CancelToken.Token, args.Target, args.Used)
             {
-                component.CancelToken = new CancellationTokenSource();
-                _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, 7f, component.CancelToken.Token, target: args.Target)
-                {
-                    BroadcastFinishedEvent = new ReclaimSuccessfulEvent(args.User, args.Used, uid),
-                    BroadcastCancelledEvent = new ReclaimCancelledEvent(uid),
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BreakOnStun = true,
-                    NeedHand = true
-                });
-            }
+                BroadcastFinishedEvent = new ReclaimSuccessfulEvent(args.User, args.Used, uid),
+                BroadcastCancelledEvent = new ReclaimCancelledEvent(uid),
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnStun = true,
+                NeedHand = true
+            });
         }
 
         private void OnClimbedOn(EntityUid uid, BiomassReclaimerComponent component, ClimbedOnEvent args)
