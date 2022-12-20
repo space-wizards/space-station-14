@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Handheld radios can now receive messages properly, type: Fix}
-  id: 2289
-  time: '2022-09-13T03:32:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Clumsy for clowns has been fixed again., type: Fix}
@@ -2939,3 +2934,11 @@ Entries:
       can see inside gifts), type: Add}
   id: 2788
   time: '2022-12-20T22:34:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added technology disks, which can be inserted into a research server
+      to unlock a new lathe recipe.', type: Add}
+  - {message: 'Added the technology disk terminal, where you can exchange 2500 research
+      points for a random technology disk.', type: Add}
+  id: 2789
+  time: '2022-12-20T22:39:58.0000000+00:00'
