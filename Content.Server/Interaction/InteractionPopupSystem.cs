@@ -1,4 +1,5 @@
 using Content.Server.Interaction.Components;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
@@ -15,6 +16,7 @@ public sealed class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
@@ -38,7 +40,7 @@ public sealed class InteractionPopupSystem : EntitySystem
             return;
 
         if (TryComp<MobStateComponent>(uid, out var state) // if it has a MobStateComponent,
-            && !state.IsAlive())                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
+            && !_mobStateSystem.IsAlive(uid, state))                           // AND if that state is not Alive (e.g. dead/incapacitated/critical)
             return;
 
         // TODO: Should be an attempt event
