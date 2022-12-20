@@ -82,7 +82,7 @@ public sealed class ChannelSelectorButton : Button
             ChatSelectChannel.LOOC => Color.MediumTurquoise,
             ChatSelectChannel.OOC => Color.LightSkyBlue,
             ChatSelectChannel.Dead => Color.MediumPurple,
-            ChatSelectChannel.Admin => Color.Red,
+            ChatSelectChannel.Admin => Color.HotPink,
             _ => Color.DarkGray
         };
     }

@@ -44,8 +44,10 @@ public sealed class NPCSteeringComponent : Component
     /// <summary>
     /// Last time the NPC steered.
     /// </summary>
+    [ViewVariables]
     public TimeSpan LastTimeSteer;
 
+    [ViewVariables]
     public Vector2 LastSteer;
 
     /// <summary>

@@ -1,16 +1,13 @@
-using Content.Client.Stylesheets;
-using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
+using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
-using Robust.Shared.Timing;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
@@ -18,10 +15,13 @@ namespace Content.Client.Popups
     public sealed class PopupSystem : SharedPopupSystem
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IResourceCache _resource = default!;
+
+        public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
+        public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
 
         private readonly List<WorldPopupLabel> _aliveWorldLabels = new();
         private readonly List<CursorPopupLabel> _aliveCursorLabels = new();
@@ -34,21 +34,25 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+            _overlay
+                .AddOverlay(new PopupOverlay(EntityManager, _prototype, _resource, this));
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _overlay
+                .RemoveOverlay<PopupOverlay>();
         }
 
         private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates, EntityUid? entity = null)
         {
-            var label = new WorldPopupLabel(_eyeManager, EntityManager)
+            var label = new WorldPopupLabel(coordinates)
             {
-                Entity = entity,
                 Text = message,
-                StyleClasses = { GetStyleClass(type) },
+                Type = type,
             };
 
-            _userInterfaceManager.PopupRoot.AddChild(label);
-            label.Measure(Vector2.Infinity);
-
-            label.InitialPos = coordinates;
             _aliveWorldLabels.Add(label);
         }
 
@@ -69,15 +73,15 @@ namespace Content.Client.Popups
             if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
                 PopupMessage(message, type, coordinates, null);
         }
-        
+
         public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {
             var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
             {
                 Text = message,
-                StyleClasses = { GetStyleClass(type) },
+                Type = type,
             };
-            _userInterfaceManager.PopupRoot.AddChild(label);
+
             _aliveCursorLabels.Add(label);
         }
 
@@ -146,159 +150,69 @@ namespace Content.Client.Popups
 
         private void OnRoundRestart(RoundRestartCleanupEvent ev)
         {
-            foreach (var label in _aliveWorldLabels)
-            {
-                label.Dispose();
-            }
-
+            _aliveCursorLabels.Clear();
             _aliveWorldLabels.Clear();
         }
 
         #endregion
-
-        private static string GetStyleClass(PopupType type) =>
-            type switch
-            {
-                PopupType.Small => StyleNano.StyleClassPopupMessageSmall,
-                PopupType.SmallCaution => StyleNano.StyleClassPopupMessageSmallCaution,
-                PopupType.Medium => StyleNano.StyleClassPopupMessageMedium,
-                PopupType.MediumCaution => StyleNano.StyleClassPopupMessageMediumCaution,
-                PopupType.Large => StyleNano.StyleClassPopupMessageLarge,
-                PopupType.LargeCaution => StyleNano.StyleClassPopupMessageLargeCaution,
-                _ => StyleNano.StyleClassPopupMessageSmall
-            };
 
         public override void FrameUpdate(float frameTime)
         {
             if (_aliveWorldLabels.Count == 0 && _aliveCursorLabels.Count == 0)
                 return;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-            var playerPos = player != null ? Transform(player.Value).MapPosition : MapCoordinates.Nullspace;
-
-            // ReSharper disable once ConvertToLocalFunction
-            var predicate = static (EntityUid uid, (EntityUid? compOwner, EntityUid? attachedEntity) data)
-                => uid == data.compOwner || uid == data.attachedEntity;
-            var occluded = player != null && _examineSystem.IsOccluded(player.Value);
-
-            for (var i = _aliveWorldLabels.Count - 1; i >= 0; i--)
+            for (var i = 0; i < _aliveWorldLabels.Count; i++)
             {
                 var label = _aliveWorldLabels[i];
-                if (label.TotalTime > PopupLifetime ||
-                    label.Entity != null && Deleted(label.Entity))
+                label.TotalTime += frameTime;
+
+                if (label.TotalTime > PopupLifetime || Deleted(label.InitialPos.EntityId))
                 {
-                    label.Dispose();
                     _aliveWorldLabels.RemoveSwap(i);
-                    continue;
+                    i--;
                 }
-
-                if (label.Entity == player)
-                {
-                    label.Visible = true;
-                    continue;
-                }
-
-                var otherPos = label.Entity != null ? Transform(label.Entity.Value).MapPosition : label.InitialPos.ToMap(EntityManager);
-
-                if (occluded && !ExamineSystemShared.InRangeUnOccluded(
-                        playerPos,
-                        otherPos, 0f,
-                        (label.Entity, player), predicate))
-                {
-                    label.Visible = false;
-                    continue;
-                }
-
-                label.Visible = true;
             }
 
-            for (var i = _aliveCursorLabels.Count - 1; i >= 0; i--)
+            for (var i = 0; i < _aliveCursorLabels.Count; i++)
             {
                 var label = _aliveCursorLabels[i];
+                label.TotalTime += frameTime;
+
                 if (label.TotalTime > PopupLifetime)
                 {
-                    label.Dispose();
                     _aliveCursorLabels.RemoveSwap(i);
+                    i--;
                 }
             }
         }
 
-        private abstract class PopupLabel : Label
+        public abstract class PopupLabel
         {
-            public float TotalTime { get; protected set; }
+            public PopupType Type = PopupType.Small;
+            public string Text { get; set; } = string.Empty;
+            public float TotalTime { get; set; }
+        }
 
-            public PopupLabel()
-            {
-                ShadowOffsetXOverride = ShadowOffsetYOverride = 1;
-                FontColorShadowOverride = Color.Black;
-                Measure(Vector2.Infinity);
-            }
+        public sealed class CursorPopupLabel : PopupLabel
+        {
+            public ScreenCoordinates InitialPos;
 
-            protected override void FrameUpdate(FrameEventArgs eventArgs)
+            public CursorPopupLabel(ScreenCoordinates screenCoords)
             {
-                TotalTime += eventArgs.DeltaSeconds;
-                if (TotalTime > 0.5f)
-                    Modulate = Color.White.WithAlpha(1f - 0.2f * MathF.Pow(TotalTime - 0.5f, 3f));
+                InitialPos = screenCoords;
             }
         }
 
-        private sealed class CursorPopupLabel : PopupLabel
+        public sealed class WorldPopupLabel : PopupLabel
         {
-            public Vector2 InitialPos { get; set; }
-
-            public CursorPopupLabel(ScreenCoordinates screenCoords) : base()
-            {
-                InitialPos = screenCoords.Position - DesiredSize / 2;
-            }
-
-            protected override void FrameUpdate(FrameEventArgs eventArgs)
-            {
-                base.FrameUpdate(eventArgs);
-                LayoutContainer.SetPosition(this, InitialPos / UIScale - (0, 20 * (TotalTime * TotalTime + TotalTime)));
-            }
-        }
-
-        private sealed class WorldPopupLabel : PopupLabel
-        {
-            private readonly IEyeManager _eyeManager;
-            private readonly IEntityManager _entityManager;
-
             /// <summary>
-            /// The original Mapid and ScreenPosition of the label.
+            /// The original EntityCoordinates of the label.
             /// </summary>
-            /// <remarks>
-            /// Yes that's right it's not technically MapCoordinates.
-            /// </remarks>
-            public EntityCoordinates InitialPos { get; set; }
-            public EntityUid? Entity { get; set; }
+            public EntityCoordinates InitialPos;
 
-            public WorldPopupLabel(IEyeManager eyeManager, IEntityManager entityManager) : base()
+            public WorldPopupLabel(EntityCoordinates coordinates)
             {
-                _eyeManager = eyeManager;
-                _entityManager = entityManager;
-            }
-
-            protected override void FrameUpdate(FrameEventArgs eventArgs)
-            {
-                base.FrameUpdate(eventArgs);
-                ScreenCoordinates screenCoords;
-
-                if (Entity == null)
-                    screenCoords = _eyeManager.CoordinatesToScreen(InitialPos);
-                else if (_entityManager.TryGetComponent(Entity.Value, out TransformComponent? xform)
-                    && xform.MapID == _eyeManager.CurrentMap)
-                    screenCoords = _eyeManager.CoordinatesToScreen(xform.Coordinates);
-                else
-                {
-                    Visible = false;
-                    if (Entity != null && _entityManager.Deleted(Entity))
-                        TotalTime += PopupLifetime;
-                    return;
-                }
-
-                Visible = true;
-                var position = screenCoords.Position / UIScale - DesiredSize / 2;
-                LayoutContainer.SetPosition(this, position - (0, 20 * (TotalTime * TotalTime + TotalTime)));
+                InitialPos = coordinates;
             }
         }
     }

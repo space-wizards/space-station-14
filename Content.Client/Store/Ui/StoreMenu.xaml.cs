@@ -99,8 +99,8 @@ public sealed partial class StoreMenu : DefaultWindow
         if (!listing.Categories.Contains(CurrentCategory))
             return;
 
-        string listingName = new (listing.Name);
-        string listingDesc = new (listing.Description);
+        var listingName = Loc.GetString(listing.Name);
+        var listingDesc = Loc.GetString(listing.Description);
         var listingPrice = listing.Cost;
         var canBuy = CanBuyListing(Balance, listingPrice);
 
