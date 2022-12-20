@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunParty
+  icon:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: birthday
+  product: CrateFunParty
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
   id: FunPlushies
   icon:
     sprite: Objects/Fun/toys.rsi

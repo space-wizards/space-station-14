@@ -1600,6 +1600,9 @@
       "name": "television"
     },
     {
+      "name": "television_broken"
+    },
+    {
       "name": "telescreen",
       "directions": 4
     },

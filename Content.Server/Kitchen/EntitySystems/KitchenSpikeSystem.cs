@@ -1,6 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
+using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -25,6 +26,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
@@ -213,7 +215,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // THE WHAT? (again)
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
             if (Resolve(victimUid, ref mobState, false) &&
-                !mobState.IsDead())
+                _mobStateSystem.IsAlive(victimUid, mobState))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", Identity.Entity(victimUid, EntityManager))),
                     victimUid, userUid);
