@@ -13,6 +13,7 @@ namespace Content.Client.Buckle
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AppearanceSystem AppearanceSystem = default!;
+        [Dependency] private readonly RotationVisualizerSystem RotationVisualizerSystem = default!;
 
         public override void Initialize()
         {
@@ -87,8 +88,7 @@ namespace Content.Client.Buckle
             }
 
             // Animate strapping yourself to something at a given angle
-            EntityManager.System<RotationVisualizerSystem>()
-                .AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
+            RotationVisualizerSystem.AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
         }
     }
 }
