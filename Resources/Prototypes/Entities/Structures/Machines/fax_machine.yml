@@ -99,7 +99,7 @@
   parent: FaxMachineBase
   id: FaxMachineCaptain
   name: captain long range fax machine
-  suffix: Centcom
+  suffix: NukeCodes
   components:
     - type: FaxMachine
       name: "Captain's Office"
