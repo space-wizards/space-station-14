@@ -1,22 +1,27 @@
 ﻿using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Construction;
+using Content.Server.Power.Components;
 using Content.Shared.Containers.ItemSlots;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
 public sealed class SolutionHeaterSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly SolutionContainerSystem _solution = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
+        SubscribeLocalEvent<SolutionHeaterComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<SolutionHeaterComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<SolutionHeaterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+    }
+
+    private void OnPowerChanged(EntityUid uid, SolutionHeaterComponent component, ref PowerChangedEvent args)
+    {
+        component.Enabled = args.Powered;
     }
 
     private void OnRefreshParts(EntityUid uid, SolutionHeaterComponent component, RefreshPartsEvent args)
@@ -37,9 +42,8 @@ public sealed class SolutionHeaterSystem : EntitySystem
 
         foreach (var heater in EntityQuery<SolutionHeaterComponent>())
         {
-            if (heater.NextHeat > _timing.CurTime)
+            if (!heater.Enabled)
                 continue;
-            heater.NextHeat = _timing.CurTime + TimeSpan.FromSeconds(1);
 
             if (_itemSlots.GetItemOrNull(heater.Owner, heater.BeakerSlotId) is not { } item)
                 continue;
@@ -47,9 +51,10 @@ public sealed class SolutionHeaterSystem : EntitySystem
             if (!TryComp<SolutionContainerManagerComponent>(item, out var solution))
                 continue;
 
+            var energy = heater.HeatPerSecond * heater.HeatMultiplier * frameTime;
             foreach (var s in solution.Solutions.Values)
             {
-                _solution.AddThermalEnergy(solution.Owner, s, heater.HeatPerSecond * heater.HeatMultiplier);
+                _solution.AddThermalEnergy(solution.Owner, s, energy);
             }
         }
     }

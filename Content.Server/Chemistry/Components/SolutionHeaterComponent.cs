@@ -5,14 +5,14 @@ public sealed class SolutionHeaterComponent : Component
 {
     public readonly string BeakerSlotId = "beakerSlot";
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Enabled;
+
     [DataField("heatPerSecond")]
     public float HeatPerSecond = 120;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float HeatMultiplier = 1;
-
-    [ViewVariables]
-    public TimeSpan NextHeat = TimeSpan.Zero;
 
     [DataField("machinePartHeatPerSecond")]
     public string MachinePartHeatPerSecond = "Laser";
