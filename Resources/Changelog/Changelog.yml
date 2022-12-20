@@ -1,9 +1,4 @@
 Entries:
-- author: och
-  changes:
-  - {message: Examining people tells you their pronouns and approximate age, type: Add}
-  id: 2282
-  time: '2022-09-11T14:45:40.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Artifacts fits into artifact storage again, type: Fix}
@@ -2931,3 +2926,8 @@ Entries:
   - {message: Faxes received a stamp scanning module, type: Add}
   id: 2781
   time: '2022-12-20T03:44:15.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Nanotrasen has begun experiments with advanced locker technology., type: Add}
+  id: 2782
+  time: '2022-12-20T03:47:38.0000000+00:00'
