@@ -68,6 +68,6 @@ public sealed class BanListCommand : LocalizedCommands
 
         var playerMgr = IoCManager.Resolve<IPlayerManager>();
         var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-ban-hint"));
+        return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-banlist-hint"));
     }
 }
