@@ -1,4 +1,4 @@
-﻿using Content.Server.Popups;
+using Content.Server.Popups;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Shared.Interaction;
@@ -33,6 +33,6 @@ public sealed class NodeScannerSystem : EntitySystem
         var target = args.Target.Value;
         _useDelay.BeginDelay(uid);
         _popupSystem.PopupEntity(Loc.GetString("node-scan-popup",
-            ("id", $"{artifact.CurrentNode.Id}")), target, Filter.Pvs(target));
+            ("id", $"{artifact.CurrentNode.Id}")), target);
     }
 }
