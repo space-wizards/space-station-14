@@ -245,11 +245,8 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            RaiseLocalEvent(new RoundStartedEvent(RoundId)); // Corvax-RoundNotifications
 
-            // Corvax-RoundNotifications-Start
-            var roundStartedEvent = new RoundStartedEvent(RoundId);
-            RaiseLocalEvent(roundStartedEvent);
-            // Corvax-RoundNotifications-End
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
@@ -372,6 +369,7 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new RoundEndMessageEvent(gamemodeTitle, roundEndText, roundDuration, RoundId,
                 listOfPlayerInfoFinal.Length, listOfPlayerInfoFinal, LobbySong,
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
+            RaiseLocalEvent(new RoundEndedEvent(RoundId, roundDuration)); // Corvax-RoundNotifications
         }
 
         public void RestartRound()
