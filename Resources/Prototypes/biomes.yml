@@ -1,4 +1,4 @@
 - type: biome
   id: Grasslands
   tiles:
-    Grass: 1
+    FloorWoodTile: 1

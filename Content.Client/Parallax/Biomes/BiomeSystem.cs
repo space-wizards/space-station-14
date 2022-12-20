@@ -1,10 +1,13 @@
 using Content.Shared.Maps;
+using Content.Shared.Parallax.Biomes;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
 
@@ -13,14 +16,13 @@ public sealed class BiomeSystem : EntitySystem
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceCache _resourceManager = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private const int ChunkSize = 4;
 
     public override void Initialize()
     {
         base.Initialize();
-        _overlay.AddOverlay(new BiomeOverlay());
+        _overlay.AddOverlay(new BiomeOverlay(_protoManager, this));
     }
 
     public override void Shutdown()
@@ -39,27 +41,45 @@ public sealed class BiomeSystem : EntitySystem
     public Texture GetTileTexture(Vector2i indices, BiomePrototype prototype, int seed)
     {
         // TODO: Should do this per chunk and just not render the tiles unneeded.
-        var random = new Random(seed);
         var chunk = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
+        var chunkSeed = (chunk.X + chunk.Y * ChunkSize * 64) ;
+        var random = new Random(seed + chunkSeed);
         var relative = SharedMapSystem.GetChunkRelative(indices, ChunkSize);
+
+        if (indices == Vector2i.Zero)
+        {
+
+        }
 
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
             {
-                if (x != relative.X && y != relative.Y)
+                if (x != relative.X || y != relative.Y)
                 {
-                    random.Next();
+                    random.NextDouble();
                     continue;
                 }
 
-                var resource = _protoManager.Index<ContentTileDefinition>("Grass").Sprite;
+                var value = random.NextDouble();
+                ResourcePath path;
 
-                if (resource == null)
-                    continue;
+                if (value < 0.5)
+                {
+                    path = new ResourcePath("/Textures/Tiles/Planet/grass.rsi/grass0.png");
+                }
+                else
+                {
+                    path = new ResourcePath("/Textures/Tiles/grassjungle.png");
+                }
+
+                // var resource = _protoManager.Index<ContentTileDefinition>("FloorSteel").Sprite;
+
+                //if (resource == null)
+                //    continue;
 
                 // TODO: Use the weighted random stuff.
-                return _resourceManager.GetResource<TextureResource>(resource).Texture;
+                return _resourceManager.GetResource<TextureResource>(path).Texture;
             }
         }
 
