@@ -96,9 +96,9 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool TryPoint(ICommonSession session, EntityCoordinates coords, EntityUid pointed)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
         {
-            if (session.AttachedEntity is not { } player)
+            if (session?.AttachedEntity is not { } player)
             {
                 Logger.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
