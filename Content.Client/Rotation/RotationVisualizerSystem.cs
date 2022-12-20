@@ -1,6 +1,6 @@
-using Content.Shared.Rotation;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
+using Robust.Client.Animations;
+using Content.Shared.Rotation;
 using Robust.Shared.Animations;
 
 namespace Content.Client.Rotation;
@@ -11,43 +11,47 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!AppearanceSystem.TryGetData(uid, RotationVisuals.RotationState, out var state, args.Component) ||
-            args.Sprite == null)
+        if (args.Sprite != null)
         {
-            return;
-        }
+            // if TryGetData fails, state defaults to RotationState.Vertical.
+            args.Component.TryGetData<RotationState>(RotationVisuals.RotationState, out var state);
 
-        switch ((RotationState) state)
-        {
-            case RotationState.Vertical:
-                AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
-                break;
-            case RotationState.Horizontal:
-                AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
-                break;
+            switch (state)
+            {
+                case RotationState.Vertical:
+                    AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
+                    break;
+                case RotationState.Horizontal:
+                    AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                    break;
+            }
         }
     }
 
     /// <summary>
     ///     Rotates a sprite between two animated keyframes given a certain time.
     /// </summary>
-    public void AnimateSpriteRotation(SpriteComponent spriteComp, Angle rotation, float animationTime)
+    public void AnimateSpriteRotation(SpriteComponent sprite, Angle rotation, float animationTime)
     {
-        if (spriteComp.Rotation.Equals(rotation))
+        var entMan = IoCManager.Resolve<IEntityManager>();
+
+        if (sprite.Rotation.Equals(rotation))
         {
             return;
         }
 
-        var animationComp = EnsureComp<AnimationPlayerComponent>(spriteComp.Owner);
-        var animationSystem = EntityManager.System<AnimationPlayerSystem>();
-        const string animationKey = "rotate";
-        // Stop the current rotate animation and then start a new one
-        if (animationSystem.HasRunningAnimation(animationComp, animationKey))
+        if (!entMan.TryGetComponent(sprite.Owner, out AnimationPlayerComponent? animation))
         {
-            animationSystem.Stop(animationComp, animationKey);
+            sprite.Rotation = rotation;
+            return;
         }
 
-        var animation = new Animation
+        if (animation.HasRunningAnimation("rotate"))
+        {
+            animation.Stop("rotate");
+        }
+
+        animation.Play(new Animation
         {
             Length = TimeSpan.FromSeconds(animationTime),
             AnimationTracks =
@@ -59,13 +63,11 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
-                        new AnimationTrackProperty.KeyFrame(spriteComp.Rotation, 0),
+                        new AnimationTrackProperty.KeyFrame(sprite.Rotation, 0),
                         new AnimationTrackProperty.KeyFrame(rotation, animationTime)
                     }
                 }
             }
-        };
-
-        animationSystem.Play(animationComp, animation, animationKey);
+        }, "rotate");
     }
 }

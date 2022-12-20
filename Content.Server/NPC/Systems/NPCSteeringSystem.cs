@@ -134,6 +134,7 @@ namespace Content.Server.NPC.Systems
         {
             // Cancel any active pathfinding jobs as they're irrelevant.
             component.PathfindToken?.Cancel();
+            component.PathfindToken = null;
         }
 
         /// <summary>
@@ -203,18 +204,12 @@ namespace Content.Server.NPC.Systems
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
-            var options = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
-            };
 
-            Parallel.For(0, npcs.Length, options, i =>
+            foreach (var (steering, _, mover, xform) in npcs)
             {
-                var (steering, _, mover, xform) = npcs[i];
-
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
                 steering.LastSteer = mover.CurTickSprintMovement;
-            });
+            }
 
             if (_subscribedSessions.Count > 0)
             {
@@ -261,8 +256,6 @@ namespace Content.Server.NPC.Systems
             EntityQuery<TransformComponent> xformQuery,
             float frameTime)
         {
-            IoCManager.InitThread(_dependencies, replaceExisting: true);
-
             if (Deleted(steering.Coordinates.EntityId))
             {
                 SetDirection(mover, steering, Vector2.Zero);
@@ -400,10 +393,11 @@ namespace Content.Server.NPC.Systems
                 steering.PathfindToken.Token,
                 flags);
 
+            steering.PathfindToken = null;
+
             if (result.Result == PathResult.NoPath)
             {
                 steering.CurrentPath.Clear();
-                steering.PathfindToken = null;
                 steering.FailedPathCount++;
 
                 if (steering.FailedPathCount >= NPCSteeringComponent.FailedPathLimit)
@@ -419,7 +413,6 @@ namespace Content.Server.NPC.Systems
 
             PrunePath(ourPos, targetPos.Position - ourPos.Position, result.Path);
             steering.CurrentPath = result.Path;
-            steering.PathfindToken = null;
         }
 
         // TODO: Move these to movercontroller

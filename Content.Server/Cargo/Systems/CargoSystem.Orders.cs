@@ -229,10 +229,7 @@ namespace Content.Server.Cargo.Systems
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
         }
 
-        private void ConsolePopup(ICommonSession session, string text)
-        {
-            _popup.PopupCursor(text, Filter.SinglePlayer(session));
-        }
+        private void ConsolePopup(ICommonSession session, string text) => _popup.PopupCursor(text, session);
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
