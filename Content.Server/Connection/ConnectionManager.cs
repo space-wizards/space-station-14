@@ -5,6 +5,7 @@ using Content.Server.Database;
 using Content.Server.GameTicking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Corvax.CCCVars;
 using Content.Shared.GameTicking;
 using Content.Shared.Players.PlayTimeTracking;
 using Robust.Server.Player;
@@ -140,7 +141,7 @@ namespace Content.Server.Connection
 
             // Corvax-Queue-Start
             var isPrivileged = await HavePrivilegedJoin(e.UserId);
-            var isQueueEnabled = _cfg.GetCVar(CCVars.QueueEnabled);
+            var isQueueEnabled = _cfg.GetCVar(CCCVars.QueueEnabled);
             if (_plyMgr.PlayerCount >= _cfg.GetCVar(CCVars.SoftMaxPlayers) && !isPrivileged && !isQueueEnabled)
             // Corvax-Queue-End
             {

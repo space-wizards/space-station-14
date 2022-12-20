@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Connection;
 using Content.Shared.CCVar;
+using Content.Shared.Corvax.CCCVars;
 using Content.Shared.Corvax.JoinQueue;
 using Prometheus;
 using Robust.Server.Player;
@@ -52,7 +53,7 @@ public sealed class JoinQueueManager
     {
         _netManager.RegisterNetMessage<MsgQueueUpdate>();
         
-        _cfg.OnValueChanged(CCVars.QueueEnabled, OnQueueCVarChanged, true);
+        _cfg.OnValueChanged(CCCVars.QueueEnabled, OnQueueCVarChanged, true);
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
     }
 
