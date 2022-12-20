@@ -1,5 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 
 namespace Content.Server.Research.Systems;
@@ -44,7 +45,7 @@ public sealed partial class ResearchSystem
     {
         if (!Resolve(component.Owner, ref databaseComponent, false))
             return false;
-        return databaseComponent.IsTechnologyUnlocked(prototype.ID);
+        return IsTechnologyUnlocked(databaseComponent.Owner, prototype.ID, databaseComponent);
     }
 
     public bool CanUnlockTechnology(ResearchServerComponent component, TechnologyPrototype technology, TechnologyDatabaseComponent? databaseComponent = null)
@@ -52,7 +53,7 @@ public sealed partial class ResearchSystem
         if (!Resolve(component.Owner, ref databaseComponent, false))
             return false;
 
-        if (!databaseComponent.CanUnlockTechnology(technology) ||
+        if (!CanUnlockTechnology(databaseComponent.Owner, technology, databaseComponent) ||
             component.Points < technology.RequiredPoints ||
             IsTechnologyUnlocked(component, technology, databaseComponent))
             return false;
