@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Slipping should feel nicer., type: Fix}
-  id: 2277
-  time: '2022-09-11T06:49:10.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Added some more networking options to the options window., type: Add}
@@ -2929,3 +2924,9 @@ Entries:
   - {message: Added wares to the Nutrimax and Kitchenware machines., type: Add}
   id: 2776
   time: '2022-12-20T02:48:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug allowing players to control a moving cardboard box without
+      being inside of that box., type: Fix}
+  id: 2777
+  time: '2022-12-20T03:33:59.0000000+00:00'
