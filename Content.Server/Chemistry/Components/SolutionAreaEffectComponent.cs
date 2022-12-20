@@ -194,8 +194,12 @@ namespace Content.Server.Chemistry.Components
 
         public void TryAddSolution(Solution solution)
         {
+            // This condition returns when a pure reaction happens
             if (solution.TotalVolume == 0)
+            {
+                UpdateVisuals();
                 return;
+            }
 
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;

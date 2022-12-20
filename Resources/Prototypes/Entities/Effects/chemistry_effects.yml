@@ -11,6 +11,7 @@
   id: Smoke
   parent: ChemEffectBase
   name: smoke
+  noSpawn: true
   components:
   - type: Sprite
     drawdepth: Effects
@@ -18,6 +19,8 @@
     layers:
       - state: chemsmoke
         map: ["enum.ChemistryEffectLayers.Base"]
+      - state: chemsmoke
+        map: ["enum.ChemistryEffectLayers.Animation"]
   - type: Occluder
   - type: Transform
     anchored: true
@@ -33,6 +36,7 @@
   id: Foam
   parent: ChemEffectBase
   name: foam
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
@@ -67,7 +71,8 @@
   - type: Slippery
   - type: StepTrigger
   - type: ChemistryEffectVisuals
-    animationTime: 5
+    animateOnShutdown: true
+    animationTime: 2
 
 - type: entity
   id: IronMetalFoam
@@ -107,12 +112,15 @@
   id: Vapor
   parent: ChemEffectBase
   name: "vapor"
+  noSpawn: true
   components:
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
     rotation: 90
     layers:
+    - state: chempuff
+      map: ["enum.ChemistryEffectLayers.Base"]
     - state: chempuff
       map: ["enum.ChemistryEffectLayers.Animation"]
   - type: SolutionContainerManager
@@ -141,6 +149,8 @@
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi
     layers:
+      - state: extinguish
+        map: [ "enum.ChemistryEffectLayers.Base"]
       - state: extinguish
         map: [ "enum.ChemistryEffectLayers.Animation"]
   - type: ChemistryEffectVisuals
