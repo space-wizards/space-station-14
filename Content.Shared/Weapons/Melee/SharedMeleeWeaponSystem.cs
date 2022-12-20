@@ -363,13 +363,19 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         var damage = component.Damage * GetModifier(component, true);
 
         // Can't attack yourself
-        // Not in LOS.
         if (user == ev.Target ||
-            ev.Target == null ||
-            Deleted(ev.Target) ||
+            // No deleted targets.
+            (ev.Target != null && Deleted(ev.Target)))
+        {
+            Audio.PlayPredicted(component.SwingSound, component.Owner, user);
+            return;
+        }
+
+        if (ev.Target == null ||
             // For consistency with wide attacks stuff needs damageable.
             !HasComp<DamageableComponent>(ev.Target) ||
             !TryComp<TransformComponent>(ev.Target, out var targetXform) ||
+            // Not in LOS.
             !InRange(user, ev.Target.Value, component.Range, session))
         {
             // Leave IsHit set to true, because the only time it's set to false
@@ -377,7 +383,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // empty HitEntities.
             var missEvent = new MeleeHitEvent(new List<EntityUid>(), user, damage);
             RaiseLocalEvent(component.Owner, missEvent);
-
             Audio.PlayPredicted(component.SwingSound, component.Owner, user);
             return;
         }
