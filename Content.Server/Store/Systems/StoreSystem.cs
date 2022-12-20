@@ -64,7 +64,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled)
         {
             var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
-            _popup.PopupEntity(msg, args.Target.Value, Filter.Pvs(args.Target.Value));
+            _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
     }

@@ -48,7 +48,7 @@ public sealed class MechEquipmentSystem : EntitySystem
         if (mechComp.EquipmentWhitelist != null && !mechComp.EquipmentWhitelist.IsValid(uid))
             return;
 
-        _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech, Filter.Pvs(mech));
+        _popup.PopupEntity(Loc.GetString("mech-equipment-begin-install", ("item", uid)), mech);
 
         component.TokenSource = new();
         _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.InstallDuration, component.TokenSource.Token, mech, uid)
@@ -64,7 +64,7 @@ public sealed class MechEquipmentSystem : EntitySystem
     private void OnFinished(EntityUid uid, MechEquipmentComponent component, MechEquipmentInstallFinished args)
     {
         component.TokenSource = null;
-        _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Mech, Filter.Pvs(args.Mech));
+        _popup.PopupEntity(Loc.GetString("mech-equipment-finish-install", ("item", uid)), args.Mech);
         _mech.InsertEquipment(args.Mech, uid);
     }
 

@@ -66,7 +66,7 @@ namespace Content.Server.Lock
             if (component.Locked)
             {
                 if (!args.Silent)
-                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
                 args.Cancel();
             }

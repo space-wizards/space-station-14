@@ -56,7 +56,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
 
         if (targetSolution.CurrentVolume == 0 && !spikableSource.IgnoreEmpty)
         {
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.PopupEmpty, ("spiked-entity", target), ("spike-entity", source)), user, user);
             return;
         }
 
@@ -71,7 +71,7 @@ public sealed class SolutionSpikableSystem : EntitySystem
                 RaiseLocalEvent(target, new SolutionSpikeOverflowEvent(overflow));
             }
 
-            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(spikableSource.Popup, ("spiked-entity", target), ("spike-entity", source)), user, user);
 
             sourceSolution.RemoveAllSolution();
 

@@ -220,7 +220,7 @@ namespace Content.Server.Salvage
         }
         private void ShowPopup(string messageKey, SalvageMagnetComponent component, EntityUid user)
         {
-            _popupSystem.PopupEntity(Loc.GetString(messageKey), component.Owner, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(messageKey), component.Owner, user);
         }
 
         private void SafeDeleteSalvage(EntityUid salvage)
@@ -263,7 +263,7 @@ namespace Content.Server.Salvage
             var tsc = Transform(component.Owner);
             coords = new EntityCoordinates(component.Owner, component.Offset).ToMap(EntityManager);
 
-            if (_mapManager.TryGetGrid(tsc.GridUid, out var magnetGrid) && TryComp<TransformComponent>(magnetGrid.GridEntityId, out var gridXform))
+            if (_mapManager.TryGetGrid(tsc.GridUid, out var magnetGrid) && TryComp<TransformComponent>(magnetGrid.Owner, out var gridXform))
             {
                 angle = gridXform.WorldRotation;
             }
