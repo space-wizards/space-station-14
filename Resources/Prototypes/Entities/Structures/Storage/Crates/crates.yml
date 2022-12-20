@@ -312,6 +312,9 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
+  - type: EntityStorage
+    capacity: 500
+    airtight: false
   - type: Fixtures
     fixtures:
     - shape:

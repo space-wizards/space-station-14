@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Roles;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.MobState.Components;
@@ -12,6 +13,7 @@ namespace Content.Server.Suspicion
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         private Role? _role;
         [ViewVariables]
@@ -52,7 +54,7 @@ namespace Content.Server.Suspicion
         public bool IsDead()
         {
             return _entMan.TryGetComponent(Owner, out MobStateComponent? state) &&
-                   state.IsDead();
+                   _mobStateSystem.IsDead(Owner, state);
         }
 
         public bool IsInnocent()
