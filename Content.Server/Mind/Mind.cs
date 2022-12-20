@@ -110,6 +110,13 @@ namespace Content.Server.Mind
         public IEnumerable<Objective> AllObjectives => _objectives;
 
         /// <summary>
+        ///     Prevents user from ghosting out
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("preventGhosting")]
+        public bool PreventGhosting { get; set; }
+
+        /// <summary>
         ///     The session of the player owning this mind.
         ///     Can be null, in which case the player is currently not logged in.
         /// </summary>

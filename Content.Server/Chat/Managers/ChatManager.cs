@@ -83,12 +83,13 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchServerMessage(IPlayerSession player, string message)
+        public void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
             ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.ConnectedClient);
 
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
+            if (!suppressLog)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
         public void SendAdminAnnouncement(string message)

@@ -156,6 +156,14 @@ namespace Content.Server.GameTicking
             if (handleEv.Handled)
                 return handleEv.Result;
 
+            if (mind.PreventGhosting)
+            {
+                if (mind.Session != null)
+                    // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
+                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"), true);
+                return false;
+            }
+
             var playerEntity = mind.CurrentEntity;
 
             var entities = IoCManager.Resolve<IEntityManager>();
