@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Gave Miasma a slightly spookier palette., type: Tweak}
-  id: 2280
-  time: '2022-09-11T07:00:43.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
@@ -2930,3 +2925,9 @@ Entries:
   - {message: Added new parallax and intercoms to Kettle, type: Add}
   id: 2779
   time: '2022-12-20T03:40:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Cloning consoles, scanners, and cloning pods are now properly linked
+      on round start.', type: Fix}
+  id: 2780
+  time: '2022-12-20T03:42:39.0000000+00:00'
