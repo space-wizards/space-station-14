@@ -38,7 +38,7 @@ technologies-industrial-engineering = Industrial engineering
 technologies-industrial-engineering-description = A refresher course on modern engineering technology.
 
 technologies-rapid-upgrade = Rapid upgrade
-technologies-rapid-upgrade-description = The ability to quickly upgrade the station like never before.
+technologies-rapid-upgrade-description = The ability to quickly improve the station like never before.
 
 technologies-material-sheet-printing = Material sheet printing
 technologies-material-sheet-printing-description = Print those sheets!
@@ -76,5 +76,8 @@ technologies-robotics-technology-description = Parts needed for constructing mec
 technologies-archaeology = Archeological equipment
 technologies-archaeology-description = Advanced equipment for uncovering the secrets of artifacts.
 
-technologies-adv-parts-technology = Advanced parts technology
+technologies-ripley-technology = Exosuit: Ripley
+technologies-ripley-technology-description = The latest and greatest in mechanized cargo construction.
+
 technologies-adv-parts-technology-description = Like the previous ones, but better!
+technologies-adv-parts-technology = Advanced parts technology

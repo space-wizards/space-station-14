@@ -90,7 +90,7 @@
 
 - type: latheRecipe
   id: RCD
-  result: RCD
+  result: RCDEmpty
   completetime: 4
   materials:
     Steel: 1000
@@ -162,3 +162,14 @@
     Steel: 650
     Plastic: 150
     Gold: 50
+
+- type: latheRecipe
+  id: MiningDrill
+  icon:
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  result: MiningDrill
+  completetime: 3
+  materials:
+    Steel: 500
+    Plastic: 100

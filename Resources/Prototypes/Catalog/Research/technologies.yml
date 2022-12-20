@@ -239,7 +239,7 @@
   - BasicResearch
   unlockedRecipes:
   - AppraisalTool
-#TODO- MiningDrill
+  - MiningDrill
   - OreProcessorMachineCircuitboard
 
 - type: technology
@@ -256,8 +256,28 @@
   unlockedRecipes:
   - ShuttleConsoleCircuitboard
   - RadarConsoleCircuitboard
-#TODO- Gyroscope
-#TODO- Thruster
+  - ThrusterMachineCircuitboard
+  - GyroscopeMachineCircuitboard
+
+- type: technology
+  name: technologies-ripley-technology
+  id: RipleyTechnology
+  description: technologies-ripley-technology-description
+  icon:
+    sprite: Objects/Specific/Mech/mecha.rsi
+    state: ripley
+  requiredPoints: 30000
+  requiredTechnologies:
+  - SalvageEquipment
+  unlockedRecipes:
+  - RipleyCentralElectronics
+  - RipleyPeripheralsElectronics
+  - MechEquipmentGrabber
+  - RipleyHarness
+  - RipleyLArm
+  - RipleyRArm
+  - RipleyLLeg
+  - RipleyRLeg
 
 # Industrial Engineering Technology Tree
 
@@ -272,6 +292,7 @@
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
+  - IntercomElectronics
   - ConveyorBeltAssembly
   - FlashlightLantern
   - FireExtinguisher
@@ -336,8 +357,7 @@
   - ElectromagneticTheory
   - IndustrialEngineering
   unlockedRecipes:
-  - RCD
-  - RCDAmmo
+  - PowerDrill
   - SMESMachineCircuitboard
   - PowerComputerCircuitboard
   - GeneratorPlasmaMachineCircuitboard
@@ -368,10 +388,12 @@
   icon: 
     sprite: Objects/Specific/Research/rped.rsi
     state: icon
-  requiredPoints: 7500
+  requiredPoints: 10000
   requiredTechnologies:
   - ElectricalEngineering
   unlockedRecipes:
+  - RCD
+  - RCDAmmo
   - RPED
 
 - type: technology

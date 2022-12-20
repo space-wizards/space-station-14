@@ -74,3 +74,8 @@
   id: PDA
   name: device-frequency-prototype-name-pdas
   frequency: 2202
+
+- type: deviceFrequency
+  id: Fax
+  name: device-frequency-prototype-name-fax
+  frequency: 2640

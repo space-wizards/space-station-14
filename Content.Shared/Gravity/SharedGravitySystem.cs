@@ -7,11 +7,13 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Gravity
 {
-    public abstract class SharedGravitySystem : EntitySystem
+    public abstract partial class SharedGravitySystem : EntitySystem
     {
+        [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
 
@@ -29,17 +31,20 @@ namespace Content.Shared.Gravity
                 return true;
 
             // If grid / map has gravity
-            if ((TryComp<GravityComponent>(xform.GridUid, out var gravity) ||
-                 TryComp(xform.MapUid, out gravity)) && gravity.Enabled)
+            if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
+                 TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
             {
                 return false;
             }
 
-            // Something holding us down
+            var hasGrav = gravity != null || mapGravity != null;
+
+            // Check for something holding us down
             // If the planet has gravity component and no gravity it will still give gravity
             // If there's no gravity comp at all (i.e. space) then they don't work.
-            if (gravity != null && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
+            if (hasGrav && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
             {
+                // TODO this should just be a event that gets relayed instead of a specific slot & component check.
                 if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
                     return false;
             }
@@ -50,11 +55,20 @@ namespace Content.Shared.Gravity
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GridInitializeEvent>(HandleGridInitialize);
+            SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
+            SubscribeLocalEvent<AlertSyncEvent>(OnAlertsSync);
             SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(OnAlertsParentChange);
             SubscribeLocalEvent<GravityChangedEvent>(OnGravityChange);
             SubscribeLocalEvent<GravityComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<GravityComponent, ComponentHandleState>(OnHandleState);
+
+            InitializeShake();
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            UpdateShake();
         }
 
         private void OnHandleState(EntityUid uid, GravityComponent component, ref ComponentHandleState args)
@@ -63,7 +77,8 @@ namespace Content.Shared.Gravity
 
             if (component.EnabledVV == state.Enabled) return;
             component.EnabledVV = state.Enabled;
-            RaiseLocalEvent(new GravityChangedEvent(uid, component.EnabledVV));
+            var ev = new GravityChangedEvent(uid, component.EnabledVV);
+            RaiseLocalEvent(uid, ref ev, true);
         }
 
         private void OnGetState(EntityUid uid, GravityComponent component, ref ComponentGetState args)
@@ -71,7 +86,7 @@ namespace Content.Shared.Gravity
             args.State = new GravityComponentState(component.EnabledVV);
         }
 
-        private void OnGravityChange(GravityChangedEvent ev)
+        private void OnGravityChange(ref GravityChangedEvent ev)
         {
             foreach (var (comp, xform) in EntityQuery<AlertsComponent, TransformComponent>(true))
             {
@@ -88,6 +103,18 @@ namespace Content.Shared.Gravity
             }
         }
 
+        private void OnAlertsSync(AlertSyncEvent ev)
+        {
+            if (IsWeightless(ev.Euid))
+            {
+                _alerts.ShowAlert(ev.Euid, AlertType.Weightless);
+            }
+            else
+            {
+                _alerts.ClearAlert(ev.Euid, AlertType.Weightless);
+            }
+        }
+
         private void OnAlertsParentChange(EntityUid uid, AlertsComponent component, ref EntParentChangedMessage args)
         {
             if (IsWeightless(component.Owner))
@@ -100,7 +127,7 @@ namespace Content.Shared.Gravity
             }
         }
 
-        private void HandleGridInitialize(GridInitializeEvent ev)
+        private void OnGridInit(GridInitializeEvent ev)
         {
             EntityManager.EnsureComponent<GravityComponent>(ev.EntityUid);
         }
