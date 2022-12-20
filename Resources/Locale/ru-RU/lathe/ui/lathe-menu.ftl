@@ -6,3 +6,4 @@ lathe-menu-search-designs = Поиск проектов
 lathe-menu-search-filter = Фильтр
 lathe-menu-amount = Кол-во:
 lathe-menu-material-display = { $material } { $amount } см³
+lathe-menu-no-materials-message = Материалы не загружены

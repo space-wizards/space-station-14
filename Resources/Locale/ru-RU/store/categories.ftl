@@ -8,6 +8,7 @@ store-category-misc = Разное
 store-category-bundles = Наборы
 store-category-tools = Инструменты
 store-category-utility = Утилиты
+store-category-implants = Импланты
 store-category-job = Работа
 store-category-armor = Броня
 store-category-pointless = Безделушки

@@ -14,5 +14,7 @@ ent-CrateFunLightImplants = ящик с имплантатами света
     .desc = Подсветите своё тело этими имплантатами!
 ent-CrateFunATV = ящик с квадроциклом
     .desc = { ent-CrateLivestock.desc }
+ent-CrateFunParty = ящик с вечеринкой
+    .desc = Целая вечеринка ждёт пока ты откроешь её. Включается в себя: сувениры для гостей, напитки и даже торт.
 ent-CrateFunSyndicateSegway = ящик с сегвеем синдиката
     .desc = { ent-CrateLivestock.desc }
