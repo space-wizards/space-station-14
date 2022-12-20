@@ -6,10 +6,10 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Holiday.Christmas;
 
 /// <summary>
-/// This is used for auto-filling gifts with COMPLETELY random things.
+/// This is used for gifts with COMPLETELY random things.
 /// </summary>
-[RegisterComponent, Access(typeof(GiftPackinSystem))]
-public sealed class GiftPackinComponent : Component
+[RegisterComponent, Access(typeof(RandomGiftSystem))]
+public sealed class RandomGiftComponent : Component
 {
     /// <summary>
     /// The wrapper entity to spawn when unwrapping the gift.

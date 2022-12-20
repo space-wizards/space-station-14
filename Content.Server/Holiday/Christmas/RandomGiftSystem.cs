@@ -13,7 +13,7 @@ namespace Content.Server.Holiday.Christmas;
 /// <summary>
 /// This handles granting players their gift.
 /// </summary>
-public sealed class GiftPackinSystem : EntitySystem
+public sealed class RandomGiftSystem : EntitySystem
 {
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly HandsSystem _hands = default!;
@@ -28,13 +28,13 @@ public sealed class GiftPackinSystem : EntitySystem
     public override void Initialize()
     {
         _prototype.PrototypesReloaded += OnPrototypesReloaded;
-        SubscribeLocalEvent<GiftPackinComponent, MapInitEvent>(OnGiftMapInit);
-        SubscribeLocalEvent<GiftPackinComponent, UseInHandEvent>(OnUseInHand);
-        SubscribeLocalEvent<GiftPackinComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<RandomGiftComponent, MapInitEvent>(OnGiftMapInit);
+        SubscribeLocalEvent<RandomGiftComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<RandomGiftComponent, ExaminedEvent>(OnExamined);
         BuildIndex();
     }
 
-    private void OnExamined(EntityUid uid, GiftPackinComponent component, ExaminedEvent args)
+    private void OnExamined(EntityUid uid, RandomGiftComponent component, ExaminedEvent args)
     {
         if (!component.ContentsViewers.IsValid(args.Examiner, EntityManager) || component.SelectedEntity is null)
             return;
@@ -44,7 +44,7 @@ public sealed class GiftPackinSystem : EntitySystem
         args.Message.AddText(Loc.GetString("gift-packin-contains", ("name", name)));
     }
 
-    private void OnUseInHand(EntityUid uid, GiftPackinComponent component, UseInHandEvent args)
+    private void OnUseInHand(EntityUid uid, RandomGiftComponent component, UseInHandEvent args)
     {
         if (args.Handled)
             return;
@@ -65,7 +65,7 @@ public sealed class GiftPackinSystem : EntitySystem
 
     }
 
-    private void OnGiftMapInit(EntityUid uid, GiftPackinComponent component, MapInitEvent args)
+    private void OnGiftMapInit(EntityUid uid, RandomGiftComponent component, MapInitEvent args)
     {
         if (component.InsaneMode)
             component.SelectedEntity = _random.Pick(_possibleGiftsUnsafe);
