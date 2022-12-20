@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Artifacts fits into artifact storage again, type: Fix}
-  id: 2283
-  time: '2022-09-11T22:24:00.0000000+00:00'
 - author: notafet
   changes:
   - {message: Gas recyclers can now convert waste carbon dioxide and nitrous oxide
@@ -2931,3 +2926,9 @@ Entries:
   - {message: Nanotrasen has begun experiments with advanced locker technology., type: Add}
   id: 2782
   time: '2022-12-20T03:47:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the Node Scanner, which can identify the ID of an artifact''s
+      node with a single click.', type: Add}
+  id: 2783
+  time: '2022-12-20T03:53:54.0000000+00:00'
