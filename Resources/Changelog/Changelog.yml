@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Anchoring will now ignore non-hard physics bodies., type: Fix}
-  id: 2281
-  time: '2022-09-11T09:19:27.0000000+00:00'
 - author: och
   changes:
   - {message: Examining people tells you their pronouns and approximate age, type: Add}
@@ -2931,3 +2926,8 @@ Entries:
       on round start.', type: Fix}
   id: 2780
   time: '2022-12-20T03:42:39.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Faxes received a stamp scanning module, type: Add}
+  id: 2781
+  time: '2022-12-20T03:44:15.0000000+00:00'
