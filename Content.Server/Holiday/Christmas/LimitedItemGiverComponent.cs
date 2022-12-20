@@ -33,6 +33,9 @@ public sealed class LimitedItemGiverComponent : Component
     [DataField("deniedPopup", required: true)]
     public string DeniedPopup = default!;
 
+    /// <summary>
+    /// The holiday required for this giver to work, if any.
+    /// </summary>
     [DataField("requiredHoliday", customTypeSerializer: typeof(PrototypeIdSerializer<HolidayPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string? RequiredHoliday = null;
 }
