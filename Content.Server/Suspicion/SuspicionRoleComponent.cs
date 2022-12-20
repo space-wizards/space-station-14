@@ -54,7 +54,7 @@ namespace Content.Server.Suspicion
         public bool IsDead()
         {
             return _entMan.TryGetComponent(Owner, out MobStateComponent? state) &&
-                   _mobStateSystem.IsDead(Owner, state);
+                   _entMan.EntitySysManager.GetEntitySystem<MobStateSystem>().IsDead(Owner, state);
         }
 
         public bool IsInnocent()
