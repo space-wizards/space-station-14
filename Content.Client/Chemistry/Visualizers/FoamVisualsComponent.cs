@@ -4,18 +4,14 @@ namespace Content.Client.Chemistry.Visualizers;
 
 [UsedImplicitly]
 [RegisterComponent]
-public sealed class ChemistryEffectVisualsComponent : Component
+public sealed class FoamVisualsComponent : Component
 {
     [DataField ("animationTime")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float AnimationTime = 0.25f;
-
-    [DataField ("animateOnShutdown")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool AnimateOnShutdown = false;
 }
 
-public enum ChemistryEffectLayers : byte
+public enum FoamLayers : byte
 {
     Base,
     Animation

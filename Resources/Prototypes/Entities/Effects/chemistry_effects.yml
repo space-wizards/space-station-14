@@ -3,7 +3,7 @@
   noSpawn: true
   components:
   - type: Appearance
-  - type: ChemistryEffectVisuals
+  - type: ColorReactionVisuals
   - type: AnimationPlayer
 
 # Smoke
@@ -16,11 +16,7 @@
   - type: Sprite
     drawdepth: Effects
     sprite: Effects/chemsmoke.rsi
-    layers:
-      - state: chemsmoke
-        map: ["enum.ChemistryEffectLayers.Base"]
-      - state: chemsmoke
-        map: ["enum.ChemistryEffectLayers.Animation"]
+    state: chemsmoke
   - type: Occluder
   - type: Transform
     anchored: true
@@ -45,10 +41,10 @@
     sprite: Effects/foam.rsi
     layers:
       - state: foam
-        map: ["enum.ChemistryEffectLayers.Base"]
+        map: ["enum.FoamLayers.Base"]
       - state: foam-dissolve
         visible: false
-        map: ["enum.ChemistryEffectLayers.Animation"]
+        map: ["enum.FoamLayers.Animation"]
   - type: Transform
     anchored: true
   - type: Physics
@@ -70,9 +66,7 @@
         canReact: false
   - type: Slippery
   - type: StepTrigger
-  - type: ChemistryEffectVisuals
-    animateOnShutdown: true
-    animationTime: 2
+  - type: FoamVisuals
 
 - type: entity
   id: IronMetalFoam
@@ -84,10 +78,10 @@
     state: mfoam
     layers:
     - state: mfoam
-      map: ["enum.ChemistryEffectLayers.Base"]
+      map: ["enum.FoamLayers.Base"]
     - state: mfoam-dissolve
       visible: false
-      map: ["enum.ChemistryEffectLayers.Animation"]
+      map: ["enum.FoamLayers.Animation"]
   - type: FoamSolutionAreaEffect
     foamedMetalPrototype: FoamedIronMetal
 
@@ -100,10 +94,10 @@
   - type: Sprite
     layers:
       - state: mfoam
-        map: ["enum.ChemistryEffectLayers.Base"]
+        map: ["enum.FoamLayers.Base"]
       - state: mfoam-dissolve
         visible: false
-        map: ["enum.ChemistryEffectLayers.Animation"]
+        map: ["enum.FoamLayers.Animation"]
   - type: FoamSolutionAreaEffect
     foamedMetalPrototype: FoamedAluminiumMetal
 
@@ -118,11 +112,7 @@
     netsync: false
     sprite: Effects/chempuff.rsi
     rotation: 90
-    layers:
-    - state: chempuff
-      map: ["enum.ChemistryEffectLayers.Base"]
-    - state: chempuff
-      map: ["enum.ChemistryEffectLayers.Animation"]
+    state: chempuff
   - type: SolutionContainerManager
     solutions:
       vapor:
@@ -148,10 +138,4 @@
   components:
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi
-    layers:
-      - state: extinguish
-        map: [ "enum.ChemistryEffectLayers.Base"]
-      - state: extinguish
-        map: [ "enum.ChemistryEffectLayers.Animation"]
-  - type: ChemistryEffectVisuals
-    animationTime: 0.8
+    state: extinguish

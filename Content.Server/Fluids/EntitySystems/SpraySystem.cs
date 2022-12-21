@@ -105,7 +105,7 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color.WithAlpha(1f));
+                appearance.SetData(ColorReactionVisuals.Color, solution.Color.WithAlpha(1f));
             }
 
             // Add the solution to the vapor and actually send the thing

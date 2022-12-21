@@ -3,9 +3,8 @@
 namespace Content.Shared.Chemistry
 {
     [Serializable, NetSerializable]
-    public enum ChemistryEffectVisuals
+    public enum FoamVisuals
     {
         FoamShutdown,
-        Color,
     }
 }

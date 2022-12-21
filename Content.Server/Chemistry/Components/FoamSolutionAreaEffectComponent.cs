@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color.WithAlpha(0.80f));
+                appearance.SetData(ColorReactionVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
         }
 
@@ -76,10 +76,9 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.Deleted(Owner))
                 return;
 
-            // TODO Replace this with ComponentShutdown at ChemistryEffectVisualizerSystem once this atrocity gets ECS
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance))
             {
-                appearance.SetData(ChemistryEffectVisuals.FoamShutdown, true);
+                appearance.SetData(FoamVisuals.FoamShutdown, true);
             }
 
             Owner.SpawnTimer(600, () =>

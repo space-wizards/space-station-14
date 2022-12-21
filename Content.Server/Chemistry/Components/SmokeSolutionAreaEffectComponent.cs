@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.Components
             if (_entMan.TryGetComponent(Owner, out AppearanceComponent? appearance) &&
                 EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                appearance.SetData(ChemistryEffectVisuals.Color, solution.Color);
+                appearance.SetData(ColorReactionVisuals.Color, solution.Color);
             }
         }
 
