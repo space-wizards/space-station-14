@@ -167,3 +167,14 @@
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
+
+- type: reagent
+  id: PotassiumChlorate
+  name: reagent-name-potassiumchlorate
+  parent: BasePyrotechnic
+  desc: reagent-desc-potassiumchlorate
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
+  color: "#dedede"
+  boilingPoint: 400.0 # I used google.
+  meltingPoint: 356.0
