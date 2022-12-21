@@ -1,0 +1,10 @@
+﻿- type: entity
+  id: ExplosivePowder
+  name: explosive powder
+  parent: BaseItem
+  description: A powder made of flammable chemicals.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/powders.rsi
+    state: icon

@@ -63,3 +63,16 @@
       amount: 1
   products:
     PotassiumChlorate: 3
+
+- type: reaction
+  id: ExplosivePowder
+  quantized: true
+  reactants:
+    PotassiumChlorate:
+      amount: 12
+    Sulfur:
+      amount: 1
+      catalyst: true
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: ExplosivePowder
