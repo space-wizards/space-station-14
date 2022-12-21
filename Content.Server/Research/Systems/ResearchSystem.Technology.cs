@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 
@@ -9,19 +8,15 @@ public sealed partial class ResearchSystem
     /// <summary>
     /// Syncs the primary entity's database to that of the secondary entity's database.
     /// </summary>
-    public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null, bool twoway = true)
+    public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null)
     {
         if (!Resolve(primaryUid, ref primaryDb) || !Resolve(otherUid, ref otherDb))
             return;
 
-        primaryDb.TechnologyIds = primaryDb.TechnologyIds.Union(otherDb.TechnologyIds).ToList();
-        primaryDb.RecipeIds = primaryDb.RecipeIds.Union(otherDb.RecipeIds).ToList();
+        primaryDb.TechnologyIds = otherDb.TechnologyIds;
+        primaryDb.RecipeIds = otherDb.RecipeIds;
 
         Dirty(primaryDb);
-        if (twoway)
-        {
-            Sync(otherUid, primaryUid, otherDb, primaryDb, false);
-        }
 
         var ev = new TechnologyDatabaseModifiedEvent();
         RaiseLocalEvent(primaryDb.Owner, ref ev);
@@ -38,10 +33,10 @@ public sealed partial class ResearchSystem
         if (!Resolve(uid, ref databaseComponent, ref clientComponent, false))
             return false;
 
-        if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server, out var clientDatabase))
+        if (!TryComp<TechnologyDatabaseComponent>(clientComponent.Server, out var serverDatabase))
             return false;
 
-        Sync(uid, clientComponent.Server.Value, databaseComponent, clientDatabase);
+        Sync(uid, clientComponent.Server.Value, databaseComponent, serverDatabase);
         return true;
     }
 

@@ -56,6 +56,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleRegistrationChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchRegistrationChangedEvent args)
     {
+        SyncClientWithServer(uid);
         UpdateConsoleInterface(uid, component);
     }
 

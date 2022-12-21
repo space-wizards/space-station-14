@@ -24,11 +24,6 @@ public sealed partial class ResearchSystem
 
     #region UI
 
-    private void OnClientDeselected(EntityUid uid, ResearchClientComponent component, ResearchClientServerDeselectedMessage args)
-    {
-        UnregisterClient(uid, clientComponent: component);
-    }
-
     private void OnClientSelected(EntityUid uid, ResearchClientComponent component, ResearchClientServerSelectedMessage args)
     {
         var server = GetServerById(args.ServerId);
@@ -37,6 +32,11 @@ public sealed partial class ResearchSystem
 
         UnregisterClient(uid, clientComponent: component);
         RegisterClient(uid, server.Owner, component, server);
+    }
+
+    private void OnClientDeselected(EntityUid uid, ResearchClientComponent component, ResearchClientServerDeselectedMessage args)
+    {
+        UnregisterClient(uid, clientComponent: component);
     }
 
     private void OnClientSyncMessage(EntityUid uid, ResearchClientComponent component, ResearchClientSyncMessage args)
