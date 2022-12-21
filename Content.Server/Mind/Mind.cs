@@ -27,11 +27,11 @@ namespace Content.Server.Mind
     /// </remarks>
     public sealed class Mind
     {
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        private readonly MobStateSystem _mobStateSystem = default!;
+        private readonly GameTicker _gameTickerSystem = default!;
+        private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly GameTicker _gameTickerSystem = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
@@ -49,6 +49,9 @@ namespace Content.Server.Mind
         {
             OriginalOwnerUserId = userId;
             IoCManager.InjectDependencies(this);
+            _entityManager.EntitySysManager.Resolve(ref _mobStateSystem);
+            _entityManager.EntitySysManager.Resolve(ref _gameTickerSystem);
+            _entityManager.EntitySysManager.Resolve(ref _mindSystem);
         }
 
         // TODO: This session should be able to be changed, probably.
@@ -108,6 +111,13 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public IEnumerable<Objective> AllObjectives => _objectives;
+
+        /// <summary>
+        ///     Prevents user from ghosting out
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("preventGhosting")]
+        public bool PreventGhosting { get; set; }
 
         /// <summary>
         ///     The session of the player owning this mind.

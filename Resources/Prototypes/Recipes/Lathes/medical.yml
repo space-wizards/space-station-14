@@ -7,7 +7,7 @@
 
 - type: latheRecipe
   id: Retractor
-  result: Scalpel
+  result: Retractor
   completetime: 2
   materials:
     Steel: 200

@@ -479,11 +479,13 @@
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
+  - TechDiskComputerCircuitboard
   - CapacitorStockPart
   - MatterBinStockPart
   - MicroLaserStockPart
   - MicroManipulatorStockPart
   - ScanningModuleStockPart
+  - NodeScanner
 
 - type: technology
   name: technologies-robotics-technology

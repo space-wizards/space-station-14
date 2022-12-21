@@ -113,22 +113,31 @@ namespace Content.Client.Research.UI
             // For now, we retrieve all technologies. In the future, this should be changed.
             foreach (var tech in prototypeMan.EnumeratePrototypes<TechnologyPrototype>())
             {
+                var techName = GetTechName(tech);
                 if (Owner.IsTechnologyUnlocked(tech))
                 {
-                    UnlockedTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                    UnlockedTechnologies.AddItem(techName, tech.Icon.Frame0());
                     _unlockedTechnologyPrototypes.Add(tech);
                 }
                 else if (Owner.CanUnlockTechnology(tech))
                 {
-                    UnlockableTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                    UnlockableTechnologies.AddItem(techName, tech.Icon.Frame0());
                     _unlockableTechnologyPrototypes.Add(tech);
                 }
                 else
                 {
-                    FutureTechnologies.AddItem(tech.Name, tech.Icon.Frame0());
+                    FutureTechnologies.AddItem(techName, tech.Icon.Frame0());
                     _futureTechnologyPrototypes.Add(tech);
                 }
             }
+        }
+
+        private string GetTechName(TechnologyPrototype prototype)
+        {
+            if (prototype.Name is { } name)
+                return Loc.GetString(name);
+
+            return prototype.ID;
         }
 
         /// <summary>
@@ -145,8 +154,9 @@ namespace Content.Client.Research.UI
             }
 
             TechnologyIcon.Texture = TechnologySelected.Icon.Frame0();
-            TechnologyName.Text = TechnologySelected.Name;
-            TechnologyDescription.Text = TechnologySelected.Description + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points)).ToLowerInvariant();
+            TechnologyName.Text = GetTechName(TechnologySelected);
+            var desc = Loc.GetString(TechnologySelected.Description);
+            TechnologyDescription.Text = desc + $"\n{TechnologySelected.RequiredPoints} " + Loc.GetString("research-console-menu-research-points-text" ,("points", Owner.Points)).ToLowerInvariant();
             TechnologyRequirements.Text = Loc.GetString("research-console-tech-requirements-none");
 
             var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
@@ -155,10 +165,11 @@ namespace Content.Client.Research.UI
             {
                 var requiredId = TechnologySelected.RequiredTechnologies[i];
                 if (!prototypeMan.TryIndex(requiredId, out TechnologyPrototype? prototype)) continue;
+                var protoName = GetTechName(prototype);
                 if (i == 0)
-                    TechnologyRequirements.Text = Loc.GetString("research-console-tech-requirements-prototype-name", ("prototypeName", prototype.Name));
+                    TechnologyRequirements.Text = Loc.GetString("research-console-tech-requirements-prototype-name", ("prototypeName", protoName));
                 else
-                    TechnologyRequirements.Text += $", {prototype.Name}";
+                    TechnologyRequirements.Text += $", {protoName}";
             }
         }
 

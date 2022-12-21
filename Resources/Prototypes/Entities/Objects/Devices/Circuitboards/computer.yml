@@ -148,6 +148,17 @@
 
 - type: entity
   parent: BaseComputerCircuitboard
+  id: TechDiskComputerCircuitboard
+  name: technology disk terminal board
+  description: A computer printed circuit board for a technology disk terminal.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerTechnologyDiskTerminal
+
+- type: entity
+  parent: BaseComputerCircuitboard
   id: CrewMonitoringComputerCircuitboard
   name: crew monitoring computer board
   description: A computer printed circuit board for a crew monitoring console.

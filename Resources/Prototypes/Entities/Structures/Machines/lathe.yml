@@ -228,6 +228,7 @@
       - PowerCellHigh  
       - SynthesizerInstrument
       - RPED
+      - NodeScanner
       - HolofanProjector
 
 - type: entity
@@ -291,6 +292,7 @@
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
+      - TechDiskComputerCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
