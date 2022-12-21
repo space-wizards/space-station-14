@@ -8,12 +8,39 @@ namespace Content.Shared.Humanoid.Markings;
 [Serializable, NetSerializable]
 public enum MarkingColoringType : byte
 {
+    /// <summary>
+    ///     Color applied from "color" property
+    /// </summary>
     SimpleColor,
+
+    /// <summary>
+    ///     Color applied from humanoid skin
+    /// </summary>
     SkinColor,
+
+    /// <summary>
+    ///     Color applied from humanoid hair color
+    /// </summary>
     HairColor,
+    
+    /// <summary>
+    ///     Color applied from humanoid facial hair color
+    /// </summary>
     FacialHairColor,
+
+    /// <summary>
+    ///     Color applied from humanoid hair or facial hair color
+    /// </summary>
     AnyHairColor,
+
+    /// <summary>
+    ///     Color applied like it's tattoo
+    /// </summary>
     Tattoo,
+
+    /// <summary>
+    ///     Color applied from humanoid eye color
+    /// </summary>
     EyeColor
 }
 
@@ -29,33 +56,33 @@ public sealed class MarkingColors
     public ColoringProperties Default { get; } = new();
 
     /// <summary>
-    /// Layers with their own coloring type and properties
+    ///     Layers with their own coloring type and properties
     /// </summary>
     [DataField("layers", true)]
     public Dictionary<string, ColoringProperties>? Layers;
 }
 
 /// <summary>
-/// Properties for coloring. 
+///     Properties for coloring. 
 /// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed class ColoringProperties
 {
     /// <summary>
-    /// Coloring type that will be used on that layer
+    ///     Coloring type that will be used on that layer
     /// </summary>
     [DataField("type", true, required: true)]
     public MarkingColoringType Type { get; } = MarkingColoringType.SkinColor;
 
     /// <summary>
-    /// Color that will be used if coloring type can't be performed or used "SimpleColor" type
+    ///     Color that will be used if coloring type can't be performed or used "SimpleColor" type
     /// </summary>
     [DataField("color", true)]
     public Color Color { get; } = Color.White;
 
     /// <summary>
-    /// Makes output color negative if true (in e.x. Different Eyes)
+    ///     Makes output color negative if true (in e.x. Different Eyes)
     /// </summary>
     [DataField("negative", true)]
     public bool Negative { get; } = false;
@@ -65,7 +92,7 @@ public sealed class ColoringProperties
 public static class MarkingColoring
 {
     /// <summary>
-    /// Returns list of colors for marking layers
+    ///     Returns list of colors for marking layers
     /// </summary>
     public static List<Color> GetMarkingLayerColors
     (
@@ -146,44 +173,26 @@ public static class MarkingColoring
         Color? facialHairColor
     )
     {
-        Color out_color;
-        switch (properties.Type)
-        {
-            case MarkingColoringType.SimpleColor:
-                out_color = SimpleColor(properties.Color);
-                break;
-            case MarkingColoringType.SkinColor:
-                out_color = SkinColor(skinColor);
-                break;
-            case MarkingColoringType.HairColor:
-                out_color = HairColor(skinColor, hairColor);
-                break;
-            case MarkingColoringType.FacialHairColor:
-                out_color = HairColor(skinColor, facialHairColor);
-                break;
-            case MarkingColoringType.AnyHairColor:
-                out_color = AnyHairColor(skinColor, hairColor, facialHairColor);
-                break;
-            case MarkingColoringType.EyeColor:
-                out_color = EyeColor(eyeColor);
-                break;
-            case MarkingColoringType.Tattoo:
-                out_color = Tattoo(skinColor);
-                break;
-            default:
-                out_color = properties.Color;
-                break;
-        }
+        Color outColor = properties.Type switch {
+            MarkingColoringType.SimpleColor => SimpleColor(properties.Color),
+            MarkingColoringType.SkinColor => SkinColor(skinColor),
+            MarkingColoringType.HairColor => HairColor(skinColor, hairColor),
+            MarkingColoringType.FacialHairColor => HairColor(skinColor, facialHairColor),
+            MarkingColoringType.AnyHairColor => AnyHairColor(skinColor, hairColor, facialHairColor),
+            MarkingColoringType.EyeColor => EyeColor(skinColor),
+            MarkingColoringType.Tattoo => Tattoo(skinColor),
+            _ => properties.Color
+        };
 
         // Negative color
         if (properties.Negative)
         {
-            out_color.R = 1f-out_color.R;
-            out_color.G = 1f-out_color.G;
-            out_color.B = 1f-out_color.B;
+            outColor.R = 1f-outColor.R;
+            outColor.G = 1f-outColor.G;
+            outColor.B = 1f-outColor.B;
         }
 
-        return out_color;
+        return outColor;
     }
 
     public static Color AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)

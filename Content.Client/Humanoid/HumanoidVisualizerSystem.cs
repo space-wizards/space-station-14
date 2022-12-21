@@ -278,7 +278,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         
         var skinColor = humanoid.SkinColor;
         if (visible && setting != null) skinColor.A = setting.LayerAlpha;
-        List<Color> marking_colors = MarkingColoring.GetMarkingLayerColors(
+        var markingColors = MarkingColoring.GetMarkingLayerColors(
                 markingPrototype,
                 skinColor,
                 humanoid.CachedEyeColor,
@@ -315,7 +315,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             }
             else if (markingPrototype.ForcedColoring || colors == null )
             {
-                sprite.LayerSetColor(layerId, marking_colors[j]);
+                sprite.LayerSetColor(layerId, markingColors[j]);
             }
             else
             {
