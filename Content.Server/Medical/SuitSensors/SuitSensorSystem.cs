@@ -25,6 +25,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedTransformSystem _xform = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -253,6 +254,8 @@ namespace Content.Server.Medical.SuitSensors
 
             // finally, form suit sensor status
             var xForm = Transform(sensor.User.Value);
+            var xFormQuery = GetEntityQuery<TransformComponent>();
+            var coords = _xform.GetMoverCoordinates(xForm, xFormQuery);
             var status = new SuitSensorStatus(userName, userJob);
             switch (sensor.Mode)
             {
@@ -266,7 +269,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = xForm.Coordinates;
+                    status.Coordinates = coords;
                     break;
             }
 
