@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Fixed tranquillizer shells not injecting their solution, type: Fix}
-  id: 2294
-  time: '2022-09-14T02:40:50.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Nanotrasen and the Syndicate have provided guidelines to their crews
@@ -2941,3 +2936,10 @@ Entries:
   - {message: Glass Airlocks have been added to the construction menu, type: Fix}
   id: 2793
   time: '2022-12-21T14:50:11.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All humanoid metabolized reagents should apply effects proportional
+      to how much was taken in. Eating 0.1u of a paralyzation drug will stun you for
+      1/5 the time as eating 0.5u., type: Fix}
+  id: 2794
+  time: '2022-12-21T14:51:49.0000000+00:00'
