@@ -10,3 +10,6 @@ ent-ResearchDisk10000 = research point disk (10000)
 ent-ResearchDiskDebug = research point disk
     .desc = A disk for the R&D server containing all the points you could ever need.
     .suffix = DEBUG, DO NOT MAP
+ent-TechnologyDisk = technology disk
+    .desc = A disk for the R&D server containing research technology.
+    .suffix = { "" }

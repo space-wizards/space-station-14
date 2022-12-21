@@ -12,3 +12,5 @@ ent-CrateServiceBureaucracy = ящик бюрократических припа
     .desc = Стопка бумаги, папки, несколько ручек - всё о чем можно мечтать.
 ent-CrateServicePersonnel = ящик для найма персонала
     .desc = Содержит коробку с КПК и чистыми ID картами.
+ent-CrateServiceBooks = Books crate
+    .desc = Contains 10 empty books of random appearance

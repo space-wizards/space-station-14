@@ -19,3 +19,6 @@ ent-CrateServiceBureaucracy = ящик бюрократических припа
 ent-CrateServicePersonnel = ящик для найма персонала
     .desc = Содержит коробку с КПК и чистыми ID картами.
     .suffix = { "" }
+ent-CrateServiceBooks = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

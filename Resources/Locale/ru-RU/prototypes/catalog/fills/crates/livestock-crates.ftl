@@ -26,5 +26,7 @@ ent-CrateNPCParrot = ящик попугаев
     .desc = Ящик, содержащий трёх попугаев.
 ent-CrateNPCPenguin = ящик пингвинов
     .desc = Ящик, содержащий двух пингвинов.
+ent-CrateNPCPig = Pig crate
+    .desc = A crate containing a single pig.
 ent-CrateNPCSnake = ящик змей
     .desc = Ящик, содержащий трёх змей.
