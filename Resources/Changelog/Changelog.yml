@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Clowns bonking on a table no longer get free movement., type: Fix}
-  id: 2291
-  time: '2022-09-13T13:53:03.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Split Station major update. New medbay, new bar and other misc changes
@@ -2942,3 +2937,8 @@ Entries:
   - {message: PA now activates the singularity generator again., type: Fix}
   id: 2790
   time: '2022-12-20T23:54:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added new animal, pig, and new chef''s pet-companion.', type: Add}
+  id: 2791
+  time: '2022-12-21T14:48:35.0000000+00:00'
