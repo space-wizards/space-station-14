@@ -22,7 +22,6 @@
         toAdd:
         - type: RgbLightController
   - type: Item
-    addPrefix: false
     inhandVisuals:
       left:
       - state: staff-inhand-left
