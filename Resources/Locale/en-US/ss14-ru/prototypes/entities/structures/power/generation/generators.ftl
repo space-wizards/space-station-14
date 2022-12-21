@@ -1,0 +1,32 @@
+ent-BaseGenerator = generator
+    .desc = A high efficiency thermoelectric generator.
+    .suffix = { "" }
+ent-BaseGeneratorWallmount = wallmount generator
+    .desc = A high efficiency thermoelectric generator stuffed in a wall cabinet.
+    .suffix = { "" }
+ent-BaseGeneratorWallmountFrame = wallmount generator frame
+    .desc = A construction frame for a wallmount generator.
+    .suffix = { "" }
+ent-GeneratorBasic = { ent-BaseGenerator }
+    .suffix = Basic, 3kW
+    .desc = { ent-BaseGenerator.desc }
+ent-GeneratorPlasma = { ent-['BaseGenerator', 'ConstructibleMachine'] }
+
+  .suffix = Plasma, 5kW
+  .desc = { ent-['BaseGenerator', 'ConstructibleMachine'].desc }
+ent-GeneratorUranium = { ent-['BaseGenerator', 'ConstructibleMachine'] }
+
+  .suffix = Uranium, 15kW
+  .desc = { ent-['BaseGenerator', 'ConstructibleMachine'].desc }
+ent-GeneratorWallmountBasic = { ent-BaseGeneratorWallmount }
+    .suffix = Basic, 3kW
+    .desc = { ent-BaseGeneratorWallmount.desc }
+ent-GeneratorWallmountAPU = shuttle APU
+    .desc = An auxiliary power unit for a shuttle - 6kW.
+    .suffix = APU, 6kW
+ent-GeneratorRTG = RTG
+    .desc = A Radioisotope Thermoelectric Generator for long term power.
+    .suffix = 10kW
+ent-GeneratorRTGDamaged = damaged RTG
+    .desc = A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
+    .suffix = 10kW
