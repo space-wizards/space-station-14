@@ -51,3 +51,15 @@
     visualType: LargeCaution
   products:
     ChlorineTrifluoride: 4
+
+- type: reaction
+  id: PotassiumChlorate
+  reactants:
+    Potassium:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    PotassiumChlorate: 3

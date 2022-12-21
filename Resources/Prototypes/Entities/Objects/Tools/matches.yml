@@ -43,6 +43,14 @@
         unlitIcon: match_unlit
         litIcon: match_lit
         burntIcon: match_burnt
+  - type: Extractable
+    grindableSolutionName: match
+  - type: SolutionContainerManager
+    solutions:
+      match:
+        reagents:
+        - ReagentId: PotassiumChlorate
+          Quantity: 1
 
 - type: entity
   parent: Matchstick
