@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Server.Research.Components;
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -18,18 +18,10 @@ namespace Content.Server.Research.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnStartup);
-
             InitializeClient();
             InitializeConsole();
             InitializeSource();
-        }
-
-        private void OnStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
-        {
-            var unusedId = EntityQuery<ResearchServerComponent>(true)
-                .Max(s => s.Id) + 1;
-            component.Id = unusedId;
+            InitializeServer();
         }
 
         public ResearchServerComponent? GetServerById(int id)
@@ -77,7 +69,7 @@ namespace Content.Server.Research.Systems
                     continue;
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                UpdateServer(server, (int) server.ResearchConsoleUpdateTime.TotalSeconds);
+                UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

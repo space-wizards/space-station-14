@@ -15,6 +15,17 @@ namespace Content.Shared.Research.Components
         public List<string> RecipeIds = new();
     }
 
+    /// <summary>
+    /// Event raised on the database whenever its
+    /// technologies or recipes are modified.
+    /// </summary>
+    /// <remarks>
+    /// This event is forwarded from the
+    /// server to all of it's clients.
+    /// </remarks>
+    [ByRefEvent]
+    public readonly record struct TechnologyDatabaseModifiedEvent;
+
     [Serializable, NetSerializable]
     public sealed class TechnologyDatabaseState : ComponentState
     {

@@ -2,15 +2,28 @@
 
 namespace Content.Shared.Research.Components
 {
+    [RegisterComponent]
+    public sealed class ResearchClientComponent : Component
+    {
+        public bool ConnectedToServer => Server != null;
+
+        [ViewVariables(VVAccess.ReadOnly)]
+        public EntityUid? Server { get; set; }
+    }
+
+    /// <summary>
+    /// Raised on the client whenever its server is changed
+    /// </summary>
+    /// <param name="Server">Its new server</param>
+    [ByRefEvent]
+    public readonly record struct ResearchRegistrationChangedEvent(EntityUid? Server);
+
     /// <summary>
     ///     Sent to the server when the client deselects a research server.
     /// </summary>
     [Serializable, NetSerializable]
     public sealed class ResearchClientServerDeselectedMessage : BoundUserInterfaceMessage
     {
-        public ResearchClientServerDeselectedMessage()
-        {
-        }
     }
 
     /// <summary>
@@ -33,10 +46,6 @@ namespace Content.Shared.Research.Components
     [Serializable, NetSerializable]
     public sealed class ResearchClientSyncMessage : BoundUserInterfaceMessage
     {
-
-        public ResearchClientSyncMessage()
-        {
-        }
     }
 
     [NetSerializable, Serializable]

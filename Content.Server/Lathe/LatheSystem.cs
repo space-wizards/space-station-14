@@ -308,10 +308,9 @@ namespace Content.Server.Lathe
 
         private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
         {
-            _researchSys.SyncWithServer(component);
+            _researchSys.SyncClientWithServer(uid, component);
             UpdateUserInterfaceState(uid);
         }
-
         #endregion
     }
 }

@@ -1,10 +1,9 @@
 using System.Linq;
 using Content.Shared.Interaction;
-using Content.Server.Research.Components;
 using Content.Server.Popups;
 using Content.Shared.Research.Prototypes;
 using Content.Server.Research.Systems;
-using Robust.Shared.Player;
+using Content.Shared.Research.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Disk
