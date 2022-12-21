@@ -1,54 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Locks on cabinets actually work., type: Fix}
-  id: 2287
-  time: '2022-09-12T16:42:55.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The fallback gamemode should something happen is now extended, not
-      sandbox.', type: Fix}
-  - {message: Removed fun!, type: Remove}
-  id: 2288
-  time: '2022-09-13T01:47:59.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Handheld radios can now receive messages properly, type: Fix}
-  id: 2289
-  time: '2022-09-13T03:32:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Clumsy for clowns has been fixed again., type: Fix}
-  id: 2290
-  time: '2022-09-13T13:52:37.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Clowns bonking on a table no longer get free movement., type: Fix}
-  id: 2291
-  time: '2022-09-13T13:53:03.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Split Station major update. New medbay, new bar and other misc changes
-      across the board.', type: Tweak}
-  id: 2292
-  time: '2022-09-13T14:26:16.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Removed clonexadone, cryoxadone still exists', type: Remove}
-  id: 2293
-  time: '2022-09-13T19:51:31.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fixed tranquillizer shells not injecting their solution, type: Fix}
-  id: 2294
-  time: '2022-09-14T02:40:50.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Nanotrasen and the Syndicate have provided guidelines to their crews
-      as to how to consider clashes against nuclear operations as successes or failures.,
-    type: Tweak}
-  id: 2295
-  time: '2022-09-14T02:42:19.0000000+00:00'
 - author: corentt
   changes:
   - {message: More detailed informations are now displayed on the cargo order form,
@@ -2934,3 +2884,60 @@ Entries:
       series to stations, type: Add}
   id: 2786
   time: '2022-12-20T04:11:36.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: NT has been convinced to replace the discomfortable beds that made even
+      the dead move with ones that are at least barely bearable!, type: Fix}
+  id: 2787
+  time: '2022-12-20T22:24:50.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Christmas trees with gifts under them now grant gifts to all crew members!
+      No presents are provided before or after December., type: Add}
+  - {message: Ghosts can see the contents of gifts., type: Add}
+  - {message: Some gifts may have slightly absurd or game breaking content if you're
+      lucky., type: Add}
+  - {message: Admins will have an easier time running santa-related events (as santa
+      can see inside gifts), type: Add}
+  id: 2788
+  time: '2022-12-20T22:34:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added technology disks, which can be inserted into a research server
+      to unlock a new lathe recipe.', type: Add}
+  - {message: 'Added the technology disk terminal, where you can exchange 2500 research
+      points for a random technology disk.', type: Add}
+  id: 2789
+  time: '2022-12-20T22:39:58.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: PA now activates the singularity generator again., type: Fix}
+  id: 2790
+  time: '2022-12-20T23:54:57.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added new animal, pig, and new chef''s pet-companion.', type: Add}
+  id: 2791
+  time: '2022-12-21T14:48:35.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: added ChefVend, type: Add}
+  id: 2792
+  time: '2022-12-21T14:49:39.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Glass Airlocks have been added to the construction menu, type: Fix}
+  id: 2793
+  time: '2022-12-21T14:50:11.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All humanoid metabolized reagents should apply effects proportional
+      to how much was taken in. Eating 0.1u of a paralyzation drug will stun you for
+      1/5 the time as eating 0.5u., type: Fix}
+  id: 2794
+  time: '2022-12-21T14:51:49.0000000+00:00'
+- author: Prentor
+  changes:
+  - {message: Added bag for carrying books and cargo order to get more of them, type: Add}
+  id: 2795
+  time: '2022-12-21T14:53:11.0000000+00:00'
