@@ -1,12 +1,8 @@
-using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
@@ -17,7 +13,7 @@ public sealed class BiomeSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceCache _resourceManager = default!;
 
-    private const int ChunkSize = 4;
+    public const int ChunkSize = 4;
 
     public override void Initialize()
     {
@@ -38,29 +34,23 @@ public sealed class BiomeSystem : EntitySystem
         return Tile.Empty;
     }
 
-    public Texture GetTileTexture(Vector2i indices, BiomePrototype prototype, int seed)
+    public void GetChunkTextures(Vector2i indices, BiomePrototype prototype, int seed, ref Texture[] textures)
     {
-        // TODO: Should do this per chunk and just not render the tiles unneeded.
-        var chunk = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
-        var chunkSeed = (chunk.X + chunk.Y * ChunkSize * 64) ;
-        var random = new Random(seed + chunkSeed);
-        var relative = SharedMapSystem.GetChunkRelative(indices, ChunkSize);
+        var chunkIndices = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
+        DebugTools.Assert(SharedMapSystem.GetChunkRelative(indices, ChunkSize) == Vector2i.Zero);
 
-        if (indices == Vector2i.Zero)
+        unchecked
         {
-
+            var chunkSeed = (chunkIndices.X + chunkIndices.Y * ChunkSize * 64);
+            seed += chunkSeed;
         }
+
+        var random = new Random(seed);
 
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
             {
-                if (x != relative.X || y != relative.Y)
-                {
-                    random.NextDouble();
-                    continue;
-                }
-
                 var value = random.NextDouble();
                 ResourcePath path;
 
@@ -73,16 +63,13 @@ public sealed class BiomeSystem : EntitySystem
                     path = new ResourcePath("/Textures/Tiles/grassjungle.png");
                 }
 
-                // var resource = _protoManager.Index<ContentTileDefinition>("FloorSteel").Sprite;
+                // TODO: Should be by group
+                // Inside each group is random
+                // Outside groups should be perlin noise or smth?
+                // Also do the edge overlaps for grass <> other groups too
 
-                //if (resource == null)
-                //    continue;
-
-                // TODO: Use the weighted random stuff.
-                return _resourceManager.GetResource<TextureResource>(path).Texture;
+                textures[x + y * ChunkSize] = _resourceManager.GetResource<TextureResource>(path).Texture;
             }
         }
-
-        throw new InvalidOperationException();
     }
 }
