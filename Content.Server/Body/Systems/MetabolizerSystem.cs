@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.MobState;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Organ;
 using Content.Shared.Chemistry.Components;
@@ -22,6 +23,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
@@ -150,22 +152,25 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+
                     mostToRemove *= group.MetabolismRateModifier;
 
                     mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
+
+                    float scale = (float) mostToRemove / (float) entry.MetabolismRate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
                     // still remove reagents
                     if (EntityManager.TryGetComponent<MobStateComponent>(solutionEntityUid.Value, out var state))
                     {
-                        if (state.IsDead())
+                        if (_mobStateSystem.IsDead(solutionEntityUid.Value, state))
                             continue;
                     }
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
-                        EntityManager, null, entry);
+                        EntityManager, null, scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)

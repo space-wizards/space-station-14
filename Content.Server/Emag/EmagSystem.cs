@@ -58,7 +58,7 @@ namespace Content.Server.Emag
 
             if (component.Charges <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("emag-no-charges"), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("emag-no-charges"), args.User, args.User);
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace Content.Server.Emag
             if (handled)
             {
                 _popupSystem.PopupEntity(Loc.GetString("emag-success", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.User,
-                    Filter.Entities(args.User), PopupType.Medium);
+                    args.User, PopupType.Medium);
                 _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
                 component.Charges--;
                 return;

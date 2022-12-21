@@ -2,6 +2,7 @@
 using Content.Shared.Body.Organ;
 using Content.Shared.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Sequence;
@@ -14,18 +15,10 @@ namespace Content.Shared.Body.Prototypes;
 [TypeSerializer]
 public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, MappingDataNode>
 {
-    private (ValidationNode Node, List<string> Connections) ValidateSlot(ISerializationManager serializationManager, MappingDataNode slot, string slotId, IDependencyCollection dependencies)
+    private (ValidationNode Node, List<string> Connections) ValidateSlot(MappingDataNode slot, IDependencyCollection dependencies)
     {
         var nodes = new List<ValidationNode>();
         var prototypes = dependencies.Resolve<IPrototypeManager>();
-        if (!slot.TryGet("part", out ValueDataNode? part))
-        {
-            nodes.Add(new ErrorNode(slot, $"No part value data node found in root slot {slotId}"));
-        }
-        else if (!prototypes.HasIndex<EntityPrototype>(part.Value))
-        {
-            nodes.Add(new ErrorNode(slot, $"No entity prototype found with id {part.Value} for root slot {slotId}"));
-        }
 
         var connections = new List<string>();
         if (slot.TryGet("connections", out SequenceDataNode? connectionsNode))
@@ -79,8 +72,6 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
         IDependencyCollection dependencies, ISerializationContext? context = null)
     {
         var nodes = new List<ValidationNode>();
-        if (!node.TryGet("id", out ValueDataNode? id))
-            nodes.Add(new ErrorNode(node, "No id value data node found"));
 
         if (!node.TryGet("root", out ValueDataNode? root))
             nodes.Add(new ErrorNode(node, $"No root value data node found"));
@@ -111,7 +102,7 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
                     continue;
                 }
 
-                var result = ValidateSlot(serializationManager, slot, root.Value, dependencies);
+                var result = ValidateSlot(slot, dependencies);
                 nodes.Add(result.Node);
 
                 foreach (var connection in result.Connections)
@@ -127,20 +118,25 @@ public sealed class BodyPrototypeSerializer : ITypeReader<BodyPrototype, Mapping
 
     public BodyPrototype Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<BodyPrototype>? instanceProvider = null)
     {
         var id = node.Get<ValueDataNode>("id").Value;
         var name = node.Get<ValueDataNode>("name").Value;
         var root = node.Get<ValueDataNode>("root").Value;
         var slotNodes = node.Get<MappingDataNode>("slots");
-        var allConnections = new Dictionary<string, (string Part, HashSet<string>? Connections, Dictionary<string, string>? Organs)>();
+        var allConnections = new Dictionary<string, (string? Part, HashSet<string>? Connections, Dictionary<string, string>? Organs)>();
 
         foreach (var (keyNode, valueNode) in slotNodes)
         {
             var slotId = ((ValueDataNode) keyNode).Value;
             var slot = ((MappingDataNode) valueNode);
-            var part = slot.Get<ValueDataNode>("part").Value;
+
+            string? part = null;
+            if (slot.TryGet<ValueDataNode>("part", out var value))
+            {
+                part = value.Value;
+            }
 
             HashSet<string>? connections = null;
             if (slot.TryGet("connections", out SequenceDataNode? slotConnectionsNode))

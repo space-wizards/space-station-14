@@ -17,6 +17,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mech.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -286,7 +287,18 @@ namespace Content.Shared.Movement.Systems
                         .WithVolume(FootstepVolume * soundModifier)
                         .WithVariation(sound.Params.Variation ?? FootstepVariation);
 
-                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    // If we're a relay target then predict the sound for all relays.
+                    if (TryComp<MovementRelayTargetComponent>(mover.Owner, out var targetComp))
+                    {
+                        foreach (var ent in targetComp.Entities)
+                        {
+                            _audio.PlayPredicted(sound, mover.Owner, ent, audioParams);
+                        }
+                    }
+                    else
+                    {
+                        _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    }
                 }
             }
 
@@ -413,6 +425,12 @@ namespace Content.Shared.Movement.Systems
             if (mobMover.StepSoundDistance < distanceNeeded) return false;
 
             mobMover.StepSoundDistance -= distanceNeeded;
+
+            if (TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
+            {
+                sound = moverModifier.Sound;
+                return true;
+            }
 
             if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
