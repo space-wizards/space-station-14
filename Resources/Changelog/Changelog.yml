@@ -1,26 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Locks on cabinets actually work., type: Fix}
-  id: 2287
-  time: '2022-09-12T16:42:55.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The fallback gamemode should something happen is now extended, not
-      sandbox.', type: Fix}
-  - {message: Removed fun!, type: Remove}
-  id: 2288
-  time: '2022-09-13T01:47:59.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Handheld radios can now receive messages properly, type: Fix}
-  id: 2289
-  time: '2022-09-13T03:32:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Clumsy for clowns has been fixed again., type: Fix}
-  id: 2290
-  time: '2022-09-13T13:52:37.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Clowns bonking on a table no longer get free movement., type: Fix}
@@ -2934,3 +2912,33 @@ Entries:
       series to stations, type: Add}
   id: 2786
   time: '2022-12-20T04:11:36.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: NT has been convinced to replace the discomfortable beds that made even
+      the dead move with ones that are at least barely bearable!, type: Fix}
+  id: 2787
+  time: '2022-12-20T22:24:50.0000000+00:00'
+- author: moonheart08
+  changes:
+  - {message: Christmas trees with gifts under them now grant gifts to all crew members!
+      No presents are provided before or after December., type: Add}
+  - {message: Ghosts can see the contents of gifts., type: Add}
+  - {message: Some gifts may have slightly absurd or game breaking content if you're
+      lucky., type: Add}
+  - {message: Admins will have an easier time running santa-related events (as santa
+      can see inside gifts), type: Add}
+  id: 2788
+  time: '2022-12-20T22:34:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added technology disks, which can be inserted into a research server
+      to unlock a new lathe recipe.', type: Add}
+  - {message: 'Added the technology disk terminal, where you can exchange 2500 research
+      points for a random technology disk.', type: Add}
+  id: 2789
+  time: '2022-12-20T22:39:58.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: PA now activates the singularity generator again., type: Fix}
+  id: 2790
+  time: '2022-12-20T23:54:57.0000000+00:00'

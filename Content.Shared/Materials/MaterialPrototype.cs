@@ -31,11 +31,7 @@ namespace Content.Shared.Materials
         public string? StackId { get; } = null;
 
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        public string Name { get; private set; } = "";
 
         [DataField("color")]
         public Color Color { get; } = Color.Gray;

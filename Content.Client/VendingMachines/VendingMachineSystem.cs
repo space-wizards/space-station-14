@@ -23,8 +23,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !_appearanceSystem.TryGetData(uid, VendingMachineVisuals.VisualState, out var visualStateObject, appearance) ||
-            visualStateObject is not VendingMachineVisualState visualState)
+            !_appearanceSystem.TryGetData<VendingMachineVisualState>(uid, VendingMachineVisuals.VisualState, out var visualState, appearance))
         {
             visualState = VendingMachineVisualState.Normal;
         }
@@ -147,7 +146,7 @@ public enum VendingMachineVisualLayers : byte
     Base,
     /// <summary>
     /// Normal / Deny / Eject
-    /// </summary>    
+    /// </summary>
     BaseUnshaded,
     /// <summary>
     /// Screens that are persistent (where the machine is not off or broken)

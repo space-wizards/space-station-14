@@ -20,31 +20,19 @@ namespace Content.Shared.Roles
         ///     The name of this antag as displayed to players.
         /// </summary>
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        public string Name { get; private set; } = "";
 
         /// <summary>
         ///     The description of this antag shown in a tooltip.
         /// </summary>
         [DataField("description")]
-        public string? Description
-        {
-            get => _description;
-            private set => _description = value is null ? null : Loc.GetString(value);
-        }
+        public string? Description { get; private set; }
 
         /// <summary>
         ///     The antag's objective, displayed at round-start to the player.
         /// </summary>
         [DataField("objective")]
-        public string Objective
-        {
-            get => _objective;
-            private set => _objective = Loc.GetString(value);
-        }
+        public string Objective { get; private set; } = "";
 
         /// <summary>
         ///     Whether or not the antag role is one of the bad guys.
