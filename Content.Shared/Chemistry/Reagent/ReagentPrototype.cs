@@ -133,7 +133,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, null);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))
