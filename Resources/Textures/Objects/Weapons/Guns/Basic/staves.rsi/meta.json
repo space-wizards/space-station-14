@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "/tg/station at https://github.com/tgstation/tgstation/commit/270acce4f551253d8ac75de19236b8b4be598f7f. edited by mirrorcult to allow layering",
+  "copyright": "/tg/station at https://github.com/tgstation/tgstation/commit/270acce4f551253d8ac75de19236b8b4be598f7f. edited by mirrorcult to allow layering. Generic unshaded layers added by electro.",
   "size": {
     "x": 32,
     "y": 32
@@ -517,6 +517,17 @@
           0.5
         ]
       ]
+    },
+    {
+      "name": "staff-inhand-right-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "staff-inhand-left-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "nothing-unshaded"
     }
   ]
 }
