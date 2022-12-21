@@ -267,7 +267,6 @@ namespace Content.Server.Medical.SuitSensors
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
                     status.Coordinates = xForm.Coordinates;
-                    status.MapCoordinates = xForm.MapPosition;
                     break;
             }
 
@@ -289,11 +288,8 @@ namespace Content.Server.Medical.SuitSensors
 
             if (status.TotalDamage != null)
                 payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE, status.TotalDamage);
-            if (status.Coordinates != null && status.MapCoordinates != null)
-            {
+            if (status.Coordinates != null)
                 payload.Add(SuitSensorConstants.NET_CORDINATES, status.Coordinates);
-                payload.Add(SuitSensorConstants.NET_MAP_COORDS, status.MapCoordinates);
-            }
 
 
             return payload;
@@ -318,14 +314,12 @@ namespace Content.Server.Medical.SuitSensors
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
             payload.TryGetValue(SuitSensorConstants.NET_CORDINATES, out EntityCoordinates? cords);
-            payload.TryGetValue(SuitSensorConstants.NET_MAP_COORDS, out MapCoordinates? mapCoords);
 
             var status = new SuitSensorStatus(name, job)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
                 Coordinates = cords,
-                MapCoordinates = mapCoords
             };
             return status;
         }
