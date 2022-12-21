@@ -2,11 +2,17 @@
 
 namespace Content.Shared.Research.Components
 {
+    /// <summary>
+    /// This is an entity that is able to connect to a <see cref="ResearchServerComponent"/>
+    /// </summary>
     [RegisterComponent]
     public sealed class ResearchClientComponent : Component
     {
         public bool ConnectedToServer => Server != null;
 
+        /// <summary>
+        /// The server the client is connected to
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public EntityUid? Server { get; set; }
     }

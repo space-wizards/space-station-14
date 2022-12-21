@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Research.Components;
+using Robust.Server.Player;
 
 namespace Content.Server.Research.Systems;
 
@@ -11,6 +13,8 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchClientComponent, ComponentStartup>(OnClientStartup);
         SubscribeLocalEvent<ResearchClientComponent, ComponentShutdown>(OnClientShutdown);
         SubscribeLocalEvent<ResearchClientComponent, BoundUIOpenedEvent>(OnClientUIOpen);
+        SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSyncMessage>(OnConsoleSync);
+        SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
 
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientSyncMessage>(OnClientSyncMessage);
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientServerSelectedMessage>(OnClientSelected);
@@ -40,6 +44,21 @@ public sealed partial class ResearchSystem
         UpdateClientInterface(uid, component);
     }
 
+    private void OnConsoleSelect(EntityUid uid, ResearchClientComponent component, ConsoleServerSelectionMessage args)
+    {
+        if (!HasComp<TechnologyDatabaseComponent>(uid) || !this.IsPowered(uid, EntityManager))
+            return;
+
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+    }
+
+    private void OnConsoleSync(EntityUid uid, ResearchClientComponent component, ConsoleServerSyncMessage args)
+    {
+        if (!this.IsPowered(uid, EntityManager))
+            return;
+
+        SyncClientWithServer(uid);
+    }
     #endregion
 
     private void OnClientRegistrationChanged(EntityUid uid, ResearchClientComponent component, ref ResearchRegistrationChangedEvent args)

@@ -4,7 +4,6 @@ using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
-using Content.Server.Research.Components;
 using Content.Server.Research.Systems;
 using Content.Server.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
@@ -335,7 +334,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (component.AnalyzerEntity == null)
             return;
 
-        if (!_research.TryGetClientServer(uid, out var server, out _))
+        if (!_research.TryGetClientServer(uid, out var server, out var serverComponent))
             return;
 
         var entToDestroy = GetArtifactForAnalysis(component.AnalyzerEntity);
@@ -348,7 +347,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             ResetAnalyzer(component.AnalyzerEntity.Value);
         }
 
-        _research.ChangePointsOnServer(server.Value, _artifact.GetResearchPointValue(entToDestroy.Value));
+        _research.ChangePointsOnServer(server.Value, _artifact.GetResearchPointValue(entToDestroy.Value), serverComponent);
         EntityManager.DeleteEntity(entToDestroy.Value);
 
         _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));

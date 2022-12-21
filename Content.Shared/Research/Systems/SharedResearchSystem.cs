@@ -61,6 +61,14 @@ public abstract class SharedResearchSystem : EntitySystem
         return Resolve(uid, ref component, false) && component.TechnologyIds.Contains(technologyId);
     }
 
+    /// <summary>
+    /// Returns whether or not all the prerequisite
+    /// technologies for a technology are unlocked.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="prototype"></param>
+    /// <param name="component"></param>
+    /// <returns>Whether or not the prerequesites are present</returns>
     public bool ArePrerequesitesUnlocked(EntityUid uid, TechnologyPrototype prototype, TechnologyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))

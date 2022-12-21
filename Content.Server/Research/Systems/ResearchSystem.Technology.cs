@@ -7,13 +7,8 @@ namespace Content.Server.Research.Systems;
 public sealed partial class ResearchSystem
 {
     /// <summary>
-    /// Syncs the primary entities database to that of the secondary entities database.
+    /// Syncs the primary entity's database to that of the secondary entity's database.
     /// </summary>
-    /// <param name="primaryUid"></param>
-    /// <param name="otherUid"></param>
-    /// <param name="primaryDb"></param>
-    /// <param name="otherDb"></param>
-    /// <param name="twoway"></param>
     public void Sync(EntityUid primaryUid, EntityUid otherUid, TechnologyDatabaseComponent? primaryDb = null, TechnologyDatabaseComponent? otherDb = null, bool twoway = true)
     {
         if (!Resolve(primaryUid, ref primaryDb) || !Resolve(otherUid, ref otherDb))
@@ -50,6 +45,10 @@ public sealed partial class ResearchSystem
         return true;
     }
 
+    /// <summary>
+    /// Tries to add a technology to a database, checking if it is able to
+    /// </summary>
+    /// <returns>If the technology was successfully added</returns>
     public bool UnlockTechnology(EntityUid client, string prototypeid, ResearchClientComponent? component = null,
         TechnologyDatabaseComponent? databaseComponent = null)
     {
@@ -61,6 +60,10 @@ public sealed partial class ResearchSystem
         return UnlockTechnology(client, prototype, component, databaseComponent);
     }
 
+    /// <summary>
+    /// Tries to add a technology to a database, checking if it is able to
+    /// </summary>
+    /// <returns>If the technology was successfully added</returns>
     public bool UnlockTechnology(EntityUid client, TechnologyPrototype prototype, ResearchClientComponent? component = null,
         TechnologyDatabaseComponent? databaseComponent = null)
     {
@@ -80,9 +83,6 @@ public sealed partial class ResearchSystem
     /// <summary>
     ///     Adds a technology to the database without checking if it could be unlocked.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="component"></param>
-    /// <param name="technology"></param>
     public void AddTechnology(EntityUid uid, string technology, TechnologyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -93,6 +93,9 @@ public sealed partial class ResearchSystem
         AddTechnology(uid, prototype, component);
     }
 
+    /// <summary>
+    ///     Adds a technology to the database without checking if it could be unlocked.
+    /// </summary>
     public void AddTechnology(EntityUid uid, TechnologyPrototype technology, TechnologyDatabaseComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -111,6 +114,10 @@ public sealed partial class ResearchSystem
         RaiseLocalEvent(uid, ref ev);
     }
 
+    /// <summary>
+    /// Adds a lathe recipe to the specified technology database
+    /// without checking if it can be unlocked.
+    /// </summary>
     public void AddLatheRecipe(EntityUid uid, string recipe, TechnologyDatabaseComponent? component = null, bool dirty = true)
     {
         if (!Resolve(uid, ref component))
@@ -127,6 +134,11 @@ public sealed partial class ResearchSystem
         RaiseLocalEvent(uid, ref ev);
     }
 
+    /// <summary>
+    ///     Returns whether a technology can be unlocked on this database,
+    ///     taking parent technologies into account.
+    /// </summary>
+    /// <returns>Whether it could be unlocked or not</returns>
     public bool CanUnlockTechnology(EntityUid uid, string technology, TechnologyDatabaseComponent? database = null, ResearchClientComponent? client = null)
     {
         if (!_prototypeManager.TryIndex<TechnologyPrototype>(technology, out var prototype))

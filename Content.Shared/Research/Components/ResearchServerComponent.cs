@@ -7,18 +7,30 @@ namespace Content.Shared.Research.Components
     [RegisterComponent, NetworkedComponent]
     public sealed class ResearchServerComponent : Component
     {
+        /// <summary>
+        /// The name of the server
+        /// </summary>
         [DataField("servername"), ViewVariables(VVAccess.ReadWrite)]
         public string ServerName = "RDSERVER";
 
+        /// <summary>
+        /// The amount of points on the server.
+        /// </summary>
         [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
         public int Points;
 
+        /// <summary>
+        /// A unique numeric id representing the server
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public int Id;
 
         /// <summary>
-        /// Clients are not safe to read client-side
+        /// Entities connected to the server
         /// </summary>
+        /// <remarks>
+        /// This is not safe to read clientside
+        /// </remarks>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<EntityUid> Clients = new();
 

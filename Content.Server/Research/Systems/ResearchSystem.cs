@@ -24,6 +24,11 @@ namespace Content.Server.Research.Systems
             InitializeServer();
         }
 
+        /// <summary>
+        /// Gets a server based on it's unique numeric id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ResearchServerComponent? GetServerById(int id)
         {
             foreach (var server in EntityQuery<ResearchServerComponent>())
@@ -35,6 +40,10 @@ namespace Content.Server.Research.Systems
             return null;
         }
 
+        /// <summary>
+        /// Gets the names of all the servers.
+        /// </summary>
+        /// <returns></returns>
         public string[] GetServerNames()
         {
             var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
@@ -48,6 +57,10 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
+        /// <summary>
+        /// Gets the ids of all the servers
+        /// </summary>
+        /// <returns></returns>
         public int[] GetServerIds()
         {
             var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
