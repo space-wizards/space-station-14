@@ -121,3 +121,6 @@ ent-MobFerret = ferret
 ent-MobHamster = hamster
     .desc = A cute, fluffy, robust hamster.
     .suffix = { "" }
+ent-MobPig = pig
+    .desc = Oink.
+    .suffix = { "" }

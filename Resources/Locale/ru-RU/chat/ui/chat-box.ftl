@@ -12,6 +12,7 @@ hud-chatbox-select-channel-Damage = Повреждения
 hud-chatbox-select-channel-Visual = Действия
 hud-chatbox-select-channel-Radio = Рация
 hud-chatbox-channel-Admin = Админ
+hud-chatbox-channel-AdminChat = Admin Chat
 hud-chatbox-channel-Dead = Мёртвые
 hud-chatbox-channel-Emotes = Эмоции
 hud-chatbox-channel-Local = Рядом

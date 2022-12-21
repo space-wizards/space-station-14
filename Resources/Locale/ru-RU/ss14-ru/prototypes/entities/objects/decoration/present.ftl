@@ -1,6 +1,16 @@
+ent-PresentBase = Present
+    .desc = A little box with incredible surprises inside.
+    .suffix = { "" }
 ent-Present = подарок
     .desc = Маленькая коробочка с невероятными сюрпризами внутри.
     .suffix = { "" }
+ent-PresentRandomUnsafe = { ent-['PresentBase', 'BaseItem'] }
+
+  .suffix = Filled Unsafe
+  .desc = { ent-['PresentBase', 'BaseItem'].desc }
+ent-PresentRandomInsane = { ent-PresentRandomUnsafe }
+    .suffix = Filled Insane
+    .desc = { ent-PresentRandomUnsafe.desc }
 ent-PresentRandom = подарок
     .desc = Маленькая коробочка с невероятными сюрпризами внутри.
     .suffix = Заполненный, Случайный

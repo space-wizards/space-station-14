@@ -1,9 +1,6 @@
 ent-PuddleBase = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-PuddleGeneric = puddle
-    .desc = { ent-PuddleSmear.desc }
-    .suffix = { "" }
 ent-PuddleGibblet = gibblets
     .desc = Gross.
     .suffix = { "" }

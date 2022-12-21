@@ -115,7 +115,7 @@
   icon:
     sprite: Objects/Tools/rcd.rsi
     state: icon
-  result: RCD
+  result: RCDEmpty
   completetime: 4
   materials:
     Steel: 1000

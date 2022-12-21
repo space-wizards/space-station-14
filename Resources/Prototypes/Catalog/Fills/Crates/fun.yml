@@ -113,10 +113,10 @@
   components:
   - type: StorageFill
     contents:
-    - id: VehicleATV
-      amount: 1
-    - id: VehicleKeyATV
-      amount: 1
+      - id: VehicleATV
+        amount: 1
+      - id: VehicleKeyATV
+        amount: 1
 
 - type: entity
   id: CrateFunSadTromboneImplants
@@ -131,11 +131,34 @@
   id: CrateFunLightImplants
   parent: CrateGenericSteel
   components:
-    - type: StorageFill
-      contents:
-        - id: LightImplanter
-          amount: 3
+  - type: StorageFill
+    contents:
+      - id: LightImplanter
+        amount: 3
 
+- type: entity
+  id: CrateFunParty
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: GlowstickBase
+        amount: 2
+      - id: GlowstickBlue
+        amount: 2
+      - id: GlowstickPurple
+        amount: 2
+      - id: GlowstickRed
+        amount: 2
+      - id: GlowstickYellow
+        amount: 2
+      - id: FoodCakeBirthday
+        amount: 1
+      - id: DrinkLean
+        amount: 4
+      - id: KnifePlastic
+        amount: 1
+        
 - type: entity
   id: CrateFunSyndicateSegway
   parent: CrateLivestock

@@ -45,6 +45,9 @@ public abstract partial class SharedGravitySystem
 
     public void StartGridShake(EntityUid uid, GravityComponent? gravity = null)
     {
+        if (Terminating(uid))
+            return;
+
         if (!Resolve(uid, ref gravity, false))
             return;
 
