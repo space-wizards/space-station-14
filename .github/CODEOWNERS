@@ -48,7 +48,6 @@
 /Content.*/Actions/ @ElectroJr
 /Content.*/Explosion/ @ElectroJr
 
-/Content.IntegrationTests/ @Wrexbe
 /Content.YAMLLinter @PaulRitter @DrSmugleaf
 /Content.*/Inventory @PaulRitter
 /Content.*/Arcade @PaulRitter

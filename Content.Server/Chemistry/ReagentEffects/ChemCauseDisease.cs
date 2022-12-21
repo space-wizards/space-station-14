@@ -27,6 +27,9 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+            if (args.Scale != 1f)
+                return;
+
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, Disease);
         }
     }
