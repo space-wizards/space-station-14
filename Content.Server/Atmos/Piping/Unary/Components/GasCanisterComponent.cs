@@ -1,7 +1,5 @@
 using Content.Shared.Atmos;
 using Robust.Shared.Audio;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
@@ -23,7 +21,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Entity prototype for the broken version of the canister.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("brokenCanister", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("brokenCanister")]
         public string BrokenCanister { get; set; } = "GasCanisterBrokenBase";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -63,7 +61,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("releaseValve")]
         public bool ReleaseValve { get; set; } = false;
 
-        [DataField("accessDeniedSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
+        [DataField("accessDeniedSound")]
         public SoundSpecifier AccessDeniedSound = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
     }
 }
