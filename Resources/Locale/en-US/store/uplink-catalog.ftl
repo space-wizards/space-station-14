@@ -149,6 +149,9 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-thieving-gloves-name = Thieving Gloves
 uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
 
+uplink-clothing-electro-gloves-name = Electro Gloves
+uplink-clothing-electro-gloves-desc = Insert a battery ( one included ) and use it in fight it will be the same as stun baton, looks and works like normal isolated gloves.
+
 uplink-clothing-outer-vest-web-name = Web West
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
