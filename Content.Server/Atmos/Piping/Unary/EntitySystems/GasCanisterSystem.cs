@@ -13,7 +13,6 @@ using Content.Server.Storage.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Database;
-using Content.Shared.Destructible;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
@@ -48,7 +47,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
             SubscribeLocalEvent<GasCanisterComponent, PriceCalculationEvent>(CalculateCanisterPrice);
             SubscribeLocalEvent<GasCanisterComponent, GasAnalyzerScanEvent>(OnAnalyzed);
-            SubscribeLocalEvent<GasCanisterComponent, DestructionEventArgs>(OnDestruction);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
@@ -324,11 +322,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnAnalyzed(EntityUid uid, GasCanisterComponent component, GasAnalyzerScanEvent args)
         {
             args.GasMixtures = new Dictionary<string, GasMixture?> { {Name(uid), component.Air} };
-        }
-
-        private void OnDestruction(EntityUid uid, GasCanisterComponent component, DestructionEventArgs args)
-        {
-            Spawn(component.BrokenCanister, Transform(uid).Coordinates);
         }
 
         private void OnLockToggled(EntityUid uid, GasCanisterComponent component, LockToggledEvent args)
