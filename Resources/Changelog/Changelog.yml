@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has removed the wheels from vending machines. They should
-      no longer be able to move, if your station suffers from a case of the sentient
-      virus plaguing our networks.', type: Fix}
-  id: 2297
-  time: '2022-09-14T03:46:50.0000000+00:00'
 - author: Morb0
   changes:
   - {message: New fashionable clothes for lawyers., type: Add}
@@ -2941,3 +2934,8 @@ Entries:
   - {message: Fixed a bug causing physics to behave weirdly on moving grids., type: Fix}
   id: 2796
   time: '2022-12-21T19:29:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Retractors are now properly printable again., type: Fix}
+  id: 2797
+  time: '2022-12-21T20:47:10.0000000+00:00'
