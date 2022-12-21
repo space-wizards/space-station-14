@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Nanotrasen and the Syndicate have provided guidelines to their crews
-      as to how to consider clashes against nuclear operations as successes or failures.,
-    type: Tweak}
-  id: 2295
-  time: '2022-09-14T02:42:19.0000000+00:00'
 - author: corentt
   changes:
   - {message: More detailed informations are now displayed on the cargo order form,
@@ -2943,3 +2936,8 @@ Entries:
       1/5 the time as eating 0.5u., type: Fix}
   id: 2794
   time: '2022-12-21T14:51:49.0000000+00:00'
+- author: Prentor
+  changes:
+  - {message: Added bag for carrying books and cargo order to get more of them, type: Add}
+  id: 2795
+  time: '2022-12-21T14:53:11.0000000+00:00'
