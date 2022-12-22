@@ -74,6 +74,18 @@ namespace Content.IntegrationTests.Tests
   id: TestRestockExplode
   name: TestRestockExplode
   components:
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 20
+      behaviors:
+      - !type:DumpRestockInventory
+      - !type:DoActsBehavior
+        acts: [ 'Destruction' ]
   - type: VendingMachineRestock
     canRestock:
     - BigTestInventory
@@ -83,6 +95,8 @@ namespace Content.IntegrationTests.Tests
   id: VendingMachineTest
   name: Test Ramen
   components:
+  - type: Wires
+    LayoutId: Vending
   - type: VendingMachine
     pack: TestInventory
   - type: Sprite
