@@ -50,6 +50,7 @@ public sealed class WiresSystem : EntitySystem
 
         // this is a broadcast event
         SubscribeLocalEvent<WireToolFinishedEvent>(OnToolFinished);
+        SubscribeLocalEvent<WireToolCanceledEvent>(OnToolCanceled);
         SubscribeLocalEvent<WiresComponent, ComponentStartup>(OnWiresStartup);
         SubscribeLocalEvent<WiresComponent, WiresActionMessage>(OnWiresActionMessage);
         SubscribeLocalEvent<WiresComponent, InteractUsingEvent>(OnInteractUsing);
@@ -462,9 +463,14 @@ public sealed class WiresSystem : EntitySystem
                 args.Handled = true;
             }
         }
-        else if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[]{ "Screwing" }, doAfterCompleteEvent:new WireToolFinishedEvent(uid), toolComponent:tool))
+        else if (!component.IsScrewing && _toolSystem.HasQuality(args.Used, "Screwing", tool))
         {
-            args.Handled = true;
+            component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid,
+                0f, ScrewTime, new[] { "Screwing" },
+                new WireToolFinishedEvent(uid),
+                new WireToolCanceledEvent(uid),
+                toolComponent: tool);
+            args.Handled = component.IsScrewing;
         }
     }
 
@@ -473,6 +479,7 @@ public sealed class WiresSystem : EntitySystem
         if (!EntityManager.TryGetComponent(args.Target, out WiresComponent? component))
             return;
 
+        component.IsScrewing = false;
         component.IsPanelOpen = !component.IsPanelOpen;
         UpdateAppearance(args.Target);
 
@@ -489,6 +496,14 @@ public sealed class WiresSystem : EntitySystem
                 _uiSystem.CloseAll(ui);
             }
         }
+    }
+
+    private void OnToolCanceled(WireToolCanceledEvent ev)
+    {
+        if (!TryComp(ev.Target, out WiresComponent? component))
+            return;
+
+        component.IsScrewing = false;
     }
 
     private void OnExamine(EntityUid uid, WiresComponent component, ExaminedEvent args)
@@ -910,6 +925,8 @@ public sealed class WiresSystem : EntitySystem
             Target = target;
         }
     }
+
+    public record struct WireToolCanceledEvent(EntityUid Target);
 
     private sealed class OnWireDoAfterEvent : EntityEventArgs
     {

@@ -17,8 +17,12 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
+            var cleanseRate = CleanseRate;
+
+            cleanseRate *= args.Scale;
+
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, CleanseRate);
+            bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }
 }
