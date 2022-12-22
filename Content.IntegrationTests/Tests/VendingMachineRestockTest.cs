@@ -90,34 +90,6 @@ namespace Content.IntegrationTests.Tests
 ";
 
         [Test]
-        public async Task TestCanRestockIsValid()
-        {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
-            var server = pairTracker.Pair.Server;
-            // Per RobustIntegrationTest.cs, wait until state is settled to access it.
-            await server.WaitIdleAsync();
-
-            var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-
-            await server.WaitAssertion(() =>
-            {
-                foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
-                {
-                    if (!proto.TryGetComponent<VendingMachineRestockComponent>(out var package))
-                        continue;
-
-                    foreach(var vendingInventory in package.CanRestock)
-                    {
-                        Assert.That(prototypeManager.HasIndex<VendingMachineInventoryPrototype>(vendingInventory),
-                            $"Unknown VendingMachineInventoryPrototype {vendingInventory} on VendingMachineRestockComponent for {proto.ID}");
-                    }
-                }
-            });
-
-            await pairTracker.CleanReturnAsync();
-        }
-
-        [Test]
         public async Task TestAllRestocksAreAvailableToBuy()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
@@ -134,9 +106,11 @@ namespace Content.IntegrationTests.Tests
                 // Collect all the prototypes with restock components.
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<VendingMachineRestockComponent>(out var restock)
-                        || proto.Abstract)
+                    if (proto.Abstract ||
+                        !proto.TryGetComponent<VendingMachineRestockComponent>(out var restock))
+                    {
                         continue;
+                    }
 
                     restocks.Add(proto.ID);
                 }
@@ -220,8 +194,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.True(entityManager.TryGetComponent(packageWrong, out restockWrongComponent!), $"Wrong package has no {nameof(VendingMachineRestockComponent)}");
                 Assert.True(entityManager.TryGetComponent(machine, out machineWires!), $"Machine has no {nameof(WiresComponent)}");
 
-                var systemRestock = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineRestockSystem>();
-                var systemMachine = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VendingMachineSystem>();
+                var systemRestock = entitySystemManager.GetEntitySystem<VendingMachineRestockSystem>();
+                var systemMachine = entitySystemManager.GetEntitySystem<VendingMachineSystem>();
 
                 // Test that the panel needs to be opened first.
                 Assert.That(systemRestock.TryAccessMachine(packageRight, restockRightComponent, machineComponent, user, machine), Is.False, "Right package is able to restock without opened access panel");
