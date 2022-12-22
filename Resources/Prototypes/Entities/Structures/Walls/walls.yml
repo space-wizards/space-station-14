@@ -388,6 +388,23 @@
 
 - type: entity
   parent: BaseWall
+  id: WallPlastitaniumIndestructible
+  name: plastitanium wall
+  suffix: indestructible
+  components:
+    - type: Tag
+      tags:
+        - Wall
+    - type: Sprite
+      sprite: Structures/Walls/plastitanium.rsi
+    - type: Icon
+      sprite: Structures/Walls/plastitanium.rsi
+    - type: IconSmooth
+      key: walls
+      base: plastitanium
+
+- type: entity
+  parent: WallPlastitaniumIndestructible
   id: WallPlastitanium
   name: plastitanium wall
   components:
@@ -395,10 +412,6 @@
       tags:
         - Wall
         - RCDDeconstructWhitelist
-    - type: Sprite
-      sprite: Structures/Walls/plastitanium.rsi
-    - type: Icon
-      sprite: Structures/Walls/plastitanium.rsi
     - type: Destructible
       thresholds:
         - trigger:
@@ -412,9 +425,6 @@
                   max: 1
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
-    - type: IconSmooth
-      key: walls
-      base: plastitanium
 
 - type: entity
   parent: BaseWall
