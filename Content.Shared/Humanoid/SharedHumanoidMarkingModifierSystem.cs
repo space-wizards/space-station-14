@@ -45,8 +45,8 @@ public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
         string species,
         Color skinColor,
         Color eyeColor,
-        Color hairColor,
-        Color facialHairColor,
+        Color? hairColor,
+        Color? facialHairColor,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers
     )
     {
@@ -63,7 +63,7 @@ public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
     public string Species { get; }
     public Color SkinColor { get; }
     public Color EyeColor { get; }
-    public Color HairColor { get; }
-    public Color FacialHairColor { get; }
+    public Color? HairColor { get; }
+    public Color? FacialHairColor { get; }
     public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> CustomBaseLayers { get; }
 }

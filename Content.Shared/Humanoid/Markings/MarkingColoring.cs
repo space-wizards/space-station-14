@@ -73,7 +73,7 @@ public sealed class ColoringProperties
     ///     Coloring type that will be used on that layer
     /// </summary>
     [DataField("type", true, required: true)]
-    public MarkingColoringType Type { get; } = MarkingColoringType.SkinColor;
+    public MarkingColoringType? Type;
 
     /// <summary>
     ///     Color that will be used if coloring type can't be performed or used "SimpleColor" type
@@ -179,9 +179,9 @@ public static class MarkingColoring
             MarkingColoringType.HairColor => HairColor(skinColor, hairColor),
             MarkingColoringType.FacialHairColor => HairColor(skinColor, facialHairColor),
             MarkingColoringType.AnyHairColor => AnyHairColor(skinColor, hairColor, facialHairColor),
-            MarkingColoringType.EyeColor => EyeColor(skinColor),
+            MarkingColoringType.EyeColor => EyeColor(eyeColor),
             MarkingColoringType.Tattoo => Tattoo(skinColor),
-            _ => properties.Color
+            _ => SkinColor(skinColor)
         };
 
         // Negative color

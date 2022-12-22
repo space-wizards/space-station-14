@@ -28,17 +28,17 @@ public abstract class SharedHumanoidComponent : Component
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
     /// </summary>
-    public Color CachedHairColor { get; set;  } = Color.Black;
+    public Color? CachedHairColor;
 
     /// <summary>
     ///     Facial Hair color of this humanoid. Used to avoid looping through all markings
     /// </summary>
-    public Color CachedFacialHairColor { get; set;  } = Color.Black;
+    public Color? CachedFacialHairColor;
 
     /// <summary>
     ///     Eye color of this humanoid.
     /// </summary>
-    public Color CachedEyeColor { get; set;  } = Color.Black;
+    public Color CachedEyeColor { get; set; } = Color.White;
 
     /// <summary>
     ///     Visual layers currently hidden. This will affect the base sprite

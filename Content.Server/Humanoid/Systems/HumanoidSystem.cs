@@ -99,13 +99,23 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         humanoid.CurrentMarkings.Clear();
 
         // Hair/facial hair - this may eventually be deprecated.
-
-        humanoid.CachedHairColor = profile.Appearance.HairColor;
         AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
         AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
 
         foreach (var marking in profile.Appearance.Markings)
         {
+            // Caching hair and facial hair colors from their markings
+            if (_markingManager.Markings.TryGetValue(marking.MarkingId, out var prototype)){
+                switch (prototype.MarkingCategory) {
+                    case MarkingCategories.Hair:
+                        humanoid.CachedHairColor = marking.MarkingColors[1];
+                        break;
+                    case MarkingCategories.FacialHair:
+                        humanoid.CachedFacialHairColor = marking.MarkingColors[1];
+                        break;
+                }
+            }
+            
             AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
         }
 

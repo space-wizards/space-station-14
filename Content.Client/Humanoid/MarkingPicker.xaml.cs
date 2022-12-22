@@ -37,8 +37,8 @@ public sealed partial class MarkingPicker : Control
     private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
     public Color CurrentSkinColor = Color.White;
     public Color CurrentEyeColor = Color.Black;
-    public Color CurrentHairColor = Color.Black;
-    public Color CurrentFacialHairColor = Color.Black;
+    public Color? CurrentHairColor = Color.Black;
+    public Color? CurrentFacialHairColor = Color.Black;
 
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
@@ -77,7 +77,7 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
-    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor, Color hairColor, Color facialHairColor)
+    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor, Color? hairColor, Color? facialHairColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
@@ -98,7 +98,7 @@ public sealed partial class MarkingPicker : Control
         PopulateUsed();
     }
 
-    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor, Color hairColor, Color facialHairColor)
+    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor, Color? hairColor, Color? facialHairColor)
     {
         _currentMarkings = set;
 

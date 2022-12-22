@@ -223,7 +223,7 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
-                
+
                 CMarkings.CurrentHairColor = newColor.marking.MarkingColors[0];
                 IsDirty = true;
             };
