@@ -454,5 +454,18 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(vendComponent);
             TryUpdateVisualState(uid, vendComponent);
         }
+
+    }
+
+    public sealed class VendingMachineRestockEvent : EntityEventArgs
+    {
+        public EntityUid User { get; }
+        public EntityUid RestockBox { get; }
+
+        public VendingMachineRestockEvent(EntityUid user, EntityUid restockBox)
+        {
+            User = user;
+            RestockBox = restockBox;
+        }
     }
 }

@@ -97,16 +97,4 @@ namespace Content.Shared.VendingMachines
     }
 
     public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent { };
-
-    public sealed class VendingMachineRestockEvent : EntityEventArgs
-    {
-        public EntityUid User { get; }
-        public EntityUid RestockBox { get; }
-
-        public VendingMachineRestockEvent(EntityUid user, EntityUid restockBox)
-        {
-            User = user;
-            RestockBox = restockBox;
-        }
-    }
 }
