@@ -110,11 +110,11 @@ public sealed partial class EnsnareableSystem
         _doAfter.DoAfter(doAfterEventArgs);
 
         if (isOwner)
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, Filter.Entities(target));
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free", ("ensnare", component.Owner)), target, target);
 
         if (!isOwner && user != null)
         {
-            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", component.Owner), ("user", Identity.Entity(target, EntityManager))), user.Value, Filter.Entities(user.Value));
+            _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-other", ("ensnare", component.Owner), ("user", Identity.Entity(target, EntityManager))), user.Value, user.Value);
         }
     }
 

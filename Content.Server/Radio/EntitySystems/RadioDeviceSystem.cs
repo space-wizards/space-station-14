@@ -99,7 +99,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         {
             var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
             var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user, Filter.Entities(user));
+            _popup.PopupEntity(message, user, user);
         }
 
         if (component.Enabled)
@@ -134,7 +134,7 @@ public sealed class RadioDeviceSystem : EntitySystem
                 {
                     component.BroadcastChannel = channel;
                     _popup.PopupEntity(Loc.GetString("handheld-radio-component-channel-set",
-                        ("channel", channel)), uid, Filter.Entities(args.User));
+                        ("channel", channel)), uid, args.User);
                 }
             };
             args.Verbs.Add(v);
@@ -168,7 +168,7 @@ public sealed class RadioDeviceSystem : EntitySystem
         {
             var state = Loc.GetString(component.Enabled ? "handheld-radio-component-on-state" : "handheld-radio-component-off-state");
             var message = Loc.GetString("handheld-radio-component-on-use", ("radioState", state));
-            _popup.PopupEntity(message, user, Filter.Entities(user));
+            _popup.PopupEntity(message, user, user);
         }
 
         if (component.Enabled)

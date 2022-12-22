@@ -5,8 +5,8 @@ using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Research;
 using Content.Server.Research.Components;
+using Content.Server.Research.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
@@ -43,12 +43,12 @@ namespace Content.Server.Lathe
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
-            SubscribeLocalEvent<LatheComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<ResearchClientComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
@@ -202,14 +202,7 @@ namespace Content.Server.Lathe
             if (uid != args.Lathe || !TryComp<LatheComponent>(uid, out var latheComponent) || latheComponent.DynamicRecipes == null)
                 return;
 
-            //gets all of the techs that are unlocked and also in the DynamicRecipes list
-            var allTechs = (from technology in from tech in component.TechnologyIds
-                    select _proto.Index<TechnologyPrototype>(tech)
-                from recipe in technology.UnlockedRecipes
-                where latheComponent.DynamicRecipes.Contains(recipe)
-                select recipe).ToList();
-
-            args.Recipes = args.Recipes.Union(allTechs).ToList();
+            args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
         }
 
         /// <summary>
@@ -308,16 +301,13 @@ namespace Content.Server.Lathe
             UpdateUserInterfaceState(uid, component);
         }
 
-        private void OnLatheServerSelectionMessage(EntityUid uid, LatheComponent component, LatheServerSelectionMessage args)
+        private void OnLatheServerSelectionMessage(EntityUid uid, ResearchClientComponent component, LatheServerSelectionMessage args)
         {
-            // TODO: one day, when you can open BUIs clientside, do that. Until then, picture Electro seething.
-            if (component.DynamicRecipes != null)
-                _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
+            _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
         }
 
         private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
         {
-            Logger.Debug("OnLatheServerSyncMessage");
             _researchSys.SyncWithServer(component);
             UpdateUserInterfaceState(uid);
         }

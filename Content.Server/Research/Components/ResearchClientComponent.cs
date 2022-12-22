@@ -1,8 +1,7 @@
 ﻿namespace Content.Server.Research.Components
 {
     [RegisterComponent]
-    [Virtual]
-    public class ResearchClientComponent : Component
+    public sealed class ResearchClientComponent : Component
     {
         public bool ConnectedToServer => Server != null;
 

@@ -49,7 +49,16 @@ public sealed partial class PathfindingSystem
         SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
+    }
+
+    private void OnTileChange(TileChangedEvent ev)
+    {
+        if (ev.OldTile.IsEmpty == ev.NewTile.Tile.IsEmpty)
+            return;
+
+        DirtyChunk(ev.Entity, Comp<MapGridComponent>(ev.Entity).GridTileToLocal(ev.NewTile.GridIndices));
     }
 
     private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityUnpausedEvent args)
@@ -88,8 +97,10 @@ public sealed partial class PathfindingSystem
         };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
-        // If we're paused then NPCs can't run anyway.
-        foreach (var comp in EntityQuery<GridPathfindingComponent>())
+        // Still run even when paused.
+        var query = AllEntityQuery<GridPathfindingComponent>();
+
+        while (query.MoveNext(out var comp))
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
@@ -318,6 +329,17 @@ public sealed partial class PathfindingSystem
     private void OnGridInit(GridInitializeEvent ev)
     {
         EnsureComp<GridPathfindingComponent>(ev.EntityUid);
+
+        // Pathfinder refactor
+        var mapGrid = Comp<MapGridComponent>(ev.EntityUid);
+
+        for (var x = Math.Floor(mapGrid.LocalAABB.Left); x <= Math.Ceiling(mapGrid.LocalAABB.Right + ChunkSize); x += ChunkSize)
+        {
+            for (var y = Math.Floor(mapGrid.LocalAABB.Bottom); y <= Math.Ceiling(mapGrid.LocalAABB.Top + ChunkSize); y += ChunkSize)
+            {
+                DirtyChunk(ev.EntityUid, mapGrid.GridTileToLocal(new Vector2i((int) x, (int) y)));
+            }
+        }
     }
 
     private void OnGridRemoved(GridRemovalEvent ev)
