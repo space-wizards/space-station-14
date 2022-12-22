@@ -432,6 +432,19 @@ namespace Content.Client.Stylesheets
                 Mode = StyleBoxTexture.StretchMode.Tile
             };
 
+            // Paper background
+            var paperFont = notoSans12;
+            var linedPaperTex = resCache.GetTexture("/Textures/Interface/Nano/lined_paper.svg.96dpi.png");
+            var paperBack = new StyleBoxTexture
+            {
+                Texture = linedPaperTex,
+                Mode = StyleBoxTexture.StretchMode.Tile,
+                // This positions the texture so the font baseline is on the bottom:
+                ExpandMarginTop = paperFont.GetDescent(1),
+                // And this scales the texture so that it's a single text line:
+                Scale = new Vector2(1, (float)paperFont.GetLineHeight(1) / linedPaperTex.Height)
+            };
+
             // Slider
             var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
             var sliderFillTex = resCache.GetTexture("/Textures/Interface/Nano/slider_fill.svg.96dpi.png");
@@ -1316,6 +1329,12 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
+
+                Element<StripeBack>().Class("LinedPaper")
+                    .Prop(StripeBack.StylePropertyBackground, paperBack),
+                Element<RichTextLabel>().Class("WrittenText")
+                    .Prop(Label.StylePropertyFont, paperFont),
+
 
                 // Red Button ---
                 Element<Button>().Class("ButtonColorRed")

@@ -13,19 +13,21 @@ namespace Content.Client.Paper.UI
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);
+
+            //var resourceCache = IoCManager.Resolve<IResourceCache>();
+            //var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lined_paper.svg.96dpi.png");
         }
 
         public void Populate(SharedPaperComponent.PaperBoundUserInterfaceState state)
         {
             bool isEditing = state.Mode == SharedPaperComponent.PaperAction.Write;
-            Input.Visible = isEditing;
+            InputContainer.Visible = isEditing;
 
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
             Label.SetMessage(msg);
 
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
-            BlankPaperPlaceholder.Visible = !BlankPaperIndicator.Visible;
 
             StampDisplay.RemoveAllChildren();
             foreach(var stamper in state.StampedBy)

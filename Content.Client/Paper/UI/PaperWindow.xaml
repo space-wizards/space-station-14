@@ -1,18 +1,23 @@
 <DefaultWindow xmlns="https://spacestation14.io"
-            MinSize="300 300">
-    <BoxContainer Orientation="Vertical">
-        <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-            <RichTextLabel Name="Label" />
-            <LineEdit Name="Input"
-                Access="Public"
-                Visible="False" />
-        </BoxContainer>
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    <controls:StripeBack Name="PaperBackground" StyleClasses="LinedPaper">
+        <BoxContainer Orientation="Vertical" Margin="12 0 12 0">
+            <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+                <RichTextLabel StyleClasses="WrittenText" Name="Label" ModulateSelfOverride="#25252A"/>
+                <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
+                    <LineEdit Name="Input" StyleClasses="chatLineEdit" Access="Public" /> <!-- todo.eoin misuse of a style -->
+                </PanelContainer>
+            </BoxContainer>
 
-        <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
-            Text="{Loc 'paper-ui-blank-page-message'}"
-            VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True"/>
-        <Control Name="BlankPaperPlaceholder"
-            VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True"/>
-        <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
-    </BoxContainer>
+            <Control VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True">
+                <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
+                    Text="{Loc 'paper-ui-blank-page-message'}"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True"/>
+            </Control>
+
+            <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
+
+        </BoxContainer>
+    </controls:StripeBack>
 </DefaultWindow>
