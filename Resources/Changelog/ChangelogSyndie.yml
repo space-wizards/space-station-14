@@ -3476,3 +3476,13 @@ Entries:
     type: Add
   id: 415
   time: '2022-12-22T10:46:39.0000000+00:00'
+- author: RomanMinaev
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B \u043A\u043B\u0435\
+      \u0432\u044B\u0435 \u0441\u043F\u0440\u0430\u0439\u0442\u044B"
+    type: Add
+  - message: "\u0423\u0431\u0440\u0430\u043D\u044B \u043D\u0435\u043A\u043B\u0435\u0432\
+      \u044B\u0435 \u0441\u043F\u0440\u0430\u0439\u0442\u044B"
+    type: Remove
+  id: 416
+  time: '2022-12-22T15:21:53.0000000+00:00'
