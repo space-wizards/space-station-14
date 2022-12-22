@@ -133,6 +133,11 @@ namespace Content.Server.MachineLinking.System
 
         public void InvokePort(EntityUid uid, string port, SignalTransmitterComponent? component = null)
         {
+            InvokePort(uid, port, SignalState.Momentary, component);
+        }
+
+        public void InvokePort(EntityUid uid, string port, SignalState state, SignalTransmitterComponent? component = null)
+        {
             if (!Resolve(uid, ref component))
                 return;
 
@@ -140,7 +145,7 @@ namespace Content.Server.MachineLinking.System
                 return;
 
             foreach (var receiver in receivers)
-                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid), false);
+                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid, state), false);
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
