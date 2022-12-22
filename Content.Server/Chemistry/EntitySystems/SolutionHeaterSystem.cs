@@ -21,7 +21,14 @@ public sealed class SolutionHeaterSystem : EntitySystem
 
     private void OnPowerChanged(EntityUid uid, SolutionHeaterComponent component, ref PowerChangedEvent args)
     {
-        component.Enabled = args.Powered;
+        if (args.Powered)
+        {
+            EnsureComp<ActiveSolutionHeaterComponent>(uid);
+        }
+        else
+        {
+            RemComp<ActiveSolutionHeaterComponent>(uid);
+        }
     }
 
     private void OnRefreshParts(EntityUid uid, SolutionHeaterComponent component, RefreshPartsEvent args)
@@ -40,11 +47,8 @@ public sealed class SolutionHeaterSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var heater in EntityQuery<SolutionHeaterComponent>())
+        foreach (var (_, heater) in EntityQuery<ActiveSolutionHeaterComponent, SolutionHeaterComponent>())
         {
-            if (!heater.Enabled)
-                continue;
-
             if (_itemSlots.GetItemOrNull(heater.Owner, heater.BeakerSlotId) is not { } item)
                 continue;
 

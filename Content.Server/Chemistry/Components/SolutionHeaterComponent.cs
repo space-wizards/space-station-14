@@ -5,9 +5,6 @@ public sealed class SolutionHeaterComponent : Component
 {
     public readonly string BeakerSlotId = "beakerSlot";
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public bool Enabled;
-
     [DataField("heatPerSecond")]
     public float HeatPerSecond = 120;
 
