@@ -1,0 +1,26 @@
+- type: entity
+  id: OrGate
+  name: MS7432
+  description: Dual 2-Input OR Gate
+  parent: BaseItem
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Anchorable
+  - type: Sprite
+    sprite: Objects/Devices/gates.rsi
+    state: or
+  - type: Rotatable
+  - type: OrGate
+  - type: SignalReceiver
+    inputs:
+      A1: []
+      B1: []
+      A2: []
+      B2: []
+  - type: SignalTransmitter
+    outputs:
+      O1: []
+      O2: []
