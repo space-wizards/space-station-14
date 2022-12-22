@@ -53,18 +53,21 @@ namespace Content.Server.Salvage
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("attachingTime")]
         public int AttachingTime;
+
         /// <summary>
         ///     How long can the magnet hold the debris until it starts losing the lock (in seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("holdTime")]
         public int HoldTime;
+
         /// <summary>
         ///     How long can the magnet hold the debris while losing the lock (in seconds)
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("detachingTime")]
         public int DetachingTime;
+
         /// <summary>
         ///     How long the magnet has to cool down after use (in seconds)
         /// </summary>
