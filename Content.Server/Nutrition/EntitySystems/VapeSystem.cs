@@ -45,9 +45,9 @@ namespace Content.Server.Nutrition.EntitySystems
             var entMan = IoCManager.Resolve<IEntityManager>();
 
             //Always read the description.
-            if(solution.ContainsReagent("Water"))
+            if(solution.ContainsReagent("Water") || comp.ExplodeOnUse)
             {
-                _explosionSystem.QueueExplosion(uid, "Default", 2.5f, 0.5f, 3, canCreateVacuum: false);
+                _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
                 entMan.DeleteEntity(uid);
             }
 
@@ -67,31 +67,34 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             args.VapeComponent.CancelToken = null;
 
-            if(args.Solution.AvailableVolume < 3)
+            if(args.Solution.AvailableVolume <= args.VapeComponent.SmokeAmount * 3)
             {
-                args.Solution.MaxVolume += 3;
-                CreateSmoke(args.Item, args.Solution);
-                args.Solution.MaxVolume -= 3;
+                args.Solution.MaxVolume += args.VapeComponent.SmokeAmount * 3;
+
+                CreateSmoke(args.Item, args.Solution, args.VapeComponent);
+
+                args.Solution.MaxVolume -= args.VapeComponent.SmokeAmount * 3;
             }
             else if(args.Solution.CurrentVolume != 0)
-                CreateSmoke(args.Item, args.Solution);
+                CreateSmoke(args.Item, args.Solution, args.VapeComponent);
 
             args.Solution.RemoveSolution(args.Solution.CurrentVolume / 2);
 
             //Smoking kills(your lungs, but there is no organ damage yet)
             args.Solution.AddReagent("Thermite", 1);
+
             _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
 
             args.Solution.RemoveAllSolution();
         }
 
         //kinda shit, but i can't find function to create smoke.
-        private void CreateSmoke(EntityUid uid, Solution solutions)
+        private void CreateSmoke(EntityUid uid, Solution solutions, VapeComponent comp)
         {
             var smoke = new Solution();
-            smoke.AddReagent("Phosphorus", 1); 
-            smoke.AddReagent("Potassium", 1);
-            smoke.AddReagent("Sugar", 1);
+            smoke.AddReagent("Phosphorus", comp.SmokeAmount); 
+            smoke.AddReagent("Potassium", comp.SmokeAmount);
+            smoke.AddReagent("Sugar", comp.SmokeAmount);
             
             _solutionContainerSystem.TryAddSolution(uid, solutions, smoke);
         }
