@@ -50,7 +50,7 @@ public sealed class BluespaceLockerComponent : Component
     /// <summary>
     /// Determines if links automatically added are restricted to being on a station
     /// </summary>
-    [DataField("PickLinksFromStationGrids"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("pickLinksFromStationGrids"), ViewVariables(VVAccess.ReadWrite)]
     public bool PickLinksFromStationGrids = true;
 
     /// <summary>
