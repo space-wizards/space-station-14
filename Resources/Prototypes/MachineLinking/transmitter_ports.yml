@@ -55,3 +55,8 @@
   name: signal-port-name-artifact-analyzer-sender
   description: signal-port-description-artifact-analyzer-sender
   defaultLinks: [ ArtifactAnalyzerReceiver ]
+
+- type: transmitterPort
+  id: DoorStatus
+  name: "Door Status"
+  description: "HIGH when door is open, LOW when door is closed."

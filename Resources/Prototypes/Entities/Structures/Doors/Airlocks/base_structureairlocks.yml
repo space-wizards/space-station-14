@@ -80,6 +80,10 @@
       Open: []
       Close: []
       Toggle: []
+      DoorBolt: []
+  - type: SignalTransmitter
+    outputs:
+      DoorStatus: []
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

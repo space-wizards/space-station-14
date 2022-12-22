@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Doors.Components;
+using Content.Server.MachineLinking.System;
 using Content.Server.Tools;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
@@ -33,6 +34,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly ConstructionSystem _constructionSystem = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly DoorSignalControlSystem _doorSignalSystem = default!;
 
     public override void Initialize()
     {

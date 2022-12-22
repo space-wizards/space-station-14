@@ -141,9 +141,16 @@ namespace Content.Server.MachineLinking.System
             if (!Resolve(uid, ref component))
                 return;
 
+            if (state != SignalState.Momentary && state == component.lastState)
+            {
+                // no change in output signal
+                return;
+            }
+
             if (!component.Outputs.TryGetValue(port, out var receivers))
                 return;
 
+            component.lastState = state;
             foreach (var receiver in receivers)
                 RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid, state), false);
         }
@@ -218,6 +225,9 @@ namespace Content.Server.MachineLinking.System
                 !TryComp(args.User, out ActorComponent? actor))
                 return;
 
+            if (!linker.LinkTX())
+                return;
+
             linker.SavedTransmitter = uid;
 
             if (!TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
@@ -241,6 +251,9 @@ namespace Content.Server.MachineLinking.System
 
             if (!TryComp(args.Used, out SignalLinkerComponent? linker) || !IsLinkerInteractable(args.Used, linker) ||
                 !TryComp(args.User, out ActorComponent? actor))
+                return;
+
+            if (!linker.LinkRX())
                 return;
 
             linker.SavedReceiver = uid;

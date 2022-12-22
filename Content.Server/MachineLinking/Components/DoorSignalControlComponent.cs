@@ -14,5 +14,11 @@ namespace Content.Server.MachineLinking.Components
 
         [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string TogglePort = "Toggle";
+
+        [DataField("boltPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        public string InBolt = "DoorBolt";
+
+        [DataField("onOpenPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+        public string OutOpen = "DoorStatus";
     }
 }

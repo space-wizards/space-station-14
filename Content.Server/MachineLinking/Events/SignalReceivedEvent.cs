@@ -2,7 +2,7 @@ namespace Content.Server.MachineLinking.Events
 {
     public enum SignalState
     {
-        Momentary,
+        Momentary, // Instantaneous pulse high, compatibility behavior
         Low,
         High
     }
