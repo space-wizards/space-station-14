@@ -407,6 +407,7 @@
   parent: WallPlastitaniumIndestructible
   id: WallPlastitanium
   name: plastitanium wall
+  suffix: ""
   components:
     - type: Tag
       tags:
