@@ -53,7 +53,7 @@ accent-words-chicken-2 = Кудах.
 accent-words-chicken-3 = Кудах?
 accent-words-chicken-4 = Кудах тах-тах!
 # Pig
-accent-words-pig-1 = Oink.
-accent-words-pig-2 = Oink?
-accent-words-pig-3 = Oink!
-accent-words-pig-4 = Oink oink!
+accent-words-pig-1 = Хрю.
+accent-words-pig-2 = Хрю?
+accent-words-pig-3 = Хрю!
+accent-words-pig-4 = Хрю Хрю!

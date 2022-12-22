@@ -1,6 +1,6 @@
 # MindComponent localization
 
-comp-mind-ghosting-prevented = You are not able to ghost right now.
+comp-mind-ghosting-prevented = Вы не можете стать призраком в данный момент.
 
 ## Messages displayed when a body is examined and in a certain state
 

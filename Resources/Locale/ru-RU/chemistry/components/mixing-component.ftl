@@ -1,4 +1,4 @@
 ## Entity
 
-default-mixing-success = You mix the { $mixed } with the { $mixer }
-bible-mixing-success = You bless the { $mixed } with the { $mixer }
+default-mixing-success = Вы смешиваете { $mixed } при помощи { $mixer }
+bible-mixing-success = Вы благословляете { $mixed } при помощи { $mixer }

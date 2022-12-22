@@ -31,10 +31,10 @@ zzzz-possessive-pronoun =
 # Used internally by the POSS-ADJ() function.
 zzzz-possessive-adjective =
     { GENDER($ent) ->
-        [male] сам
-        [female] сама
-        [epicene] сами
-       *[neuter] сам
+        [male] его
+        [female] её
+        [epicene] их
+       *[neuter] его
     }
 # Used internally by the REFLEXIVE() function.
 zzzz-reflexive-pronoun =

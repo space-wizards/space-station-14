@@ -1,8 +1,8 @@
-tech-disk-inserted = You insert the disk, adding a new recipe to the server.
-tech-disk-examine-none = The label is blank.
-tech-disk-examine = The label has a small dot matrix printed image depicting a { $result }.
-tech-disk-examine-more = There are more images printed, but they're too small to discern.
-tech-disk-ui-name = technology disk terminal
-tech-disk-ui-total-label = There are { $amount } points on the selected server
-tech-disk-ui-cost-label = Each disk costs { $amount } points to print
-tech-disk-ui-print-button = Print Disk
+tech-disk-inserted = Вы вставляете диск, добавляя на сервер новый рецепт.
+tech-disk-examine-none = Этикетка пуста.
+tech-disk-examine = На этикетке имеется небольшое матричное изображение, представляющее { $result }.
+tech-disk-examine-more = Имеются и другие изображения, но они слишком малы, чтобы разглядеть их.
+tech-disk-ui-name = Терминал технологических дисков
+tech-disk-ui-total-label = На выбранном сервере имеется { $amount } очков
+tech-disk-ui-cost-label = Печать каждого диска стоит { $amount } очков
+tech-disk-ui-print-button = Напечать диск

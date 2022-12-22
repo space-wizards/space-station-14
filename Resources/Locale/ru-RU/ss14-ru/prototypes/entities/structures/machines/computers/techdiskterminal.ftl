@@ -1,3 +1,3 @@
-ent-ComputerTechnologyDiskTerminal = technology disk terminal
-    .desc = A terminal used to print out technology disks.
+ent-ComputerTechnologyDiskTerminal = терминал технологических дисков
+    .desc = Терминал, используемый для печати технологических дисков.
     .suffix = { "" }
