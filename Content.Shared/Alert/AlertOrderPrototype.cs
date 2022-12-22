@@ -81,7 +81,8 @@ namespace Content.Shared.Alert
             if (idx == -1 && idy == -1)
             {
                 // break ties by type value
-                return x.AlertType - y.AlertType;
+                // Must cast to int to avoid integer overflow when subtracting (enum's unsigned)
+                return (int)x.AlertType - (int)y.AlertType;
             }
 
             if (idx == -1) return 1;
@@ -92,7 +93,8 @@ namespace Content.Shared.Alert
             if (result == 0)
             {
                 // break ties by type value
-                return x.AlertType - y.AlertType;
+                // Must cast to int to avoid integer overflow when subtracting (enum's unsigned)
+                return (int)x.AlertType - (int)y.AlertType;
             }
 
             return result;

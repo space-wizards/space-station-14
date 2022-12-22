@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Research.Components;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
@@ -7,16 +8,6 @@ namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-    private void InitializeTechnology()
-    {
-        SubscribeLocalEvent<TechnologyDatabaseComponent, ComponentGetState>(OnTechnologyGetState);
-    }
-
-    private void OnTechnologyGetState(EntityUid uid, TechnologyDatabaseComponent component, ref ComponentGetState args)
-    {
-        args.State = new TechnologyDatabaseState(component.TechnologyIds);
-    }
-
     /// <summary>
     ///     Synchronizes this database against other,
     ///     adding all technologies from the other that
@@ -27,11 +18,8 @@ public sealed partial class ResearchSystem
     /// <param name="twoway">Whether the other database should be synced against this one too or not.</param>
     public void Sync(TechnologyDatabaseComponent component, TechnologyDatabaseComponent otherDatabase, bool twoway = true)
     {
-        foreach (var tech in otherDatabase.TechnologyIds)
-        {
-            if (!component.IsTechnologyUnlocked(tech))
-                AddTechnology(component, tech);
-        }
+        otherDatabase.TechnologyIds = otherDatabase.TechnologyIds.Union(component.TechnologyIds).ToList();
+        otherDatabase.RecipeIds = otherDatabase.RecipeIds.Union(component.RecipeIds).ToList();
 
         if (twoway)
             Sync(otherDatabase, component, false);
@@ -65,11 +53,9 @@ public sealed partial class ResearchSystem
     /// <returns></returns>
     public bool UnlockTechnology(TechnologyDatabaseComponent component, TechnologyPrototype technology)
     {
-        if (!component.CanUnlockTechnology(technology))
-            return false;
+        if (!CanUnlockTechnology(component.Owner, technology, component)) return false;
 
         AddTechnology(component, technology.ID);
-        Dirty(component);
         return true;
     }
 
@@ -80,6 +66,39 @@ public sealed partial class ResearchSystem
     /// <param name="technology"></param>
     public void AddTechnology(TechnologyDatabaseComponent component, string technology)
     {
-        component.TechnologyIds.Add(technology);
+        if (!_prototypeManager.TryIndex<TechnologyPrototype>(technology, out var prototype))
+            return;
+        AddTechnology(component, prototype);
+    }
+
+    public void AddTechnology(TechnologyDatabaseComponent component, TechnologyPrototype technology)
+    {
+        component.TechnologyIds.Add(technology.ID);
+        foreach (var unlock in technology.UnlockedRecipes)
+        {
+            if (component.RecipeIds.Contains(unlock))
+                continue;
+            component.RecipeIds.Add(unlock);
+        }
+        Dirty(component);
+
+        if (!TryComp<ResearchServerComponent>(component.Owner, out var server))
+            return;
+        foreach (var client in server.Clients)
+        {
+            if (!TryComp<ResearchConsoleComponent>(client, out var console))
+                continue;
+            UpdateConsoleInterface(console);
+        }
+    }
+
+    public void AddLatheRecipe(TechnologyDatabaseComponent component, string recipe, bool dirty = true)
+    {
+        if (component.RecipeIds.Contains(recipe))
+            return;
+
+        component.RecipeIds.Add(recipe);
+        if (dirty)
+            Dirty(component);
     }
 }
