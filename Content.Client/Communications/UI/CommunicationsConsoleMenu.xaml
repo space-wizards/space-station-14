@@ -27,10 +27,14 @@
                 <Control MinSize="0 10" HorizontalExpand="True" />
 
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+
+                    <!-- Call emergency shuttle button -->
                     <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="0 0 6 0">
                         <ui:StripeBack HasTopEdge="False" HasBottomEdge="False">
                             <BoxContainer Orientation="Vertical"
-                                HorizontalAlignment="Center" Margin="12 24 12 24">
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Margin="12 24 12 12">
                                 <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
                                 <Button Name="EmergencyShuttleCallButton" Access="Public"
                                     Margin="12" SetSize="80 80"
@@ -41,24 +45,34 @@
 
                     <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="6 0 0 0">
                         <ui:StripeBack HasTopEdge="False" HasBottomEdge="False">
-                            <BoxContainer Orientation="Vertical"
-                                HorizontalAlignment="Center" Margin="12 24 12 24">
-                                <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
-                                <Button Name="EmergencyShuttleRecallButton" Access="Public"
-                                    Margin="12" SetSize="80 80"
-                                    StyleClasses="ButtonColorRed" />
+                            <BoxContainer Orientation="Vertical">
+                                <BoxContainer Margin="12 6 12 6">
+                                    <Button Name="ShuttleIncomingLight" StyleClasses="ButtonColorGreen" Margin="0 0 6 0"/> <!-- todo.eoin Need a proper control here -->
+                                    <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
+                                </BoxContainer>
+
+                                <!-- Shuttle "arriving in" label here -->
+                                <BoxContainer HorizontalExpand="True" Orientation="Horizontal" Margin="12 6 12 6">
+                                    <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
+                                    <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+                                        <PanelContainer StyleClasses="PanelBackgroundBaseDark">
+                                            <Label Name="_countdownLabel" StyleClasses="LabelLCDBig"/>
+                                        </PanelContainer>
+                                    </BoxContainer>
+                                </BoxContainer>
+
+                                <!-- Button to recall shuttle -->
+                                <BoxContainer Orientation="Vertical"
+                                    HorizontalAlignment="Center" Margin="12 24 12 12">
+                                    <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                    <Button Name="EmergencyShuttleRecallButton" Access="Public"
+                                        Margin="12" SetSize="80 80"
+                                        StyleClasses="ButtonColorRed" />
+                                </BoxContainer>
                             </BoxContainer>
                         </ui:StripeBack>
                     </BoxContainer>
                 </BoxContainer>
-
-                <PanelContainer>
-                    <BoxContainer Orientation="Vertical"
-                        HorizontalAlignment="Center">
-                        <RichTextLabel Name="CountdownLabel"/>
-                    </BoxContainer>
-                </PanelContainer>
-
             </BoxContainer>
 
             <Control MinSize="100 0" />

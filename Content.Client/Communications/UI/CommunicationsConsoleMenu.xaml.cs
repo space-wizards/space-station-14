@@ -98,15 +98,10 @@ namespace Content.Client.Communications.UI
 
         public void UpdateCountdown()
         {
-            if (!Owner.CountdownStarted)
-            {
-                CountdownLabel.SetMessage("");
-                EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-call-shuttle");
-                return;
-            }
-
-            EmergencyShuttleButton.Text = Loc.GetString("comms-console-menu-recall-shuttle");
-            CountdownLabel.SetMessage($"Time remaining\n{Owner.Countdown.ToString()}s");
+            int remaining = Owner.CountdownStarted ? Owner.Countdown : 0;
+            var message = remaining.ToString("D4");
+            CountdownLabel.Text = message;
+            ShuttleIncomingLight.Disabled = !Owner.CountdownStarted;
         }
 
         public override void Close()

@@ -71,6 +71,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassLabelHeadingBigger = "LabelHeadingBigger";
         public const string StyleClassLabelKeyText = "LabelKeyText";
         public const string StyleClassLabelSecondaryColor = "LabelSecondaryColor";
+        public const string StyleClassLabelLCDBig = "LabelLCDBig";
         public const string StyleClassLabelBig = "LabelBig";
         public const string StyleClassButtonBig = "ButtonBig";
 
@@ -1315,6 +1316,11 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class("FancyWindowTitle")
                     .Prop("font", boxFont13)
                     .Prop("font-color", NanoGold),
+
+                Element<Label>().Class(StyleClassLabelLCDBig)
+                    .Prop("font-color", DangerousRedFore)
+                    .Prop("font", notoSansDisplayBold16),
+
 
                 Element<PanelContainer>().Class("WindowHeadingBackground")
                     .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default })
