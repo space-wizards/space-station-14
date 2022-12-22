@@ -27,9 +27,7 @@ namespace Content.Server.VendingMachines.Restock
 
             SubscribeLocalEvent<VendingMachineRestockComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<VendingMachineRestockComponent, PriceCalculationEvent>(OnPriceCalculation);
-
-            SubscribeLocalEvent<RestockSuccessfulEvent>(OnRestockSuccessful);
-            SubscribeLocalEvent<RestockCancelledEvent>(OnRestockCancelled);
+            SubscribeLocalEvent<VendingMachineRestockComponent, RestockCancelledEvent>(OnRestockCancelled);
         }
 
         public bool TryAccessMachine(EntityUid uid,
@@ -85,13 +83,19 @@ namespace Content.Server.VendingMachines.Restock
 
             component.CancelToken = new CancellationTokenSource();
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, component.RestockDelay, component.CancelToken.Token, target: args.Target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(
+                    args.User,
+                    (float) component.RestockDelay.TotalSeconds,
+                    component.CancelToken.Token,
+                    args.Target,
+                    args.Used)
             {
-                BroadcastFinishedEvent = new RestockSuccessfulEvent(args.User, (EntityUid) args.Target, component.Owner),
-                BroadcastCancelledEvent = new RestockCancelledEvent(component.Owner),
+                TargetFinishedEvent = new VendingMachineRestockEvent(args.User, uid),
+                UsedCancelledEvent = new RestockCancelledEvent(),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
+                BreakOnDamage = true,
                 NeedHand = true
             });
 
@@ -133,59 +137,12 @@ namespace Content.Server.VendingMachines.Restock
             args.Price += priceSets.Max();
         }
 
-        private void OnRestockCancelled(RestockCancelledEvent ev)
+        private void OnRestockCancelled(EntityUid uid, VendingMachineRestockComponent component, RestockCancelledEvent args)
         {
-            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockComponent? package))
-                return;
-            package.CancelToken = null;
+            component.CancelToken?.Cancel();
+            component.CancelToken = null;
         }
 
-        private void OnRestockSuccessful(RestockSuccessfulEvent ev)
-        {
-            if (!EntityManager.TryGetComponent(ev.Package, out VendingMachineRestockComponent? package))
-                return;
-
-            package.CancelToken = null;
-
-            RaiseLocalEvent(ev.Target, new VendingMachineRestockEvent(), false);
-
-            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-done",
-                    ("this", ev.Package),
-                    ("user", ev.User),
-                    ("target", ev.Target)
-                    ),
-                ev.User,
-                PopupType.Medium);
-
-            _audioSystem.PlayPvs(package.SoundRestockDone, package.Owner,
-                AudioParams.Default
-                .WithVolume(-2f)
-                .WithVariation(0.2f));
-
-            QueueDel(ev.Package);
-        }
-
-        private sealed class RestockCancelledEvent : EntityEventArgs
-        {
-            public EntityUid Package;
-
-            public RestockCancelledEvent(EntityUid package)
-            {
-                Package = package;
-            }
-        }
-
-        private sealed class RestockSuccessfulEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Target;
-            public EntityUid Package;
-            public RestockSuccessfulEvent(EntityUid user, EntityUid target, EntityUid package)
-            {
-                User = user;
-                Target = target;
-                Package = package;
-            }
-        }
+        public readonly struct RestockCancelledEvent { }
     }
 }
