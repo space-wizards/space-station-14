@@ -19,3 +19,6 @@ ent-CrateServiceBureaucracy = { ent-CrateGenericSteel }
 ent-CrateServicePersonnel = { ent-CrateCommandSecure }
     .desc = { ent-CrateCommandSecure.desc }
     .suffix = { "" }
+ent-CrateServiceBooks = { ent-CrateGenericSteel }
+    .desc = { ent-CrateGenericSteel.desc }
+    .suffix = { "" }

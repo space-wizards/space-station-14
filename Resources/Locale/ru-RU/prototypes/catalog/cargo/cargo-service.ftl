@@ -12,3 +12,5 @@ ent-ServiceBureaucracy = { ent-CrateServiceBureaucracy }
     .desc = { ent-CrateServiceBureaucracy.desc }
 ent-ServicePersonnel = { ent-CrateServicePersonnel }
     .desc = { ent-CrateServicePersonnel.desc }
+ent-ServiceBooks = { ent-CrateServiceBooks }
+    .desc = { ent-CrateServiceBooks.desc }
