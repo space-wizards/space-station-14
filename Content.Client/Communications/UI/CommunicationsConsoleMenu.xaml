@@ -25,9 +25,40 @@
                     Text="{Loc 'comms-console-menu-announcement-button'}" />
                 <OptionButton Name="AlertLevelButton" Access="Public"/>
                 <Control MinSize="0 10" HorizontalExpand="True" />
-                <RichTextLabel Name="CountdownLabel"
-                    MinSize="0 200" />
-                <Button Name="EmergencyShuttleButton" Access="Public"/>
+
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="0 0 6 0">
+                        <ui:StripeBack HasTopEdge="False" HasBottomEdge="False">
+                            <BoxContainer Orientation="Vertical"
+                                HorizontalAlignment="Center" Margin="12 24 12 24">
+                                <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                <Button Name="EmergencyShuttleCallButton" Access="Public"
+                                    Margin="12" SetSize="80 80"
+                                    StyleClasses="ButtonColorRed" />
+                            </BoxContainer>
+                        </ui:StripeBack>
+                    </BoxContainer>
+
+                    <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="6 0 0 0">
+                        <ui:StripeBack HasTopEdge="False" HasBottomEdge="False">
+                            <BoxContainer Orientation="Vertical"
+                                HorizontalAlignment="Center" Margin="12 24 12 24">
+                                <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                <Button Name="EmergencyShuttleRecallButton" Access="Public"
+                                    Margin="12" SetSize="80 80"
+                                    StyleClasses="ButtonColorRed" />
+                            </BoxContainer>
+                        </ui:StripeBack>
+                    </BoxContainer>
+                </BoxContainer>
+
+                <PanelContainer>
+                    <BoxContainer Orientation="Vertical"
+                        HorizontalAlignment="Center">
+                        <RichTextLabel Name="CountdownLabel"/>
+                    </BoxContainer>
+                </PanelContainer>
+
             </BoxContainer>
 
             <Control MinSize="100 0" />

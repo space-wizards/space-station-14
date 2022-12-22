@@ -50,8 +50,10 @@ namespace Content.Client.Communications.UI
             };
             AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
 
-            EmergencyShuttleButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
-            EmergencyShuttleButton.Disabled = !owner.CanCall;
+            EmergencyShuttleCallButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
+            EmergencyShuttleCallButton.Disabled = !(owner.CanCall && !owner.CountdownStarted);
+            EmergencyShuttleRecallButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
+            EmergencyShuttleRecallButton.Disabled = !(owner.CanCall && owner.CountdownStarted);
 
             UpdateCountdown();
             Timer.SpawnRepeating(1000, UpdateCountdown, _timerCancelTokenSource.Token);
