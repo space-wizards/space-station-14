@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Content.Server.Cargo.Systems;
 using Content.Server.DoAfter;
@@ -43,9 +42,8 @@ namespace Content.Server.VendingMachines.Restock
                 _popupSystem.PopupCursor(Loc.GetString("vending-machine-restock-needs-panel-open",
                         ("this", uid),
                         ("user", user),
-                        ("target", target)
-                        ),
-                    Filter.Entities(user));
+                        ("target", target)),
+                    user);
                 return false;
             }
 
@@ -64,7 +62,7 @@ namespace Content.Server.VendingMachines.Restock
                         ("user", user),
                         ("target", target)
                         ),
-                    Filter.Entities(user));
+                    user);
                 return false;
             }
 
@@ -103,7 +101,6 @@ namespace Content.Server.VendingMachines.Restock
                     ("target", args.Target)
                     ),
                 args.User,
-                Filter.Pvs(args.User),
                 PopupType.Medium);
 
             _audioSystem.PlayPvs(component.SoundRestockStart, component.Owner,
@@ -158,7 +155,6 @@ namespace Content.Server.VendingMachines.Restock
                     ("target", ev.Target)
                     ),
                 ev.User,
-                Filter.Pvs(ev.User),
                 PopupType.Medium);
 
             _audioSystem.PlayPvs(package.SoundRestockDone, package.Owner,
