@@ -347,7 +347,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             ResetAnalyzer(component.AnalyzerEntity.Value);
         }
 
-        _research.ChangePointsOnServer(server.Value, _artifact.GetResearchPointValue(entToDestroy.Value), serverComponent);
+        _research.AddPointsToServer(server.Value, _artifact.GetResearchPointValue(entToDestroy.Value), serverComponent);
         EntityManager.DeleteEntity(entToDestroy.Value);
 
         _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));

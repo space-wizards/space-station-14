@@ -49,7 +49,7 @@ public sealed partial class ResearchSystem
 
         if (!CanRun(uid))
             return;
-        ChangePointsOnServer(uid, PointsPerSecond(uid, component) * time, component);
+        AddPointsToServer(uid, PointsPerSecond(uid, component) * time, component);
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public sealed partial class ResearchSystem
     /// <param name="clientComponent"></param>
     /// <param name="serverComponent"></param>
     /// <param name="dirtyServer">Whether or not to dirty the server component after registration</param>
-    /// <returns>Whether or not the client wa successfully registered</returns>
+    /// <returns>Whether or not the client was successfully registered to the server</returns>
     public bool RegisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
         ResearchServerComponent? serverComponent = null,  bool dirtyServer = true)
     {
@@ -149,12 +149,12 @@ public sealed partial class ResearchSystem
     }
 
     /// <summary>
-    /// Changes the amount of points on a server
+    /// Adds a specified number of points to a server.
     /// </summary>
-    /// <param name="uid"></param>
-    /// <param name="points"></param>
+    /// <param name="uid">The server</param>
+    /// <param name="points">The amount of points being added</param>
     /// <param name="component"></param>
-    public void ChangePointsOnServer(EntityUid uid, int points, ResearchServerComponent? component = null)
+    public void AddPointsToServer(EntityUid uid, int points, ResearchServerComponent? component = null)
     {
         if (points == 0)
             return;

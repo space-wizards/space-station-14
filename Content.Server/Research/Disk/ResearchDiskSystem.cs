@@ -28,7 +28,7 @@ namespace Content.Server.Research.Disk
             if (!TryComp<ResearchServerComponent>(args.Target, out var server))
                 return;
 
-            _research.ChangePointsOnServer(server.Owner, component.Points, server);
+            _research.AddPointsToServer(server.Owner, component.Points, server);
             _popupSystem.PopupEntity(Loc.GetString("research-disk-inserted", ("points", component.Points)), args.Target.Value, args.User);
             EntityManager.QueueDeleteEntity(uid);
         }

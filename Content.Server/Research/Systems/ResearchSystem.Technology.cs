@@ -71,7 +71,7 @@ public sealed partial class ResearchSystem
         if (component.Server is not { } server)
             return false;
         AddTechnology(server, prototype.ID);
-        ChangePointsOnServer(server, -prototype.RequiredPoints);
+        AddPointsToServer(server, -prototype.RequiredPoints);
         return true;
     }
 
