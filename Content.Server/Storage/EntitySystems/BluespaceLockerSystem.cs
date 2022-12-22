@@ -50,8 +50,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             _entityStorage.CloseStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
 
         // Apply bluespace effects if target is not a bluespace locker, otherwise let it handle it
-        if (!Resolve(targetContainerStorageComponent.Owner, ref targetContainerBluespaceComponent, false) ||
-            targetContainerBluespaceComponent.BluespaceLinks is not { Count: > 0 })
+        if (!Resolve(targetContainerStorageComponent.Owner, ref targetContainerBluespaceComponent, false))
         {
             // Move contained items
             if (component.TransportEntities)
