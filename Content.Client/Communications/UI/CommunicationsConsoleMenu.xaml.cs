@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using System.Threading;
 using Content.Client.UserInterface.Controls;
+using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
@@ -84,10 +85,10 @@ namespace Content.Client.Communications.UI
         // If the current alert is unselectable, the only item in the alerts list will be
         // the current alert. Otherwise, it will be the list of alerts, with the current alert
         // selected.
-        public void UpdateAlertLevels(List<string>? alerts, string currentAlert)
+        public void UpdateAlertLevels(List<string>? alerts, List<Color>? colors, string currentAlert)
         {
             AlertLevelOptions.Clear();
-            AlertLevelLight.Text = currentAlert;
+
             if (UserSelectedAlertLevel.Length == 0)
             {
                 // This is the first time we've got the list of alert levels from the UI
@@ -112,8 +113,9 @@ namespace Content.Client.Communications.UI
                 // If the user has selected a new alert level when we get this message, try to
                 // remember their old selection. If not found, select the current station level.
                 var foundUserSelectedAlert = false;
-                foreach (var alert in alerts)
+                for(int i = 0; i < alerts.Count; i++)
                 {
+                    var alert = alerts[i];
                     var name = alert;
                     if (Loc.TryGetString($"alert-level-{alert}", out var locName))
                     {
@@ -127,9 +129,21 @@ namespace Content.Client.Communications.UI
                         AlertLevelOptions.Select(AlertLevelOptions.ItemCount - 1);
                         foundUserSelectedAlert = true;
                     }
-                    else if (alert == currentAlert && !foundUserSelectedAlert)
+
+                    if (alert == currentAlert)
                     {
-                        AlertLevelOptions.Select(AlertLevelOptions.ItemCount - 1);
+                        if (!foundUserSelectedAlert)
+                        {
+                            AlertLevelOptions.Select(AlertLevelOptions.ItemCount - 1);
+                        }
+
+                        if (colors != null)
+                        {
+                            AlertLevelLight.PanelOverride = new StyleBoxFlat
+                            {
+                                BackgroundColor = colors[i],
+                            };
+                        }
                     }
 
                 }

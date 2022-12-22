@@ -105,7 +105,7 @@ namespace Content.Client.Communications.UI
             {
                 //<todo.eoin Tidy this up
                 _menu.UpdateCountdown();
-                _menu.UpdateAlertLevels(commsState.AlertLevels, CurrentLevel);
+                _menu.UpdateAlertLevels(commsState.AlertLevels, commsState.AlertColors, CurrentLevel);
                 _menu.AlertLevelSelectable = AlertLevelSelectable;
                 _menu.EmergencyShuttleCallButton.Disabled = !(CanCall && !CountdownStarted);
                 _menu.EmergencyShuttleRecallButton.Disabled = !(CanCall && CountdownStarted);

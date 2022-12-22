@@ -15,16 +15,19 @@ namespace Content.Shared.Communications
         public readonly TimeSpan? ExpectedCountdownEnd;
         public readonly bool CountdownStarted;
         public List<string>? AlertLevels;
+        public List<Color>? AlertColors;
         public string CurrentAlert;
         public float CurrentAlertDelay;
 
-        public CommunicationsConsoleInterfaceState(bool canAnnounce, bool canCall, List<string>? alertLevels, string currentAlert, float currentAlertDelay, TimeSpan? expectedCountdownEnd = null)
+        public CommunicationsConsoleInterfaceState(bool canAnnounce, bool canCall, List<string>? alertLevels, List<Color>? alertColors,
+                string currentAlert, float currentAlertDelay, TimeSpan? expectedCountdownEnd = null)
         {
             CanAnnounce = canAnnounce;
             CanCall = canCall;
             ExpectedCountdownEnd = expectedCountdownEnd;
             CountdownStarted = expectedCountdownEnd != null;
             AlertLevels = alertLevels;
+            AlertColors = alertColors;
             CurrentAlert = currentAlert;
             CurrentAlertDelay = currentAlertDelay;
         }

@@ -129,6 +129,7 @@ namespace Content.Server.Communications
 
             var stationUid = _stationSystem.GetOwningStation(uid);
             List<string>? levels = null;
+            List<Color>? colors = null;
             string currentLevel = default!;
             float currentDelay = 0;
 
@@ -140,11 +141,13 @@ namespace Content.Server.Communications
                     if (alertComp.IsSelectable)
                     {
                         levels = new();
+                        colors = new();
                         foreach (var (id, detail) in alertComp.AlertLevels.Levels)
                         {
                             if (detail.Selectable)
                             {
                                 levels.Add(id);
+                                colors.Add(detail.Color);
                             }
                         }
                     }
@@ -158,7 +161,7 @@ namespace Content.Server.Communications
                 new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
-                    levels,
+                    levels, colors,
                     currentLevel,
                     currentDelay,
                     _roundEndSystem.ExpectedCountdownEnd

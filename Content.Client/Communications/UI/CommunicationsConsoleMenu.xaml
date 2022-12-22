@@ -1,5 +1,6 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     MinSize="600 400"
     Title="{Loc 'comms-console-menu-title'}">
     <BoxContainer Name="Contents">
@@ -22,8 +23,33 @@
                 <BoxContainer VerticalExpand="True" VerticalAlignment="Bottom">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
                         <GridContainer Columns="2">
+
+                            <!-- Row with alert level light and label -->
+                            <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="6 2 6 2">
+                                <PanelContainer Name="AlertLevelLight" MaxSize="72 24">
+                                    <PanelContainer.PanelOverride>
+                                        <gfx:StyleBoxFlat BackgroundColor="#000000"/>
+                                    </PanelContainer.PanelOverride>
+                                </PanelContainer>
+                            </PanelContainer>
                             <Label Text="{Loc 'comms-console-current-alert-label'}"  />
-                            <Label Name="AlertLevelLight" MinSize="100 24" />
+
+                            <!-- Row with a visual seperator line -->
+                            <PanelContainer>
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                </PanelContainer.PanelOverride>
+                                <ui:HSpacer Spacing="2"/>
+                            </PanelContainer>
+                            <!-- A little horizontal gap appears here. Can it be removed somehow?-->
+                            <PanelContainer>
+                                <PanelContainer.PanelOverride>
+                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                                </PanelContainer.PanelOverride>
+                                <ui:HSpacer Spacing="2"/>
+                            </PanelContainer>
+
+                            <!-- Row with controls to change alert level -->
                             <OptionButton Name="AlertLevelOptions" Access="Public"/>
                             <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
                         </GridContainer>
