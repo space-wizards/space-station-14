@@ -1,0 +1,8 @@
+- type: entity
+  id: FTLPoint
+  parent: MarkerBase
+  name: FTL point
+  components:
+    - type: FTLDestination
+    - type: Sprite
+      state: pink

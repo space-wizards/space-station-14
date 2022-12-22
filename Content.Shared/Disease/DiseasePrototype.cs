@@ -11,18 +11,12 @@ namespace Content.Shared.Disease
     [DataDefinition]
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
-        private string _name = string.Empty;
-
         [ViewVariables]
         [IdDataFieldAttribute]
         public string ID { get; } = default!;
 
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        public string Name { get; private set; } = string.Empty;
 
         [ParentDataFieldAttribute(typeof(AbstractPrototypeIdArraySerializer<DiseasePrototype>))]
         public string[]? Parents { get; private set; }

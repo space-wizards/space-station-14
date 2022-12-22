@@ -5,6 +5,7 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -75,9 +76,9 @@ namespace Content.Server.Tiles
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                    var gridXform = Transform(mapGrid.GridEntityId);
+                    var gridXform = Transform(mapGrid.Owner);
                     gridXform.WorldPosition = locationMap.Position;
-                    location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
+                    location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
                 }
             }
@@ -94,11 +95,11 @@ namespace Content.Server.Tiles
             return false;
         }
 
-        private void PlaceAt(IMapGrid mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
+        private void PlaceAt(MapGridComponent mapGrid, EntityCoordinates location, ushort tileId, SoundSpecifier placeSound, float offset = 0)
         {
             var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
             mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
-            _audio.Play(placeSound, Filter.Pvs(location), location, AudioHelpers.WithVariation(0.125f, _random));
+            _audio.Play(placeSound, Filter.Pvs(location), location, true, AudioHelpers.WithVariation(0.125f, _random));
         }
     }
 }

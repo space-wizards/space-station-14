@@ -1,5 +1,4 @@
 using Content.Shared.Atmos.Prototypes;
-using Content.Shared.GameTicking;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
@@ -21,8 +20,6 @@ namespace Content.Shared.Atmos.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-
             List<int> visibleGases = new();
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
@@ -34,8 +31,6 @@ namespace Content.Shared.Atmos.EntitySystems
 
             VisibleGasId = visibleGases.ToArray();
         }
-
-        public abstract void Reset(RoundRestartCleanupEvent ev);
 
         public static Vector2i GetGasChunkIndices(Vector2i indices)
         {
@@ -63,10 +58,16 @@ namespace Content.Shared.Atmos.EntitySystems
                 if (FireState != other.FireState)
                     return false;
 
-                for (var i = 0; i < Opacity.Length; i++)
+                if (Opacity?.Length != other.Opacity?.Length)
+                    return false;
+
+                if (Opacity != null && other.Opacity != null)
                 {
-                    if (Opacity[i] != other.Opacity[i])
-                        return false;
+                    for (var i = 0; i < Opacity.Length; i++)
+                    {
+                        if (Opacity[i] != other.Opacity[i])
+                            return false;
+                    }
                 }
 
                 return true;

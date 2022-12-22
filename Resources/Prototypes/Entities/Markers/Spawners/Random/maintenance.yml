@@ -7,7 +7,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Clothing/Eyes/Glasses/gar.rsi/icon-super.png
+        - sprite: Clothing/Eyes/Glasses/gar.rsi
+          state: icon-super
     - type: RandomSpawner
       rarePrototypes:
         - CigarGold
@@ -39,6 +40,7 @@
         - ClothingShoeSlippersDuck
         - ClothingUnderSocksBee
         - ClothingUnderSocksCoder
+        - ClothingHeadHatSquid
       chance: 0.6
       offset: 0.0
 
@@ -58,7 +60,7 @@
       rarePrototypes:
         - lanternextrabright
         - PowerCellHigh
-        - PowerCellMicroreactor
+        - NetProbeCartridge
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
@@ -86,7 +88,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Weapons/Melee/machete.rsi/icon.png
+        - sprite: Objects/Weapons/Melee/machete.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - Machete

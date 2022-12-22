@@ -10,4 +10,10 @@ public partial class InventorySystem
         InitializeRelay();
         InitializeSlots();
     }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        ShutdownSlots();
+    }
 }

@@ -16,6 +16,7 @@ using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Exceptions;
@@ -23,6 +24,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -236,6 +238,10 @@ public static class PoolManager
         {
             options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
         }
+
+        // This breaks some tests.
+        // TODO: Figure out which tests this breaks.
+        options.CVarOverrides[CVars.NetBufferSize.Name] = "0";
     }
 
     /// <summary>
@@ -531,7 +537,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             var mapManager = IoCManager.Resolve<IMapManager>();
             mapData.MapId = mapManager.CreateMap();
             mapData.MapGrid = mapManager.CreateGrid(mapData.MapId);
-            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.GridEntityId, 0, 0);
+            mapData.GridCoords = new EntityCoordinates(mapData.MapGrid.Owner, 0, 0);
             var tileDefinitionManager = IoCManager.Resolve<ITileDefinitionManager>();
             var plating = tileDefinitionManager["Plating"];
             var platingTile = new Tile(plating.TileId);
@@ -752,7 +758,7 @@ public sealed class PoolSettings
 public sealed class TestMapData
 {
     public MapId MapId { get; set; }
-    public IMapGrid MapGrid { get; set; }
+    public MapGridComponent MapGrid { get; set; }
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }

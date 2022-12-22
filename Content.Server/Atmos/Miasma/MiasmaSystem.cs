@@ -179,8 +179,12 @@ namespace Content.Server.Atmos.Miasma
         /// </summary>
         private bool IsRotting(PerishableComponent perishable, MetaDataComponent? metadata = null)
         {
+            if (perishable.TimeOfDeath == TimeSpan.Zero)
+                return false;
+
             if (_timing.CurTime >= perishable.TimeOfDeath + perishable.RotAfter + _metaDataSystem.GetPauseTime(perishable.Owner, metadata))
                 return true;
+
             return false;
         }
 

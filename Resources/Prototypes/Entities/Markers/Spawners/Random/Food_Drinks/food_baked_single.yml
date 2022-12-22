@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Food/Baked/pie.rsi/plain-slice.png 
+      - sprite: Objects/Consumable/Food/Baked/pie.rsi
+        state: plain-slice
   - type: RandomSpawner
     prototypes:
       - FoodBreadPlainSlice

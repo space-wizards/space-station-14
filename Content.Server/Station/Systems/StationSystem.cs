@@ -10,6 +10,7 @@ using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -100,7 +101,7 @@ public sealed class StationSystem : EntitySystem
     {
         if (e.NewStatus == SessionStatus.Connected)
         {
-            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), Filter.SinglePlayer(e.Session));
+            RaiseNetworkEvent(new StationsUpdatedEvent(_stations), e.Session);
         }
     }
 
@@ -243,10 +244,10 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.Grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
                 continue;
 
-            largestBounds = grid.Grid.LocalAABB;
+            largestBounds = grid.LocalAABB;
             largestGrid = gridUid;
         }
 
@@ -397,11 +398,11 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(gridComponent.Owner);
+        stationData.Grids.Add(((Component) gridComponent).Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
+        RaiseLocalEvent(station, new StationGridAddedEvent(((Component) gridComponent).Owner, false), true);
 
-        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
+        _sawmill.Info($"Adding grid {mapGrid}:{((Component) gridComponent).Owner} to station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -420,10 +421,10 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(gridComponent.Owner);
+        stationData.Grids.Remove(((Component) gridComponent).Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
-        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
+        RaiseLocalEvent(station, new StationGridRemovedEvent(((Component) gridComponent).Owner), true);
+        _sawmill.Info($"Removing grid {mapGrid}:{((Component) gridComponent).Owner} from station {Name(station)} ({station})");
     }
 
     /// <summary>

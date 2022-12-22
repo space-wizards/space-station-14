@@ -20,7 +20,8 @@
     sprite: Markers/jobs.rsi
     layers:
       - state: green
-      - texture: Mobs/Ghosts/ghost_human.rsi/icon.png
+      - sprite: Mobs/Ghosts/ghost_human.rsi
+        state: icon
     state: observer
   - type: SpawnPoint
     spawn_type: Observer
@@ -431,7 +432,7 @@
     layers:
       - state: green
       - state: ertleader
-      
+
 - type: entity
   id: SpawnPointERTEngineer
   parent: SpawnPointJobBase
@@ -443,7 +444,7 @@
     layers:
       - state: green
       - state: ertengineer
-      
+
 - type: entity
   id: SpawnPointERTMedical
   parent: SpawnPointJobBase
@@ -455,7 +456,7 @@
     layers:
       - state: green
       - state: ertmedical
-      
+
 - type: entity
   id: SpawnPointERTSecurity
   parent: SpawnPointJobBase
@@ -467,7 +468,7 @@
     layers:
       - state: green
       - state: ertsecurity
-      
+
 - type: entity
   id: SpawnPointERTJanitor
   parent: SpawnPointJobBase

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
@@ -8,6 +9,7 @@ using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -115,12 +117,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return splitSol;
     }
 
-    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false)
+    public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
-            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume);
+            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
         }
 
         UpdateAppearance(uid, solutionHolder);
@@ -331,6 +333,36 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         return reagentQuantity;
+    }
+
+    public bool TryGetMixableSolution(EntityUid uid,
+        [NotNullWhen(true)] out Solution? solution,
+        SolutionContainerManagerComponent? solutionsMgr = null)
+    {
+
+        if (!Resolve(uid, ref solutionsMgr, false))
+        {
+            solution = null;
+            return false;
+        }
+
+        var getMixableSolutionAttempt = new GetMixableSolutionAttemptEvent(uid);
+        RaiseLocalEvent(uid, ref getMixableSolutionAttempt);
+        if(getMixableSolutionAttempt.MixedSolution != null)
+        {
+            solution = getMixableSolutionAttempt.MixedSolution;
+            return true;
+        }
+
+        var tryGetSolution = solutionsMgr.Solutions.FirstOrNull(x => x.Value.CanMix);
+        if (tryGetSolution.HasValue)
+        {
+            solution = tryGetSolution.Value.Value;
+            return true;
+        }
+
+        solution = null;
+        return false;
     }
 
 

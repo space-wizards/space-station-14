@@ -19,6 +19,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 
 namespace Content.Server.GameTicking
@@ -135,7 +136,7 @@ namespace Content.Server.GameTicking
         /// <param name="loadOptions">Map loading options, includes offset.</param>
         /// <param name="stationName">Name to assign to the loaded station.</param>
         /// <returns>All loaded entities and grids.</returns>
-        public (IReadOnlyList<EntityUid> Entities, IReadOnlyList<EntityUid> Grids) LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
+        public IReadOnlyList<EntityUid> LoadGameMap(GameMapPrototype map, MapId targetMapId, MapLoadOptions? loadOptions, string? stationName = null)
         {
             // Okay I specifically didn't set LoadMap here because this is typically called onto a new map.
             // whereas the command can also be used on an existing map.
@@ -144,12 +145,12 @@ namespace Content.Server.GameTicking
             var ev = new PreGameMapLoad(targetMapId, map, loadOpts);
             RaiseLocalEvent(ev);
 
-            var (entities, gridIds) = _mapLoader.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
+            var gridIds = _map.LoadMap(targetMapId, ev.GameMap.MapPath.ToString(), ev.Options);
 
-            var gridUids = gridIds.Select(g => g).ToList();
-            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, entities, gridUids, stationName));
+            var gridUids = gridIds.ToList();
+            RaiseLocalEvent(new PostGameMapLoad(map, targetMapId, gridUids, stationName));
 
-            return (entities, gridUids);
+            return gridUids;
         }
 
         public void StartRound(bool force = false)
@@ -295,6 +296,9 @@ namespace Content.Server.GameTicking
 
         public void ShowRoundEndScoreboard(string text = "")
         {
+            // Log end of round
+            _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
+
             //Tell every client the round has ended.
             var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
 
@@ -600,15 +604,13 @@ namespace Content.Server.GameTicking
     {
         public readonly GameMapPrototype GameMap;
         public readonly MapId Map;
-        public readonly IReadOnlyList<EntityUid> Entities;
         public readonly IReadOnlyList<EntityUid> Grids;
         public readonly string? StationName;
 
-        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> entities, IReadOnlyList<EntityUid> grids, string? stationName)
+        public PostGameMapLoad(GameMapPrototype gameMap, MapId map, IReadOnlyList<EntityUid> grids, string? stationName)
         {
             GameMap = gameMap;
             Map = map;
-            Entities = entities;
             Grids = grids;
             StationName = stationName;
         }

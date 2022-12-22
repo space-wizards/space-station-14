@@ -159,6 +159,7 @@
     intensitySlope: 2
     totalIntensity: 100
   - type: StationInfiniteBatteryTarget
+  - type: WallMount
 
 # Substations in use
 
@@ -213,3 +214,4 @@
   - type: Construction
     graph: WallmountSubstation
     node: frame
+  - type: WallMount

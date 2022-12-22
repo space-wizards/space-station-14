@@ -25,7 +25,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTLeaderGearEVA
@@ -42,7 +41,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
-    pocket2:
 
 # Engineer
 - type: job
@@ -71,7 +69,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTEngineerGearEVA
@@ -116,7 +113,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTSecurityGearEVA
@@ -206,7 +202,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTJanitorGearEVA
