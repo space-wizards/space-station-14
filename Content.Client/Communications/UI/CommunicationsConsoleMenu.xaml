@@ -23,8 +23,15 @@
                 <Control MinSize="0 10" HorizontalExpand="True" />
                 <Button Name="AnnounceButton" Access="Public"
                     Text="{Loc 'comms-console-menu-announcement-button'}" />
-                <OptionButton Name="AlertLevelButton" Access="Public"/>
-                <Control MinSize="0 10" HorizontalExpand="True" />
+
+                <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
+                    <GridContainer Columns="2">
+                        <Label Text="{Loc 'comms-console-current-alert-label'}"  />
+                        <Label Name="AlertLevelLight" MinSize="100 24" />
+                        <OptionButton Name="AlertLevelOptions" Access="Public"/>
+                        <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
+                    </GridContainer>
+                </PanelContainer>
 
                 <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
 

@@ -6,6 +6,8 @@ comms-console-menu-call-shuttle = Call emergency shuttle
 comms-console-menu-recall-shuttle = Recall emergency shuttle
 comms-shuttle-incoming-label = Shuttle en route
 comms-shuttle-arriving-duration-label = Shuttle arriving in:
+comms-console-menu-set-alert-button-label = Set station status
+comms-console-current-alert-label = Current station level
 
 # Popup
 comms-console-permission-denied = Permission denied

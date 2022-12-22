@@ -17,6 +17,16 @@ namespace Content.Client.Communications.UI
     {
         private CommunicationsConsoleBoundUserInterface Owner { get; set; }
         private readonly CancellationTokenSource _timerCancelTokenSource = new();
+        private string UserSelectedAlertLevel = "";
+        private string CurrentStationAlertLevel = "";
+        private bool _alertLevelSelectable = true;
+        public bool AlertLevelSelectable { get { return _alertLevelSelectable; }
+            set
+            {
+                _alertLevelSelectable = value;
+                CheckSetLevelButton();
+            }
+        }
 
         public CommunicationsConsoleMenu(CommunicationsConsoleBoundUserInterface owner)
         {
@@ -40,15 +50,26 @@ namespace Content.Client.Communications.UI
 
             AnnounceButton.Disabled = !owner.CanAnnounce;
 
-            AlertLevelButton.OnItemSelected += args =>
+            AlertLevelOptions.OnItemSelected += args =>
             {
-                var metadata = AlertLevelButton.GetItemMetadata(args.Id);
+                var metadata = AlertLevelOptions.GetItemMetadata(args.Id);
+                if (metadata != null && metadata is string cast)
+                {
+                    UserSelectedAlertLevel = cast;
+                }
+                AlertLevelOptions.Select(args.Id);
+                CheckSetLevelButton();
+            };
+
+            SetAlertLevelButton.OnPressed += args =>
+            {
+                var metadata = AlertLevelOptions.GetItemMetadata(AlertLevelOptions.SelectedId);
                 if (metadata != null && metadata is string cast)
                 {
                     Owner.AlertLevelSelected(cast);
                 }
             };
-            AlertLevelButton.Disabled = !owner.AlertLevelSelectable;
+            SetAlertLevelButton.Disabled = !owner.AlertLevelSelectable;
 
             EmergencyShuttleCallButton.OnPressed += (_) => Owner.EmergencyShuttleButtonPressed();
             EmergencyShuttleCallButton.Disabled = !(owner.CanCall && !owner.CountdownStarted);
@@ -65,7 +86,16 @@ namespace Content.Client.Communications.UI
         // selected.
         public void UpdateAlertLevels(List<string>? alerts, string currentAlert)
         {
-            AlertLevelButton.Clear();
+            AlertLevelOptions.Clear();
+            AlertLevelLight.Text = currentAlert;
+            if (UserSelectedAlertLevel.Length == 0)
+            {
+                // This is the first time we've got the list of alert levels from the UI
+                // User can't have made a change here, so we can initialize the user-selected
+                // level to match the currentLevel
+                UserSelectedAlertLevel = currentAlert;
+            }
+            CurrentStationAlertLevel = currentAlert;
 
             if (alerts == null)
             {
@@ -74,11 +104,14 @@ namespace Content.Client.Communications.UI
                 {
                     name = locName;
                 }
-                AlertLevelButton.AddItem(name);
-                AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, currentAlert);
+                AlertLevelOptions.AddItem(name);
+                AlertLevelOptions.SetItemMetadata(AlertLevelOptions.ItemCount - 1, currentAlert);
             }
             else
             {
+                // If the user has selected a new alert level when we get this message, try to
+                // remember their old selection. If not found, select the current station level.
+                var foundUserSelectedAlert = false;
                 foreach (var alert in alerts)
                 {
                     var name = alert;
@@ -86,14 +119,29 @@ namespace Content.Client.Communications.UI
                     {
                         name = locName;
                     }
-                    AlertLevelButton.AddItem(name);
-                    AlertLevelButton.SetItemMetadata(AlertLevelButton.ItemCount - 1, alert);
-                    if (alert == currentAlert)
+                    AlertLevelOptions.AddItem(name);
+                    AlertLevelOptions.SetItemMetadata(AlertLevelOptions.ItemCount - 1, alert);
+
+                    if (alert == UserSelectedAlertLevel)
                     {
-                        AlertLevelButton.Select(AlertLevelButton.ItemCount - 1);
+                        AlertLevelOptions.Select(AlertLevelOptions.ItemCount - 1);
+                        foundUserSelectedAlert = true;
                     }
+                    else if (alert == currentAlert && !foundUserSelectedAlert)
+                    {
+                        AlertLevelOptions.Select(AlertLevelOptions.ItemCount - 1);
+                    }
+
                 }
             }
+
+            CheckSetLevelButton();
+        }
+
+        private void CheckSetLevelButton()
+        {
+            bool canChange = AlertLevelSelectable && UserSelectedAlertLevel != CurrentStationAlertLevel;
+            SetAlertLevelButton.Disabled = !canChange;
         }
 
         public void UpdateCountdown()
