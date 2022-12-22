@@ -1,4 +1,5 @@
-﻿using Content.Shared.Communications;
+using System;
+using Content.Shared.Communications;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 
@@ -70,7 +71,10 @@ namespace Content.Client.Communications.UI
                 newlines++;
             }
 
-            SendMessage(new CommunicationsConsoleAnnounceMessage(new string(msg)));
+            if (msg.Length > 0)
+            {
+                SendMessage(new CommunicationsConsoleAnnounceMessage(new string(msg)));
+            }
         }
 
         public void CallShuttle()
