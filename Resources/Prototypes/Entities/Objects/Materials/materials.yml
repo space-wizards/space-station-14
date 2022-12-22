@@ -210,22 +210,13 @@
   - type: Stack
     count: 1
 
+# Materials that don't stack go below here
+
 - type: entity
   parent: MaterialBase
   id: MaterialExplosivePowder
   name: explosive powder
-  suffix: Full
   description: A powder made of flammable chemicals.
   components:
   - type: Sprite
     state: ash
-  - type: Stack
-    stackType: ExplosivePowder
-
-- type: entity
-  parent: MaterialExplosivePowder
-  id: MaterialExplosivePowder1
-  suffix: Single
-  components:
-  - type: Stack
-    count: 1

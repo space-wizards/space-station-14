@@ -39,10 +39,3 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
   maxCount: 30
-
-- type: stack
-  id: ExplosivePowder
-  name: explosive powder
-  icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: ash }
-  spawn: MaterialExplosivePowder
-  maxCount: 30

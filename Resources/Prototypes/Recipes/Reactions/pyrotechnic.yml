@@ -75,4 +75,4 @@
       catalyst: true
   effects:
     - !type:CreateEntityReactionEffect
-      entity: MaterialExplosivePowder1
+      entity: MaterialExplosivePowder
