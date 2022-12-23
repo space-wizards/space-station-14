@@ -156,7 +156,7 @@ public abstract class ReactionSpecification : IComparable<ReactionSpecification>
     /// <summary>
     /// The set of effects that this reaction has when it begins to occur.
     /// </summary>
-    [DataField("startEffects")]
+    [DataField("startEffects", serverOnly: true)]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
     public List<ReagentEffect> StartEffects = new();
@@ -164,7 +164,7 @@ public abstract class ReactionSpecification : IComparable<ReactionSpecification>
     /// <summary>
     /// The set of effects that this reaction has periodically as is occurs.
     /// </summary>
-    [DataField("stepEffects")]
+    [DataField("stepEffects", serverOnly: true)]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
     public List<ReagentEffect> StepEffects = new();
@@ -172,7 +172,7 @@ public abstract class ReactionSpecification : IComparable<ReactionSpecification>
     /// <summary>
     /// The set of effects that this reaction has when it ceases to occur.
     /// </summary>
-    [DataField("stopEffects")]
+    [DataField("stopEffects", serverOnly: true)]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
     public List<ReagentEffect> StopEffects = new();
