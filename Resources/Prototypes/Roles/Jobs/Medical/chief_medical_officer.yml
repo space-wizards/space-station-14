@@ -3,6 +3,7 @@
 - type: job
   id: ChiefMedicalOfficer
   name: job-name-cmo
+  description: job-description-cmo
   playTimeTracker: JobChiefMedicalOfficer
   requirements:
     - !type:DepartmentTimeRequirement
