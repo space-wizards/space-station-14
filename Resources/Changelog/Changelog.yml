@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: New fashionable clothes for lawyers., type: Add}
-  id: 2298
-  time: '2022-09-14T04:47:08.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
@@ -2939,3 +2934,8 @@ Entries:
   - {message: Retractors are now properly printable again., type: Fix}
   id: 2797
   time: '2022-12-21T20:47:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
+  id: 2798
+  time: '2022-12-22T02:43:46.0000000+00:00'
