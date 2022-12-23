@@ -63,8 +63,8 @@
                             VerticalAlignment="Bottom"
                             Margin="12 24 12 12">
                             <PanelContainer StyleClasses="AngleRect">
-                                <BoxContainer Orientation="Vertical">
-                                    <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+                                    <ui:EmbossedLabel Text="{Loc 'comms-console-menu-call-shuttle'}" />
                                     <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
                                         Margin="12" SetSize="80 80"
                                         StyleClasses="TemptingRedButton" />
@@ -107,8 +107,8 @@
                                 VerticalExpand="True"
                                 Margin="12 24 12 12">
                                 <PanelContainer StyleClasses="AngleRect">
-                                    <BoxContainer Orientation="Vertical">
-                                        <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                    <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+                                        <ui:EmbossedLabel Text="{Loc 'comms-console-menu-recall-shuttle'}" />
                                         <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                             Margin="12" SetSize="80 80"
                                             StyleClasses="TemptingRedButton" />

@@ -443,7 +443,7 @@ namespace Content.Client.Stylesheets
             nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
 
             // Stripe background
-            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png"); //<todo.eoin Fix this!
+            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png");
             var stripeBack = new StyleBoxTexture
             {
                 Texture = stripeBackTex,
@@ -456,6 +456,10 @@ namespace Content.Client.Stylesheets
                 Modulate = ConcerningOrangeFore
             };
 
+            var perforatedLabelBackground  = new StyleBoxFlat {
+                BackgroundColor = Color.FromHex("#3969ef"),
+                BorderThickness = new(0, 0, 0, 0)
+            };
 
             // Slider
             var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
@@ -1525,6 +1529,24 @@ namespace Content.Client.Stylesheets
                         .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
                 Element<TextureButton>().Class(StyleClassLockableButtonRed).Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
+
+                // Perforated label --
+                Element<TextureButton>().Class("PerforatedLabelBegin")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/perforated_edge.svg.192dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#3969ef")),
+
+                Element<StripeBack>().Class("PerforatedLabel")
+                    .Prop(StripeBack.StylePropertyBackground, perforatedLabelBackground),
+
+                Element<Label>().Class("PerforatedLabel")
+                    .Prop("font", resCache.GetFont("/Fonts/Mono.ttf", 16))
+                    .Prop("font-color", Color.White),
+
+
+                Element<TextureButton>().Class("PerforatedLabelEnd")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/perforated_edge_flipped.svg.192dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#3969ef")),
+                // ---
 
             }).ToList());
         }
