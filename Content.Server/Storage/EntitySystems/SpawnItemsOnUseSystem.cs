@@ -35,7 +35,7 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var proto in spawnEntities)
             {
                 entityToPlaceInHands = Spawn(proto, coords);
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(component.Owner)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
+                _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(component.Owner)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 
             if (component.Sound != null)
