@@ -6,7 +6,7 @@
         <!-- Surely there is a way to add a texture to container? -->
         <TextureButton StyleClasses="PerforatedLabelBegin" VerticalAlignment="Center"/>
 
-        <Label Name="_Label" StyleClasses="PerforatedLabel" />
+        <Control Access="Public" Name="ContentsContainer" VerticalExpand="true" />
 
         <!-- Can't figure out how to apply a negative scale to an image, so just made a flipped version -->
         <TextureButton StyleClasses="PerforatedLabelEnd" VerticalAlignment="Center" />

@@ -2,128 +2,121 @@
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'comms-console-menu-title'}" Resizable="False">
-    <BoxContainer Name="Contents" Orientation="Vertical">
-        <!-- Top row contains a heading with the console name -->
-        <!--todo.eoin Not sure I like this -->
-        <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12">
-            <ui:EmbossedLabel Name="ConsoleName" Access="Public" VerticalAlignment="Center" />
+    <BoxContainer
+        Orientation="Horizontal"
+        HorizontalExpand="True"
+        VerticalExpand="True"
+        MinHeight="450">
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6">
+            <TextEdit Name="MessageInput"
+                PlaceHolder="{Loc 'comms-console-menu-announcement-placeholder'}"
+                HorizontalExpand="True"
+                SizeFlagsStretchRatio="1" />
+            <Control MinSize="0 10" HorizontalExpand="True" />
+            <Button Name="AnnounceButton" Access="Public"
+                Text="{Loc 'comms-console-menu-announcement-button'}" />
+
+            <BoxContainer VerticalExpand="True" VerticalAlignment="Bottom">
+                <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
+                    <GridContainer Columns="2">
+                        <!-- Row with alert level light and label -->
+                        <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="24 6" Scale="2 0.5"
+                            TexturePath="/Textures/Interface/Nano/rounded_button.svg.96dpi.png"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                        <Label Text="{Loc 'comms-console-current-alert-label'}"  />
+
+                        <!-- Row with a visual seperator line -->
+                        <PanelContainer>
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                            </PanelContainer.PanelOverride>
+                            <ui:HSpacer Spacing="2"/>
+                        </PanelContainer>
+                        <!-- A little horizontal gap appears here. Can it be removed somehow?-->
+                        <PanelContainer>
+                            <PanelContainer.PanelOverride>
+                                <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
+                            </PanelContainer.PanelOverride>
+                            <ui:HSpacer Spacing="2"/>
+                        </PanelContainer>
+
+                        <!-- Row with controls to change alert level -->
+                        <OptionButton Name="AlertLevelOptions" Access="Public"/>
+                        <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
+                    </GridContainer>
+                </PanelContainer>
+            </BoxContainer>
         </BoxContainer>
 
-        <BoxContainer
-            Orientation="Horizontal"
-            HorizontalExpand="True"
-            VerticalExpand="True"
-            MinHeight="450">
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6">
-                <TextEdit Name="MessageInput"
-                    HorizontalExpand="True"
-                    VerticalExpand="True"
-                    SizeFlagsStretchRatio="1"
-                    Margin="0 0 0 5"
-                    MinHeight="100"
-                    PlaceHolder="{Loc 'comms-console-menu-announcement-placeholder'}" />
-                <Control MinSize="0 10" HorizontalExpand="True" />
-                <Button Name="AnnounceButton" Access="Public"
-                    Text="{Loc 'comms-console-menu-announcement-button'}" />
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="6">
 
-                <BoxContainer VerticalExpand="True" VerticalAlignment="Bottom">
-                    <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
-                        <GridContainer Columns="2">
-                            <!-- Row with alert level light and label -->
-                            <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="24 6" Scale="2 0.5"
-                                TexturePath="/Textures/Interface/Nano/rounded_button.svg.96dpi.png"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                            <Label Text="{Loc 'comms-console-current-alert-label'}"  />
-
-                            <!-- Row with a visual seperator line -->
-                            <PanelContainer>
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                                </PanelContainer.PanelOverride>
-                                <ui:HSpacer Spacing="2"/>
-                            </PanelContainer>
-                            <!-- A little horizontal gap appears here. Can it be removed somehow?-->
-                            <PanelContainer>
-                                <PanelContainer.PanelOverride>
-                                    <gfx:StyleBoxFlat BackgroundColor="#A88B5E" />
-                                </PanelContainer.PanelOverride>
-                                <ui:HSpacer Spacing="2"/>
-                            </PanelContainer>
-
-                            <!-- Row with controls to change alert level -->
-                            <OptionButton Name="AlertLevelOptions" Access="Public"/>
-                            <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
-                        </GridContainer>
-                    </PanelContainer>
-                </BoxContainer>
+            <!-- Call emergency shuttle button -->
+            <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="0 0 6 0">
+                <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning">
+                    <BoxContainer Orientation="Vertical"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Margin="12 24 12 12">
+                        <PanelContainer StyleClasses="AngleRect">
+                            <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
+                                <ui:EmbossedLabel Margin="6 12 6 0" VerticalAlignment="Bottom">
+                                    <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                </ui:EmbossedLabel>
+                                <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
+                                    Margin="12" SetSize="80 80"
+                                    StyleClasses="TemptingRedButton" />
+                            </BoxContainer>
+                        </PanelContainer>
+                    </BoxContainer>
+                </ui:StripeBack>
             </BoxContainer>
 
-            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="6">
+            <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="6 0 0 0">
+                <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning">
+                    <BoxContainer Orientation="Vertical">
+                        <!-- This contains the shuttle state indicators -->
+                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="12 12 12 6">
+                            <PanelContainer StyleClasses="AngleRect">
+                                <BoxContainer Orientation="Vertical">
+                                    <!-- "Shuttle is incoming" light in here -->
+                                    <BoxContainer Orientation="Horizontal">
+                                        <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 6 0"/>
+                                        <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
+                                    </BoxContainer>
 
-                <!-- Call emergency shuttle button -->
-                <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="0 0 6 0">
-                    <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning">
+                                    <!-- Shuttle "arriving in" label here -->
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
+                                        <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+                                            <PanelContainer StyleClasses="PanelBackgroundBaseDark">
+                                                <Label Name="_countdownLabel" StyleClasses="LabelLCDBig"/>
+                                            </PanelContainer>
+                                        </BoxContainer>
+                                    </BoxContainer>
+                                </BoxContainer>
+                            </PanelContainer>
+                        </BoxContainer>
+
+                        <!-- Button to recall shuttle -->
                         <BoxContainer Orientation="Vertical"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Bottom"
+                            VerticalExpand="True"
                             Margin="12 24 12 12">
                             <PanelContainer StyleClasses="AngleRect">
-                                <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
-                                    <ui:EmbossedLabel Text="{Loc 'comms-console-menu-call-shuttle'}" Margin="6 12 6 0" VerticalAlignment="Bottom"/>
-                                    <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
+                                <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
+                                    <ui:EmbossedLabel Margin="6 12 6 0">
+                                        <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                    </ui:EmbossedLabel>
+                                    <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                         Margin="12" SetSize="80 80"
                                         StyleClasses="TemptingRedButton" />
                                 </BoxContainer>
                             </PanelContainer>
                         </BoxContainer>
-                    </ui:StripeBack>
-                </BoxContainer>
-
-                <BoxContainer HorizontalExpand="False" HorizontalAlignment="Center" Margin="6 0 0 0">
-                    <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning">
-                        <BoxContainer Orientation="Vertical">
-                            <!-- This contains the shuttle state indicators -->
-                            <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="12 12 12 6">
-                                <PanelContainer StyleClasses="AngleRect">
-                                    <BoxContainer Orientation="Vertical">
-                                        <!-- "Shuttle is incoming" light in here -->
-                                        <BoxContainer Orientation="Horizontal">
-                                            <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 6 0"/>
-                                            <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
-                                        </BoxContainer>
-
-                                        <!-- Shuttle "arriving in" label here -->
-                                        <BoxContainer Orientation="Horizontal">
-                                            <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
-                                            <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
-                                                <PanelContainer StyleClasses="PanelBackgroundBaseDark">
-                                                    <Label Name="_countdownLabel" StyleClasses="LabelLCDBig"/>
-                                                </PanelContainer>
-                                            </BoxContainer>
-                                        </BoxContainer>
-                                    </BoxContainer>
-                                </PanelContainer>
-                            </BoxContainer>
-
-                            <!-- Button to recall shuttle -->
-                            <BoxContainer Orientation="Vertical"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Bottom"
-                                VerticalExpand="True"
-                                Margin="12 24 12 12">
-                                <PanelContainer StyleClasses="AngleRect">
-                                    <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                                        <ui:EmbossedLabel Text="{Loc 'comms-console-menu-recall-shuttle'}" Margin="6 12 6 0"/>
-                                        <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
-                                            Margin="12" SetSize="80 80"
-                                            StyleClasses="TemptingRedButton" />
-                                    </BoxContainer>
-                                </PanelContainer>
-                            </BoxContainer>
-                        </BoxContainer>
-                    </ui:StripeBack>
-                </BoxContainer>
+                    </BoxContainer>
+                </ui:StripeBack>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

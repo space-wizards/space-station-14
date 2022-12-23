@@ -104,7 +104,6 @@ namespace Content.Client.Communications.UI
             if (_menu != null)
             {
                 //<todo.eoin Tidy this up
-                _menu.ConsoleName.Text = Loc.GetString(commsState.CommsConsoleName);
                 _menu.UpdateCountdown();
                 _menu.UpdateAlertLevels(commsState.AlertLevels, commsState.AlertColors, CurrentLevel);
                 _menu.AlertLevelSelectable = AlertLevelSelectable;

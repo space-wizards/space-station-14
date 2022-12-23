@@ -12,12 +12,7 @@ namespace Content.Client.UserInterface.Controls
         public EmbossedLabel()
         {
             RobustXamlLoader.Load(this);
-        }
-
-        public string? Text
-        {
-            get => _Label.Text;
-            set => _Label.Text = value;
+            XamlChildren = ContentsContainer.Children;
         }
     }
 }
