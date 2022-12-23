@@ -1,22 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: More detailed informations are now displayed on the cargo order form,
-    type: Add}
-  id: 2296
-  time: '2022-09-14T03:20:39.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has removed the wheels from vending machines. They should
-      no longer be able to move, if your station suffers from a case of the sentient
-      virus plaguing our networks.', type: Fix}
-  id: 2297
-  time: '2022-09-14T03:46:50.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: New fashionable clothes for lawyers., type: Add}
-  id: 2298
-  time: '2022-09-14T04:47:08.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
@@ -2941,3 +2923,19 @@ Entries:
   - {message: Added bag for carrying books and cargo order to get more of them, type: Add}
   id: 2795
   time: '2022-12-21T14:53:11.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fix various entity visuals not properly updating, type: Fix}
+  - {message: Fixed a bug causing physics to behave weirdly on moving grids., type: Fix}
+  id: 2796
+  time: '2022-12-21T19:29:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Retractors are now properly printable again., type: Fix}
+  id: 2797
+  time: '2022-12-21T20:47:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
+  id: 2798
+  time: '2022-12-22T02:43:46.0000000+00:00'
