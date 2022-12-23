@@ -1,4 +1,4 @@
-advertisement-chefvend-1 = По крайне мере 60 процентов наших яиц не разбиты, гарантируем! 
+advertisement-chefvend-1 = По крайне мере 60 процентов наших яиц не разбиты, гарантируем!
 advertisement-chefvend-2 = Это рис, детка.
 advertisement-chefvend-3 = Шлёпни немного масла на это!
 advertisement-chefvend-4 = Ты стоишь своей соли? Мы да.
