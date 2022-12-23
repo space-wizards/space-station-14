@@ -60,9 +60,9 @@
                         Margin="12 24 12 12">
                         <PanelContainer StyleClasses="AngleRect">
                             <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
-                                <ui:EmbossedLabel Margin="6 12 6 0" VerticalAlignment="Bottom">
+                                <ui:BracketedContainer Margin="6 12 6 0" VerticalAlignment="Bottom">
                                     <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
-                                </ui:EmbossedLabel>
+                                </ui:BracketedContainer>
                                 <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
                                     Margin="12" SetSize="80 80"
                                     StyleClasses="TemptingRedButton" />
@@ -76,27 +76,31 @@
                 <ui:StripeBack HasTopEdge="False" HasBottomEdge="False" StyleClasses="StripeWarning">
                     <BoxContainer Orientation="Vertical">
                         <!-- This contains the shuttle state indicators -->
-                        <BoxContainer Orientation="Vertical" HorizontalExpand="True" Margin="12 12 12 6">
-                            <PanelContainer StyleClasses="AngleRect">
-                                <BoxContainer Orientation="Vertical">
-                                    <!-- "Shuttle is incoming" light in here -->
-                                    <BoxContainer Orientation="Horizontal">
-                                        <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 6 0"/>
+                        <PanelContainer StyleClasses="AngleRect" Margin="12 12 12 6">
+                            <BoxContainer Orientation="Vertical">
+                                <!-- "Shuttle is incoming" light in here -->
+                                <ui:BracketedContainer HorizontalExpand="True">
+                                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                                         <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
-                                    </BoxContainer>
-
-                                    <!-- Shuttle "arriving in" label here -->
-                                    <BoxContainer Orientation="Horizontal">
-                                        <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
                                         <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right">
+                                            <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 4 0"/>
+                                        </BoxContainer>
+                                    </BoxContainer>
+                                </ui:BracketedContainer>
+
+                                <!-- Shuttle "arriving in" label here -->
+                                <ui:BracketedContainer HorizontalExpand="True">
+                                    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                                        <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
+                                        <BoxContainer HorizontalExpand="True" HorizontalAlignment="Right" Margin="0 0 4 0">
                                             <PanelContainer StyleClasses="PanelBackgroundBaseDark">
                                                 <Label Name="_countdownLabel" StyleClasses="LabelLCDBig"/>
                                             </PanelContainer>
                                         </BoxContainer>
                                     </BoxContainer>
-                                </BoxContainer>
-                            </PanelContainer>
-                        </BoxContainer>
+                                </ui:BracketedContainer>
+                            </BoxContainer>
+                        </PanelContainer>
 
                         <!-- Button to recall shuttle -->
                         <BoxContainer Orientation="Vertical"
@@ -106,9 +110,9 @@
                             Margin="12 24 12 12">
                             <PanelContainer StyleClasses="AngleRect">
                                 <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                                    <ui:EmbossedLabel Margin="6 12 6 0">
+                                    <ui:BracketedContainer Margin="6 12 6 0">
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
-                                    </ui:EmbossedLabel>
+                                    </ui:BracketedContainer>
                                     <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                         Margin="12" SetSize="80 80"
                                         StyleClasses="TemptingRedButton" />

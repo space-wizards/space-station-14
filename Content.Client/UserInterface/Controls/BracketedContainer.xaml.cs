@@ -7,9 +7,9 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.UserInterface.Controls
 {
     [GenerateTypedNameReferences]
-    public partial class EmbossedLabel : Container
+    public partial class BracketedContainer : Container
     {
-        public EmbossedLabel()
+        public BracketedContainer()
         {
             RobustXamlLoader.Load(this);
             XamlChildren = ContentsContainer.Children;

@@ -1,14 +1,14 @@
-<controls:EmbossedLabel xmlns="https://spacestation14.io"
+<controls:BracketedContainer xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
 
     <BoxContainer Orientation="Horizontal" VerticalAlignment="Center">
         <!-- Surely there is a way to add a texture to container? -->
-        <TextureButton StyleClasses="PerforatedLabelBegin" VerticalAlignment="Center"/>
+        <TextureButton StyleClasses="BracketedContainerBegin" VerticalExpand="True"/>
 
-        <Control Access="Public" Name="ContentsContainer" VerticalExpand="true" />
+        <Control Access="Public" Name="ContentsContainer" HorizontalExpand="True" VerticalExpand="True" />
 
         <!-- Can't figure out how to apply a negative scale to an image, so just made a flipped version -->
-        <TextureButton StyleClasses="PerforatedLabelEnd" VerticalAlignment="Center" />
+        <TextureButton StyleClasses="BracketedContainerEnd" VerticalExpand="True" />
     </BoxContainer>
-</controls:EmbossedLabel>
+</controls:BracketedContainer>

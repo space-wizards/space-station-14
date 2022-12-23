@@ -456,11 +456,6 @@ namespace Content.Client.Stylesheets
                 Modulate = ConcerningOrangeFore
             };
 
-            var perforatedLabelBackground  = new StyleBoxFlat {
-                BackgroundColor = Color.FromHex("#3969ef"),
-                BorderThickness = new(0, 0, 0, 0)
-            };
-
             // Slider
             var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
             var sliderFillTex = resCache.GetTexture("/Textures/Interface/Nano/slider_fill.svg.96dpi.png");
@@ -1531,16 +1526,15 @@ namespace Content.Client.Stylesheets
                 Element<TextureButton>().Class(StyleClassLockableButtonRed).Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
 
-                // Perforated label --
-                Element<TextureButton>().Class("PerforatedLabelBegin")
+                // Bracketed Container start/end textures
+                Element<TextureButton>().Class("BracketedContainerBegin")
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e")),
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
 
-                Element<TextureButton>().Class("PerforatedLabelEnd")
+                Element<TextureButton>().Class("BracketedContainerEnd")
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/close_widget_grouping.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e")),
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#343647")),
 
-                // ---
             }).ToList());
         }
     }
