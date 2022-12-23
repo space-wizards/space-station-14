@@ -35,13 +35,13 @@
        inkscape:collect="always"
        style="color-interpolation-filters:sRGB"
        id="filter1666"
-       x="-0.102"
-       y="-0.0408"
-       width="1.204"
-       height="1.0816">
+       x="-0.00083999997"
+       y="-0.00033599999"
+       width="1.00168"
+       height="1.000672">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="0.34"
+         stdDeviation="0.0028"
          id="feGaussianBlur1668" />
     </filter>
   </defs>
@@ -65,8 +65,8 @@
      inkscape:snap-nodes="false"
      inkscape:snap-page="true"
      inkscape:zoom="39.105536"
-     inkscape:cx="6.4568863"
-     inkscape:cy="7.5564749"
+     inkscape:cx="3.8229881"
+     inkscape:cy="7.5820467"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="1"
