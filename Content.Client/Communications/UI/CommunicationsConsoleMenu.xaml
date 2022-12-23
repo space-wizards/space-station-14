@@ -65,9 +65,9 @@
                             <PanelContainer StyleClasses="AngleRect">
                                 <BoxContainer Orientation="Vertical">
                                     <Label Text="{Loc 'comms-console-menu-call-shuttle'}" />
-                                    <Button Name="EmergencyShuttleCallButton" Access="Public"
+                                    <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
                                         Margin="12" SetSize="80 80"
-                                        StyleClasses="ButtonColorRed" />
+                                        StyleClasses="TemptingRedButton" />
                                 </BoxContainer>
                             </PanelContainer>
                         </BoxContainer>
@@ -109,9 +109,9 @@
                                 <PanelContainer StyleClasses="AngleRect">
                                     <BoxContainer Orientation="Vertical">
                                         <Label Text="{Loc 'comms-console-menu-recall-shuttle'}" />
-                                        <Button Name="EmergencyShuttleRecallButton" Access="Public"
+                                        <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                             Margin="12" SetSize="80 80"
-                                            StyleClasses="ButtonColorRed" />
+                                            StyleClasses="TemptingRedButton" />
                                     </BoxContainer>
                                 </PanelContainer>
                             </BoxContainer>

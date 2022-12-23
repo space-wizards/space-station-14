@@ -158,10 +158,12 @@ namespace Content.Client.Communications.UI
 
         public void UpdateCountdown()
         {
-            int remaining = Owner.CountdownStarted ? Owner.Countdown : 0;
-            var message = remaining.ToString("D4");
+            // Set the label on the LCD countdown
+            int remainingWholeSeconds = Owner.CountdownStarted ? (int)Owner.Countdown : 0;
+            var message = remainingWholeSeconds.ToString("D4");
             CountdownLabel.Text = message;
 
+            // Set the appropriate light colour for showing when the shuttle is en route
             if(Owner.CountdownStarted)
             {
                 ShuttleIncomingLight.SetOnlyStyleClass(StyleNano.StyleClassLightLitGreen);
@@ -171,9 +173,10 @@ namespace Content.Client.Communications.UI
                 ShuttleIncomingLight.SetOnlyStyleClass(StyleNano.StyleClassLightUnlit);
             }
 
+            // Blink the LCD
             if(Owner.CountdownStarted)
             {
-                var subSecondsRemaining = Owner.CountdownFloat - (float)Math.Floor(Owner.CountdownFloat);
+                var subSecondsRemaining = Owner.Countdown - (float)Math.Floor(Owner.Countdown);
 
                 var lightEnableBlend = SmoothStep(0.1f, 0.2f, subSecondsRemaining);
                 var lightDisableBlend = 1.0f - SmoothStep(0.9f, 0.95f, subSecondsRemaining);

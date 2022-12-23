@@ -141,6 +141,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassCrossButtonRed = "CrossButtonRed";
         public const string StyleClassButtonColorRed = "ButtonColorRed";
         public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+        public const string StyleClassLockableButtonRed = "TemptingRedButton";
         public const string StyleClassLightLitGreen = "LightLitGreen";
         public const string StyleClassLightUnlit = "LightUnlit";
 
@@ -313,10 +314,10 @@ namespace Content.Client.Stylesheets
             };
             topButtonSquare.SetPatchMargin(StyleBox.Margin.Horizontal, 0);
 
-            var chatChannelButtonTex = resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png");
+            var roundedButton = resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png");
             var chatChannelButton = new StyleBoxTexture
             {
-                Texture = chatChannelButtonTex,
+                Texture = roundedButton,
             };
             chatChannelButton.SetPatchMargin(StyleBox.Margin.All, 5);
             chatChannelButton.SetPadding(StyleBox.Margin.All, 2);
@@ -1504,13 +1505,26 @@ namespace Content.Client.Stylesheets
 
                 // Light indicators --
                 Element<TextureButton>().Class(StyleClassLightLitGreen)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
+                    .Prop(TextureButton.StylePropertyTexture, roundedButton)
                     .Prop(Control.StylePropertyModulateSelf, GoodGreenFore),
 
                 Element<TextureButton>().Class(StyleClassLightUnlit)
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
+                    .Prop(TextureButton.StylePropertyTexture, roundedButton)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
-                // ---
+
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Prop(TextureButton.StylePropertyTexture, roundedButton)
+                    .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
+
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                        .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
+                Element<TextureButton>().Class(StyleClassLockableButtonRed)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                        .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_locked_button.svg.96dpi.png"))
+                        .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
+                Element<TextureButton>().Class(StyleClassLockableButtonRed).Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHoveredRed),
 
             }).ToList());
         }
