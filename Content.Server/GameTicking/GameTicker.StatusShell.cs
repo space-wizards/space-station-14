@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Text.Json.Nodes;
+using System.Threading.Tasks;
 using Content.Shared.CCVar;
 using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
@@ -24,12 +25,45 @@ namespace Content.Server.GameTicking
         /// </summary>
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+        [Dependency] private readonly IStatusHost _status = default!;
+
         private bool _statusPlayerListEnabled;
+
+        public event Action<JsonNode>? OnManifestRequest;
 
         private void InitializeStatusShell()
         {
-            IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
+            _status.OnStatusRequest += GetStatusResponse;
+            _status.AddHandler(ManifestHandler);
             _configurationManager.OnValueChanged(CCVars.StatusPlayerListEnabled, b => _statusPlayerListEnabled = b, true);
+        }
+
+        private async Task<bool> ManifestHandler(IStatusHandlerContext context)
+        {
+            if (!context.IsGetLike || context.Url!.AbsolutePath != "/ss14/manifest")
+            {
+                return false;
+            }
+
+            var jObject = new JsonObject();
+
+            if (_statusPlayerListEnabled)
+            {
+                var arr = new JsonArray();
+
+                foreach (var session in _playerManager.ServerSessions.ToList())
+                {
+                    arr.Add(session.Name);
+                }
+
+                jObject["playerList"] = arr;
+            }
+
+            OnManifestRequest?.Invoke(jObject);
+
+            await context.RespondJsonAsync(jObject);
+
+            return true;
         }
 
         private void GetStatusResponse(JsonNode jObject)
@@ -44,18 +78,6 @@ namespace Content.Server.GameTicking
                 if (_runLevel >= GameRunLevel.InRound)
                 {
                     jObject["round_start_time"] = _roundStartDateTime.ToString("o");
-                }
-
-                if (_statusPlayerListEnabled)
-                {
-                    var arr = new JsonArray();
-
-                    foreach (var session in _playerManager.ServerSessions.ToList())
-                    {
-                        arr.Add(session.Name);
-                    }
-
-                    jObject["playerList"] = arr;
                 }
             }
         }

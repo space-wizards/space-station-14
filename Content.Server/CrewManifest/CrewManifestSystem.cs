@@ -2,6 +2,7 @@ using System.Linq;
 using System.Text.Json.Nodes;
 using Content.Server.Administration;
 using Content.Server.EUI;
+using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Shared.Administration;
@@ -20,9 +21,10 @@ namespace Content.Server.CrewManifest;
 
 public sealed class CrewManifestSystem : EntitySystem
 {
+    [Dependency] private readonly EuiManager _euiManager = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
-    [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IStatusHost _status = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -57,7 +59,7 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
 
-        _status.OnStatusRequest += GetStatusResponse;
+        _gameTicker.OnManifestRequest += GetStatusResponse;
         _prototype.PrototypesReloaded += OnPrototypesReloaded;
         _configManager.OnValueChanged(CCVars.CrewManifestWithoutEntity, b => _crewManifestWithoutEntity = b, true);
         BuildDeptIndex();
