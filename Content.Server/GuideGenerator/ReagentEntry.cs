@@ -57,8 +57,12 @@ public sealed class ReactionEntry
     [JsonPropertyName("products")]
     public Dictionary<string, float> Products { get; }
 
-    [JsonPropertyName("effects")]
-    public List<ReagentEffect> Effects { get; }
+    [JsonPropertyName("startEffects")]
+    public List<ReagentEffect> StartEffects { get; }
+    [JsonPropertyName("stepEffects")]
+    public List<ReagentEffect> StepEffects { get; }
+    [JsonPropertyName("stopEffects")]
+    public List<ReagentEffect> StopEffects { get; }
 
     public ReactionEntry(ReactionPrototype proto)
     {
@@ -66,13 +70,15 @@ public sealed class ReactionEntry
         Name = proto.Name;
         Reactants =
             proto.Reactants
-                .Select(x => KeyValuePair.Create(x.Key, new ReactantEntry(x.Value.Amount.Float(), x.Value.Catalyst)))
+                .Select(x => KeyValuePair.Create(x.Id, new ReactantEntry(x.Amount.Float(), x.Catalyst)))
                 .ToDictionary(x => x.Key, x => x.Value);
         Products =
             proto.Products
-                .Select(x => KeyValuePair.Create(x.Key, x.Value.Float()))
+                .Select(x => KeyValuePair.Create(x.Id, x.Amount.Float()))
                 .ToDictionary(x => x.Key, x => x.Value);
-        Effects = proto.Effects;
+        StartEffects = proto.StartEffects;
+        StepEffects = proto.StepEffects;
+        StopEffects = proto.StopEffects;
     }
 }
 

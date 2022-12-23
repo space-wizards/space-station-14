@@ -58,7 +58,29 @@ public sealed class BloodstreamSystem : EntitySystem
             && args.Solution.Name != BloodstreamComponent.DefaultBloodTemporarySolutionName)
             return;
 
-        foreach (var effect in args.Reaction.Effects)
+        foreach (var effect in args.Reaction.StartEffects)
+        {
+            switch (effect)
+            {
+                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
+                    args.Cancel();
+                    return;
+            }
+        }
+
+        foreach (var effect in args.Reaction.StepEffects)
+        {
+            switch (effect)
+            {
+                case CreateEntityReactionEffect: // Prevent entities from spawning in the bloodstream
+                case AreaReactionEffect: // No spontaneous smoke or foam leaking out of blood vessels.
+                    args.Cancel();
+                    return;
+            }
+        }
+
+        foreach (var effect in args.Reaction.StopEffects)
         {
             switch (effect)
             {

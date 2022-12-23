@@ -1,104 +1,140 @@
 - type: reaction
   id: Ammonia
   reactants:
-    Hydrogen:
-      amount: 3
-    Nitrogen:
-      amount: 1
+  - id: Hydrogen
+    amount: 3
+  - id: Nitrogen
+    amount: 1
   products:
-    Ammonia: 4
+  - id: Ammonia
+    amount: 4
 
 - type: reaction
   id: Diethylamine
   reactants:
-    Ammonia:
-      amount: 1
-    Ethanol:
-      amount: 1
+  - id: Ammonia
+    amount: 1
+  - id: Ethanol
+    amount: 1
   products:
-    Diethylamine: 2
+  - id: Diethylamine
+    amount: 2
 
 - type: reaction
   id: Phenol
   reactants:
-    Water:
-      amount: 1
-    Chlorine:
-      amount: 1
-    Oil:
-      amount: 1
+  - id: Water
+    amount: 1
+  - id: Chlorine
+    amount: 1
+  - id: Oil
+    amount: 1
   products:
-    Phenol: 3
+  - id: Phenol
+    amount: 3
 
 - type: reaction
   id: Acetone
   reactants:
-    Oil:
-      amount: 1
-    WeldingFuel:
-      amount: 1
-    Oxygen:
-      amount: 1
+  - id: Oil
+    amount: 1
+  - id: WeldingFuel
+    amount: 1
+  - id: Oxygen
+    amount: 1
   products:
-    Acetone: 2
+  - id: Acetone
+    amount: 2
+
+- type: reaction
+  id: Cracking
+  rate: 0.1
+  reactants:
+  - id: Oil
+    amount: 1
+  - id: SulfuricAcid
+    amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Water
+    amount: 1
+    catalyst: true
+  products:
+  - id: Hydrogen
+    amount: 1
+  - id: WeldingFuel
+    amount: 2
+
+# reactants:\W*\n(( {4,6}\w+: *\w* *\n)*)( {4}(\w+): *\n)(( {6}\w+: *\w* *\n)*)
+# reactants:\n$1  - id: $4\n$5
+
+# reactants:\W*\n((( {2}- id: \w+\n)( {6}\w+: *\w* *\n)*)*)( {6}(\w+): *(\w)* *\n)
+# reactants:\n$1    $6: $7\n
+
+# products:\W*\n(( {4}\w+: *\w+ *\n)*)( {4}(\w+): *(\w+) *\n)
+# products:\n$1  - id: $4\n    amount: $5\n
 
 - type: reaction
   id: FoamingAgent
   reactants:
-    Lithium:
-      amount: 1
-    Hydrogen:
-      amount: 1
+  - id: Lithium
+    amount: 1
+  - id: Hydrogen
+    amount: 1
   products:
-    FoamingAgent: 2
+  - id: FoamingAgent
+    amount: 2
 
 - type: reaction
   id: PolytrinicAcid
   reactants:
-    SulfuricAcid:
-      amount: 1
-    Chlorine:
-      amount: 1
-    Potassium:
-      amount: 1
+  - id: SulfuricAcid
+    amount: 1
+  - id: Chlorine
+    amount: 1
+  - id: Potassium
+    amount: 1
   products:
-    PolytrinicAcid: 3
+  - id: PolytrinicAcid
+    amount: 3
 
 - type: reaction
   id: SulfuricAcid
   reactants:
-    Hydrogen:
-      amount: 1
-    Sulfur:
-      amount: 1
-    Oxygen:
-      amount: 2
+  - id: Hydrogen
+    amount: 1
+  - id: Sulfur
+    amount: 1
+  - id: Oxygen
+    amount: 2
   products:
-    SulfuricAcid: 3
+  - id: SulfuricAcid
+    amount: 3
 
 - type: reaction
   id: FluorosulfuricAcid
   reactants:
-    Fluorine:
-      amount: 1
-    Hydrogen:
-      amount: 1
-    Potassium:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
+  - id: Fluorine
+    amount: 1
+  - id: Hydrogen
+    amount: 1
+  - id: Potassium
+    amount: 1
+  - id: SulfuricAcid
+    amount: 1
   products:
-    FluorosulfuricAcid: 4
+  - id: FluorosulfuricAcid
+    amount: 4
 
 - type: reaction
   id: PotassiumExplosion
   impact: High
   priority: 20
   reactants:
-    Water:
-      amount: 1
-    Potassium:
-      amount: 1
+  - id: Water
+    amount: 1
+  - id: Potassium
+    amount: 1
   stopEffects:
     - !type:ExplosionReactionEffect
       explosionType: Default
@@ -112,12 +148,12 @@
   priority: 10
   impact: High
   reactants:
-    Phosphorus:
-      amount: 1
-    Potassium:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Phosphorus
+    amount: 1
+  - id: Potassium
+    amount: 1
+  - id: Sugar
+    amount: 1
   stopEffects:
     - !type:SmokeAreaReactionEffect
       rangeConstant: 0
@@ -136,10 +172,10 @@
   priority: 10
   impact: High
   reactants:
-    Fluorosurfactant:
-      amount: 1
-    Water:
-      amount: 1
+  - id: Fluorosurfactant
+    amount: 1
+  - id: Water
+    amount: 1
   stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
@@ -161,12 +197,12 @@
   impact: High
   priority: 10
   reactants:
-    Iron:
-      amount: 3
-    FoamingAgent:
-      amount: 1
-    FluorosulfuricAcid:
-      amount: 1
+  - id: Iron
+    amount: 3
+  - id: FoamingAgent
+    amount: 1
+  - id: FluorosulfuricAcid
+    amount: 1
   stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
@@ -188,12 +224,12 @@
   impact: High
   priority: 10
   reactants:
-    Aluminium:
-      amount: 3
-    FoamingAgent:
-      amount: 1
-    FluorosulfuricAcid:
-      amount: 1
+  - id: Aluminium
+    amount: 3
+  - id: FoamingAgent
+    amount: 1
+  - id: FluorosulfuricAcid
+    amount: 1
   stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
@@ -213,152 +249,164 @@
 - type: reaction
   id: TableSalt
   reactants:
-    Chlorine:
-      amount: 1
-    Sodium:
-      amount: 1
+  - id: Chlorine
+    amount: 1
+  - id: Sodium
+    amount: 1
   products:
-    TableSalt: 2
+  - id: TableSalt
+    amount: 2
 
 - type: reaction
   id: Thermite
   impact: Medium
   reactants:
-    Iron:
-      amount: 1
-    Aluminium:
-      amount: 1
-    Oxygen:
-      amount: 1
+  - id: Iron
+    amount: 1
+  - id: Aluminium
+    amount: 1
+  - id: Oxygen
+    amount: 1
   products:
-    Thermite: 3
+  - id: Thermite
+    amount: 3
 
 - type: reaction
   id: UnstableMutagen
   reactants:
-    Radium:
-      amount: 1
-    Phosphorus:
-      amount: 1
-    Chlorine:
-      amount: 1
+  - id: Radium
+    amount: 1
+  - id: Phosphorus
+    amount: 1
+  - id: Chlorine
+    amount: 1
   products:
-    UnstableMutagen: 3
+  - id: UnstableMutagen
+    amount: 3
 
 - type: reaction
   id: Oil
   reactants:
-    WeldingFuel:
-      amount: 1
-    Carbon:
-      amount: 1
-    Hydrogen:
-      amount: 1
+  - id: WeldingFuel
+    amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Hydrogen
+    amount: 1
   products:
-    Oil: 3
+  - id: Oil
+    amount: 3
 
 - type: reaction
   id: Fluorosurfactant
   impact: Medium
   reactants:
-    Carbon:
-      amount: 2
-    Fluorine:
-      amount: 2
-    SulfuricAcid:
-      amount: 1
+  - id: Carbon
+    amount: 2
+  - id: Fluorine
+    amount: 2
+  - id: SulfuricAcid
+    amount: 1
   products:
-    Fluorosurfactant: 5
+  - id: Fluorosurfactant
+    amount: 5
 
 - type: reaction
   id: Desoxyephedrine
   impact: Medium
   minTemp: 370
   reactants:
-    Ephedrine:
-      amount: 1
-    Carbon:
-      amount: 1
-    Iodine:
-      amount: 1
-    Phosphorus:
-     amount: 1
+  - id: Ephedrine
+    amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Iodine
+    amount: 1
+  - id: Phosphorus
+    amount: 1
   products:
-    Desoxyephedrine: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+  - id: Desoxyephedrine #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+    amount: 4
 
 - type: reaction
   id: Ephedrine
   impact: Medium
   reactants:
-    Oil:
-      amount: 1
-    Hydrogen:
-      amount: 1
-    Sugar:
-      amount: 1
-    Diethylamine:
-     amount: 1
+  - id: Oil
+    amount: 1
+  - id: Hydrogen
+    amount: 1
+  - id: Sugar
+    amount: 1
+  - id: Diethylamine
+    amount: 1
   products:
-    Ephedrine: 4
+  - id: Ephedrine
+    amount: 4
 
 - type: reaction
   id: MuteToxin
   impact: Medium
   reactants:
-    Uranium:
-      amount: 2
-    Water:
-      amount: 1
-    Carbon:
-      amount: 1
+  - id: Uranium
+    amount: 2
+  - id: Water
+    amount: 1
+  - id: Carbon
+    amount: 1
   products:
-    MuteToxin: 2
+  - id: MuteToxin
+    amount: 2
 
 - type: reaction
   id: ChloralHydrate
   impact: Medium
   reactants:
-    Chlorine:
-      amount: 3
-    Ethanol:
-      amount: 1
-    Water:
-      amount: 1
+  - id: Chlorine
+    amount: 3
+  - id: Ethanol
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    ChloralHydrate: 1
+  - id: ChloralHydrate
+    amount: 1
 
 - type: reaction
   id: Pax
   impact: Medium
   reactants:
-    MindbreakerToxin:
-      amount: 1
-    Synaptizine:
-      amount: 1
-    Water:
-      amount: 1
+  - id: MindbreakerToxin
+    amount: 1
+  - id: Synaptizine
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    Pax: 3
+  - id: Pax
+    amount: 3
 
 - type: reaction
   id: Charcoal
   reactants:
-    Carbon:
-      amount: 1
-    Ash:
-      amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Ash
+    amount: 1
   products:
-    Charcoal: 1
+  - id: Charcoal
+    amount: 1
 
 - type: reaction
   id: NorepinephricAcid
   impact: Medium
   reactants:
-    Uranium:
-      amount: 2
-    Hydrogen:
-      amount: 1
-    Oxygen:
-      amount: 1
+  - id: Uranium
+    amount: 2
+  - id: Hydrogen
+    amount: 1
+  - id: Oxygen
+    amount: 1
   products:
-    NorepinephricAcid: 2
+  - id: NorepinephricAcid
+    amount: 2

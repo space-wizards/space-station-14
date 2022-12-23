@@ -3,11 +3,11 @@
   impact: Low
   quantized: true
   reactants:
-    Milk:
-      amount: 40
-    Enzyme:
-      amount: 5
-      catalyst: true
+  - id: Milk
+    amount: 0
+  - id: Enzyme
+    amount: 5
+    catalyst: true
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCheese
@@ -17,10 +17,10 @@
   impact: Low
   quantized: true
   reactants:
-    Flour:
-      amount: 15
-    Water:
-      amount: 10
+  - id: Flour
+    amount: 5
+  - id: Water
+    amount: 0
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodDough
@@ -30,12 +30,12 @@
   impact: Low
   quantized: true
   reactants:
-    Flour:
-      amount: 15
-    Egg:
-      amount: 12
-    Sugar:
-      amount: 5
+  - id: Flour
+    amount: 5
+  - id: Egg
+    amount: 2
+  - id: Sugar
+    amount: 5
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
@@ -45,11 +45,11 @@
   impact: Low
   quantized: true
   reactants:
-    Milk:
-      amount: 30
-    TableSalt:
-      amount: 5
-      catalyst: true
+  - id: Milk
+    amount: 0
+  - id: TableSalt
+    amount: 5
+    catalyst: true
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodButter
@@ -59,12 +59,12 @@
   impact: Low
   quantized: true
   reactants:
-    Flour:
-      amount: 15
-    Egg:
-      amount: 12
-    TableSalt:
-      amount: 5
+  - id: Flour
+    amount: 5
+  - id: Egg
+    amount: 2
+  - id: TableSalt
+    amount: 5
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodDoughPie
@@ -77,12 +77,12 @@
   impact: Low
   quantized: true
   reactants:
-    Flour:
-      amount: 15
-    MilkSoy:
-      amount: 15
-    Sugar:
-      amount: 5
+  - id: Flour
+    amount: 5
+  - id: MilkSoy
+    amount: 5
+  - id: Sugar
+    amount: 5
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
@@ -92,48 +92,51 @@
 - type: reaction
   id: CookingKetchup
   reactants:
-    JuiceTomato:
-      amount: 10
-    Sugar:
-      amount: 5
+  - id: JuiceTomato
+    amount: 0
+  - id: Sugar
+    amount: 5
   products:
-    Ketchup: 15
+  - id: Ketchup
+    amount: 15
 
 - type: reaction
   id: CookingBbqSauce
   reactants:
-    Ketchup:
-      amount: 5
-    Vinegar:
-      amount: 5
-    Sugar:
-      amount: 5
+  - id: Ketchup
+    amount: 5
+  - id: Vinegar
+    amount: 5
+  - id: Sugar
+    amount: 5
   products:
-    BbqSauce: 15
+  - id: BbqSauce
+    amount: 15
 
 - type: reaction
   id: CookingHotsauce
   reactants:
-    JuiceTomato:
-      amount: 5
-    TableSalt:
-      amount: 5
-    CapsaicinOil:
-      amount: 5
+  - id: JuiceTomato
+    amount: 5
+  - id: TableSalt
+    amount: 5
+  - id: CapsaicinOil
+    amount: 5
   products:
-    Hotsauce: 15
+  - id: Hotsauce
+    amount: 15
 
 - type: reaction
   id: CreateMeatball
   impact: Low
   quantized: true
   reactants:
-    UncookedAnimalProteins:
-      amount: 5
-    Flour:
-      amount: 5
-    Egg:
-      amount: 6
+  - id: UncookedAnimalProteins
+    amount: 5
+  - id: Flour
+    amount: 5
+  - id: Egg
+    amount: 6
   stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodMeatMeatball

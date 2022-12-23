@@ -1,24 +1,25 @@
 ﻿- type: reaction
   id: Napalm
   reactants:
-    Oil:
-      amount: 1
-    WeldingFuel:
-      amount: 1
-    Ethanol:
-      amount: 1
+  - id: Oil
+    amount: 1
+  - id: WeldingFuel
+    amount: 1
+  - id: Ethanol
+    amount: 1
   products:
-    Napalm: 3
+  - id: Napalm
+    amount: 3
 
 - type: reaction
   id: Phlogiston
   reactants:
-    Phosphorus:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
-    Plasma:
-      amount: 1
+  - id: Phosphorus
+    amount: 1
+  - id: SulfuricAcid
+    amount: 1
+  - id: Plasma
+    amount: 1
   stepEffects:
   - !type:CreateGas
     gas: Plasma
@@ -28,16 +29,17 @@
     messages: [ "phlogiston-plasma-created" ]
     type: Pvs
   products:
-    Phlogiston: 3
+  - id: Phlogiston
+    amount: 3
 
 - type: reaction
   id: ChlorineTrifluoride
   priority: 20
   reactants:
-    Chlorine:
-      amount: 1
-    Fluorine:
-      amount: 3
+  - id: Chlorine
+    amount: 1
+  - id: Fluorine
+    amount: 3
   stopEffects:
   # TODO solution temperature!!
   - !type:ExplosionReactionEffect
@@ -45,11 +47,12 @@
     maxIntensity: 1 # at most 15 damage per tile.
     intensityPerUnit: 3 # 12 total input reagent units reach max total intensity
     intensitySlope: 0.5
-    maxTotalIntensity: 9
+    maxTotalIntensity: 1000000000
   startEffects:
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs
     visualType: LargeCaution
   products:
-    ChlorineTrifluoride: 4
+  - id: ChlorineTrifluoride
+    amount: 4

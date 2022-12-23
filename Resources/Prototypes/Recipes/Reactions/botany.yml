@@ -1,43 +1,47 @@
 - type: reaction
   id: EZNutrient
   reactants:
-    Nitrogen:
-      amount: 1
-    Phosphorus:
-      amount: 1
-    Potassium:
-      amount: 1
+  - id: Nitrogen
+    amount: 1
+  - id: Phosphorus
+    amount: 1
+  - id: Potassium
+    amount: 1
   products:
-    EZNutrient: 3
+  - id: EZNutrient
+    amount: 3
 
 - type: reaction
   id: RobustHarvest
   reactants:
-    EZNutrient:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
-      catalyst: true
+  - id: EZNutrient
+    amount: 1
+  - id: SulfuricAcid
+    amount: 1
+    catalyst: true
   products:
-    RobustHarvest: 1
+  - id: RobustHarvest
+    amount: 1
 
 - type: reaction
   id: Left4Zed
   reactants:
-    EZNutrient:
-      amount: 1
-    Radium:
-      amount: 1
-      catalyst: true
+  - id: EZNutrient
+    amount: 1
+  - id: Radium
+    amount: 1
+    catalyst: true
   products:
-    Left4Zed: 1
+  - id: Left4Zed
+    amount: 1
 
 - type: reaction
   id: PlantBGone
   reactants:
-    Toxin:
-      amount: 1
-    Water:
-      amount: 4
+  - id: Toxin
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    PlantBGone: 5
+  - id: PlantBGone
+    amount: 5

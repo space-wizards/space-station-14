@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
 
             // Prevent smoke/foam fork bombs (smoke creating more smoke).
-            foreach (var effect in args.Reaction.Effects)
+            foreach (var effect in args.Reaction.StartEffects)
             {
                 if (effect is AreaReactionEffect)
                 {

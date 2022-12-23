@@ -3,10 +3,11 @@
   impact: Low
   minTemp: 347
   reactants:
-    UncookedAnimalProteins:
-      amount: 0.5
+  - id: UncookedAnimalProteins
+    amount: 0.5
   products:
-    Protein: 0.5
+  - id: Protein
+    amount: 0.5
 
 - type: reaction
   id: BloodToWine
@@ -14,7 +15,8 @@
   requiredMixerCategories:
   - Holy
   reactants:
-    Blood:
-      amount: 1
+  - id: Blood
+    amount: 1
   products:
-    Wine: 1
+  - id: Wine
+    amount: 1

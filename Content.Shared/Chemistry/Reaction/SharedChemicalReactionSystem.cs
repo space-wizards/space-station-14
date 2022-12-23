@@ -162,8 +162,7 @@ public abstract partial class SharedChemicalReactionSystem : EntitySystem
 /// <reamrks>
 ///     Some solution containers (e.g., bloodstream, smoke, foam) use this to block certain reactions from occurring.
 /// </reamrks>
-[ByRefEvent]
-public class ReactionAttemptEvent : CancellableEntityEventArgs
+public sealed class ReactionAttemptEvent : CancellableEntityEventArgs
 {
     public readonly ReactionSpecification Reaction;
     public readonly Solution Solution;

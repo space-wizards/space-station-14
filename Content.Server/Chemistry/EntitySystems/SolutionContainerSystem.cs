@@ -122,7 +122,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
-            _chemistrySystem.FullyReactSolution(solutionHolder, uid, solutionHolder.MaxVolume, mixerComponent);
+            _chemistrySystem.UpdateReactions(uid, solutionHolder, mixer:mixerComponent);
         }
 
         UpdateAppearance(uid, solutionHolder);

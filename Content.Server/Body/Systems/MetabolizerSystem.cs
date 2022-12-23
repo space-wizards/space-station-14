@@ -180,7 +180,7 @@ namespace Content.Server.Body.Systems
                         if (effect.ShouldLog)
                         {
                             _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
-                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
+                                $"Metabolism effect {effect.GetType().Name:effect} of reagent {(args.Reagent != null ? args.Reagent.LocalizedName : "NULL"):reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
                         effect.Effect(ref args);

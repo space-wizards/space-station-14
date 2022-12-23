@@ -14,14 +14,14 @@ namespace Content.Server.Chemistry.ReactionEffects
         public float CleanseRate = 3.0f;
         public override void Effect(ref ReagentEffectArgs args)
         {
-            if (args.Source == null)
+            if (args.Source == null || args.Reagent == null)
                 return;
 
             var cleanseRate = CleanseRate;
 
             cleanseRate *= args.Scale;
 
-            var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
+            var bloodstreamSys = args.EntityManager.EntitySysManager.GetEntitySystem<BloodstreamSystem>();
             bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }

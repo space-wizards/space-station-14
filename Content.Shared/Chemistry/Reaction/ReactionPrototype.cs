@@ -17,7 +17,7 @@ public sealed class ReactionPrototype : ReactionSpecification, IPrototype {}
 
 [DataDefinition]
 [ImplicitDataDefinitionForInheritors]
-public class ReactionSpecification : IComparable<ReactionSpecification>
+public abstract class ReactionSpecification : IComparable<ReactionSpecification>
 {
     [ViewVariables]
     [IdDataFieldAttribute]
@@ -33,7 +33,7 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
     /// The speed at which the reaction progresses in solution.
     /// Infinite reaction speed indicates that the reaction should complete instantly when it can react.
     /// </summary>
-    [DataField("reactionRate")]
+    [DataField("rate")]
     [ViewVariables(VVAccess.ReadWrite)]
     [Access(typeof(SharedChemicalReactionSystem))]
     public float ReactionRate { get; internal set; } = float.PositiveInfinity;
@@ -55,14 +55,14 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
     /// </summary>
     [DataField("reactants", required:true)]
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly List<ReactantSpecification> Reactants = default!;
+    public readonly List<ReactantSpecification> Reactants = new();
 
     /// <summary>
     /// The set of reagents produced by the reaction.
     /// </summary>
     [DataField("products")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly List<ProductSpecification> Products = default!;
+    public readonly List<ProductSpecification> Products = new();
 
     /// <summary>
     /// The total change in solution volume caused per unit of this reaction.
@@ -159,7 +159,7 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
     [DataField("startEffects")]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
-    public List<ReagentEffect>? StartEffects = null;
+    public List<ReagentEffect> StartEffects = new();
 
     /// <summary>
     /// The set of effects that this reaction has periodically as is occurs.
@@ -167,7 +167,7 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
     [DataField("stepEffects")]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
-    public List<ReagentEffect>? StepEffects = null;
+    public List<ReagentEffect> StepEffects = new();
 
     /// <summary>
     /// The set of effects that this reaction has when it ceases to occur.
@@ -175,7 +175,7 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
     [DataField("stopEffects")]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(SharedChemicalReactionSystem))]
-    public List<ReagentEffect>? StopEffects = null;
+    public List<ReagentEffect> StopEffects = new();
 
     #endregion Effects
 
@@ -230,14 +230,13 @@ public class ReactionSpecification : IComparable<ReactionSpecification>
 /// A specification for a reagent required by a reaction.
 /// </summary>
 [DataDefinition]
-public class ReactantSpecification
+public sealed class ReactantSpecification
 {
     /// <summary>
     /// The id of the reagent required by the reaction.
     /// </summary>
     [DataField("id", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedChemicalReactionSystem))]
     public string Id = default!;
 
     /// <summary>
@@ -245,7 +244,6 @@ public class ReactantSpecification
     /// </summary>
     [DataField("amount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedChemicalReactionSystem))]
     public FixedPoint2 Amount = 1;
 
     /// <summary>
@@ -253,7 +251,6 @@ public class ReactantSpecification
     /// </summary>
     [DataField("catalyst")]
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedChemicalReactionSystem))]
     public bool Catalyst = false;
 }
 
@@ -261,14 +258,13 @@ public class ReactantSpecification
 /// A specification for a reagent produced by a reaction.
 /// </summary>
 [DataDefinition]
-public class ProductSpecification
+public sealed class ProductSpecification
 {
     /// <summary>
     /// The id of the reagent produced by the reaction.
     /// </summary>
     [DataField("id", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedChemicalReactionSystem))]
     public string Id = default!;
 
     /// <summary>
@@ -276,7 +272,6 @@ public class ProductSpecification
     /// </summary>
     [DataField("amount")]
     [ViewVariables(VVAccess.ReadWrite)]
-    [Access(typeof(SharedChemicalReactionSystem))]
     public FixedPoint2 Amount = 1;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -1,564 +1,615 @@
 - type: reaction
   id: Antifreeze
   reactants:
-    Cream:
-      amount: 1
-    Ice:
-      amount: 1
-    Vodka:
-      amount: 2
+  - id: Cream
+    amount: 1
+  - id: Ice
+    amount: 1
+  - id: Vodka
+    amount: 2
   products:
-    Antifreeze: 4
+  - id: Antifreeze
+    amount: 4
 
 - type: reaction
   id: AtomicBomb
   reactants:
-    B52:
-      amount: 10
-    Uranium:
-      amount: 1
+  - id: B52
+    amount: 0
+  - id: Uranium
+    amount: 1
   products:
-    AtomicBomb: 11
+  - id: AtomicBomb
+    amount: 11
 
 - type: reaction
   id: B52
   reactants:
-    Cognac:
-      amount: 1
-    IrishCarBomb:
-      amount: 1
-    CoffeeLiqueur:
-      amount: 1
+  - id: Cognac
+    amount: 1
+  - id: IrishCarBomb
+    amount: 1
+  - id: CoffeeLiqueur
+    amount: 1
   products:
-    B52: 3
+  - id: B52
+    amount: 3
 
 - type: reaction
   id: BananaHonk
   reactants:
-    Cream:
-      amount: 1
-    JuiceBanana:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Cream
+    amount: 1
+  - id: JuiceBanana
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    BananaHonk: 3
+  - id: BananaHonk
+    amount: 3
 
 - type: reaction
   id: BeepskySmash
   reactants:
-    Iron:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    Whiskey:
-      amount: 1
+  - id: Iron
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: Whiskey
+    amount: 1
   products:
-    BeepskySmash: 2
+  - id: BeepskySmash
+    amount: 2
 
 - type: reaction
   id: Bilk
   reactants:
-    Beer:
-      amount: 1
-    Milk:
-      amount: 1
+  - id: Beer
+    amount: 1
+  - id: Milk
+    amount: 1
   products:
-    Bilk: 2
+  - id: Bilk
+    amount: 2
 
 - type: reaction
   id: BlackRussian
   reactants:
-    CoffeeLiqueur:
-      amount: 1
-    Vodka:
-      amount: 2
+  - id: CoffeeLiqueur
+    amount: 1
+  - id: Vodka
+    amount: 2
   products:
-    BlackRussian: 3
+  - id: BlackRussian
+    amount: 3
 
 - type: reaction
   id: BloodyMary
   reactants:
-    JuiceLime:
-      amount: 1
-    JuiceTomato:
-      amount: 3
-    Vodka:
-      amount: 2
+  - id: JuiceLime
+    amount: 1
+  - id: JuiceTomato
+    amount: 3
+  - id: Vodka
+    amount: 2
   products:
-    BloodyMary: 6
+  - id: BloodyMary
+    amount: 6
 
 - type: reaction
   id: Booger
   reactants:
-    Cream:
-      amount: 2
-    JuiceBanana:
-      amount: 1
-    JuiceWatermelon:
-      amount: 1
-    Rum:
-      amount: 1
+  - id: Cream
+    amount: 2
+  - id: JuiceBanana
+    amount: 1
+  - id: JuiceWatermelon
+    amount: 1
+  - id: Rum
+    amount: 1
   products:
-    Booger: 5
+  - id: Booger
+    amount: 5
 
 - type: reaction
   id: BraveBull
   reactants:
-    CoffeeLiqueur:
-      amount: 1
-    Tequila:
-      amount: 2
+  - id: CoffeeLiqueur
+    amount: 1
+  - id: Tequila
+    amount: 2
   products:
-    BraveBull: 3
+  - id: BraveBull
+    amount: 3
 
 - type: reaction
   id: CafeLatte
   reactants:
-    Coffee:
-      amount: 1
-    Milk:
-      amount: 1
+  - id: Coffee
+    amount: 1
+  - id: Milk
+    amount: 1
   products:
-    CafeLatte: 2
+  - id: CafeLatte
+    amount: 2
 
 - type: reaction
   id: CubaLibre
   reactants:
-    Cola:
-      amount: 1
-    Rum:
-      amount: 2
+  - id: Cola
+    amount: 1
+  - id: Rum
+    amount: 2
   products:
-    CubaLibre: 3
+  - id: CubaLibre
+    amount: 3
 
 - type: reaction
   id: DoctorsDelight
   reactants:
-    Cream:
-      amount: 2
-    JuiceLime:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    JuiceTomato:
-      amount: 1
-    Tricordrazine:
-      amount: 1
+  - id: Cream
+    amount: 2
+  - id: JuiceLime
+    amount: 1
+  - id: JuiceOrange
+    amount: 1
+  - id: JuiceTomato
+    amount: 1
+  - id: Tricordrazine
+    amount: 1
   products:
-    DoctorsDelight: 6
+  - id: DoctorsDelight
+    amount: 6
 
 - type: reaction
   id: DriestMartini
   reactants:
-    Gin:
-      amount: 1
-    Nothing:
-      amount: 1
+  - id: Gin
+    amount: 1
+  - id: Nothing
+    amount: 1
   products:
-    DriestMartini: 2
+  - id: DriestMartini
+    amount: 2
 
 - type: reaction
   id: ErikaSurprise
   reactants:
-    Ale:
-      amount: 2
-    Ice:
-      amount: 1
-    JuiceBanana:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    Whiskey:
-      amount: 1
+  - id: Ale
+    amount: 2
+  - id: Ice
+    amount: 1
+  - id: JuiceBanana
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: Whiskey
+    amount: 1
   products:
-    ErikaSurprise: 6
+  - id: ErikaSurprise
+    amount: 6
 
 - type: reaction
   id: FourteenLoko
   reactants:
-    Coffee:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    Vodka:
-      amount: 1
+  - id: Coffee
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: Vodka
+    amount: 1
   products:
-    FourteenLoko: 3
+  - id: FourteenLoko
+    amount: 3
 
 - type: reaction
   id: GargleBlaster
   reactants:
-    Cognac:
-      amount: 1
-    Gin:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    Vodka:
-      amount: 1
-    Whiskey:
-      amount: 1
+  - id: Cognac
+    amount: 1
+  - id: Gin
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: Vodka
+    amount: 1
+  - id: Whiskey
+    amount: 1
   products:
-    GargleBlaster: 5
+  - id: GargleBlaster
+    amount: 5
 
 - type: reaction
   id: GinFizz
   reactants:
-    Gin:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    SodaWater:
-      amount: 1
+  - id: Gin
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: SodaWater
+    amount: 1
   products:
-    GinFizz: 3
+  - id: GinFizz
+    amount: 3
 
 - type: reaction
   id: GinTonic
   reactants:
-    Gin:
-      amount: 2
-    TonicWater:
-      amount: 1
+  - id: Gin
+    amount: 2
+  - id: TonicWater
+    amount: 1
   products:
-    GinTonic: 3
+  - id: GinTonic
+    amount: 3
 
 - type: reaction
   id: Goldschlager
   reactants:
-    Gold:
-      amount: 1
-    Vodka:
-      amount: 10
+  - id: Gold
+    amount: 1
+  - id: Vodka
+    amount: 0
   products:
-    Goldschlager: 10
+  - id: Goldschlager
+    amount: 10
 
 - type: reaction
   id: Grog
   reactants:
-    Rum:
-      amount: 1
-    Water:
-      amount: 1
+  - id: Rum
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    Grog: 2
+  - id: Grog
+    amount: 2
 
 - type: reaction
   id: IceCream
   reactants:
-    Cream:
-      amount: 1
-    Ice:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Cream
+    amount: 1
+  - id: Ice
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    IceCream: 3
+  - id: IceCream
+    amount: 3
 
 - type: reaction
   id: IcedCoffee
   reactants:
-    Coffee:
-      amount: 2
-    Ice:
-      amount: 1
+  - id: Coffee
+    amount: 2
+  - id: Ice
+    amount: 1
   products:
-    IcedCoffee: 3
+  - id: IcedCoffee
+    amount: 3
 
 - type: reaction
   id: IcedGreenTea
   reactants:
-    GreenTea:
-      amount: 2
-    Ice:
-      amount: 1
+  - id: GreenTea
+    amount: 2
+  - id: Ice
+    amount: 1
   products:
-    IcedGreenTea: 3
+  - id: IcedGreenTea
+    amount: 3
 
 - type: reaction
   id: IcedTea
   reactants:
-    Ice:
-      amount: 1
-    Tea:
-      amount: 2
+  - id: Ice
+    amount: 1
+  - id: Tea
+    amount: 2
   products:
-    IcedTea: 3
+  - id: IcedTea
+    amount: 3
 
 - type: reaction
   id: IrishCarBomb
   reactants:
-    Ale:
-      amount: 1
-    IrishCream:
-      amount: 1
+  - id: Ale
+    amount: 1
+  - id: IrishCream
+    amount: 1
   products:
-    IrishCarBomb: 2
+  - id: IrishCarBomb
+    amount: 2
 
 - type: reaction
   id: IrishCoffee
   reactants:
-    Coffee:
-      amount: 2
-    IrishCream:
-      amount: 2
+  - id: Coffee
+    amount: 2
+  - id: IrishCream
+    amount: 2
   products:
-    IrishCoffee: 4
+  - id: IrishCoffee
+    amount: 4
 
 - type: reaction
   id: IrishCream
   reactants:
-    Cream:
-      amount: 1
-    Whiskey:
-      amount: 2
+  - id: Cream
+    amount: 1
+  - id: Whiskey
+    amount: 2
   products:
-    IrishCream: 3
+  - id: IrishCream
+    amount: 3
 
 - type: reaction
   id: Lemonade
   reactants:
-    JuiceLemon:
-      amount: 1
-    Sugar:
-      amount: 1
-    Water:
-      amount: 1
+  - id: JuiceLemon
+    amount: 1
+  - id: Sugar
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    Lemonade: 3
+  - id: Lemonade
+    amount: 3
 
 - type: reaction
   id: LemonLime
   reactants:
-    JuiceLemon:
-      amount: 1
-    JuiceLime:
-      amount: 1
-    SodaWater:
-      amount: 1
+  - id: JuiceLemon
+    amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: SodaWater
+    amount: 1
   products:
-    LemonLime: 3
+  - id: LemonLime
+    amount: 3
 
 - type: reaction
   id: LongIslandIcedTea
   reactants:
-    CubaLibre:
-      amount: 3
-    Gin:
-      amount: 1
-    Tequila:
-      amount: 1
-    Vodka:
-      amount: 1
+  - id: CubaLibre
+    amount: 3
+  - id: Gin
+    amount: 1
+  - id: Tequila
+    amount: 1
+  - id: Vodka
+    amount: 1
   products:
-    LongIslandIcedTea: 6
+  - id: LongIslandIcedTea
+    amount: 6
 
 - type: reaction
   id: KiraSpecial
   reactants:
-    JuiceLime:
-      amount: 1
-    JuiceOrange:
-      amount: 1
-    SodaWater:
-      amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: JuiceOrange
+    amount: 1
+  - id: SodaWater
+    amount: 1
   products:
-    KiraSpecial: 3
+  - id: KiraSpecial
+    amount: 3
 
 - type: reaction
   id: ManlyDorf
   reactants:
-    Ale:
-      amount: 2
-    Beer:
-      amount: 1
+  - id: Ale
+    amount: 2
+  - id: Beer
+    amount: 1
   products:
-    ManlyDorf: 3
+  - id: ManlyDorf
+    amount: 3
 
 - type: reaction
   id: Martini
   reactants:
-    Gin:
-      amount: 2
-    Vermouth:
-      amount: 1
+  - id: Gin
+    amount: 2
+  - id: Vermouth
+    amount: 1
   products:
-    Martini: 3
+  - id: Martini
+    amount: 3
 
 - type: reaction
   id: Mojito
   reactants:
-    JuiceLime:
-      amount: 1
-    Rum:
-      amount: 1
-    SodaWater:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: JuiceLime
+    amount: 1
+  - id: Rum
+    amount: 1
+  - id: SodaWater
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    Mojito: 4
+  - id: Mojito
+    amount: 4
 
 - type: reaction
   id: Moonshine
   reactants:
-    Tequila:
-      amount: 1
-    Vodka:
-      amount: 1
-    Whiskey:
-      amount: 1
+  - id: Tequila
+    amount: 1
+  - id: Vodka
+    amount: 1
+  - id: Whiskey
+    amount: 1
   products:
-    Moonshine: 3
+  - id: Moonshine
+    amount: 3
 
 - type: reaction
   id: NuclearCola
   reactants:
-    Cola:
-      amount: 5
-    Uranium:
-      amount: 1
+  - id: Cola
+    amount: 5
+  - id: Uranium
+    amount: 1
   products:
-    NuclearCola: 5
+  - id: NuclearCola
+    amount: 5
 
 - type: reaction
   id: Patron
   reactants:
-    Tequila:
-      amount: 10
-    Silver:
-      amount: 1
+  - id: Tequila
+    amount: 0
+  - id: Silver
+    amount: 1
   products:
-    Patron: 10
+  - id: Patron
+    amount: 10
 
 - type: reaction
   id: Rewriter
   reactants:
-    Coffee:
-      amount: 1
-    SpaceMountainWind:
-      amount: 1
+  - id: Coffee
+    amount: 1
+  - id: SpaceMountainWind
+    amount: 1
   products:
-    Rewriter: 2
+  - id: Rewriter
+    amount: 2
 
 - type: reaction
   id: RootBeerFloat
   reactants:
-    RootBeer:
-      amount: 2
-    IceCream:
-      amount: 1
+  - id: RootBeer
+    amount: 2
+  - id: IceCream
+    amount: 1
   products:
-    RootBeerFloat: 3
+  - id: RootBeerFloat
+    amount: 3
 
 - type: reaction
   id: ScrewdriverCocktail
   reactants:
-    JuiceOrange:
-      amount: 1
-    Vodka:
-      amount: 2
+  - id: JuiceOrange
+    amount: 1
+  - id: Vodka
+    amount: 2
   products:
-    ScrewdriverCocktail: 3
+  - id: ScrewdriverCocktail
+    amount: 3
 
 - type: reaction
   id: SoyLatte
   reactants:
-    Coffee:
-      amount: 1
-    MilkSoy:
-      amount: 1
+  - id: Coffee
+    amount: 1
+  - id: MilkSoy
+    amount: 1
   products:
-    SoyLatte: 2
+  - id: SoyLatte
+    amount: 2
 
 - type: reaction
   id: Starkist
   reactants:
-    Cola:
-      amount: 1
-    JuiceOrange:
-      amount: 2
+  - id: Cola
+    amount: 1
+  - id: JuiceOrange
+    amount: 2
   products:
-    Starkist: 3
+  - id: Starkist
+    amount: 3
 
 - type: reaction
   id: SyndicateBomb
   reactants:
-    Beer:
-      amount: 1
-    WhiskeyCola:
-      amount: 1
+  - id: Beer
+    amount: 1
+  - id: WhiskeyCola
+    amount: 1
   products:
-    SyndicateBomb: 2
+  - id: SyndicateBomb
+    amount: 2
 
 - type: reaction
   id: TequilaSunrise
   reactants:
-    JuiceOrange:
-      amount: 1
-    Tequila:
-      amount: 2
+  - id: JuiceOrange
+    amount: 1
+  - id: Tequila
+    amount: 2
   products:
-    TequilaSunrise: 3
+  - id: TequilaSunrise
+    amount: 3
 
 - type: reaction
   id: ThreeMileIsland
   reactants:
-    LongIslandIcedTea:
-      amount: 10
-    Uranium:
-      amount: 1
+  - id: LongIslandIcedTea
+    amount: 0
+  - id: Uranium
+    amount: 1
   products:
-    ThreeMileIsland: 10
+  - id: ThreeMileIsland
+    amount: 10
 
 - type: reaction
   id: VodkaMartini
   reactants:
-    Vermouth:
-      amount: 1
-    Vodka:
-      amount: 2
+  - id: Vermouth
+    amount: 1
+  - id: Vodka
+    amount: 2
   products:
-    VodkaMartini: 3
+  - id: VodkaMartini
+    amount: 3
 
 - type: reaction
   id: WhiskeyCola
   reactants:
-    Cola:
-      amount: 1
-    Whiskey:
-      amount: 2
+  - id: Cola
+    amount: 1
+  - id: Whiskey
+    amount: 2
   products:
-    WhiskeyCola: 3
+  - id: WhiskeyCola
+    amount: 3
 
 - type: reaction
   id: WhiteRussian
   reactants:
-    BlackRussian:
-      amount: 2
-    Cream:
-      amount: 1
+  - id: BlackRussian
+    amount: 2
+  - id: Cream
+    amount: 1
   products:
-    WhiteRussian: 3
+  - id: WhiteRussian
+    amount: 3
 
 - type: reaction
   id: HotRamen
   minTemp: 323.15
   reactants:
-    DryRamen:
-      amount: 3
-    Water:
-      amount: 1
+  - id: DryRamen
+    amount: 3
+  - id: Water
+    amount: 1
   products:
-    HotRamen: 3
+  - id: HotRamen
+    amount: 3
 
 - type: reaction
   id: Pilk
   reactants:
-    Cola:
-      amount: 1
-    Milk:
-      amount: 1
+  - id: Cola
+    amount: 1
+  - id: Milk
+    amount: 1
   products:
-    Pilk: 2
+  - id: Pilk
+    amount: 2

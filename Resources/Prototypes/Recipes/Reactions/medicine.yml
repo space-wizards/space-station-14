@@ -1,357 +1,388 @@
 - type: reaction
   id: Dylovene
   reactants:
-    Silicon:
-      amount: 1
-    Nitrogen:
-      amount: 1
-    Potassium:
-      amount: 1
+  - id: Silicon
+    amount: 1
+  - id: Nitrogen
+    amount: 1
+  - id: Potassium
+    amount: 1
   products:
-    Dylovene: 3
+  - id: Dylovene
+    amount: 3
 
 - type: reaction
   id: Ethylredoxrazine
   reactants:
-    Oxygen:
-      amount: 1
-    Dylovene:
-      amount: 1
-    Carbon:
-      amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Dylovene
+    amount: 1
+  - id: Carbon
+    amount: 1
   products:
-    Ethylredoxrazine: 3
+  - id: Ethylredoxrazine
+    amount: 3
 
 - type: reaction
   id: Cryptobiolin
   reactants:
-    Potassium:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Potassium
+    amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    Cryptobiolin: 3
+  - id: Cryptobiolin
+    amount: 3
 
 - type: reaction
   id: Arithrazine
   reactants:
-    Hyronalin:
-      amount: 1
-    Hydrogen:
-      amount: 1
+  - id: Hyronalin
+    amount: 1
+  - id: Hydrogen
+    amount: 1
   products:
-    Arithrazine: 2
+  - id: Arithrazine
+    amount: 2
 
 - type: reaction
   id: Bicaridine
   reactants:
-    Inaprovaline:
-      amount: 1
-    Carbon:
-      amount: 1
+  - id: Inaprovaline
+    amount: 1
+  - id: Carbon
+    amount: 1
   products:
-    Bicaridine: 2
+  - id: Bicaridine
+    amount: 2
 
 - type: reaction
   id: Cryoxadone
   reactants:
-    Dexalin:
-      amount: 1
-    Water:
-      amount: 1
-    Oxygen:
-      amount: 1
+  - id: Dexalin
+    amount: 1
+  - id: Water
+    amount: 1
+  - id: Oxygen
+    amount: 1
   products:
-    Cryoxadone: 3
+  - id: Cryoxadone
+    amount: 3
 
 - type: reaction
   id: Epinephrine
   reactants:
-    Phenol:
-      amount: 1
-    Acetone:
-      amount: 1
-    Diethylamine:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Chlorine:
-      amount: 1
-    Hydrogen:
-      amount: 1
+  - id: Phenol
+    amount: 1
+  - id: Acetone
+    amount: 1
+  - id: Diethylamine
+    amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Chlorine
+    amount: 1
+  - id: Hydrogen
+    amount: 1
   products:
-    Epinephrine: 6
+  - id: Epinephrine
+    amount: 6
 
 - type: reaction
   id: Dermaline
   reactants:
-    Kelotane:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Phosphorus:
-      amount: 1
+  - id: Kelotane
+    amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Phosphorus
+    amount: 1
   products:
-    Dermaline: 3
+  - id: Dermaline
+    amount: 3
 
 - type: reaction
   id: Dexalin
   reactants:
-    Oxygen:
-      amount: 2
-    Plasma:
-      amount: 5
-      catalyst: true
+  - id: Oxygen
+    amount: 2
+  - id: Plasma
+    amount: 5
+    catalyst: true
   products:
-    Dexalin: 3
+  - id: Dexalin
+    amount: 3
 
 - type: reaction
   id: DexalinPlus
   reactants:
-    Dexalin:
-      amount: 1
-    Carbon:
-      amount: 1
-    Iron:
-      amount: 1
+  - id: Dexalin
+    amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Iron
+    amount: 1
   products:
-    DexalinPlus: 3
+  - id: DexalinPlus
+    amount: 3
 
 - type: reaction
   id: Hyronalin
   reactants:
-    Radium:
-      amount: 1
-    Dylovene:
-      amount: 1
+  - id: Radium
+    amount: 1
+  - id: Dylovene
+    amount: 1
   products:
-    Hyronalin: 2
+  - id: Hyronalin
+    amount: 2
 
 - type: reaction
   id: Inaprovaline
   reactants:
-    Oxygen:
-      amount: 1
-    Carbon:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    Inaprovaline: 3
+  - id: Inaprovaline
+    amount: 3
 
 - type: reaction
   id: Ipecac
   reactants:
-    Dylovene:
-      amount: 1
-    Ammonia:
-      amount: 1
+  - id: Dylovene
+    amount: 1
+  - id: Ammonia
+    amount: 1
   products:
-    Ipecac: 2
+  - id: Ipecac
+    amount: 2
 
 - type: reaction
   id: TranexamicAcid
   reactants:
-    Inaprovaline:
-      amount: 1
-    SulfuricAcid:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Inaprovaline
+    amount: 1
+  - id: SulfuricAcid
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    TranexamicAcid: 3
+  - id: TranexamicAcid
+    amount: 3
 
 - type: reaction
   id: Kelotane
   reactants:
-    Silicon:
-      amount: 1
-    Carbon:
-      amount: 1
+  - id: Silicon
+    amount: 1
+  - id: Carbon
+    amount: 1
   products:
-    Kelotane: 2
+  - id: Kelotane
+    amount: 2
 
 - type: reaction
   id: Leporazine
   reactants:
-    Silicon:
-      amount: 1
-    Copper:
-      amount: 1
-    Plasma:
-      amount: 5
-      catalyst: true
+  - id: Silicon
+    amount: 1
+  - id: Copper
+    amount: 1
+  - id: Plasma
+    amount: 5
+    catalyst: true
   products:
-    Leporazine: 2
+  - id: Leporazine
+    amount: 2
 
 - type: reaction
   id: Phalanximine
   reactants:
-    Hyronalin:
-      amount: 1
-    Ethanol:
-      amount: 1
-    UnstableMutagen:
-      amount: 1
+  - id: Hyronalin
+    amount: 1
+  - id: Ethanol
+    amount: 1
+  - id: UnstableMutagen
+    amount: 1
   products:
-    Phalanximine: 3
+  - id: Phalanximine
+    amount: 3
 
 - type: reaction
   id: Romerol
   reactants:
-    Phalanximine:
-      amount: 1
-    Tricordrazine:
-      amount: 1
+  - id: Phalanximine
+    amount: 1
+  - id: Tricordrazine
+    amount: 1
   products:
-    Romerol: 2
+  - id: Romerol
+    amount: 2
 
 - type: reaction
   id: Synaptizine
   reactants:
-    Lithium:
-      amount: 1
-    Sugar:
-      amount: 1
-    Water:
-      amount: 1
+  - id: Lithium
+    amount: 1
+  - id: Sugar
+    amount: 1
+  - id: Water
+    amount: 1
   products:
-    Synaptizine: 3
+  - id: Synaptizine
+    amount: 3
 
 - type: reaction
   id: Tricordrazine
   reactants:
-    Inaprovaline:
-      amount: 1
-    Dylovene:
-      amount: 1
+  - id: Inaprovaline
+    amount: 1
+  - id: Dylovene
+    amount: 1
   products:
-    Tricordrazine: 2
+  - id: Tricordrazine
+    amount: 2
 
 - type: reaction
   id: HeartbreakerToxin #heat to 37C once temperatures supported
   reactants:
-    Dexalin:
-      amount: 1
-    MindbreakerToxin:
-      amount: 1
+  - id: Dexalin
+    amount: 1
+  - id: MindbreakerToxin
+    amount: 1
   products:
-    HeartbreakerToxin: 2
+  - id: HeartbreakerToxin
+    amount: 2
 
 - type: reaction
   id: Impedrezene
   reactants:
-    Mercury:
-      amount: 1
-    Oxygen:
-      amount: 1
-    Sugar:
-      amount: 1
+  - id: Mercury
+    amount: 1
+  - id: Oxygen
+    amount: 1
+  - id: Sugar
+    amount: 1
   products:
-    Impedrezene: 3
+  - id: Impedrezene
+    amount: 3
 
 - type: reaction
   id: Lexorin
   impact: High
   reactants:
-    Ammonia:
-      amount: 1
-    Plasma:
-      amount: 1
+  - id: Ammonia
+    amount: 1
+  - id: Plasma
+    amount: 1
   products:
-    Lexorin: 2
+  - id: Lexorin
+    amount: 2
 
 - type: reaction
   id: Lipozine
   reactants:
-    TableSalt:
-      amount: 1
-    Ethanol:
-      amount: 1
-    Radium:
-      amount: 1
+  - id: TableSalt
+    amount: 1
+  - id: Ethanol
+    amount: 1
+  - id: Radium
+    amount: 1
   products:
-    Lipozine: 3
+  - id: Lipozine
+    amount: 3
 
 - type: reaction
   id: MindbreakerToxin
   reactants:
-    Silicon:
-      amount: 1
-    Hydrogen:
-      amount: 1
-    Dylovene:
-      amount: 1
+  - id: Silicon
+    amount: 1
+  - id: Hydrogen
+    amount: 1
+  - id: Dylovene
+    amount: 1
   products:
-    MindbreakerToxin: 3
+  - id: MindbreakerToxin
+    amount: 3
 
 - type: reaction
   id: SpaceDrugs
   reactants:
-    Mercury:
-      amount: 1
-    Sugar:
-      amount: 1
-    Lithium:
-      amount: 1
+  - id: Mercury
+    amount: 1
+  - id: Sugar
+    amount: 1
+  - id: Lithium
+    amount: 1
   products:
-    SpaceDrugs: 3
+  - id: SpaceDrugs
+    amount: 3
 
 - type: reaction
   id: Ultravasculine
   reactants:
-    Histamine:
-      amount: 2
-    Plasma:
-      amount: 5
-      catalyst: true
+  - id: Histamine
+    amount: 2
+  - id: Plasma
+    amount: 5
+    catalyst: true
   products:
-    Ultravasculine: 2
+  - id: Ultravasculine
+    amount: 2
 
 - type: reaction
   id: Oculine
   reactants:
-    TableSalt:
-      amount: 1
-    Blood:
-      amount: 1
-    Carbon:
-      amount: 1
-    Hydrogen:
-      amount: 1
+  - id: TableSalt
+    amount: 1
+  - id: Blood
+    amount: 1
+  - id: Carbon
+    amount: 1
+  - id: Hydrogen
+    amount: 1
   products:
-    Oculine: 4
+  - id: Oculine
+    amount: 4
 
 - type: reaction
   id: Siderlac
   reactants:
-    Aloe:
-      amount: 1
-    Stellibinin:
-      amount: 1
+  - id: Aloe
+    amount: 1
+  - id: Stellibinin
+    amount: 1
   products:
-    Siderlac: 2
+  - id: Siderlac
+    amount: 2
 
 - type: reaction
   id: Spaceacillin
   reactants:
-    Cryptobiolin:
-      amount: 1
-    Inaprovaline:
-      amount: 1
+  - id: Cryptobiolin
+    amount: 1
+  - id: Inaprovaline
+    amount: 1
   products:
-    Spaceacillin: 2
+  - id: Spaceacillin
+    amount: 2
 
 - type: reaction
   id: Cognizine
   reactants:
-    CarpoToxin:
-      amount: 1
-    Siderlac:
-      amount: 1
-    Acetone:
-      amount: 1
+  - id: CarpoToxin
+    amount: 1
+  - id: Siderlac
+    amount: 1
+  - id: Acetone
+    amount: 1
   products:
-    Cognizine: 1
+  - id: Cognizine
+    amount: 1

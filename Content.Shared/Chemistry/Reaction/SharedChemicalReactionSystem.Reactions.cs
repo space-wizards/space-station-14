@@ -70,6 +70,8 @@ public abstract partial class SharedChemicalReactionSystem
                 break;
             case (false, false): // All reactions in the target solution have terminated. Remove the reaction group and, if necessary, remove the reacting component.
                 allReactions!.ReactionGroups.Remove(solution);
+                if (allReactions!.ReactionGroups.Count <= 0)
+                    QueueLocalEvent(new AllReactionsStoppedMessage(uid, allReactions));
                 break;
         }
     }
@@ -106,28 +108,30 @@ public abstract partial class SharedChemicalReactionSystem
                 continue;
             }
 
-            if (data!.State == ReactionState.Starting) // The ! is necessary because [MaybeNullWhen(false)] does not override the inherent nullability of a type? argument.
-            {
-                ongoing ??= new();
-                ongoing.Add(reaction, data);
+            switch(data!.State)
+            {   // Both starting reactions and progressing reactions probably change the state of the solution.
+                case ReactionState.Starting:
+                    ongoing ??= new();
+                    ongoing.Add(reaction, data);
+                    goto case ReactionState.Running;
+                case ReactionState.Running:
+                    result = true;
+                    break;
             }
-
-            result = true;
-            break;
         }
 
         reactions.ExceptWith(toRemove);
 
-        if (products == null)
-            return result;
-
-        foreach(var product in products)
+        if (products != null && products.TotalVolume > FixedPoint2.Zero)
         {
-            if (_reactions.TryGetValue(product.ReagentId, out var productReactions))
-                reactions.UnionWith(productReactions);
+            foreach(var product in products)
+            {
+                if (_reactions.TryGetValue(product.ReagentId, out var productReactions))
+                    reactions.UnionWith(productReactions);
+            }
+            solution.AddSolution(products);
         }
 
-        solution.AddSolution(products);
         return result;
     }
 
@@ -157,13 +161,12 @@ public abstract partial class SharedChemicalReactionSystem
 
         if (data == null)
             OnReactionStart(reaction, uid, solution, curTime, out data);
+        else if(amount > 0f)
+            OnReactionStep(reaction, uid, solution, curTime, amount, data, out products);
         else
-            data.State = ReactionState.Running; // Do this here so the last cycle un-cancels continuous reactions.
+            data.State = ReactionState.Paused;
 
-        if (amount <= FixedPoint2.Zero)
-            return false;
-
-        return OnReactionStep(reaction, uid, solution, curTime, amount, data, out products);
+        return true;
     }
 
     /// <summary>
@@ -176,19 +179,19 @@ public abstract partial class SharedChemicalReactionSystem
     /// <param name="data">The state of the reaction ongoing within the solution.</param>
     /// <param name="amount">The amount of the reaction which can occur within the solution. May be <= <see cref="FixedPoint2.Zero"/>.</param>
     /// <param name="mixer">The state of some device being used to mix the solution if any such entity exists.</param>
-    protected bool CanReact(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, ReactionData? data, out FixedPoint2 amount, ReactionMixerComponent? mixer = null)
+    protected bool CanReact(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, ReactionData? data, out float amount, ReactionMixerComponent? mixer = null)
     {
-        amount = FixedPoint2.MaxValue;
+        amount = float.PositiveInfinity;
         if (reaction.MinimumTemperature > float.NegativeInfinity
         ||  reaction.MaximumTemperature < float.PositiveInfinity)
         {
             if (solution.Temperature < reaction.MinimumTemperature)
             {
-                amount = FixedPoint2.Zero;
+                amount = 0f;
                 return false;
             } else if(solution.Temperature > reaction.MaximumTemperature)
             {
-                amount = FixedPoint2.Zero;
+                amount = 0f;
                 return false;
             }
 
@@ -207,10 +210,10 @@ public abstract partial class SharedChemicalReactionSystem
                 if (divisor != 0)
                 {
                     limit = (reaction.MinimumTemperature * C0 - T0C0) / divisor;
-                    if (limit >= FixedPoint2.Zero && limit < amount)
+                    if (limit >= 0f && limit < amount)
                     {   // If the limit is negative then the reaction will bring the solution further away from the thermal limit as it progresses.
                         amount = limit;
-                        if (amount <= FixedPoint2.Zero)
+                        if (amount <= 0f)
                             return false;
                     }
                 }
@@ -219,23 +222,23 @@ public abstract partial class SharedChemicalReactionSystem
                 if (divisor != 0)
                 {
                     limit = (reaction.MaximumTemperature * C0 - T0C0) / divisor;
-                    if (limit >= FixedPoint2.Zero && limit < amount)
+                    if (limit >= 0f && limit < amount)
                     {   // If the limit is negative then the reaction will bring the solution further away from the thermal limit as it progresses.
                         amount = limit;
-                        if (amount <= FixedPoint2.Zero)
+                        if (amount <= 0f)
                             return false;
                     }
                 }
             }
         }
 
-        if(!reaction.CanOverflow && reaction.VolumeDelta > FixedPoint2.Zero)
+        if(!reaction.CanOverflow && reaction.VolumeDelta > 0f)
         {
-            var limit = solution.AvailableVolume / reaction.VolumeDelta;
+            var limit = (float)(solution.AvailableVolume / reaction.VolumeDelta);
             if (limit < amount)
             {
                 amount = limit;
-                if (amount <= FixedPoint2.Zero)
+                if (amount <= 0f)
                     return false;
             }
         }
@@ -246,7 +249,7 @@ public abstract partial class SharedChemicalReactionSystem
         RaiseLocalEvent(uid, attempt, false);
         if (attempt.Cancelled)
         {
-            amount = FixedPoint2.Zero;
+            amount = 0f;
             return false;
         }
 
@@ -254,7 +257,7 @@ public abstract partial class SharedChemicalReactionSystem
         && (data == null || reaction.NeedsContinuousMixing)
         && (!currentlyMixingTypes.Any() || reaction.MixingCategories.Except(currentlyMixingTypes).Any()))
         {
-            amount = FixedPoint2.Zero;
+            amount = 0f;
             return false;
         }
 
@@ -277,7 +280,7 @@ public abstract partial class SharedChemicalReactionSystem
                 continue;
             }
 
-            var unitReactions = reactantQuantity / reactantCoefficient;
+            var unitReactions = (float)(reactantQuantity / reactantCoefficient);
 
             if (unitReactions < amount)
                 amount = unitReactions;
@@ -287,17 +290,15 @@ public abstract partial class SharedChemicalReactionSystem
         {   // Infinitely fast reactions are considered as completing in a single update even with a timestep of size 0.
             if (reaction.Quantized)
                 amount = (int) amount;
-            return amount > FixedPoint2.Zero;
+            return amount > FixedPoint2.Epsilon;
         }
-        else if(amount <= FixedPoint2.Zero)
+
+        if(amount < (reaction.Quantized ? 1 : FixedPoint2.Epsilon))
             return false;
 
-        if (reaction.Quantized && amount < 1)
-            return false; // While we want continuous quantized reactions to creep up on their target not having this check would permit them to creep up while not actually having enough reagents to complete a step.
-
         TimeSpan frameTime = data != null ? (curTime - data.LastTime) : TimeSpan.Zero;
-        var rateLimit = reaction.ReactionRate * frameTime.TotalSeconds;
-        if (rateLimit <= amount)
+        var rateLimit = reaction.ReactionRate * (float)frameTime.TotalSeconds;
+        if (rateLimit < amount)
             amount = rateLimit;
         return true; // We technically _can_ react, we are just limited by the available time.
     }
@@ -310,7 +311,7 @@ public abstract partial class SharedChemicalReactionSystem
     /// <param name="solution">The <see cref="Solution"/> that the reaction is beginning within.</param>
     /// <param name="curTime">The reaction that continuing to react.</param>
     /// <param name="data">A wrapper for the state of the reaction within the solution created at the start of the reaction.</param>
-    protected void OnReactionStart(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, out ReactionData data)
+    protected virtual void OnReactionStart(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, out ReactionData data)
     {
         data = new(curTime);
         data.State = ReactionState.Starting;
@@ -348,24 +349,26 @@ public abstract partial class SharedChemicalReactionSystem
     /// <param name="amount">The size of the reaction step which is occuring.</param>
     /// <param name="data">The state of the reaction ongoing in the solution.</param>
     /// <param name="products">The set of reagents produced by this reaction during its reaction.</param>
-    protected bool OnReactionStep(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, FixedPoint2 amount, ReactionData data, out Solution? products)
+    protected virtual bool OnReactionStep(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, float amount, ReactionData data, out Solution? products)
     {
+        data.State = ReactionState.Running;
         TimeSpan frameTime = curTime - data.LastTime;
         data.LastTime = curTime;
+        ref var stepAmt = ref data.LastStep;
+        stepAmt = data.TotalQuantity;
+        data.TotalAmount += amount;
 
         if (reaction.Quantized)
-        {   // Quantized reactions can only really occur in steps size n in N. This makes them compatible with continuous reactions by having the continuous reaction very slowly happen in the background and then the effects of the reaction only occur when they have a total reaction rate of at least 1.
-            var oldQuantity = (int) data.TotalQuantity;
-            data.TotalQuantity += amount;
-            amount = ((int)data.TotalQuantity) - oldQuantity;
-            if (amount <= FixedPoint2.Zero)
-            {
-                products = null;
-                return false;
-            }
-        }
+            /// This makes it possible to have continuous quantized reactions. They will tick up in the background, they just won't do anything until they accumulate at least one unit reaction.
+            stepAmt = ((int)data.TotalQuantity - (int)stepAmt);
         else
-            data.TotalQuantity += amount;
+            stepAmt = data.TotalQuantity - stepAmt;
+
+        if (stepAmt <= FixedPoint2.Epsilon)
+        {   // Please don't let the reaction do anything unless we have enough oomph to change the solution.
+            products = null;
+            return false;
+        }
 
         foreach(var reactant in reaction.Reactants)
         {
@@ -373,19 +376,23 @@ public abstract partial class SharedChemicalReactionSystem
                 solution.RemoveReagent(reactant.Id, reactant.Amount * amount);
         }
 
-        products = new();
         if (reaction.Products.Any())
         {
+            products = new();
             foreach(var (productId, productAmount) in reaction.Products)
             {
                 products.AddReagent(productId, productAmount * amount);
             }
+            /// Note: This assumes that the products produced by a unit reaction have nonzero heat capacity.
             products.Temperature = reaction.ProductTemperature;
         }
         else
+        {
+            products = null;
             /// Word of warning, if the reaction doesn't produce any products and also produces heat the temperature will approach
             /// <see cref="float.PositiveInfinity"/> if the reaction consumes everything in the solution.
             solution.ThermalEnergy += reaction.HeatDelta * (float)amount;
+        }
 
 
         var args = new ReagentEffectArgs(uid, null, solution, null, reaction, amount, frameTime, EntityManager, ReactionMethod.None, 1);
@@ -422,7 +429,7 @@ public abstract partial class SharedChemicalReactionSystem
     /// <param name="solution">The <see cref="Solution"/> that the reaction is beginning within.</param>
     /// <param name="curTime">The reaction that continuing to react.</param>
     /// <param name="data">A wrapper for the state of the reaction within the solution created at the start of the reaction.</param>
-    protected void OnReactionStop(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, ReactionData data)
+    protected virtual void OnReactionStop(ReactionSpecification reaction, EntityUid uid, Solution solution, TimeSpan curTime, ReactionData data)
     {
         data.State = ReactionState.Stopped;
         if (reaction.StopEffects == null)
