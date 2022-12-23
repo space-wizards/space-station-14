@@ -587,7 +587,7 @@
   description: uplink-clothing-electro-gloves-desc
   productEntity: ElectroInsulatedGloves
   cost:
-    Telecrystal: 6
+    Telecrystal: 8
   categories:
   - UplinkArmor
 
