@@ -4,6 +4,7 @@ salvage-system-announcement-losing = The magnet is no longer able to hold the sa
 salvage-system-announcement-lost = The salvagable debris have been lost.
 
 salvage-system-announcement-spawn-magnet-lost = The salvage magnet has been lost.
+salvage-system-announcement-spawn-magnet-paused = The salvage magnet disengaged unexpectedly!
 salvage-system-announcement-spawn-no-debris-available = No debris could be recovered by the salvage magnet.
 salvage-system-announcement-spawn-debris-disintegrated = Debris disintegrated during orbital transfer.
 
