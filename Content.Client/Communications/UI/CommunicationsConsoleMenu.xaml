@@ -23,15 +23,11 @@
                 <BoxContainer VerticalExpand="True" VerticalAlignment="Bottom">
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
                         <GridContainer Columns="2">
-
                             <!-- Row with alert level light and label -->
-                            <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="6 2 6 2">
-                                <PanelContainer Name="AlertLevelLight" MaxSize="72 24">
-                                    <PanelContainer.PanelOverride>
-                                        <gfx:StyleBoxFlat BackgroundColor="#000000"/>
-                                    </PanelContainer.PanelOverride>
-                                </PanelContainer>
-                            </PanelContainer>
+                            <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="48 18"
+                                TexturePath="/Textures/Interface/Nano/rounded_button.svg.96dpi.png"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
                             <Label Text="{Loc 'comms-console-current-alert-label'}"  />
 
                             <!-- Row with a visual seperator line -->

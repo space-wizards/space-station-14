@@ -139,10 +139,7 @@ namespace Content.Client.Communications.UI
 
                         if (colors != null)
                         {
-                            AlertLevelLight.PanelOverride = new StyleBoxFlat
-                            {
-                                BackgroundColor = colors[i],
-                            };
+                            AlertLevelLight.ModulateSelfOverride = colors[i];
                         }
                     }
 
