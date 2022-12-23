@@ -122,6 +122,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("stationGoal"); // Corvax-StationGoal
+            _prototypeManager.RegisterIgnore("loadout"); // Corvax-Loadout
             _prototypeManager.RegisterIgnore("flavor");
 
             _componentFactory.GenerateNetIds();
