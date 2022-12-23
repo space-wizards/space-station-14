@@ -13,7 +13,7 @@ public sealed class ModifyBloodLevel : ReagentEffect
     [DataField("amount")]
     public FixedPoint2 Amount = 1.0f;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.SolutionEntity, out var blood))
         {

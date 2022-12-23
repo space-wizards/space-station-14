@@ -46,8 +46,8 @@ namespace Content.Shared.Chemistry
                 return;
 
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
-            var args = new ReagentEffectArgs(uid, null, source, reagent,
-                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method, 1f);
+            var args = new ReagentEffectArgs(uid, null, source, reagent, null,
+                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, TimeSpan.Zero, EntityManager, method, 1f);
 
             // First, check if the reagent wants to apply any effects.
             if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)
@@ -65,7 +65,7 @@ namespace Content.Shared.Chemistry
 
                     foreach (var effect in val.Effects)
                     {
-                        if (!effect.ShouldApply(args, _robustRandom))
+                        if (!effect.ShouldApply(ref args, _robustRandom))
                             continue;
 
                         if (effect.ShouldLog)
@@ -75,7 +75,7 @@ namespace Content.Shared.Chemistry
                                 $"Reactive effect {effect.GetType().Name:effect} of reagent {reagent.ID:reagent} with method {method} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                         }
 
-                        effect.Effect(args);
+                        effect.Effect(ref args);
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace Content.Shared.Chemistry
 
                     foreach (var effect in entry.Effects)
                     {
-                        if (!effect.ShouldApply(args, _robustRandom))
+                        if (!effect.ShouldApply(ref args, _robustRandom))
                             continue;
 
                         if (effect.ShouldLog)
@@ -103,7 +103,7 @@ namespace Content.Shared.Chemistry
                                 $"Reactive effect {effect.GetType().Name:effect} of {ToPrettyString(entity):entity} using reagent {reagent.ID:reagent} with method {method} at {Transform(entity).Coordinates:coordinates}");
                         }
 
-                        effect.Effect(args);
+                        effect.Effect(ref args);
                     }
                 }
             }

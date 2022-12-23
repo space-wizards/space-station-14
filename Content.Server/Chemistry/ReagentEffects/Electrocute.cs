@@ -16,7 +16,7 @@ public sealed class Electrocute : ReagentEffect
 
     public override bool ShouldLog => true;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         EntitySystem.Get<ElectrocutionSystem>().TryDoElectrocution(args.SolutionEntity, null,
             Math.Max((args.Quantity * ElectrocuteDamageScale).Int(), 1), TimeSpan.FromSeconds(ElectrocuteTime), Refresh, ignoreInsulation: true);

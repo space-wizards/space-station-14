@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         [DataField("maxIntensity")]
         [JsonIgnore]
         public float MaxIntensity = 5;
-        
+
         /// <summary>
         ///     How quickly intensity drops off as you move away from the epicenter
         /// </summary>
@@ -53,7 +53,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override bool ShouldLog => true;
         public override LogImpact LogImpact => LogImpact.High;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var intensity = MathF.Min((float) args.Quantity * IntensityPerUnit, MaxTotalIntensity);
 

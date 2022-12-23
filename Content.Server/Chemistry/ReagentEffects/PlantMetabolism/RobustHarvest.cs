@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
         [DataField("potencySeedlessThreshold")]
         public int PotencySeedlessThreshold = 30;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
                                     || plantHolderComp.Seed == null || plantHolderComp.Dead ||

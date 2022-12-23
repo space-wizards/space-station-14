@@ -21,7 +21,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("reagent")]
         public string? Reagent;
 
-        public override bool Condition(ReagentEffectArgs args)
+        public override bool Condition(ref ReagentEffectArgs args)
         {
             if (Reagent == null)
                 Reagent = args.Reagent.ID;

@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("type")]
         public StatusEffectMetabolismType Type = StatusEffectMetabolismType.Add;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var statusSys = args.EntityManager.EntitySysManager.GetEntitySystem<StatusEffectsSystem>();
 

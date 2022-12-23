@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("amount", required: true)]
         public FixedPoint2 Amount = default!;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Source != null)
             {

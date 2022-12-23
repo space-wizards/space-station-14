@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         [DataField("max")]
         public float Max = float.PositiveInfinity;
-        public override bool Condition(ReagentEffectArgs args)
+        public override bool Condition(ref ReagentEffectArgs args)
         {
             if (args.Source == null)
                 return false;

@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// </summary>
 public sealed class Scream : ReagentEffect
 {
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         EntitySystem.Get<VocalSystem>().TryScream(args.SolutionEntity);
     }

@@ -133,20 +133,20 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, 1f);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, null, amount.Quantity, TimeSpan.Zero, entMan, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
-                if (!plantMetabolizable.ShouldApply(args, random))
+                if (!plantMetabolizable.ShouldApply(ref args, random))
                     continue;
 
                 if (plantMetabolizable.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    EntitySystem.Get<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
+                    entMan.EntitySysManager.GetEntitySystem<SharedAdminLogSystem>().Add(LogType.ReagentEffect, plantMetabolizable.LogImpact,
                         $"Plant metabolism effect {plantMetabolizable.GetType().Name:effect} of reagent {ID:reagent} applied on entity {entMan.ToPrettyString(entity):entity} at {entMan.GetComponent<TransformComponent>(entity).Coordinates:coordinates}");
                 }
 
-                plantMetabolizable.Effect(args);
+                plantMetabolizable.Effect(ref args);
             }
         }
     }

@@ -9,7 +9,7 @@ public sealed class ModifyLungGas : ReagentEffect
     [DataField("ratios", required: true)]
     private Dictionary<Gas, float> _ratios = default!;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<LungComponent>(args.OrganEntity, out var lung))
         {

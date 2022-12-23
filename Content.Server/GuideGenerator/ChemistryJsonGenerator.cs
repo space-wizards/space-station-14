@@ -29,7 +29,7 @@ public sealed class ChemistryJsonGenerator
 
         foreach (var reaction in reactions)
         {
-            foreach (var product in reaction.Products.Keys)
+            foreach (var product in reaction.Products.Select((item, index) => item.Id ))
             {
                 prototypes[product].Recipes.Add(reaction.ID);
             }

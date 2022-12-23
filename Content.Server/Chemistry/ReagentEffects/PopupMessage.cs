@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("visualType")]
         public PopupType VisualType = PopupType.Small;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var popupSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedPopupSystem>();
             var random = IoCManager.Resolve<IRobustRandom>();

@@ -15,7 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override bool ShouldLog => true;
         public override LogImpact LogImpact => LogImpact.Medium;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out FlammableComponent? flammable)) return;
 

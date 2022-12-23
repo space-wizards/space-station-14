@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("amount")]
         public int Amount = -1;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Scale != 1f)
                 return;

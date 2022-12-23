@@ -18,7 +18,7 @@ public sealed class AdjustAlert : ReagentEffect
     [DataField("time")]
     public float Time;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var alertSys = EntitySystem.Get<AlertsSystem>();
         if (args.EntityManager.HasComponent<AlertsComponent>(args.SolutionEntity))

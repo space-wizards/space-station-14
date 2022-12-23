@@ -12,7 +12,7 @@ public sealed class ModifyBleedAmount : ReagentEffect
     [DataField("amount")]
     public float Amount = -1.0f;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<BloodstreamComponent>(args.SolutionEntity, out var blood))
         {

@@ -169,13 +169,12 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
-                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
-                        EntityManager, null, scale);
+                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, null, mostToRemove, TimeSpan.Zero, EntityManager, null, scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)
                     {
-                        if (!effect.ShouldApply(args, _random))
+                        if (!effect.ShouldApply(ref args, _random))
                             continue;
 
                         if (effect.ShouldLog)
@@ -184,7 +183,7 @@ namespace Content.Server.Body.Systems
                                 $"Metabolism effect {effect.GetType().Name:effect} of reagent {args.Reagent.LocalizedName:reagent} applied on entity {actualEntity:entity} at {Transform(actualEntity).Coordinates:coordinates}");
                         }
 
-                        effect.Effect(args);
+                        effect.Effect(ref args);
                     }
                 }
 

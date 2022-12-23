@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("cureChance")]
         public float CureChance = 0.15f;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var cureChance = CureChance;
 

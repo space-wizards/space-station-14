@@ -13,7 +13,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed class ChemMiasmaPoolSource : ReagentEffect
     {
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Scale != 1f)
                 return;

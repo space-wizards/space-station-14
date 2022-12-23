@@ -14,7 +14,7 @@ public sealed class HasTag : ReagentEffectCondition
     [DataField("invert")]
     public bool Invert = false;
 
-    public override bool Condition(ReagentEffectArgs args)
+    public override bool Condition(ref ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<TagComponent>(args.SolutionEntity, out var tag))
             return EntitySystem.Get<TagSystem>().HasTag(tag, Tag) ^ Invert;

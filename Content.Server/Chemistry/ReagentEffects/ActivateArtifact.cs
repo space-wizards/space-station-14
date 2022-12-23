@@ -5,7 +5,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed class ActivateArtifact : ReagentEffect
 {
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var artifact = args.EntityManager.EntitySysManager.GetEntitySystem<ArtifactSystem>();
         artifact.TryActivateArtifact(args.SolutionEntity);

@@ -19,7 +19,7 @@ public sealed class CreateGas : ReagentEffect
     public override bool ShouldLog => true;
     public override LogImpact LogImpact => LogImpact.High;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var atmosSys = args.EntityManager.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 

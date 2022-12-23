@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
         [DataField("refresh")]
         public bool Refresh = true;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var time = Time;
             time *= args.Scale;

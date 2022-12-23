@@ -19,9 +19,10 @@
       amount: 1
     Plasma:
       amount: 1
-  effects:
+  stepEffects:
   - !type:CreateGas
     gas: Plasma
+  startEffects:
   - !type:PopupMessage
     visualType: LargeCaution
     messages: [ "phlogiston-plasma-created" ]
@@ -37,7 +38,7 @@
       amount: 1
     Fluorine:
       amount: 3
-  effects:
+  stopEffects:
   # TODO solution temperature!!
   - !type:ExplosionReactionEffect
     explosionType: Default # 15 damage per intensity.
@@ -45,6 +46,7 @@
     intensityPerUnit: 3 # 12 total input reagent units reach max total intensity
     intensitySlope: 0.5
     maxTotalIntensity: 9
+  startEffects:
   - !type:PopupMessage
     messages: [ "clf3-explosion" ]
     type: Pvs

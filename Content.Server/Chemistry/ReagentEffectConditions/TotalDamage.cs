@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("min")]
         public FixedPoint2 Min = FixedPoint2.Zero;
 
-        public override bool Condition(ReagentEffectArgs args)
+        public override bool Condition(ref ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out DamageableComponent? damage))
             {

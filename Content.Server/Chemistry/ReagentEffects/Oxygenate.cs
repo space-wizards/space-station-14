@@ -9,7 +9,7 @@ public sealed class Oxygenate : ReagentEffect
     [DataField("factor")]
     public float Factor = 1f;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         if (args.EntityManager.TryGetComponent<RespiratorComponent>(args.SolutionEntity, out var resp))
         {

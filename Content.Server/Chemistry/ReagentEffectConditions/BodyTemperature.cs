@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         [DataField("max")]
         public float Max = float.MaxValue;
-        public override bool Condition(ReagentEffectArgs args)
+        public override bool Condition(ref ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
             {

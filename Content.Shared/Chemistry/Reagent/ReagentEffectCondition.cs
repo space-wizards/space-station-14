@@ -9,6 +9,6 @@ namespace Content.Shared.Chemistry.Reagent
     {
         [JsonPropertyName("id")] private protected string _id => this.GetType().Name;
 
-        public abstract bool Condition(ReagentEffectArgs args);
+        public abstract bool Condition(ref ReagentEffectArgs args);
     }
 }

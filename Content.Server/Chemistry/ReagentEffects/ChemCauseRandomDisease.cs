@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [ViewVariables(VVAccess.ReadWrite)]
         public List<string> Diseases = default!;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent<DiseasedComponent>(args.SolutionEntity, out var diseased))
                 return;

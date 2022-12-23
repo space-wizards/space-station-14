@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("temperature", required: true)] private float _temperature;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var solution = args.Source;
             if (solution == null)
@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <returns></returns>
         protected virtual float GetDeltaT(Solution solution) => Delta;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var solution = args.Source;
             if (solution == null)

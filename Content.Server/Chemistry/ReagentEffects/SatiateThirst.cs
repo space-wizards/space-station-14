@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public float HydrationFactor { get; set; } = 3.0f;
 
         /// Satiate thirst if a ThirstComponent can be found
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out ThirstComponent? thirst))
                 EntitySystem.Get<ThirstSystem>().UpdateThirst(thirst, HydrationFactor);

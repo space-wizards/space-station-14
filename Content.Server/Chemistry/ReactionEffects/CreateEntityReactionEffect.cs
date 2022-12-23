@@ -19,7 +19,7 @@ public sealed class CreateEntityReactionEffect : ReagentEffect
     [DataField("number")]
     public uint Number = 1;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);
         var quantity = Number * args.Quantity.Int();

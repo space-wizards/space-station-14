@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [DataDefinition]
     public sealed class PlantCryoxadone : ReagentEffect
     {
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (!args.EntityManager.TryGetComponent(args.SolutionEntity, out PlantHolderComponent? plantHolderComp)
             || plantHolderComp.Seed == null || plantHolderComp.Dead)

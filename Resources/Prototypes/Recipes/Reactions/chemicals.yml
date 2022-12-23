@@ -99,7 +99,7 @@
       amount: 1
     Potassium:
       amount: 1
-  effects:
+  stopEffects:
     - !type:ExplosionReactionEffect
       explosionType: Default
       maxIntensity: 1 # at most 15 damage per tile
@@ -118,7 +118,7 @@
       amount: 1
     Sugar:
       amount: 1
-  effects:
+  stopEffects:
     - !type:SmokeAreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
@@ -140,7 +140,7 @@
       amount: 1
     Water:
       amount: 1
-  effects:
+  stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1 #Range formula: rangeConstant + rangeMultiplier*sqrt(ReactionUnits)
@@ -167,7 +167,7 @@
       amount: 1
     FluorosulfuricAcid:
       amount: 1
-  effects:
+  stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1
@@ -194,7 +194,7 @@
       amount: 1
     FluorosulfuricAcid:
       amount: 1
-  effects:
+  stopEffects:
     - !type:FoamAreaReactionEffect
       rangeConstant: 0
       rangeMultiplier: 1.1

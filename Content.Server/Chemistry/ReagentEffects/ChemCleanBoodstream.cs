@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     {
         [DataField("cleanseRate")]
         public float CleanseRate = 3.0f;
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Source == null)
                 return;

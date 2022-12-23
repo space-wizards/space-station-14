@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
     [UsedImplicitly]
     public sealed class PlantAffectGrowth : PlantAdjustAttribute
     {
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (!CanMetabolize(args.SolutionEntity, out var plantHolderComp, args.EntityManager))
                 return;

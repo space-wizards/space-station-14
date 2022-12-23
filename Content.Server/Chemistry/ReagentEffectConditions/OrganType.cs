@@ -19,7 +19,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("shouldHave")]
         public bool ShouldHave = true;
 
-        public override bool Condition(ReagentEffectArgs args)
+        public override bool Condition(ref ReagentEffectArgs args)
         {
             if (args.OrganEntity == null)
                 return false;

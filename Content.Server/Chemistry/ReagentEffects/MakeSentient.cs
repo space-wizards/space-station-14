@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 
 public sealed class MakeSentient : ReagentEffect
 {
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;

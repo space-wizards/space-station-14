@@ -8,7 +8,7 @@
     Enzyme:
       amount: 5
       catalyst: true
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCheese
 
@@ -21,7 +21,7 @@
       amount: 15
     Water:
       amount: 10
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodDough
 
@@ -36,7 +36,7 @@
       amount: 12
     Sugar:
       amount: 5
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
 
@@ -50,7 +50,7 @@
     TableSalt:
       amount: 5
       catalyst: true
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodButter
 
@@ -65,12 +65,12 @@
       amount: 12
     TableSalt:
       amount: 5
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodDoughPie
 
 # TG has a cake recipe that uses soy milk instead of eggs.
-# but afaik it spawns the exact same cake batter entity. 
+# but afaik it spawns the exact same cake batter entity.
 # Maybe change this if you want to do allergies or something
 - type: reaction
   id: CreateVeganCakeBatter
@@ -83,7 +83,7 @@
       amount: 15
     Sugar:
       amount: 5
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
 
@@ -98,7 +98,7 @@
       amount: 5
   products:
     Ketchup: 15
-    
+
 - type: reaction
   id: CookingBbqSauce
   reactants:
@@ -107,10 +107,10 @@
     Vinegar:
       amount: 5
     Sugar:
-      amount: 5   
+      amount: 5
   products:
     BbqSauce: 15
-    
+
 - type: reaction
   id: CookingHotsauce
   reactants:
@@ -134,6 +134,6 @@
       amount: 5
     Egg:
       amount: 6
-  effects:
+  stepEffects:
     - !type:CreateEntityReactionEffect
       entity: FoodMeatMeatball

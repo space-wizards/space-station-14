@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("amount")]
         public float Amount;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
             {

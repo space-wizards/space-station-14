@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("solution")]
         private string _solution = "reagents";
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Reagent == null)
                 return;

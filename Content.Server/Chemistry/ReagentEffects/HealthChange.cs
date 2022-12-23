@@ -31,7 +31,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         [JsonPropertyName("ignoreResistances")]
         public bool IgnoreResistances = true;
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
             scale *= args.Scale;

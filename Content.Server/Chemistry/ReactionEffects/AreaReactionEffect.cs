@@ -72,7 +72,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             IoCManager.InjectDependencies(this);
         }
 
-        public override void Effect(ReagentEffectArgs args)
+        public override void Effect(ref ReagentEffectArgs args)
         {
             if (args.Source == null)
                 return;

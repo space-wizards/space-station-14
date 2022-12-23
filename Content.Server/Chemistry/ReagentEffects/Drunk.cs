@@ -17,7 +17,7 @@ public sealed class Drunk : ReagentEffect
     [DataField("slurSpeech")]
     public bool SlurSpeech = true;
 
-    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ref ReagentEffectArgs args)
     {
         var boozePower = BoozePower;
 
