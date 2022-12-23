@@ -24,7 +24,7 @@
                     <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12">
                         <GridContainer Columns="2">
                             <!-- Row with alert level light and label -->
-                            <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="48 18"
+                            <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="24 6" Scale="2 0.5"
                                 TexturePath="/Textures/Interface/Nano/rounded_button.svg.96dpi.png"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center" />
