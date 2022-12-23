@@ -493,6 +493,7 @@ namespace Content.Client.Stylesheets
             var sliderFillWhite = new StyleBoxTexture(sliderFillBox) { Modulate = Color.White };
 
             var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+            var lcdFontLarge = resCache.GetFont("/Fonts/LCD.ttf", 22);
 
             var insetBack = new StyleBoxTexture
             {
@@ -1326,7 +1327,7 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class(StyleClassLabelLCDBig)
                     .Prop("font-color", DangerousRedFore)
-                    .Prop("font", notoSansDisplayBold16),
+                    .Prop("font", lcdFontLarge),
 
 
                 Element<PanelContainer>().Class("WindowHeadingBackground")
