@@ -63,13 +63,20 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (component.ImplantAction != null)
             _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
 
-        if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant) || Terminating(storageImplant.ContainedEntities.FirstOrDefault()))
+        if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant))
             return;
 
         var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
-        // TODO add variant of empty container that dumpes entities into parent containers OR grid OR Map
-        _container.EmptyContainer(storageImplant, true, entCoords, true, EntityManager);
+        var containedEntites = storageImplant.ContainedEntities.ToArray();
+
+        foreach (var entity in containedEntites)
+        {
+            if (Terminating(entity))
+                continue;
+
+            _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
+        }
     }
 
     /// <summary>
