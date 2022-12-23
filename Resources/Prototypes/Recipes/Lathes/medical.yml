@@ -9,7 +9,7 @@
 - type: latheRecipe
   id: Retractor
   icon: { sprite: Objects/Specific/Medical/Surgery/scissors.rsi, state: retractor }
-  result: Scalpel
+  result: Retractor
   completetime: 2
   materials:
     Steel: 200
