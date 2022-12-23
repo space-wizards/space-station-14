@@ -277,6 +277,8 @@ namespace Content.Server.Construction
 
                     // TODO: Sanity checks.
 
+                    user = interactUsing.User;
+
                     // If this step's DoAfter was cancelled, we just fail the interaction.
                     if (doAfterState == DoAfterState.Cancelled)
                         return HandleResult.False;

@@ -490,7 +490,7 @@ namespace Content.Server.Construction
             EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
-            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has started construction on the ghost of a {ev.PrototypeName}");
+            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }
     }
