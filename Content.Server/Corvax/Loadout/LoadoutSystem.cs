@@ -59,6 +59,7 @@ public sealed class LoadoutSystem : EntitySystem
                     
                     // Automatically search empty slot for clothes to equip
                     string? firstSlotName = null;
+                    bool isEquiped = false;
                     foreach (var slot in _inventorySystem.GetSlots(ev.Mob))
                     {
                         if (!clothing.Slots.HasFlag(slot.SlotFlags))
@@ -71,11 +72,14 @@ public sealed class LoadoutSystem : EntitySystem
                             continue;
 
                         if (_inventorySystem.TryEquip(ev.Mob, entity, slot.Name, true))
-                            return;
+                        {
+                            isEquiped = true;
+                            break;
+                        }
                     }
                     
-                    if (firstSlotName == null) // Weird
-                        return;
+                    if (isEquiped || firstSlotName == null)
+                        continue;
 
                     // Force equip to first valid clothes slot
                     // Get occupied entity -> Insert to backpack -> Equip loadout entity
