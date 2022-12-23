@@ -4,7 +4,7 @@
 		"x": 32,
 		"y": 32
 	},
-	"license": "CC 3.0 BY-SA",
+	"license": "CC-BY-SA-3.0",
 	"copyright": "Taken from /tg/station on commit https://github.com/tgstation/tgstation/commit/1dd5021b2c5b64e954935bdf77bc973c34016a04",
 	"states": [
 		{ "name": "gsensor0" },

@@ -74,7 +74,7 @@ public sealed class InternalsSystem : EntitySystem
         // If they're not on then check if we have a mask to use
         if (internals.BreathToolEntity == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, user);
             return;
         }
 
@@ -82,7 +82,7 @@ public sealed class InternalsSystem : EntitySystem
 
         if (tank == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, user);
             return;
         }
 
@@ -215,11 +215,19 @@ public sealed class InternalsSystem : EntitySystem
     public GasTankComponent? FindBestGasTank(InternalsComponent component)
     {
         // Prioritise
-        // 1. exo-slot tanks
-        // 2. in-hand tanks
-        // 3. pocket/belt tanks
+        // 1. back equipped tanks
+        // 2. exo-slot tanks
+        // 3. in-hand tanks
+        // 4. pocket/belt tanks
         InventoryComponent? inventory = null;
         ContainerManagerComponent? containerManager = null;
+
+        if (_inventory.TryGetSlotEntity(component.Owner, "back", out var backEntity, inventory, containerManager) &&
+            TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
+            _gasTank.CanConnectToInternals(backGasTank))
+        {
+            return backGasTank;
+        }
 
         if (_inventory.TryGetSlotEntity(component.Owner, "suitstorage", out var entity, inventory, containerManager) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&

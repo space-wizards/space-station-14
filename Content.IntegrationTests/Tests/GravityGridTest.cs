@@ -68,8 +68,8 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.GravityActive, Is.True);
 
-                var grid1Entity = grid1.GridEntityId;
-                var grid2Entity = grid2.GridEntityId;
+                var grid1Entity = grid1.Owner;
+                var grid2Entity = grid2.Owner;
 
                 Assert.That(!entityMan.GetComponent<GravityComponent>(grid1Entity).EnabledVV);
                 Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV);
@@ -87,7 +87,7 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.GravityActive, Is.False);
 
-                var grid2Entity = grid2.GridEntityId;
+                var grid2Entity = grid2.Owner;
 
                 Assert.That(entityMan.GetComponent<GravityComponent>(grid2Entity).EnabledVV, Is.False);
             });

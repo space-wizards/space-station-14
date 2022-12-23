@@ -1,6 +1,7 @@
 using Content.Server.Actions;
 using Content.Server.Inventory;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;
@@ -25,6 +26,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -107,8 +109,7 @@ namespace Content.Server.Polymorph.Systems
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),
                 ("child", Identity.Entity(component.Parent, EntityManager))),
-                component.Parent,
-                Filter.Pvs(component.Parent));
+                component.Parent);
             QueueDel(uid);
         }
 
@@ -158,8 +159,8 @@ namespace Content.Server.Polymorph.Systems
                 if (!TryComp<MobStateComponent>(comp.Owner, out var mob))
                     continue;
 
-                if ((proto.RevertOnDeath && mob.IsDead()) ||
-                    (proto.RevertOnCrit && mob.IsCritical()))
+                if ((proto.RevertOnDeath && _mobStateSystem.IsDead(comp.Owner, mob)) ||
+                    (proto.RevertOnCrit && _mobStateSystem.IsCritical(comp.Owner, mob)))
                     Revert(comp.Owner);
             }
         }

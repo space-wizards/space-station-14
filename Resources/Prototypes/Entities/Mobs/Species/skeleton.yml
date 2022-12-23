@@ -12,6 +12,7 @@
     state: full
   - type: Body
     prototype: Skeleton
+    requiredLegs: 2
     gibSound: /Audio/Effects/bone_rattle.ogg
   - type: Damageable
     damageContainer: Biological

@@ -7,3 +7,14 @@
       amount: 0.5
   products:
     Protein: 0.5
+
+- type: reaction
+  id: BloodToWine
+  impact: Low
+  requiredMixerCategories:
+  - Holy
+  reactants:
+    Blood:
+      amount: 1
+  products:
+    Wine: 1

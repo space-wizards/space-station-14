@@ -86,6 +86,21 @@
         ExamineName: Glass Beaker
 
 - type: entity
+  id: ExosuitFabricatorMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: exosuit fabricator machine board
+  components:
+  - type: Sprite
+    state: science
+  - type: MachineBoard
+    prototype: ExosuitFabricator
+    requirements:
+      MatterBin: 1
+      Manipulator: 3
+    materialRequirements:
+      Glass: 5
+
+- type: entity
   id: UniformPrinterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: uniform printer machine board
@@ -433,6 +448,32 @@
         Capacitor: 1
       materialRequirements:
         CableHV: 5
+
+- type: entity
+  id: ThrusterMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: thruster machine board
+  components:
+  - type: MachineBoard
+    prototype: Thruster
+    requirements:
+      Laser: 4
+      Capacitor: 1
+    materialRequirements:
+      Steel: 5
+
+- type: entity
+  id: GyroscopeMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: gyroscope machine board
+  components:
+  - type: MachineBoard
+    prototype: Gyroscope
+    requirements:
+      ScanningModule: 2
+      Capacitor: 1
+    materialRequirements:
+      Glass: 2
 
 - type: entity
   id: GeneratorUraniumMachineCircuitboard

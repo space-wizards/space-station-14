@@ -59,7 +59,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (referenceGrid != null)
         {
             var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
-            var xform = Transform(targetGrid.GridEntityId);
+            var xform = Transform(targetGrid.Owner);
             targetAngle = xform.WorldRotation;
             targetMatrix = xform.InvWorldMatrix;
             tileSize = targetGrid.TileSize;
@@ -93,7 +93,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             }
 
             var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-            var xform = xforms.GetComponent(grid.GridEntityId);
+            var xform = xforms.GetComponent(grid.Owner);
             var  (_, gridWorldRotation, gridWorldMatrix, invGridWorldMatrid) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             var localEpicentre = (Vector2i) invGridWorldMatrid.Transform(epicentre.Position);

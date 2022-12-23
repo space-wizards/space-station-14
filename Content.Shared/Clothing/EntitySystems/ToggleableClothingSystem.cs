@@ -146,7 +146,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         else if (_inventorySystem.TryGetSlotEntity(parent, component.Slot, out var existing))
         {
             _popupSystem.PopupEntity(Loc.GetString("toggleable-clothing-remove-first", ("entity", existing)),
-                args.Performer, Filter.Entities(args.Performer));
+                args.Performer, args.Performer);
         }
         else
             _inventorySystem.TryEquip(parent, component.ClothingUid.Value, component.Slot);

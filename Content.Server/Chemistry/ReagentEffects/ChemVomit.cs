@@ -19,6 +19,9 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+            if (args.Scale != 1f)
+                return;
+
             var vomitSys = args.EntityManager.EntitySysManager.GetEntitySystem<VomitSystem>();
 
             vomitSys.Vomit(args.SolutionEntity, ThirstAmount, HungerAmount);

@@ -12,6 +12,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.GameObjects;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.Fluids.EntitySystems
@@ -33,26 +35,26 @@ namespace Content.Server.Fluids.EntitySystems
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
-            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
-            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
+            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         }
 
-        private void OnInit(EntityUid uid, PuddleComponent component, ComponentInit args)
+        private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             solution.MaxVolume = FixedPoint2.New(1000);
         }
 
-        private void OnUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
+        private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
             UpdateSlip(uid, component);
-            UpdateVisuals(uid, component);
+            UpdateAppearance(uid, component);
         }
 
-        private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
+        private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null, AppearanceComponent? appearance = null)
         {
-            if (Deleted(puddleComponent.Owner) || EmptyHolder(uid, puddleComponent) ||
-                !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
+            if (!Resolve(uid, ref puddleComponent, ref appearance, false)
+                || EmptyHolder(uid, puddleComponent))
             {
                 return;
             }
@@ -64,22 +66,19 @@ namespace Content.Server.Fluids.EntitySystems
                               puddleComponent.OpacityModifier;
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
+            bool isEvaporating;
 
-            bool hasEvaporationComponent =
-                EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
-            bool canEvaporate = (hasEvaporationComponent &&
-                                 (evaporationComponent!.LowerLimit == 0 ||
-                                  CurrentVolume(puddleComponent.Owner, puddleComponent) >
-                                  evaporationComponent.LowerLimit));
+            if (TryComp(uid, out EvaporationComponent? evaporation)
+                && evaporation.EvaporationToggle)// if puddle is evaporating.
+            {
+                isEvaporating = true;
+            }
+            else isEvaporating = false;
 
-            // "Does this puddle's sprite need changing to the wet floor effect sprite?"
-            bool changeToWetFloor = (CurrentVolume(puddleComponent.Owner, puddleComponent) <=
-                                     puddleComponent.WetFloorEffectThreshold
-                                     && canEvaporate);
-
-            appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
-            appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
+            appearance.SetData(PuddleVisuals.VolumeScale, volumeScale);
+            appearance.SetData(PuddleVisuals.CurrentVolume, puddleComponent.CurrentVolume);
+            appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearance.SetData(PuddleVisuals.IsEvaporatingVisual, isEvaporating);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)

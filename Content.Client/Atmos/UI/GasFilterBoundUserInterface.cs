@@ -85,7 +85,8 @@ namespace Content.Client.Atmos.UI
             {
                 var atmos = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
                 var gas = atmos.GetGas((Gas) cast.FilteredGas);
-                _window.SetGasFiltered(gas.ID, gas.Name);
+                var gasName = Loc.GetString(gas.Name);
+                _window.SetGasFiltered(gas.ID, gasName);
             }
             else
             {

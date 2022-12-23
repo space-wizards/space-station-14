@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Hands.Components;
+using Content.Server.MobState;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -36,6 +37,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MaxTimeRestartRuleSystem _restarter = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
@@ -148,13 +150,13 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
 
         if (mind.OwnedEntity is {Valid: true} entity && TryComp(entity, out MobStateComponent? mobState))
         {
-            if (mobState.IsCritical())
+            if (_mobStateSystem.IsCritical(entity, mobState))
             {
                 // TODO BODY SYSTEM KILL
                 var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
                 Get<DamageableSystem>().TryChangeDamage(entity, damage, true);
             }
-            else if (!mobState.IsDead())
+            else if (!_mobStateSystem.IsDead(entity,mobState))
             {
                 if (HasComp<HandsComponent>(entity))
                 {
@@ -225,7 +227,7 @@ public sealed class TraitorDeathMatchRuleSystem : GameRuleSystem
             if (TryComp(avoidMeEntity.Value, out MobStateComponent? mobState))
             {
                 // Does have mob state component; if critical or dead, they don't really matter for spawn checks
-                if (mobState.IsCritical() || mobState.IsDead())
+                if (_mobStateSystem.IsCritical(avoidMeEntity.Value, mobState) || _mobStateSystem.IsDead(avoidMeEntity.Value, mobState))
                     continue;
             }
             else

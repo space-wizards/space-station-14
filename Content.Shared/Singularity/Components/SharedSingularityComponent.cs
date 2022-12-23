@@ -1,42 +1,32 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
-namespace Content.Shared.Singularity.Components
+using Content.Shared.Singularity.EntitySystems;
+
+namespace Content.Shared.Singularity.Components;
+
+/// <summary>
+/// A component that makes the associated entity accumulate energy when an associated event horizon consumes things.
+/// Energy management is server-side.
+/// </summary>
+[NetworkedComponent]
+public abstract class SharedSingularityComponent : Component
 {
-    [NetworkedComponent]
-    public abstract class SharedSingularityComponent : Component
-    {
-        /// <summary>
-        ///     The radiation pulse component's radsPerSecond is set to the singularity's level multiplied by this number.
-        /// </summary>
-        [DataField("radsPerLevel")]
-        public float RadsPerLevel = 1;
+    /// <summary>
+    /// The current level of the singularity.
+    /// Used as a scaling factor for things like visual size, event horizon radius, gravity well radius, radiation output, etc.
+    /// If you want to set this use <see cref="SharedSingularitySystem.SetLevel"/>().
+    /// </summary>
+    [DataField("level")]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    public byte Level = 1;
 
-        /// <summary>
-        ///     Changed by <see cref="SharedSingularitySystem.ChangeSingularityLevel"/>
-        /// </summary>
-        [ViewVariables]
-        public int Level { get; set; }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            if (curState is not SingularityComponentState state)
-            {
-                return;
-            }
-
-            EntitySystem.Get<SharedSingularitySystem>().ChangeSingularityLevel(this, state.Level);
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class SingularityComponentState : ComponentState
-    {
-        public int Level { get; }
-
-        public SingularityComponentState(int level)
-        {
-            Level = level;
-        }
-    }
+    /// <summary>
+    /// The amount of radiation this singularity emits per its level.
+    /// Has to be on shared in case someone attaches a RadiationPulseComponent to the singularity.
+    /// If you want to set this use <see cref="SharedSingularitySystem.SetRadsPerLevel"/>().
+    /// </summary>
+    [DataField("radsPerLevel")]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float RadsPerLevel = 2f;
 }
