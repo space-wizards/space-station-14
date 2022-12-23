@@ -445,6 +445,7 @@ namespace Content.Client.Stylesheets
             {
                 Texture = stripeBackTex,
                 Mode = StyleBoxTexture.StretchMode.Tile,
+                Modulate = Color.FromHex("#1e1e22")
             };
             var stripeBackWarning = new StyleBoxTexture {
                 Texture = stripeBackTex,
