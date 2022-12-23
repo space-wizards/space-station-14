@@ -141,6 +141,8 @@ namespace Content.Client.Stylesheets
         public const string StyleClassCrossButtonRed = "CrossButtonRed";
         public const string StyleClassButtonColorRed = "ButtonColorRed";
         public const string StyleClassButtonColorGreen = "ButtonColorGreen";
+        public const string StyleClassLightLitGreen = "LightLitGreen";
+        public const string StyleClassLightUnlit = "LightUnlit";
 
         public override Stylesheet Stylesheet { get; }
 
@@ -1352,14 +1354,14 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
 
                 // X Texture button ---
-                Element<TextureButton>().Class("CrossButtonRed")
+                Element<TextureButton>().Class(StyleClassCrossButtonRed)
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png"))
                     .Prop(Control.StylePropertyModulateSelf, DangerousRedFore),
 
-                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
+                Element<TextureButton>().Class(StyleClassCrossButtonRed).Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7F3636")),
 
-                Element<TextureButton>().Class("CrossButtonRed").Pseudo(TextureButton.StylePseudoClassHover)
+                Element<TextureButton>().Class(StyleClassCrossButtonRed).Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
 
@@ -1501,13 +1503,14 @@ namespace Content.Client.Stylesheets
                     .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
 
                 // Light indicators --
-                Element<TextureButton>().Class("LightLitGreen")
+                Element<TextureButton>().Class(StyleClassLightLitGreen)
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
                     .Prop(Control.StylePropertyModulateSelf, GoodGreenFore),
 
-                Element<TextureButton>().Class("LightUnlit")
+                Element<TextureButton>().Class(StyleClassLightUnlit)
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+                // ---
 
             }).ToList());
         }
