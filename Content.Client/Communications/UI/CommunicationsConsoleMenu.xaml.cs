@@ -170,7 +170,7 @@ namespace Content.Client.Communications.UI
             }
             else
             {
-                ShuttleIncomingLight.SetOnlyStyleClass("LitUnlit");
+                ShuttleIncomingLight.SetOnlyStyleClass("LightUnlit");
             }
         }
 
