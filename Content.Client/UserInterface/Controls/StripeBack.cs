@@ -5,6 +5,7 @@ namespace Content.Client.UserInterface.Controls
 {
     public sealed class StripeBack : Container
     {
+        public Color BackgroundModulate = Color.White;
         private const float PadSize = 4;
         private const float EdgeSize = 2;
         private static readonly Color EdgeColor = Color.FromHex("#525252ff");

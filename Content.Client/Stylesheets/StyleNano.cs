@@ -440,12 +440,18 @@ namespace Content.Client.Stylesheets
             nanoHeadingBox.SetPatchMargin(StyleBox.Margin.Left | StyleBox.Margin.Bottom, 2);
 
             // Stripe background
-            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png");
+            var stripeBackTex = resCache.GetTexture("/Textures/Interface/Nano/stripeback.svg.96dpi.png"); //<todo.eoin Fix this!
             var stripeBack = new StyleBoxTexture
             {
                 Texture = stripeBackTex,
-                Mode = StyleBoxTexture.StretchMode.Tile
+                Mode = StyleBoxTexture.StretchMode.Tile,
             };
+            var stripeBackWarning = new StyleBoxTexture {
+                Texture = stripeBackTex,
+                Mode = StyleBoxTexture.StretchMode.Tile,
+                Modulate = ConcerningOrangeFore
+            };
+
 
             // Slider
             var sliderOutlineTex = resCache.GetTexture("/Textures/Interface/Nano/slider_outline.svg.96dpi.png");
@@ -1489,6 +1495,8 @@ namespace Content.Client.Stylesheets
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
+                Element<StripeBack>().Class("StripeWarning")
+                    .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
             }).ToList());
         }
     }
