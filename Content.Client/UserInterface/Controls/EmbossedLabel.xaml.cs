@@ -16,8 +16,8 @@ namespace Content.Client.UserInterface.Controls
 
         public string? Text
         {
-            get => _label.Text;
-            set => _label.Text = value;
+            get => _Label.Text;
+            set => _Label.Text = value;
         }
     }
 }

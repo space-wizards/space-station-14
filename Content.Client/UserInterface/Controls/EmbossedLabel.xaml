@@ -1,20 +1,18 @@
 <controls:EmbossedLabel xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    MinWidth="200" MinHeight="150"
-    HorizontalAlignment="Left" >
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
 
-    <BoxContainer Orientation="Horizontal" VerticalExpand="False" VerticalAlignment="Bottom">
+    <BoxContainer Orientation="Horizontal" VerticalAlignment="Center">
         <!-- Surely there is a way to add a texture to container? -->
-        <TextureButton StyleClasses="PerforatedLabelBegin" />
+        <TextureButton StyleClasses="PerforatedLabelBegin" VerticalAlignment="Center"/>
 
         <!-- todo.eoin Really feels like this class should be called something more generic? -->
         <controls:StripeBack StyleClasses="PerforatedLabel" HasTopEdge="False" HasBottomEdge="False">
-            <Label Name="_label" StyleClasses="PerforatedLabel" />
+            <Label Name="_Label" StyleClasses="PerforatedLabel" />
         </controls:StripeBack>
 
         <!-- Can't figure out how to apply a negative scale to an image, so just made a flipped version -->
-        <TextureButton StyleClasses="PerforatedLabelEnd" />
+        <TextureButton StyleClasses="PerforatedLabelEnd" VerticalAlignment="Center" />
     </BoxContainer>
 
 

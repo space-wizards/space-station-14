@@ -1,10 +1,14 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    MinSize="600 400"
+    MinSize="600 500"
     Title="{Loc 'comms-console-menu-title'}">
-    <BoxContainer Name="Contents">
-        <BoxContainer Name="hbox"
+    <BoxContainer Name="Contents" Orientation="Vertical">
+        <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12">
+            <ui:EmbossedLabel Name="ConsoleName" Access="Public" VerticalAlignment="Center" />
+        </BoxContainer>
+
+        <BoxContainer
             Orientation="Horizontal"
             HorizontalExpand="True"
             VerticalExpand="True">
@@ -63,8 +67,8 @@
                             VerticalAlignment="Bottom"
                             Margin="12 24 12 12">
                             <PanelContainer StyleClasses="AngleRect">
-                                <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                                    <ui:EmbossedLabel Text="{Loc 'comms-console-menu-call-shuttle'}" />
+                                <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom" VerticalExpand="True">
+                                    <ui:EmbossedLabel Text="{Loc 'comms-console-menu-call-shuttle'}" Margin="6 12 6 0" VerticalAlignment="Bottom"/>
                                     <TextureButton Name="EmergencyShuttleCallButton" Access="Public"
                                         Margin="12" SetSize="80 80"
                                         StyleClasses="TemptingRedButton" />
@@ -108,7 +112,7 @@
                                 Margin="12 24 12 12">
                                 <PanelContainer StyleClasses="AngleRect">
                                     <BoxContainer Orientation="Vertical" VerticalAlignment="Bottom">
-                                        <ui:EmbossedLabel Text="{Loc 'comms-console-menu-recall-shuttle'}" />
+                                        <ui:EmbossedLabel Text="{Loc 'comms-console-menu-recall-shuttle'}" Margin="6 12 6 0"/>
                                         <TextureButton Name="EmergencyShuttleRecallButton" Access="Public"
                                             Margin="12" SetSize="80 80"
                                             StyleClasses="TemptingRedButton" />

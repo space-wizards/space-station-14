@@ -159,6 +159,7 @@ namespace Content.Server.Communications
 
             comp.UserInterface?.SetState(
                 new CommunicationsConsoleInterfaceState(
+                    comp.AnnouncementDisplayName,
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels, colors,
