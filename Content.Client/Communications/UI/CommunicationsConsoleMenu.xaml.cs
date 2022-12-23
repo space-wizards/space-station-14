@@ -170,6 +170,20 @@ namespace Content.Client.Communications.UI
             {
                 ShuttleIncomingLight.SetOnlyStyleClass(StyleNano.StyleClassLightUnlit);
             }
+
+            if(Owner.CountdownStarted)
+            {
+                var subSecondsRemaining = Owner.CountdownFloat - (float)Math.Floor(Owner.CountdownFloat);
+
+                var lightEnableBlend = SmoothStep(0.1f, 0.2f, subSecondsRemaining);
+                var lightDisableBlend = 1.0f - SmoothStep(0.9f, 0.95f, subSecondsRemaining);
+                var alpha = lightEnableBlend * lightDisableBlend;
+                _countdownLabel.ModulateSelfOverride = new Color(1.0f, 1.0f, 1.0f, alpha);
+            }
+            else
+            {
+                _countdownLabel.ModulateSelfOverride = Color.White;
+            }
         }
 
         public override void Close()
@@ -186,5 +200,24 @@ namespace Content.Client.Communications.UI
             if (disposing)
                 _timerCancelTokenSource.Cancel();
         }
+
+        protected override void Draw(DrawingHandleScreen handle)
+        {
+            UpdateCountdown();
+            base.Draw(handle);
+        }
+
+        private float SmoothStep(float stepBegin, float stepEnd, float x)
+        {
+           if (x < stepBegin)
+              return 0;
+
+           if (x >= stepEnd)
+              return 1;
+
+           float fractionInStep = (x - stepBegin) / (stepEnd - stepBegin);
+           return (3 * x * x) - (2 * x * x * x);
+        }
+
     }
 }
