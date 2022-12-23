@@ -1499,6 +1499,16 @@ namespace Content.Client.Stylesheets
 
                 Element<StripeBack>().Class("StripeWarning")
                     .Prop(StripeBack.StylePropertyBackground, stripeBackWarning),
+
+                // Light indicators --
+                Element<TextureButton>().Class("LightLitGreen")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, GoodGreenFore),
+
+                Element<TextureButton>().Class("LightUnlit")
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/rounded_button.svg.96dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+
             }).ToList());
         }
     }

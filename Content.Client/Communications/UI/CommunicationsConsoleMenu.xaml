@@ -87,7 +87,7 @@
                                     <BoxContainer Orientation="Vertical">
                                         <!-- "Shuttle is incoming" light in here -->
                                         <BoxContainer Orientation="Horizontal">
-                                            <Button Name="ShuttleIncomingLight" StyleClasses="ButtonColorGreen" Margin="0 0 6 0"/> <!-- todo.eoin Need a proper control here -->
+                                            <TextureButton Name="ShuttleIncomingLight" StyleClasses="LightUnlit" SetSize="18 18" Margin="0 0 6 0"/>
                                             <Label Text="{Loc 'comms-shuttle-incoming-label'}" Margin="0 0 6 0" />
                                         </BoxContainer>
 

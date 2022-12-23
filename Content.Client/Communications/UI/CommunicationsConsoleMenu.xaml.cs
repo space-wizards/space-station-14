@@ -163,7 +163,15 @@ namespace Content.Client.Communications.UI
             int remaining = Owner.CountdownStarted ? Owner.Countdown : 0;
             var message = remaining.ToString("D4");
             CountdownLabel.Text = message;
-            ShuttleIncomingLight.Disabled = !Owner.CountdownStarted;
+
+            if(Owner.CountdownStarted)
+            {
+                ShuttleIncomingLight.SetOnlyStyleClass("LightLitGreen");
+            }
+            else
+            {
+                ShuttleIncomingLight.SetOnlyStyleClass("LitUnlit");
+            }
         }
 
         public override void Close()
