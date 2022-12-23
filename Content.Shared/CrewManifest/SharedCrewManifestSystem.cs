@@ -44,6 +44,8 @@ public sealed class CrewManifestEntries
     /// </summary>
     // public Dictionary<string, List<CrewManifestEntry>> Entries = new();
     public List<CrewManifestEntry> Entries = new();
+
+    public string StationName = string.Empty;
 }
 
 [Serializable, NetSerializable]
@@ -57,12 +59,15 @@ public sealed class CrewManifestEntry
 
     public string JobPrototype { get; }
 
-    public CrewManifestEntry(string name, string jobTitle, string jobIcon, string jobPrototype)
+    public List<string> JobDepartment { get; }
+
+    public CrewManifestEntry(string name, string jobTitle, string jobIcon, string jobPrototype, List<string> jobDepartment)
     {
         Name = name;
         JobTitle = jobTitle;
         JobIcon = jobIcon;
         JobPrototype = jobPrototype;
+        JobDepartment = jobDepartment;
     }
 }
 

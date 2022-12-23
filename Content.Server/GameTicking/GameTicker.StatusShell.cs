@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.Json.Nodes;
 using Content.Shared.CCVar;
 using Robust.Server.ServerStatus;
@@ -23,9 +24,12 @@ namespace Content.Server.GameTicking
         /// </summary>
         [Dependency] private readonly IConfigurationManager _cfg = default!;
 
+        private bool _statusPlayerListEnabled;
+
         private void InitializeStatusShell()
         {
             IoCManager.Resolve<IStatusHost>().OnStatusRequest += GetStatusResponse;
+            _configurationManager.OnValueChanged(CCVars.StatusPlayerListEnabled, b => _statusPlayerListEnabled = b, true);
         }
 
         private void GetStatusResponse(JsonNode jObject)
@@ -40,6 +44,18 @@ namespace Content.Server.GameTicking
                 if (_runLevel >= GameRunLevel.InRound)
                 {
                     jObject["round_start_time"] = _roundStartDateTime.ToString("o");
+                }
+
+                if (_statusPlayerListEnabled)
+                {
+                    var arr = new JsonArray();
+
+                    foreach (var session in _playerManager.ServerSessions.ToList())
+                    {
+                        arr.Add(session.Name);
+                    }
+
+                    jObject["playerList"] = arr;
                 }
             }
         }

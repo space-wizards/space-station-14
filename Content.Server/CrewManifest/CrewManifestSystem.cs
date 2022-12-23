@@ -1,7 +1,7 @@
 using System.Linq;
+using System.Text.Json.Nodes;
 using Content.Server.Administration;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords;
 using Content.Shared.Administration;
@@ -10,12 +10,10 @@ using Content.Shared.CrewManifest;
 using Content.Shared.GameTicking;
 using Content.Shared.Roles;
 using Content.Shared.StationRecords;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Server.ServerStatus;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
-using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.CrewManifest;
@@ -26,6 +24,14 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IStatusHost _status = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
+
+    /// <summary>
+    ///     Used for thread safety, given <see cref="IStatusHost.OnStatusRequest"/> is called from another thread.
+    /// </summary>
+    private readonly object _statusShellLock = new();
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -34,16 +40,97 @@ public sealed class CrewManifestSystem : EntitySystem
     /// </summary>
     private readonly Dictionary<EntityUid, CrewManifestEntries> _cachedEntries = new();
 
+    // An utter hack because departments store jobs and not the other way around.
+    private readonly Dictionary<string, HashSet<string>> _jobDepartments = new();
+
+    private bool _crewManifestWithoutEntity;
+
     private readonly Dictionary<EntityUid, Dictionary<IPlayerSession, CrewManifestEui>> _openEuis = new();
 
     public override void Initialize()
     {
         SubscribeLocalEvent<AfterGeneralRecordCreatedEvent>(AfterGeneralRecordCreated);
         SubscribeLocalEvent<RecordModifiedEvent>(OnRecordModified);
+        SubscribeLocalEvent<StationRecordsComponent, StationRenamedEvent>(OnStationRenamed);
         SubscribeLocalEvent<CrewManifestViewerComponent, BoundUIClosedEvent>(OnBoundUiClose);
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
+
+        _status.OnStatusRequest += GetStatusResponse;
+        _prototype.PrototypesReloaded += OnPrototypesReloaded;
+        _configManager.OnValueChanged(CCVars.CrewManifestWithoutEntity, b => _crewManifestWithoutEntity = b, true);
+        BuildDeptIndex();
+    }
+
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs obj)
+    {
+        BuildDeptIndex();
+    }
+
+    private void BuildDeptIndex()
+    {
+        foreach (var dept in _prototype.EnumeratePrototypes<DepartmentPrototype>())
+        {
+            foreach (var job in dept.Roles)
+            {
+                if (!_jobDepartments.ContainsKey(job))
+                {
+                    _jobDepartments[job] = new() { dept.ID };
+                    continue;
+                }
+
+                _jobDepartments[job].Add(dept.ID);
+            }
+        }
+    }
+
+    private void OnStationRenamed(EntityUid uid, StationRecordsComponent component, StationRenamedEvent args)
+    {
+        BuildCrewManifest(uid);
+    }
+
+    private void GetStatusResponse(JsonNode jObject)
+    {
+        if (!_crewManifestWithoutEntity)
+            return;
+
+        // THREAD SAFETY: We're on a network thread, not the game thread, make sure nothing edits the cache underneath us.
+        lock (_statusShellLock)
+        {
+            var stations = new JsonObject();
+            foreach (var (_, entries) in _cachedEntries)
+            {
+                var station = new JsonObject();
+                var deptsObj = new Dictionary<string, JsonObject>();
+                foreach (var entry in entries.Entries)
+                {
+                    var depts = entry.JobDepartment;
+
+                    foreach (var dept in depts)
+                    {
+                        var localizedDept = _loc.GetString(dept);
+                        if (!deptsObj.TryGetValue(localizedDept, out var obj))
+                        {
+                            obj = new JsonObject();
+                            deptsObj[localizedDept] = obj;
+                        }
+
+                        obj[entry.Name] = _loc.GetString(entry.JobTitle);
+                    }
+
+                }
+
+                foreach (var (dept, obj) in deptsObj)
+                {
+                    station[dept] = obj;
+                }
+
+                stations[entries.StationName] = station;
+            }
+
+            jObject["manifest"] = stations;
+        }
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -57,7 +144,10 @@ public sealed class CrewManifestSystem : EntitySystem
         }
 
         _openEuis.Clear();
-        _cachedEntries.Clear();
+        lock (_statusShellLock)
+        {
+            _cachedEntries.Clear();
+        }
     }
 
     private void OnRequestCrewManifest(RequestCrewManifestMessage message, EntitySessionEventArgs args)
@@ -104,7 +194,13 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <returns>The name and crew manifest entries (unordered) of the station.</returns>
     public (string name, CrewManifestEntries? entries) GetCrewManifest(EntityUid station)
     {
-        var valid = _cachedEntries.TryGetValue(station, out var manifest);
+        bool valid;
+        CrewManifestEntries? manifest;
+        lock (_statusShellLock) // THREAD SAFETY: Cannot modify the cache when status endpoint is busy.
+        {
+            valid = _cachedEntries.TryGetValue(station, out manifest);
+        }
+
         return (valid ? MetaData(station).EntityName : string.Empty, valid ? manifest : null);
     }
 
@@ -205,23 +301,32 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         var iter = _recordsSystem.GetRecordsOfType<GeneralStationRecord>(station);
 
-        var entries = new CrewManifestEntries();
+        var entries = new CrewManifestEntries()
+        {
+            StationName = Name(station),
+        };
 
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
+            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon,
+                record.JobPrototype,
+                _jobDepartments[record.JobPrototype].ToList());
 
             entries.Entries.Add(entry);
         }
 
-        if (_cachedEntries.ContainsKey(station))
+        lock (_statusShellLock) // THREAD SAFETY: Cannot modify the cache when status endpoint is busy.
         {
-            _cachedEntries[station] = entries;
-        }
-        else
-        {
-            _cachedEntries.Add(station, entries);
+            if (_cachedEntries.ContainsKey(station))
+            {
+
+                _cachedEntries[station] = entries;
+            }
+            else
+            {
+                _cachedEntries.Add(station, entries);
+            }
         }
     }
 }

@@ -102,6 +102,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> StatusMoMMIPassword =
             CVarDef.Create("status.mommipassword", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
+        public static readonly CVarDef<bool> StatusPlayerListEnabled =
+            CVarDef.Create("status.player_list_enabled", true, CVar.SERVERONLY);
+
         /*
          * Events
          */
