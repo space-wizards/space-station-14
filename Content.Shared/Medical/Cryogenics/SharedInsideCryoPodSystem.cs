@@ -8,7 +8,7 @@ public abstract partial class SharedCryoPodSystem
     public virtual void InitializeInsideCryoPod()
     {
         SubscribeLocalEvent<InsideCryoPodComponent, DownAttemptEvent>(HandleDown);
-        SubscribeLocalEvent<InsideCryoPodComponent, EntGotRemovedFromContainerMessage>(OnRemove);
+        SubscribeLocalEvent<InsideCryoPodComponent, EntGotRemovedFromContainerMessage>(OnEntGotRemovedFromContainer);
     }
 
     // Must stand in the cryo pod
@@ -17,7 +17,7 @@ public abstract partial class SharedCryoPodSystem
         args.Cancel();
     }
 
-    private void OnRemove(EntityUid uid, InsideCryoPodComponent component, EntGotRemovedFromContainerMessage args)
+    private void OnEntGotRemovedFromContainer(EntityUid uid, InsideCryoPodComponent component, EntGotRemovedFromContainerMessage args)
     {
         if (Terminating(uid))
         {
