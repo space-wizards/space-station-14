@@ -1384,6 +1384,7 @@ namespace Content.Client.Stylesheets
                 Element<LineEdit>().Class("PaperLineEdit")
                     .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
 
+
                 // Red Button ---
                 Element<Button>().Class("ButtonColorRed")
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
@@ -1532,22 +1533,14 @@ namespace Content.Client.Stylesheets
 
                 // Perforated label --
                 Element<TextureButton>().Class("PerforatedLabelBegin")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/perforated_edge.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#3969ef")),
-
-                Element<StripeBack>().Class("PerforatedLabel")
-                    .Prop(StripeBack.StylePropertyBackground, perforatedLabelBackground),
-
-                Element<Label>().Class("PerforatedLabel")
-                    .Prop("font", resCache.GetFont("/Fonts/Mono.ttf", 16))
-                    .Prop("font-color", Color.White),
-
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/open_widget_grouping.svg.192dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e")),
 
                 Element<TextureButton>().Class("PerforatedLabelEnd")
-                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/perforated_edge_flipped.svg.192dpi.png"))
-                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#3969ef")),
-                // ---
+                    .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/Interface/Nano/close_widget_grouping.svg.192dpi.png"))
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#7b7e9e")),
 
+                // ---
             }).ToList());
         }
     }

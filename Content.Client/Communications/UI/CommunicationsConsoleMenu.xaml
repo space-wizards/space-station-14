@@ -1,9 +1,10 @@
 <ui:FancyWindow xmlns="https://spacestation14.io"
     xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-    MinSize="600 500"
-    Title="{Loc 'comms-console-menu-title'}">
+    Title="{Loc 'comms-console-menu-title'}" Resizable="False">
     <BoxContainer Name="Contents" Orientation="Vertical">
+        <!-- Top row contains a heading with the console name -->
+        <!--todo.eoin Not sure I like this -->
         <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center" Margin="12">
             <ui:EmbossedLabel Name="ConsoleName" Access="Public" VerticalAlignment="Center" />
         </BoxContainer>
@@ -11,7 +12,8 @@
         <BoxContainer
             Orientation="Horizontal"
             HorizontalExpand="True"
-            VerticalExpand="True">
+            VerticalExpand="True"
+            MinHeight="450">
             <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6">
                 <TextEdit Name="MessageInput"
                     HorizontalExpand="True"

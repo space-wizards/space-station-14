@@ -6,14 +6,9 @@
         <!-- Surely there is a way to add a texture to container? -->
         <TextureButton StyleClasses="PerforatedLabelBegin" VerticalAlignment="Center"/>
 
-        <!-- todo.eoin Really feels like this class should be called something more generic? -->
-        <controls:StripeBack StyleClasses="PerforatedLabel" HasTopEdge="False" HasBottomEdge="False">
-            <Label Name="_Label" StyleClasses="PerforatedLabel" />
-        </controls:StripeBack>
+        <Label Name="_Label" StyleClasses="PerforatedLabel" />
 
         <!-- Can't figure out how to apply a negative scale to an image, so just made a flipped version -->
         <TextureButton StyleClasses="PerforatedLabelEnd" VerticalAlignment="Center" />
     </BoxContainer>
-
-
 </controls:EmbossedLabel>
