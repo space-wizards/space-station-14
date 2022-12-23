@@ -1,0 +1,15 @@
+﻿# OopsieDoopsie
+- type: loadout
+  id: ClothingOuterAtmosianBomberJacketLoadout
+  entity: ClothingOuterAtmosianBomberJacket
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingMaskGasAtmosianLoadout
+  entity: ClothingMaskGasAtmosian
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingCloakAtmosianLoadout
+  entity: ClothingCloakAtmosian
+  sponsorOnly: true

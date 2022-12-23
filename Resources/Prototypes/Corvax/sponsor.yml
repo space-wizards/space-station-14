@@ -1,0 +1,35 @@
+﻿# OopsieDoopsie
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterAtmosianBomberJacket
+  name: atmosian bomber jacket
+  description: A thick, well-worn atmosian leather bomber jacket.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasAtmosian
+  name: atmosian gas mask
+  description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Heat: 0.80
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakAtmosian
+  name: atmosian's cloak
+  description: The cloak of a legendary Atmosian.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Neck/Cloaks/atmosian.rsi

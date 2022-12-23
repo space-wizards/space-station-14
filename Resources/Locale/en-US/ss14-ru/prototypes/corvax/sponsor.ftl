@@ -1,0 +1,9 @@
+ent-ClothingOuterAtmosianBomberJacket = atmosian bomber jacket
+    .desc = A thick, well-worn atmosian leather bomber jacket.
+    .suffix = { "" }
+ent-ClothingMaskGasAtmosian = atmosian gas mask
+    .desc = Improved gas mask utilized by atmospheric technicians. It's flameproof!
+    .suffix = { "" }
+ent-ClothingCloakAtmosian = atmosian's cloak
+    .desc = The cloak of a legendary Atmosian.
+    .suffix = { "" }

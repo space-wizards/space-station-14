@@ -1,1 +1,1 @@
-marking-SponsorPulsingPurple = Пульсация (Фиолетовый)
+﻿marking-SponsorPulsingPurple = Пульсация (Фиолетовый)
