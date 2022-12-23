@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.AME.Components;
 using Content.Server.Power.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Tools;
+using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Map;
@@ -19,6 +21,7 @@ namespace Content.Server.AME
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         private float _accumulatedFrameTime;
 
         private const float UpdateCooldown = 10f;
@@ -103,6 +106,8 @@ namespace Content.Server.AME
             }
 
             var ent = EntityManager.SpawnEntity("AMEShielding", mapGrid.GridTileToLocal(snapPos));
+
+            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(args.User):player} unpacked {ToPrettyString(ent)} at {Transform(ent).Coordinates} from {ToPrettyString(uid)}");
 
             SoundSystem.Play(component.UnwrapSound.GetSound(), Filter.Pvs(uid), uid);
 
