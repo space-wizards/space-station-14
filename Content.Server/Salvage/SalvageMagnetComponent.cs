@@ -47,6 +47,34 @@ namespace Content.Server.Salvage
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
 
+        /// <summary>
+        ///     How long it takes for the magnet to pull in the debris (in seconds)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("attachingTime")]
+        public int AttachingTime;
+
+        /// <summary>
+        ///     How long can the magnet hold the debris until it starts losing the lock (in seconds)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("holdTime")]
+        public int HoldTime;
+
+        /// <summary>
+        ///     How long can the magnet hold the debris while losing the lock (in seconds)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("detachingTime")]
+        public int DetachingTime;
+
+        /// <summary>
+        ///     How long the magnet has to cool down after use (in seconds)
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("cooldownTime")]
+        public int CooldownTime;
+
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";
 

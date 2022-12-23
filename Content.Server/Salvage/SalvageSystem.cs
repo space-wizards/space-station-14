@@ -31,10 +31,6 @@ namespace Content.Server.Salvage
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
 
-        private static readonly TimeSpan AttachingTime = TimeSpan.FromSeconds(30);
-        private static readonly TimeSpan HoldTime = TimeSpan.FromMinutes(4);
-        private static readonly TimeSpan DetachingTime = TimeSpan.FromSeconds(30);
-        private static readonly TimeSpan CooldownTime = TimeSpan.FromMinutes(1);
         private static readonly int SalvageLocationPlaceAttempts = 16;
 
         // TODO: This is probably not compatible with multi-station
@@ -83,13 +79,13 @@ namespace Content.Server.Salvage
                 component.ChargeRemaining = 5;
             else if (component.MagnetState.StateType == MagnetStateType.Holding)
             {
-                component.ChargeRemaining = (timeLeft / ((HoldTime.Minutes * 60 + HoldTime.Seconds) / component.ChargeCapacity)) + 1;
+                component.ChargeRemaining = (timeLeft / (component.HoldTime / component.ChargeCapacity)) + 1;
             }
             else if (component.MagnetState.StateType == MagnetStateType.Detaching)
                 component.ChargeRemaining = 0;
             else if (component.MagnetState.StateType == MagnetStateType.CoolingDown)
             {
-                component.ChargeRemaining = component.ChargeCapacity - (timeLeft / ((CooldownTime.Minutes * 60 + CooldownTime.Seconds) / component.ChargeCapacity)) - 1;
+                component.ChargeRemaining = component.ChargeCapacity - (timeLeft / ((component.CooldownTime) / component.ChargeCapacity)) - 1;
             }
             if (component.PreviousCharge != component.ChargeRemaining)
             {
@@ -194,7 +190,7 @@ namespace Content.Server.Salvage
                         _salvageGridStates[gridId] = gridState;
                     }
                     gridState.ActiveMagnets.Add(component);
-                    component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + AttachingTime);
+                    component.MagnetState = new MagnetState(MagnetStateType.Attaching, gridState.CurrentTime + TimeSpan.FromSeconds(component.AttachingTime));
                     RaiseLocalEvent(new SalvageMagnetActivatedEvent(component.Owner));
                     Report(component.Owner, component.SalvageChannel, "salvage-system-report-activate-success");
                     break;
@@ -361,7 +357,7 @@ namespace Content.Server.Salvage
             var pulledTransform = EntityManager.GetComponent<TransformComponent>(salvageEntityId[0]);
             pulledTransform.WorldRotation = spAngle;
 
-            Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-arrived", ("timeLeft", HoldTime.TotalSeconds));
+            Report(component.Owner, component.SalvageChannel, "salvage-system-announcement-arrived", ("timeLeft", component.HoldTime));
             return true;
         }
 
@@ -381,16 +377,16 @@ namespace Content.Server.Salvage
                 case MagnetStateType.Attaching:
                     if (SpawnSalvage(magnet))
                     {
-                        magnet.MagnetState = new MagnetState(MagnetStateType.Holding, currentTime + HoldTime);
+                        magnet.MagnetState = new MagnetState(MagnetStateType.Holding, currentTime + TimeSpan.FromSeconds(magnet.HoldTime));
                     }
                     else
                     {
-                        magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + CooldownTime);
+                        magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + TimeSpan.FromSeconds(magnet.CooldownTime));
                     }
                     break;
                 case MagnetStateType.Holding:
-                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", DetachingTime.TotalSeconds));
-                    magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + DetachingTime);
+                    Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-losing", ("timeLeft", magnet.DetachingTime));
+                    magnet.MagnetState = new MagnetState(MagnetStateType.Detaching, currentTime + TimeSpan.FromSeconds(magnet.DetachingTime));
                     break;
                 case MagnetStateType.Detaching:
                     if (magnet.AttachedEntity.HasValue)
@@ -402,7 +398,7 @@ namespace Content.Server.Salvage
                         Logger.ErrorS("salvage", "Salvage detaching was expecting attached entity but it was null");
                     }
                     Report(magnet.Owner, magnet.SalvageChannel, "salvage-system-announcement-lost");
-                    magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + CooldownTime);
+                    magnet.MagnetState = new MagnetState(MagnetStateType.CoolingDown, currentTime + TimeSpan.FromSeconds(magnet.CooldownTime));
                     break;
                 case MagnetStateType.CoolingDown:
                     magnet.MagnetState = MagnetState.Inactive;
