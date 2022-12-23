@@ -82,7 +82,9 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var bloodstream in EntityManager.EntityQuery<BloodstreamComponent>())
+        var bloodstreamQuery = EntityQuery<BloodstreamComponent>();
+
+        foreach (var bloodstream in bloodstreamQuery)
         {
             bloodstream.AccumulatedFrametime += frameTime;
 
@@ -90,7 +92,6 @@ public sealed class BloodstreamSystem : EntitySystem
                 continue;
 
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
-
             var uid = bloodstream.Owner;
             if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
                 continue;
