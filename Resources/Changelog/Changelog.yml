@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
-  id: 2299
-  time: '2022-09-14T07:07:44.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Added chameleon clothing that can mimic any uniform. Watch out for suspicious
@@ -2939,3 +2934,8 @@ Entries:
   - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
   id: 2798
   time: '2022-12-22T02:43:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Jobs now have tooltip descriptions in the lobby., type: Add}
+  id: 2799
+  time: '2022-12-23T23:36:12.0000000+00:00'
