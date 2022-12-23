@@ -2,6 +2,7 @@ using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Parallax.Biomes;
@@ -12,15 +13,17 @@ public sealed class BiomeOverlay : Overlay
      * Similar to ParallaxOverlay except it renders fake tiles for planetmap purposes.
      */
 
+    private readonly IEntityManager _entManager;
+    private readonly IMapManager _mapManager;
     private readonly IPrototypeManager _prototype;
     private readonly BiomeSystem _biome;
 
-    private Texture[] _textures = new Texture[BiomeSystem.ChunkSize * BiomeSystem.ChunkSize];
-
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
-    public BiomeOverlay(IPrototypeManager protoManager, BiomeSystem biome)
+    public BiomeOverlay(IEntityManager entManager, IMapManager mapManager, IPrototypeManager protoManager, BiomeSystem biome)
     {
+        _entManager = entManager;
+        _mapManager = mapManager;
         _prototype = protoManager;
         _biome = biome;
     }
@@ -33,32 +36,37 @@ public sealed class BiomeOverlay : Overlay
         var screenHandle = args.WorldHandle;
         var seed = 0;
         var biome = _prototype.Index<BiomePrototype>("Grasslands");
-        var chunkSize = BiomeSystem.ChunkSize;
-        // TODO: Map mapgrid
+
         var tileSize = 1f;
+
+        if (_entManager.TryGetComponent<MapGridComponent>(_mapManager.GetMapEntityId(args.MapId), out var grid))
+        {
+            tileSize = grid.TileSize;
+        }
 
         // Remove offset so we can floor.
         var flooredBL = args.WorldAABB.BottomLeft;
 
         // Floor to background size.
-        flooredBL = (args.WorldAABB.BottomLeft / chunkSize).Floored() * chunkSize;
-        var ceilingTR = (args.WorldAABB.TopRight / chunkSize).Ceiled() * chunkSize;
+        flooredBL = (args.WorldAABB.BottomLeft / tileSize).Floored() * tileSize;
+        var ceilingTR = (args.WorldAABB.TopRight / tileSize).Ceiled() * tileSize;
 
-        for (var x = flooredBL.X; x < ceilingTR.X; x += chunkSize)
+        for (var x = flooredBL.X; x < ceilingTR.X; x += tileSize)
         {
-            for (var y = flooredBL.Y; y < ceilingTR.Y; y+= chunkSize)
+            for (var y = flooredBL.Y; y < ceilingTR.Y; y+= tileSize)
             {
-                var originIndices = new Vector2i((int) x, (int) y);
-                _biome.GetChunkTextures(originIndices, biome, seed, ref _textures);
-                // TODO: Avoid overdraw on the tile if there's an existing tile there.
-                var idx = 0;
+                var indices = new Vector2i((int) x, (int) y);
 
-                foreach (var tex in _textures)
-                {
-                    var (texX, texY) = (idx / chunkSize, idx % chunkSize);
-                    screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originIndices + (texX, texY), (tileSize, tileSize)));
-                    idx++;
-                }
+                // If there's a tile there then skip drawing.
+                if (grid?.TryGetTileRef(indices, out _) == true)
+                    continue;
+
+                var tex = _biome.GetTexture(indices, biome, seed);
+
+                if (tex == null)
+                    continue;
+
+                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, (tileSize, tileSize)));
             }
         }
     }
