@@ -70,6 +70,7 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var containedEntites = storageImplant.ContainedEntities.ToArray();
 
+        //test
         foreach (var entity in containedEntites)
         {
             if (Terminating(entity))
