@@ -13,3 +13,20 @@
   id: ClothingCloakAtmosianLoadout
   entity: ClothingCloakAtmosian
   sponsorOnly: true
+
+# Fezory
+- type: loadout
+  id: ClothingMaskSkullLoadout
+  entity: ClothingMaskSkull
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingCloakGamerLoadout
+  entity: ClothingCloakGamer
+  sponsorOnly: true
+
+- type: loadout
+  id: ClothingUniformJumpsuitSkeletonLoadout
+  entity: ClothingUniformJumpsuitSkeleton
+  sponsorOnly: true
+
