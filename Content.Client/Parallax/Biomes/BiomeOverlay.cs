@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -51,6 +52,10 @@ public sealed class BiomeOverlay : Overlay
         flooredBL = (args.WorldAABB.BottomLeft / tileSize).Floored() * tileSize;
         var ceilingTR = (args.WorldAABB.TopRight / tileSize).Ceiled() * tileSize;
 
+        // Setup for per-tile drawing
+        var groups = biome.TileGroups.Select(o => _prototype.Index<BiomeTileGroupPrototype>(o)).ToList();
+        var weightSum = groups.Sum(o => o.Weight);
+
         for (var x = flooredBL.X; x < ceilingTR.X; x += tileSize)
         {
             for (var y = flooredBL.Y; y < ceilingTR.Y; y+= tileSize)
@@ -61,7 +66,7 @@ public sealed class BiomeOverlay : Overlay
                 if (grid?.TryGetTileRef(indices, out _) == true)
                     continue;
 
-                var tex = _biome.GetTexture(indices, biome, seed);
+                var tex = _biome.GetTexture(indices, seed, groups, weightSum);
 
                 if (tex == null)
                     continue;

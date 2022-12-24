@@ -1,8 +1,8 @@
 - type: biome
   id: Grasslands
   tileGroups:
-    - Grass
     - Asteroid
+    - Grass
 
 - type: biomeTileGroup
   id: Asteroid
