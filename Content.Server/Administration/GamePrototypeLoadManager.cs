@@ -52,8 +52,10 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
         var msg = new GamePrototypeLoadMessage();
         msg.PrototypeData = prototypeData;
         _netManager.ServerSendToAll(msg); // everyone load it up!
-        _prototypeManager.LoadString(prototypeData, true); // server needs it too.
+        var changed = new Dictionary<Type, HashSet<string>>();
+        _prototypeManager.LoadString(prototypeData, true, changed); // server needs it too.
         _prototypeManager.ResolveResults();
+        _prototypeManager.ReloadPrototypes(changed);
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
     }

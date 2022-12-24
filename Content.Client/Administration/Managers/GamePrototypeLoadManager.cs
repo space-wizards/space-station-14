@@ -21,8 +21,10 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 
     private void LoadGamePrototype(GamePrototypeLoadMessage message)
     {
-        _prototypeManager.LoadString(message.PrototypeData, true);
+        var changed = new Dictionary<Type, HashSet<string>>();
+        _prototypeManager.LoadString(message.PrototypeData, true, changed);
         _prototypeManager.ResolveResults();
+        _prototypeManager.ReloadPrototypes(changed);
         _localizationManager.ReloadLocalizations();
         GamePrototypeLoaded?.Invoke();
         Logger.InfoS("adminbus", "Loaded adminbus prototype data.");
