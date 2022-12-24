@@ -1,12 +1,13 @@
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ensnaring.Components;
 /// <summary>
-/// Use this on an entity that you would like to be ensnared by anything that has the <see cref="SharedEnsnaringComponent"/>
+/// Use this on an entity that you would like to be ensnared by anything that has the <see cref="EnsnaringComponent"/>
 /// </summary>
-[NetworkedComponent]
-public abstract class SharedEnsnareableComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class EnsnareableComponent : Component
 {
     /// <summary>
     /// How much should this slow down the entities walk?
@@ -28,6 +29,17 @@ public abstract class SharedEnsnareableComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isEnsnared")]
     public bool IsEnsnared;
+
+    /// <summary>
+    /// The container where the <see cref="EnsnaringComponent"/> entity will be stored
+    /// </summary>
+    public Container Container = default!;
+
+    [DataField("sprite")]
+    public string? Sprite;
+
+    [DataField("state")]
+    public string? State;
 }
 
 [Serializable, NetSerializable]

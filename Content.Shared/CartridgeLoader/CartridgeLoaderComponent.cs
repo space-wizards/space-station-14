@@ -1,9 +1,11 @@
 ﻿using Content.Shared.Containers.ItemSlots;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Shared.CartridgeLoader;
 
-[Access(typeof(SharedCartridgeLoaderSystem))]
-public abstract class SharedCartridgeLoaderComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class CartridgeLoaderComponent : Component
 {
     public const string CartridgeSlotId = "Cartridge-Slot";
 
@@ -33,4 +35,13 @@ public abstract class SharedCartridgeLoaderComponent : Component
     /// </summary>
     [DataField("installedCartridges")]
     public List<EntityUid> InstalledPrograms = new();
+
+    /// <summary>
+    /// The maximum amount of programs that can be installed on the cartridge loader entity
+    /// </summary>
+    [DataField("diskSpace")]
+    public int DiskSpace = 5;
+
+    [DataField("uiKey", readOnly: true, required: true, customTypeSerializer: typeof(EnumSerializer))]
+    public Enum UiKey = default!;
 }
