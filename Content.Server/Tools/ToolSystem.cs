@@ -123,7 +123,7 @@ namespace Content.Server.Tools
             RaiseLocalEvent(user, ref ev);
             if (ev.Cancelled)
                 return false;
-            
+
             if (!ToolStartUse(tool, user, fuel, toolQualitiesNeeded, toolComponent))
                 return false;
 

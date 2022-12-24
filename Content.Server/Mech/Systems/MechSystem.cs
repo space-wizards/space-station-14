@@ -139,7 +139,7 @@ public sealed class MechSystem : SharedMechSystem
         ToggleMechUi(uid, component);
     }
 
-    private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ToolUserAttemptUseEvent args)
+    private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ref ToolUserAttemptUseEvent args)
     {
         if (args.Target == component.Mech)
             args.Cancelled = true;
