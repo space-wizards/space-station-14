@@ -47,7 +47,7 @@
                     </PanelContainer>
 
                     <!-- Row with controls to change alert level -->
-                    <OptionButton Name="AlertLevelOptions" Access="Public"/>
+                    <OptionButton Name="AlertLevelOptions" MinWidth="100" Access="Public" VerticalAlignment="Center"/>
                     <Button Name="SetAlertLevelButton" Access="Public" Text="{Loc 'comms-console-menu-set-alert-button-label'}" Margin="6"/>
                 </GridContainer>
             </PanelContainer>
