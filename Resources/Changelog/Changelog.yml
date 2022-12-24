@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Added chameleon clothing that can mimic any uniform. Watch out for suspicious
-      syndicate imposters., type: Add}
-  id: 2300
-  time: '2022-09-14T08:42:14.0000000+00:00'
 - author: AJCM-git
   changes:
   - {message: In-Character names now get proper casing automatically, type: Tweak}
@@ -2939,3 +2933,8 @@ Entries:
   - {message: Jobs now have tooltip descriptions in the lobby., type: Add}
   id: 2799
   time: '2022-12-23T23:36:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Popups will use your UI scaling now., type: Fix}
+  id: 2800
+  time: '2022-12-24T21:07:00.0000000+00:00'
