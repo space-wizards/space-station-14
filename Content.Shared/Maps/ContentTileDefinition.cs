@@ -31,11 +31,9 @@ namespace Content.Shared.Maps
         public string Name { get; private set; } = "";
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
-        [DataField("cornerSprite")]
-        public ResourcePath? CornerSprite { get; }
+        [DataField("cornerSprites")] public List<ResourcePath> CornerSprites { get; } = new();
 
-        [DataField("cardinalSprite")]
-        public ResourcePath? CardinalSprite { get; }
+        [DataField("cardinalSprites")] public List<ResourcePath> CardinalSprites { get; } = new();
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 

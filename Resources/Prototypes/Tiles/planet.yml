@@ -4,8 +4,10 @@
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
   placementVariants: [0, 1, 2, 3]
-  cornerSprite: /Textures/Tiles/Planet/Grass/single_edge.png
-  cardinalSprite: /Textures/Tiles/Planet/Grass/double_edge.png
+  cornerSprites:
+  - /Textures/Tiles/Planet/Grass/single_edge.png
+  cardinalSprites:
+  - /Textures/Tiles/Planet/Grass/double_edge.png
   baseTurfs:
   - FloorDirt
   isSubfloor: true
