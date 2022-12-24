@@ -19,7 +19,6 @@ namespace Content.Client.Buckle
             base.Initialize();
 
             SubscribeLocalEvent<BuckleComponent, ComponentHandleState>(OnBuckleHandleState);
-            SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
             SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
         }
 
@@ -62,18 +61,6 @@ namespace Content.Client.Buckle
                 ownerSprite.DrawDepth = buckle.OriginalDrawDepth.Value;
                 buckle.OriginalDrawDepth = null;
             }
-        }
-
-        private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not StrapComponentState state)
-                return;
-
-            component.Position = state.Position;
-            component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
-            component.BuckledEntities.Clear();
-            component.BuckledEntities.UnionWith(state.BuckledEntities);
-            component.MaxBuckleDistance = state.MaxBuckleDistance;
         }
 
         private void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
