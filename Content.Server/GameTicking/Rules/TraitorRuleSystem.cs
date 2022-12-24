@@ -52,12 +52,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
     public enum SelectionState
     {
-        WaitingForSpawn,
-        ReadyToSelect,
-        SelectionMade,
+        WaitingForSpawn = 0,
+        ReadyToSelect = 1,
+        SelectionMade = 2,
     }
 
-    public SelectionState SelectionStatus;
+    public SelectionState SelectionStatus = SelectionState.WaitingForSpawn;
     private TimeSpan _announceAt = TimeSpan.Zero;
     private Dictionary<IPlayerSession, HumanoidCharacterProfile> _startCandidates = new();
 
