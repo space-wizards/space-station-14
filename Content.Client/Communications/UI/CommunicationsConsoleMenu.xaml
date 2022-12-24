@@ -9,16 +9,20 @@
         MinHeight="450">
 
         <!-- First column: Announcements and station alert level controls -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6">
-            <TextEdit Name="MessageInput"
-                PlaceHolder="{Loc 'comms-console-menu-announcement-placeholder'}"
-                HorizontalExpand="True"
-                SizeFlagsStretchRatio="1" />
-            <Control MinSize="0 10" HorizontalExpand="True" />
-            <Button Name="AnnounceButton" Access="Public"
-                Text="{Loc 'comms-console-menu-announcement-button'}" />
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="6 12 6 12">
+            <!-- Announcement controls -->
+            <PanelContainer StyleClasses="PanelBackgroundBaseDark" VerticalExpand="True" VerticalAlignment="Top">
+                <BoxContainer Orientation="Vertical" Margin="6">
+                    <TextEdit Name="MessageInput"
+                        VerticalExpand="True"
+                        HorizontalExpand="True" MinHeight="100" />
+                    <ui:HSpacer Spacing="10"/>
+                    <Button Name="AnnounceButton" Access="Public"
+                        Text="{Loc 'comms-console-menu-announcement-button'}" />
+                    </BoxContainer>
+            </PanelContainer>
 
-            <PanelContainer StyleClasses="PanelBackgroundBaseDark" Margin="12" VerticalExpand="True" VerticalAlignment="Bottom">
+            <PanelContainer StyleClasses="PanelBackgroundBaseDark" VerticalExpand="True" VerticalAlignment="Bottom">
                 <GridContainer Columns="2">
                     <!-- Row with alert level light and label -->
                     <TextureButton Margin="6 6 6 2" Name="AlertLevelLight" MinSize="24 6" Scale="2 0.5"
