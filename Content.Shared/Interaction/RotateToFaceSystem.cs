@@ -89,7 +89,7 @@ namespace Content.Shared.Interaction
                 return true;
             }
 
-            if (EntityManager.TryGetComponent(user, out SharedBuckleComponent? buckle) && buckle.Buckled)
+            if (EntityManager.TryGetComponent(user, out BuckleComponent? buckle) && buckle.Buckled)
             {
                 var suid = buckle.LastEntityBuckledTo;
                 if (suid != null)

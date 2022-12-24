@@ -1,4 +1,3 @@
-using Content.Client.Buckle.Strap;
 using Content.Client.Rotation;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle;
@@ -12,8 +11,8 @@ namespace Content.Client.Buckle
     internal sealed class BuckleSystem : SharedBuckleSystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-        [Dependency] private readonly AppearanceSystem AppearanceSystem = default!;
-        [Dependency] private readonly RotationVisualizerSystem RotationVisualizerSystem = default!;
+        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
 
         public override void Initialize()
         {
@@ -79,8 +78,8 @@ namespace Content.Client.Buckle
 
         private void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
         {
-            if (!AppearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
-                !AppearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+            if (!_appearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
+                !_appearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
                 !buckled ||
                 args.Sprite == null)
             {
@@ -88,7 +87,7 @@ namespace Content.Client.Buckle
             }
 
             // Animate strapping yourself to something at a given angle
-            RotationVisualizerSystem.AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
+            _rotationVisualizerSystem.AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
         }
     }
 }

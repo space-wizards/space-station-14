@@ -1,8 +1,12 @@
-﻿namespace Content.Shared.Ensnaring.Components;
+﻿using System.Threading;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Ensnaring.Components;
 /// <summary>
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
-public abstract class SharedEnsnaringComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class EnsnaringComponent : Component
 {
     /// <summary>
     /// How long it should take to free someone else.
@@ -45,10 +49,19 @@ public abstract class SharedEnsnaringComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("ensnared")]
     public EntityUid? Ensnared;
+
+    /// <summary>
+    /// Should movement cancel breaking out?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("canMoveBreakout")]
+    public bool CanMoveBreakout;
+
+    public CancellationTokenSource? CancelToken;
 }
 
 /// <summary>
-/// Used whenever you want to do something when someone becomes ensnared by the <see cref="SharedEnsnaringComponent"/>
+/// Used whenever you want to do something when someone becomes ensnared by the <see cref="EnsnaringComponent"/>
 /// </summary>
 public sealed class EnsnareEvent : EntityEventArgs
 {
@@ -63,9 +76,35 @@ public sealed class EnsnareEvent : EntityEventArgs
 }
 
 /// <summary>
-/// Used whenever you want to do something when someone is freed by the <see cref="SharedEnsnaringComponent"/>
+/// Used whenever you want to do something when someone is freed by the <see cref="EnsnaringComponent"/>
 /// </summary>
 public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
 {
 
+}
+
+/// <summary>
+/// Used for the do after event to free the entity that owns the <see cref="EnsnareableComponent"/>
+/// </summary>
+public sealed class FreeEnsnareDoAfterComplete : EntityEventArgs
+{
+    public readonly EntityUid EnsnaringEntity;
+
+    public FreeEnsnareDoAfterComplete(EntityUid ensnaringEntity)
+    {
+        EnsnaringEntity = ensnaringEntity;
+    }
+}
+
+/// <summary>
+/// Used for the do after event when it fails to free the entity that owns the <see cref="EnsnareableComponent"/>
+/// </summary>
+public sealed class FreeEnsnareDoAfterCancel : EntityEventArgs
+{
+    public readonly EntityUid EnsnaringEntity;
+
+    public FreeEnsnareDoAfterCancel(EntityUid ensnaringEntity)
+    {
+        EnsnaringEntity = ensnaringEntity;
+    }
 }
