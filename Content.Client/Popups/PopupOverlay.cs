@@ -53,7 +53,6 @@ public sealed class PopupOverlay : Overlay
 
         args.DrawingHandle.SetTransform(Matrix3.Identity);
         args.DrawingHandle.UseShader(_shader);
-        var scale2 = args.Viewport.RenderScale;
         var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
         if (scale == 0f)
