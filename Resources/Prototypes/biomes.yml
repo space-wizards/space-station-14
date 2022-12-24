@@ -14,6 +14,6 @@
   # TODO: Replace the actual grass with this
   tile: FloorPlanetGrass
   edges:
-    Single: Tiles/Planet/Grass/single_edge.png
-    Double: Tiles/Planet/Grass/double_edge.png
-    Triple: Tiles/Planet/Grass/triple_edge.png
+    Single: /Textures/Tiles/Planet/Grass/single_edge.png
+    Double: /Textures/Tiles/Planet/Grass/double_edge.png
+    Triple: /Textures/Tiles/Planet/Grass/triple_edge.png

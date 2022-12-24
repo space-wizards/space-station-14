@@ -7,6 +7,7 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.Utility;
 using Robust.Shared.Collections;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -20,6 +21,7 @@ public sealed class BiomeSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IClientTileDefinitionManager _tileDefManager = default!;
 
     public const int ChunkSize = 8;
@@ -27,7 +29,7 @@ public sealed class BiomeSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        _overlay.AddOverlay(new BiomeOverlay(EntityManager, _mapManager, _protoManager, this));
+        _overlay.AddOverlay(new BiomeOverlay(_tileDefManager, EntityManager, _mapManager, _protoManager, _resource, this));
     }
 
     public override void Shutdown()
@@ -36,20 +38,23 @@ public sealed class BiomeSystem : EntitySystem
         _overlay.RemoveOverlay<BiomeOverlay>();
     }
 
-    public Tile GetTile(Vector2i indices, BiomePrototype prototype, int seed)
+    public Tile GetTile(MapGridComponent component, Vector2i indices, int seed, List<BiomeTileGroupPrototype> groups, float weightSum)
     {
-        return Tile.Empty;
+        if (component.TryGetTileRef(indices, out var tileRef))
+            return tileRef.Tile;
+
+        return GetTile(indices, seed, groups, weightSum);
     }
 
-    private float GetValue(Vector2i indices, int seed)
+    public float GetValue(Vector2i indices, int seed)
     {
         var chunkOrigin = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
         var chunkValue = (OpenSimplex2.Noise2(seed, chunkOrigin.X, chunkOrigin.Y) + 1f) / 2f;
         var tileValue = (OpenSimplex2.Noise2(seed, indices.X, indices.Y) + 1f) / 2f;
-        return (chunkValue / 2f + tileValue) / 1.5f;
+        return (chunkValue / 4f + tileValue) / 1.25f;
     }
 
-    private BiomeTileGroupPrototype GetGroup(List<BiomeTileGroupPrototype> groups, float value, float weight)
+    public BiomeTileGroupPrototype GetGroup(List<BiomeTileGroupPrototype> groups, float value, float weight)
     {
         DebugTools.Assert(groups.Count > 0);
 
@@ -71,10 +76,17 @@ public sealed class BiomeSystem : EntitySystem
         throw new InvalidOperationException();
     }
 
-    public Texture GetTexture(Vector2i indices, int seed, List<BiomeTileGroupPrototype> groups, float weightSum)
+    /// <summary>
+    /// If it's a single tile on its own we fall back to the default group
+    /// </summary>
+    public BiomeTileGroupPrototype GetAdjustedGroup(
+        BiomeTileGroupPrototype group,
+        List<BiomeTileGroupPrototype> groups,
+        Vector2i indices,
+        int seed,
+        float weightSum)
     {
-        var value = GetValue(indices, seed);
-        var group = GetGroup(groups, value, weightSum);
+        // TODO: This API fucking blows.
 
         // If it's a single tile on its own we fall back to the default group
         if (group != groups[0])
@@ -112,13 +124,40 @@ public sealed class BiomeSystem : EntitySystem
             }
         }
 
-        var sprite = _protoManager.Index<ContentTileDefinition>(group.Tile).Sprite;
+        return group;
+    }
 
-        if (sprite == null)
-            return Texture.Transparent;
+    /// <summary>
+    /// Gets the underlying biome tile, ignoring any existing tile that may be there.
+    /// </summary>
+    public Tile GetTile(Vector2i indices, int seed, List<BiomeTileGroupPrototype> groups,
+        float weightSum)
+    {
+        var value = GetValue(indices, seed);
+        var group = GetGroup(groups, value, weightSum);
+        group = GetAdjustedGroup(group, groups, indices, seed, weightSum);
 
         byte variant = 0;
-        return _tileDefManager.GetTexture(new Tile(_protoManager.Index<ContentTileDefinition>(group.Tile).TileId, 0,
-            variant));
+        var tileDef = _protoManager.Index<ContentTileDefinition>(group.Tile);
+
+        // Pick a variant tile if they're available as well
+        if (tileDef.Variants > 1)
+        {
+            var variantValue = (OpenSimplex2.Noise2(seed, indices.X, indices.Y) + 1f) / 2f;
+            variantValue *= tileDef.Variants;
+
+            for (byte i = 0; i < tileDef.Variants; i++)
+            {
+                variantValue -= 1f;
+
+                if (variantValue <= 0f)
+                {
+                    variant = i;
+                    break;
+                }
+            }
+        }
+
+        return new Tile(tileDef.TileId, 0, variant);
     }
 }
