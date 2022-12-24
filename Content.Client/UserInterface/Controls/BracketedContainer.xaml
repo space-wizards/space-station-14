@@ -6,7 +6,9 @@
         <!-- Surely there is a way to add a texture to container? -->
         <TextureButton StyleClasses="BracketedContainerBegin" VerticalExpand="True"/>
 
-        <Control Access="Public" Name="ContentsContainer" HorizontalExpand="True" VerticalExpand="True" />
+        <BoxContainer Orientation="Vertical">
+            <Control Access="Public" Name="ContentsContainer" HorizontalExpand="True" VerticalExpand="True" />
+        </BoxContainer>
 
         <!-- Can't figure out how to apply a negative scale to an image, so just made a flipped version -->
         <TextureButton StyleClasses="BracketedContainerEnd" VerticalExpand="True" />

@@ -84,7 +84,7 @@
 
                         <!-- Shuttle "arriving in" label here -->
                         <ui:BracketedContainer HorizontalExpand="True">
-                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                            <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="0 6 0 6">
                                 <Label Text="{Loc 'comms-shuttle-arriving-duration-label'}" Margin="0 0 6 0" />
                                 <PanelContainer StyleClasses="PanelBackgroundBaseDark" HorizontalExpand="True" HorizontalAlignment="Right" Margin="0 0 4 0">
                                     <Label Name="_countdownLabel" StyleClasses="LabelLCDBig"/>
