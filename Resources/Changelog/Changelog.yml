@@ -1,9 +1,4 @@
 Entries:
-- author: AJCM-git
-  changes:
-  - {message: In-Character names now get proper casing automatically, type: Tweak}
-  id: 2301
-  time: '2022-09-14T09:50:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
@@ -2938,3 +2933,12 @@ Entries:
   - {message: Popups will use your UI scaling now., type: Fix}
   id: 2800
   time: '2022-12-24T21:07:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mechs can no longer pick up the pilot inside the mech., type: Fix}
+  - {message: Mechs can no longer be piloted by non-humanoids., type: Fix}
+  - {message: Hydraulic clamps can no longer pick up living creatures. (too wriggly),
+    type: Fix}
+  - {message: You can no longer repair a mech from inside of it., type: Fix}
+  id: 2801
+  time: '2022-12-24T21:33:08.0000000+00:00'
