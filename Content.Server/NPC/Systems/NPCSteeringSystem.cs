@@ -41,7 +41,6 @@ namespace Content.Server.NPC.Systems
 
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IDependencyCollection _dependencies = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IParallelManager _parallel = default!;
@@ -79,8 +78,8 @@ namespace Content.Server.NPC.Systems
             }
 
             UpdatesBefore.Add(typeof(SharedPhysicsSystem));
-            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
-            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
+            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
             SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
@@ -90,9 +89,11 @@ namespace Content.Server.NPC.Systems
         {
             if (!obj)
             {
-                foreach (var (_, mover) in EntityQuery<NPCSteeringComponent, InputMoverComponent>())
+                foreach (var (comp, mover) in EntityQuery<NPCSteeringComponent, InputMoverComponent>())
                 {
                     mover.CurTickSprintMovement = Vector2.Zero;
+                    comp.PathfindToken?.Cancel();
+                    comp.PathfindToken = null;
                 }
             }
 
@@ -117,6 +118,7 @@ namespace Content.Server.NPC.Systems
         {
             base.Shutdown();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+            _configManager.UnsubValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
         }
 
         private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
