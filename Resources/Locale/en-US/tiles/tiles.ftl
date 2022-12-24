@@ -69,6 +69,7 @@ tiles-green-circuit-floor = green circuit floor
 tiles-blue-circuit-floor = blue circuit floor
 tiles-snow = snow
 tiles-grass-floor = grass floor
+tiles-planet-grass-floor = grass floor
 tiles-jungle-grass-floor = jungle grass floor
 tiles-dark-grass-floor = dark grass floor
 tiles-light-grass-floor = light grass floor
