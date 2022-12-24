@@ -1110,11 +1110,7 @@
 - type: tile
   id: FloorGrass
   name: tiles-grass-floor
-  sprite: /Textures/Tiles/Grass/grass.png
-  variants: 4
-  placementVariants: [0, 1, 2, 3]
-  cornerSprite: /Textures/Tiles/Grass/single_edge.png
-  cardinalSprite: /Textures/Tiles/Grass/double_edge.png
+  sprite: /Textures/Tiles/grass.png
   baseTurfs:
   - FloorDirt
   isSubfloor: true

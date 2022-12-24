@@ -1,0 +1,18 @@
+- type: tile
+  id: FloorPlanetGrass
+  name: tiles-grass-planet-floor
+  sprite: /Textures/Tiles/Planet/Grass/grass.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  cornerSprite: /Textures/Tiles/Planet/Grass/single_edge.png
+  cardinalSprite: /Textures/Tiles/Planet/Grass/double_edge.png
+  baseTurfs:
+  - FloorDirt
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepGrass
+  friction: 0.30
+  itemDrop: FloorTileItemGrass
+  thermalConductivity: 0.04
+  heatCapacity: 10000
