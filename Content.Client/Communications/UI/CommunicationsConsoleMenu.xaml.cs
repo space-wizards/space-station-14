@@ -178,9 +178,9 @@ namespace Content.Client.Communications.UI
             {
                 var subSecondsRemaining = Owner.Countdown - (float)Math.Floor(Owner.Countdown);
 
-                var lightEnableBlend = SmoothStep(0.1f, 0.2f, subSecondsRemaining);
-                var lightDisableBlend = 1.0f - SmoothStep(0.9f, 0.95f, subSecondsRemaining);
-                var alpha = lightEnableBlend * lightDisableBlend;
+                var lightEnableBlend = 1.0f - SmoothStep(0.0f, 0.2f, subSecondsRemaining);
+                var lightDisableBlend = SmoothStep(0.9f, 0.95f, subSecondsRemaining);
+                var alpha = lightEnableBlend - lightDisableBlend;
                 _countdownLabel.ModulateSelfOverride = new Color(1.0f, 1.0f, 1.0f, alpha);
             }
             else
