@@ -130,6 +130,15 @@
     Poison: 0.0
     Radiation: 0.0
 
+- type: damageModifierSet
+  id: Moth
+  coefficients:
+    Blunt: 0.7
+    Slash: 1.3
+    Cold: 0.65
+    Heat: 1.5
+    Poison: 1.2
+
 # immune to everything except physical and heat damage
 - type: damageModifierSet
   id: Skeleton

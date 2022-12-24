@@ -1,0 +1,39 @@
+- type: entity
+  save: false
+  name: Urist McFluff
+  parent: BaseMobMoth
+  id: MobMoth
+  components:
+  - type: CombatMode
+    canDisarm: true
+  - type: InteractionPopup
+    successChance: 1
+    interactSuccessString: hugging-success-generic
+    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
+    messagePerceivedByOthers: hugging-success-generic-others
+  - type: Mind
+    showExamineInfo: true
+  - type: Input
+    context: "human"
+  - type: MobMover
+  - type: InputMover
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1.0
+    damageRecovery:
+      types:
+        Asphyxiation: -1.0
+  - type: Vocal # these are all the same
+    maleScream: "/Audio/Voice/Moth/scream_moth.ogg"
+    femaleScream: "/Audio/Voice/Moth/scream_moth.ogg"
+    wilhelm: "/Audio/Voice/Moth/scream_moth.ogg"
+  - type: Alerts
+  - type: Actions
+  - type: Eye
+  - type: CameraRecoil
+  - type: Examiner
+  - type: CanHostGuardian
+  - type: Faction
+    factions:
+    - NanoTrasen
