@@ -204,12 +204,19 @@ namespace Content.Server.NPC.Systems
 
             var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
-
-            foreach (var (steering, _, mover, xform) in npcs)
+            var options = new ParallelOptions
             {
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
+
+            Parallel.For(0, npcs.Length, options, i =>
+            {
+                var (steering, _, mover, xform) = npcs[i];
+
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
                 steering.LastSteer = mover.CurTickSprintMovement;
-            }
+            });
+
 
             if (_subscribedSessions.Count > 0)
             {
