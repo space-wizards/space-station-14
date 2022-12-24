@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
@@ -18,7 +17,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Timer = Robust.Shared.Timing.Timer;
+using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -29,6 +28,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
@@ -50,8 +50,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     private int _playersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
     private int _maxTraitors => _cfg.GetCVar(CCVars.TraitorMaxTraitors);
 
-    public bool AnnouncementMade = false;
-    private CancellationTokenSource? _cancelStart;
+    public enum SelectionState
+    {
+        WaitingForSpawn,
+        ReadyToSelect,
+        SelectionMade,
+    }
+
+    public SelectionState SelectionStatus;
+    private TimeSpan _announceAt = TimeSpan.Zero;
     private Dictionary<IPlayerSession, HumanoidCharacterProfile> _startCandidates = new();
 
     public override void Initialize()
@@ -66,15 +73,21 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
 
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        if (SelectionStatus == SelectionState.ReadyToSelect && _gameTiming.CurTime >= _announceAt)
+            DoTraitorStart();
+    }
+
     public override void Started(){}
 
     public override void Ended()
     {
         Traitors.Clear();
         _startCandidates.Clear();
-        _cancelStart?.Cancel();
-        _cancelStart = null;
-        AnnouncementMade = false;
+        SelectionStatus = SelectionState.WaitingForSpawn;
     }
 
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -130,7 +143,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         foreach (var traitor in selectedTraitors)
             MakeTraitor(traitor);
 
-        AnnouncementMade = true;
+        SelectionStatus = SelectionState.SelectionMade;
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -150,8 +163,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             _cfg.GetCVar(CCVars.TraitorStartDelay) +
             _random.NextFloat(0f, _cfg.GetCVar(CCVars.TraitorStartDelayVariance)));
 
-        _cancelStart = new CancellationTokenSource();
-        Timer.Spawn(delay, () => DoTraitorStart(), _cancelStart.Token);
+        _announceAt = _gameTiming.CurTime + delay;
+
+        SelectionStatus = SelectionState.ReadyToSelect;
     }
 
     public List<IPlayerSession> FindPotentialTraitors(in Dictionary<IPlayerSession, HumanoidCharacterProfile> candidates)
@@ -261,7 +275,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             return;
 
         // Before the announcement is made, late-joiners are considered the same as players who readied.
-        if (!AnnouncementMade)
+        if (SelectionStatus < SelectionState.SelectionMade)
         {
             _startCandidates[ev.Player] = ev.Profile;
             return;
