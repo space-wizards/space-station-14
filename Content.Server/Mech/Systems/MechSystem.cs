@@ -142,7 +142,7 @@ public sealed class MechSystem : SharedMechSystem
     private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ToolUserAttemptUseEvent args)
     {
         if (args.Target == component.Mech)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)

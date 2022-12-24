@@ -119,6 +119,11 @@ namespace Content.Server.Tools
             if (!Resolve(tool, ref toolComponent, false))
                 return false;
 
+            var ev = new ToolUserAttemptUseEvent(user, target);
+            RaiseLocalEvent(user, ref ev);
+            if (ev.Cancelled)
+                return false;
+            
             if (!ToolStartUse(tool, user, fuel, toolQualitiesNeeded, toolComponent))
                 return false;
 
@@ -174,7 +179,7 @@ namespace Content.Server.Tools
                 return false;
 
             var ev = new ToolUserAttemptUseEvent(user, target);
-            RaiseLocalEvent(user, ev);
+            RaiseLocalEvent(user, ref ev);
             if (ev.Cancelled)
                 return false;
 
@@ -314,10 +319,12 @@ namespace Content.Server.Tools
     /// <summary>
     /// Event raised on the user of a tool to see if they can actually use it.
     /// </summary>
-    public sealed class ToolUserAttemptUseEvent : CancellableEntityEventArgs
+    [ByRefEvent]
+    public struct ToolUserAttemptUseEvent
     {
         public EntityUid User;
         public EntityUid? Target;
+        public bool Cancelled = false;
 
         public ToolUserAttemptUseEvent(EntityUid user, EntityUid? target)
         {
