@@ -1,6 +1,10 @@
-﻿using Content.Shared.Materials;
+﻿using Content.Server.Administration.Logs;
+using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
+using Content.Shared.Database;
+using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Robust.Shared.Player;
 
 namespace Content.Server.Materials;
@@ -10,6 +14,8 @@ namespace Content.Server.Materials;
 /// </summary>
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -25,6 +31,13 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         _popup.PopupEntity(Loc.GetString("machine-insert-item", ("user", user), ("machine", component.Owner),
             ("item", toInsert)), component.Owner);
         QueueDel(toInsert);
+
+        // Logging
+        _entityManager.TryGetComponent<SharedStackComponent>(toInsert, out var stack);
+        var count = stack?.Count ?? 1;
+        _adminLogger.Add(LogType.Action, LogImpact.Low,
+            $"{ToPrettyString(user):player} inserted {count:count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+
         return true;
     }
 }
