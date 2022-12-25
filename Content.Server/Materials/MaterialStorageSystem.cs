@@ -13,7 +13,6 @@ namespace Content.Server.Materials;
 public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -31,7 +30,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         QueueDel(toInsert);
 
         // Logging
-        _entityManager.TryGetComponent<StackComponent>(toInsert, out var stack);
+        TryComp<StackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
