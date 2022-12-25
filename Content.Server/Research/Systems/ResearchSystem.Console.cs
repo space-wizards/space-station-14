@@ -4,7 +4,7 @@ using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using Robust.Server.Player;
 
-namespace Content.Server.Research;
+namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
@@ -13,6 +13,7 @@ public sealed partial class ResearchSystem
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleServerSyncMessage>(OnConsoleSync);
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
+        SubscribeLocalEvent<ResearchConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
     }
 
     private void OnConsoleSelect(EntityUid uid, ResearchConsoleComponent component, ConsoleServerSelectionMessage args)
@@ -45,9 +46,11 @@ public sealed partial class ResearchSystem
 
         if (!_prototypeManager.TryIndex(args.Id, out TechnologyPrototype? tech) ||
             client.Server == null ||
-            !CanUnlockTechnology(client.Server, tech)) return;
+            !CanUnlockTechnology(client.Server, tech))
+            return;
 
-        if (!UnlockTechnology(client.Server, tech)) return;
+        if (!UnlockTechnology(client.Server, tech))
+            return;
 
         SyncWithServer(database);
         Dirty(database);
@@ -69,6 +72,15 @@ public sealed partial class ResearchSystem
             var pointsPerSecond = clientComponent.ConnectedToServer ? PointsPerSecond(clientComponent.Server) : 0;
             state = new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
         }
-        _uiSystem.GetUiOrNull(component.Owner, ResearchConsoleUiKey.Key)?.SetState(state);
+
+        _uiSystem.TrySetUiState(component.Owner, ResearchConsoleUiKey.Key, state);
     }
+
+    private void OnPointsChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchServerPointsChangedEvent args)
+    {
+        if (!_uiSystem.IsUiOpen(uid, ResearchConsoleUiKey.Key))
+            return;
+        UpdateConsoleInterface(component);
+    }
+
 }

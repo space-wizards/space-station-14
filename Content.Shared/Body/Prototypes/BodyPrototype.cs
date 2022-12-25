@@ -8,14 +8,8 @@ public sealed class BodyPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    private string _name = string.Empty;
-
     [DataField("name")]
-    public string Name
-    {
-        get => _name;
-        private set => _name = Loc.GetString(value);
-    }
+    public string Name { get; private set; } = "";
 
     [DataField("root")] public string Root { get; } = string.Empty;
 

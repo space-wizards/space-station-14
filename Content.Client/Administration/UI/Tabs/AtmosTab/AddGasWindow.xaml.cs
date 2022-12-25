@@ -39,7 +39,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             _gasData = EntitySystem.Get<AtmosphereSystem>().Gases;
             foreach (var gas in _gasData)
             {
-                GasOptions.AddItem($"{gas.Name} ({gas.ID})");
+                var gasName = Loc.GetString(gas.Name);
+                GasOptions.AddItem($"{gasName} ({gas.ID})");
             }
 
             GasOptions.OnItemSelected += eventArgs => GasOptions.SelectId(eventArgs.Id);

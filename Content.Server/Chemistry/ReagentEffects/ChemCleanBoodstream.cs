@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// Basically smoke and foam reactions.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ChemCleanBoodstream : ReagentEffect
+    public sealed class ChemCleanBloodstream : ReagentEffect
     {
         [DataField("cleanseRate")]
         public float CleanseRate = 3.0f;
@@ -17,8 +17,12 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (args.Source == null)
                 return;
 
+            var cleanseRate = CleanseRate;
+
+            cleanseRate *= args.Scale;
+
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, CleanseRate);
+            bloodstreamSys.FlushChemicals(args.SolutionEntity, args.Reagent.ID, cleanseRate);
         }
     }
 }
