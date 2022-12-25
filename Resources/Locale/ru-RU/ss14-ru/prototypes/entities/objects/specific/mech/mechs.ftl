@@ -1,0 +1,9 @@
+ent-BaseMech = { "" }
+    .desc = { "" }
+    .suffix = { "" }
+ent-MechRipley = Рипли
+    .desc = Любимый мех-погрузчик отдела снабжения.
+    .suffix = { "" }
+ent-MechRipleyBattery = { ent-MechRipley }
+    .suffix = Батарея
+    .desc = { ent-MechRipley.desc }
