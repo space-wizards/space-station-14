@@ -1,21 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
-  id: 2302
-  time: '2022-09-14T10:03:00.0000000+00:00'
-- author: themias
-  changes:
-  - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
-      and plastic plates', type: Tweak}
-  id: 2303
-  time: '2022-09-14T17:14:55.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Empty Fuel Tank wont explode., type: Add}
-  - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
-  id: 2304
-  time: '2022-09-14T17:15:55.0000000+00:00'
 - author: rolfero
   changes:
   - {message: You can no longer examine players and other mobs melee damage., type: Fix}
@@ -2942,3 +2925,21 @@ Entries:
   - {message: You can no longer repair a mech from inside of it., type: Fix}
   id: 2801
   time: '2022-12-24T21:33:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will ignore stationary allies for separation. Pets in particular
+      will move through other stationary pets., type: Tweak}
+  id: 2802
+  time: '2022-12-25T00:30:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bump NPC avoidance range and fix some instances of unapproved dancing.,
+    type: Fix}
+  id: 2803
+  time: '2022-12-25T00:35:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added hot plates for heating up beakers. No longer are chemists bound
+      to the humble microwave., type: Add}
+  id: 2804
+  time: '2022-12-25T01:59:52.0000000+00:00'
