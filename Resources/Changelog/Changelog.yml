@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
-      and plastic plates', type: Tweak}
-  id: 2303
-  time: '2022-09-14T17:14:55.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Empty Fuel Tank wont explode., type: Add}
@@ -2943,3 +2937,9 @@ Entries:
       will move through other stationary pets., type: Tweak}
   id: 2802
   time: '2022-12-25T00:30:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bump NPC avoidance range and fix some instances of unapproved dancing.,
+    type: Fix}
+  id: 2803
+  time: '2022-12-25T00:35:00.0000000+00:00'
