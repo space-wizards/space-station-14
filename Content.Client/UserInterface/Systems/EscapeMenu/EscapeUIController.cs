@@ -12,6 +12,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Utility;
+using Content.Client.Stylesheets;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
@@ -93,6 +94,9 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
             _console.ExecuteCommand("quit");
         };
 
+        // set red cuz' noobies needs to see wiki first
+        _escapeWindow.WikiButton.AddStyleClass(StyleBase.ButtonCaution);
+
         _escapeWindow.WikiButton.OnPressed += _ =>
         {
             _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksWiki));
@@ -100,6 +104,14 @@ public sealed class EscapeUIController : UIController, IOnStateEntered<GameplayS
 
         // Hide wiki button if we don't have a link for it.
         _escapeWindow.WikiButton.Visible = _cfg.GetCVar(CCVars.InfoLinksWiki) != "";
+
+        _escapeWindow.DiscordButton.OnPressed += _ =>
+        {
+            _uri.OpenUri(_cfg.GetCVar(CCVars.InfoLinksDiscord));
+        };
+
+        // Hide discord button if we don't have a link for it.
+        _escapeWindow.DiscordButton.Visible = _cfg.GetCVar(CCVars.InfoLinksDiscord) != "";
 
         CommandBinds.Builder
             .Bind(EngineKeyFunctions.EscapeMenu,
