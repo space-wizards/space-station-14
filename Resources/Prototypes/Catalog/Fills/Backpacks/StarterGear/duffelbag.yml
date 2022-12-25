@@ -118,6 +118,16 @@
 - type: entity
   noSpawn: true
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelLibrarianFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: BookRandom
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelDetectiveFilled
   components:
     - type: StorageFill

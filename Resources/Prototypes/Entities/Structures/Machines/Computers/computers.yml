@@ -29,12 +29,10 @@
   - type: EmergencyShuttleConsole
   - type: ActivatableUI
     key: enum.EmergencyConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.EmergencyConsoleUiKey.Key
         type: EmergencyConsoleBoundUserInterface
-  - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -342,7 +340,6 @@
   - type: TechnologyDatabase
   - type: ActivatableUI
     key: enum.ResearchConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -352,7 +349,6 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
     priority: Low
-  - type: ExtensionCableReceiver
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: PointLight
@@ -387,7 +383,6 @@
       ArtifactAnalyzerSender: []
   - type: ActivatableUI
     key: enum.ArtifactAnalzyerUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ArtifactAnalzyerUiKey.Key
@@ -397,7 +392,6 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
     priority: Low
-  - type: ExtensionCableReceiver
   - type: Computer
     board: AnalysisComputerCircuitboard
   - type: PointLight
@@ -434,7 +428,6 @@
         - IdCard
   - type: ActivatableUI
     key: enum.IdCardConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
@@ -475,7 +468,6 @@
   - type: BodyScanner
   - type: ActivatableUI
     key: enum.BodyScannerUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -511,7 +503,6 @@
     title: comms-console-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
@@ -573,7 +564,6 @@
   - type: SolarControlConsole
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
@@ -638,7 +628,6 @@
   - type: CargoShuttleConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Shuttle
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Shuttle
@@ -671,7 +660,6 @@
   - type: CargoOrderConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Orders
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Orders
@@ -720,7 +708,6 @@
       CloningPodSender: []
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.CloningConsoleUiKey.Key
