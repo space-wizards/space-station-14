@@ -298,7 +298,7 @@ namespace Content.Server.Lathe
                 }
                 if (count > 0 && args.Session.AttachedEntity != null)
                     _adminLogger.Add(LogType.Action, LogImpact.Low,
-                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} queued {count:count} {recipe.Name} at {ToPrettyString(uid):lathe}");
+                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} queued {count} {recipe.Name} at {ToPrettyString(uid):lathe}");
             }
             TryStartProducing(uid, component);
             UpdateUserInterfaceState(uid, component);

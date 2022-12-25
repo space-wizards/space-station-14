@@ -36,7 +36,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         _entityManager.TryGetComponent<SharedStackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
-            $"{ToPrettyString(user):player} inserted {count:count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
+            $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
 
         return true;
     }
