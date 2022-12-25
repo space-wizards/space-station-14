@@ -129,18 +129,15 @@ public static class MarkingColoring
             for (var i = 0; i < prototype.Sprites.Count; i++)
             {
                 // Getting layer name
-                string name;
-                switch (prototype.Sprites[i])
+                string? name = prototype.Sprites[i] switch
                 {
-                    case SpriteSpecifier.Rsi rsi:
-                        name = rsi.RsiState;
-                        break;
-                    case SpriteSpecifier.Texture texture:
-                        name = texture.TexturePath.Filename;
-                        break;
-                    default:
-                        colors.Add(default_color);
-                        continue;
+                    SpriteSpecifier.Rsi rsi => rsi.RsiState,
+                    SpriteSpecifier.Texture texture => texture.TexturePath.Filename,
+                    _ => null
+                };
+                if (name == null) {
+                    colors.Add(default_color);
+                    continue;
                 }
             
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
