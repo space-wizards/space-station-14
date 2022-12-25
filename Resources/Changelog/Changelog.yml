@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Empty Fuel Tank wont explode., type: Add}
-  - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
-  id: 2304
-  time: '2022-09-14T17:15:55.0000000+00:00'
 - author: rolfero
   changes:
   - {message: You can no longer examine players and other mobs melee damage., type: Fix}
@@ -2943,3 +2937,9 @@ Entries:
     type: Fix}
   id: 2803
   time: '2022-12-25T00:35:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added hot plates for heating up beakers. No longer are chemists bound
+      to the humble microwave., type: Add}
+  id: 2804
+  time: '2022-12-25T01:59:52.0000000+00:00'
