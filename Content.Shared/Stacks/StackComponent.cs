@@ -4,8 +4,8 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Stacks
 {
-    [NetworkedComponent, Access(typeof(SharedStackSystem))]
-    public abstract class SharedStackComponent : Component
+    [RegisterComponent, NetworkedComponent]
+    public sealed class StackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -32,6 +32,12 @@ namespace Content.Shared.Stacks
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ThrowIndividually { get; set; } = false;
+
+        [ViewVariables]
+        public bool UiUpdateNeeded { get; set; }
     }
 
     [Serializable, NetSerializable]
