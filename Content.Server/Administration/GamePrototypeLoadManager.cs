@@ -17,7 +17,7 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ILocalizationManager _localizationManager = default!;
 
-    private readonly List<string> LoadedPrototypes = new();
+    private readonly List<string> _loadedPrototypes = new();
 
     public void Initialize()
     {
@@ -29,8 +29,6 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
     {
 
     }
-
-    public event Action? GamePrototypeLoaded;
 
     private void ClientLoadsPrototype(GamePrototypeLoadMessage message)
     {
@@ -48,23 +46,28 @@ public sealed class GamePrototypeLoadManager : IGamePrototypeLoadManager
 
     private void LoadPrototypeData(string prototypeData)
     {
-        LoadedPrototypes.Add(prototypeData);
-        var msg = new GamePrototypeLoadMessage();
-        msg.PrototypeData = prototypeData;
+        _loadedPrototypes.Add(prototypeData);
+        var msg = new GamePrototypeLoadMessage
+        {
+            PrototypeData = prototypeData
+        };
         _netManager.ServerSendToAll(msg); // everyone load it up!
-        _prototypeManager.LoadString(prototypeData, true); // server needs it too.
+        var changed = new Dictionary<Type, HashSet<string>>();
+        _prototypeManager.LoadString(prototypeData, true, changed); // server needs it too.
         _prototypeManager.ResolveResults();
+        _prototypeManager.ReloadPrototypes(changed);
         _localizationManager.ReloadLocalizations();
-        GamePrototypeLoaded?.Invoke();
     }
 
     private void NetManagerOnConnected(object? sender, NetChannelArgs e)
     {
         // Just dump all the prototypes on connect, before them missing could be an issue.
-        foreach (var prototype in LoadedPrototypes)
+        foreach (var prototype in _loadedPrototypes)
         {
-            var msg = new GamePrototypeLoadMessage();
-            msg.PrototypeData = prototype;
+            var msg = new GamePrototypeLoadMessage
+            {
+                PrototypeData = prototype
+            };
             e.Channel.SendMessage(msg);
         }
     }

@@ -1,10 +1,9 @@
-using Content.Shared.Singularity.Components;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Singularity.Components;
+namespace Content.Shared.Singularity.Components;
 
-[RegisterComponent]
-[ComponentReference(typeof(SharedContainmentFieldComponent))]
-public sealed class ContainmentFieldComponent : SharedContainmentFieldComponent
+[RegisterComponent, NetworkedComponent]
+public sealed class ContainmentFieldComponent : Component
 {
     /// <summary>
     /// The throw force for the field if an entity collides with it

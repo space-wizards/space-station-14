@@ -1,6 +1,7 @@
 - type: job
   id: Lawyer
   name: job-name-lawyer
+  description: job-description-lawyer
   playTimeTracker: JobLawyer
   startingGear: LawyerGear
   icon: "Lawyer"

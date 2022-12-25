@@ -1,15 +1,16 @@
 using Content.Shared.Physics;
-using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Singularity.Components;
-[RegisterComponent]
-[ComponentReference(typeof(SharedContainmentFieldGeneratorComponent))]
-public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldGeneratorComponent
+namespace Content.Shared.Singularity.Components;
+
+[RegisterComponent, NetworkedComponent]
+public sealed class ContainmentFieldGeneratorComponent : Component
 {
-    private int _powerBuffer;
+        private int _powerBuffer;
 
     /// <summary>
     /// Store power with a cap. Decrease over time if not being powered from source.
@@ -99,4 +100,30 @@ public sealed class ContainmentFieldGeneratorComponent : SharedContainmentFieldG
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("createdField", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string CreatedField = "ContainmentField";
+}
+
+[Serializable, NetSerializable]
+public enum ContainmentFieldGeneratorVisuals : byte
+{
+    PowerLight,
+    FieldLight,
+    OnLight,
+}
+
+[Serializable, NetSerializable]
+public enum PowerLevelVisuals : byte
+{
+    NoPower,
+    LowPower,
+    MediumPower,
+    HighPower,
+}
+
+[Serializable, NetSerializable]
+public enum FieldLevelVisuals : byte
+{
+    NoLevel,
+    On,
+    OneField,
+    MultipleFields,
 }
