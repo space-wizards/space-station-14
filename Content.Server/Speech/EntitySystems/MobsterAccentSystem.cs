@@ -28,7 +28,6 @@ public sealed class MobsterAccentSystem : EntitySystem
         { "going to", "boutta" },
         { "about to", "boutta" },
         { "here", "'ere" },
-        { "here", "'ere" },
         { "утащил", "сдёрнул" },
         { "принеси", "надыбай" },
         { "принесите", "надыбайте" },
