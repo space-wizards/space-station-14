@@ -68,7 +68,7 @@ namespace Content.Client.Research.UI
             if (_technologyDatabase == null)
                 return false;
 
-            return _research.CanUnlockTechnology(_technologyDatabase.Owner, technology, _technologyDatabase);
+            return _research.ArePrerequesitesUnlocked(_technologyDatabase.Owner, technology, _technologyDatabase);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
