@@ -3,7 +3,7 @@
   alias:
     - survival
   name: survival-title
-  showInVote: false # secret
+  showInVote: true # secret
   description: survival-description
   rules:
     - RampingStationEventScheduler
@@ -36,7 +36,7 @@
     - sandbox
   name: sandbox-title
   description: sandbox-description
-  showInVote: true
+  showInVote: false
   maxPlayers: 5
   rules:
     - Sandbox
@@ -89,7 +89,7 @@
     - nukeops
   name: nukeops-title
   description: nukeops-description
-  showInVote: false
+  showInVote: true
   rules:
     - Nukeops
     - BasicStationEventScheduler
