@@ -1,7 +1,7 @@
 using Content.Server.Power.Components;
-using Content.Server.Projectiles.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
+using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
