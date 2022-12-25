@@ -38,6 +38,7 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { ":>", "chatsan-grins" },
         { ":<", "chatsan-pouts" },
         { "xD", "chatsan-laughs" },
+        { "хд", "chatsan-laughs" },
         { ";-;", "chatsan-cries" },
         { ";_;", "chatsan-cries" },
         { "qwq", "chatsan-cries" },
