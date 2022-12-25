@@ -79,4 +79,5 @@ public enum LogType
     LatticeCut = 74,
     Stripping = 75,
     Stamina = 76,
+    EntitySpawn = 77,
 }

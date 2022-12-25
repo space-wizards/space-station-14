@@ -14,9 +14,9 @@ using Content.Server.Singularity.Events;
 namespace Content.Server.Singularity.EntitySystems;
 
 /// <summary>
-/// The server-side version of <seed cref="SharedSingularitySystem">.
+/// The server-side version of <see cref="SharedSingularitySystem"/>.
 /// Primarily responsible for managing <see cref="SingularityComponent"/>s.
-/// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent">) and gradual dissipation.
+/// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent"/>) and gradual dissipation.
 /// Also handles synchronizing server-side components with the singuarities level.
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
@@ -41,7 +41,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
-        SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
         SubscribeLocalEvent<SingularityComponent, ComponentShutdown>(OnSingularityShutdown);
         SubscribeLocalEvent<SingularityComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
         SubscribeLocalEvent<SinguloFoodComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
@@ -198,7 +197,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is forming.</param>
     /// <param name="comp">The component of the singularity that is forming.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
     {
         comp.LastUpdateTime = _timing.CurTime;
         comp.NextUpdateTime = comp.LastUpdateTime + comp.TargetUpdatePeriod;
@@ -309,7 +308,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void UpdateEnergyDrain(EntityUid uid, SingularityComponent comp, SingularityLevelChangedEvent args)
     {
-        comp.EnergyDrain = args.NewValue switch {
+        comp.EnergyDrain = args.NewValue switch
+        {
             6 => 20,
             5 => 15,
             4 => 10,

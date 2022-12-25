@@ -1,5 +1,4 @@
 using Content.Server.Body.Systems;
-using Content.Server.Buckle.Components;
 using Content.Server.Buckle.Systems;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
@@ -7,6 +6,7 @@ using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;

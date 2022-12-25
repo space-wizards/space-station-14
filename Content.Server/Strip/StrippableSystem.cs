@@ -1,7 +1,6 @@
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring;
-using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
@@ -13,10 +12,10 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Ensnaring.Components;
 
 namespace Content.Server.Strip
 {
