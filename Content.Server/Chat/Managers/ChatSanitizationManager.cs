@@ -64,20 +64,24 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "lmao", "chatsan-laughs" },
         { "lmao.", "chatsan-laughs" },
         { "лмао", "chatsan-laughs" },
+        { "лмао.", "chatsan-laughs" },
         { "lol", "chatsan-laughs" },
         { "lol.", "chatsan-laughs" },
         { "лол", "chatsan-laughs" },
+        { "лол.", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
         { "lel", "chatsan-laughs" },
         { "лел.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
-        { "kek.", "chatsan-laughs" },
+        { "кек.", "chatsan-laughs" },
+        { "кек", "chatsan-laughs" },
         { "кек.", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
         { "о7", "chatsan-salutes" }, // cyrillic о
         { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" },
-        { "хз", "chatsan-shrugs" }
+        { "хз", "chatsan-shrugs" },
+        { "хз.", "chatsan-shrugs" }
     };
 
     private bool _doSanitize;
