@@ -96,7 +96,7 @@ public sealed class SingularityComponent : Component
     public TimeSpan NextUpdateTime = default!;
 
     /// <summary>
-    /// The last time this singularity was be updated.
+    /// The last time this singularity was updated.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan LastUpdateTime = default!;
