@@ -17,7 +17,6 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly IEyeManager _eyeManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
 
     public bool Enabled { get; set; }
@@ -85,15 +84,10 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
             if (gameState is GameplayState game)
             {
-                EntityUid? uid;
+                var uid = game.GetEntityUnderPosition(mousePos);
 
-                foreach (var ent in _lookup.GetEntitiesIntersecting(mousePos, LookupFlags.Approximate | LookupFlags.Static))
-                {
-                    uid = game.GetEntityUnderPosition(mousePos);
-
-                    if (uid != null)
-                        StartDragging(uid.Value, mousePos);
-                }
+                if (uid != null)
+                    StartDragging(uid.Value, mousePos);
             }
 
             if (_dragging == null)

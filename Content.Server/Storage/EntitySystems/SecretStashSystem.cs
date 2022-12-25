@@ -24,14 +24,6 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnInit(EntityUid uid, SecretStashComponent component, ComponentInit args)
         {
-            // set default secret part name
-            if (component.SecretPartName == string.Empty)
-            {
-                var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
-                var entityName = Loc.GetString("comp-secret-stash-secret-part-name", ("name", meta.EntityName));
-                component.SecretPartName = entityName;
-            }
-
             component.ItemContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "stash", out _);
         }
 
@@ -79,7 +71,7 @@ namespace Content.Server.Storage.EntitySystems
             if (item.Size > component.MaxItemSize)
             {
                 var msg = Loc.GetString("comp-secret-stash-action-hide-item-too-big",
-                    ("item", itemName), ("stash", component.SecretPartName));
+                    ("item", itemName), ("stash", GetSecretPartName(uid, component)));
                 _popupSystem.PopupEntity(msg, uid, userUid);
                 return false;
             }
@@ -92,7 +84,7 @@ namespace Content.Server.Storage.EntitySystems
 
             // all done, show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-hide-success",
-                ("item", itemName), ("this", component.SecretPartName));
+                ("item", itemName), ("this", GetSecretPartName(uid, component)));
             _popupSystem.PopupEntity(successMsg, uid, userUid);
             return true;
         }
@@ -121,10 +113,21 @@ namespace Content.Server.Storage.EntitySystems
 
             // show success message
             var successMsg = Loc.GetString("comp-secret-stash-action-get-item-found-something",
-                ("stash", component.SecretPartName));
+                ("stash", GetSecretPartName(uid, component)));
             _popupSystem.PopupEntity(successMsg, uid, userUid);
 
             return true;
+        }
+
+        private string GetSecretPartName(EntityUid uid, SecretStashComponent stash)
+        {
+            if (stash.SecretPartName != "")
+                return Loc.GetString(stash.SecretPartName);
+
+            var meta = EntityManager.GetComponent<MetaDataComponent>(uid);
+            var entityName = Loc.GetString("comp-secret-stash-secret-part-name", ("name", meta.EntityName));
+
+            return entityName;
         }
     }
 }

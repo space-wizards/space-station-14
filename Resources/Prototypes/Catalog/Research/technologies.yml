@@ -103,6 +103,7 @@
   - Dropper
   - Syringe
   - ReagentGrinderMachineCircuitboard
+  - HotplateMachineCircuitboard
   - PillCanister
   - ChemistryEmptyBottle01
   - ChemicalPayload
@@ -479,6 +480,7 @@
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
+  - TechDiskComputerCircuitboard
   - CapacitorStockPart
   - MatterBinStockPart
   - MicroLaserStockPart

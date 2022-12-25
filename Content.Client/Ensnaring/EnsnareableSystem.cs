@@ -1,5 +1,5 @@
-using Content.Client.Ensnaring.Components;
 using Content.Shared.Ensnaring;
+using Content.Shared.Ensnaring.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Ensnaring.Visualizers;

@@ -287,11 +287,13 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
+      - TechDiskComputerCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
