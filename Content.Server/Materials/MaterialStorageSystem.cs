@@ -2,8 +2,8 @@
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Stack;
 using Content.Shared.Database;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Materials;
 
