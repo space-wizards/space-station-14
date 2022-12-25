@@ -17,7 +17,7 @@
   - type: Clickable
   - type: Evaporation
   - type: Physics
-    canCollide: false
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
@@ -120,7 +120,7 @@
   - type: Clickable
   - type: Evaporation
   - type: Physics
-    canCollide: false
+    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
