@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
+using Content.Shared.Stacks;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;

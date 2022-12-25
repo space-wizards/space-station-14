@@ -167,8 +167,11 @@
       - CableStack
       - CableMVStack
       - CableHVStack
+      - PowerDrill
+      - MiningDrill
       - ConveyorBeltAssembly
       - AppraisalTool
+      - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -205,6 +208,7 @@
       - APCElectronics
       - AirAlarmElectronics
       - FireAlarmElectronics
+      - IntercomElectronics
       - MailingUnitElectronics
       - Bucket
       - MopItem
@@ -222,7 +226,9 @@
       - PowerCellSmall
       - PowerCellMedium
       - PowerCellHigh  
+      - SynthesizerInstrument
       - RPED
+      - NodeScanner
       - HolofanProjector
 
 - type: entity
@@ -255,6 +261,7 @@
       - AirAlarmElectronics
       - FireAlarmElectronics
       - MailingUnitElectronics
+      - IntercomElectronics
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - ThermomachineFreezerMachineCircuitBoard
@@ -280,21 +287,27 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
+      - TechDiskComputerCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
       - OreProcessorMachineCircuitboard
+      - RipleyCentralElectronics
+      - RipleyPeripheralsElectronics
       - GeneratorPlasmaMachineCircuitboard
       - GeneratorUraniumMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
       - EmitterCircuitboard
+      - ThrusterMachineCircuitboard
+      - GyroscopeMachineCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
@@ -333,6 +346,12 @@
     - ProximitySensor
     - LeftArmBorg
     - RightArmBorg
+    - RipleyHarness
+    - RipleyLArm
+    - RipleyRArm
+    - RipleyLLeg
+    - RipleyRLeg
+    - MechEquipmentGrabber
   - type: MaterialStorage
     whitelist:
       tags:

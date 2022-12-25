@@ -13,7 +13,7 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    public abstract class ExamineSystemShared : EntitySystem
+    public abstract partial class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;

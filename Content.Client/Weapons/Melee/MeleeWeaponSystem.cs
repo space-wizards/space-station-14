@@ -103,7 +103,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -138,7 +138,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -179,7 +179,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
             }
             else
             {
@@ -239,7 +239,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return true;
 
             if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
-                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
+                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value);
 
             return false;
         }
@@ -252,7 +252,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!Timing.IsFirstTimePredicted || uid == null)
             return;
 
-        PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
+        PopupSystem.PopupEntity(message, uid.Value);
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)

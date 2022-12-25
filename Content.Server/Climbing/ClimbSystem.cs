@@ -66,7 +66,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, CanDragDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, CanDragDropOnEvent args)
     {
         base.OnCanDragDropOn(uid, component, args);
 
@@ -79,7 +79,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             : CanVault(component, args.User, args.Dragged, args.Target, out reason);
 
         if (!canVault)
-            _popupSystem.PopupEntity(reason, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(reason, args.User, args.User);
 
         args.CanDrop = canVault;
         args.Handled = true;
@@ -118,13 +118,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (TryBonk(component, user))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(entityToMove, component.ClimbDelay, default, climbable, user)
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            UserFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
+            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
         });
     }
 
@@ -166,6 +166,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             return;
 
         climbing.IsClimbing = true;
+        Dirty(climbing);
 
         MoveEntityToward(uid, climbable, physics, climbing);
         // we may potentially need additional logic since we're forcing a player onto a climbable
@@ -265,6 +266,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
+        Dirty(climbing);
     }
 
     /// <summary>
@@ -275,7 +277,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    private bool CanVault(SharedClimbableComponent component, EntityUid user, EntityUid target, out string reason)
+    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid target, out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, target))
         {
@@ -311,7 +313,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <param name="target">The object that is being vaulted onto</param>
     /// <param name="reason">The reason why it cant be dropped</param>
     /// <returns></returns>
-    private bool CanVault(SharedClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
+    private bool CanVault(ClimbableComponent component, EntityUid user, EntityUid dragged, EntityUid target,
         out string reason)
     {
         if (!_actionBlockerSystem.CanInteract(user, dragged) || !_actionBlockerSystem.CanInteract(user, target))
@@ -353,7 +355,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private static void OnClimbingGetState(EntityUid uid, ClimbingComponent component, ref ComponentGetState args)
     {
-        args.State = new SharedClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
+        args.State = new ClimbingComponent.ClimbModeComponentState(component.IsClimbing, component.OwnerIsTransitioning);
     }
 
     private void OnGlassClimbed(EntityUid uid, GlassTableComponent component, ClimbedOnEvent args)
@@ -368,7 +370,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Not shown to the user, since they already get a 'you climb on the glass table' popup
         _popupSystem.PopupEntity(
             Loc.GetString("glass-table-shattered-others", ("table", uid), ("climber", Identity.Entity(args.Climber, EntityManager))), args.Climber,
-            Filter.Pvs(uid).RemoveWhereAttachedEntity(puid => puid == args.Climber));
+            Filter.PvsExcept(args.Climber), true);
     }
 
     /// <summary>
@@ -401,7 +403,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         _actionBlockerSystem.UpdateCanMove(uid);
 
         // Transition back to KinematicController after BufferTime
-        climbing.Owner.SpawnTimer((int) (SharedClimbingComponent.BufferTime * 1000), () =>
+        climbing.Owner.SpawnTimer((int) (ClimbingComponent.BufferTime * 1000), () =>
         {
             if (climbing.Deleted) return;
             physics.BodyType = BodyType.KinematicController;

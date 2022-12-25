@@ -55,9 +55,6 @@ public sealed partial class ShuttleSystem
 
    private void InitializeEscape()
    {
-#if !FULL_RELEASE
-       _configManager.OverrideDefault(CCVars.EmergencyShuttleEnabled, false);
-#endif
        _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
        // Don't immediately invoke as roundstart will just handle it.
        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
@@ -165,7 +162,7 @@ public sealed partial class ShuttleSystem
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.GridEntityId != targetGrid))
+                           dockedBounds).Any(o => o.Owner != targetGrid))
                    {
                        continue;
                    }

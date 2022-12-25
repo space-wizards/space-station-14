@@ -4,8 +4,8 @@ using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
-using Content.Server.Research;
 using Content.Server.Research.Components;
+using Content.Server.Research.Systems;
 using Content.Server.UserInterface;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
@@ -38,6 +38,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
     [Dependency] private readonly PaperSystem _paper = default!;
+    [Dependency] private readonly ResearchSystem _research = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -272,7 +273,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (msg == null)
             return;
 
-        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid, Filter.Pvs(uid));
+        _popup.PopupEntity(Loc.GetString("analysis-console-print-popup"), uid);
         _paper.SetContent(report, msg.ToMarkup());
         UpdateUserInterface(uid, component);
     }
@@ -332,7 +333,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <param name="args"></param>
     private void OnDestroyButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleDestroyButtonPressedMessage args)
     {
-        if (!TryComp<ResearchClientComponent>(uid, out var client) || client.Server == null || component.AnalyzerEntity == null)
+        if (!TryComp<ResearchClientComponent>(uid, out var client) || client.Server is not { } server || component.AnalyzerEntity == null)
             return;
 
         var entToDestroy = GetArtifactForAnalysis(component.AnalyzerEntity);
@@ -345,13 +346,13 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             ResetAnalyzer(component.AnalyzerEntity.Value);
         }
 
-        client.Server.Points += _artifact.GetResearchPointValue(entToDestroy.Value);
+        _research.ChangePointsOnServer(server.Owner, _artifact.GetResearchPointValue(entToDestroy.Value), server);
         EntityManager.DeleteEntity(entToDestroy.Value);
 
         _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
 
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-destroy-popup"),
-            component.AnalyzerEntity.Value, Filter.Pvs(component.AnalyzerEntity.Value), PopupType.Large);
+            component.AnalyzerEntity.Value, PopupType.Large);
 
         UpdateUserInterface(uid, component);
     }

@@ -1,0 +1,152 @@
+{
+  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mecha_mousetrapmrtr"
+    },
+    {
+      "name": "mecha_bananamrtr"
+    },
+    {
+      "name": "mecha_honker"
+    },
+    {
+      "name": "mecha_mime"
+    },
+    {
+      "name": "mecha_scatter"
+    },
+    {
+      "name": "mecha_carbine"
+    },
+    {
+      "name": "mecha_disabler"
+    },
+    {
+      "name": "mecha_grenadelnchr"
+    },
+    {
+      "name": "mecha_uac2"
+    },
+    {
+      "name": "mecha_taser"
+    },
+    {
+      "name": "mecha_pulse"
+    },
+    {
+      "name": "mecha_laser"
+    },
+    {
+      "name": "mecha_missilerack"
+    },
+    {
+      "name": "mecha_teleport"
+    },
+    {
+      "name": "mecha_exting"
+    },
+    {
+      "name": "mecha_drill"
+    },
+    {
+      "name": "mecha_diamond_drill"
+    },
+    {
+      "name": "mecha_plasmacutter"
+    },
+    {
+      "name": "mecha_clamp"
+    },
+    {
+      "name": "mecha_wire"
+    },
+    {
+      "name": "mecha_wholegen",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "mecha_rcd"
+    },
+    {
+      "name": "repair_droid_a",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "repair_droid"
+    },
+    {
+      "name": "mecha_abooster_ccw"
+    },
+    {
+      "name": "mecha_abooster_proj"
+    },
+    {
+      "name": "tesla"
+    },
+    {
+      "name": "mecha_ion"
+    },
+    {
+      "name": "mecha_analyzer"
+    },
+    {
+      "name": "mecha_medigun"
+    },
+    {
+      "name": "mecha_punching_glove"
+    },
+    {
+      "name": "mecha_weapon_bay"
+    },
+    {
+      "name": "ripleyupgrade"
+    },
+    {
+      "name": "mecha_missilerack_six"
+    },
+    {
+      "name": "thrusters"
+    },
+    {
+      "name": "mecha_kineticgun"
+    }
+  ]
+}
