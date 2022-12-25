@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
-  id: 2302
-  time: '2022-09-14T10:03:00.0000000+00:00'
 - author: themias
   changes:
   - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
@@ -2942,3 +2937,9 @@ Entries:
   - {message: You can no longer repair a mech from inside of it., type: Fix}
   id: 2801
   time: '2022-12-24T21:33:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will ignore stationary allies for separation. Pets in particular
+      will move through other stationary pets., type: Tweak}
+  id: 2802
+  time: '2022-12-25T00:30:01.0000000+00:00'
