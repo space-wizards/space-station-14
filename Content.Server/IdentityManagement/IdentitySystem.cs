@@ -1,13 +1,12 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
-using Content.Server.Humanoid;
 using Content.Shared.Database;
 using Content.Shared.Hands;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 

@@ -5,23 +5,23 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components
 {
-    [NetworkedComponent]
-    public abstract class SharedMultipleToolComponent : Component
+    [RegisterComponent, NetworkedComponent]
+    public sealed class MultipleToolComponent : Component
     {
         [DataDefinition]
         public sealed class ToolEntry
         {
             [DataField("behavior", required: true)]
-            public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
+            public PrototypeFlags<ToolQualityPrototype> Behavior = new();
 
             [DataField("useSound")]
-            public SoundSpecifier? Sound { get; } = null;
+            public SoundSpecifier? Sound;
 
             [DataField("changeSound")]
-            public SoundSpecifier? ChangeSound { get; } = null;
+            public SoundSpecifier? ChangeSound;
 
             [DataField("sprite")]
-            public SpriteSpecifier? Sprite { get; } = null;
+            public SpriteSpecifier? Sprite;
         }
 
         [DataField("entries", required: true)]
@@ -31,7 +31,13 @@ namespace Content.Shared.Tools.Components
         public uint CurrentEntry = 0;
 
         [ViewVariables]
-        public string CurrentQualityName = String.Empty;
+        public string CurrentQualityName = string.Empty;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool UiUpdateNeeded;
+
+        [DataField("statusShowBehavior")]
+        public bool StatusShowBehavior = true;
     }
 
     [NetSerializable, Serializable]
