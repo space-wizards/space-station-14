@@ -67,3 +67,10 @@
   keycode: 't'
   frequency: 1213
   color: "#8f4a4b"
+
+- type: radioChannel
+  id: Unregistered
+  name: chat-radio-unregistered
+  keycode: 'r'
+  frequency: 1453
+  color: "#8f4a4b"

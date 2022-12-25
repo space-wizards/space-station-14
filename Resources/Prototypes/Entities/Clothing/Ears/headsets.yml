@@ -175,6 +175,21 @@
 
 - type: entity
   parent: ClothingHeadset
+  id: ClothingHeadsetUnregistered
+  name: unregistered headset
+  description: A headset that has been modified to not require any local infrastructure and which does not use a registered channel.
+  components:
+    - type: Headset
+      channels:
+        - Unregistered
+      defaultChannel: Unregistered
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/mining.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/mining.rsi
+
+- type: entity
+  parent: ClothingHeadset
   id: ClothingHeadsetRobotics
   name: robotics headset
   description: Made specifically for the roboticists, who cannot decide between departments.
