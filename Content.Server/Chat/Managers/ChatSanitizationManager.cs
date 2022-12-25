@@ -74,13 +74,14 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
         { "лел", "chatsan-laughs" },
         { "лел.", "chatsan-laughs" },
         { "kek", "chatsan-laughs" },
-        { "кек.", "chatsan-laughs" },
+        { "kek.", "chatsan-laughs" },
         { "кек", "chatsan-laughs" },
         { "кек.", "chatsan-laughs" },
         { "o7", "chatsan-salutes" },
         { "о7", "chatsan-salutes" }, // cyrillic о
         { ";_;7", "chatsan-tearfully-salutes"},
         { "idk", "chatsan-shrugs" },
+        { "idk.", "chatsan-shrugs" },
         { "хз", "chatsan-shrugs" },
         { "хз.", "chatsan-shrugs" }
     };
