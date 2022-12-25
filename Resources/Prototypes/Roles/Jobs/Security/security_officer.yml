@@ -1,6 +1,7 @@
 - type: job
   id: SecurityOfficer
   name: job-name-security
+  description: job-description-security
   playTimeTracker: JobSecurityOfficer
   requirements:
     - !type:DepartmentTimeRequirement

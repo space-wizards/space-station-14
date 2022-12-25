@@ -59,7 +59,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (EntityManager.TryGetComponent<SharedBuckleComponent?>(puller, out var buckle))
+            if (EntityManager.TryGetComponent<BuckleComponent?>(puller, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
                 if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled))

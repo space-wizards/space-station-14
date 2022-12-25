@@ -1,6 +1,7 @@
 ﻿- type: job
   id: TechnicalAssistant
-  name: job-name-assistant
+  name: job-name-technical-assistant
+  description: job-description-technical-assistant
   playTimeTracker: JobTechnicalAssistant
   requirements:
     - !type:DepartmentTimeRequirement

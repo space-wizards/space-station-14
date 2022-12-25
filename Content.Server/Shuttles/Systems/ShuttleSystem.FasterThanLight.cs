@@ -1,4 +1,3 @@
-using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
@@ -14,7 +13,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
+using Content.Shared.Buckle.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
