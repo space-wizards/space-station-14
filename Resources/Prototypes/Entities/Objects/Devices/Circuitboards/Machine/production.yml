@@ -508,6 +508,19 @@
           ExamineName: Glass Beaker
 
 - type: entity
+  id: HotplateMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: hotplate machine board
+  description: A machine printed circuit board for a hotplate
+  components:
+    - type: MachineBoard
+      prototype: ChemistryHotplate
+      requirements:
+        Laser: 2
+      materialRequirements:
+        Steel: 2
+
+- type: entity
   id: StasisBedMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: Stasis Bed (Machine Board)

@@ -224,6 +224,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: HotplateMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: HotplateMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: AnalysisComputerCircuitboard
   icon: { sprite: Objects/Misc/module.rsi, state: cpu_science }
   result: AnalysisComputerCircuitboard
