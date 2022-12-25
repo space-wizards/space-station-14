@@ -103,11 +103,11 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: Evaporation
     evaporateTime: 400 # very slow
   - type: Appearance
   - type: PuddleVisualizer
+    wetFloorEffectThreshold: 0 # No wet floor sparkles
 
 - type: entity
   name: vomit
