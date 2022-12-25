@@ -2,10 +2,8 @@
 using Content.Shared.Materials;
 using Content.Shared.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Stack;
 using Content.Shared.Database;
-using Content.Shared.Stacks;
-using Content.Shared.Storage;
-using Robust.Shared.Player;
 
 namespace Content.Server.Materials;
 
@@ -33,7 +31,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         QueueDel(toInsert);
 
         // Logging
-        _entityManager.TryGetComponent<SharedStackComponent>(toInsert, out var stack);
+        _entityManager.TryGetComponent<StackComponent>(toInsert, out var stack);
         var count = stack?.Count ?? 1;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
