@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
@@ -109,7 +109,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (TryComp<WiresComponent>(args.Target, out var wires) && !wires.IsPanelOpen)
         {
             _popup.PopupEntity(Loc.GetString("construction-step-condition-wire-panel-open"),
-                args.Target.Value, Filter.Pvs(args.Target.Value, entityManager: EntityManager));
+                args.Target.Value);
             return;
         }
 

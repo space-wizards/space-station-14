@@ -2,8 +2,8 @@
 
 - type: listing
   id: UplinkPistolViper
-  name: Viper
-  description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
+  name: uplink-pistol-viper-name
+  description: uplink-pistol-viper-desc
   productEntity: WeaponPistolViper
   cost:
     Telecrystal: 6
@@ -12,8 +12,8 @@
 
 - type: listing
   id: UplinkRevolverPython
-  name: Python
-  description: A loud and deadly revolver. Uses .45 Magnum.
+  name: uplink-revolver-python-name
+  description: uplink-revolver-python-desc
   productEntity: WeaponRevolverPython
   cost:
     Telecrystal: 8
@@ -23,8 +23,8 @@
 # Inbuilt suppressor so it's sneaky + more expensive.
 - type: listing
   id: UplinkPistolCobra
-  name: Cobra
-  description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
+  name: uplink-pistol-cobra-name
+  description: uplink-pistol-cobra-desc
   productEntity: WeaponPistolCobra
   cost:
     Telecrystal: 8
@@ -34,8 +34,8 @@
 # Poor accuracy, slow to fire, cheap option
 - type: listing
   id: UplinkRifleMosin
-  name: Surplus Rifle
-  description: A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
+  name: uplink-rifle-mosin-name
+  description: uplink-rifle-mosin-desc
   productEntity: WeaponSniperMosin
   cost:
     Telecrystal: 2
@@ -44,8 +44,9 @@
 
 - type: listing
   id: UplinkEsword
-  name: Energy Sword
-  description: A very dangerous energy sword. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
+  name: uplink-esword-name
+  description: uplink-esword-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   productEntity: EnergySword
   cost:
     Telecrystal: 8
@@ -54,8 +55,9 @@
 
 - type: listing
   id: UplinkEnergyDagger
-  name: Energy Dagger
-  description: A small energy blade conveniently disguised in the form of a pen.
+  name: uplink-edagger-name
+  description: uplink-edagger-desc
+  icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDagger
   cost:
     Telecrystal: 2
@@ -64,8 +66,8 @@
 
 - type: listing
   id: UplinkFireAxeFlaming
-  name: Fire Axe
-  description: A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+  name: uplink-fire-axe-flaming-name
+  description: uplink-fire-axe-flaming-desc
   productEntity: FireAxeFlaming
   cost:
     Telecrystal: 10
@@ -76,6 +78,8 @@
 
 - type: listing
   id: UplinkExplosiveGrenade
+  name: uplink-explosive-grenade-name
+  description: uplink-explosive-grenade-desc
   productEntity: ExGrenade
   cost:
     Telecrystal: 4
@@ -84,6 +88,8 @@
 
 - type: listing
   id: UplinkExplosiveGrenadeFlash
+  name: uplink-flash-grenade-name
+  description: uplink-flash-grenade-desc
   productEntity: GrenadeFlashBang
   cost:
     Telecrystal: 2
@@ -92,6 +98,8 @@
 
 - type: listing
   id: UplinkSyndieMiniBomb
+  name: uplink-mini-bomb-name
+  description: uplink-mini-bomb-desc
   productEntity: SyndieMiniBomb
   cost:
     Telecrystal: 6
@@ -100,6 +108,8 @@
 
 - type: listing
   id: UplinkGrenadePenguin
+  name: uplink-penguin-grenade-name
+  description: uplink-penguin-grenade-desc
   productEntity: MobGrenadePenguin
   cost:
     Telecrystal: 6
@@ -113,9 +123,8 @@
 
 - type: listing
   id: UplinkC4
-  description: >
-    C-4 is plastic explosive of the common variety Composition C. You can use it to breach walls, airlocks or sabotage equipment.
-    It can be attached to almost all objects and has a modifiable timer with a minimum setting of 10 seconds.
+  name: uplink-c4-name
+  description: uplink-c4-desc
   productEntity: C4
   cost:
     Telecrystal: 2
@@ -124,7 +133,8 @@
 
 - type: listing
   id: UplinkC4Bundle
-  description: Because sometimes quantity is quality. Contains 8 C-4 plastic explosives.
+  name: uplink-c4-bundle-name
+  description: uplink-c4-bundle-desc
   productEntity: ClothingBackpackDuffelSyndicateC4tBundle
   cost:
     Telecrystal: 12
@@ -135,25 +145,33 @@
 
 - type: listing
   id: UplinkPistol9mmMagazine
+  name: uplink-pistol-magazine-name
+  description: uplink-pistol-magazine-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistol
   cost:
     Telecrystal: 2
   categories:
   - UplinkAmmo
 
-# For the Mandella
+# For the Cobra
 - type: listing
   id: UplinkMagazinePistolCaselessRifle
+  name: uplink-pistol-magazine-caseless-name
+  description: uplink-pistol-magazine-caseless-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/CaselessRifle/caseless_pistol_mag.rsi, state: red-icon }
   productEntity: MagazinePistolCaselessRifle
   cost:
     Telecrystal: 2
   categories:
   - UplinkAmmo
 
-# For the Inspector
+# For the Python
 - type: listing
   id: UplinkSpeedLoaderMagnum
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: base }
+  name: uplink-speedloader-magnum-name
+  description: uplink-speedloader-magnu-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi, state: icon }
   productEntity: SpeedLoaderMagnum
   cost:
     Telecrystal: 2
@@ -163,7 +181,8 @@
 # For the mosin
 - type: listing
   id: UplinkMosinAmmo
-  description: A box of cartridges for the surplus rifle.
+  name: uplink-mosin-ammo-name
+  description: uplink-mosin-ammo-desc
   productEntity: BoxMagazineLightRifle
   cost:
     Telecrystal: 2
@@ -174,8 +193,8 @@
 
 - type: listing
   id: UplinkHoloparaKit
-  name: Holoparasite Kit
-  description: The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active. The guardian can punch rapidly and is immune to hazardous environments and bullets, but shares any damage it takes with the user.
+  name: uplink-holopara-kit-name
+  description: uplink-holopara-kit-desc
   icon: { sprite: /Textures/Objects/Misc/guardian_info.rsi, state: icon }
   productEntity: BoxHoloparasite
   cost:
@@ -190,8 +209,8 @@
 
 - type: listing
   id: UplinkHolster
-  name: Syndicate Shoulder Holster
-  description: A deep shoulder holster capable of holding many types of ballistics.
+  name: uplink-holster-name
+  description: uplink-holster-desc
   productEntity: ClothingBeltSyndieHolster
   cost:
     Telecrystal: 1
@@ -200,8 +219,8 @@
 
 - type: listing
   id: UplinkEmag
-  name: Emag
-  description: The business card of the syndicate, this sequencer is able to break open airlocks and tamper with a variety of station devices. Recharges automatically.
+  name: uplink-emag-name
+  description: uplink-emag-desc
   productEntity: Emag
   cost:
     Telecrystal: 8
@@ -210,8 +229,8 @@
 
 - type: listing
   id: UplinkAgentIDCard
-  name: Agent ID Card
-  description: A modified ID card that can copy accesses from other cards and change its name and job title at-will.
+  name: uplink-agent-id-card-name
+  description: uplink-agent-id-card-desc
   productEntity: AgentIDCard
   cost:
     Telecrystal: 3
@@ -220,8 +239,8 @@
 
 - type: listing
   id: UplinkJetpack
-  name: Black Jetpack
-  description: A black jetpack. It allows you to fly around in space. Additional fuel not included.
+  name: uplink-black-jetpack-name
+  description: uplink-black-jetpack-desc
   productEntity: JetpackBlack
   cost:
     Telecrystal: 4
@@ -230,8 +249,8 @@
 
 - type: listing
   id: UplinkReinforcementTeleporterSyndicate
-  name: Reinforcement Teleporter
-  description: Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+  name: uplink-reinforcement-teleporter-name
+  description: uplink-reinforcement-teleporter-desc
   productEntity: ReinforcementTeleporterSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
@@ -241,8 +260,8 @@
 
 - type: listing
   id: UplinkStealthBox
-  name: Stealth Box
-  description: A box outfitted with stealth technology, sneak around with this and don't move too fast now!
+  name: uplink-stealth-box-name
+  description: uplink-stealth-box-desc
   productEntity: StealthBox
   cost:
     Telecrystal: 10
@@ -252,8 +271,8 @@
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
   id: UplinkHeadset
-  name: Syndicate Over-ear Headset
-  description: A headset that allows you to listen in on departmental channels, or contact other traitors.
+  name: uplink-headset-name
+  description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
     Telecrystal: 2
@@ -262,8 +281,8 @@
 
 - type: listing
   id: UplinkHypopen
-  name: Hypopen
-  description: A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
+  name: uplink-hypopen-name
+  description: uplink-hypopen-desc
   productEntity: Hypopen
   cost:
     Telecrystal: 6
@@ -272,26 +291,26 @@
 
 - type: listing
   id: UplinkVoiceMask
-  name: Voice Mask
-  description: A gas mask that lets you adjust your voice to whoever you can think of.
+  name: uplink-voice-mask-name
+  description: uplink-voice-mask-desc
   productEntity: ClothingMaskGasVoiceMasker
   cost:
     Telecrystal: 4
   categories:
   - UplinkUtility
 
-# Utility-Implants
+# Implants
 
 - type: listing
   id: UplinkStorageImplanter
+  name: uplink-storage-implanter-name
+  description: uplink-storage-implanter-desc
   icon: { sprite: /Textures/Clothing/Back/Backpacks/backpack.rsi, state: icon }
-  name: Storage Implanter
-  description: Hide goodies inside of yourself with new bluespace technology!
   productEntity: StorageImplanter
   cost:
     Telecrystal: 12
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -300,14 +319,14 @@
 
 - type: listing
   id: UplinkFreedomImplanter
+  name: uplink-freedom-implanter-name
+  description: uplink-freedom-implanter-desc
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
-  name: Freedom Implanter
-  description: Get away from those nasty sec officers with this three use implant!
   productEntity: FreedomImplanter
   cost:
     Telecrystal: 10
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       blacklist:
@@ -316,14 +335,14 @@
 
 - type: listing
   id: UplinkMacroBombImplanter
+  name: uplink-macro-bomb-implanter-name
+  description: uplink-macro-bomb-implanter-desc
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: explosive }
-  name: Macro Bomb Implanter
-  description: Inject this and on death you'll create a large explosion. Huge team casualty cost, use at own risk. Replaces internal micro bomb.
   productEntity: MacroBombImplanter
   cost:
     Telecrystal: 25
   categories:
-    - UplinkUtility
+    - UplinkImplants
   conditions:
     - !type:StoreWhitelistCondition
       whitelist:
@@ -338,6 +357,8 @@
 
 - type: listing
   id: UplinkC20RBundle
+  name: uplink-c20r-bundle-name
+  description: uplink-c20r-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledSMG
   cost:
@@ -347,6 +368,8 @@
 
 - type: listing
   id: UplinkBulldogBundle
+  name: uplink-buldog-bundle-name
+  description: uplink-buldog-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/bulldog.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledShotgun
   cost:
@@ -356,6 +379,8 @@
 
 - type: listing
   id: UplinkGrenadeLauncherBundle
+  name: uplink-grenade-launcher-bundle-name
+  description: uplink-grenade-launcher-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   cost:
@@ -365,6 +390,8 @@
 
 - type: listing
   id: UplinkL6SawBundle
+  name: uplink-l6-saw-bundle-name
+  description: uplink-l6-saw-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateFilledLMG
   cost:
@@ -374,6 +401,8 @@
 
 - type: listing
   id: UplinkZombieBundle
+  name: uplink-zombie-bundle-name
+  description: uplink-zombie-bundle-desc
   icon: { sprite: /Textures/Structures/Wallmounts/signs.rsi, state: bio }
   productEntity: ClothingBackpackDuffelZombieBundle
   cost:
@@ -392,7 +421,8 @@
 
 - type: listing
   id: UplinkSurplusBundle
-  description: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
+  name: uplink-surplus-bundle-name
+  description: uplink-surplus-bundle-desc
   productEntity: CrateSyndicateSurplusBundle
   cost:
     Telecrystal: 20
@@ -410,7 +440,8 @@
 
 - type: listing
   id: UplinkSuperSurplusBundle
-  description: Contains 125 telecrystals worth of completely random Syndicate items.
+  name: uplink-super-surplus-bundle-name
+  description: uplink-super-surplus-bundle-desc
   productEntity: CrateSyndicateSuperSurplusBundle
   cost:
     Telecrystal: 40
@@ -430,7 +461,8 @@
 
 - type: listing
   id: UplinkToolbox
-  description: A full compliment of tools for the mechanically inclined traitor. Includes a pair of insulated combat gloves, syndicate gas mask and a shoulder holster.
+  name: uplink-toolbox-name
+  description: uplink-toolbox-desc
   productEntity: ToolboxSyndicateFilled
   cost:
     Telecrystal: 2
@@ -439,7 +471,8 @@
 
 - type: listing
   id: UplinkSyndicateJawsOfLife
-  description: A combined prying and cutting tool. Useful for entering the station or its departments.
+  name: uplink-syndicate-jaws-of-life-name
+  description: uplink-syndicate-jaws-of-life-desc
   productEntity: SyndicateJawsOfLife
   cost:
     Telecrystal: 2
@@ -448,6 +481,8 @@
 
 - type: listing
   id: UplinkDuffelSurgery
+  name: uplink-duffel-surgery-name
+  description: uplink-duffel-surgery-desc
   productEntity: ClothingBackpackDuffelSyndicateFilledMedical
   cost:
     Telecrystal: 5
@@ -456,14 +491,23 @@
 
 - type: listing
   id: UplinkPowerSink
+  name: uplink-power-sink-name
+  description: uplink-power-sink-desc
   productEntity: PowerSink
   cost:
     Telecrystal: 8
   categories:
   - UplinkTools
+  conditions:
+    - !type:BuyerWhitelistCondition
+      blacklist:
+        components:
+          - SurplusBundle
 
 - type: listing
   id: UplinkCarpDehydrated
+  name: uplink-carp-dehydrated-name
+  description: uplink-carp-dehydrated-desc
   productEntity: DehydratedSpaceCarp
   cost:
     Telecrystal: 2
@@ -474,7 +518,8 @@
 
 - type: listing
   id: uplinkGatfruitSeeds
-  description: And who says guns don't grow on trees?
+  name: uplink-gatfruit-seeds-name
+  description: uplink-gatfruit-seeds-desc
   productEntity: GatfruitSeeds
   cost:
     Telecrystal: 6
@@ -487,7 +532,8 @@
 
 - type: listing
   id: uplinkNecronomicon
-  description: An unholy book capable of summoning a demonic familiar.
+  name: uplink-necronomicon-name
+  description: uplink-necronomicon-desc
   productEntity: BibleNecronomicon
   cost:
     Telecrystal: 4
@@ -506,8 +552,8 @@
 
 - type: listing
   id: UplinkChameleon
-  name: Chameleon Kit
-  description: A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+  name: uplink-chameleon-name
+  description: uplink-chameleon-desc
   productEntity: ClothingBackpackChameleonFill
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   cost:
@@ -517,8 +563,8 @@
 
 - type: listing
   id: UplinkClothingNoSlipsShoes
-  name: no-slip shoes
-  description: These protect you from slips while looking like normal sneakers.
+  name: uplink-clothing-no-slips-shoes-name
+  description: uplink-clothing-no-slips-shoes-desc
   productEntity: ClothingShoesChameleonNoSlips
   cost:
     Telecrystal: 2
@@ -527,8 +573,8 @@
 
 - type: listing
   id: UplinkgClothingThievingGloves
-  name: Thieving Gloves
-  description: Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
+  name: uplink-clothing-thieving-gloves-name
+  description: uplink-clothing-thieving-gloves-desc
   productEntity: ThievingGloves
   cost:
     Telecrystal: 4
@@ -537,6 +583,8 @@
 
 - type: listing
   id: UplinkClothingOuterVestWeb
+  name: uplink-clothing-outer-vest-web-name
+  description: uplink-clothing-outer-vest-web-desc
   productEntity: ClothingOuterVestWeb
   cost:
     Telecrystal: 4
@@ -545,7 +593,9 @@
 
 - type: listing
   id: UplinkHardsuitSyndie
-  description: The Syndicate's well known armored blood red hardsuit, capable of space walks and bullet resistant.
+  name: uplink-hardsuit-syndie-name
+  description: uplink-hardsuit-syndie-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
   cost:
     Telecrystal: 8
@@ -554,7 +604,8 @@
 
 - type: listing
   id: UplinkClothingShoesBootsMagSyndie
-  description: A pair of magnetic boots that will keep you on the ground if the gravity fails or is sabotaged, giving you a mobility advantage. If activated with gravity they will protect from slips, but they will slow you down.
+  name: uplink-clothing-shoes-boots-mag-syndie-name
+  description: uplink-clothing-shoes-boots-mag-syndie-desc
   productEntity: ClothingShoesBootsMagSyndie
   cost:
     Telecrystal: 2
@@ -563,7 +614,9 @@
 
 - type: listing
   id: UplinkEVASyndie
-  description: A simple EVA suit that offers no protection other than what's needed to survive in space.
+  name: uplink-eva-syndie-name
+  description: uplink-eva-syndie-desc
+  icon: { sprite: /Textures/Clothing/OuterClothing/Suits/syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
     Telecrystal: 2
@@ -572,7 +625,8 @@
 
 - type: listing
   id: UplinkClothingOuterHardsuitJuggernaut
-  description: Hyper resilient armor made of materials tested in the Tau chromosphere facility. The only thing that's going to be slowing you down is this suit... and tasers.
+  name: uplink-clothing-outer-hardsuit-juggernaut-name
+  description: uplink-clothing-outer-hardsuit-juggernaut-desc
   productEntity: ClothingOuterHardsuitJuggernaut
   cost:
     Telecrystal: 12
@@ -583,7 +637,8 @@
 
 - type: listing
   id: UplinkCyberpen
-  description: Cybersun's legal department pen. Smells vaguely of hard-light and war profiteering.
+  name: uplink-cyberpen-name
+  description: uplink-cyberpen-desc
   productEntity: CyberPen
   cost:
     Telecrystal: 3
@@ -592,8 +647,8 @@
 
 - type: listing
   id: UplinkDecoyDisk
-  name: decoy nuclear disk
-  description: A piece of plastic with a lenticular printing, made to look like a nuclear auth disk.
+  name: uplink-decoy-disk-name
+  description: uplink-decoy-disk-desc
   productEntity: NukeDiskFake
   cost:
     Telecrystal: 1
@@ -602,6 +657,8 @@
 
 - type: listing
   id: UplinkCigarettes
+  name: uplink-cigarettes-name
+  description: uplink-cigarettes-desc
   productEntity: CigPackSyndicate
   cost:
     Telecrystal: 2
@@ -610,6 +667,8 @@
 
 - type: listing
   id: UplinkSoapSyndie
+  name: uplink-soap-name
+  description: uplink-soap-desc
   productEntity: SoapSyndie
   cost:
     Telecrystal: 1
@@ -618,6 +677,8 @@
 
 - type: listing
   id: UplinkUltrabrightLantern
+  name: uplink-ultrabright-lantern-name
+  description: uplink-ultrabright-lantern-desc
   productEntity: lanternextrabright #why is this item id not capitalized???
   cost:
     Telecrystal: 2
@@ -636,7 +697,8 @@
 
 - type: listing
   id: UplinkNocturineChemistryBottle
-  description: A chemical that makes it very hard for your target to stand up.
+  name: uplink-nocturine-chemistry-bottle-name
+  description: uplink-nocturine-chemistry-bottle-desc
   productEntity: NocturineChemistryBottle
   cost:
     Telecrystal: 5
@@ -645,8 +707,9 @@
 
 - type: listing
   id: UplinkSyndicateSegwayCrate
-  name: syndicate segway
-  description: Be an enemy of the corporation, in style!
+  name: uplink-syndicate-segway-crate-name
+  description: uplink-syndicate-segway-crate-desc
+  icon: { sprite: /Textures/Objects/Vehicles/syndicatesegway.rsi, state: icon }
   productEntity: CrateFunSyndicateSegway
   cost:
     Telecrystal: 5
@@ -662,6 +725,8 @@
 
 - type: listing
   id: UplinkRevolverCapGun
+  name: uplink-revolver-cap-gun-name
+  description: uplink-revolver-cap-gun-desc
   productEntity: RevolverCapGun
   cost:
     Telecrystal: 4
@@ -670,6 +735,8 @@
 
 - type: listing
   id: UplinkSyndicateStamp
+  name: uplink-syndicate-stamp-name
+  description: uplink-syndicate-stamp-desc
   productEntity: RubberStampSyndicate
   cost:
     Telecrystal: 2
@@ -678,8 +745,8 @@
 
 - type: listing
   id: UplinkCatEars
-  name: Cat Ears
-  description: UwU
+  name: uplink-cat-ears-name
+  description: uplink-cat-ears-desc
   productEntity: ClothingHeadHatCatEars
   cost:
     Telecrystal: 26
@@ -688,6 +755,8 @@
 
 - type: listing
   id: UplinkOutlawHat
+  name: uplink-outlaw-hat-name
+  description: uplink-outlaw-hat-desc
   productEntity: ClothingHeadHatOutlawHat
   cost:
     Telecrystal: 1
@@ -696,6 +765,8 @@
 
 - type: listing
   id: UplinkCostumePyjama
+  name: uplink-costume-pyjama-name
+  description: uplink-costume-pyjama-desc
   productEntity: ClothingBackpackDuffelSyndicatePyjamaBundle
   cost:
     Telecrystal: 4
@@ -704,9 +775,9 @@
 
 - type: listing
   id: UplinkCostumeClown
+  name: uplink-costume-clown-name
+  description: uplink-costume-clown-desc
   productEntity: ClothingBackpackDuffelSyndicateCostumeClown
-  name: clown costume duffel bag
-  description: Contains a complete Clown outfit. Includes PDA and service radio.
   cost:
     Telecrystal: 4
   categories:
@@ -714,7 +785,8 @@
 
 - type: listing
   id: UplinkOperativeSuit
-  description: A suit given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  name: uplink-operative-suit-name
+  description: uplink-operative-suit-desc
   productEntity: ClothingUniformJumpsuitOperative
   cost:
     Telecrystal: 1
@@ -723,7 +795,8 @@
 
 - type: listing
   id: UplinkOperativeSkirt
-  description: A skirt given to our nuclear operatives with fine fabric to make sure you stand out, no other benefits aside from looking cool.
+  name: uplink-operative-skirt-name
+  description: uplink-operative-skirt-desc
   productEntity: ClothingUniformJumpskirtOperative
   cost:
     Telecrystal: 1
@@ -732,6 +805,8 @@
 
 - type: listing
   id: UplinkBalloon
+  name: uplink-balloon-name
+  description: uplink-balloon-desc
   productEntity: BalloonSyn
   cost:
     Telecrystal: 20

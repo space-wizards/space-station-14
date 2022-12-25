@@ -1031,49 +1031,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font", notoSans16)
                     }),
 
-                // Popup messages
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmall}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.White),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmallCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMediumCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLargeCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {

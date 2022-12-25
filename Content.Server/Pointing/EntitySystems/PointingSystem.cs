@@ -98,9 +98,15 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
         {
-            var mapCoords = coords.ToMap(EntityManager);
-            if ((session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity is not { } player)
+            if (session?.AttachedEntity is not { } player)
             {
+                Logger.Warning($"Player {session} attempted to point without any attached entity");
+                return false;
+            }
+
+            if (!coords.IsValid(EntityManager))
+            {
+                Logger.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
                 return false;
             }
 
@@ -130,13 +136,15 @@ namespace Content.Server.Pointing.EntitySystems
 
             if (!InRange(player, coords))
             {
-                _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, Filter.Entities(player));
+                _popup.PopupEntity(Loc.GetString("pointing-system-try-point-cannot-reach"), player, player);
                 return false;
             }
 
+
+            var mapCoords = coords.ToMap(EntityManager);
             _rotateToFaceSystem.TryFaceCoordinates(player, mapCoords.Position);
 
-            var arrow = EntityManager.SpawnEntity("PointingArrow", mapCoords);
+            var arrow = EntityManager.SpawnEntity("PointingArrow", coords);
 
             if (TryComp<PointingArrowComponent>(arrow, out var pointing))
             {
@@ -208,11 +216,12 @@ namespace Content.Server.Pointing.EntitySystems
 
                 var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
 
-                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.Name));
+                var name = Loc.GetString(tileDef.Name);
+                selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", name));
 
                 viewerMessage = Loc.GetString("pointing-system-other-point-at-tile", ("otherName", playerName), ("tileName", tileDef.Name));
 
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {tileDef.Name} {(position == null ? mapCoords : position)}");
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):user} pointed at {name} {(position == null ? mapCoords : position)}");
             }
 
             _pointers[session] = _gameTiming.CurTime;
@@ -237,7 +246,10 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            TryPoint(args.SenderSession, Transform(ev.Target).Coordinates, ev.Target);
+            if (TryComp(ev.Target, out TransformComponent? xform))
+                TryPoint(args.SenderSession, xform.Coordinates, ev.Target);
+            else
+                Logger.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }
 
         public override void Shutdown()
