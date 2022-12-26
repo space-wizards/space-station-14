@@ -412,6 +412,7 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 10

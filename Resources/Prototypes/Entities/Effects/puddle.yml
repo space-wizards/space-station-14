@@ -9,7 +9,7 @@
     drawdepth: FloorObjects
   - type: SolutionContainerManager
     solutions:
-      puddle: {}
+      puddle: { maxVol: 1000 }
   - type: Puddle
     spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
@@ -45,6 +45,7 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: Water
           Quantity: 10
@@ -139,6 +140,7 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -165,6 +167,7 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: Toxin
           Quantity: 5

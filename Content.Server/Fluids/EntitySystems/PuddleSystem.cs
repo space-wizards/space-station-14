@@ -23,6 +23,7 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
 
+        public static float PuddleVolume = 1000;
 
         public override void Initialize()
         {
@@ -37,8 +38,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
-            var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
-            solution.MaxVolume = FixedPoint2.New(1000);
+            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName, FixedPoint2.New(PuddleVolume), out _);
         }
 
         private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)

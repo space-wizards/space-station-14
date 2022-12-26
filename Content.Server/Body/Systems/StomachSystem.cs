@@ -89,8 +89,7 @@ namespace Content.Server.Body.Systems
 
         private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
         {
-            var solution = _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName);
-            solution.MaxVolume = component.InitialMaxVolume;
+            _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName, component.InitialMaxVolume, out _);
         }
 
         public bool CanTransferSolution(EntityUid uid, Solution solution,
