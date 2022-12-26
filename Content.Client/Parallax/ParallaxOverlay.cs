@@ -1,5 +1,6 @@
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Salvage;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -11,7 +12,9 @@ namespace Content.Client.Parallax;
 
 public sealed class ParallaxOverlay : Overlay
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
@@ -22,14 +25,20 @@ public sealed class ParallaxOverlay : Overlay
     public ParallaxOverlay()
     {
         IoCManager.InjectDependencies(this);
-        _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
+        _parallax = _entManager.System<ParallaxSystem>();
+    }
+
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (args.MapId == MapId.Nullspace ||
+            _entManager.HasComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId)))
+            return false;
+
+        return true;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace)
-            return;
-
         if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
             return;
 

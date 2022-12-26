@@ -34,6 +34,7 @@ public sealed class BiomeTileGroupPrototype : IPrototype
     public Dictionary<BiomeEdge, ResourcePath> Edges = new();
 }
 
+// TODO: Just use the other thingie
 public enum BiomeEdge : byte
 {
     None = 0,

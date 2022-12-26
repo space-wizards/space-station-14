@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Salvage;
 using Robust.Client.Graphics;
 using Robust.Client.Map;
 using Robust.Client.ResourceManagement;
@@ -44,12 +45,15 @@ public sealed class BiomeOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (args.MapId == MapId.Nullspace)
+        if (args.MapId == MapId.Nullspace ||
+            !_entManager.TryGetComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId), out var biomeComponent))
+        {
             return;
+        }
 
         var screenHandle = args.WorldHandle;
-        var seed = new FastNoise(0);
-        var biome = _prototype.Index<BiomePrototype>("Grasslands");
+        var seed = new FastNoise(biomeComponent.Seed);
+        var biome = _prototype.Index<BiomePrototype>(biomeComponent.Prototype);
         var tileSize = 1;
 
         if (_entManager.TryGetComponent<MapGridComponent>(_mapManager.GetMapEntityId(args.MapId), out var grid))
@@ -77,7 +81,7 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out _) == true)
+                if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
                     continue;
 
                 var tile = _biome.GetTile(indices, seed, groups, weightSum);
@@ -99,7 +103,7 @@ public sealed class BiomeOverlay : Overlay
                 {
                     var indices = new Vector2i((int) x, (int) y);
 
-                    if (grid?.TryGetTileRef(indices, out _) == true)
+                    if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
                         continue;
 
                     var value = _biome.GetValue(indices, seed);

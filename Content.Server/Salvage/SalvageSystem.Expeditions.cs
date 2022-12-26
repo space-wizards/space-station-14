@@ -13,6 +13,7 @@ using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
 using Robust.Shared.Random;
 
 namespace Content.Server.Salvage;
@@ -172,9 +173,6 @@ public sealed partial class SalvageSystem
         MetaDataComponent? metadata = null;
         var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
 
-        var parallax = EnsureComp<ParallaxComponent>(mapUid);
-        parallax.Parallax = "Grass";
-        Dirty(parallax, metadata);
         var gravity = EnsureComp<GravityComponent>(mapUid);
         gravity.Enabled = true;
         Dirty(gravity, metadata);
@@ -234,7 +232,8 @@ public sealed partial class SalvageSystem
                     config,
                     cave,
                     SalvageGenTime,
-                    random);
+                    random,
+                    new FastNoise(mission.Seed));
                 break;
             default:
                 return;

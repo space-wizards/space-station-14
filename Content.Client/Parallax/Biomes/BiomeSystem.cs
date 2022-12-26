@@ -1,5 +1,6 @@
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Salvage;
 using Robust.Client.Graphics;
 using Robust.Client.Map;
 using Robust.Client.ResourceManagement;
@@ -11,7 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
 
-public sealed class BiomeSystem : EntitySystem
+public sealed class BiomeSystem : SharedBiomeSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;

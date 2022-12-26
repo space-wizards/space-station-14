@@ -4,8 +4,10 @@ using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Shared.Salvage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Salvage;
@@ -22,6 +24,7 @@ public sealed class SalvageCaveJob : Job<bool>
     private readonly SalvageExpeditionComponent _expedition;
     private readonly SalvageCaveGen _cave;
     private readonly Random _random;
+    private readonly FastNoise _noise;
 
     public SalvageCaveJob(
         IEntityManager entManager,
@@ -34,6 +37,7 @@ public sealed class SalvageCaveJob : Job<bool>
         SalvageCaveGen cave,
         double maxTime,
         Random random,
+        FastNoise noise,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
     {
         _entManager = entManager;
@@ -45,6 +49,7 @@ public sealed class SalvageCaveJob : Job<bool>
         _prototype = prototype;
         _cave = cave;
         _random = random;
+        _noise = noise;
     }
 
     protected override async Task<bool> Process()
@@ -72,54 +77,21 @@ public sealed class SalvageCaveJob : Job<bool>
         // Salvage stuff
         var width = _cave.Width;
         var height = _cave.Height;
-        var length = width * height;
-
-        // CA stuff
-        var solidChance = _cave.SolidChance;
 
         // Need to double buffer
         var cellDimensions = width * height;
 
-        var cells1 = ArrayPool<bool>.Shared.Rent(cellDimensions);
-        var cells2 = ArrayPool<bool>.Shared.Rent(cellDimensions);
-
-        for (var i = 0; i < length; i++)
-        {
-            if (_random.NextDouble() <= solidChance)
-            {
-                cells1[i] = true;
-            }
-            else
-            {
-                cells1[i] = false;
-            }
-        }
-
-        var simSteps = _cave.Steps;
-        var useCells = cells1;
-
-        for (var i = 0; i < simSteps; i++)
-        {
-            // Swap the double buffer
-            if (i % 2 != 0)
-            {
-                (cells1, cells2) = (cells2, cells1);
-                useCells = cells2;
-            }
-
-            Step(cells1, cells2, width, height);
-        }
-
-        var tiles = new List<(Vector2i Indices, Tile Tile)>(cells1.Length);
+        var tiles = new List<(Vector2i Indices, Tile Tile)>(cellDimensions);
         var tileId = new Tile(_tileDefManager["FloorAsteroidIronsand1"].TileId);
+        var cellNoise = new FastNoise(_noise.GetSeed());
 
         for (var x = 0; x < width; x++)
         {
             for (var y = 0; y < height; y++)
             {
-                var cell = useCells[y * height + x];
+                var value = (cellNoise.GetSimplex(x * 10f, y * 10f) + 1f) / 2f;
 
-                if (!cell)
+                if (value < 0.6f)
                     continue;
 
                 tiles.Add(new ValueTuple<Vector2i, Tile>(new Vector2i(x, y), tileId));
@@ -127,8 +99,6 @@ public sealed class SalvageCaveJob : Job<bool>
         }
 
         _grid.SetTiles(tiles);
-        ArrayPool<bool>.Shared.Return(cells1);
-        ArrayPool<bool>.Shared.Return(cells2);
 
         // Don't pause pathfinding etc. so we can amortise the costs over several ticks rather than a lump sum
         // at the end.
@@ -139,7 +109,7 @@ public sealed class SalvageCaveJob : Job<bool>
 
             _entManager.SpawnEntity("AsteroidRock", new EntityCoordinates(_uid, (tile.Indices + new Vector2(0.5f, 0.5f)) * _grid.TileSize));
 
-            if (i % 20 == 0)
+            if (i % 10 == 0)
             {
                 await SuspendIfOutOfTime();
 
@@ -241,6 +211,9 @@ public sealed class SalvageCaveJob : Job<bool>
             }
         }
 
+        var biome = _entManager.EnsureComponent<BiomeComponent>(_uid);
+        biome.Prototype = "Grasslands";
+        _entManager.Dirty(biome);
         _expedition.Phase = SalvagePhase.Initializing;
         return true;
     }
@@ -248,72 +221,5 @@ public sealed class SalvageCaveJob : Job<bool>
     private bool ValidateResume()
     {
         return !_entManager.Deleted(_uid) && !_expedition.Deleted;
-    }
-
-    private void Step(bool[] cells1, bool[] cells2, int width, int height)
-    {
-        // TODO: Config
-        var aliveLimit = 4;
-        var deadLimit = 3;
-
-        for (var x = 0; x < width; x++)
-        {
-            for (var y = 0; y < height; y++)
-            {
-                // Count the cell neighbours
-                var count = 0;
-
-                for (var i = -1; i < 2; i++)
-                {
-                    for (var j = -1; j < 2; j++)
-                    {
-                        if (i == 0 && j == 0)
-                            continue;
-
-                        var neighborX = x + i;
-                        var neighborY = y + j;
-
-                        // Out of bounds
-                        if (neighborX < 0 || neighborX >= width ||
-                            neighborY < 0 || neighborY >= height)
-                        {
-                            continue;
-                        }
-
-                        if (cells1[neighborY * height + neighborX])
-                        {
-                            count++;
-                        }
-                    }
-                }
-
-                // Alright now check the thresholds to see what to do with the cell
-                var index = y * height + x;
-                var alive = cells1[index];
-
-                if (alive)
-                {
-                    if (count < deadLimit)
-                    {
-                        cells2[index] = false;
-                    }
-                    else
-                    {
-                        cells2[index] = true;
-                    }
-                }
-                else
-                {
-                    if (count > aliveLimit)
-                    {
-                        cells2[index] = true;
-                    }
-                    else
-                    {
-                        cells2[index] = false;
-                    }
-                }
-            }
-        }
     }
 }
