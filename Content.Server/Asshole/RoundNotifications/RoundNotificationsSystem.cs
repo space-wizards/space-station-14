@@ -35,7 +35,7 @@ public sealed class RoundNotificationsSystem : EntitySystem
         _config.OnValueChanged(CCVars.DiscordRoundRoleId, value => _roleId = value, true);
         _config.OnValueChanged(CCVars.DiscordRoundStartOnly, value => _roundStartOnly = value, true);
 
-        _sawmill = IoCManager.Resolve<ILogManager>().Ge tSawmill("notifications");
+        _sawmill = IoCManager.Resolve<ILogManager>().GetSawmill("notifications");
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent e)
