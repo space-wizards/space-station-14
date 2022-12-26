@@ -196,7 +196,8 @@ namespace Content.Server.GameTicking
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", MetaData(mob).EntityName),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name)),
+                    ("gender", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(gender))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
             }
