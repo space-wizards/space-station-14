@@ -82,7 +82,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             volumeLabel.HorizontalExpand = true;
             volumeLabel.Margin = new Thickness(0, 4);
             volumeLabel.Text = Loc.GetString("admin-solutions-window-volume-label",
-                ("currentVolume", solution.TotalVolume),
+                ("currentVolume", solution.Volume),
                 ("maxVolume", solution.MaxVolume));
 
             var capacityBox = new BoxContainer();
@@ -125,7 +125,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             var heatCapacityLabel = new Label();
             heatCapacityLabel.HorizontalExpand = true;
             heatCapacityLabel.Margin = new Thickness(0, 1);
-            heatCapacityLabel.Text = Loc.GetString("admin-solutions-window-heat-capacity-label", ("heatCapacity", (heatCap/solution.TotalVolume.Float()).ToString("G3")));
+            heatCapacityLabel.Text = Loc.GetString("admin-solutions-window-heat-capacity-label", ("heatCapacity", (heatCap/solution.Volume.Float()).ToString("G3")));
 
             // Temperature entry:
             var temperatureBox = new BoxContainer();

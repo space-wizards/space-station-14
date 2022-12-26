@@ -52,7 +52,7 @@ public sealed class SpraySystem : EntitySystem
             && curTime < cooldown.CooldownEnd)
             return;
 
-        if (solution.TotalVolume <= 0)
+        if (solution.Volume <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid,
                 args.User);
@@ -77,7 +77,7 @@ public sealed class SpraySystem : EntitySystem
         var threeQuarters = diffNorm * 0.75f;
         var quarter = diffNorm * 0.25f;
 
-        var amount = Math.Max(Math.Min((solution.TotalVolume / component.TransferAmount).Int(), component.VaporAmount), 1);
+        var amount = Math.Max(Math.Min((solution.Volume / component.TransferAmount).Int(), component.VaporAmount), 1);
         var spread = component.VaporSpread / amount;
 
         for (var i = 0; i < amount; i++)
@@ -95,7 +95,7 @@ public sealed class SpraySystem : EntitySystem
 
             var newSolution = _solutionContainerSystem.SplitSolution(uid, solution, component.TransferAmount);
 
-            if (newSolution.TotalVolume <= FixedPoint2.Zero)
+            if (newSolution.Volume <= FixedPoint2.Zero)
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.

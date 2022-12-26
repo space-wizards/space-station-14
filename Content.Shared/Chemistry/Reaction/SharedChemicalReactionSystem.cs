@@ -252,12 +252,12 @@ namespace Content.Shared.Chemistry.Reaction
             // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
             reactions.Except(toRemove);
 
-            if (products.TotalVolume <= 0)
+            if (products.Volume <= 0)
                 return true;
 
             // remove excess product
             // TODO spill excess?
-            var excessVolume = solution.TotalVolume + products.TotalVolume - maxVolume;
+            var excessVolume = solution.Volume + products.Volume - maxVolume;
             if (excessVolume > 0)
                 products.RemoveSolution(excessVolume);
 

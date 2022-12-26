@@ -78,7 +78,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
         {
             transfer = solTrans.TransferAmount;
         }
-        transfer = FixedPoint2.Min(transfer, targetSolution.TotalVolume);
+        transfer = FixedPoint2.Min(transfer, targetSolution.Volume);
 
         if (transfer > 0)
         {

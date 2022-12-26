@@ -62,7 +62,7 @@ namespace Content.Server.Chemistry.Components
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
 
             var cloneSolution = solution.Clone();
-            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
+            var transferAmount = FixedPoint2.Min(cloneSolution.Volume * solutionFraction * (1 - protection),
                 bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 

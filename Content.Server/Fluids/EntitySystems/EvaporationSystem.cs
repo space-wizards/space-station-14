@@ -35,15 +35,15 @@ namespace Content.Server.Fluids.EntitySystems
                 if (evaporationComponent.EvaporationToggle == true)
                 {
                     _solutionContainerSystem.SplitSolution(uid, solution,
-                        FixedPoint2.Min(FixedPoint2.New(1), solution.TotalVolume)); // removes 1 unit, or solution current volume, whichever is lower.
+                        FixedPoint2.Min(FixedPoint2.New(1), solution.Volume)); // removes 1 unit, or solution current volume, whichever is lower.
                 }
 
-                if (solution.TotalVolume <= 0)
+                if (solution.Volume <= 0)
                 {
                     EntityManager.QueueDeleteEntity(uid);
                 }
-                else if (solution.TotalVolume <= evaporationComponent.LowerLimit // if puddle is too big or too small to evaporate.
-                         || solution.TotalVolume >= evaporationComponent.UpperLimit)
+                else if (solution.Volume <= evaporationComponent.LowerLimit // if puddle is too big or too small to evaporate.
+                         || solution.Volume >= evaporationComponent.UpperLimit)
                 {
                     evaporationComponent.EvaporationToggle = false; // pause evaporation
                 }

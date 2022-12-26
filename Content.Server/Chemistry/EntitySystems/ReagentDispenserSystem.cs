@@ -63,7 +63,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (_solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var solution))
             {
                 var reagents = solution.Contents.Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
-                return new ContainerInfo(Name(container.Value), true, solution.TotalVolume, solution.MaxVolume, reagents);
+                return new ContainerInfo(Name(container.Value), true, solution.Volume, solution.MaxVolume, reagents);
             }
 
             return null;

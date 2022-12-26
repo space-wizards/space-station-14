@@ -221,7 +221,7 @@ namespace Content.Server.Tools
                 && _solutionContainerSystem.TryGetDrainableSolution(target, out var targetSolution)
                 && _solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var welderSolution))
             {
-                var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.TotalVolume);
+                var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.Volume);
                 if (trans > 0)
                 {
                     var drained = _solutionContainerSystem.Drain(target, targetSolution,  trans);

@@ -96,7 +96,7 @@ public sealed class BloodstreamSystem : EntitySystem
                 continue;
 
             // First, let's refresh their blood if possible.
-            if (bloodstream.BloodSolution.TotalVolume < bloodstream.BloodSolution.MaxVolume)
+            if (bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume)
                 TryModifyBloodLevel(uid, bloodstream.BloodRefreshAmount, bloodstream);
 
             // Next, let's remove some blood from them according to their bleed level.
@@ -286,10 +286,10 @@ public sealed class BloodstreamSystem : EntitySystem
         var newSol = component.BloodSolution.SplitSolution(-amount);
         component.BloodTemporarySolution.AddSolution(newSol, _prototypeManager);
 
-        if (component.BloodTemporarySolution.TotalVolume > component.BleedPuddleThreshold)
+        if (component.BloodTemporarySolution.Volume > component.BleedPuddleThreshold)
         {
             // Pass some of the chemstream into the spilled blood.
-            var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.TotalVolume / 10);
+            var temp = component.ChemicalSolution.SplitSolution(component.BloodTemporarySolution.Volume / 10);
             component.BloodTemporarySolution.AddSolution(temp, _prototypeManager);
             _spillableSystem.SpillAt(uid, component.BloodTemporarySolution, "PuddleBlood", false);
             component.BloodTemporarySolution.RemoveAllSolution();

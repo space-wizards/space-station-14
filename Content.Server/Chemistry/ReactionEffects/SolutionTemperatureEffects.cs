@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
+using static Robust.Shared.Physics.DynamicTree;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -54,7 +55,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override void Effect(ReagentEffectArgs args)
         {
             var solution = args.Source;
-            if (solution == null || solution.TotalVolume == 0)
+            if (solution == null || solution.Volume == 0)
                 return;
 
             var deltaT = _scaled ? _delta * (float) args.Quantity : _delta;
@@ -90,7 +91,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         public override void Effect(ReagentEffectArgs args)
         {
             var solution = args.Source;
-            if (solution == null || solution.TotalVolume == 0)
+            if (solution == null || solution.Volume == 0)
                 return;
 
             if (_delta > 0 && solution.Temperature >= _maxTemp)
@@ -98,11 +99,10 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (_delta < 0 && solution.Temperature <= _minTemp)
                 return;
 
-            var proto = IoCManager.Resolve<IPrototypeManager>();
-            
+            var heatCap = solution.GetHeatCapacity(null);
             var deltaT = _scaled
-                ? _delta / solution.GetHeatCapacity(proto) * (float) args.Quantity 
-                : _delta / solution.GetHeatCapacity(proto);
+                ? _delta / heatCap * (float) args.Quantity 
+                : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
         }

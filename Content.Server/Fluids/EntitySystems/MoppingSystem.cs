@@ -53,7 +53,7 @@ public sealed class MoppingSystem : EntitySystem
         }
 
         var toolAvailableVolume = absorbedSolution.AvailableVolume;
-        var toolCurrentVolume = absorbedSolution.TotalVolume;
+        var toolCurrentVolume = absorbedSolution.Volume;
 
         // For adding liquid to an empty floor tile
         if (args.Target is null) // if a tile is clicked
@@ -81,7 +81,7 @@ public sealed class MoppingSystem : EntitySystem
             TileRef tile = mapGrid.GetTileRef(clickLocation);
 
             // Drop some of the absorbed liquid onto the ground
-            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.TotalVolume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
+            var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorbedSolution.Volume); // The release amount specified on the absorbent component, or the amount currently absorbed (whichever is less).
             var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorbedSolution, releaseAmount); // Remove releaseAmount of solution from the absorbent component
             _spillableSystem.SpillAt(tile, releasedSolution, puddlePrototypeId);                                    // And spill it onto the tile.
         }
@@ -110,7 +110,7 @@ public sealed class MoppingSystem : EntitySystem
         {
             // These return conditions will abort BEFORE the do_after is called:
             if(!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSolution) // puddle Solution is null
-                || (puddleSolution.TotalVolume <= 0)) // puddle is completely empty
+                || (puddleSolution.Volume <= 0)) // puddle is completely empty
             {
                 return;
             }
@@ -121,7 +121,7 @@ public sealed class MoppingSystem : EntitySystem
                 return;
             }
             // adding to puddles
-            else if (puddleSolution.TotalVolume < component.MopLowerLimit // if the puddle is too small for the tool to effectively absorb any more solution from it
+            else if (puddleSolution.Volume < component.MopLowerLimit // if the puddle is too small for the tool to effectively absorb any more solution from it
                     && currentVolume > 0) // tool needs a solution to dilute the puddle with.
             {
                 // Dilutes the puddle with some solution from the tool
@@ -141,12 +141,12 @@ public sealed class MoppingSystem : EntitySystem
                 // Taking from puddles:
 
                 // Determine transferAmount:
-                transferAmount = FixedPoint2.Min(component.PickupAmount, puddleSolution.TotalVolume, availableVolume);
+                transferAmount = FixedPoint2.Min(component.PickupAmount, puddleSolution.Volume, availableVolume);
 
                 // TODO: consider onelining this with the above, using additional args on Min()?
-                if ((puddleSolution.TotalVolume - transferAmount) < component.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
+                if ((puddleSolution.Volume - transferAmount) < component.MopLowerLimit) // If the transferAmount would bring the puddle below the MopLowerLimit
                 {
-                    transferAmount = puddleSolution.TotalVolume - component.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
+                    transferAmount = puddleSolution.Volume - component.MopLowerLimit; // Then the transferAmount should bring the puddle down to the MopLowerLimit exactly
                 }
 
                 donor = target; // the puddle Uid
@@ -235,7 +235,7 @@ public sealed class MoppingSystem : EntitySystem
             {
                 return;
             }
-            else if (drainableSolution.TotalVolume <= 0) // target container is empty (liquid source)
+            else if (drainableSolution.Volume <= 0) // target container is empty (liquid source)
             {
                 msg = "mopping-system-target-container-empty";
                 user.PopupMessage(user, Loc.GetString(msg, ("target", target))); // play message now because we are returning.
@@ -244,7 +244,7 @@ public sealed class MoppingSystem : EntitySystem
             else
             {
                 // Determine transferAmount
-                transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.TotalVolume); // Let's transfer up to to half the tool's available capacity to the tool.
+                transferAmount = FixedPoint2.Min(availableVolume * 0.5, drainableSolution.Volume); // Let's transfer up to to half the tool's available capacity to the tool.
 
                 donor = target; // the drainable container's Uid
                 donorSolutionName = drainable.Solution;

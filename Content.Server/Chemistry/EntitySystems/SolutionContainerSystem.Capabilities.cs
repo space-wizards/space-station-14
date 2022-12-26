@@ -110,7 +110,7 @@ public sealed partial class SolutionContainerSystem
     {
         return !TryGetDrainableSolution(uid, out var solution)
             ? FixedPoint2.Zero
-            : solution.TotalVolume;
+            : solution.Volume;
     }
 
     public float PercentFull(EntityUid uid)

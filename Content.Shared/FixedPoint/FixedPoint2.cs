@@ -82,7 +82,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            return new((int) MathF.Round(a.Value * b, MidpointRounding.AwayFromZero));
+            return new((int) Math.Round(a.Value * b, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)

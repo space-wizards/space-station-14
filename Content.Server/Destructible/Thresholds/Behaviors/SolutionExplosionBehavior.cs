@@ -22,7 +22,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
             {
                 // Don't explode if there's no solution
-                if (explodingSolution.TotalVolume == 0)
+                if (explodingSolution.Volume == 0)
                     return;
 
                 // Scale the explosion intensity based on the remaining volume of solution

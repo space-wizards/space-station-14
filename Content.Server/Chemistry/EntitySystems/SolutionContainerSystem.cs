@@ -125,7 +125,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
     {
-        if (solutionHolder.TotalVolume == 0)
+        if (solutionHolder.Volume == 0)
             return;
 
         solutionHolder.RemoveAllSolution();
@@ -155,8 +155,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
 
         targetSolution.MaxVolume = capacity;
-        if (capacity < targetSolution.TotalVolume)
-            targetSolution.RemoveSolution(targetSolution.TotalVolume - capacity);
+        if (capacity < targetSolution.Volume)
+            targetSolution.RemoveSolution(targetSolution.Volume - capacity);
 
         UpdateChemicals(targetUid, targetSolution);
     }
@@ -216,7 +216,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution addedSolution)
     {
         if (targetSolution == null
-            || !targetSolution.CanAddSolution(addedSolution) || addedSolution.TotalVolume == 0)
+            || !targetSolution.CanAddSolution(addedSolution) || addedSolution.Volume == 0)
             return false;
 
         targetSolution.AddSolution(addedSolution, _prototypeManager);
@@ -241,7 +241,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         FixedPoint2 overflowThreshold,
         [NotNullWhen(true)] out Solution? overflowingSolution)
     {
-        if (addedSolution.TotalVolume == 0 || overflowThreshold > targetSolution.MaxVolume)
+        if (addedSolution.Volume == 0 || overflowThreshold > targetSolution.MaxVolume)
         {
             overflowingSolution = null;
             return false;
@@ -250,7 +250,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         targetSolution.AddSolution(addedSolution, _prototypeManager);
         UpdateChemicals(targetUid, targetSolution, true);
         overflowingSolution = targetSolution.SplitSolution(FixedPoint2.Max(FixedPoint2.Zero,
-            targetSolution.TotalVolume - overflowThreshold));
+            targetSolution.Volume - overflowThreshold));
         return true;
     }
 
