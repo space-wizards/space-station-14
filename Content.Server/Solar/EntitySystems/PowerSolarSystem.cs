@@ -3,6 +3,7 @@ using Content.Server.Power.Components;
 using Content.Server.Solar.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
+using Content.Shared.Solar;
 using JetBrains.Annotations;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
@@ -59,9 +60,9 @@ namespace Content.Server.Solar.EntitySystems
         public float TotalPanelPower = 0;
 
         /// <summary>
-        /// Queue of panels to update each cycle.
+        /// Timer used to avoid updating the panels every frame (which would be overkill)
         /// </summary>
-        private readonly Queue<SolarPanelComponent> _updateQueue = new();
+        private float _updateTimer = 0f;
 
 
         public override void Initialize()
@@ -99,28 +100,24 @@ namespace Content.Server.Solar.EntitySystems
             TargetPanelRotation += TargetPanelVelocity * frameTime;
             TargetPanelRotation = TargetPanelRotation.Reduced();
 
-            if (_updateQueue.Count > 0)
+            _updateTimer += frameTime;
+            if (_updateTimer > 1)
             {
-                var panel = _updateQueue.Dequeue();
-                if (panel.Running)
-                    UpdatePanelCoverage(panel);
-            }
-            else
-            {
+                _updateTimer -= 1;
                 TotalPanelPower = 0;
                 foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
                 {
+                    if (panel.Running)
+                        UpdatePanelCoverage(panel, xform, TargetPanelRotation);
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    xform.WorldRotation = TargetPanelRotation;
-                    _updateQueue.Enqueue(panel);
                 }
+                RaiseNetworkEvent(new PowerSolarSystemSyncMessage(TargetPanelRotation, TargetPanelVelocity));
             }
         }
 
-        private void UpdatePanelCoverage(SolarPanelComponent panel)
+        private void UpdatePanelCoverage(SolarPanelComponent panel, TransformComponent xform, Angle panelAngle)
         {
             EntityUid entity = panel.Owner;
-            var xform = EntityManager.GetComponent<TransformComponent>(entity);
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".
@@ -134,7 +131,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = xform.WorldRotation - TowardsSun;
+            var panelRelativeToSun = panelAngle - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.
