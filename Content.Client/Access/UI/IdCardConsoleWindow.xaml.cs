@@ -75,13 +75,21 @@ namespace Content.Client.Access.UI
 
                 var newButton = new Button
                 {
-                    Text = accessLevel.Name,
+                    Text = GetAccessLevelName(accessLevel),
                     ToggleMode = true,
                 };
                 AccessLevelGrid.AddChild(newButton);
                 _accessButtons.Add(accessLevel.ID, newButton);
                 newButton.OnPressed += _ => SubmitData();
             }
+        }
+
+        private static string GetAccessLevelName(AccessLevelPrototype prototype)
+        {
+            if (prototype.Name is { } name)
+                return Loc.GetString(name);
+
+            return prototype.ID;
         }
 
         private void ClearAllAccess()

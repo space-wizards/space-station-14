@@ -482,8 +482,6 @@ namespace Content.Server.Decals
 
         public void UpdatePlayer(IPlayerSession player)
         {
-            IoCManager.InitThread(_dependencies, replaceExisting: true);
-
             var xformQuery = GetEntityQuery<TransformComponent>();
             var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();

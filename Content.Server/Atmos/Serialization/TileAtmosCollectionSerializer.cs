@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.Manager;
+﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -16,10 +17,10 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
 
     public Dictionary<Vector2i, TileAtmosphere> Read(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<Dictionary<Vector2i, TileAtmosphere>>? instanceProvider = null)
     {
-        var data = serializationManager.Read<TileAtmosData>(node, context, skipHook);
+        var data = serializationManager.Read<TileAtmosData>(node, hookCtx, context);
         var tiles = new Dictionary<Vector2i, TileAtmosphere>();
         if (data.TilesUniqueMixes != null)
         {
@@ -82,7 +83,7 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         [DataField("tiles")] public Dictionary<Vector2i, int>? TilesUniqueMixes;
     }
 
-    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, bool skipHook,
+    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
         target.Clear();

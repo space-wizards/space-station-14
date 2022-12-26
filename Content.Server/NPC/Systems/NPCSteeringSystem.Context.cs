@@ -394,7 +394,8 @@ public sealed partial class NPCSteeringSystem
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
                 !_faction.IsFriendly(uid, ent, ourFaction, otherFaction) ||
-                Vector2.Dot(otherBody.LinearVelocity, ourVelocity) < 0f)
+                // Use <= 0 so we ignore stationary friends in case.
+                Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {
                 continue;
             }
@@ -415,7 +416,7 @@ public sealed partial class NPCSteeringSystem
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
             var weight = obstableDistance <= agentRadius ? 1f : (detectionRadius - obstableDistance) / detectionRadius;
-            weight *= 1.5f;
+            weight *= 1f;
 
             for (var i = 0; i < InterestDirections; i++)
             {
