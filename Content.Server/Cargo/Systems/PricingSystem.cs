@@ -10,6 +10,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.MobState.Components;
+using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;

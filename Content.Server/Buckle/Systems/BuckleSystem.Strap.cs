@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Content.Server.Buckle.Components;
 using Content.Server.Construction.Completions;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Destructible;
