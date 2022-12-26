@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Server.Research.Components;
+using Content.Shared.Research.Components;
 using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -18,20 +18,17 @@ namespace Content.Server.Research.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnStartup);
-
             InitializeClient();
             InitializeConsole();
             InitializeSource();
+            InitializeServer();
         }
 
-        private void OnStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
-        {
-            var unusedId = EntityQuery<ResearchServerComponent>(true)
-                .Max(s => s.Id) + 1;
-            component.Id = unusedId;
-        }
-
+        /// <summary>
+        /// Gets a server based on it's unique numeric id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ResearchServerComponent? GetServerById(int id)
         {
             foreach (var server in EntityQuery<ResearchServerComponent>())
@@ -43,6 +40,10 @@ namespace Content.Server.Research.Systems
             return null;
         }
 
+        /// <summary>
+        /// Gets the names of all the servers.
+        /// </summary>
+        /// <returns></returns>
         public string[] GetServerNames()
         {
             var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
@@ -56,6 +57,10 @@ namespace Content.Server.Research.Systems
             return list;
         }
 
+        /// <summary>
+        /// Gets the ids of all the servers
+        /// </summary>
+        /// <returns></returns>
         public int[] GetServerIds()
         {
             var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
@@ -77,7 +82,7 @@ namespace Content.Server.Research.Systems
                     continue;
                 server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                UpdateServer(server, (int) server.ResearchConsoleUpdateTime.TotalSeconds);
+                UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Content.Client.Clickable
             drawDepth = sprite.DrawDepth;
             renderOrder = sprite.RenderOrder;
             var (spritePos, spriteRot) = transform.GetWorldPositionRotation(xformQuery);
-            var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye);
+            var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
             bottom = spriteBB.CalcBoundingBox().Bottom;
 
             var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());

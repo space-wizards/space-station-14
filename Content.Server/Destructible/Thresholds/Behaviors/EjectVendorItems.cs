@@ -1,4 +1,5 @@
 using Content.Server.VendingMachines;
+using Content.Shared.VendingMachines;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {

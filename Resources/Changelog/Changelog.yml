@@ -1,47 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Tile prying no longer spawns the tile item in the wall., type: Fix}
-  id: 2299
-  time: '2022-09-14T07:07:44.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Added chameleon clothing that can mimic any uniform. Watch out for suspicious
-      syndicate imposters., type: Add}
-  id: 2300
-  time: '2022-09-14T08:42:14.0000000+00:00'
-- author: AJCM-git
-  changes:
-  - {message: In-Character names now get proper casing automatically, type: Tweak}
-  id: 2301
-  time: '2022-09-14T09:50:15.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Shooting at and shooting from vehicles now works as expected, type: Fix}
-  id: 2302
-  time: '2022-09-14T10:03:00.0000000+00:00'
-- author: themias
-  changes:
-  - {message: 'Trash bags can pick up empty booze bottles, empty ingredient packs,
-      and plastic plates', type: Tweak}
-  id: 2303
-  time: '2022-09-14T17:14:55.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Empty Fuel Tank wont explode., type: Add}
-  - {message: Fuel Tank explosion scales with remaining fuel., type: Add}
-  id: 2304
-  time: '2022-09-14T17:15:55.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: You can no longer examine players and other mobs melee damage., type: Fix}
-  id: 2305
-  time: '2022-09-14T17:17:24.0000000+00:00'
-- author: ShadowCommander
-  changes:
-  - {message: Added verb context menu to player lists in admin menus., type: Add}
-  id: 2306
-  time: '2022-09-15T00:03:14.0000000+00:00'
 - author: illiux
   changes:
   - {message: The ChemMaster 4000 now outputs directly into a pill canister or bottle,
@@ -2939,3 +2896,54 @@ Entries:
   - {message: Fixed IFF consoles being able to be opened without power., type: Fix}
   id: 2798
   time: '2022-12-22T02:43:46.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Jobs now have tooltip descriptions in the lobby., type: Add}
+  id: 2799
+  time: '2022-12-23T23:36:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Popups will use your UI scaling now., type: Fix}
+  id: 2800
+  time: '2022-12-24T21:07:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mechs can no longer pick up the pilot inside the mech., type: Fix}
+  - {message: Mechs can no longer be piloted by non-humanoids., type: Fix}
+  - {message: Hydraulic clamps can no longer pick up living creatures. (too wriggly),
+    type: Fix}
+  - {message: You can no longer repair a mech from inside of it., type: Fix}
+  id: 2801
+  time: '2022-12-24T21:33:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will ignore stationary allies for separation. Pets in particular
+      will move through other stationary pets., type: Tweak}
+  id: 2802
+  time: '2022-12-25T00:30:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bump NPC avoidance range and fix some instances of unapproved dancing.,
+    type: Fix}
+  id: 2803
+  time: '2022-12-25T00:35:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added hot plates for heating up beakers. No longer are chemists bound
+      to the humble microwave., type: Add}
+  id: 2804
+  time: '2022-12-25T01:59:52.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Medbay can now obtain cryo pods, specialized cryogenics machines used
+      to lower the temperature of a patient to extreme values somewhat safely to use
+      specific chemicals, such as cryoxadone.', type: Add}
+  id: 2805
+  time: '2022-12-25T11:35:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer spam print technology disks., type: Fix}
+  - {message: Changed some of the internal logic regarding research server syncing.,
+    type: Tweak}
+  id: 2806
+  time: '2022-12-25T21:22:24.0000000+00:00'
