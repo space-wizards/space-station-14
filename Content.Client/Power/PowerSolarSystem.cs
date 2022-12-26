@@ -17,7 +17,7 @@ namespace Content.Client.Power
     {
         // This is used for client-side prediction of the panel rotation.
         // This makes the display feel a lot smoother.
-        private IGameTiming _gameTiming = IoCManager.Resolve<IGameTiming>();
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
         /// Timestamp of the last update. (used for angle prediction)
