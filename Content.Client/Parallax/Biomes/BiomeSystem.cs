@@ -1,18 +1,13 @@
-using System.Linq;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Client.Map;
 using Robust.Client.ResourceManagement;
-using Robust.Client.Utility;
-using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
 namespace Content.Client.Parallax.Biomes;
 
@@ -38,7 +33,7 @@ public sealed class BiomeSystem : EntitySystem
         _overlay.RemoveOverlay<BiomeOverlay>();
     }
 
-    public Tile GetTile(MapGridComponent component, Vector2i indices, int seed, List<BiomeTileGroupPrototype> groups, float weightSum)
+    public Tile GetTile(MapGridComponent component, Vector2i indices, FastNoise seed, List<BiomeTileGroupPrototype> groups, float weightSum)
     {
         if (component.TryGetTileRef(indices, out var tileRef))
             return tileRef.Tile;
@@ -46,11 +41,11 @@ public sealed class BiomeSystem : EntitySystem
         return GetTile(indices, seed, groups, weightSum);
     }
 
-    public float GetValue(Vector2i indices, int seed)
+    public float GetValue(Vector2i indices, FastNoise seed)
     {
         var chunkOrigin = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
-        var chunkValue = (OpenSimplex2.Noise2(seed, chunkOrigin.X, chunkOrigin.Y) + 1f) / 2f;
-        var tileValue = (OpenSimplex2.Noise2(seed, indices.X, indices.Y) + 1f) / 2f;
+        var chunkValue = (seed.GetSimplex(chunkOrigin.X * 10f, chunkOrigin.Y * 10f) + 1f) / 2f;
+        var tileValue = (seed.GetSimplex(indices.X * 10f, indices.Y * 10f) + 1f) / 2f;
         return (chunkValue / 4f + tileValue) / 1.25f;
     }
 
@@ -83,7 +78,7 @@ public sealed class BiomeSystem : EntitySystem
         BiomeTileGroupPrototype group,
         List<BiomeTileGroupPrototype> groups,
         Vector2i indices,
-        int seed,
+        FastNoise seed,
         float weightSum)
     {
         // TODO: This API fucking blows.
@@ -130,7 +125,7 @@ public sealed class BiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public Tile GetTile(Vector2i indices, int seed, List<BiomeTileGroupPrototype> groups,
+    public Tile GetTile(Vector2i indices, FastNoise seed, List<BiomeTileGroupPrototype> groups,
         float weightSum)
     {
         var value = GetValue(indices, seed);
@@ -143,7 +138,7 @@ public sealed class BiomeSystem : EntitySystem
         // Pick a variant tile if they're available as well
         if (tileDef.Variants > 1)
         {
-            var variantValue = (OpenSimplex2.Noise2(seed, indices.X, indices.Y) + 1f) / 2f;
+            var variantValue = (seed.GetSimplex(indices.X * 20f, indices.Y * 20f) + 1f) / 2f;
             variantValue *= tileDef.Variants;
 
             for (byte i = 0; i < tileDef.Variants; i++)

@@ -1,4 +1,3 @@
-using System.Buffers;
 using System.Linq;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
@@ -7,8 +6,8 @@ using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
 
@@ -49,7 +48,7 @@ public sealed class BiomeOverlay : Overlay
             return;
 
         var screenHandle = args.WorldHandle;
-        var seed = 0;
+        var seed = new FastNoise(0);
         var biome = _prototype.Index<BiomePrototype>("Grasslands");
         var tileSize = 1;
 
