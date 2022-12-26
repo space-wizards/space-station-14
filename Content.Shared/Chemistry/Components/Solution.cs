@@ -258,7 +258,12 @@ namespace Content.Shared.Chemistry.Components
         /// <param name="quantity">The quantity in milli-units.</param>
         public void AddReagent(string reagentId, FixedPoint2 quantity, bool dirtyHeatCap = true)
         {
-            DebugTools.Assert(quantity > 0);
+            if (quantity <= 0)
+            {
+                DebugTools.Assert(quantity == 0, "Attempted to add negative reagent quantity");
+                return;
+            }
+
             Volume += quantity;
             _heatCapacityDirty |= dirtyHeatCap;
             for (var i = 0; i < Contents.Count; i++)
@@ -444,15 +449,24 @@ namespace Content.Shared.Chemistry.Components
             var origVol = Volume;
             var effVol = Volume.Value;
             newSolution = new Solution(Contents.Count) { Temperature = Temperature };
+            var remaining = (long) toTake.Value;
 
             for (var i = Contents.Count - 1; i >= 0; i--) // iterate backwards because of remove swap.
             {
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (effVol - toTake.Value) / effVol);
+                var split = remaining * reagent.Quantity.Value / effVol;
 
-                var splitQuantity = reagent.Quantity - newQuantity;
+                if (split <= 0)
+                {
+                    effVol -= reagent.Quantity.Value;
+                    DebugTools.Assert(split == 0, "Negative solution quantity while splitting? Long/int overflow?");
+                    continue;
+                }
+
+                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var newQuantity = reagent.Quantity - splitQuantity;
 
                 DebugTools.Assert(newQuantity >= 0);
 
@@ -463,14 +477,14 @@ namespace Content.Shared.Chemistry.Components
 
                 newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
                 Volume -= splitQuantity;
-                toTake -= splitQuantity;
+                remaining -= split;
                 effVol -= reagent.Quantity.Value;
             }
 
             newSolution.Volume = origVol - Volume;
 
-            DebugTools.Assert(toTake >= FixedPoint2.Zero);
-            DebugTools.Assert(toTake == FixedPoint2.Zero || Volume == FixedPoint2.Zero);
+            DebugTools.Assert(remaining >= 0);
+            DebugTools.Assert(remaining == 0 || Volume == FixedPoint2.Zero);
 
             _heatCapacityDirty = true;
             newSolution._heatCapacityDirty = true;
@@ -497,26 +511,36 @@ namespace Content.Shared.Chemistry.Components
             }
 
             var effVol = Volume.Value;
+            Volume -= toTake;
+            var remaining = (long) toTake.Value;
             for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (effVol - toTake.Value) / effVol);
+                var split = remaining * reagent.Quantity.Value / effVol;
 
-                var splitQuantity = reagent.Quantity - newQuantity;
+                if (split <= 0)
+                {
+                    effVol -= reagent.Quantity.Value;
+                    DebugTools.Assert(split == 0, "Negative solution quantity while splitting? Long/int overflow?");
+                    continue;
+                }
+
+                var splitQuantity = FixedPoint2.FromCents((int) split);
+                var newQuantity = reagent.Quantity - splitQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)
                     Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 else
                     Contents.RemoveSwap(i);
 
-                toTake -= splitQuantity;
+                remaining -= split;
                 effVol -= reagent.Quantity.Value;
             }
 
-            DebugTools.Assert(toTake >= FixedPoint2.Zero);
-            DebugTools.Assert(toTake == FixedPoint2.Zero || Volume == FixedPoint2.Zero);
+            DebugTools.Assert(remaining >= 0);
+            DebugTools.Assert(remaining == 0 || Volume == FixedPoint2.Zero);
 
             _heatCapacityDirty = true;
             ValidateSolution();
@@ -528,7 +552,21 @@ namespace Content.Shared.Chemistry.Components
                 return;
 
             Volume += otherSolution.Volume;
-            var totalThermalEnergy = _heatCapacity * Temperature + otherSolution._heatCapacity * otherSolution.Temperature;
+
+            var closeTemps = MathHelper.CloseTo(otherSolution.Temperature, Temperature);
+            float totalThermalEnergy = 0;
+            if (!closeTemps)
+            {
+                IoCManager.Resolve(ref protoMan);
+
+                if (_heatCapacityDirty)
+                    UpdateHeatCapacity(protoMan);
+
+                if (otherSolution._heatCapacityDirty)
+                    otherSolution.UpdateHeatCapacity(protoMan);
+
+                totalThermalEnergy = _heatCapacity * Temperature + otherSolution._heatCapacity * otherSolution.Temperature;
+            }
 
             for (var i = 0; i < otherSolution.Contents.Count; i++)
             {
@@ -552,23 +590,11 @@ namespace Content.Shared.Chemistry.Components
                 }
             }
 
-            if (MathHelper.CloseTo(otherSolution.Temperature, Temperature))
-            {
+            _heatCapacity += otherSolution._heatCapacity;
+            if (closeTemps)
                 _heatCapacityDirty |= otherSolution._heatCapacityDirty;
-                _heatCapacity += otherSolution._heatCapacity;
-            }
             else
-            {
-                IoCManager.Resolve(ref protoMan);
-                if (_heatCapacityDirty)
-                    UpdateHeatCapacity(protoMan);
-
-                if (otherSolution._heatCapacityDirty)
-                    UpdateHeatCapacity(protoMan);
-
-                _heatCapacity += otherSolution._heatCapacity;
                 Temperature = _heatCapacity == 0 ? 0 : totalThermalEnergy / _heatCapacity;
-            }
 
             ValidateSolution();
         }

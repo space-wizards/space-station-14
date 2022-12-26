@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Chemistry;
 
@@ -24,6 +24,25 @@ public sealed class SolutionSystemTests
     solutions:
       beaker:
         maxVol: 50
+
+- type: reagent
+  id: TestReagentA
+  name: nah
+  desc: nah
+  physicalDesc: nah
+
+- type: reagent
+  id: TestReagentB
+  name: nah
+  desc: nah
+  physicalDesc: nah
+
+- type: reagent
+  id: TestReagentC
+  specificHeat: 2.0
+  name: nah
+  desc: nah
+  physicalDesc: nah
 ";
     [Test]
     public async Task TryAddTwoNonReactiveReagent()
@@ -32,6 +51,7 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
@@ -50,7 +70,7 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
-            solution.AddSolution(originalWater);
+            solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded));
 
@@ -74,6 +94,7 @@ public sealed class SolutionSystemTests
         var testMap = await PoolManager.CreateTestMap(pairTracker);
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
@@ -91,7 +112,7 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
-            solution.AddSolution(originalWater);
+            solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded), Is.False);
 
@@ -113,6 +134,7 @@ public sealed class SolutionSystemTests
 
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
@@ -133,7 +155,7 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
-            solution.AddSolution(originalWater);
+            solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
@@ -161,6 +183,7 @@ public sealed class SolutionSystemTests
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
@@ -181,10 +204,49 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryGetSolution(beaker, "beaker", out var solution));
 
-            solution.AddSolution(originalWater);
+            solution.AddSolution(originalWater, protoMan);
             Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out _),
                 Is.False);
+        });
+
+        await pairTracker.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task TestTemperatureCalculations()
+    {
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        var server = pairTracker.Pair.Server;
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
+        const float temp = 100.0f;
+
+        // Adding reagent with adjusts temperature
+        await server.WaitAssertion(() =>
+        {
+
+            var solution = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+            Assert.That(solution.Temperature, Is.EqualTo(temp * 1));
+
+            solution.AddSolution(new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp * 3 }, protoMan);
+            Assert.That(solution.Temperature, Is.EqualTo(temp * 2));
+
+            solution.AddSolution(new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp * 5 }, protoMan);
+            Assert.That(solution.Temperature, Is.EqualTo(temp * 3));
+        });
+
+        // adding solutions combines thermal energy
+        await server.WaitAssertion(() =>
+        {
+            var solutionOne = new Solution("TestReagentA", FixedPoint2.New(100)) { Temperature = temp };
+
+            var solutionTwo = new Solution("TestReagentB", FixedPoint2.New(100)) { Temperature = temp };
+            solutionTwo.AddReagent("TestReagentC", FixedPoint2.New(100));
+
+            var thermalEnergyOne = solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature;
+            var thermalEnergyTwo = solutionTwo.GetHeatCapacity(protoMan) * solutionTwo.Temperature;
+            solutionOne.AddSolution(solutionTwo, protoMan);
+            Assert.That(solutionOne.GetHeatCapacity(protoMan) * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
         });
 
         await pairTracker.CleanReturnAsync();
