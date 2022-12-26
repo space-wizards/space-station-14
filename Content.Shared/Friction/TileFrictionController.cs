@@ -10,7 +10,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -20,6 +19,7 @@ namespace Content.Shared.Friction
 {
     public sealed class TileFrictionController : VirtualController
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
@@ -33,11 +33,8 @@ namespace Content.Shared.Friction
         public override void Initialize()
         {
             base.Initialize();
-
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-
-            configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
-            configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+            _configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
+            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
 
             SubscribeLocalEvent<TileFrictionModifierComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<TileFrictionModifierComponent, ComponentHandleState>(OnHandleState);
@@ -61,22 +58,22 @@ namespace Content.Shared.Friction
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
 
-            configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
-            configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
+            _configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
+            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
-        public override void UpdateBeforeMapSolve(bool prediction, SharedPhysicsMapComponent mapComponent, float frameTime)
+        public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
-            base.UpdateBeforeMapSolve(prediction, mapComponent, frameTime);
+            base.UpdateBeforeSolve(prediction, frameTime);
 
             var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var pullerQuery = GetEntityQuery<SharedPullerComponent>();
             var pullableQuery = GetEntityQuery<SharedPullableComponent>();
+            var awakeQuery = EntityQueryEnumerator<AwakePhysicsComponent, PhysicsComponent>();
 
-            foreach (var body in mapComponent.AwakeBodies)
+            while (awakeQuery.MoveNext(out _, out var body))
             {
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
