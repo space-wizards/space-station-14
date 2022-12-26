@@ -13,5 +13,11 @@ public sealed class SalvageCaveGen : ISalvageProcgen
     /// Tile-height
     /// </summary>
     [DataField("height")]
-    public int Height = 64;
+    public int Height = 96;
+
+    /// <summary>
+    /// How wide the exterior border is, to prevent players wandering off.
+    /// </summary>
+    [DataField("borderWidth")]
+    public int BorderWidth = 4;
 }

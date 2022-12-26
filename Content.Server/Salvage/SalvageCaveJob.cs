@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Salvage;
 
@@ -84,17 +85,37 @@ public sealed class SalvageCaveJob : Job<bool>
         var tiles = new List<(Vector2i Indices, Tile Tile)>(cellDimensions);
         var tileId = new Tile(_tileDefManager["FloorAsteroidIronsand1"].TileId);
         var cellNoise = new FastNoise(_noise.GetSeed());
+        var threshold = 0.6f;
 
         for (var x = 0; x < width; x++)
         {
             for (var y = 0; y < height; y++)
             {
-                var value = (cellNoise.GetSimplex(x * 10f, y * 10f) + 1f) / 2f;
+                // Is it near the border, try using a different seed.
+                if (x < _cave.BorderWidth || _cave.Width - x < _cave.BorderWidth ||
+                    y < _cave.BorderWidth || _cave.Height - y < _cave.BorderWidth)
+                {
+                    var minX = Math.Min(x, _cave.Width - 1 - x);
+                    var minY = Math.Min(y, _cave.Height - 1 - y);
+                    var min = Math.Min(minX, minY);
 
-                if (value < 0.6f)
+                    var rand = _random.Next(_cave.BorderWidth);
+                    if (rand >= min)
+                    {
+                        tiles.Add(new ValueTuple<Vector2i, Tile>(new Vector2i(x, y), tileId));
+                    }
+
                     continue;
+                }
 
-                tiles.Add(new ValueTuple<Vector2i, Tile>(new Vector2i(x, y), tileId));
+                // Standard noise.
+                var value = (cellNoise.GetSimplex((x + 5f) * 10f, (y + 5f) * 10f) + 1f) / 2f;
+
+                if (value >= 0.6f)
+                {
+                    tiles.Add(new ValueTuple<Vector2i, Tile>(new Vector2i(x, y), tileId));
+                    continue;
+                }
             }
         }
 
