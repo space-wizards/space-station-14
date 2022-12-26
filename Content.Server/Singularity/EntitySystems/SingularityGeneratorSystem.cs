@@ -125,7 +125,9 @@ public sealed class SingularityGeneratorSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<SingularityGeneratorComponent?>(args.OtherFixture.Body.Owner, out var singularityGeneratorComponent))
         {
-            singularityGeneratorComponent.Power += component.State switch
+            SetPower(
+                singularityGeneratorComponent,
+                singularityGeneratorComponent.Power + component.State switch
             {
                 ParticleAcceleratorPowerState.Standby => 0,
                 ParticleAcceleratorPowerState.Level0 => 1,
@@ -133,7 +135,7 @@ public sealed class SingularityGeneratorSystem : EntitySystem
                 ParticleAcceleratorPowerState.Level2 => 4,
                 ParticleAcceleratorPowerState.Level3 => 8,
                 _ => 0
-            };
+            });
             EntityManager.QueueDeleteEntity(uid);
         }
     }

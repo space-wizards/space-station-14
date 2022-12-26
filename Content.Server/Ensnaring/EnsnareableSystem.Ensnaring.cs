@@ -1,12 +1,10 @@
 using System.Threading;
 using Content.Server.DoAfter;
-using Content.Server.Ensnaring.Components;
 using Content.Shared.Alert;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Throwing;
-using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 

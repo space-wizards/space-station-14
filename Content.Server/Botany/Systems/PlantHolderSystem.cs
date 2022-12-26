@@ -76,9 +76,10 @@ namespace Content.Server.Botany.Systems
             }
             else if (!component.Dead)
             {
+                var displayName = Loc.GetString(component.Seed.DisplayName);
                 args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
-                                      ("seedName", component.Seed.DisplayName),
-                                      ("toBeForm", component.Seed.DisplayName.EndsWith('s') ? "are" : "is")));
+                                      ("seedName", displayName),
+                                      ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
                 if (component.Health <= component.Seed.Endurance / 2)
                 {
@@ -134,9 +135,11 @@ namespace Content.Server.Botany.Systems
                     if (!_botanySystem.TryGetSeed(seeds, out var seed))
                         return ;
 
+                    var name = Loc.GetString(seed.Name);
+                    var noun = Loc.GetString(seed.Noun);
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
-                        ("seedName", seed.Name),
-                        ("seedNoun", seed.Noun)), args.User, PopupType.Medium);
+                        ("seedName", name),
+                        ("seedNoun", noun)), args.User, PopupType.Medium);
 
                     component.Seed = seed;
                     component.Dead = false;
@@ -249,8 +252,9 @@ namespace Content.Server.Botany.Systems
                 component.Seed.Unique = false;
                 var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates);
                 seed.RandomOffset(0.25f);
+                var displayName = Loc.GetString(component.Seed.DisplayName);
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
-                    ("seedName", component.Seed.DisplayName)), args.User);
+                    ("seedName", displayName)), args.User);
                 component.Health -= (_random.Next(3, 5) * 10);
 
                 if (_random.Prob(0.3f))
