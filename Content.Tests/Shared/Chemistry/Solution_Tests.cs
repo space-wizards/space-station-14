@@ -343,7 +343,7 @@ public sealed class Solution_Tests : ContentUnitTest
         solutionTwo.AddReagent("water", FixedPoint2.New(500));
         solutionTwo.AddReagent("earth", FixedPoint2.New(1000));
 
-        solutionOne.AddSolution(solutionTwo);
+        solutionOne.AddSolution(solutionTwo, null);
 
         Assert.That(solutionOne.GetReagentQuantity("water").Int(), Is.EqualTo(1500));
         Assert.That(solutionOne.GetReagentQuantity("fire").Int(), Is.EqualTo(2000));
@@ -359,24 +359,7 @@ public sealed class Solution_Tests : ContentUnitTest
     public void EmptySolutionHasNoHeatCapacity()
     {
         var solution = new Solution();
-        Assert.That(solution.HeatCapacity, Is.EqualTo(0.0f));
-    }
-
-    [Test]
-    public void EmptySolutionHasNoThermalEnergy()
-    {
-        var solution = new Solution();
-        Assert.That(solution.ThermalEnergy, Is.EqualTo(0.0f));
-    }
-
-    [Test]
-    public void AddReagentToEmptySolutionSetsTemperature()
-    {
-        const float testTemp = 100.0f;
-
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), testTemp);
-        Assert.That(solution.Temperature, Is.EqualTo(testTemp));
+        Assert.That(solution.GetHeatCapacity(null), Is.EqualTo(0.0f));
     }
 
     [Test]
@@ -384,8 +367,7 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
 
         solution.AddReagent("water", FixedPoint2.New(100));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
@@ -408,7 +390,7 @@ public sealed class Solution_Tests : ContentUnitTest
         solutionTwo.AddReagent("earth", FixedPoint2.New(100));
         solutionTwo.Temperature = initialTemp;
 
-        solutionOne.AddSolution(solutionTwo);
+        solutionOne.AddSolution(solutionTwo, null);
         Assert.That(solutionOne.Temperature, Is.EqualTo(initialTemp));
     }
 
@@ -417,8 +399,7 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.RemoveReagent("water", FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }
@@ -428,8 +409,7 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.RemoveSolution(FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }
@@ -439,8 +419,7 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solution.SplitSolution(FixedPoint2.New(50));
         Assert.That(solution.Temperature, Is.EqualTo(initialTemp));
     }
@@ -450,14 +429,13 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float temp = 100.0f;
 
-        var solution = new Solution();
-        solution.AddReagent("water", FixedPoint2.New(100), temp * 1);
+        var solution = new Solution("water", FixedPoint2.New(100)) { Temperature = temp };
         Assert.That(solution.Temperature, Is.EqualTo(temp * 1));
 
-        solution.AddReagent("water", FixedPoint2.New(100), temp * 3);
+        solution.AddSolution(new Solution("water", FixedPoint2.New(100)) { Temperature = temp * 3 }, null);
         Assert.That(solution.Temperature, Is.EqualTo(temp * 2));
 
-        solution.AddReagent("earth", FixedPoint2.New(100), temp * 5);
+        solution.AddSolution(new Solution("water", FixedPoint2.New(100)) { Temperature = temp * 5 }, null);
         Assert.That(solution.Temperature, Is.EqualTo(temp * 3));
     }
 
@@ -466,17 +444,15 @@ public sealed class Solution_Tests : ContentUnitTest
     {
         const float initialTemp = 100.0f;
 
-        var solutionOne = new Solution();
-        solutionOne.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solutionOne = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
 
-        var solutionTwo = new Solution();
-        solutionTwo.AddReagent("water", FixedPoint2.New(100), initialTemp);
+        var solutionTwo = new Solution("water", FixedPoint2.New(100)) { Temperature = initialTemp };
         solutionTwo.AddReagent("earth", FixedPoint2.New(100));
 
-        var thermalEnergyOne = solutionOne.ThermalEnergy;
-        var thermalEnergyTwo = solutionTwo.ThermalEnergy;
-        solutionOne.AddSolution(solutionTwo);
-        Assert.That(solutionOne.ThermalEnergy, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
+        var thermalEnergyOne = solutionOne.GetHeatCapacity(null) * solutionOne.Temperature;
+        var thermalEnergyTwo = solutionOne.GetHeatCapacity(null) * solutionOne.Temperature;
+        solutionOne.AddSolution(solutionTwo, null);
+        Assert.That(solutionOne.GetHeatCapacity(null) * solutionOne.Temperature, Is.EqualTo(thermalEnergyOne + thermalEnergyTwo));
     }
 
     #endregion Thermal Energy and Temperature
