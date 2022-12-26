@@ -33,6 +33,7 @@ namespace Content.Shared.Friction
         public override void Initialize()
         {
             base.Initialize();
+            UpdatesAfter.Add(typeof(SharedMoverController));
             _configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
 
