@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added verb context menu to player lists in admin menus., type: Add}
-  id: 2306
-  time: '2022-09-15T00:03:14.0000000+00:00'
 - author: illiux
   changes:
   - {message: The ChemMaster 4000 now outputs directly into a pill canister or bottle,
@@ -2945,3 +2940,10 @@ Entries:
       specific chemicals, such as cryoxadone.', type: Add}
   id: 2805
   time: '2022-12-25T11:35:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer spam print technology disks., type: Fix}
+  - {message: Changed some of the internal logic regarding research server syncing.,
+    type: Tweak}
+  id: 2806
+  time: '2022-12-25T21:22:24.0000000+00:00'

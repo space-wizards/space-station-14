@@ -31,6 +31,10 @@ namespace Content.Shared.Maps
         public string Name { get; private set; } = "";
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
+        [DataField("cornerSprites")] public List<ResourcePath> CornerSprites { get; } = new();
+
+        [DataField("cardinalSprites")] public List<ResourcePath> CardinalSprites { get; } = new();
+
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurfs")] public List<string> BaseTurfs { get; } = new();

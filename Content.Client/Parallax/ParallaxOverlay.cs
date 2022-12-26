@@ -23,7 +23,6 @@ public sealed class ParallaxOverlay : Overlay
     {
         IoCManager.InjectDependencies(this);
         _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
-
     }
 
     protected override void Draw(in OverlayDrawArgs args)

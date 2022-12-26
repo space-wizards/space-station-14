@@ -1109,7 +1109,7 @@
 
 - type: tile
   id: FloorGrass
-  name: tiles-grass-floor
+  name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
   baseTurfs:
   - FloorDirt
