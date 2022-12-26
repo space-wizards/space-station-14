@@ -1,7 +1,7 @@
 <DefaultWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <controls:StripeBack Name="PaperBackground" StyleClasses="LinedPaper">
+    <PanelContainer Name="PaperBackground" StyleClasses="DefaultPaper">
         <BoxContainer Orientation="Vertical" Margin="12 0 12 0">
             <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                 <RichTextLabel StyleClasses="WrittenText" Name="Label" ModulateSelfOverride="#25252A"/>
@@ -10,14 +10,14 @@
                 </PanelContainer>
             </BoxContainer>
 
-            <Control VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True">
+            <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
                 <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                     Text="{Loc 'paper-ui-blank-page-message'}"
-                    VerticalAlignment="Center" HorizontalAlignment="Center" VerticalExpand="True"/>
+                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
             </Control>
 
             <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
 
         </BoxContainer>
-    </controls:StripeBack>
+    </PanelContainer>
 </DefaultWindow>

@@ -33,6 +33,24 @@
   - type: Recyclable
 
 - type: entity
+  name: lined paper
+  parent: Paper
+  id: LinedPaper
+  description: 'A new kind of paper. This one is lined.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    centerTexturePath: "/Textures/Interface/Nano/lined_paper.svg.96dpi.png"
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true

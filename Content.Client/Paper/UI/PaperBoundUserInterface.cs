@@ -19,14 +19,19 @@ namespace Content.Client.Paper.UI
         protected override void Open()
         {
             base.Open();
+            var entityMgr = IoCManager.Resolve<IEntityManager>();
+
             _window = new PaperWindow
             {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+                Title = entityMgr.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.Input.OnTextEntered += Input_OnTextEntered;
-            _window.OpenCentered();
 
+            var visuals = entityMgr.GetComponent<PaperVisualsComponent>(Owner.Owner);
+            _window.InitVisuals(visuals);
+
+            _window.OpenCentered();
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
