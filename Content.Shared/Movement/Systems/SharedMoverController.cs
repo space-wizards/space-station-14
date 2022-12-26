@@ -57,11 +57,6 @@ namespace Content.Shared.Movement.Systems
 
         private bool _relativeMovement;
 
-        /// <summary>
-        /// Cache the mob movement calculation to re-use elsewhere.
-        /// </summary>
-        public Dictionary<EntityUid, bool> UsedMobMovement = new();
-
         public override void Initialize()
         {
             base.Initialize();
@@ -86,12 +81,6 @@ namespace Content.Shared.Movement.Systems
             _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
-        public override void UpdateAfterSolve(bool prediction, float frameTime)
-        {
-            base.UpdateAfterSolve(prediction, frameTime);
-            UsedMobMovement.Clear();
-        }
-
         /// <summary>
         ///     Movement while considering actionblockers, weightlessness, etc.
         /// </summary>
@@ -102,8 +91,6 @@ namespace Content.Shared.Movement.Systems
             float frameTime,
             EntityQuery<TransformComponent> xformQuery)
         {
-            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner));
-
             // Update relative movement
             if (mover.LerpAccumulator > 0f)
             {
@@ -193,11 +180,9 @@ namespace Content.Shared.Movement.Systems
 
             if (!UseMobMovement(mover, physicsComponent))
             {
-                UsedMobMovement[mover.Owner] = false;
                 return;
             }
 
-            UsedMobMovement[mover.Owner] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
             var weightless = _gravity.IsWeightless(physicsComponent.Owner, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
@@ -344,12 +329,7 @@ namespace Content.Shared.Movement.Systems
             currentVelocity += wishDir * accelSpeed;
         }
 
-        public bool UseMobMovement(EntityUid uid)
-        {
-            return UsedMobMovement.TryGetValue(uid, out var used) && used;
-        }
-
-        protected bool UseMobMovement(InputMoverComponent mover, PhysicsComponent body)
+        public bool UseMobMovement(InputMoverComponent mover, PhysicsComponent body)
         {
             return mover.CanMove &&
                    body.BodyStatus == BodyStatus.OnGround &&

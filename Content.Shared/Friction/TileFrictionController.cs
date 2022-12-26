@@ -1,5 +1,6 @@
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Pulling.Components;
@@ -33,7 +34,6 @@ namespace Content.Shared.Friction
         public override void Initialize()
         {
             base.Initialize();
-            UpdatesAfter.Add(typeof(SharedMoverController));
             _configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
 
@@ -70,6 +70,7 @@ namespace Content.Shared.Friction
 
             var frictionQuery = GetEntityQuery<TileFrictionModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
             var pullerQuery = GetEntityQuery<SharedPullerComponent>();
             var pullableQuery = GetEntityQuery<SharedPullableComponent>();
             var awakeQuery = EntityQueryEnumerator<AwakePhysicsComponent, PhysicsComponent>();
@@ -79,7 +80,8 @@ namespace Content.Shared.Friction
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    _mover.UseMobMovement(body.Owner))
+                    moverQuery.TryGetComponent(body.Owner, out var mover) &&
+                    _mover.UseMobMovement(mover, body))
                 {
                     continue;
                 }
