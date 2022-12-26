@@ -1,21 +1,36 @@
-using Content.Server.Research.Systems;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Server.Research.Components
+namespace Content.Shared.Research.Components
 {
-    [Access(typeof(ResearchSystem))]
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class ResearchServerComponent : Component
     {
+        /// <summary>
+        /// The name of the server
+        /// </summary>
         [DataField("servername"), ViewVariables(VVAccess.ReadWrite)]
         public string ServerName = "RDSERVER";
 
+        /// <summary>
+        /// The amount of points on the server.
+        /// </summary>
         [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
         public int Points;
 
+        /// <summary>
+        /// A unique numeric id representing the server
+        /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public int Id;
 
+        /// <summary>
+        /// Entities connected to the server
+        /// </summary>
+        /// <remarks>
+        /// This is not safe to read clientside
+        /// </remarks>
         [ViewVariables(VVAccess.ReadOnly)]
         public List<EntityUid> Clients = new();
 
@@ -24,6 +39,20 @@ namespace Content.Server.Research.Components
 
         [DataField("researchConsoleUpdateTime"), ViewVariables(VVAccess.ReadWrite)]
         public readonly TimeSpan ResearchConsoleUpdateTime = TimeSpan.FromSeconds(1);
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ResearchServerState : ComponentState
+    {
+        public string ServerName;
+        public int Points;
+        public int Id;
+        public ResearchServerState(string serverName, int points, int id)
+        {
+            ServerName = serverName;
+            Points = points;
+            Id = id;
+        }
     }
 
     /// <summary>
