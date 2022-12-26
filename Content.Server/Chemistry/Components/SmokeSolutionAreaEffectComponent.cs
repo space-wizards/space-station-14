@@ -1,8 +1,10 @@
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Robust.Shared.Prototypes;
@@ -15,6 +17,7 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public new const string SolutionName = "solutionArea";
 
@@ -51,7 +54,11 @@ namespace Content.Server.Chemistry.Components
             }
 
             var bloodstreamSys = EntitySystem.Get<BloodstreamSystem>();
-            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
+            if (bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream))
+            {
+                // Log solution addition by smoke
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{_entMan.ToPrettyString(entity):target} was affected by smoke {SolutionContainerSystem.ToPrettyString(transferSolution)}");
+            }
         }
 
 

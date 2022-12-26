@@ -24,6 +24,9 @@ namespace Content.Server.Chemistry.ReagentEffects
             if (args.EntityManager.TryGetComponent<DiseasedComponent>(args.SolutionEntity, out var diseased))
                 return;
 
+            if (args.Scale != 1f)
+                return;
+
             var random = IoCManager.Resolve<IRobustRandom>();
 
             EntitySystem.Get<DiseaseSystem>().TryAddDisease(args.SolutionEntity, random.Pick(Diseases));

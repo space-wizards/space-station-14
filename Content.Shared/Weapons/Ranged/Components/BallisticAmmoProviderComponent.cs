@@ -31,7 +31,7 @@ public sealed class BallisticAmmoProviderComponent : Component
     public Container Container = default!;
 
     // TODO: Make this use stacks when the typeserializer is done.
-    [ViewVariables, DataField("entities")]
+    [DataField("entities")]
     public List<EntityUid> Entities = new();
 
     /// <summary>

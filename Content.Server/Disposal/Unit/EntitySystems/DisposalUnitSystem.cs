@@ -26,6 +26,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -286,7 +287,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
-                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-thrown-missed"), uid);
                 return;
             }
 
@@ -460,7 +461,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (userId.HasValue && !HasComp<SharedHandsComponent>(userId) && toInsertId != userId) // Mobs like mouse can Jump inside even with no hands
             {
-                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, Filter.Entities(userId.Value), PopupType.SmallCaution);
+                _popupSystem.PopupEntity(Loc.GetString("disposal-unit-no-hands"), userId.Value, userId.Value, PopupType.SmallCaution);
                 return false;
             }
 
@@ -515,7 +516,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
 
             var coords = xform.Coordinates;
-            var entry = grid.Grid.GetLocal(coords)
+            var entry = grid.GetLocal(coords)
                 .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)

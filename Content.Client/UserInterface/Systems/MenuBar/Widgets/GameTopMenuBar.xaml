@@ -88,7 +88,7 @@
         Access="Internal"
         Icon="{xe:Tex '/Textures/Interface/info.svg.192dpi.png'}"
         BoundKey = "{x:Static is:ContentKeyFunctions.OpenAHelp}"
-        ToolTip="{Loc 'ui-options-function-open-ahelp'}"
+        ToolTip="{Loc 'ui-options-function-open-a-help'}"
         MinSize="42 64"
         HorizontalExpand="True"
         AppendStyleClass="{x:Static style:StyleBase.ButtonOpenLeft}"

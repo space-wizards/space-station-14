@@ -55,7 +55,7 @@ public sealed class SpraySystem : EntitySystem
         if (solution.TotalVolume <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid,
-                Filter.Entities(args.User));
+                args.User);
             return;
         }
 

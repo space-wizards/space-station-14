@@ -1,0 +1,90 @@
+- type: entity
+  id: BaseDionaOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Diona/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
+- type: entity
+  id: OrganDionaBrain
+  parent: BaseDionaOrgan
+  name: brain
+  description: "The source of incredible, unending intelligence. Honk."
+  components:
+  - type: Sprite
+    state: brain
+  - type: Organ
+  - type: Input
+    context: "ghost"
+  - type: InputMover
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        canReact: False
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0
+    baseSprintSpeed: 0
+  - type: GhostOnMove
+  - type: Brain
+  - type: Lung #lungs in they head. why they there tho?
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Plant ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+
+- type: entity
+  id: OrganDionaEyes
+  parent: BaseDionaOrgan
+  name: eyes
+  description: "I see you!"
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Organ
+
+- type: entity
+  id: OrganDionaStomach
+  parent: BaseDionaOrgan
+  name: stomach
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Organ
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 250
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Plant ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+      - id: Medicine
+      - id: Poison
+      - id: Narcotic

@@ -157,6 +157,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: cat
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -203,6 +211,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: puppy
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -286,6 +302,14 @@
       layer:
       - MobLayer
   - type: Appearance
+  - type: Inventory
+    speciesId: dog
+    templateId: pet
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
   - type: DamageStateVisuals
     states:
       Alive:
@@ -338,6 +362,16 @@
       gender: female
 
 - type: entity
+  name: Alexander
+  parent: MobPig
+  id: MobAlexander
+  description: Chef's finest colleague.
+  components:
+  - type: Grammar
+    attributes:
+      gender: male
+      
+- type: entity
   name: Renault
   parent: MobFox
   id: MobFoxRenault
@@ -355,3 +389,29 @@
     attributes:
       proper: true
       gender: female
+
+- type: entity
+  name: Hamlet
+  parent: MobHamster
+  id: MobHamsterHamlet
+  description: A grumpy, cute and fluffy hamster.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: ghost-role-information-hamlet-name
+    description: ghost-role-information-hamlet-description
+  - type: InteractionPopup
+    successChance: 1
+  - type: Puller
+    needsHands: false
+  - type: Butcherable
+    spawned:
+    - id: FoodMeat
+      amount: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+

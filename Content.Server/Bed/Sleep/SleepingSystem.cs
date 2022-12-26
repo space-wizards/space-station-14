@@ -10,6 +10,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
@@ -39,6 +40,7 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
             SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<SleepingComponent, SlipAttemptEvent>(OnSlip);
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
         }
 
@@ -157,6 +159,12 @@ namespace Content.Server.Bed.Sleep
                 args.PushMarkup(Loc.GetString("sleep-examined", ("target", Identity.Entity(uid, EntityManager))));
             }
         }
+
+        private void OnSlip(EntityUid uid, SleepingComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
         private void OnInit(EntityUid uid, ForcedSleepingComponent component, ComponentInit args)
         {
             TrySleeping(uid);
@@ -169,6 +177,10 @@ namespace Content.Server.Bed.Sleep
         {
             if (!HasComp<MobStateComponent>(uid))
                 return false;
+
+            var tryingToSleepEvent = new TryingToSleepEvent(uid);
+            RaiseLocalEvent(uid, ref tryingToSleepEvent);
+            if (tryingToSleepEvent.Cancelled) return false;
 
             if (_prototypeManager.TryIndex<InstantActionPrototype>("Sleep", out var sleepAction))
                 _actionsSystem.RemoveAction(uid, sleepAction);
@@ -187,7 +199,7 @@ namespace Content.Server.Bed.Sleep
                 if (user != null)
                 {
                     SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
-                    _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value), Shared.Popups.PopupType.SmallCaution);
+                    _popupSystem.PopupEntity(Loc.GetString("wake-other-failure", ("target", Identity.Entity(uid, EntityManager))), uid, user.Value, Shared.Popups.PopupType.SmallCaution);
                 }
                 return false;
             }
@@ -195,7 +207,7 @@ namespace Content.Server.Bed.Sleep
             if (user != null)
             {
                 SoundSystem.Play("/Audio/Effects/thudswoosh.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.05f, _robustRandom));
-                _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", Identity.Entity(uid, EntityManager))), uid, Filter.Entities(user.Value));
+                _popupSystem.PopupEntity(Loc.GetString("wake-other-success", ("target", Identity.Entity(uid, EntityManager))), uid, user.Value);
             }
             RemComp<SleepingComponent>(uid);
             return true;

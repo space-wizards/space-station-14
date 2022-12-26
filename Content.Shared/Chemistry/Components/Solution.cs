@@ -6,7 +6,6 @@ using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Collections;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
@@ -22,7 +21,7 @@ namespace Content.Shared.Chemistry.Components
         // This is a list because it is actually faster to add and remove reagents from
         // a list than a dictionary, though contains-reagent checks are slightly slower, 
         [DataField("reagents")]
-        public List<ReagentQuantity> Contents;
+        public List<ReagentQuantity> Contents = new(2);
 
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).

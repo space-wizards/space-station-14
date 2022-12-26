@@ -3,6 +3,7 @@ using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -85,6 +86,8 @@ public sealed class MachineFrameSystem : EntitySystem
             if (TryComp<StackComponent?>(args.Used, out var stack))
             {
                 var type = stack.StackTypeId;
+                if (type == null)
+                    return;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     return;
 
@@ -262,6 +265,8 @@ public sealed class MachineFrameSystem : EntitySystem
             {
                 var type = stack.StackTypeId;
                 // Check this is part of the requirements...
+                if (type == null)
+                    continue;
                 if (!component.MaterialRequirements.ContainsKey(type))
                     continue;
 

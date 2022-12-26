@@ -25,11 +25,13 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -467,7 +469,7 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     // Unbounded intentionally.
-                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {stack.MaxCount})", (int newAmount) =>
+                    _quickDialog.OpenDialog(player, "Adjust stack", $"Amount (max {_stackSystem.GetMaxCount(stack)})", (int newAmount) =>
                     {
                         _stackSystem.SetCount(args.Target, newAmount, stack);
                     });
@@ -485,7 +487,7 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/fill-stack.png",
                 Act = () =>
                 {
-                    _stackSystem.SetCount(args.Target, stack.MaxCount, stack);
+                    _stackSystem.SetCount(args.Target, _stackSystem.GetMaxCount(stack), stack);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-fill-stack-description"),

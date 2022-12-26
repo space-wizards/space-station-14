@@ -32,6 +32,11 @@ bite.ogg take from https://github.com/tgstation/tgstation/commit/d4f678a1772007f
 
 bone_rattle.ogg licensed under CC0 1.0 and taken from spookymodem at https://freesound.org/people/spookymodem/sounds/202102/
 
+- files: ["sadtrombone.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "sadtrombone.ogg taken from Citadel Station."
+  source: "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/35a1723e98a60f375df590ca572cc90f1bb80bd5"
+
 The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
     demon_attack1.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0

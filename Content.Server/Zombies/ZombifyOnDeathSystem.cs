@@ -119,8 +119,10 @@ namespace Content.Server.Zombies
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
-            melee.Animation = zombiecomp.AttackAnimation;
-            melee.Range = 0.75f;
+            melee.ClickAnimation = zombiecomp.AttackAnimation;
+            melee.WideAnimation = zombiecomp.AttackAnimation;
+            melee.Range = 1.5f;
+            Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
@@ -154,7 +156,7 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
             if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
@@ -169,8 +171,8 @@ namespace Content.Server.Zombies
                 _damageable.SetAllDamage(damageablecomp, 0);
 
             //gives it the funny "Zombie ___" name.
-            if (TryComp<MetaDataComponent>(target, out var meta))
-                meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
+            var meta = MetaData(target);
+            meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
 

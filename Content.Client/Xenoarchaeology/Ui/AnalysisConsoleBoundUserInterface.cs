@@ -31,6 +31,10 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         {
             SendMessage(new AnalysisConsoleScanButtonPressedMessage());
         };
+        _consoleMenu.OnPrintButtonPressed += _ =>
+        {
+            SendMessage(new AnalysisConsolePrintButtonPressedMessage());
+        };
         _consoleMenu.OnDestroyButtonPressed += _ =>
         {
             SendMessage(new AnalysisConsoleDestroyButtonPressedMessage());
@@ -44,8 +48,7 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
         switch (state)
         {
             case AnalysisConsoleScanUpdateState msg:
-                _consoleMenu?.SetDestroyButtonDisabled(msg);
-                _consoleMenu?.SetScanButtonDisabled(msg);
+                _consoleMenu?.SetButtonsDisabled(msg);
                 _consoleMenu?.UpdateInformationDisplay(msg);
                 _consoleMenu?.UpdateProgressBar(msg);
                 break;
@@ -58,6 +61,7 @@ public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
 
         if (!disposing)
             return;
+        _consoleMenu?.AnalysisDestroyWindow?.Close();
         _consoleMenu?.Dispose();
     }
 }

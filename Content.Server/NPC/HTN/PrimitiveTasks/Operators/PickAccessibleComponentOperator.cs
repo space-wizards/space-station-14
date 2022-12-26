@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Pathfinding;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
@@ -20,16 +19,16 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
     [DataField("rangeKey", required: true)]
     public string RangeKey = string.Empty;
 
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = string.Empty;
 
-    [ViewVariables, DataField("component", required: true)]
+    [DataField("component", required: true)]
     public string Component = string.Empty;
 
     /// <summary>
     /// Where the pathfinding result will be stored (if applicable). This gets removed after execution.
     /// </summary>
-    [ViewVariables, DataField("pathfindKey")]
+    [DataField("pathfindKey")]
     public string PathfindKey = NPCBlackboard.PathfindKey;
 
     public override void Initialize(IEntitySystemManager sysManager)
@@ -49,10 +48,10 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             return (false, null);
         }
 
-        var range = blackboard.GetValueOrDefault<float>(RangeKey);
+        var range = blackboard.GetValueOrDefault<float>(RangeKey, _entManager);
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
 
-        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates))
+        if (!blackboard.TryGetValue<EntityCoordinates>(NPCBlackboard.OwnerCoordinates, out var coordinates, _entManager))
         {
             return (false, null);
         }
@@ -77,7 +76,7 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
             return (false, null);
         }
 
-        blackboard.TryGetValue<float>(RangeKey, out var maxRange);
+        blackboard.TryGetValue<float>(RangeKey, out var maxRange, _entManager);
 
         if (maxRange == 0f)
             maxRange = 7f;
@@ -86,7 +85,6 @@ public sealed class PickAccessibleComponentOperator : HTNOperator
         {
             var path = await _pathfinding.GetRandomPath(
                 owner,
-                1.4f,
                 maxRange,
                 cancelToken,
                 flags: _pathfinding.GetFlags(blackboard));

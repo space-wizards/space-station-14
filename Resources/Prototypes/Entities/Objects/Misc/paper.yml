@@ -30,6 +30,7 @@
     - Document
   - type: Appearance
   - type: PaperVisuals
+  - type: Recyclable
 
 - type: entity
   parent: Paper
@@ -56,9 +57,6 @@
   components:
     - type: NukeCodePaper
     - type: Paper
-      content: |
-        [color=red]TOP SECRET![/color]
-        Nuclear device activation code:
 
 - type: entity
   name: pen
@@ -76,6 +74,7 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: pen
     size: 2
+  - type: Recyclable
 
 - type: entity
   name: Cybersun pen
@@ -440,7 +439,7 @@
     state: stamp-syndicate
 
 - type: entity
-  name: chief engineers's rubber stamp
+  name: chief engineer's rubber stamp
   parent: RubberStampMime
   id: RubberStampCE
   components:

@@ -22,6 +22,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
+using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
@@ -32,7 +33,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Server.Cloning.Systems
+namespace Content.Server.Cloning
 {
     public sealed class CloningSystem : EntitySystem
     {
@@ -97,7 +98,7 @@ namespace Content.Server.Cloning.Systems
 
         private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
         {
-            _serverStackSystem.SpawnMultiple(_material.GetMaterialAmount(uid, "Biomass"), 100, "Biomass", Transform(uid).Coordinates);
+            _serverStackSystem.SpawnMultiple(component.MaterialCloningOutput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -149,10 +150,10 @@ namespace Content.Server.Cloning.Systems
             if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
                 return;
 
-            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, "Biomass"))));
+            args.PushMarkup(Loc.GetString("cloning-pod-biomass", ("number", _material.GetMaterialAmount(uid, component.RequiredMaterial))));
         }
 
-        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod)
+        public bool TryCloning(EntityUid uid, EntityUid bodyToClone, Mind.Mind mind, CloningPodComponent? clonePod, float failChanceModifier = 1)
         {
             if (!Resolve(uid, ref clonePod))
                 return false;
@@ -193,7 +194,7 @@ namespace Content.Server.Cloning.Systems
                 cloningCost = (int) Math.Round(cloningCost * EasyModeCloningCost);
 
             // biomass checks
-            var biomassAmount = _material.GetMaterialAmount(uid, "Biomass");
+            var biomassAmount = _material.GetMaterialAmount(uid, clonePod.RequiredMaterial);
 
             if (biomassAmount < cloningCost)
             {
@@ -202,7 +203,7 @@ namespace Content.Server.Cloning.Systems
                 return false;
             }
 
-            _material.TryChangeMaterialAmount(uid, "Biomass", -cloningCost);
+            _material.TryChangeMaterialAmount(uid, clonePod.RequiredMaterial, -cloningCost);
             clonePod.UsedBiomass = cloningCost;
             // end of biomass checks
 
@@ -211,6 +212,8 @@ namespace Content.Server.Cloning.Systems
                 damageable.Damage.DamageDict.TryGetValue("Cellular", out var cellularDmg))
             {
                 var chance = Math.Clamp((float) (cellularDmg / 100), 0, 1);
+                chance *= failChanceModifier;
+
                 if (cellularDmg > 0 && clonePod.ConnectedConsole != null)
                     _chatSystem.TrySendInGameICMessage(clonePod.ConnectedConsole.Value, Loc.GetString("cloning-console-cellular-warning", ("percent", Math.Round(100 - (chance * 100)))), InGameICChatType.Speak, false);
 
@@ -319,7 +322,7 @@ namespace Content.Server.Cloning.Systems
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            var biomassStack = Spawn("MaterialBiomass", transform.Coordinates);
+            var biomassStack = Spawn(clonePod.MaterialCloningOutput, transform.Coordinates);
             _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
 
             clonePod.UsedBiomass = 0;

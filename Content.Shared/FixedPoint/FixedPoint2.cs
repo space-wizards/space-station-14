@@ -8,7 +8,7 @@ namespace Content.Shared.FixedPoint
     ///     Represents a quantity of something, to a precision of 0.01.
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
-    [Serializable]
+    [Serializable, CopyByRef]
     public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>, IFormattable
     {
         public int Value { get; private set; }
@@ -72,21 +72,17 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
-            var aD = a.ShiftDown();
-            var bD = b.ShiftDown();
-            return New(aD * bD);
+            return new((int) MathF.Round(b.Value * a.Value / MathF.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
-            var aD = (float) a.ShiftDown();
-            return New(aD * b);
+            return new((int) MathF.Round(a.Value * b, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
-            var aD = a.ShiftDown();
-            return New(aD * b);
+            return new((int) MathF.Round(a.Value * b, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, int b)
@@ -100,14 +96,12 @@ namespace Content.Shared.FixedPoint
             {
                 throw new DivideByZeroException();
             }
-            var aD = a.ShiftDown();
-            var bD = b.ShiftDown();
-            return New(aD / bD);
+            return new((int) MathF.Round((MathF.Pow(10, Shift) * a.Value) / b.Value, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
         {
-            return a / FixedPoint2.New(b);
+            return new((int) MathF.Round(a.Value / b, MidpointRounding.AwayFromZero));
         }
 
         public static bool operator <=(FixedPoint2 a, int b)

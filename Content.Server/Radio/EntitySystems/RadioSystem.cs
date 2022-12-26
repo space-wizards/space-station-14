@@ -1,52 +1,95 @@
-using System.Linq;
-using Content.Shared.Examine;
+using Content.Server.Administration.Logs;
+using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
+using Content.Server.VoiceMask;
+using Content.Shared.Chat;
+using Content.Shared.Database;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
-using JetBrains.Annotations;
-using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
+using Robust.Shared.Network;
+using Robust.Shared.Replays;
+using Robust.Shared.Utility;
 
-namespace Content.Server.Radio.EntitySystems
+namespace Content.Server.Radio.EntitySystems;
+
+/// <summary>
+///     This system handles intrinsic radios and the general process of converting radio messages into chat messages.
+/// </summary>
+public sealed class RadioSystem : EntitySystem
 {
-    [UsedImplicitly]
-    public sealed class RadioSystem : EntitySystem
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly IReplayRecordingManager _replay = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
+    // set used to prevent radio feedback loops.
+    private readonly HashSet<string> _messages = new();
+
+    public override void Initialize()
     {
-        private readonly List<string> _messages = new();
+        base.Initialize();
+        SubscribeLocalEvent<IntrinsicRadioReceiverComponent, RadioReceiveEvent>(OnIntrinsicReceive);
+        SubscribeLocalEvent<IntrinsicRadioTransmitterComponent, EntitySpokeEvent>(OnIntrinsicSpeak);
+    }
 
-        public override void Initialize()
+    private void OnIntrinsicSpeak(EntityUid uid, IntrinsicRadioTransmitterComponent component, EntitySpokeEvent args)
+    {
+        if (args.Channel != null && component.Channels.Contains(args.Channel.ID))
         {
-            base.Initialize();
-            SubscribeLocalEvent<HandheldRadioComponent, ExaminedEvent>(OnExamine);
-            SubscribeLocalEvent<HandheldRadioComponent, ActivateInWorldEvent>(OnActivate);
+            SendRadioMessage(uid, args.Message, args.Channel);
+            args.Channel = null; // prevent duplicate messages from other listeners.
         }
+    }
 
-        private void OnActivate(EntityUid uid, HandheldRadioComponent component, ActivateInWorldEvent args)
+    private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, RadioReceiveEvent args)
+    {
+        if (TryComp(uid, out ActorComponent? actor))
+            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+    }
+
+    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel)
+    {
+        // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
+        if (!_messages.Add(message))
+            return;
+
+        var name = TryComp(source, out VoiceMaskComponent? mask) && mask.Enabled
+            ? Identity.Name(source, EntityManager)
+            : MetaData(source).EntityName;
+
+        name = FormattedMessage.EscapeText(name);
+
+        // most radios are relayed to chat, so lets parse the chat message beforehand
+        var chat = new ChatMessage(
+            ChatChannel.Radio,
+            message,
+            Loc.GetString("chat-radio-message-wrap", ("color", channel.Color), ("channel", $"\\[{channel.LocalizedName}\\]"), ("name", name), ("message", FormattedMessage.EscapeText(message))),
+            EntityUid.Invalid);
+        var chatMsg = new MsgChatMessage { Message = chat };
+
+        var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
+        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);
+
+        foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
-            if (args.Handled)
-                return;
+            // TODO map/station/range checks?
 
-            args.Handled = true;
-            component.Use(args.User);
-        }
+            if (!radio.Channels.Contains(channel.ID))
+                continue;
 
-        private void OnExamine(EntityUid uid, HandheldRadioComponent component, ExaminedEvent args)
-        {
-            if (!args.IsInDetailsRange)
-                return;
-            args.PushMarkup(Loc.GetString("handheld-radio-component-on-examine",("frequency", component.BroadcastFrequency)));
-        }
-
-        public void SpreadMessage(IRadio source, EntityUid speaker, string message, RadioChannelPrototype channel)
-        {
-            if (_messages.Contains(message)) return;
-
-            _messages.Add(message);
-
-            foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
+            RaiseLocalEvent(radio.Owner, attemptEv);
+            if (attemptEv.Cancelled)
             {
-                radio.Receive(message, channel, speaker);
+                attemptEv.Uncancel();
+                continue;
             }
 
-            _messages.Remove(message);
+            RaiseLocalEvent(radio.Owner, ev);
         }
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
+
+        _replay.QueueReplayMessage(chat);
+        _messages.Remove(message);
     }
 }

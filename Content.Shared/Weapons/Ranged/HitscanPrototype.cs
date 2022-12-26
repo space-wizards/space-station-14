@@ -28,13 +28,13 @@ public sealed class HitscanPrototype : IPrototype, IShootable
     [ViewVariables(VVAccess.ReadOnly), DataField("impactFlash")]
     public SpriteSpecifier? ImpactFlash;
 
-    [ViewVariables, DataField("collisionMask")]
+    [DataField("collisionMask")]
     public int CollisionMask = (int) CollisionGroup.Opaque;
 
     /// <summary>
     /// Sound that plays upon the thing being hit.
     /// </summary>
-    [ViewVariables, DataField("sound")]
+    [DataField("sound")]
     public SoundSpecifier? Sound;
 
     /// <summary>
@@ -46,6 +46,6 @@ public sealed class HitscanPrototype : IPrototype, IShootable
     /// <summary>
     /// Try not to set this too high.
     /// </summary>
-    [ViewVariables, DataField("maxLength")]
+    [DataField("maxLength")]
     public float MaxLength = 20f;
 }

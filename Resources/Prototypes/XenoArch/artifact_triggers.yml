@@ -21,6 +21,9 @@
   id: TriggerAnchor
   targetDepth: 0
   triggerHint: artifact-trigger-hint-tool
+  blacklist:
+    components:
+    - Item
   components:
   - type: ArtifactAnchorTrigger
 
@@ -28,6 +31,9 @@
   id: TriggerElectricity
   targetDepth: 0
   triggerHint: artifact-trigger-hint-electricity
+  blacklist:
+    components:
+    - Item
   components:
   - type: ArtifactElectricityTrigger
   - type: PowerConsumer
@@ -61,9 +67,19 @@
   - type: ArtifactDamageTrigger
     damageTypes:
     - Blunt
-    - Slash 
+    - Slash
     - Piercing
     damageThreshold: 50
+
+- type: artifactTrigger
+  id: TriggerItemLanded
+  targetDepth: 1
+  triggerHint: artifact-trigger-hint-land
+  whitelist:
+    components:
+    - Item
+  components:
+  - type: ArtifactLandTrigger
 
 - type: artifactTrigger
   id: TriggerHeat
@@ -119,10 +135,11 @@
   targetDepth: 3
   triggerHint: artifact-trigger-hint-radiation
   components:
+  - type: ArtifactMicrowaveTrigger
   - type: ArtifactDamageTrigger
     damageTypes:
     - Radiation
-    damageThreshold: 100
+    damageThreshold: 50
   - type: RadiationReceiver
 
 - type: artifactTrigger
