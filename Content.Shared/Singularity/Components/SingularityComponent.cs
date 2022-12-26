@@ -1,23 +1,40 @@
-using Content.Shared.Singularity.Components;
-using Content.Server.Singularity.EntitySystems;
+using Robust.Shared.GameStates;
+
+using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Singularity.Components;
+namespace Content.Shared.Singularity.Components;
 
 /// <summary>
-/// The server-side version of <see cref="SharedSingularityComponent">.
-/// Primarily managed by <see cref="SingularitySystem">.
+/// A component that makes the associated entity accumulate energy when an associated event horizon consumes things.
+/// Energy management is server-side.
 /// </summary>
-[RegisterComponent]
-[ComponentReference(typeof(SharedSingularityComponent))]
-public sealed class SingularityComponent : SharedSingularityComponent
+[RegisterComponent, NetworkedComponent]
+public sealed class SingularityComponent : Component
 {
     /// <summary>
+    /// The current level of the singularity.
+    /// Used as a scaling factor for things like visual size, event horizon radius, gravity well radius, radiation output, etc.
+    /// If you want to set this use <see cref="SharedSingularitySystem.SetLevel"/>().
+    /// </summary>
+    [DataField("level")]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    public byte Level = 1;
+
+    /// <summary>
+    /// The amount of radiation this singularity emits per its level.
+    /// Has to be on shared in case someone attaches a RadiationPulseComponent to the singularity.
+    /// If you want to set this use <see cref="SharedSingularitySystem.SetRadsPerLevel"/>().
+    /// </summary>
+    [DataField("radsPerLevel")]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float RadsPerLevel = 2f;
+
+    /// <summary>
     /// The amount of energy this singularity contains.
-    /// If you want to set this go through <see cref="SingularitySystem.SetEnergy"/>
     /// </summary>
     [DataField("energy")]
-    [Access(friends:typeof(SingularitySystem))]
     public float Energy = 180f;
 
     /// <summary>
@@ -40,7 +57,7 @@ public sealed class SingularityComponent : SharedSingularityComponent
     );
 
     /// <summary>
-    /// The audio stream that plays the sound specified by <see cref="AmbientSound"> on loop.
+    /// The audio stream that plays the sound specified by <see cref="AmbientSound"/> on loop.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public IPlayingAudioStream? AmbientSoundStream = null;
@@ -71,22 +88,18 @@ public sealed class SingularityComponent : SharedSingularityComponent
     /// </summary>
     [DataField("updatePeriod")]
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SingularitySystem))]
-    public TimeSpan TargetUpdatePeriod { get; internal set; } = TimeSpan.FromSeconds(1.0);
+    public TimeSpan TargetUpdatePeriod = TimeSpan.FromSeconds(1.0);
 
     /// <summary>
-    /// The next time this singularity should be updated by <see cref="SingularitySystem"/>
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SingularitySystem))]
-    public TimeSpan NextUpdateTime { get; internal set; } = default!;
+    public TimeSpan NextUpdateTime = default!;
 
     /// <summary>
-    /// The last time this singularity was be updated by <see cref="SingularitySystem"/>
+    /// The last time this singularity was updated.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(SingularitySystem))]
-    public TimeSpan LastUpdateTime { get; internal set; } = default!;
+    public TimeSpan LastUpdateTime = default!;
 
     #endregion Update Timing
 }

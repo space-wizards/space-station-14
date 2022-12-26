@@ -1,4 +1,4 @@
-# In order to make this list somewhat organized, please place 
+# In order to make this list somewhat organized, please place
 # new technologies underneath their overarching "base" technology.
 
 # Base Technology
@@ -160,6 +160,7 @@
   - MedicalScannerMachineCircuitboard
   - StasisBedMachineCircuitboard
   - CloningConsoleComputerCircuitboard
+  - CryoPodMachineCircuitboard
 
 # Security Technology Tree
 
@@ -386,7 +387,7 @@
   name: technologies-rapid-upgrade
   id: RapidUpgrade
   description: technologies-rapid-upgrade-description
-  icon: 
+  icon:
     sprite: Objects/Specific/Research/rped.rsi
     state: icon
   requiredPoints: 10000

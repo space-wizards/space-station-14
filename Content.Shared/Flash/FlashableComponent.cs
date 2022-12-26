@@ -3,11 +3,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Flash
 {
-    [NetworkedComponent, Access(typeof(SharedFlashSystem))]
-    public abstract class SharedFlashableComponent : Component
+    [RegisterComponent, NetworkedComponent]
+    public sealed class FlashableComponent : Component
     {
-        public float Duration { get; set; }
-        public TimeSpan LastFlash { get; set; }
+        public float Duration;
+        public TimeSpan LastFlash;
 
         public override bool SendOnlyToOwner => true;
     }
