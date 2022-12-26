@@ -104,7 +104,6 @@ public sealed class BiomeOverlay : Overlay
 
                     var value = _biome.GetValue(indices, seed);
                     var group = _biome.GetGroup(groups, value, weightSum);
-                    group = _biome.GetAdjustedGroup(group, groups, indices, seed, weightSum);
 
                     // Iterate through neighbors and work out what edges we need to draw.
                     for (var i = -1; i <= 1; i++)
@@ -117,8 +116,6 @@ public sealed class BiomeOverlay : Overlay
                             var neighborIndices = new Vector2i(indices.X + i, indices.Y + j);
                             var neighborValue = _biome.GetValue(neighborIndices, seed);
                             var neighborGroup = _biome.GetGroup(groups, neighborValue, weightSum);
-                            neighborGroup = _biome.GetAdjustedGroup(neighborGroup, groups, neighborIndices, seed,
-                                weightSum);
 
                             if (group == neighborGroup || neighborGroup.Edges.Count == 0)
                                 continue;

@@ -72,57 +72,6 @@ public sealed class BiomeSystem : EntitySystem
     }
 
     /// <summary>
-    /// If it's a single tile on its own we fall back to the default group
-    /// </summary>
-    public BiomeTileGroupPrototype GetAdjustedGroup(
-        BiomeTileGroupPrototype group,
-        List<BiomeTileGroupPrototype> groups,
-        Vector2i indices,
-        FastNoise seed,
-        float weightSum)
-    {
-        // TODO: This API fucking blows.
-
-        // If it's a single tile on its own we fall back to the default group
-        if (group != groups[0])
-        {
-            var isValid = false;
-
-            for (var x = -1; x <= 1; x++)
-            {
-                for (var y = -1; y <= 1; y++)
-                {
-                    if (x == 0 && y == 0 ||
-                        x != 0 && y != 0)
-                    {
-                        continue;
-                    }
-
-                    var neighborIndices = new Vector2i(indices.X + x, indices.Y + y);
-                    var neighborValue = GetValue(neighborIndices, seed);
-                    var neighborGroup = GetGroup(groups, neighborValue, weightSum);
-
-                    if (neighborGroup == group)
-                    {
-                        isValid = true;
-                        break;
-                    }
-                }
-
-                if (isValid)
-                    break;
-            }
-
-            if (!isValid)
-            {
-                group = groups[0];
-            }
-        }
-
-        return group;
-    }
-
-    /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
     public Tile GetTile(Vector2i indices, FastNoise seed, List<BiomeTileGroupPrototype> groups,
@@ -130,7 +79,6 @@ public sealed class BiomeSystem : EntitySystem
     {
         var value = GetValue(indices, seed);
         var group = GetGroup(groups, value, weightSum);
-        group = GetAdjustedGroup(group, groups, indices, seed, weightSum);
 
         byte variant = 0;
         var tileDef = _protoManager.Index<ContentTileDefinition>(group.Tile);
