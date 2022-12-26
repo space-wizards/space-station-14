@@ -442,25 +442,29 @@ namespace Content.Shared.Chemistry.Components
             }
 
             var origVol = Volume;
+            var effVol = Volume.Value;
             newSolution = new Solution(Contents.Count) { Temperature = Temperature };
 
-            for (var i = Contents.Count - 1; i >= 0; i--)
+            for (var i = Contents.Count - 1; i >= 0; i--) // iterate backwards because of remove swap.
             {
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (Volume.Value - toTake.Value) / Volume.Value);
+                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (effVol - toTake.Value) / effVol);
 
                 var splitQuantity = reagent.Quantity - newQuantity;
+
+                DebugTools.Assert(newQuantity >= 0);
 
                 if (newQuantity > FixedPoint2.Zero)
                     Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 else
-                    Contents.RemoveAt(i);
+                    Contents.RemoveSwap(i);
 
                 newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
                 Volume -= splitQuantity;
                 toTake -= splitQuantity;
+                effVol -= reagent.Quantity.Value;
             }
 
             newSolution.Volume = origVol - Volume;
@@ -492,21 +496,23 @@ namespace Content.Shared.Chemistry.Components
                 return;
             }
 
-            for (var i = Contents.Count - 1; i >= 0; i--)
+            var effVol = Volume.Value;
+            for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
                 var reagent = Contents[i];
 
                 // This is set up such that integer rounding will tend to take more reagents.
-                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (Volume.Value - toTake.Value) / Volume.Value);
+                var newQuantity = FixedPoint2.FromCents(reagent.Quantity.Value * (effVol - toTake.Value) / effVol);
 
                 var splitQuantity = reagent.Quantity - newQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)
                     Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
                 else
-                    Contents.RemoveAt(i);
+                    Contents.RemoveSwap(i);
 
                 toTake -= splitQuantity;
+                effVol -= reagent.Quantity.Value;
             }
 
             DebugTools.Assert(toTake >= FixedPoint2.Zero);

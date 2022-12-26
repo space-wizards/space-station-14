@@ -92,10 +92,6 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            if (b.Value == 0)
-            {
-                throw new DivideByZeroException();
-            }
             return new((int) MathF.Round((MathF.Pow(10, Shift) * a.Value) / b.Value, MidpointRounding.AwayFromZero));
         }
 
