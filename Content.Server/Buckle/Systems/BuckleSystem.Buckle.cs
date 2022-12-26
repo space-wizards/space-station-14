@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Buckle.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
@@ -14,7 +13,6 @@ using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Buckle.Systems;
 

@@ -152,9 +152,12 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
+
                     mostToRemove *= group.MetabolismRateModifier;
 
                     mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
+
+                    float scale = (float) mostToRemove / (float) entry.MetabolismRate;
 
                     // if it's possible for them to be dead, and they are,
                     // then we shouldn't process any effects, but should probably
@@ -167,7 +170,7 @@ namespace Content.Server.Body.Systems
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
                     var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
-                        EntityManager, null, entry);
+                        EntityManager, null, scale);
 
                     // do all effects, if conditions apply
                     foreach (var effect in entry.Effects)

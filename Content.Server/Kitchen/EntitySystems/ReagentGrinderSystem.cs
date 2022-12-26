@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
