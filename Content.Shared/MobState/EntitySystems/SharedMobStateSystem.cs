@@ -46,6 +46,11 @@ public abstract partial class SharedMobStateSystem : EntitySystem
         Alerts.ClearAlert(uid, AlertType.HumanHealth);
     }
 
+    public bool HasState(EntityUid uid, MobState mobState, MobStateComponent? component = null)
+    {
+        return Resolve(uid, ref component, false) && component.AllowedStates.Contains(mobState);
+    }
+
     public bool IsAlive(EntityUid uid, MobStateComponent? component = null)
     {
         if (!Resolve(uid, ref component, false)) return false;

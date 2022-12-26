@@ -14,6 +14,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.GhostKick;
 using Content.Server.Interaction.Components;
 using Content.Server.Medical;
+using Content.Server.MobState;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Pointing.Components;
 using Content.Server.Polymorph.Systems;
@@ -68,6 +69,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
@@ -217,11 +219,11 @@ public sealed partial class AdminVerbSystem
                 {
                     int damageToDeal;
                     var critState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Critical).FirstOrNull();
-                    if (critState is null)
+                    if (!_mobStateSystem.HasState(args.Target, Shared.MobState.MobState.Critical, mobState))
                     {
                         // We can't crit them so try killing them.
                         var deadState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Dead).FirstOrNull();
-                        if (deadState is null)
+                        if (_mobStateSystem.HasState(args.Target, Shared.MobState.MobState.Dead, mobState))
                             return; // whelp.
 
                         damageToDeal = deadState.Value.Key - (int) damageable.TotalDamage;
