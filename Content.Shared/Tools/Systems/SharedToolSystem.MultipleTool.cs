@@ -13,13 +13,13 @@ public abstract class SharedToolSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedMultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
-        SubscribeLocalEvent<SharedMultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
-        SubscribeLocalEvent<SharedMultipleToolComponent, ComponentGetState>(OnMultipleToolGetState);
-        SubscribeLocalEvent<SharedMultipleToolComponent, ComponentHandleState>(OnMultipleToolHandleState);
+        SubscribeLocalEvent<MultipleToolComponent, ComponentStartup>(OnMultipleToolStartup);
+        SubscribeLocalEvent<MultipleToolComponent, ActivateInWorldEvent>(OnMultipleToolActivated);
+        SubscribeLocalEvent<MultipleToolComponent, ComponentGetState>(OnMultipleToolGetState);
+        SubscribeLocalEvent<MultipleToolComponent, ComponentHandleState>(OnMultipleToolHandleState);
     }
 
-    private void OnMultipleToolHandleState(EntityUid uid, SharedMultipleToolComponent component, ref ComponentHandleState args)
+    private void OnMultipleToolHandleState(EntityUid uid, MultipleToolComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MultipleToolComponentState state)
             return;
@@ -28,14 +28,14 @@ public abstract class SharedToolSystem : EntitySystem
         SetMultipleTool(uid, component);
     }
 
-    private void OnMultipleToolStartup(EntityUid uid, SharedMultipleToolComponent multiple, ComponentStartup args)
+    private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
         if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
-    private void OnMultipleToolActivated(EntityUid uid, SharedMultipleToolComponent multiple, ActivateInWorldEvent args)
+    private void OnMultipleToolActivated(EntityUid uid, MultipleToolComponent multiple, ActivateInWorldEvent args)
     {
         if (args.Handled)
             return;
@@ -43,12 +43,12 @@ public abstract class SharedToolSystem : EntitySystem
         args.Handled = CycleMultipleTool(uid, multiple, args.User);
     }
 
-    private void OnMultipleToolGetState(EntityUid uid, SharedMultipleToolComponent multiple, ref ComponentGetState args)
+    private void OnMultipleToolGetState(EntityUid uid, MultipleToolComponent multiple, ref ComponentGetState args)
     {
         args.State = new MultipleToolComponentState(multiple.CurrentEntry);
     }
 
-    public bool CycleMultipleTool(EntityUid uid, SharedMultipleToolComponent? multiple = null, EntityUid? user = null)
+    public bool CycleMultipleTool(EntityUid uid, MultipleToolComponent? multiple = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref multiple))
             return false;
@@ -63,7 +63,7 @@ public abstract class SharedToolSystem : EntitySystem
     }
 
     public virtual void SetMultipleTool(EntityUid uid,
-        SharedMultipleToolComponent? multiple = null,
+        MultipleToolComponent? multiple = null,
         ToolComponent? tool = null,
         bool playSound = false,
         EntityUid? user = null)

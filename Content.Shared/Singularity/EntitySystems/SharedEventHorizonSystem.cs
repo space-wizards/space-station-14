@@ -190,8 +190,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         // If we can, breach containment
         // otherwise, check if it's containment and just keep the collision
-        if (EntityManager.HasComponent<SharedContainmentFieldComponent>(otherUid) ||
-            EntityManager.HasComponent<SharedContainmentFieldGeneratorComponent>(otherUid))
+        if (EntityManager.HasComponent<ContainmentFieldComponent>(otherUid) ||
+            EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(otherUid))
         {
             if (comp.CanBreachContainment)
                 args.Cancelled = true;

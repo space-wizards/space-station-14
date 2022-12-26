@@ -68,3 +68,10 @@
   dummyWires: 4
   wires:
   - !type:PowerWireAction
+
+- type: wireLayout
+  id: CryoPod
+  dummyWires: 2
+  wires:
+  - !type:PowerWireAction
+  - !type:CryoPodEjectLockWireAction

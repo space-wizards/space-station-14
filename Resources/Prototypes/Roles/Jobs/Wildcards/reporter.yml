@@ -1,6 +1,7 @@
 - type: job
   id: Reporter
   name: job-name-reporter
+  description: job-description-reporter
   playTimeTracker: JobReporter
   startingGear: ReporterGear
   icon: "Reporter"
