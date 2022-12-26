@@ -1,3 +1,3 @@
-ent-CryoPod = cryo pod
-    .desc = A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
+ent-CryoPod = криокапсула
+    .desc = Специальный агрегат, создающий безопасную среду для применения химикатов, работающих в условиях низких температур.
     .suffix = { "" }

@@ -1,1 +1,1 @@
-solution-heater-upgrade-heat = Heat strength
+solution-heater-upgrade-heat = сила нагрева
