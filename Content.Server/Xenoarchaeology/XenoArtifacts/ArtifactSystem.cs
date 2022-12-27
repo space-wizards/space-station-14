@@ -260,7 +260,6 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     private void OnRoundEnd(RoundEndTextAppendEvent ev)
     {
-        Logger.Debug("foobar");
         foreach (var artifactComp in EntityQuery<ArtifactComponent>())
         {
             artifactComp.CooldownTime = TimeSpan.Zero;
