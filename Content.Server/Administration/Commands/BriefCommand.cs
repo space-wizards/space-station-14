@@ -53,18 +53,19 @@ namespace Content.Server.Administration.Commands
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
 
             string entname = "MobHuman";
-            try { entname = args[2]; } catch (Exception) { }
+            if (args.Length >= 3) entname = args[2];
 
             var brief = _entities.SpawnEntity(entname, coordinates);
             _entities.EnsureComponent<BriefOfficerComponent>(brief);
-            _entities.GetComponent<TransformComponent>(brief).AttachToGridOrMap();
+            _entities.TryGetComponent<TransformComponent>(brief, out var briefTransform);
+            if (briefTransform != null) briefTransform.AttachToGridOrMap();
 
-            try { _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1]; } catch (Exception) { }
+            if (args.Length >= 2) _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1];
 
             mind.Visit(brief);
 
             string outfit = "CentcomGear";
-            try { if (_prototypeManager.Index<StartingGearPrototype>(args[0]) != null) outfit = args[0]; } catch (Exception) { }
+            if (args.Length >= 1) if (_prototypeManager.TryIndex<StartingGearPrototype>(args[0], out var outfitProto)) outfit = outfitProto.ID;
 
             SetOutfitCommand.SetOutfit(brief, outfit, _entities);
         }
