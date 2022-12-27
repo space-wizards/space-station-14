@@ -103,10 +103,10 @@ public static class MarkingColoring
         Color? facialHairColor
     )
     {
-        List<Color> colors = new List<Color>();
+        var colors = new List<Color>();
 
         // Coloring from default properties
-        Color default_color = MarkingColoring.GetMarkingColor(
+        Color defaultColor = MarkingColoring.GetMarkingColor(
             prototype.Coloring.Default,
             skinColor,
             eyeColor,
@@ -119,7 +119,7 @@ public static class MarkingColoring
             // If layers is not specified, then every layer must be default
             for (var i = 0; i < prototype.Sprites.Count; i++)
             {
-                colors.Add(default_color);
+                colors.Add(defaultColor);
             }
             return colors;
         }
@@ -136,12 +136,12 @@ public static class MarkingColoring
                     _ => null
                 };
                 if (name == null) {
-                    colors.Add(default_color);
+                    colors.Add(defaultColor);
                     continue;
                 }
             
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
-                if (prototype.Coloring.Layers.TryGetValue(name, out ColoringProperties? properties))
+                if (prototype.Coloring.Layers.TryGetValue(name, out var properties))
                 {
                     Color marking_color = MarkingColoring.GetMarkingColor(
                         properties,
@@ -154,7 +154,7 @@ public static class MarkingColoring
                 }
                 else
                 {
-                    colors.Add(default_color);
+                    colors.Add(defaultColor);
                 }
             }
             return colors;
@@ -170,7 +170,7 @@ public static class MarkingColoring
         Color? facialHairColor
     )
     {
-        Color outColor = properties.Type switch {
+        var outColor = properties.Type switch {
             MarkingColoringType.SimpleColor => SimpleColor(properties.Color),
             MarkingColoringType.SkinColor => SkinColor(skinColor),
             MarkingColoringType.HairColor => HairColor(skinColor, hairColor),

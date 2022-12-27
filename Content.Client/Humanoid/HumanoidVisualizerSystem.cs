@@ -285,6 +285,9 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 humanoid.CachedHairColor,
                 humanoid.CachedFacialHairColor
             );
+        foreach (var mrk in markingColors) {
+            Logger.DebugS("kek", $"color {mrk.ToHex()} -- {markingPrototype.ID}");
+        }
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {

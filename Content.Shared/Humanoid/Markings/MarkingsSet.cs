@@ -222,14 +222,14 @@ public sealed class MarkingSet
             {
                 if (markingManager.Markings.TryGetValue(points.DefaultMarkings[index], out var prototype))
                 {
-                    List<Color> colors = MarkingColoring.GetMarkingLayerColors(
+                    var colors = MarkingColoring.GetMarkingLayerColors(
                             prototype,
                             skinColor,
                             eyeColor,
                             hairColor,
                             facialHairColor
                         );
-                    Marking marking = new Marking(points.DefaultMarkings[index], colors);
+                    var marking = new Marking(points.DefaultMarkings[index], colors);
 
                     AddBack(category, marking);
                 }

@@ -37,8 +37,8 @@ public sealed partial class MarkingPicker : Control
     private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
     public Color CurrentSkinColor = Color.White;
     public Color CurrentEyeColor = Color.Black;
-    public Color? CurrentHairColor = Color.Black;
-    public Color? CurrentFacialHairColor = Color.Black;
+    public Color? CurrentHairColor;
+    public Color? CurrentFacialHairColor;
 
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
@@ -91,8 +91,19 @@ public sealed partial class MarkingPicker : Control
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-        CurrentHairColor = hairColor;
-        CurrentFacialHairColor = facialHairColor;
+        
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0 &&
+            hairMarkings[0].MarkingColors.Count > 0)
+        {
+            CurrentHairColor = hairMarkings[0].MarkingColors[0];
+        }
+        if (_currentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0 &&
+            facialHairMarkings[0].MarkingColors.Count > 0)
+        {
+            CurrentFacialHairColor = facialHairMarkings[0].MarkingColors[0];
+        }
 
         Populate();
         PopulateUsed();
@@ -110,8 +121,19 @@ public sealed partial class MarkingPicker : Control
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-        CurrentHairColor = hairColor;
-        CurrentFacialHairColor = facialHairColor;
+
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0 &&
+            hairMarkings[0].MarkingColors.Count > 0)
+        {
+            CurrentHairColor = hairMarkings[0].MarkingColors[0];
+        }
+        if (_currentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0 &&
+            facialHairMarkings[0].MarkingColors.Count > 0)
+        {
+            CurrentFacialHairColor = facialHairMarkings[0].MarkingColors[0];
+        }
 
         Populate();
         PopulateUsed();
@@ -425,7 +447,7 @@ public sealed partial class MarkingPicker : Control
         var markingObject = marking.AsMarking();
 
         // Coloring
-        List<Color> colors = MarkingColoring.GetMarkingLayerColors(
+        var colors = MarkingColoring.GetMarkingLayerColors(
             marking,
             CurrentSkinColor,
             CurrentEyeColor,

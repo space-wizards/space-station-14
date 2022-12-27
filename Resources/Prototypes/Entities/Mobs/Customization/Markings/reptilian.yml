@@ -177,7 +177,6 @@
   id: LizardChestTiger
   bodyPart: Chest
   markingCategory: Chest
-  followSkinColor: false
   speciesRestriction: [Reptilian]
   sprites:
   - sprite: Mobs/Customization/reptilian_parts.rsi

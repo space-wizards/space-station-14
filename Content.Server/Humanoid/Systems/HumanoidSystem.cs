@@ -65,6 +65,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         LoadProfile(uid, startingSet.Profile, humanoid);
+        
     }
 
     private void OnExamined(EntityUid uid, HumanoidComponent component, ExaminedEvent args)
@@ -104,18 +105,6 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
 
         foreach (var marking in profile.Appearance.Markings)
         {
-            // Caching hair and facial hair colors from their markings
-            if (_markingManager.Markings.TryGetValue(marking.MarkingId, out var prototype)){
-                switch (prototype.MarkingCategory) {
-                    case MarkingCategories.Hair:
-                        humanoid.CachedHairColor = marking.MarkingColors[1];
-                        break;
-                    case MarkingCategories.FacialHair:
-                        humanoid.CachedFacialHairColor = marking.MarkingColors[1];
-                        break;
-                }
-            }
-            
             AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
         }
 
@@ -128,6 +117,25 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.Age = profile.Age;
+        
+        // Caching hair and facial hair colors from their markings
+        if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0 &&
+            hairMarkings[0].MarkingColors.Count > 0)
+        {
+            humanoid.CachedHairColor = hairMarkings[0].MarkingColors[0];
+        }
+        if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0 &&
+            facialHairMarkings[0].MarkingColors.Count > 0)
+        {
+            humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors[0];
+        }
+        
+        if (humanoid.CustomBaseLayers.TryGetValue(HumanoidVisualLayers.Eyes, out var eyes))
+        {
+            humanoid.CachedEyeColor = eyes.Color;
+        }
 
         Synchronize(uid);
     }
