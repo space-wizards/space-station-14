@@ -18,7 +18,7 @@ namespace Content.Server.Administration.Commands.Brief
 
         public string Command => "brief";
         public string Description => "Makes you a mob of choice until the command is rerun.";
-        public string Help => $"Usage: {Command} <outfit> <name> <entity>";
+        public string Help => $"Usage: {Command} <outfit> <name> <entity> <force>";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -39,15 +39,27 @@ namespace Content.Server.Administration.Commands.Brief
 
             if (mind.VisitingEntity != default)
             {
-                var entity = mind.VisitingEntity;
-                player.ContentData()!.Mind?.UnVisit();
+                var didYouBrief = false;
+                if (args.Length >= 4)
+                    if (args[3].ToLower() == "true")
+                        didYouBrief = true;
 
                 foreach (var officer in _entities.EntityQuery<BriefOfficerComponent>(true))
                 {
-                    if (officer.Owner == entity)
+                    if (officer.Owner == mind.VisitingEntity)
+                    {
+                        didYouBrief = true;
+                        player.ContentData()!.Mind?.UnVisit();
                         _entities.QueueDeleteEntity(officer.Owner);
+                        return;
+                    }
                 }
-                return;
+
+                if (didYouBrief == false)
+                {
+                    shell.WriteError("You are visiting something other than a brief already.");
+                    return;
+                }
             }
 
             var outfit = "CentcomGear";
@@ -114,6 +126,14 @@ namespace Content.Server.Administration.Commands.Brief
                     .OrderBy(p => p.Value);
 
                 return CompletionResult.FromHintOptions(options, Loc.GetString("brief-command-arg-species"));
+            }
+            if (args.Length == 4)
+            {
+                // what a great solution 2
+                List<string> list = new();
+                list.Add("true");
+                list.Add("false");
+                return CompletionResult.FromHintOptions(list, Loc.GetString("brief-command-arg-force"));
             }
 
             return CompletionResult.Empty;
