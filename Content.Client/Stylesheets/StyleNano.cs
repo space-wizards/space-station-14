@@ -482,7 +482,7 @@ namespace Content.Client.Stylesheets
             // Default paper background:
             var paperBackground = new StyleBoxTexture
             {
-                Texture = resCache.GetTexture("/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"),
+                Texture = resCache.GetTexture("/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"),
                 Modulate = Color.FromHex("#eaedde"), // A light cream
             };
             paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);

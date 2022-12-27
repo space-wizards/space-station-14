@@ -49,7 +49,7 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundPatchMargin:
       16.0,
       16.0,
@@ -73,7 +73,7 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundPatchMargin:
       16.0,
       16.0,
@@ -98,7 +98,7 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
 
 - type: entity
   name: testpaper just lines colored
@@ -117,7 +117,7 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     contentImageModulate: "#f7e574"
 
 - type: entity
@@ -137,8 +137,8 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundPatchMargin:
       16.0,
       16.0,
@@ -167,9 +167,9 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     contentImageModulate: "#f7e574"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundModulate: "#f7e574"
     backgroundPatchMargin:
       16.0,
@@ -194,8 +194,8 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    headerImagePath: "/Textures/Interface/Nano/paper_heading_captains_thoughts.svg.96dpi.png"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundModulate: "#e6e6fa"
     backgroundPatchMargin:
       16.0,
@@ -225,8 +225,8 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
-    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     backgroundPatchMargin:
       16.0,
       16.0,
@@ -255,8 +255,8 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_perforated.svg.96dpi.png"
-    headerImagePath: "/Textures/Interface/Nano/paper_heading_virus.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_virus.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
     backgroundPatchMargin:
       0.0,
@@ -290,13 +290,13 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    headerImagePath: "/Textures/Interface/Nano/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
     headerMargin:
       0.0,
       12.0,
       0.0,
       0.0
-    backgroundImagePath: "/Textures/Interface/Nano/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
     backgroundPatchMargin:
       37.0,
