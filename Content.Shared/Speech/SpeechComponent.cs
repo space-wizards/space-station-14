@@ -1,5 +1,6 @@
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Speech
 {
@@ -7,11 +8,13 @@ namespace Content.Shared.Speech
     ///     Component required for entities to be able to speak. (TODO: Entities can speak fine without this, this only forbids them speak if they have it and enabled is false.)
     ///     Contains the option to let entities make noise when speaking, datafields for the sounds in question, and relevant AudioParams.
     /// </summary>
-    [RegisterComponent]
-    public sealed class SharedSpeechComponent : Component
+    [RegisterComponent, NetworkedComponent]
+    public sealed class SpeechComponent : Component
     {
-        [DataField("enabled")]
-        private bool _enabled = true;
+        [DataField("enabled"), Access(typeof(SpeechSystem),
+             Friend = AccessPermissions.ReadWrite,
+             Other = AccessPermissions.Read)]
+        public bool Enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("speechSounds", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechSoundsPrototype>))]
@@ -25,16 +28,5 @@ namespace Content.Shared.Speech
         public float SoundCooldownTime { get; set; } = 0.5f;
 
         public TimeSpan LastTimeSoundPlayed = TimeSpan.Zero;
-
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                if (_enabled == value) return;
-                _enabled = value;
-                Dirty();
-            }
-        }
     }
 }
