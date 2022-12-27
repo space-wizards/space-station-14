@@ -7,7 +7,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Administration.Commands
+namespace Content.Server.Administration.Commands.Brief
 {
     [AdminCommand(AdminFlags.Admin)]
     public sealed class BriefCommand : IConsoleCommand
