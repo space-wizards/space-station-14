@@ -1,4 +1,4 @@
-﻿trait-blindness-name = Blindness
+trait-blindness-name = Blindness
 trait-blindness-desc = You lack vision
 
 trait-narcolepsy-name = Narcolepsy
@@ -8,5 +8,8 @@ trait-pacifist-name = Pacifist
 
 trait-sneezing-name = Runny nose
 trait-sneezing-desc = You sneeze and cough uncontrollably
+
+trait-tourette-name = Tourette Syndrom
+trait-tourette-desc = You suddenly scream and repeating own/other words
 
 permanent-blindness-trait-examined = [color=lightblue]{CAPITALIZE(POSS-ADJ($target))} eyes are glassy and unfocused. It doesn't seem like {SUBJECT($target)} can see you.[/color]
