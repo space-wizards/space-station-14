@@ -289,6 +289,12 @@ namespace Content.Shared.CCVar
          * Discord
          */
 
+         // <summary>
+         /// URL of the discord webhook which will relay all bans messages
+         // </summary>
+         public static readonly CVarDef<string> DiscordRoundWebhook =
+            CVarDef.Create("discord.bans_webhook", string.Empty, CVar.SERVERONLY);
+
         /// <summary>
         /// URL of the Discord webhook which will relay all round messages.
         /// </summary>
