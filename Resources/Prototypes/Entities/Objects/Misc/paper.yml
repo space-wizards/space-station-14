@@ -33,10 +33,10 @@
   - type: Recyclable
 
 - type: entity
-  name: lined paper
+  name: testpaper background
   parent: Paper
-  id: LinedPaper
-  description: 'A new kind of paper. This one is lined.'
+  id: TestPaperBackground
+  description: 'A new kind of paper. This one has a background.'
   components:
   - type: Paper
     layers:
@@ -48,7 +48,257 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    centerTexturePath: "/Textures/Interface/Nano/lined_paper.svg.96dpi.png"
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+
+- type: entity
+  name: testpaper background colored
+  parent: Paper
+  id: TestPaperColoredBackground
+  description: 'A new kind of paper. This one is yellow.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    backgroundModulate: "#f7e574"
+
+- type: entity
+  name: testpaper just lines
+  parent: Paper
+  id: TestPaperJustLines
+  description: 'A new kind of paper. This one has no boder, lines all the way to the edge!'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+
+- type: entity
+  name: testpaper just lines colored
+  parent: Paper
+  id: TestPaperJustLinesYellow
+  description: 'A new kind of paper. This one has no boder, lines all the way to the edge and yellow!'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    contentImageModulate: "#f7e574"
+
+- type: entity
+  name: testpaper bordered lines
+  parent: Paper
+  id: TestPaperBorderedLines
+  description: 'A new kind of paper. This one has a boder and lines!'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    contentMargin:
+      32.0,
+      32.0,
+      32.0,
+      32.0
+
+- type: entity
+  name: testpaper bordered lines coloured
+  parent: Paper
+  id: TestPaperBorderedLinesColored
+  description: 'A new kind of paper. This one has a boder and lines and a yellow shade!'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    contentImageModulate: "#f7e574"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+
+- type: entity
+  name: styledtest captain's thoughts
+  parent: Paper
+  id: CoolPaperCaptainsThoughts
+  description: 'A page of the captains journal. In luxurious lavender.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    headerImagePath: "/Textures/Interface/Nano/paper_heading_captains_thoughts.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#e6e6fa"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    contentMargin:
+      32.0,
+      8.0,
+      32.0,
+      32.0
+
+- type: entity
+  name: styledtest office
+  parent: Paper
+  id: CoolPaperBoringOffice
+  description: 'A plain sheet of office paper.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Nano/paper_content_lined.svg.96dpi.png"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    contentMargin:
+      32.0,
+      32.0,
+      32.0,
+      32.0
+
+- type: entity
+  name: styledtest diagnosis
+  parent: Paper
+  id: CoolPaperDiagnosisReport
+  description: 'A chilling medical receipt.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_perforated.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Nano/paper_heading_virus.svg.96dpi.png"
+    backgroundImageTile: true #todo.eoin Want to expose the enum here
+    backgroundPatchMargin:
+      0.0,
+      6.0,
+      0.0,
+      6.0
+    contentMargin:
+      16.0,
+      32.0,
+      16.0,
+      32.0
+
+- type: entity
+  name: styledtest cargo
+  parent: Paper
+  id: CoolPaperCargoInvoice
+  description: 'A single unit of bureaucracy.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    headerImagePath: "/Textures/Interface/Nano/paper_heading_cargo_invoice.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Nano/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImageTile: true #todo.eoin Want to expose the enum here
+    backgroundPatchMargin:
+      37.0,
+      0.0,
+      37.0,
+      0.0
+    contentMargin:
+      20.0,
+      20.0,
+      20.0,
+      20.0
 
 - type: entity
   parent: Paper

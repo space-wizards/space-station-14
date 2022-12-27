@@ -1,23 +1,26 @@
 <DefaultWindow xmlns="https://spacestation14.io"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <PanelContainer Name="PaperBackground" StyleClasses="DefaultPaper">
-        <BoxContainer Orientation="Vertical" Margin="12 0 12 0">
-            <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-                <RichTextLabel StyleClasses="WrittenText" Name="Label" ModulateSelfOverride="#25252A"/>
-                <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
-                    <LineEdit Name="Input" StyleClasses="chatLineEdit" Access="Public" /> <!-- todo.eoin misuse of a style -->
-                </PanelContainer>
-            </BoxContainer>
 
-            <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
-                <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
-                    Text="{Loc 'paper-ui-blank-page-message'}"
-                    VerticalAlignment="Top" HorizontalAlignment="Center"/>
-            </Control>
+    <PanelContainer Name="PaperBackground" StyleClasses="DefaultPaperBorder" VerticalExpand="True" HorizontalExpand="True">
+        <BoxContainer Name="PaperContentContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <TextureButton Name="ImageHeader" HorizontalAlignment="Center" />
+            <PanelContainer Name="PaperContent" StyleClasses="DefaultPaperContent" VerticalExpand="True" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
+                    <RichTextLabel StyleClasses="WrittenText" Name="Label"/>
+                    <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
+                        <LineEdit Name="Input" StyleClasses="chatLineEdit" Access="Public" /> <!-- todo.eoin misuse of a style -->
+                    </PanelContainer>
+                </BoxContainer>
 
-            <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
+                <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
+                    <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
+                        Text="{Loc 'paper-ui-blank-page-message'}"
+                        VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                </Control>
 
+                <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
+            </PanelContainer>
         </BoxContainer>
     </PanelContainer>
 </DefaultWindow>

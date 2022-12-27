@@ -22,46 +22,206 @@ namespace Content.Client.Paper.UI
 
         public void InitVisuals(PaperVisualsComponent visuals)
         {
-            Logger.Debug($"BKG: {visuals.BackgroundTexturePath}");
-
             var resCache = IoCManager.Resolve<IResourceCache>();
 
-            if(visuals.CenterTexturePath != null)
+            _texturesDirty = true;
+            if (visuals.BorderTexturePath != null)
+            {
+                var borderTex = resCache.GetResource<TextureResource>(visuals.BorderTexturePath);
+                _paperBorderBackground = borderTex;
+            }
+
+            if (visuals.BorderCenterPatch != null)
+            {
+                _borderRepeatCenter = (Box2)visuals.BorderCenterPatch;
+            }
+
+            if (visuals.ContentPatch != null)
+            {
+                _contentsPatch = (Box2)visuals.ContentPatch;
+            }
+
+            if (visuals.CenterTexturePath != null)
             {
                 var bkgTex = resCache.GetResource<TextureResource>(visuals.CenterTexturePath);
-                _repeatingBackground = bkgTex;
-           }
+                _paperContentBackground = bkgTex;
+            }
+
+            if (visuals.FontAccentColor != null)
+            {
+                Label.ModulateSelfOverride = Color.FromHex(visuals.FontAccentColor);
+            }
+
+
+            // Good:
+            //<todo.eoin there is surely sugar for this?
+            _backgroundImage = visuals.BackgroundImagePath != null? resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
+            if(visuals.BackgroundPatchMargin != null)
+            {
+                _backgroundPatchMargin = (Box2)visuals.BackgroundPatchMargin;
+            }
+            else
+            {
+                _backgroundPatchMargin = new();
+            }
+
+            if (visuals.BackgroundModulate != null)
+            {
+                PaperBackground.ModulateSelfOverride = (Color)visuals.BackgroundModulate;
+            }
+
+            _backgroundImageMode = visuals.BackgroundImageTile ? StyleBoxTexture.StretchMode.Tile : StyleBoxTexture.StretchMode.Stretch;
+
+            _contentImage = visuals.ContentImagePath != null ? resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
+
+            if (visuals.ContentImageModulate != null)
+            {
+                PaperContent.ModulateSelfOverride = (Color)visuals.ContentImageModulate;
+            }
+            if (visuals.ContentMargin != null)
+            {
+                _contentsMargin = (Box2)visuals.ContentMargin;
+            }
+
+            if (visuals.HeaderImagePath != null)
+            {
+                ImageHeader.TexturePath = visuals.HeaderImagePath;
+            }
+            if (visuals.HeaderImageModulate != null)
+            {
+                ImageHeader.ModulateSelfOverride = (Color)visuals.HeaderImageModulate;
+            }
+
+            //<todo Modulate
+
         }
 
-        protected TextureResource? _repeatingBackground;
+        private bool _texturesDirty = false;
+        private TextureResource? _paperBorderBackground;
+        private Box2 _borderRepeatCenter = new();
+        private Box2 _contentsPatch = new();
+        private TextureResource? _paperContentBackground;
 
-        protected override void Draw(DrawingHandleScreen handle)
+
+        /// Good:
+        private TextureResource? _backgroundImage;
+        private Box2 _backgroundPatchMargin = new();
+        private StyleBoxTexture.StretchMode _backgroundImageMode;
+        private TextureResource? _contentImage;
+        private Box2 _contentsMargin = new();
+        private TextureResource? _headerImage;
+
+        private void _updateTextures()
         {
-            if(_repeatingBackground != null)
+            if (_backgroundImage != null)
+            {
+                PaperBackground.PanelOverride = new StyleBoxTexture
+                {
+                    Texture = _backgroundImage,
+                    Mode = _backgroundImageMode,
+                    PatchMarginLeft = _backgroundPatchMargin.Left,
+                    PatchMarginBottom = _backgroundPatchMargin.Bottom,
+                    PatchMarginRight = _backgroundPatchMargin.Right,
+                    PatchMarginTop = _backgroundPatchMargin.Top
+                };
+
+            }
+            else
+            {
+                PaperBackground.PanelOverride = null;
+            }
+
+            if(_contentImage != null)
             {
                 // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
-                // So hardcode some reasonable numbers here
+                // So hardcode some reasonable numbers here. There must be a better way to get the real font
+                // that is used by a RichTextLabel
                 float fontLineHeight = 12;
                 float fontDescent = 4;
                 if( Label.TryGetStyleProperty<Font>("font", out var font) )
                 {
                     fontLineHeight = font.GetLineHeight(UIScale);
-                    fontDescent = font.GetDescent(1);
+                    fontDescent = font.GetDescent(UIScale);
                 }
 
-                var texHeight = _repeatingBackground.Texture.Height;
-                PaperBackground.PanelOverride = new StyleBoxTexture
+                var texHeight = _contentImage.Texture.Height;
+                PaperContent.PanelOverride = new StyleBoxTexture
                 {
-                    Texture = _repeatingBackground,
+                    Texture = _contentImage,
+                    Mode = StyleBoxTexture.StretchMode.Tile,
+                    // This positions the texture so the font baseline is on the bottom:
+                    ExpandMarginTop = fontDescent + _backgroundPatchMargin.Top,
+                    // And this scales the texture so that it's a single text line:
+                    //Scale = new Vector2(1, fontLineHeight / texHeight)
+                };
+            }
+
+            PaperContentContainer.Margin = new Thickness(_contentsMargin.Top,
+                    _contentsMargin.Left, _contentsMargin.Right, _contentsMargin.Bottom);
+
+            if (_headerImage != null)
+            {
+            }
+
+            /*
+            if (_paperBorderBackground != null)
+            {
+                PaperBorder.PanelOverride = new StyleBoxTexture
+                {
+                    Texture = _paperBorderBackground,
+                    PatchMarginTop = _borderRepeatCenter.Top,
+                    PatchMarginBottom = _paperBorderBackground.Texture.Height - _borderRepeatCenter.Bottom,
+                    PatchMarginLeft = _borderRepeatCenter.Left,
+                    PatchMarginRight = _paperBorderBackground.Texture.Width - _borderRepeatCenter.Right,
+                    //ExpandMarginLeft = _contentsPatch.Left,
+                    //ExpandMarginTop = _contentsPatch.Top,
+                };
+            }
+
+            // Set the margin so we're drawing the content in the region
+            // specified by the contentsPatch
+            PaperContent.Margin = new Thickness(
+                    _contentsPatch.Left,
+                    _contentsPatch.Top,
+                    (_paperBorderBackground?.Texture.Width ?? 0) - _contentsPatch.Right,
+                    (_paperBorderBackground?.Texture.Height ?? 0) - _contentsPatch.Bottom);
+
+            if(_paperContentBackground != null)
+            {
+                // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
+                // So hardcode some reasonable numbers here. There must be a better way to get the real font
+                // that is used by a RichTextLabel
+                float fontLineHeight = 12;
+                float fontDescent = 4;
+                if( Label.TryGetStyleProperty<Font>("font", out var font) )
+                {
+                    fontLineHeight = font.GetLineHeight(UIScale);
+                    fontDescent = font.GetDescent(UIScale);
+                }
+
+                var texHeight = _paperContentBackground.Texture.Height;
+                PaperContent.PanelOverride = new StyleBoxTexture
+                {
+                    Texture = _paperContentBackground,
                     Mode = StyleBoxTexture.StretchMode.Tile,
                     // This positions the texture so the font baseline is on the bottom:
                     ExpandMarginTop = fontDescent,
                     // And this scales the texture so that it's a single text line:
-                    //Scale = new Vector2(1, (float)paperFont.GetLineHeight(1) / tiledHeight)
-                    Scale = new Vector2(1, fontLineHeight / texHeight)
+                    //Scale = new Vector2(1, fontLineHeight / texHeight)
                 };
             }
+            */
 
+            _texturesDirty = false;
+        }
+
+
+        protected override void Draw(DrawingHandleScreen handle)
+        {
+            if(_texturesDirty)
+            {
+                _updateTextures();
+            }
             base.Draw(handle);
         }
 
