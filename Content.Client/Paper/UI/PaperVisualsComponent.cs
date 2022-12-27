@@ -3,42 +3,27 @@ namespace Content.Client.Paper;
 [RegisterComponent]
 public sealed class PaperVisualsComponent : Component
 {
-    [DataField("borderTexturePath")]
-    public string? BorderTexturePath = null;
-
-    [DataField("borderCenterPatch")]
-    public Box2? BorderCenterPatch = null;
-
-    [DataField("contentPatch")]
-    public Box2? ContentPatch = null;
-
-    //<todo.eoin Probably want to use a Sprite here?
-    [DataField("centerTexturePath")]
-    public string? CenterTexturePath = null;
-
-
     // Background image
-    //   Modulate
     //   Patch margins
+    //   Modulate
+    //   Tiling mode
     [DataField("backgroundImagePath")]
     public string? BackgroundImagePath;
     [DataField("backgroundPatchMargin")]
     public Box2? BackgroundPatchMargin;
     [DataField("backgroundModulate")]
     public Color? BackgroundModulate;
-
     [DataField("backgroundImageTile")]
     public bool BackgroundImageTile = false;
 
-    // Header image(s?)
-    //     Header alignment
-    //     Modulate?
+    // Header image
+    //     Modulate
     [DataField("headerImagePath")]
     public string? HeaderImagePath;
-    [DataField("headerImageAlignment")]
-    public string? HeaderAlignment; // Seems I can't serialize a VAlignment?
     [DataField("headerImageModulate")]
     public Color? HeaderImageModulate;
+    [DataField("headerMargin")]
+    public Box2? HeaderMargin = null;
 
     //<todo.eoin Ensure all properties are used!
 
@@ -46,15 +31,16 @@ public sealed class PaperVisualsComponent : Component
     //     Modulate?
     //<todo.eoin
 
-    // Content image
+    // Content image - the actual part which is written on
     //   Modulate
-    //   Stretch mode? (Might need X strech controls sperately?)
+    //   Stretch mode? (Might need X stretch controls separately?)
     [DataField("contentImagePath")]
     public string? ContentImagePath;
 
     [DataField("contentImageModulate")]
     public Color? ContentImageModulate;
 
+    /// An additional margin around the content (including header)
     [DataField("contentMargin")]
     public Box2? ContentMargin;
 

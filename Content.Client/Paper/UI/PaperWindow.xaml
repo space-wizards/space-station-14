@@ -2,23 +2,22 @@
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
 
-    <PanelContainer Name="PaperBackground" StyleClasses="DefaultPaperBorder" VerticalExpand="True" HorizontalExpand="True">
+    <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
         <BoxContainer Name="PaperContentContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <TextureButton Name="ImageHeader" HorizontalAlignment="Center" />
-            <PanelContainer Name="PaperContent" StyleClasses="DefaultPaperContent" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-                    <RichTextLabel StyleClasses="WrittenText" Name="Label"/>
+                    <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
+                        <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
+                            Text="{Loc 'paper-ui-blank-page-message'}"
+                            VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                    </Control>
+
+                    <RichTextLabel StyleClasses="PaperWrittenText" Name="Label" MinSize="250 350" MaxSize="315 600"/>
                     <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
-                        <LineEdit Name="Input" StyleClasses="chatLineEdit" Access="Public" /> <!-- todo.eoin misuse of a style -->
+                        <LineEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                     </PanelContainer>
                 </BoxContainer>
-
-                <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
-                    <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
-                        Text="{Loc 'paper-ui-blank-page-message'}"
-                        VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                </Control>
-
                 <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
             </PanelContainer>
         </BoxContainer>

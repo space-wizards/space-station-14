@@ -25,35 +25,7 @@ namespace Content.Client.Paper.UI
             var resCache = IoCManager.Resolve<IResourceCache>();
 
             _texturesDirty = true;
-            if (visuals.BorderTexturePath != null)
-            {
-                var borderTex = resCache.GetResource<TextureResource>(visuals.BorderTexturePath);
-                _paperBorderBackground = borderTex;
-            }
 
-            if (visuals.BorderCenterPatch != null)
-            {
-                _borderRepeatCenter = (Box2)visuals.BorderCenterPatch;
-            }
-
-            if (visuals.ContentPatch != null)
-            {
-                _contentsPatch = (Box2)visuals.ContentPatch;
-            }
-
-            if (visuals.CenterTexturePath != null)
-            {
-                var bkgTex = resCache.GetResource<TextureResource>(visuals.CenterTexturePath);
-                _paperContentBackground = bkgTex;
-            }
-
-            if (visuals.FontAccentColor != null)
-            {
-                Label.ModulateSelfOverride = Color.FromHex(visuals.FontAccentColor);
-            }
-
-
-            // Good:
             //<todo.eoin there is surely sugar for this?
             _backgroundImage = visuals.BackgroundImagePath != null? resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
             if(visuals.BackgroundPatchMargin != null)
@@ -93,8 +65,16 @@ namespace Content.Client.Paper.UI
                 ImageHeader.ModulateSelfOverride = (Color)visuals.HeaderImageModulate;
             }
 
-            //<todo Modulate
+            if (visuals.HeaderMargin != null)
+            {
+                var m = (Box2)visuals.HeaderMargin;
+                ImageHeader.Margin = new Thickness(m.Left, m.Top, m.Right, m.Bottom);
+            }
 
+            if (visuals.FontAccentColor != null)
+            {
+                Label.ModulateSelfOverride = Color.FromHex(visuals.FontAccentColor);
+            }
         }
 
         private bool _texturesDirty = false;
@@ -114,6 +94,17 @@ namespace Content.Client.Paper.UI
 
         private void _updateTextures()
         {
+            // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
+            // So hardcode some reasonable numbers here in case the style is unset. (There must be a better
+            // way to get the real font that is used by a RichTextLabel)
+            float fontLineHeight = 12;
+            float fontDescent = 4;
+            if( Label.TryGetStyleProperty<Font>("font", out var font) )
+            {
+                fontLineHeight = font.GetLineHeight(UIScale);
+                fontDescent = font.GetDescent(UIScale);
+            }
+
             if (_backgroundImage != null)
             {
                 PaperBackground.PanelOverride = new StyleBoxTexture
@@ -134,76 +125,10 @@ namespace Content.Client.Paper.UI
 
             if(_contentImage != null)
             {
-                // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
-                // So hardcode some reasonable numbers here. There must be a better way to get the real font
-                // that is used by a RichTextLabel
-                float fontLineHeight = 12;
-                float fontDescent = 4;
-                if( Label.TryGetStyleProperty<Font>("font", out var font) )
-                {
-                    fontLineHeight = font.GetLineHeight(UIScale);
-                    fontDescent = font.GetDescent(UIScale);
-                }
-
                 var texHeight = _contentImage.Texture.Height;
                 PaperContent.PanelOverride = new StyleBoxTexture
                 {
                     Texture = _contentImage,
-                    Mode = StyleBoxTexture.StretchMode.Tile,
-                    // This positions the texture so the font baseline is on the bottom:
-                    ExpandMarginTop = fontDescent + _backgroundPatchMargin.Top,
-                    // And this scales the texture so that it's a single text line:
-                    //Scale = new Vector2(1, fontLineHeight / texHeight)
-                };
-            }
-
-            PaperContentContainer.Margin = new Thickness(_contentsMargin.Top,
-                    _contentsMargin.Left, _contentsMargin.Right, _contentsMargin.Bottom);
-
-            if (_headerImage != null)
-            {
-            }
-
-            /*
-            if (_paperBorderBackground != null)
-            {
-                PaperBorder.PanelOverride = new StyleBoxTexture
-                {
-                    Texture = _paperBorderBackground,
-                    PatchMarginTop = _borderRepeatCenter.Top,
-                    PatchMarginBottom = _paperBorderBackground.Texture.Height - _borderRepeatCenter.Bottom,
-                    PatchMarginLeft = _borderRepeatCenter.Left,
-                    PatchMarginRight = _paperBorderBackground.Texture.Width - _borderRepeatCenter.Right,
-                    //ExpandMarginLeft = _contentsPatch.Left,
-                    //ExpandMarginTop = _contentsPatch.Top,
-                };
-            }
-
-            // Set the margin so we're drawing the content in the region
-            // specified by the contentsPatch
-            PaperContent.Margin = new Thickness(
-                    _contentsPatch.Left,
-                    _contentsPatch.Top,
-                    (_paperBorderBackground?.Texture.Width ?? 0) - _contentsPatch.Right,
-                    (_paperBorderBackground?.Texture.Height ?? 0) - _contentsPatch.Bottom);
-
-            if(_paperContentBackground != null)
-            {
-                // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
-                // So hardcode some reasonable numbers here. There must be a better way to get the real font
-                // that is used by a RichTextLabel
-                float fontLineHeight = 12;
-                float fontDescent = 4;
-                if( Label.TryGetStyleProperty<Font>("font", out var font) )
-                {
-                    fontLineHeight = font.GetLineHeight(UIScale);
-                    fontDescent = font.GetDescent(UIScale);
-                }
-
-                var texHeight = _paperContentBackground.Texture.Height;
-                PaperContent.PanelOverride = new StyleBoxTexture
-                {
-                    Texture = _paperContentBackground,
                     Mode = StyleBoxTexture.StretchMode.Tile,
                     // This positions the texture so the font baseline is on the bottom:
                     ExpandMarginTop = fontDescent,
@@ -211,7 +136,10 @@ namespace Content.Client.Paper.UI
                     //Scale = new Vector2(1, fontLineHeight / texHeight)
                 };
             }
-            */
+
+            PaperContentContainer.Margin = new Thickness(
+                    _contentsMargin.Left, _contentsMargin.Top,
+                    _contentsMargin.Right, _contentsMargin.Bottom);
 
             _texturesDirty = false;
         }

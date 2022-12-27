@@ -204,9 +204,9 @@
       16.0
     contentMargin:
       32.0,
-      8.0,
+      16.0,
       32.0,
-      32.0
+      0.0
 
 - type: entity
   name: styledtest office
@@ -233,10 +233,10 @@
       16.0,
       16.0
     contentMargin:
-      32.0,
-      32.0,
-      32.0,
-      32.0
+      16.0,
+      16.0,
+      16.0,
+      16.0
 
 - type: entity
   name: styledtest diagnosis
@@ -264,10 +264,10 @@
       0.0,
       6.0
     contentMargin:
-      16.0,
-      32.0,
-      16.0,
-      32.0
+      12.0,
+      0.0,
+      12.0,
+      0.0
 
 - type: entity
   name: styledtest cargo
@@ -287,6 +287,11 @@
   - type: PaperVisuals
     fontAccentColor: "#25252a"
     headerImagePath: "/Textures/Interface/Nano/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin:
+      0.0,
+      12.0,
+      0.0,
+      0.0
     backgroundImagePath: "/Textures/Interface/Nano/paper_background_dotmatrix.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
     backgroundPatchMargin:

@@ -1326,11 +1326,14 @@ namespace Content.Client.Stylesheets
                 // ---
 
                 // The default look of paper in UIs. Pages can have components which override this
-                Element<PanelContainer>().Class("DefaultPaperBorder")
+                Element<PanelContainer>().Class("PaperDefaultBorder")
                     .Prop(PanelContainer.StylePropertyPanel, paperBackground),
-                Element<RichTextLabel>().Class("WrittenText")
+                Element<RichTextLabel>().Class("PaperWrittenText")
                     .Prop(Label.StylePropertyFont, notoSans12)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#111111")),
+
+                Element<LineEdit>().Class("PaperLineEdit")
+                    .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
 
                 // Red Button ---
                 Element<Button>().Class("ButtonColorRed")
