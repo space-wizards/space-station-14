@@ -68,6 +68,7 @@
   - type: Construction
     graph: SolarPanel
     node: solarpanel
+  - type: Appearance
 
 - type: entity
   id: SolarPanelBroken

@@ -19,6 +19,7 @@ namespace Content.Server.Solar.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         /// <summary>
         /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
@@ -65,6 +66,7 @@ namespace Content.Server.Solar.EntitySystems
         private float _updateTimer = 0f;
 
 
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
@@ -108,11 +110,19 @@ namespace Content.Server.Solar.EntitySystems
                 foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
                 {
                     if (panel.Running)
+                    {
                         UpdatePanelCoverage(panel, xform, TargetPanelRotation);
+                        UpdateAppearance(panel);
+                    }
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
                 }
-                RaiseNetworkEvent(new PowerSolarSystemSyncMessage(TargetPanelRotation, TargetPanelVelocity));
             }
+        }
+
+        private void UpdateAppearance(SolarPanelComponent solarPanel)
+        {
+            var uid = solarPanel.Owner;
+            _appearanceSystem.SetData(uid, SolarPanelVisuals.Angle, TargetPanelRotation);
         }
 
         private void UpdatePanelCoverage(SolarPanelComponent panel, TransformComponent xform, Angle panelAngle)

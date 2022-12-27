@@ -15,49 +15,28 @@ namespace Content.Client.Power
     [UsedImplicitly]
     public sealed class PowerSolarSystem : EntitySystem
     {
-        // This is used for client-side prediction of the panel rotation.
-        // This makes the display feel a lot smoother.
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        /// <summary>
-        /// Timestamp of the last update. (used for angle prediction)
-        /// </summary>
-        private TimeSpan _lastUpdate;
-
-        /// <summary>
-        /// The last update's solar panel angle.
-        /// </summary>
-        public Angle PanelAngle;
-
-        /// <summary>
-        /// The last update's solar panel angular velocity.
-        /// </summary>
-        public Angle PanelAngularVelocity;
-
-        /// <summary>
-        /// The predicted solar panel angle from the last update.
-        /// </summary>
-        public Angle PredictedPanelRotation => PanelAngle + (PanelAngularVelocity * ((_gameTiming.CurTime - _lastUpdate).TotalSeconds));
+        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeNetworkEvent<PowerSolarSystemSyncMessage>(OnPowerSolarSystemSyncMessage);
-        }
-        private void OnPowerSolarSystemSyncMessage(PowerSolarSystemSyncMessage message, EntitySessionEventArgs eventArgs)
-        {
-            PanelAngle = message.Angle;
-            PanelAngularVelocity = message.AngularVelocity;
-            _lastUpdate = _gameTiming.CurTime;
+            SubscribeLocalEvent<SolarPanelComponent, AppearanceChangeEvent>(OnAppearanceChange);
         }
 
-        public override void Update(float frameTime)
+        private void OnAppearanceChange(EntityUid uid, SolarPanelComponent component, ref AppearanceChangeEvent args)
         {
-            Angle rot = PredictedPanelRotation;
-            foreach (var (panel, sprite) in EntityManager.EntityQuery<SolarPanelComponent, SpriteComponent>())
+            if (args.Sprite == null)
             {
-                sprite.Rotation = rot;
+                return;
             }
+
+            if (!_appearanceSystem.TryGetData(uid, SolarPanelVisuals.Angle, out Angle panelAngle))
+            {
+                return;
+            }
+
+            if (TryComp<TransformComponent>(uid, out var xform))
+                args.Sprite.Rotation = panelAngle - xform.WorldRotation;
         }
     }
 }
