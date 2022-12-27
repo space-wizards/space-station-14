@@ -52,24 +52,19 @@ namespace Content.Server.Administration.Commands
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
 
-            var entname = args[2];
-            if (entname == "") entname = "MobHuman";
+            string entname = "MobHuman";
+            try { entname = args[2]; } catch (Exception) { }
 
             var brief = _entities.SpawnEntity(entname, coordinates);
             _entities.EnsureComponent<BriefOfficerComponent>(brief);
             _entities.GetComponent<TransformComponent>(brief).AttachToGridOrMap();
 
-            if (args[1] != "") _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1];
+            try { _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1]; } catch (Exception) { }
 
             mind.Visit(brief);
 
-            string outfit = "";
-            if (_prototypeManager.Index<StartingGearPrototype>(args[0]) != null) outfit = args[0];
-            if (outfit == "")
-            {
-                Console.WriteLine("An error occurred while trying to set the brief outfit.");
-                return;
-            }
+            string outfit = "CentcomGear";
+            try { if (_prototypeManager.Index<StartingGearPrototype>(args[0]) != null) outfit = args[0]; } catch (Exception) { }
 
             SetOutfitCommand.SetOutfit(brief, outfit, _entities);
         }
