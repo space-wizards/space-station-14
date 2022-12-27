@@ -6,6 +6,6 @@
   components:
   - type: Sprite
     drawdepth: Objects
-    sprite: Corvax/Structures/Wallmounts/barsign.rsi
+    sprite: Structures/Wallmounts/barsign.rsi
   - type: BarSign
     current: AlcoholicSign
