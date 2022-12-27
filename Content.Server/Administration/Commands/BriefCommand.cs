@@ -13,6 +13,7 @@ namespace Content.Server.Administration.Commands
     public sealed class BriefCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly IEntitySystemManager _entitysys = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string Command => "brief";
@@ -24,7 +25,7 @@ namespace Content.Server.Administration.Commands
             var player = shell.Player as IPlayerSession;
             if (player == null)
             {
-                shell.WriteLine("Nah");
+                shell.WriteLine("You aren't a player.");
                 return;
             }
 
@@ -32,7 +33,7 @@ namespace Content.Server.Administration.Commands
 
             if (mind == null)
             {
-                shell.WriteLine("You can't spawn here!");
+                shell.WriteLine("You can't spawn without a mind.");
                 return;
             }
 
@@ -43,30 +44,46 @@ namespace Content.Server.Administration.Commands
 
                 foreach (var officer in _entities.EntityQuery<BriefOfficerComponent>(true))
                 {
-                    if (officer.Owner == entity) _entities.QueueDeleteEntity(officer.Owner);
+                    if (officer.Owner == entity)
+                        _entities.QueueDeleteEntity(officer.Owner);
                 }
                 return;
             }
 
+            var outfit = "CentcomGear";
+            if (args.Length >= 1)
+                if (_prototypeManager.TryIndex<StartingGearPrototype>(args[0], out var outfitProto))
+                    outfit = outfitProto.ID;
+                else
+                {
+                    shell.WriteError("Given outfit is invalid.");
+                    return;
+                }
+
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
-                : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
+                : _entitysys.GetEntitySystem<GameTicker>().GetObserverSpawnPoint();
 
-            string entname = "MobHuman";
-            if (args.Length >= 3) entname = args[2];
+            var entName = "MobHuman";
+            if (args.Length >= 3)
+                entName = args[2];
+            _prototypeManager.TryIndex<EntityPrototype>(entName, out var entProto);
+            if (entProto == null)
+            {
+                shell.WriteError("Entity prototype is invalid.");
+                return;
+            }
 
-            var brief = _entities.SpawnEntity(entname, coordinates);
+            var brief = _entities.SpawnEntity(entName, coordinates);
             _entities.EnsureComponent<BriefOfficerComponent>(brief);
             _entities.TryGetComponent<TransformComponent>(brief, out var briefTransform);
-            if (briefTransform != null) briefTransform.AttachToGridOrMap();
+            if (briefTransform != null)
+                briefTransform.AttachToGridOrMap();
 
-            if (args.Length >= 2) _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1];
+            if (args.Length >= 2)
+                _entities.GetComponent<MetaDataComponent>(brief).EntityName = args[1];
 
             mind.Visit(brief);
-
-            string outfit = "CentcomGear";
-            if (args.Length >= 1) if (_prototypeManager.TryIndex<StartingGearPrototype>(args[0], out var outfitProto)) outfit = outfitProto.ID;
-
             SetOutfitCommand.SetOutfit(brief, outfit, _entities);
         }
 
