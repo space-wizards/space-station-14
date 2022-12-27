@@ -239,6 +239,45 @@
       16.0
 
 - type: entity
+  name: styledtest cargo
+  parent: Paper
+  id: CoolPaperCargoInvoice
+  description: 'A single unit of bureaucracy.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    contentMargin:
+      16.0,
+      16.0,
+      16.0,
+      16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin:
+      0.0,
+      12.0,
+      0.0,
+      0.0
+
+
+- type: entity
   name: styledtest diagnosis
   parent: Paper
   id: CoolPaperDiagnosisReport
@@ -274,10 +313,10 @@
       360.0
 
 - type: entity
-  name: styledtest cargo
+  name: styledtest artifact
   parent: Paper
-  id: CoolPaperCargoInvoice
-  description: 'A single unit of bureaucracy.'
+  id: CoolPaperArtifactAnalyzer
+  description: 'The readout of a device forgotten to time'
   components:
   - type: Paper
     layers:
@@ -290,7 +329,7 @@
       type: PaperBoundUserInterface
   - type: PaperVisuals
     fontAccentColor: "#25252a"
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
     headerMargin:
       0.0,
       12.0,
