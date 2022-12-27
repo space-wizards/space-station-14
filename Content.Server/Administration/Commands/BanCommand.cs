@@ -2,8 +2,11 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using Content.Server.Construction.Completions;
 using Content.Server.Database;
+using Content.Server.StationEvents;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -11,7 +14,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class BanCommand : IConsoleCommand
+    public sealed class BanCommand : EntitySystem, IConsoleCommand
     {
         public string Command => "ban";
         public string Description => Loc.GetString("cmd-ban-desc");
@@ -110,6 +113,8 @@ namespace Content.Server.Administration.Commands
             {
                 targetPlayer.ConnectedClient.Disconnect(banDef.DisconnectMessage);
             }
+
+            RaiseLocalEvent(new BanEvent(target, expires, reason));
         }
 
         public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

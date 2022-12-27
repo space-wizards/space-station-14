@@ -292,7 +292,7 @@ namespace Content.Shared.CCVar
          // <summary>
          /// URL of the discord webhook which will relay all bans messages
          // </summary>
-         public static readonly CVarDef<string> DiscordBansWebhook =
+         public static readonly CVarDef<string> DiscordBanWebhook =
             CVarDef.Create("discord.bans_webhook", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
