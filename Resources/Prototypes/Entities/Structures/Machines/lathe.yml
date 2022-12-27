@@ -268,6 +268,7 @@
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
@@ -287,6 +288,7 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
