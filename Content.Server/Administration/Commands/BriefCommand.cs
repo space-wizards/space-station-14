@@ -41,8 +41,12 @@ namespace Content.Server.Administration.Commands.Brief
             {
                 var didYouBrief = false;
                 if (args.Length >= 4)
+                {
                     if (args[3].ToLower() == "true")
+                    {
                         didYouBrief = true;
+                    }
+                }
 
                 foreach (var officer in _entities.EntityQuery<BriefOfficerComponent>(true))
                 {
@@ -64,13 +68,17 @@ namespace Content.Server.Administration.Commands.Brief
 
             var outfit = "CentcomGear";
             if (args.Length >= 1)
+            {
                 if (_prototypeManager.TryIndex<StartingGearPrototype>(args[0], out var outfitProto))
+                {
                     outfit = outfitProto.ID;
+                }
                 else
                 {
                     shell.WriteError("Given outfit is invalid.");
                     return;
                 }
+            }
 
             var coordinates = player.AttachedEntity != null
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
