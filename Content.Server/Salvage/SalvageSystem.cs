@@ -120,9 +120,8 @@ namespace Content.Server.Salvage
         private void OnMagnetRemoval(EntityUid uid, SalvageMagnetComponent component, ComponentShutdown args)
         {
             Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-magnet-lost");
-            SuddenFailure(uid, component);
+            MagnetFailure(uid, component, new MagnetState ( MagnetStateType.Inactive, TimeSpan.Zero));
         }
-
 
         private void OnExamined(EntityUid uid, SalvageMagnetComponent component, ExaminedEvent args)
         {
@@ -143,8 +142,8 @@ namespace Content.Server.Salvage
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down"));
                     break;
                 case MagnetStateType.Holding:
-                    if (EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid is EntityUid gridId &&
-                        _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
+                    var magnetTransform = EntityManager.GetComponent<TransformComponent>(component.Owner);
+                    if (magnetTransform.GridUid is EntityUid gridId && _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
                     {
                         var remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
                         args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
@@ -171,8 +170,22 @@ namespace Content.Server.Salvage
         private void OnPaused(EntityUid uid, SalvageMagnetComponent component, ref EntityPausedEvent args)
         {
             if (component.MagnetState.StateType is not MagnetStateType.Inactive or MagnetStateType.CoolingDown)
+            {
+                var _cooldownTime = component.MagnetState.Until;
+
                 Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-magnet-paused");
-            SuddenFailure(uid, component);
+
+                // Losing the salvage debris will extend the cooldown time to how long a normal cycle would have lasted, to prevent salvage-rolling
+                // Unless the magnet was only in the Attaching phase so it did not yet choose and reveal the salvage derelict
+                if (component.MagnetState.StateType is MagnetStateType.Attaching)
+                    _cooldownTime = component.CooldownTime;
+                else if (component.MagnetState.StateType is MagnetStateType.Holding)
+                    _cooldownTime = _cooldownTime + component.DetachingTime + component.CooldownTime;
+                else if (component.MagnetState.StateType is MagnetStateType.Detaching)
+                    _cooldownTime = _cooldownTime + component.CooldownTime;
+
+                MagnetFailure(uid, component, new (MagnetStateType.CoolingDown, _cooldownTime));
+            }
         }
 
         private void StartMagnet(SalvageMagnetComponent component, EntityUid user)
@@ -182,7 +195,7 @@ namespace Content.Server.Salvage
                 case MagnetStateType.Inactive:
                     ShowPopup("salvage-system-report-activate-success", component, user);
                     SalvageGridState? gridState;
-                    EntityUid gridId = EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid ?? 
+                    EntityUid gridId = EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid ??
                         throw new InvalidOperationException("Magnet had no grid associated");
                     if (!_salvageGridStates.TryGetValue(gridId, out gridState))
                     {
@@ -207,14 +220,15 @@ namespace Content.Server.Salvage
             }
         }
 
-        private void SuddenFailure(EntityUid uid, SalvageMagnetComponent component)
+        private void MagnetFailure(EntityUid uid, SalvageMagnetComponent component, MagnetState targetState)
         {
             if (component.MagnetState.StateType == MagnetStateType.Inactive)
                 return;
             if (!(EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid is EntityUid gridId) ||
                 !_salvageGridStates.TryGetValue(gridId, out var salvageGridState))
                 return;
-            salvageGridState.ActiveMagnets.Remove(component);
+            if (targetState.StateType == MagnetStateType.Inactive)
+                salvageGridState.ActiveMagnets.Remove(component);
 
             if (component.AttachedEntity.HasValue)
             {
@@ -226,7 +240,7 @@ namespace Content.Server.Salvage
             {
                 Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-no-debris-available");
             }
-            component.MagnetState = MagnetState.Inactive;
+            component.MagnetState = targetState;
         }
 
         private void ShowPopup(string messageKey, SalvageMagnetComponent component, EntityUid user)
