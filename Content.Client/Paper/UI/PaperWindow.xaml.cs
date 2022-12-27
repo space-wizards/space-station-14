@@ -86,6 +86,7 @@ namespace Content.Client.Paper.UI
             if (visuals.HeaderImagePath != null)
             {
                 ImageHeader.TexturePath = visuals.HeaderImagePath;
+                ImageHeader.MinSize = ImageHeader.TextureNormal?.Size ?? Vector2.Zero;
             }
             if (visuals.HeaderImageModulate != null)
             {
