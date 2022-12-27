@@ -137,8 +137,8 @@ public abstract partial class SharedGunSystem
 
         if (TryComp<AppearanceComponent>(magEnt, out var magAppearance))
         {
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoCount, out var addCount);
-            magAppearance.TryGetData<int>(AmmoVisuals.AmmoMax, out var addCapacity);
+            Appearance.TryGetData<int>(magEnt, AmmoVisuals.AmmoCount, out var addCount, magAppearance);
+            Appearance.TryGetData<int>(magEnt, AmmoVisuals.AmmoMax, out var addCapacity, magAppearance);
             count += addCount;
             capacity += addCapacity;
         }
