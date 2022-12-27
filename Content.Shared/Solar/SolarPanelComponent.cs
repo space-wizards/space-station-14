@@ -1,4 +1,4 @@
-using Content.Server.Solar.EntitySystems;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Solar.Components
 {
@@ -8,7 +8,7 @@ namespace Content.Server.Solar.Components
     ///     It generates power from the sun based on coverage.
     /// </summary>
     [RegisterComponent]
-    [Access(typeof(PowerSolarSystem))]
+    [NetworkedComponent]
     public sealed class SolarPanelComponent : Component
     {
         /// <summary>

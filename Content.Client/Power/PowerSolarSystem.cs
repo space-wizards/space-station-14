@@ -1,14 +1,7 @@
-using Content.Shared.Atmos.Piping;
+using Content.Server.Solar.Components;
 using Content.Shared.Solar;
-using Content.Shared.VendingMachines;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Timing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Content.Client.Power
 {
@@ -36,7 +29,9 @@ namespace Content.Client.Power
             }
 
             if (TryComp<TransformComponent>(uid, out var xform))
-                args.Sprite.Rotation = panelAngle - xform.WorldRotation;
+            {
+                args.Sprite.Rotation = panelAngle - xform.LocalRotation;
+            }
         }
     }
 }
