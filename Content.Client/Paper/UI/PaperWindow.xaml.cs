@@ -75,6 +75,13 @@ namespace Content.Client.Paper.UI
             {
                 Label.ModulateSelfOverride = Color.FromHex(visuals.FontAccentColor);
             }
+
+            if (visuals.MaxWritableArea != null)
+            {
+                Label.MinSize = Vector2.Zero;
+                Label.MinSize = (Vector2)(visuals.MaxWritableArea);
+                Label.MaxSize = (Vector2)(visuals.MaxWritableArea);
+            }
         }
 
         private bool _texturesDirty = false;

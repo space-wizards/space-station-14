@@ -48,4 +48,7 @@ public sealed class PaperVisualsComponent : Component
     //<todo.eoin Feels like we want full control here, not an accent on the style?
     [DataField("fontAccentColor")]
     public string? FontAccentColor = null;
+
+    [DataField("maxWritableArea")]
+    public Vector2? MaxWritableArea = null;
 }
