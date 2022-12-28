@@ -1,7 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Content.Server.Traits.Assorted;
-
 
 /// <summary>
 /// This is used for the occasional tourette syndrome trait.
