@@ -15,15 +15,18 @@ namespace Content.Shared.Construction.Steps
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            // TODO
+            float guideTemperature = MinTemperature.HasValue ? MinTemperature.Value : (MaxTemperature.HasValue ? MaxTemperature.Value : 0);
+            examinedEvent.PushMarkup(Loc.GetString("construction-temperature-default", ("temperature", guideTemperature)));
         }
 
         public override ConstructionGuideEntry GenerateGuideEntry()
         {
-            // TODO
+            float guideTemperature = MinTemperature.HasValue ? MinTemperature.Value : (MaxTemperature.HasValue ? MaxTemperature.Value : 0);
+
             return new ConstructionGuideEntry()
             {
-                Localization = "TODO" // TODO
+                Localization = "construction-presenter-temperature-step",
+                Arguments = new (string, object)[] { ("temperature", guideTemperature) }
             };
         }
     }
