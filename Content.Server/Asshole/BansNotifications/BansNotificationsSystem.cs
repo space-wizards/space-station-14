@@ -49,7 +49,7 @@ public sealed class BansNotificationsSystem : EntitySystem {
         var payload = new WebhookPayload();
         var text = Loc.GetString("discord-ban-msg",
             ("username", e.Username),
-            ("expires", e.Expires == null ? "навсегда" : $" до {e.Expires}"),
+            ("expires", e.Expires == null ? "навсегда" : $"до {e.Expires}"),
             ("reason", e.Reason));
 
         payload.Content = text;
