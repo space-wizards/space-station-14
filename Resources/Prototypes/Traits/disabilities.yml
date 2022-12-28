@@ -36,6 +36,5 @@
         - DropItemInHand
         - UseItemInHand
         - Jittering
-        #- Agression
       tourettePhrases: ["Ccloooown", "fuck", "woof-woof", "Grrr Grrr", "HrrHrHrr", "khaaaaa", "pizza pizzza", "you dumb", "banana peel", "hit meee"]
       jitteringDuration: 3, 6

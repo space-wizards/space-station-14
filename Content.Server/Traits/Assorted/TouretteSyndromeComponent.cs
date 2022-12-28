@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace Content.Server.Traits.Assorted;
 
 
