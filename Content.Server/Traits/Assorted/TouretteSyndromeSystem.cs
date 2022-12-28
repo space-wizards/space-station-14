@@ -6,8 +6,24 @@ using Content.Server.Popups;
 using System.Text;
 using Content.Shared.StatusEffect;
 using Content.Shared.Jittering;
+//using Content.Shared.Actions;
+//using Content.Shared.CombatMode;
 
 namespace Content.Server.Traits.Assorted;
+
+// ToDO:
+//+1. After timer expired generate from 1 to N number to choose random event.
+// Events:
+//+2. Random Scream
+//+3. Random Phrase:
+//   +3.1) Barking
+//   +3.2) Grunting
+//   +3.3) Vulgar words
+//-4. Random PVP mode
+//+5. Character twitching
+//+6. Drop item from hand
+//+7. Use item in hand
+// 8. Set final disability modifiers
 
 /// <summary>
 /// This handles character tourette syndrome: randomly scream,speak,drop/use,jittering,combat mode.
@@ -98,6 +114,20 @@ public sealed class TouretteSyndromeSystem : EntitySystem
                                                         TimeSpan.FromSeconds(jittering_duration),
                                                         false);
                     break;
+
+                //case "Agression":
+                //    if (!TryComp<SharedCombatModeComponent>(tourette.Owner, out var combatMode))
+                //        return;
+                //    Console.WriteLine("DEBUG BEFORE");
+                //    if (combatMode.CombatToggleAction != null)
+                //    {
+                //        if (combatMode.IsInCombatMode == false)
+                //        {
+                //            Console.WriteLine("DEBUG AFTER");
+                //            _actionsSystem.SetToggled(combatMode.CombatToggleAction, true);
+                //        }
+                //    }
+                //    break;
 
                 case "DropItemInHand":
                     _popupSystem.PopupEntity(Loc.GetString("trait-tourette-drop-item-in-hand-examine"), tourette.Owner);
