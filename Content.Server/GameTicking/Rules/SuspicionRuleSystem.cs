@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -44,6 +45,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
@@ -294,7 +296,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 continue;
             }
 
-            if (!mobState.IsAlive())
+            if (!_mobStateSystem.IsAlive(playerEntity, mobState))
             {
                 continue;
             }

@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Buckle.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.Storage.Components;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -14,12 +15,13 @@ using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Buckle.Systems;
 
 public sealed partial class BuckleSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     private void InitializeBuckle()
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleStartup);
@@ -277,6 +279,12 @@ public sealed partial class BuckleSystem
             }
         }
 
+        // Logging
+        if (user != buckleId)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckleId)} to {ToPrettyString(to)}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled themselves to {ToPrettyString(to)}");
+
         return true;
     }
 
@@ -318,6 +326,12 @@ public sealed partial class BuckleSystem
                 vehicle.Rider != user)
                 return false;
         }
+
+        // Logging
+        if (user != buckleId)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} unbuckled {ToPrettyString(buckleId)} from {ToPrettyString(oldBuckledTo.Owner)}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} unbuckled themselves from {ToPrettyString(oldBuckledTo.Owner)}");
 
         SetBuckledTo(buckle, null);
 

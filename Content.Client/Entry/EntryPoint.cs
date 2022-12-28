@@ -1,7 +1,6 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
-using Content.Client.Options;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
@@ -21,10 +20,7 @@ using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
 using Content.Shared.AME;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
-using Content.Shared.Lathe;
 using Content.Shared.Localizations;
 using Content.Shared.Markers;
 using Robust.Client;
@@ -33,10 +29,6 @@ using Robust.Client.Input;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-#if FULL_RELEASE
-using Robust.Shared;
-using Robust.Shared.Configuration;
-#endif
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -73,8 +65,6 @@ namespace Content.Client.Entry
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
 
-        public const int NetBufferSizeOverride = 2;
-
         public override void Init()
         {
             ClientContentIoC.Register();
@@ -87,11 +77,6 @@ namespace Content.Client.Entry
 
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
-
-#if FULL_RELEASE
-            // if FULL_RELEASE, because otherwise this breaks some integration tests.
-            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
-#endif
 
             _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();

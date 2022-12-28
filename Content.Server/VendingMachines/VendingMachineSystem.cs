@@ -14,7 +14,6 @@ using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -72,11 +71,9 @@ namespace Content.Server.VendingMachines
             args.Price += price;
         }
 
-        protected override void OnComponentInit(EntityUid uid, SharedVendingMachineComponent sharedComponent, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
         {
-            base.OnComponentInit(uid, sharedComponent, args);
-
-            var component = (VendingMachineComponent) sharedComponent;
+            base.OnComponentInit(uid, component, args);
 
             if (HasComp<ApcPowerReceiverComponent>(component.Owner))
             {

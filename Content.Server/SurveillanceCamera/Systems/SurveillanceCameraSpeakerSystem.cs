@@ -36,7 +36,7 @@ public sealed class SurveillanceCameraSpeakerSystem : EntitySystem
 
         // this part's mostly copied from speech
         if (time - component.LastSoundPlayed < cd
-            && TryComp<SharedSpeechComponent>(args.Speaker, out var speech)
+            && TryComp<SpeechComponent>(args.Speaker, out var speech)
             && speech.SpeechSounds != null
             && _prototypeManager.TryIndex(speech.SpeechSounds, out SpeechSoundsPrototype? speechProto))
         {

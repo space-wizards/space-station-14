@@ -1,9 +1,10 @@
 name: RSI Validator
 
 on:
-  pull_request: 
+  pull_request:
     paths:
       - '**.rsi/**'
+
 jobs:
   validate_rsis:
     name: Validate RSIs
@@ -14,9 +15,9 @@ jobs:
         run: git submodule update --init
       - name: Pull engine updates
         uses: space-wizards/submodule-dependency@v0.1.5
-      - name: Parse files
-        uses: space-wizards/json-schema-validator@v1.0.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          json_schema: RobustToolbox/Schemas/rsi.json
-          json_path_pattern: .*meta.json$
+      - name: Install Python dependencies
+        run: |
+          pip3 install --ignore-installed --user pillow jsonschema
+      - name: Validate RSIs
+        run: |
+          python3 RobustToolbox/Schemas/validate_rsis.py Resources/

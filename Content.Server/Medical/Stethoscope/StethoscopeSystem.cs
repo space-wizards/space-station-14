@@ -11,6 +11,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Server.MobState;
 
 namespace Content.Server.Medical
 {
@@ -18,6 +19,7 @@ namespace Content.Server.Medical
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
         public override void Initialize()
         {
@@ -135,7 +137,7 @@ namespace Content.Server.Medical
         public void ExamineWithStethoscope(EntityUid user, EntityUid target)
         {
             /// The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
-            if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || mobState.IsDead())
+            if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || _mobStateSystem.IsDead(target, mobState))
             {
                 _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, user);
                 return;
