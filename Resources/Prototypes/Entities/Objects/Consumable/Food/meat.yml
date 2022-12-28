@@ -62,7 +62,7 @@
   - type: Construction
     graph: MeatSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: meat steak
 
 - type: entity
   name: raw carp fillet
@@ -139,7 +139,7 @@
   - type: Construction
     graph: BearSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: filet migrawr
 
 - type: entity
   name: raw penguin meat
@@ -164,7 +164,7 @@
   - type: Construction
     graph: PenguinSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: cooked penguin
 
 - type: entity
   name: raw chicken meat
@@ -189,7 +189,7 @@
   - type: Construction
     graph: ChickenSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: cooked chicken
 
 - type: entity
   name: raw duck meat
@@ -214,7 +214,7 @@
   - type: Construction
     graph: DuckSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: cooked duck
 
 - type: entity
   name: prime-cut corgi meat
@@ -235,10 +235,6 @@
           Quantity: 20
   - type: StaticPrice
     price: 750
-  - type: Construction
-    graph: CorgiSteak
-    node: start
-    defaultTarget: cookedSteak
 
 - type: entity
   name: raw crab meat
@@ -260,7 +256,7 @@
   - type: Construction
     graph: CrabSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: cooked crab
 
 - type: entity
   name: raw goliath meat
@@ -282,7 +278,7 @@
   - type: Construction
     graph: GoliathSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: goliath steak
 
 - type: entity
   name: dragon flesh
@@ -351,7 +347,7 @@
   - type: Construction
     graph: LizardSteak
     node: start
-    defaultTarget: cookedSteak
+    defaultTarget: lizard steak
 
 - type: entity
   name: raw plant meat

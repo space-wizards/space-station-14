@@ -6,11 +6,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: meat steak
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: meat steak
     entity: FoodMeatCooked
 
 # penguin steak
@@ -21,11 +21,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: cooked penguin
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: cooked penguin
     entity: FoodMeatPenguinCooked
 
 # chicken steak
@@ -36,11 +36,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: cooked chicken
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: cooked chicken
     entity: FoodMeatChickenCooked
 
 # duck steak
@@ -51,11 +51,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: cooked duck
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: cooked duck
     entity: FoodMeatDuckCooked
 
 # lizard steak
@@ -66,11 +66,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: lizard steak
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: lizard steak
     entity: FoodMeatLizardCooked
 
 # bear steak
@@ -81,11 +81,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: filet migrawr
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: filet migrawr
     entity: FoodMealBearsteak
 
 # crab steak
@@ -96,11 +96,11 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: cooked crab
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: cooked crab
     entity: FoodMeatCrabCooked
 
 # crab steak
@@ -111,9 +111,9 @@
 
   - node: start
     edges:
-    - to: cookedSteak
+    - to: goliath steak
       steps:
-      - minTemperature: 323
+      - minTemperature: 305
 
-  - node: cookedSteak
+  - node: goliath steak
     entity: FoodMeatGoliathCooked
