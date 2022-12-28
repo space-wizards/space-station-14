@@ -4,28 +4,28 @@ namespace Content.Server.Traits.Assorted;
 
 
 /// <summary>
-/// This is used for the occasional scream/speak.
+/// This is used for the occasional tourette syndrome trait.
 /// </summary>
 [RegisterComponent]
 public sealed class TouretteSyndromeComponent : Component
 {
     /// <summary>
-    /// Message to play when using item in active hand.
+    /// Tourette phrases list which spoken by character.
     /// </summary>
-    [DataField("wristSpasmMessage", required: true)]
-    public string TouretteUseItemMessage { get; } = default!;
-
-    /// <summary>
-    /// Message to play when drops item from active hand.
-    /// </summary>
-    [DataField("armTwitchingMessage", required: true)]
-    public string TouretteDropItemMessage { get; } = default!;
+    [DataField("tourettePhrases", required: true)]
+    public List<string> TourettePhrases { get; } = default!;
 
     /// <summary>
     /// The random time between incidents, (min, max).
     /// </summary>
     [DataField("timeBetweenIncidents", required: true)]
     public Vector2 TimeBetweenIncidents { get; }
+
+    /// <summary>
+    /// The duration of jittering effect, (min, max).
+    /// </summary>
+    [DataField("jitteringDuration", required: true)]
+    public Vector2 TouretteJitteringDuration { get; }
 
     /// <summary>
     /// The random number to choose symptom, (first, last).
