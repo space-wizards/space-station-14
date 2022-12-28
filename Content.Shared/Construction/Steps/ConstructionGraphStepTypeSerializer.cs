@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
@@ -33,6 +33,11 @@ namespace Content.Shared.Construction.Steps
             if (node.Has("allTags") || node.Has("anyTags"))
             {
                 return typeof(MultipleTagsConstructionGraphStep);
+            }
+
+            if (node.Has("minTemperature") || node.Has("maxTemperature"))
+            {
+                return typeof(TemperatureConstructionGraphStep);
             }
 
             return null;
