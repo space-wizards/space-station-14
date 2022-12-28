@@ -505,16 +505,6 @@
     FoodFlyAmanita: 3
 
 #Other
-- type: microwaveMealRecipe
-  id: RecipeMeatSteak
-  name: meat steak recipe
-  result: FoodMeatCooked
-  time: 10
-  reagents:
-    TableSalt: 1
-  solids:
-    FoodMeat: 1
-    FoodPlateSmall: 1
 
 - type: microwaveMealRecipe
   id: RecipeMeatPenguin

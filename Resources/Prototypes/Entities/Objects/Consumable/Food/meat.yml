@@ -57,6 +57,12 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
+  - type: Temperature
+    currentTemperature: 310.15
+  - type: Construction
+    graph: MeatSteak
+    node: start
+    defaultTarget: cookedSteak
 
 - type: entity
   name: raw carp fillet
@@ -523,6 +529,8 @@
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutletCooked
+  - type: Temperature
+    currentTemperature: 310.15
 
 - type: entity
   name: bacon

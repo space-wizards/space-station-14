@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: MeatSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cookedSteak
+      steps:
+      - minTemperature: 300
+
+  - node: cookedSteak
+    entity: FoodMeatCooked
