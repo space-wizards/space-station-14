@@ -29,7 +29,7 @@
   description: trait-tourette-desc
   components:
     - type: TouretteSyndrome
-      timeBetweenIncidents: 1, 5
+      timeBetweenIncidents: 60, 400
       touretteSymptoms:
         - Scream
         - Phrase
