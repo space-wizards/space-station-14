@@ -1,10 +1,4 @@
 Entries:
-- author: illiux
-  changes:
-  - {message: The ChemMaster 4000 now outputs directly into a pill canister or bottle,
-    type: Tweak}
-  id: 2307
-  time: '2022-09-15T00:10:13.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Sell prices have been significantly increased across the board so cargo
@@ -2947,3 +2941,9 @@ Entries:
     type: Tweak}
   id: 2806
   time: '2022-12-25T21:22:24.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Scalpels can now be used to butcher in emergencies, 50% slower than
+      standard tools.', type: Add}
+  id: 2807
+  time: '2022-12-26T22:09:00.0000000+00:00'
