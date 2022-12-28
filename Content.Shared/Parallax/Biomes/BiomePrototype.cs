@@ -12,8 +12,19 @@ public sealed class BiomePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
+    [DataField("layers", customTypeSerializer:typeof(PrototypeIdListSerializer<BiomeLayerPrototype>))]
+    public List<string> Layers = new();
+
     [DataField("tileGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<BiomeTileGroupPrototype>))]
     public List<string> TileGroups = new();
+}
+
+[Prototype("biomeLayer")]
+public sealed class BiomeLayerPrototype : IPrototype
+{
+    [IdDataFieldAttribute] public string ID { get; } = default!;
+
+
 }
 
 [Prototype("biomeTileGroup")]
