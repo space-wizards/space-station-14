@@ -1,5 +1,5 @@
 # regular steak
-type: constructionGraph
+- type: constructionGraph
   id: MeatSteak
   start: start
   graph:
