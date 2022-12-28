@@ -28,5 +28,12 @@
   name: trait-tourette-name
   description: trait-tourette-desc
   components:
-    - type: TouretteSyndrome
-      timeBetweenIncidents: 1, 5
+  - type: TouretteSyndrome
+    timeBetweenIncidents: 1, 5
+    wristSpasmMessage: "Wrist muscle spasm occurred"
+    armTwitchingMessage: "Arm twitching occurred"
+    touretteSymptoms:
+      - Scream
+      #- Phrase
+      - DropItemInHand
+      - UseItemInHand
