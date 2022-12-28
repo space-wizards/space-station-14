@@ -171,20 +171,17 @@ namespace Content.Server.Salvage
         {
             if (component.MagnetState.StateType is not MagnetStateType.Inactive or MagnetStateType.CoolingDown)
             {
-                var _cooldownTime = component.MagnetState.Until;
+                var _until = component.MagnetState.Until;
 
                 Report(uid, component.SalvageChannel, "salvage-system-announcement-spawn-magnet-paused");
 
                 // Losing the salvage debris will extend the cooldown time to how long a normal cycle would have lasted, to prevent salvage-rolling
-                // Unless the magnet was only in the Attaching phase so it did not yet choose and reveal the salvage derelict
-                if (component.MagnetState.StateType is MagnetStateType.Attaching)
-                    _cooldownTime = component.CooldownTime;
+                if (component.MagnetState.StateType is MagnetStateType.Attaching or MagnetStateType.Detaching)
+                    _until = _until + component.CooldownTime;
                 else if (component.MagnetState.StateType is MagnetStateType.Holding)
-                    _cooldownTime = _cooldownTime + component.DetachingTime + component.CooldownTime;
-                else if (component.MagnetState.StateType is MagnetStateType.Detaching)
-                    _cooldownTime = _cooldownTime + component.CooldownTime;
+                    _until = _until + component.DetachingTime + component.CooldownTime;
 
-                MagnetFailure(uid, component, new (MagnetStateType.CoolingDown, _cooldownTime));
+                MagnetFailure(uid, component, new (MagnetStateType.CoolingDown, _until));
             }
         }
 
