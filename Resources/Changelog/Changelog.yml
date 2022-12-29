@@ -1,13 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Sell prices have been significantly increased across the board so cargo
-      should receive more income., type: Tweak}
-  - {message: Cargo passive income generation reduced from 10 per second to 2., type: Tweak}
-  - {message: Cargo shuttle cooldown reduced from 3 minutes to 30 seconds to facilitate
-      their increased pace., type: Tweak}
-  id: 2308
-  time: '2022-09-15T01:53:18.0000000+00:00'
 - author: illiux
   changes:
   - {message: The ChemMaster 4000 applies labels correctly, type: Fix}
@@ -2947,3 +2938,9 @@ Entries:
       standard tools.', type: Add}
   id: 2807
   time: '2022-12-26T22:09:00.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Pill canisters will now fit in coat storage, at the cost of having
+      less space for pills. (12 -> 9)', type: Tweak}
+  id: 2808
+  time: '2022-12-29T03:57:28.0000000+00:00'
