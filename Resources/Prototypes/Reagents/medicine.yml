@@ -510,7 +510,7 @@
       - !type:HealthChange
         damage:
           types:
-            Cellular: 1
+            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin
