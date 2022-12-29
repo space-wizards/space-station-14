@@ -1,0 +1,99 @@
+- type: entity
+  name: Nymph
+  parent: SimpleMobBase
+  id: MobNymph
+  description: A small, curious, green creature with a big eye.
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    name: Nymph
+    description: A small, curious, green creature with a big eye.
+  - type: ReplacementAccent
+    accent: mouse
+  - type: Speech
+    speechSounds: Squeak
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Animals/nymph.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: nymph
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 5
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: MobState
+    thresholds:
+      0: Alive
+      15: Critical
+      30: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
+  - type: Appearance
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: nymph
+      Critical:
+        Base: dead
+      Dead:
+        Base: dead
+  - type: Food
+  - type: Hunger
+    baseDecayRate: 0.35
+  - type: Extractable
+    grindableSolutionName: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 50
+  - type: Butcherable
+    spawned:
+    - id: NymphSeed
+      amount: 3
+  - type: Tag
+    tags:
+    - Trash
+    - CannotSuicide
+  - type: Recyclable
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 0.15
+    damageRecovery:
+      types:
+        Asphyxiation: -1
+  - type: Vocal
+    maleScream: /Audio/Animals/mouse_squeak.ogg
+    femaleScream: /Audio/Animals/mouse_squeak.ogg
+    unsexedScream: /Audio/Animals/mouse_squeak.ogg
+    wilhelmProbability: 0.001
+  - type: CombatMode
+    combatToggleAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-combat
+    disarmAction:
+      enabled: false
+      autoPopulate: false
+      name: action-name-disarm
+  - type: Bloodstream
+    bloodReagent: Water
+    bloodMaxVolume: 50
+  - type: CanEscapeInventory
+  - type: MobPrice
+    price: 60

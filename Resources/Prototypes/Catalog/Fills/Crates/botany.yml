@@ -20,6 +20,8 @@
         amount: 2
       - id: PineappleSeeds
         amount: 2
+      - id: NymphSeed
+        amount: 2
 
 - type: entity
   id: CrateHydroponicsSeedsMedicinal

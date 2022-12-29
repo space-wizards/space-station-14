@@ -1,0 +1,35 @@
+- type: entity
+  parent: SeedBase
+  name: pack of dionea spores
+  id: NymphSeed
+  components:
+    - type: Seed
+      seedId: NymphSeed
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/nymph_seed.rsi
+
+
+- type: seed
+  id: NymphSeed
+  name: pack of dionea spores
+  noun: seeds-noun-seeds
+  displayName: pack of dionea spores
+  plantRsi: Objects/Specific/Hydroponics/nymph_seed.rsi
+  productPrototypes:
+    - MobNymph
+  lifespan: 50
+  maturation: 8
+  production: 3
+  yield: 3
+  idealLight: 10
+  waterConsumption: 10
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
