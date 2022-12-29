@@ -34,7 +34,7 @@ public enum MarkingColoringType : byte
     AnyHairColor,
 
     /// <summary>
-    ///     Color applied like it's tattoo
+    ///     Color applied from skin, but much darker.
     /// </summary>
     Tattoo,
 
