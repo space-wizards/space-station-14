@@ -17,7 +17,7 @@
     netsync: false
   - type: DiseaseDiagnoser
   - type: DiseaseMachine
-    machineOutput: Paper
+    machineOutput: CoolPaperDiagnosisReport
   - type: Appearance
   - type: DiseaseMachineVisuals
     idleState: icon

@@ -5,15 +5,14 @@
     <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
         <BoxContainer Name="PaperContentContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
             <TextureButton Name="ImageHeader" HorizontalAlignment="Center" />
-            <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True">
+            <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-                    <Control VerticalAlignment="Top" HorizontalAlignment="Center" VerticalExpand="True">
+                    <Control HorizontalAlignment="Center">
                         <Label Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                             Text="{Loc 'paper-ui-blank-page-message'}"
                             VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     </Control>
-
-                    <RichTextLabel StyleClasses="PaperWrittenText" Name="Label" MinSize="250 350" MaxSize="315 600"/>
+                    <RichTextLabel StyleClasses="PaperWrittenText" Name="Label" VerticalAlignment="Top"/>
                     <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
                         <LineEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                     </PanelContainer>

@@ -309,8 +309,8 @@
       0.0
     maxWritableArea:
       # This is a narrow piece of paper
-      40.0,
-      360.0
+      128.0,
+      300.0
 
 - type: entity
   name: styledtest artifact

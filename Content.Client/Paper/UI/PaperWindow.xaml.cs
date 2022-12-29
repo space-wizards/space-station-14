@@ -78,9 +78,9 @@ namespace Content.Client.Paper.UI
 
             if (visuals.MaxWritableArea != null)
             {
-                Label.MinSize = Vector2.Zero;
-                Label.MinSize = (Vector2)(visuals.MaxWritableArea);
-                Label.MaxSize = (Vector2)(visuals.MaxWritableArea);
+                PaperContent.MinSize = Vector2.Zero;
+                PaperContent.MinSize = (Vector2)(visuals.MaxWritableArea);
+                PaperContent.MaxSize = (Vector2)(visuals.MaxWritableArea);
             }
         }
 
@@ -167,7 +167,10 @@ namespace Content.Client.Paper.UI
             InputContainer.Visible = isEditing;
 
             var msg = new FormattedMessage();
-            msg.AddMarkupPermissive(state.Text);
+            // Remove any newlines from the end of the message. There can be a trailing
+            // new line at the end of user input, and we would like to display the input
+            // box immeditely on the next line.
+            msg.AddMarkupPermissive(state.Text.TrimEnd('\r', '\n'));
             Label.SetMessage(msg);
 
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;

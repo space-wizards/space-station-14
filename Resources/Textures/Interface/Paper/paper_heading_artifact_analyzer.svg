@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="256"
+   width="308"
    height="64"
-   viewBox="0 0 256 64"
+   viewBox="0 0 308 64"
    fill="none"
    version="1.1"
    id="svg4"
-   sodipodi:docname="paper_heading_captains_thoughts.svg"
+   sodipodi:docname="paper_heading_artifact_analyzer.svg"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
-   inkscape:export-filename="paper_heading_captains_thoughts.svg.96dpi.png"
+   inkscape:export-filename="paper_heading_artifact_analyzer.svg.96dpi.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -32,11 +32,74 @@
   <defs
      id="defs8">
     <rect
+       x="-30.967747"
+       y="-32.336391"
+       width="277.27594"
+       height="150.43042"
+       id="rect462" />
+    <rect
        x="12.500253"
        y="14.598581"
        width="334.51892"
        height="47.488827"
        id="rect348" />
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1398">
+      <g
+         id="g1414"
+         transform="skewX(-0.64194233)">
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1400"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="10.397732" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1402"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="19.308941" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1404"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="28.220152" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1406"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="37.131363" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1408"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="46.042572" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1410"
+           width="193.3102"
+           height="4.4629641"
+           x="0"
+           y="54.953781" />
+        <rect
+           style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
+           id="rect1412"
+           width="27.770258"
+           height="8.9112129"
+           x="52.285023"
+           y="30.451633" />
+      </g>
+    </clipPath>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -57,60 +120,51 @@
      inkscape:snap-object-midpoints="false"
      inkscape:snap-nodes="false"
      inkscape:snap-page="true"
-     inkscape:zoom="1.6214301"
-     inkscape:cx="34.229043"
-     inkscape:cy="93.436036"
+     inkscape:zoom="3.4289391"
+     inkscape:cx="163.31582"
+     inkscape:cy="19.685389"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1" />
+     inkscape:deskcolor="#d1d1d1"
+     showguides="true" />
   <g
      inkscape:groupmode="layer"
      id="layer1"
      inkscape:label="Decoration"
-     style="display:inline">
-    <circle
-       style="fill:#2c4597;fill-opacity:1;stroke:none;stroke-width:1.418;stroke-linejoin:round"
-       id="path1117"
-       cx="128"
-       cy="54.980602"
-       r="2.8490536" />
-    <path
-       style="fill:#2c4597;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 121.76153,57.829655 V 52.131549 L 27.172269,54.980602 Z"
-       id="path1863"
-       sodipodi:nodetypes="cccc" />
-    <path
-       style="fill:#2c4597;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 134.23847,57.829656 V 52.13155 l 94.58926,2.849053 z"
-       id="path2192"
-       sodipodi:nodetypes="cccc" />
-  </g>
+     style="display:inline" />
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Text">
-    <text
-       xml:space="preserve"
-       id="text346"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect348);display:inline;fill:#a5b4e5;fill-opacity:1;stroke:none"
-       transform="matrix(0.54169298,0,0,0.54169298,1.6702018,-2.3409923)"><tspan
-         x="12.5"
-         y="50.992664"
-         id="tspan1023">Thoughts of...</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
-       x="70.939812"
-       y="39.081627"
-       id="text1437"><tspan
-         sodipodi:role="line"
-         id="tspan1435"
-         x="70.939812"
-         y="39.081627"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Z003;-inkscape-font-specification:Z003">The Captain</tspan></text>
-  </g>
+     inkscape:label="Text" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:89.6359px;line-height:1.25;font-family:sans-serif;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:2.24089"
+     x="-0.71708649"
+     y="64"
+     id="text299"
+     transform="matrix(1.3056159,0,0.01462875,1.3056159,-5.3708349,-13.575443)"
+     clip-path="url(#clipPath1398)"><tspan
+       sodipodi:role="line"
+       id="tspan297"
+       x="-0.71708649"
+       y="64"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IBM 3270';-inkscape-font-specification:'IBM 3270, ';fill:#0000ff;stroke-width:2.24089">XENO</tspan></text>
+  <text
+     xml:space="preserve"
+     id="text460"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect462);fill:#000000;fill-opacity:1;stroke:none" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
+     x="222.8941"
+     y="58.173088"
+     id="text468"><tspan
+       sodipodi:role="line"
+       id="tspan466"
+       x="222.8941"
+       y="58.173088">Labs</tspan></text>
 </svg>
