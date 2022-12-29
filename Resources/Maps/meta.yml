@@ -1595,27 +1595,27 @@ entities:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale180
           coordinates: -2,-30
-        2278:
+        2273:
           color: '#FFFFFFFF'
           id: SpaceStationSign1
           coordinates: -6,-21
-        2279:
+        2274:
           color: '#FFFFFFFF'
           id: SpaceStationSign2
           coordinates: -5,-21
-        2280:
+        2275:
           color: '#FFFFFFFF'
           id: SpaceStationSign3
           coordinates: -4,-21
-        2281:
+        2276:
           color: '#FFFFFFFF'
           id: SpaceStationSign4
           coordinates: -3,-21
-        2282:
+        2277:
           color: '#FFFFFFFF'
           id: SpaceStationSign5
           coordinates: -2,-21
-        2283:
+        2278:
           color: '#FFFFFFFF'
           id: SpaceStationSign6
           coordinates: -1,-21
@@ -2006,59 +2006,59 @@ entities:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 16,-29
-        2017:
+        2012:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 8,-29
-        2019:
+        2014:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 8,-32
-        2020:
+        2015:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 8,-30
-        2021:
+        2016:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 8,-29
-        2022:
+        2017:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 8,-32
-        2023:
+        2018:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 8,-30
-        2024:
+        2019:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 19,-30
-        2025:
+        2020:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 20,-30
-        2026:
+        2021:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale180
           coordinates: 21,-30
-        2027:
+        2022:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: 22,-31
-        2028:
+        2023:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: 22,-32
-        2029:
+        2024:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: 21,-32
-        2030:
+        2025:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: 20,-32
-        2284:
+        2279:
           color: '#FFFFFFFF'
           id: SpaceStationSign7
           coordinates: 0,-21
@@ -4391,83 +4391,83 @@ entities:
           color: '#FFFFFFFF'
           id: DirtMedium
           coordinates: -42,26
-        2258:
+        2253:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -44,26
-        2259:
+        2254:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -44,27
-        2260:
+        2255:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale270
           coordinates: -44,28
-        2261:
+        2256:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: -40,26
-        2262:
+        2257:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: -40,27
-        2263:
+        2258:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale90
           coordinates: -40,28
-        2264:
+        2259:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale90
           coordinates: -44,28
-        2265:
+        2260:
           color: '#A4610696'
           id: QuarterTileOverlayGreyscale
           coordinates: -40,28
-        2266:
+        2261:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -41,28
-        2267:
+        2262:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -42,28
-        2268:
+        2263:
           color: '#A4610696'
           id: HalfTileOverlayGreyscale
           coordinates: -43,28
-        2269:
+        2264:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -44,28
-        2270:
+        2265:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: -43,28
-        2271:
+        2266:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNW
           coordinates: -42,28
-        2272:
+        2267:
           color: '#FFFFFFFF'
           id: DirtHeavy
           coordinates: -44,28
-        2273:
+        2268:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -43,28
-        2274:
+        2269:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -44,27
-        2275:
+        2270:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -41,28
-        2276:
+        2271:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -40,26
-        2277:
+        2272:
           color: '#FFFFFFFF'
           id: DirtLight
           coordinates: -44,26
@@ -6400,407 +6400,407 @@ entities:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale
           coordinates: 38,30
-        2151:
+        2146:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 51,12
-        2152:
+        2147:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 49,12
-        2153:
+        2148:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 50,12
-        2154:
+        2149:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 46,17
-        2155:
+        2150:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 47,17
-        2156:
+        2151:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 46,12
-        2157:
+        2152:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 47,12
-        2158:
+        2153:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 44,13
-        2159:
+        2154:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 59,13
-        2160:
+        2155:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,14
-        2161:
+        2156:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,15
-        2162:
+        2157:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,16
-        2163:
+        2158:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,24
-        2164:
+        2159:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,25
-        2165:
+        2160:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 58,26
-        2166:
+        2161:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 59,27
-        2167:
+        2162:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSE
           coordinates: 58,27
-        2168:
+        2163:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNE
           coordinates: 58,13
-        2169:
+        2164:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 56,16
-        2170:
+        2165:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNE
           coordinates: 55,16
-        2171:
+        2166:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 56,18
-        2172:
+        2167:
           color: '#FFFFFFFF'
           id: WarnLineW
           coordinates: 56,22
-        2173:
+        2168:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNE
           coordinates: 55,22
-        2174:
+        2169:
           color: '#FFFFFFFF'
           id: WarnCornerSmallNW
           coordinates: 57,22
-        2175:
+        2170:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
           coordinates: 57,18
-        2176:
+        2171:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSE
           coordinates: 55,18
-        2177:
+        2172:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 42,14
-        2178:
+        2173:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 44,14
-        2179:
+        2174:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,15
-        2180:
+        2175:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,16
-        2181:
+        2176:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,17
-        2182:
+        2177:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 43,14
-        2183:
+        2178:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 44,16
-        2184:
+        2179:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 44,17
-        2185:
+        2180:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 46,16
-        2186:
+        2181:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 46,13
-        2187:
+        2182:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 46,14
-        2188:
+        2183:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 47,13
-        2189:
+        2184:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 48,13
-        2190:
+        2185:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 49,13
-        2191:
+        2186:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 50,13
-        2192:
+        2187:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 51,13
-        2193:
+        2188:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 52,13
-        2194:
+        2189:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 53,13
-        2195:
+        2190:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,14
-        2196:
+        2191:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,16
-        2197:
+        2192:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,17
-        2198:
+        2193:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,18
-        2199:
+        2194:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,15
-        2200:
+        2195:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,19
-        2201:
+        2196:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,20
-        2202:
+        2197:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 53,21
-        2203:
+        2198:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 53,22
-        2204:
+        2199:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 52,22
-        2205:
+        2200:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 49,22
-        2206:
+        2201:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 48,22
-        2207:
+        2202:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 48,21
-        2208:
+        2203:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 48,19
-        2209:
+        2204:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 48,18
-        2210:
+        2205:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 48,17
-        2211:
+        2206:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale
           coordinates: 48,16
-        2212:
+        2207:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 47,16
-        2213:
+        2208:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 46,19
-        2214:
+        2209:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 42,19
-        2215:
+        2210:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 42,26
-        2216:
+        2211:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 46,26
-        2217:
+        2212:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 45,26
-        2218:
+        2213:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 44,26
-        2219:
+        2214:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 43,26
-        2220:
+        2215:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,20
-        2221:
+        2216:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,21
-        2222:
+        2217:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,22
-        2223:
+        2218:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,23
-        2224:
+        2219:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,24
-        2225:
+        2220:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 42,25
-        2226:
+        2221:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 46,21
-        2227:
+        2222:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 46,22
-        2228:
+        2223:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 46,23
-        2229:
+        2224:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 46,24
-        2230:
+        2225:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 46,25
-        2231:
+        2226:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 45,19
-        2232:
+        2227:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 44,19
-        2233:
+        2228:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 43,19
-        2234:
+        2229:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 54,16
-        2235:
+        2230:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 48,24
-        2236:
+        2231:
           color: '#EFB34196'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 48,26
-        2237:
+        2232:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 49,24
-        2238:
+        2233:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale270
           coordinates: 48,25
-        2239:
+        2234:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale
           coordinates: 49,26
-        2240:
+        2235:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 56,24
-        2241:
+        2236:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 56,25
-        2242:
+        2237:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 56,26
-        2243:
+        2238:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 56,27
-        2244:
+        2239:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale90
           coordinates: 56,28
-        2245:
+        2240:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 52,24
-        2246:
+        2241:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 53,24
-        2247:
+        2242:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 54,24
-        2248:
+        2243:
           color: '#EFB34196'
           id: HalfTileOverlayGreyscale180
           coordinates: 55,24
-        2249:
+        2244:
           color: '#EFB34196'
           id: QuarterTileOverlayGreyscale270
           coordinates: 56,24
-        2250:
+        2245:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: 56,24
-        2251:
+        2246:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSE
           coordinates: 55,24
@@ -7918,59 +7918,59 @@ entities:
           color: '#D381C996'
           id: QuarterTileOverlayGreyscale90
           coordinates: -1,-37
-        2053:
+        2048:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-52
-        2054:
+        2049:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-50
-        2055:
+        2050:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: -1,-51
-        2147:
+        2142:
           cleanable: True
           color: '#DE3A3A96'
           id: rune1
           coordinates: -12,-56
-        2148:
+        2143:
           cleanable: True
           color: '#DE3A3A96'
           id: rune5
           coordinates: -11,-55
-        2149:
+        2144:
           cleanable: True
           color: '#DE3A3A96'
           id: rune4
           coordinates: -13,-55
-        2150:
+        2145:
           cleanable: True
           color: '#FFFFFFFF'
           id: Remains
           coordinates: -11,-56
-        2252:
+        2247:
           color: '#79150096'
           id: QuarterTileOverlayGreyscale270
           coordinates: -4,-60
-        2253:
+        2248:
           color: '#79150096'
           id: QuarterTileOverlayGreyscale270
           coordinates: -3,-60
-        2254:
+        2249:
           color: '#79150096'
           id: QuarterTileOverlayGreyscale270
           coordinates: -2,-60
-        2255:
+        2250:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -4,-60
-        2256:
+        2251:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -3,-60
-        2257:
+        2252:
           color: '#D4D4D496'
           id: QuarterTileOverlayGreyscale180
           coordinates: -2,-60
@@ -9132,407 +9132,407 @@ entities:
           color: '#FFFFFFFF'
           id: BotGreyscale
           coordinates: 21,-49
-        2299:
-          color: '#FFFFFFFF'
-          id: WarnLineS
-          coordinates: 29,-61
-        2300:
-          color: '#FFFFFFFF'
-          id: WarnLineS
-          coordinates: 29,-60
-        2298:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-          coordinates: 27,-59
-        2297:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-          coordinates: 27,-60
-        2296:
-          color: '#FFFFFFFF'
-          id: WarnLineE
-          coordinates: 27,-61
-        1989:
+        1984:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
           coordinates: 10,-52
-        1990:
+        1985:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
           coordinates: 9,-52
-        1991:
+        1986:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
           coordinates: 8,-52
-        1992:
+        1987:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
           coordinates: 7,-52
-        1993:
+        1988:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleE
           coordinates: 6,-51
-        1994:
+        1989:
           color: '#FFFFFFFF'
           id: WarnCornerSmallGreyscaleNE
           coordinates: 6,-52
-        1995:
+        1990:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleW
           coordinates: 12,-51
-        1996:
+        1991:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleW
           coordinates: 12,-50
-        1997:
+        1992:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
           coordinates: 6,-51
-        1998:
+        1993:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 6,-50
-        1999:
+        1994:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 6,-49
-        2000:
+        1995:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 8,-49
-        2001:
+        1996:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 9,-49
-        2002:
+        1997:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 10,-49
-        2003:
+        1998:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: 11,-49
-        2004:
+        1999:
           color: '#FFFFFFFF'
           id: WarnLineGreyscaleN
+          coordinates: 10,-41
+        2000:
+          color: '#FFFFFFFF'
+          id: WarnLineGreyscaleN
+          coordinates: 11,-41
+        2001:
+          color: '#FFFFFFFF'
+          id: WarnLineGreyscaleN
+          coordinates: 12,-41
+        2002:
+          color: '#FFFFFFFF'
+          id: WarnLineGreyscaleS
+          coordinates: 12,-41
+        2003:
+          color: '#FFFFFFFF'
+          id: WarnLineGreyscaleS
+          coordinates: 11,-41
+        2004:
+          color: '#FFFFFFFF'
+          id: WarnLineGreyscaleS
           coordinates: 10,-41
         2005:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleN
-          coordinates: 11,-41
+          id: WarnLineGreyscaleW
+          coordinates: 16,-44
         2006:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleN
-          coordinates: 12,-41
+          id: WarnLineGreyscaleW
+          coordinates: 16,-43
         2007:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleS
-          coordinates: 12,-41
+          id: WarnLineGreyscaleW
+          coordinates: 16,-42
         2008:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleS
-          coordinates: 11,-41
+          id: WarnLineGreyscaleE
+          coordinates: 16,-44
         2009:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleS
-          coordinates: 10,-41
+          id: WarnLineGreyscaleE
+          coordinates: 16,-43
         2010:
           color: '#FFFFFFFF'
-          id: WarnLineGreyscaleW
-          coordinates: 16,-44
+          id: WarnLineGreyscaleE
+          coordinates: 16,-42
         2011:
-          color: '#FFFFFFFF'
-          id: WarnLineGreyscaleW
-          coordinates: 16,-43
-        2012:
-          color: '#FFFFFFFF'
-          id: WarnLineGreyscaleW
-          coordinates: 16,-42
-        2013:
-          color: '#FFFFFFFF'
-          id: WarnLineGreyscaleE
-          coordinates: 16,-44
-        2014:
-          color: '#FFFFFFFF'
-          id: WarnLineGreyscaleE
-          coordinates: 16,-43
-        2015:
-          color: '#FFFFFFFF'
-          id: WarnLineGreyscaleE
-          coordinates: 16,-42
-        2016:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: 8,-33
-        2018:
+        2013:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 8,-33
-        2049:
+        2044:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-44
-        2050:
+        2045:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-43
-        2051:
+        2046:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale270
           coordinates: 31,-42
-        2052:
+        2047:
           color: '#D381C996'
           id: FullTileOverlayGreyscale
           coordinates: 30,-43
-        2056:
+        2051:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-40
-        2057:
+        2052:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-39
-        2058:
+        2053:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-39
-        2059:
+        2054:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-40
-        2060:
+        2055:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-40
-        2061:
+        2056:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-39
-        2062:
+        2057:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-38
-        2063:
+        2058:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-38
-        2064:
+        2059:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-38
-        2065:
+        2060:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-38
-        2066:
+        2061:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-39
-        2067:
+        2062:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-40
-        2068:
+        2063:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-37
-        2069:
+        2064:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-37
-        2070:
+        2065:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-37
-        2071:
+        2066:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-37
-        2072:
+        2067:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-36
-        2073:
+        2068:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-36
-        2074:
+        2069:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-36
-        2075:
+        2070:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-36
-        2076:
+        2071:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 22,-35
-        2077:
+        2072:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 21,-35
-        2078:
+        2073:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 20,-35
-        2079:
+        2074:
           color: '#D4D4D40F'
           id: CheckerNWSE
           coordinates: 19,-35
-        2080:
+        2075:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: 23,-37
-        2081:
+        2076:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale180
           coordinates: 24,-37
-        2082:
+        2077:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale90
           coordinates: 25,-36
-        2083:
+        2078:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: 24,-35
-        2084:
+        2079:
           color: '#D381C996'
           id: HalfTileOverlayGreyscale
           coordinates: 23,-35
-        2085:
+        2080:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 25,-35
-        2086:
+        2081:
           color: '#D381C996'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 25,-37
-        2110:
+        2105:
           color: '#FFFFFFFF'
           id: Grassa5
           coordinates: 31,-57
-        2111:
+        2106:
           color: '#FFFFFFFF'
           id: Grassa1
           coordinates: 31,-56
-        2112:
+        2107:
           color: '#FFFFFFFF'
           id: Grassa2
           coordinates: 31,-58
-        2285:
+        2280:
           color: '#D381C996'
           id: BrickTileWhiteLineW
           coordinates: 17,-51
-        2286:
+        2281:
           color: '#D381C996'
           id: BrickTileWhiteLineW
           coordinates: 17,-50
-        2287:
+        2282:
           color: '#D381C996'
           id: BrickTileWhiteLineW
           coordinates: 17,-49
-        2288:
+        2283:
           color: '#D381C996'
           id: BrickTileWhiteLineE
           coordinates: 19,-51
-        2289:
+        2284:
           color: '#D381C996'
           id: BrickTileWhiteLineE
           coordinates: 19,-50
-        2290:
+        2285:
           color: '#D381C996'
           id: BrickTileWhiteLineE
           coordinates: 19,-49
-        2291:
+        2286:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 10,-56
-        2292:
+        2287:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 9,-56
-        2293:
+        2288:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 8,-56
-        2294:
+        2289:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 7,-56
-        2295:
+        2290:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 6,-56
-        2301:
+        2291:
+          color: '#FFFFFFFF'
+          id: WarnLineE
+          coordinates: 27,-61
+        2292:
+          color: '#FFFFFFFF'
+          id: WarnLineE
+          coordinates: 27,-60
+        2293:
+          color: '#FFFFFFFF'
+          id: WarnLineE
+          coordinates: 27,-59
+        2294:
+          color: '#FFFFFFFF'
+          id: WarnLineS
+          coordinates: 29,-61
+        2295:
+          color: '#FFFFFFFF'
+          id: WarnLineS
+          coordinates: 29,-60
+        2296:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 29,-59
-        2302:
+        2297:
           color: '#D381C996'
           id: BrickTileSteelLineE
           coordinates: 24,-60
-        2303:
+        2298:
           color: '#D381C996'
           id: BrickTileSteelLineE
           coordinates: 24,-59
-        2311:
-          color: '#D381C996'
-          id: BrickTileSteelLineW
-          coordinates: 21,-59
-        2309:
-          color: '#D381C996'
-          id: BrickTileSteelCornerNe
-          coordinates: 24,-58
-        2306:
+        2299:
           color: '#D381C996'
           id: BrickTileSteelLineN
           coordinates: 23,-58
-        2307:
+        2300:
           color: '#D381C996'
           id: BrickTileSteelLineN
           coordinates: 22,-58
-        2310:
+        2301:
+          color: '#D381C996'
+          id: BrickTileSteelCornerNe
+          coordinates: 24,-58
+        2302:
           color: '#D381C996'
           id: BrickTileSteelCornerNw
           coordinates: 21,-58
-        2312:
+        2303:
+          color: '#D381C996'
+          id: BrickTileSteelLineW
+          coordinates: 21,-59
+        2304:
           color: '#D381C996'
           id: BrickTileSteelLineW
           coordinates: 21,-60
-        2313:
+        2305:
           color: '#D381C996'
           id: BrickTileWhiteLineS
           coordinates: 25,-60
-        2314:
+        2306:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 29,-55
-        2315:
+        2307:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 28,-55
-        2316:
+        2308:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 27,-55
-        2317:
+        2309:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 26,-55
-        2318:
+        2310:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 25,-55
-        2319:
+        2311:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 24,-55
-        2321:
+        2312:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 21,-55
-        2322:
+        2313:
           color: '#D381C996'
           id: BrickTileWhiteLineN
           coordinates: 22,-55
@@ -9561,305 +9561,305 @@ entities:
           color: '#FFFFFFFF'
           id: Bushj2
           coordinates: -7,-68
-        2131:
+        2126:
           color: '#DE3A3A96'
           id: FullTileOverlayGreyscale
           coordinates: -1,-70
-        2132:
+        2127:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -12,-72
-        2133:
+        2128:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -10,-72
-        2134:
+        2129:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -4,-72
-        2135:
+        2130:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -12,-71
-        2136:
+        2131:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -10,-71
-        2137:
+        2132:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -4,-71
-        2138:
+        2133:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -4,-72
-        2139:
+        2134:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -10,-72
-        2140:
+        2135:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -12,-72
-        2141:
+        2136:
           color: '#FFFFFFFF'
           id: WarnLineN
           coordinates: -11,-72
-        2142:
+        2137:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
           coordinates: -9,-72
-        2143:
+        2138:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
           coordinates: -3,-72
-        2144:
+        2139:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSE
           coordinates: -5,-72
       1,-2:
-        2031:
+        2026:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 34,-44
-        2032:
+        2027:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 34,-43
-        2033:
+        2028:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 34,-42
-        2034:
+        2029:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 35,-42
-        2035:
+        2030:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 35,-43
-        2036:
+        2031:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 35,-44
-        2037:
+        2032:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 36,-44
-        2038:
+        2033:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 36,-43
-        2039:
+        2034:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 36,-42
-        2040:
+        2035:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 37,-42
-        2041:
+        2036:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 37,-43
-        2042:
+        2037:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 37,-44
-        2043:
+        2038:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 38,-44
-        2044:
+        2039:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 38,-43
-        2045:
+        2040:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 38,-42
-        2046:
+        2041:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 39,-42
-        2047:
+        2042:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 39,-43
-        2048:
+        2043:
           color: '#D381C996'
           id: CheckerNWSE
           coordinates: 39,-44
-        2087:
+        2082:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 38,-41
-        2088:
+        2083:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 38,-40
-        2089:
+        2084:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 38,-39
-        2090:
+        2085:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 35,-41
-        2091:
+        2086:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 35,-40
-        2092:
+        2087:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 35,-39
-        2093:
+        2088:
           color: '#FFFFFFFF'
           id: Grasse3
           coordinates: 33,-56
-        2094:
+        2089:
           color: '#FFFFFFFF'
           id: Grasse2
           coordinates: 33,-55
-        2095:
+        2090:
           color: '#FFFFFFFF'
           id: Flowersbr3
           coordinates: 33,-55
-        2096:
+        2091:
           color: '#FFFFFFFF'
           id: Flowersy2
           coordinates: 33,-56
-        2097:
+        2092:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 34,-58
-        2098:
+        2093:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 34,-57
-        2099:
+        2094:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 34,-56
-        2100:
+        2095:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 34,-55
-        2101:
+        2096:
           color: '#FFFFFFFF'
           id: WarnLineE
           coordinates: 34,-54
-        2102:
+        2097:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 32,-58
-        2103:
+        2098:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 32,-57
-        2104:
+        2099:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 32,-56
-        2105:
+        2100:
           color: '#FFFFFFFF'
           id: Grassa2
           coordinates: 35,-57
-        2106:
+        2101:
           color: '#FFFFFFFF'
           id: Grassa3
           coordinates: 35,-56
-        2107:
+        2102:
           color: '#FFFFFFFF'
           id: Grassa4
           coordinates: 35,-55
-        2108:
+        2103:
           color: '#FFFFFFFF'
           id: Grassb2
           coordinates: 35,-54
-        2109:
+        2104:
           color: '#FFFFFFFF'
           id: Grassa5
           coordinates: 35,-58
       0,-3:
-        2113:
+        2108:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: 0,-74
-        2114:
+        2109:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 2,-74
-        2115:
+        2110:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: 3,-73
-        2116:
+        2111:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: 0,-68
-        2117:
+        2112:
           color: '#DE3A3A96'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: 3,-68
-        2118:
+        2113:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 2,-68
-        2119:
+        2114:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale
           coordinates: 1,-68
-        2120:
+        2115:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale180
           coordinates: 1,-74
-        2121:
+        2116:
           color: '#DE3A3A96'
           id: QuarterTileOverlayGreyscale180
           coordinates: 2,-73
-        2122:
+        2117:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: 3,-72
-        2123:
+        2118:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: 3,-71
-        2124:
+        2119:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: 3,-70
-        2125:
+        2120:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale90
           coordinates: 3,-69
-        2126:
+        2121:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: 0,-73
-        2127:
+        2122:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: 0,-72
-        2128:
+        2123:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: 0,-71
-        2129:
+        2124:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: 0,-70
-        2130:
+        2125:
           color: '#DE3A3A96'
           id: HalfTileOverlayGreyscale270
           coordinates: 0,-69
-        2145:
+        2140:
           color: '#FFFFFFFF'
           id: WarnLineS
           coordinates: 0,-74
-        2146:
+        2141:
           color: '#FFFFFFFF'
           id: WarnCornerSmallSW
           coordinates: 0,-73
@@ -10169,7 +10169,7 @@ entities:
       -14,3: 0
       -14,4: 0
       -14,5: 0
-      -14,6: 0
+      -14,6: 1
       -14,7: 0
       -14,8: 0
       -14,9: 0
@@ -10209,7 +10209,7 @@ entities:
       -11,10: 0
       -10,0: 0
       -10,1: 0
-      -10,2: 0
+      -10,2: 1
       -10,3: 0
       -10,4: 0
       -10,5: 0
@@ -10220,7 +10220,7 @@ entities:
       -10,10: 0
       -9,0: 0
       -9,1: 0
-      -9,2: 0
+      -9,2: 1
       -9,3: 0
       -9,4: 0
       -9,5: 0
@@ -10335,7 +10335,7 @@ entities:
       12,3: 0
       12,4: 0
       12,5: 0
-      12,6: 0
+      12,6: 1
       12,7: 0
       12,8: 0
       12,9: 0
@@ -10471,7 +10471,7 @@ entities:
       10,-16: 0
       10,-15: 0
       10,-14: 0
-      10,-13: 0
+      10,-13: 1
       10,-12: 0
       10,-11: 0
       10,-10: 0
@@ -10646,7 +10646,7 @@ entities:
       -12,-1: 0
       -11,-16: 0
       -11,-15: 0
-      -11,-14: 0
+      -11,-14: 1
       -11,-13: 0
       -11,-12: 0
       -11,-11: 0
@@ -10664,7 +10664,7 @@ entities:
       -10,-15: 0
       -10,-14: 0
       -10,-13: 0
-      -10,-12: 0
+      -10,-12: 1
       -10,-11: 0
       -10,-10: 0
       -10,-9: 0
@@ -10950,13 +10950,13 @@ entities:
       -18,3: 0
       -18,4: 0
       -18,5: 0
-      -18,6: 0
+      -18,6: 1
       -18,7: 0
       -18,8: 0
       -18,9: 0
       -18,10: 0
       -17,0: 0
-      -17,1: 0
+      -17,1: 1
       -17,2: 0
       -17,3: 0
       -17,4: 0
@@ -11029,7 +11029,7 @@ entities:
       -15,-20: 0
       -15,-19: 0
       -15,-18: 0
-      -15,-17: 0
+      -15,-17: 1
       -14,-21: 0
       -14,-20: 0
       -14,-19: 0
@@ -11225,14 +11225,14 @@ entities:
       17,-19: 0
       17,-18: 0
       17,-17: 0
-      -16,11: 0
+      -16,11: 1
       -16,12: 0
       -16,14: 0
-      -15,11: 0
+      -15,11: 1
       -15,12: 0
       -15,14: 0
       -15,15: 0
-      -14,11: 0
+      -14,11: 1
       -14,12: 0
       -14,14: 0
       -14,15: 0
@@ -11314,9 +11314,9 @@ entities:
       -25,-1: 0
       -24,-16: 0
       -24,-15: 0
-      -24,-14: 0
-      -24,-13: 0
-      -24,-12: 0
+      -24,-14: 1
+      -24,-13: 1
+      -24,-12: 1
       -24,-11: 0
       -24,-10: 0
       -24,-9: 0
@@ -11568,7 +11568,7 @@ entities:
       22,5: 0
       22,6: 0
       22,7: 0
-      22,8: 0
+      22,8: 1
       22,9: 0
       22,10: 0
       22,11: 0
@@ -11580,7 +11580,7 @@ entities:
       23,5: 0
       23,6: 0
       23,7: 0
-      23,8: 0
+      23,8: 1
       23,9: 0
       23,10: 0
       23,11: 0
@@ -11601,7 +11601,7 @@ entities:
       25,2: 0
       25,3: 0
       25,4: 0
-      25,5: 0
+      25,5: 1
       25,6: 0
       25,7: 0
       25,8: 0
@@ -11613,7 +11613,7 @@ entities:
       26,2: 0
       26,3: 0
       26,4: 0
-      26,5: 0
+      26,5: 1
       26,6: 0
       26,7: 0
       26,8: 0
@@ -11684,8 +11684,8 @@ entities:
       18,-1: 0
       19,-16: 0
       19,-15: 0
-      19,-14: 0
-      19,-13: 0
+      19,-14: 1
+      19,-13: 1
       19,-12: 0
       19,-11: 0
       19,-10: 0
@@ -11860,7 +11860,7 @@ entities:
       29,-1: 0
       30,-16: 0
       30,-15: 0
-      30,-14: 0
+      30,-14: 1
       30,-13: 0
       30,-12: 0
       30,-11: 0
@@ -11916,9 +11916,9 @@ entities:
       7,-22: 0
       8,-22: 0
       9,-22: 0
-      10,-22: 0
-      11,-22: 0
-      12,-22: 0
+      10,-22: 1
+      11,-22: 1
+      12,-22: 1
       13,-27: 0
       13,-26: 0
       13,-25: 0
@@ -11928,7 +11928,7 @@ entities:
       14,-27: 0
       14,-26: 0
       14,-25: 0
-      14,-24: 0
+      14,-24: 1
       14,-23: 0
       14,-22: 0
       15,-27: 0
@@ -12120,7 +12120,7 @@ entities:
       32,-15: 0
       32,-14: 0
       32,-13: 0
-      32,-12: 0
+      32,-12: 1
       32,-11: 0
       32,-10: 0
       32,-9: 0
@@ -12132,13 +12132,13 @@ entities:
       32,-3: 0
       32,-2: 0
       32,-1: 0
-      33,-16: 1
-      33,-15: 1
-      33,-14: 1
+      33,-16: 2
+      33,-15: 3
+      33,-14: 2
       33,-13: 0
       33,-12: 0
       33,-11: 0
-      33,-10: 0
+      33,-10: 1
       33,-9: 0
       33,-8: 0
       33,-7: 0
@@ -12148,9 +12148,9 @@ entities:
       33,-3: 0
       33,-2: 0
       33,-1: 0
-      34,-16: 1
-      34,-15: 1
-      34,-14: 1
+      34,-16: 2
+      34,-15: 2
+      34,-14: 2
       34,-13: 0
       34,-12: 0
       34,-11: 0
@@ -12164,9 +12164,9 @@ entities:
       34,-3: 0
       34,-2: 0
       34,-1: 0
-      35,-16: 1
-      35,-15: 1
-      35,-14: 1
+      35,-16: 2
+      35,-15: 2
+      35,-14: 2
       35,-13: 0
       35,-12: 0
       35,-11: 0
@@ -12180,7 +12180,7 @@ entities:
       35,-3: 0
       35,-2: 0
       35,-1: 0
-      36,-16: 1
+      36,-16: 2
       36,-15: 0
       36,-14: 0
       36,-13: 0
@@ -12196,7 +12196,7 @@ entities:
       36,-3: 0
       36,-2: 0
       36,-1: 0
-      37,-16: 1
+      37,-16: 2
       37,-15: 0
       37,-14: 0
       37,-13: 0
@@ -12212,7 +12212,7 @@ entities:
       37,-3: 0
       37,-2: 0
       37,-1: 0
-      38,-16: 1
+      38,-16: 2
       38,-15: 0
       38,-14: 0
       38,-13: 0
@@ -12318,7 +12318,7 @@ entities:
       33,2: 0
       33,3: 0
       33,4: 0
-      34,0: 0
+      34,0: 1
       34,1: 0
       34,2: 0
       34,3: 0
@@ -12333,7 +12333,7 @@ entities:
       36,2: 0
       36,3: 0
       36,4: 0
-      37,0: 0
+      37,0: 1
       37,1: 0
       37,2: 0
       37,3: 0
@@ -12343,7 +12343,7 @@ entities:
       38,2: 0
       38,3: 0
       38,4: 0
-      39,0: 0
+      39,0: 1
       39,1: 0
       39,2: 0
       39,3: 0
@@ -12389,7 +12389,7 @@ entities:
       33,-20: 0
       33,-19: 0
       33,-18: 0
-      33,-17: 1
+      33,-17: 2
       34,-27: 0
       34,-26: 0
       34,-25: 0
@@ -12400,18 +12400,18 @@ entities:
       34,-20: 0
       34,-19: 0
       34,-18: 0
-      34,-17: 1
+      34,-17: 2
       35,-27: 0
       35,-26: 0
       35,-25: 0
       35,-24: 0
-      35,-23: 0
-      35,-22: 0
-      35,-21: 0
+      35,-23: 1
+      35,-22: 1
+      35,-21: 1
       35,-20: 0
       35,-19: 0
       35,-18: 0
-      35,-17: 1
+      35,-17: 2
       36,-27: 0
       36,-26: 0
       36,-25: 0
@@ -12422,7 +12422,7 @@ entities:
       36,-20: 0
       36,-19: 0
       36,-18: 0
-      36,-17: 1
+      36,-17: 2
       37,-27: 0
       37,-26: 0
       37,-25: 0
@@ -12433,18 +12433,18 @@ entities:
       37,-20: 0
       37,-19: 0
       37,-18: 0
-      37,-17: 1
+      37,-17: 2
       38,-27: 0
-      38,-26: 0
+      38,-26: 1
       38,-25: 0
       38,-24: 0
       38,-23: 0
-      38,-22: 0
+      38,-22: 1
       38,-21: 0
       38,-20: 0
       38,-19: 0
       38,-18: 0
-      38,-17: 1
+      38,-17: 2
       39,-27: 0
       39,-26: 0
       39,-25: 0
@@ -12478,8 +12478,8 @@ entities:
       41,-19: 0
       41,-18: 0
       41,-17: 0
-      42,-27: 0
-      42,-26: 0
+      42,-27: 1
+      42,-26: 1
       42,-25: 0
       42,-24: 0
       42,-23: 0
@@ -12634,7 +12634,7 @@ entities:
       -1,24: 0
       -1,25: 0
       -32,16: 0
-      -32,17: 0
+      -32,17: 1
       -32,18: 0
       -32,19: 0
       -32,20: 0
@@ -12656,7 +12656,7 @@ entities:
       -31,22: 0
       -31,23: 0
       -31,24: 0
-      -31,25: 0
+      -31,25: 1
       -31,26: 0
       -31,27: 0
       -31,28: 0
@@ -12682,7 +12682,7 @@ entities:
       -29,20: 0
       -29,21: 0
       -29,22: 0
-      -29,23: 0
+      -29,23: 1
       -29,24: 0
       -29,25: 0
       -29,26: 0
@@ -12715,7 +12715,7 @@ entities:
       -27,25: 0
       -27,26: 0
       -27,27: 0
-      -27,28: 0
+      -27,28: 1
       -27,29: 0
       -26,16: 0
       -26,17: 0
@@ -12923,9 +12923,9 @@ entities:
       -40,20: 0
       -40,21: 0
       -40,22: 0
-      -40,23: 0
-      -40,24: 0
-      -40,25: 0
+      -40,23: 1
+      -40,24: 1
+      -40,25: 1
       -40,26: 0
       -40,27: 0
       -40,28: 0
@@ -12956,7 +12956,7 @@ entities:
       -38,25: 0
       -38,26: 0
       -38,27: 0
-      -38,28: 0
+      -38,28: 1
       -38,29: 0
       -37,16: 0
       -37,17: 0
@@ -13331,7 +13331,7 @@ entities:
       -63,-6: 0
       -63,-5: 0
       -63,-4: 0
-      -63,-3: 0
+      -63,-3: 1
       -63,-2: 0
       -63,-1: 0
       -62,-11: 0
@@ -13458,7 +13458,7 @@ entities:
       -64,11: 0
       -64,12: 0
       -63,0: 0
-      -63,1: 0
+      -63,1: 1
       -63,2: 0
       -63,3: 0
       -63,4: 0
@@ -13587,7 +13587,7 @@ entities:
       -53,3: 0
       -53,4: 0
       -53,5: 0
-      -53,6: 0
+      -53,6: 1
       -53,7: 0
       -53,8: 0
       -53,9: 0
@@ -13607,7 +13607,7 @@ entities:
       -51,3: 0
       -51,4: 0
       -51,5: 0
-      -51,6: 0
+      -51,6: 1
       -51,7: 0
       -51,8: 0
       -51,9: 0
@@ -13695,7 +13695,7 @@ entities:
       -65,-5: 0
       -65,-4: 0
       -65,-3: 0
-      -65,-2: 0
+      -65,-2: 1
       -65,-1: 0
       -76,7: 0
       -76,8: 0
@@ -13765,7 +13765,7 @@ entities:
       -69,2: 0
       -69,3: 0
       -69,4: 0
-      -69,5: 0
+      -69,5: 1
       -69,6: 0
       -69,7: 0
       -69,8: 0
@@ -13778,7 +13778,7 @@ entities:
       -68,2: 0
       -68,3: 0
       -68,4: 0
-      -68,5: 0
+      -68,5: 1
       -68,6: 0
       -68,7: 0
       -68,8: 0
@@ -13812,7 +13812,7 @@ entities:
       -66,10: 0
       -66,11: 0
       -66,12: 0
-      -65,0: 0
+      -65,0: 1
       -65,1: 0
       -65,2: 0
       -65,3: 0
@@ -13988,7 +13988,7 @@ entities:
       -24,-26: 0
       -24,-25: 0
       -24,-24: 0
-      -24,-23: 0
+      -24,-23: 1
       -23,-27: 0
       -23,-26: 0
       -23,-25: 0
@@ -14100,7 +14100,7 @@ entities:
       33,7: 0
       33,8: 0
       33,9: 0
-      33,10: 0
+      33,10: 1
       33,11: 0
       34,5: 0
       34,6: 0
@@ -14214,7 +14214,7 @@ entities:
       47,3: 0
       47,4: 0
       47,5: 0
-      47,6: 0
+      47,6: 1
       47,7: 0
       47,8: 0
       47,9: 0
@@ -14263,7 +14263,7 @@ entities:
       54,-20: 0
       54,-19: 0
       54,-18: 0
-      54,-17: 0
+      54,-17: 1
       55,-20: 0
       55,-19: 0
       55,-18: 0
@@ -14364,8 +14364,8 @@ entities:
       53,-3: 0
       53,-2: 0
       53,-1: 0
-      54,-16: 0
-      54,-15: 0
+      54,-16: 1
+      54,-15: 1
       54,-14: 0
       54,-13: 0
       54,-12: 0
@@ -14415,10 +14415,10 @@ entities:
       49,4: 0
       49,5: 0
       49,6: 0
-      49,7: 0
+      49,7: 1
       49,8: 0
       49,9: 0
-      49,10: 0
+      49,10: 1
       49,11: 0
       50,0: 0
       50,1: 0
@@ -14439,10 +14439,10 @@ entities:
       51,4: 0
       51,5: 0
       51,6: 0
-      51,7: 0
+      51,7: 1
       51,8: 0
       51,9: 0
-      51,10: 0
+      51,10: 1
       51,11: 0
       52,0: 0
       52,1: 0
@@ -14465,7 +14465,7 @@ entities:
       53,6: 0
       53,7: 0
       53,8: 0
-      53,9: 0
+      53,9: 1
       53,10: 0
       53,11: 0
       54,0: 0
@@ -14739,7 +14739,7 @@ entities:
       7,-28: 0
       8,-31: 0
       8,-30: 0
-      8,-29: 0
+      8,-29: 1
       8,-28: 0
       9,-31: 0
       9,-30: 0
@@ -14802,9 +14802,9 @@ entities:
       -30,-31: 0
       -30,-30: 0
       -30,-29: 0
-      -30,-28: 1
-      -30,-27: 1
-      -30,-26: 1
+      -30,-28: 2
+      -30,-27: 2
+      -30,-26: 2
       -30,-25: 0
       -30,-24: 0
       -30,-23: 0
@@ -14817,9 +14817,9 @@ entities:
       -29,-31: 0
       -29,-30: 0
       -29,-29: 0
-      -29,-28: 1
-      -29,-27: 1
-      -29,-26: 1
+      -29,-28: 2
+      -29,-27: 2
+      -29,-26: 2
       -29,-25: 0
       -29,-24: 0
       -29,-23: 0
@@ -14832,9 +14832,9 @@ entities:
       -28,-31: 0
       -28,-30: 0
       -28,-29: 0
-      -28,-28: 1
-      -28,-27: 1
-      -28,-26: 1
+      -28,-28: 2
+      -28,-27: 2
+      -28,-26: 2
       -28,-25: 0
       -28,-24: 0
       -28,-23: 0
@@ -14847,24 +14847,24 @@ entities:
       -27,-31: 0
       -27,-30: 0
       -27,-29: 0
-      -27,-28: 1
-      -27,-27: 1
-      -27,-26: 1
+      -27,-28: 2
+      -27,-27: 2
+      -27,-26: 2
       -27,-25: 0
       -27,-24: 0
       -27,-23: 0
       -27,-22: 0
       -27,-21: 0
-      -27,-20: 0
+      -27,-20: 1
       -27,-19: 0
       -27,-18: 0
       -27,-17: 0
       -26,-31: 0
       -26,-30: 0
       -26,-29: 0
-      -26,-28: 1
-      -26,-27: 1
-      -26,-26: 1
+      -26,-28: 2
+      -26,-27: 2
+      -26,-26: 2
       -26,-25: 0
       -26,-24: 0
       -26,-23: 0
@@ -14935,7 +14935,7 @@ entities:
       18,-28: 0
       19,-31: 0
       19,-30: 0
-      19,-29: 0
+      19,-29: 1
       19,-28: 0
       20,-31: 0
       20,-30: 0
@@ -14993,7 +14993,7 @@ entities:
       33,-30: 0
       33,-29: 0
       33,-28: 0
-      34,-31: 0
+      34,-31: 1
       34,-30: 0
       34,-29: 0
       34,-28: 0
@@ -15089,7 +15089,7 @@ entities:
       -43,-16: 0
       -43,-15: 0
       -43,-14: 0
-      -43,-13: 0
+      -43,-13: 1
       -43,-12: 0
       -43,-11: 0
       -43,-10: 0
@@ -15099,7 +15099,7 @@ entities:
       -43,-6: 0
       -43,-5: 0
       -43,-4: 0
-      -43,-3: 0
+      -43,-3: 1
       -42,-16: 0
       -42,-15: 0
       -42,-14: 0
@@ -15113,7 +15113,7 @@ entities:
       -42,-6: 0
       -42,-5: 0
       -42,-4: 0
-      -42,-3: 0
+      -42,-3: 1
       -41,-16: 0
       -41,-15: 0
       -41,-14: 0
@@ -15127,7 +15127,7 @@ entities:
       -41,-6: 0
       -41,-5: 0
       -41,-4: 0
-      -41,-3: 0
+      -41,-3: 1
       -40,-16: 0
       -40,-15: 0
       -40,-14: 0
@@ -15243,7 +15243,7 @@ entities:
       0,18: 0
       0,19: 0
       0,20: 0
-      0,21: 0
+      0,21: 1
       0,22: 0
       1,18: 0
       1,19: 0
@@ -15364,7 +15364,7 @@ entities:
       -60,-15: 0
       -60,-14: 0
       -60,-13: 0
-      -59,-16: 0
+      -59,-16: 1
       -59,-15: 0
       -59,-14: 0
       -59,-13: 0
@@ -15376,7 +15376,7 @@ entities:
       -57,-15: 0
       -57,-14: 0
       -57,-13: 0
-      -57,-12: 0
+      -57,-12: 1
       -57,-11: 0
       -57,-10: 0
       -57,-9: 0
@@ -15434,7 +15434,7 @@ entities:
       -52,-7: 0
       -51,-16: 0
       -51,-15: 0
-      -51,-14: 0
+      -51,-14: 1
       -51,-13: 0
       -51,-12: 0
       -51,-11: 0
@@ -15540,12 +15540,12 @@ entities:
       -67,-10: 0
       -67,-9: 0
       -67,-8: 0
-      -67,-7: 0
+      -67,-7: 1
       -66,-11: 0
       -66,-10: 0
       -66,-9: 0
       -66,-8: 0
-      -66,-7: 0
+      -66,-7: 1
       -65,-16: 0
       -65,-15: 0
       -65,-14: 0
@@ -15741,10 +15741,10 @@ entities:
       -39,-28: 0
       -39,-27: 0
       -39,-26: 0
-      -39,-25: 0
-      -39,-24: 0
+      -39,-25: 1
+      -39,-24: 1
       -39,-23: 0
-      -39,-22: 0
+      -39,-22: 1
       -39,-21: 0
       -39,-20: 0
       -39,-19: 0
@@ -15932,7 +15932,7 @@ entities:
       -57,-27: 0
       -57,-26: 0
       -57,-25: 0
-      -57,-24: 0
+      -57,-24: 1
       -57,-23: 0
       -57,-22: 0
       -57,-21: 0
@@ -16026,7 +16026,7 @@ entities:
       -51,-23: 0
       -51,-22: 0
       -51,-21: 0
-      -51,-20: 0
+      -51,-20: 1
       -51,-19: 0
       -51,-18: 0
       -51,-17: 0
@@ -16162,7 +16162,7 @@ entities:
       -15,30: 0
       -15,31: 0
       -14,26: 0
-      -14,27: 0
+      -14,27: 1
       -14,28: 0
       -14,29: 0
       -14,30: 0
@@ -16180,7 +16180,7 @@ entities:
       -12,30: 0
       -12,31: 0
       -11,26: 0
-      -11,27: 0
+      -11,27: 1
       -11,28: 0
       -11,29: 0
       -11,30: 0
@@ -16198,7 +16198,7 @@ entities:
       -9,30: 0
       -9,31: 0
       -8,26: 0
-      -8,27: 0
+      -8,27: 1
       -8,28: 0
       -8,29: 0
       -8,30: 0
@@ -16219,7 +16219,7 @@ entities:
       -5,27: 0
       -5,28: 0
       -5,29: 0
-      -5,30: 0
+      -5,30: 1
       -5,31: 0
       -4,26: 0
       -4,27: 0
@@ -16247,7 +16247,7 @@ entities:
       -1,31: 0
       -26,26: 0
       -26,27: 0
-      -26,28: 0
+      -26,28: 1
       -26,29: 0
       -25,26: 0
       -25,27: 0
@@ -16315,7 +16315,7 @@ entities:
       3,29: 0
       3,30: 0
       3,31: 0
-      4,23: 0
+      4,23: 1
       4,24: 0
       4,25: 0
       4,26: 0
@@ -16378,7 +16378,7 @@ entities:
       10,29: 0
       10,30: 0
       10,31: 0
-      11,23: 0
+      11,23: 1
       11,24: 0
       11,25: 0
       11,26: 0
@@ -16441,16 +16441,16 @@ entities:
       0,33: 0
       0,34: 0
       0,35: 0
-      0,36: 0
+      0,36: 1
       0,37: 0
       0,38: 0
-      0,39: 0
+      0,39: 1
       0,40: 0
       0,41: 0
       0,42: 0
       0,43: 0
       0,44: 0
-      0,45: 0
+      0,45: 1
       0,46: 0
       1,32: 0
       1,33: 0
@@ -16465,7 +16465,7 @@ entities:
       1,42: 0
       1,43: 0
       1,44: 0
-      1,45: 0
+      1,45: 1
       1,46: 0
       2,32: 0
       2,33: 0
@@ -16545,7 +16545,7 @@ entities:
       6,44: 0
       6,45: 0
       6,46: 0
-      6,47: 0
+      6,47: 1
       7,32: 0
       7,33: 0
       7,34: 0
@@ -16706,7 +16706,7 @@ entities:
       -15,35: 0
       -15,36: 0
       -15,37: 0
-      -15,38: 0
+      -15,38: 1
       -15,39: 0
       -15,40: 0
       -15,41: 0
@@ -16781,14 +16781,14 @@ entities:
       -11,46: 0
       -11,47: 0
       -10,32: 0
-      -10,33: 0
-      -10,34: 0
+      -10,33: 1
+      -10,34: 1
       -10,35: 0
       -10,36: 0
       -10,37: 0
       -10,38: 0
-      -10,39: 0
-      -10,40: 0
+      -10,39: 1
+      -10,40: 1
       -10,41: 0
       -10,42: 0
       -10,43: 0
@@ -16797,8 +16797,8 @@ entities:
       -10,46: 0
       -10,47: 0
       -9,32: 0
-      -9,33: 0
-      -9,34: 0
+      -9,33: 1
+      -9,34: 1
       -9,35: 0
       -9,36: 0
       -9,37: 0
@@ -16886,7 +16886,7 @@ entities:
       -4,42: 0
       -4,43: 0
       -4,44: 0
-      -4,45: 0
+      -4,45: 1
       -4,46: 0
       -3,32: 0
       -3,33: 0
@@ -16901,7 +16901,7 @@ entities:
       -3,42: 0
       -3,43: 0
       -3,44: 0
-      -3,45: 0
+      -3,45: 1
       -3,46: 0
       -2,32: 0
       -2,33: 0
@@ -16911,12 +16911,12 @@ entities:
       -2,37: 0
       -2,38: 0
       -2,39: 0
-      -2,40: 0
+      -2,40: 1
       -2,41: 0
       -2,42: 0
       -2,43: 0
       -2,44: 0
-      -2,45: 0
+      -2,45: 1
       -2,46: 0
       -1,32: 0
       -1,33: 0
@@ -16931,7 +16931,7 @@ entities:
       -1,42: 0
       -1,43: 0
       -1,44: 0
-      -1,45: 0
+      -1,45: 1
       -1,46: 0
       16,29: 0
       16,30: 0
@@ -17048,7 +17048,7 @@ entities:
       -17,46: 0
       -17,47: 0
       -16,48: 0
-      -16,49: 0
+      -16,49: 1
       -16,50: 0
       -16,51: 0
       -16,52: 0
@@ -17097,7 +17097,7 @@ entities:
       -11,48: 0
       -11,49: 0
       -11,50: 0
-      -11,51: 0
+      -11,51: 1
       -11,52: 0
       -11,53: 0
       -11,54: 0
@@ -17136,11 +17136,11 @@ entities:
       -7,48: 0
       -7,49: 0
       -7,50: 0
-      -7,51: 0
+      -7,51: 1
       -7,52: 0
       -18,51: 0
       -17,48: 0
-      -17,49: 0
+      -17,49: 1
       -17,50: 0
       -17,51: 0
       -17,52: 0
@@ -17152,10 +17152,10 @@ entities:
       -21,31: 0
       -20,30: 0
       -20,31: 0
-      -19,30: 0
+      -19,30: 1
       -19,31: 0
       -18,30: 0
-      -18,31: 0
+      -18,31: 1
       -17,30: 0
       -17,31: 0
       -16,32: 0
@@ -17554,7 +17554,7 @@ entities:
       -19,61: 0
       -19,62: 0
       -18,48: 0
-      -18,49: 0
+      -18,49: 1
       -18,50: 0
       -18,52: 0
       -18,53: 0
@@ -17710,11 +17710,11 @@ entities:
       20,13: 0
       20,14: 0
       20,15: 0
-      21,12: 0
+      21,12: 1
       21,13: 0
       21,14: 0
       21,15: 0
-      22,12: 0
+      22,12: 1
       22,13: 0
       22,14: 0
       22,15: 0
@@ -17744,7 +17744,7 @@ entities:
       17,16: 0
       17,17: 0
       17,18: 0
-      17,19: 0
+      17,19: 1
       17,20: 0
       17,21: 0
       17,22: 0
@@ -17757,7 +17757,7 @@ entities:
       18,16: 0
       18,17: 0
       18,18: 0
-      18,19: 0
+      18,19: 1
       18,20: 0
       18,21: 0
       18,22: 0
@@ -17770,7 +17770,7 @@ entities:
       19,16: 0
       19,17: 0
       19,18: 0
-      19,19: 0
+      19,19: 1
       19,20: 0
       19,21: 0
       19,22: 0
@@ -17958,7 +17958,7 @@ entities:
       -3,48: 0
       -3,49: 0
       -3,50: 0
-      -3,51: 0
+      -3,51: 1
       -3,52: 0
       -3,53: 0
       -3,54: 0
@@ -18168,7 +18168,7 @@ entities:
       43,14: 0
       43,15: 0
       44,12: 0
-      44,13: 0
+      44,13: 1
       44,14: 0
       44,15: 0
       45,12: 0
@@ -18187,7 +18187,7 @@ entities:
       48,13: 0
       48,14: 0
       48,15: 0
-      49,12: 0
+      49,12: 1
       49,13: 0
       49,14: 0
       49,15: 0
@@ -18377,7 +18377,7 @@ entities:
       37,19: 0
       37,20: 0
       37,21: 0
-      37,22: 0
+      37,22: 1
       37,23: 0
       37,24: 0
       37,25: 0
@@ -18457,7 +18457,7 @@ entities:
       46,16: 0
       46,17: 0
       47,16: 0
-      47,17: 0
+      47,17: 1
       48,16: 0
       48,17: 0
       49,16: 0
@@ -18530,7 +18530,7 @@ entities:
       27,43: 0
       27,44: 0
       27,45: 0
-      27,46: 0
+      27,46: 1
       27,47: 0
       28,32: 0
       28,33: 0
@@ -18594,7 +18594,7 @@ entities:
       31,43: 0
       31,44: 0
       31,45: 0
-      31,46: 0
+      31,46: 1
       31,47: 0
       18,51: 0
       19,51: 0
@@ -18699,7 +18699,7 @@ entities:
       32,43: 0
       32,44: 0
       32,45: 0
-      32,46: 0
+      32,46: 1
       32,47: 0
       33,32: 0
       33,33: 0
@@ -18715,7 +18715,7 @@ entities:
       33,43: 0
       33,44: 0
       33,45: 0
-      33,46: 0
+      33,46: 1
       33,47: 0
       34,32: 0
       34,33: 0
@@ -18731,7 +18731,7 @@ entities:
       34,43: 0
       34,44: 0
       34,45: 0
-      34,46: 0
+      34,46: 1
       34,47: 0
       35,32: 0
       35,33: 0
@@ -18852,7 +18852,7 @@ entities:
       35,54: 0
       35,55: 0
       35,57: 0
-      36,48: 0
+      36,48: 1
       36,49: 0
       36,51: 0
       36,57: 0
@@ -18865,7 +18865,7 @@ entities:
       38,50: 0
       38,51: 0
       38,57: 0
-      39,48: 0
+      39,48: 1
       39,49: 0
       39,51: 0
       40,48: 0
@@ -18944,9 +18944,9 @@ entities:
       56,-2: 0
       56,-1: 0
       57,-4: 0
-      57,-3: 0
-      57,-2: 0
-      57,-1: 0
+      57,-3: 1
+      57,-2: 1
+      57,-1: 1
       58,-4: 0
       58,-3: 0
       58,-2: 0
@@ -18975,7 +18975,7 @@ entities:
       50,13: 0
       50,14: 0
       50,15: 0
-      51,12: 0
+      51,12: 1
       51,13: 0
       51,14: 0
       51,15: 0
@@ -19000,12 +19000,12 @@ entities:
       56,5: 0
       56,6: 0
       56,7: 0
-      56,8: 0
+      56,8: 1
       56,9: 0
       56,10: 0
       56,11: 0
       56,12: 0
-      57,0: 0
+      57,0: 1
       57,1: 0
       57,2: 0
       57,3: 0
@@ -19079,7 +19079,7 @@ entities:
       63,2: 0
       63,3: 0
       63,4: 0
-      63,5: 0
+      63,5: 1
       63,6: 0
       64,2: 0
       64,3: 0
@@ -19097,7 +19097,7 @@ entities:
       66,5: 0
       66,6: 0
       67,2: 0
-      67,3: 0
+      67,3: 1
       67,4: 0
       67,5: 0
       67,6: 0
@@ -19197,7 +19197,7 @@ entities:
       -32,37: 0
       -32,38: 0
       -32,39: 0
-      -32,40: 0
+      -32,40: 1
       -32,41: 0
       -32,42: 0
       -32,43: 0
@@ -19425,7 +19425,7 @@ entities:
       -36,35: 0
       -36,36: 0
       -36,37: 0
-      -36,38: 0
+      -36,38: 1
       -36,39: 0
       -36,40: 0
       -36,41: 0
@@ -19511,7 +19511,7 @@ entities:
       7,-33: 0
       8,-35: 0
       8,-34: 0
-      8,-33: 0
+      8,-33: 1
       9,-35: 0
       9,-34: 0
       9,-33: 0
@@ -19642,7 +19642,7 @@ entities:
       49,-27: 0
       49,-26: 0
       49,-25: 0
-      49,-24: 0
+      49,-24: 1
       49,-23: 0
       49,-22: 0
       49,-21: 0
@@ -19659,9 +19659,9 @@ entities:
       50,-22: 0
       50,-21: 0
       51,-32: 0
-      51,-31: 2
-      51,-30: 2
-      51,-29: 2
+      51,-31: 4
+      51,-30: 4
+      51,-29: 4
       51,-28: 0
       51,-27: 0
       51,-26: 0
@@ -19671,9 +19671,9 @@ entities:
       51,-22: 0
       51,-21: 0
       52,-32: 0
-      52,-31: 2
-      52,-30: 2
-      52,-29: 2
+      52,-31: 4
+      52,-30: 4
+      52,-29: 4
       52,-28: 0
       52,-27: 0
       52,-26: 0
@@ -19683,9 +19683,9 @@ entities:
       52,-22: 0
       52,-21: 0
       53,-32: 0
-      53,-31: 2
-      53,-30: 2
-      53,-29: 2
+      53,-31: 4
+      53,-30: 4
+      53,-29: 4
       53,-28: 0
       53,-27: 0
       53,-26: 0
@@ -19707,9 +19707,9 @@ entities:
       54,-22: 0
       54,-21: 0
       55,-32: 0
-      55,-31: 3
-      55,-30: 3
-      55,-29: 3
+      55,-31: 5
+      55,-30: 5
+      55,-29: 5
       55,-28: 0
       55,-27: 0
       55,-26: 0
@@ -19719,9 +19719,9 @@ entities:
       55,-22: 0
       55,-21: 0
       56,-32: 0
-      56,-31: 3
-      56,-30: 3
-      56,-29: 3
+      56,-31: 5
+      56,-30: 5
+      56,-29: 5
       56,-28: 0
       56,-27: 0
       56,-26: 0
@@ -19733,9 +19733,9 @@ entities:
       56,-20: 0
       56,-19: 0
       57,-32: 0
-      57,-31: 3
-      57,-30: 3
-      57,-29: 3
+      57,-31: 5
+      57,-30: 5
+      57,-29: 5
       57,-28: 0
       57,-27: 0
       57,-26: 0
@@ -19923,38 +19923,38 @@ entities:
       66,-8: 0
       66,-7: 0
       66,-6: 0
-      67,-16: 4
-      67,-15: 4
+      67,-16: 6
+      67,-15: 6
       67,-14: 0
-      67,-13: 5
-      67,-12: 5
-      67,-11: 5
+      67,-13: 7
+      67,-12: 7
+      67,-11: 7
       67,-10: 0
-      67,-9: 5
-      67,-8: 5
-      67,-7: 5
+      67,-9: 7
+      67,-8: 7
+      67,-7: 7
       67,-6: 0
-      68,-16: 4
-      68,-15: 4
+      68,-16: 6
+      68,-15: 6
       68,-14: 0
-      68,-13: 5
-      68,-12: 5
-      68,-11: 5
+      68,-13: 7
+      68,-12: 7
+      68,-11: 7
       68,-10: 0
-      68,-9: 5
-      68,-8: 5
-      68,-7: 5
+      68,-9: 7
+      68,-8: 7
+      68,-7: 7
       68,-6: 0
-      69,-16: 4
-      69,-15: 4
+      69,-16: 6
+      69,-15: 6
       69,-14: 0
-      69,-13: 5
-      69,-12: 5
-      69,-11: 5
+      69,-13: 7
+      69,-12: 7
+      69,-11: 7
       69,-10: 0
-      69,-9: 5
-      69,-8: 5
-      69,-7: 5
+      69,-9: 7
+      69,-8: 7
+      69,-7: 7
       69,-6: 0
       70,-16: 0
       70,-15: 0
@@ -20006,27 +20006,27 @@ entities:
       67,-24: 0
       67,-23: 0
       67,-22: 0
-      67,-21: 5
-      67,-20: 5
-      67,-19: 5
+      67,-21: 7
+      67,-20: 7
+      67,-19: 7
       67,-18: 0
-      67,-17: 4
+      67,-17: 6
       68,-27: 0
       68,-26: 0
       68,-24: 0
       68,-23: 0
       68,-22: 0
-      68,-21: 5
-      68,-20: 5
-      68,-19: 5
+      68,-21: 7
+      68,-20: 7
+      68,-19: 7
       68,-18: 0
-      68,-17: 4
+      68,-17: 6
       69,-22: 0
-      69,-21: 5
-      69,-20: 5
-      69,-19: 5
+      69,-21: 7
+      69,-20: 7
+      69,-19: 7
       69,-18: 0
-      69,-17: 4
+      69,-17: 6
       70,-22: 0
       70,-21: 0
       70,-20: 0
@@ -20058,7 +20058,7 @@ entities:
       -9,-32: 0
       -8,-32: 0
       -7,-32: 0
-      -6,-32: 0
+      -6,-32: 1
       -5,-32: 0
       -4,-32: 0
       -3,-32: 0
@@ -20204,7 +20204,7 @@ entities:
       43,30: 0
       43,31: 0
       44,18: 0
-      44,19: 0
+      44,19: 1
       44,20: 0
       44,21: 0
       44,22: 0
@@ -20213,12 +20213,12 @@ entities:
       44,25: 0
       44,26: 0
       44,27: 0
-      44,28: 0
+      44,28: 1
       44,29: 0
       44,30: 0
       44,31: 0
       45,18: 0
-      45,19: 0
+      45,19: 1
       45,20: 0
       45,21: 0
       45,22: 0
@@ -20232,7 +20232,7 @@ entities:
       45,30: 0
       45,31: 0
       46,18: 0
-      46,19: 0
+      46,19: 1
       46,20: 0
       46,21: 0
       46,22: 0
@@ -20265,13 +20265,13 @@ entities:
       48,21: 0
       48,22: 0
       48,23: 0
-      48,24: 0
-      48,25: 0
+      48,24: 1
+      48,25: 1
       48,26: 0
       48,27: 0
       48,28: 0
       48,29: 0
-      48,30: 0
+      48,30: 1
       48,31: 0
       49,18: 0
       49,19: 0
@@ -20285,7 +20285,7 @@ entities:
       49,27: 0
       49,28: 0
       49,29: 0
-      49,30: 0
+      49,30: 1
       49,31: 0
       50,16: 0
       50,17: 0
@@ -20351,7 +20351,7 @@ entities:
       53,29: 0
       53,30: 0
       53,31: 0
-      54,16: 0
+      54,16: 1
       54,17: 0
       54,18: 0
       54,19: 0
@@ -20429,7 +20429,7 @@ entities:
       58,27: 0
       58,28: 0
       58,29: 0
-      58,30: 0
+      58,30: 1
       58,31: 0
       59,16: 0
       59,17: 0
@@ -20686,7 +20686,7 @@ entities:
       -14,-37: 0
       -14,-36: 0
       -14,-35: 0
-      -14,-34: 0
+      -14,-34: 1
       -14,-33: 0
       -13,-42: 0
       -13,-41: 0
@@ -21215,13 +21215,13 @@ entities:
       52,34: 0
       52,35: 0
       52,36: 0
-      52,37: 0
+      52,37: 1
       52,38: 0
       52,39: 0
       52,41: 0
       52,43: 0
       53,32: 0
-      53,33: 0
+      53,33: 1
       53,34: 0
       53,35: 0
       53,36: 0
@@ -21245,7 +21245,7 @@ entities:
       54,42: 0
       54,43: 0
       55,32: 0
-      55,33: 0
+      55,33: 1
       55,34: 0
       55,35: 0
       55,36: 0
@@ -21369,7 +21369,7 @@ entities:
       66,38: 0
       66,42: 0
       67,32: 0
-      67,33: 0
+      67,33: 1
       67,34: 0
       67,35: 0
       67,36: 0
@@ -21380,7 +21380,7 @@ entities:
       67,41: 0
       67,42: 0
       68,32: 0
-      68,33: 0
+      68,33: 1
       68,34: 0
       68,36: 0
       68,42: 0
@@ -21581,7 +21581,7 @@ entities:
       -41,-32: 0
       -40,-32: 0
       -39,-32: 0
-      -38,-32: 0
+      -38,-32: 1
       -37,-32: 0
       -36,-32: 0
       -35,-32: 0
@@ -21593,8 +21593,8 @@ entities:
       -16,-45: 0
       -16,-44: 0
       -16,-43: 0
-      -15,-48: 0
-      -15,-47: 0
+      -15,-48: 1
+      -15,-47: 1
       -15,-46: 0
       -15,-45: 0
       -15,-44: 0
@@ -21611,8 +21611,8 @@ entities:
       -13,-45: 0
       -13,-44: 0
       -13,-43: 0
-      -12,-48: 0
-      -12,-47: 0
+      -12,-48: 8
+      -12,-47: 8
       -12,-46: 0
       -12,-45: 0
       -12,-44: 0
@@ -21627,10 +21627,10 @@ entities:
       -10,-47: 0
       -10,-46: 0
       -10,-45: 0
-      -10,-44: 0
+      -10,-44: 1
       -10,-43: 0
-      -9,-48: 0
-      -9,-47: 0
+      -9,-48: 1
+      -9,-47: 1
       -9,-46: 0
       -9,-45: 0
       -9,-44: 0
@@ -21832,7 +21832,7 @@ entities:
       -46,-43: 0
       -46,-42: 0
       -46,-41: 0
-      -46,-40: 0
+      -46,-40: 1
       -46,-39: 0
       -46,-38: 0
       -46,-37: 0
@@ -21847,7 +21847,7 @@ entities:
       -45,-44: 0
       -45,-43: 0
       -45,-42: 0
-      -45,-41: 0
+      -45,-41: 1
       -45,-40: 0
       -45,-39: 0
       -45,-38: 0
@@ -21856,7 +21856,7 @@ entities:
       -45,-35: 0
       -45,-34: 0
       -45,-33: 0
-      -44,-48: 0
+      -44,-48: 1
       -44,-47: 0
       -44,-46: 0
       -44,-45: 0
@@ -21888,7 +21888,7 @@ entities:
       -43,-35: 0
       -43,-34: 0
       -43,-33: 0
-      -42,-48: 0
+      -42,-48: 1
       -42,-47: 0
       -42,-46: 0
       -42,-45: 0
@@ -21956,7 +21956,7 @@ entities:
       -38,-47: 0
       -38,-46: 0
       -38,-45: 0
-      -38,-44: 0
+      -38,-44: 1
       -38,-43: 0
       -38,-42: 0
       -38,-41: 0
@@ -21979,7 +21979,7 @@ entities:
       -37,-40: 0
       -37,-39: 0
       -37,-38: 0
-      -37,-37: 0
+      -37,-37: 1
       -37,-36: 0
       -37,-35: 0
       -37,-34: 0
@@ -21995,7 +21995,7 @@ entities:
       -36,-40: 0
       -36,-39: 0
       -36,-38: 0
-      -36,-37: 0
+      -36,-37: 1
       -36,-36: 0
       -36,-35: 0
       -36,-34: 0
@@ -22055,19 +22055,19 @@ entities:
       -16,-50: 0
       -16,-49: 0
       -15,-50: 0
-      -15,-49: 0
+      -15,-49: 1
       -14,-50: 0
       -14,-49: 0
       -13,-50: 0
       -13,-49: 0
-      -12,-50: 0
-      -12,-49: 0
+      -12,-50: 1
+      -12,-49: 8
       -11,-50: 0
       -11,-49: 0
       -10,-50: 0
       -10,-49: 0
-      -9,-50: 0
-      -9,-49: 0
+      -9,-50: 1
+      -9,-49: 1
       -8,-50: 0
       -8,-49: 0
       -7,-50: 0
@@ -22184,7 +22184,7 @@ entities:
       -14,-54: 0
       -14,-53: 0
       -14,-52: 0
-      -14,-51: 0
+      -14,-51: 1
       -13,-63: 0
       -13,-62: 0
       -13,-61: 0
@@ -22197,10 +22197,10 @@ entities:
       -13,-54: 0
       -13,-53: 0
       -13,-52: 0
-      -13,-51: 0
+      -13,-51: 1
       -12,-63: 0
       -12,-62: 0
-      -12,-61: 0
+      -12,-61: 1
       -12,-60: 0
       -12,-59: 0
       -12,-58: 0
@@ -22210,17 +22210,17 @@ entities:
       -12,-54: 0
       -12,-53: 0
       -12,-52: 0
-      -12,-51: 0
+      -12,-51: 1
       -11,-60: 0
       -11,-59: 0
-      -11,-58: 0
+      -11,-58: 1
       -11,-57: 0
       -11,-56: 0
       -11,-55: 0
       -11,-54: 0
       -11,-53: 0
       -11,-52: 0
-      -11,-51: 0
+      -11,-51: 1
       -10,-60: 0
       -10,-59: 0
       -10,-58: 0
@@ -22230,17 +22230,17 @@ entities:
       -10,-54: 0
       -10,-53: 0
       -10,-52: 0
-      -10,-51: 0
+      -10,-51: 1
       -9,-60: 0
       -9,-59: 0
       -9,-58: 0
       -9,-57: 0
       -9,-56: 0
       -9,-55: 0
-      -9,-54: 0
+      -9,-54: 1
       -9,-53: 0
       -9,-52: 0
-      -9,-51: 0
+      -9,-51: 1
       -8,-60: 0
       -8,-59: 0
       -8,-58: 0
@@ -22304,8 +22304,8 @@ entities:
       -31,-56: 0
       -31,-55: 0
       -31,-54: 0
-      -31,-53: 0
-      -31,-52: 0
+      -31,-53: 1
+      -31,-52: 1
       -31,-51: 0
       -30,-63: 0
       -30,-62: 0
@@ -22330,8 +22330,8 @@ entities:
       -29,-56: 0
       -29,-55: 0
       -29,-54: 0
-      -29,-53: 0
-      -29,-52: 0
+      -29,-53: 1
+      -29,-52: 1
       -29,-51: 0
       -28,-63: 0
       -28,-62: 0
@@ -22440,7 +22440,7 @@ entities:
       -20,-63: 0
       -20,-62: 0
       -20,-61: 0
-      -20,-60: 0
+      -20,-60: 1
       -20,-59: 0
       -20,-58: 0
       -20,-57: 0
@@ -22459,7 +22459,7 @@ entities:
       -19,-57: 0
       -19,-56: 0
       -19,-55: 0
-      -19,-54: 0
+      -19,-54: 1
       -19,-53: 0
       -19,-52: 0
       -19,-51: 0
@@ -22467,8 +22467,8 @@ entities:
       -18,-62: 0
       -18,-61: 0
       -18,-60: 0
-      -18,-59: 0
-      -18,-58: 0
+      -18,-59: 1
+      -18,-58: 1
       -18,-57: 0
       -18,-56: 0
       -18,-55: 0
@@ -22510,7 +22510,7 @@ entities:
       -40,-53: 0
       -40,-52: 0
       -40,-51: 0
-      -39,-63: 0
+      -39,-63: 1
       -39,-62: 0
       -39,-61: 0
       -39,-60: 0
@@ -22562,7 +22562,7 @@ entities:
       -36,-53: 0
       -36,-52: 0
       -36,-51: 0
-      -35,-63: 0
+      -35,-63: 1
       -35,-62: 0
       -35,-61: 0
       -35,-60: 0
@@ -22578,7 +22578,7 @@ entities:
       -34,-63: 0
       -34,-62: 0
       -34,-61: 0
-      -34,-60: 0
+      -34,-60: 1
       -34,-59: 0
       -34,-58: 0
       -34,-57: 0
@@ -22593,10 +22593,10 @@ entities:
       -33,-61: 0
       -33,-60: 0
       -33,-59: 0
-      -33,-58: 0
+      -33,-58: 1
       -33,-57: 0
       -33,-56: 0
-      -33,-55: 0
+      -33,-55: 1
       -33,-54: 0
       -33,-53: 0
       -33,-52: 0
@@ -22692,14 +22692,14 @@ entities:
       -55,-40: 0
       -54,-48: 0
       -54,-47: 0
-      -54,-46: 0
+      -54,-46: 1
       -54,-45: 0
       -54,-42: 0
       -54,-41: 0
       -54,-40: 0
       -53,-48: 0
       -53,-47: 0
-      -53,-46: 0
+      -53,-46: 1
       -53,-45: 0
       -53,-44: 0
       -53,-43: 0
@@ -23285,7 +23285,7 @@ entities:
       38,-32: 0
       39,-32: 0
       -62,-25: 0
-      -30,38: 0
+      -30,38: 1
       -30,39: 0
       -30,40: 0
       -30,41: 0
@@ -23293,12 +23293,12 @@ entities:
       -29,38: 0
       -29,39: 0
       -29,40: 0
-      -29,41: 0
+      -29,41: 1
       -29,42: 0
       -28,38: 0
       -28,39: 0
       -28,40: 0
-      -28,41: 0
+      -28,41: 1
       -28,42: 0
       -27,38: 0
       -27,39: 0
@@ -23309,7 +23309,7 @@ entities:
       -26,40: 0
       -26,41: 0
       -25,38: 0
-      -25,39: 0
+      -25,39: 1
       -25,40: 0
       -24,38: 0
       -24,39: 0
@@ -23373,7 +23373,7 @@ entities:
       5,-46: 0
       5,-45: 0
       5,-44: 0
-      5,-43: 0
+      5,-43: 1
       5,-42: 0
       5,-41: 0
       5,-40: 0
@@ -23402,7 +23402,7 @@ entities:
       7,-43: 0
       7,-42: 0
       7,-41: 0
-      7,-40: 0
+      7,-40: 1
       7,-39: 0
       7,-38: 0
       7,-37: 0
@@ -23525,7 +23525,7 @@ entities:
       16,-37: 0
       16,-36: 0
       17,-48: 0
-      17,-47: 0
+      17,-47: 1
       17,-46: 0
       17,-45: 0
       17,-44: 0
@@ -23561,10 +23561,10 @@ entities:
       19,-40: 0
       19,-39: 0
       19,-38: 0
-      19,-37: 0
+      19,-37: 1
       19,-36: 0
       20,-48: 0
-      20,-47: 0
+      20,-47: 1
       20,-46: 0
       20,-45: 0
       20,-44: 0
@@ -23685,7 +23685,7 @@ entities:
       28,-36: 0
       28,-35: 0
       28,-34: 0
-      28,-33: 0
+      28,-33: 1
       29,-48: 0
       29,-47: 0
       29,-46: 0
@@ -23773,8 +23773,8 @@ entities:
       34,-44: 0
       34,-43: 0
       34,-42: 0
-      34,-41: 0
-      34,-40: 0
+      34,-41: 1
+      34,-40: 1
       34,-39: 0
       34,-38: 0
       34,-37: 0
@@ -23816,7 +23816,7 @@ entities:
       36,-33: 0
       37,-48: 0
       37,-47: 0
-      37,-46: 0
+      37,-46: 1
       37,-45: 0
       37,-44: 0
       37,-43: 0
@@ -23839,7 +23839,7 @@ entities:
       38,-42: 0
       38,-41: 0
       38,-40: 0
-      38,-39: 0
+      38,-39: 1
       38,-38: 0
       38,-37: 0
       38,-36: 0
@@ -23850,8 +23850,8 @@ entities:
       39,-44: 0
       39,-43: 0
       39,-42: 0
-      39,-41: 0
-      39,-40: 0
+      39,-41: 1
+      39,-40: 1
       39,-39: 0
       39,-38: 0
       39,-37: 0
@@ -24006,7 +24006,7 @@ entities:
       1,-61: 0
       1,-60: 0
       1,-59: 0
-      1,-58: 0
+      1,-58: 1
       1,-57: 0
       1,-56: 0
       1,-55: 0
@@ -24056,7 +24056,7 @@ entities:
       4,-57: 0
       4,-56: 0
       4,-55: 0
-      4,-54: 0
+      4,-54: 1
       4,-53: 0
       4,-52: 0
       4,-51: 0
@@ -24092,8 +24092,8 @@ entities:
       6,-53: 0
       6,-52: 0
       6,-51: 0
-      6,-50: 0
-      6,-49: 0
+      6,-50: 1
+      6,-49: 1
       7,-64: 0
       7,-63: 0
       7,-62: 0
@@ -24127,7 +24127,7 @@ entities:
       8,-50: 0
       8,-49: 0
       9,-63: 0
-      9,-62: 0
+      9,-62: 1
       9,-61: 0
       9,-60: 0
       9,-59: 0
@@ -24170,7 +24170,7 @@ entities:
       11,-52: 0
       11,-51: 0
       11,-50: 0
-      11,-49: 0
+      11,-49: 1
       12,-64: 0
       12,-63: 0
       12,-62: 0
@@ -24194,9 +24194,9 @@ entities:
       13,-59: 0
       13,-58: 0
       13,-57: 0
-      13,-56: 5
-      13,-55: 5
-      13,-54: 5
+      13,-56: 7
+      13,-55: 7
+      13,-54: 7
       13,-53: 0
       13,-52: 0
       13,-51: 0
@@ -24208,9 +24208,9 @@ entities:
       14,-59: 0
       14,-58: 0
       14,-57: 0
-      14,-56: 5
-      14,-55: 5
-      14,-54: 5
+      14,-56: 7
+      14,-55: 7
+      14,-54: 7
       14,-53: 0
       14,-52: 0
       14,-51: 0
@@ -24223,9 +24223,9 @@ entities:
       15,-59: 0
       15,-58: 0
       15,-57: 0
-      15,-56: 5
-      15,-55: 5
-      15,-54: 5
+      15,-56: 7
+      15,-55: 7
+      15,-54: 7
       15,-53: 0
       15,-52: 0
       15,-51: 0
@@ -24239,7 +24239,7 @@ entities:
       -11,-64: 0
       -11,-63: 0
       -11,-62: 0
-      -11,-61: 0
+      -11,-61: 1
       -10,-64: 0
       -10,-63: 0
       -10,-62: 0
@@ -24319,7 +24319,7 @@ entities:
       -1,-54: 0
       -1,-53: 0
       -1,-52: 0
-      -1,-51: 0
+      -1,-51: 1
       -31,-64: 0
       -30,-64: 0
       -29,-64: 0
@@ -24368,14 +24368,14 @@ entities:
       -31,-75: 0
       -31,-74: 0
       -31,-73: 0
-      -31,-72: 0
-      -31,-71: 0
-      -31,-70: 0
+      -31,-72: 1
+      -31,-71: 1
+      -31,-70: 1
       -31,-69: 0
       -31,-68: 0
-      -31,-67: 0
+      -31,-67: 1
       -31,-66: 0
-      -31,-65: 0
+      -31,-65: 1
       -30,-75: 0
       -30,-74: 0
       -30,-73: 0
@@ -24405,7 +24405,7 @@ entities:
       -28,-71: 0
       -28,-70: 0
       -28,-69: 0
-      -28,-68: 0
+      -28,-68: 1
       -28,-67: 0
       -28,-66: 0
       -28,-65: 0
@@ -24761,7 +24761,7 @@ entities:
       21,-55: 0
       21,-54: 0
       21,-53: 0
-      21,-52: 0
+      21,-52: 1
       21,-51: 0
       21,-50: 0
       21,-49: 0
@@ -24839,9 +24839,9 @@ entities:
       27,-64: 0
       27,-63: 0
       27,-62: 0
-      27,-61: 0
-      27,-60: 0
-      27,-59: 0
+      27,-61: 1
+      27,-60: 1
+      27,-59: 1
       27,-58: 0
       27,-57: 0
       27,-56: 0
@@ -25225,7 +25225,7 @@ entities:
       34,-53: 0
       34,-52: 0
       34,-51: 0
-      34,-50: 0
+      34,-50: 1
       34,-49: 0
       35,-62: 0
       35,-59: 0
@@ -25258,7 +25258,7 @@ entities:
       37,-62: 0
       37,-61: 0
       37,-60: 0
-      37,-59: 0
+      37,-59: 1
       37,-58: 0
       37,-57: 0
       37,-56: 0
@@ -25279,7 +25279,7 @@ entities:
       38,-57: 0
       38,-56: 0
       38,-55: 0
-      38,-54: 0
+      38,-54: 1
       38,-53: 0
       38,-52: 0
       38,-51: 0
@@ -25881,12 +25881,48 @@ entities:
       -44,33: 0
       -43,32: 0
       -43,33: 0
+      -45,39: 7
+      -45,40: 7
+      -45,41: 7
+      -45,42: 7
+      -45,43: 7
+      -45,44: 7
+      -45,45: 7
+      -45,46: 7
+      -44,39: 7
+      -44,43: 7
+      -43,38: 7
+      -43,39: 7
+      -43,40: 7
+      -43,41: 7
+      -43,42: 7
+      -43,43: 7
+      -43,44: 7
+      -43,45: 7
+      29,-64: 7
+      29,-63: 7
+      30,-63: 7
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
       - 0
       - 0
       - 0
@@ -25913,6 +25949,21 @@ entities:
       - 0
       - 0
     - volume: 2500
+      temperature: 235
+      moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
       temperature: 293.15
       moles:
       - 0
@@ -25962,6 +26013,21 @@ entities:
       moles:
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -62087,14 +62153,14 @@ entities:
 - uid: 5141
   type: ComputerCargoShuttle
   components:
-  - rot: 3.141592653589793 rad
-    pos: -37.5,8.5
+  - pos: -39.5,21.5
     parent: 0
     type: Transform
 - uid: 5142
   type: ComputerCargoOrders
   components:
-  - pos: -39.5,21.5
+  - rot: 3.141592653589793 rad
+    pos: -37.5,8.5
     parent: 0
     type: Transform
 - uid: 5143
@@ -122143,6 +122209,8 @@ entities:
   - pos: 56.5,40.5
     parent: 0
     type: Transform
+  - charge: 100
+    type: GravityGenerator
 - uid: 14054
   type: GeneratorPlasma
   components:
@@ -157525,7 +157593,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -157541,7 +157609,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -157557,7 +157625,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -157573,7 +157641,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -157589,7 +157657,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -157605,7 +157673,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -1957.8004
+  - SecondsUntilStateChange: -2184.3267
     state: Closing
     type: Door
   - inputs:
@@ -194168,4 +194236,25 @@ entities:
   - pos: 29.547186,-60.28679
     parent: 0
     type: Transform
+- uid: 24708
+  type: AirCanister
+  components:
+  - pos: 51.5,-13.5
+    parent: 0
+    type: Transform
+- uid: 24709
+  type: AirCanister
+  components:
+  - pos: 51.5,-12.5
+    parent: 0
+    type: Transform
+- uid: 24710
+  type: Poweredlight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 33.5,-7.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
 ...
