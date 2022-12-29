@@ -183,6 +183,7 @@
   components:
   - type: SpawnArtifact
     maxSpawns: 5
+    consistentSpawn: true
     possiblePrototypes:
     - MobCarpHolo
     - MobCarpMagic

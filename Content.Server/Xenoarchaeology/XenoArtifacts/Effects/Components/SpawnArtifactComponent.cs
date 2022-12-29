@@ -53,5 +53,5 @@ public sealed class SpawnArtifactComponent : Component
     /// or picks through the list each time.
     /// </summary>
     [DataField("consistentSpawn")]
-    public bool ConsistentSpawn = true;
+    public bool ConsistentSpawn = false;
 }
