@@ -1,6 +1,4 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
+using Content.Shared.Storage;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 
@@ -11,18 +9,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 [RegisterComponent]
 public sealed class SpawnArtifactComponent : Component
 {
-    /// <summary>
-    /// The list of possible prototypes to spawn that it picks from.
-    /// </summary>
-    [DataField("possiblePrototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> PossiblePrototypes = new();
-
-    /// <summary>
-    /// The prototype it selected to spawn.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("prototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? Prototype;
+    [DataField("spawns")]
+    public List<EntitySpawnEntry>? Spawns;
 
     /// <summary>
     /// The range around the artifact that it will spawn the entity
@@ -31,27 +19,8 @@ public sealed class SpawnArtifactComponent : Component
     public float Range = 0.5f;
 
     /// <summary>
-    /// The minimum amount of entities to spawn per activation
-    /// </summary>
-    [DataField("minAmountPerSpawn")]
-    public int MinAmountPerSpawn = 1;
-
-    /// <summary>
-    /// The maximum amount of entities to spawn per activation
-    /// </summary>
-    [DataField("maxAmountPerSpawn")]
-    public int MaxAmountPerSpawn = 1;
-
-    /// <summary>
     /// The maximum number of times the spawn will occur
     /// </summary>
     [DataField("maxSpawns")]
-    public int MaxSpawns = 20;
-
-    /// <summary>
-    /// Whether or not the artifact spawns the same entity every time
-    /// or picks through the list each time.
-    /// </summary>
-    [DataField("consistentSpawn")]
-    public bool ConsistentSpawn = false;
+    public int MaxSpawns = 10;
 }
