@@ -148,14 +148,14 @@ namespace Content.Server.Salvage
                 return;
 
             if (EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid is EntityUid gridId &&
-                        _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
+                _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
             {
                 _remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
                 _gotGrid = true;
             }
             else
             {
-                        Logger.WarningS("salvage", "Failed to load salvage grid state, can't display remaining time");
+                Logger.WarningS("salvage", "Failed to load salvage grid state, can't display remaining time");
             }
             switch (component.MagnetState.StateType)
             {
