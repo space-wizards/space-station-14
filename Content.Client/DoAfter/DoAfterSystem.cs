@@ -49,6 +49,7 @@ namespace Content.Client.DoAfter
             if (args.Current is not DoAfterComponentState state)
                 return;
 
+            //TODO: Remove clientdoafter references, fuse with DoAfter
             var toRemove = new RemQueue<ClientDoAfter>();
 
             foreach (var (id, doAfter) in component.DoAfters)

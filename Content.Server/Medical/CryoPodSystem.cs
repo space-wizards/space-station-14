@@ -21,6 +21,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;

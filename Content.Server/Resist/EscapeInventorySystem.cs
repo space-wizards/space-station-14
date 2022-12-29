@@ -7,6 +7,7 @@ using Content.Shared.Storage;
 using Content.Shared.Inventory;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.ActionBlocker;
+using Content.Shared.DoAfter;
 using Content.Shared.Movement.Events;
 using Content.Shared.Interaction.Events;
 

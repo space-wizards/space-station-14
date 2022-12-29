@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Content.Server.Hands.Components;
+using Content.Shared.Hands.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
-namespace Content.Server.DoAfter
+namespace Content.Shared.DoAfter
 {
     public sealed class DoAfter
     {
@@ -48,7 +48,7 @@ namespace Content.Server.DoAfter
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
             // (or if there is no item there we need to keep it free).
-            if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
+            if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out SharedHandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand?.Name;
                 _activeItem = handsComponent.ActiveHandEntity;
@@ -140,7 +140,7 @@ namespace Content.Server.DoAfter
 
             if (EventArgs.NeedHand)
             {
-                if (!entityManager.TryGetComponent(EventArgs.User, out HandsComponent? handsComponent))
+                if (!entityManager.TryGetComponent(EventArgs.User, out SharedHandsComponent? handsComponent))
                 {
                     // If we had a hand but no longer have it that's still a paddlin'
                     if (_activeHand != null)

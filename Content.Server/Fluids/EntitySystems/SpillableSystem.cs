@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Fluids.EntitySystems;
 

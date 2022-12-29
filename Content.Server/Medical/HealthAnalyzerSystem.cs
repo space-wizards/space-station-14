@@ -4,6 +4,7 @@ using Content.Server.Medical.Components;
 using Content.Server.Disease;
 using Content.Server.Popups;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;

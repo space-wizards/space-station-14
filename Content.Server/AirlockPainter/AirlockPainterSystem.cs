@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.AirlockPainter;
 using Content.Shared.AirlockPainter.Prototypes;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;

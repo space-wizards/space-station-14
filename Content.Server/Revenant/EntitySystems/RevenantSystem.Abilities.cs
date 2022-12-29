@@ -26,6 +26,7 @@ using Content.Server.Emag;
 using Content.Server.Humanoid;
 using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Revenant.Components;

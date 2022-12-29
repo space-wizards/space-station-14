@@ -11,6 +11,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;

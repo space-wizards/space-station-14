@@ -5,6 +5,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 #if EXCEPTION_TOLERANCE

@@ -1,6 +1,7 @@
 ﻿using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Mech.Equipment.Components;
 using Robust.Shared.Player;

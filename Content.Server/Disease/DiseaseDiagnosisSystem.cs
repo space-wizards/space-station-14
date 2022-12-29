@@ -17,6 +17,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Utility;
 using Content.Shared.Tools.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Disease

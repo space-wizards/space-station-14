@@ -11,6 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Actions.Events;
+using Content.Shared.DoAfter;
 using Content.Shared.Weapons.Melee.Events;
 
 

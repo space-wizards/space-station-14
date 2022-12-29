@@ -21,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 
 namespace Content.Server.Dragon

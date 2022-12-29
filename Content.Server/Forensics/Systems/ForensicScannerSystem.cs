@@ -9,6 +9,7 @@ using Content.Server.DoAfter;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
+using Content.Shared.DoAfter;
 using Content.Shared.Forensics;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;

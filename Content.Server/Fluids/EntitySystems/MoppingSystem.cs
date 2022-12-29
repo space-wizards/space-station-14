@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;

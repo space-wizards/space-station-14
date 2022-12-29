@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.EntityList;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;

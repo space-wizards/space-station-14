@@ -4,6 +4,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;

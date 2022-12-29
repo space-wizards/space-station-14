@@ -12,6 +12,7 @@ using Content.Server.Popups;
 using Robust.Shared.Player;
 using Content.Server.DoAfter;
 using System.Threading;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Body.Systems;
 

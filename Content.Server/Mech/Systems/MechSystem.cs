@@ -7,6 +7,7 @@ using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Server.Wires;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;

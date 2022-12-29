@@ -21,6 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System.Threading;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Light.EntitySystems
 {

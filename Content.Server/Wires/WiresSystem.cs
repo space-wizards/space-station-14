@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;

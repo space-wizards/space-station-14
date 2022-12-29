@@ -10,6 +10,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Audio;
 using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Content.Shared.Nuke;
 using Content.Shared.Popups;
 using Robust.Shared.Audio;

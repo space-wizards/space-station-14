@@ -6,6 +6,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;

@@ -11,6 +11,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;

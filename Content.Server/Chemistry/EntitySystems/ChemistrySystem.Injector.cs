@@ -15,6 +15,7 @@ using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.DoAfter;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;

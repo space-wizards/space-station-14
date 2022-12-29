@@ -19,6 +19,7 @@ using Content.Server.Construction;
 using Content.Server.DoAfter;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
+using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;

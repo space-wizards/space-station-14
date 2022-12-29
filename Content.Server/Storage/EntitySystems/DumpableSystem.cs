@@ -6,6 +6,7 @@ using Content.Shared.Verbs;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Shared.DoAfter;
 using Content.Shared.Placeable;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;

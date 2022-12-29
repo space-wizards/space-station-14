@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;

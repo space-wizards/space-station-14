@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Ensnaring.Components;
 
 namespace Content.Server.Strip

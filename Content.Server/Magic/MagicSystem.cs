@@ -9,6 +9,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Body.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction.Events;

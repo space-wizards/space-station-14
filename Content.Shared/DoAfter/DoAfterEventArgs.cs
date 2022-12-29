@@ -2,7 +2,7 @@ using System.Threading;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Utility;
 
-namespace Content.Server.DoAfter
+namespace Content.Shared.DoAfter
 {
     public sealed class DoAfterEventArgs
     {

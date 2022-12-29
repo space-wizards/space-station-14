@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Wires;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;

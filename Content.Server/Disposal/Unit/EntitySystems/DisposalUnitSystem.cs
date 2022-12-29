@@ -13,6 +13,7 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;

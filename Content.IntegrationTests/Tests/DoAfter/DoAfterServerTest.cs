@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
+using Content.Shared.DoAfter;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

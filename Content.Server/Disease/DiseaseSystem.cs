@@ -10,6 +10,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Disease;
 using Content.Shared.Disease.Components;
 using Content.Shared.Disease.Events;
+using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;

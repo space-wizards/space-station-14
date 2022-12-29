@@ -29,6 +29,7 @@ using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
+using Content.Shared.DoAfter;
 using Content.Shared.Implants.Components;
 using Content.Shared.Movement.Events;
 

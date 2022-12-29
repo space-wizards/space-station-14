@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
+using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
 using Robust.Shared.Player;
 

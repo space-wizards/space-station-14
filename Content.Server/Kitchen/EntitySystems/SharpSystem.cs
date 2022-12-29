@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
 using Content.Shared.Destructible;
+using Content.Shared.DoAfter;
 using Robust.Server.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

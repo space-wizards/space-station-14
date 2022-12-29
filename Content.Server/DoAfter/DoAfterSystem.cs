@@ -12,8 +12,8 @@ namespace Content.Server.DoAfter
     public sealed class DoAfterSystem : EntitySystem
     {
         // We cache these lists as to not allocate them every update tick...
-        private readonly Queue<DoAfter> _cancelled = new();
-        private readonly Queue<DoAfter> _finished = new();
+        private readonly Queue<Shared.DoAfter.DoAfter> _cancelled = new();
+        private readonly Queue<Shared.DoAfter.DoAfter> _finished = new();
 
         public override void Initialize()
         {
@@ -23,7 +23,7 @@ namespace Content.Server.DoAfter
             SubscribeLocalEvent<DoAfterComponent, ComponentGetState>(OnDoAfterGetState);
         }
 
-        public void Add(DoAfterComponent component, DoAfter doAfter)
+        public void Add(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter)
         {
             component.DoAfters.Add(doAfter, component.RunningIndex);
             EnsureComp<ActiveDoAfterComponent>(component.Owner);
@@ -31,7 +31,7 @@ namespace Content.Server.DoAfter
             Dirty(component);
         }
 
-        public void Cancelled(DoAfterComponent component, DoAfter doAfter)
+        public void Cancelled(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter)
         {
             if (!component.DoAfters.TryGetValue(doAfter, out var index))
                 return;
@@ -50,7 +50,7 @@ namespace Content.Server.DoAfter
         ///     Call when the particular DoAfter is finished.
         ///     Client should be tracking this independently.
         /// </summary>
-        public void Finished(DoAfterComponent component, DoAfter doAfter)
+        public void Finished(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter)
         {
             if (!component.DoAfters.ContainsKey(doAfter))
                 return;
@@ -207,21 +207,14 @@ namespace Content.Server.DoAfter
             CreateDoAfter(eventArgs);
         }
 
-        private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
+        private Shared.DoAfter.DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
         {
             // Setup
-            var doAfter = new DoAfter(eventArgs, EntityManager);
+            var doAfter = new Shared.DoAfter.DoAfter(eventArgs, EntityManager);
             // Caller's gonna be responsible for this I guess
             var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);
             Add(doAfterComponent, doAfter);
             return doAfter;
         }
-    }
-
-    public enum DoAfterStatus : byte
-    {
-        Running,
-        Cancelled,
-        Finished,
     }
 }
