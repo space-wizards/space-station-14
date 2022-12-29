@@ -27,14 +27,9 @@
   permanentComponents:
   - type: Instrument
   - type: ActivatableUI
-    inHandsOnly: true
     singleUser: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
   - type: RandomInstrumentArtifact
 
 - type: artifactEffect

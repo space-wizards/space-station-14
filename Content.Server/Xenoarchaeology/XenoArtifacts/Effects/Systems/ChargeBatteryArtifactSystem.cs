@@ -18,12 +18,8 @@ public sealed class ChargeBatteryArtifactSystem : EntitySystem
 
     private void OnActivated(EntityUid uid, ChargeBatteryArtifactComponent component, ArtifactActivatedEvent args)
     {
-        var batteryQuery = GetEntityQuery<BatteryComponent>();
-        foreach (var ent in _lookup.GetEntitiesInRange(uid, component.Radius))
+        foreach (var battery in _lookup.GetComponentsInRange<BatteryComponent>(Transform(uid).MapPosition, component.Radius))
         {
-            if (!batteryQuery.TryGetComponent(ent, out var battery))
-                continue;
-
             battery.CurrentCharge = battery.MaxCharge;
         }
     }
