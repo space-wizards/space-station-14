@@ -39,22 +39,27 @@ public sealed class SpawnArtifactSystem : EntitySystem
         if (amount >= component.MaxSpawns)
             return;
 
+        var amountToSpawn = _random.Next(component.MinAmountPerSpawn, component.MaxAmountPerSpawn);
         var toSpawn = component.Prototype;
-        if (!component.ConsistentSpawn)
-            toSpawn = _random.Pick(component.PossiblePrototypes);
 
-        // select spawn position near artifact
-        var artifactCord = Transform(uid).MapPosition;
-        var dx = _random.NextFloat(-component.Range, component.Range);
-        var dy = _random.NextFloat(-component.Range, component.Range);
-        var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
+        for (var i = 0; i < amountToSpawn; i++)
+        {
+            if (!component.ConsistentSpawn)
+                toSpawn = _random.Pick(component.PossiblePrototypes);
 
-        // spawn entity
-        var spawned = EntityManager.SpawnEntity(toSpawn, spawnCord);
-        _artifact.SetNodeData(uid, NodeDataSpawnAmount, amount+1);
+            // select spawn position near artifact
+            var artifactCord = Transform(uid).MapPosition;
+            var dx = _random.NextFloat(-component.Range, component.Range);
+            var dy = _random.NextFloat(-component.Range, component.Range);
+            var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
 
-        // if there is an user - try to put spawned item in their hands
-        // doesn't work for spawners
-        _handsSystem.PickupOrDrop(args.Activator, spawned);
+            // spawn entity
+            var spawned = EntityManager.SpawnEntity(toSpawn, spawnCord);
+            _artifact.SetNodeData(uid, NodeDataSpawnAmount, amount + 1);
+
+            // if there is an user - try to put spawned item in their hands
+            // doesn't work for spawners
+            _handsSystem.PickupOrDrop(args.Activator, spawned);
+        }
     }
 }

@@ -31,6 +31,18 @@ public sealed class SpawnArtifactComponent : Component
     public float Range = 0.5f;
 
     /// <summary>
+    /// The minimum amount of entities to spawn per activation
+    /// </summary>
+    [DataField("minAmountPerSpawn")]
+    public int MinAmountPerSpawn = 1;
+
+    /// <summary>
+    /// The maximum amount of entities to spawn per activation
+    /// </summary>
+    [DataField("maxAmountPerSpawn")]
+    public int MaxAmountPerSpawn = 1;
+
+    /// <summary>
     /// The maximum number of times the spawn will occur
     /// </summary>
     [DataField("maxSpawns")]

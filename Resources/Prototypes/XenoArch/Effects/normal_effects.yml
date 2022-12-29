@@ -149,6 +149,34 @@
     - RandomInstruments
 
 - type: artifactEffect
+  id: EffectMonkeySpawn
+  targetDepth: 1
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    possiblePrototypes:
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobMonkey
+    - MobGorilla #haarambu
+
+- type: artifactEffect
+  id: EffectChargeBatteries
+  targetDepth: 1
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: ChargeBatteryArtifact
+  - type: TelepathicArtifact
+    messages:
+    - charge-artifact-popup
+
+- type: artifactEffect
   id: EffectAngryCarpSpawn
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
@@ -158,6 +186,29 @@
     possiblePrototypes:
     - MobCarpHolo
     - MobCarpMagic
+
+- type: artifactEffect
+  id: EffectCashSpawn
+  targetDepth: 2
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 10
+    maxAmountPerSpawn: 3
+    possiblePrototypes:
+    - SpaceCash10
+    - SpaceCash10
+    - SpaceCash10
+    - SpaceCash10
+    - SpaceCash10
+    - SpaceCash100
+    - SpaceCash100
+    - SpaceCash100
+    - SpaceCash100
+    - SpaceCash100
+    - SpaceCash500
+    - SpaceCash500
+    - SpaceCash1000
 
 - type: artifactEffect
   id: EffectRadiate
@@ -203,6 +254,39 @@
   - type: RandomTeleportArtifact
 
 - type: artifactEffect
+  id: EffectFoamGood
+  targetDepth: 2
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: FoamArtifact
+    spreadDuration: 0.5
+    duration: 5
+    reagents:
+    - Dermaline
+    - Arithrazine
+    - Spaceacillin
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
+
+- type: artifactEffect
+  id: EffectHealAll
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: DamageNearbyArtifact
+    damageChance: 0.75
+    radius: 5
+    whitelist:
+      components:
+      - MobState
+    damage:
+      groups:
+        Brute: -300
+        Burn: -300
+
+- type: artifactEffect
   id: EffectMaterialSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
@@ -234,6 +318,7 @@
   - type: SpawnArtifact
     maxSpawns: 10
     consistentSpawn: false
+    maxAmountPerSpawn: 2
     possiblePrototypes:
     - SuperCapacitorStockPart
     - PhasicScanningModuleStockPart
@@ -264,6 +349,8 @@
   - type: SpawnArtifact
     maxSpawns: 15
     consistentSpawn: false
+    minAmountPerSpawn: 5
+    maxAmountPerSpawn: 8
     possiblePrototypes:
     - SilverOre1
     - PlasmaOre1
@@ -305,6 +392,16 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: IgniteArtifact
+
+- type: artifactEffect
+  id: EffectMitosis
+  targetDepth: 4
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    possiblePrototypes:
+    - RandomArtifactSpawner
 
 - type: artifactEffect
   id: EffectSingulo
