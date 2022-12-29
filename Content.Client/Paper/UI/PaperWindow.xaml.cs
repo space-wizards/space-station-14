@@ -185,6 +185,10 @@ namespace Content.Client.Paper.UI
             {
                 StampDisplay.AddChild(new StampWidget{ Stamper = stamper });
             }
+
+            // The DefaultWindow sets an arbitrary MinSize. We'll set this back so that
+            // the min size is enough to contain the content without overlapping.
+            MinSize = DesiredSize;
         }
     }
 }
