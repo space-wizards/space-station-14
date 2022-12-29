@@ -18,6 +18,10 @@ namespace Content.Client.Paper.UI
 
             //var resourceCache = IoCManager.Resolve<IResourceCache>();
             //var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lined_paper.svg.96dpi.png");
+
+            // Not sure why I can't set this from xaml?
+            //
+            BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"));
         }
 
         public void InitVisuals(PaperVisualsComponent visuals)
@@ -78,6 +82,7 @@ namespace Content.Client.Paper.UI
 
             if (visuals.MaxWritableArea != null)
             {
+                Resizable = false; // Don't allow this window to be resized
                 PaperContent.MinSize = Vector2.Zero;
                 PaperContent.MinSize = (Vector2)(visuals.MaxWritableArea);
                 PaperContent.MaxSize = (Vector2)(visuals.MaxWritableArea);
