@@ -9,6 +9,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
 
@@ -26,6 +27,8 @@ public sealed class BiomeOverlay : Overlay
     private readonly BiomeSystem _biome;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
+
+    private Dictionary<Type, HashSet<Vector2i>> _handled = new();
 
     public BiomeOverlay(
         IClientTileDefinitionManager tileDefinitionManager,
@@ -67,25 +70,30 @@ public sealed class BiomeOverlay : Overlay
         // Floor to background size.
         flooredBL = (args.WorldAABB.BottomLeft / tileSize).Floored() * tileSize;
         var ceilingTR = (args.WorldAABB.TopRight / tileSize).Ceiled() * tileSize;
-        var handledTiles = new HashSet<Vector2i>();
 
         // Setup for per-tile drawing
 
         for (var i = biome.Layers.Count - 1; i >= 0; i--)
         {
             var layer = biome.Layers[i];
+            var hands = _handled.GetOrNew(layer.GetType());
 
             switch (layer)
             {
                 case BiomeTileLayer tileLayer:
-                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, handledTiles);
+                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 case BiomeDecalLayer decalLayer:
-                    DrawDecalLayer(worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed);
+                    DrawDecalLayer(worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 default:
                     throw new NotImplementedException();
             }
+        }
+
+        foreach (var handled in _handled.Values)
+        {
+            handled.Clear();
         }
     }
 
@@ -126,9 +134,11 @@ public sealed class BiomeOverlay : Overlay
         Vector2 flooredBL,
         Vector2 ceilingTR,
         MapGridComponent? grid,
-        FastNoise seed)
+        FastNoise seed,
+        HashSet<Vector2i> handled)
     {
         seed.SetFrequency(decalLayer.Frequency);
+        seed.SetSeed(seed.GetSeed() + decalLayer.SeedOffset);
 
         for (var x = flooredBL.X; x < ceilingTR.X; x++)
         {
@@ -138,7 +148,9 @@ public sealed class BiomeOverlay : Overlay
 
                 // If there's a tile there then skip drawing.
                 if (grid?.TryGetTileRef(indices, out _) == true ||
-                    !_biome.TryGetDecal(indices, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
+                    handled.Contains(indices) ||
+                    !_biome.TryGetDecal(indices, seed, decalLayer.Threshold, decalLayer.Decals, out var tex) ||
+                    !handled.Add(indices))
                 {
                     continue;
                 }
@@ -146,5 +158,7 @@ public sealed class BiomeOverlay : Overlay
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
             }
         }
+
+        seed.SetSeed(seed.GetSeed() - decalLayer.SeedOffset);
     }
 }

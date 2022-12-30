@@ -31,6 +31,9 @@ public sealed class BiomeTileLayer : IBiomeLayer
 
 public sealed class BiomeDecalLayer : IBiomeLayer
 {
+    [DataField("seedOffset")]
+    public int SeedOffset = 0;
+
     /// <summary>
     /// Frequency for noise: lower values create larger blobs.
     /// </summary>

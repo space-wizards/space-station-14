@@ -2,6 +2,28 @@
   id: Grasslands
   layers:
     - !type:BiomeDecalLayer
+      seedOffset: 2
+      threshold: 0.95
+      decals:
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushd1
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushd2
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushd3
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushd4
+    - !type:BiomeDecalLayer
+      seedOffset: 1
+      threshold: 0.95
+      decals:
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushf1
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushf2
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: bushf3
+    - !type:BiomeDecalLayer
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: busha1

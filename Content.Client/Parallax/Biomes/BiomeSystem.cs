@@ -115,7 +115,7 @@ public sealed class BiomeSystem : EntitySystem
             return false;
         }
 
-        var decal = Pick(decals, (value - 0.5f) * 2f);
+        var decal = Pick(decals, (seed.GetSimplex(indices.X, indices.Y) + 1f) / 2f);
         texture = _sprite.Frame0(decal);
         return true;
     }
