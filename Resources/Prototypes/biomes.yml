@@ -4,6 +4,8 @@
     - !type:BiomeDecalLayer
       seedOffset: 2
       threshold: 0.95
+      divisions: 2
+      frequency: 1
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: bushd1
@@ -15,7 +17,9 @@
           state: bushd4
     - !type:BiomeDecalLayer
       seedOffset: 1
-      threshold: 0.95
+      threshold: 0.8
+      divisions: 1
+      frequency: 0.05
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: bushf1

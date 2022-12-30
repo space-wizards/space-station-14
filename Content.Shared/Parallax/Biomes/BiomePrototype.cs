@@ -31,6 +31,9 @@ public sealed class BiomeTileLayer : IBiomeLayer
 
 public sealed class BiomeDecalLayer : IBiomeLayer
 {
+    [DataField("divisions")]
+    public float Divisions = 1f;
+
     [DataField("seedOffset")]
     public int SeedOffset = 0;
 

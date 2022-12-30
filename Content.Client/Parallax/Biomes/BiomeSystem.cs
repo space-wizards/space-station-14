@@ -101,7 +101,7 @@ public sealed class BiomeSystem : EntitySystem
     }
 
     public bool TryGetDecal(
-        Vector2i indices,
+        Vector2 indices,
         FastNoise seed,
         float threshold,
         List<SpriteSpecifier> decals,

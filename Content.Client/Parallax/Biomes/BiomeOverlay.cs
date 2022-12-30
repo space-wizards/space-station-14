@@ -139,23 +139,36 @@ public sealed class BiomeOverlay : Overlay
     {
         seed.SetFrequency(decalLayer.Frequency);
         seed.SetSeed(seed.GetSeed() + decalLayer.SeedOffset);
+        var offset = 1f / decalLayer.Divisions / 2f;
 
-        for (var x = flooredBL.X; x < ceilingTR.X; x++)
+        for (var x = flooredBL.X - 1f; x < ceilingTR.X; x++)
         {
-            for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
+            for (var y = flooredBL.Y - 1f; y < ceilingTR.Y; y++)
             {
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out _) == true ||
-                    handled.Contains(indices) ||
-                    !_biome.TryGetDecal(indices, seed, decalLayer.Threshold, decalLayer.Decals, out var tex) ||
-                    !handled.Add(indices))
-                {
+                if (grid?.TryGetTileRef(indices, out _) == true || handled.Contains(indices))
                     continue;
+
+                var drawn = false;
+
+                for (var i = 0; i < decalLayer.Divisions; i++)
+                {
+                    for (var j = 0; j < decalLayer.Divisions; j++)
+                    {
+                        var index = new Vector2(x + i * 1f / decalLayer.Divisions + offset, y + j * 1f / decalLayer.Divisions + offset);
+
+                        if (!_biome.TryGetDecal(index, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
+                            continue;
+
+                        drawn = true;
+                        screenHandle.DrawTextureRect(tex, Box2.FromDimensions(index, tileSize));
+                    }
                 }
 
-                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
+                if (drawn)
+                    handled.Add(indices);
             }
         }
 
