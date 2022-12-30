@@ -149,3 +149,41 @@
         Left: []
         Right: []
         Middle: []
+
+#directional
+
+- type: entity
+  id: SignalSwitchDirectional
+  name: signal switch
+  suffix: directional
+  parent: SignalSwitch
+  description: It's a switch for toggling power to things.
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+
+- type: entity
+  id: SignalButtonDirectional
+  name: signal button
+  suffix: directional
+  parent: SignalButton
+  description: It's a button for activating something.
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+
+- type: entity
+  id: ApcNetSwitchDirectional
+  name: apc net switch
+  suffix: directional
+  parent: ApcNetSwitch
+  description: Its a switch for toggling lights that are connected to the same apc.
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
