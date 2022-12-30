@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -60,5 +61,18 @@ namespace Content.Shared.Zombies
         /// </summary>
         [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
         public readonly string ZombieRoleId = "Zombie";
+
+        /// <summary>
+        /// How much time passes between healing attempts
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float HealingCooldown = 30;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float HealingAccumulator;
+
+        // Set this up through your disease or something
+        [ViewVariables]
+        public DamageSpecifier HealingDamageSpecifier = new DamageSpecifier();
     }
 }

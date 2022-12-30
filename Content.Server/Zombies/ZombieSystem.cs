@@ -8,13 +8,13 @@ using Content.Server.Inventory;
 using Content.Server.Speech;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Chemistry.Components;
-using Content.Server.Chat.Systems;
-using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.Disease.Events;
+using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
@@ -32,6 +32,8 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedMobStateSystem _state = default!;
 
         public override void Initialize()
         {
@@ -42,6 +44,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
             SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieInit);
 
         }
 
@@ -156,24 +159,92 @@ namespace Content.Server.Zombies
             component.LastDamageGroanCooldown = component.GroanCooldown;
         }
 
+        private void OnZombieInit(EntityUid ent, ZombieComponent component, ComponentStartup _)
+        {
+            // Brute
+            component.HealingDamageSpecifier.DamageDict["Brute"] = -10;
+            component.HealingDamageSpecifier.DamageDict["Pierce"] = -10;
+            component.HealingDamageSpecifier.DamageDict["Blunt"] = -10;
+
+            // Burn
+            component.HealingDamageSpecifier.DamageDict["Heat"] = -10;
+            component.HealingDamageSpecifier.DamageDict["Shock"] = -10;
+            component.HealingDamageSpecifier.DamageDict["Cold"] = -10;
+
+            // Zombies do not receive any Toxic or Airloss damage
+        }
+
+        /// <summary>
+        /// Heals zombie if it is in bad state and not dead
+        /// </summary>
+        private void TryHealZombie(EntityUid ent, ZombieComponent component)
+        {
+            if (!TryComp<MobStateComponent>(ent, out var state) || !TryComp<DamageableComponent>(ent, out var damage))
+            {
+                return;
+            }
+
+
+            if (state.CurrentState == DamageState.Critical)
+            {
+                _damageable.TryChangeDamage(ent, component.HealingDamageSpecifier, true);
+                return;
+            }
+
+            if (state.CurrentState != DamageState.Alive)
+                return;
+            var dmg = damage.TotalDamage;
+
+            // Always zero, I guess?
+            var aliveThreshold = 0f;
+            var critStateData = _state.GetEarliestCriticalState(state, 0);
+            if (critStateData == null)
+            {
+                return;
+            }
+
+            var critThreshold = critStateData.Value.threshold;
+
+            // Healing to 80% of HP. Not too big and not too small.
+            var healingThreshold = aliveThreshold + (critThreshold - aliveThreshold) * 0.8;
+
+            if (dmg > healingThreshold)
+            {
+                _damageable.TryChangeDamage(ent, component.HealingDamageSpecifier, true);
+            }
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var zombiecomp in EntityQuery<ActiveZombieComponent>())
+            foreach (var zombiecomp in EntityQuery<ZombieComponent>())
             {
-                zombiecomp.Accumulator += frameTime;
-                zombiecomp.LastDamageGroanCooldown -= frameTime;
+                // Only zombies that are alive have this thing
+                if (TryComp<ActiveZombieComponent>(zombiecomp.Owner, out var activeComp))
+                {
 
-                if (zombiecomp.Accumulator < zombiecomp.RandomGroanAttempt)
-                    continue;
-                zombiecomp.Accumulator -= zombiecomp.RandomGroanAttempt;
+                    activeComp.Accumulator += frameTime;
+                    activeComp.LastDamageGroanCooldown -= frameTime;
 
-                if (!_robustRandom.Prob(zombiecomp.GroanChance))
-                    continue;
+                    if (activeComp.Accumulator >= activeComp.RandomGroanAttempt)
+                    {
+                        activeComp.Accumulator -= activeComp.RandomGroanAttempt;
 
-                //either do a random accent line or scream
-                DoGroan(zombiecomp.Owner, zombiecomp);
+                        if (_robustRandom.Prob(activeComp.GroanChance))
+                        {
+                            //either do a random accent line or scream
+                            DoGroan(zombiecomp.Owner, activeComp);
+                        }
+                    }
+                }
+
+                zombiecomp.HealingAccumulator += frameTime;
+                while (zombiecomp.HealingAccumulator > zombiecomp.HealingCooldown)
+                {
+                    zombiecomp.HealingAccumulator -= zombiecomp.HealingCooldown;
+                    TryHealZombie(zombiecomp.Owner, zombiecomp);
+                }
             }
         }
     }
