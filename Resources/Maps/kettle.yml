@@ -114414,7 +114414,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 11450
-  type: WindoorMedicalLocked
+  type: WindoorSecurityLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 53.5,-13.5
