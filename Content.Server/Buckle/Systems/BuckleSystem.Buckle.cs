@@ -322,7 +322,7 @@ public sealed partial class BuckleSystem
         var xform = Transform(buckleId);
         var oldBuckledXform = Transform(oldBuckledTo.Owner);
 
-        if (xform.ParentUid == oldBuckledXform.Owner && !Terminating(xform.ParentUid) || !Terminating(oldBuckledTo.Owner))
+        if (xform.ParentUid == oldBuckledXform.Owner && !Terminating(xform.ParentUid))
         {
             _containers.AttachParentToContainerOrGrid(xform);
             xform.WorldRotation = oldBuckledXform.WorldRotation;
