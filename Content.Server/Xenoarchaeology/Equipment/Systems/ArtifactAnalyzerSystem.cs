@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Construction;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
@@ -32,6 +32,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedAmbientSoundSystem _ambienntSound = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ArtifactSystem _artifact = default!;
@@ -475,11 +476,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = true;
 
-        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-        {
-            ambientSound.Enabled = true;
-            Dirty(ambientSound);
-        }
+        _ambienntSound.SetAmbience(uid, true);
     }
 
     private void OnAnalyzeEnd(EntityUid uid, ActiveArtifactAnalyzerComponent component, ComponentShutdown args)
@@ -487,11 +484,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         if (TryComp<ApcPowerReceiverComponent>(uid, out var powa))
             powa.NeedsPower = false;
 
-        if (TryComp<AmbientSoundComponent>(uid, out var ambientSound))
-        {
-            ambientSound.Enabled = false;
-            Dirty(ambientSound);
-        }
+        _ambienntSound.SetAmbience(uid, false);
     }
 
     private void OnPowerChanged(EntityUid uid, ActiveArtifactAnalyzerComponent component, ref PowerChangedEvent args)
