@@ -87,13 +87,21 @@ public sealed class BiomeSystem : EntitySystem
 
     public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoise seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
-        if (grid?.TryGetTileRef(indices, out _) == true)
+        if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
             tile = null;
             return false;
         }
 
         var oldFrequency = seed.GetFrequency();
+        var biomeCache = _tileCache.GetOrNew(prototype);
+        var seedCache = biomeCache.GetOrNew(seed.GetSeed());
+
+        if (seedCache.TryGetValue(indices, out var cachedTile))
+        {
+            tile = cachedTile;
+            return true;
+        }
 
         for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
@@ -107,6 +115,7 @@ public sealed class BiomeSystem : EntitySystem
             if (TryGetTile(indices, seed, tileLayer.Threshold, tileLayer.Tiles.Select(o => _protoManager.Index<ContentTileDefinition>(o)).ToList(), out tile))
             {
                 seed.SetFrequency(oldFrequency);
+                seedCache[indices] = tile.Value;
                 return true;
             }
         }
