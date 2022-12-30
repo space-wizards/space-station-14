@@ -59,14 +59,7 @@ public sealed class BansNotificationsSystem : EntitySystem {
 
     private struct WebhookPayload
     {
-        [JsonPropertyName("content")]
-        public string Content { get; set; } = "";
-
-        public Dictionary<string, string[]> AllowedMentions { get; set; } =
-            new()
-            {
-                { "parse", Array.Empty<string>() }
-            };
+        [JsonPropertyName("content")] public string Content { get; set; } = "";
 
         public WebhookPayload()
         {
