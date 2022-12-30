@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.GameObjects;
@@ -25,6 +26,11 @@ public sealed class BiomeSystem : EntitySystem
 
     public const int ChunkSize = 8;
 
+    /// <summary>
+    /// Cache of tiles we've calculated previously.
+    /// </summary>
+    private Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> _tileCache = new();
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,6 +40,7 @@ public sealed class BiomeSystem : EntitySystem
     public override void Shutdown()
     {
         base.Shutdown();
+        _tileCache.Clear();
         _overlay.RemoveOverlay<BiomeOverlay>();
     }
 
@@ -81,11 +88,53 @@ public sealed class BiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
+    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoise seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    {
+        if (grid?.TryGetTileRef(indices, out _) == true)
+        {
+            tile = null;
+            return false;
+        }
+
+        var oldFrequency = seed.GetFrequency();
+
+        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        {
+            var layer = prototype.Layers[i];
+
+            if (layer is not BiomeTileLayer tileLayer)
+                continue;
+
+            seed.SetFrequency(tileLayer.Frequency);
+
+            if (TryGetTile(indices, seed, tileLayer.Threshold, tileLayer.Tiles.Select(o => _protoManager.Index<ContentTileDefinition>(o)).ToList(), out tile))
+            {
+                seed.SetFrequency(oldFrequency);
+                return true;
+            }
+        }
+
+        seed.SetFrequency(oldFrequency);
+        tile = null;
+        return false;
+    }
+
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public Tile GetTile(Vector2i indices, FastNoise seed, List<ContentTileDefinition> tiles)
+    public bool TryGetTile(Vector2i indices, FastNoise seed, float threshold, List<ContentTileDefinition> tiles, [NotNullWhen(true)] out Tile? tile)
     {
+        if (threshold > 0f)
+        {
+            var found = (seed.GetSimplexFractal(indices.X, indices.Y) + 1f) / 2f;
+
+            if (found < threshold)
+            {
+                tile = null;
+                return false;
+            }
+        }
+
         var value = (seed.GetSimplex(indices.X, indices.Y) + 1f) / 2f;
         var tileDef = Pick(tiles, value);
         byte variant = 0;
@@ -97,7 +146,8 @@ public sealed class BiomeSystem : EntitySystem
             variant = (byte) Pick(tileDef.Variants, variantValue);
         }
 
-        return new Tile(tileDef.TileId, 0, variant);
+        tile = new Tile(tileDef.TileId, 0, variant);
+        return true;
     }
 
     public bool TryGetDecal(

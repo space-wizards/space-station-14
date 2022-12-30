@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Parallax.Biomes;
 
 [Prototype("biome")]
-public sealed class Biome : IPrototype
+public sealed class BiomePrototype : IPrototype
 {
     [IdDataFieldAttribute] public string ID { get; } = default!;
 
@@ -20,6 +20,12 @@ public interface IBiomeLayer {}
 public sealed class BiomeTileLayer : IBiomeLayer
 {
     /// <summary>
+    /// Threshold for this tile to be present. If set to 0 forces it for every tile.
+    /// </summary>
+    [DataField("threshold")]
+    public float Threshold = 0.5f;
+
+    /// <summary>
     /// Frequency for noise: lower values create larger blobs.
     /// </summary>
     [DataField("frequency")]
@@ -31,6 +37,11 @@ public sealed class BiomeTileLayer : IBiomeLayer
 
 public sealed class BiomeDecalLayer : IBiomeLayer
 {
+    /// <summary>
+    /// What biome tiles we're allowed to draw on. If no biome tile is present (i.e. a real tile is there) nothing drawn.
+    /// </summary>
+    [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))] public List<string> AllowedTiles = new();
+
     [DataField("divisions")]
     public float Divisions = 1f;
 

@@ -54,7 +54,7 @@ public sealed class BiomeOverlay : Overlay
         var worldHandle = args.WorldHandle;
         var seed = new FastNoise(0);
         seed.SetFrequency(0.1f);
-        var biome = _prototype.Index<Biome>("Grasslands");
+        var biome = _prototype.Index<BiomePrototype>("Grasslands");
         var tileSize = 1;
 
         if (_entManager.TryGetComponent<MapGridComponent>(_mapManager.GetMapEntityId(args.MapId), out var grid))
@@ -84,7 +84,7 @@ public sealed class BiomeOverlay : Overlay
                     DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 case BiomeDecalLayer decalLayer:
-                    DrawDecalLayer(worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
+                    DrawDecalLayer(biome, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -117,17 +117,22 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out _) == true || !handledTiles.Add(indices))
+                if (grid?.TryGetTileRef(indices, out _) == true || handledTiles.Contains(indices))
                     continue;
 
-                var tile = _biome.GetTile(indices, seed, groups);
-                var tex = _tileDefinitionManager.GetTexture(tile);
+                if (!_biome.TryGetTile(indices, seed, tileLayer.Threshold, groups, out var tile))
+                    continue;
+
+                handledTiles.Add(indices);
+
+                var tex = _tileDefinitionManager.GetTexture(tile.Value);
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
             }
         }
     }
 
     private void DrawDecalLayer(
+        BiomePrototype prototype,
         DrawingHandleWorld screenHandle,
         Vector2 tileSize,
         BiomeDecalLayer decalLayer,
@@ -138,7 +143,6 @@ public sealed class BiomeOverlay : Overlay
         HashSet<Vector2i> handled)
     {
         seed.SetFrequency(decalLayer.Frequency);
-        seed.SetSeed(seed.GetSeed() + decalLayer.SeedOffset);
 
         for (var x = flooredBL.X - 1f; x < ceilingTR.X; x++)
         {
@@ -147,10 +151,17 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out _) == true || handled.Contains(indices))
+                if (handled.Contains(indices))
                     continue;
 
+                if (!_biome.TryGetBiomeTile(indices, prototype, seed, grid, out var indexTile) ||
+                    !decalLayer.AllowedTiles.Contains(_tileDefinitionManager[indexTile.Value.TypeId].ID))
+                {
+                    continue;
+                }
+
                 var drawn = false;
+                seed.SetSeed(seed.GetSeed() + decalLayer.SeedOffset);
 
                 for (var i = 0; i < decalLayer.Divisions; i++)
                 {
@@ -168,9 +179,9 @@ public sealed class BiomeOverlay : Overlay
 
                 if (drawn)
                     handled.Add(indices);
+
+                seed.SetSeed(seed.GetSeed() - decalLayer.SeedOffset);
             }
         }
-
-        seed.SetSeed(seed.GetSeed() - decalLayer.SeedOffset);
     }
 }

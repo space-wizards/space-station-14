@@ -2,6 +2,8 @@
   id: Grasslands
   layers:
     - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
       seedOffset: 2
       threshold: 0.95
       divisions: 2
@@ -16,6 +18,8 @@
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: bushd4
     - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
       seedOffset: 1
       threshold: 0.8
       divisions: 1
@@ -28,6 +32,8 @@
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: bushc3
     - !type:BiomeDecalLayer
+      allowedTiles:
+      - FloorPlanetGrass
       divisions: 1
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
@@ -37,8 +43,13 @@
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: busha3
     - !type:BiomeTileLayer
+      threshold: 0
       tiles:
       - FloorPlanetGrass
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tiles:
+        - FloorAsteroidSand
 
 #- type: biomeTileLayer
 #  id: Asteroid
