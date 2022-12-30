@@ -139,7 +139,6 @@ public sealed class BiomeOverlay : Overlay
     {
         seed.SetFrequency(decalLayer.Frequency);
         seed.SetSeed(seed.GetSeed() + decalLayer.SeedOffset);
-        var offset = 1f / decalLayer.Divisions / 2f;
 
         for (var x = flooredBL.X - 1f; x < ceilingTR.X; x++)
         {
@@ -157,7 +156,7 @@ public sealed class BiomeOverlay : Overlay
                 {
                     for (var j = 0; j < decalLayer.Divisions; j++)
                     {
-                        var index = new Vector2(x + i * 1f / decalLayer.Divisions + offset, y + j * 1f / decalLayer.Divisions + offset);
+                        var index = new Vector2(x + i * 1f / decalLayer.Divisions, y + j * 1f / decalLayer.Divisions);
 
                         if (!_biome.TryGetDecal(index, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
                             continue;

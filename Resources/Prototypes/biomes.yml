@@ -22,12 +22,13 @@
       frequency: 0.05
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushf1
+          state: bushc1
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushf2
+          state: bushc2
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushf3
+          state: bushc3
     - !type:BiomeDecalLayer
+      divisions: 1
       decals:
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: busha1
