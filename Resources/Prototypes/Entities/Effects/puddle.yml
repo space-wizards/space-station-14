@@ -29,6 +29,7 @@
       hard: false
   - type: Appearance
   - type: PuddleVisualizer
+    wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
 
 - type: entity
   id: EvaporatingPuddle
@@ -36,6 +37,8 @@
   abstract: true
   components:
   - type: Evaporation
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 5;
 
 - type: entity
   name: gibblets
@@ -47,16 +50,12 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
     netsync: false
-  - type: Puddle
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
         reagents:
         - ReagentId: Water
           Quantity: 10
-  - type: Appearance
-  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -110,9 +109,6 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
-  - type: Appearance
-  - type: PuddleVisualizer
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
 
 - type: entity
   name: vomit

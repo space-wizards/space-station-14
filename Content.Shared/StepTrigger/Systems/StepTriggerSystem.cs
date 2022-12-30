@@ -5,7 +5,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Utility;
-using System.Linq;
 
 namespace Content.Shared.StepTrigger.Systems;
 
