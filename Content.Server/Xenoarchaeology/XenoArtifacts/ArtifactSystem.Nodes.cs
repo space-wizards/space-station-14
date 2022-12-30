@@ -121,7 +121,7 @@ public sealed partial class ArtifactSystem
         var weights = new Dictionary<int, float>();
         foreach (var d in depths)
         {
-            var w = 10f / (0.75f * MathF.Sqrt(2 * MathF.PI)) * MathF.Pow(MathF.E, -((d - targetDepth) / 0.75f));
+            var w = 10f / (0.75f * MathF.Sqrt(2 * MathF.PI)) * MathF.Pow(MathF.E, -MathF.Pow((d - targetDepth) / 0.75f, 2));
             weights.Add(d, w);
         }
         return weights;
