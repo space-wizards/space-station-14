@@ -4,7 +4,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.StepTrigger.Systems;
 
@@ -27,7 +26,8 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!component.Active)
             return;
 
-        DebugTools.Assert(TryComp(uid, out FixturesComponent? fixtures) && fixtures.FixtureCount > 0);
+        if (!TryComp(uid, out FixturesComponent? fixtures) || fixtures.FixtureCount == 0)
+            Logger.Warning($"{ToPrettyString(uid)} has an active step trigger without any fixtures.");
 #endif
     }
 
