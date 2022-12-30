@@ -10,9 +10,9 @@ public sealed class PaperVisualsComponent : Component
     [DataField("backgroundImagePath")]
     public string? BackgroundImagePath;
     [DataField("backgroundPatchMargin")]
-    public Box2? BackgroundPatchMargin;
+    public Box2 BackgroundPatchMargin = default;
     [DataField("backgroundModulate")]
-    public Color? BackgroundModulate;
+    public Color BackgroundModulate = Color.White;
     [DataField("backgroundImageTile")]
     public bool BackgroundImageTile = false;
 
@@ -21,9 +21,9 @@ public sealed class PaperVisualsComponent : Component
     [DataField("headerImagePath")]
     public string? HeaderImagePath;
     [DataField("headerImageModulate")]
-    public Color? HeaderImageModulate;
+    public Color HeaderImageModulate = Color.White;
     [DataField("headerMargin")]
-    public Box2? HeaderMargin = null;
+    public Box2 HeaderMargin = default;
 
     //<todo.eoin Ensure all properties are used!
 
@@ -38,16 +38,16 @@ public sealed class PaperVisualsComponent : Component
     public string? ContentImagePath;
 
     [DataField("contentImageModulate")]
-    public Color? ContentImageModulate;
+    public Color ContentImageModulate = Color.White;
 
     /// An additional margin around the content (including header)
     [DataField("contentMargin")]
-    public Box2? ContentMargin;
+    public Box2 ContentMargin = default;
 
     // Font color
     //<todo.eoin Feels like we want full control here, not an accent on the style?
     [DataField("fontAccentColor")]
-    public string? FontAccentColor = null;
+    public Color FontAccentColor = Color.White;
 
     [DataField("maxWritableArea")]
     public Vector2? MaxWritableArea = null;

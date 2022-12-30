@@ -16,11 +16,7 @@ namespace Content.Client.Paper.UI
         {
             RobustXamlLoader.Load(this);
 
-            //var resourceCache = IoCManager.Resolve<IResourceCache>();
-            //var backgroundTexture = resourceCache.GetTexture("/Textures/Interface/Nano/lined_paper.svg.96dpi.png");
-
-            // Not sure why I can't set this from xaml?
-            //
+            // We can't configure the RichTextLabel contents from xaml, so do it here:
             BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"));
         }
 
@@ -28,105 +24,23 @@ namespace Content.Client.Paper.UI
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
 
-            _texturesDirty = true;
+            /// Initialize the background:
 
             //<todo.eoin there is surely sugar for this?
-            _backgroundImage = visuals.BackgroundImagePath != null? resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
-            if(visuals.BackgroundPatchMargin != null)
+            PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate;
+            var backgroundImage = visuals.BackgroundImagePath != null? resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
+            if (backgroundImage != null)
             {
-                _backgroundPatchMargin = (Box2)visuals.BackgroundPatchMargin;
-            }
-            else
-            {
-                _backgroundPatchMargin = new();
-            }
-
-            if (visuals.BackgroundModulate != null)
-            {
-                PaperBackground.ModulateSelfOverride = (Color)visuals.BackgroundModulate;
-            }
-
-            _backgroundImageMode = visuals.BackgroundImageTile ? StyleBoxTexture.StretchMode.Tile : StyleBoxTexture.StretchMode.Stretch;
-
-            _contentImage = visuals.ContentImagePath != null ? resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
-
-            if (visuals.ContentImageModulate != null)
-            {
-                PaperContent.ModulateSelfOverride = (Color)visuals.ContentImageModulate;
-            }
-            if (visuals.ContentMargin != null)
-            {
-                _contentsMargin = (Box2)visuals.ContentMargin;
-            }
-
-            if (visuals.HeaderImagePath != null)
-            {
-                ImageHeader.TexturePath = visuals.HeaderImagePath;
-                ImageHeader.MinSize = ImageHeader.TextureNormal?.Size ?? Vector2.Zero;
-            }
-            if (visuals.HeaderImageModulate != null)
-            {
-                ImageHeader.ModulateSelfOverride = (Color)visuals.HeaderImageModulate;
-            }
-
-            if (visuals.HeaderMargin != null)
-            {
-                var m = (Box2)visuals.HeaderMargin;
-                ImageHeader.Margin = new Thickness(m.Left, m.Top, m.Right, m.Bottom);
-            }
-
-            if (visuals.FontAccentColor != null)
-            {
-                Label.ModulateSelfOverride = Color.FromHex(visuals.FontAccentColor);
-            }
-
-            if (visuals.MaxWritableArea != null)
-            {
-                Resizable = false; // Don't allow this window to be resized
-                PaperContent.MinSize = Vector2.Zero;
-                PaperContent.MinSize = (Vector2)(visuals.MaxWritableArea);
-                PaperContent.MaxSize = (Vector2)(visuals.MaxWritableArea);
-            }
-        }
-
-        private bool _texturesDirty = false;
-        private TextureResource? _paperBorderBackground;
-        private Box2 _borderRepeatCenter = new();
-        private Box2 _contentsPatch = new();
-        private TextureResource? _paperContentBackground;
-
-
-        /// Good:
-        private TextureResource? _backgroundImage;
-        private Box2 _backgroundPatchMargin = new();
-        private StyleBoxTexture.StretchMode _backgroundImageMode;
-        private TextureResource? _contentImage;
-        private Box2 _contentsMargin = new();
-        private TextureResource? _headerImage;
-
-        private void _updateTextures()
-        {
-            // For some reason, the UserInterfaceManager.ThemeDefaults.DefaultFont.GetLineHeight(1) == 0
-            // So hardcode some reasonable numbers here in case the style is unset. (There must be a better
-            // way to get the real font that is used by a RichTextLabel)
-            float fontLineHeight = 12;
-            float fontDescent = 4;
-            if( Label.TryGetStyleProperty<Font>("font", out var font) )
-            {
-                fontLineHeight = font.GetLineHeight(UIScale);
-                fontDescent = font.GetDescent(UIScale);
-            }
-
-            if (_backgroundImage != null)
-            {
+                var backgroundImageMode = visuals.BackgroundImageTile ? StyleBoxTexture.StretchMode.Tile : StyleBoxTexture.StretchMode.Stretch;
+                var backgroundPatchMargin = visuals.BackgroundPatchMargin;
                 PaperBackground.PanelOverride = new StyleBoxTexture
                 {
-                    Texture = _backgroundImage,
-                    Mode = _backgroundImageMode,
-                    PatchMarginLeft = _backgroundPatchMargin.Left,
-                    PatchMarginBottom = _backgroundPatchMargin.Bottom,
-                    PatchMarginRight = _backgroundPatchMargin.Right,
-                    PatchMarginTop = _backgroundPatchMargin.Top
+                    Texture = backgroundImage,
+                    Mode = backgroundImageMode,
+                    PatchMarginLeft = backgroundPatchMargin.Left,
+                    PatchMarginBottom = backgroundPatchMargin.Bottom,
+                    PatchMarginRight = backgroundPatchMargin.Right,
+                    PatchMarginTop = backgroundPatchMargin.Top
                 };
 
             }
@@ -135,34 +49,66 @@ namespace Content.Client.Paper.UI
                 PaperBackground.PanelOverride = null;
             }
 
-            if(_contentImage != null)
+
+            // Then the header:
+            if (visuals.HeaderImagePath != null)
             {
-                var texHeight = _contentImage.Texture.Height;
+                ImageHeader.TexturePath = visuals.HeaderImagePath;
+                ImageHeader.MinSize = ImageHeader.TextureNormal?.Size ?? Vector2.Zero;
+            }
+
+            ImageHeader.ModulateSelfOverride = visuals.HeaderImageModulate;
+            ImageHeader.Margin = new Thickness(visuals.HeaderMargin.Left, visuals.HeaderMargin.Top,
+                    visuals.HeaderMargin.Right, visuals.HeaderMargin.Bottom);
+
+
+            // Now the writing area:
+            // First, setup some info we need about the font. It seems
+            // UserInterfaceManager.ThemeDefaults.DefaultFont can be a DummyFont,
+            // which will have zeros for these values, so we need to populate some
+            // sane defaults here, but these are basically an arbitrary guess:
+            float fontLineHeight = 12;
+            float fontDescent = 4;
+            if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
+            {
+                fontLineHeight = font.GetLineHeight(UIScale);
+                fontDescent = font.GetDescent(UIScale);
+            }
+
+            PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
+            WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
+
+            var contentImage = visuals.ContentImagePath != null ? resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
+            if (contentImage != null)
+            {
                 PaperContent.PanelOverride = new StyleBoxTexture
                 {
-                    Texture = _contentImage,
+                    Texture = contentImage,
                     Mode = StyleBoxTexture.StretchMode.Tile,
                     // This positions the texture so the font baseline is on the bottom:
                     ExpandMarginTop = fontDescent,
                     // And this scales the texture so that it's a single text line:
-                    //Scale = new Vector2(1, fontLineHeight / texHeight)
+                    //Scale = new Vector2(1, fontLineHeight / _contentImage.Texure.Height)
                 };
             }
 
             PaperContentContainer.Margin = new Thickness(
-                    _contentsMargin.Left, _contentsMargin.Top,
-                    _contentsMargin.Right, _contentsMargin.Bottom);
+                    visuals.ContentMargin.Left, visuals.ContentMargin.Top,
+                    visuals.ContentMargin.Right, visuals.ContentMargin.Bottom);
 
-            _texturesDirty = false;
-        }
-
+            if (visuals.MaxWritableArea != null)
+            {
+                // Paper has requested that this has a maximum area that you can write on.
+                // So, we'll make the window non-resizable and fix the size of the content.
+                Resizable = false;
+                PaperContent.MinSize = Vector2.Zero;
+                PaperContent.MinSize = (Vector2)(visuals.MaxWritableArea);
+                PaperContent.MaxSize = (Vector2)(visuals.MaxWritableArea);
+            }
+       }
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            if(_texturesDirty)
-            {
-                _updateTextures();
-            }
             base.Draw(handle);
         }
 
@@ -174,9 +120,9 @@ namespace Content.Client.Paper.UI
             var msg = new FormattedMessage();
             // Remove any newlines from the end of the message. There can be a trailing
             // new line at the end of user input, and we would like to display the input
-            // box immeditely on the next line.
+            // box immediately on the next line.
             msg.AddMarkupPermissive(state.Text.TrimEnd('\r', '\n'));
-            Label.SetMessage(msg);
+            WrittenTextLabel.SetMessage(msg);
 
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 

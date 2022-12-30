@@ -9,7 +9,7 @@
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                     <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                         VerticalAlignment="Top" HorizontalAlignment="Center"/>
-                    <RichTextLabel StyleClasses="PaperWrittenText" Name="Label" VerticalAlignment="Top"/>
+                    <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
                     <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel">
                         <LineEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                     </PanelContainer>
