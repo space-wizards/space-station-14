@@ -95,8 +95,7 @@
   canRotate: true
   canBuildInImpassable: true
   conditions:
-    - !type:WallmountCondition
-    
+    - !type:WallmountCondition    
 
 - type: construction
   name: directional light switch
