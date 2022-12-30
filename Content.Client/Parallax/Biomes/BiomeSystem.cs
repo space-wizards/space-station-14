@@ -10,7 +10,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
@@ -23,8 +22,6 @@ public sealed class BiomeSystem : EntitySystem
     [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IClientTileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
-
-    public const int ChunkSize = 8;
 
     /// <summary>
     /// Cache of tiles we've calculated previously.

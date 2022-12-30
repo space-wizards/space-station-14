@@ -81,7 +81,7 @@ public sealed class BiomeOverlay : Overlay
             switch (layer)
             {
                 case BiomeTileLayer tileLayer:
-                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
+                    DrawTileLayer(biome, worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 case BiomeDecalLayer decalLayer:
                     DrawDecalLayer(biome, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
@@ -98,6 +98,7 @@ public sealed class BiomeOverlay : Overlay
     }
 
     private void DrawTileLayer(
+        BiomePrototype prototype,
         DrawingHandleWorld screenHandle,
         Vector2 tileSize,
         BiomeTileLayer tileLayer,
@@ -127,6 +128,126 @@ public sealed class BiomeOverlay : Overlay
 
                 var tex = _tileDefinitionManager.GetTexture(tile.Value);
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
+
+                DrawTileEdges(screenHandle, prototype, seed, indices, tile.Value);
+            }
+        }
+    }
+
+    private void DrawTileEdges(DrawingHandleWorld screenHandle, BiomePrototype prototype, FastNoise seed, Vector2i indices, Tile tile)
+    {
+        var tileDef = _tileDefinitionManager[tile.TypeId];
+
+        if (tileDef.CardinalSprites.Count == 0 && tileDef.CornerSprites.Count == 0)
+            return;
+
+        var tileDimensions = new Vector2(1f, 1f);
+
+        // Get what tiles border us to determine what sprites we need to draw.
+        for (var x = -1; x <= 1; x++)
+        {
+            for (var y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                    continue;
+
+                var neighborIndices = new Vector2i(indices.X + x, indices.Y + y);
+
+                // If it's the same tile then no edge to be drawn.
+                if (!_biome.TryGetBiomeTile(neighborIndices, prototype, seed, null, out var neighborTile) ||
+                    neighborTile.Value.TypeId.Equals(tile.TypeId))
+                    continue;
+
+                var direction = new Vector2i(x, y).AsDirection();
+                var intDirection = (int)direction;
+                var box = Box2.FromDimensions(neighborIndices, tileDimensions);
+                var variants = tileDef.CornerSprites.Count;
+                var variant = (neighborIndices.X + neighborIndices.Y * 4 + intDirection) % variants;
+
+                Angle angle = Angle.Zero;
+                Texture? texture = null;
+
+                switch (direction)
+                {
+                    // Corner sprites
+                    case Direction.SouthEast:
+                        if (tileDef.CornerSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
+                                .Texture;
+                        }
+                        break;
+                    case Direction.NorthEast:
+                        if (tileDef.CornerSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI / 2f);
+                        }
+                        break;
+                    case Direction.NorthWest:
+                        if (tileDef.CornerSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI);
+                        }
+                        break;
+                    case Direction.SouthWest:
+                        if (tileDef.CornerSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI * 1.5f);
+                        }
+                        break;
+                    // Edge sprites
+                    case Direction.South:
+                        if (tileDef.CardinalSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
+                                .Texture;
+                        }
+                        break;
+                    case Direction.East:
+                        if (tileDef.CardinalSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI / 2f);
+                        }
+                        break;
+                    case Direction.North:
+                        if (tileDef.CardinalSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI);
+                        }
+                        break;
+                    case Direction.West:
+                        if (tileDef.CardinalSprites.Count > 0)
+                        {
+                            texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
+                                .Texture;
+
+                            angle = new Angle(MathF.PI * 1.5f);
+                        }
+                        break;
+                }
+
+                if (texture == null)
+                    continue;
+
+                if (angle == Angle.Zero)
+                    screenHandle.DrawTextureRect(texture, box);
+                else
+                    screenHandle.DrawTextureRect(texture, new Box2Rotated(box, angle, box.Center));
             }
         }
     }
