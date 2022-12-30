@@ -197,16 +197,26 @@ namespace Content.Server.Zombies
 
             // Always zero, I guess?
             var aliveThreshold = 0f;
-            var critStateData = _state.GetEarliestCriticalState(state, 0);
-            if (critStateData == null)
+            var critStateData = _state.GetEarliestCriticalState(state, dmg);
+            var nextThreshold = FixedPoint2.Zero;
+            if (critStateData != null)
             {
-                return;
+                nextThreshold = critStateData.Value.threshold;
+            }
+            else
+            {
+                var deadStateData = _state.GetEarliestDeadState(state, dmg);
+                if (deadStateData == null)
+                {
+                    return;
+                }
+
+                nextThreshold = deadStateData.Value.threshold;
             }
 
-            var critThreshold = critStateData.Value.threshold;
 
             // Healing to 80% of HP. Not too big and not too small.
-            var healingThreshold = aliveThreshold + (critThreshold - aliveThreshold) * 0.8;
+            var healingThreshold = aliveThreshold + (nextThreshold - aliveThreshold) * 0.8;
 
             if (dmg > healingThreshold)
             {
