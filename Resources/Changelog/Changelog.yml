@@ -1,9 +1,4 @@
 Entries:
-- author: illiux
-  changes:
-  - {message: Added bottle boxes to chemistry lockers, type: Add}
-  id: 2310
-  time: '2022-09-15T13:17:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Joints will break upon buckling to a vehicle., type: Fix}
@@ -2945,3 +2940,10 @@ Entries:
       maybe not...', type: Tweak}
   id: 2809
   time: '2022-12-29T04:44:53.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Cryo pods now properly transfer the reagents from the contained beaker
+      to the patient. There''s also a wiki page explaining how cryo pods work, be
+      sure to read it if you need help!', type: Fix}
+  id: 2810
+  time: '2022-12-30T14:34:59.0000000+00:00'
