@@ -15,11 +15,11 @@
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: slipFixture
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       mask:
@@ -29,6 +29,13 @@
       hard: false
   - type: Appearance
   - type: PuddleVisualizer
+
+- type: entity
+  id: EvaporatingPuddle
+  parent: PuddleBase
+  abstract: true
+  components:
+  - type: Evaporation
 
 - type: entity
   name: gibblets
@@ -57,7 +64,7 @@
 - type: entity
   name: puddle
   id: PuddleSmear
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -75,7 +82,7 @@
 - type: entity
   name: puddle
   id: PuddleSplatter
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -103,8 +110,6 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
-  - type: Evaporation
-    evaporateTime: 400 # very slow
   - type: Appearance
   - type: PuddleVisualizer
     wetFloorEffectThreshold: 0 # No wet floor sparkles
@@ -117,18 +122,7 @@
   - type: Transform
     anchored: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      mask:
-      - ItemMask
-      layer:
-      - SlipLayer
-      hard: false
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
@@ -188,6 +182,7 @@
     state: writing-0
     netsync: false
   - type: Puddle
+  - type: Evaporation
     evaporateTime: 10
   - type: Appearance
   - type: PuddleVisualizer
