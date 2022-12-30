@@ -156,110 +156,43 @@
   id: SignalSwitchDirectional
   name: signal switch
   suffix: directional
+  parent: SignalSwitch
   description: It's a switch for toggling power to things.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
     - type: WallMount
       arc: 180
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: on
       offset: 0,-0.25
-    - type: SignalSwitch
-    - type: UseDelay
-      delay: 0.5 # prevent light-toggling auto-clickers.
-    - type: Rotatable
     - type: Construction
       graph: SignalSwitchDirectionalGraph
       node: SignalSwitchDirectionalNode
-    - type: Fixtures
-    - type: SignalTransmitter
-      outputs:
-        On: []
-        Off: []
 
 - type: entity
   id: SignalButtonDirectional
   name: signal button
   suffix: directional
+  parent: SignalButton
   description: It's a button for activating something.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
     - type: WallMount
       arc: 180
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
     - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: dead
       offset: 0,-0.25
-    - type: UseDelay
-      delay: 0.5 # prevent light-toggling auto-clickers.
-    - type: SignalSwitch
-      onPort: Pressed
-      offPort: Pressed
-    - type: Rotatable
     - type: Construction
       graph: SignalButtonDirectionalGraph
       node: SignalButtonDirectionalNode
-    - type: Fixtures
-    - type: SignalTransmitter
-      outputs:
-        Pressed: []
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
   id: ApcNetSwitchDirectional
   name: apc net switch
   suffix: directional
+  parent: ApcNetSwitch
   description: Its a switch for toggling lights that are connected to the same apc.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
   components:
     - type: WallMount
       arc: 180
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: Transform
-      anchored: true
     - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: on
       offset: 0,-0.25
-    - type: Rotatable
-    - type: ExtensionCableReceiver
-    - type: DeviceNetwork
-      deviceNetId: Apc
-      transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
-    - type: ApcNetworkConnection
-    - type: ApcNetSwitch
     - type: Construction
       graph: LightSwitchDirectionalGraph
       node: LightSwitchDirectionalNode
-    - type: Fixtures
