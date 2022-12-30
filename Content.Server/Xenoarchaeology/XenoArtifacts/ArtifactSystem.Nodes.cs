@@ -90,7 +90,6 @@ public sealed partial class ArtifactSystem
         var targetTriggers = allTriggers
             .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
-
         return _random.Pick(targetTriggers);
     }
 
