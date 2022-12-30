@@ -1,7 +1,6 @@
 - type: biome
   id: Grasslands
-  tileGroups:
-    - Asteroid
+  layers:
     - Grass
 
 - type: biomeTileGroup
@@ -9,11 +8,7 @@
   # TODO: Make tile into tiles
   tile: FloorAsteroidSand
 
-- type: biomeTileGroup
+- type: biomeTileLayer
   id: Grass
   # TODO: Replace the actual grass with this
   tile: FloorPlanetGrass
-  edges:
-    Single: /Textures/Tiles/Planet/Grass/single_edge.png
-    Double: /Textures/Tiles/Planet/Grass/double_edge.png
-    Triple: /Textures/Tiles/Planet/Grass/triple_edge.png

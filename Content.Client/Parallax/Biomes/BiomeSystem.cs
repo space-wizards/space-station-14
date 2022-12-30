@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Biomes;
@@ -33,72 +34,64 @@ public sealed class BiomeSystem : EntitySystem
         _overlay.RemoveOverlay<BiomeOverlay>();
     }
 
-    public Tile GetTile(MapGridComponent component, Vector2i indices, FastNoise seed, List<BiomeTileGroupPrototype> groups, float weightSum)
+    private T Pick<T>(List<T> collection, float value)
     {
-        if (component.TryGetTileRef(indices, out var tileRef))
-            return tileRef.Tile;
+        DebugTools.Assert(value is >= 0f and <= 1f);
 
-        return GetTile(indices, seed, groups, weightSum);
-    }
+        if (collection.Count == 1)
+            return collection[0];
 
-    public float GetValue(Vector2i indices, FastNoise seed)
-    {
-        var chunkOrigin = SharedMapSystem.GetChunkIndices(indices, ChunkSize);
-        var chunkValue = (seed.GetSimplex(chunkOrigin.X * 10f, chunkOrigin.Y * 10f) + 1f) / 2f;
-        var tileValue = (seed.GetSimplex(indices.X * 10f, indices.Y * 10f) + 1f) / 2f;
-        return (chunkValue / 4f + tileValue) / 1.25f;
-    }
+        value *= collection.Count;
 
-    public BiomeTileGroupPrototype GetGroup(List<BiomeTileGroupPrototype> groups, float value, float weight)
-    {
-        DebugTools.Assert(groups.Count > 0);
-
-        if (groups.Count == 1)
-            return groups[0];
-
-        value *= weight;
-
-        foreach (var group in groups)
+        foreach (var item in collection)
         {
-            value -= group.Weight;
+            value -= 1f;
 
             if (value <= 0f)
             {
-                return group;
+                return item;
             }
         }
 
-        throw new InvalidOperationException();
+        throw new ArgumentOutOfRangeException();
+    }
+
+    private int Pick(int count, float value)
+    {
+        DebugTools.Assert(value is >= 0f and <= 1f);
+
+        if (count == 1)
+            return 0;
+
+        value *= count;
+
+        for (var i = 0; i < count; i++)
+        {
+            value -= 1f;
+
+            if (value <= 0f)
+            {
+                return i;
+            }
+        }
+
+        throw new ArgumentOutOfRangeException();
     }
 
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public Tile GetTile(Vector2i indices, FastNoise seed, List<BiomeTileGroupPrototype> groups,
-        float weightSum)
+    public Tile GetTile(Vector2i indices, FastNoise seed, List<ContentTileDefinition> tiles)
     {
-        var value = GetValue(indices, seed);
-        var group = GetGroup(groups, value, weightSum);
-
+        var value = (seed.GetSimplex(indices.X * 10f, indices.Y * 10f) + 1f) / 2f;
+        var tileDef = Pick(tiles, value);
         byte variant = 0;
-        var tileDef = _protoManager.Index<ContentTileDefinition>(group.Tile);
 
         // Pick a variant tile if they're available as well
         if (tileDef.Variants > 1)
         {
             var variantValue = (seed.GetSimplex(indices.X * 20f, indices.Y * 20f) + 1f) / 2f;
-            variantValue *= tileDef.Variants;
-
-            for (byte i = 0; i < tileDef.Variants; i++)
-            {
-                variantValue -= 1f;
-
-                if (variantValue <= 0f)
-                {
-                    variant = i;
-                    break;
-                }
-            }
+            variant = (byte) Pick(tileDef.Variants, variantValue);
         }
 
         return new Tile(tileDef.TileId, 0, variant);

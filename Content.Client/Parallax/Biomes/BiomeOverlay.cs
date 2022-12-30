@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Client.Map;
@@ -47,7 +48,7 @@ public sealed class BiomeOverlay : Overlay
         if (args.MapId == MapId.Nullspace)
             return;
 
-        var screenHandle = args.WorldHandle;
+        var worldHandle = args.WorldHandle;
         var seed = new FastNoise(0);
         var biome = _prototype.Index<BiomePrototype>("Grasslands");
         var tileSize = 1;
@@ -57,6 +58,8 @@ public sealed class BiomeOverlay : Overlay
             tileSize = grid.TileSize;
         }
 
+        var tileDimensions = new Vector2(tileSize, tileSize);
+
         // Remove offset so we can floor.
         var flooredBL = args.WorldAABB.BottomLeft;
 
@@ -65,12 +68,27 @@ public sealed class BiomeOverlay : Overlay
         var ceilingTR = (args.WorldAABB.TopRight / tileSize).Ceiled() * tileSize;
 
         // Setup for per-tile drawing
-        var groups = biome.TileGroups.Select(o => _prototype.Index<BiomeTileGroupPrototype>(o)).ToList();
-        var weightSum = groups.Sum(o => o.Weight);
 
-        // TODO: Should have some internal caching to the biome stuff.
+        for (var i = biome.Layers.Count - 1; i >= 0; i--)
+        {
+            var layer = biome.Layers[i];
 
-        for (var x = flooredBL.X; x < ceilingTR.X; x ++)
+            switch (_prototype.Index<BiomeLayerPrototype>(layer))
+            {
+                case BiomeTileLayer tileLayer:
+                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+    }
+
+    private void DrawTileLayer(DrawingHandleWorld screenHandle, Vector2 tileSize, BiomeTileLayer tileLayer, Vector2 flooredBL, Vector2 ceilingTR, MapGridComponent? grid, FastNoise seed)
+    {
+        var groups = tileLayer.Tiles.Select(o => _prototype.Index<ContentTileDefinition>(o)).ToList();
+
+        for (var x = flooredBL.X; x < ceilingTR.X; x++)
         {
             for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
             {
@@ -80,157 +98,9 @@ public sealed class BiomeOverlay : Overlay
                 if (grid?.TryGetTileRef(indices, out _) == true)
                     continue;
 
-                var tile = _biome.GetTile(indices, seed, groups, weightSum);
+                var tile = _biome.GetTile(indices, seed, groups);
                 var tex = _tileDefinitionManager.GetTexture(tile);
-                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, (tileSize, tileSize)));
-            }
-        }
-
-        // Now work out edge tiles inside of a slightly higher bounds
-        if (groups.Count > 1)
-        {
-            // Store the tile's neighbors and work out what edge sprites we need to draw on ourselves
-            // TODO: Pooling
-            var neighborDirections = new Dictionary<BiomeTileGroupPrototype, List<Direction>>();
-
-            for (var x = flooredBL.X - 1; x < ceilingTR.X; x++)
-            {
-                for (var y = flooredBL.Y - 1; y < ceilingTR.Y; y++)
-                {
-                    var indices = new Vector2i((int) x, (int) y);
-
-                    if (grid?.TryGetTileRef(indices, out _) == true)
-                        continue;
-
-                    var value = _biome.GetValue(indices, seed);
-                    var group = _biome.GetGroup(groups, value, weightSum);
-
-                    // Iterate through neighbors and work out what edges we need to draw.
-                    for (var i = -1; i <= 1; i++)
-                    {
-                        for (var j = -1; j <= 1; j++)
-                        {
-                            if (i == 0 && j == 0)
-                                continue;
-
-                            var neighborIndices = new Vector2i(indices.X + i, indices.Y + j);
-                            var neighborValue = _biome.GetValue(neighborIndices, seed);
-                            var neighborGroup = _biome.GetGroup(groups, neighborValue, weightSum);
-
-                            if (group == neighborGroup || neighborGroup.Edges.Count == 0)
-                                continue;
-
-                            if (!neighborDirections.TryGetValue(neighborGroup, out var directions))
-                            {
-                                directions = new List<Direction>();
-                                neighborDirections[neighborGroup] = directions;
-                            }
-
-                            var dir = new Vector2i(i, j).AsDirection();
-                            directions.Add(dir);
-                        }
-                    }
-
-                    if (neighborDirections.Count == 0)
-                        continue;
-
-                    foreach (var (neighborGroup, flags) in neighborDirections)
-                    {
-                        foreach (var dir in flags)
-                        {
-                            switch (dir)
-                            {
-                                // Corner sprites
-                                case Direction.NorthWest:
-                                    if (!flags.Contains(Direction.West) &&
-                                        !flags.Contains(Direction.North))
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Single]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, box);
-                                    }
-                                    break;
-                                case Direction.SouthWest:
-                                    if (!flags.Contains(Direction.West) &&
-                                        !flags.Contains(Direction.South))
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Single]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI / 2f), box.Center));
-                                    }
-                                    break;
-                                case Direction.SouthEast:
-                                    if (!flags.Contains(Direction.East) &&
-                                        !flags.Contains(Direction.South))
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Single]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI), box.Center));
-                                    }
-                                    break;
-                                case Direction.NorthEast:
-                                    if (!flags.Contains(Direction.East) &&
-                                        !flags.Contains(Direction.North))
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Single]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI * 1.5f), box.Center));
-                                    }
-                                    break;
-                                // Edge sprites
-
-                                case Direction.North:
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Double]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, box);
-                                    }
-                                    break;
-                                case Direction.West:
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Double]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI / 2f), box.Center));
-                                    }
-                                    break;
-                                case Direction.South:
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Double]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI), box.Center));
-                                    }
-                                    break;
-                                case Direction.East:
-                                    {
-                                        var tex = _resource
-                                            .GetResource<TextureResource>(neighborGroup.Edges[BiomeEdge.Double]).Texture;
-
-                                        var box = Box2.FromDimensions(indices, (tileSize, tileSize));
-                                        screenHandle.DrawTextureRect(tex, new Box2Rotated(box, new Angle(MathF.PI * 1.5f), box.Center));
-                                    }
-                                    break;
-                            }
-                        }
-
-                        flags.Clear();
-                    }
-
-                    neighborDirections.Clear();
-                }
+                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
             }
         }
     }
