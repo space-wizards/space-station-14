@@ -50,7 +50,8 @@ public sealed class BiomeOverlay : Overlay
 
         var worldHandle = args.WorldHandle;
         var seed = new FastNoise(0);
-        var biome = _prototype.Index<BiomePrototype>("Grasslands");
+        seed.SetFrequency(0.1f);
+        var biome = _prototype.Index<Biome>("Grasslands");
         var tileSize = 1;
 
         if (_entManager.TryGetComponent<MapGridComponent>(_mapManager.GetMapEntityId(args.MapId), out var grid))
@@ -66,6 +67,7 @@ public sealed class BiomeOverlay : Overlay
         // Floor to background size.
         flooredBL = (args.WorldAABB.BottomLeft / tileSize).Floored() * tileSize;
         var ceilingTR = (args.WorldAABB.TopRight / tileSize).Ceiled() * tileSize;
+        var handledTiles = new HashSet<Vector2i>();
 
         // Setup for per-tile drawing
 
@@ -73,10 +75,13 @@ public sealed class BiomeOverlay : Overlay
         {
             var layer = biome.Layers[i];
 
-            switch (_prototype.Index<BiomeLayerPrototype>(layer))
+            switch (layer)
             {
                 case BiomeTileLayer tileLayer:
-                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed);
+                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, handledTiles);
+                    break;
+                case BiomeDecalLayer decalLayer:
+                    DrawDecalLayer(worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -84,8 +89,17 @@ public sealed class BiomeOverlay : Overlay
         }
     }
 
-    private void DrawTileLayer(DrawingHandleWorld screenHandle, Vector2 tileSize, BiomeTileLayer tileLayer, Vector2 flooredBL, Vector2 ceilingTR, MapGridComponent? grid, FastNoise seed)
+    private void DrawTileLayer(
+        DrawingHandleWorld screenHandle,
+        Vector2 tileSize,
+        BiomeTileLayer tileLayer,
+        Vector2 flooredBL,
+        Vector2 ceilingTR,
+        MapGridComponent? grid,
+        FastNoise seed,
+        HashSet<Vector2i> handledTiles)
     {
+        seed.SetFrequency(tileLayer.Frequency);
         var groups = tileLayer.Tiles.Select(o => _prototype.Index<ContentTileDefinition>(o)).ToList();
 
         for (var x = flooredBL.X; x < ceilingTR.X; x++)
@@ -95,11 +109,40 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out _) == true)
+                if (grid?.TryGetTileRef(indices, out _) == true || !handledTiles.Add(indices))
                     continue;
 
                 var tile = _biome.GetTile(indices, seed, groups);
                 var tex = _tileDefinitionManager.GetTexture(tile);
+                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
+            }
+        }
+    }
+
+    private void DrawDecalLayer(
+        DrawingHandleWorld screenHandle,
+        Vector2 tileSize,
+        BiomeDecalLayer decalLayer,
+        Vector2 flooredBL,
+        Vector2 ceilingTR,
+        MapGridComponent? grid,
+        FastNoise seed)
+    {
+        seed.SetFrequency(decalLayer.Frequency);
+
+        for (var x = flooredBL.X; x < ceilingTR.X; x++)
+        {
+            for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
+            {
+                var indices = new Vector2i((int) x, (int) y);
+
+                // If there's a tile there then skip drawing.
+                if (grid?.TryGetTileRef(indices, out _) == true ||
+                    !_biome.TryGetDecal(indices, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
+                {
+                    continue;
+                }
+
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
             }
         }

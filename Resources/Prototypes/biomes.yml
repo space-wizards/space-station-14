@@ -1,14 +1,19 @@
 - type: biome
   id: Grasslands
   layers:
-    - Grass
+    - !type:BiomeDecalLayer
+      decals:
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: busha1
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: busha2
+        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
+          state: busha3
+    - !type:BiomeTileLayer
+      tiles:
+      - FloorPlanetGrass
 
-- type: biomeTileGroup
-  id: Asteroid
-  # TODO: Make tile into tiles
-  tile: FloorAsteroidSand
-
-- type: biomeTileLayer
-  id: Grass
-  # TODO: Replace the actual grass with this
-  tile: FloorPlanetGrass
+#- type: biomeTileLayer
+#  id: Asteroid
+#  # TODO: Make tile into tiles
+#  tile: FloorAsteroidSand

@@ -1,5 +1,7 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Maps;
 using Content.Shared.Parallax.Biomes;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Map;
 using Robust.Client.ResourceManagement;
@@ -19,6 +21,7 @@ public sealed class BiomeSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceCache _resource = default!;
     [Dependency] private readonly IClientTileDefinitionManager _tileDefManager = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     public const int ChunkSize = 8;
 
@@ -83,17 +86,37 @@ public sealed class BiomeSystem : EntitySystem
     /// </summary>
     public Tile GetTile(Vector2i indices, FastNoise seed, List<ContentTileDefinition> tiles)
     {
-        var value = (seed.GetSimplex(indices.X * 10f, indices.Y * 10f) + 1f) / 2f;
+        var value = (seed.GetSimplex(indices.X, indices.Y) + 1f) / 2f;
         var tileDef = Pick(tiles, value);
         byte variant = 0;
 
         // Pick a variant tile if they're available as well
         if (tileDef.Variants > 1)
         {
-            var variantValue = (seed.GetSimplex(indices.X * 20f, indices.Y * 20f) + 1f) / 2f;
+            var variantValue = (seed.GetSimplex(indices.X * 2f, indices.Y * 2f) + 1f) / 2f;
             variant = (byte) Pick(tileDef.Variants, variantValue);
         }
 
         return new Tile(tileDef.TileId, 0, variant);
+    }
+
+    public bool TryGetDecal(
+        Vector2i indices,
+        FastNoise seed,
+        float threshold,
+        List<SpriteSpecifier> decals,
+        [NotNullWhen(true)] out Texture? texture)
+    {
+        var value = (seed.GetCellular(indices.X, indices.Y) + 1f) / 2f;
+
+        if (value <= threshold)
+        {
+            texture = null;
+            return false;
+        }
+
+        var decal = Pick(decals, (value - 0.5f) * 2f);
+        texture = _sprite.Frame0(decal);
+        return true;
     }
 }
