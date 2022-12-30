@@ -383,23 +383,21 @@ namespace Content.Server.Electrocution
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
                 statusEffects);
 
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,
-                Filter.Entities(uid).Unpredicted());
+            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
-            var filter = Filter.Pvs(uid, 2f, EntityManager).RemoveWhereAttachedEntity(puid => puid == uid)
-                .Unpredicted();
+            var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
             // TODO: Allow being able to pass EntityUid to Loc...
             if (sourceUid != null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
+                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
                 PlayElectrocutionSound(uid, sourceUid.Value);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                    ("mob", uid)), uid, filter);
+                    ("mob", uid)), uid, filter, true);
             }
 
             return true;

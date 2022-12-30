@@ -1,10 +1,8 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
-using Content.Server.Damage.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
 using Content.Server.Interaction.Components;
-using Content.Server.Projectiles.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
@@ -12,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -79,7 +78,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gun.Owner);
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
 
-                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value, Filter.Pvs(user.Value, entityManager: EntityManager));
+                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
                     Del(gun.Owner);
                     return;
                 }

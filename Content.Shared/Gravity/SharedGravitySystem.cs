@@ -32,16 +32,19 @@ namespace Content.Shared.Gravity
 
             // If grid / map has gravity
             if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
-                 TryComp(xform.MapUid, out gravity) && gravity.Enabled)
+                 TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
             {
                 return false;
             }
 
-            // Something holding us down
+            var hasGrav = gravity != null || mapGravity != null;
+
+            // Check for something holding us down
             // If the planet has gravity component and no gravity it will still give gravity
             // If there's no gravity comp at all (i.e. space) then they don't work.
-            if (gravity != null && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
+            if (hasGrav && _inventory.TryGetSlotEntity(uid, "shoes", out var ent))
             {
+                // TODO this should just be a event that gets relayed instead of a specific slot & component check.
                 if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
                     return false;
             }

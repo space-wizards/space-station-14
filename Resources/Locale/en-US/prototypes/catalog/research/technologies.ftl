@@ -38,7 +38,7 @@ technologies-industrial-engineering = Industrial engineering
 technologies-industrial-engineering-description = A refresher course on modern engineering technology.
 
 technologies-rapid-upgrade = Rapid upgrade
-technologies-rapid-upgrade-description = The ability to quickly upgrade the station like never before.
+technologies-rapid-upgrade-description = The ability to quickly improve the station like never before.
 
 technologies-material-sheet-printing = Material sheet printing
 technologies-material-sheet-printing-description = Print those sheets!

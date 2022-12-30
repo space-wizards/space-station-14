@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Content.Server.Climbing.Components;
+using Content.Shared.Climbing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

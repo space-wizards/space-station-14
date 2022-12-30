@@ -25,6 +25,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Book
+
+- type: Tag
   id: BorgArm
 
 - type: Tag
