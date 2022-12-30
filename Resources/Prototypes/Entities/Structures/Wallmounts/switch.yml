@@ -159,6 +159,7 @@
   parent: SignalSwitch
   description: It's a switch for toggling power to things.
   components:
+  - type: Physics
   - type: WallMount
     arc: 180
   - type: Sprite
@@ -174,6 +175,7 @@
   parent: SignalButton
   description: It's a button for activating something.
   components:
+  - type: Physics
   - type: WallMount
     arc: 180
   - type: Sprite
@@ -189,6 +191,7 @@
   parent: ApcNetSwitch
   description: Its a switch for toggling lights that are connected to the same apc.
   components:
+  - type: Physics
   - type: WallMount
     arc: 180
   - type: Sprite
