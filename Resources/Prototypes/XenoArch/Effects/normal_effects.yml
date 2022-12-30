@@ -436,4 +436,4 @@
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
-    - id: Singularitys
+    - id: Singularity
