@@ -38,7 +38,7 @@
   components:
   - type: Evaporation
   - type: PuddleVisualizer
-    wetFloorEffectThreshold: 5;
+    wetFloorEffectThreshold: 5
 
 - type: entity
   name: gibblets
