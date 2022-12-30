@@ -22,6 +22,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -364,15 +365,32 @@ public sealed partial class ShuttleSystem
            return;
        }
 
+       void CallShuttles()
+       {
+           foreach (var comp in EntityQuery<StationDataComponent>(true))
+               CallEmergencyShuttle(comp.Owner);
+       }
+
        _consoleAccumulator = _configManager.GetCVar(CCVars.EmergencyShuttleDockTime);
        EmergencyShuttleArrived = true;
 
        if (CentComMap != null)
-         _mapManager.SetMapPaused(CentComMap.Value, false);
-
-       foreach (var comp in EntityQuery<StationDataComponent>(true))
        {
-           CallEmergencyShuttle(comp.Owner);
+           if (_mapManager.IsMapPaused(CentComMap.Value))
+           {
+               // Looks like we're getting called before the CentComMap has had
+               // time to unpause and setup its power.
+               //
+               // Normally, a timer would have done this for us before this
+               // happens, but such is life.
+               _mapManager.SetMapPaused(CentComMap.Value, false);
+
+               Timer.Spawn(TimeSpan.FromSeconds(5), CallShuttles);
+           }
+           else
+           {
+               CallShuttles();
+           }
        }
 
        _commsConsole.UpdateCommsConsoleInterface();
