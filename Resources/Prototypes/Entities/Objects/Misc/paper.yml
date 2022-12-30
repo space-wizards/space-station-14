@@ -352,6 +352,59 @@
       400.0,
       260.0
 
+- type: entity
+  name: styledtest napkin
+  parent: Paper
+  id: CoolPaperNapkin
+  description: 'For keeping tables dry, mostly.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_napkin.svg.96dpi.png"
+    backgroundImageTile: true #todo.eoin Want to expose the enum here
+    backgroundPatchMargin:
+      56.0,
+      0.0,
+      0.0,
+      56.0
+    maxWritableArea:
+      200.0,
+      200.0
+    contentMargin:
+      12.0,
+      12.0,
+      12.0,
+      12.0
+
+- type: entity
+  name: styledtest travelling
+  parent: Paper
+  id: CoolPaperTravellingAtNight
+  description: 'Dream-journals of Christopher Illopoly (Annotated)'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
+    backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
+    contentMargin: 20.0, 20.0, 20.0, 20.0
 
 - type: entity
   parent: Paper
