@@ -276,7 +276,6 @@
       0.0,
       0.0
 
-
 - type: entity
   name: styledtest diagnosis
   parent: Paper
@@ -371,19 +370,18 @@
     fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_napkin.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
+    backgroundScale: 2.0, 2.0
     backgroundPatchMargin:
       56.0,
       0.0,
       0.0,
       56.0
-    maxWritableArea:
-      200.0,
-      200.0
+    maxWritableArea: 200.0, 200.0
     contentMargin:
-      12.0,
-      12.0,
-      12.0,
-      12.0
+      64.0,
+      64.0,
+      64.0,
+      64.0
 
 - type: entity
   name: styledtest travelling

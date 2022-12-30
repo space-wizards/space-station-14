@@ -12,6 +12,10 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : DefaultWindow
     {
+        // We keep a reference to the paper content texture that we create
+        // so that we can modify it later.
+        private StyleBoxTexture _paperContentTex = new();
+
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);
@@ -36,6 +40,7 @@ namespace Content.Client.Paper.UI
                 PaperBackground.PanelOverride = new StyleBoxTexture
                 {
                     Texture = backgroundImage,
+                    TextureScale = visuals.BackgroundScale,
                     Mode = backgroundImageMode,
                     PatchMarginLeft = backgroundPatchMargin.Left,
                     PatchMarginBottom = backgroundPatchMargin.Bottom,
@@ -62,34 +67,20 @@ namespace Content.Client.Paper.UI
                     visuals.HeaderMargin.Right, visuals.HeaderMargin.Bottom);
 
 
-            // Now the writing area:
-            // First, setup some info we need about the font. It seems
-            // UserInterfaceManager.ThemeDefaults.DefaultFont can be a DummyFont,
-            // which will have zeros for these values, so we need to populate some
-            // sane defaults here, but these are basically an arbitrary guess:
-            float fontLineHeight = 12;
-            float fontDescent = 4;
-            if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
-            {
-                fontLineHeight = font.GetLineHeight(UIScale);
-                fontDescent = font.GetDescent(UIScale);
-            }
-
             PaperContent.ModulateSelfOverride = visuals.ContentImageModulate;
             WrittenTextLabel.ModulateSelfOverride = visuals.FontAccentColor;
 
             var contentImage = visuals.ContentImagePath != null ? resCache.GetResource<TextureResource>(visuals.ContentImagePath) : null;
             if (contentImage != null)
             {
-                PaperContent.PanelOverride = new StyleBoxTexture
+                // Setup the paper content texture, but keep a reference to it, as we can't set
+                // some font-related properties here. We'll fix those up later, in Draw()
+                _paperContentTex = new StyleBoxTexture
                 {
                     Texture = contentImage,
                     Mode = StyleBoxTexture.StretchMode.Tile,
-                    // This positions the texture so the font baseline is on the bottom:
-                    ExpandMarginTop = fontDescent,
-                    // And this scales the texture so that it's a single text line:
-                    //Scale = new Vector2(1, fontLineHeight / _contentImage.Texure.Height)
                 };
+                PaperContent.PanelOverride = _paperContentTex;
             }
 
             PaperContentContainer.Margin = new Thickness(
@@ -109,6 +100,18 @@ namespace Content.Client.Paper.UI
 
         protected override void Draw(DrawingHandleScreen handle)
         {
+            // Now do the deferred setup of the written area. At the point
+            // that InitVisuals runs, the label hasn't had it's style initialized
+            // so we need to get some info out now:
+            if (WrittenTextLabel.TryGetStyleProperty<Font>("font", out var font))
+            {
+                float fontLineHeight = font.GetLineHeight(UIScale);
+                // This positions the texture so the font baseline is on the bottom:
+                _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
+                // And this scales the texture so that it's a single text line:
+                _paperContentTex.TextureScale = new Vector2(1, fontLineHeight / _paperContentTex.Texture?.Height ?? fontLineHeight);
+            }
+
             base.Draw(handle);
         }
 

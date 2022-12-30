@@ -15,6 +15,8 @@ public sealed class PaperVisualsComponent : Component
     public Color BackgroundModulate = Color.White;
     [DataField("backgroundImageTile")]
     public bool BackgroundImageTile = false;
+    [DataField("backgroundScale")]
+    public Vector2 BackgroundScale = Vector2.One;
 
     // Header image
     //     Modulate
