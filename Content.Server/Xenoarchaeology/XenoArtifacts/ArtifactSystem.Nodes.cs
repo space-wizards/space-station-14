@@ -81,29 +81,28 @@ public sealed partial class ArtifactSystem
 
     private ArtifactTriggerPrototype GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
-        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
+        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetTriggers = allTriggers
-            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
-
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetTriggers);
     }
 
     private ArtifactEffectPrototype GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
-        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
+        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetEffects = allEffects
-            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetEffects);
     }
