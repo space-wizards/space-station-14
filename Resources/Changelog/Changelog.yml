@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Joints will break upon buckling to a vehicle., type: Fix}
-  id: 2311
-  time: '2022-09-15T13:19:40.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Adds lightning, unused for now!', type: Add}
@@ -2947,3 +2942,10 @@ Entries:
       sure to read it if you need help!', type: Fix}
   id: 2810
   time: '2022-12-30T14:34:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Puddles now become sparkles as soon as you finish mopping them. Still
+      be careful of wet floors!, type: Tweak}
+  - {message: Blood stains now fade out instead of becoming sparkles., type: Fix}
+  id: 2811
+  time: '2022-12-30T17:45:05.0000000+00:00'
