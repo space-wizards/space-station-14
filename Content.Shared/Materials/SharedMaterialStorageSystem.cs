@@ -23,6 +23,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
@@ -42,6 +43,11 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             _appearance.SetData(inserting.Owner, MaterialStorageVisuals.Inserting, false);
             RemComp(inserting.Owner, inserting);
         }
+    }
+
+    private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)
+    {
+        _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
     }
 
     private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
