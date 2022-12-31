@@ -19,7 +19,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
     }
 
     public void RestockInventoryFromPrototype(EntityUid uid,
-        SharedVendingMachineComponent? component = null)
+        VendingMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
         {
