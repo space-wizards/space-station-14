@@ -1,44 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Added verb context menu to player lists in admin menus., type: Add}
-  id: 2306
-  time: '2022-09-15T00:03:14.0000000+00:00'
-- author: illiux
-  changes:
-  - {message: The ChemMaster 4000 now outputs directly into a pill canister or bottle,
-    type: Tweak}
-  id: 2307
-  time: '2022-09-15T00:10:13.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Sell prices have been significantly increased across the board so cargo
-      should receive more income., type: Tweak}
-  - {message: Cargo passive income generation reduced from 10 per second to 2., type: Tweak}
-  - {message: Cargo shuttle cooldown reduced from 3 minutes to 30 seconds to facilitate
-      their increased pace., type: Tweak}
-  id: 2308
-  time: '2022-09-15T01:53:18.0000000+00:00'
-- author: illiux
-  changes:
-  - {message: The ChemMaster 4000 applies labels correctly, type: Fix}
-  id: 2309
-  time: '2022-09-15T06:27:22.0000000+00:00'
-- author: illiux
-  changes:
-  - {message: Added bottle boxes to chemistry lockers, type: Add}
-  id: 2310
-  time: '2022-09-15T13:17:32.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Joints will break upon buckling to a vehicle., type: Fix}
-  id: 2311
-  time: '2022-09-15T13:19:40.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: 'Adds lightning, unused for now!', type: Add}
-  id: 2312
-  time: '2022-09-15T15:49:01.0000000+00:00'
 - author: themias
   changes:
   - {message: Added lathe recipe for glass chemistry bottles, type: Add}
@@ -2945,3 +2905,48 @@ Entries:
       specific chemicals, such as cryoxadone.', type: Add}
   id: 2805
   time: '2022-12-25T11:35:51.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer spam print technology disks., type: Fix}
+  - {message: Changed some of the internal logic regarding research server syncing.,
+    type: Tweak}
+  id: 2806
+  time: '2022-12-25T21:22:24.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Scalpels can now be used to butcher in emergencies, 50% slower than
+      standard tools.', type: Add}
+  id: 2807
+  time: '2022-12-26T22:09:00.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Pill canisters will now fit in coat storage, at the cost of having
+      less space for pills. (12 -> 9)', type: Tweak}
+  id: 2808
+  time: '2022-12-29T03:57:28.0000000+00:00'
+- author: Ungle McBumblefuck
+  changes:
+  - {message: 'Spaceacillin use now seems to impair brain function. A worthy risk?
+      maybe not...', type: Tweak}
+  id: 2809
+  time: '2022-12-29T04:44:53.0000000+00:00'
+- author: Carbonhell
+  changes:
+  - {message: 'Cryo pods now properly transfer the reagents from the contained beaker
+      to the patient. There''s also a wiki page explaining how cryo pods work, be
+      sure to read it if you need help!', type: Fix}
+  id: 2810
+  time: '2022-12-30T14:34:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Puddles now become sparkles as soon as you finish mopping them. Still
+      be careful of wet floors!, type: Tweak}
+  - {message: Blood stains now fade out instead of becoming sparkles., type: Fix}
+  id: 2811
+  time: '2022-12-30T17:45:05.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added missing locale string for the carpotoxin physical reagent description.,
+    type: Fix}
+  id: 2812
+  time: '2022-12-31T21:51:44.0000000+00:00'
