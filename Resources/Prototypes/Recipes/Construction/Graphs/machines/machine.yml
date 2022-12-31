@@ -80,8 +80,6 @@
                 - !type:MachineFrameRegenerateProgress
 
         - to: missingWires
-          actions:
-            - !type:EmptyAllContainers
           conditions:
             - !type:EntityAnchored
             - !type:ContainerEmpty
