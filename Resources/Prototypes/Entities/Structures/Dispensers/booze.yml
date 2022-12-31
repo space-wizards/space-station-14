@@ -17,3 +17,6 @@
     noRot: false 
   - type: Machine
     board: BoozeDispenserMachineCircuitboard
+  - type: Wires
+    BoardName: "booze_dispenser"
+    LayoutId: booze_dispenser
