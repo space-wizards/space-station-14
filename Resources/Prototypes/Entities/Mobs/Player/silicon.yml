@@ -87,6 +87,7 @@
       type: StrippableBoundUserInterface
   - type: GhostTakeoverAvailable
     makeSentient: true
+    whitelistRequired: true
     name: Maintenance Drone
     description: Maintain the station. Ignore other beings except drones.
     rules: |
