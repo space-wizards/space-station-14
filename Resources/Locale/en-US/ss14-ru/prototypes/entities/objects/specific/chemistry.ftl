@@ -26,5 +26,5 @@ ent-Pill = pill
     .desc = It's not a suppository.
     .suffix = { "" }
 ent-PillCanister = pill canister
-    .desc = Holds up to 12 pills.
+    .desc = Holds up to 9 pills.
     .suffix = { "" }
