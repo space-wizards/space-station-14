@@ -370,7 +370,7 @@
   - type: Grammar
     attributes:
       gender: male
-      
+
 - type: entity
   name: Renault
   parent: MobFox
