@@ -1,6 +1,4 @@
-using System.Collections.Immutable;
 using System.Linq;
-using Content.Server.Database;
 using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
@@ -31,9 +29,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
-    [Dependency] private readonly IServerDbManager _db = default!;
-
-
 
 
     public override string Prototype => "Traitor";
@@ -122,7 +117,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     public List<IPlayerSession> FindPotentialTraitors(RulePlayerJobsAssignedEvent ev)
     {
         var list = new List<IPlayerSession>(ev.Players).Where(x =>
-            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Content.Server.Roles.Job { CanBeAntag: false }) ?? false
+            x.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false
         ).ToList();
 
         var prefList = new List<IPlayerSession>();
@@ -164,19 +159,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         return results;
     }
 
-    public void MakeTraitor(IPlayerSession traitor)
+    public bool MakeTraitor(IPlayerSession traitor)
     {
         var mind = traitor.Data.ContentData()?.Mind;
         if (mind == null)
         {
             Logger.ErrorS("preset", "Failed getting mind for picked traitor.");
-            return;
-        }
-
-        if (_cfg.GetCVar(CCVars.WhitelistEnabled))
-        {
-            if (traitor.ContentData == null || !traitor.ContentData()!.Whitelisted)
-                return;
+            return false;
         }
 
         // creadth: we need to create uplink for the antag.
@@ -189,7 +178,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.AntagAdvantage, 0);
 
         if (!_uplink.AddUplink(mind.OwnedEntity!.Value, startingBalance))
-            return;
+            return false;
 
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(TraitorPrototypeID);
         var traitorRole = new TraitorRole(mind, antagPrototype);
@@ -214,7 +203,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         traitorRole.Mind.Briefing = Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", Codewords)));
 
         SoundSystem.Play(_addedSound.GetSound(), Filter.Empty().AddPlayer(traitor), AudioParams.Default);
-        return;
+        return true;
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)

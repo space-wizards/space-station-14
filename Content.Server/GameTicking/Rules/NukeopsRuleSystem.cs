@@ -17,7 +17,6 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Server.Players;
 using Content.Server.Traitor;
 using Content.Shared.Dataset;
 using Content.Shared.MobState;
@@ -25,14 +24,12 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Nuke;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
-using Content.Shared.CCVar;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Configuration;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -55,7 +52,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
 
     private enum WinType
@@ -476,12 +472,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             {
                 continue;
             }
-
-            if (_cfg.GetCVar(CCVars.WhitelistEnabled) && !player.ContentData()!.Whitelisted)
-            {
-                continue;
-            }
-
             var profile = ev.Profiles[player.UserId];
             if (profile.AntagPreferences.Contains(_nukeopsRuleConfig.OperativeRoleProto))
             {

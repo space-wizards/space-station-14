@@ -184,7 +184,7 @@ namespace Content.Server.Ghost.Roles
         {
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
 
-            if (role.WhitelistRequired && _cfg.GetCVar(CCVars.WhitelistEnabled) && !player.ContentData()!.Whitelisted)
+            if (role.WhitelistRequired && _cfg.GetCVar(CCVars.WhitelistRolesEnabled) && !player.ContentData()!.Whitelisted)
                 return;
 
             if (!role.Take(player)) return;

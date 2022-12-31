@@ -131,7 +131,7 @@ public sealed class PlayTimeTrackingManager
             {
                 SendPlayTimes(player);
 
-                if (_cfg.GetCVar(CCVars.WhitelistEnabled))
+                if (_cfg.GetCVar(CCVars.WhitelistRolesEnabled))
                     SendWhitelist(player);
 
                 data.NeedSendTimers = false;

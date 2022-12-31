@@ -900,6 +900,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("whitelist.enabled", false, CVar.REPLICATED);
 
         /// <summary>
+        ///     Controls whether the server will apply whitelisting to roles.
+        /// </summary>
+        public static readonly CVarDef<bool> WhitelistRolesEnabled =
+            CVarDef.Create("whitelistroles.enabled", true, CVar.REPLICATED);
+
+        /// <summary>
         ///     The loc string to display as a disconnect reason when someone is not whitelisted.
         /// </summary>
         public static readonly CVarDef<string> WhitelistReason =

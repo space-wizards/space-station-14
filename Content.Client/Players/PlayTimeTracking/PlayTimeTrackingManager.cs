@@ -89,7 +89,7 @@ public sealed class PlayTimeTrackingManager
             reasonBuilder.AppendLine(reason);
         }
 
-        if (job.WhitelistRequired && _cfg.GetCVar(CCVars.WhitelistEnabled) && !_whitelisted)
+        if (job.WhitelistRequired && _cfg.GetCVar(CCVars.WhitelistRolesEnabled) && !_whitelisted)
         {
             if (reasonBuilder.Length > 0)
                 reasonBuilder.Append('\n');

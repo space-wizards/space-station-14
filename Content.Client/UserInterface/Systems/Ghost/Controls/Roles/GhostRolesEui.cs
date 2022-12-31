@@ -77,7 +77,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 
             foreach (var group in groupedRoles)
             {
-                if (group.Key.WhitelistRequired && cfg.GetCVar(CCVars.WhitelistEnabled) && !playTime.IsWhitelisted())
+                if (group.Key.WhitelistRequired && cfg.GetCVar(CCVars.WhitelistRolesEnabled) && !playTime.IsWhitelisted())
                 {
                     denied = denied + 1;
                     continue;
