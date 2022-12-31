@@ -43,6 +43,9 @@ namespace Content.Shared.Roles
         [DataField("requirements")]
         public HashSet<JobRequirement>? Requirements;
 
+        [DataField("whitelistRequired")]
+        public bool WhitelistRequired = false;
+
         [DataField("joinNotifyCrew")]
         public bool JoinNotifyCrew { get; } = false;
 
