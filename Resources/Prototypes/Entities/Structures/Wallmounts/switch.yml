@@ -7,26 +7,26 @@
     snap:
     - Wallmount
   components:
-    - type: WallMount
-      arc: 360
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: on
-    - type: SignalSwitch
-    - type: UseDelay
-      delay: 0.5 # prevent light-toggling auto-clickers.
-    - type: Rotatable
-    - type: Construction
-      graph: SignalSwitchGraph
-      node: SignalSwitchNode
-    - type: Fixtures
-    - type: SignalTransmitter
-      outputs:
-        On: []
-        Off: []
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Sprite
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  - type: SignalSwitch
+  - type: UseDelay
+    delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: Rotatable
+  - type: Construction
+    graph: SignalSwitchGraph
+    node: SignalSwitchNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      On: []
+      Off: []
 
 - type: entity
   id: SignalButton
@@ -37,41 +37,41 @@
     snap:
     - Wallmount
   components:
-    - type: WallMount
-      arc: 360
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: dead
-    - type: UseDelay
-      delay: 0.5 # prevent light-toggling auto-clickers.
-    - type: SignalSwitch
-      onPort: Pressed
-      offPort: Pressed
-    - type: Rotatable
-    - type: Construction
-      graph: SignalButtonGraph
-      node: SignalButtonNode
-    - type: Fixtures
-    - type: SignalTransmitter
-      outputs:
-        Pressed: []
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 40
-          behaviors:
-            - !type:DoActsBehavior
-              acts: [ "Destruction" ]
-            - !type:PlaySoundBehavior
-              sound:
-                path: /Audio/Effects/metalbreak.ogg
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Sprite
+    sprite: Structures/Wallmounts/switch.rsi
+    state: dead
+  - type: UseDelay
+    delay: 0.5 # prevent light-toggling auto-clickers.
+  - type: SignalSwitch
+    onPort: Pressed
+    offPort: Pressed
+  - type: Rotatable
+  - type: Construction
+    graph: SignalButtonGraph
+    node: SignalButtonNode
+  - type: Fixtures
+  - type: SignalTransmitter
+    outputs:
+      Pressed: []
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
 
 - type: entity
   id: ApcNetSwitch
@@ -82,27 +82,27 @@
     snap:
       - Wallmount
   components:
-    - type: WallMount
-      arc: 360
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: Transform
-      anchored: true
-    - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: on
-    - type: Rotatable
-    - type: ExtensionCableReceiver
-    - type: DeviceNetwork
-      deviceNetId: Apc
-      transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
-    - type: ApcNetworkConnection
-    - type: ApcNetSwitch
-    - type: Construction
-      graph: LightSwitchGraph
-      node: LightSwitchNode
-    - type: Fixtures
+  - type: WallMount
+    arc: 360
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  - type: Rotatable
+  - type: ExtensionCableReceiver
+  - type: DeviceNetwork
+    deviceNetId: Apc
+    transmitFrequencyId: SmartLight # assuming people want to use it for light switches.
+  - type: ApcNetworkConnection
+  - type: ApcNetSwitch
+  - type: Construction
+    graph: LightSwitchGraph
+    node: LightSwitchNode
+  - type: Fixtures
 
 - type: entity
   id: TwoWayLever
@@ -111,44 +111,44 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      netsync: false
-      sprite: Structures/conveyor.rsi
-      layers:
-        - state: switch-off
-          map: ["enabled", "enum.TwoWayLeverState.Middle"]
-    - type: TwoWayLever
-    - type: UseDelay
-      delay: 0.2 # prevent light-toggling auto-clickers.
-    - type: Appearance
-    - type: GenericVisualizer
-      visuals:
-        enum.TwoWayLeverVisuals.State:
-          enabled:
-            Right: { state: switch-fwd }
-            Middle: { state: switch-off }
-            Left: { state: switch-rev }
-    - type: Damageable
-      damageContainer: Inorganic
-      damageModifierSet: Metallic
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 100
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
-    - type: Construction
-      graph: LeverGraph
-      node: LeverNode
-    - type: SignalTransmitter
-      outputs:
-        Left: []
-        Right: []
-        Middle: []
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    sprite: Structures/conveyor.rsi
+    layers:
+      - state: switch-off
+        map: ["enabled", "enum.TwoWayLeverState.Middle"]
+  - type: TwoWayLever
+  - type: UseDelay
+    delay: 0.2 # prevent light-toggling auto-clickers.
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TwoWayLeverVisuals.State:
+        enabled:
+          Right: { state: switch-fwd }
+          Middle: { state: switch-off }
+          Left: { state: switch-rev }
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: LeverGraph
+    node: LeverNode
+  - type: SignalTransmitter
+    outputs:
+      Left: []
+      Right: []
+      Middle: []
 
 #directional
 
@@ -158,15 +158,15 @@
   suffix: directional
   parent: SignalSwitch
   components:
-    - type: Physics
-      canCollide: false
-    - type: WallMount
-      arc: 180
-    - type: Sprite
-      offset: 0,-0.25
-    - type: Construction
-      graph: SignalSwitchDirectionalGraph
-      node: SignalSwitchDirectionalNode
+  - type: Physics
+    canCollide: false
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalSwitchDirectionalGraph
+    node: SignalSwitchDirectionalNode
 
 - type: entity
   id: SignalButtonDirectional
@@ -174,15 +174,15 @@
   suffix: directional
   parent: SignalButton
   components:
-    - type: Physics
-      canCollide: false
-    - type: WallMount
-      arc: 180
-    - type: Sprite
-      offset: 0,-0.25
-    - type: Construction
-      graph: SignalButtonDirectionalGraph
-      node: SignalButtonDirectionalNode
+  - type: Physics
+    canCollide: false
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalButtonDirectionalGraph
+    node: SignalButtonDirectionalNode
 
 - type: entity
   id: ApcNetSwitchDirectional
@@ -190,12 +190,12 @@
   suffix: directional
   parent: ApcNetSwitch
   components:
-    - type: Physics
-      canCollide: false
-    - type: WallMount
-      arc: 180
-    - type: Sprite
-      offset: 0,-0.25
-    - type: Construction
-      graph: LightSwitchDirectionalGraph
-      node: LightSwitchDirectionalNode
+  - type: Physics
+    canCollide: false
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: LightSwitchDirectionalGraph
+    node: LightSwitchDirectionalNode
