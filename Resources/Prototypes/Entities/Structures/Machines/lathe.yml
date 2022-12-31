@@ -377,7 +377,6 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
       map: ["enum.MaterialStorageVisualLayers.Inserting"]
-      visible: false
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
