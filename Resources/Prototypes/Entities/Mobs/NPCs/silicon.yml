@@ -132,7 +132,6 @@
     node: bot
   - type: GhostTakeoverAvailable
     makeSentient: true
-    whitelistRequired: false
     name: honkbot
     description: An artificial being of pure evil.
   - type: InteractionPopup

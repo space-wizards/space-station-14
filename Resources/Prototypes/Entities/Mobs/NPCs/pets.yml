@@ -370,7 +370,7 @@
   - type: Grammar
     attributes:
       gender: male
-      
+
 - type: entity
   name: Renault
   parent: MobFox
@@ -400,7 +400,6 @@
     makeSentient: true
     allowSpeech: true
     allowMovement: true
-    whitelistRequired: false
     name: ghost-role-information-hamlet-name
     description: ghost-role-information-hamlet-description
   - type: InteractionPopup

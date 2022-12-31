@@ -82,7 +82,6 @@ namespace Content.Server.PAI
 
             ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
             ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
-            ghostFinder.WhitelistRequired = false;
 
             _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, args.User);
             UpdatePAIAppearance(uid, PAIStatus.Searching);
