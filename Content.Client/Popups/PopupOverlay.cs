@@ -1,6 +1,10 @@
+using Content.Shared.CCVar;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
@@ -11,7 +15,9 @@ namespace Content.Client.Popups;
 /// </summary>
 public sealed class PopupOverlay : Overlay
 {
+    private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
+    private readonly IUserInterfaceManager _uiManager;
     private readonly PopupSystem _popup;
 
     private readonly ShaderInstance _shader;
@@ -21,9 +27,17 @@ public sealed class PopupOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
-    public PopupOverlay(IEntityManager entManager, IPrototypeManager protoManager, IResourceCache cache, PopupSystem popup)
+    public PopupOverlay(
+        IConfigurationManager configManager,
+        IEntityManager entManager,
+        IPrototypeManager protoManager,
+        IResourceCache cache,
+        IUserInterfaceManager uiManager,
+        PopupSystem popup)
     {
+        _configManager = configManager;
         _entManager = entManager;
+        _uiManager = uiManager;
         _popup = popup;
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
@@ -39,14 +53,18 @@ public sealed class PopupOverlay : Overlay
 
         args.DrawingHandle.SetTransform(Matrix3.Identity);
         args.DrawingHandle.UseShader(_shader);
+        var scale = _configManager.GetCVar(CVars.DisplayUIScale);
 
-        DrawWorld(args.ScreenHandle, args);
-        DrawScreen(args.ScreenHandle, args);
+        if (scale == 0f)
+            scale = _uiManager.DefaultUIScale;
+
+        DrawWorld(args.ScreenHandle, args, scale);
+        DrawScreen(args.ScreenHandle, args, scale);
 
         args.DrawingHandle.UseShader(null);
     }
 
-    private void DrawWorld(DrawingHandleScreen worldHandle, OverlayDrawArgs args)
+    private void DrawWorld(DrawingHandleScreen worldHandle, OverlayDrawArgs args, float scale)
     {
         if (_popup.WorldLabels.Count == 0)
             return;
@@ -64,11 +82,11 @@ public sealed class PopupOverlay : Overlay
                 continue;
 
             var pos = matrix.Transform(mapPos.Position);
-            DrawPopup(popup, worldHandle, pos);
+            DrawPopup(popup, worldHandle, pos, scale);
         }
     }
 
-    private void DrawScreen(DrawingHandleScreen screenHandle, OverlayDrawArgs args)
+    private void DrawScreen(DrawingHandleScreen screenHandle, OverlayDrawArgs args, float scale)
     {
         foreach (var popup in _popup.CursorLabels)
         {
@@ -76,18 +94,17 @@ public sealed class PopupOverlay : Overlay
             if (popup.InitialPos.Window != args.ViewportControl?.Window?.Id)
                 continue;
 
-            DrawPopup(popup, screenHandle, popup.InitialPos.Position);
+            DrawPopup(popup, screenHandle, popup.InitialPos.Position, scale);
         }
     }
 
-    private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position)
+    private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position, float scale)
     {
         const float alphaMinimum = 0.5f;
 
         var alpha = MathF.Min(1f, 1f - (popup.TotalTime - alphaMinimum) / (PopupSystem.PopupLifetime - alphaMinimum));
         var updatedPosition = position - new Vector2(0f, 20f * (popup.TotalTime * popup.TotalTime + popup.TotalTime));
         var font = _smallFont;
-        var dimensions = Vector2.Zero;
         var color = Color.White.WithAlpha(alpha);
 
         switch (popup.Type)
@@ -113,7 +130,7 @@ public sealed class PopupOverlay : Overlay
                 break;
         }
 
-        dimensions = handle.GetDimensions(font, popup.Text, 1f);
-        handle.DrawString(font, updatedPosition - dimensions / 2f, popup.Text, color.WithAlpha(alpha));
+        var dimensions = handle.GetDimensions(font, popup.Text, scale);
+        handle.DrawString(font, updatedPosition - dimensions / 2f, popup.Text, scale, color.WithAlpha(alpha));
     }
 }

@@ -10,10 +10,10 @@ public abstract class SharedVendingMachineSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SharedVendingMachineComponent, ComponentInit>(OnComponentInit);;
+        SubscribeLocalEvent<VendingMachineComponent, ComponentInit>(OnComponentInit);
     }
 
-    protected virtual void OnComponentInit(EntityUid uid, SharedVendingMachineComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
     {
         RestockInventoryFromPrototype(uid, component);
     }
@@ -36,13 +36,13 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
     /// <summary>
     /// Returns all of the vending machine's inventory. Only includes emagged and contraband inventories if
-    /// <see cref="SharedVendingMachineComponent.Emagged"/> and <see cref="SharedVendingMachineComponent.Contraband"/>
+    /// <see cref="VendingMachineComponent.Emagged"/> and <see cref="VendingMachineComponent.Contraband"/>
     /// are <c>true</c> respectively.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns></returns>
-    public List<VendingMachineInventoryEntry> GetAllInventory(EntityUid uid, SharedVendingMachineComponent? component = null)
+    public List<VendingMachineInventoryEntry> GetAllInventory(EntityUid uid, VendingMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return new();
@@ -58,7 +58,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
         return inventory;
     }
 
-    public List<VendingMachineInventoryEntry> GetAvailableInventory(EntityUid uid, SharedVendingMachineComponent? component = null)
+    public List<VendingMachineInventoryEntry> GetAvailableInventory(EntityUid uid, VendingMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return new();
@@ -68,7 +68,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
     private void AddInventoryFromPrototype(EntityUid uid, Dictionary<string, uint>? entries,
         InventoryType type,
-        SharedVendingMachineComponent? component = null)
+        VendingMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component) || entries == null)
         {

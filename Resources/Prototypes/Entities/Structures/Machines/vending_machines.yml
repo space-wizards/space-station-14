@@ -793,7 +793,7 @@
     brokenState: broken
     normalState: normal-unshaded
     ejectState: eject-unshaded
-    ejectdelay: 1.8
+    ejectDelay: 1.8
   - type: Advertise
     pack: GoodCleanFunAds
   - type: Sprite

@@ -75,11 +75,9 @@ namespace Content.Server.VendingMachines
             args.Price += price;
         }
 
-        protected override void OnComponentInit(EntityUid uid, SharedVendingMachineComponent sharedComponent, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
         {
-            base.OnComponentInit(uid, sharedComponent, args);
-
-            var component = (VendingMachineComponent) sharedComponent;
+            base.OnComponentInit(uid, component, args);
 
             if (HasComp<ApcPowerReceiverComponent>(component.Owner))
             {
