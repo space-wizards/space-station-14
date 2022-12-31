@@ -79,6 +79,7 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+      - Pickaxe
   - type: StaticPrice
     price: 800
 
