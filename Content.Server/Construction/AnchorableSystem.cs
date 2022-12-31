@@ -83,7 +83,14 @@ namespace Content.Server.Construction
 
             // Snap rotation to cardinal (multiple of 90)
             var rot = xform.LocalRotation;
-            xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+            var snappedAngle = Math.Round(rot / (Math.PI / 2)) * Math.PI * 2;
+            // We want to override the local rotation to `snappedAngle` regardless
+            // of the xforms `NoLocalRotation` setting, so temporarily allow a
+            // local rotation and restore it
+            var oldLocalRotation = xform.NoLocalRotation;
+            xform.NoLocalRotation = false;
+            xform.LocalRotation = snappedAngle;
+            xform.NoLocalRotation = oldLocalRotation;
 
             if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
             {
