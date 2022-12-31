@@ -688,13 +688,13 @@
       state: service
     - type: MachineBoard
       prototype: BoozeDispenser
-    materialRequirements:
-      Steel: 5
-    tagRequirements:
-        GlassBeaker:
-          Amount: 1
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
 
 - type: entity
   id: SodaDispenserMachineCircuitboard
@@ -706,10 +706,10 @@
       state: service
     - type: MachineBoard
       prototype: SodaDispenser
-    materialRequirements:
-      Steel: 5
-    tagRequirements:
-        GlassBeaker:
-          Amount: 1
-          DefaultPrototype: Beaker
-          ExamineName: Glass Beaker
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
