@@ -74,9 +74,6 @@
       - Crowbar
       - Multitool
       - AirlockPainter
-      - MiniHoe
-      - Shovel
-      - Spade
       - CableStack
       - HandheldGPSBasic
       - TRayScanner
@@ -175,7 +172,10 @@
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
+      - Clippers
+      - MiniHoe
       - Shovel
+      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
@@ -230,7 +230,6 @@
       - RPED
       - NodeScanner
       - HolofanProjector
-      - Clippers
 
 - type: entity
   parent: Protolathe
