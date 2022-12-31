@@ -1,5 +1,6 @@
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Utility;
 
@@ -59,6 +60,15 @@ public sealed class BiomeDecalLayer : IBiomeLayer
     /// </summary>
     [DataField("threshold")]
     public float Threshold = 0.8f;
+
+    /// <summary>
+    /// If this decal layer has an underlying tile to it.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="BiomeTileLayer"/> tiles may not necessarily align with the decal tiles.
+    /// </remarks>
+    [DataField("tile", customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+    public string? Tile = null;
 
     [DataField("decals", required: true)]
     public List<SpriteSpecifier> Decals = new();

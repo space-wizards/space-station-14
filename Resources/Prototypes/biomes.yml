@@ -1,6 +1,10 @@
 - type: biome
   id: Grasslands
   layers:
+    - !type:BiomeTileLayer
+      threshold: 0
+      tiles:
+        - FloorAsteroidSand
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
@@ -43,13 +47,9 @@
         - sprite: /Textures/Decals/Flora/flora_bushes.rsi
           state: busha3
     - !type:BiomeTileLayer
-      threshold: 0
+      threshold: 0.5
       tiles:
       - FloorPlanetGrass
-    - !type:BiomeTileLayer
-      threshold: 0.6
-      tiles:
-        - FloorAsteroidSand
 
 #- type: biomeTileLayer
 #  id: Asteroid

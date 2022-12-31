@@ -81,7 +81,7 @@ public sealed class BiomeOverlay : Overlay
             switch (layer)
             {
                 case BiomeTileLayer tileLayer:
-                    DrawTileLayer(biome, worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
+                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 case BiomeDecalLayer decalLayer:
                     DrawDecalLayer(biome, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
@@ -91,15 +91,16 @@ public sealed class BiomeOverlay : Overlay
             }
         }
 
+        // Render tile edges after all previous tiles done
+        DrawTileEdges(worldHandle, biome, seed);
+
         foreach (var handled in _handled.Values)
         {
             handled.Clear();
         }
     }
 
-    private void DrawTileLayer(
-        BiomePrototype prototype,
-        DrawingHandleWorld screenHandle,
+    private void DrawTileLayer(DrawingHandleWorld screenHandle,
         Vector2 tileSize,
         BiomeTileLayer tileLayer,
         Vector2 flooredBL,
@@ -128,8 +129,6 @@ public sealed class BiomeOverlay : Overlay
 
                 var tex = _tileDefinitionManager.GetTexture(tile.Value);
                 screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
-
-                DrawTileEdges(screenHandle, prototype, seed, indices, tile.Value);
             }
         }
     }
