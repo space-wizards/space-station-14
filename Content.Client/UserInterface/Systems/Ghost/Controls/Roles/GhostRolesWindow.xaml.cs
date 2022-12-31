@@ -45,7 +45,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
             EntryContainer.AddChild(textLabel);
 
             var whitelistButton = new Button();
-            whitelistButton.Text = Loc.GetString("ui-escape-discord");
+            whitelistButton.Text = Loc.GetString("ghost-role-whitelist-discord");
 
             var uri = IoCManager.Resolve<IUriOpener>();
             var cfg = IoCManager.Resolve<IConfigurationManager>();
