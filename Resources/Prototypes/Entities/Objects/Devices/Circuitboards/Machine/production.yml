@@ -687,11 +687,14 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: booze_dispenser
-      requirements:
-        Capacitor: 1
-        Manipulator: 1
-        MatterBin: 1
+      prototype: BoozeDispenser
+    materialRequirements:
+      Steel: 5
+    tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
 
 - type: entity
   id: SodaDispenserMachineCircuitboard
@@ -702,8 +705,11 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: soda_dispenser
-      requirements:
-        Capacitor: 1
-        Manipulator: 1
-        MatterBin: 1
+      prototype: SodaDispenser
+    materialRequirements:
+      Steel: 5
+    tagRequirements:
+        GlassBeaker:
+          Amount: 1
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker

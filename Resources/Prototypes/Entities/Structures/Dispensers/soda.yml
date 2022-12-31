@@ -18,5 +18,5 @@
   - type: Machine
     board: SodaDispenserMachineCircuitboard
   - type: Wires
-    BoardName: "soda_dispenser"
-    LayoutId: soda_dispenser
+    BoardName: "SodaDispenser"
+    LayoutId: SodaDispenser
