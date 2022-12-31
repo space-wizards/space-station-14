@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Adds lightning, unused for now!', type: Add}
-  id: 2312
-  time: '2022-09-15T15:49:01.0000000+00:00'
 - author: themias
   changes:
   - {message: Added lathe recipe for glass chemistry bottles, type: Add}
@@ -2949,3 +2944,9 @@ Entries:
   - {message: Blood stains now fade out instead of becoming sparkles., type: Fix}
   id: 2811
   time: '2022-12-30T17:45:05.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added missing locale string for the carpotoxin physical reagent description.,
+    type: Fix}
+  id: 2812
+  time: '2022-12-31T21:51:44.0000000+00:00'
