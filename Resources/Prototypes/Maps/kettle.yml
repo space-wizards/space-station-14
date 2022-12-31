@@ -2,7 +2,7 @@
   id: Kettle
   mapName: 'Kettle'
   mapPath: /Maps/kettle.yml
-  minPlayers: 35
+  minPlayers: 0
   stations:
     Kettle:
       mapNameTemplate: '{0} Kettle {1}'
