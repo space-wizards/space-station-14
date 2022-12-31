@@ -230,6 +230,7 @@
       - RPED
       - NodeScanner
       - HolofanProjector
+      - Clippers
 
 - type: entity
   parent: Protolathe
