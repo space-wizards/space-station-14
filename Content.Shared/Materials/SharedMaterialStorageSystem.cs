@@ -3,6 +3,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Materials;
 
@@ -12,6 +14,10 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract class SharedMaterialStorageSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -20,6 +26,22 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    public override void Update(float frameTime)
+    {
+        if (_timing.InPrediction)
+            return;
+
+        base.Update(frameTime);
+        foreach (var inserting in EntityQuery<InsertingMaterialStorageComponent>())
+        {
+            if (_timing.CurTime < inserting.EndTime)
+                continue;
+
+            _appearance.SetData(inserting.Owner, MaterialStorageVisuals.Inserting, false);
+            RemComp(inserting.Owner, inserting);
+        }
     }
 
     private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
@@ -181,6 +203,15 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         {
             TryChangeMaterialAmount(receiver, mat, vol * multiplier, component);
         }
+
+        var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);
+        insertingComp.EndTime = _timing.CurTime + component.InsertionTime;
+        if (!component.IgnoreColor)
+        {
+            _prototype.TryIndex<MaterialPrototype>(material._materials.Keys.Last(), out var lastMat);
+            insertingComp.MaterialColor = lastMat?.Color;
+        }
+        _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
 
         RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
         return true;

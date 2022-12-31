@@ -32,11 +32,26 @@ public sealed class MaterialStorageComponent : Component
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 
+    [DataField("ignoreColor")]
+    public bool IgnoreColor;
+
     /// <summary>
     /// The sound that plays when inserting an item into the storage
     /// </summary>
     [DataField("insertingSound")]
     public SoundSpecifier? InsertingSound;
+
+    /// <summary>
+    /// How long the inserting animation will play
+    /// </summary>
+    [DataField("insertionTime")]
+    public TimeSpan InsertionTime = TimeSpan.FromSeconds(0.79f); // 0.01 off for animation timing
+}
+
+[Serializable, NetSerializable]
+public enum MaterialStorageVisuals : byte
+{
+    Inserting
 }
 
 /// <summary>
