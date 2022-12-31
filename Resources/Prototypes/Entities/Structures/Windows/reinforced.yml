@@ -67,8 +67,6 @@
     graph: Window
     node: tintedWindow
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
   - type: StaticPrice
     price: 0.75
 

@@ -66,6 +66,9 @@
   id: EffectDrill
   targetDepth: 3
   effectHint: artifact-effect-hint-drill
+  whitelist:
+    components:
+    - Item
   permanentComponents:
   - type: GatheringTool
     damage:
