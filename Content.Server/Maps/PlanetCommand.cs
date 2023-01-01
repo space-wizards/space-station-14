@@ -63,8 +63,12 @@ public sealed class PlanetCommand : IConsoleCommand
         _entManager.Dirty(gravity, metadata);
 
         // Day lighting
+        // Daylight: D8B059
+        // Midday: #E6CB8B
+        // Moonlight: #2b3143
+
         var light = _entManager.EnsureComponent<MapLightComponent>(mapUid);
-        light.AmbientLightColor = Color.FromHex("#EFECD8FF");
+        light.AmbientLightColor = Color.FromHex("#D8B059");
         _entManager.Dirty(light, metadata);
 
         // Atmos
