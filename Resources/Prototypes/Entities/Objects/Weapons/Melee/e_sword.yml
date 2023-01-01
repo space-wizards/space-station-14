@@ -7,9 +7,9 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 12.5
-            Heat: 12.5
-            Blunt: -7
+            Slash: 8.5
+            Heat: 8.5
+            Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
@@ -21,11 +21,12 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
-    hitSound:
+    attackRate: 1.5
+    soundHit:
       path: /Audio/Weapons/genhit1.ogg
     damage:
       types:
-        Blunt: 7
+        Blunt: 4.5
   - type: Item
     size: 5
     sprite: Objects/Weapons/Melee/e_sword.rsi

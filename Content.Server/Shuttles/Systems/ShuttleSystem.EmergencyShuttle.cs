@@ -11,11 +11,13 @@ using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Events;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
@@ -32,11 +34,11 @@ public sealed partial class ShuttleSystem
    [Dependency] private readonly IAdminLogManager _logger = default!;
    [Dependency] private readonly IAdminManager _admin = default!;
    [Dependency] private readonly IConfigurationManager _configManager = default!;
-   [Dependency] private readonly IMapLoader _loader = default!;
    [Dependency] private readonly IRobustRandom _random = default!;
    [Dependency] private readonly ChatSystem _chatSystem = default!;
    [Dependency] private readonly CommunicationsConsoleSystem _commsConsole = default!;
    [Dependency] private readonly DockingSystem _dockSystem = default!;
+   [Dependency] private readonly MapLoaderSystem _map = default!;
    [Dependency] private readonly StationSystem _station = default!;
 
    public MapId? CentComMap { get; private set; }
@@ -53,9 +55,6 @@ public sealed partial class ShuttleSystem
 
    private void InitializeEscape()
    {
-#if !FULL_RELEASE
-       _configManager.OverrideDefault(CCVars.EmergencyShuttleEnabled, false);
-#endif
        _emergencyShuttleEnabled = _configManager.GetCVar(CCVars.EmergencyShuttleEnabled);
        // Don't immediately invoke as roundstart will just handle it.
        _configManager.OnValueChanged(CCVars.EmergencyShuttleEnabled, SetEmergencyShuttleEnabled);
@@ -112,9 +111,9 @@ public sealed partial class ShuttleSystem
    /// <summary>
    /// Checks whether the emergency shuttle can warp to the specified position.
    /// </summary>
-   private bool ValidSpawn(IMapGridComponent grid, Box2 area)
+   private bool ValidSpawn(MapGridComponent grid, Box2 area)
    {
-       return !grid.Grid.GetLocalTilesIntersecting(area).Any();
+       return !grid.GetLocalTilesIntersecting(area).Any();
    }
 
    private DockingConfig? GetDockingConfig(ShuttleComponent component, EntityUid targetGrid)
@@ -124,13 +123,12 @@ public sealed partial class ShuttleSystem
        if (gridDocks.Count <= 0) return null;
 
        var xformQuery = GetEntityQuery<TransformComponent>();
-       var targetGridGrid = Comp<IMapGridComponent>(targetGrid);
+       var targetGridGrid = Comp<MapGridComponent>(targetGrid);
        var targetGridXform = xformQuery.GetComponent(targetGrid);
        var targetGridAngle = targetGridXform.WorldRotation.Reduced();
-       var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(component.Owner);
-       var shuttleAABB = Comp<IMapGridComponent>(component.Owner).Grid.LocalAABB;
+       var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
 
        var validDockConfigs = new List<DockingConfig>();
 
@@ -148,7 +146,7 @@ public sealed partial class ShuttleSystem
                    if (!CanDock(
                            shuttleDock, shuttleDockXform,
                            gridDock, gridXform,
-                           targetGridRotation,
+                           targetGridAngle,
                            shuttleAABB,
                            targetGridGrid,
                            out var dockedAABB,
@@ -163,7 +161,7 @@ public sealed partial class ShuttleSystem
 
                    // Check if there's no intersecting grids (AKA oh god it's docking at cargo).
                    if (_mapManager.FindGridsIntersecting(targetGridXform.MapID,
-                           dockedBounds).Any(o => o.GridEntityId != targetGrid))
+                           dockedBounds).Any(o => o.Owner != targetGrid))
                    {
                        continue;
                    }
@@ -192,7 +190,7 @@ public sealed partial class ShuttleSystem
                                    xformQuery.GetComponent(other.Owner),
                                    otherGrid,
                                    xformQuery.GetComponent(otherGrid.Owner),
-                                   targetGridRotation,
+                                   targetGridAngle,
                                    shuttleAABB, targetGridGrid,
                                    out var otherDockedAABB,
                                    out _,
@@ -204,16 +202,12 @@ public sealed partial class ShuttleSystem
                        }
                    }
 
-                   var spawnRotation = shuttleDockXform.LocalRotation +
-                                       gridXform.LocalRotation +
-                                       targetGridXform.LocalRotation;
-
                    validDockConfigs.Add(new DockingConfig()
                    {
                        Docks = dockedPorts,
                        Area = dockedAABB.Value,
                        Coordinates = spawnPosition,
-                       Angle = spawnRotation,
+                       Angle = targetAngle,
                    });
                }
            }
@@ -305,40 +299,46 @@ public sealed partial class ShuttleSystem
    /// </summary>
    private bool CanDock(
        DockingComponent shuttleDock,
-       TransformComponent shuttleXform,
+       TransformComponent shuttleDockXform,
        DockingComponent gridDock,
-       TransformComponent gridXform,
-       Vector2 targetGridRotation,
+       TransformComponent gridDockXform,
+       Angle targetGridRotation,
        Box2 shuttleAABB,
-       IMapGridComponent grid,
+       MapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
-       out Vector2 gridRotation)
+       out Angle gridRotation)
    {
-       gridRotation = Vector2.Zero;
+       gridRotation = Angle.Zero;
        matty = Matrix3.Identity;
        shuttleDockedAABB = null;
 
        if (shuttleDock.Docked ||
            gridDock.Docked ||
-           !shuttleXform.Anchored ||
-           !gridXform.Anchored)
+           !shuttleDockXform.Anchored ||
+           !gridDockXform.Anchored)
        {
            return false;
        }
 
        // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-       var stationDockPos = shuttleXform.LocalPosition +
-                            shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
+       var stationDockPos = shuttleDockXform.LocalPosition +
+                            shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -shuttleXform.LocalRotation);
-       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridXform.LocalRotation);
+       // Need to invert the grid's angle.
+       var shuttleDockAngle = shuttleDockXform.LocalRotation;
+       var gridDockAngle = gridDockXform.LocalRotation.Opposite();
+
+       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockAngle);
+       var gridXformMatrix = Matrix3.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
+       // Rounding moment
+       shuttleDockedAABB = shuttleDockedAABB.Value.Enlarged(-0.01f);
 
        if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
 
-       gridRotation = matty.Transform(targetGridRotation);
+       gridRotation = targetGridRotation + gridDockAngle - shuttleDockAngle;
        return true;
    }
 
@@ -379,7 +379,7 @@ public sealed partial class ShuttleSystem
        _commsConsole.UpdateCommsConsoleInterface();
    }
 
-   private List<DockingComponent> GetDocks(EntityUid uid)
+   public List<DockingComponent> GetDocks(EntityUid uid)
    {
        var result = new List<DockingComponent>();
 
@@ -405,7 +405,7 @@ public sealed partial class ShuttleSystem
 
        if (!string.IsNullOrEmpty(centComPath))
        {
-           var (_, centcomm) = _loader.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
+           var centcomm = _map.LoadGrid(CentComMap.Value, "/Maps/centcomm.yml");
            CentCom = centcomm;
 
            if (CentCom != null)
@@ -424,10 +424,17 @@ public sealed partial class ShuttleSystem
 
    private void AddEmergencyShuttle(StationDataComponent component)
    {
-       if (!_emergencyShuttleEnabled || CentComMap == null || component.EmergencyShuttle != null) return;
+       if (!_emergencyShuttleEnabled
+           || CentComMap == null
+           || component.EmergencyShuttle != null
+           || component.StationConfig == null)
+       {
+           return;
+       }
 
        // Load escape shuttle
-       var (_, shuttle) = _loader.LoadGrid(CentComMap.Value, component.EmergencyShuttlePath.ToString(), new MapLoadOptions()
+       var shuttlePath = component.StationConfig.EmergencyShuttlePath;
+       var shuttle = _map.LoadGrid(CentComMap.Value, shuttlePath.ToString(), new MapLoadOptions()
        {
            // Should be far enough... right? I'm too lazy to bounds check CentCom rn.
            Offset = new Vector2(500f + _shuttleIndex, 0f)
@@ -435,7 +442,7 @@ public sealed partial class ShuttleSystem
 
        if (shuttle == null)
        {
-           _sawmill.Error($"Unable to spawn emergency shuttle {component.EmergencyShuttlePath} for {ToPrettyString(component.Owner)}");
+           _sawmill.Error($"Unable to spawn emergency shuttle {shuttlePath} for {ToPrettyString(component.Owner)}");
            return;
        }
 

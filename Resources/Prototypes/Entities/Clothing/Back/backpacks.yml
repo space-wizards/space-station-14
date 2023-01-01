@@ -117,6 +117,15 @@
   - type: Sprite
     sprite: Clothing/Back/Backpacks/virology.rsi
 
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSalvage
+  name: salvage bag
+  description: A robust backpack for stashing your loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/salvage.rsi
+
 #ERT
 - type: entity
   parent: ClothingBackpack

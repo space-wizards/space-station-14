@@ -6,6 +6,7 @@
   components:
   - type: Drink
     isOpen: true
+    solution: bucket
   - type: Clickable
   - type: Sprite
     netsync: false
@@ -48,3 +49,6 @@
     fillBaseName: fill-
   - type: ExaminableSolution
     solution: bucket
+  - type: Tag
+    tags:
+      - Bucket

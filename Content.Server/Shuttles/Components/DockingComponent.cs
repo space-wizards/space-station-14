@@ -6,14 +6,13 @@ namespace Content.Server.Shuttles.Components
     [RegisterComponent]
     public sealed class DockingComponent : SharedDockingComponent
     {
-        [ViewVariables]
         [DataField("dockedWith")]
         public EntityUid? DockedWith;
 
         [ViewVariables]
         public Joint? DockJoint;
 
-        [ViewVariables, DataField("dockJointId")]
+        [DataField("dockJointId")]
         public string? DockJointId;
 
         [ViewVariables]
@@ -30,5 +29,8 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite), DataField("highlightedRadarColor")]
         public Color HighlightedRadarColor = Color.Magenta;
+
+        [ViewVariables]
+        public int PathfindHandle = -1;
     }
 }

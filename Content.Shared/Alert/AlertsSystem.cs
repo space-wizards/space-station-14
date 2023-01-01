@@ -6,10 +6,7 @@ namespace Content.Shared.Alert;
 
 public abstract class AlertsSystem : EntitySystem
 {
-    [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
-
-    [Dependency] private readonly MetaDataSystem _metaSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     private readonly Dictionary<AlertType, AlertPrototype> _typeToAlert = new();
 
@@ -111,7 +108,7 @@ public abstract class AlertsSystem : EntitySystem
 
         AfterClearAlert(alertsComponent);
 
-        alertsComponent.Dirty();
+        Dirty(alertsComponent);
     }
 
     /// <summary>
@@ -131,7 +128,7 @@ public abstract class AlertsSystem : EntitySystem
 
             AfterClearAlert(alertsComponent);
 
-            alertsComponent.Dirty();
+            Dirty(alertsComponent);
         }
         else
         {
@@ -213,7 +210,8 @@ public abstract class AlertsSystem : EntitySystem
     private void HandleClickAlert(ClickAlertEvent msg, EntitySessionEventArgs args)
     {
         var player = args.SenderSession.AttachedEntity;
-        if (player is null || !EntityManager.TryGetComponent<AlertsComponent>(player, out var alertComp)) return;
+        if (player is null || !EntityManager.HasComponent<AlertsComponent>(player))
+            return;
 
         if (!IsShowingAlert(player.Value, msg.Type))
         {

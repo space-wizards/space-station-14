@@ -1,7 +1,8 @@
 ﻿- type: seed
   id: wheat
-  name: wheat
-  displayName: wheat stalks
+  name: seeds-wheat-name
+  noun: seeds-noun-seeds
+  displayName: seeds-wheat-display-name
   plantRsi: Objects/Specific/Hydroponics/wheat.rsi
   productPrototypes:
     - WheatBushel
@@ -24,8 +25,9 @@
 
 - type: seed
   id: oat
-  name: oat
-  displayName: oat stalks
+  name: seeds-oat-name
+  noun: seeds-noun-seeds
+  displayName: seeds-oat-display-name
   plantRsi: Objects/Specific/Hydroponics/oat.rsi
   productPrototypes:
     - OatBushel
@@ -48,8 +50,9 @@
 
 - type: seed
   id: banana
-  name: banana
-  displayName: banana plant
+  name: seeds-banana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-banana-display-name
   plantRsi: Objects/Specific/Hydroponics/banana.rsi
   productPrototypes:
     - FoodBanana
@@ -73,8 +76,9 @@
 
 - type: seed
   id: carrots
-  name: carrot
-  displayName: carrots
+  name: seeds-carrots-name
+  noun: seeds-noun-seeds
+  displayName: seeds-carrots-display-name
   plantRsi: Objects/Specific/Hydroponics/carrot.rsi
   productPrototypes:
     - FoodCarrot
@@ -97,8 +101,9 @@
 
 - type: seed
   id: lemon
-  name: lemon
-  displayName: lemon trees
+  name: seeds-lemon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemon-display-name
   plantRsi: Objects/Specific/Hydroponics/lemon.rsi
   productPrototypes:
     - FoodLemon
@@ -121,8 +126,9 @@
 
 - type: seed
   id: pineapple
-  name: pineapple
-  displayName: pineapple plant
+  name: seeds-pineapple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pineapple-display-name
   plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
   productPrototypes:
     - FoodPineapple
@@ -150,8 +156,9 @@
 
 - type: seed
   id: potato
-  name: potato
-  displayName: potatoes
+  name: seeds-potato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-potato-display-name
   plantRsi: Objects/Specific/Hydroponics/potato.rsi
   productPrototypes:
     - FoodPotato
@@ -174,8 +181,9 @@
 
 - type: seed
   id: sugarcane
-  name: sugarcane
-  displayName: sugarcanes
+  name: seeds-sugarcane-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sugarcane-display-name
   plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
   productPrototypes:
     - Sugarcane
@@ -195,8 +203,9 @@
 
 - type: seed
   id: towercap
-  name: tower cap
-  displayName: tower caps
+  name: seeds-towercap-name
+  noun: seeds-noun-spores
+  displayName: seeds-towercap-display-name
   plantRsi: Objects/Specific/Hydroponics/towercap.rsi
   productPrototypes:
     - Log
@@ -213,8 +222,9 @@
 
 - type: seed
   id: tomato
-  name: tomato
-  displayName: tomato plant
+  name: seeds-tomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-tomato-display-name
   plantRsi: Objects/Specific/Hydroponics/tomato.rsi
   productPrototypes:
     - FoodTomato
@@ -242,8 +252,9 @@
 
 - type: seed
   id: eggplant
-  name: eggplant
-  displayName: eggplants
+  name: seeds-eggplant-name
+  noun: seeds-noun-seeds
+  displayName: seeds-eggplant-display-name
   plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
   productPrototypes:
     - FoodEggplant
@@ -267,8 +278,9 @@
 
 - type: seed
   id: apple
-  name: apple
-  displayName: apple tree
+  name: seeds-apple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-apple-display-name
   plantRsi: Objects/Specific/Hydroponics/apple.rsi
   productPrototypes:
     - FoodApple
@@ -291,8 +303,9 @@
 
 - type: seed
   id: corn
-  name: corn
-  displayName: ears of corn
+  name: seeds-corn-name
+  noun: seeds-noun-seeds
+  displayName: seeds-corn-display-name
   plantRsi: Objects/Specific/Hydroponics/corn.rsi
   productPrototypes:
     - FoodCorn
@@ -317,8 +330,9 @@
 
 - type: seed
   id: onion
-  name: onion
-  displayName: onions
+  name: seeds-onion-name
+  noun: seeds-noun-seeds
+  displayName: seeds-onion-display-name
   plantRsi: Objects/Specific/Hydroponics/onion.rsi
   productPrototypes:
     - FoodOnion
@@ -347,8 +361,9 @@
 
 - type: seed
   id: onionred
-  name: red onion
-  displayName: red onions
+  name: seeds-onionred-name
+  noun: seeds-noun-seeds
+  displayName: seeds-onionred-display-name
   plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
   productPrototypes:
     - FoodOnionRed
@@ -377,9 +392,9 @@
 
 - type: seed
   id: chanterelle
-  name: chanterelle
-  noun: spores
-  displayName: chanterelle mushrooms
+  name: seeds-chanterelle-name
+  noun: seeds-noun-spores
+  displayName: seeds-chanterelle-display-name
   plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
   productPrototypes:
     - FoodMushroom
@@ -400,8 +415,9 @@
 
 - type: seed
   id: eggy
-  name: egg-plant
-  displayName: egg-plants
+  name: seeds-eggy-name
+  noun: seeds-noun-seeds
+  displayName: seeds-eggy-display-name
   plantRsi: Objects/Specific/Hydroponics/eggy.rsi
   productPrototypes:
     - FoodEgg
@@ -421,8 +437,9 @@
 
 - type: seed
   id: cannabis
-  name: cannabis
-  displayName: cannabis
+  name: seeds-cannabis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cannabis-display-name
   plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
   productPrototypes:
     - LeavesCannabis
@@ -443,8 +460,9 @@
 
 - type: seed
   id: tobacco
-  name: tobacco
-  displayName: tobacco plant
+  name: seeds-tobacco-name
+  noun: seeds-noun-seeds
+  displayName: seeds-tobacco-display-name
   plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
   productPrototypes:
     - LeavesTobacco
@@ -465,8 +483,9 @@
 
 - type: seed
   id: nettle
-  name: nettle
-  displayName: nettles
+  name: seeds-nettle-name
+  noun: seeds-noun-seeds
+  displayName: seeds-nettle-display-name
   plantRsi: Objects/Specific/Hydroponics/nettle.rsi
   productPrototypes:
     - Nettle
@@ -487,8 +506,9 @@
 
 - type: seed
   id: chili
-  name: chili
-  displayName: chilis
+  name: seeds-chili-name
+  noun: seeds-noun-seeds
+  displayName: seeds-chili-display-name
   plantRsi: Objects/Specific/Hydroponics/chili.rsi
   productPrototypes:
     - FoodChili
@@ -516,8 +536,9 @@
 
 - type: seed
   id: poppy
-  name: poppy
-  displayName: poppies
+  name: seeds-poppy-name
+  noun: seeds-noun-seeds
+  displayName: seeds-poppy-display-name
   plantRsi: Objects/Specific/Hydroponics/poppy.rsi
   productPrototypes:
     - FoodPoppy
@@ -540,8 +561,9 @@
 
 - type: seed
   id: aloe
-  name: aloe
-  displayName: aloe
+  name: seeds-aloe-name
+  noun: seeds-noun-seeds
+  displayName: seeds-aloe-display-name
   plantRsi: Objects/Specific/Hydroponics/aloe.rsi
   productPrototypes:
     - FoodAloe
@@ -564,8 +586,9 @@
 
 - type: seed
   id: lingzhi
-  name: lingzhi
-  displayName: lingzhi
+  name: seeds-lingzhi-name
+  noun: seeds-noun-spores
+  displayName: seeds-lingzhi-display-name
   plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
   productPrototypes:
     - FoodLingzhi
@@ -588,8 +611,9 @@
 
 - type: seed
   id: ambrosiaVulgaris
-  name: ambrosia vulgaris
-  displayName: ambrosia vulgaris
+  name: seeds-ambrosiavulgaris-name
+  noun: seeds-noun-seeds
+  displayName: seeds-ambrosiavulgaris-display-name
   plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
   productPrototypes:
     - FoodAmbrosiaVulgaris
@@ -624,8 +648,9 @@
 
 - type: seed
   id: galaxythistle
-  name: galaxythistle
-  displayName: galaxythistle
+  name: seeds-galaxythistle-name
+  noun: seeds-noun-seeds
+  displayName: seeds-galaxythistle-display-name
   plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
   productPrototypes:
     - FoodGalaxythistle
@@ -644,8 +669,9 @@
 
 - type: seed
   id: flyAmanita
-  name: fly amanita
-  displayName: fly amanita
+  name: seeds-flyamanita-name
+  noun: seeds-noun-spores
+  displayName: seeds-flyamanita-display-name
   plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
   productPrototypes:
     - FoodFlyAmanita
@@ -668,8 +694,9 @@
 
 - type: seed
   id: gatfruit
-  name: gatfruit
-  displayName: gatfruit tree
+  name: seeds-gatfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-gatfruit-display-name
   plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
   productPrototypes:
     - FoodGatfruit

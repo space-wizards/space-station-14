@@ -136,6 +136,15 @@
     FoodMeatBear: 1
 
 - type: microwaveMealRecipe
+  id: RecipeCurger
+  name: curger recipe
+  result: FoodBurgerCorgi
+  time: 5
+  solids:
+    FoodBreadBun: 1
+    FoodMeatCorgi: 1
+
+- type: microwaveMealRecipe
   id: RecipeFiletMigrawr
   name: filet migrawr recipe
   result: FoodMealBearsteak

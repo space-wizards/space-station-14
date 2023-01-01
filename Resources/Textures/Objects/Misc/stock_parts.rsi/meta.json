@@ -37,6 +37,9 @@
       ]
     },
     {
+      "name": "adv_scan_module_static"
+    },
+    {
       "name": "advanced_matter_bin",
       "delays": [
         [
@@ -409,6 +412,9 @@
           1
         ]
       ]
+    },
+    {
+      "name": "scan_module_static"
     }
   ]
 }

@@ -4,9 +4,11 @@ using Content.Server.Administration.Systems;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
+using Content.Server.StationRecords;
 using Content.Shared.Access.Components;
 using Content.Shared.Administration;
 using Content.Shared.PDA;
+using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -57,7 +59,25 @@ public sealed class RenameCommand : IConsoleCommand
         if (entSysMan.TryGetEntitySystem<IdCardSystem>(out var idCardSystem))
         {
             if (idCardSystem.TryFindIdCard(entityUid, out var idCard))
+            {
                 idCardSystem.TryChangeFullName(idCard.Owner, name, idCard);
+
+                // Records
+                // This is done here because ID cards are linked to station records
+                if (entSysMan.TryGetEntitySystem<StationRecordsSystem>(out var recordsSystem)
+                    && entMan.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
+                    && keyStorage.Key != null)
+                {
+                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(keyStorage.Key.Value.OriginStation,
+                            keyStorage.Key.Value,
+                            out var generalRecord))
+                    {
+                        generalRecord.Name = name;
+                    }
+
+                    recordsSystem.Synchronize(keyStorage.Key.Value.OriginStation);
+                }
+            }
         }
 
         // PDAs

@@ -89,6 +89,15 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelSalvage
+  name: salvage satchel
+  description: A robust satchel for stashing your loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Satchels/salvage.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelHolding
   name: satchel of holding
   description: A satchel that opens into a localized pocket of bluespace.

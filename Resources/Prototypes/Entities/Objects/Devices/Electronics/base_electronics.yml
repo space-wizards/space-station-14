@@ -1,0 +1,16 @@
+- type: entity
+  id: BaseElectronics
+  parent: BaseItem
+  name: base electronics
+  abstract: true
+  suffix: Electronics
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: generic
+      netsync: false
+    - type: Tag
+      tags:
+        - DroneUsable
+    - type: StaticPrice
+      price: 100

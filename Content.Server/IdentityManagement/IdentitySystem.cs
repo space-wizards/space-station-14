@@ -1,13 +1,12 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Database;
 using Content.Shared.Hands;
+using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
-using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
 
@@ -119,10 +118,10 @@ public class IdentitySystem : SharedIdentitySystem
     /// </summary>
     private IdentityRepresentation GetIdentityRepresentation(EntityUid target,
         InventoryComponent? inventory=null,
-        HumanoidAppearanceComponent? appearance=null)
+        HumanoidComponent? appearance=null)
     {
-        int age = HumanoidCharacterProfile.MinimumAge;
-        Gender gender = Gender.Neuter;
+        int age = 18;
+        Gender gender = Gender.Epicene;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))

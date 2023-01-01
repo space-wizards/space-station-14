@@ -70,9 +70,10 @@ public abstract partial class SharedGunSystem
     private void UpdateBasicEntityAppearance(BasicEntityAmmoProviderComponent component)
     {
         if (!Timing.IsFirstTimePredicted || !TryComp<AppearanceComponent>(component.Owner, out var appearance)) return;
-        appearance.SetData(AmmoVisuals.HasAmmo, component.Count != 0);
-        appearance.SetData(AmmoVisuals.AmmoCount, component.Count ?? int.MaxValue);
-        appearance.SetData(AmmoVisuals.AmmoMax, component.Capacity ?? int.MaxValue);
+
+        Appearance.SetData(appearance.Owner, AmmoVisuals.HasAmmo, component.Count != 0, appearance);
+        Appearance.SetData(appearance.Owner, AmmoVisuals.AmmoCount, component.Count ?? int.MaxValue, appearance);
+        Appearance.SetData(appearance.Owner, AmmoVisuals.AmmoMax, component.Capacity ?? int.MaxValue, appearance);
     }
 
     #region Public API

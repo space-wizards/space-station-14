@@ -9,6 +9,8 @@ namespace Content.Shared.Follower;
 
 public sealed class FollowerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -71,7 +73,7 @@ public sealed class FollowerSystem : EntitySystem
         followedComp.Following.Add(follower);
 
         var xform = Transform(follower);
-        xform.AttachParent(entity);
+        _transform.SetParent(xform, entity);
         xform.LocalPosition = Vector2.Zero;
         xform.LocalRotation = Angle.Zero;
 

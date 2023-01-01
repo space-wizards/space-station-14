@@ -148,7 +148,7 @@
           steps:
             - tool: Anchoring
               doAfter: 1
-              
+
     - node: ShuttersRadiationFrame
       edges:
         - to: ShuttersRadiation

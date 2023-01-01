@@ -19,13 +19,13 @@
   id: Bee
 
 - type: Tag
-  id: BrassInstrument
-
-- type: Tag
-  id: Brutepack
+  id: BikeHorn
 
 - type: Tag
   id: BodyBag
+
+- type: Tag
+  id: Book
 
 - type: Tag
   id: BorgArm
@@ -41,6 +41,18 @@
 
 - type: Tag
   id: Bottle
+
+- type: Tag
+  id: BoxHug
+
+- type: Tag
+  id: BrassInstrument
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: Bucket
 
 - type: Tag
   id: BulletFoam
@@ -106,6 +118,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClownRubberStamp
+
+- type: Tag
   id: Crayon
 
 - type: Tag
@@ -149,6 +164,9 @@
 
 - type: Tag
   id: CombatKnife
+
+- type: Tag
+  id: ComputerTelevisionCircuitboard
 
 - type: Tag
   id: Debug
@@ -235,7 +253,13 @@
   id: Gauze
 
 - type: Tag
+  id: GeigerCounter
+
+- type: Tag
   id: GlassBeaker
+
+- type: Tag
+  id: GlassShard
 
 - type: Tag
   id: Grenade
@@ -247,6 +271,9 @@
   id: Handcuffs
 
 - type: Tag
+  id: Head
+
+- type: Tag
   id: HideContextMenu
 
 - type: Tag
@@ -255,11 +282,20 @@
 - type: Tag
   id: Hoe
 
+- type: Tag
+  id: HolofanProjector
+
+- type: Tag
+  id: HolosignProjector
+
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: IntercomElectronics
 
 - type: Tag
   id: JawsOfLife
@@ -327,10 +363,10 @@
   id: MagazinePistolSubMachineGun
 
 - type: Tag
-  id: Matchstick
+  id: MailingUnitElectronics
 
 - type: Tag
-  id: MailingUnitElectronics
+  id: Matchstick
 
 - type: Tag
   id: Medkit
@@ -345,6 +381,9 @@
   id: MicrowaveSelfUnsafe
 
 - type: Tag
+  id: MindTransferTarget
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -352,6 +391,9 @@
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: NoBlockAnchoring
 
 - type: Tag
   id: NukeOpsUplink
@@ -366,10 +408,19 @@
   id: Payload # for grenade/bomb crafting
 
 - type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
+
+- type: Tag
   id: PaintableAirlock
 
 - type: Tag
   id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
 
 - type: Tag
   id: Pickaxe
@@ -408,14 +459,35 @@
   id: PussyWagonKeys
 
 - type: Tag
+  id: Radio
+
+- type: Tag
   id: RawMaterial
+
+- type: Tag
+  id: RCDDeconstructWhitelist
 
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
 
 - type: Tag
-  id: RCDDeconstructWhitelist
+  id: RipleyCentralControlModule
+
+- type: Tag
+  id: RipleyPeripheralsControlModule
+
+- type: Tag
+  id: RipleyLArm
+
+- type: Tag
+  id: RipleyLLeg
+
+- type: Tag
+  id: RipleyRLeg
+
+- type: Tag
+  id: RipleyRArm
 
 - type: Tag
   id: RodMetal1
@@ -445,7 +517,19 @@
   id: Shovel
 
 - type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: Smokable
+
+- type: Tag
   id: Soap
+
+- type: Tag
+  id: SolarAssemblyPart
+
+- type: Tag
+  id: SolarTrackerElectronics
 
 - type: Tag
   id: Spray
@@ -454,7 +538,22 @@
   id: Spear
 
 - type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
+
+- type: Tag
   id: StringInstrument
+
+- type: Tag
+  id: SurveillanceCameraMonitorCircuitboard
 
 - type: Tag
   id: Syndicate
@@ -479,6 +578,15 @@
 
 - type: Tag
   id: Wall
+
+- type: Tag
+  id: WallmountGeneratorAPUElectronics
+
+- type: Tag
+  id: WallmountGeneratorElectronics
+
+- type: Tag
+  id: WallmountSubstationElectronics
 
 - type: Tag
   id: Window
@@ -507,3 +615,5 @@
 - type: Tag
   id: Write
 
+- type: Tag
+  id: SubdermalImplant

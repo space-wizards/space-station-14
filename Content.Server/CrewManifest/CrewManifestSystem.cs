@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.EUI;
 using Content.Server.GameTicking;
@@ -87,13 +88,13 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
-         var owningStation = _stationSystem.GetOwningStation(uid);
-         if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
-         {
-             return;
-         }
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
 
-         CloseEui(owningStation.Value, sessionCast, uid);
+        CloseEui(owningStation.Value, sessionCast, uid);
     }
 
     /// <summary>
@@ -214,6 +215,8 @@ public sealed class CrewManifestSystem : EntitySystem
             entries.Entries.Add(entry);
         }
 
+        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
+
         if (_cachedEntries.ContainsKey(station))
         {
             _cachedEntries[station] = entries;
@@ -232,6 +235,13 @@ public sealed class CrewManifestCommand : IConsoleCommand
     public string Description => "Opens the crew manifest for the given station.";
     public string Help => $"Usage: {Command} <entity uid>";
 
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+
+    public CrewManifestCommand()
+    {
+        IoCManager.InjectDependencies(this);
+    }
+
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length != 1)
@@ -239,8 +249,6 @@ public sealed class CrewManifestCommand : IConsoleCommand
             shell.WriteLine($"Invalid argument count.\n{Help}");
             return;
         }
-
-        var entMan = IoCManager.Resolve<IEntityManager>();
 
         if (!EntityUid.TryParse(args[0], out var uid))
         {
@@ -254,8 +262,28 @@ public sealed class CrewManifestCommand : IConsoleCommand
             return;
         }
 
-        var crewManifestSystem = entMan.EntitySysManager.GetEntitySystem<CrewManifestSystem>();
+        var crewManifestSystem = _entityManager.System<CrewManifestSystem>();
 
         crewManifestSystem.OpenEui(uid, session);
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length != 1)
+        {
+            return CompletionResult.Empty;
+        }
+
+        var stations = _entityManager
+            .System<StationSystem>()
+            .Stations
+            .Select(station =>
+            {
+                var meta = _entityManager.GetComponent<MetaDataComponent>(station);
+
+                return new CompletionOption(station.ToString(), meta.EntityName);
+            });
+
+        return CompletionResult.FromHintOptions(stations, null);
     }
 }

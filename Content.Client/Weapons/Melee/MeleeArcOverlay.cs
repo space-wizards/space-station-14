@@ -1,0 +1,75 @@
+using Content.Shared.CombatMode;
+using Content.Shared.Weapons.Melee;
+using Robust.Client.Graphics;
+using Robust.Client.Input;
+using Robust.Client.Player;
+using Robust.Shared.Enums;
+using Robust.Shared.Map;
+
+namespace Content.Client.Weapons.Melee;
+
+/// <summary>
+/// Debug overlay showing the arc and range of a melee weapon.
+/// </summary>
+public sealed class MeleeArcOverlay : Overlay
+{
+    private readonly IEntityManager _entManager;
+    private readonly IEyeManager _eyeManager;
+    private readonly IInputManager _inputManager;
+    private readonly IPlayerManager _playerManager;
+    private readonly MeleeWeaponSystem _melee;
+    private readonly SharedCombatModeSystem _combatMode;
+
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+
+    public MeleeArcOverlay(IEntityManager entManager, IEyeManager eyeManager, IInputManager inputManager, IPlayerManager playerManager, MeleeWeaponSystem melee, SharedCombatModeSystem combatMode)
+    {
+        _entManager = entManager;
+        _eyeManager = eyeManager;
+        _inputManager = inputManager;
+        _playerManager = playerManager;
+        _melee = melee;
+        _combatMode = combatMode;
+    }
+
+    protected override void Draw(in OverlayDrawArgs args)
+    {
+        var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+        if (!_entManager.TryGetComponent<TransformComponent>(player, out var xform) ||
+            !_combatMode.IsInCombatMode(player))
+        {
+            return;
+        }
+
+        var weapon = _melee.GetWeapon(player.Value);
+
+        if (weapon == null)
+            return;
+
+        var mousePos = _inputManager.MouseScreenPosition;
+        var mapPos = _eyeManager.ScreenToMap(mousePos);
+
+        if (mapPos.MapId != args.MapId)
+            return;
+
+        var playerPos = xform.MapPosition;
+
+        if (mapPos.MapId != playerPos.MapId)
+            return;
+
+        var diff = mapPos.Position - playerPos.Position;
+
+        if (diff.Equals(Vector2.Zero))
+            return;
+
+        diff = diff.Normalized * Math.Min(weapon.Range, diff.Length);
+        args.WorldHandle.DrawLine(playerPos.Position, playerPos.Position + diff, Color.Aqua);
+
+        if (weapon.Angle.Theta == 0)
+            return;
+
+        args.WorldHandle.DrawLine(playerPos.Position, playerPos.Position + new Angle(-weapon.Angle / 2).RotateVec(diff), Color.Orange);
+        args.WorldHandle.DrawLine(playerPos.Position, playerPos.Position + new Angle(weapon.Angle / 2).RotateVec(diff), Color.Orange);
+    }
+}

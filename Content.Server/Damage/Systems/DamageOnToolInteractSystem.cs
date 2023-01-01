@@ -30,7 +30,7 @@ namespace Content.Server.Damage.Systems
                 && welder.Lit
                 && !welder.TankSafe)
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage);
+                var dmg = _damageableSystem.TryChangeDamage(args.Target, weldingDamage, origin: args.User);
 
                 if (dmg != null)
                     _adminLogger.Add(LogType.Damaged,
@@ -42,7 +42,7 @@ namespace Content.Server.Damage.Systems
                 && EntityManager.TryGetComponent<ToolComponent?>(args.Used, out var tool)
                 && tool.Qualities.ContainsAny(component.Tools))
             {
-                var dmg = _damageableSystem.TryChangeDamage(args.Target, damage);
+                var dmg = _damageableSystem.TryChangeDamage(args.Target, damage, origin: args.User);
 
                 if (dmg != null)
                     _adminLogger.Add(LogType.Damaged,

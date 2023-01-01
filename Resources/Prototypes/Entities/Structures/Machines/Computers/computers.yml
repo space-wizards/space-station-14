@@ -25,12 +25,10 @@
   - type: EmergencyShuttleConsole
   - type: ActivatableUI
     key: enum.EmergencyConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.EmergencyConsoleUiKey.Key
         type: EmergencyConsoleBoundUserInterface
-  - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -96,6 +94,8 @@
       radius: 1.5
       energy: 1.6
       color: "#c94242"
+    - type: Computer
+      board: SyndicateShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -115,6 +115,8 @@
       radius: 1.5
       energy: 1.6
       color: "#c94242"
+    - type: Computer
+      board: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -260,7 +262,6 @@
           type: GeneralStationRecordConsoleBoundUserInterface
     - type: ActivatableUI
       key: enum.GeneralStationRecordConsoleKey.Key
-    - type: ActivatableUIRequiresPower
     - type: PointLight
       radius: 1.5
       energy: 1.6
@@ -287,7 +288,6 @@
       board: CrewMonitoringComputerCircuitboard
     - type: ActivatableUI
       key: enum.CrewMonitoringUIKey.Key
-    - type: ActivatableUIRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.CrewMonitoringUIKey.Key
@@ -315,7 +315,6 @@
   - type: TechnologyDatabase
   - type: ActivatableUI
     key: enum.ResearchConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.ResearchConsoleUiKey.Key
@@ -325,9 +324,46 @@
   - type: ApcPowerReceiver
     powerLoad: 1000
     priority: Low
-  - type: ExtensionCableReceiver
   - type: Computer
     board: ResearchComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b53ca1"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerAnalysisConsole
+  name: analysis console
+  description: A computer used to interface with the artifact analyzer.
+  components:
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      key: tech_key
+      screen: artifact
+  - type: ResearchClient
+  - type: AnalysisConsole
+  - type: DeviceList
+  - type: DeviceNetwork
+    deviceNetId: Wired
+  - type: SignalTransmitter
+    transmissionRange: 5
+    outputs:
+      ArtifactAnalyzerSender: []
+  - type: ActivatableUI
+    key: enum.ArtifactAnalzyerUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.ArtifactAnalzyerUiKey.Key
+      type: AnalysisConsoleBoundUserInterface
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+    priority: Low
+  - type: Computer
+    board: AnalysisComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -362,7 +398,6 @@
         - IdCard
   - type: ActivatableUI
     key: enum.IdCardConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.IdCardConsoleUiKey.Key
@@ -398,7 +433,6 @@
   - type: BodyScanner
   - type: ActivatableUI
     key: enum.BodyScannerUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.BodyScannerUiKey.Key
@@ -434,7 +468,6 @@
     title: comms-console-announcement-title-station
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key
@@ -486,7 +519,6 @@
   - type: SolarControlConsole
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.SolarControlConsoleUiKey.Key
@@ -516,7 +548,6 @@
     - type: RadarConsole
     - type: ActivatableUI
       key: enum.RadarConsoleUiKey.Key
-    - type: ActivatableUIRequiresPower
     - type: UserInterface
       interfaces:
         - key: enum.RadarConsoleUiKey.Key
@@ -542,13 +573,12 @@
   - type: CargoShuttleConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Shuttle
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Shuttle
       type: CargoShuttleConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoShuttleComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -570,13 +600,12 @@
   - type: CargoOrderConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Orders
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CargoConsoleUiKey.Orders
       type: CargoOrderConsoleBoundUserInterface
   - type: Computer
-    board: SupplyComputerCircuitboard
+    board: CargoRequestComputerCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -614,7 +643,6 @@
       CloningPodSender: []
   - type: ActivatableUI
     key: enum.CloningConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.CloningConsoleUiKey.Key
@@ -640,10 +668,11 @@
       receiveFrequencyId: SurveillanceCamera
       transmitFrequencyId: SurveillanceCamera
     - type: WiredNetworkConnection
+    - type: DeviceNetworkRequiresPower
     - type: SurveillanceCameraMonitor
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresPower
+    - type: ActivatableUIRequiresVision
     - type: Transform
       anchored: true
     - type: UserInterface
@@ -670,12 +699,14 @@
       transmitFrequencyId: SurveillanceCamera
     - type: WirelessNetworkConnection
       range: 200
+    - type: DeviceNetworkRequiresPower
+    - type: Speech
+    - type: SurveillanceCameraSpeaker
     - type: SurveillanceCameraMonitor
+      speechEnabled: true
     - type: ActivatableUI
       key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresPower
-    - type: Transform
-      anchored: true
+    - type: ActivatableUIRequiresVision
     - type: UserInterface
       interfaces:
         - key: enum.SurveillanceCameraMonitorUiKey.Key
@@ -716,7 +747,7 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.25,-0.25,0.25,0.25"
-          mass: 50
+          density: 200
           mask:
             - TabletopMachineMask
           layer:

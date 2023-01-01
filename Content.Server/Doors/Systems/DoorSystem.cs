@@ -2,7 +2,6 @@ using Content.Server.Access;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Systems;
@@ -18,7 +17,6 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using System.Linq;
 using Robust.Shared.Physics.Components;
@@ -38,7 +36,6 @@ public sealed class DoorSystem : SharedDoorSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DoorComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ConstructionSystem) });
 
         // Mob prying doors
@@ -108,16 +105,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (predicted && predictingPlayer == null)
             return;
 
-        var filter = Filter.Pvs(uid);
-
         if (predicted)
-        {
-            // This interaction is predicted, but only by the instigating user, who will have played their own sounds.
-            filter.RemoveWhereAttachedEntity(e => e == predictingPlayer);
-        }
-
-        // send the sound to players.
-        Audio.Play(soundSpecifier, filter, uid, audioParams);
+            Audio.PlayPredicted(soundSpecifier, uid, predictingPlayer, audioParams);
+        else
+            Audio.PlayPvs(soundSpecifier, uid, audioParams);
     }
 
 #region DoAfters
@@ -170,7 +161,7 @@ public sealed class DoorSystem : SharedDoorSystem
 
         args.Verbs.Add(new AlternativeVerb()
         {
-            Text = "Pry door",
+            Text = Loc.GetString("door-pry"),
             Impact = LogImpact.Low,
             Act = () => TryPryDoor(uid, args.User, args.User, component, true),
         });
@@ -180,7 +171,7 @@ public sealed class DoorSystem : SharedDoorSystem
     /// <summary>
     ///     Pry open a door. This does not check if the user is holding the required tool.
     /// </summary>
-    private bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
+    public bool TryPryDoor(EntityUid target, EntityUid tool, EntityUid user, DoorComponent door, bool force = false)
     {
         if (door.BeingPried)
             return false;
@@ -199,7 +190,7 @@ public sealed class DoorSystem : SharedDoorSystem
                 return true;
         }
 
-        var modEv = new DoorGetPryTimeModifierEvent();
+        var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
         door.BeingPried = true;
@@ -273,31 +264,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
-
-    private void OnMapInit(EntityUid uid, DoorComponent door, MapInitEvent args)
-    {
-        // Ensure that the construction component is aware of the board container.
-        if (TryComp(uid, out ConstructionComponent? construction))
-            _constructionSystem.AddContainer(uid, "board", construction);
-
-        // We don't do anything if this is null or empty.
-        if (string.IsNullOrEmpty(door.BoardPrototype))
-            return;
-
-        var container = _containerSystem.EnsureContainer<Container>(uid, "board", out var existed);
-
-        if (existed && container.ContainedEntities.Count != 0)
-        {
-            // We already contain a board. Note: We don't check if it's the right one!
-            return;
-        }
-
-        var board = EntityManager.SpawnEntity(door.BoardPrototype, Transform(uid).Coordinates);
-
-        if(!container.Insert(board))
-            Logger.Warning($"Couldn't insert board {ToPrettyString(board)} into door {ToPrettyString(uid)}!");
-    }
-
     private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))

@@ -6,12 +6,12 @@
     edges:
     - to: bot
       steps:
-      - prototype: Bucket
+      - tag: Bucket
         icon:
           sprite: Objects/Tools/bucket.rsi
           state: icon
         name: bucket
-      - prototype: ProximitySensor
+      - tag: ProximitySensor
         icon:
           sprite: Objects/Misc/proximity_sensor.rsi
           state: icon

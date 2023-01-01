@@ -1,5 +1,5 @@
+using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
@@ -16,13 +16,13 @@ public sealed class MeleeOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
     /// <summary>
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
-    [ViewVariables, DataField("targetState")]
+    [DataField("targetState")]
     public DamageState TargetState = DamageState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
@@ -31,13 +31,15 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.MissChance = blackboard.GetValueOrDefault<float>(NPCBlackboard.MeleeMissChance, _entManager);
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
-    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard)
+    public override async Task<(bool Valid, Dictionary<string, object>? Effects)> Plan(NPCBlackboard blackboard,
+        CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }
@@ -62,7 +64,6 @@ public sealed class MeleeOperator : HTNOperator
     public override HTNOperatorStatus Update(NPCBlackboard blackboard, float frameTime)
     {
         base.Update(blackboard, frameTime);
-        // TODO:
         var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         var status = HTNOperatorStatus.Continuing;
 
@@ -79,6 +80,7 @@ public sealed class MeleeOperator : HTNOperator
             {
                 switch (combat.Status)
                 {
+                    case CombatStatus.TargetOutOfRange:
                     case CombatStatus.Normal:
                         status = HTNOperatorStatus.Continuing;
                         break;

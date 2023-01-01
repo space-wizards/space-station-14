@@ -32,7 +32,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.48,0.25,0.48"
-      mass: 70
+      density: 145
       mask:
       - MachineMask
       layer:
@@ -70,3 +70,85 @@
       state: generic
       state_open: generic_open
       state_closed: generic_door
+
+#Wall Closet
+- type: entity
+  id: BaseWallCloset
+  placement:
+    mode: SnapgridCenter
+  abstract: true
+  name: wall closet
+  description: A standard-issue Nanotrasen storage unit, now on walls.
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: ResistLocker
+  - type: Weldable
+  - type: WallMount
+    arc: 180
+  - type: Transform
+    noRot: false
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    noRot: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: generic
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: EntityStorage
+    isCollidableWhenOpen: true
+    enteringOffset: 0, -0.75
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+        ents: []
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+
+#Wall locker
+- type: entity
+  id: BaseWallLocker
+  parent: BaseWallCloset
+  abstract: true
+  components:
+  - type: AccessReader
+  - type: Lock
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Storage/wall_locker.rsi
+    layers:
+    - state: generic
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]

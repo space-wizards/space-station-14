@@ -1,7 +1,5 @@
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
-using Content.Server.Chat;
-using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
@@ -17,13 +15,12 @@ using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
-using Robust.Shared.Timing;
+using Robust.Shared.Random;
 
 namespace Content.Server.Nuke
 {
     public sealed class NukeSystem : EntitySystem
     {
-        [Dependency] private readonly NukeCodeSystem _codes = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly ExplosionSystem _explosions = default!;
@@ -32,6 +29,7 @@ namespace Content.Server.Nuke
         [Dependency] private readonly ServerGlobalSoundSystem _soundSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         /// <summary>
         ///     Used to calculate when the nuke song should start playing for maximum kino with the nuke sfx
@@ -46,8 +44,10 @@ namespace Content.Server.Nuke
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<NukeComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<NukeComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<NukeComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
             SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
@@ -97,6 +97,22 @@ namespace Content.Server.Nuke
             }
         }
 
+        private void OnMapInit(EntityUid uid, NukeComponent nuke, MapInitEvent args)
+        {
+            var originStation = _stationSystem.GetOwningStation(uid);
+
+            if (originStation != null)
+                nuke.OriginStation = originStation;
+
+            else
+            {
+                var transform = Transform(uid);
+                nuke.OriginMapGrid = (transform.MapID, transform.GridUid);
+            }
+
+            nuke.Code = GenerateRandomNumberString(nuke.CodeLength);
+        }
+
         private void OnRemove(EntityUid uid, NukeComponent component, ComponentRemove args)
         {
             _itemSlots.RemoveItemSlot(uid, component.DiskSlot);
@@ -104,7 +120,8 @@ namespace Content.Server.Nuke
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ContainerModifiedMessage args)
         {
-            if (!component.Initialized) return;
+            if (!component.Initialized)
+                return;
 
             if (args.Container.ID != component.DiskSlot.ID)
                 return;
@@ -131,7 +148,7 @@ namespace Content.Server.Nuke
             if (component.Status == NukeStatus.ARMED)
             {
                 var msg = Loc.GetString("nuke-component-cant-anchor");
-                _popups.PopupEntity(msg, uid, Filter.Entities(args.User));
+                _popups.PopupEntity(msg, uid, args.User);
 
                 args.Cancel();
             }
@@ -185,7 +202,7 @@ namespace Content.Server.Nuke
             if (component.Status != NukeStatus.AWAIT_CODE)
                 return;
 
-            if (component.EnteredCode.Length >= _codes.Code.Length)
+            if (component.EnteredCode.Length >= component.CodeLength)
                 return;
 
             component.EnteredCode += args.Value.ToString();
@@ -209,9 +226,8 @@ namespace Content.Server.Nuke
                 return;
 
             if (component.Status == NukeStatus.AWAIT_ARM && Transform(uid).Anchored)
-            {
                 ArmBomb(uid, component);
-            }
+
             else
             {
                 if (args.Session.AttachedEntity is not { } user)
@@ -283,10 +299,9 @@ namespace Content.Server.Nuke
                 nuke.RemainingTime = 0;
                 ActivateBomb(uid, nuke);
             }
+
             else
-            {
                 UpdateUserInterface(uid, nuke);
-            }
         }
 
         private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
@@ -309,8 +324,8 @@ namespace Content.Server.Nuke
                         break;
                     }
 
-                    var isValid = _codes.IsCodeValid(component.EnteredCode);
-                    if (isValid)
+                    // var isValid = _codes.IsCodeValid(uid, component.EnteredCode);
+                    if (component.EnteredCode == component.Code)
                     {
                         component.Status = NukeStatus.AWAIT_ARM;
                         component.RemainingTime = component.Timer;
@@ -358,7 +373,7 @@ namespace Content.Server.Nuke
                 IsAnchored = anchored,
                 AllowArm = allowArm,
                 EnteredCodeLength = component.EnteredCode.Length,
-                MaxCodeLength = _codes.Code.Length,
+                MaxCodeLength = component.CodeLength,
                 CooldownTime = (int) component.CooldownTime
             };
 
@@ -406,6 +421,18 @@ namespace Content.Server.Nuke
                 Filter.Pvs(uid), uid, AudioHelpers.WithVariation(varyPitch).WithVolume(-5f));
         }
 
+        public string GenerateRandomNumberString(int length)
+        {
+            var ret = "";
+            for (var i = 0; i < length; i++)
+            {
+                var c = (char) _random.Next('0', '9' + 1);
+                ret += c;
+            }
+
+            return ret;
+        }
+
         #region Public API
 
         /// <summary>
@@ -424,9 +451,7 @@ namespace Content.Server.Nuke
             // let people know that a nuclear bomb was armed in their vicinity instead.
             // Otherwise, you could set every station to whatever AlertLevelOnActivate is.
             if (stationUid != null)
-            {
                 _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnActivate, true, true, true, true);
-            }
 
             var nukeXform = Transform(uid);
             var pos =  nukeXform.MapPosition;
@@ -461,9 +486,7 @@ namespace Content.Server.Nuke
 
             var stationUid = _stationSystem.GetOwningStation(uid);
             if (stationUid != null)
-            {
                 _alertLevel.SetLevel(stationUid.Value, component.AlertLevelOnDeactivate, true, true, true);
-            }
 
             // warn a crew
             var announcement = Loc.GetString("nuke-component-announcement-unarmed");
@@ -559,7 +582,7 @@ namespace Content.Server.Nuke
 
             _doAfterSystem.DoAfter(doafter);
             _popups.PopupEntity(Loc.GetString("nuke-component-doafter-warning"), user,
-                Filter.Entities(user), PopupType.LargeCaution);
+                user, PopupType.LargeCaution);
         }
 
         private void NukeArmedAudio(NukeComponent component)
@@ -582,11 +605,17 @@ namespace Content.Server.Nuke
     /// <summary>
     ///     Raised directed on the nuke when its disarm doafter is successful.
     /// </summary>
-    public sealed class NukeDisarmSuccessEvent : EntityEventArgs {}
+    public sealed class NukeDisarmSuccessEvent : EntityEventArgs
+    {
+
+    }
 
     /// <summary>
     ///     Raised directed on the nuke when its disarm doafter is cancelled.
     /// </summary>
-    public sealed class NukeDisarmCancelledEvent : EntityEventArgs {}
+    public sealed class NukeDisarmCancelledEvent : EntityEventArgs
+    {
+
+    }
 
 }

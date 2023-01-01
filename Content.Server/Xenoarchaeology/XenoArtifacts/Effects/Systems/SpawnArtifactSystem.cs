@@ -1,6 +1,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Storage;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -8,52 +8,35 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 public sealed class SpawnArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly ArtifactSystem _artifact = default!;
+
+    public const string NodeDataSpawnAmount = "nodeDataSpawnAmount";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<SpawnArtifactComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SpawnArtifactComponent, ArtifactActivatedEvent>(OnActivate);
-    }
-    private void OnMapInit(EntityUid uid, SpawnArtifactComponent component, MapInitEvent args)
-    {
-        ChooseRandomPrototype(uid, component);
     }
 
     private void OnActivate(EntityUid uid, SpawnArtifactComponent component, ArtifactActivatedEvent args)
     {
-        if (component.Prototype == null)
-            return;
-        if (component.SpawnsCount >= component.MaxSpawns)
-            return;
+        if (!_artifact.TryGetNodeData(uid, NodeDataSpawnAmount, out int amount))
+            amount = 0;
 
-        // select spawn position near artifact
-        var artifactCord = Transform(uid).Coordinates;
-        var dx = _random.NextFloat(-component.Range, component.Range);
-        var dy = _random.NextFloat(-component.Range, component.Range);
-        var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
-
-        // spawn entity
-        var spawned = EntityManager.SpawnEntity(component.Prototype, spawnCord);
-        component.SpawnsCount++;
-
-        // if there is an user - try to put spawned item in their hands
-        // doesn't work for spawners
-        _handsSystem.PickupOrDrop(args.Activator, spawned);
-    }
-
-    private void ChooseRandomPrototype(EntityUid uid, SpawnArtifactComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
+        if (amount >= component.MaxSpawns)
             return;
 
-        if (!component.RandomPrototype)
-            return;
-        if (component.PossiblePrototypes.Count == 0)
+        if (component.Spawns is not {} spawns)
             return;
 
-        var proto = _random.Pick(component.PossiblePrototypes);
-        component.Prototype = proto;
+        var artifactCord = Transform(uid).MapPosition;
+        foreach (var spawn in EntitySpawnCollection.GetSpawns(spawns, _random))
+        {
+            var dx = _random.NextFloat(-component.Range, component.Range);
+            var dy = _random.NextFloat(-component.Range, component.Range);
+            var spawnCord = artifactCord.Offset(new Vector2(dx, dy));
+            EntityManager.SpawnEntity(spawn, spawnCord);
+        }
+        _artifact.SetNodeData(uid, NodeDataSpawnAmount, amount + 1);
     }
 }

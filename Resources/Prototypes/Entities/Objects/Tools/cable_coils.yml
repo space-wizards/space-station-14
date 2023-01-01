@@ -22,8 +22,10 @@
     sprite: Objects/Tools/cable-coils.rsi
   - type: CablePlacer
   - type: Clickable
+  - type: StaticPrice
+    price: 0
   - type: StackPrice
-    price: 0.5
+    price: 5
 
 - type: entity
   id: CableHVStack

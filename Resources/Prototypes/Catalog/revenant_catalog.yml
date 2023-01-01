@@ -14,7 +14,7 @@
 - type: listing
   id: RevenantOverloadLights
   name: Overload Lights
-  description: Overloads all nearby lights, causing the bulbs to shatter and sending out damaging sparks. Using it leaves you vulnerable to attacks for a long period of time.
+  description: Overloads all nearby lights, causing lights to pulse and sending out dangerous lightning. Using it leaves you vulnerable to attacks for a long period of time.
   productAction: RevenantOverloadLights
   cost: 
     StolenEssence: 25

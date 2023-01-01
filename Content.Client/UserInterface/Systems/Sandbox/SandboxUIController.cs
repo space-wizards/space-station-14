@@ -1,23 +1,25 @@
-﻿using Content.Client.Gameplay;
-using Content.Client.HUD;
+﻿using Content.Client.Administration.Managers;
+using Content.Client.Gameplay;
 using Content.Client.Markers;
 using Content.Client.Sandbox;
 using Content.Client.SubFloor;
+using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.DecalPlacer;
 using Content.Client.UserInterface.Systems.Sandbox.Windows;
 using Content.Shared.Input;
 using JetBrains.Annotations;
+using Robust.Client.Console;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controllers.Implementations;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Players;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BaseButton;
 
 namespace Content.Client.UserInterface.Systems.Sandbox;
 
@@ -28,7 +30,6 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     [Dependency] private readonly IEyeManager _eye = default!;
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly ILightManager _light = default!;
-    [Dependency] private readonly IGameHud _gameHud = default!;
 
     [UISystemDependency] private readonly DebugPhysicsSystem _debugPhysics = default!;
     [UISystemDependency] private readonly MarkerSystem _marker = default!;
@@ -42,11 +43,14 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
     private TileSpawningUIController TileSpawningController => UIManager.GetUIController<TileSpawningUIController>();
     private DecalPlacerUIController DecalPlacerController => UIManager.GetUIController<DecalPlacerUIController>();
 
+    private MenuButton? SandboxButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.SandboxButton;
+
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
         EnsureWindow();
-        _gameHud.SandboxButtonToggled += GameHudOnSandboxButtonToggled;
+
+        CheckSandboxVisibility();
 
         _input.SetInputCommand(ContentKeyFunctions.OpenEntitySpawnWindow,
             InputCmdHandler.FromDelegate(_ => EntitySpawningController.ToggleWindow()));
@@ -62,13 +66,33 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
             .Register<SandboxSystem>();
     }
 
+    public void UnloadButton()
+    {
+        if (SandboxButton == null)
+        {
+            return;
+        }
+
+        SandboxButton.OnPressed -= SandboxButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (SandboxButton == null)
+        {
+            return;
+        }
+
+        SandboxButton.OnPressed += SandboxButtonPressed;
+    }
+
     private void EnsureWindow()
     {
         if(_window is { Disposed: false })
             return;
         _window = UIManager.CreateWindow<SandboxWindow>();
-        _window.OnClose += () => { _gameHud.SandboxButtonDown = false; };
-        _window.OnOpen += () => { _gameHud.SandboxButtonDown = true; };
+        _window.OnOpen += () => { SandboxButton!.Pressed = true; };
+        _window.OnClose += () => { SandboxButton!.Pressed = false; };
         _window.ToggleLightButton.Pressed = !_light.Enabled;
         _window.ToggleFovButton.Pressed = !_eye.CurrentEye.DrawFov;
         _window.ToggleShadowsButton.Pressed = !_light.DrawShadows;
@@ -92,9 +116,12 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         _window.MachineLinkingButton.OnPressed += _ => _sandbox.MachineLinking();
     }
 
-    private void GameHudOnSandboxButtonToggled(bool pressed)
+    private void CheckSandboxVisibility()
     {
-        ToggleWindow();
+        if (SandboxButton == null)
+            return;
+
+        SandboxButton.Visible = _sandbox.SandboxAllowed;
     }
 
     public void OnStateExited(GameplayState state)
@@ -105,20 +132,26 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
             _window = null;
         }
 
-        _gameHud.SandboxButtonToggled -= GameHudOnSandboxButtonToggled;
-        _gameHud.SandboxButtonDown = false;
-
         CommandBinds.Unregister<SandboxSystem>();
     }
 
     public void OnSystemLoaded(SandboxSystem system)
     {
         system.SandboxDisabled += CloseAll;
+        system.SandboxEnabled += CheckSandboxVisibility;
+        system.SandboxDisabled += CheckSandboxVisibility;
     }
 
     public void OnSystemUnloaded(SandboxSystem system)
     {
         system.SandboxDisabled -= CloseAll;
+        system.SandboxEnabled -= CheckSandboxVisibility;
+        system.SandboxDisabled -= CheckSandboxVisibility;
+    }
+
+    private void SandboxButtonPressed(ButtonEventArgs args)
+    {
+        ToggleWindow();
     }
 
     private void CloseAll()

@@ -21,14 +21,15 @@ namespace Content.Shared.Doors.Systems;
 
 public abstract class SharedDoorSystem : EntitySystem
 {
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -316,6 +317,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!Resolve(uid, ref door))
             return false;
 
+        // since both closing/closed and welded are door states, we need to prevent 'closing'
+        // a welded door or else there will be weird state bugs
+        if (door.State == DoorState.Welded)
+            return false;
+
         var ev = new BeforeDoorClosedEvent(door.PerformCollisionCheck);
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
@@ -380,13 +386,13 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            physics.CanCollide = collidable;
+            PhysicsSystem.SetCanCollide(physics, collidable);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
 
-        if (door.Occludes && Resolve(uid, ref occluder, false))
-            occluder.Enabled = collidable;
+        if (door.Occludes)
+            _occluder.SetEnabled(uid, collidable);
     }
 
     /// <summary>
@@ -406,7 +412,7 @@ public abstract class SharedDoorSystem : EntitySystem
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
-                _damageableSystem.TryChangeDamage(entity, door.CrushDamage);
+                _damageableSystem.TryChangeDamage(entity, door.CrushDamage, origin: uid);
 
             _stunSystem.TryParalyze(entity, stunTime, true);
         }

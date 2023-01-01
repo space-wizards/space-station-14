@@ -15,6 +15,11 @@
   - type: Tag
     tags:
     - Handcuffs
+  - type: MeleeWeapon
+    animation: WeaponArcDisarm
+    damage:
+      types:
+        Blunt: 0
 
 - type: entity
   name: makeshift handcuffs
@@ -31,8 +36,8 @@
     color: red
     breakOnRemove: true
     brokenIconState: cuff-broken
-    brokenName: broken cables
-    brokenDesc: These cables are broken in several places and don't seem very useful.
+    brokenName: handcuff-broken-cables-name
+    brokenDesc: handcuff-broken-cables-desc
     startCuffSound:
       path: /Audio/Items/Handcuffs/rope_start.ogg
     endCuffSound:
@@ -65,8 +70,8 @@
     bodyIconState: body-overlay
     breakOnRemove: true
     brokenIconState: cuff-broken
-    brokenName: broken zipties
-    brokenDesc: These zipties look like they tried to manage the wrong cables.
+    brokenName: handcuff-broken-zipties-name
+    brokenDesc: handcuff-broken-zipties-desc
     startCuffSound:
       path: /Audio/Items/Handcuffs/ziptie_start.ogg
     endCuffSound:

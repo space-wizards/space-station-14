@@ -528,6 +528,24 @@
   - type: Sprite
     state: poster54_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRise
+  name: "Rise Up"
+  description: "A poster depicting a grey shirted man holding a crowbar with the words Rise written above it."
+  components:
+  - type: Sprite
+    state: poster55_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandRevolt
+  name: "Revolt"
+  description: "Revolutionist propaganda, manufactured by the Syndicate."
+  components:
+  - type: Sprite
+    state: poster56_contraband
+
 
 # Legit
 - type: entity
@@ -872,6 +890,15 @@
   - type: Sprite
     state: poster38_legit
 
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSecWatch
+  name: "Sec is Watching You"
+  description: A poster reminding you that security is watching your every move.'
+  components:
+  - type: Sprite
+    state: poster39_legit
+
 #maps
 
 - type: entity
@@ -963,3 +990,12 @@
   components:
   - type: Sprite
     state: waystationmap
+
+- type: entity
+  parent: PosterBase
+  id: PosterMapOrigin
+  name: "origin map"
+  description: "A map of Origin Station."
+  components:
+  - type: Sprite
+    state: originmap

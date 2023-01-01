@@ -1,5 +1,4 @@
 using Robust.Shared.Audio;
-using System.Threading;
 
 namespace Content.Server.Morgue.Components;
 
@@ -7,18 +6,10 @@ namespace Content.Server.Morgue.Components;
 public sealed class CrematoriumComponent : Component
 {
     /// <summary>
-    ///     Whether or not the crematorium is currently cooking
-    /// </summary>
-    [ViewVariables]
-    public bool Cooking;
-
-    /// <summary>
-    ///     The time it takes to cook
+    ///     The time it takes to cook in second
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public int BurnMilis = 5000;
-
-    public CancellationTokenSource? CremateCancelToken;
+    public int CookTime = 5;
 
     [DataField("cremateStartSound")]
     public SoundSpecifier CremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");

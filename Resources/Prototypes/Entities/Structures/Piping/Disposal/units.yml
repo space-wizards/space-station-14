@@ -26,7 +26,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.25,-0.4,0.25,0.4"
-      mass: 30
+      density: 75
       mask:
       - MachineMask
       layer:
@@ -123,8 +123,6 @@
     transmitFrequencyId: MailingUnit
   - type: WiredNetworkConnection
   - type: Configuration
-    config:
-      tag:
   - type: Appearance
     visuals:
       - type: DisposalUnitVisualizer

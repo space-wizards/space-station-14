@@ -187,8 +187,12 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOff(HandheldLightComponent component, bool makeNoise = true)
         {
-            if (!component.Activated) return false;
+            if (!component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            {
+                return false;
+            }
 
+            pointLightComponent.Enabled = false;
             SetActivated(component.Owner, false, component, makeNoise);
             component.Level = null;
             _activeLights.Remove(component);
@@ -197,13 +201,16 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOn(EntityUid user, HandheldLightComponent component)
         {
-            if (component.Activated) return false;
+            if (component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            {
+                return false;
+            }
 
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
                 !TryComp(component.Owner, out battery))
             {
                 SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, user);
                 return false;
             }
 
@@ -213,10 +220,11 @@ namespace Content.Server.Light.EntitySystems
             if (component.Wattage > battery.CurrentCharge)
             {
                 SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, user);
                 return false;
             }
 
+            pointLightComponent.Enabled = true;
             SetActivated(component.Owner, true, component, true);
             _activeLights.Add(component);
 

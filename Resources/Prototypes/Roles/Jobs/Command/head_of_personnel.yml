@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfPersonnel
   name: job-name-hop
+  description: job-description-hop
   playTimeTracker: JobHeadOfPersonnel
   requirements:
     - !type:DepartmentTimeRequirement
@@ -13,7 +14,7 @@
       department: Security
       time: 3600
     - !type:OverallPlaytimeRequirement
-      time: 54000
+      time: 108000
   weight: 20
   startingGear: HoPGear
   icon: "HeadOfPersonnel"
@@ -23,17 +24,15 @@
   access:
   - Command
   - HeadOfPersonnel
-  - Brig
+  - Bar
   - Service
-  - Quartermaster
-  - Salvage
-  - Cargo
   - Maintenance
   - Janitor
   - Theatre
   - Kitchen
   - Chapel
   - Hydroponics
+  - External
   # I mean they'll give themselves the rest of the access levels *anyways*.
 
 - type: startingGear

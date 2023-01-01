@@ -13,7 +13,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.1"
-      mass: 25
+      density: 190
       hard: false
       mask:
       - FullTileMask
@@ -34,6 +34,7 @@
     sprite: Structures/Hydroponics/misc.rsi
     state: soil
     netsync: false
+    noRot: true
   - type: PlantHolder
     drawWarnings: false
   - type: SolutionContainerManager

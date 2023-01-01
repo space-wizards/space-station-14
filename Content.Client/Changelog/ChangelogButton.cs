@@ -1,6 +1,4 @@
 ﻿using Content.Client.Stylesheets;
-using Content.Client.UserInterface.Systems.EscapeMenu;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog
@@ -12,8 +10,6 @@ namespace Content.Client.Changelog
         public ChangelogButton()
         {
             IoCManager.InjectDependencies(this);
-
-            OnPressed += OnChangelogPressed;
 
             // So that measuring before opening returns a correct height,
             // and the window has the correct size when opened.
@@ -33,11 +29,6 @@ namespace Content.Client.Changelog
             base.ExitedTree();
 
             _changelogManager.NewChangelogEntriesChanged -= UpdateStuff;
-        }
-
-        private void OnChangelogPressed(ButtonEventArgs obj)
-        {
-            IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ChangelogUIController>().ToggleWindow();
         }
 
         private void UpdateStuff()

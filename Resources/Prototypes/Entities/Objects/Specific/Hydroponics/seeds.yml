@@ -95,7 +95,7 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of tower cap seeds
+  name: packet of tower cap spores
   id: TowercapSeeds
   components:
     - type: Seed
@@ -231,7 +231,7 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of lingzhi seeds
+  name: packet of lingzhi spores
   description: "Also known as reishi."
   id: LingzhiSeeds
   components:
@@ -264,7 +264,7 @@
 
 - type: entity
   parent: SeedBase
-  name: packet of fly amanita seeds
+  name: packet of fly amanita spores
   description: "The iconic, extremely deadly mushroom to be used for purely ornamental purposes."
   id: FlyAmanitaSeeds
   components:

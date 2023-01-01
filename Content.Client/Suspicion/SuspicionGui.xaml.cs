@@ -20,6 +20,7 @@ namespace Content.Client.Suspicion
     [GenerateTypedNameReferences]
     public sealed partial class SuspicionGui : UIWidget
     {
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
 
@@ -66,7 +67,7 @@ namespace Content.Client.Suspicion
                 return false;
             }
 
-            return IoCManager.Resolve<IEntityManager>().TryGetComponent(_playerManager.LocalPlayer.ControlledEntity, out suspicion);
+            return _entManager.TryGetComponent(_playerManager.LocalPlayer.ControlledEntity, out suspicion);
         }
 
         public void UpdateLabel()
@@ -83,7 +84,7 @@ namespace Content.Client.Suspicion
                 return;
             }
 
-            var endTime = EntitySystem.Get<SuspicionEndTimerSystem>().EndTime;
+            var endTime = _entManager.System<SuspicionEndTimerSystem>().EndTime;
             if (endTime == null)
             {
                 TimerLabel.Visible = false;

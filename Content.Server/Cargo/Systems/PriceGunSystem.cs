@@ -39,7 +39,7 @@ public sealed class PriceGunSystem : EntitySystem
         {
             Act = () =>
             {
-                _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target, EntityManager)), ("price", $"{price:F2}")), args.User, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
                 _useDelay.BeginDelay(uid, useDelay);
             },
             Text = Loc.GetString("price-gun-verb-text"),
@@ -58,7 +58,7 @@ public sealed class PriceGunSystem : EntitySystem
 
         var price = _pricingSystem.GetPrice(args.Target.Value);
 
-        _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, Filter.Entities(args.User));
+        _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
         _useDelay.BeginDelay(uid, useDelay);
     }
 }

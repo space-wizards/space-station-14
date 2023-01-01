@@ -5,6 +5,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
+using Content.Shared.Gravity;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
@@ -20,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -38,6 +40,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Logs = default!;
     [Dependency] protected readonly DamageableSystem Damageable = default!;
+    [Dependency] private readonly SharedGravitySystem Gravity = default!;
     [Dependency] private   readonly ItemSlotsSystem _slots = default!;
     [Dependency] protected readonly SharedActionsSystem Actions = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
@@ -275,7 +278,7 @@ public abstract partial class SharedGunSystem : EntitySystem
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
-                PlaySound(gun.Owner, gun.SoundEmpty?.GetSound(Random, ProtoManager), user);
+                Audio.PlayPredicted(gun.SoundEmpty, gun.Owner, user);
                 Dirty(gun);
                 return;
             }
@@ -285,6 +288,12 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        // Projectiles cause impulses especially important in non gravity environments
+        if (TryComp<PhysicsComponent>(user, out var userPhysics))
+        {
+            if (Gravity.IsWeightless(user, userPhysics))
+                CauseImpulse(fromCoordinates, toCoordinates.Value, userPhysics);
+        }
         Dirty(gun);
     }
 
@@ -315,8 +324,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         Shoot(gun, new List<IShootable>(1) { ammo }, fromCoordinates, toCoordinates, user);
     }
-
-    protected abstract void PlaySound(EntityUid gun, string? sound, EntityUid? user = null);
 
     protected abstract void Popup(string message, EntityUid? uid, EntityUid? user);
 
@@ -351,15 +358,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         xform.LocalRotation = Random.NextAngle();
         xform.Coordinates = coordinates;
 
-        string? sound = null;
-
-        if (TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
+        if (playSound && TryComp<CartridgeAmmoComponent>(entity, out var cartridge))
         {
-            sound = cartridge.EjectSound?.GetSound(Random, ProtoManager);
+            Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(0.05f).WithVolume(-1f));
         }
-
-        if (sound != null && playSound)
-            SoundSystem.Play(sound, Filter.Pvs(entity, entityManager: EntityManager), coordinates, AudioHelpers.WithVariation(0.05f).WithVolume(-1f));
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
@@ -373,6 +375,16 @@ public abstract partial class SharedGunSystem : EntitySystem
         CreateEffect(gun, ev, user);
     }
 
+    public void CauseImpulse(EntityCoordinates fromCoordinates, EntityCoordinates toCoordinates, PhysicsComponent userPhysics)
+    {
+        var fromMap = fromCoordinates.ToMapPos(EntityManager);
+        var toMap = toCoordinates.ToMapPos(EntityManager);
+        var shotDirection = (toMap - fromMap).Normalized;
+
+        const float impulseStrength = 85.0f; //The bullet impulse strength, TODO: In the future we might want to make it more projectile dependent
+        var impulseVector =  shotDirection * impulseStrength;
+        Physics.ApplyLinearImpulse(userPhysics, -impulseVector);
+    }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]

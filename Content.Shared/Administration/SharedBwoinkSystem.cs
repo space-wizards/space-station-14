@@ -23,7 +23,6 @@ namespace Content.Shared.Administration
 
         protected void LogBwoink(BwoinkTextMessage message)
         {
-            Logger.InfoS("c.s.go.es.bwoink", $"@{message.UserId}: {message.Text}");
         }
 
         [Serializable, NetSerializable]

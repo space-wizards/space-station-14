@@ -26,4 +26,14 @@ nuke-user-interface-second-status-time = TIME: {$time}
 nuke-user-interface-second-status-current-code = CODE: {$code}
 nuke-user-interface-second-status-cooldown-time = WAIT: {$time}
 
+## Nuke labels
+nuke-label-nanotrasen = NT-{$serial}
 
+# do you even need this one? It's more funnier to say that
+# the Syndicate stole a NT nuke
+nuke-label-syndicate = SYN-{$serial}
+
+# Codes
+nuke-codes-message = [color=red]TOP SECRET![/color]
+ Nuclear device activation code: {$name} - {$code}
+nuke-codes-fax-paper-name = nuclear authentication codes

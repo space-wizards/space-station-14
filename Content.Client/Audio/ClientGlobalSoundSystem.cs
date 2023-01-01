@@ -10,6 +10,7 @@ namespace Content.Client.Audio;
 public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     // Admin music
     private bool _adminAudioEnabled = true;
@@ -64,7 +65,7 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
     {
         if(!_adminAudioEnabled) return;
 
-        var stream = SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
+        var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
         _adminAudio.Add(stream);
     }
 
@@ -73,13 +74,13 @@ public sealed class ClientGlobalSoundSystem : SharedGlobalSoundSystem
         // Either the cvar is disabled or it's already playing
         if(!_eventAudioEnabled || _eventAudio.ContainsKey(soundEvent.Type)) return;
 
-        var stream = SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
+        var stream = _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
         _eventAudio.Add(soundEvent.Type, stream);
     }
 
     private void PlayGameSound(GameGlobalSoundEvent soundEvent)
     {
-        SoundSystem.Play(soundEvent.Filename, Filter.Local(), soundEvent.AudioParams);
+        _audio.PlayGlobal(soundEvent.Filename, Filter.Local(), false, soundEvent.AudioParams);
     }
 
     private void StopStationEventMusic(StopStationEventMusic soundEvent)

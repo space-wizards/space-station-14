@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/1da0b5547e02db0db48d0bc93926c26bd8888347",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "fab-active",
+      "delays": [
+        [
+          1.5,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.05,
+          0.1,
+          0.3,
+          0.1,
+          0.05,
+          0.1,
+          0.3,
+          0.1,
+          0.05,
+          0.1,
+          0.3,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "fab-idle"
+    },
+    {
+      "name": "fab-o"
+    },
+    {
+      "name": "fab-load",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.2,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

@@ -21,6 +21,7 @@
     solutions:
       drink: # This solution name and target volume is hard-coded in ChemMasterComponent
         maxVol: 30
+        canMix: true
   - type: RefillableSolution
     solution: drink
   - type: DrainableSolution
@@ -125,6 +126,9 @@
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: RobustHarvestChemistryBottle
@@ -139,6 +143,26 @@
         reagents:
         - ReagentId: RobustHarvest
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
+  id: UnstableMutagenChemistryBottle
+  name: unstable mutagen bottle
+  description: This will cause rapid mutations in your plants.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: UnstableMutagen
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: NocturineChemistryBottle
@@ -153,6 +177,9 @@
         reagents:
         - ReagentId: Nocturine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: EphedrineChemistryBottle
@@ -166,6 +193,9 @@
         reagents:
         - ReagentId: Ephedrine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
 
 - type: entity
   id: OmnizineChemistryBottle
@@ -179,3 +209,6 @@
         reagents:
         - ReagentId: Omnizine
           Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle

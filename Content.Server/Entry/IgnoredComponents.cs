@@ -7,7 +7,6 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "InteractionOutline",
-            "MeleeWeaponArcAnimation",
             "AnimationsTest",
             "ItemStatus",
             "Marker",
@@ -15,10 +14,11 @@ namespace Content.Server.Entry
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
-            "CharacterInfo",
             "HandheldGPS",
             "CableVisualizer",
-            "EnsnareableVisualizer",
+            "PuddleVisualizer",
+            "UIFragment",
+            "PDABorderColor",
         };
     }
 }

@@ -147,9 +147,24 @@
   name: cat ears
   description: "NYAH!"
   components:
+  - type: Tag
+    tags: # ignore "WhitelistChameleon" tag
+      - DroneUsable
   - type: Sprite
     sprite: Clothing/Head/Hats/catears.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/catears.rsi
   - type: AddAccentClothing
     accent: OwOAccent
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSquid
+  name: squiddy
+  description: "Scare your friends with this eldritch mask."
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Misc/squiddy.rsi
+  - type: IngestionBlocker

@@ -1,6 +1,6 @@
 - type: entity
   name: filing cabinet
-  parent: BaseStructure
+  parent: BaseStructureDynamic
   id: filingCabinet
   description: A cabinet for all your filing needs.
   components:
@@ -31,12 +31,15 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.18,-0.48,0.18,0.48"
-      mass: 70
+      density: 200
       mask:
       - MachineMask
       layer:
       - MachineLayer
   - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
 
 - type: entity
   name: tall cabinet
@@ -84,9 +87,12 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.22,-0.42,0.22,0.34"
-      mass: 70
+      density: 210
       mask:
       - MachineMask
       layer:
       - MachineLayer
   - type: InteractionOutline
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container

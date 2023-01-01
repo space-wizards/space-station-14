@@ -67,6 +67,15 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackDuffelHydroponics
+  id: ClothingBackpackDuffelHydroponicsFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackDuffelMime
   id: ClothingBackpackDuffelMimeFilled
   components:
@@ -109,6 +118,16 @@
 - type: entity
   noSpawn: true
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelLibrarianFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: BookRandom
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelDetectiveFilled
   components:
     - type: StorageFill
@@ -119,3 +138,11 @@
       - id: BoxForensicPad
       - id: HandLabeler
 
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelSalvage
+  id: ClothingBackpackDuffelSalvageFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival

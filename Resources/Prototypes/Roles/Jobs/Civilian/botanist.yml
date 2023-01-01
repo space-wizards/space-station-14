@@ -1,6 +1,7 @@
 - type: job
   id: Botanist
   name: job-name-botanist
+  description: job-description-botanist
   playTimeTracker: JobBotanist
   startingGear: BotanistGear
   icon: "Botanist"
@@ -25,4 +26,4 @@
     belt: ClothingBeltPlantFilled
   innerclothingskirt: ClothingUniformJumpskirtHydroponics
   satchel: ClothingBackpackSatchelHydroponicsFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  duffelbag: ClothingBackpackDuffelHydroponicsFilled

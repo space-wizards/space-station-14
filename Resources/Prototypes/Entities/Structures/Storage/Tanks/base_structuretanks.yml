@@ -15,7 +15,7 @@
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
-      mass: 100
+      density: 155
       mask:
       - MachineMask
       layer:
@@ -28,6 +28,13 @@
     - trigger:
         !type:DamageTypeTrigger
         damageType: Heat
+        damage: 5
+      behaviors:
+      - !type:SolutionExplosionBehavior
+        solution: tank
+    - trigger:
+        !type:DamageTypeTrigger
+        damageType: Piercing
         damage: 5
       behaviors:
       - !type:SolutionExplosionBehavior

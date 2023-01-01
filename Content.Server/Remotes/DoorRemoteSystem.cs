@@ -84,8 +84,8 @@ namespace Content.Server.Remotes
                     _doorSystem.TryToggleDoor(doorComp.Owner, doorComp, args.Used);
                     break;
                 case OperatingMode.ToggleBolts:
-                    //TODO: What about cut wires...?
-                    airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
+                    if (!airlockComp.BoltWireCut)
+                        airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
                     _sharedAirlockSystem.ToggleEmergencyAccess(airlockComp);
@@ -97,6 +97,6 @@ namespace Content.Server.Remotes
         }
 
         private void ShowPopupToUser(string messageId, EntityUid user) =>
-            _popupSystem.PopupEntity(Loc.GetString(messageId), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString(messageId), user, user);
     }
 }

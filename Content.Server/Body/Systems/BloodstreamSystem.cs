@@ -3,6 +3,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Chemistry.ReactionEffects;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.HealthExaminable;
+using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
@@ -27,6 +28,7 @@ public sealed class BloodstreamSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -90,7 +92,7 @@ public sealed class BloodstreamSystem : EntitySystem
             bloodstream.AccumulatedFrametime -= bloodstream.UpdateInterval;
 
             var uid = bloodstream.Owner;
-            if (TryComp<MobStateComponent>(uid, out var state) && state.IsDead())
+            if (TryComp<MobStateComponent>(uid, out var state) && _mobStateSystem.IsDead(uid, state))
                 continue;
 
             // First, let's refresh their blood if possible.
@@ -176,7 +178,7 @@ public sealed class BloodstreamSystem : EntitySystem
             // We'll play a special sound and popup for feedback.
             SoundSystem.Play(component.BloodHealedSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default);
             _popupSystem.PopupEntity(Loc.GetString("bloodstream-component-wounds-cauterized"), uid,
-                Filter.Entities(uid), PopupType.Medium);
+                uid, PopupType.Medium);
 ;       }
     }
 

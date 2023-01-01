@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
+using Content.Server.Disease.Components;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
 using Content.Server.Players;
@@ -12,7 +13,7 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
 using Content.Shared.Preferences;
@@ -20,7 +21,6 @@ using Content.Shared.Roles;
 using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -146,12 +146,12 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void CheckRoundEnd(EntityUid target)
     {
         //we only care about players, not monkeys and such.
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidComponent>(target))
             return;
 
         var percent = GetInfectedPercentage(out var num);
         if (num.Count == 1) //only one human left. spooky
-           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], Filter.Entities(num[0]));
+           _popup.PopupEntity(Loc.GetString("zombie-alone"), num[0], num[0]);
         if (percent >= 1) //oops, all zombies
             _roundEndSystem.EndRound();
     }
@@ -195,7 +195,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
-        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
+        var allPlayers = EntityQuery<HumanoidComponent, MobStateComponent>(true);
         var allZombers = GetEntityQuery<ZombieComponent>();
 
         var totalPlayers = new List<EntityUid>();
@@ -234,7 +234,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         var prefList = new List<IPlayerSession>();
         foreach (var player in allPlayers)
         {
-            if (player.AttachedEntity != null)
+            if (player.AttachedEntity != null && HasComp<DiseaseCarrierComponent>(player.AttachedEntity))
             {
                 playerList.Add(player);
 
@@ -297,15 +297,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
             if (mind.Session != null)
             {
-                var messageWrapper = Loc.GetString("chat-manager-server-wrap-message");
+                var message = Loc.GetString("zombie-patientzero-role-greeting");
+                var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
 
                 //gets the names now in case the players leave.
                 //this gets unhappy if people with the same name get chose. Probably shouldn't happen.
                 _initialInfectedNames.Add(inCharacterName, mind.Session.Name);
 
                 // I went all the way to ChatManager.cs and all i got was this lousy T-shirt
-                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, Loc.GetString("zombie-patientzero-role-greeting"),
-                   messageWrapper, default, false, mind.Session.ConnectedClient, Color.Plum);
+                // You got a free T-shirt!?!?
+                _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message,
+                   wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Plum);
             }
         }
     }

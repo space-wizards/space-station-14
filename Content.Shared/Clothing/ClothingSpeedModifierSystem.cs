@@ -1,4 +1,5 @@
-﻿using Content.Shared.Examine;
+using Content.Shared.Examine;
+using Content.Shared.Inventory;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -19,7 +20,7 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, ComponentHandleState>(OnHandleState);
-        SubscribeLocalEvent<ClothingSpeedModifierComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMoveSpeed);
+        SubscribeLocalEvent<ClothingSpeedModifierComponent, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent>>(OnRefreshMoveSpeed);
         SubscribeLocalEvent<ClothingSpeedModifierComponent, GetVerbsEvent<ExamineVerb>>(OnClothingVerbExamine);
     }
 
@@ -65,12 +66,12 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         }
     }
 
-    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void OnRefreshMoveSpeed(EntityUid uid, ClothingSpeedModifierComponent component, InventoryRelayedEvent<RefreshMovementSpeedModifiersEvent> args)
     {
         if (!component.Enabled)
             return;
 
-        args.ModifySpeed(component.WalkModifier, component.SprintModifier);
+        args.Args.ModifySpeed(component.WalkModifier, component.SprintModifier);
     }
 
     private void OnClothingVerbExamine(EntityUid uid, ClothingSpeedModifierComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -117,18 +118,8 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             }
         }
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                _examine.SendExamineTooltip(args.User, uid, msg, false, false);
-            },
-            Text = Loc.GetString("clothing-speed-examinable-verb-text"),
-            Message = Loc.GetString("clothing-speed-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png"
-        };
+        _examine.AddDetailedExamineVerb(args, component, msg, Loc.GetString("clothing-speed-examinable-verb-text"), "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png", Loc.GetString("clothing-speed-examinable-verb-message"));
 
-        args.Verbs.Add(verb);
+        return;
     }
 }

@@ -1,10 +1,9 @@
 ﻿- type: gameMap
-  id: omega
+  id: Omega
   mapName: 'Omega'
   mapPath: /Maps/omega.yml
   minPlayers: 0
   maxPlayers: 35
-  votable: true
   stations:
     Omega:
       mapNameTemplate: '{0} Omega Station {1}'

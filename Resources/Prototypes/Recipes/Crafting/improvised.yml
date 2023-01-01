@@ -19,8 +19,21 @@
   targetNode: cuffscable
   category: construction-category-tools
   description: "Homemade handcuffs crafted from spare cables."
-  icon: Objects/Misc/cablecuffs.rsi/cuff.png
+  icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
   objectType: Item
+
+- type: construction
+  name: muzzle
+  id: muzzle
+  graph: Muzzle
+  startNode: start
+  targetNode: muzzle
+  category: construction-category-tools
+  objectType: Item
+  description: "A muzzle to shut your victim up."
+  icon:
+    sprite: Clothing/Mask/muzzle.rsi
+    state: icon
 
 - type: construction
   name: improvised pneumatic cannon

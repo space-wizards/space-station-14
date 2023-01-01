@@ -13,14 +13,13 @@
   - type: GatheringTool
     damage:
       types:
-        Piercing: 25
+        Structural: 50
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
         Blunt: 4
-    arcCooldownTime: 3
   - type: Item
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
@@ -40,12 +39,12 @@
   - type: GatheringTool
     damage:
       types:
-        Piercing: 25
-    gatheringTime: 0.75
+        Structural: 75
+    gatheringTime: 0.50
+    MaxGatheringEntities: 2
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
         Blunt: 4
-    arcCooldownTime: 3

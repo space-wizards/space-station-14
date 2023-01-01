@@ -26,9 +26,9 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return;
 
             base.SetCount(uid, amount, component);
@@ -41,9 +41,12 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
-        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
+        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
+                return null;
+
+            if (stack.StackTypeId == null)
                 return null;
 
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
@@ -58,7 +61,7 @@ namespace Content.Server.Stack
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
 
-            if (TryComp(entity, out SharedStackComponent? stackComp))
+            if (TryComp(entity, out StackComponent? stackComp))
             {
                 // Set the split stack's count.
                 SetCount(entity, amount, stackComp);
@@ -87,38 +90,21 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 stacks of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public void SpawnMultiple(int amount, int maxCountPerStack, StackPrototype prototype, EntityCoordinates spawnPosition)
+        public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
+            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
+            proto.TryGetComponent<StackComponent>(out var stack);
+            var maxCountPerStack = GetMaxCount(stack);
+            var spawnedEnts = new List<EntityUid>();
             while (amount > 0)
             {
-                if (amount > maxCountPerStack)
-                {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
-
-                    SetCount(entity, maxCountPerStack, stack);
-                    amount -= maxCountPerStack;
-                }
-                else
-                {
-                    var entity = Spawn("MaterialBiomass", spawnPosition);
-                    var stack = Comp<StackComponent>(entity);
-
-                    SetCount(entity, amount, stack);
-                    amount = 0;
-                }
+                var entity = Spawn(entityPrototype, spawnPosition);
+                spawnedEnts.Add(entity);
+                var countAmount = Math.Min(maxCountPerStack, amount);
+                SetCount(entity, countAmount);
+                amount -= countAmount;
             }
-        }
-
-        public void SpawnMultiple(int amount, int maxCountPerStack, string prototype, EntityCoordinates spawnPosition)
-        {
-            if (!_prototypeManager.TryIndex<StackPrototype>(prototype, out var stackType))
-            {
-                Logger.Error("Failed to index stack prototype " + prototype);
-                return;
-            }
-
-            SpawnMultiple(amount, maxCountPerStack, stackType, spawnPosition);
+            return spawnedEnts;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)
@@ -168,7 +154,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid), PopupType.Medium);
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
                 return;
             }
 
@@ -177,7 +163,7 @@ namespace Content.Server.Stack
 
             HandsSystem.PickupOrDrop(userUid, split);
 
-            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
+            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
         }
     }
 }

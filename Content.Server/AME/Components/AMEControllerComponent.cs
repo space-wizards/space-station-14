@@ -54,7 +54,8 @@ namespace Content.Server.AME.Components
 
             _injecting = false;
             InjectionAmount = 2;
-            JarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
+            // TODO: Fix this bad name. I'd update maps but then people get mad.
+            JarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"AMEController-fuelJarContainer");
         }
 
         internal void OnUpdate(float frameTime)

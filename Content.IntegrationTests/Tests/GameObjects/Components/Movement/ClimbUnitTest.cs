@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Content.Server.Climbing.Components;
+using Content.Shared.Climbing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -43,8 +44,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities

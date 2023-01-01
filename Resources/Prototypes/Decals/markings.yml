@@ -479,3 +479,17 @@
   sprite:
     sprite: Decals/markings.rsi
     state: warn_line_greyscale_w
+
+- type: decal
+  id: HatchSmall
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: hatch_small
+
+- type: decal
+  id: VentSmall
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/markings.rsi
+    state: vent_small

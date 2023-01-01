@@ -1,4 +1,4 @@
-﻿using Content.Server.Atmos;
+using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
@@ -57,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!args.CanReach)
             {
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
@@ -81,13 +81,16 @@ namespace Content.Server.Atmos.EntitySystems
         {
             component.Target = target;
             component.User = user;
-            component.LastPosition = Transform(target ?? user).Coordinates;
+            if (target != null)
+                component.LastPosition = Transform(target.Value).Coordinates;
+            else
+                component.LastPosition = null;
             component.Enabled = true;
             Dirty(component);
             UpdateAppearance(component);
             if(!HasComp<ActiveGasAnalyzerComponent>(uid))
                 AddComp<ActiveGasAnalyzerComponent>(uid);
-            UpdateAnalyzer(uid);
+            UpdateAnalyzer(uid, component);
         }
 
         /// <summary>
@@ -96,7 +99,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
         {
             if(args.User is { } userId && component.Enabled)
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
             DisableAnalyzer(uid, component, args.User);
         }
 
@@ -143,15 +146,21 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref component))
                 return false;
 
+            if (!TryComp(component.User, out TransformComponent? xform))
+            {
+                DisableAnalyzer(uid, component);
+                return false;
+            }
+
             // check if the user has walked away from what they scanned
-            var userPos = Transform(component.User).Coordinates;
+            var userPos = xform.Coordinates;
             if (component.LastPosition.HasValue)
             {
                 // Check if position is out of range => don't update and disable
                 if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
                 {
                     if(component.User is { } userId && component.Enabled)
-                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
+                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
                     DisableAnalyzer(uid, component, component.User);
                     return false;
                 }
@@ -175,6 +184,13 @@ namespace Content.Server.Atmos.EntitySystems
             var deviceFlipped = false;
             if (component.Target != null)
             {
+                if (Deleted(component.Target))
+                {
+                    component.Target = null;
+                    DisableAnalyzer(uid, component, component.User);
+                    return false;
+                }
+
                 // gas analyzed was used on an entity, try to request gas data via event for override
                 var ev = new GasAnalyzerScanEvent();
                 RaiseLocalEvent(component.Target.Value, ev, false);
@@ -238,7 +254,10 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 if (mixture != null)
-                    gases.Add(new GasEntry(gas.Name, mixture.Moles[i], gas.Color));
+                {
+                    var gasName = Loc.GetString(gas.Name);
+                    gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
+                }
             }
 
             return gases.ToArray();

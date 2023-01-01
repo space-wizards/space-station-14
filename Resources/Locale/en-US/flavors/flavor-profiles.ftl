@@ -92,6 +92,7 @@ flavor-complex-apple = like apples
 flavor-complex-bungo = like bungo
 flavor-complex-raisins = like dried grapes
 flavor-complex-orange = like oranges
+flavor-complex-watermelon = like watermelon
 
 ## Complex foodstuffs (cooked foods, joke flavors, etc)
 
@@ -111,7 +112,7 @@ flavor-complex-sus-jerky = like sus
 flavor-complex-boritos = like gaming
 flavor-complex-nachos = like nachos
 flavor-complex-donk = like cheap pizza
-flavor-complex-copypasta = like a reptitive joke
+flavor-complex-copypasta = like a repetitive joke
 flavor-complex-memory-leek = like a fork bomb
 flavor-complex-gunpowder = like gunpowder
 flavor-complex-validhunting = like validhunting

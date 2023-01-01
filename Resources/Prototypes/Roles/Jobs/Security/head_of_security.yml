@@ -1,6 +1,7 @@
 - type: job
   id: HeadOfSecurity
   name: job-name-hos
+  description: job-description-hos
   playTimeTracker: JobHeadOfSecurity
   requirements:
     - !type:RoleTimeRequirement
@@ -9,6 +10,8 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 18000
+    - !type:OverallPlaytimeRequirement
+      time: 108000
   weight: 10
   startingGear: HoSGear
   icon: "HeadOfSecurity"
@@ -30,7 +33,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitHoS
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretHoS

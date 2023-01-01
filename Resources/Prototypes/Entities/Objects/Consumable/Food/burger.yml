@@ -210,6 +210,28 @@
           Quantity: 12
 # Tastes like bun, ectoplasm.
 
+- type: entity
+  name: curger #curger...
+  parent: FoodBurgerBase
+  id: FoodBurgerCorgi
+  description: The Head of Personnel's favorite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bun
+      - validhunting
+  - type: Sprite
+    state: ian
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Bicaridine #keeping it somewhat consistent with the meat itself
+          Quantity: 7
+        - ReagentId: Vitamin
+          Quantity: 12
+
 # Note: I would put a bunch of colored burgers here as listed in the tg .dm but
 # I'd rather wait for a custom burger component.
 

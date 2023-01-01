@@ -1,5 +1,6 @@
-﻿using Content.Shared.Ensnaring.Components;
+using Content.Shared.Ensnaring.Components;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Ensnaring;
 
@@ -12,13 +13,32 @@ public abstract class SharedEnsnareableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedEnsnareableComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedModify);
-        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareEvent>(OnEnsnare);
-        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
-        SubscribeLocalEvent<SharedEnsnareableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
+        SubscribeLocalEvent<EnsnareableComponent, RefreshMovementSpeedModifiersEvent>(MovementSpeedModify);
+        SubscribeLocalEvent<EnsnareableComponent, EnsnareEvent>(OnEnsnare);
+        SubscribeLocalEvent<EnsnareableComponent, EnsnareRemoveEvent>(OnEnsnareRemove);
+        SubscribeLocalEvent<EnsnareableComponent, EnsnaredChangedEvent>(OnEnsnareChange);
+        SubscribeLocalEvent<EnsnareableComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<EnsnareableComponent, ComponentHandleState>(OnHandleState);
     }
 
-    private void OnEnsnare(EntityUid uid, SharedEnsnareableComponent component, EnsnareEvent args)
+    private void OnHandleState(EntityUid uid, EnsnareableComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not EnsnareableComponentState state)
+            return;
+
+        if (state.IsEnsnared == component.IsEnsnared)
+            return;
+
+        component.IsEnsnared = state.IsEnsnared;
+        RaiseLocalEvent(uid, new EnsnaredChangedEvent(component.IsEnsnared));
+    }
+
+    private void OnGetState(EntityUid uid, EnsnareableComponent component, ref ComponentGetState args)
+    {
+        args.State = new EnsnareableComponentState(component.IsEnsnared);
+    }
+
+    private void OnEnsnare(EntityUid uid, EnsnareableComponent component, EnsnareEvent args)
     {
         component.WalkSpeed = args.WalkSpeed;
         component.SprintSpeed = args.SprintSpeed;
@@ -29,7 +49,7 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         RaiseLocalEvent(uid, ev);
     }
 
-    private void OnEnsnareRemove(EntityUid uid, SharedEnsnareableComponent component, EnsnareRemoveEvent args)
+    private void OnEnsnareRemove(EntityUid uid, EnsnareableComponent component, EnsnareRemoveEvent args)
     {
         _speedModifier.RefreshMovementSpeedModifiers(uid);
 
@@ -37,17 +57,17 @@ public abstract class SharedEnsnareableSystem : EntitySystem
         RaiseLocalEvent(uid, ev);
     }
 
-    private void OnEnsnareChange(EntityUid uid, SharedEnsnareableComponent component, EnsnaredChangedEvent args)
+    private void OnEnsnareChange(EntityUid uid, EnsnareableComponent component, EnsnaredChangedEvent args)
     {
         UpdateAppearance(uid, component);
     }
 
-    private void UpdateAppearance(EntityUid uid, SharedEnsnareableComponent component, AppearanceComponent? appearance = null)
+    private void UpdateAppearance(EntityUid uid, EnsnareableComponent component, AppearanceComponent? appearance = null)
     {
         Appearance.SetData(uid, EnsnareableVisuals.IsEnsnared, component.IsEnsnared, appearance);
     }
 
-    private void MovementSpeedModify(EntityUid uid, SharedEnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
+    private void MovementSpeedModify(EntityUid uid, EnsnareableComponent component, RefreshMovementSpeedModifiersEvent args)
     {
         if (!component.IsEnsnared)
             return;

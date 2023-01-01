@@ -13,9 +13,11 @@
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-air-alarm
     sendBroadcastAttemptEvent: true
   - type: WiredNetworkConnection
   - type: DeviceList
+  - type: DeviceNetworkRequiresPower
   - type: AtmosAlarmable
     syncWith:
       - AirAlarm
@@ -62,6 +64,20 @@
   - type: Construction
     graph: AirAlarm
     node: air_alarm
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
   placement:
     mode: SnapgridCenter
     snap:

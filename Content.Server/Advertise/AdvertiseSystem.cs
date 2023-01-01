@@ -3,6 +3,7 @@ using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
+using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -34,7 +35,7 @@ namespace Content.Server.Advertise
             RefreshTimer(uid, true, advertise);
         }
 
-        private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, ref PowerChangedEvent args)
         {
             SetEnabled(uid, args.Powered, advertise);
         }

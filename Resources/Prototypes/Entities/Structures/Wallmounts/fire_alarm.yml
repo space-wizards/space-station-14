@@ -13,9 +13,12 @@
     deviceNetId: AtmosDevices
     receiveFrequencyId: AtmosMonitor
     transmitFrequencyId: AtmosMonitor
+    prefix: device-address-prefix-fire-alarm
     sendBroadcastAttemptEvent: true
+    examinableAddress: true
   - type: DeviceList
   - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
   - type: AtmosDevice
   - type: AtmosAlarmable
     syncWith:
@@ -72,6 +75,20 @@
   - type: Construction
     graph: FireAlarm
     node: fire_alarm
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
   placement:
     mode: SnapgridCenter
     snap:

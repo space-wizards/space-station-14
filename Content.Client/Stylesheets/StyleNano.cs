@@ -1,10 +1,9 @@
 using System.Linq;
-using Content.Client.Actions.UI;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
-using Content.Client.HUD.UI;
+using Content.Client.PDA;
 using Content.Client.Resources;
-using Content.Client.Targeting;
+using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
@@ -13,7 +12,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.Maths;
 using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
@@ -39,7 +37,7 @@ namespace Content.Client.Stylesheets
         }
 
     }
-
+    // STLYE SHEETS WERE A MISTAKE. KILL ALL OF THIS WITH FIRE
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -741,8 +739,7 @@ namespace Content.Client.Stylesheets
                 Element<ContainerButton>().Class(StyleClassStorageButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
-
-                // ListContainer
+// ListContainer
                 Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, listContainerButton),
 
@@ -761,43 +758,6 @@ namespace Content.Client.Stylesheets
                 Element<ContainerButton>().Class(ListContainer.StyleClassListContainerButton)
                     .Pseudo(ContainerButton.StylePseudoClassDisabled)
                     .Prop(Control.StylePropertyModulateSelf, new Color(10, 10, 12)),
-
-                // action slot hotbar buttons
-                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRect),
-                }),
-                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectPressed),
-                }),
-                new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassDisabled}), new[]
-                {
-                    new StyleProperty(PanelContainer.StylePropertyPanel, buttonRectDisabled),
-                }),
-
-                // action menu item buttons
-                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItem),
-                }),
-                // we don't actually disable the action menu items, only change their style based on the underlying action being revoked
-                new StyleRule(new SelectorElement(typeof(ActionMenuItem), new [] {StyleClassActionMenuItemRevoked}, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemRevoked),
-                }),
-                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassHover}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemHover),
-                }),
-                new StyleRule(new SelectorElement(typeof(ActionMenuItem), null, null, new[] {ContainerButton.StylePseudoClassPressed}), new[]
-                {
-                    new StyleProperty(ContainerButton.StylePropertyStyleBox, buttonRectActionMenuItemPressed),
-                }),
 
                 // Main menu: Make those buttons bigger.
                 new StyleRule(new SelectorChild(
@@ -835,6 +795,10 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.Gray),
                     }),
+
+                Element<TextEdit>().Pseudo(TextEdit.StylePseudoClassPlaceholder)
+                    .Prop("font-color", Color.Gray),
+
                 // Chat lineedit - we don't actually draw a stylebox around the lineedit itself, we put it around the
                 // input + other buttons, so we must clear the default stylebox
                 new StyleRule(new SelectorElement(typeof(LineEdit), new[] {StyleClassChatLineEdit}, null, null),
@@ -1067,49 +1031,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font", notoSans16)
                     }),
 
-                // Popup messages
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmall}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.White),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmallCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMediumCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLargeCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {
@@ -1131,70 +1052,70 @@ namespace Content.Client.Stylesheets
                 // which is NOT the case for the default BaseButton styles (OpenLeft/OpenRight adds extra padding on one of the sides
                 // which makes the TopButton icons appear off-center, which we don't want).
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), new[] {ButtonSquare}, null, null),
+                    new SelectorElement(typeof(MenuButton), new[] {ButtonSquare}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonSquare),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), new[] {ButtonOpenLeft}, null, null),
+                    new SelectorElement(typeof(MenuButton), new[] {ButtonOpenLeft}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonOpenLeft),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), new[] {ButtonOpenRight}, null, null),
+                    new SelectorElement(typeof(MenuButton), new[] {ButtonOpenRight}, null, null),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyStyleBox, topButtonOpenRight),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), new[] {TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefaultRed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassNormal}),
+                    new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassNormal}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorDefault),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassPressed}),
+                    new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassPressed}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorPressed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), null, null, new[] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(MenuButton), null, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHovered),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(TopButton), new[] {TopButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
+                    new SelectorElement(typeof(MenuButton), new[] {MenuButton.StyleClassRedTopButton}, null, new[] {Button.StylePseudoClassHover}),
                     new[]
                     {
                         new StyleProperty(Button.StylePropertyModulateSelf, ButtonColorHoveredRed),
                     }),
 
                 new StyleRule(
-                    new SelectorElement(typeof(Label), new[] {TopButton.StyleClassLabelTopButton}, null, null),
+                    new SelectorElement(typeof(Label), new[] {MenuButton.StyleClassLabelTopButton}, null, null),
                     new[]
                     {
                         new StyleProperty(Label.StylePropertyFont, notoSansDisplayBold14),
@@ -1432,6 +1353,60 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class("Disabled")
                     .Prop("font-color", DisabledFore),
+
+                //PDA - Backgrounds
+                Element<PanelContainer>().Class("PDAContentBackground")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252a")),
+
+                Element<PanelContainer>().Class("PDABackground")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseButtonOpenBoth)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#000000")),
+
+                Element<PanelContainer>().Class("PDABackgroundRect")
+                    .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#717059")),
+
+                Element<PanelContainer>().Class("PDABorderRect")
+                    .Prop(PanelContainer.StylePropertyPanel, AngleBorderRect),
+
+                Element<PanelContainer>().Class("BackgroundDark")
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat(Color.FromHex("#25252A"))),
+
+                //PDA - Buttons
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.HoverColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.PressedColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.EnabledFgColor)),
+
+                Element<PDASettingsButton>().Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(PDASettingsButton.StylePropertyBgColor, Color.FromHex(PDASettingsButton.NormalBgColor))
+                    .Prop(PDASettingsButton.StylePropertyFgColor, Color.FromHex(PDASettingsButton.DisabledFgColor)),
+
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.NormalBgColor)),
+
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.HoverColor)),
+
+                Element<PDAProgramItem>().Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(PDAProgramItem.StylePropertyBgColor, Color.FromHex(PDAProgramItem.HoverColor)),
+
+                //PDA - Text
+                Element<Label>().Class("PDAContentFooterText")
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#757575")),
+
+                Element<Label>().Class("PDAWindowFooterText")
+                    .Prop(Label.StylePropertyFont, notoSans10)
+                    .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
 
             }).ToList());
         }

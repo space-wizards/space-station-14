@@ -90,7 +90,7 @@
 
 - type: gas
   id: 8
-  name: Frezon
+  name: gases-frezon
   specificHeat: 600 # Strongest by far
   heatCapacityRatio: 1.33
   molarMass: 50

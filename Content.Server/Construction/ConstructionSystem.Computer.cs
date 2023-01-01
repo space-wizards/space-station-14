@@ -7,6 +7,8 @@ namespace Content.Server.Construction;
 
 public sealed partial class ConstructionSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     private void InitializeComputer()
     {
         SubscribeLocalEvent<ComputerComponent, ComponentInit>(OnCompInit);
@@ -19,10 +21,9 @@ public sealed partial class ConstructionSystem
         // Let's ensure the container manager and container are here.
         _container.EnsureContainer<Container>(uid, "board");
 
-        if (TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver) &&
-            TryComp<AppearanceComponent>(uid, out var appearance))
+        if (TryComp<ApcPowerReceiverComponent>(uid, out var powerReceiver))
         {
-            appearance.SetData(ComputerVisuals.Powered, powerReceiver.Powered);
+            _appearance.SetData(uid, ComputerVisuals.Powered, powerReceiver.Powered);
         }
     }
 
@@ -31,12 +32,9 @@ public sealed partial class ConstructionSystem
         CreateComputerBoard(component);
     }
 
-    private void OnCompPowerChange(EntityUid uid, ComputerComponent component, PowerChangedEvent args)
+    private void OnCompPowerChange(EntityUid uid, ComputerComponent component, ref PowerChangedEvent args)
     {
-        if (TryComp<AppearanceComponent>(uid, out var appearance))
-        {
-            appearance.SetData(ComputerVisuals.Powered, args.Powered);
-        }
+        _appearance.SetData(uid, ComputerVisuals.Powered, args.Powered);
     }
 
     /// <summary>

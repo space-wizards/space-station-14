@@ -21,6 +21,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
@@ -104,11 +105,11 @@ namespace Content.Server.Electrocution
                         _prototypeManager.Index<DamageTypePrototype>(DamageType),
                         (int) finished.AccumulatedDamage);
 
-                    var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
+                    var actual = _damageableSystem.TryChangeDamage(finished.Electrocuting, damage, origin: finished.Source);
                     if (actual != null)
                     {
                         _adminLogger.Add(LogType.Electrocution,
-                            $"{ToPrettyString(finished.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                            $"{ToPrettyString(finished.Electrocuting):entity} received {actual.Total:damage} powered electrocution damage from {ToPrettyString(finished.Source):source}");
                     }
                 }
 
@@ -167,7 +168,7 @@ namespace Content.Server.Electrocution
             if (electrified.NoWindowInTile)
             {
                 foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.Anchored, _entityLookup))
+                    LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
                 {
                     if (_tagSystem.HasTag(entity, "Window"))
                         return false;
@@ -245,7 +246,7 @@ namespace Content.Server.Electrocution
             Node? TryNode(string? id)
             {
                 if (id != null && nodeContainer.TryGetNode<Node>(id, out var tryNode)
-                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastAvailableSupplySum: >0 } })
+                               && tryNode.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } })
                 {
                     return tryNode;
                 }
@@ -314,6 +315,7 @@ namespace Content.Server.Electrocution
 
             electrocutionComponent.TimeLeft = 1f;
             electrocutionComponent.Electrocuting = uid;
+            electrocutionComponent.Source = sourceUid;
 
             RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient), true);
 
@@ -368,12 +370,12 @@ namespace Content.Server.Electrocution
             if(shockDamage is {} dmg)
             {
                 var actual = _damageableSystem.TryChangeDamage(uid,
-                    new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
+                    new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg), origin: sourceUid);
 
                 if (actual != null)
                 {
                     _adminLogger.Add(LogType.Electrocution,
-                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage");
+                        $"{ToPrettyString(statusEffects.Owner):entity} received {actual.Total:damage} powered electrocution damage{(sourceUid != null ? " from " + ToPrettyString(sourceUid.Value) : ""):source}");
                 }
             }
 
@@ -381,23 +383,21 @@ namespace Content.Server.Electrocution
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, refresh, JitterAmplitude, JitterFrequency, true,
                 statusEffects);
 
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,
-                Filter.Entities(uid).Unpredicted());
+            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid, uid);
 
-            var filter = Filter.Pvs(uid, 2f, EntityManager).RemoveWhereAttachedEntity(puid => puid == uid)
-                .Unpredicted();
+            var filter = Filter.PvsExcept(uid, entityManager: EntityManager);
 
             // TODO: Allow being able to pass EntityUid to Loc...
             if (sourceUid != null)
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter);
+                        ("mob", uid), ("source", (sourceUid.Value))), uid, filter, true);
                 PlayElectrocutionSound(uid, sourceUid.Value);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
-                    ("mob", uid)), uid, filter);
+                    ("mob", uid)), uid, filter, true);
             }
 
             return true;

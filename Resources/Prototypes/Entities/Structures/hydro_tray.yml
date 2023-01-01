@@ -4,14 +4,12 @@
   id: hydroponicsTray
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
-  - type: Transform
-    noRot: true
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
         bounds: "-0.45,-0.45,0.45,0.1"
-      mass: 25
+      density: 190
       hard: true
       mask:
       - MachineMask
@@ -78,7 +76,6 @@
         acts: ["Destruction"]
   - type: Machine
     board: HydroponicsTrayMachineCircuitboard
-  - type: MaterialStorage
   - type: Wires
     BoardName: "HydroponicsTray"
     LayoutId: HydroponicsTray

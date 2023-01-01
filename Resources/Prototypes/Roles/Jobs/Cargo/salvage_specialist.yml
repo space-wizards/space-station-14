@@ -1,6 +1,7 @@
 - type: job
   id: SalvageSpecialist
   name: job-name-salvagespec
+  description: job-description-salvagespec
   playTimeTracker: JobSalvageSpecialist
   requirements:
     - !type:DepartmentTimeRequirement
@@ -19,9 +20,9 @@
   id: SalvageSpecialistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSalvageSpecialist
-    back: ClothingBackpackFilled
+    back: ClothingBackpackSalvageFilled
     shoes: ClothingShoesBootsSalvage
     id: SalvagePDA
     ears: ClothingHeadsetCargo
-  satchel: ClothingBackpackSatchelFilled
-  duffelbag: ClothingBackpackDuffelFilled
+  satchel: ClothingBackpackSatchelSalvageFilled
+  duffelbag: ClothingBackpackDuffelSalvageFilled

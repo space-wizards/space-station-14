@@ -1,22 +1,22 @@
 using System.Linq;
+using Content.Server.Body.Systems;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Destructible;
-using Content.Shared.Interaction;
-using Content.Shared.Item;
-using Content.Shared.Kitchen.Components;
-using Robust.Shared.Player;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Body.Components;
-using Content.Shared.Body.Part;
 using Content.Server.Hands.Systems;
+using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Content.Shared.Kitchen;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Popups;
 using Content.Shared.Power;
 using Content.Shared.Tag;
@@ -24,11 +24,13 @@ using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Player;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
     public sealed class MicrowaveSystem : EntitySystem
     {
+        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RecipeManager _recipeManager = default!;
@@ -51,6 +53,8 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<MicrowaveComponent, BreakageEventArgs>(OnBreak);
             SubscribeLocalEvent<MicrowaveComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<MicrowaveComponent, SuicideEvent>(OnSuicide);
+            SubscribeLocalEvent<MicrowaveComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<MicrowaveComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveStartCookMessage>((u,c,_) => Wzhzhzh(u,c));
             SubscribeLocalEvent<MicrowaveComponent, MicrowaveEjectMessage>(OnEjectMessage);
@@ -68,7 +72,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SetAppearance(microwaveComponent, MicrowaveVisualState.Cooking);
 
             microwaveComponent.PlayingStream =
-                _audio.Play(microwaveComponent.LoopingSound, Filter.Pvs(uid), uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
+                _audio.PlayPvs(microwaveComponent.LoopingSound, uid, AudioParams.Default.WithLoop(true).WithMaxDistance(5));
         }
 
         private void OnCookStop(EntityUid uid, ActiveMicrowaveComponent component, ComponentShutdown args)
@@ -182,29 +186,19 @@ namespace Content.Server.Kitchen.EntitySystems
             var victim = args.Victim;
             var headCount = 0;
 
-            if (TryComp<SharedBodyComponent>(victim, out var body))
+            if (TryComp<BodyComponent>(victim, out var body))
             {
-                var headSlots = body.GetSlotsOfType(BodyPartType.Head);
+                var headSlots = _bodySystem.GetBodyChildrenOfType(victim, BodyPartType.Head, body);
 
-                foreach (var slot in headSlots)
+                foreach (var part in headSlots)
                 {
-                    var part = slot.Part;
-
-                    if (part == null ||
-                        !body.TryDropPart(slot, out var dropped))
+                    if (!_bodySystem.OrphanPart(part.Id, part.Component))
                     {
                         continue;
                     }
 
-                    foreach (var droppedPart in dropped.Values)
-                    {
-                        if (droppedPart.PartType != BodyPartType.Head)
-                        {
-                            continue;
-                        }
-                        component.Storage.Insert(droppedPart.Owner);
-                        headCount++;
-                    }
+                    component.Storage.Insert(part.Id);
+                    headCount++;
                 }
             }
 
@@ -216,8 +210,8 @@ namespace Content.Server.Kitchen.EntitySystems
                 ? Loc.GetString("microwave-component-suicide-multi-head-message")
                 : Loc.GetString("microwave-component-suicide-message");
 
-            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim));
-            _popupSystem.PopupEntity(selfMessage, victim, Filter.Entities(victim));
+            _popupSystem.PopupEntity(othersMessage, victim, Filter.PvsExcept(victim), true);
+            _popupSystem.PopupEntity(selfMessage, victim, victim);
 
             _audio.PlayPvs(component.ClickSound, uid, AudioParams.Default.WithVolume(-2));
             component.CurrentCookTimerTime = 10;
@@ -236,19 +230,19 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
             if (!(TryComp<ApcPowerReceiverComponent>(uid, out var apc) && apc.Powered))
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-no-power"), uid, args.User);
                 return;
             }
 
             if (component.Broken)
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-broken"), uid, args.User);
                 return;
             }
 
             if (!HasComp<ItemComponent>(args.Used))
             {
-                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("microwave-component-interact-using-transfer-fail"), uid, args.User);
                 return;
             }
 
@@ -266,7 +260,7 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateUserInterfaceState(uid, component);
         }
 
-        private void OnPowerChanged(EntityUid uid, MicrowaveComponent component, PowerChangedEvent args)
+        private void OnPowerChanged(EntityUid uid, MicrowaveComponent component, ref PowerChangedEvent args)
         {
             if (!args.Powered)
             {
@@ -275,6 +269,17 @@ namespace Content.Server.Kitchen.EntitySystems
                 _sharedContainer.EmptyContainer(component.Storage);
             }
             UpdateUserInterfaceState(uid, component);
+        }
+
+        private void OnRefreshParts(EntityUid uid, MicrowaveComponent component, RefreshPartsEvent args)
+        {
+            var cookRating = args.PartRatings[component.MachinePartCookTimeMultiplier];
+            component.CookTimeMultiplier = MathF.Pow(component.CookTimeScalingConstant, cookRating - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, MicrowaveComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("microwave-component-upgrade-cook-time", component.CookTimeMultiplier);
         }
 
         public void UpdateUserInterfaceState(EntityUid uid, MicrowaveComponent component)
@@ -379,7 +384,7 @@ namespace Content.Server.Kitchen.EntitySystems
             _audio.PlayPvs(component.StartCookingSound, uid);
             var activeComp = AddComp<ActiveMicrowaveComponent>(uid); //microwave is now cooking
             activeComp.CookTimeRemaining = component.CurrentCookTimerTime * component.CookTimeMultiplier;
-            activeComp.TotalTime = component.CurrentCookTimerTime * component.CookTimeMultiplier;
+            activeComp.TotalTime = component.CurrentCookTimerTime; //this doesn't scale so that we can have the "actual" time
             activeComp.PortionedRecipe = portionedRecipe;
             UpdateUserInterfaceState(uid, component);
         }

@@ -2,7 +2,6 @@
   id: CaptainIDStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -40,26 +39,14 @@
   canBeDuplicate: true
 
 - type: objective
-  id: StayAliveObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-        conditions:
-          - DieCondition
-  conditions:
-    - !type:StayAliveCondition {}
-
-- type: objective
   id: DieObjective
   issuer: syndicate
-  prob: 0.03
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
       conditions:
-        - StayAliveCondition
         - StealCondition
+        - EscapeShuttleCondition
   conditions:
     - !type:DieCondition {}
 
@@ -67,7 +54,6 @@
   id: CMOHyposprayStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -84,7 +70,6 @@
   id: RDHardsuitStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -100,7 +85,6 @@
 - type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -127,7 +111,6 @@
 - type: objective
   id: IDComputerBoardStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -144,7 +127,6 @@
   id: MagbootsStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -160,7 +142,6 @@
 - type: objective
   id: SupplyConsoleBoardStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -170,13 +151,12 @@
       roleId: Quartermaster
   conditions:
     - !type:StealCondition
-      prototype: SupplyComputerCircuitboard
+      prototype: CargoRequestComputerCircuitboard
       owner: job-name-qm
 
 - type: objective
   id: CorgiMeatStealObjective
   issuer: syndicate
-  prob: 0.2
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -193,7 +173,6 @@
   id: CaptainGunStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.1
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -210,7 +189,6 @@
   id: CaptainJetpackStealObjective
   issuer: syndicate
   difficultyOverride: 2.75
-  prob: 0.1
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -221,3 +199,24 @@
   conditions:
     - !type:StealCondition
       prototype: JetpackCaptainFilled
+
+- type: objective
+  id: EscapeShuttleObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:IncompatibleConditionsRequirement
+      conditions:
+        - DieCondition
+  conditions:
+    - !type:EscapeShuttleCondition {}
+
+- type: objective
+  id: RandomTraitorProgressObjective
+  issuer: syndicate
+  requirements:
+    - !type:TraitorRequirement {}
+    - !type:MultipleTraitorsRequirement
+  conditions:
+    - !type:RandomTraitorProgressCondition {}
+  canBeDuplicate: true

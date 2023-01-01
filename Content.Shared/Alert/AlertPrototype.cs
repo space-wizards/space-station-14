@@ -1,4 +1,3 @@
-using System.Globalization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -31,13 +30,13 @@ namespace Content.Shared.Alert
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("name")]
-        public FormattedMessage Name { get; private set; } = new();
+        public string Name { get; private set; } = "";
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("description")]
-        public FormattedMessage Description { get; private set; } = new();
+        public string Description { get; private set; } = "";
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category

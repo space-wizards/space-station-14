@@ -1,5 +1,4 @@
 using Content.Client.Administration.Managers;
-using Content.Client.HUD;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
@@ -17,7 +16,6 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly IMapManager _map = default!;
         [Dependency] private readonly IPlacementManager _placement = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -39,12 +37,10 @@ namespace Content.Client.Sandbox
             if (SandboxAllowed)
             {
                 SandboxEnabled?.Invoke();
-                _gameHud.SandboxButtonVisible = true;
             }
             else
             {
                 SandboxDisabled?.Invoke();
-                _gameHud.SandboxButtonVisible = false;
             }
         }
 

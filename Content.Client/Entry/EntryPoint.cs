@@ -1,12 +1,9 @@
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
-using Content.Client.CharacterInterface;
 using Content.Client.Chat.Managers;
-using Content.Client.Options;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
-using Content.Client.HUD;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -15,7 +12,7 @@ using Content.Client.MainMenu;
 using Content.Client.Parallax.Managers;
 using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Preferences;
-using Content.Client.Radiation;
+using Content.Client.Radiation.Overlays;
 using Content.Client.Screenshot;
 using Content.Client.Singularity;
 using Content.Client.Stylesheets;
@@ -23,33 +20,23 @@ using Content.Client.Viewport;
 using Content.Client.Voting;
 using Content.Shared.Administration;
 using Content.Shared.AME;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Gravity;
-using Content.Shared.Lathe;
+using Content.Shared.Localizations;
 using Content.Shared.Markers;
 using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
-#if FULL_RELEASE
-using Robust.Shared;
-using Robust.Shared.Configuration;
-#endif
 using Robust.Shared.ContentPack;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 
 namespace Content.Client.Entry
 {
     public sealed class EntryPoint : GameClient
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IGameController _gameController = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
@@ -76,9 +63,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
-        [Dependency] private readonly IGameHud _gameHud = default!;
-
-        public const int NetBufferSizeOverride = 2;
+        [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
 
         public override void Init()
         {
@@ -93,17 +78,12 @@ namespace Content.Client.Entry
             IoCManager.BuildGraph();
             IoCManager.InjectDependencies(this);
 
-#if FULL_RELEASE
-            // if FULL_RELEASE, because otherwise this breaks some integration tests.
-            IoCManager.Resolve<IConfigurationManager>().OverrideDefault(CVars.NetBufferSize, NetBufferSizeOverride);
-#endif
-
+            _contentLoc.Initialize();
             _componentFactory.DoAutoRegistrations();
             _componentFactory.IgnoreMissingComponents();
 
             // Do not add to these, they are legacy.
             _componentFactory.RegisterClass<SharedSpawnPointComponent>();
-            _componentFactory.RegisterClass<SharedReagentDispenserComponent>();
             _componentFactory.RegisterClass<SharedGravityGeneratorComponent>();
             _componentFactory.RegisterClass<SharedAMEControllerComponent>();
             // Do not add to the above, they are legacy
@@ -120,6 +100,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnCompound");
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
+            _prototypeManager.RegisterIgnore("gameMapPool");
             _prototypeManager.RegisterIgnore("faction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
@@ -147,7 +128,6 @@ namespace Content.Client.Entry
             _ghostKick.Initialize();
             _extendedDisconnectInformation.Initialize();
             _playTimeTracking.Initialize();
-            _baseClient.PlayerJoinedServer += (_, _) => { _mapManager.CreateNewMapEntity(MapId.Nullspace);};
 
             //AUTOSCALING default Setup!
             _configManager.SetCVar("interface.resolutionAutoScaleUpperCutoffX", 1080);
@@ -169,9 +149,6 @@ namespace Content.Client.Entry
             _overlayManager.AddOverlay(new FlashOverlay());
             _overlayManager.AddOverlay(new RadiationPulseOverlay());
 
-            _baseClient.PlayerJoinedServer += SubscribePlayerAttachmentEvents;
-            _baseClient.PlayerLeaveServer += UnsubscribePlayerAttachmentEvents;
-            _gameHud.Initialize();
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
@@ -193,56 +170,6 @@ namespace Content.Client.Entry
             _userInterfaceManager.MainViewport.Visible = false;
 
             SwitchToDefaultState();
-        }
-
-        public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
-        {
-            base.Update(level, frameEventArgs);
-
-            switch (level)
-            {
-                case ModUpdateLevel.FramePreEngine:
-                    // TODO: Turn IChatManager into an EntitySystem and remove the line below.
-                    IoCManager.Resolve<IChatManager>().FrameUpdate(frameEventArgs);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Subscribe events to the player manager after the player manager is set up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
-        public void SubscribePlayerAttachmentEvents(object? sender, EventArgs args)
-        {
-            if (_playerManager.LocalPlayer != null)
-            {
-                _playerManager.LocalPlayer.EntityAttached += AttachPlayerToEntity;
-                _playerManager.LocalPlayer.EntityDetached += DetachPlayerFromEntity;
-            }
-        }
-        public void UnsubscribePlayerAttachmentEvents(object? sender, EventArgs args)
-        {
-            if (_playerManager.LocalPlayer != null)
-            {
-                _playerManager.LocalPlayer.EntityAttached -= AttachPlayerToEntity;
-                _playerManager.LocalPlayer.EntityDetached -= DetachPlayerFromEntity;
-            }
-        }
-
-        public void AttachPlayerToEntity(EntityAttachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            _entityManager.AddComponent<CharacterInterfaceComponent>(eventArgs.NewEntity);
-        }
-
-        public void DetachPlayerFromEntity(EntityDetachedEventArgs eventArgs)
-        {
-            // TODO This is shitcode. Move this to an entity system, FOR FUCK'S SAKE
-            if (!_entityManager.Deleted(eventArgs.OldEntity))
-            {
-                _entityManager.RemoveComponent<CharacterInterfaceComponent>(eventArgs.OldEntity);
-            }
         }
 
         private void SwitchToDefaultState(bool disconnected = false)

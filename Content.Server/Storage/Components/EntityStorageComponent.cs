@@ -29,13 +29,20 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("removedMasks")]
     public int RemovedMasks;
 
-    [ViewVariables]
     [DataField("capacity")]
     public int Capacity = 30;
 
-    [ViewVariables]
     [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
+
+    /// <summary>
+    /// If true, it opens the storage when the entity inside of it moves
+    /// If false, it prevents the storage from opening when the entity inside of it moves.
+    /// This is for objects that you want the player to move while inside, like large cardboard boxes, without opening the storage.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("openOnMove")]
+    public bool OpenOnMove = true;
 
     //The offset for where items are emptied/vacuumed for the EntityStorage.
     [DataField("enteringOffset")]
@@ -45,7 +52,6 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("enteringOffsetCollisionFlags")]
     public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
-    [ViewVariables]
     [DataField("enteringRange")]
     public float EnteringRange = 0.18f;
 
@@ -55,8 +61,14 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("occludesLight")]
     public bool OccludesLight = true;
 
-    [DataField("deleteContentsOnDestruction")]
+    [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteContentsOnDestruction = false;
+
+    /// <summary>
+    /// Whether or not the container is sealed and traps air inside of it
+    /// </summary>
+    [DataField("airtight"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Airtight = true;
 
     [DataField("open")]
     public bool Open;
@@ -102,12 +114,11 @@ public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
         Silent = silent;
     }
 }
+public sealed class StorageBeforeOpenEvent : EventArgs { }
 public sealed class StorageAfterOpenEvent : EventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
 {
-    public EntityUid Container;
-
     public HashSet<EntityUid> Contents;
 
     /// <summary>
@@ -115,9 +126,8 @@ public sealed class StorageBeforeCloseEvent : EventArgs
     /// </summary>
     public HashSet<EntityUid> BypassChecks = new();
 
-    public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
+    public StorageBeforeCloseEvent(HashSet<EntityUid> contents)
     {
-        Container = container;
         Contents = contents;
     }
 }

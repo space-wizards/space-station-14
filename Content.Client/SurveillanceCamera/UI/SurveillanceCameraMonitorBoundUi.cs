@@ -115,6 +115,12 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
     {
         base.Dispose(disposing);
 
+        if (_currentCamera != null)
+        {
+            _eyeLerpingSystem.RemoveEye(_currentCamera.Value);
+            _currentCamera = null;
+        }
+
         if (disposing)
         {
             _window?.Dispose();
