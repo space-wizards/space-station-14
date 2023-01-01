@@ -333,6 +333,8 @@ public sealed partial class ShuttleSystem
        var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
+       // Rounding moment
+       shuttleDockedAABB = shuttleDockedAABB.Value.Enlarged(-0.01f);
 
        if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
 
