@@ -50,13 +50,11 @@
   - type: ShuttleConsole
   - type: ActivatableUI
     key: enum.ShuttleConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.ShuttleConsoleUiKey.Key
         type: ShuttleConsoleBoundUserInterface
   - type: RadarConsole
-  - type: ExtensionCableReceiver
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -275,7 +273,6 @@
         type: GeneralStationRecordConsoleBoundUserInterface
   - type: ActivatableUI
     key: enum.GeneralStationRecordConsoleKey.Key
-  - type: ActivatableUIRequiresPower
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -307,7 +304,6 @@
     board: CrewMonitoringComputerCircuitboard
   - type: ActivatableUI
     key: enum.CrewMonitoringUIKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
         - key: enum.CrewMonitoringUIKey.Key
@@ -597,7 +593,6 @@
   - type: RadarConsole
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
       - key: enum.RadarConsoleUiKey.Key
@@ -742,7 +737,6 @@
   - type: SurveillanceCameraMonitor
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: ActivatableUIRequiresVision
   - type: Transform
     anchored: true
@@ -782,10 +776,7 @@
     speechEnabled: true
   - type: ActivatableUI
     key: enum.SurveillanceCameraMonitorUiKey.Key
-  - type: ActivatableUIRequiresPower
   - type: ActivatableUIRequiresVision
-  - type: Transform
-    anchored: true
   - type: UserInterface
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
