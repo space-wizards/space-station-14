@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using Content.Shared.Projectiles;
 using Content.Shared.Teleportation.Components;
-using Content.Shared.Teleportation.Systems;
-using Robust.Server.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
-namespace Content.Server.Teleportation;
+namespace Content.Shared.Teleportation.Systems;
 
 /// <summary>
 /// This handles teleporting entities through portals, and creating new linked portals.
@@ -17,8 +17,8 @@ namespace Content.Server.Teleportation;
 public sealed class PortalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly LinkedEntitySystem _linked = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -28,6 +28,20 @@ public sealed class PortalSystem : EntitySystem
     {
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
+
+        SubscribeLocalEvent<PortalTimeoutComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<PortalTimeoutComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
+    {
+        args.State = new PortalTimeoutComponentState(component.EnteredPortal);
+    }
+
+    private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is PortalTimeoutComponentState state)
+            component.EnteredPortal = state.EnteredPortal;
     }
 
     private bool ShouldCollide(Fixture our, Fixture other)
@@ -50,8 +64,16 @@ public sealed class PortalSystem : EntitySystem
             return;
         }
 
-        if (TryComp<LinkedEntityComponent>(uid, out var link) && link.LinkedEntities.Any())
+        if (TryComp<LinkedEntityComponent>(uid, out var link))
         {
+            // client can't predict outside of simple portal-to-portal interactions due to randomness involved
+            // --also can't predict if the target doesn't exist on the client
+            if (_netMan.IsClient && (link.LinkedEntities.Count != 1 || !Exists(link.LinkedEntities.First())))
+                return;
+
+            if (!link.LinkedEntities.Any())
+                return;
+
             // pick a target and teleport there
             var target = _random.Pick(link.LinkedEntities);
 
@@ -60,11 +82,15 @@ public sealed class PortalSystem : EntitySystem
                 // if target is a portal, signal that they shouldn't be immediately portaled back
                 var timeout = EnsureComp<PortalTimeoutComponent>(subject);
                 timeout.EnteredPortal = uid;
+                Dirty(timeout);
             }
 
             TeleportEntity(uid, subject, Transform(target).Coordinates, target);
             return;
         }
+
+        if (_netMan.IsClient)
+            return;
 
         // no linked entity--teleport randomly
         var randVector = _random.NextVector2(component.MaxRandomRadius);
@@ -105,15 +131,7 @@ public sealed class PortalSystem : EntitySystem
 
         Transform(subject).Coordinates = target;
 
-        _audio.PlayPvs(departureSound, portal);
-        _audio.Play(arrivalSound, Filter.Pvs(target), target, true);
-    }
-
-    public void CreateLinkedPortals(EntityCoordinates first, EntityCoordinates second, string firstProto, string secondProto)
-    {
-        var firstEnt = Spawn(firstProto, first);
-        var secondEnt = Spawn(secondProto, second);
-
-        _linked.TryLink(firstEnt, secondEnt);
+        _audio.PlayPredicted(departureSound, portal, subject);
+        _audio.PlayPredicted(arrivalSound, subject, subject);
     }
 }

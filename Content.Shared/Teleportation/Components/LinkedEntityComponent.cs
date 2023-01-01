@@ -25,6 +25,17 @@ public sealed class LinkedEntityComponent : Component
 }
 
 [Serializable, NetSerializable]
+public sealed class LinkedEntityComponentState : ComponentState
+{
+    public HashSet<EntityUid> LinkedEntities;
+
+    public LinkedEntityComponentState(HashSet<EntityUid> linkedEntities)
+    {
+        LinkedEntities = linkedEntities;
+    }
+}
+
+[Serializable, NetSerializable]
 public enum LinkedEntityVisuals : byte
 {
     HasAnyLinks
