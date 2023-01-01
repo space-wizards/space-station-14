@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: chance to find salami lid in a pizza crate has been decreased, type: Tweak}
-  id: 2317
-  time: '2022-09-15T22:15:45.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: Added icons for Lock and Unlock in the right click menu!, type: Add}
@@ -2949,3 +2944,9 @@ Entries:
   - {message: Fixed some broken artifact effects., type: Fix}
   id: 2816
   time: '2023-01-01T05:59:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to mop up blood stains., type: Fix}
+  - {message: Various stains no longer evaporate., type: Tweak}
+  id: 2817
+  time: '2023-01-01T06:03:26.0000000+00:00'
