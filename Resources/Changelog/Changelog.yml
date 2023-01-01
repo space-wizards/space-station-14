@@ -1,66 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Adds lightning, unused for now!', type: Add}
-  id: 2312
-  time: '2022-09-15T15:49:01.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Added lathe recipe for glass chemistry bottles, type: Add}
-  id: 2313
-  time: '2022-09-15T17:27:46.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Suppressed artifacts ($4,000) now sell for more than unsuppressed artifacts
-      ($2,000).', type: Add}
-  id: 2314
-  time: '2022-09-15T17:28:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Most cargo crate prices have been tweaked down to reflect the value
-      of the crate. Security items in particular are much cheaper., type: Tweak}
-  - {message: Cargo passive income reduced from 2 to 1 per second., type: Tweak}
-  - {message: 'Pipes, racks, and walls should be worth a token amount of money.',
-    type: Tweak}
-  - {message: Dead organics can be sold., type: Tweak}
-  id: 2315
-  time: '2022-09-15T17:29:07.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Soda water can no longer breaks into glass shards, type: Fix}
-  id: 2316
-  time: '2022-09-15T19:07:12.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: chance to find salami lid in a pizza crate has been decreased, type: Tweak}
-  id: 2317
-  time: '2022-09-15T22:15:45.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: Added icons for Lock and Unlock in the right click menu!, type: Add}
-  id: 2318
-  time: '2022-09-15T23:26:49.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: NSS Pillar has been rebuilt from scratch! Expect a lot of changes and
-      follow the directional signs not to get lost., type: Add}
-  id: 2319
-  time: '2022-09-16T02:55:43.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Gas tanks can now also be sold (no longer just canisters)., type: Add}
-  id: 2320
-  time: '2022-09-16T14:04:25.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Gas canisters now come with access locks., type: Add}
-  id: 2321
-  time: '2022-09-16T14:06:30.0000000+00:00'
-- author: och
-  changes:
-  - {message: Fix all clones being young neuter humans, type: Fix}
-  id: 2322
-  time: '2022-09-16T14:13:46.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Added strip button to examine tooltip., type: Add}
@@ -2949,3 +2887,71 @@ Entries:
   - {message: Blood stains now fade out instead of becoming sparkles., type: Fix}
   id: 2811
   time: '2022-12-30T17:45:05.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added missing locale string for the carpotoxin physical reagent description.,
+    type: Fix}
+  id: 2812
+  time: '2022-12-31T21:51:44.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added missing interaction outline component to cardboard boxes., type: Fix}
+  id: 2813
+  time: '2023-01-01T00:42:36.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: 'Flashlights now have an empty variant, which can be manufactured by
+      a protolathe.', type: Add}
+  - {message: Changed the protolathe recipe for flashlights to use the empty variant.,
+    type: Fix}
+  id: 2814
+  time: '2023-01-01T05:48:58.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added logic for sorting crew manifest entries by job titles and names.,
+    type: Fix}
+  id: 2815
+  time: '2023-01-01T05:49:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added several new beneficial artifact effects., type: Add}
+  - {message: Fixed some broken artifact effects., type: Fix}
+  id: 2816
+  time: '2023-01-01T05:59:39.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed being unable to mop up blood stains., type: Fix}
+  - {message: Various stains no longer evaporate., type: Tweak}
+  id: 2817
+  time: '2023-01-01T06:03:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an issue where deconstructed machines showed an empty frame.,
+    type: Fix}
+  - {message: Fixed an issue where you'd have to crowbar an empty machine frame in
+      order to deconstruct it., type: Fix}
+  id: 2818
+  time: '2023-01-01T06:06:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Something about the mystical energy of the end of the round seems to
+      be causing artifacts to go absolutely crazy. Best keep them far away (or perhaps
+      really close?)', type: Add}
+  id: 2819
+  time: '2023-01-01T06:16:09.0000000+00:00'
+- author: Kupo
+  changes:
+  - {message: 'Radio channel ":h" will now use the headset''s department radio', type: Add}
+  id: 2820
+  time: '2023-01-01T06:20:04.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: All gas canisters now dump their contents when destroyed., type: Fix}
+  id: 2821
+  time: '2023-01-01T06:21:26.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: The warning popups when opening dangerous firelocks are now specific
+      to the user prying them open and are much more noticeable., type: Tweak}
+  id: 2822
+  time: '2023-01-01T19:42:22.0000000+00:00'
