@@ -4,6 +4,7 @@ using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 
 namespace Content.Server.Teleportation;
@@ -28,7 +29,7 @@ public sealed class PortalSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture)
+        if (args.OurFixture.ID != PortalFixture && args.OtherFixture.Hard)
             return;
 
         var subject = args.OtherFixture.Body.Owner;
@@ -51,7 +52,7 @@ public sealed class PortalSystem : EntitySystem
                 timeout.EnteredPortal = uid;
             }
 
-            TeleportEntity(uid, subject, Transform(target).Coordinates);
+            TeleportEntity(uid, subject, Transform(target).Coordinates, target);
             return;
         }
 
@@ -63,7 +64,7 @@ public sealed class PortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture)
+        if (args.OurFixture.ID != PortalFixture && args.OtherFixture.Hard)
             return;
 
         var subject = args.OtherFixture.Body.Owner;
@@ -75,8 +76,17 @@ public sealed class PortalSystem : EntitySystem
         }
     }
 
-    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target)
+    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity=null,
+        PortalComponent? portalComponent = null)
     {
+        if (!Resolve(portal, ref portalComponent))
+            return;
+
+        var arrivalSound = CompOrNull<PortalComponent>(targetEntity)?.ArrivalSound ?? portalComponent.ArrivalSound;
+        var departureSound = portalComponent.DepartureSound;
+
+        _audio.PlayPvs(departureSound, portal);
+        _audio.Play(arrivalSound, Filter.Pvs(target), target, true);
 
         Transform(subject).Coordinates = target;
     }

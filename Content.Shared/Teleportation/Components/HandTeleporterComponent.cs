@@ -1,4 +1,6 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Audio;
+using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Teleportation.Components;
 
@@ -20,4 +22,13 @@ public sealed class HandTeleporterComponent : Component
 
     [DataField("secondPortalPrototype")]
     public string SecondPortalPrototype = "PortalBlue";
+
+    [DataField("newPortalSound")]
+    public SoundSpecifier NewPortalSound = new SoundPathSpecifier("/Audio/Machines/high_tech_confirm.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(-2f)
+    };
+
+    [DataField("clearPortalsSound")]
+    public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
