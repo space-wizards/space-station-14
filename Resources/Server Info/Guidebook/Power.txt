@@ -1,23 +1,23 @@
 SS14 has a fairly in-depth power system through which all devices on the station receive electricity. It's divided into three main powernets; HV, LV, and MV.
-?{|:Horizontal:Center
-?embedEntityCaption:CableHVStack:2
-?embedEntityCaption:CableMVStack:2
-?embedEntityCaption:CableApcStack:2
-?|}
+<Box HCenter>
+<GuideEntityEmbed CableHVStack Caption Scale=2>
+<GuideEntityEmbed CableMVStack Caption Scale=2>
+<GuideEntityEmbed CableApcStack Caption Scale=2>
+<Box\>
 #Cabling
 The three major cable types (HV, MV, and LV) can be used to form independent powernets. Examine them for a description of their uses.
-?{|:Horizontal:Center
-?embedEntityCaption:CableHV:2
-?embedEntityCaption:CableMV:2
-?embedEntityCaption:CableApcExtension:2
-?|}
+<Box HCenter>
+<GuideEntityEmbed CableHV Caption Scale=2>
+<GuideEntityEmbed CableMV Caption Scale=2>
+<GuideEntityEmbed CableApcExtension Caption Scale=2>
+<Box\>
 #Power storage
 Each power storage device presented functions as the transformer for its respective power level (HV, MV, and LV) and also provides a fairly sizable backup battery to help flatten out spikes and dips in power usage.
-?{|:Horizontal:Center
-?embedEntityCaption:SMESBasic:2
-?embedEntityCaption:SubstationBasic:2
-?embedEntityCaption:APCBasic:2
-?|}
+<Box HCenter>
+<GuideEntityEmbed SMESBasic Caption Scale=2>
+<GuideEntityEmbed SubstationBasic Caption Scale=2>
+<GuideEntityEmbed APCBasic Caption Scale=2>
+<Box\>
 #Ramping
 Contrary to what one might expect from a video game electrical simulation, power is not instantly provided upon request. Generators and batteries take time to ramp up to match the draw imposed on them, which leads to brownouts when there are large changes in current draw all at once, for example when batteries run out.
 

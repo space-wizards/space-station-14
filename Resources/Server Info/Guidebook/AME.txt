@@ -1,14 +1,12 @@
 The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
 
 #Construction
-?{|:Horizontal:Center
-Required parts:
-?|}
-?{|:Horizontal:Center
-?embedEntityCaption:AMEController:2
-?embedEntityCaption:AMEPart:2
-?embedEntityCaption:AMEJar:2
-?|}
+<Box HCenter>Required parts:<Box\>
+<Box HCenter>
+<GuideEntityEmbed AMEController Caption Scale=2>
+<GuideEntityEmbed AMEPart Caption Scale=2>
+<GuideEntityEmbed AMEJar Caption Scale=2>
+<Box\>
 
 To assemble an AME, start by wrenching down the controller on the far end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
 
