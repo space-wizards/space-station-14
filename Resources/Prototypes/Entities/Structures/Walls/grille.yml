@@ -17,7 +17,17 @@
       netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
-      state: grille
+      layers:
+      - state: grille
+      - map: ["electrifiedAnimation"]
+        state: electrified_animation
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ElectrifiedVisuals.Enabled:
+          electrifiedAnimation:
+            True: { visible: true, shader: "unshaded"}
+            False: { visible: false }
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille
@@ -29,6 +39,8 @@
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic
     - type: PowerConsumer
+      drawRate: 1
+      drawFromAllWires: true
     - type: Electrified
       requirePower: true
       noWindowInTile: true

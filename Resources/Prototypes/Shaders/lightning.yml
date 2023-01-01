@@ -1,0 +1,13 @@
+- type: shader
+  id: lightning
+  kind: source
+  path: "/Textures/Shaders/lightning.swsl"
+  params:
+    key: value
+
+- type: shader
+  id: electrified
+  kind: source
+  path: "/Textures/Shaders/lightning.swsl"
+  params:
+    key: value

@@ -1,5 +1,8 @@
 using System.Linq;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
@@ -7,6 +10,8 @@ using JetBrains.Annotations;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Threading;
+using Content.Server.Light.Components;
+using YamlDotNet.Serialization.ValueDeserializers;
 
 namespace Content.Server.Power.EntitySystems
 {
@@ -311,6 +316,30 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var consumer))
             {
+                if (TryComp<NodeContainerComponent>(consumer.Owner, out var nodeComponent))
+                {
+                    foreach (var nodeValue in nodeComponent.Nodes.Values)
+                    {
+                        // Set the PowerConsumer powered/unpowered by looping through its wires and checking the supply
+                        var powered = nodeValue.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } };
+                        if (powered)
+                        {
+                            consumer.PoweredBy = (true, nodeValue.NodeGroupID);
+                            break;
+                        }
+
+                        if (!powered)
+                            consumer.PoweredBy = (false, nodeValue.NodeGroupID);
+                    }
+
+                    // Change the voltage to the wire currently powering the consumer
+                    if (consumer.DrawFromAllWires  &&
+                        consumer.PoweredBy.Powered)
+                    {
+                        consumer.Voltage = (Voltage) consumer.PoweredBy.Wire;
+                    }
+                }
+
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))

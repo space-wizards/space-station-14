@@ -1,5 +1,7 @@
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.NodeGroups;
 
 namespace Content.Server.Power.Components
 {
@@ -15,6 +17,19 @@ namespace Content.Server.Power.Components
         [DataField("drawRate")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+
+        /// <summary>
+        ///  Whether to draw power from the powered wires in the entity's <see cref="NodeContainerComponent"/>
+        /// </summary>
+        [DataField("drawFromAllWires")]
+        [ViewVariables]
+        public bool DrawFromAllWires = false;
+
+        /// <summary>
+        ///  Stores the wires in the entity's <see cref="NodeContainerComponent"/> and if they have power
+        /// </summary>
+        [ViewVariables]
+        public (bool Powered, NodeGroupID Wire) PoweredBy { get; set; } = new(false, default!);
 
         /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.

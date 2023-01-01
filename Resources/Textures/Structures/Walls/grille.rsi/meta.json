@@ -24,6 +24,17 @@
     },
     {
       "name": "grille_damaged_3"
+    },
+    {
+      "name": "electrified_animation",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     }
   ]
 }

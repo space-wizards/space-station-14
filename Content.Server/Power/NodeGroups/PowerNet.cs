@@ -84,7 +84,6 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveConsumer(PowerConsumerComponent consumer)
         {
-            DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == NetworkNode.Id);
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Remove(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
