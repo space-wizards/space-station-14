@@ -1,6 +1,6 @@
 ﻿
 <Box Vertical HCenter>You can change the keybinds at any time here:<Box\>
-<Box Vertical HCenter><ControlsButton><Box\>
+<Box Vertical HCenter><CommandButton ui-options-tab-controls "options 1"><Box\>
 
 #Basic controls
 We shall politely assume you already know how WASD to walk works.
