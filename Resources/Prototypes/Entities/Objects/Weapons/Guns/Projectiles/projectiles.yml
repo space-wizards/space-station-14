@@ -222,6 +222,7 @@
       - state: projectile
         shader: unshaded
   - type: Ammo
+    muzzleFlash: null
   - type: Physics
   - type: Fixtures
     fixtures:
