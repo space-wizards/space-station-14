@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Robust.Client.UserInterface;
@@ -32,9 +32,6 @@ public sealed class Document : BoxContainer
     public Document(string contents) : this()
     {
         TryAddMarkup(contents);
-        //if (!)
-        //    throw new Exception("Failed to initialize a document, it was provided with bad contents!");
-
     }
 
     private enum ParserMode
@@ -66,8 +63,11 @@ public sealed class Document : BoxContainer
         var tagParamList = new Dictionary<string, string>();
         bool noAppend = false;
 
-        foreach (var (idx, rune) in markup.EnumerateRunes().Select(((rune, i) => (i, rune))))
+        int idx = -1;
+        foreach (var rune in markup.EnumerateRunes())
         {
+            idx++;
+
             tagArgList.Clear();
             tagParamList.Clear();
             var initialState = state;
@@ -100,7 +100,6 @@ public sealed class Document : BoxContainer
                     state = ParserMode.Text;
                     break;
                 default:
-                    state = state;
                     break;
             }
 
@@ -295,11 +294,17 @@ public sealed class Document : BoxContainer
                 continue;
             }
 
+            escaped = false;
+
             if (Rune.IsWhiteSpace(rune) && !quoted)
             {
                 // cool clear our buffer.
                 var str = buffer.ToString();
                 buffer.Clear();
+
+                if (string.IsNullOrWhiteSpace(str))
+                    continue;
+
                 if (tag is null)
                 {
                     tag = str;
@@ -307,9 +312,16 @@ public sealed class Document : BoxContainer
                 }
 
                 var idx = str.IndexOf('=');
-                if (idx != -1 && str[idx-1] != '\\')
+                if (idx != -1)
                 {
                     var prop = str.Remove(idx);
+
+                    if (prop == string.Empty)
+                    {
+                        Logger.Error($"Encountered empty property name while processing arguments for tag: {tag}.");
+                        continue;
+                    }
+
                     var value = str.Remove(0, idx+1);
                     param[prop] = value;
                     continue;
@@ -321,6 +333,12 @@ public sealed class Document : BoxContainer
 
             buffer.Append(rune);
         }
+
+        if (quoted)
+            Logger.Error($"Missing closing quote while processing document args: {input}");
+
+        if (escaped)
+            Logger.Error($"Unfinished escape while processing document args: {input}");
     }
 }
 
