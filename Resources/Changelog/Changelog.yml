@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Added lathe recipe for glass chemistry bottles, type: Add}
-  id: 2313
-  time: '2022-09-15T17:27:46.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Suppressed artifacts ($4,000) now sell for more than unsuppressed artifacts
@@ -2950,3 +2945,8 @@ Entries:
     type: Fix}
   id: 2812
   time: '2022-12-31T21:51:44.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added missing interaction outline component to cardboard boxes., type: Fix}
+  id: 2813
+  time: '2023-01-01T00:42:36.0000000+00:00'
