@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.UserInterface;
 using Content.Client.UserInterface.Controls;
@@ -41,10 +41,6 @@ public sealed partial class GuidebookWindow : FancyWindow
         GuideContainer.AddChild(new Document(text));
 
         GuideContainer.MaxWidth = this.Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
-
-        return;
-
-        LayoutGuidebook(text, GuideContainer);
     }
 
     public void UpdateGuides(List<GuideEntry> entries)
