@@ -15,7 +15,7 @@ public sealed class LinkedEntityComponent : Component
     ///     The entities that this entity is linked to.
     /// </summary>
     [DataField("linkedEntities")]
-    public HashSet<EntityUid> LinkedEntities = default!;
+    public HashSet<EntityUid> LinkedEntities = new();
 
     /// <summary>
     ///     Should this entity be deleted if all of its links are removed?

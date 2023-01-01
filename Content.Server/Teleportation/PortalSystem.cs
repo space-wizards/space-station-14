@@ -1,10 +1,12 @@
 ﻿using System.Linq;
 using Content.Shared.Teleportation.Components;
+using Content.Shared.Teleportation.Systems;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 
-namespace Content.Shared.Teleportation.Systems;
+namespace Content.Server.Teleportation;
 
 /// <summary>
 /// This handles teleporting entities through portals, and creating new linked portals.
@@ -13,6 +15,7 @@ public sealed class PortalSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LinkedEntitySystem _linked = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
 
     private const string PortalFixture = "portalFixture";
 
@@ -20,6 +23,7 @@ public sealed class PortalSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
+        SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
     }
 
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
@@ -29,10 +33,9 @@ public sealed class PortalSystem : EntitySystem
 
         var subject = args.OtherFixture.Body.Owner;
 
-        // if they came from another portal, just remove the marker and return
+        // if they came from another portal, just return and wait for them to exit the portal
         if (HasComp<PortalTimeoutComponent>(subject))
         {
-            RemComp <PortalTimeoutComponent>(subject);
             return;
         }
 
@@ -44,10 +47,12 @@ public sealed class PortalSystem : EntitySystem
             if (HasComp<PortalComponent>(target))
             {
                 // if target is a portal, signal that they shouldn't be immediately portaled back
-                EnsureComp<PortalTimeoutComponent>(subject);
+                var timeout = EnsureComp<PortalTimeoutComponent>(subject);
+                timeout.EnteredPortal = uid;
             }
 
             TeleportEntity(uid, subject, Transform(target).Coordinates);
+            return;
         }
 
         // no linked entity--teleport randomly
@@ -56,10 +61,22 @@ public sealed class PortalSystem : EntitySystem
         TeleportEntity(uid, subject, newCoords);
     }
 
+    private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
+    {
+        if (args.OurFixture.ID != PortalFixture)
+            return;
+
+        var subject = args.OtherFixture.Body.Owner;
+
+        // if they came from (not us), remove the timeout
+        if (TryComp<PortalTimeoutComponent>(subject, out var timeout) && timeout.EnteredPortal != uid)
+        {
+            RemComp<PortalTimeoutComponent>(subject);
+        }
+    }
+
     private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target)
     {
-        // TODO
-        // Sound + popup
 
         Transform(subject).Coordinates = target;
     }

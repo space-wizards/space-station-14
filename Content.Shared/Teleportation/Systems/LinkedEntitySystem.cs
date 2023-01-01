@@ -22,7 +22,7 @@ public sealed class LinkedEntitySystem : EntitySystem
         // Remove any links to this entity when deleted.
         foreach (var ent in component.LinkedEntities.ToArray())
         {
-            if (!Terminating(ent) && TryComp<LinkedEntityComponent>(ent, out var link))
+            if (!Deleted(ent) && !Terminating(ent) && TryComp<LinkedEntityComponent>(ent, out var link))
             {
                 TryUnlink(uid, ent, component, link);
             }

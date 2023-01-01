@@ -7,4 +7,8 @@
 [RegisterComponent]
 public sealed class PortalTimeoutComponent : Component
 {
+    /// <summary>
+    ///     The portal that was entered. Null if coming from a hand teleporter, etc.
+    /// </summary>
+    public EntityUid? EnteredPortal = null;
 }
