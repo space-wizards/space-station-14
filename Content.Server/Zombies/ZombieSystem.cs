@@ -215,7 +215,7 @@ namespace Content.Server.Zombies
             }
 
 
-            // Healing to 80% of HP. Not too big and not too small.
+            // Healing to 20% of HP. Not too big and not too small.
             var healingThreshold = aliveThreshold + (nextThreshold - aliveThreshold) * 0.8;
 
             if (dmg > healingThreshold)
