@@ -36,6 +36,11 @@ public sealed partial class AnomalySystem : EntitySystem
         component.Stability = _random.NextFloat(component.InitialStabilityRange.Item1, component.InitialStabilityRange.Item2);
         component.Severity = _random.NextFloat(component.InitialSeverityRange.Item1, component.InitialSeverityRange.Item2);
         component.NextPulseTime = _timing.CurTime + GetPulseLength(component) * 2; //extra long the first time
+
+        var particles = new[] { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
+        component.SeverityParticleType = _random.PickAndTake(particles);
+        component.DestabilizingParticleType = _random.PickAndTake(particles);
+        component.WeakeningParticleType = _random.PickAndTake(particles);
     }
 
     private void OnShutdown(EntityUid uid, AnomalyComponent component, ComponentShutdown args)

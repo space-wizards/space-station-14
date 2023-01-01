@@ -1,0 +1,72 @@
+- type: entity
+  id: MachineAnomalyVessel
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: anomaly vessel
+  description: A container able to harness a scan of an anomaly and turn it into research points.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/anomaly_vessel.rsi
+    layers:
+    - state: base
+    - state: powered
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: anomaly
+      shader: unshaded
+      map: ["enum.AnomalyVesselVisualLayers.Base"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    noRot: false
+  - type: AnomalyVessel
+  - type: ResearchClient
+  - type: ActivatableUI
+    key: enum.ResearchClientUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Machine
+    board: TraversalDistorterMachineCircuitboard #CHANGE
+  - type: PointLight
+    radius: 1.2
+    energy: 2
+    color: "#fca3c0"
+  - type: Appearance
+  - type: Wires
+    BoardName: "Vessel"
+    LayoutId: Vessel
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AnomalyVesselVisuals.HasAnomaly:
+        enum.AnomalyVesselVisualLayers.Base:
+          True: { visible: true }
+          False: { visible: false }
+      enum.WiresVisuals.MaintenancePanelState:
+        enum.WiresVisualLayers.MaintenancePanel:
+          True: { visible: false }
+          False: { visible: true }
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    intensitySlope: 30
+    totalIntensity: 30
+    canCreateVacuum: false
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior

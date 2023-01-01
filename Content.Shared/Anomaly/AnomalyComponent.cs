@@ -107,13 +107,11 @@ public sealed class AnomalyComponent : Component
     public float PulseVariation = .1f;
     #endregion
 
-    #region Starting Values
     [DataField("initialStabilityRange")]
     public (float, float) InitialStabilityRange = (0.2f, 0.5f);
 
     [DataField("initialSeverityRange")]
     public (float, float) InitialSeverityRange = (0.0f, 0.35f);
-    #endregion
 
     /// <summary>
     /// The minimum amount of research points generated per second
@@ -126,6 +124,29 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("maxPointsPerSecond")]
     public int MaxPointsPerSecond = 150;
+
+    /// <summary>
+    /// The particle type that increases the severity of the anomaly.
+    /// </summary>
+    [DataField("severityParticleType")]
+    public AnomalousParticleType SeverityParticleType;
+    /// <summary>
+    /// The particle type that destabilizes the anomaly.
+    /// </summary>
+    [DataField("destabilizingParticleType")]
+    public AnomalousParticleType DestabilizingParticleType;
+    /// <summary>
+    /// The particle type that weakens the anomalys health.
+    /// </summary>
+    [DataField("weakeningParticleType")]
+    public AnomalousParticleType WeakeningParticleType;
+
+    /// <summary>
+    /// The vessel that the anomaly is connceted to. Stored so that multiple
+    /// vessels cannot connect to the same anomaly.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityUid? ConnectedVessel;
 }
 
 

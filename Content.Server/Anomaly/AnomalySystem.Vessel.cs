@@ -15,22 +15,44 @@ public sealed partial class AnomalySystem
 {
     public void InitializeVessel()
     {
+        SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
+        SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnGetPointsPerSecond);
         SubscribeLocalEvent<AnomalyVesselComponent, AnomalyShutdownEvent>(OnAnomalyShutdown);
+    }
+
+    private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)
+    {
+        if (component.Anomaly is not { } anomaly)
+            return;
+
+        if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComp))
+            return;
+
+        anomalyComp.ConnectedVessel = null;
+    }
+
+    private void OnVesselMapInit(EntityUid uid, AnomalyVesselComponent component, MapInitEvent args)
+    {
+        UpdateVesselAppearance(uid,  component);
     }
 
     private void OnInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
     {
         if (component.Anomaly != null ||
             !TryComp<AnomalyScannerComponent>(args.Used, out var scanner) ||
-            scanner.ScannedAnomaly == null)
+            scanner.ScannedAnomaly is not {} anomaly)
         {
             return;
         }
 
-        _appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, true);
+        if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComponent) || anomalyComponent.ConnectedVessel != null)
+            return;
+
+        UpdateVesselAppearance(uid,  component);
         component.Anomaly = scanner.ScannedAnomaly;
+        anomalyComponent.ConnectedVessel = uid;
         _popup.PopupEntity(Loc.GetString("anomaly-vessel-component-anomaly-assigned"), uid);
     }
 
@@ -50,12 +72,12 @@ public sealed partial class AnomalySystem
         if (args.Anomaly != component.Anomaly)
             return;
 
-        _appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, false);
+        UpdateVesselAppearance(uid,  component);
         component.Anomaly = null;
 
         if (!args.Supercritical)
             return;
-        _explosion.QueueExplosion(uid, "Default", 30, 30, 20);
+        _explosion.TriggerExplosive(uid);
     }
 
     /// <summary>
@@ -71,10 +93,27 @@ public sealed partial class AnomalySystem
 
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
-            multiplier = 1.25f;
+            multiplier = 1.25f; //more points for unstable
         else if (component.Stability < component.DeathThreshold)
-            multiplier = 0.75f;
+            multiplier = 0.75f; //less points if it's dying
+
+        //penalty of up to 50% based on health
+        multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
 
         return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
+    }
+
+    public void UpdateVesselAppearance(EntityUid uid, AnomalyVesselComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var on = component.Anomaly != null;
+
+        _appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on);
+        if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
+        {
+            pointLightComponent.Enabled = on;
+        }
     }
 }
