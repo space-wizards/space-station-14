@@ -13,7 +13,7 @@ public sealed class PortalTimeoutComponent : Component
     /// <summary>
     ///     The portal that was entered. Null if coming from a hand teleporter, etc.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField("enteredPortal")]
     public EntityUid? EnteredPortal = null;
 }
 
