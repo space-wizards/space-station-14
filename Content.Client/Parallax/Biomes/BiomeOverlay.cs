@@ -125,7 +125,7 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out var tileRef) == true && tileRef.Tile.IsEmpty || handledTiles.Contains(indices))
+                if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty || handledTiles.Contains(indices))
                     continue;
 
                 if (!_biome.TryGetTile(indices, seed, tileLayer.Threshold, groups, out var tile))
