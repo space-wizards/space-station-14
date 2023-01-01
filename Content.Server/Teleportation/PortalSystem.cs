@@ -29,7 +29,7 @@ public sealed class PortalSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture && args.OtherFixture.Hard)
+        if (args.OurFixture.ID != PortalFixture || !args.OtherFixture.Hard)
             return;
 
         var subject = args.OtherFixture.Body.Owner;
@@ -64,7 +64,7 @@ public sealed class PortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture && args.OtherFixture.Hard)
+        if (args.OurFixture.ID != PortalFixture || !args.OtherFixture.Hard)
             return;
 
         var subject = args.OtherFixture.Body.Owner;
