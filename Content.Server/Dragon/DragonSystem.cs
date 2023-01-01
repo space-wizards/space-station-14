@@ -11,7 +11,6 @@ using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Humanoid;
 using Content.Server.NPC;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
@@ -22,6 +21,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Dragon
 {

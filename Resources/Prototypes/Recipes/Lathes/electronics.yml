@@ -83,6 +83,16 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CryoPodMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CryoPodMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: ChemMasterMachineCircuitboard
   result: ChemMasterMachineCircuitboard
   completetime: 4
@@ -195,6 +205,15 @@
 - type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   result: ReagentGrinderMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: HotplateMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: HotplateMachineCircuitboard
   completetime: 4
   materials:
      Steel: 100

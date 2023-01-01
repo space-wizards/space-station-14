@@ -123,7 +123,7 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        if (TryComp<SharedStackComponent>(component.Owner, out var stack) && stack.Count < 1)
+        if (TryComp<StackComponent>(component.Owner, out var stack) && stack.Count < 1)
             return false;
 
         component.CancelToken = new CancellationTokenSource();

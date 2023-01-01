@@ -1,6 +1,7 @@
 - type: job
   id: Zookeeper
   name: job-name-zookeeper
+  description: job-description-zookeeper
   playTimeTracker: JobZookeeper
   startingGear: ZookeeperGear
   icon: "Zookeeper"

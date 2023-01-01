@@ -30,7 +30,7 @@
 
 - type: latheRecipe
   id: FlashlightLantern
-  result: FlashlightLantern
+  result: EmptyFlashlightLantern
   completetime: 2
   materials:
     Steel: 100

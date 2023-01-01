@@ -1,4 +1,5 @@
 using Content.Shared.Lathe;
+using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
@@ -32,11 +33,11 @@ namespace Content.Client.Lathe.UI
             };
             _menu.OnServerListButtonPressed += _ =>
             {
-                SendMessage(new LatheServerSelectionMessage());
+                SendMessage(new ConsoleServerSelectionMessage());
             };
             _menu.OnServerSyncButtonPressed += _ =>
             {
-                SendMessage(new LatheServerSyncMessage());
+                SendMessage(new ConsoleServerSyncMessage());
             };
             _menu.RecipeQueueAction += (recipe, amount) =>
             {

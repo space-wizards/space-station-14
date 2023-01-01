@@ -21,8 +21,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
+        [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
 
         /// <summary>
         ///     A cache of all existant chemical reactions indexed by one of their
@@ -36,7 +35,12 @@ namespace Content.Shared.Chemistry.Reaction
 
             InitializeReactionCache();
             _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
-            _gamePrototypeLoadManager.GamePrototypeLoaded += InitializeReactionCache;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
         }
 
         /// <summary>
@@ -210,7 +214,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                    AdminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 
