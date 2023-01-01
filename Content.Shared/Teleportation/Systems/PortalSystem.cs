@@ -22,7 +22,7 @@ public sealed class PortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
     }
 
-    private void OnCollide(EntityUid uid, PortalComponent component, StartCollideEvent args)
+    private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
         if (args.OurFixture.ID != PortalFixture)
             return;

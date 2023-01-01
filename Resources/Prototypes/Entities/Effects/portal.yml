@@ -27,17 +27,19 @@
   id: PortalRed
   parent: BasePortal
   description: This one looks more like a redspace portal.
+  noSpawn: true
   components:
   - type: Sprite
     layers:
     - state: portal
-      color: Red
+      color: OrangeRed
 
 - type: entity
   id: PortalBlue
   parent: BasePortal
+  noSpawn: true
   components:
   - type: Sprite
     layers:
     - state: portal
-      color: Blue
+      color: SkyBlue
