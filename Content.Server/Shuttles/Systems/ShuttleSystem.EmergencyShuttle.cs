@@ -299,9 +299,9 @@ public sealed partial class ShuttleSystem
    /// </summary>
    private bool CanDock(
        DockingComponent shuttleDock,
-       TransformComponent shuttleXform,
+       TransformComponent shuttleDockXform,
        DockingComponent gridDock,
-       TransformComponent gridXform,
+       TransformComponent gridDockXform,
        Angle targetGridRotation,
        Box2 shuttleAABB,
        MapGridComponent grid,
@@ -315,22 +315,22 @@ public sealed partial class ShuttleSystem
 
        if (shuttleDock.Docked ||
            gridDock.Docked ||
-           !shuttleXform.Anchored ||
-           !gridXform.Anchored)
+           !shuttleDockXform.Anchored ||
+           !gridDockXform.Anchored)
        {
            return false;
        }
 
        // First, get the station dock's position relative to the shuttle, this is where we rotate it around
-       var stationDockPos = shuttleXform.LocalPosition +
-                            shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
+       var stationDockPos = shuttleDockXform.LocalPosition +
+                            shuttleDockXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-       // Need to invert the grid'`s angle.
-       var shuttleDockAngle = shuttleXform.LocalRotation;
-       var gridDockAngle = gridXform.LocalRotation.Opposite();
+       // Need to invert the grid's angle.
+       var shuttleDockAngle = shuttleDockXform.LocalRotation;
+       var gridDockAngle = gridDockXform.LocalRotation.Opposite();
 
        var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockAngle);
-       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridDockAngle);
+       var gridXformMatrix = Matrix3.CreateTransform(gridDockXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
        // Rounding moment
