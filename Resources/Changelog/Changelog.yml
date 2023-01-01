@@ -1,9 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Added strip button to examine tooltip., type: Add}
-  id: 2323
-  time: '2022-09-16T14:16:10.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bible heal has been reduced from 70 damage per 5 seconds to 30 damage
@@ -2955,3 +2950,9 @@ Entries:
       to the user prying them open and are much more noticeable., type: Tweak}
   id: 2822
   time: '2023-01-01T19:42:22.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Station mugs now have uniform capacity with vending machine coffee mugs
+      (10 -> 20), type: Tweak}
+  id: 2823
+  time: '2023-01-01T23:50:36.0000000+00:00'
