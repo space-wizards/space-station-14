@@ -1,8 +1,10 @@
 ﻿using System.Linq;
+using Content.Shared.Projectiles;
 using Content.Shared.Teleportation.Components;
 using Content.Shared.Teleportation.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -19,6 +21,7 @@ public sealed class PortalSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
 
     private const string PortalFixture = "portalFixture";
+    private const string ProjectileFixture = "projectile";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -27,9 +30,16 @@ public sealed class PortalSystem : EntitySystem
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
     }
 
+    private bool ShouldCollide(Fixture our, Fixture other)
+    {
+        // most non-hard fixtures shouldn't pass through portals, but projectiles are non-hard as well
+        // and they should still pass through
+        return our.ID == PortalFixture && (other.Hard || other.ID == ProjectileFixture);
+    }
+
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture || !args.OtherFixture.Hard)
+        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherFixture.Body.Owner;
@@ -64,7 +74,7 @@ public sealed class PortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != PortalFixture || !args.OtherFixture.Hard)
+        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherFixture.Body.Owner;
@@ -85,10 +95,18 @@ public sealed class PortalSystem : EntitySystem
         var arrivalSound = CompOrNull<PortalComponent>(targetEntity)?.ArrivalSound ?? portalComponent.ArrivalSound;
         var departureSound = portalComponent.DepartureSound;
 
-        _audio.PlayPvs(departureSound, portal);
-        _audio.Play(arrivalSound, Filter.Pvs(target), target, true);
+        // Some special cased stuff: projectiles should stop ignoring shooter when they enter a portal, to avoid
+        // stacking 500 bullets in between 2 portals and instakilling people--you'll just hit yourself instead
+        // (as expected)
+        if (TryComp<ProjectileComponent>(subject, out var projectile))
+        {
+            projectile.IgnoreShooter = false;
+        }
 
         Transform(subject).Coordinates = target;
+
+        _audio.PlayPvs(departureSound, portal);
+        _audio.Play(arrivalSound, Filter.Pvs(target), target, true);
     }
 
     public void CreateLinkedPortals(EntityCoordinates first, EntityCoordinates second, string firstProto, string secondProto)
