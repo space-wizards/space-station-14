@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Gas tanks can now also be sold (no longer just canisters)., type: Add}
-  id: 2320
-  time: '2022-09-16T14:04:25.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Gas canisters now come with access locks., type: Add}
@@ -2954,3 +2949,8 @@ Entries:
       really close?)', type: Add}
   id: 2819
   time: '2023-01-01T06:16:09.0000000+00:00'
+- author: Kupo
+  changes:
+  - {message: 'Radio channel ":h" will now use the headset''s department radio', type: Add}
+  id: 2820
+  time: '2023-01-01T06:20:04.0000000+00:00'
