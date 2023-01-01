@@ -1,6 +1,9 @@
 ﻿using Content.Server.Administration.Logs;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Popups;
 using Content.Shared.Anomaly;
 using Content.Shared.Database;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -10,17 +13,22 @@ namespace Content.Server.Anomaly;
 /// <summary>
 /// This handles logic and interactions relating to <see cref="AnomalyComponent"/>
 /// </summary>
-public sealed class AnomalySystem : EntitySystem
+public sealed partial class AnomalySystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _log = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
+
+        InitializeVessel();
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)

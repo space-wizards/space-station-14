@@ -14,3 +14,14 @@ public enum AnomalousParticleTypes : byte
     Gamma
 }
 
+[Serializable, NetSerializable]
+public enum AnomalyVesselVisuals : byte
+{
+    HasAnomaly
+}
+[Serializable, NetSerializable]
+public enum AnomalyVesselVisualLayers : byte
+{
+    Base
+}
+

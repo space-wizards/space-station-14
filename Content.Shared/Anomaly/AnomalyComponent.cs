@@ -114,6 +114,18 @@ public sealed class AnomalyComponent : Component
     [DataField("initialSeverityRange")]
     public (float, float) InitialSeverityRange = (0.0f, 0.35f);
     #endregion
+
+    /// <summary>
+    /// The minimum amount of research points generated per second
+    /// </summary>
+    [DataField("minPointsPerSecond")]
+    public int MinPointsPerSecond = 25;
+
+    /// <summary>
+    /// The maximum amount of research points generated per second
+    /// </summary>
+    [DataField("maxPointsPerSecond")]
+    public int MaxPointsPerSecond = 150;
 }
 
 

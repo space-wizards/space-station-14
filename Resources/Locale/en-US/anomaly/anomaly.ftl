@@ -1,0 +1,1 @@
+anomaly-vessel-component-anomaly-assigned = Anomaly assigned to vessel.
