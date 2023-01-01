@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: NSS Pillar has been rebuilt from scratch! Expect a lot of changes and
-      follow the directional signs not to get lost., type: Add}
-  id: 2319
-  time: '2022-09-16T02:55:43.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Gas tanks can now also be sold (no longer just canisters)., type: Add}
@@ -2953,3 +2947,10 @@ Entries:
       order to deconstruct it., type: Fix}
   id: 2818
   time: '2023-01-01T06:06:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Something about the mystical energy of the end of the round seems to
+      be causing artifacts to go absolutely crazy. Best keep them far away (or perhaps
+      really close?)', type: Add}
+  id: 2819
+  time: '2023-01-01T06:16:09.0000000+00:00'
