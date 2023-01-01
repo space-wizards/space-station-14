@@ -1,6 +1,9 @@
 ent-PuddleBase = { "" }
     .desc = { "" }
     .suffix = { "" }
+ent-EvaporatingPuddle = { ent-PuddleBase }
+    .desc = { ent-PuddleBase.desc }
+    .suffix = { "" }
 ent-PuddleGeneric = лужа
     .desc = { ent-PuddleSmear.desc }
     .suffix = { "" }

@@ -1,3 +1,4 @@
+construction-condition-machine-container-empty = Удалите части из рамки используя [color=cyan]Монтировку[/color].
 # MachineFrameComplete
 construction-condition-machine-frame-requirement-label = Требования:
 construction-condition-machine-frame-insert-circuit-board-message = Вставьте [color=cyan]любую плату для машины[/color].

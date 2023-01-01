@@ -15,6 +15,7 @@ artifact-effect-hint-multitool = Конгломерат устройств
 artifact-effect-hint-storage = Внутренняя камера
 artifact-effect-hint-drill = Зазубренный вращатель
 artifact-effect-hint-soap = Смазанная поверхность
+artifact-effect-hint-communication = Коммуникации на дальние расстояния
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
