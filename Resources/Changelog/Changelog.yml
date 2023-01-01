@@ -1,9 +1,4 @@
 Entries:
-- author: och
-  changes:
-  - {message: Fix all clones being young neuter humans, type: Fix}
-  id: 2322
-  time: '2022-09-16T14:13:46.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Added strip button to examine tooltip., type: Add}
@@ -2954,3 +2949,9 @@ Entries:
   - {message: All gas canisters now dump their contents when destroyed., type: Fix}
   id: 2821
   time: '2023-01-01T06:21:26.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: The warning popups when opening dangerous firelocks are now specific
+      to the user prying them open and are much more noticeable., type: Tweak}
+  id: 2822
+  time: '2023-01-01T19:42:22.0000000+00:00'
