@@ -1,11 +1,11 @@
-﻿<controls:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface"
+<controls:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface"
                 xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 SetSize="750 700"
                 MinSize="100 200"
                 Resizable="True"
-                Title="Guidebook">
+                Title="{Loc 'guidebook-window-title'}">
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SizeFlagsStretchRatio="1">
@@ -14,8 +14,8 @@
         </BoxContainer>
         <ScrollContainer Name="GuideScroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2">
             <BoxContainer Orientation="Vertical" Name="GuideContainer" Margin="5 5 5 5">
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="Select an entry."/>
-                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="If you're new, select the topmost entry to get started."/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>

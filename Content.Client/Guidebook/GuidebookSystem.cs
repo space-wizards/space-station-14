@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Guidebook;
 
 /// <summary>
-/// This handles...
+///     This system handles interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
 public sealed class GuidebookSystem : EntitySystem
 {
@@ -53,7 +53,7 @@ public sealed class GuidebookSystem : EntitySystem
                 if (Transform(uid).LocalRotation != Angle.Zero)
                     Transform(uid).LocalRotation -= Angle.FromDegrees(90);
             },
-            Text = "Unspin Monkey",
+            Text = Loc.GetString("guidebook-monkey-unspin"),
             Priority = -9999,
         });
 
@@ -75,7 +75,7 @@ public sealed class GuidebookSystem : EntitySystem
 
                 _rgbLightControllerSystem.SetLayers(uid, layers, rgb);
             },
-            Text = "Disco Monkey",
+            Text = Loc.GetString("guidebook-monkey-disco"),
             Priority = -9998,
         });
     }
