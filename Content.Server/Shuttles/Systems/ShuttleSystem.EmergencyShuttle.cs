@@ -330,8 +330,8 @@ public sealed partial class ShuttleSystem
        var stationDockPos = shuttleXform.LocalPosition +
                             shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -shuttleXform.LocalRotation);
-       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridXform.LocalRotation);
+       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -(shuttleXform.LocalRotation.ToWorldVec().ToAngle()));
+       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, (gridXform.LocalRotation.ToWorldVec().ToAngle()));
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
 
