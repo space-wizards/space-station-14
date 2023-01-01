@@ -1,6 +1,7 @@
-﻿<ui:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface.Controls"
+﻿<controls:FancyWindow xmlns:ui="clr-namespace:Content.Client.UserInterface"
                 xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                 SetSize="750 700"
                 MinSize="100 200"
                 Resizable="True"
@@ -18,4 +19,4 @@
             </BoxContainer>
         </ScrollContainer>
     </BoxContainer>
-</ui:FancyWindow>
+</controls:FancyWindow>
