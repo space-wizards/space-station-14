@@ -34,6 +34,7 @@
     contents:
       - id: ClothingOuterArmorCaptainCarapace
       - id: NukeDisk
+      - id: HandTeleporter
       - id: PinpointerNuclear
       - id: CaptainIDCard
       - id: ClothingHeadHatCaptain

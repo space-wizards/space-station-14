@@ -201,6 +201,22 @@
       prototype: JetpackCaptainFilled
 
 - type: objective
+  id: HandTeleporterStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - DieCondition
+  - !type:NotRoleRequirement
+    roleId: Captain
+  conditions:
+  - !type:StealCondition
+    prototype: HandTeleporter
+    owner: job-name-captain
+
+- type: objective
   id: EscapeShuttleObjective
   issuer: syndicate
   requirements:
