@@ -53,6 +53,7 @@ public sealed class PlanetCommand : IConsoleCommand
         var mapUid = _mapManager.GetMapEntityId(mapId);
         MetaDataComponent? metadata = null;
 
+        // Fake tiles
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
         biome.Seed = _random.Next();
         _entManager.Dirty(biome);
@@ -60,7 +61,13 @@ public sealed class PlanetCommand : IConsoleCommand
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
         _entManager.Dirty(gravity, metadata);
-        _entManager.EnsureComponent<MapLightComponent>(mapUid);
+
+        // Day lighting
+        var light = _entManager.EnsureComponent<MapLightComponent>(mapUid);
+        light.AmbientLightColor = Color.FromHex("#EFECD8FF");
+        _entManager.Dirty(light, metadata);
+
+        // Atmos
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
         atmos.Space = false;
