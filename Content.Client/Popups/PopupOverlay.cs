@@ -1,4 +1,7 @@
+using Content.Client.Examine;
 using Content.Shared.CCVar;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -6,6 +9,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Popups;
@@ -70,6 +74,7 @@ public sealed class PopupOverlay : Overlay
             return;
 
         var matrix = args.ViewportControl!.GetWorldToScreenMatrix();
+        var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
 
         foreach (var popup in _popup.WorldLabels)
         {
@@ -78,7 +83,11 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            if (!args.WorldAABB.Contains(mapPos.Position))
+            var distance = (mapPos.Position - args.WorldBounds.Centre).Length;
+
+            // Should handle fade here too wyci.
+            if (!args.WorldAABB.Contains(mapPos.Position) || !ExamineSystemShared.InRangeUnOccluded(viewPos, mapPos, distance,
+                    e => e == popup.InitialPos.EntityId, entMan: _entManager))
                 continue;
 
             var pos = matrix.Transform(mapPos.Position);
