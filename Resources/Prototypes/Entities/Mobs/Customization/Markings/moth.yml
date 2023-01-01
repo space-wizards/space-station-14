@@ -9,46 +9,292 @@
   - sprite: Mobs/Customization/moth_parts.rsi
     state: antenna_default
 
-# Wings
+# Colorable Wings
+- type: marking
+  id: MothWingsColoredDefault
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_default
+
+- type: marking
+  id: MothWingsColoredPointy
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_pointy
+
+- type: marking
+  id: MothWingsColoredSquigly
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_squigly
+
+- type: marking
+  id: MothWingsColoredStared
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_stared
+
+- type: marking
+  id: MothWingsColoredStriped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_striped
+
+- type: marking
+  id: MothWingsColoredFan
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_fan
+
+- type: marking
+  id: MothWingsColoredFeather
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_feather
+
+- type: marking
+  id: MothWingsColoredHolo
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: colored_holo
+
+# Colored Wings
 - type: marking
   id: MothWingsDefault
-#  name: Default Wings
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
-    state: default
+    state: normal
 
 - type: marking
-  id: MothWingsLook1
-#  name: Pointy Wings
+  id: MothWingsPointy
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
-    state: look1
+    state: pointy
 
 - type: marking
-  id: MothWingsLook2
-#  name: Swirly Wings
+  id: MothWingsSquigly
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
-    state: look2
+    state: squigly
 
 - type: marking
-  id: MothWingsLook3
-#  name: Dotted Wings
+  id: MothWingsStared
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
-    state: look3
+    state: stared
 
+- type: marking
+  id: MothWingsAphid
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: aphid
 
-# Other markings
+- type: marking
+  id: MothWingsBlackstriped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: blackstriped
+
+- type: marking
+  id: MothWingsBushyblack
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: bushyblack
+
+- type: marking
+  id: MothWingsCharred
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: charred
+
+- type: marking
+  id: MothWingsFan
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: fan
+
+- type: marking
+  id: MothWingsFanpink
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: fanpink
+
+- type: marking
+  id: MothWingsFeather
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: feather
+
+- type: marking
+  id: MothWingsHoloblue
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: holoblue
+
+- type: marking
+  id: MothWingsHolored
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: holored
+
+- type: marking
+  id: MothWingsLadybug
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: ladybug
+
+- type: marking
+  id: MothWingsPieidk
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: pieidk
+
+- type: marking
+  id: MothWingsPinkstriped
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: pinkstriped
+
+- type: marking
+  id: MothWingsPiratecape
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: piratecape
+
+- type: marking
+  id: MothWingsPirategold
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: pirategold
+
+- type: marking
+  id: MothWingsPsyho
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: psyho
+
+- type: marking
+  id: MothWingsRoyalpurple
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: royalpurple
+
+- type: marking
+  id: MothWingsShulker
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: shulker
+
+- type: marking
+  id: MothWingsSquiglygreen
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: squiglygreen
+
+- type: marking
+  id: MothWingsTermalstripes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: termalstripes
+
+- type: marking
+  id: MothWingsWoodland
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_wings.rsi
+    state: woodland
