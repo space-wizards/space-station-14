@@ -126,7 +126,6 @@ public sealed partial class ShuttleSystem
        var targetGridGrid = Comp<MapGridComponent>(targetGrid);
        var targetGridXform = xformQuery.GetComponent(targetGrid);
        var targetGridAngle = targetGridXform.WorldRotation.Reduced();
-       var targetGridRotation = targetGridAngle.ToVec();
 
        var shuttleDocks = GetDocks(component.Owner);
        var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
@@ -147,7 +146,7 @@ public sealed partial class ShuttleSystem
                    if (!CanDock(
                            shuttleDock, shuttleDockXform,
                            gridDock, gridXform,
-                           targetGridRotation,
+                           targetGridAngle,
                            shuttleAABB,
                            targetGridGrid,
                            out var dockedAABB,
@@ -191,7 +190,7 @@ public sealed partial class ShuttleSystem
                                    xformQuery.GetComponent(other.Owner),
                                    otherGrid,
                                    xformQuery.GetComponent(otherGrid.Owner),
-                                   targetGridRotation,
+                                   targetGridAngle,
                                    shuttleAABB, targetGridGrid,
                                    out var otherDockedAABB,
                                    out _,
@@ -203,16 +202,12 @@ public sealed partial class ShuttleSystem
                        }
                    }
 
-                   var spawnRotation = shuttleDockXform.LocalRotation +
-                                       gridXform.LocalRotation +
-                                       targetGridXform.LocalRotation;
-
                    validDockConfigs.Add(new DockingConfig()
                    {
                        Docks = dockedPorts,
                        Area = dockedAABB.Value,
                        Coordinates = spawnPosition,
-                       Angle = spawnRotation,
+                       Angle = targetAngle,
                    });
                }
            }
@@ -307,14 +302,14 @@ public sealed partial class ShuttleSystem
        TransformComponent shuttleXform,
        DockingComponent gridDock,
        TransformComponent gridXform,
-       Vector2 targetGridRotation,
+       Angle targetGridRotation,
        Box2 shuttleAABB,
        MapGridComponent grid,
        [NotNullWhen(true)] out Box2? shuttleDockedAABB,
        out Matrix3 matty,
-       out Vector2 gridRotation)
+       out Angle gridRotation)
    {
-       gridRotation = Vector2.Zero;
+       gridRotation = Angle.Zero;
        matty = Matrix3.Identity;
        shuttleDockedAABB = null;
 
@@ -330,14 +325,18 @@ public sealed partial class ShuttleSystem
        var stationDockPos = shuttleXform.LocalPosition +
                             shuttleXform.LocalRotation.RotateVec(new Vector2(0f, -1f));
 
-       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, -(shuttleXform.LocalRotation.ToWorldVec().ToAngle()));
-       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, (gridXform.LocalRotation.ToWorldVec().ToAngle()));
+       // Need to invert the grid'`s angle.
+       var shuttleDockAngle = shuttleXform.LocalRotation;
+       var gridDockAngle = gridXform.LocalRotation.Opposite();
+
+       var stationDockMatrix = Matrix3.CreateInverseTransform(stationDockPos, shuttleDockAngle);
+       var gridXformMatrix = Matrix3.CreateTransform(gridXform.LocalPosition, gridDockAngle);
        Matrix3.Multiply(in stationDockMatrix, in gridXformMatrix, out matty);
        shuttleDockedAABB = matty.TransformBox(shuttleAABB);
 
        if (!ValidSpawn(grid, shuttleDockedAABB.Value)) return false;
 
-       gridRotation = matty.Transform(targetGridRotation);
+       gridRotation = targetGridRotation + gridDockAngle - shuttleDockAngle;
        return true;
    }
 
