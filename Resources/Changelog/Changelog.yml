@@ -1,9 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: Added icons for Lock and Unlock in the right click menu!, type: Add}
-  id: 2318
-  time: '2022-09-15T23:26:49.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: NSS Pillar has been rebuilt from scratch! Expect a lot of changes and
@@ -2950,3 +2945,11 @@ Entries:
   - {message: Various stains no longer evaporate., type: Tweak}
   id: 2817
   time: '2023-01-01T06:03:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed an issue where deconstructed machines showed an empty frame.,
+    type: Fix}
+  - {message: Fixed an issue where you'd have to crowbar an empty machine frame in
+      order to deconstruct it., type: Fix}
+  id: 2818
+  time: '2023-01-01T06:06:32.0000000+00:00'
