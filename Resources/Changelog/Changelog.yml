@@ -1,20 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Suppressed artifacts ($4,000) now sell for more than unsuppressed artifacts
-      ($2,000).', type: Add}
-  id: 2314
-  time: '2022-09-15T17:28:07.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Most cargo crate prices have been tweaked down to reflect the value
-      of the crate. Security items in particular are much cheaper., type: Tweak}
-  - {message: Cargo passive income reduced from 2 to 1 per second., type: Tweak}
-  - {message: 'Pipes, racks, and walls should be worth a token amount of money.',
-    type: Tweak}
-  - {message: Dead organics can be sold., type: Tweak}
-  id: 2315
-  time: '2022-09-15T17:29:07.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Soda water can no longer breaks into glass shards, type: Fix}
@@ -2950,3 +2934,17 @@ Entries:
   - {message: Added missing interaction outline component to cardboard boxes., type: Fix}
   id: 2813
   time: '2023-01-01T00:42:36.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: 'Flashlights now have an empty variant, which can be manufactured by
+      a protolathe.', type: Add}
+  - {message: Changed the protolathe recipe for flashlights to use the empty variant.,
+    type: Fix}
+  id: 2814
+  time: '2023-01-01T05:48:58.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Added logic for sorting crew manifest entries by job titles and names.,
+    type: Fix}
+  id: 2815
+  time: '2023-01-01T05:49:30.0000000+00:00'
