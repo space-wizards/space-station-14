@@ -7,6 +7,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
 using Content.Shared.Parallax;
+using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -51,12 +52,11 @@ public sealed class PlanetCommand : IConsoleCommand
         var mapUid = _mapManager.GetMapEntityId(mapId);
         MetaDataComponent? metadata = null;
 
-        var parallax = _entManager.EnsureComponent<ParallaxComponent>(mapUid);
-        parallax.Parallax = "Grass";
-        _entManager.Dirty(parallax, metadata);
+        _entManager.EnsureComponent<BiomeComponent>(mapUid);
+
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
-        _entManager.Dirty(gravity);
+        _entManager.Dirty(gravity, metadata);
         _entManager.EnsureComponent<MapLightComponent>(mapUid);
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
@@ -73,7 +73,7 @@ public sealed class PlanetCommand : IConsoleCommand
 
         var footstep = _entManager.EnsureComponent<FootstepModifierComponent>(mapUid);
         footstep.Sound = new SoundCollectionSpecifier("FootstepGrass");
-        _entManager.Dirty(footstep);
+        _entManager.Dirty(footstep, metadata);
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));

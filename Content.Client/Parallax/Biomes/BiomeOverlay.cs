@@ -28,7 +28,7 @@ public sealed class BiomeOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
 
-    private Dictionary<Type, HashSet<Vector2i>> _handled = new();
+    private readonly Dictionary<Type, HashSet<Vector2i>> _handled = new();
 
     public BiomeOverlay(
         IClientTileDefinitionManager tileDefinitionManager,
@@ -51,13 +51,19 @@ public sealed class BiomeOverlay : Overlay
         if (args.MapId == MapId.Nullspace)
             return;
 
+        var mapUid = _mapManager.GetMapEntityId(args.MapId);
+
+        if (!_entManager.TryGetComponent<BiomeComponent>(mapUid, out var biome) ||
+            !_prototype.TryIndex<BiomePrototype>(biome.BiomePrototype, out var prototype))
+        {
+            return;
+        }
+
         var worldHandle = args.WorldHandle;
-        var seed = new FastNoise(0);
-        seed.SetFrequency(0.1f);
-        var biome = _prototype.Index<BiomePrototype>("Grasslands");
+        var seed = new FastNoise(biome.Seed);
         var tileSize = 1;
 
-        if (_entManager.TryGetComponent<MapGridComponent>(_mapManager.GetMapEntityId(args.MapId), out var grid))
+        if (_entManager.TryGetComponent<MapGridComponent>(mapUid, out var grid))
         {
             tileSize = grid.TileSize;
         }
@@ -73,9 +79,9 @@ public sealed class BiomeOverlay : Overlay
 
         // Setup for per-tile drawing
 
-        for (var i = biome.Layers.Count - 1; i >= 0; i--)
+        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
         {
-            var layer = biome.Layers[i];
+            var layer = prototype.Layers[i];
             var hands = _handled.GetOrNew(layer.GetType());
 
             switch (layer)
@@ -84,7 +90,7 @@ public sealed class BiomeOverlay : Overlay
                     DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 case BiomeDecalLayer decalLayer:
-                    DrawDecalLayer(biome, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
+                    DrawDecalLayer(prototype, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -92,7 +98,7 @@ public sealed class BiomeOverlay : Overlay
         }
 
         // Render tile edges after all previous tiles done
-        DrawTileEdges(worldHandle, biome, flooredBL, ceilingTR, grid, seed);
+        DrawTileEdges(worldHandle, prototype, flooredBL, ceilingTR, grid, seed);
 
         foreach (var handled in _handled.Values)
         {
