@@ -8,6 +8,20 @@
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
+      seedOffset: 3
+      threshold: 0.98
+      divisions: 1
+      frequency: 1
+      decals:
+        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
+          state: flowersbr1
+        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
+          state: flowersbr2
+        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
+          state: flowersbr3
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorPlanetGrass
       seedOffset: 2
       threshold: 0.95
       divisions: 2
