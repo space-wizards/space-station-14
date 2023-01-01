@@ -30,6 +30,7 @@
 
 - type: entity
   id: SpaceVillainArcade
+  name: space villain arcade
   parent: ArcadeBase
   components:
   - type: SpaceVillainArcade
