@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Guidebook;
 
+
 /// <summary>
 ///     This system handles interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
