@@ -66,13 +66,19 @@ public sealed class PortalSystem : EntitySystem
 
         if (TryComp<LinkedEntityComponent>(uid, out var link))
         {
-            // client can't predict outside of simple portal-to-portal interactions due to randomness involved
-            // --also can't predict if the target doesn't exist on the client
-            if (_netMan.IsClient && (link.LinkedEntities.Count != 1 || !Exists(link.LinkedEntities.First())))
-                return;
-
             if (!link.LinkedEntities.Any())
                 return;
+
+
+            // client can't predict outside of simple portal-to-portal interactions due to randomness involved
+            // --also can't predict if the target doesn't exist on the client / is outside of PVS
+            if (_netMan.IsClient)
+            {
+                var first = link.LinkedEntities.First();
+                var exists = Exists(first);
+                if (link.LinkedEntities.Count != 1 || !exists || (exists && Transform(first).MapID == MapId.Nullspace))
+                    return;
+            }
 
             // pick a target and teleport there
             var target = _random.Pick(link.LinkedEntities);
