@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Maps;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
@@ -17,6 +19,41 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// Cache of tiles we've calculated previously.
     /// </summary>
     protected Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> TileCache = new();
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<BiomeComponent, ComponentGetState>(OnBiomeGetState);
+        SubscribeLocalEvent<BiomeComponent, ComponentHandleState>(OnBiomeHandleState);
+        SubscribeLocalEvent<BiomeComponent, ComponentShutdown>(OnBiomeShutdown);
+    }
+
+    private void OnBiomeShutdown(EntityUid uid, BiomeComponent component, ComponentShutdown args)
+    {
+        // Cleanup caching to avoid leaking over long-term.
+        if (ProtoManager.TryIndex<BiomePrototype>(component.BiomePrototype, out var prototype))
+        {
+            TileCache.Remove(prototype);
+        }
+    }
+
+    private void OnBiomeHandleState(EntityUid uid, BiomeComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not BiomeComponentState state)
+            return;
+
+        if (component.BiomePrototype != state.Prototype && ProtoManager.TryIndex<BiomePrototype>(component.BiomePrototype, out var prototype))
+        {
+            TileCache.Remove(prototype);
+        }
+
+        component.Seed = state.Seed;
+    }
+
+    private void OnBiomeGetState(EntityUid uid, BiomeComponent component, ref ComponentGetState args)
+    {
+        args.State = new BiomeComponentState(component.Seed, component.BiomePrototype);
+    }
 
     protected T Pick<T>(List<T> collection, float value)
     {
@@ -149,5 +186,18 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         tile = new Tile(tileDef.TileId, 0, variant);
         return true;
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class BiomeComponentState : ComponentState
+    {
+        public int Seed;
+        public string Prototype;
+
+        public BiomeComponentState(int seed, string prototype)
+        {
+            Seed = seed;
+            Prototype = prototype;
+        }
     }
 }
