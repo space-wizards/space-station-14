@@ -37,7 +37,7 @@
   icon:
     sprite: Objects/Tools/flashlight.rsi
     state: flashlight
-  result: FlashlightLantern
+  result: EmptyFlashlightLantern
   completetime: 2
   materials:
     Steel: 100
