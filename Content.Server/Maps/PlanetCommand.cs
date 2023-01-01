@@ -6,12 +6,12 @@ using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
-using Content.Shared.Parallax;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
 
@@ -23,6 +23,7 @@ public sealed class PlanetCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     public string Command => $"planet";
     public string Description => Loc.GetString("cmd-planet-desc");
@@ -52,7 +53,9 @@ public sealed class PlanetCommand : IConsoleCommand
         var mapUid = _mapManager.GetMapEntityId(mapId);
         MetaDataComponent? metadata = null;
 
-        _entManager.EnsureComponent<BiomeComponent>(mapUid);
+        var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
+        biome.Seed = _random.Next();
+        _entManager.Dirty(biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
@@ -70,10 +73,6 @@ public sealed class PlanetCommand : IConsoleCommand
             Temperature = 293.15f,
             Moles = moles,
         };
-
-        var footstep = _entManager.EnsureComponent<FootstepModifierComponent>(mapUid);
-        footstep.Sound = new SoundCollectionSpecifier("FootstepGrass");
-        _entManager.Dirty(footstep, metadata);
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));

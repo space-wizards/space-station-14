@@ -101,14 +101,14 @@ public abstract class SharedBiomeSystem : EntitySystem
 
     public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
+        if (grid.TryGetTileRef(indices, out var tileRef))
+        {
+            tile = tileRef.Tile;
+            return true;
+        }
+
         if (!TryComp<BiomeComponent>(uid, out var biome))
         {
-            if (grid.TryGetTileRef(indices, out var tileRef))
-            {
-                tile = tileRef.Tile;
-                return true;
-            }
-
             tile = null;
             return false;
         }
@@ -117,12 +117,15 @@ public abstract class SharedBiomeSystem : EntitySystem
             new FastNoise(biome.Seed), grid, out tile);
     }
 
+    /// <summary>
+    /// Tries to get the tile, real or otherwise, for the specified indices.
+    /// </summary>
     public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoise seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
-            tile = null;
-            return false;
+            tile = tileRef.Tile;
+            return true;
         }
 
         var oldFrequency = seed.GetFrequency();

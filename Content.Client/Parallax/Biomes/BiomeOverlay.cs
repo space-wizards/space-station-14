@@ -26,7 +26,7 @@ public sealed class BiomeOverlay : Overlay
     private readonly IResourceCache _resource;
     private readonly BiomeSystem _biome;
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
 
     private readonly Dictionary<Type, HashSet<Vector2i>> _handled = new();
 
@@ -44,6 +44,7 @@ public sealed class BiomeOverlay : Overlay
         _prototype = protoManager;
         _resource = resource;
         _biome = biome;
+        ZIndex = TileEdgeOverlay.TileEdgeZIndex - 1;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -146,6 +147,10 @@ public sealed class BiomeOverlay : Overlay
             for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
             {
                 var indices = new Vector2i((int) x, (int) y);
+
+                // Don't try to draw edges for existing tiles.
+                if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
+                    continue;
 
                 if (!_biome.TryGetBiomeTile(indices, prototype, seed, grid, out var tile))
                     continue;
@@ -296,7 +301,7 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (handled.Contains(indices))
+                if (handled.Contains(indices) || grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
                     continue;
 
                 if (!_biome.TryGetBiomeTile(indices, prototype, seed, grid, out var indexTile) ||
