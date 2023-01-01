@@ -85,16 +85,15 @@ namespace Content.Client.Gameplay
             return GetEntitiesUnderPosition(coordinates.ToMap(_entityManager));
         }
 
-        public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates)
+        public IList<EntityUid> GetEntitiesUnderPosition(MapCoordinates coordinates, float range = 1f)
         {
             // Find all the entities intersecting our click
             var entities = _entityManager.EntitySysManager.GetEntitySystem<EntityLookupSystem>().GetEntitiesIntersecting(coordinates.MapId,
-                Box2.CenteredAround(coordinates.Position, (1, 1)), LookupFlags.Uncontained | LookupFlags.Approximate);
+                Box2.CenteredAround(coordinates.Position, new Vector2(range, range)), LookupFlags.Uncontained | LookupFlags.Approximate);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid clicked, int drawDepth, uint renderOrder, float bottom)>();
             var clickQuery = _entityManager.GetEntityQuery<ClickableComponent>();
-            var metaQuery = _entityManager.GetEntityQuery<MetaDataComponent>();
             var spriteQuery = _entityManager.GetEntityQuery<SpriteComponent>();
             var xformQuery = _entityManager.GetEntityQuery<TransformComponent>();
             // TODO: Smelly
