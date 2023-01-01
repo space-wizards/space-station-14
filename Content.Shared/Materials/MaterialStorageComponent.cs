@@ -57,34 +57,27 @@ public enum MaterialStorageVisuals : byte
 /// <summary>
 /// event raised on the materialStorage when a material entity is inserted into it.
 /// </summary>
-public readonly struct MaterialEntityInsertedEvent
+[ByRefEvent]
+public readonly record struct MaterialEntityInsertedEvent(Dictionary<string, int> Materials)
 {
-    public readonly Dictionary<string, int> Materials;
-
-    public MaterialEntityInsertedEvent(Dictionary<string, int> materials)
-    {
-        Materials = materials;
-    }
+    public readonly Dictionary<string, int> Materials = Materials;
 }
 
 /// <summary>
 /// Event raised when a material amount is changed
 /// </summary>
-public readonly struct MaterialAmountChangedEvent
-{
+[ByRefEvent]
+public readonly record struct MaterialAmountChangedEvent;
 
-}
-
-public sealed class GetMaterialWhitelistEvent : EntityEventArgs
+/// <summary>
+/// Event raised to get all the materials that the
+/// </summary>
+[ByRefEvent]
+public record struct GetMaterialWhitelistEvent(EntityUid Storage)
 {
-    public readonly EntityUid Storage;
+    public readonly EntityUid Storage = Storage;
 
     public List<string> Whitelist = new();
-
-    public GetMaterialWhitelistEvent(EntityUid storage)
-    {
-        Storage = storage;
-    }
 }
 
 [Serializable, NetSerializable]

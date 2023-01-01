@@ -27,6 +27,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     public override void Update(float frameTime)
@@ -64,6 +65,11 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         if (state.MaterialWhitelist != null)
             component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
+    }
+
+    private void OnUnpaused(EntityUid uid, InsertingMaterialStorageComponent component, ref EntityUnpausedEvent args)
+    {
+        component.EndTime += args.PausedTime;
     }
 
     /// <summary>
@@ -156,7 +162,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             component.Storage.Add(materialId, 0);
         component.Storage[materialId] += volume;
 
-        RaiseLocalEvent(uid, new MaterialAmountChangedEvent());
+        var ev = new MaterialAmountChangedEvent();
+        RaiseLocalEvent(uid, ref ev);
         Dirty(component);
         return true;
     }
@@ -219,7 +226,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         }
         _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
 
-        RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
+        var ev = new MaterialEntityInsertedEvent(material._materials);
+        RaiseLocalEvent(component.Owner, ref ev);
         return true;
     }
 
@@ -234,7 +242,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
         var ev = new GetMaterialWhitelistEvent(uid);
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ref ev);
         component.MaterialWhiteList = ev.Whitelist;
         Dirty(component);
     }
