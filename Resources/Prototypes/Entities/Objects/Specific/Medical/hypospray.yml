@@ -153,17 +153,10 @@
 - type: entity
   name: pen
   suffix: Hypopen
-  parent: BaseItem
+  parent: Pen # It is just like normal pen, isn't it?
   description: A dark ink pen.
   id: Hypopen
   components:
-  - type: Sprite
-    sprite: Objects/Misc/bureaucracy.rsi
-    state: pen
-    netsync: false
-  - type: Item
-    sprite: Objects/Misc/bureaucracy.rsi
-    heldPrefix: pen
   - type: SolutionContainerManager
     solutions:
       hypospray:
@@ -173,8 +166,5 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
-  - type: Tag
-    tags:
-    - Write
-  - type: StaticPrice
+  - type: StaticPrice # A new shitcurity meta
     price: 75

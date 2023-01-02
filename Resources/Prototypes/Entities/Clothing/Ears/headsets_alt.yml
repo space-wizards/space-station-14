@@ -103,7 +103,7 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
- 
+
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
@@ -150,3 +150,28 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: Tag
+    tags:
+      - WhitelistChameleon
+
+- type: entity
+  parent: ClothingHeadsetAltSyndicate
+  id: ClothingHeadsetAltSyndicateChameleon # For cool agents
+  name: syndicate over-ear headset
+  description: An updated, modular syndicate intercom that fits over the head and takes encryption keys. Protects ears from flashbangs.
+  components:
+    - type: Sprite
+      sprite: Clothing/Ears/Headsets/syndicate.rsi
+    - type: Clothing
+      sprite: Clothing/Ears/Headsets/syndicate.rsi
+    - type: Headset
+      channels:
+        - Common
+        - Syndicate
+    - type: ChameleonClothing
+      slot: [ ears ]
+      default: ClothingHeadsetAltSyndicate
+    - type: UserInterface
+      interfaces:
+        - key: enum.ChameleonUiKey.Key
+          type: ChameleonBoundUserInterface

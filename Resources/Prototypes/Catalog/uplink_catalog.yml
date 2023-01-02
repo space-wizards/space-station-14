@@ -278,6 +278,26 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      whitelist:
+        tags:
+          - NukeOpsUplink # nukies are not cool agents
+
+- type: listing
+  id: UplinkHeadsetChameleon
+  name: uplink-chameleon-headset-name
+  description: uplink-chameleon-headset-desc
+  productEntity: ClothingHeadsetAltSyndicateChameleon
+  cost:
+    Telecrystal: 3 # next step is adding encryption keys
+  categories:
+    - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkHypopen
