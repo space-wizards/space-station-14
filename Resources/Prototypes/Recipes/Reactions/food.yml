@@ -131,8 +131,7 @@
     Oxygen:
       amount: 5
   products:
-    Vinegar: 5
-    Water: 5
+    Vinegar: 10
 
 - type: reaction
   id: CreateMeatball
