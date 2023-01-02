@@ -78,8 +78,8 @@ uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around 
 uplink-headset-name = Syndicate Over-ear Headset
 uplink-headset-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
 
-uplink-chameleon-headset-name = Syndicate Over-ear Headset
-uplink-chameleon-headset-desc = Chameleon headset that allows you to listen common channel, or contact other traitors via specific one
+uplink-chameleon-headset-name = Chameleon Syndicate Over-ear Headset
+uplink-chameleon-headset-desc = Chameleon headset that allows you to listen common channel, or contact other traitors via specific one.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.
