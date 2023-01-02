@@ -320,7 +320,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<IPhysBody>(toAdd, out var phys))
+        if (TryComp<PhysicsComponent>(toAdd, out var phys))
         {
             if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
                 return false;

@@ -52,7 +52,7 @@ namespace Content.Client.Suspicion
                     continue;
                 }
 
-                if (!_entityManager.TryGetComponent(ally, out IPhysBody? physics))
+                if (!_entityManager.TryGetComponent(ally, out PhysicsComponent? physics))
                 {
                     continue;
                 }

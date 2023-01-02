@@ -353,7 +353,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateBody(EntityUid uid, PhysicsComponent comp, SingularityLevelChangedEvent args)
     {
-        _physics.SetBodyStatus(comp, (args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround);
+        _physics.SetBodyStatus((args.NewValue > 1) ? BodyStatus.InAir : BodyStatus.OnGround);
         if (args.NewValue <= 1 && args.OldValue > 1) // Apparently keeps singularities from getting stuck in the corners of containment fields.
             _physics.SetLinearVelocity(comp, Vector2.Zero); // No idea how stopping the singularities movement keeps it from getting stuck though.
     }

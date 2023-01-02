@@ -28,12 +28,10 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, FlyBySoundComponent component, ComponentStartup args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body))
+            return;
 
-        var shape = new PhysShapeCircle()
-        {
-            Radius = component.Range,
-        };
+        var shape = new PhysShapeCircle(component.Range);
 
         var fixture = new Fixture(body, shape)
         {

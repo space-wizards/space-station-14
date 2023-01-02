@@ -82,7 +82,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (_entMan.TryGetComponent(entity, out IPhysBody? physics))
+            if (_entMan.TryGetComponent(entity, out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }

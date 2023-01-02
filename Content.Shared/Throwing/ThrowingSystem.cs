@@ -82,19 +82,19 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (time < FlyTime)
         {
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+            _physics.SetBodyStatus(BodyStatus.OnGround);
             _thrownSystem.LandComponent(comp);
         }
         else
         {
-            _physics.SetBodyStatus(physics, BodyStatus.InAir);
+            _physics.SetBodyStatus(BodyStatus.InAir);
 
             Timer.Spawn(TimeSpan.FromSeconds(time - FlyTime), () =>
             {
                 if (physics.Deleted)
                     return;
 
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+                _physics.SetBodyStatus(BodyStatus.OnGround);
                 _thrownSystem.LandComponent(comp);
             });
         }

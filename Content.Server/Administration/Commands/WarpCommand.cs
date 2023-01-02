@@ -121,7 +121,7 @@ namespace Content.Server.Administration.Commands
                 var xform = entMan.GetComponent<TransformComponent>(playerEntity);
                 xform.Coordinates = coords;
                 xform.AttachToGridOrMap();
-                if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
+                if (entMan.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     physics.LinearVelocity = Vector2.Zero;
                 }

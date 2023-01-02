@@ -74,7 +74,7 @@ namespace Content.Server.Abilities.Mime
             // Check there are no walls or mobs there
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                IPhysBody? physics = null; // We use this to check if it's impassable
+                PhysicsComponent? physics = null; // We use this to check if it's impassable
                 if ((HasComp<MobStateComponent>(entity) && entity != uid) || // Is it a mob?
                     ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
                     &&  !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?

@@ -4,10 +4,10 @@ namespace Content.Shared.Physics.Pull
 {
     public abstract class PullMessage : EntityEventArgs
     {
-        public readonly IPhysBody Puller;
-        public readonly IPhysBody Pulled;
+        public readonly PhysicsComponent Puller;
+        public readonly PhysicsComponent Pulled;
 
-        protected PullMessage(IPhysBody puller, IPhysBody pulled)
+        protected PullMessage(PhysicsComponent puller, PhysicsComponent pulled)
         {
             Puller = puller;
             Pulled = pulled;

@@ -23,7 +23,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         [ViewVariables]
         public bool Anchored =>
-            !_entMan.TryGetComponent(Owner, out IPhysBody? physics) ||
+            !_entMan.TryGetComponent(Owner, out PhysicsComponent? physics) ||
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalRouterUiKey.Key);
