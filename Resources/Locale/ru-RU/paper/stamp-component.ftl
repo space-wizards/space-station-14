@@ -15,4 +15,3 @@ stamp-component-stamped-name-warden = Смотритель
 stamp-component-stamped-name-trader = Торговец
 stamp-component-stamped-name-syndicate = Синдикат
 stamp-component-stamped-name-ce = Старший инженер
-stamp-component-stamped-name-iaa = Агент внутренних дел
