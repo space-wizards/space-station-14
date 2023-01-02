@@ -20,7 +20,6 @@ namespace Content.Server.Spider
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
-        //[Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
@@ -30,30 +29,25 @@ namespace Content.Server.Spider
             base.Initialize();
 
             SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnStartup);
-
             SubscribeLocalEvent<SpiderComponent, SpiderNetActionEvent>(OnSpawnNet);
-            //SubscribeLocalEvent<SpiderComponent, SpiderJumpActionEvent>(OnSpiderJump);
-
-            SubscribeLocalEvent<SpiderJumpActionEvent>(OnSpiderJump);
         }
 
         private void OnStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
         {
             var netAction = new InstantAction(_proto.Index<InstantActionPrototype>("SpiderNetAction"));
             _action.AddAction(uid, netAction, null);
-            var spiderJump = new WorldTargetAction(_proto.Index<WorldTargetActionPrototype>("SpiderJumpAction"));
-            //_action.AddAction(uid, spiderJump, null);
         }
 
         private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderNetActionEvent args)
         {
-            //TryGet<>
+            if (args.Handled)
+                return;
 
-            //if (!Resolve(uid, ref transform, false))
-            //    return false;
             var transform = Transform(uid);
 
             if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
+
+            args.Handled = true;
 
             bool notBlocked = false;
             var coords = transform.Coordinates;
@@ -105,21 +99,6 @@ namespace Content.Server.Spider
 
             return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
         }
-
-        private void OnSpiderJump(SpiderJumpActionEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            var performerPos = Transform(args.Performer).WorldPosition;
-
-            //if (!_mapManager.TryGetGrid(xform.GridUid, out var mapGrid))
-            //    return;
-            //var pos = mapGrid.GetLocal()
-
-            _throwing.TryThrow(args.Performer, (performerPos - args.Target.Position) + 180, 0.5f);
-        }
-
     }
 }
 

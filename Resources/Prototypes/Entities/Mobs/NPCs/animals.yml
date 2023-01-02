@@ -1313,6 +1313,8 @@
     interactFailureString: petting-failure-generic
   - type: Puller
     needsHands: false
+  - type: NoSlip
+  - type: Spider
   - type: IgnoreSpiderNet
 
 - type: entity
@@ -1332,16 +1334,6 @@
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
-
-- type: entity
-  name: tarantula
-  parent: MobGiantSpiderAngry
-  id: MobGiantSpiderStrong
-  suffix: Strong
-  components:
-    - type: NoSlip
-    - type: Spider
-    
       
 - type: entity
   name: possum

@@ -1,15 +1,7 @@
 - type: instantAction
   id: SpiderNetAction
-  icon: Objects/Misc/kudzu.rsi
+  icon: Actions/spider.rsi/web.png
   name: spider-net-action-name
   description: spider-net-action-description
   serverEvent: !type:SpiderNetActionEvent
-  useDelay: 15
-
-- type: worldTargetAction
-  id: SpiderJumpAction
-  icon: Interface/Actions/defile.png
-  name: spider-jump-action-name
-  description: spider-jump-action-description
-  serverEvent: !type:SpiderJumpActionEvent
-  useDelay: 15
+  useDelay: 60

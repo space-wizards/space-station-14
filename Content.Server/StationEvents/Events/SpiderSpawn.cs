@@ -26,7 +26,7 @@ public sealed class SpiderSpawn : StationEventSystem
 
             var coords = EntityManager.GetComponent<TransformComponent>(location.Owner);
 
-            EntityManager.SpawnEntity("MobGiantSpiderStrong", coords.Coordinates);
+            EntityManager.SpawnEntity("MobGiantSpiderAngry", coords.Coordinates);
         }
     }
 }
