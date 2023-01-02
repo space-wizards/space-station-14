@@ -193,9 +193,6 @@ reagent-desc-neurotoxin = A strong neurotoxin that puts the subject into a death
 reagent-name-patron = patron
 reagent-desc-patron = Tequila with silver in it, a favorite of alcoholic women in the club scene.
 
-reagent-name-posca = posca
-reagent-desc-posca = Poor warriors' drink from a forgotten era.
-
 reagent-name-red-mead = red mead
 reagent-desc-red-mead = The true Viking's drink! Even though it has a strange red color.
 
