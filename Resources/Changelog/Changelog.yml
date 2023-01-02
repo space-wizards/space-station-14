@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'Added 2 bottle boxes to chemistry supplies crate, price slightly increased',
-    type: Add}
-  id: 2325
-  time: '2022-09-16T14:27:28.0000000+00:00'
 - author: rolfero
   changes:
   - {message: Deconstructing certain things dont leave their materials stuck in the
@@ -2956,3 +2950,10 @@ Entries:
     type: Add}
   id: 2824
   time: '2023-01-02T00:03:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Grenade penguins no longer attack syndicate agents., type: Fix}
+  - {message: 'Grenade penguins are now only 5 TC and explode on death. You can still
+      trigger them manually, if you''d like.', type: Tweak}
+  id: 2825
+  time: '2023-01-02T01:18:48.0000000+00:00'
