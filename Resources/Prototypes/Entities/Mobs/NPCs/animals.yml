@@ -1311,6 +1311,19 @@
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
   - type: Puller
+  - type: MobState
+    thresholds:
+      0: Alive
+      75: Critical
+      125: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    damage:
+      types:
+        Piercing: 15
+        Poison: 7
 
 - type: entity
   name: tarantula
