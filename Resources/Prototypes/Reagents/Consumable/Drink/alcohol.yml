@@ -946,6 +946,16 @@
   spritePath: red_meadglass.rsi
 
 - type: reagent
+  id: Posca
+  name: reagent-name-posca
+  parent: BaseAlcohol
+  desc: reagent-desc-posca
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: alcohol
+  color: "#B3B599"
+  spritePath: glass_lyellow.rsi
+
+- type: reagent
   id: Sbiten
   name: reagent-name-sbiten
   parent: BaseAlcohol
