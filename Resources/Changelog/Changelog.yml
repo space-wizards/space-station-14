@@ -1,9 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: More variants of equipped headsets sprite, type: Add}
-  id: 2327
-  time: '2022-09-16T14:43:18.0000000+00:00'
 - author: Jukereise
   changes:
   - {message: Beginners can now spend up to 2 hours (90 extra minutes after unlocking
@@ -2956,3 +2951,9 @@ Entries:
   - {message: Hamster cages no longer clip through doors, type: Fix}
   id: 2826
   time: '2023-01-02T03:52:30.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Air alarms should be less annoying around small quantities of water
+      vapor., type: Tweak}
+  id: 2827
+  time: '2023-01-02T05:05:37.0000000+00:00'
