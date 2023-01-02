@@ -26,8 +26,8 @@ public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVi
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData<string>(PlantHolderVisuals.PlantRsi, out var rsi)
-            && args.Component.TryGetData<string>(PlantHolderVisuals.PlantState, out var state))
+        if (AppearanceSystem.TryGetData<string>(uid, PlantHolderVisuals.PlantRsi, out var rsi)
+            && AppearanceSystem.TryGetData<string>(uid, PlantHolderVisuals.PlantState, out var state))
         {
             var valid = !string.IsNullOrWhiteSpace(state);
 

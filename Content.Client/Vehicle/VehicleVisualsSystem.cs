@@ -15,13 +15,13 @@ namespace Content.Client.Vehicle
                 return;
 
             // First check is for the sprite itself
-            if (args.Component.TryGetData(VehicleVisuals.DrawDepth, out int drawDepth))
+            if (AppearanceSystem.TryGetData(uid, VehicleVisuals.DrawDepth, out int drawDepth))
             {
                 args.Sprite.DrawDepth = drawDepth;
             }
 
             // Set vehicle layer to animated or not (i.e. are the wheels turning or not)
-            if (args.Component.TryGetData(VehicleVisuals.AutoAnimate, out bool autoAnimate))
+            if (AppearanceSystem.TryGetData(uid, VehicleVisuals.AutoAnimate, out bool autoAnimate))
             {
                 args.Sprite.LayerSetAutoAnimated(VehicleVisualLayers.AutoAnimate, autoAnimate);
             }

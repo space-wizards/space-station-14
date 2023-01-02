@@ -48,7 +48,9 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
     protected override void OnAppearanceChange(EntityUid uid, FireVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite != null)
+        {
             UpdateAppearance(uid, component, args.Sprite, args.Component);
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, FireVisualsComponent component, SpriteComponent sprite, AppearanceComponent appearance)
@@ -56,8 +58,8 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         if (!sprite.LayerMapTryGet(FireVisualLayers.Fire, out var index))
             return;
 
-        appearance.TryGetData(FireVisuals.OnFire, out bool onFire);
-        appearance.TryGetData(FireVisuals.FireStacks, out float fireStacks);
+        AppearanceSystem.TryGetData(uid, FireVisuals.OnFire, out bool onFire);
+        AppearanceSystem.TryGetData(uid, FireVisuals.FireStacks, out float fireStacks);
         sprite.LayerSetVisible(index, onFire);
 
         if (!onFire)

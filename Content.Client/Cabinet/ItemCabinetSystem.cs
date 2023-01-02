@@ -10,8 +10,8 @@ public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsCompo
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
-            && args.Component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
+        if (AppearanceSystem.TryGetData(uid, ItemCabinetVisuals.IsOpen, out bool isOpen)
+            && AppearanceSystem.TryGetData(uid, ItemCabinetVisuals.ContainsItem, out bool contains))
         {
             var state = isOpen ? component.OpenState : component.ClosedState;
             args.Sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);

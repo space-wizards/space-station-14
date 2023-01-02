@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry;
+using Content.Shared.Chemistry;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.Visualizers;
@@ -7,7 +7,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!args.Component.TryGetData(SolutionContainerVisuals.VisualState, out SolutionContainerVisualState state))
+        if (!AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.VisualState, out SolutionContainerVisualState state))
             return;
 
         if (args.Sprite == null)

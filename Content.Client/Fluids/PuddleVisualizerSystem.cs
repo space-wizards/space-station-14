@@ -45,10 +45,10 @@ namespace Content.Client.Fluids
                 return;
             }
 
-            if  (args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                && args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                && args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                && args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            if  (AppearanceSystem.TryGetData(uid, PuddleVisuals.VolumeScale, out float volumeScale)
+                && AppearanceSystem.TryGetData(uid, PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
+                && AppearanceSystem.TryGetData(uid, PuddleVisuals.SolutionColor, out Color solutionColor)
+                && AppearanceSystem.TryGetData(uid, PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
             {
                 // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
                 var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);

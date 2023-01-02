@@ -29,7 +29,7 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
         if(args.Sprite == null)
             return;
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.Core, out var core))
+        if(AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.Core, out var core))
         {
             if (core == "isCore")
             {
@@ -43,7 +43,7 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
             }
         }
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.CoreState, out var coreState))
+        if(AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.CoreState, out var coreState))
         {
             switch(coreState)
             {

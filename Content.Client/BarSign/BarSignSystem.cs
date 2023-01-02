@@ -22,20 +22,20 @@ public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
             return;
 
         component.CurrentSign = state.CurrentSign;
-        UpdateAppearance(component);
+        UpdateAppearance(uid, component);
     }
 
     protected override void OnAppearanceChange(EntityUid uid, BarSignComponent component, ref AppearanceChangeEvent args)
     {
-        UpdateAppearance(component, args.Component, args.Sprite);
+        UpdateAppearance(uid, component, args.Component, args.Sprite);
     }
 
-    private void UpdateAppearance(BarSignComponent sign, AppearanceComponent? appearance = null, SpriteComponent? sprite = null)
+    private void UpdateAppearance(EntityUid uid, BarSignComponent sign, AppearanceComponent? appearance = null, SpriteComponent? sprite = null)
     {
         if (!Resolve(sign.Owner, ref appearance, ref sprite))
             return;
 
-        appearance.TryGetData(PowerDeviceVisuals.Powered, out bool powered);
+        AppearanceSystem.TryGetData(uid, PowerDeviceVisuals.Powered, out bool powered);
 
         if (powered
             && sign.CurrentSign != null

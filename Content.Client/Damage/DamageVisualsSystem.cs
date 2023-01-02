@@ -345,28 +345,28 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         // If this was passed into the component, we update
         // the data to ensure that the current disabled
         // bool matches.
-        if (args.Component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus))
             damageVisComp.Disabled = disabledStatus;
 
         if (damageVisComp.Disabled)
             return;
 
-        HandleDamage(args.Component, damageVisComp);
+        HandleDamage(uid, args.Component, damageVisComp);
     }
 
-    private void HandleDamage(AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void HandleDamage(EntityUid uid, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
         if (!TryComp(component.Owner, out SpriteComponent? spriteComponent)
             || !TryComp(component.Owner, out DamageableComponent? damageComponent))
             return;
 
         if (damageVisComp.TargetLayers != null && damageVisComp.DamageOverlayGroups != null)
-            UpdateDisabledLayers(spriteComponent, component, damageVisComp);
+            UpdateDisabledLayers(uid, spriteComponent, component, damageVisComp);
 
         if (damageVisComp.Overlay && damageVisComp.DamageOverlayGroups != null && damageVisComp.TargetLayers == null)
             CheckOverlayOrdering(spriteComponent, damageVisComp);
 
-        if (component.TryGetData<bool>(DamageVisualizerKeys.ForceUpdate, out var update)
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.ForceUpdate, out var update)
             && update)
         {
             ForceUpdateLayers(damageComponent, spriteComponent, damageVisComp);
@@ -377,7 +377,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         {
             UpdateDamageVisuals(damageComponent, spriteComponent, damageVisComp);
         }
-        else if (component.TryGetData(DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
+        else if (AppearanceSystem.TryGetData(uid, DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
         {
             UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
         }
@@ -389,12 +389,12 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     ///     layer will no longer be visible, or obtain
     ///     any damage updates.
     /// </summary>
-    private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void UpdateDisabledLayers(EntityUid uid, SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
         foreach (var layer in damageVisComp.TargetLayerMapKeys)
         {
             bool? layerStatus = null;
-            if (component.TryGetData<bool>(layer, out var layerStateEnum))
+            if (AppearanceSystem.TryGetData<bool>(uid, layer, out var layerStateEnum))
                 layerStatus = layerStateEnum;
 
             if (layerStatus == null)

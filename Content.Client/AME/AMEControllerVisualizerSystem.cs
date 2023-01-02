@@ -27,7 +27,7 @@ public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControll
         base.OnAppearanceChange(uid, component, ref args);
 
         if(args.Sprite != null
-            && args.Component.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state))
+            && AppearanceSystem.TryGetData<string>(uid, AMEControllerVisuals.DisplayState, out var state))
         {
             switch(state)
             {

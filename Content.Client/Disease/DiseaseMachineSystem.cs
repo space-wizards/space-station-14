@@ -14,8 +14,8 @@ namespace Content.Client.Disease
             if (args.Sprite == null)
                 return;
 
-            if (args.Component.TryGetData(DiseaseMachineVisuals.IsOn, out bool isOn)
-                && args.Component.TryGetData(DiseaseMachineVisuals.IsRunning, out bool isRunning))
+            if (AppearanceSystem.TryGetData(uid, DiseaseMachineVisuals.IsOn, out bool isOn)
+                && AppearanceSystem.TryGetData(uid, DiseaseMachineVisuals.IsRunning, out bool isRunning))
             {
                 var state = isRunning ? component.RunningState : component.IdleState;
                 args.Sprite.LayerSetVisible(DiseaseMachineVisualLayers.IsOn, isOn);

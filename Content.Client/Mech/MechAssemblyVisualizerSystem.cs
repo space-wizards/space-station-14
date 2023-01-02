@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mech;
+using Content.Shared.Mech;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Mech;
@@ -14,7 +14,7 @@ public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssembly
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!args.Component.TryGetData(MechAssemblyVisuals.State, out int stage))
+        if (!AppearanceSystem.TryGetData(uid, MechAssemblyVisuals.State, out int stage))
             return;
 
         var state = component.StatePrefix + stage;
