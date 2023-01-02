@@ -133,7 +133,7 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatHoodGoliathCloak
   name: goliath cloak hood
-  description: A hood of the goliath cloak, designed for protection from ash storms.
+  description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
   components:
   - type: Sprite
     sprite: Clothing/Head/Hoods/goliathcloak.rsi
