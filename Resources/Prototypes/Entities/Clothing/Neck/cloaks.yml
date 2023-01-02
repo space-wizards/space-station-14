@@ -114,3 +114,19 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakGoliathCloak
+  name: goliath cloak
+  description: A cloak made from the hides of resilient fauna from a distant planet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/goliathcloak.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodGoliathCloak
+    requiredSlot:
+    - neck
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
