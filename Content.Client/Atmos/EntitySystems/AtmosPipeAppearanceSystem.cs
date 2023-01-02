@@ -2,7 +2,6 @@ using Content.Client.SubFloor;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.Piping;
-using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
@@ -13,6 +12,7 @@ namespace Content.Client.Atmos.EntitySystems;
 public sealed class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -56,10 +56,10 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             return;
         }
 
-        if (!args.Component.TryGetData(PipeColorVisuals.Color, out Color color))
+        if (!_appearanceSystem.TryGetData(uid, PipeColorVisuals.Color, out Color color))
             color = Color.White;
 
-        if (!args.Component.TryGetData(PipeVisuals.VisualState, out PipeDirection worldConnectedDirections))
+        if (!_appearanceSystem.TryGetData(uid, PipeVisuals.VisualState, out PipeDirection worldConnectedDirections))
             return;
 
         // transform connected directions to local-coordinates

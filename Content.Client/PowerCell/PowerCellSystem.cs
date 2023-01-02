@@ -7,6 +7,8 @@ namespace Content.Client.PowerCell;
 [UsedImplicitly]
 public sealed class PowerCellSystem : SharedPowerCellSystem
 {
+    [Dependency] protected readonly SharedAppearanceSystem _appearanceSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -21,7 +23,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         if (!args.Sprite.TryGetLayer((int) PowerCellVisualLayers.Unshaded, out var unshadedLayer))
             return;
 
-        if (args.Component.TryGetData(PowerCellVisuals.ChargeLevel, out byte level))
+        if (_appearanceSystem.TryGetData(uid, PowerCellVisuals.ChargeLevel, out byte level))
         {
             if (level == 0)
             {

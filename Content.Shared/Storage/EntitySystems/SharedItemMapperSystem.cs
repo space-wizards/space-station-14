@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -13,7 +13,7 @@ namespace Content.Shared.Storage.EntitySystems
     [UsedImplicitly]
     public abstract class SharedItemMapperSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] protected readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
 
         /// <inheritdoc />

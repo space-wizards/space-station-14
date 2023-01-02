@@ -29,16 +29,16 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         {
             if (component.SpriteLayers.Count == 0)
             {
-                InitLayers(component, spriteComponent, args.Component);
+                InitLayers(uid, component, spriteComponent, args.Component);
             }
 
-            EnableLayers(component, spriteComponent, args.Component);
+            EnableLayers(uid, component, spriteComponent, args.Component);
         }
     }
 
-    private void InitLayers(ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
+    private void InitLayers(EntityUid uid, ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
     {
-        if (!appearance.TryGetData<ShowLayerData>(StorageMapVisuals.InitLayers, out var wrapper))
+        if (!_appearance.TryGetData<ShowLayerData>(uid, StorageMapVisuals.InitLayers, out var wrapper))
             return;
 
         component.SpriteLayers.AddRange(wrapper.QueuedEntities);
@@ -51,9 +51,9 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         }
     }
 
-    private void EnableLayers(ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
+    private void EnableLayers(EntityUid uid, ItemMapperComponent component, SpriteComponent spriteComponent, AppearanceComponent appearance)
     {
-        if (!appearance.TryGetData<ShowLayerData>(StorageMapVisuals.LayerChanged, out var wrapper))
+        if (!_appearance.TryGetData<ShowLayerData>(uid, StorageMapVisuals.LayerChanged, out var wrapper))
             return;
 
         foreach (var layerName in component.SpriteLayers)

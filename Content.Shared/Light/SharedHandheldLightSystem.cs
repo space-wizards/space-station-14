@@ -14,7 +14,7 @@ public abstract class SharedHandheldLightSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
     [Dependency] private readonly ClothingSystem _clothingSys = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()

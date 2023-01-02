@@ -7,6 +7,8 @@ namespace Content.Client.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+
     private static readonly Animation CargoTelepadBeamAnimation = new()
     {
         Length = TimeSpan.FromSeconds(0.5),
@@ -50,22 +52,22 @@ public sealed partial class CargoSystem
 
     private void OnCargoAppChange(EntityUid uid, CargoTelepadComponent component, ref AppearanceChangeEvent args)
     {
-        OnChangeData(args.Component, args.Sprite);
+        OnChangeData(uid, args.Component, args.Sprite);
     }
 
     private void OnCargoAnimComplete(EntityUid uid, CargoTelepadComponent component, AnimationCompletedEvent args)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance)) return;
 
-        OnChangeData(appearance);
+        OnChangeData(uid, appearance);
     }
 
-    private void OnChangeData(AppearanceComponent component, SpriteComponent? sprite = null)
+    private void OnChangeData(EntityUid uid, AppearanceComponent component, SpriteComponent? sprite = null)
     {
         if (!Resolve(component.Owner, ref sprite))
             return;
 
-        component.TryGetData(CargoTelepadVisuals.State, out CargoTelepadState? state);
+        _appearanceSystem.TryGetData(uid, CargoTelepadVisuals.State, out CargoTelepadState? state);
         AnimationPlayerComponent? player = null;
 
         switch (state)

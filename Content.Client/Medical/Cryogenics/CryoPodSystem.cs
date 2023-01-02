@@ -1,4 +1,4 @@
-﻿using Content.Shared.Destructible;
+using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Verbs;
@@ -54,8 +54,8 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
             return;
         }
 
-        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen)
-            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
+        if (!_appearanceSystem.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen)
+            || !_appearanceSystem.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
         {
             return;
         }
