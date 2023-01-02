@@ -12,7 +12,7 @@ public abstract partial class SharedMobStateSystem
 
         if (_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
         {
-            _physics.SetCanCollide(physics, false);
+            _physics.SetCanCollide(uid, false, body: physics);
         }
 
         _appearance.SetData(uid, DamageStateVisuals.State, DamageState.Dead);
@@ -26,7 +26,7 @@ public abstract partial class SharedMobStateSystem
 
         if (!_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
         {
-            _physics.SetCanCollide(physics, true);
+            _physics.SetCanCollide(uid, true, body: physics);
         }
     }
 

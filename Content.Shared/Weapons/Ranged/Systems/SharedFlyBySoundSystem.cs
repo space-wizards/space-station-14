@@ -33,14 +33,7 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
 
         var shape = new PhysShapeCircle(component.Range);
 
-        var fixture = new Fixture(body, shape)
-        {
-            Hard = false,
-            ID = FlyByFixture,
-            CollisionLayer = (int) CollisionGroup.MobMask,
-        };
-
-        _fixtures.TryCreateFixture(body, fixture);
+        _fixtures.TryCreateFixture(uid, shape, FlyByFixture, collisionLayer: (int) CollisionGroup.MobMask, hard: false, body: body);
     }
 
     private void OnShutdown(EntityUid uid, FlyBySoundComponent component, ComponentShutdown args)
@@ -51,7 +44,7 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
             return;
         }
 
-        _fixtures.DestroyFixture(body, FlyByFixture);
+        _fixtures.DestroyFixture(uid, FlyByFixture, body: body);
     }
 
     private void OnHandleState(EntityUid uid, FlyBySoundComponent component, ref ComponentHandleState args)

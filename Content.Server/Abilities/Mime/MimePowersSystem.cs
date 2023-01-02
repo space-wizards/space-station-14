@@ -9,6 +9,7 @@ using Content.Shared.Maps;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime

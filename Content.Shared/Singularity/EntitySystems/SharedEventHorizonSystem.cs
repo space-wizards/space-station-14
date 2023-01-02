@@ -138,7 +138,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         var shape = (PhysShapeCircle)fixture.Shape;
         _physics.SetRadius(uid, fixture, shape, eventHorizon.Radius, manager: manager, body: physics);
-        fixture.Hard = !eventHorizon.CanBreachContainment;
+        _physics.SetHard(uid, fixture, true, manager);
     }
 
 #endregion Getters/Setters

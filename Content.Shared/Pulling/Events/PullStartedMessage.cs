@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Physics;
+﻿using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Physics.Pull
 {

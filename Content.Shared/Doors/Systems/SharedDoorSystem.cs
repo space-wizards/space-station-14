@@ -377,7 +377,10 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Collisions
-    protected virtual void SetCollidable(EntityUid uid, bool collidable,
+
+    protected virtual void SetCollidable(
+        EntityUid uid,
+        bool collidable,
         DoorComponent? door = null,
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
@@ -386,13 +389,13 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            PhysicsSystem.SetCanCollide(physics, collidable);
+            PhysicsSystem.SetCanCollide(uid, collidable, body: physics);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
 
         if (door.Occludes)
-            _occluder.SetEnabled(uid, collidable);
+            _occluder.SetEnabled(uid, collidable, occluder);
     }
 
     /// <summary>

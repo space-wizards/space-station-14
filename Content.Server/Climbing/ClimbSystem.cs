@@ -44,6 +44,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -204,6 +205,8 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <returns>Returns whether adding the new fixtures was successful</returns>
     private bool ReplaceFixtures(ClimbingComponent climbingComp, PhysicsComponent physicsComp, FixturesComponent fixturesComp)
     {
+        var uid = climbingComp.Owner;
+
         // Swap fixtures
         foreach (var (name, fixture) in fixturesComp.Fixtures)
         {
@@ -213,13 +216,20 @@ public sealed class ClimbSystem : SharedClimbSystem
                 continue;
 
             climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
-            fixture.CollisionMask &= ~ClimbingCollisionGroup;
+            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
         }
 
-        if (!_fixtureSystem.TryCreateFixture(physicsComp,
-            new Fixture(new PhysShapeCircle { Radius = 0.35f }, (int) CollisionGroup.None, ClimbingCollisionGroup, false)
-                {ID = ClimbingFixtureName}, manager: fixturesComp))
+        if (!_fixtureSystem.TryCreateFixture(
+                uid,
+                new PhysShapeCircle(0.35f),
+                ClimbingFixtureName,
+                collisionMask: (int) CollisionGroup.None,
+                collisionLayer: ClimbingCollisionGroup,
+                manager: fixturesComp))
+        {
             return false;
+        }
+
         return true;
     }
 
@@ -250,8 +260,11 @@ public sealed class ClimbSystem : SharedClimbSystem
         foreach (var (name, fixtureMask) in climbing.DisabledFixtureMasks)
         {
             if (!fixtures.Fixtures.TryGetValue(name, out var fixture))
+            {
                 continue;
-            fixture.CollisionMask |= fixtureMask;
+            }
+
+            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
         }
         climbing.DisabledFixtureMasks.Clear();
 
@@ -397,16 +410,18 @@ public sealed class ClimbSystem : SharedClimbSystem
         // Since there are bodies with different masses:
         // mass * 10 seems enough to move entity
         // instead of launching cats like rockets against the walls with constant impulse value.
-        physics.ApplyLinearImpulse((to - from).Normalized * velocity * physics.Mass * 10);
-        physics.BodyType = BodyType.Dynamic;
+        _physics.ApplyLinearImpulse(uid, (to - from).Normalized * velocity * physics.Mass * 10, body: physics);
+        _physics.SetBodyType(uid, BodyType.Dynamic, body: physics);
         climbing.OwnerIsTransitioning = true;
         _actionBlockerSystem.UpdateCanMove(uid);
 
         // Transition back to KinematicController after BufferTime
         climbing.Owner.SpawnTimer((int) (ClimbingComponent.BufferTime * 1000), () =>
         {
-            if (climbing.Deleted) return;
-            physics.BodyType = BodyType.KinematicController;
+            if (climbing.Deleted)
+                return;
+
+            _physics.SetBodyType(uid, BodyType.KinematicController, body: physics);
             climbing.OwnerIsTransitioning = false;
             _actionBlockerSystem.UpdateCanMove(uid);
         });
@@ -418,10 +433,13 @@ public sealed class ClimbSystem : SharedClimbSystem
         {
             if (!TryComp<PhysicsComponent>(uid, out var physicsComp)
                 || !TryComp<FixturesComponent>(uid, out var fixturesComp))
+            {
                 continue;
+            }
+
             foreach (var fixture in fixtures)
             {
-                _fixtureSystem.DestroyFixture(physicsComp, fixture, true, fixturesComp);
+                _fixtureSystem.DestroyFixture(uid, fixture, body: physicsComp, manager: fixturesComp);
             }
         }
 
