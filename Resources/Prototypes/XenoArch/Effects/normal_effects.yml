@@ -419,6 +419,23 @@
   - type: IgniteArtifact
 
 - type: artifactEffect
+  id: EffectGravityWell
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: GravityWellArtifact
+    maxRange:
+      5.0: 10.0
+    minRange:
+      0.0: 3.0
+    radialAcceleration:
+      -50.0: 50.0
+    tangentialAcceleration:
+      -50.0: 50.0
+    pulsePeriod:
+      0.5: 5.0
+
+- type: artifactEffect
   id: EffectMitosis
   targetDepth: 4
   effectHint: artifact-effect-hint-creation
