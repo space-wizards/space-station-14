@@ -42,12 +42,18 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
+            if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
+                return;
+
             UpdateAppearance(uid, itemMapper, args);
         }
 
         private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
+            if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
+                return;
+
             UpdateAppearance(uid, itemMapper, args);
         }
 
