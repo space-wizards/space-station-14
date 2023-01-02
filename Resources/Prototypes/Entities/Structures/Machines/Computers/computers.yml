@@ -10,12 +10,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: alert-2
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: atmos_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
 
 - type: entity
   parent: BaseComputer
@@ -72,12 +72,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: shuttle
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: Computer
     board: ShuttleConsoleCircuitboard
 
@@ -91,12 +91,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: syndishuttle
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: syndie_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: Tag
     tags:
       - Syndicate
@@ -119,12 +119,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: shuttle
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: CargoPilotConsole
   - type: RadarConsole
     maxRange: 256
@@ -146,13 +146,13 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       sprite: Structures/Shuttles/iff.rsi
       state: helm
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
@@ -188,12 +188,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: power_monitor
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: power_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -224,12 +224,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: medcomp
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: med_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -247,12 +247,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: explosive
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: security_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -290,12 +290,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: crew
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: med_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -325,12 +325,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: rdcomp
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: rd_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
@@ -362,12 +362,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: artifact
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: tech_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: ResearchClient
   - type: AnalysisConsole
   - type: DeviceList
@@ -433,12 +433,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: id
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: id_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
@@ -487,12 +487,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: comm
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
@@ -520,12 +520,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: comm_syndie
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: syndie_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
@@ -551,12 +551,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: solar_screen
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: SolarControlConsole
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
@@ -584,12 +584,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: solar_screen
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: RadarConsole
   - type: ActivatableUI
     key: enum.RadarConsoleUiKey.Key
@@ -614,12 +614,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: supply
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: tech_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: CargoShuttleConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Shuttle
@@ -646,12 +646,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: request
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: tech_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: CargoOrderConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Orders
@@ -682,12 +682,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: dna
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
-    - map: ["computerLayerKeyboardOn"]
-      state: generic_key
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: ApcPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
@@ -720,12 +720,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: cameras
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: tech_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: Computer
     board: SurveillanceCameraMonitorCircuitboard
   - type: DeviceNetwork
@@ -755,12 +755,12 @@
     layers:
     - map: ["computerLayerBody"]
       state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
     - map: ["computerLayerScreen"]
       state: cameras
-    - map: ["computerLayerKeyboardOn"]
+    - map: ["computerLayerKeys"]
       state: tech_key
-    - map: ["computerLayerKeyboardOff"]
-      state: generic_key_off
   - type: Computer
     board: SurveillanceWirelessCameraMonitorCircuitboard
   - type: DeviceNetwork
@@ -781,32 +781,3 @@
     interfaces:
       - key: enum.SurveillanceCameraMonitorUiKey.Key
         type: SurveillanceCameraMonitorBoundUserInterface
-
-- type: entity
-  parent: ComputerSurveillanceWirelessCameraMonitor
-  id: ComputerTelevision
-  name: wooden television
-  description: Finally, some decent reception around here...
-  components:
-  - type: Sprite
-    layers:
-    - map: ["computerLayerBody"]
-      state: television
-    - map: ["computerLayerScreen"]
-      state: detective_television
-  - type: Computer
-    board: ComputerTelevisionCircuitboard
-  - type: PointLight
-    radius: 1.5
-    energy: 1.6
-    color: "#b89f25"
-  - type: Fixtures
-    fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
-        density: 200
-        mask:
-          - TabletopMachineMask
-        layer:
-          - TabletopMachineLayer
