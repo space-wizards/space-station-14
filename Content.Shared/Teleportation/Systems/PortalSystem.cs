@@ -58,6 +58,10 @@ public sealed class PortalSystem : EntitySystem
 
         var subject = args.OtherFixture.Body.Owner;
 
+        // best not.
+        if (Transform(subject).Anchored)
+            return;
+
         // if they came from another portal, just return and wait for them to exit the portal
         if (HasComp<PortalTimeoutComponent>(subject))
         {
@@ -68,7 +72,6 @@ public sealed class PortalSystem : EntitySystem
         {
             if (!link.LinkedEntities.Any())
                 return;
-
 
             // client can't predict outside of simple portal-to-portal interactions due to randomness involved
             // --also can't predict if the target doesn't exist on the client / is outside of PVS
