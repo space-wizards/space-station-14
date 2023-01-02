@@ -28,6 +28,8 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
   - type: ContainerAmmoProvider
     container: storagebase
   - type: PneumaticCannon
@@ -84,6 +86,8 @@
     - FullAuto
     soundGunshot:
       path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
   - type: ContainerAmmoProvider
     container: storagebase
   - type: Item

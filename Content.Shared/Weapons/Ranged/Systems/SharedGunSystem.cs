@@ -206,11 +206,13 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
     {
-        if (gun.FireRate <= 0f) return;
+        if (gun.FireRate <= 0f)
+            return;
 
         var toCoordinates = gun.ShootCoordinates;
 
-        if (toCoordinates == null) return;
+        if (toCoordinates == null)
+            return;
 
         if (TagSystem.HasTag(user, "GunsDisabled"))
         {
@@ -218,11 +220,18 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
+
         var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
-        if (gun.NextFire > curTime) return;
+        if (gun.NextFire > curTime)
+            return;
+
+        var attemptEv = new AttemptShootEvent(user);
+        RaiseLocalEvent(gun.Owner, ref attemptEv);
+        if (attemptEv.Cancelled)
+            return;
 
         // First shot
         if (gun.ShotCounter == 0 && gun.NextFire < curTime)
@@ -289,6 +298,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        var shotEv = new GunShotEvent(user);
+        RaiseLocalEvent(gun.Owner, shotEv);
         // Projectiles cause impulses especially important in non gravity environments
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
@@ -410,6 +421,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 }
+
+public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
+
+public record struct GunShotEvent(EntityUid User);
 
 public enum EffectLayers : byte
 {

@@ -1,14 +1,15 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Popups;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
-using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tools.Components;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Server.Containers;
+using Robust.Shared.Containers;
 
 namespace Content.Server.PneumaticCannon
 {
@@ -17,13 +18,15 @@ namespace Content.Server.PneumaticCannon
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
         [Dependency] private readonly GasTankSystem _gasTank = default!;
         [Dependency] private readonly StunSystem _stun = default!;
-        [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+        [Dependency] private readonly ContainerSystem _container = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing, before: new []{ typeof(StorageSystem) });
+            SubscribeLocalEvent<PneumaticCannonComponent, AttemptShootEvent>(OnAttemptShoot);
         }
 
         private void OnInteractUsing(EntityUid uid, PneumaticCannonComponent component, InteractUsingEvent args)
@@ -31,8 +34,9 @@ namespace Content.Server.PneumaticCannon
             if (args.Handled)
                 return;
 
-            if (!EntityManager.TryGetComponent<ToolComponent?>(args.Used, out var tool))
+            if (!TryComp<ToolComponent>(args.Used, out var tool))
                 return;
+
             if (!tool.Qualities.Contains(component.ToolModifyPower))
                 return;
 
@@ -40,60 +44,57 @@ namespace Content.Server.PneumaticCannon
             val = (val + 1) % (int) PneumaticCannonPower.Len;
             component.Power = (PneumaticCannonPower) val;
 
-            args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-power",
-                ("power", component.Power.ToString())));
+            _popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-change-power",
+                ("power", component.Power.ToString())), uid, args.User);
+
+            // TODO Change gun stats
 
             args.Handled = true;
         }
 
-        public void Fire(PneumaticCannonComponent comp, PneumaticCannonComponent.FireData data)
+        private void OnAttemptShoot(EntityUid uid, PneumaticCannonComponent component, ref AttemptShootEvent args)
         {
-            if (!HasGas(comp) && comp.GasTankRequired)
+            if (!HasGas(uid, component, out var gas))
             {
-                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
-                    ("cannon", comp.Owner)));
-                SoundSystem.Play("/Audio/Items/hiss.ogg", Filter.Pvs(comp.Owner), comp.Owner, AudioParams.Default);
+                _popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-fire-no-gas", ("cannon", uid)), uid, args.User);
+                args.Cancelled = true;
                 return;
             }
 
-            if(EntityManager.TryGetComponent<StatusEffectsComponent?>(data.User, out var status)
-               && comp.Power == PneumaticCannonPower.High)
+            if(EntityManager.TryGetComponent<StatusEffectsComponent?>(args.User, out var status)
+               && component.Power == PneumaticCannonPower.High)
             {
-                _stun.TryParalyze(data.User, TimeSpan.FromSeconds(comp.HighPowerStunTime), true, status);
-
-                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
-                    ("cannon", comp.Owner)));
+                _stun.TryParalyze(args.User, TimeSpan.FromSeconds(component.HighPowerStunTime), true, status);
+                _popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-power-stun",
+                    ("cannon", component.Owner)), uid, args.User);
             }
 
-            if (comp.GasTankSlot.ContainedEntity is {Valid: true} contained && comp.GasTankRequired)
+            var environment = _atmos.GetContainingMixture(component.Owner, false, true);
+            var removed = _gasTank.RemoveAir(gas, GetMoleUsageFromPower(component.Power));
+            if (environment != null && removed != null)
             {
-                // we checked for this earlier in HasGas so a GetComp is okay
-                var gas = EntityManager.GetComponent<GasTankComponent>(contained);
-                var environment = _atmos.GetContainingMixture(comp.Owner, false, true);
-                var removed = _gasTank.RemoveAir(gas, GetMoleUsageFromPower(comp.Power));
-                if (environment != null && removed != null)
-                {
-                    _atmos.Merge(environment, removed);
-                }
+                _atmos.Merge(environment, removed);
             }
         }
 
         /// <summary>
         ///     Returns whether the pneumatic cannon has enough gas to shoot an item.
         /// </summary>
-        public bool HasGas(PneumaticCannonComponent component)
+        private bool HasGas(EntityUid uid, PneumaticCannonComponent component, [NotNullWhen(true)] out GasTankComponent? tank)
         {
             var usage = GetMoleUsageFromPower(component.Power);
 
-            if (component.GasTankSlot.ContainedEntity is not {Valid: true } contained)
+            tank = null;
+            if (!_container.TryGetContainer(uid, PneumaticCannonComponent.TankSlotId, out var container) ||
+                container is not ContainerSlot slot || slot.ContainedEntity is not {} contained)
                 return false;
 
-            // not sure how it wouldnt, but it might not! who knows
-            if (EntityManager.TryGetComponent<GasTankComponent?>(contained, out var tank))
+            if (TryComp<GasTankComponent>(contained, out var gasTank))
             {
-                if (tank.Air.TotalMoles < usage)
+                if (gasTank.Air.TotalMoles < usage)
                     return false;
 
+                tank = gasTank;
                 return true;
             }
 

@@ -4,10 +4,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.PneumaticCannon
 {
+    /// <summary>
+    ///     Handles gas powered guns--cancels shooting if no gas is available, and takes gas from the given container slot.
+    /// </summary>
     [RegisterComponent, Access(typeof(PneumaticCannonSystem))]
     public sealed class PneumaticCannonComponent : Component
     {
-        public const string TankSlotId = $"gas_tank";
+        public const string TankSlotId = "gas_tank";
 
         [ViewVariables(VVAccess.ReadWrite)]
         public PneumaticCannonPower Power = PneumaticCannonPower.Low;
@@ -21,10 +24,6 @@ namespace Content.Server.PneumaticCannon
         [DataField("highPowerStunTime")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float HighPowerStunTime = 3.0f;
-
-        [DataField("gasTankRequired")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool GasTankRequired = true;
     }
 
     /// <summary>
