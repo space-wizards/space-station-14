@@ -327,8 +327,8 @@
   name: reagent-name-posca
   parent: BaseDrink
   desc: reagent-desc-posca
-  physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: alcohol
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
   color: "#B3B599"
   spritePath: glass_lyellow.rsi
 
