@@ -13,6 +13,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Content.Shared.Kudzu;
+using Robust.Shared.Random;
 
 namespace Content.Server.Spider
 {
@@ -23,19 +25,27 @@ namespace Content.Server.Spider
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<SpiderWebVisualsComponent, ComponentStartup>(OnWebStartup);
+            SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnSpiderStartup);
             SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
         }
 
-        private void OnStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
+        private void OnSpiderStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
         {
             var netAction = new InstantAction(_proto.Index<InstantActionPrototype>("SpiderWebAction"));
             _action.AddAction(uid, netAction, null);
+        }
+
+        private void OnWebStartup(EntityUid uid, SpiderWebVisualsComponent component, ComponentStartup args)
+        {
+            _appearance.SetData(uid,SpiderWebVisuals.Variant, _robustRandom.Next(1, 3));
         }
 
         private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderWebActionEvent args)

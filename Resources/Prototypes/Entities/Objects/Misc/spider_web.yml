@@ -14,10 +14,11 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/spiderweb.rsi
-      state: spider_web_01
+      state: spider_web_1
       drawdepth: WallMountedItems
       netsync: false
     - type: Appearance
+    - type: SpiderWebVisuals
     - type: Clickable
     - type: Transform
       anchored: true
