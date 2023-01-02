@@ -63,7 +63,8 @@
   suffix: Filled
   components:
   - type: SpaceVillainArcade
-    rewardAmount: 7
+    rewardMinAmount: 5
+    rewardMaxAmount: 8
     
 - type: entity
   id: BlockGameArcade

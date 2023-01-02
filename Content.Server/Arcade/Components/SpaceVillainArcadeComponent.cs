@@ -63,9 +63,14 @@ namespace Content.Server.Arcade.Components
             "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument"
         };
 
+        [DataField("rewardMinAmount")]
+        public int _rewardMinAmount;
+
+        [DataField("rewardMaxAmount")]
+        public int _rewardMaxAmount;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("rewardAmount")]
-        public int _rewardAmount;
+        public int _rewardAmount = 0;
 
         protected override void Initialize()
         {
@@ -75,6 +80,10 @@ namespace Content.Server.Arcade.Components
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            // Random amount of prizes
+            _rewardAmount = new Random().Next(_rewardMinAmount, _rewardMaxAmount + 1);
+
         }
 
         public void OnPowerStateChanged(PowerChangedEvent e)
