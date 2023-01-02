@@ -1294,6 +1294,11 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
+  - type: MobState
+    thresholds:
+      0: Alive
+      75: Critical
+      125: Dead
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -1302,9 +1307,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 8
-        Slash: 2
-        Poison: 2
+        Piercing: 12
+        Poison: 5
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup

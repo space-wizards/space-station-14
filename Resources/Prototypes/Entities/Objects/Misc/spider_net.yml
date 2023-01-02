@@ -13,8 +13,8 @@
           path:
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
-      sprite: Objects/Misc/kudzu.rsi
-      state: kudzu_11
+      sprite: Objects/Misc/spidernet.rsi
+      state: spider_net
       drawdepth: WallMountedItems
       netsync: false
     - type: Appearance
