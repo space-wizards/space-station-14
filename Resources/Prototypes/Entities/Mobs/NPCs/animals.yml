@@ -55,6 +55,8 @@
     accent: mouse
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -1568,6 +1570,8 @@
         Base: narsian_dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -1989,6 +1993,8 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:

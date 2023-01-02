@@ -42,6 +42,8 @@
       200: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -149,6 +151,8 @@
       350: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -218,6 +222,8 @@
     excess: 60
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
