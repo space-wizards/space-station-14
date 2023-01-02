@@ -1,7 +1,7 @@
 - type: entity
-  id: SpiderNet
-  name: spider net
-  description: White sticky stuff that can slow you down
+  id: SpiderWeb
+  name: spider web
+  description: It's stringy and sticky.
   placement:
     mode: SnapgridCenter
     snap:
@@ -13,8 +13,8 @@
           path:
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
-      sprite: Objects/Misc/spidernet.rsi
-      state: spider_net
+      sprite: Objects/Misc/spiderweb.rsi
+      state: spider_web_01
       drawdepth: WallMountedItems
       netsync: false
     - type: Appearance
@@ -58,10 +58,10 @@
       groups:
         Flammable: [Touch]
         Extinguish: [Touch]
-    - type: SpiderNetObject
+    - type: SpiderWebObject
     - type: SlowContacts
       walkSpeedModifier: 0.5
       sprintSpeedModifier: 0.5
       ignoreWhitelist:
         components:
-            - IgnoreSpiderNet
+            - IgnoreSpiderWeb

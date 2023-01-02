@@ -29,16 +29,16 @@ namespace Content.Server.Spider
             base.Initialize();
 
             SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<SpiderComponent, SpiderNetActionEvent>(OnSpawnNet);
+            SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
         }
 
         private void OnStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
         {
-            var netAction = new InstantAction(_proto.Index<InstantActionPrototype>("SpiderNetAction"));
+            var netAction = new InstantAction(_proto.Index<InstantActionPrototype>("SpiderWebAction"));
             _action.AddAction(uid, netAction, null);
         }
 
-        private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderNetActionEvent args)
+        private void OnSpawnNet(EntityUid uid, SpiderComponent component, SpiderWebActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -59,7 +59,7 @@ namespace Content.Server.Spider
                 {
                     notBlocked = true;
                     if (!net)
-                        EntityManager.SpawnEntity("SpiderNet", transform.Coordinates);  
+                        EntityManager.SpawnEntity("SpiderWeb", transform.Coordinates);  
                 }
             }
 
@@ -74,14 +74,14 @@ namespace Content.Server.Spider
 
                     if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;
 
-                    EntityManager.SpawnEntity("SpiderNet", transform.Coordinates.Offset(direction.AsDir().ToVec()));
+                    EntityManager.SpawnEntity("SpiderWeb", transform.Coordinates.Offset(direction.AsDir().ToVec()));
                 }
             }
         }
 
         private bool IsTileBlocked(EntityUid ent, ref bool net)
         {
-            if (HasComp<SpiderNetObjectComponent>(ent))
+            if (HasComp<SpiderWebObjectComponent>(ent))
                 net = true;
             if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
                 return false;
@@ -90,7 +90,7 @@ namespace Content.Server.Spider
 
         private bool IsTileBlockedFrom(EntityUid ent, DirectionFlag dir)
         {
-            if (HasComp<SpiderNetObjectComponent>(ent))
+            if (HasComp<SpiderWebObjectComponent>(ent))
                 return true;
             if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
                 return false;

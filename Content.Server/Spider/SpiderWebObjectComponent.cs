@@ -1,7 +1,7 @@
 namespace Content.Server.Spider
 {
     [RegisterComponent]
-    public sealed class SpiderNetObjectComponent : Component
+    public sealed class SpiderWebObjectComponent : Component
     {
     }
 }

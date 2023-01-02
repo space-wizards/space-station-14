@@ -1319,7 +1319,7 @@
     needsHands: false
   - type: NoSlip
   - type: Spider
-  - type: IgnoreSpiderNet
+  - type: IgnoreSpiderWeb
 
 - type: entity
   name: tarantula

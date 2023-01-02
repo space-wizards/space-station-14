@@ -1,7 +1,7 @@
 - type: instantAction
-  id: SpiderNetAction
+  id: SpiderWebAction
   icon: Interface/Actions/web.png
-  name: spider-net-action-name
-  description: spider-net-action-description
-  serverEvent: !type:SpiderNetActionEvent
+  name: spider-web-action-name
+  description: spider-web-action-description
+  serverEvent: !type:SpiderWebActionEvent
   useDelay: 25
