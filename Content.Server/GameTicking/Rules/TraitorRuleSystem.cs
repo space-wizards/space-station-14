@@ -68,8 +68,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         MakeCodewords();
         if (!RuleAdded)
             return;
-
-        return;
+        
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
         {
