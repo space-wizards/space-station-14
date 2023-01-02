@@ -149,7 +149,7 @@ namespace Content.Client.Actions
         /// <summary>
         ///     Execute convenience functionality for actions (pop-ups, sound, speech)
         /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action)
+        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
         {
             var performedAction = action.Sound != null
                                   || !string.IsNullOrWhiteSpace(action.UserPopup)
@@ -233,7 +233,7 @@ namespace Content.Client.Actions
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;
 
-                PerformAction(PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
             {
