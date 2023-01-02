@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Atmos.Components;
-//using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
+using Content.Shared.Spider;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
@@ -102,6 +102,3 @@ namespace Content.Server.Spider
     }
 }
 
-public sealed class SpiderNetActionEvent : InstantActionEvent { };
-
-public sealed class SpiderJumpActionEvent : WorldTargetActionEvent { };
