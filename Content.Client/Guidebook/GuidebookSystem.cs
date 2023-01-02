@@ -15,6 +15,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Guidebook;
 
+// TODO:
+// - improve Tree UI control to add highlighting & collapsible sections
+// - add better support for guides that do not exist on the same tree.
+// - add public interface to open up a guide, optionally without any tree view
+// - add help component/verb
 
 /// <summary>
 ///     This system handles interactions with various client-side entities that are embedded into guidebooks.
