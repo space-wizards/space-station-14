@@ -24,11 +24,14 @@ public abstract class SharedHumanoidSystem : EntitySystem
         string species,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayer,
         Color skinColor,
+        Color? hairColor,
+        Color? facialHairColor,
+        Color eyeColor,
         Sex sex,
         List<HumanoidVisualLayers> visLayers,
         List<Marking> markings)
     {
-        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, sex, visLayers, markings);
+        var data = new HumanoidVisualizerData(species, customBaseLayer, skinColor, hairColor, facialHairColor, eyeColor, sex, visLayers, markings);
 
         // This should raise a HumanoidAppearanceUpdateEvent, but that requires this component to be made networked and
         // I cbf doing that atm.

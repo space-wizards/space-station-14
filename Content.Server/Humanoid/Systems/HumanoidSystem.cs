@@ -39,6 +39,9 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             component.Species,
             component.CustomBaseLayers,
             component.SkinColor,
+            component.CachedHairColor,
+            component.CachedFacialHairColor,
+            component.CachedEyeColor,
             component.Sex,
             component.AllHiddenLayers.ToList(),
             component.CurrentMarkings.GetForwardEnumerator().ToList());
@@ -157,6 +160,9 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
+        targetHumanoid.CachedHairColor = sourceHumanoid.CachedHairColor;
+        targetHumanoid.CachedFacialHairColor = sourceHumanoid.CachedFacialHairColor;
+        targetHumanoid.CachedEyeColor = sourceHumanoid.CachedEyeColor;
         targetHumanoid.Sex = sourceHumanoid.Sex;
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.CurrentMarkings = new(sourceHumanoid.CurrentMarkings);
