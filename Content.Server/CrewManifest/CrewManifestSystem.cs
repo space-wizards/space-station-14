@@ -215,7 +215,7 @@ public sealed class CrewManifestSystem : EntitySystem
             entries.Entries.Add(entry);
         }
 
-        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
+        entries.Entries = entries.Entries.OrderBy(e => e.JobPrototype).ThenBy(e => e.Name).ToList();
 
         if (_cachedEntries.ContainsKey(station))
         {
