@@ -8,15 +8,14 @@
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     netsync: false
     layers:
-    - state: pneumaticCannon
+    - state: icon
       map: [ "enum.PneumaticCannonVisualLayers.Base" ]
-    - state: oxygen
+    - state: tank
       map: [ "tank" ]
       visible: false
   - type: Item
     size: 50
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     quickEquip: false
     slots:
     - Back
@@ -41,7 +40,7 @@
     mapLayers:
       tank:
         whitelist:
-          tags:
+          components:
           - GasTank
   - type: Construction
     graph: PneumaticCannon
@@ -51,7 +50,7 @@
       gas_tank:
         name: Gas Tank
         whitelist:
-          tags:
+          components:
           - GasTank
         insertSound:
           path: /Audio/Weapons/click.ogg

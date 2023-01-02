@@ -422,6 +422,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     }
 }
 
+[ByRefEvent]
 public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
 
 public record struct GunShotEvent(EntityUid User);
