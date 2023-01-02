@@ -28,14 +28,12 @@ public sealed class GuideEntryPrototypeTests
         {
             Assert.Multiple(() =>
             {
-                var doc = new Document();
                 foreach (var proto in prototypes)
                 {
                     try
                     {
                         var text = resMan.ContentFileReadText(proto.Text).ReadToEnd();
-                        Assert.That(doc.TryAddMarkup(text), $"Failed to add markup. while processing guide prototype {proto.ID}.");
-                        doc.RemoveAllChildren();
+                        Document.FromString(text);
                     }
                     catch (Exception e)
                     {

@@ -34,11 +34,11 @@
   parent: Engineering
   text: "/Server Info/Guidebook/Power.txt"
 
-- type: guideEntry
-  id: Singularity
-  name: Singularity
-  parent: Power
-  text: "/Server Info/Guidebook/Singularity.txt"
+#- type: guideEntry
+#  id: Singularity
+#  name: Singularity
+#  parent: Power
+#  text: "/Server Info/Guidebook/Singularity.txt"
 
 - type: guideEntry
   id: AME

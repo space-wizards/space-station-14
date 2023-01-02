@@ -1,6 +1,6 @@
 ﻿
-<Box Vertical HCenter>You can change the keybinds at any time here:<Box\>
-<Box Vertical HCenter><CommandButton ui-options-tab-controls "options 1"><Box\>
+<Box Vertical HCenter>You can change the keybinds at any time here:</Box>
+<Box Vertical HCenter><CommandButton ui-options-tab-controls "options 1"/></Box>
 
 #Basic controls
 We shall politely assume you already know how WASD to walk works.
@@ -14,7 +14,7 @@ Beyond that, there's a handful primary interactions in SS14, ordered by importan
 You can quickly try out these controls with the monkey below (note: clicking it only works in-game and not in the lobby), and at any point in this guidebook if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
 
 
-<GuideEntityEmbed MobGuidebookMonkey Interactive Scale=2>
+<GuideEntityEmbed MobGuidebookMonkey Interactive Scale=2/>
 
 #Inventory
 In order to move items around in your inventory and between containers, you can click the item (or item name) to move it to your active hand, and then click the spot you want it to go (either a slot in your HUD, or the container).

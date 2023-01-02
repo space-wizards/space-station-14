@@ -1,7 +1,7 @@
-﻿- type: guideEntry
-  id: CharacterCreation
-  name: Character Creation
-  text: "/Server Info/Guidebook/CharacterCreation.txt"
+﻿#- type: guideEntry
+#  id: CharacterCreation
+#  name: Character Creation
+#  text: "/Server Info/Guidebook/CharacterCreation.txt"
 
 - type: guideEntry
   id: Jobs

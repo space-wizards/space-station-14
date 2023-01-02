@@ -27,20 +27,27 @@ public sealed partial class GuidebookWindow : FancyWindow
     private void GuideSelectOnOnItemSelected()
     {
         var entry = (GuideEntry) GuideSelect.Selected!.Metadata!;
-
-        var text = _resourceManager.ContentFileReadText(entry.Text).ReadToEnd();
-
         GuideContainer.RemoveAllChildren();
 
-        GuideContainer.AddChild(new Label()
+        try
         {
-            StyleClasses = { "LabelHeadingBigger" },
-            Text = entry.Name
-        });
+            using var file = _resourceManager.ContentFileReadText(entry.Text);
+            var text = file.ReadToEnd();
 
-        GuideContainer.AddChild(new Document(text));
+            GuideContainer.AddChild(new Label()
+            {
+                StyleClasses = { "LabelHeadingBigger" },
+                Text = entry.Name
+            });
+            GuideContainer.AddChild(Document.FromString(text));
+        }
+        catch (Exception e)
+        {
+            Logger.Error($"Caught error while generating guide document for entry {entry.Id}. Error: {e}");
+            GuideContainer.AddChild(new Label() { Text = "Error" });
+        }
 
-        GuideContainer.MaxWidth = this.Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
+        GuideContainer.MaxWidth = Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
     }
 
     public void UpdateGuides(List<GuideEntry> entries)

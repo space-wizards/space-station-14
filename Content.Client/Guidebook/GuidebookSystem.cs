@@ -15,11 +15,15 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Guidebook;
 
-// TODO:
+// TODO GUIDEBOOKS
 // - improve Tree UI control to add highlighting & collapsible sections
 // - add better support for guides that do not exist on the same tree.
+// - search bar for sections/guides
 // - add public interface to open up a guide, optionally without any tree view
 // - add help component/verb
+//   - Examine tooltip -> ? button -> opens a relevant guide
+//   - Maybe also a "help" keybind that tries to open a relevant guide based on the mouse's current control/window or hovered entity.
+// - Tests. Especially for all the parsing stuff.
 
 /// <summary>
 ///     This system handles interactions with various client-side entities that are embedded into guidebooks.

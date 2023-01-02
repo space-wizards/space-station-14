@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using Pidgin;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Reflection;
@@ -29,9 +30,17 @@ public sealed class Document : BoxContainer
         }
     }
 
-    public Document(string contents) : this()
+    public Document(IEnumerable<Control> controls) : this()
     {
-        TryAddMarkup(contents);
+        foreach (var control in controls)
+        {
+            AddChild(control);
+        }
+    }
+
+    public static Document FromString(string contents)
+    {
+        return IoCManager.Resolve<GuidebookParsingManager>().DocumentParser.ParseOrThrow(contents);
     }
 
     private enum ParserMode
@@ -344,5 +353,7 @@ public sealed class Document : BoxContainer
 
 public interface ITag
 {
+    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
+        => TryParseTag(args, param, out control, out _);
     public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control, out bool instant);
 }
