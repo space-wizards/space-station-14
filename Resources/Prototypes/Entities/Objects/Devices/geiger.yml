@@ -5,7 +5,8 @@
   description: A handheld device used for detecting and measuring radiation pulses.
   components:
     - type: Tag
-      tags: GeigerCounter
+      tags:
+        - GeigerCounter
     - type: Sprite
       netsync: false
       sprite: Objects/Tools/geiger.rsi
