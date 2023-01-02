@@ -17,9 +17,9 @@ public sealed partial class AnomalySystem
     {
         SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
-        SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnGetPointsPerSecond);
-        SubscribeLocalEvent<AnomalyVesselComponent, AnomalyShutdownEvent>(OnAnomalyShutdown);
+        SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
+        SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
+        SubscribeLocalEvent<AnomalyVesselComponent, AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
     }
 
     private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)
@@ -38,7 +38,7 @@ public sealed partial class AnomalySystem
         UpdateVesselAppearance(uid,  component);
     }
 
-    private void OnInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
+    private void OnVesselInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
     {
         if (component.Anomaly != null ||
             !TryComp<AnomalyScannerComponent>(args.Used, out var scanner) ||
@@ -56,7 +56,7 @@ public sealed partial class AnomalySystem
         _popup.PopupEntity(Loc.GetString("anomaly-vessel-component-anomaly-assigned"), uid);
     }
 
-    private void OnGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
+    private void OnVesselGetPointsPerSecond(EntityUid uid, AnomalyVesselComponent component, ref ResearchServerGetPointsPerSecondEvent args)
     {
         if (!this.IsPowered(uid, EntityManager) || component.Anomaly is not {} anomaly)
         {
@@ -67,7 +67,7 @@ public sealed partial class AnomalySystem
         args.Points = GetAnomalyPointValue(anomaly);
     }
 
-    private void OnAnomalyShutdown(EntityUid uid, AnomalyVesselComponent component, ref AnomalyShutdownEvent args)
+    private void OnVesselAnomalyShutdown(EntityUid uid, AnomalyVesselComponent component, ref AnomalyShutdownEvent args)
     {
         if (args.Anomaly != component.Anomaly)
             return;
@@ -103,6 +103,12 @@ public sealed partial class AnomalySystem
         return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
     }
 
+    /// <summary>
+    /// Updates the appearance of an anomaly vessel
+    /// based on whether or not it has an anomaly
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public void UpdateVesselAppearance(EntityUid uid, AnomalyVesselComponent? component = null)
     {
         if (!Resolve(uid, ref component))

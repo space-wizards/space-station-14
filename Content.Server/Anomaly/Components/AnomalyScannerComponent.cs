@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Anomaly.Components;
+﻿using System.Threading;
+
+namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// This is used for scanning anomalies and
@@ -12,4 +14,23 @@ public sealed class AnomalyScannerComponent : Component
     /// </summary>
     [ViewVariables]
     public EntityUid? ScannedAnomaly;
+
+    [DataField("scanDoAfterDuration")]
+    public float ScanDoAfterDuration = 5;
+
+    public CancellationTokenSource? TokenSource;
+}
+
+public sealed class AnomalyScanFinishedEvent : EntityEventArgs
+{
+    public EntityUid Anomaly;
+
+    public AnomalyScanFinishedEvent(EntityUid anomaly)
+    {
+        Anomaly = anomaly;
+    }
+}
+
+public sealed class AnomalyScanCancelledEvent : EntityEventArgs
+{
 }

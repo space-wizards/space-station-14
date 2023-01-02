@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Logs;
+using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Anomaly;
@@ -19,6 +20,7 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -28,6 +30,7 @@ public sealed partial class AnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
 
+        InitializeScanner();
         InitializeVessel();
     }
 
