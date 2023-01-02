@@ -1,10 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: Deconstructing certain things dont leave their materials stuck in the
-      wall., type: Fix}
-  id: 2326
-  time: '2022-09-16T14:41:21.0000000+00:00'
 - author: Morb0
   changes:
   - {message: More variants of equipped headsets sprite, type: Add}
@@ -2957,3 +2951,8 @@ Entries:
       trigger them manually, if you''d like.', type: Tweak}
   id: 2825
   time: '2023-01-02T01:18:48.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Hamster cages no longer clip through doors, type: Fix}
+  id: 2826
+  time: '2023-01-02T03:52:30.0000000+00:00'
