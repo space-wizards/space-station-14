@@ -85,6 +85,18 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
+        ///    Spawn in starting items for any item slots that should have one but post map init.
+        /// </summary>
+        private void OnAddItemSlot(EntityUid uid, ItemSlot slot, EntityUid Owner)
+        {
+            if (slot.HasItem || string.IsNullOrEmpty(slot.StartingItem))
+                return;
+
+            var item = EntityManager.SpawnEntity(slot.StartingItem, EntityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+            slot.ContainerSlot?.Insert(item);
+        }
+
+        /// <summary>
         ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure the slot has an item
         ///     container.
         /// </summary>
@@ -105,6 +117,8 @@ namespace Content.Shared.Containers.ItemSlots
             slot.ContainerSlot = _containers.EnsureContainer<ContainerSlot>(uid, id);
             itemSlots.Slots[id] = slot;
             Dirty(itemSlots);
+
+            OnAddItemSlot(uid, slot, itemSlots.Owner);
         }
 
         /// <summary>

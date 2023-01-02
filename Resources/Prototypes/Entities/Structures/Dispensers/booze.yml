@@ -10,8 +10,10 @@
     drawdepth: SmallObjects
     state: booze
   - type: ReagentDispenser
+    storageWhitelist:
+      tags:
+      - DrinkBottle
     pack: BoozeDispenserInventory
-    emagPack: BoozeDispenserEmagInventory
   - type: Transform
     noRot: false
   - type: Machine

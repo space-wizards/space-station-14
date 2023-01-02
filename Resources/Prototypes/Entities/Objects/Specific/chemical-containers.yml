@@ -47,6 +47,9 @@
       price: 60
     - type: Label
       originalName: jug
+    - type: Tag
+      tags:
+      - ChemDispensable
 
 - type: entity
   parent: Jug
