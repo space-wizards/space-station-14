@@ -1,8 +1,10 @@
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.AirlockPainter;
 using Content.Shared.AirlockPainter.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
@@ -18,6 +20,7 @@ namespace Content.Server.AirlockPainter
     [UsedImplicitly]
     public sealed class AirlockPainterSystem : SharedAirlockPainterSystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -41,6 +44,9 @@ namespace Content.Server.AirlockPainter
             {
                 SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.User, entityManager:EntityManager), ev.User);
                 appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
+
+                // Log success
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(ev.User):user} painted {ToPrettyString(ev.Target):target}");
             }
         }
 
@@ -91,6 +97,9 @@ namespace Content.Server.AirlockPainter
                 BroadcastCancelledEvent = new AirlockPainterDoAfterCancelled(component),
             };
             _doAfterSystem.DoAfter(doAfterEventArgs);
+
+            // Log attempt
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is painting {ToPrettyString(uid):target} to '{style}' at {Transform(uid).Coordinates:targetlocation}");
         }
 
         private sealed class AirlockPainterDoAfterComplete : EntityEventArgs
