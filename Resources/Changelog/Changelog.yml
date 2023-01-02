@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bible heal has been reduced from 70 damage per 5 seconds to 30 damage
-      per 10 seconds., type: Tweak}
-  id: 2324
-  time: '2022-09-16T14:27:05.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'Added 2 bottle boxes to chemistry supplies crate, price slightly increased',
@@ -2956,3 +2950,9 @@ Entries:
       (10 -> 20), type: Tweak}
   id: 2823
   time: '2023-01-01T23:50:36.0000000+00:00'
+- author: keronshb
+  changes:
+  - {message: Added a delay for internals alerts to match the action button delay.,
+    type: Add}
+  id: 2824
+  time: '2023-01-02T00:03:19.0000000+00:00'
