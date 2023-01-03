@@ -1,4 +1,5 @@
-﻿using Content.Shared.Audio;
+﻿using System.Threading;
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -33,4 +34,22 @@ public sealed class HandTeleporterComponent : Component
 
     [DataField("clearPortalsSound")]
     public SoundSpecifier ClearPortalsSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
+    /// <summary>
+    ///     Delay for creating the portals in seconds.
+    /// </summary>
+    [DataField("portalCreationDelay")]
+    public float PortalCreationDelay = 2.5f;
+
+    public CancellationTokenSource? CancelToken = null;
 }
+
+/// <summary>
+///     Raised on doafter success for creating a portal.
+/// </summary>
+public record HandTeleporterSuccessEvent(EntityUid User);
+
+/// <summary>
+///     Raised on doafter cancel for creating a portal.
+/// </summary>
+public record HandTeleporterCancelledEvent;

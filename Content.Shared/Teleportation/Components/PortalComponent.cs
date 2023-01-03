@@ -27,5 +27,5 @@ public sealed class PortalComponent : Component
     ///     If no portals are linked, the subject will be teleported a random distance at maximum this far away.
     /// </summary>
     [DataField("maxRandomRadius")]
-    public float MaxRandomRadius = 10.0f;
+    public float MaxRandomRadius = 7.0f;
 }
