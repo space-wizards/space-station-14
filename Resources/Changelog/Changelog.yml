@@ -1,12 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Entity storage (lockers, animal crates, etc) now hold some air inside
-      them when closed. Entities inside will be exposed to that air instead of the
-      environment surrounding the storage. Now you can take animals on spacewalks!',
-    type: Add}
-  id: 2329
-  time: '2022-09-16T18:46:09.0000000+00:00'
 - author: corentt
   changes:
   - {message: You can now buy jetpacks from cargo., type: Add}
@@ -2959,3 +2951,9 @@ Entries:
       It can create portals at will, and is a traitor steal objective.', type: Add}
   id: 2828
   time: '2023-01-03T01:58:25.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that would sometimes cause players to appear as if they
+      were dead/horizontal., type: Fix}
+  id: 2829
+  time: '2023-01-03T06:43:35.0000000+00:00'
