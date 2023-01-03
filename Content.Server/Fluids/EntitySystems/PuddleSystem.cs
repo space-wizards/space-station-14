@@ -1,19 +1,14 @@
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
-using Robust.Shared.GameObjects;
 using Solution = Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Server.Fluids.EntitySystems
@@ -24,9 +19,10 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
-        [Dependency] private readonly SlipperySystem _slipSystem = default!;
-        [Dependency] private readonly EvaporationSystem _evaporationSystem = default!;
 
+        // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
+        // loses & then gains reagents in a single tick.
+        private HashSet<EntityUid> _deletionQueue = new();
 
         public override void Initialize()
         {
@@ -39,6 +35,16 @@ namespace Content.Server.Fluids.EntitySystems
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var ent in _deletionQueue)
+            {
+                Del(ent);
+            }
+            _deletionQueue.Clear();
+        }
+
         private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
@@ -47,6 +53,16 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
+            if (args.Solution.Name != component.SolutionName)
+                return;
+
+            if (args.Solution.CurrentVolume <= 0)
+            {
+                _deletionQueue.Add(uid);
+                return;
+            }
+
+            _deletionQueue.Remove(uid);
             UpdateSlip(uid, component);
             UpdateAppearance(uid, component);
         }
@@ -157,12 +173,11 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             solution.AddSolution(addedSolution);
+            _solutionContainerSystem.UpdateChemicals(puddleUid, solution, true);
             if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
                 _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
-
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {
