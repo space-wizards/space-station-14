@@ -1,3 +1,4 @@
+using Content.Server.Administration.Logs;
 using Robust.Shared.Player;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -8,6 +9,7 @@ using Content.Shared.Access.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Doors.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using static Content.Server.Remotes.DoorRemoteComponent;
 
@@ -15,6 +17,7 @@ namespace Content.Server.Remotes
 {
     public sealed class DoorRemoteSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -81,14 +84,19 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
-                    _doorSystem.TryToggleDoor(doorComp.Owner, doorComp, args.Used);
+                    if (_doorSystem.TryToggleDoor(doorComp.Owner, doorComp, args.Used))
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(doorComp.Owner)}: {doorComp.State}");
                     break;
                 case OperatingMode.ToggleBolts:
                     if (!airlockComp.BoltWireCut)
+                    {
                         airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(doorComp.Owner)} to {(airlockComp.IsBolted() ? "" : "un")}bolt it");
+                    }
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
                     _sharedAirlockSystem.ToggleEmergencyAccess(airlockComp);
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(doorComp.Owner)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     break;
                 default:
                     throw new InvalidOperationException(
