@@ -1,0 +1,9 @@
+- files: ["electrified_animation.png"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Made by Aleksh#7552 (Discord) / Alekshhh (Github) for SS14"
+  source: "https://github.com/space-wizards/space-station-14"
+
+- files: ["grille.png", "grille_broken.png", "grille_damaged_0.png", grille_damaged_1.png", "grille_damaged_2.png", "grille_damaged_3"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at commit 17c603f1d037f22081d446b9a3f3ae8d41f52e86"
+  source: "https://github.com/tgstation/tgstation/"
