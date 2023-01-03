@@ -181,6 +181,21 @@ namespace Content.Server.Mind
         }
 
         /// <summary>
+        ///     A string to represent the mind for logging
+        /// </summary>
+        private string MindOwnerLoggingString
+        {
+            get
+            {
+                if (OwnedEntity != null)
+                    return _entityManager.ToPrettyString(OwnedEntity.Value);
+                if (UserId != null)
+                    return UserId.Value.ToString();
+                return "(originally " + OriginalOwnerUserId + ")";
+            }
+        }
+
+        /// <summary>
         ///     Gives this mind a new role.
         /// </summary>
         /// <param name="role">The type of the role to give.</param>
@@ -202,19 +217,9 @@ namespace Content.Server.Mind
             if (OwnedEntity != null)
             {
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' added to mind of {_entityManager.ToPrettyString(OwnedEntity.Value)}");
             }
-            else if (UserId != null)
-            {
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' added to mind of {UserId.Value}");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' added to a mind originally owned by {OriginalOwnerUserId}");
-            }
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"'{role}' added to mind of {MindOwnerLoggingString}");
 
             return role;
         }
@@ -240,19 +245,9 @@ namespace Content.Server.Mind
             if (OwnedEntity != null)
             {
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' removed from mind of {_entityManager.ToPrettyString(OwnedEntity.Value)}");
             }
-            else if (UserId != null)
-            {
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' removed from mind of {UserId.Value}");
-            }
-            else
-            {
-                _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                    $"'{role}' removed from a mind originally owned by {OriginalOwnerUserId}");
-            }
+            _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                $"'{role}' removed from mind of {MindOwnerLoggingString}");
         }
 
         public bool HasRole<T>() where T : Role
@@ -277,6 +272,11 @@ namespace Content.Server.Mind
             var objective = objectivePrototype.GetObjective(this);
             if (_objectives.Contains(objective))
                 return false;
+
+            foreach (var condition in objective.Conditions)
+                _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString}");
+
+
             _objectives.Add(objective);
             return true;
         }
@@ -290,6 +290,10 @@ namespace Content.Server.Mind
             if (_objectives.Count >= index) return false;
 
             var objective = _objectives[index];
+
+            foreach (var condition in objective.Conditions)
+                _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' removed from the mind of {MindOwnerLoggingString}");
+
             _objectives.Remove(objective);
             return true;
         }
