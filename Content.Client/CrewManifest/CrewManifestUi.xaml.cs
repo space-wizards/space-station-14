@@ -139,7 +139,7 @@ public sealed partial class CrewManifestUi : DefaultWindow
                 };
 
                 var title = new RichTextLabel();
-                title.SetMessage(Loc.GetString(entry.JobTitle));
+                title.SetMessage(entry.JobTitle);
 
 
                 if (rsi != null)

@@ -210,12 +210,16 @@ public sealed class CrewManifestSystem : EntitySystem
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
+            var entry = new CrewManifestEntry(
+                record.Name,
+                Loc.GetString(record.JobTitle),
+                record.JobIcon,
+                record.JobPrototype);
 
             entries.Entries.Add(entry);
         }
 
-        entries.Entries = entries.Entries.OrderBy(e => e.JobPrototype).ThenBy(e => e.Name).ToList();
+        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
 
         if (_cachedEntries.ContainsKey(station))
         {
