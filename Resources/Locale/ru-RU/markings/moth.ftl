@@ -1,14 +1,5 @@
 marking-MothAntennasDefault = Антенны (Стандартные)
 
-marking-MothWingsColoredDefault = Крылья Раскрашиваемые (Обычные)
-marking-MothWingsColoredPointy = Крылья Раскрашиваемые (Заострённые)
-marking-MothWingsColoredSquigly = Крылья Раскрашиваемые (Закруглённые)
-marking-MothWingsColoredStared = Крылья Раскрашиваемые (Звёздные)
-marking-MothWingsColoredStriped = Крылья Раскрашиваемые (Полосатые)
-marking-MothWingsColoredFan = Крылья Раскрашиваемые (Веерные)
-marking-MothWingsColoredFeather = Крылья Раскрашиваемые (Перьевые)
-marking-MothWingsColoredHolo = Крылья Раскрашиваемые (Голо)
-
 marking-MothWingsDefault = Крылья (Обычные)
 marking-MothWingsPointy = Крылья (Заострённые)
 marking-MothWingsSquigly = Крылья (Закруглённые)

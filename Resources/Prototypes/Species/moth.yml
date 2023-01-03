@@ -53,7 +53,7 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ MothWingsColoredDefault ]
+      defaultMarkings: [ MothWingsDefault ]
     Snout:
       points: 1
       required: true

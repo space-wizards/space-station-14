@@ -1,7 +1,6 @@
 # Antennas
 - type: marking
   id: MothAntennasDefault
-#  name: Default Antennas
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Moth]
@@ -9,80 +8,7 @@
   - sprite: Mobs/Customization/moth_parts.rsi
     state: antenna_default
 
-# Colorable Wings
-- type: marking
-  id: MothWingsColoredDefault
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_default
-
-- type: marking
-  id: MothWingsColoredPointy
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_pointy
-
-- type: marking
-  id: MothWingsColoredSquigly
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_squigly
-
-- type: marking
-  id: MothWingsColoredStared
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_stared
-
-- type: marking
-  id: MothWingsColoredStriped
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_striped
-
-- type: marking
-  id: MothWingsColoredFan
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_fan
-
-- type: marking
-  id: MothWingsColoredFeather
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_feather
-
-- type: marking
-  id: MothWingsColoredHolo
-  bodyPart: Tail
-  markingCategory: Tail
-  speciesRestriction: [Moth]
-  sprites:
-  - sprite: Mobs/Customization/moth_wings.rsi
-    state: colored_holo
-
-# Colored Wings
+# Wings
 - type: marking
   id: MothWingsDefault
   bodyPart: Tail

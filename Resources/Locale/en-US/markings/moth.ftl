@@ -1,14 +1,5 @@
 marking-MothAntennasDefault = Antennas (Default)
 
-marking-MothWingsColoredDefault = Wings Colorable (Default)
-marking-MothWingsColoredPointy = Wings Colorable (Pointy)
-marking-MothWingsColoredSquigly = Wings Colorable (Squigly)
-marking-MothWingsColoredStared = Wings Colorable (Stared)
-marking-MothWingsColoredStriped = Wings Colorable (Striped)
-marking-MothWingsColoredFan = Wings Colorable (Fan)
-marking-MothWingsColoredFeather = Wings Colorable (Feather)
-marking-MothWingsColoredHolo = Wings Colorable (Holo)
-
 marking-MothWingsDefault = Wings (Default)
 marking-MothWingsPointy = Wings (Pointy)
 marking-MothWingsSquigly = Wings (Squigly)
