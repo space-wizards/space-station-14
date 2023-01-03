@@ -202,6 +202,18 @@ namespace Content.Server.Mind
             if (OwnedEntity != null)
             {
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' added to mind of {_entityManager.ToPrettyString(OwnedEntity.Value)}");
+            }
+            else if (UserId != null)
+            {
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' added to mind of {UserId.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' added to a mind originally owned by {OriginalOwnerUserId}");
             }
 
             return role;
@@ -228,6 +240,18 @@ namespace Content.Server.Mind
             if (OwnedEntity != null)
             {
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' removed from mind of {_entityManager.ToPrettyString(OwnedEntity.Value)}");
+            }
+            else if (UserId != null)
+            {
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' removed from mind of {UserId.Value}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"'{role}' removed from a mind originally owned by {OriginalOwnerUserId}");
             }
         }
 
