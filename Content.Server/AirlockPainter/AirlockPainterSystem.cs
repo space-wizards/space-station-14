@@ -42,7 +42,7 @@ namespace Content.Server.AirlockPainter
             if (TryComp<AppearanceComponent>(ev.Target, out var appearance) &&
                 TryComp<PaintableAirlockComponent>(ev.Target, out PaintableAirlockComponent? airlock))
             {
-                SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.User, entityManager:EntityManager), ev.User);
+                SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.UsedTool, entityManager:EntityManager), ev.UsedTool);
                 appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
 
                 // Log success
@@ -93,7 +93,7 @@ namespace Content.Server.AirlockPainter
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 NeedHand = true,
-                BroadcastFinishedEvent = new AirlockPainterDoAfterComplete(uid, target, sprite, component),
+                BroadcastFinishedEvent = new AirlockPainterDoAfterComplete(uid, target, sprite, component, args.User),
                 BroadcastCancelledEvent = new AirlockPainterDoAfterCancelled(component),
             };
             _doAfterSystem.DoAfter(doAfterEventArgs);
@@ -105,13 +105,16 @@ namespace Content.Server.AirlockPainter
         private sealed class AirlockPainterDoAfterComplete : EntityEventArgs
         {
             public readonly EntityUid User;
+            public readonly EntityUid UsedTool;
             public readonly EntityUid Target;
             public readonly string Sprite;
             public readonly AirlockPainterComponent Component;
 
-            public AirlockPainterDoAfterComplete(EntityUid user, EntityUid target, string sprite, AirlockPainterComponent component)
+            public AirlockPainterDoAfterComplete(EntityUid usedTool, EntityUid target, string sprite,
+                AirlockPainterComponent component, EntityUid user)
             {
                 User = user;
+                UsedTool = usedTool;
                 Target = target;
                 Sprite = sprite;
                 Component = component;
