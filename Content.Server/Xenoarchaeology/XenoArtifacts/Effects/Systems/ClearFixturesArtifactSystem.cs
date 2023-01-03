@@ -6,8 +6,12 @@ using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+/// <summary>
+///     Handles allowing activated artifacts to phase through walls.
+/// </summary>
 public sealed class ClearFixturesArtifactSystem : EntitySystem
 {
+    /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
