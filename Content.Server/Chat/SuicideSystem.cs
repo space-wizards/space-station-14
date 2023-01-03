@@ -41,9 +41,12 @@ namespace Content.Server.Chat
             if (SuicideAttemptBlocked(victim, suicideEvent))
                 return false;
 
+            bool environmentSuicide = false;
             // If you are critical, you wouldn't be able to use your surroundings to suicide, so you do the default suicide
             if (!_mobState.IsCritical(victim, mobState))
-                EnvironmentSuicideHandler(victim, suicideEvent);
+            {
+                environmentSuicide = EnvironmentSuicideHandler(victim, suicideEvent);
+            }
 
             if (suicideEvent.AttemptBlocked)
                 return false;
@@ -51,7 +54,7 @@ namespace Content.Server.Chat
             DefaultSuicideHandler(victim, suicideEvent);
 
             ApplyDeath(victim, suicideEvent.Kind!.Value);
-            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided");
+            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} suicided{(environmentSuicide ? " (environment)" : "")}");
             return true;
         }
 
@@ -88,7 +91,7 @@ namespace Content.Server.Chat
         /// <summary>
         /// Raise event to attempt to use held item, or surrounding entities to attempt to commit suicide
         /// </summary>
-        private void EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
+        private bool EnvironmentSuicideHandler(EntityUid victim, SuicideEvent suicideEvent)
         {
             var itemQuery = GetEntityQuery<ItemComponent>();
 
@@ -99,7 +102,7 @@ namespace Content.Server.Chat
                 RaiseLocalEvent(item, suicideEvent, false);
 
                 if (suicideEvent.Handled)
-                    return;
+                    return true;
             }
 
             // Suicide by nearby entity (ex: Microwave)
@@ -112,8 +115,10 @@ namespace Content.Server.Chat
                 RaiseLocalEvent(entity, suicideEvent, false);
 
                 if (suicideEvent.Handled)
-                    break;
+                    return true;
             }
+
+            return false;
         }
 
         private void ApplyDeath(EntityUid target, SuicideKind kind)
