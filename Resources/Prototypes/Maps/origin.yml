@@ -2,7 +2,7 @@
   id: Origin
   mapName: 'Origin'
   mapPath: /Maps/origin.yml
-  minPlayers: 35
+  minPlayers: 0
   stations:
     Origin:
       mapNameTemplate: '{0} Origin {1}'

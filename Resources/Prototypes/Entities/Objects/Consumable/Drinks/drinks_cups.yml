@@ -8,7 +8,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 10
+        maxVol: 20
         canMix: true
   - type: FitsInDispenser
     solution: drink
@@ -174,7 +174,6 @@
         reagents:
         - ReagentId: Coffee
           Quantity: 20
-        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
     layers:
@@ -200,7 +199,6 @@
         reagents:
         - ReagentId: Tea
           Quantity: 20
-        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi
     layers:
@@ -226,7 +224,6 @@
         reagents:
         - ReagentId: Water
           Quantity: 20
-        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lean.rsi
     state: icon
@@ -244,7 +241,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
         reagents:
         - ReagentId: Water
           Quantity: 20

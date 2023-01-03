@@ -3,7 +3,7 @@
   mapName: 'Cluster'
   mapPath: /Maps/cluster.yml
   minPlayers: 0
-  maxPlayers: 35
+  maxPlayers: 25
   stations:
     Cluster:
       mapNameTemplate: '{0} Cluster Station {1}'

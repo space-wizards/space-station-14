@@ -89,10 +89,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                 continue;
             cryoPod.NextInjectionTime = curTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
-            if (
-                !itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent)
-                || !fitsInDispenserQuery.TryGetComponent(cryoPod.Owner, out var fitsInDispenserComponent)
-                || !solutionContainerManagerQuery.TryGetComponent(cryoPod.Owner, out var solutionContainerManagerComponent))
+            if (!itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent))
             {
                 continue;
             }
@@ -101,6 +98,9 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             if (container != null
                 && container.Value.Valid
                 && patient != null
+                && fitsInDispenserQuery.TryGetComponent(container, out var fitsInDispenserComponent)
+                && solutionContainerManagerQuery.TryGetComponent(container,
+                    out var solutionContainerManagerComponent)
                 && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, dispenserFits: fitsInDispenserComponent, solutionManager: solutionContainerManagerComponent))
             {
                 if (!bloodStreamQuery.TryGetComponent(patient, out var bloodstream))
