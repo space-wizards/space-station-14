@@ -33,7 +33,7 @@ namespace Content.Server.Chat
             if (!TryComp<MobStateComponent>(victim, out var mobState) || _mobState.IsDead(victim, mobState))
                 return false;
 
-            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting suicide");
+            _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(victim):player} is attempting to suicide");
 
             var suicideEvent = new SuicideEvent(victim);
 
