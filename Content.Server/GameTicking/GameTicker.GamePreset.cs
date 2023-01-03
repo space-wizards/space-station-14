@@ -152,8 +152,8 @@ namespace Content.Server.GameTicking
         {
             var playerEntity = mind.CurrentEntity;
 
-            if (playerEntity != null && (!mind.PreventGhosting || viaCommand))
-                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost{(viaCommand ? " via command" : "")}");
+            if (playerEntity != null && viaCommand)
+                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
             RaiseLocalEvent(handleEv);
