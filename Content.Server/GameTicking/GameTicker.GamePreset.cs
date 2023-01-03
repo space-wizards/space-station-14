@@ -226,7 +226,7 @@ namespace Content.Server.GameTicking
             }
 
             if (playerEntity != null)
-                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(canReturn ? " (non-returnable)" : "")}");
+                _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
 
