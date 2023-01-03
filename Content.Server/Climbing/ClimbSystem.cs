@@ -163,7 +163,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!Resolve(uid, ref climbing, ref physics, ref fixtures, false))
             return;
 
-        if (!ReplaceFixtures(climbing, physics, fixtures))
+        if (!ReplaceFixtures(climbing, fixtures))
             return;
 
         climbing.IsClimbing = true;
@@ -203,7 +203,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// Replaces the current fixtures with non-climbing collidable versions so that climb end can be detected
     /// </summary>
     /// <returns>Returns whether adding the new fixtures was successful</returns>
-    private bool ReplaceFixtures(ClimbingComponent climbingComp, PhysicsComponent physicsComp, FixturesComponent fixturesComp)
+    private bool ReplaceFixtures(ClimbingComponent climbingComp, FixturesComponent fixturesComp)
     {
         var uid = climbingComp.Owner;
 
@@ -223,8 +223,8 @@ public sealed class ClimbSystem : SharedClimbSystem
                 uid,
                 new PhysShapeCircle(0.35f),
                 ClimbingFixtureName,
-                collisionMask: (int) CollisionGroup.None,
-                collisionLayer: ClimbingCollisionGroup,
+                collisionLayer: (int) CollisionGroup.None,
+                collisionMask: ClimbingCollisionGroup,
                 manager: fixturesComp))
         {
             return false;
