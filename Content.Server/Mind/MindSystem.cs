@@ -4,6 +4,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
 using Content.Shared.Examine;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -23,6 +24,7 @@ public sealed class MindSystem : EntitySystem
 
         SubscribeLocalEvent<MindComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<MindComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<MindComponent, SuicideEvent>(OnSuicide);
     }
 
     public void SetGhostOnShutdown(EntityUid uid, bool value, MindComponent? mind = null)
@@ -152,6 +154,17 @@ public sealed class MindSystem : EntitySystem
         else if (mind.Mind?.Session == null)
         {
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-ssd", ("ent", uid))}[/color]");
+        }
+    }
+
+    private void OnSuicide(EntityUid uid, MindComponent component, SuicideEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        if (component.PreventSuicide || (component.HasMind && component.Mind!.PreventSuicide))
+        {
+            args.BlockSuicideAttempt(true);
         }
     }
 }
