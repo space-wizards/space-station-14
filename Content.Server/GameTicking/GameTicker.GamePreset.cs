@@ -148,7 +148,7 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal, bool viaCommand = true)
+        public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal, bool viaCommand = false)
         {
             var playerEntity = mind.CurrentEntity;
 
