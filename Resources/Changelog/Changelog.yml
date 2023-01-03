@@ -1,10 +1,4 @@
 Entries:
-- author: Jukereise
-  changes:
-  - {message: Beginners can now spend up to 2 hours (90 extra minutes after unlocking
-      the non-beginner jobs) as an intern (originally 30 minutes), type: Tweak}
-  id: 2328
-  time: '2022-09-16T14:45:20.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Entity storage (lockers, animal crates, etc) now hold some air inside
@@ -2957,3 +2951,11 @@ Entries:
       vapor., type: Tweak}
   id: 2827
   time: '2023-01-02T05:05:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Portals have been added, which teleport you randomly (if unlinked)
+      or between portals (if linked). Expect to see them used more.', type: Add}
+  - {message: 'The research director has received a new device, the ''hand teleporter''.
+      It can create portals at will, and is a traitor steal objective.', type: Add}
+  id: 2828
+  time: '2023-01-03T01:58:25.0000000+00:00'
