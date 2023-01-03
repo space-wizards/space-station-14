@@ -210,11 +210,7 @@ public sealed class CrewManifestSystem : EntitySystem
         foreach (var recordObject in iter)
         {
             var record = recordObject.Item2;
-            var entry = new CrewManifestEntry(
-                record.Name,
-                Loc.GetString(record.JobTitle),
-                record.JobIcon,
-                record.JobPrototype);
+            var entry = new CrewManifestEntry(record.Name, record.JobTitle, record.JobIcon, record.JobPrototype);
 
             entries.Entries.Add(entry);
         }
