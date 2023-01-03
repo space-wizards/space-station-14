@@ -219,7 +219,7 @@ namespace Content.Server.Mind
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
             }
             _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"'{role}' added to mind of {MindOwnerLoggingString}");
+                $"'{role.Name}' added to mind of {MindOwnerLoggingString}");
 
             return role;
         }
@@ -247,7 +247,7 @@ namespace Content.Server.Mind
                 _entityManager.EventBus.RaiseLocalEvent(OwnedEntity.Value, message, true);
             }
             _adminLogger.Add(LogType.Mind, LogImpact.Low,
-                $"'{role}' removed from mind of {MindOwnerLoggingString}");
+                $"'{role.Name}' removed from mind of {MindOwnerLoggingString}");
         }
 
         public bool HasRole<T>() where T : Role
