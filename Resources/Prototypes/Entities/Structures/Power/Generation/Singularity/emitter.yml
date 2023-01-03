@@ -26,21 +26,14 @@
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
     netsync: false
     layers:
-    - state: emitter2
+    - state: emitter # Corvax-Resprite
     - state: beam
       shader: unshaded
       visible: false
-    - state: lock
+    - state: unlock # Corvax-Resprite
       shader: unshaded
-      visible: false
+#      visible: false # Corvax-Resprite
   - type: Emitter
-  - type: Gun
-    fireRate: 10 #just has to be fast enough to keep up with upgrades
-    selectedMode: SemiAuto
-    availableModes:
-      - SemiAuto
-    soundGunshot:
-      path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer
