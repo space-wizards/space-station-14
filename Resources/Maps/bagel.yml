@@ -25540,8 +25540,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -25570,8 +25570,8 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -31855,7 +31855,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 6
+  - index: 4
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -33868,13 +33868,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 1198
-  type: PoweredSmallLight
+  type: FirelockGlass
   components:
-  - pos: -14.5,-26.5
+  - pos: 16.5,-8.5
     parent: 60
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 1199
   type: PoweredSmallLight
   components:
@@ -56224,14 +56222,11 @@ entities:
     parent: 60
     type: Transform
 - uid: 4369
-  type: PoweredSmallLight
+  type: FirelockGlass
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -18.5,-36.5
+  - pos: 15.5,-8.5
     parent: 60
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 4370
   type: Rack
   components:
@@ -57389,14 +57384,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 4546
-  type: PoweredSmallLight
+  type: FirelockGlass
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -29.5,-29.5
+  - pos: 17.5,-8.5
     parent: 60
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 4547
   type: PoweredSmallLight
   components:
@@ -68758,22 +68750,22 @@ entities:
     parent: 60
     type: Transform
 - uid: 6128
-  type: FirelockGlass
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 15.5,-7.5
+  - pos: -47.5,-39.5
     parent: 60
     type: Transform
 - uid: 6129
-  type: FirelockGlass
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 16.5,-7.5
-    parent: 60
+  - pos: -11.5,-0.5
+    parent: 7536
     type: Transform
 - uid: 6130
-  type: FirelockGlass
+  type: AtmosDeviceFanTiny
   components:
-  - pos: 17.5,-7.5
-    parent: 60
+  - pos: -11.5,-4.5
+    parent: 7536
     type: Transform
 - uid: 6131
   type: CableHV
@@ -78716,8 +78708,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -89005,21 +88997,11 @@ entities:
     parent: 7536
     type: Transform
 - uid: 9110
-  type: HoloFan
+  type: AtmosDeviceFanTiny
   components:
-  - pos: -11.5,-0.5
+  - pos: 0.5,-0.5
     parent: 7536
     type: Transform
-  missingComponents:
-  - TimedDespawn
-- uid: 9111
-  type: HoloFan
-  components:
-  - pos: -11.5,-4.5
-    parent: 7536
-    type: Transform
-  missingComponents:
-  - TimedDespawn
 - uid: 9112
   type: AirlockExternal
   components:
@@ -89133,14 +89115,6 @@ entities:
   - pos: 3.5,-2.5
     parent: 7536
     type: Transform
-- uid: 9129
-  type: HoloFan
-  components:
-  - pos: -47.5,-39.5
-    parent: 60
-    type: Transform
-  missingComponents:
-  - TimedDespawn
 - uid: 9130
   type: Bed
   components:
@@ -99883,14 +99857,6 @@ entities:
   - pos: 13.04615,-1.4593277
     parent: 7536
     type: Transform
-- uid: 10828
-  type: HoloFan
-  components:
-  - pos: 0.5,-0.5
-    parent: 7536
-    type: Transform
-  missingComponents:
-  - TimedDespawn
 - uid: 10830
   type: TablePlasmaGlass
   components:
@@ -170254,14 +170220,17 @@ entities:
     - 6127
     - 6126
     - 6125
-    - 6130
-    - 6129
-    - 6128
+    - invalid
+    - invalid
+    - invalid
     - 21559
     - 12591
     - 12592
     - 3692
     - 3693
+    - 4369
+    - 1198
+    - 4546
     type: DeviceList
 - uid: 21558
   type: FireAlarm
@@ -170274,10 +170243,13 @@ entities:
     - 6127
     - 6126
     - 6125
-    - 6130
-    - 6129
-    - 6128
+    - invalid
+    - invalid
+    - invalid
     - 21559
+    - 4369
+    - 1198
+    - 4546
     type: DeviceList
 - uid: 21559
   type: AirSensor
@@ -172427,11 +172399,14 @@ entities:
     - 6133
     - 5901
     - 5900
-    - 6128
-    - 6129
-    - 6130
+    - invalid
+    - invalid
+    - invalid
     - 12001
     - 12589
+    - 4369
+    - 1198
+    - 4546
     type: DeviceList
 - uid: 21776
   type: BlastDoorExterior2Open
@@ -183388,9 +183363,12 @@ entities:
     - 6133
     - 5901
     - 5900
-    - 6128
-    - 6129
-    - 6130
+    - invalid
+    - invalid
+    - invalid
+    - 4369
+    - 1198
+    - 4546
     type: DeviceList
 - uid: 23385
   type: Mirror
