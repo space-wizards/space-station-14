@@ -165,6 +165,23 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: artifactEffect
+  id: EffectSentience
+  targetDepth: 3
+  effectHint: artifact-effect-hint-sentience
+  permanentComponents:
+  - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: sentient artifact
+    description: |
+      Enact your eldritch whims.
+      Forcibly activate your nodes for good or for evil.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
+
+- type: artifactEffect
   id: EffectMultitool
   targetDepth: 3
   effectHint: artifact-effect-hint-multitool

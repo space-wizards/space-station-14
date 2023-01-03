@@ -17,6 +17,7 @@ artifact-effect-hint-drill = Serrated rotator
 artifact-effect-hint-soap = Lubricated surface
 artifact-effect-hint-communication = Long-distance communication
 artifact-effect-hint-fixtures = Structural permeation
+artifact-effect-hint-sentience = Neurological activity
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")

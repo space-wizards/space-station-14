@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization;
+﻿using Content.Shared.Actions;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
@@ -7,4 +8,9 @@ public enum SharedArtifactsVisuals : byte
 {
     SpriteIndex,
     IsActivated
+}
+
+
+public sealed class ArtifactSelfActivateEvent : InstantActionEvent
+{
 }
