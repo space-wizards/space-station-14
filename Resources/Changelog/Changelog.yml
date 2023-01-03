@@ -1,10 +1,4 @@
 Entries:
-- author: Rolfero
-  changes:
-  - {message: Forensic scanners can be used by a verb in the right-clicking menu.,
-    type: Add}
-  id: 2331
-  time: '2022-09-16T21:22:17.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Setting the side port output on a gas mixer now behaves as intended,
@@ -2960,3 +2954,8 @@ Entries:
     type: Tweak}
   id: 2830
   time: '2023-01-03T07:53:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
+  id: 2831
+  time: '2023-01-03T23:13:11.0000000+00:00'
