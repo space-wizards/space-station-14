@@ -300,6 +300,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
+            if (args.User != null)
+                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.User.Value):player} landed in {ToPrettyString(uid)}");
             AfterInsert(component, args.Thrown);
         }
 
