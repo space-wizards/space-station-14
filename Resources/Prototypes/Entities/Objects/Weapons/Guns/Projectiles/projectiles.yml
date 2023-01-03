@@ -222,6 +222,7 @@
       - state: projectile
         shader: unshaded
   - type: Ammo
+    muzzleFlash: null
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -242,6 +243,8 @@
   - type: Tag
     tags:
     - EmitterBolt
+  - type: TimedDespawn
+    lifetime: 3
 
 - type: entity
   id: BulletKinetic
