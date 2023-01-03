@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
@@ -7,6 +8,7 @@ using Content.Server.MobState;
 using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Roles;
+using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,6 +34,7 @@ namespace Content.Server.Mind
         private readonly MindSystem _mindSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private readonly ISet<Role> _roles = new HashSet<Role>();
 
@@ -406,6 +409,10 @@ namespace Content.Server.Mind
         {
             Session?.AttachToEntity(OwnedEntity);
             RemoveVisitingEntity();
+
+            if (Session != null && OwnedEntity != null)
+                _adminLogger.Add(LogType.Mind, LogImpact.Low,
+                    $"{Session.Name} returned to {_entityManager.ToPrettyString(OwnedEntity.Value)}");
         }
 
         /// <summary>
