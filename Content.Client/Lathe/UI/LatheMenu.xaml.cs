@@ -140,7 +140,9 @@ public sealed partial class LatheMenu : DefaultWindow
                 sb.Append(Loc.GetString(proto.Name));
             }
 
-            var icon = _spriteSystem.Frame0(prototype.Icon);
+            var icon = prototype.Icon == null
+                ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
+                : _spriteSystem.Frame0(prototype.Icon);
             var canProduce = _lathe.CanProduce(lathe, prototype, quantity);
 
             var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);

@@ -363,7 +363,7 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, IPhysBody collider)
+        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, PhysicsComponent collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRangeVV);
 
