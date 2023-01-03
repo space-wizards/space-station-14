@@ -42572,8 +42572,7 @@ entities:
 - uid: 2379
   type: GasThermoMachineFreezer
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 26.5,-28.5
+  - pos: 26.5,-28.5
     parent: 60
     type: Transform
   - color: '#0335FCFF'
