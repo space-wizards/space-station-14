@@ -20,7 +20,6 @@
         reagents:
         - ReagentId: Flour
           Quantity: 10
-  - type: Evaporation
   - type: Appearance
   - type: PuddleVisualizer
 

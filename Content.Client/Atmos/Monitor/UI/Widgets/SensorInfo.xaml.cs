@@ -77,10 +77,6 @@ public sealed partial class SensorInfo : BoxContainer
         {
             OnThresholdUpdate!(_address, type, threshold, arg3);
         };
-
-        foreach (var (gas, threshold) in data.GasThresholds)
-        {
-       }
     }
 
     public void ChangeData(AtmosSensorData data)
