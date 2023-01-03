@@ -225,6 +225,7 @@ public sealed class ClimbSystem : SharedClimbSystem
                 ClimbingFixtureName,
                 collisionLayer: (int) CollisionGroup.None,
                 collisionMask: ClimbingCollisionGroup,
+                hard: false,
                 manager: fixturesComp))
         {
             return false;
@@ -421,7 +422,7 @@ public sealed class ClimbSystem : SharedClimbSystem
             if (climbing.Deleted)
                 return;
 
-            _physics.SetBodyType(uid, BodyType.KinematicController, body: physics);
+            _physics.SetBodyType(uid, BodyType.KinematicController);
             climbing.OwnerIsTransitioning = false;
             _actionBlockerSystem.UpdateCanMove(uid);
         });
