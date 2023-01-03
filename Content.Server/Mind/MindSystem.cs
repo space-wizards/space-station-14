@@ -162,7 +162,7 @@ public sealed class MindSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (component.PreventSuicide || (component.HasMind && component.Mind!.PreventSuicide))
+        if (component.HasMind && component.Mind!.PreventSuicide)
         {
             args.BlockSuicideAttempt(true);
         }
