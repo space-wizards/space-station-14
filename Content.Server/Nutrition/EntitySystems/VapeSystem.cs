@@ -9,6 +9,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Damage;
+using Content.Server.Chemistry.ReactionEffects;
 
 namespace Content.Server.Nutrition.Vape
 {
@@ -70,18 +71,10 @@ namespace Content.Server.Nutrition.Vape
         {
             comp.CancelToken = null;
 
-            if (args.Solution.AvailableVolume <= comp.SmokeAmount * 3)
-            {
-                args.Solution.MaxVolume += comp.SmokeAmount * 3;
+            if (args.Solution.CurrentVolume != 0)
+                SmokeAreaReactionEffect.SpawnSmoke("Smoke",Transform(args.Target).Coordinates, args.Solution, comp.SmokeAmount, 5, 1, 1, entityManager: EntityManager);
 
-                CreateSmoke(uid, args.Solution, comp);
-
-                args.Solution.MaxVolume -= comp.SmokeAmount * 3;
-            }
-            else if (args.Solution.CurrentVolume != 0)
-                CreateSmoke(uid, args.Solution, comp);
-
-            args.Solution.RemoveSolution(args.Solution.CurrentVolume / 2);
+            args.Solution.ScaleSolution(0.6f);
 
             //Smoking kills(your lungs, but there is no organ damage yet)
             _damageableSystem.TryChangeDamage(args.Target, comp.Damage, true);
@@ -89,17 +82,6 @@ namespace Content.Server.Nutrition.Vape
             _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
 
             args.Solution.RemoveAllSolution();
-        }
-
-        //kinda shit, but i can't find function to create smoke.
-        private void CreateSmoke(EntityUid uid, Solution solutions, VapeComponent comp)
-        {
-            var smoke = new Solution();
-            smoke.AddReagent("Phosphorus", comp.SmokeAmount); 
-            smoke.AddReagent("Potassium", comp.SmokeAmount);
-            smoke.AddReagent("Sugar", comp.SmokeAmount);
-            
-            _solutionContainerSystem.TryAddSolution(uid, solutions, smoke);
         }
 
         private void OnInteractionCanceled(EntityUid uid, VapeComponent comp, VapingEventCancel args)

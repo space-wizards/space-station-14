@@ -8,5 +8,3 @@
     sprite: Objects/Consumable/Smokeables/Vapes/vape-standart.rsi
     netsync: false
     state: icon
-  - type: Item
-    size: 1

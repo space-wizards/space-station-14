@@ -65,6 +65,7 @@
         maxVol: 20
 
 - type: entity
+  parent: BaseItem
   id: BaseVape
   abstract: true
   components:
