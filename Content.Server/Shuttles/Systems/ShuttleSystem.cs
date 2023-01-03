@@ -153,7 +153,7 @@ namespace Content.Server.Shuttles.Systems
 
             _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
             _physics.SetBodyStatus(component, BodyStatus.OnGround);
-            _physics.SetFixedRotation(uid, false, manager: manager, body: component);
+            _physics.SetFixedRotation(uid, true, manager: manager, body: component);
         }
 
         private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
