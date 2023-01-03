@@ -2,11 +2,13 @@
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Containers;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
 public partial class SharedGunSystem
 {
+    [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     public void InitializeContainer()
@@ -26,7 +28,9 @@ public partial class SharedGunSystem
                 break;
 
             var ent = container.ContainedEntities[0];
-            container.Remove(ent);
+
+            if (_netMan.IsServer)
+                container.Remove(ent);
 
             args.Ammo.Add(EnsureComp<AmmoComponent>(ent));
         }
