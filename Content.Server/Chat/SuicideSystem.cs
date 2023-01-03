@@ -51,6 +51,7 @@ namespace Content.Server.Chat
             DefaultSuicideHandler(victim, suicideEvent);
 
             ApplyDeath(victim, suicideEvent.Kind!.Value);
+            _adminLogger.Add(LogType.Suicide, $"{EntityManager.ToPrettyString(victim):player} suicided");
             return true;
         }
 
