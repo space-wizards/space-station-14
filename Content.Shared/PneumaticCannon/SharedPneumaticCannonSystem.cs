@@ -26,7 +26,6 @@ namespace Content.Shared.PneumaticCannon
             if (!Container.TryGetContainer(uid, PneumaticCannonComponent.TankSlotId, out var container) ||
                 container is not ContainerSlot slot || slot.ContainedEntity is null)
             {
-                Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-fire-no-gas", ("cannon", uid)), uid, args.User);
                 args.Cancelled = true;
             }
         }
