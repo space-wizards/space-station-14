@@ -1,5 +1,6 @@
-using Content.Server.Nutrition.EntitySystems;
 using System.Threading;
+using Content.Server.Nutrition.Vape;
+using Content.Shared.Damage;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -26,6 +27,9 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ExplodeOnUse { get; set; } = false;
 
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
 
         public CancellationTokenSource? CancelToken;
     }

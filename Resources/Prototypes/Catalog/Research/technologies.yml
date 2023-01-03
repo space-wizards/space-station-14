@@ -65,6 +65,7 @@
   - HydroponicsTrayMachineCircuitboard
   - HandheldHealthAnalyzer
   - Implanter
+  - Vape
 
 - type: technology
   name: technologies-virology
@@ -97,7 +98,6 @@
   requiredTechnologies:
   - BasicResearch
   unlockedRecipes:
-  - Vape
   - Beaker
   - LargeBeaker
   - CryostasisBeaker

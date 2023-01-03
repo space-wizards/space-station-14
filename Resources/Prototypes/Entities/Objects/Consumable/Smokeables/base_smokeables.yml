@@ -65,13 +65,13 @@
         maxVol: 20
 
 - type: entity
-  parent: BaseSmokable
   id: BaseVape
   abstract: true
   components:
-  - type: Smokable
-    exposeTemperature: 1173.15
   - type: Vape
+    damage:
+      groups:
+        Burn: 2
   - type: SolutionContainerManager
     solutions:
       smokable:

@@ -1,4 +1,3 @@
-
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Body.Components;
@@ -8,13 +7,16 @@ using System.Threading;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.Damage;
 
-namespace Content.Server.Nutrition.EntitySystems
+namespace Content.Server.Nutrition.Vape
 {
     public sealed class VapeSystem : EntitySystem
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
         [Dependency] private readonly FoodSystem _foodSystem = default!;
         [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
@@ -24,7 +26,8 @@ namespace Content.Server.Nutrition.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<VapeComponent, AfterInteractEvent>(OnInteraction);
 
-            SubscribeLocalEvent<VapingEvent>(InjectAndSmokeReagents);
+            SubscribeLocalEvent<VapeComponent, VapingEvent>(InjectAndSmokeReagents);
+            SubscribeLocalEvent<VapeComponent, VapingEventCancel>(OnInteractionCanceled);
         }
 
         private void OnInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args) 
@@ -33,55 +36,55 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var delay = comp.Delay;
 
-            if(!TryComp<BloodstreamComponent>(args.Target, out var bloodstream)
+            if (!args.CanReach
             || solution == null
-            || !args.CanReach
+            || comp.CancelToken != null
+            || !TryComp<BloodstreamComponent>(args.Target, out var bloodstream)
             || _foodSystem.IsMouthBlocked(args.Target.Value, args.User))
                 return;
 
-            if(args.Target == args.User)
+            if (args.Target == args.User)
                 delay = comp.UserDelay;
-            
-            var entMan = IoCManager.Resolve<IEntityManager>();
 
             //Always read the description.
-            if(solution.ContainsReagent("Water") || comp.ExplodeOnUse)
+            if (solution.ContainsReagent("Water") || comp.ExplodeOnUse)
             {
                 _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);
-                entMan.DeleteEntity(uid);
+                EntityManager.DeleteEntity(uid);
             }
 
             comp.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, delay, comp.CancelToken.Token, args.Target, uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = false,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                BroadcastFinishedEvent = new VapingEvent(args.User, args.Target.Value, uid, comp, solution, bloodstream)
+                UsedFinishedEvent = new VapingEvent(args.User, args.Target.Value, solution, bloodstream),
+                UsedCancelledEvent = new VapingEventCancel()
             });
             args.Handled = true;
 		}
 
-        private void InjectAndSmokeReagents(VapingEvent args)
+        private void InjectAndSmokeReagents(EntityUid uid, VapeComponent comp, VapingEvent args)
         {
-            args.VapeComponent.CancelToken = null;
+            comp.CancelToken = null;
 
-            if(args.Solution.AvailableVolume <= args.VapeComponent.SmokeAmount * 3)
+            if (args.Solution.AvailableVolume <= comp.SmokeAmount * 3)
             {
-                args.Solution.MaxVolume += args.VapeComponent.SmokeAmount * 3;
+                args.Solution.MaxVolume += comp.SmokeAmount * 3;
 
-                CreateSmoke(args.Item, args.Solution, args.VapeComponent);
+                CreateSmoke(uid, args.Solution, comp);
 
-                args.Solution.MaxVolume -= args.VapeComponent.SmokeAmount * 3;
+                args.Solution.MaxVolume -= comp.SmokeAmount * 3;
             }
-            else if(args.Solution.CurrentVolume != 0)
-                CreateSmoke(args.Item, args.Solution, args.VapeComponent);
+            else if (args.Solution.CurrentVolume != 0)
+                CreateSmoke(uid, args.Solution, comp);
 
             args.Solution.RemoveSolution(args.Solution.CurrentVolume / 2);
 
             //Smoking kills(your lungs, but there is no organ damage yet)
-            args.Solution.AddReagent("Thermite", 1);
+            _damageableSystem.TryChangeDamage(args.Target, comp.Damage, true);
 
             _bloodstreamSystem.TryAddToChemicals(args.Target, args.Solution, args.Bloodstream);
 
@@ -98,25 +101,28 @@ namespace Content.Server.Nutrition.EntitySystems
             
             _solutionContainerSystem.TryAddSolution(uid, solutions, smoke);
         }
+
+        private void OnInteractionCanceled(EntityUid uid, VapeComponent comp, VapingEventCancel args)
+        {
+            comp.CancelToken = null;
+        }
 	}
 
-    internal sealed class VapingEvent : EntityEventArgs
+    public sealed class VapingEvent : EntityEventArgs
     {
         public EntityUid User { get; }
         public EntityUid Target { get; }
-        public EntityUid Item { get; }
-        public VapeComponent VapeComponent;
         public Solution Solution { get; }
         public BloodstreamComponent Bloodstream;
 
-        public VapingEvent(EntityUid user, EntityUid target, EntityUid item, VapeComponent vapeComponent, Solution solution, BloodstreamComponent bloodstream)
+        public VapingEvent(EntityUid user, EntityUid target, Solution solution, BloodstreamComponent bloodstream)
         {
             User = user;
             Target = target;
-            Item = item;
-            VapeComponent = vapeComponent;
             Solution = solution;
             Bloodstream = bloodstream;
         }
     }
+
+    public sealed class VapingEventCancel : EntityEventArgs {}
 }
