@@ -48,6 +48,24 @@
     capacity: 50
 
 - type: artifactEffect
+  id: EffectClearFixtures
+  targetDepth: 2
+  effectHint: artifact-effect-hint-fixtures
+  permanentComponents:
+  - type: ClearFixturesArtifact
+
+- type: artifactEffect
+  id: EffectWandering
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  permanentComponents:
+  - type: RandomWalk
+    minSpeed: 12
+    maxSpeed: 20
+    minStepCooldown: 1
+    maxStepCooldown: 3
+
+- type: artifactEffect
   id: EffectSolutionStorage
   targetDepth: 2
   effectHint: artifact-effect-hint-storage
