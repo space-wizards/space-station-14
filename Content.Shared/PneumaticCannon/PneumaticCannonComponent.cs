@@ -13,7 +13,7 @@ namespace Content.Shared.PneumaticCannon
         public const string TankSlotId = "gas_tank";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public PneumaticCannonPower Power = PneumaticCannonPower.Low;
+        public PneumaticCannonPower Power = PneumaticCannonPower.Medium;
 
         [DataField("toolModifyPower", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string ToolModifyPower = "Anchoring";
@@ -30,7 +30,13 @@ namespace Content.Shared.PneumaticCannon
         /// </summary>
         [DataField("gasUsage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public float GasUsage = 3.0f;
+        public float GasUsage = 2f;
+
+        /// <summary>
+        ///     Base projectile speed at default power.
+        /// </summary>
+        [DataField("baseProjectileSpeed")]
+        public float BaseProjectileSpeed = 20f;
     }
 
     /// <summary>

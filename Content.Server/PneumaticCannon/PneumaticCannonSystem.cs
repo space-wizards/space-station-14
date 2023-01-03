@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tools.Components;
+using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Containers;
 
@@ -46,7 +47,10 @@ namespace Content.Server.PneumaticCannon
             Popup.PopupEntity(Loc.GetString("pneumatic-cannon-component-change-power",
                 ("power", component.Power.ToString())), uid, args.User);
 
-            // TODO Change gun stats
+            if (TryComp<GunComponent>(uid, out var gun))
+            {
+                gun.ProjectileSpeed = GetProjectileSpeedFromPower(component);
+            }
 
             args.Handled = true;
         }
@@ -105,13 +109,13 @@ namespace Content.Server.PneumaticCannon
             return TryComp<GasTankComponent>(contained, out var gasTank) ? gasTank : null;
         }
 
-        private float GetRangeMultFromPower(PneumaticCannonPower power)
+        private float GetProjectileSpeedFromPower(PneumaticCannonComponent component)
         {
-            return power switch
+            return component.Power switch
             {
-                PneumaticCannonPower.High => 1.6f,
-                PneumaticCannonPower.Medium => 1.3f,
-                PneumaticCannonPower.Low or _ => 1.0f,
+                PneumaticCannonPower.High => component.BaseProjectileSpeed * 4f,
+                PneumaticCannonPower.Medium => component.BaseProjectileSpeed,
+                PneumaticCannonPower.Low or _ => component.BaseProjectileSpeed * 0.5f,
             };
         }
     }
