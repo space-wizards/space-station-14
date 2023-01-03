@@ -2,14 +2,13 @@
   name: improvised pneumatic cannon
   parent: BaseStorageItem
   id: WeaponImprovisedPneumaticCannon
-  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     netsync: false
     layers:
     - state: icon
-      map: [ "enum.PneumaticCannonVisualLayers.Base" ]
     - state: tank
       map: [ "tank" ]
       visible: false
@@ -20,7 +19,7 @@
     slots:
     - Back
   - type: Gun
-    fireRate: 1
+    fireRate: 2
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
@@ -48,7 +47,7 @@
   - type: ItemSlots
     slots:
       gas_tank:
-        name: Gas Tank
+        name: pneumatic-cannon-component-itemslot-name
         whitelist:
           components:
           - GasTank

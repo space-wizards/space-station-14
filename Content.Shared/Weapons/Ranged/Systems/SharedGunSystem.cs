@@ -228,11 +228,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.NextFire > curTime)
             return;
 
-        var attemptEv = new AttemptShootEvent(user);
-        RaiseLocalEvent(gun.Owner, ref attemptEv);
-        if (attemptEv.Cancelled)
-            return;
-
         // First shot
         if (gun.ShotCounter == 0 && gun.NextFire < curTime)
             gun.NextFire = curTime;
@@ -279,7 +274,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         // where the gun may be SemiAuto or Burst.
         gun.ShotCounter += shots;
 
-        if (ev.Ammo.Count <= 0)
+        var attemptEv = new AttemptShootEvent(user);
+        RaiseLocalEvent(gun.Owner, ref attemptEv);
+
+        if (ev.Ammo.Count <= 0 || attemptEv.Cancelled)
         {
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -299,7 +297,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
         var shotEv = new GunShotEvent(user);
-        RaiseLocalEvent(gun.Owner, shotEv);
+        RaiseLocalEvent(gun.Owner, ref shotEv);
         // Projectiles cause impulses especially important in non gravity environments
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
@@ -425,6 +423,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 [ByRefEvent]
 public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
 
+[ByRefEvent]
 public record struct GunShotEvent(EntityUid User);
 
 public enum EffectLayers : byte

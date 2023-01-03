@@ -1,13 +1,13 @@
-﻿using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Tools;
+﻿using Content.Shared.Tools;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.PneumaticCannon
+namespace Content.Shared.PneumaticCannon
 {
     /// <summary>
     ///     Handles gas powered guns--cancels shooting if no gas is available, and takes gas from the given container slot.
     /// </summary>
-    [RegisterComponent, Access(typeof(PneumaticCannonSystem))]
+    [RegisterComponent, NetworkedComponent]
     public sealed class PneumaticCannonComponent : Component
     {
         public const string TankSlotId = "gas_tank";
@@ -24,6 +24,13 @@ namespace Content.Server.PneumaticCannon
         [DataField("highPowerStunTime")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float HighPowerStunTime = 3.0f;
+
+        /// <summary>
+        ///     Amount of moles to consume for each shot at any power.
+        /// </summary>
+        [DataField("gasUsage")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float GasUsage = 3.0f;
     }
 
     /// <summary>
