@@ -48,6 +48,24 @@
     capacity: 50
 
 - type: artifactEffect
+  id: EffectClearFixtures
+  targetDepth: 2
+  effectHint: artifact-effect-hint-fixtures
+  permanentComponents:
+  - type: ClearFixturesArtifact
+
+- type: artifactEffect
+  id: EffectWandering
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  permanentComponents:
+  - type: RandomWalk
+    minSpeed: 12
+    maxSpeed: 20
+    minStepCooldown: 1
+    maxStepCooldown: 3
+
+- type: artifactEffect
   id: EffectSolutionStorage
   targetDepth: 2
   effectHint: artifact-effect-hint-storage
@@ -145,6 +163,23 @@
     - FullAuto # no alien revolver in buildings
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+
+- type: artifactEffect
+  id: EffectSentience
+  targetDepth: 3
+  effectHint: artifact-effect-hint-sentience
+  permanentComponents:
+  - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: sentient artifact
+    description: |
+      Enact your eldritch whims.
+      Forcibly activate your nodes for good or for evil.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
 
 - type: artifactEffect
   id: EffectMultitool
