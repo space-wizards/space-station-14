@@ -435,10 +435,11 @@ namespace Content.Server.Mind
         /// </summary>
         public void UnVisit()
         {
+            var currentEntity = Session?.AttachedEntity;
             Session?.AttachToEntity(OwnedEntity);
             RemoveVisitingEntity();
 
-            if (Session != null && OwnedEntity != null)
+            if (Session != null && OwnedEntity != null && currentEntity != OwnedEntity)
                 _adminLogger.Add(LogType.Mind, LogImpact.Low,
                     $"{Session.Name} returned to {_entityManager.ToPrettyString(OwnedEntity.Value)}");
         }
