@@ -1148,8 +1148,8 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 5
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -1207,6 +1207,13 @@
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:ExplodeBehavior
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity

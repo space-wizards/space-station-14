@@ -322,7 +322,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       density: 80
       mask:
-      - SmallMobMask
+      - LargeMobMask
       layer:
-      - SmallMobLayer
+      - LargeMobLayer
 
