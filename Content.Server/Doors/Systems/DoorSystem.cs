@@ -190,7 +190,7 @@ public sealed class DoorSystem : SharedDoorSystem
                 return true;
         }
 
-        var modEv = new DoorGetPryTimeModifierEvent();
+        var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
         door.BeingPried = true;

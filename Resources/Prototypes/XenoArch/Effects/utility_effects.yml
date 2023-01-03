@@ -1,20 +1,35 @@
 ﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
 - type: artifactEffect
+  id: EffectIntercom
+  targetDepth: 2
+  effectHint: artifact-effect-hint-communication
+  permanentComponents:
+  - type: RadioMicrophone
+    powerRequired: false
+    listenRange: 3
+    supportedChannels:
+    - Common
+    - CentCom
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+
+- type: artifactEffect
   id: EffectRandomInstrument
   targetDepth: 2
   effectHint: artifact-effect-hint-mental
   permanentComponents:
   - type: Instrument
   - type: ActivatableUI
-    inHandsOnly: true
     singleUser: true
     verbText: verb-instrument-openui
     key: enum.InstrumentUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.InstrumentUiKey.Key
-      type: InstrumentBoundUserInterface
   - type: RandomInstrumentArtifact
 
 - type: artifactEffect

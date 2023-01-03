@@ -1,0 +1,99 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/species/moth/",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "aphid",
+			"directions": 4
+		},
+		{
+			"name": "blackcurvy",
+			"directions": 4
+		},
+		{
+			"name": "bushyblack",
+			"directions": 4
+		},
+		{
+			"name": "charred",
+			"directions": 4
+		},
+		{
+			"name": "default",
+			"directions": 4
+		},
+		{
+			"name": "elongated",
+			"directions": 4
+		},
+		{
+			"name": "fanpink",
+			"directions": 4
+		},
+		{
+			"name": "feather",
+			"directions": 4
+		},
+		{
+			"name": "green",
+			"directions": 4
+		},
+		{
+			"name": "holoblue",
+			"directions": 4
+		},
+		{
+			"name": "holored",
+			"directions": 4
+		},
+		{
+			"name": "pieidk",
+			"directions": 4
+		},
+		{
+			"name": "piratecape",
+			"directions": 4
+		},
+		{
+			"name": "pirategold",
+			"directions": 4
+		},
+		{
+			"name": "pointyblack",
+			"directions": 4
+		},
+		{
+			"name": "royaldefault",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple",
+			"directions": 4
+		},
+		{
+			"name": "stripedblack",
+			"directions": 4
+		},
+		{
+			"name": "stripedpink",
+			"directions": 4
+		},
+		{
+			"name": "thermal",
+			"directions": 4
+		},
+		{
+			"name": "white",
+			"directions": 4
+		},
+		{
+			"name": "woodland",
+			"directions": 4
+		}
+	]
+}

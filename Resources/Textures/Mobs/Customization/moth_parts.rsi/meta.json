@@ -1,15 +1,360 @@
 {
-  "version": 1,
-  "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/species/moth/",
-  "size": {
-    "x": 32,
-    "y": 32
-  },
-  "states": [
-    {
-      "name": "antenna_default",
-      "directions": 4
-    }
-  ]
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+	"copyright": "https://github.com/tgstation/tgstation/blob/master/icons/mob/species/moth/",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "aphid_body",
+			"directions": 4
+		},
+		{
+			"name": "aphid_head",
+			"directions": 4
+		},
+		{
+			"name": "aphid_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "aphid_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "aphid_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "aphid_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "black_body",
+			"directions": 4
+		},
+		{
+			"name": "black_head",
+			"directions": 4
+		},
+		{
+			"name": "black_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "black_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "black_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "black_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "deepcyan_body",
+			"directions": 4
+		},
+		{
+			"name": "deepcyan_head",
+			"directions": 4
+		},
+		{
+			"name": "deepcyan_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "deepcyan_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "deepcyan_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "deepcyan_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "gray_body",
+			"directions": 4
+		},
+		{
+			"name": "gray_head",
+			"directions": 4
+		},
+		{
+			"name": "gray_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "gray_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "gray_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "gray_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "holoblue_body",
+			"directions": 4
+		},
+		{
+			"name": "holoblue_head",
+			"directions": 4
+		},
+		{
+			"name": "holoblue_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "holoblue_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "holoblue_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "holoblue_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "holored_body",
+			"directions": 4
+		},
+		{
+			"name": "holored_head",
+			"directions": 4
+		},
+		{
+			"name": "holored_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "holored_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "holored_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "holored_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "ingraved_body",
+			"directions": 4
+		},
+		{
+			"name": "ingraved_head",
+			"directions": 4
+		},
+		{
+			"name": "ingraved_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "ingraved_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "ingraved_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "ingraved_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "neonpink_body",
+			"directions": 4
+		},
+		{
+			"name": "neonpink_head",
+			"directions": 4
+		},
+		{
+			"name": "neonpink_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "neonpink_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "neonpink_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "neonpink_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "pale_body",
+			"directions": 4
+		},
+		{
+			"name": "pale_head",
+			"directions": 4
+		},
+		{
+			"name": "pale_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "pale_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "pale_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "pale_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "pieidk_body",
+			"directions": 4
+		},
+		{
+			"name": "pieidk_head",
+			"directions": 4
+		},
+		{
+			"name": "pieidk_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "pieidk_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "pieidk_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "pieidk_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "redshine_body",
+			"directions": 4
+		},
+		{
+			"name": "redshine_head",
+			"directions": 4
+		},
+		{
+			"name": "redshine_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "redshine_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "redshine_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "redshine_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "royalpurple_body",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple_head",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "royalpurple_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "thermal_body",
+			"directions": 4
+		},
+		{
+			"name": "thermal_head",
+			"directions": 4
+		},
+		{
+			"name": "thermal_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "thermal_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "thermal_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "thermal_r_leg",
+			"directions": 4
+		},
+
+		{
+			"name": "woodland_body",
+			"directions": 4
+		},
+		{
+			"name": "woodland_head",
+			"directions": 4
+		},
+		{
+			"name": "woodland_l_arm",
+			"directions": 4
+		},
+		{
+			"name": "woodland_l_leg",
+			"directions": 4
+		},
+		{
+			"name": "woodland_r_arm",
+			"directions": 4
+		},
+		{
+			"name": "woodland_r_leg",
+			"directions": 4
+		}
+	]
 }

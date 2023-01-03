@@ -15,11 +15,11 @@
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: slipFixture
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       mask:
@@ -29,6 +29,16 @@
       hard: false
   - type: Appearance
   - type: PuddleVisualizer
+    wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
+
+- type: entity
+  id: EvaporatingPuddle
+  parent: PuddleBase
+  abstract: true
+  components:
+  - type: Evaporation
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 5
 
 - type: entity
   name: gibblets
@@ -40,16 +50,12 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
     netsync: false
-  - type: Puddle
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
         reagents:
         - ReagentId: Water
           Quantity: 10
-  - type: Appearance
-  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -57,7 +63,7 @@
 - type: entity
   name: puddle
   id: PuddleSmear
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -75,7 +81,7 @@
 - type: entity
   name: puddle
   id: PuddleSplatter
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -103,11 +109,6 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
-  - type: Evaporation
-    evaporateTime: 400 # very slow
-  - type: Appearance
-  - type: PuddleVisualizer
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
 
 - type: entity
   name: vomit
@@ -117,11 +118,11 @@
   - type: Transform
     anchored: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: slipFixture
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       mask:
@@ -188,6 +189,7 @@
     state: writing-0
     netsync: false
   - type: Puddle
+  - type: Evaporation
     evaporateTime: 10
   - type: Appearance
   - type: PuddleVisualizer
