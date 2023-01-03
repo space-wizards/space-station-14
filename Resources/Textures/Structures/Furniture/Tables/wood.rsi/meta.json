@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/a138859aec54b20dac65eb76e94e9db1b2202f55 and modified by Swept",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/47f6d91b37609b940152de62befa931dba35adf0",
   "size": {
     "x": 32,
     "y": 32

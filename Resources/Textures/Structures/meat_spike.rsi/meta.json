@@ -2,7 +2,7 @@
   "version":1,
   "size":{"x":32,"y":32},
   "license":"CC-BY-SA-3.0",
-  "copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/kitchen.dmi",
+  "copyright":"Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/commit/ed4fbf117973dafea6e654bee7efdc2316bc2d8d",
   "states":[
     {"name":"spike","directions":1,"delays":[[1.0]]},
     {"name":"spikebloody","directions":1,"delays":[[1.0]]},

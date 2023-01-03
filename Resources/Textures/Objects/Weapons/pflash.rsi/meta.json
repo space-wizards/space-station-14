@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/f349b842c84f500399bd5673e5e34a6bc45b001a",
+  "copyright": "Taken from TauCetiStation at commit https://github.com/TauCetiStation/TauCetiClassic/commit/b9a629d13b54be97631e4aa83a06c6a6225136d9",
   "size": {
     "x": 32,
     "y": 32
@@ -20,9 +20,10 @@
       "name": "flashing",
       "delays": [
         [
-          0.1,
-          0.1,
-          0.1
+          1,
+          0.075,
+          0.075,
+          0.075
         ]
       ]
     }
