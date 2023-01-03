@@ -4,3 +4,6 @@ ent-FlashlightLantern = flashlight
 ent-FlashlightSeclite = seclite
     .desc = A robust flashlight used by security.
     .suffix = { "" }
+ent-EmptyFlashlightLantern = { ent-FlashlightLantern }
+    .suffix = Empty
+    .desc = { ent-FlashlightLantern.desc }
