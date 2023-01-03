@@ -269,6 +269,24 @@
         Cable: 1
 
 - type: entity
+  id: CryoPodMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: cryo pod machine board
+  description: A machine printed circuit board for a cryo pod
+  components:
+    - type: Sprite
+      state: medical
+    - type: MachineBoard
+      prototype: CryoPod
+      requirements:
+        ScanningModule: 1
+        Manipulator: 1
+        MatterBin: 2
+      materialRequirements:
+        Glass: 1
+        Cable: 1
+
+- type: entity
   id: ChemMasterMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: ChemMaster 4000 machine board

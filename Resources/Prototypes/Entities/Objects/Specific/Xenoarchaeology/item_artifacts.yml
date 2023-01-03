@@ -46,6 +46,8 @@
       type: StorageBoundUserInterface
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Appearance
   - type: StaticPrice
     price: 500
