@@ -155,6 +155,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 Act = () =>
                 {
                     _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
                     AfterInsert(component, args.Using.Value);
                 }
             };
@@ -171,11 +172,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (unit.Container.Insert(toInsert))
-                AfterInsert(unit, toInsert);
+            if (!unit.Container.Insert(toInsert))
+                return;
+            if (ev.User != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                    $"{ToPrettyString(ev.User.Value):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(unit.Owner)}");
+            AfterInsert(unit, toInsert);
         }
 
-        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
         {
             if (!Resolve(unit, ref disposal))
                 return;
@@ -183,6 +188,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!disposal.Container.Insert(toInsert))
                 return;
 
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(unit)}");
             AfterInsert(disposal, toInsert);
         }
 
@@ -283,6 +289,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
             AfterInsert(component, args.Used);
             args.Handled = true;
         }
