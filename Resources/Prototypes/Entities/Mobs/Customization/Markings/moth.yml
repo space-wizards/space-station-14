@@ -5,8 +5,197 @@
   markingCategory: HeadTop
   speciesRestriction: [Moth]
   sprites:
-  - sprite: Mobs/Customization/moth_parts.rsi
-    state: antenna_default
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: default
+
+- type: marking
+  id: MothAntennasAphid
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: aphid
+
+- type: marking
+  id: MothAntennasBlackcurvy
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: blackcurvy
+
+- type: marking
+  id: MothAntennasBushyblack
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: bushyblack
+
+- type: marking
+  id: MothAntennasCharred
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: charred
+
+- type: marking
+  id: MothAntennasElongated
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: elongated
+
+- type: marking
+  id: MothAntennasFanpink
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: fanpink
+
+- type: marking
+  id: MothAntennasFeather
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: feather
+
+- type: marking
+  id: MothAntennasGreen
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: green
+
+- type: marking
+  id: MothAntennasHoloblue
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: holoblue
+
+- type: marking
+  id: MothAntennasHolored
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: holored
+
+- type: marking
+  id: MothAntennasCarpet
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: pieidk
+
+- type: marking
+  id: MothAntennasPiratecape
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: piratecape
+
+- type: marking
+  id: MothAntennasPirategold
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: pirategold
+
+- type: marking
+  id: MothAntennasPointyblack
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: pointyblack
+
+- type: marking
+  id: MothAntennasRoyaldefault
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: royaldefault
+
+- type: marking
+  id: MothAntennasRoyalpurple
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: royalpurple
+
+- type: marking
+  id: MothAntennasStripedblack
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: stripedblack
+
+- type: marking
+  id: MothAntennasStripedpink
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: stripedpink
+
+- type: marking
+  id: MothAntennasThermal
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: thermal
+
+- type: marking
+  id: MothAntennasWhite
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: white
+
+- type: marking
+  id: MothAntennasWoodland
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_antennas.rsi
+    state: woodland
 
 # Wings
 - type: marking
@@ -224,3 +413,704 @@
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
     state: woodland
+
+#Markings
+## aphid
+- type: marking
+  id: MothMarkingsChest_aphid
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_body
+- type: marking
+  id: MothMarkingsHead_aphid
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_head
+- type: marking
+  id: MothMarkingsLeftLeg_aphid
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_aphid
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_aphid
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_l_arm
+- type: marking
+  id: MothMarkingsRightArm_aphid
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: aphid_r_arm
+
+## black
+- type: marking
+  id: MothMarkingsChest_black
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_body
+- type: marking
+  id: MothMarkingsHead_black
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_head
+- type: marking
+  id: MothMarkingsLeftLeg_black
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_black
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_black
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_l_arm
+- type: marking
+  id: MothMarkingsRightArm_black
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: black_r_arm
+
+## deepcyan
+- type: marking
+  id: MothMarkingsChest_deepcyan
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_body
+- type: marking
+  id: MothMarkingsHead_deepcyan
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_head
+- type: marking
+  id: MothMarkingsLeftLeg_deepcyan
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_deepcyan
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_deepcyan
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_l_arm
+- type: marking
+  id: MothMarkingsRightArm_deepcyan
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: deepcyan_r_arm
+
+## gray
+- type: marking
+  id: MothMarkingsChest_gray
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_body
+- type: marking
+  id: MothMarkingsHead_gray
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_head
+- type: marking
+  id: MothMarkingsLeftLeg_gray
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_gray
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_gray
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_l_arm
+- type: marking
+  id: MothMarkingsRightArm_gray
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: gray_r_arm
+
+## holoblue
+- type: marking
+  id: MothMarkingsChest_holoblue
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_body
+- type: marking
+  id: MothMarkingsHead_holoblue
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_head
+- type: marking
+  id: MothMarkingsLeftLeg_holoblue
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_holoblue
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_holoblue
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_l_arm
+- type: marking
+  id: MothMarkingsRightArm_holoblue
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holoblue_r_arm
+
+## holored
+- type: marking
+  id: MothMarkingsChest_holored
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_body
+- type: marking
+  id: MothMarkingsHead_holored
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_head
+- type: marking
+  id: MothMarkingsLeftLeg_holored
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_holored
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_holored
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_l_arm
+- type: marking
+  id: MothMarkingsRightArm_holored
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: holored_r_arm
+
+## ingraved
+- type: marking
+  id: MothMarkingsChest_ingraved
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_body
+- type: marking
+  id: MothMarkingsHead_ingraved
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_head
+- type: marking
+  id: MothMarkingsLeftLeg_ingraved
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_ingraved
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_ingraved
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_l_arm
+- type: marking
+  id: MothMarkingsRightArm_ingraved
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: ingraved_r_arm
+
+## neonpink
+- type: marking
+  id: MothMarkingsChest_neonpink
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_body
+- type: marking
+  id: MothMarkingsHead_neonpink
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_head
+- type: marking
+  id: MothMarkingsLeftLeg_neonpink
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_neonpink
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_neonpink
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_l_arm
+- type: marking
+  id: MothMarkingsRightArm_neonpink
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: neonpink_r_arm
+
+## pale
+- type: marking
+  id: MothMarkingsChest_pale
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_body
+- type: marking
+  id: MothMarkingsHead_pale
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_head
+- type: marking
+  id: MothMarkingsLeftLeg_pale
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_pale
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_pale
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_l_arm
+- type: marking
+  id: MothMarkingsRightArm_pale
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pale_r_arm
+
+## pieidk
+- type: marking
+  id: MothMarkingsChest_pieidk
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_body
+- type: marking
+  id: MothMarkingsHead_pieidk
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_head
+- type: marking
+  id: MothMarkingsLeftLeg_pieidk
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_pieidk
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_pieidk
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_l_arm
+- type: marking
+  id: MothMarkingsRightArm_pieidk
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: pieidk_r_arm
+
+## redshine
+- type: marking
+  id: MothMarkingsChest_redshine
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_body
+- type: marking
+  id: MothMarkingsHead_redshine
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_head
+- type: marking
+  id: MothMarkingsLeftLeg_redshine
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_redshine
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_redshine
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_l_arm
+- type: marking
+  id: MothMarkingsRightArm_redshine
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: redshine_r_arm
+
+## royalpurple
+- type: marking
+  id: MothMarkingsChest_royalpurple
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_body
+- type: marking
+  id: MothMarkingsHead_royalpurple
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_head
+- type: marking
+  id: MothMarkingsLeftLeg_royalpurple
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_royalpurple
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_royalpurple
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_l_arm
+- type: marking
+  id: MothMarkingsRightArm_royalpurple
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: royalpurple_r_arm
+
+## thermal
+- type: marking
+  id: MothMarkingsChest_thermal
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_body
+- type: marking
+  id: MothMarkingsHead_thermal
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_head
+- type: marking
+  id: MothMarkingsLeftLeg_thermal
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_thermal
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_thermal
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_l_arm
+- type: marking
+  id: MothMarkingsRightArm_thermal
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: thermal_r_arm
+
+## woodland
+- type: marking
+  id: MothMarkingsChest_woodland
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_body
+- type: marking
+  id: MothMarkingsHead_woodland
+  bodyPart: Head
+  markingCategory: Head
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_head
+- type: marking
+  id: MothMarkingsLeftLeg_woodland
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_l_leg
+- type: marking
+  id: MothMarkingsRightLeg_woodland
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_r_leg
+- type: marking
+  id: MothMarkingsLeftArm_woodland
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_l_arm
+- type: marking
+  id: MothMarkingsRightArm_woodland
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Moth]
+  sprites:
+  - sprite: Mobs/Customization/moth_parts.rsi
+    state: woodland_r_arm
