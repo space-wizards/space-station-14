@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
@@ -10,6 +11,7 @@ using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
@@ -36,6 +38,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
@@ -207,14 +210,20 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 case SharedDisposalUnitComponent.UiButton.Eject:
                     TryEjectContents(component);
+                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit eject button on {ToPrettyString(uid)}");
                     break;
                 case SharedDisposalUnitComponent.UiButton.Engage:
                     ToggleEngage(component);
+                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit flush button on {ToPrettyString(uid)}, it's now {(component.Engaged ? "on" : "off")}");
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
                     TogglePower(component);
                     _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), component.Owner,
                         AudioParams.Default.WithVolume(-2f));
+                    if (EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
+                    {
+                        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
