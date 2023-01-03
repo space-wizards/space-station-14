@@ -145,6 +145,7 @@ namespace Content.Server.Doors.Components
                 _entityManager.TryGetComponent<AppearanceComponent>(Owner, out var appearanceComponent))
             {
                 appearanceComponent.SetData(DoorVisuals.Powered, receiverComponent.Powered);
+                appearanceComponent.SetData(DoorVisuals.ClosedLights, true); // Corvax-Resprite-Airlocks
             }
         }
 

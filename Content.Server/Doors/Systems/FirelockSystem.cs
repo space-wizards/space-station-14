@@ -11,7 +11,6 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
-using Content.Shared.Popups;
 using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
@@ -145,12 +144,12 @@ namespace Content.Server.Doors.Systems
             if (state.Fire)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-fire-message"),
-                    uid, args.User, PopupType.MediumCaution);
+                    uid);
             }
             else if (state.Pressure)
             {
                 _popupSystem.PopupEntity(Loc.GetString("firelock-component-is-holding-pressure-message"),
-                    uid, args.User, PopupType.MediumCaution);
+                    uid);
             }
 
             if (state.Fire || state.Pressure)
