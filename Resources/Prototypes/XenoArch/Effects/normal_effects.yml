@@ -423,17 +423,13 @@
   targetDepth: 3
   effectHint: artifact-effect-hint-environment
   components:
+  - type: GravityWell # Required for the actual effect to function. Do not add as a permanent effect elsewhere or things will break.
   - type: GravityWellArtifact
-    maxRange:
-      5.0: 10.0
-    minRange:
-      0.0: 3.0
-    radialAcceleration:
-      -50.0: 50.0
-    tangentialAcceleration:
-      -50.0: 50.0
-    pulsePeriod:
-      0.5: 5.0
+    maxRange: {5.0: 10.0} # Weird syntax required because tuples cannot be parsed from sequences. Key is Item1, value is Item2.
+    minRange: {0.0: 3.0}
+    radialAcceleration: {-50.0: 50.0}
+    tangentialAcceleration: {-50.0: 50.0}
+    pulsePeriod: {0.5: 5.0}
 
 - type: artifactEffect
   id: EffectMitosis
