@@ -870,7 +870,8 @@ namespace Content.Shared.Interaction
 
             DoContactInteraction(user, used, activateMsg);
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            if (!activateMsg.WasLogged)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion

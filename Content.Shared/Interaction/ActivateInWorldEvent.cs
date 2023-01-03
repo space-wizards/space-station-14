@@ -18,6 +18,11 @@ public sealed class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInte
     /// </summary>
     public EntityUid Target { get; }
 
+    /// <summary>
+    ///     Set to true when the activation is logged by a specific logger.
+    /// </summary>
+    public bool WasLogged { get; set; }
+
     public ActivateInWorldEvent(EntityUid user, EntityUid target)
     {
         User = user;

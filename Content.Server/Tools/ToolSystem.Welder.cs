@@ -62,6 +62,7 @@ namespace Content.Server.Tools
         }
 
         public bool TryToggleWelder(EntityUid uid, EntityUid? user,
+            ref bool wasLogged,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
             ItemComponent? item = null,
@@ -74,11 +75,12 @@ namespace Content.Server.Tools
                 return false;
 
             return !welder.Lit
-                ? TryTurnWelderOn(uid, user, welder, solutionContainer, item, light, appearance)
-                : TryTurnWelderOff(uid, user, welder, item, light, appearance);
+                ? TryTurnWelderOn(uid, user, ref wasLogged, welder, solutionContainer, item, light, appearance)
+                : TryTurnWelderOff(uid, user, ref wasLogged, welder, item, light, appearance);
         }
 
         public bool TryTurnWelderOn(EntityUid uid, EntityUid? user,
+            ref bool wasLogged,
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
             ItemComponent? item = null,
@@ -111,9 +113,10 @@ namespace Content.Server.Tools
 
             // Logging
             if (user != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} on");
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} on");
             else
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled on");
+            wasLogged = true;
 
             var ev = new WelderToggledEvent(true);
             RaiseLocalEvent(welder.Owner, ev, false);
@@ -144,6 +147,17 @@ namespace Content.Server.Tools
             PointLightComponent? light = null,
             AppearanceComponent? appearance = null)
         {
+            bool wasLogged = false;
+            return TryTurnWelderOff(uid, user, ref wasLogged, welder, item, light, appearance);
+        }
+
+        public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
+            ref bool wasLogged,
+            WelderComponent? welder = null,
+            ItemComponent? item = null,
+            PointLightComponent? light = null,
+            AppearanceComponent? appearance = null)
+        {
             if (!Resolve(uid, ref welder))
                 return false;
 
@@ -154,9 +168,10 @@ namespace Content.Server.Tools
 
             // Logging
             if (user != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} off");
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user.Value):user} toggled {ToPrettyString(uid):welder} off");
             else
                 _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(uid):welder} toggled off");
+            wasLogged = true;
 
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(welder.Owner, ev, false);
@@ -216,7 +231,9 @@ namespace Content.Server.Tools
 
         private void OnWelderActivate(EntityUid uid, WelderComponent welder, ActivateInWorldEvent args)
         {
-            args.Handled = TryToggleWelder(uid, args.User, welder);
+            bool wasLogged = args.WasLogged;
+            args.Handled = TryToggleWelder(uid, args.User, ref wasLogged, welder);
+            args.WasLogged = wasLogged;
         }
 
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
