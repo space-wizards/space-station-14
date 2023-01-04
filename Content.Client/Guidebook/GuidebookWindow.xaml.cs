@@ -13,6 +13,7 @@ namespace Content.Client.Guidebook;
 public sealed partial class GuidebookWindow : FancyWindow
 {
     [Dependency] private readonly IResourceManager _resourceManager = default!;
+    [Dependency] private readonly GuidebookParsingManager _parsingMan = default!;
 
     private List<GuideEntry> _entries = new();
 
@@ -28,24 +29,19 @@ public sealed partial class GuidebookWindow : FancyWindow
     {
         var entry = (GuideEntry) GuideSelect.Selected!.Metadata!;
         GuideContainer.RemoveAllChildren();
+        using var file = _resourceManager.ContentFileReadText(entry.Text);
 
-        try
+        GuideContainer.AddChild(new Label()
         {
-            using var file = _resourceManager.ContentFileReadText(entry.Text);
-            var text = file.ReadToEnd();
+            StyleClasses = { "LabelHeadingBigger" },
+            Text = entry.Name
+        });
 
-            GuideContainer.AddChild(new Label()
-            {
-                StyleClasses = { "LabelHeadingBigger" },
-                Text = entry.Name
-            });
-            GuideContainer.AddChild(Document.FromString(text));
-        }
-        catch (Exception e)
-        {
-            Logger.Error($"Caught error while generating guide document for entry {entry.Id}. Error: {e}");
-            GuideContainer.AddChild(new Label() { Text = "Error" });
-        }
+        var doc = new Document();
+        GuideContainer.AddChild(doc);
+
+        if (!_parsingMan.TryAddMarkup(doc, file.ReadToEnd()))
+            Logger.Error($"Failed to add contents of guide document {entry.Id}.");
 
         GuideContainer.MaxWidth = Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
     }

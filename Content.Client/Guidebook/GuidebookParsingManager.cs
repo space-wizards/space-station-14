@@ -1,6 +1,7 @@
 using Content.Client.Guidebook.Richtext;
 using Pidgin;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
 using System.Linq;
@@ -14,7 +15,8 @@ public sealed partial class GuidebookParsingManager
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
     private readonly List<Parser<char, Control>> _tagControlParsers = new();
-    private Parser<char, Control> _controlParser = default!;
+    public Parser<char, Control> _controlParser = default!;
+    public Parser<char, IEnumerable<Control>> ControlParser = default!;
     public Parser<char, Document> DocumentParser = default!;
 
     public void Initialize()
@@ -26,7 +28,27 @@ public sealed partial class GuidebookParsingManager
             _tagControlParsers.Add(CreateTagControlParser(typ.Name, typ, _sandboxHelper));
         }
 
-        DocumentParser = SkipWhitespaces.Then(Map((x) => new Document(x), _controlParser.Many()));
+        ControlParser = SkipWhitespaces.Then(_controlParser.Many());
+        DocumentParser = ControlParser.Select(x => new Document(x));
+    }
+
+    public bool TryAddMarkup(Control control, string text)
+    {
+        try
+        {
+            foreach (var child in ControlParser.ParseOrThrow(text))
+            {
+                control.AddChild(child);
+            }
+        }
+        catch (Exception e)
+        {
+            Logger.Error($"Caught error while generating markup controls. Error: {e}");
+            control.AddChild(new Label() { Text = "Error" });
+            return false;
+        }
+
+        return true;
     }
 
     private Parser<char, Control> CreateTagControlParser(string tagId, Type tagType, ISandboxHelper sandbox) => Map(
@@ -47,4 +69,11 @@ public sealed partial class GuidebookParsingManager
         },
         TryOpeningTag(tagId).Then(ParseTagArgs(tagId)),
         TagContentParser(tagId));
+
+    // Parse a bunch of controls until we encounter a matching closing tag.
+    private Parser<char, IEnumerable<Control>> TagContentParser(string tag) =>
+    OneOf(
+        Try(ImmediateTagEnd).ThenReturn(Enumerable.Empty<Control>()),
+        TagEnd.Then(_controlParser.Until(TryTagTerminator(tag)).Labelled($"{tag} children"))
+    );
 }

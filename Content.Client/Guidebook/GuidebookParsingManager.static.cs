@@ -121,13 +121,6 @@ public sealed partial class GuidebookParsingManager
     private static Parser<char, Unit> TryTagTerminator(string tag)
         => Try(String("</")).Then(SkipWhitespaces).Then(String(tag)).Then(SkipWhitespaces).Then(TagEnd).Labelled($"closing {tag}");
 
-    // Parse a bunch of controls until we encounter a matching closing tag.
-    private Parser<char, IEnumerable<Control>> TagContentParser(string tag) =>
-    OneOf(
-        Try(ImmediateTagEnd).ThenReturn(Enumerable.Empty<Control>()),
-        TagEnd.Then(_controlParser.Until(TryTagTerminator(tag)).Labelled($"{tag} children"))
-    );
-
     // given a list of strings, split over equal signs and create a dictionary+list.
     private static (List<string>, Dictionary<string, string>) ProcessArgs(IEnumerable<(string, string)> args)
     {

@@ -3,7 +3,6 @@ using Content.Client.Guidebook.Richtext;
 using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,6 +21,7 @@ public sealed class GuideEntryPrototypeTests
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
+        var parser = client.ResolveDependency<GuidebookParsingManager>();
         var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
 
         await client.WaitAssertion(() =>
@@ -30,15 +30,8 @@ public sealed class GuideEntryPrototypeTests
             {
                 foreach (var proto in prototypes)
                 {
-                    try
-                    {
-                        var text = resMan.ContentFileReadText(proto.Text).ReadToEnd();
-                        Document.FromString(text);
-                    }
-                    catch (Exception e)
-                    {
-                        Assert.Fail($"Caught exception while processing guide prototype {proto.ID}. Exception: {e}");
-                    }
+                    var text = resMan.ContentFileReadText(proto.Text).ReadToEnd();
+                    Assert.That(parser.TryAddMarkup(new Document(), text), $"Failed to parse guidebook: {proto.Id}");
                 }
             });
         });
