@@ -6,6 +6,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
 using Content.Shared.Speech;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -17,16 +18,18 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Guidebook;
 
 // TODO GUIDEBOOKS
+// - Tests. Especially for all the parsing stuff.
+// - Add more guides.
+// - Add GuideHelpComponent to various entities.
+//
+// After an engine PR to make the Tree control less shit:
+// - Hide tree view when showing a singular guide.
+// - Add argument to public method to select a specific guide (e.g., show AME guide, but with the full power tree available)
 // - improve Tree UI control to add highlighting & collapsible sections
 // - search bar for sections/guides
-// - add help component/verb
-//   - Examine tooltip -> ? button -> opens a relevant guide
-//   - Maybe also a "help" keybind that tries to open a relevant guide based on the mouse's current control/window or hovered entity.
-// - Tests. Especially for all the parsing stuff.
-// - Hide tree view when showing a singular guide.
 
 /// <summary>
-///     This system handles interactions with various client-side entities that are embedded into guidebooks.
+///     This system handles the help-verb and interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
 public sealed class GuidebookSystem : EntitySystem
 {
@@ -35,7 +38,10 @@ public sealed class GuidebookSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly VerbSystem _verbSystem = default!;
     [Dependency] private readonly RgbLightControllerSystem _rgbLightControllerSystem = default!;
+    [Dependency] private readonly TagSystem _tags = default!;
     private GuidebookWindow _guideWindow = default!;
+
+    public const string GuideEmbedTag = "GuideEmbeded";
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -46,12 +52,26 @@ public sealed class GuidebookSystem : EntitySystem
             .Register<GuidebookSystem>();
         _guideWindow = new GuidebookWindow();
 
+        SubscribeLocalEvent<GuideHelpComponent, GetVerbsEvent<ExamineVerb>>(OnGetVerbs);
         SubscribeLocalEvent<GuidebookControlsTestComponent, InteractHandEvent>(OnGuidebookControlsTestInteractHand);
         SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
         SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
             OnGuidebookControlsTestGetAlternateVerbs);
     }
 
+    private void OnGetVerbs(EntityUid uid, GuideHelpComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (component.Guides.Count == 0 || _tags.HasTag(uid, GuideEmbedTag))
+            return;
+
+        args.Verbs.Add(new()
+        {
+            Text = Loc.GetString("guide-help-verb"),
+            IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png",
+            Act = () => OpenGuidebook(component.Guides, includeChildren: component.IncludeChildren, selected: component.Guides[0]),
+            ClientExclusive = true
+        });
+    }
 
     private void OnGuidebookControlsTestGetAlternateVerbs(EntityUid uid, GuidebookControlsTestComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
@@ -152,8 +172,15 @@ public sealed class GuidebookSystem : EntitySystem
     /// <param name="forceRoot">This forces a singular guide to contain all other guides. This guide will
     /// contain its own children, in addition to what would normally be the root guides if this were not
     /// specified.</param>
-    /// <returns></returns>
-    public bool OpenGuidebook(Dictionary<string, GuideEntry>? guides = null, List<string>? rootEntries = null, string? forceRoot = null)
+    /// <param name="includeChildren">Whether or not to automatically include child entries. If false, this will ONLY
+    /// show the specified entries</param>
+    /// <param name="selected">The guide whose contents should be displayed when the guidebook is opened</param>
+    public bool OpenGuidebook(
+        Dictionary<string, GuideEntry>? guides = null,
+        List<string>? rootEntries = null,
+        string? forceRoot = null,
+        bool includeChildren = true,
+        string? selected = null)
     {
         _guideWindow.OpenCenteredRight();
 
@@ -166,10 +193,58 @@ public sealed class GuidebookSystem : EntitySystem
             RaiseLocalEvent(ev);
             guides = ev.Guides;
         }
+        else if (includeChildren)
+        {
+            var oldGuides = guides;
+            guides = new(oldGuides);
+            foreach (var guide in oldGuides.Values)
+            {
+                RecursivelyAddChildren(guide, guides);
+            }
+        }
 
-        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot);
+        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot, selected);
 
         return true;
+    }
+
+    public bool OpenGuidebook(
+        List<string> guideList,
+        List<string>? rootEntries = null,
+        string? forceRoot = null,
+        bool includeChildren = true,
+        string? selected = null)
+    {
+        Dictionary<string, GuideEntry>? guides = new();
+        foreach (var guideId in guideList)
+        {
+            if (!_prototypeManager.TryIndex<GuideEntryPrototype>(guideId, out var guide))
+            {
+                Logger.Error($"Encountered unknown guide prototype: {guideId}");
+                continue;
+            }
+            guides.Add(guideId, guide);
+        }
+
+        return OpenGuidebook(guides, rootEntries, forceRoot, includeChildren, selected);
+    }
+
+    private void RecursivelyAddChildren(GuideEntry guide, Dictionary<string, GuideEntry> guides)
+    {
+        foreach (var childId in guide.Children)
+        {
+            if (guides.ContainsKey(childId))
+                continue;
+
+            if (!_prototypeManager.TryIndex<GuideEntryPrototype>(childId, out var child))
+            {
+                Logger.Error($"Encountered unknown guide prototype: {childId} as a child of {guide.Id}. If the child is not a prototype, it must be directly provided.");
+                continue;
+            }
+
+            guides.Add(childId, child);
+            RecursivelyAddChildren(child, guides);
+        }
     }
 }
 

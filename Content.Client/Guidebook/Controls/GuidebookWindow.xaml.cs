@@ -15,6 +15,7 @@ public sealed partial class GuidebookWindow : FancyWindow
     [Dependency] private readonly GuidebookParsingManager _parsingMan = default!;
 
     private Dictionary<string, GuideEntry> _entries = new();
+    private string? _currentlyShowing;
 
     public GuidebookWindow()
     {
@@ -24,11 +25,20 @@ public sealed partial class GuidebookWindow : FancyWindow
         Tree.OnItemSelected += GuideSelectOnOnItemSelected;
     }
 
+    public void ClearSelecteddGuide()
+    {
+        _currentlyShowing = null;
+        Placeholder.Visible = true;
+        EntryContainer.RemoveAllChildren();
+    }
+
     private void GuideSelectOnOnItemSelected() =>
         ShowGuide((GuideEntry) Tree.Selected!.Metadata!);
 
     private void ShowGuide(GuideEntry entry)
     {
+        _currentlyShowing = entry.Id;
+        Placeholder.Visible = false;
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
@@ -47,20 +57,36 @@ public sealed partial class GuidebookWindow : FancyWindow
         EntryContainer.MaxWidth = Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
     }
 
-    public void UpdateGuides(Dictionary<string, GuideEntry> entries, List<string>? rootEntries = null, string? forceRoot = null)
+    public void UpdateGuides(
+        Dictionary<string, GuideEntry> entries,
+        List<string>? rootEntries = null,
+        string? forceRoot = null,
+        string? selected = null)
     {
         _entries = entries;
         RepopulateTree(rootEntries, forceRoot);
 
-        if (Tree.ChildCount > 1)
-            return;
-
         // why doesn't tree allow you to set the selected entry!?!? Or even retrieve existing entries???
         // TODO fix tree shitcode and then just show the singular entry
 
-        // Tree.Visible = false;
-        // ShowGuide((GuideEntry) ((Tree.Item)Tree.Children.First()).Metadata);
-        ;
+        if (Tree.ChildCount > 1)
+        {
+            // TODO hide tree view altogether
+            // selected = WhyTheFuckDoesntTheTreeHaveAMethodToGetFuckingItems()
+        }
+
+        if (selected != null)
+        {
+            // TODO select guide. Inc making it highlighted in the tree
+            return;
+        }
+
+        if (_currentlyShowing != null && !entries.ContainsKey(_currentlyShowing))
+            ClearSelecteddGuide();
+        else
+        {
+            // TODO select the currently shown item (so that it is highlighted in the tree/TOC.
+        }
     }
 
     private IEnumerable<GuideEntry> GetSortedRootEntries(List<string>? rootEntries)
@@ -97,10 +123,7 @@ public sealed partial class GuidebookWindow : FancyWindow
     private Tree.Item? AddEntry(string id, Tree.Item? parent, HashSet<string> addedEntries, bool indent)
     {
         if (!_entries.TryGetValue(id, out var entry))
-        {
-            Logger.Error($"Missing guide entry: {id}");
             return null;
-        }
 
         if (!addedEntries.Add(id))
         {

@@ -11,6 +11,7 @@ namespace Content.Server.Entry
             "ItemStatus",
             "Marker",
             "GuidebookControlsTest",
+            "GuideHelp",
             "Clickable",
             "Icon",
             "ClientEntitySpawner",
