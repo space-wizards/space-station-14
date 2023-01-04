@@ -353,7 +353,7 @@
   description: technologies-electrical-engineering-description
   icon:
     sprite: Structures/Power/Generation/Singularity/emitter.rsi
-    state: emitter # Corvax-Resprite
+    state: emitter2
   requiredPoints: 15000
   requiredTechnologies:
   - ElectromagneticTheory
