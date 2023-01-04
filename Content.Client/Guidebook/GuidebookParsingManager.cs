@@ -23,7 +23,7 @@ public sealed partial class GuidebookParsingManager
     {
         _controlParser = OneOf(Rec(() => OneOf(_tagControlParsers)), HeaderControlParser, ListControlParser, TextControlParser).Before(SkipWhitespaces);
 
-        foreach (var typ in _reflectionManager.GetAllChildren<ITag>())
+        foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
         {
             _tagControlParsers.Add(CreateTagControlParser(typ.Name, typ, _sandboxHelper));
         }
@@ -54,7 +54,7 @@ public sealed partial class GuidebookParsingManager
     private Parser<char, Control> CreateTagControlParser(string tagId, Type tagType, ISandboxHelper sandbox) => Map(
         (args, controls) =>
         {
-            var tag = (ITag) sandbox.CreateInstance(tagType);
+            var tag = (IDocumentTag) sandbox.CreateInstance(tagType);
             if (!tag.TryParseTag(args.Item1, args.Item2, out var control))
             {
                 Logger.Error($"Failed to parse {tagId} args");

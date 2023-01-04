@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Guidebook.Richtext;
 
-public sealed class Box : BoxContainer, ITag
+public sealed class Box : BoxContainer, IDocumentTag
 {
     public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control, out bool instant)
     {

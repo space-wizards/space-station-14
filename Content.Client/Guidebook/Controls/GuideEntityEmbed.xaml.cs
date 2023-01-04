@@ -15,7 +15,7 @@ using Robust.Shared.Map;
 namespace Content.Client.Guidebook.Controls;
 
 [GenerateTypedNameReferences]
-public sealed partial class GuideEntityEmbed : BoxContainer, ITag
+public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IEntitySystemManager _systemManager = default!;

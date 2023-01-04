@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Guidebook.Richtext;
 
-public sealed class CommandButton : Button, ITag
+public sealed class CommandButton : Button, IDocumentTag
 {
     private string _command = string.Empty;
 
