@@ -6,17 +6,16 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
 using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
-using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
-using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Map;
+using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -29,9 +28,10 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly ProjectileSystem _projectile = default!;
-        [Dependency] private readonly GunSystem _gun = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -207,16 +207,33 @@ namespace Content.Server.Singularity.EntitySystems
         private void Fire(EmitterComponent component)
         {
             var uid = component.Owner;
-            if (!TryComp<GunComponent>(uid, out var guncomp))
+            var projectile = EntityManager.SpawnEntity(component.BoltType, EntityManager.GetComponent<TransformComponent>(uid).Coordinates);
+
+            if (!EntityManager.TryGetComponent<PhysicsComponent?>(projectile, out var physicsComponent))
+            {
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a PhysicsComponent");
                 return;
+            }
 
-            var xform = Transform(uid);
-            var ent = Spawn(component.BoltType, xform.Coordinates);
-            var proj = EnsureComp<ProjectileComponent>(ent);
-            _projectile.SetShooter(proj, uid);
+            physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            var targetPos = new EntityCoordinates(uid, (0, -1));
-            _gun.Shoot(guncomp, ent, xform.Coordinates, targetPos);
+            if (!EntityManager.TryGetComponent<ProjectileComponent?>(projectile, out var projectileComponent))
+            {
+                Logger.Error("Emitter tried firing a bolt, but it was spawned without a ProjectileComponent");
+                return;
+            }
+
+            _projectile.SetShooter(projectileComponent, component.Owner);
+
+            var worldRotation = Transform(uid).WorldRotation;
+            _physics.SetLinearVelocity(physicsComponent, worldRotation.ToWorldVec() * 20f);
+            Transform(projectile).WorldRotation = worldRotation;
+
+            // TODO: Move to projectile's code.
+            Timer.Spawn(3000, () => EntityManager.DeleteEntity(projectile));
+
+            _audio.PlayPvs(component.FireSound, component.Owner,
+                AudioParams.Default.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 
         private void UpdateAppearance(EmitterComponent component)
