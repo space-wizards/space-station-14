@@ -11,6 +11,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -23,6 +25,7 @@ namespace Content.Shared.Containers.ItemSlots
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly INetManager _netManager = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -224,8 +227,12 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Insert(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot?.Insert(item);
+            var inserted = slot.ContainerSlot?.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
+
+            // Logging
+            if (inserted != null && inserted.Value && user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} inserted {ToPrettyString(item)} into {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
             _audioSystem.PlayPredicted(slot.InsertSound, uid, excludeUserAudio ? user : null);
         }
@@ -249,7 +256,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.Whitelist != null && !slot.Whitelist.IsValid(usedUid))
             {
                 if (_netManager.IsClient && _timing.IsFirstTimePredicted && popup.HasValue && !string.IsNullOrWhiteSpace(slot.WhitelistFailPopup))
-                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, Filter.Entities(popup.Value));
+                    _popupSystem.PopupEntity(Loc.GetString(slot.WhitelistFailPopup), uid, popup.Value);
                 return false;
             }
 
@@ -327,8 +334,12 @@ namespace Content.Shared.Containers.ItemSlots
         /// Useful for predicted interactions</param>
         private void Eject(EntityUid uid, ItemSlot slot, EntityUid item, EntityUid? user, bool excludeUserAudio = false)
         {
-            slot.ContainerSlot?.Remove(item);
+            var ejected = slot.ContainerSlot?.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
+
+            // Logging
+            if (ejected != null && ejected.Value && user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value)} ejected {ToPrettyString(item)} from {slot.ContainerSlot?.ID + " slot of "}{ToPrettyString(uid)}");
 
             _audioSystem.PlayPredicted(slot.EjectSound, uid, excludeUserAudio ? user : null, slot.SoundOptions);
         }

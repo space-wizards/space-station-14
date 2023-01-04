@@ -81,7 +81,7 @@ namespace Content.Server.Guardian
 
             if (!HasComp<GuardianHostComponent>(host)) return;
 
-            _popupSystem.PopupEntity(Loc.GetString("guardian-available"), host, Filter.Entities(host));
+            _popupSystem.PopupEntity(Loc.GetString("guardian-available"), host, host);
         }
 
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
@@ -102,7 +102,8 @@ namespace Content.Server.Guardian
             if (args.Cancelled || args.Target != component.Host)
                 return;
 
-            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), Filter.Entities(uid), PopupType.LargeCaution);
+            // why is this server side code? This should be in shared
+            _popupSystem.PopupCursor(Loc.GetString("guardian-attack-host"), uid, PopupType.LargeCaution);
             args.Cancel();
         }
 
@@ -147,22 +148,21 @@ namespace Content.Server.Guardian
         {
             if (component.Used)
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-empty-invalid-creation"), user, user);
                 return;
             }
 
             // Can only inject things with the component...
             if (!HasComp<CanHostGuardianComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-activator-invalid-target"), user, user);
                 return;
             }
-
 
             // If user is already a host don't duplicate.
             if (HasComp<GuardianHostComponent>(target))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-already-present-invalid-creation"), user, user);
                 return;
             }
 
@@ -204,9 +204,9 @@ namespace Content.Server.Guardian
             {
                 guardianComponent.Host = ev.Target;
 
-                SoundSystem.Play("/Audio/Effects/guardian_inject.ogg", Filter.Entities(ev.Target), ev.Target);
+                SoundSystem.Play("/Audio/Effects/guardian_inject.ogg", Filter.Pvs(ev.Target), ev.Target);
 
-                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, Filter.Entities(ev.Target));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-created"), ev.Target, ev.Target);
                 // Exhaust the activator
                 comp.Used = true;
             }
@@ -226,8 +226,8 @@ namespace Content.Server.Guardian
 
             if (args.CurrentMobState.IsCritical())
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, Filter.Entities(component.HostedGuardian.Value));
-                SoundSystem.Play("/Audio/Effects/guardian_warn.ogg", Filter.Entities(component.HostedGuardian.Value), component.HostedGuardian.Value);
+                _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
+                SoundSystem.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value);
             }
             else if (args.CurrentMobState.IsDead())
             {
@@ -244,7 +244,7 @@ namespace Content.Server.Guardian
             if (args.DamageDelta == null) return;
 
             _damageSystem.TryChangeDamage(component.Host, args.DamageDelta * component.DamageShare, origin: args.Origin);
-            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, Filter.Entities(component.Host));
+            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-taking-damage"), component.Host, component.Host);
 
         }
 
@@ -321,7 +321,7 @@ namespace Content.Server.Guardian
 
             if (!CanRelease(hostComponent, guardianComponent))
             {
-                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), hostComponent.Owner, Filter.Entities(hostComponent.Owner));
+                _popupSystem.PopupEntity(Loc.GetString("guardian-no-soul"), hostComponent.Owner, hostComponent.Owner);
                 return;
             }
 
@@ -342,7 +342,7 @@ namespace Content.Server.Guardian
 
             hostComponent.GuardianContainer.Insert(guardianComponent.Owner);
             DebugTools.Assert(hostComponent.GuardianContainer.Contains(guardianComponent.Owner));
-            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), hostComponent.Owner, Filter.Pvs(hostComponent.Owner));
+            _popupSystem.PopupEntity(Loc.GetString("guardian-entity-recall"), hostComponent.Owner);
             guardianComponent.GuardianLoose = false;
         }
 

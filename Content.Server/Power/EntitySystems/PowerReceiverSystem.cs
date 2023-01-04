@@ -1,8 +1,10 @@
 using Content.Server.Power.Components;
 using Content.Server.Hands.Components;
+using Content.Server.Administration.Logs;
 using Content.Shared.Examine;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
+using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 
@@ -10,6 +12,7 @@ namespace Content.Server.Power.EntitySystems
 {
     public sealed class PowerReceiverSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
         public override void Initialize()
@@ -101,7 +104,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 Act = () =>
                 {
-                    TogglePower(uid);
+                    TogglePower(uid, user: args.User);
                 },
                 IconTexture = "/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png",
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
@@ -136,7 +139,7 @@ namespace Content.Server.Power.EntitySystems
         /// Turn this machine on or off.
         /// Returns true if we turned it on, false if we turned it off.
         /// </summary>
-        public bool TogglePower(EntityUid uid, bool playSwitchSound = true, ApcPowerReceiverComponent? receiver = null)
+        public bool TogglePower(EntityUid uid, bool playSwitchSound = true, ApcPowerReceiverComponent? receiver = null, EntityUid? user = null)
         {
             if (!Resolve(uid, ref receiver, false))
                 return true;
@@ -149,6 +152,9 @@ namespace Content.Server.Power.EntitySystems
             }
 
             receiver.PowerDisabled = !receiver.PowerDisabled;
+
+            if (user != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user.Value):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
 
             if (playSwitchSound)
             {

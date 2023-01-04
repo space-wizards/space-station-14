@@ -7,6 +7,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -16,6 +17,7 @@ namespace Content.Shared.Damage
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly INetManager _netMan = default!;
 
         public override void Initialize()
         {
@@ -231,7 +233,15 @@ namespace Content.Shared.Damage
 
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
-            args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId);
+            if (_netMan.IsServer)
+            {
+                args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId);
+            }
+            else
+            {
+                // avoid mispredicting damage on newly spawned entities.
+                args.State = new DamageableComponentState(component.Damage.DamageDict.ShallowClone(), component.DamageModifierSetId);
+            }
         }
 
         private void OnIrradiated(EntityUid uid, DamageableComponent component, OnIrradiatedEvent args)

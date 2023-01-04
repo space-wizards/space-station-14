@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "shrapnellarge",
+      "name": "shrapnellarge"
     },
     {
-      "name": "shrapnelmedium",
+      "name": "shrapnelmedium"
     },
     {
-      "name": "shrapnelsmall",
+      "name": "shrapnelsmall"
     }
   ]
 }

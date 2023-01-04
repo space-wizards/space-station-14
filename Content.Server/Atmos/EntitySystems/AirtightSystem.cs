@@ -43,7 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
             // If the grid is deleting no point updating atmos.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
 
             SetAirblocked(airtight, false, xform);
@@ -114,7 +114,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
 
-            var gridUid = grid.GridEntityId;
+            var gridUid = grid.Owner;
 
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
             _explosionSystem.UpdateAirtightMap(gridId, pos, query);
