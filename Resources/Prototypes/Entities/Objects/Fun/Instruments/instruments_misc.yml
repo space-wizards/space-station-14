@@ -127,7 +127,7 @@
     quickEquip: false
 
 - type: entity
-  parent: BaseHandheldInstrument
+  parent: PhoneInstrument
   id: BananaPhone
   name: Banana Phone
   description: A direct line to the Honkmother. Seems to always go to voicemail.
@@ -148,4 +148,3 @@
     interfaces:
     - key: enum.StorageUiKey.Key
       type: StorageBoundUserInterface
-  - type: ContainerContainer
