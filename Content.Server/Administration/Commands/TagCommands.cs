@@ -7,6 +7,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class AddTagCommand : LocalizedCommands
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Command => "addtag";
         public override string Description => "Adds a tag to a given entity";
         public override string Help => "Usage: addtag <entity uid> <tag>";
@@ -25,8 +27,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var tagSystem = entityManager.System<TagSystem>();
+            if (!_entityManager.TrySystem(out TagSystem? tagSystem))
+                return;
 
             if (tagSystem.TryAddTag(entityUid, args[1]))
             {
@@ -42,6 +44,8 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Debug)]
     public sealed class RemoveTagCommand : LocalizedCommands
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public override string Command => "removetag";
         public override string Description => "Removes a tag from a given entity";
         public override string Help => "Usage: removetag <entity uid> <tag>";
@@ -60,8 +64,8 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var tagSystem = entityManager.System<TagSystem>();
+            if (!_entityManager.TrySystem(out TagSystem? tagSystem))
+                return;
 
             if (tagSystem.RemoveTag(entityUid, args[1]))
             {
