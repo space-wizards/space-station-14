@@ -506,7 +506,11 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:ChemCureDisease
+      - !type:ChemCureDisease
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

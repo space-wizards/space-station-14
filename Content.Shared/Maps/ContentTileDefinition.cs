@@ -28,12 +28,7 @@ namespace Content.Shared.Maps
         public ushort TileId { get; private set; }
 
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
-
+        public string Name { get; private set; } = "";
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }

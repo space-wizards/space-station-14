@@ -56,7 +56,7 @@ namespace Content.Server.AME
         {
             if (!TryComp(args.User, out HandsComponent? hands))
             {
-                _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-no-hands-text"), uid, args.User);
                 return;
             }
 
@@ -64,20 +64,20 @@ namespace Content.Server.AME
             {
                 if (component.HasJar)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-already-has-jar"), uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-already-has-jar"), uid, args.User);
                 }
 
                 else
                 {
                     component.JarSlot.Insert(args.Used);
                     _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-success"), uid,
-                        Filter.Entities(args.User), PopupType.Medium);
+                        args.User, PopupType.Medium);
                     component.UpdateUserInterface();
                 }
             }
             else
             {
-                 _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, Filter.Entities(args.User));
+                 _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Content.Server.AME
         {
             if (!HasComp<HandsComponent>(args.User))
             {
-                _popupSystem.PopupEntity(Loc.GetString("ame-part-component-interact-using-no-hands"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("ame-part-component-interact-using-no-hands"), uid, args.User);
                 return;
             }
 
@@ -98,7 +98,7 @@ namespace Content.Server.AME
             var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
             if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => HasComp<AMEShieldComponent>(sc)))
             {
-                _popupSystem.PopupEntity(Loc.GetString("ame-part-component-shielding-already-present"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("ame-part-component-shielding-already-present"), uid, args.User);
                 return;
             }
 

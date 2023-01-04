@@ -27,7 +27,7 @@ namespace Content.Server.Stack
             SubscribeLocalEvent<StackComponent, GetVerbsEvent<AlternativeVerb>>(OnStackAlternativeInteract);
         }
 
-        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))
                 return;
@@ -42,7 +42,7 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="Robust.Shared.GameObjects.EntityUid"/> if successful.
         /// </summary>
-        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
+        public EntityUid? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, StackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return null;
@@ -62,7 +62,7 @@ namespace Content.Server.Stack
             // Set the output parameter in the event instance to the newly split stack.
             var entity = Spawn(prototype, spawnPosition);
 
-            if (TryComp(entity, out SharedStackComponent? stackComp))
+            if (TryComp(entity, out StackComponent? stackComp))
             {
                 // Set the split stack's count.
                 SetCount(entity, amount, stackComp);
@@ -220,7 +220,7 @@ namespace Content.Server.Stack
 
             if (amount <= 0)
             {
-                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), Filter.Entities(userUid), PopupType.Medium);
+                PopupSystem.PopupCursor(Loc.GetString("comp-stack-split-too-small"), userUid, PopupType.Medium);
                 return;
             }
 
@@ -229,7 +229,7 @@ namespace Content.Server.Stack
 
             HandsSystem.PickupOrDrop(userUid, split);
 
-            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), Filter.Entities(userUid));
+            PopupSystem.PopupCursor(Loc.GetString("comp-stack-split"), userUid);
         }
     }
 }
