@@ -1,11 +1,11 @@
-using Content.Server.Sound.Components;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Throwing
+namespace Content.Shared.Sound.Components
 {
     /// <summary>
     /// Simple sound emitter that emits sound on ThrowEvent
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class EmitSoundOnThrowComponent : BaseEmitSoundComponent
     {
     }

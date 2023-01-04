@@ -1,6 +1,6 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Sound.Components
+namespace Content.Shared.Sound.Components
 {
     /// <summary>
     /// Base sound emitter which defines most of the data fields.
