@@ -33,7 +33,7 @@
 # Food/Bev Service Technology Tree
 
 - type: technology
-  name: technologies-FoodBev-technology
+  name: technologies-foodbev-technology
   id: FoodBevTechnology
   description: technologies-food-and-beverage-technology-description
   icon:

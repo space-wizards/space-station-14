@@ -4,7 +4,7 @@ technologies-basic-research-technology-description = Nanotrasen basic research t
 technologies-cleaning-technology = Cleaning technology
 technologies-cleaning-technology-description = Start to a shiny clean station.
 
-technologies-FoodBev-technology = Food and beverage technology
+technologies-foodbev-technology = Food and beverage technology
 technologies-food-and-beverage-technology-description = Robust service from better technology.
 
 technologies-biological-technology = Biological technology
