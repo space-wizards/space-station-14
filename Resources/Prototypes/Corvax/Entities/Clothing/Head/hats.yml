@@ -1,0 +1,32 @@
+﻿- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCapCentcomBlack
+  name: special operations officer cap
+  description: The NanoTrasen gold-engraved special cap of the higher ranks, which has long gone through more than one blitzkrieg...
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/centcom_officer_black.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/centcom_officer_black.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadCapCentcomNaval
+  name: naval cap
+  description: A cap worn by those in the Nanotrasen Navy.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/centcom_naval_cap.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/centcom_naval_cap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCentcomNaval
+  name: naval beret
+  description: A beret worn by those in the Nanotrasen Navy.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/centcom_naval_beret.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/centcom_naval_beret.rsi

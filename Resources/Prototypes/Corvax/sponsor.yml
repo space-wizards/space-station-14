@@ -1,0 +1,68 @@
+﻿# OopsieDoopsie
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterAtmosianBomberJacket
+  name: atmosian bomber jacket
+  description: A thick, well-worn atmosian leather bomber jacket.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/OuterClothing/Coats/atmosian.rsi
+
+- type: entity
+  parent: ClothingMaskGas
+  id: ClothingMaskGasAtmosian
+  name: atmosian gas mask
+  description: Improved gas mask utilized by atmospheric technicians. It's flameproof!
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Mask/atmosian.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Heat: 0.80
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakAtmosian
+  name: atmosian's cloak
+  description: The cloak of a legendary Atmosian.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Neck/Cloaks/atmosian.rsi
+
+# Fezory
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskSkull
+  name: skull mask
+  description: Spooky skull mask.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Mask/death.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Mask/death.rsi
+    - type: BreathMask
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingCloakGamer
+  name: legendary gamer's cloak
+  description: Worn by the most skilled professional gamers.
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Neck/Cloaks/gamer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSkeleton
+  name: skeleton jumpsuit
+  description: A black jumpsuit with a white bone pattern printed on it. Spooky!
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/Clothing/Uniforms/Jumpsuit/skeleton.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/Clothing/Uniforms/Jumpsuit/skeleton.rsi
