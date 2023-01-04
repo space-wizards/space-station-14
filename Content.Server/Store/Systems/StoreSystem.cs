@@ -8,6 +8,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Server.UserInterface;
+using Content.Shared.Stacks;
 
 namespace Content.Server.Store.Systems;
 
@@ -64,7 +65,7 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled)
         {
             var msg = Loc.GetString("store-currency-inserted", ("used", args.Used), ("target", args.Target));
-            _popup.PopupEntity(msg, args.Target.Value, Filter.Pvs(args.Target.Value));
+            _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
     }

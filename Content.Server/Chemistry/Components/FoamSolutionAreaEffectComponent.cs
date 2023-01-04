@@ -1,6 +1,8 @@
 ﻿using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
@@ -12,6 +14,7 @@ namespace Content.Server.Chemistry.Components
     public sealed class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public new const string SolutionName = "solutionArea";
 
@@ -61,7 +64,11 @@ namespace Content.Server.Chemistry.Components
                 bloodstream.ChemicalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
-            bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream);
+            if (bloodstreamSys.TryAddToChemicals(entity, transferSolution, bloodstream))
+            {
+                // Log solution addition by foam
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{_entMan.ToPrettyString(entity):target} was affected by foam {SolutionContainerSystem.ToPrettyString(transferSolution)}");
+            }
         }
 
         protected override void OnKill()

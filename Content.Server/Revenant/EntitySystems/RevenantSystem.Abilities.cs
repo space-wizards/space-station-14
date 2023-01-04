@@ -27,6 +27,7 @@ using Content.Server.Humanoid;
 using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -59,9 +60,9 @@ public sealed partial class RevenantSystem
 
     private void OnInteract(EntityUid uid, RevenantComponent component, InteractNoHandEvent args)
     {
-        var target = args.Target;
-        if (target == args.User)
+        if (args.Target == args.User || args.Target == null)
             return;
+        var target = args.Target.Value;
 
         if (HasComp<PoweredLightComponent>(target))
         {
@@ -70,9 +71,6 @@ public sealed partial class RevenantSystem
         }
 
         if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
-            return;
-
-        if (!_interact.InRangeUnobstructed(uid, target))
             return;
 
         args.Handled = true;
@@ -92,7 +90,7 @@ public sealed partial class RevenantSystem
         if (revenant.SoulSearchCancelToken != null)
             return;
 
-        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, Filter.Entities(uid), PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString("revenant-soul-searching", ("target", target)), uid, uid, PopupType.Medium);
         revenant.SoulSearchCancelToken = new();
         var searchDoAfter = new DoAfterEventArgs(uid, revenant.SoulSearchDuration, revenant.SoulSearchCancelToken.Token, target)
         {
@@ -124,7 +122,7 @@ public sealed partial class RevenantSystem
                 message = "revenant-soul-yield-average";
                 break;
         }
-        _popup.PopupEntity(Loc.GetString(message, ("target", args.Target)), args.Target, Filter.Entities(uid), PopupType.Medium);
+        _popup.PopupEntity(Loc.GetString(message, ("target", args.Target)), args.Target, uid, PopupType.Medium);
     }
 
     private void OnSoulSearchCancelled(EntityUid uid, RevenantComponent component, SoulSearchDoAfterCancelled args)
@@ -139,13 +137,13 @@ public sealed partial class RevenantSystem
 
         if (essence.Harvested)
         {
-            _popup.PopupEntity(Loc.GetString("revenant-soul-harvested"), target, Filter.Entities(uid), PopupType.SmallCaution);
+            _popup.PopupEntity(Loc.GetString("revenant-soul-harvested"), target, uid, PopupType.SmallCaution);
             return;
         }
 
         if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == DamageState.Alive && !HasComp<SleepingComponent>(target))
         {
-            _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, Filter.Entities(uid));
+            _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, uid);
             return;
         }
 
@@ -162,7 +160,7 @@ public sealed partial class RevenantSystem
         _appearance.SetData(uid, RevenantVisuals.Harvesting, true);
 
         _popup.PopupEntity(Loc.GetString("revenant-soul-begin-harvest", ("target", target)),
-            target, Filter.Pvs(target), PopupType.Large);
+            target, PopupType.Large);
 
         TryUseAbility(uid, revenant, 0, revenant.HarvestDebuffs);
         _doAfter.DoAfter(doAfter);
@@ -177,7 +175,7 @@ public sealed partial class RevenantSystem
             return;
 
         _popup.PopupEntity(Loc.GetString("revenant-soul-finish-harvest", ("target", args.Target)),
-            args.Target, Filter.Pvs(args.Target), PopupType.LargeCaution);
+            args.Target, PopupType.LargeCaution);
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
@@ -192,7 +190,7 @@ public sealed partial class RevenantSystem
 
         if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
         {
-            _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, Filter.Entities(uid));
+            _popup.PopupEntity(Loc.GetString("revenant-max-essence-increased"), uid, uid);
             component.EssenceRegenCap += component.MaxEssenceUpgradeAmount;
         }
 
@@ -238,7 +236,7 @@ public sealed partial class RevenantSystem
             value.PryTile();
         }
 
-        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Anchored);
+        var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);
         var tags = GetEntityQuery<TagComponent>();
         var entityStorage = GetEntityQuery<EntityStorageComponent>();
         var items = GetEntityQuery<ItemComponent>();

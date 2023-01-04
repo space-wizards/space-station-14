@@ -1,265 +1,350 @@
-using Content.Server.Ghost.Components;
-using Content.Server.Singularity.Components;
-using Content.Server.Station.Components;
-using Content.Shared.Singularity;
-using Content.Shared.Singularity.Components;
-using JetBrains.Annotations;
+using Robust.Shared.GameStates;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Server.GameStates;
-using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Physics.Events;
 
-namespace Content.Server.Singularity.EntitySystems
+using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Singularity.Events;
+
+using Content.Server.Physics.Components;
+using Content.Server.Singularity.Components;
+using Content.Server.Singularity.Events;
+
+namespace Content.Server.Singularity.EntitySystems;
+
+/// <summary>
+/// The server-side version of <see cref="SharedSingularitySystem"/>.
+/// Primarily responsible for managing <see cref="SingularityComponent"/>s.
+/// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent"/>) and gradual dissipation.
+/// Also handles synchronizing server-side components with the singuarities level.
+/// </summary>
+public sealed class SingularitySystem : SharedSingularitySystem
 {
-    [UsedImplicitly]
-    public sealed class SingularitySystem : SharedSingularitySystem
+#region Dependencies
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+#endregion Dependencies
+
+    /// <summary>
+    /// The amount of energy singulos accumulate when they eat a tile.
+    /// </summary>
+    public const float BaseTileEnergy = 1f;
+
+    /// <summary>
+    /// The amount of energy singulos accumulate when they eat an entity.
+    /// </summary>
+    public const float BaseEntityEnergy = 1f;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly PVSOverrideSystem _pvs = default!;
-        /// <summary>
-        /// How much energy the singulo gains from destroying a tile.
-        /// </summary>
-        private const int TileEnergyGain = 1;
+        base.Initialize();
+        SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
+        SubscribeLocalEvent<SingularityComponent, ComponentShutdown>(OnSingularityShutdown);
+        SubscribeLocalEvent<SingularityComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
+        SubscribeLocalEvent<SinguloFoodComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
+        SubscribeLocalEvent<SingularityComponent, EntityConsumedByEventHorizonEvent>(OnConsumedEntity);
+        SubscribeLocalEvent<SingularityComponent, TilesConsumedByEventHorizonEvent>(OnConsumedTiles);
+        SubscribeLocalEvent<SingularityComponent, SingularityLevelChangedEvent>(UpdateEnergyDrain);
+        SubscribeLocalEvent<SingularityComponent, ComponentGetState>(HandleSingularityState);
 
-        private const float GravityCooldown = 0.5f;
-        private float _gravityAccumulator;
+        // TODO: Figure out where all this coupling should be handled.
+        SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
+        SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
 
-        private int _updateInterval = 1;
-        private float _accumulator;
+        var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
+        vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
+        vvHandle.AddPath(nameof(SingularityComponent.TargetUpdatePeriod), (_, comp) => comp.TargetUpdatePeriod, SetUpdatePeriod);
+    }
 
-        public override void Initialize()
+    public override void Shutdown()
+    {
+        var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
+        vvHandle.RemovePath(nameof(SingularityComponent.Energy));
+        vvHandle.RemovePath(nameof(SingularityComponent.TargetUpdatePeriod));
+        base.Shutdown();
+    }
+
+    /// <summary>
+    /// Handles the gradual dissipation of all singularities.
+    /// </summary>
+    /// <param name="frameTime">The amount of time since the last set of updates.</param>
+    public override void Update(float frameTime)
+    {
+        if(!_timing.IsFirstTimePredicted)
+            return;
+
+        foreach(var singularity in EntityManager.EntityQuery<SingularityComponent>())
         {
-            base.Initialize();
-            SubscribeLocalEvent<ServerSingularityComponent, StartCollideEvent>(OnCollide);
-            SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
-        }
-
-        private void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent component, ComponentStartup args)
-        {
-            // to avoid distortion overlay pop-in, entities with distortion ignore PVS. Really this should probably be a
-            // PVS range-override, but this is good enough for now.
-            _pvs.AddGlobalOverride(uid);
-        }
-
-        protected override bool PreventCollide(EntityUid uid, SharedSingularityComponent component, ref PreventCollideEvent args)
-        {
-            if (base.PreventCollide(uid, component, ref args)) return true;
-
-            var otherUid = args.BodyB.Owner;
-
-            if (args.Cancelled) return true;
-
-            // If it's not cancelled then we'll cancel if we can't immediately destroy it on collision
-            if (!CanDestroy(component, otherUid))
-                args.Cancelled = true;
-
-            return true;
-        }
-
-        private void OnCollide(EntityUid uid, ServerSingularityComponent component, ref StartCollideEvent args)
-        {
-            if (args.OurFixture.ID != "DeleteCircle") return;
-
-            // This handles bouncing off of containment walls.
-            // If you want the delete behavior we do it under DeleteEntities for reasons (not everything has physics).
-
-            // If we're being deleted by another singularity, this call is probably for that singularity.
-            // Even if not, just don't bother.
-            if (component.BeingDeletedByAnotherSingularity)
-                return;
-
-            var otherUid = args.OtherFixture.Body.Owner;
-
-            // HandleDestroy will also check CanDestroy for us
-            HandleDestroy(component, otherUid);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            _gravityAccumulator += frameTime;
-            _accumulator += frameTime;
-
-            while (_accumulator > _updateInterval)
-            {
-                _accumulator -= _updateInterval;
-
-                foreach (var singularity in EntityManager.EntityQuery<ServerSingularityComponent>())
-                {
-                    singularity.Energy -= singularity.EnergyDrain;
-                }
-            }
-
-            while (_gravityAccumulator > GravityCooldown)
-            {
-                _gravityAccumulator -= GravityCooldown;
-
-                foreach (var (singularity, xform) in EntityManager.EntityQuery<ServerSingularityComponent, TransformComponent>())
-                {
-                    Update(singularity, xform, GravityCooldown);
-                }
-            }
-        }
-
-        private void Update(ServerSingularityComponent component, TransformComponent xform, float frameTime)
-        {
-            if (component.BeingDeletedByAnotherSingularity) return;
-
-            var worldPos = xform.WorldPosition;
-            DestroyEntities(component, xform, worldPos);
-            DestroyTiles(component, xform, worldPos);
-            PullEntities(component, xform, worldPos, frameTime);
-        }
-
-        private float PullRange(ServerSingularityComponent component)
-        {
-            // Level 6 is normally 15 range but that's yuge.
-            return 2 + component.Level * 2;
-        }
-
-        private float DestroyTileRange(ServerSingularityComponent component)
-        {
-            return component.Level - 0.5f;
-        }
-
-        private bool CanDestroy(SharedSingularityComponent component, EntityUid entity)
-        {
-            return entity != component.Owner &&
-                   !EntityManager.HasComponent<MapGridComponent>(entity) &&
-                   !EntityManager.HasComponent<GhostComponent>(entity) &&
-                   !EntityManager.HasComponent<StationDataComponent>(entity) && // these SHOULD be in null-space... but just in case. Also, maybe someone moves a singularity there..
-                   (component.Level > 4 ||
-                   !EntityManager.HasComponent<ContainmentFieldComponent>(entity) &&
-                   !(EntityManager.TryGetComponent<ContainmentFieldGeneratorComponent>(entity, out var fieldGen) && fieldGen.IsConnected));
-        }
-
-        private void HandleDestroy(ServerSingularityComponent component, EntityUid entity)
-        {
-            // TODO: Need singuloimmune tag
-            if (!CanDestroy(component, entity)) return;
-
-            // Singularity priority management / etc.
-            if (EntityManager.TryGetComponent<ServerSingularityComponent?>(entity, out var otherSingulo))
-            {
-                // MERGE
-                if (!otherSingulo.BeingDeletedByAnotherSingularity)
-                {
-                    component.Energy += otherSingulo.Energy;
-                }
-
-                otherSingulo.BeingDeletedByAnotherSingularity = true;
-            }
-
-            if (EntityManager.TryGetComponent<SinguloFoodComponent?>(entity, out var singuloFood))
-                component.Energy += singuloFood.Energy;
-            else
-                component.Energy++;
-
-            EntityManager.QueueDeleteEntity(entity);
-        }
-
-        /// <summary>
-        /// Handle deleting entities and increasing energy
-        /// </summary>
-        private void DestroyEntities(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos)
-        {
-            // The reason we don't /just/ use collision is because we'll be deleting stuff that may not necessarily have physics (e.g. carpets).
-            var destroyRange = DestroyTileRange(component);
-
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, destroyRange))
-            {
-                HandleDestroy(component, entity);
-            }
-        }
-
-        private bool CanPull(EntityUid entity)
-        {
-            return !(EntityManager.HasComponent<GhostComponent>(entity) ||
-                   EntityManager.HasComponent<MapGridComponent>(entity) ||
-                   EntityManager.HasComponent<MapComponent>(entity) ||
-                   EntityManager.HasComponent<ServerSingularityComponent>(entity) ||
-                   _container.IsEntityInContainer(entity));
-        }
-
-        /// <summary>
-        /// Pull dynamic bodies in range to the singulo.
-        /// </summary>
-        private void PullEntities(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos, float frameTime)
-        {
-            // TODO: When we split up dynamic and static trees we might be able to make items always on the broadphase
-            // in which case we can just query dynamictree directly for brrt
-            var pullRange = PullRange(component);
-            var destroyRange = DestroyTileRange(component);
-
-            foreach (var entity in _lookup.GetEntitiesInRange(xform.MapID, worldPos, pullRange))
-            {
-                // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
-                if (entity == component.Owner ||
-                    !TryComp<PhysicsComponent?>(entity, out var collidableComponent) ||
-                    collidableComponent.BodyType == BodyType.Static) continue;
-
-                if (!CanPull(entity)) continue;
-
-                var vec = worldPos - Transform(entity).WorldPosition;
-
-                if (vec.Length < destroyRange - 0.01f) continue;
-
-                var speed = 1f / vec.Length * component.Level * collidableComponent.Mass * 10f;
-
-                // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
-                collidableComponent.ApplyLinearImpulse(vec.Normalized * speed * frameTime);
-            }
-        }
-
-        /// <summary>
-        /// Destroy any grid tiles within the relevant Level range.
-        /// </summary>
-        private void DestroyTiles(ServerSingularityComponent component, TransformComponent xform, Vector2 worldPos)
-        {
-            var radius = DestroyTileRange(component);
-
-            var circle = new Circle(worldPos, radius);
-            var box = new Box2(worldPos - radius, worldPos + radius);
-
-            foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, box))
-            {
-                // Bundle these together so we can use the faster helper to set tiles.
-                var toDestroy = new List<(Vector2i, Tile)>();
-
-                foreach (var tile in grid.GetTilesIntersecting(circle))
-                {
-                    if (tile.Tile.IsEmpty) continue;
-
-                    // Avoid ripping up tiles that may be essential to containment
-                    if (component.Level < 5)
-                    {
-                        var canDelete = true;
-
-                        foreach (var ent in grid.GetAnchoredEntities(tile.GridIndices))
-                        {
-                            if (EntityManager.HasComponent<ContainmentFieldComponent>(ent) ||
-                                EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(ent))
-                            {
-                                canDelete = false;
-                                break;
-                            }
-                        }
-
-                        if (!canDelete) continue;
-                    }
-
-                    toDestroy.Add((tile.GridIndices, Tile.Empty));
-                }
-
-                component.Energy += TileEnergyGain * toDestroy.Count;
-                grid.SetTiles(toDestroy);
-            }
+            var curTime = _timing.CurTime;
+            if (singularity.NextUpdateTime <= curTime)
+                Update(singularity.Owner, curTime - singularity.LastUpdateTime, singularity);
         }
     }
+
+    /// <summary>
+    /// Handles the gradual energy loss and dissipation of singularity.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to update.</param>
+    /// <param name="singularity">The state of the singularity to update.</param>
+    public void Update(EntityUid uid, SingularityComponent? singularity = null)
+    {
+        if (Resolve(uid, ref singularity))
+            Update(uid, _timing.CurTime - singularity.LastUpdateTime, singularity);
+    }
+
+    /// <summary>
+    /// Handles the gradual energy loss and dissipation of a singularity.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to update.</param>
+    /// <param name="frameTime">The amount of time that has elapsed since the last update.</param>
+    /// <param name="singularity">The state of the singularity to update.</param>
+    public void Update(EntityUid uid, TimeSpan frameTime, SingularityComponent? singularity = null)
+    {
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        singularity.LastUpdateTime = _timing.CurTime;
+        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
+        AdjustEnergy(uid, -singularity.EnergyDrain * (float)frameTime.TotalSeconds, singularity: singularity);
+    }
+
+#region Getters/Setters
+
+    /// <summary>
+    /// Setter for <see cref="SingularityComponent.Energy"/>.
+    /// Also updates the level of the singularity accordingly.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to set the energy of.</param>
+    /// <param name="value">The amount of energy for the singularity to have.</param>
+    /// <param name="singularity">The state of the singularity to set the energy of.</param>
+    public void SetEnergy(EntityUid uid, float value, SingularityComponent? singularity = null)
+    {
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        var oldValue = singularity.Energy;
+        if (oldValue == value)
+            return;
+
+        singularity.Energy = value;
+        SetLevel(uid, value switch {
+                >= 1500 => 6,
+                >= 1000 => 5,
+                >= 600 => 4,
+                >= 300 => 3,
+                >= 200 => 2,
+                > 0 => 1,
+                _ => 0
+        }, singularity);
+    }
+
+    /// <summary>
+    /// Adjusts the amount of energy the singularity has accumulated.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to adjust the energy of.</param>
+    /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
+    /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
+    /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
+    /// <param name="hardMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
+    /// <param name="hardMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
+    /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
+    public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
+    {
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        var newValue = singularity.Energy + delta;
+        if((!snapMin && newValue < min)
+        || (!snapMax && newValue > max))
+            return;
+        SetEnergy(uid, MathHelper.Clamp(newValue, min, max), singularity);
+    }
+
+    /// <summary>
+    /// Setter for <see cref="SingularityComponent.TargetUpdatePeriod"/>.
+    /// If the new target time implies that the singularity should have updated it does so immediately.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity to set the update period for.</param>
+    /// <param name="value">The new update period for the singularity.</param>
+    /// <param name="singularity">The state of the singularity to set the update period for.</param>
+    public void SetUpdatePeriod(EntityUid uid, TimeSpan value, SingularityComponent? singularity = null)
+    {
+        if(!Resolve(uid, ref singularity))
+            return;
+
+        if (MathHelper.CloseTo(singularity.TargetUpdatePeriod.TotalSeconds, value.TotalSeconds))
+            return;
+
+        singularity.TargetUpdatePeriod = value;
+        singularity.NextUpdateTime = singularity.LastUpdateTime + singularity.TargetUpdatePeriod;
+
+        var curTime = _timing.CurTime;
+        if (singularity.NextUpdateTime <= curTime)
+            Update(uid, curTime - singularity.LastUpdateTime, singularity);
+    }
+
+#endregion Getters/Setters
+
+#region Event Handlers
+
+    /// <summary>
+    /// Handles playing the startup sounds when a singulo forms.
+    /// Always sets up the ambient singularity rumble.
+    /// The formation sound only plays if the singularity is being created.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that is forming.</param>
+    /// <param name="comp">The component of the singularity that is forming.</param>
+    /// <param name="args">The event arguments.</param>
+    protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    {
+        comp.LastUpdateTime = _timing.CurTime;
+        comp.NextUpdateTime = comp.LastUpdateTime + comp.TargetUpdatePeriod;
+
+        MetaDataComponent? metaData = null;
+        if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
+            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+        UpdateSingularityLevel(uid, comp);
+    }
+
+    /// <summary>
+    /// Makes entities that have the singularity distortion visual warping always get their state shared with the client.
+    /// This prevents some major popin with large distortion ranges.
+    /// </summary>
+    /// <param name="uid">The entity UID of the entity that is gaining the shader.</param>
+    /// <param name="comp">The component of the shader that the entity is gaining.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnDistortionStartup(EntityUid uid, SingularityDistortionComponent comp, ComponentStartup args)
+    {
+        _pvs.AddGlobalOverride(uid);
+    }
+
+    /// <summary>
+    /// Handles playing the shutdown sounds when a singulo dissipates.
+    /// Always stops the ambient singularity rumble.
+    /// The dissipations sound only plays if the singularity is being destroyed.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that is dissipating.</param>
+    /// <param name="comp">The component of the singularity that is dissipating.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnSingularityShutdown(EntityUid uid, SingularityComponent comp, ComponentShutdown args)
+    {
+        comp.AmbientSoundStream?.Stop();
+
+        MetaDataComponent? metaData = null;
+        if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
+            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+    }
+
+    /// <summary>
+    /// Handles wrapping the state of a singularity for server-client syncing.
+    /// </summary>
+    /// <param name="uid">The uid of the singularity that is being synced.</param>
+    /// <param name="comp">The state of the singularity that is being synced.</param>
+    /// <param name="args">The event arguments.</param>
+    private void HandleSingularityState(EntityUid uid, SingularityComponent comp, ref ComponentGetState args)
+    {
+        args.State = new SingularityComponentState(comp);
+    }
+
+    /// <summary>
+    /// Adds the energy of any entities that are consumed to the singularity that consumed them.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that is consuming the entity.</param>
+    /// <param name="comp">The component of the singularity that is consuming the entity.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, EntityConsumedByEventHorizonEvent args)
+    {
+        AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
+    }
+
+    /// <summary>
+    /// Adds the energy of any tiles that are consumed to the singularity that consumed them.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that is consuming the tiles.</param>
+    /// <param name="comp">The component of the singularity that is consuming the tiles.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, TilesConsumedByEventHorizonEvent args)
+    {
+        AdjustEnergy(uid, args.Tiles.Count * BaseTileEnergy, singularity: comp);
+    }
+
+    /// <summary>
+    /// Adds the energy of this singularity to singularities consume it.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that is being consumed.</param>
+    /// <param name="comp">The component of the singularity that is being consumed.</param>
+    /// <param name="args">The event arguments.</param>
+    private void OnConsumed(EntityUid uid, SingularityComponent comp, EventHorizonConsumedEntityEvent args)
+    {
+        // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
+        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
+        {
+            AdjustEnergy(singulo.Owner, comp.Energy, singularity: singulo);
+            SetEnergy(uid, 0.0f, comp);
+        }
+    }
+
+    /// <summary>
+    /// Adds some bonus energy from any singularity food to the singularity that consumes it.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity food that is being consumed.</param>
+    /// <param name="comp">The component of the singularity food that is being consumed.</param>
+    /// <param name="args">The event arguments.</param>
+    public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, EventHorizonConsumedEntityEvent args)
+    {
+        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
+            AdjustEnergy(args.EventHorizon.Owner, comp.Energy, singularity: singulo);
+    }
+
+    /// <summary>
+    /// Updates the rate at which the singularities energy drains at when its level changes.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity that changed in level.</param>
+    /// <param name="comp">The component of the singularity that changed in level.</param>
+    /// <param name="args">The event arguments.</param>
+    public void UpdateEnergyDrain(EntityUid uid, SingularityComponent comp, SingularityLevelChangedEvent args)
+    {
+        comp.EnergyDrain = args.NewValue switch
+        {
+            6 => 20,
+            5 => 15,
+            4 => 10,
+            3 => 5,
+            2 => 2,
+            1 => 1,
+            _ => 0
+        };
+    }
+
+    /// <summary>
+    /// Updates the possible speeds of the singulos random walk when the singularities level changes.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity.</param>
+    /// <param name="comp">The random walk component component sharing the entity with the singulo component.</param>
+    /// <param name="args">The event arguments.</param>
+    private void UpdateRandomWalk(EntityUid uid, RandomWalkComponent comp, SingularityLevelChangedEvent args)
+    {
+        var scale = MathF.Max(args.NewValue, 4);
+        comp.MinSpeed = 7.5f / scale;
+        comp.MaxSpeed = 10f / scale;
+    }
+
+    /// <summary>
+    /// Updates the size and strength of the singularities gravity well when the singularities level changes.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity.</param>
+    /// <param name="comp">The gravity well component sharing the entity with the singulo component.</param>
+    /// <param name="args">The event arguments.</param>
+    private void UpdateGravityWell(EntityUid uid, GravityWellComponent comp, SingularityLevelChangedEvent args)
+    {
+        var singulos = args.Singularity;
+        comp.MaxRange = GravPulseRange(singulos);
+        (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
+    }
+
+#endregion Event Handlers
 }

@@ -12,6 +12,7 @@ public static class ChatChannelExtensions
             ChatChannel.OOC => Color.LightSkyBlue,
             ChatChannel.Dead => Color.MediumPurple,
             ChatChannel.Admin => Color.Red,
+            ChatChannel.AdminChat => Color.HotPink,
             ChatChannel.Whisper => Color.DarkGray,
             _ => Color.LightGray
         };

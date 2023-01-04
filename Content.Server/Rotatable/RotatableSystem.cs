@@ -2,6 +2,7 @@ using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Rotatable
 {
@@ -38,7 +39,7 @@ namespace Content.Server.Rotatable
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
             if (!component.RotateWhileAnchored &&
-                EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
+                EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
                 return;
 
@@ -82,7 +83,7 @@ namespace Content.Server.Rotatable
         /// </summary>
         public void TryFlip(FlippableComponent component, EntityUid user)
         {
-            if (EntityManager.TryGetComponent(component.Owner, out IPhysBody? physics) &&
+            if (EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physics) &&
                 physics.BodyType == BodyType.Static)
             {
                 component.Owner.PopupMessage(user, Loc.GetString("flippable-component-try-flip-is-stuck"));

@@ -34,6 +34,13 @@
       shader: unshaded
       visible: false
   - type: Emitter
+  - type: Gun
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer

@@ -14,6 +14,7 @@ namespace Content.Shared.MobState.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
+    [Access(typeof(SharedMobStateSystem))]
     public sealed class MobStateComponent : Component
     {
         /// <summary>
@@ -34,33 +35,5 @@ namespace Content.Shared.MobState.Components
         public FixedPoint2? CurrentThreshold { get; set; }
 
         public IEnumerable<KeyValuePair<int, DamageState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsAlive()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsAlive(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsCritical()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsCritical(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsDead()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsDead(Owner, this);
-        }
-
-        [Obsolete("Use MobStateSystem")]
-        public bool IsIncapacitated()
-        {
-            return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedMobStateSystem>()
-                .IsIncapacitated(Owner, this);
-        }
     }
 }

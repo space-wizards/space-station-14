@@ -8,6 +8,9 @@
   "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, modified by Veritius",
   "states": [
     {
+      "name": "icon"
+    },
+    {
       "name": "vehicle",
       "directions": 4,
       "delays": [

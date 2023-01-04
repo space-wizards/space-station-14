@@ -62,13 +62,13 @@ namespace Content.Server.Recycling
                 _ticker.OnGhostAttempt(mind, false);
                 if (mind.OwnedEntity is { Valid: true } entity)
                 {
-                    _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity, Filter.Pvs(entity, entityManager: EntityManager));
+                    _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity);
                 }
             }
 
             _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message-others", ("victim", Identity.Entity(victim, EntityManager))),
                 victim,
-                Filter.Pvs(victim, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == victim));
+                Filter.PvsExcept(victim, entityManager: EntityManager), true);
 
             if (TryComp<BodyComponent?>(victim, out var body))
             {
