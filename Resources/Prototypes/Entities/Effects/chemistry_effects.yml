@@ -21,6 +21,27 @@
         canReact: false
 
 - type: entity
+  id: VapeSmoke
+  name: smoke
+  noSpawn: true
+  components:
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: Appearance
+    visuals:
+      - type: SmokeVisualizer
+  - type: Transform
+    anchored: true
+  - type: SmokeSolutionAreaEffect
+  - type: SolutionContainerManager
+    solutions:
+      solutionArea:
+        maxVol: 200
+        canReact: false
+
+- type: entity
   id: Foam
   name: foam
   noSpawn: true

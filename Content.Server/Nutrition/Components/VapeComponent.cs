@@ -11,25 +11,28 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float Delay { get; set; } = 5;
 
-        [DataField("userdelay")]
+        [DataField("userDelay")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float UserDelay { get; set; } = 2;
 
-        [DataField("smokeamount")]
+        [DataField("smokeAmount")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int SmokeAmount { get; set; } = 0;
 
-        [DataField("explosionintensity")]
+        [DataField("explosionIntensity")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;
 
-        [DataField("explodeonuse")]
+        [DataField("explodeOnUse")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ExplodeOnUse { get; set; } = false;
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
+
+        [DataField("smokePrototype")]
+        public string SmokePrototype = "VapeSmoke";
 
         public CancellationTokenSource? CancelToken;
     }
