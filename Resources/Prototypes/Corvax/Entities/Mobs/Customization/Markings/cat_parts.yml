@@ -3,7 +3,6 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
-  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_stubby_outer
@@ -15,7 +14,6 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
-  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_curled_outer
@@ -27,7 +25,6 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
-  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Corvax/Mobs/Customization/cat_parts.rsi
     state: ears_torn_outer

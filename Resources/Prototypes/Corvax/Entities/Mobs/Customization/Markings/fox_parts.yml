@@ -3,7 +3,6 @@
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Human]
-  sponsorOnly: true # Corvax-Sponsors
   sprites:
   - sprite: Corvax/Mobs/Customization/fox_parts.rsi
     state: ears_fox_outer
