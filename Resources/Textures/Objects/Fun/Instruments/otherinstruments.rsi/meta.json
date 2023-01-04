@@ -29,10 +29,13 @@
       "name": "helicopter"
     },
     {
-      "name": "red_phone"
+        "name": "red_phone"
     },
     {
-      "name": "seashell"
-    }
+        "name": "seashell"
+    },
+    {
+        "name": "banana_phone"
+    },
   ]
 }

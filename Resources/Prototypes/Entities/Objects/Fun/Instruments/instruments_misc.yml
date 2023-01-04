@@ -125,3 +125,20 @@
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]
     quickEquip: false
+    
+    - type: entity
+  parent: BaseHandheldInstrument
+  id: PhoneInstrument
+  name: Banana Phone
+  description: A direct line to the Honkmother. Seems to always go to voicemail.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: banana_phone
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Items/bikehorn
+  - type: Instrument
+    program: 124
+  - type: Item
+    size: 10
