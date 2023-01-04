@@ -7,8 +7,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.DoAfter
-{
+namespace Content.Client.DoAfter;
+
     /// <summary>
     /// Handles events that need to happen after a certain amount of time where the event could be cancelled by factors
     /// such as moving.
@@ -49,8 +49,7 @@ namespace Content.Client.DoAfter
             if (args.Current is not DoAfterComponentState state)
                 return;
 
-            //TODO: Remove clientdoafter references, fuse with DoAfter
-            var toRemove = new RemQueue<ClientDoAfter>();
+            var toRemove = new RemQueue<Shared.DoAfter.DoAfter>();
 
             foreach (var (id, doAfter) in component.DoAfters)
             {
@@ -78,7 +77,7 @@ namespace Content.Client.DoAfter
 
             foreach (var doAfter in state.DoAfters)
             {
-                if (component.DoAfters.ContainsKey(doAfter.ID))
+                if (component.DoAfters.ContainsValue(doAfter))
                     continue;
 
                 component.DoAfters.Add(doAfter.ID, doAfter);
@@ -96,16 +95,16 @@ namespace Content.Client.DoAfter
         /// <summary>
         ///     Remove a DoAfter without showing a cancellation graphic.
         /// </summary>
-        public void Remove(DoAfterComponent component, ClientDoAfter clientDoAfter)
+        public void Remove(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter)
         {
-            component.DoAfters.Remove(clientDoAfter.ID);
+            component.DoAfters.Remove(doAfter.ID);
 
             var found = false;
 
-            component.CancelledDoAfters.Remove(clientDoAfter.ID);
+            component.CancelledDoAfters.Remove(doAfter.ID);
 
             if (!found)
-                component.DoAfters.Remove(clientDoAfter.ID);
+                component.DoAfters.Remove(doAfter.ID);
         }
 
         /// <summary>
@@ -143,13 +142,13 @@ namespace Content.Client.DoAfter
                 }
 
                 var userGrid = xform.Coordinates;
-                var toRemove = new RemQueue<ClientDoAfter>();
+                var toRemove = new RemQueue<Shared.DoAfter.DoAfter>();
 
                 // Check cancellations / finishes
                 foreach (var (id, doAfter) in doAfters)
                 {
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
-                    if ((doAfter.Accumulator + doAfter.CancelledAccumulator) > doAfter.Delay + ExcessTime)
+                    if ((doAfter.Elapsed.TotalSeconds + doAfter.CancelledElapsed.TotalSeconds) > doAfter.Delay + ExcessTime)
                     {
                         toRemove.Add(doAfter);
                         continue;
@@ -157,14 +156,14 @@ namespace Content.Client.DoAfter
 
                     if (doAfter.Cancelled)
                     {
-                        doAfter.CancelledAccumulator += frameTime;
+                        doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.StartTime;
                         continue;
                     }
 
-                    doAfter.Accumulator += frameTime;
+                    doAfter.Elapsed = _gameTiming.CurTime - doAfter.StartTime;
 
                     // Well we finished so don't try to predict cancels.
-                    if (doAfter.Accumulator > doAfter.Delay)
+                    if (doAfter.Elapsed.TotalSeconds > doAfter.Delay)
                     {
                         continue;
                     }
@@ -178,7 +177,7 @@ namespace Content.Client.DoAfter
                     // despite succeeding.
                     continue;
 
-                    if (doAfter.BreakOnUserMove)
+                    /*if (doAfter.BreakOnUserMove)
                     {
                         if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
                         {
@@ -196,7 +195,7 @@ namespace Content.Client.DoAfter
                             Cancel(comp, id);
                             continue;
                         }
-                    }
+                    }*/
                 }
 
                 foreach (var doAfter in toRemove)
@@ -205,11 +204,11 @@ namespace Content.Client.DoAfter
                 }
 
                 // Remove cancelled DoAfters after ExcessTime has elapsed
-                var toRemoveCancelled = new List<ClientDoAfter>();
+                var toRemoveCancelled = new List<Shared.DoAfter.DoAfter>();
 
                 foreach (var (_, doAfter) in comp.CancelledDoAfters)
                 {
-                    if (doAfter.CancelledAccumulator > ExcessTime)
+                    if ((float)doAfter.CancelledElapsed.TotalSeconds > ExcessTime)
                     {
                         toRemoveCancelled.Add(doAfter);
                     }
@@ -222,4 +221,3 @@ namespace Content.Client.DoAfter
             }
         }
     }
-}

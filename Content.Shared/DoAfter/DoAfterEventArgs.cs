@@ -9,27 +9,27 @@ namespace Content.Shared.DoAfter
         /// <summary>
         ///     The entity invoking do_after
         /// </summary>
-        public EntityUid User { get; }
+        public EntityUid User;
 
         /// <summary>
         ///     How long does the do_after require to complete
         /// </summary>
-        public float Delay { get; }
+        public float Delay;
 
         /// <summary>
         ///     Applicable target (if relevant)
         /// </summary>
-        public EntityUid? Target { get; }
+        public EntityUid? Target;
 
         /// <summary>
         ///     Entity used by the User on the Target.
         /// </summary>
-        public EntityUid? Used { get; set; }
+        public EntityUid? Used;
 
         /// <summary>
         ///     Manually cancel the do_after so it no longer runs
         /// </summary>
-        public CancellationToken CancelToken { get; }
+        public CancellationToken CancelToken;
 
         // Break the chains
         /// <summary>

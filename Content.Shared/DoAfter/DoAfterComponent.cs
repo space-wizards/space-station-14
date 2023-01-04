@@ -1,0 +1,72 @@
+using Robust.Shared.GameStates;
+using Robust.Shared.Map;
+using Robust.Shared.Serialization;
+
+namespace Content.Shared.DoAfter;
+
+[RegisterComponent, NetworkedComponent]
+public abstract class DoAfterComponent : Component
+{
+    public readonly Dictionary<byte, DoAfter> DoAfters = new();
+    public readonly Dictionary<byte, DoAfter> CancelledDoAfters = new();
+
+    // So the client knows which one to update (and so we don't send all of the do_afters every time 1 updates)
+    // we'll just send them the index. Doesn't matter if it wraps around.
+    public byte RunningIndex;
+
+    // To see what these do look at DoAfter and DoAfterEventArgs
+    public byte ID;
+
+    public EntityCoordinates UserGrid;
+
+    public EntityCoordinates TargetGrid;
+
+    public TimeSpan StartTime;
+}
+
+[Serializable, NetSerializable]
+public sealed class DoAfterComponentState : ComponentState
+{
+    public List<DoAfter> DoAfters;
+
+    public DoAfterComponentState(List<DoAfter> doAfters)
+    {
+        DoAfters = doAfters;
+    }
+}
+
+/// <summary>
+/// Use this event to raise your DoAfter events now.
+/// Check for cancelled, and if it is, then null the token there.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class DoAfterEvent : EntityEventArgs
+{
+    public bool Cancelled;
+
+    public DoAfterEvent(bool cancelled)
+    {
+        Cancelled = cancelled;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CancelledDoAfterMessage : EntityEventArgs
+{
+    public EntityUid Uid;
+    public byte ID;
+
+    public CancelledDoAfterMessage(EntityUid uid, byte id)
+    {
+        Uid = uid;
+        ID = id;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum DoAfterStatus : byte
+{
+    Running,
+    Cancelled,
+    Finished,
+}
