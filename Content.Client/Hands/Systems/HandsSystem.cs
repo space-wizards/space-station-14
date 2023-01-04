@@ -14,6 +14,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using System.Diagnostics.CodeAnalysis;
+using Content.Client.Verbs.UI;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Hands.Systems
 {
@@ -22,6 +24,7 @@ namespace Content.Client.Hands.Systems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly StrippableSystem _stripSys = default!;
@@ -240,9 +243,9 @@ namespace Content.Client.Hands.Systems
                 return;
             }
 
-            _verbs.VerbMenu.OpenVerbMenu(entity);
+            _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(entity);
         }
-        
+
         public void UIHandAltActivateItem(string handName)
         {
             RaisePredictiveEvent(new RequestHandAltInteractEvent(handName));
