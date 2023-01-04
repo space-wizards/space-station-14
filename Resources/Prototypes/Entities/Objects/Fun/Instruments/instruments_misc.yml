@@ -142,3 +142,13 @@
     program: 124
   - type: Item
     size: 10
+  - type: Storage
+    capacity: 120
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+  - type: UserInterface
+    interfaces:
+    - key: enum.StorageUiKey.Key
+      type: StorageBoundUserInterface
