@@ -29,7 +29,6 @@ namespace Content.Client.Inventory
 
         [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly VerbSystem _verbs = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;

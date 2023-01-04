@@ -40,7 +40,6 @@ namespace Content.Client.CombatMode
                 return;
             }
 
-            var verbs = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<VerbSystem>();
             IoCManager.Resolve<IUserInterfaceManager>().GetUIController<ContextMenuUIController>().Close();
         }
     }

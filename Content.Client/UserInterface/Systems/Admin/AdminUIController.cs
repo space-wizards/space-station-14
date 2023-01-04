@@ -29,8 +29,6 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     [Dependency] private readonly IInputManager _input = default!;
     [Dependency] private readonly VerbMenuUIController _verb = default!;
 
-    [UISystemDependency] private readonly VerbSystem _verbs = default!;
-
     private AdminMenuWindow? _window;
     private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
 

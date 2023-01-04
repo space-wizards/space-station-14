@@ -29,7 +29,6 @@ namespace Content.Client.Hands.Systems
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly StrippableSystem _stripSys = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly VerbSystem _verbs = default!;
 
         public event Action<string, HandLocation>? OnPlayerAddHand;
         public event Action<string>? OnPlayerRemoveHand;
