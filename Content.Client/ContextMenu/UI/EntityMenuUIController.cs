@@ -133,14 +133,6 @@ namespace Content.Client.ContextMenu.UI
             if (_entityManager.Deleted(entity))
                 return;
 
-            // open verb menu?
-            if (args.Function == EngineKeyFunctions.UseSecondary)
-            {
-                _verb.OpenVerbMenu(entity.Value);
-                args.Handle();
-                return;
-            }
-
             // do examination?
             if (args.Function == ContentKeyFunctions.ExamineEntity)
             {

@@ -42,14 +42,14 @@ namespace Content.Client.ContextMenu.UI
         public void OnStateEntered(GameplayState state)
         {
             RootMenu = new(this, null);
-            RootMenu.OnPopupHide += RootMenu.MenuBody.DisposeAllChildren;
+            RootMenu.OnPopupHide += Close;
             Menus.Push(RootMenu);
         }
 
         public void OnStateExited(GameplayState state)
         {
             Close();
-            RootMenu.OnPopupHide -= RootMenu.MenuBody.DisposeAllChildren;
+            RootMenu.OnPopupHide -= Close;
             RootMenu.Dispose();
         }
 
@@ -58,7 +58,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public void Close()
         {
-            RootMenu.Close();
+            RootMenu.MenuBody.DisposeAllChildren();
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
             OnContextClosed?.Invoke();

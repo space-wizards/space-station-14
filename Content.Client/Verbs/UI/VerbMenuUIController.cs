@@ -31,7 +31,6 @@ namespace Content.Client.Verbs.UI
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly ContextMenuUIController _context = default!;
-        [Dependency] private readonly EntityMenuUIController _entity = default!;
 
         [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
         [UISystemDependency] private readonly VerbSystem _verbSystem = default!;
