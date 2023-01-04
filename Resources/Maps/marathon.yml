@@ -127209,8 +127209,7 @@ entities:
 - uid: 14973
   type: Girder
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 40.5,16.5
+  - pos: 40.5,16.5
     parent: 30
     type: Transform
 - uid: 14974

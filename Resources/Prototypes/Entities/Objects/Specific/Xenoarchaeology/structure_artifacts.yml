@@ -36,6 +36,7 @@
     - type: Appearance
     - type: StaticPrice
       price: 500
+    - type: Actions
 
 - type: entity
   parent: BaseXenoArtifact
