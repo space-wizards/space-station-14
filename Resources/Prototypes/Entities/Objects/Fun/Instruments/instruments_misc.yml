@@ -143,7 +143,7 @@
   - type: Item
     size: 10
   - type: Storage
-    capacity: 120
+    capacity: 5
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
