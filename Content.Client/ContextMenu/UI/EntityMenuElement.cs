@@ -33,7 +33,7 @@ namespace Content.Client.ContextMenu.UI
         public readonly Label CountLabel;
         public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
 
-        public EntityMenuElement(EntityUid? entity = null, bool verbMenu = true)
+        public EntityMenuElement(EntityUid? entity = null)
         {
             IoCManager.InjectDependencies(this);
 

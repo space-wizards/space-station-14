@@ -5,13 +5,13 @@ using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuUIController : UIController
+    public sealed partial class EntityMenuUIController
     {
         public const int GroupingTypesCount = 2;
         private int GroupingContextMenuType { get; set; }
         public void OnGroupingChanged(int obj)
         {
-            Close();
+            _context.Close();
             GroupingContextMenuType = obj;
         }
 

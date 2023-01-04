@@ -44,6 +44,8 @@ namespace Content.Client.Verbs
         /// </summary>
         public MenuVisibility Visibility;
 
+        public Action<VerbsResponseEvent>? OnVerbsResponse;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -227,10 +229,7 @@ namespace Content.Client.Verbs
 
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
-            if (VerbMenu.OpenMenu == null || !VerbMenu.OpenMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
-                return;
-
-            VerbMenu.AddServerVerbs(msg.Verbs, VerbMenu.OpenMenu);
+            OnVerbsResponse?.Invoke(msg);
         }
     }
 
