@@ -3536,3 +3536,10 @@ Entries:
     type: Tweak
   id: 422
   time: '2022-12-31T19:11:44.0000000+00:00'
+- author: lapatison
+  changes:
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043F\u0435\
+      \u0440\u0435\u0432\u043E\u0434\u044B"
+    type: Fix
+  id: 423
+  time: '2023-01-04T13:26:43.0000000+00:00'
