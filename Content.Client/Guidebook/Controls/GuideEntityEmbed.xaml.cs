@@ -13,7 +13,6 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Guidebook;
 
-
 [GenerateTypedNameReferences]
 public sealed partial class GuideEntityEmbed : BoxContainer, ITag
 {

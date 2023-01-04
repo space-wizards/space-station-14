@@ -137,7 +137,6 @@ public sealed class GuidebookSystem : EntitySystem
 
     private void OnGetGuidesEvent(GetGuidesEvent ev)
     {
-        ev.Entries.AddRange(_prototypeManager.EnumeratePrototypes<GuideEntryPrototype>());
     }
 
     private bool HandleOpenGuidebook(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -145,10 +144,15 @@ public sealed class GuidebookSystem : EntitySystem
         if (args.State == BoundKeyState.Down)
             _guideWindow.OpenCenteredRight();
 
-        var ev = new GetGuidesEvent();
+        var ev = new GetGuidesEvent()
+        {
+            Guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>().ToDictionary(x => x.ID, x => (GuideEntry) x)
+        };
+
+        
         RaiseLocalEvent(ev);
 
-        _guideWindow.UpdateGuides(ev.Entries);
+        _guideWindow.UpdateGuides(ev.Guides);
 
         return true;
     }
@@ -156,5 +160,5 @@ public sealed class GuidebookSystem : EntitySystem
 
 public sealed class GetGuidesEvent : EntityEventArgs
 {
-    public readonly List<GuideEntry> Entries = new();
+    public Dictionary<string, GuideEntry> Guides { get; init; } = new();
 }

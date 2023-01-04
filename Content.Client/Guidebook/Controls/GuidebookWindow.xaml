@@ -9,11 +9,11 @@
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
         <!-- Guide select -->
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SizeFlagsStretchRatio="1">
-            <Tree Name="GuideSelect" VerticalExpand="True" HorizontalExpand="True"/>
+            <Tree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
-        <ScrollContainer Name="GuideScroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2">
-            <BoxContainer Orientation="Vertical" Name="GuideContainer" Margin="5 5 5 5">
+        <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2">
+            <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5">
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text'}"/>
                 <Label HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Loc 'guidebook-placeholder-text-2'}"/>
             </BoxContainer>

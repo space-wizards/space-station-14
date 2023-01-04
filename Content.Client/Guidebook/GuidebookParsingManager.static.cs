@@ -16,7 +16,7 @@ public sealed partial class GuidebookParsingManager
 
     #region Text Parsing
     #region Basic Text Parsing
-    // Try look for an escaped character, and consume it and the escaping slash.
+    // Try look for an escaped character. If found, skip the escaping slash and return the character.
     private static readonly Parser<char, char> TryEscapedChar = Try(Char('\\').Then(OneOf(
      Try(Char('<')),
      Try(Char('>')),
