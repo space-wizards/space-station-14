@@ -1,9 +1,4 @@
 Entries:
-- author: GTRsound
-  changes:
-  - {message: Picked as traitor sound changed, type: Tweak}
-  id: 2333
-  time: '2022-09-16T21:57:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed various weird issues with lathe behavior that would result in
@@ -2958,3 +2953,15 @@ Entries:
   - {message: Doubled the paper symbol limit, type: Tweak}
   id: 2832
   time: '2023-01-04T06:44:17.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'The radar shown in mass scanners and shuttle consoles now resizes gracefully,
+      scaling as expected with whatever breathing room it has! (Originally merged
+      on December 30, 2022)', type: Add}
+  - {message: 'The mass scanner and shuttle consoles now have minimum and default
+      sizes to keep things relatively sane-looking (Originally merged on December
+      30, 2022)', type: Tweak}
+  - {message: The mass scanner UI now actually has a default size defined. This was
+      left out of the original PR by mistake, type: Fix}
+  id: 2833
+  time: '2023-01-04T23:34:09.0000000+00:00'
