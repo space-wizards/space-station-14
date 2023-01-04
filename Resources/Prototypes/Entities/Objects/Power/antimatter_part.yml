@@ -14,4 +14,4 @@
   - type: StaticPrice
     price: 500
   - type: GuideHelp
-    guides: [ AME ]
+    guides: [ AME, Power ]

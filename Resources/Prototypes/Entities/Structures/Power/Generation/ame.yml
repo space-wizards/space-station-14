@@ -74,7 +74,7 @@
     containers:
       AMEController-fuelJarContainer: !type:ContainerSlot {}
   - type: GuideHelp
-    guides: [ AME ]
+    guides: [ AME, Power ]
 
 - type: entity
   noSpawn: true
@@ -148,4 +148,4 @@
     graph: AMEShielding
     node: ameShielding
   - type: GuideHelp
-    guides: [ AME ]
+    guides: [ AME, Power ]

@@ -77,15 +77,14 @@ public sealed partial class GuidebookWindow : FancyWindow
 
         if (selected != null)
         {
-            // TODO select guide. Inc making it highlighted in the tree
-            return;
+            ShowGuide(_entries[selected]);
         }
-
-        if (_currentlyShowing != null && !entries.ContainsKey(_currentlyShowing))
+        else if (_currentlyShowing != null && !entries.ContainsKey(_currentlyShowing))
             ClearSelecteddGuide();
-        else
+
+        if (_currentlyShowing != null)
         {
-            // TODO select the currently shown item (so that it is highlighted in the tree/TOC.
+            // TODO make tree actually select the selected guide, so that it is highlighted.
         }
     }
 
