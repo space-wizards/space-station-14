@@ -11,7 +11,7 @@ namespace Content.Server.Paper
         public string Content { get; set; } = "";
 
         [DataField("contentSize")]
-        public int ContentSize { get; set; } = 500;
+        public int ContentSize { get; set; } = 1000;
 
         [DataField("stampedBy")]
         public List<string> StampedBy { get; set; } = new();

@@ -1,4 +1,3 @@
-using System.Globalization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -11,9 +10,6 @@ namespace Content.Shared.Alert
     [Prototype("alert")]
     public sealed class AlertPrototype : IPrototype, ISerializationHooks
     {
-        private FormattedMessage _name = new ();
-        private FormattedMessage _description = new ();
-        
         [ViewVariables]
         string IPrototype.ID => AlertType.ToString();
 
@@ -34,21 +30,13 @@ namespace Content.Shared.Alert
         /// Name to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("name")]
-        public FormattedMessage Name
-        {
-            get => _name;
-            private set => _name = FormattedMessage.FromMarkup(Loc.GetString(value.ToString()));
-        }
+        public string Name { get; private set; } = "";
 
         /// <summary>
         /// Description to show in tooltip window. Accepts formatting.
         /// </summary>
         [DataField("description")]
-        public FormattedMessage Description
-        {
-            get => _description;
-            private set => _description = FormattedMessage.FromMarkup(Loc.GetString(value.ToString()));
-        }
+        public string Description { get; private set; } = "";
 
         /// <summary>
         /// Category the alert belongs to. Only one alert of a given category

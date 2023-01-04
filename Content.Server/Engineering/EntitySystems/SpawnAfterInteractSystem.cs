@@ -60,7 +60,7 @@ namespace Content.Server.Engineering.EntitySystems
             if (component.Deleted || Deleted(component.Owner))
                 return;
 
-            if (EntityManager.TryGetComponent<SharedStackComponent?>(component.Owner, out var stackComp)
+            if (EntityManager.TryGetComponent<StackComponent?>(component.Owner, out var stackComp)
                 && component.RemoveOnInteract && !_stackSystem.Use(uid, 1, stackComp))
             {
                 return;
