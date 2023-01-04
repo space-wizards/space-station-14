@@ -44,7 +44,7 @@
     
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckMantleHOS
+  id: ClothingNeckMantleHOSShoulder
   name: head of security's mantle
   description: Shootouts with nukies are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
   components:
