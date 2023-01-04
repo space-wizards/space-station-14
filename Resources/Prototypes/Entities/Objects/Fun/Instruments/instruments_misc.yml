@@ -142,7 +142,7 @@
     program: 124
   - type: Item
     size: 10
-    - type: Storage
+  - type: Storage
     capacity: 5
   - type: UserInterface
     interfaces:
