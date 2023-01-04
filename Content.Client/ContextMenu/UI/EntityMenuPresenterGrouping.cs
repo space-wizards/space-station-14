@@ -1,10 +1,11 @@
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using System.Linq;
+using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public sealed partial class EntityMenuPresenter : ContextMenuPresenter
+    public sealed partial class EntityMenuUIController : UIController
     {
         public const int GroupingTypesCount = 2;
         private int GroupingContextMenuType { get; set; }

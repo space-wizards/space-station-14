@@ -33,7 +33,7 @@ namespace Content.Client.ContextMenu.UI
         public readonly Label CountLabel;
         public readonly SpriteView EntityIcon = new() { OverrideDirection = Direction.South};
 
-        public EntityMenuElement(EntityUid? entity = null)
+        public EntityMenuElement(EntityUid? entity = null, bool verbMenu = true)
         {
             IoCManager.InjectDependencies(this);
 
@@ -45,12 +45,12 @@ namespace Content.Client.ContextMenu.UI
             LayoutContainer.SetGrowVertical(CountLabel, LayoutContainer.GrowDirection.Begin);
 
             Entity = entity;
-            if (Entity != null)
-            {
-                Count = 1;
-                CountLabel.Visible = false;
-                UpdateEntity();
-            }
+            if (Entity == null)
+                return;
+
+            Count = 1;
+            CountLabel.Visible = false;
+            UpdateEntity();
         }
 
         protected override void Dispose(bool disposing)

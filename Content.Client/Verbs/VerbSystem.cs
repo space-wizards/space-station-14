@@ -17,6 +17,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Verbs
 {
@@ -36,9 +37,6 @@ namespace Content.Client.Verbs
         /// </summary>
         public const float EntityMenuLookupSize = 0.25f;
 
-        public EntityMenuPresenter EntityMenu = default!;
-        public VerbMenuPresenter VerbMenu = default!;
-
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         /// <summary>
@@ -50,37 +48,7 @@ namespace Content.Client.Verbs
         {
             base.Initialize();
 
-            UpdatesOutsidePrediction = true;
-
-            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
-
-            EntityMenu = new(this);
-            VerbMenu = new(_combatMode, this);
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            CloseAllMenus();
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            EntityMenu?.Dispose();
-            VerbMenu?.Dispose();
-        }
-
-        public override void FrameUpdate(float frameTime)
-        {
-            base.FrameUpdate(frameTime);
-            EntityMenu?.Update();
-        }
-
-        public void CloseAllMenus()
-        {
-            EntityMenu.Close();
-            VerbMenu.Close();
         }
 
         /// <summary>
@@ -259,10 +227,10 @@ namespace Content.Client.Verbs
 
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
-            if (!VerbMenu.RootMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
+            if (VerbMenu.OpenMenu == null || !VerbMenu.OpenMenu.Visible || VerbMenu.CurrentTarget != msg.Entity)
                 return;
 
-            VerbMenu.AddServerVerbs(msg.Verbs);
+            VerbMenu.AddServerVerbs(msg.Verbs, VerbMenu.OpenMenu);
         }
     }
 

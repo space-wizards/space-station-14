@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Content.Client.Gameplay;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Timer = Robust.Shared.Timing.Timer;
@@ -13,12 +15,11 @@ namespace Content.Client.ContextMenu.UI
     /// <remarks>
     ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
     /// </remarks>
-    [Virtual]
-    public class ContextMenuPresenter : IDisposable
+    public sealed class ContextMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
-        public ContextMenuPopup RootMenu;
+        public ContextMenuPopup RootMenu = default!;
         public Stack<ContextMenuPopup> Menus { get; } = new();
 
         /// <summary>
@@ -31,17 +32,17 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public CancellationTokenSource? CancelClose;
 
-        public ContextMenuPresenter()
+        public Action? OnContextClosed;
+        public Action<ContextMenuElement>? OnContextMouseEntered;
+
+        public void OnStateEntered(GameplayState state)
         {
             RootMenu = new(this, null);
             RootMenu.OnPopupHide += RootMenu.MenuBody.DisposeAllChildren;
             Menus.Push(RootMenu);
         }
 
-        /// <summary>
-        ///     Dispose of all UI elements.
-        /// </summary>
-        public virtual void Dispose()
+        public void OnStateExited(GameplayState state)
         {
             RootMenu.OnPopupHide -= RootMenu.MenuBody.DisposeAllChildren;
             RootMenu.Dispose();
@@ -50,11 +51,12 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Close and clear the root menu. This will also dispose any sub-menus.
         /// </summary>
-        public virtual void Close()
+        public void Close()
         {
             RootMenu.Close();
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
+            OnContextClosed?.Invoke();
         }
 
         /// <summary>
