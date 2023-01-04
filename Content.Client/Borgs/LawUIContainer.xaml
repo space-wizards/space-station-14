@@ -1,0 +1,16 @@
+<PanelContainer
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    Margin="12 12 12 0"
+    StyleClasses="PanelBackgroundAngledDark"
+    VerticalExpand="True">
+
+    <BoxContainer Orientation="Vertical"
+         HorizontalExpand="True">
+        <controls:NanoHeading Name="Title"/>
+        <RichTextLabel Name="Description" Margin="12 6 6 6" />
+    </BoxContainer>
+</PanelContainer>
