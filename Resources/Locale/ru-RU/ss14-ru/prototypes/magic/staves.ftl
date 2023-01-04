@@ -1,3 +1,3 @@
-ent-RGBStaff = RGB Staff
-    .desc = Helps fix the underabundance of RGB gear on the station.
+ent-RGBStaff = RGB посох
+    .desc = Помогает исправить нехватку RGB подсветки на станции.
     .suffix = { "" }

@@ -5,5 +5,5 @@ ent-FlashlightSeclite = фонарик СБ
     .desc = Надежный фонарь, используемый службой безопасности.
     .suffix = { "" }
 ent-EmptyFlashlightLantern = { ent-FlashlightLantern }
-    .suffix = Empty
+    .suffix = Пустой
     .desc = { ent-FlashlightLantern.desc }

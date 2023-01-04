@@ -1,8 +1,8 @@
-ent-BasePortal = bluespace portal
-    .desc = Transports you to a linked destination!
+ent-BasePortal = блюспейс портал
+    .desc = Выглядит как приключение на 5 минут!
     .suffix = { "" }
 ent-PortalRed = { ent-BasePortal }
-    .desc = This one looks more like a redspace portal.
+    .desc = Этот больше похож на редспейс портал.
     .suffix = { "" }
 ent-PortalBlue = { ent-BasePortal }
     .desc = { ent-BasePortal.desc }

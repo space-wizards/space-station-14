@@ -1,4 +1,4 @@
-construction-condition-machine-container-empty = Remove the parts from the frame using a [color=cyan]Crowbar[/color].
+construction-condition-machine-container-empty = Извлеките компоненты из каркаса, используя [color=cyan]Лом[/color].
 # MachineFrameComplete
 construction-condition-machine-frame-requirement-label = Требования:
 construction-condition-machine-frame-insert-circuit-board-message = Вставьте [color=cyan]любую плату для машины[/color].
