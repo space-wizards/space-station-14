@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Setting the side port output on a gas mixer now behaves as intended,
-    type: Fix}
-  id: 2332
-  time: '2022-09-16T21:34:18.0000000+00:00'
 - author: GTRsound
   changes:
   - {message: Picked as traitor sound changed, type: Tweak}
@@ -2959,3 +2953,8 @@ Entries:
   - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
   id: 2831
   time: '2023-01-03T23:13:11.0000000+00:00'
+- author: vanx
+  changes:
+  - {message: Doubled the paper symbol limit, type: Tweak}
+  id: 2832
+  time: '2023-01-04T06:44:17.0000000+00:00'
