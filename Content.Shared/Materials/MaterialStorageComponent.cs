@@ -44,11 +44,11 @@ public sealed class MaterialStorageComponent : Component
 /// </summary>
 public readonly struct MaterialEntityInsertedEvent
 {
-    public readonly Dictionary<string, int> Materials;
+    public readonly MaterialComponent MaterialComp;
 
-    public MaterialEntityInsertedEvent(Dictionary<string, int> materials)
+    public MaterialEntityInsertedEvent(MaterialComponent materials)
     {
-        Materials = materials;
+        MaterialComp = materials;
     }
 }
 
