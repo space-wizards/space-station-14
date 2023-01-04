@@ -1,5 +1,8 @@
 ﻿- type: guideEntry
   id: SS14
-  name: Space Station 14
+  name: guide-entry-ss14
   text: "/Server Info/Guidebook/Space Station 14.txt"
-  priority: -1
+  children:
+  - Controls
+  - Jobs
+  - Survival

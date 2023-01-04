@@ -1,9 +1,4 @@
 ﻿- type: guideEntry
   id: Controls
-  name: Controls
+  name: guide-entry-controls
   text: "/Server Info/Guidebook/Controls.txt"
-
-#- type: guideEntry
-#  id: Roleplaying
-#  name: Roleplaying
-#  text: "/Server Info/Guidebook/Roleplaying.txt"

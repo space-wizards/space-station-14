@@ -1,14 +1,11 @@
-﻿#- type: guideEntry
-#  id: CharacterCreation
-#  name: Character Creation
-#  text: "/Server Info/Guidebook/CharacterCreation.txt"
-
-- type: guideEntry
+﻿- type: guideEntry
   id: Jobs
-  name: Jobs
+  name: guide-entry-jobs
   text: "/Server Info/Guidebook/Jobs.txt"
+  children:
+  - Engineering
 
 - type: guideEntry
   id: Survival
-  name: Survival
+  name: guide-entry-survival
   text: "/Server Info/Guidebook/Survival.txt"

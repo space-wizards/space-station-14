@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Client.Guidebook.Controls;
 using Content.Client.Light;
 using Content.Client.Verbs;
 using Content.Shared.Input;
@@ -17,13 +18,12 @@ namespace Content.Client.Guidebook;
 
 // TODO GUIDEBOOKS
 // - improve Tree UI control to add highlighting & collapsible sections
-// - add better support for guides that do not exist on the same tree.
 // - search bar for sections/guides
-// - add public interface to open up a guide, optionally without any tree view
 // - add help component/verb
 //   - Examine tooltip -> ? button -> opens a relevant guide
 //   - Maybe also a "help" keybind that tries to open a relevant guide based on the mouse's current control/window or hovered entity.
 // - Tests. Especially for all the parsing stuff.
+// - Hide tree view when showing a singular guide.
 
 /// <summary>
 ///     This system handles interactions with various client-side entities that are embedded into guidebooks.
@@ -46,7 +46,6 @@ public sealed class GuidebookSystem : EntitySystem
             .Register<GuidebookSystem>();
         _guideWindow = new GuidebookWindow();
 
-        SubscribeLocalEvent<GetGuidesEvent>(OnGetGuidesEvent);
         SubscribeLocalEvent<GuidebookControlsTestComponent, InteractHandEvent>(OnGuidebookControlsTestInteractHand);
         SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
         SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
@@ -134,25 +133,41 @@ public sealed class GuidebookSystem : EntitySystem
         RaiseLocalEvent(activated, activateMsg, true);
     }
 
-
-    private void OnGetGuidesEvent(GetGuidesEvent ev)
-    {
-    }
-
     private bool HandleOpenGuidebook(in PointerInputCmdHandler.PointerInputCmdArgs args)
     {
-        if (args.State == BoundKeyState.Down)
-            _guideWindow.OpenCenteredRight();
+        if (args.State != BoundKeyState.Down)
+            return false;
 
-        var ev = new GetGuidesEvent()
+        OpenGuidebook();
+        return true;
+    }
+
+    /// <summary>
+    ///     Opens the guidebook.
+    /// </summary>
+    /// <param name="guides">What guides should be shown. If not specified, this will instead raise a <see
+    /// cref="GetGuidesEvent"/> and automatically include all guide prototypes.</param>
+    /// <param name="rootEntries">A list of guides that should form the base of the table of contents. If not specified,
+    /// this will automatically simply be a list of all guides that have no parent.</param>
+    /// <param name="forceRoot">This forces a singular guide to contain all other guides. This guide will
+    /// contain its own children, in addition to what would normally be the root guides if this were not
+    /// specified.</param>
+    /// <returns></returns>
+    public bool OpenGuidebook(Dictionary<string, GuideEntry>? guides = null, List<string>? rootEntries = null, string? forceRoot = null)
+    {
+        _guideWindow.OpenCenteredRight();
+
+        if (guides == null)
         {
-            Guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>().ToDictionary(x => x.ID, x => (GuideEntry) x)
-        };
+            var ev = new GetGuidesEvent()
+            {
+                Guides = _prototypeManager.EnumeratePrototypes<GuideEntryPrototype>().ToDictionary(x => x.ID, x => (GuideEntry) x)
+            };
+            RaiseLocalEvent(ev);
+            guides = ev.Guides;
+        }
 
-        
-        RaiseLocalEvent(ev);
-
-        _guideWindow.UpdateGuides(ev.Guides);
+        _guideWindow.UpdateGuides(guides, rootEntries, forceRoot);
 
         return true;
     }

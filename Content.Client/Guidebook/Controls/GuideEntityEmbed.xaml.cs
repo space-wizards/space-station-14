@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Examine;
 using Content.Client.Guidebook.Richtext;
 using Content.Client.Verbs;
@@ -11,7 +11,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 
-namespace Content.Client.Guidebook;
+namespace Content.Client.Guidebook.Controls;
 
 [GenerateTypedNameReferences]
 public sealed partial class GuideEntityEmbed : BoxContainer, ITag

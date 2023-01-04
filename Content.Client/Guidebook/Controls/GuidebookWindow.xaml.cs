@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.ContentPack;
 using System.Linq;
 
-namespace Content.Client.Guidebook;
+namespace Content.Client.Guidebook.Controls;
 
 [GenerateTypedNameReferences]
 public sealed partial class GuidebookWindow : FancyWindow
@@ -24,17 +24,19 @@ public sealed partial class GuidebookWindow : FancyWindow
         Tree.OnItemSelected += GuideSelectOnOnItemSelected;
     }
 
-    private void GuideSelectOnOnItemSelected()
+    private void GuideSelectOnOnItemSelected() =>
+        ShowGuide((GuideEntry) Tree.Selected!.Metadata!);
+
+    private void ShowGuide(GuideEntry entry)
     {
-        var entry = (GuideEntry) Tree.Selected!.Metadata!;
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
         EntryContainer.AddChild(new Label()
         {
             StyleClasses = { "LabelHeadingBigger" },
-            Text = entry.Name
-        });
+            Text = Loc.GetString(entry.Name)
+        }); ;
 
         var doc = new Document();
         EntryContainer.AddChild(doc);
@@ -45,48 +47,77 @@ public sealed partial class GuidebookWindow : FancyWindow
         EntryContainer.MaxWidth = Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
     }
 
-    public void UpdateGuides(Dictionary<string, GuideEntry> entries)
+    public void UpdateGuides(Dictionary<string, GuideEntry> entries, List<string>? rootEntries = null, string? forceRoot = null)
     {
         _entries = entries;
-        RepopulateTree();
+        RepopulateTree(rootEntries, forceRoot);
+
+        if (Tree.ChildCount > 1)
+            return;
+
+        // why doesn't tree allow you to set the selected entry!?!? Or even retrieve existing entries???
+        // TODO fix tree shitcode and then just show the singular entry
+
+        // Tree.Visible = false;
+        // ShowGuide((GuideEntry) ((Tree.Item)Tree.Children.First()).Metadata);
+        ;
     }
 
-    private void RepopulateTree()
+    private IEnumerable<GuideEntry> GetSortedRootEntries(List<string>? rootEntries)
+    {
+        if (rootEntries == null)
+        {
+            HashSet<string> entries = new(_entries.Keys);
+            foreach (var entry in _entries.Values)
+            {
+                entries.ExceptWith(entry.Children);
+            }
+            rootEntries = entries.ToList();
+        }
+
+        return rootEntries
+            .Select(x => _entries[x])
+            .OrderBy(x => x.Priority)
+            .ThenBy(x => Loc.GetString(x.Name));
+    }
+
+    private void RepopulateTree(List<string>? roots = null, string? forcedRoot = null)
     {
         Tree.Clear();
 
-        HashSet<string> rootEntries = new(_entries.Keys);
-        foreach (var entry in _entries.Values)
-        {
-            rootEntries.ExceptWith(entry.Children);
-        }
+        HashSet<string> addedEntries = new();
 
-        var sorted = rootEntries
-            .Select(x=>_entries[x])
-            .OrderBy(x => x.Priority)
-            .ThenBy(x => x.Name).ToList();
-
-        foreach (var entry in sorted)
+        Tree.Item? parent = forcedRoot == null ? null : AddEntry(forcedRoot, null, addedEntries, false);
+        foreach (var entry in GetSortedRootEntries(roots))
         {
-            AddEntry(entry.Id, false);
+            AddEntry(entry.Id, parent, addedEntries, parent != null);
         }
     }
 
-    private void AddEntry(string id, bool indent, Tree.Item? parent = null)
+    private Tree.Item? AddEntry(string id, Tree.Item? parent, HashSet<string> addedEntries, bool indent)
     {
         if (!_entries.TryGetValue(id, out var entry))
         {
             Logger.Error($"Missing guide entry: {id}");
-            return;
+            return null;
         }
 
-        var item = Tree.CreateItem(null);
+        if (!addedEntries.Add(id))
+        {
+            Logger.Error($"Adding duplicate guide entry: {id}");
+            return null;
+        }
+
+        var item = Tree.CreateItem(parent);
         item.Metadata = entry;
-        item.Text = indent ? $"› {entry.Name}" : entry.Name;
+        var name = Loc.GetString(entry.Name);
+        item.Text = indent ? $"› {name}" : name;
 
         foreach (var child in entry.Children)
         {
-            AddEntry(child, true, item);
+            AddEntry(child, item, addedEntries, true);
         }
+
+        return item;
     }
 }

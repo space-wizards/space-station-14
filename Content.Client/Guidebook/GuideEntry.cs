@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook;
 
-[Serializable, NetSerializable, Virtual]
+[Virtual]
 public class GuideEntry
 {
     /// <summary>
