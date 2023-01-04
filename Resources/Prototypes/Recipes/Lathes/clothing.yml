@@ -479,8 +479,8 @@
     Durathread: 150
 
 - type: latheRecipe
-  id: ClothingNeckMantleHOSShoulder #corvax
-  result: ClothingNeckMantleHOSShoulder #corvax
+  id: ClothingNeckMantleHOS
+  result: ClothingNeckMantleHOS
   completetime: 2.8
   materials:
     Cloth: 150
