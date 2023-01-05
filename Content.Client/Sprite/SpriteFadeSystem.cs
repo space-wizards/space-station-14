@@ -40,40 +40,40 @@ public sealed class SpriteFadeSystem : EntitySystem
         base.FrameUpdate(frameTime);
 
         var player = _playerManager.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<TransformComponent>(player, out var playerXform))
-            return;
-
-        if (_stateManager.CurrentState is not GameplayState state)
-            return;
-
         var spriteQuery = GetEntityQuery<SpriteComponent>();
-        var fadeQuery = GetEntityQuery<SpriteFadeComponent>();
         var change = ChangeRate * frameTime;
-        var mapPos = playerXform.MapPosition;
 
-        // Also want to handle large entities even if they may not be clickable.
-        foreach (var ent in state.GetEntitiesUnderPosition(mapPos, 6f))
+        if (TryComp<TransformComponent>(player, out var playerXform) &&
+            _stateManager.CurrentState is GameplayState state &&
+            spriteQuery.TryGetComponent(player, out var playerSprite))
         {
-            if (ent == player ||
-                !fadeQuery.HasComponent(ent) ||
-                !spriteQuery.TryGetComponent(ent, out var sprite))
-            {
-                continue;
-            }
+            var fadeQuery = GetEntityQuery<SpriteFadeComponent>();
+            var mapPos = playerXform.MapPosition;
 
-            if (!TryComp<FadingSpriteComponent>(ent, out var fading))
+            // Also want to handle large entities even if they may not be clickable.
+            foreach (var ent in state.GetEntitiesUnderPosition(mapPos, 6f))
             {
-                fading = AddComp<FadingSpriteComponent>(ent);
-                fading.OriginalAlpha = sprite.Color.A;
-            }
+                if (ent == player ||
+                    !fadeQuery.HasComponent(ent) ||
+                    !spriteQuery.TryGetComponent(ent, out var sprite) ||
+                    sprite.DrawDepth < playerSprite.DrawDepth)
+                {
+                    continue;
+                }
 
-            _comps.Add(fading);
-            var newColor = Math.Max(sprite.Color.A - change, TargetAlpha);
+                if (!TryComp<FadingSpriteComponent>(ent, out var fading))
+                {
+                    fading = AddComp<FadingSpriteComponent>(ent);
+                    fading.OriginalAlpha = sprite.Color.A;
+                }
 
-            if (!sprite.Color.A.Equals(newColor))
-            {
-                sprite.Color = sprite.Color.WithAlpha(newColor);
+                _comps.Add(fading);
+                var newColor = Math.Max(sprite.Color.A - change, TargetAlpha);
+
+                if (!sprite.Color.A.Equals(newColor))
+                {
+                    sprite.Color = sprite.Color.WithAlpha(newColor);
+                }
             }
         }
 
