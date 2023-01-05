@@ -50,9 +50,9 @@ public sealed partial class AnomalySystem
         if (!TryComp<AnomalyComponent>(anomaly, out var anomalyComponent) || anomalyComponent.ConnectedVessel != null)
             return;
 
-        UpdateVesselAppearance(uid,  component);
         component.Anomaly = scanner.ScannedAnomaly;
         anomalyComponent.ConnectedVessel = uid;
+        UpdateVesselAppearance(uid,  component);
         _popup.PopupEntity(Loc.GetString("anomaly-vessel-component-anomaly-assigned"), uid);
     }
 
@@ -64,7 +64,7 @@ public sealed partial class AnomalySystem
             return;
         }
 
-        args.Points = GetAnomalyPointValue(anomaly);
+        args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }
 
     private void OnVesselAnomalyShutdown(EntityUid uid, AnomalyVesselComponent component, ref AnomalyShutdownEvent args)
@@ -88,7 +88,7 @@ public sealed partial class AnomalySystem
     /// <returns>The amount of points</returns>
     public int GetAnomalyPointValue(EntityUid anomaly, AnomalyComponent? component = null)
     {
-        if (!Resolve(anomaly, ref component))
+        if (!Resolve(anomaly, ref component, false))
             return 0;
 
         var multiplier = 1f;

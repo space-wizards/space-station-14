@@ -1,0 +1,18 @@
+- type: entity
+  parent: BaseItem
+  id: AnomalyScanner
+  name: anomaly scanner
+  description: A hand-held scanner built to collect information on various anomalous objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/healthanalyzer.rsi
+    netsync: false
+    state: analyzer
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.HealthAnalyzerUiKey.Key
+        type: HealthAnalyzerBoundUserInterface
+  - type: AnomalyScanner

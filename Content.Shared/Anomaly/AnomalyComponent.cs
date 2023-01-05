@@ -19,7 +19,7 @@ public sealed class AnomalyComponent : Component
     /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DeathThreshold"/>
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Stability = 0f;
+    public float Stability = 0.5f;
 
     /// <summary>
     /// How severe the effects of an anomaly are. Moves only upwards.
@@ -107,23 +107,23 @@ public sealed class AnomalyComponent : Component
     public float PulseVariation = .1f;
     #endregion
 
+    /// <summary>
+    /// The range of initial values for stability
+    /// </summary>
+    /// <remarks>
+    /// +/- 0.2 from perfect stability (0.5)
+    /// </remarks>
     [DataField("initialStabilityRange")]
-    public (float, float) InitialStabilityRange = (0.2f, 0.5f);
+    public (float, float) InitialStabilityRange = (0.3f, 0.7f);
 
+    /// <summary>
+    /// The range of initial values for severity
+    /// </summary>
+    /// <remarks>
+    /// Between 0 and 0.5, which should be all mild effects
+    /// </remarks>
     [DataField("initialSeverityRange")]
-    public (float, float) InitialSeverityRange = (0.0f, 0.35f);
-
-    /// <summary>
-    /// The minimum amount of research points generated per second
-    /// </summary>
-    [DataField("minPointsPerSecond")]
-    public int MinPointsPerSecond = 25;
-
-    /// <summary>
-    /// The maximum amount of research points generated per second
-    /// </summary>
-    [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 150;
+    public (float, float) InitialSeverityRange = (0.0f, 0.5f);
 
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
@@ -141,12 +141,26 @@ public sealed class AnomalyComponent : Component
     [DataField("weakeningParticleType")]
     public AnomalousParticleType WeakeningParticleType;
 
+    #region Points and Vessels
     /// <summary>
     /// The vessel that the anomaly is connceted to. Stored so that multiple
     /// vessels cannot connect to the same anomaly.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public EntityUid? ConnectedVessel;
+
+    /// <summary>
+    /// The minimum amount of research points generated per second
+    /// </summary>
+    [DataField("minPointsPerSecond")]
+    public int MinPointsPerSecond = 10;
+
+    /// <summary>
+    /// The maximum amount of research points generated per second
+    /// </summary>
+    [DataField("maxPointsPerSecond")]
+    public int MaxPointsPerSecond = 150;
+    #endregion
 }
 
 

@@ -29,6 +29,7 @@ public sealed partial class AnomalySystem : EntitySystem
     {
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnUnpause);
 
         InitializeScanner();
         InitializeVessel();
@@ -40,7 +41,8 @@ public sealed partial class AnomalySystem : EntitySystem
         component.Severity = _random.NextFloat(component.InitialSeverityRange.Item1, component.InitialSeverityRange.Item2);
         component.NextPulseTime = _timing.CurTime + GetPulseLength(component) * 2; //extra long the first time
 
-        var particles = new[] { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
+        var particles = new List<AnomalousParticleType>
+            { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
         component.SeverityParticleType = _random.PickAndTake(particles);
         component.DestabilizingParticleType = _random.PickAndTake(particles);
         component.WeakeningParticleType = _random.PickAndTake(particles);
@@ -49,6 +51,12 @@ public sealed partial class AnomalySystem : EntitySystem
     private void OnShutdown(EntityUid uid, AnomalyComponent component, ComponentShutdown args)
     {
         EndAnomaly(uid, component);
+    }
+
+    private void OnUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextPulseTime += args.PausedTime;
+        component.NextSecondUpdate += args.PausedTime;
     }
 
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)

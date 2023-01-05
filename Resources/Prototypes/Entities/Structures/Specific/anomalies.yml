@@ -1,0 +1,32 @@
+- type: entity
+  abstract: true
+  id: BaseAnomaly
+  name: anomaly
+  description: A impossible object in space, shimmering with a strange and powerful force. Standing nearby it makes you uneasy.
+  components:
+  - type: Anomaly
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures #TODO: this probably needs fixtures of some kind
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Specific/anomaly.rsi
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+
+- type: entity
+  id: AnomalyPyroclastic
+  parent: BaseAnomaly
+  components:
+  - type: Sprite
+    layers:
+    - state: anom1-pulse
+  - type: PointLight
+    radius: 2.0
+    energy: 5
+    color: "#fca3c0"

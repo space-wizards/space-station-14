@@ -13,6 +13,7 @@ public sealed class AnomalyVesselComponent : Component
     /// The anomaly that the vessel is storing.
     /// Can be null.
     /// </summary>
+    [ViewVariables]
     public EntityUid? Anomaly;
 
     /// <summary>
