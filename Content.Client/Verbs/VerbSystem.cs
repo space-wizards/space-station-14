@@ -109,7 +109,7 @@ namespace Content.Client.Verbs
             // Do we have to do FoV checks?
             if ((visibility & MenuVisibility.NoFov) == 0)
             {
-                var entitiesUnderMouse = gameScreenBase.GetEntitiesUnderPosition(targetPos);
+                var entitiesUnderMouse = gameScreenBase.GetClickableEntities(targetPos).ToHashSet();
                 bool Predicate(EntityUid e) => e == player || entitiesUnderMouse.Contains(e);
 
                 // first check the general location.
