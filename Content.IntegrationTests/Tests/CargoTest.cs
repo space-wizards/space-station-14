@@ -20,6 +20,8 @@ public sealed class CargoTest
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
         var server = pairTracker.Pair.Server;
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -27,7 +29,7 @@ public sealed class CargoTest
 
         await server.WaitAssertion(() =>
         {
-            var mapId = mapManager.CreateMap();
+            var mapId = testMap.MapId;
 
             foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
             {
@@ -50,13 +52,15 @@ public sealed class CargoTest
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = mapManager.CreateMap();
+            var mapId = testMap.MapId;
             var grid = mapManager.CreateGrid(mapId);
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
@@ -73,8 +77,10 @@ public sealed class CargoTest
                     && stackpricecomp.Price > 0)
                 {
                     if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
+                    {
                         Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                                    $"The prototype {proto} have a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
+                            $"The prototype {proto} have a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
+                    }
                 }
                 entManager.DeleteEntity(ent);
             }

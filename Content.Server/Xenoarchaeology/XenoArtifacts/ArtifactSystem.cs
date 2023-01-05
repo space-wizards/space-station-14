@@ -29,6 +29,7 @@ public sealed partial class ArtifactSystem : EntitySystem
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
+        InitializeActions();
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
