@@ -1,12 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: 'Due to a mix-up in the NanoTrasen Standardized Equipment Logistics
-      Warehouse, non-clothing items were getting stocked in ''Drobe machines. We''ve
-      corrected this issue and ensured said equipment should be available in the appropriate
-      lockers instead.', type: Tweak}
-  id: 2336
-  time: '2022-09-17T14:43:34.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: Cargo techs and the QM now start with an appraisal tool., type: Add}
@@ -2964,3 +2956,8 @@ Entries:
   - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
   id: 2835
   time: '2023-01-05T11:36:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'QM, RD, and CMO players are now eligible to be traitors.', type: Add}
+  id: 2836
+  time: '2023-01-05T23:33:25.0000000+00:00'
