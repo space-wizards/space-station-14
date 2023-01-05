@@ -51,7 +51,7 @@ public sealed class SpriteFadeSystem : EntitySystem
             var mapPos = playerXform.MapPosition;
 
             // Also want to handle large entities even if they may not be clickable.
-            foreach (var ent in state.GetEntitiesUnderPosition(mapPos, 6f))
+            foreach (var ent in state.GetClickableEntities(mapPos))
             {
                 if (ent == player ||
                     !fadeQuery.HasComponent(ent) ||
