@@ -29,6 +29,7 @@ namespace Content.Server.Power.NodeGroups
     public sealed class PowerNet : BaseNetConnectorNodeGroup<IPowerNet>, IPowerNet
     {
         private PowerNetSystem? _powerNetSystem;
+        private IEntityManager? _entMan;
 
         [ViewVariables] public readonly List<PowerSupplierComponent> Suppliers = new();
         [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
@@ -41,6 +42,8 @@ namespace Content.Server.Power.NodeGroups
         public override void Initialize(Node sourceNode, IEntityManager entMan)
         {
             base.Initialize(sourceNode, entMan);
+
+            _entMan = entMan;
 
             _powerNetSystem = entMan.EntitySysManager.GetEntitySystem<PowerNetSystem>();
             _powerNetSystem.InitPowerNet(this);
@@ -91,7 +94,10 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddDischarger(BatteryDischargerComponent discharger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
+            if (_entMan == null)
+                return;
+
+            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(discharger.Owner);
             DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default);
             battery.NetworkBattery.LinkedNetworkDischarging = default;
             Dischargers.Add(discharger);
@@ -100,8 +106,11 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveDischarger(BatteryDischargerComponent discharger)
         {
+            if (_entMan == null)
+                return;
+
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
+            if (_entMan.TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
             {
                 DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = default;
@@ -113,7 +122,10 @@ namespace Content.Server.Power.NodeGroups
 
         public void AddCharger(BatteryChargerComponent charger)
         {
-            var battery = IoCManager.Resolve<IEntityManager>().GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
+            if (_entMan == null)
+                return;
+
+            var battery = _entMan.GetComponent<PowerNetworkBatteryComponent>(charger.Owner);
             DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default);
             battery.NetworkBattery.LinkedNetworkCharging = default;
             Chargers.Add(charger);
@@ -122,8 +134,11 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveCharger(BatteryChargerComponent charger)
         {
+            if (_entMan == null)
+                return;
+
             // Can be missing if the entity is being deleted, not a big deal.
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
+            if (_entMan.TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
             {
                 DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = default;
