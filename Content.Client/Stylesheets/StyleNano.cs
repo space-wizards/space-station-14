@@ -1410,16 +1410,30 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
 
                 // Fancy Tree
-                Element<ContainerButton>().Class(TreeItem.StyleClassSelected)
+                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassSelected)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
                         BackgroundColor = new Color(55, 55, 68),
                     }),
 
-                Element<TextureRect>().Class(TreeItem.StyleClassCollapsed)
+                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = new Color(30, 30, 35),
+                    }),
+
+                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassCollapsed)
                     .Prop(TextureRect.StylePropertyTexture, textureTriangleRight),
 
-                Element<TextureRect>().Class(TreeItem.StyleClassExpanded)
+                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassExpanded)
+                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
+
+                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassExpanded)
                     .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
 
             }).ToList());

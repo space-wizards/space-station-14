@@ -14,6 +14,7 @@ public sealed partial class TreeItem : PanelContainer
     public const string StyleClassExpanded = "expanded";
     public const string StyleClassCollapsed = "collapsed";
     public const string StyleClassSelected = "selected";
+    public const string StyleClassTreeButton = "fancy-tree-button";
 
     public bool Collapsible { get; private set; } = true;
 
@@ -28,7 +29,9 @@ public sealed partial class TreeItem : PanelContainer
     public TreeItem()
     {
         RobustXamlLoader.Load(this);
+        Button.AddStyleClass(StyleClassTreeButton);
         Button.AddStyleClass(StyleClassCollapsed);
+        Icon.AddStyleClass(StyleClassTreeButton);
         Icon.AddStyleClass(StyleClassCollapsed);
         Body.OnChildAdded += OnItemAdded;
         Body.OnChildRemoved += OnItemRemoved;

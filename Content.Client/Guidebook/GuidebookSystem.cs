@@ -17,17 +17,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Guidebook;
 
-// TODO GUIDEBOOKS
-// - Tests. Especially for all the parsing stuff.
-// - Add more guides.
-// - Add GuideHelpComponent to various entities.
-//
-// After an engine PR to make the Tree control less shit:
-// - Hide tree view when showing a singular guide.
-// - Add argument to public method to select a specific guide (e.g., show AME guide, but with the full power tree available)
-// - improve Tree UI control to add highlighting & collapsible sections
-// - search bar for sections/guides
-
 /// <summary>
 ///     This system handles the help-verb and interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
