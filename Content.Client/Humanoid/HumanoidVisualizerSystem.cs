@@ -258,6 +258,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         }
     }
 
+    // TODO: Do marking things on server-side, so client only must apply it.
     private void ApplyMarking(EntityUid uid,
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
@@ -275,7 +276,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
            && setting.AllowsMarkings;
 
         // Marking coloring
-        
         var skinColor = humanoid.SkinColor;
         if (visible && setting != null) skinColor.A = setting.LayerAlpha;
         var markingColors = MarkingColoring.GetMarkingLayerColors(

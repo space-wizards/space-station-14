@@ -39,7 +39,7 @@ public sealed partial class HumanoidSystem
                         component.SkinColor,
                         component.CachedEyeColor,
                         component.CachedHairColor,
-                        component.CachedHairColor,
+                        component.CachedFacialHairColor,
                         component.CustomBaseLayers
                     ));
             }
@@ -78,7 +78,7 @@ public sealed partial class HumanoidSystem
                         component.SkinColor,
                         component.CachedEyeColor,
                         component.CachedHairColor,
-                        component.CachedHairColor,
+                        component.CachedFacialHairColor,
                         component.CustomBaseLayers
                     ));
         }

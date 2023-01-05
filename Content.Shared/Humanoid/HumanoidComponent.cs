@@ -32,7 +32,6 @@ public sealed class HumanoidComponent : Component
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
     /// </summary>
-
     [ViewVariables(VVAccess.ReadOnly)]
     public Color? CachedHairColor;
 

@@ -44,7 +44,8 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
             component.CachedEyeColor,
             component.Sex,
             component.AllHiddenLayers.ToList(),
-            component.CurrentMarkings.GetForwardEnumerator().ToList());
+            component.CurrentMarkings.GetForwardEnumerator().ToList()
+            );
     }
 
     private void OnInit(EntityUid uid, HumanoidComponent humanoid, ComponentInit args)
