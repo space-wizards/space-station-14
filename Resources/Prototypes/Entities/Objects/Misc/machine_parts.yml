@@ -24,6 +24,9 @@
     - type: MachinePart
       part: Capacitor
       rating: 1
+    - type: Tag
+      tags:
+        - Capacitor
 
 - type: entity
   id: ScanningModuleStockPart
@@ -36,6 +39,9 @@
     - type: MachinePart
       part: ScanningModule
       rating: 1
+    - type: Tag
+      tags:
+        - ScanningModule
 
 - type: entity
   id: MicroManipulatorStockPart
@@ -48,6 +54,9 @@
     - type: MachinePart
       part: Manipulator
       rating: 1
+    - type: Tag
+      tags:
+        - MicroManipulator
 
 - type: entity
   id: MicroLaserStockPart
@@ -60,6 +69,9 @@
     - type: MachinePart
       part: Laser
       rating: 1
+    - type: Tag
+      tags:
+        - MicroLaser
 
 - type: entity
   id: MatterBinStockPart
@@ -72,6 +84,9 @@
     - type: MachinePart
       part: MatterBin
       rating: 1
+    - type: Tag
+      tags:
+        - MatterBin
 
 # Rating 2
 
@@ -85,6 +100,10 @@
       state: adv_capacitor
     - type: MachinePart
       rating: 2
+    - type: Tag
+      tags:
+        - Capacitor
+        - AdvancedCapacitor
 
 - type: entity
   id: AdvancedScanningModuleStockPart
@@ -96,6 +115,10 @@
       state: adv_scan_module
     - type: MachinePart
       rating: 2
+    - type: Tag
+      tags:
+        - ScanningModule
+        - AdvancedScanningModule
 
 - type: entity
   id: NanoManipulatorStockPart
@@ -107,6 +130,10 @@
       state: nano_mani
     - type: MachinePart
       rating: 2
+    - type: Tag
+      tags:
+        - MicroManipulator
+        - NanoManipulator
 
 - type: entity
   id: HighPowerMicroLaserStockPart
@@ -118,6 +145,10 @@
       state: high_micro_laser
     - type: MachinePart
       rating: 2
+    - type: Tag
+      tags:
+        - MicroLaser
+        - HighPowerMicroLaser
 
 - type: entity
   id: AdvancedMatterBinStockPart
@@ -129,6 +160,10 @@
       state: advanced_matter_bin
     - type: MachinePart
       rating: 2
+    - type: Tag
+      tags:
+        - MatterBin
+        - AdvancedMatterBin
 
 # Rating 3
 
@@ -142,6 +177,11 @@
       state: super_capacitor
     - type: MachinePart
       rating: 3
+    - type: Tag
+      tags:
+        - Capacitor
+        - AdvancedCapacitor
+        - SuperCapacitor
 
 - type: entity
   id: PhasicScanningModuleStockPart
@@ -153,6 +193,11 @@
       state: super_scan_module
     - type: MachinePart
       rating: 3
+    - type: Tag
+      tags:
+        - ScanningModule
+        - AdvancedScanningModule
+        - PhasicScanningModule
 
 - type: entity
   id: PicoManipulatorStockPart
@@ -164,6 +209,11 @@
       state: pico_mani
     - type: MachinePart
       rating: 3
+    - type: Tag
+      tags:
+        - MicroManipulator
+        - NanoManipulator
+        - PicoManipulator
 
 - type: entity
   id: UltraHighPowerMicroLaserStockPart
@@ -175,6 +225,11 @@
       state: ultra_high_micro_laser
     - type: MachinePart
       rating: 3
+    - type: Tag
+      tags:
+        - MicroLaser
+        - HighPowerMicroLaser
+        - UltraHighPowerMicroLaser
 
 - type: entity
   id: SuperMatterBinStockPart
@@ -186,6 +241,11 @@
       state: super_matter_bin
     - type: MachinePart
       rating: 3
+    - type: Tag
+      tags:
+        - MatterBin
+        - AdvancedMatterBin
+        - SuperMatterBin
 
 # Rating 4
 
@@ -199,6 +259,12 @@
       state: quadratic_capacitor
     - type: MachinePart
       rating: 4
+    - type: Tag
+      tags:
+        - Capacitor
+        - AdvancedCapacitor
+        - SuperCapacitor
+        - QuadraticCapacitor
 
 - type: entity
   id: TriphasicScanningModuleStockPart
@@ -210,6 +276,12 @@
       state: triphasic_scan_module
     - type: MachinePart
       rating: 4
+    - type: Tag
+      tags:
+        - ScanningModule
+        - AdvancedScanningModule
+        - PhasicScanningModule
+        - TriphasicScanningModule
 
 - type: entity
   id: FemtoManipulatorStockPart
@@ -221,6 +293,12 @@
       state: femto_mani
     - type: MachinePart
       rating: 4
+    - type: Tag
+      tags:
+        - MicroManipulator
+        - NanoManipulator
+        - PicoManipulator
+        - FemtoManipulator
 
 - type: entity
   id: QuadUltraMicroLaserStockPart
@@ -232,6 +310,12 @@
       state: quadultra_micro_laser
     - type: MachinePart
       rating: 4
+    - type: Tag
+      tags:
+        - MicroLaser
+        - HighPowerMicroLaser
+        - UltraHighPowerMicroLaser
+        - QuadUltraMicroLaser
 
 - type: entity
   id: BluespaceMatterBinStockPart
@@ -243,6 +327,12 @@
       state: bluespace_matter_bin
     - type: MachinePart
       rating: 4
+    - type: Tag
+      tags:
+        - MatterBin
+        - AdvancedMatterBin
+        - SuperMatterBin
+        - BluespaceMatterBin
 
 # Subspace stock parts
 
@@ -256,6 +346,9 @@
       state: subspace_ansible
     - type: MachinePart
       part: Ansible
+    - type: Tag
+      tags:
+        - SubspaceAnsible
 
 - type: entity
   id: FilterSubspaceStockPart
@@ -267,6 +360,9 @@
       state: hyperwave_filter
     - type: MachinePart
       part: Filter
+    - type: Tag
+      tags:
+        - SubspaceFilter
 
 - type: entity
   id: AmplifierSubspaceStockPart
@@ -278,6 +374,9 @@
       state: subspace_amplifier
     - type: MachinePart
       part: Amplifier
+    - type: Tag
+      tags:
+        - SubspaceAmplifier
 
 - type: entity
   id: TreatmentSubspaceStockPart
@@ -289,6 +388,9 @@
       state: treatment_disk
     - type: MachinePart
       part: Treatment
+    - type: Tag
+      tags:
+        - SubspaceTreatmentDisk
 
 - type: entity
   id: AnalyzerSubspaceStockPart
@@ -300,6 +402,9 @@
       state: wavelength_analyzer
     - type: MachinePart
       part: Analyzer
+    - type: Tag
+      tags:
+        - SubspaceWavelengthAnalyzer
 
 - type: entity
   id: CrystalSubspaceStockPart
@@ -311,6 +416,9 @@
       state: ansible_crystal
     - type: MachinePart
       part: Crystal
+    - type: Tag
+      tags:
+        - AnsibleCrystal
 
 - type: entity
   id: TransmitterSubspaceStockPart
@@ -322,3 +430,6 @@
       state: subspace_transmitter
     - type: MachinePart
       part: Transmitter
+    - type: Tag
+      tags:
+        - SubspaceTransmitter
