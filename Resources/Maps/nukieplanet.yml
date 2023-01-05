@@ -14512,8 +14512,7 @@ entities:
 - uid: 1539
   type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,-0.5
+  - pos: 8.5,-0.5
     parent: 104
     type: Transform
 - uid: 1540
