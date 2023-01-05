@@ -18,6 +18,7 @@ using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -320,7 +321,7 @@ public sealed class EntityStorageSystem : EntitySystem
         if (toAdd == container)
             return false;
 
-        if (TryComp<IPhysBody>(toAdd, out var phys))
+        if (TryComp<PhysicsComponent>(toAdd, out var phys))
         {
             if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
                 return false;

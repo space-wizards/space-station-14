@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
+using Content.Server.VendingMachines.Restock;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
@@ -10,6 +11,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
@@ -51,6 +53,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineRestockEvent>(OnRestock);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -158,6 +162,31 @@ namespace Content.Server.VendingMachines
 
             args.Handled = true;
             EjectRandom(uid, throwItem: true, forceEject: false, component);
+        }
+
+        private void OnRestock(EntityUid uid, VendingMachineComponent component, VendingMachineRestockEvent args)
+        {
+            if (!TryComp<VendingMachineRestockComponent>(args.RestockBox, out var restockComponent))
+            {
+                _sawmill.Error($"{ToPrettyString(args.User)} tried to restock {ToPrettyString(uid)} with {ToPrettyString(args.RestockBox)} which did not have a VendingMachineRestockComponent.");
+                return;
+            }
+
+            TryRestockInventory(uid, component);
+
+            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-done",
+                    ("this", args.RestockBox),
+                    ("user", args.User),
+                    ("target", uid)),
+                args.User,
+                PopupType.Medium);
+
+            _audioSystem.PlayPvs(restockComponent.SoundRestockDone, component.Owner,
+                AudioParams.Default
+                .WithVolume(-2f)
+                .WithVariation(0.2f));
+
+            Del(args.RestockBox);
         }
 
         /// <summary>
@@ -411,6 +440,30 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+        }
+
+        public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
+        {
+            if (!Resolve(uid, ref vendComponent))
+                return;
+
+            RestockInventoryFromPrototype(uid, vendComponent);
+
+            UpdateVendingMachineInterfaceState(vendComponent);
+            TryUpdateVisualState(uid, vendComponent);
+        }
+
+    }
+
+    public sealed class VendingMachineRestockEvent : EntityEventArgs
+    {
+        public EntityUid User { get; }
+        public EntityUid RestockBox { get; }
+
+        public VendingMachineRestockEvent(EntityUid user, EntityUid restockBox)
+        {
+            User = user;
+            RestockBox = restockBox;
         }
     }
 }
