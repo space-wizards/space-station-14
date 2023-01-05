@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "license": "CC-BY",
+  "copyright": "Created by Coles_Magnum",
+  "size": {"x": 32, "y": 32}, 
+  "states": [{"name": "centrifuge0", "delays": [[1.0]]}, 
+  	{"name": "centrifuge1", "delays": [[1.0]]},
+  	{"name": "centrifuge2", "delays": [[1.0]]},
+  	{"name": "centrifuge3", "delays": [[1.0]]}
+  ]
+}

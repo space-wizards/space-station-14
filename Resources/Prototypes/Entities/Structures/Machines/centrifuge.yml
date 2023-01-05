@@ -1,0 +1,67 @@
+- type: entity
+  id: Centrifuge
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: CentriMax 2000
+  description: An advanced Centrifuge for separating reagents. If you have one of these, it means you couldn't afford a ChemMaster.'
+  suffix: centrifuge
+  components:
+  - type: Transform
+    anchored: true
+  - type: Centrifuge
+    beakerSlot:
+      insertSound: /Audio/Machines/machine_switch.ogg
+      ejectSound: /Audio/Machines/machine_switch.ogg
+      swap: false
+      soundOptions:
+        volume: -2
+      whitelist:
+        components:
+        - FitsInDispenser
+    outputSlot:
+      insertSound: /Audio/Machines/machine_switch.ogg
+      ejectSound: /Audio/Machines/machine_switch.ogg
+      swap: false
+      soundOptions:
+        volume: -2
+      whitelist:
+        components:
+        - FitsInDispenser
+        tags:
+        - Bottle
+  - type: ActivatableUI
+    key: enum.CentrifugeUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.CentrifugeUiKey.Key
+      type: CentrifugeBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: CentrifugeVisualizer
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.08,-0.35,0.15,0.25"
+      mask:
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/centrifuge.rsi
+    state: centrifuge0
+    drawdepth: SmallObjects
+    snapCardinals: true
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      Centrifuge-beakerSlot: !type:ContainerSlot
+      Centrifuge-outputSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: SolutionContainerManager
+    solutions:
+      buffer: {}
