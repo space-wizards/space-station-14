@@ -448,22 +448,10 @@ namespace Content.Shared.Movement.Systems
         {
             sound = null;
             MapGridComponent? grid;
-            Tile? tile;
-            ContentTileDefinition def;
 
-            // Fallback to the map
-            if (xform.MapUid == xform.GridUid ||
-                xform.GridUid == null)
+            // Fallback to the map?
+            if (xform.GridUid == null)
             {
-                if (TryComp(xform.GridUid, out grid) &&
-                    _biome.TryGetBiomeTile(grid.Owner, grid, grid.LocalToTile(xform.Coordinates), out tile))
-                {
-                    // Walking on a tile.
-                    def = (ContentTileDefinition) _tileDefinitionManager[tile.Value.TypeId];
-                    sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
-                    return sound != null;
-                }
-
                 if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
                     sound = modifier.Sound;
@@ -476,15 +464,11 @@ namespace Content.Shared.Movement.Systems
             grid = _mapManager.GetGrid(xform.GridUid.Value);
             var position = grid.LocalToTile(xform.Coordinates);
 
-            if (!_biome.TryGetBiomeTile(grid.Owner, grid, position, out tile))
-            {
-                sound = null;
-                return false;
-            }
-
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
-            foreach (var maybeFootstep in grid.GetAnchoredEntities(position))
+            var anchored = grid.GetAnchoredEntitiesEnumerator(position);
+
+            while (anchored.MoveNext(out var maybeFootstep))
             {
                 if (TryComp<FootstepModifierComponent>(maybeFootstep, out var footstep))
                 {
@@ -493,8 +477,14 @@ namespace Content.Shared.Movement.Systems
                 }
             }
 
+            if (!grid.TryGetTileRef(position, out var tileRef))
+            {
+                sound = null;
+                return false;
+            }
+
             // Walking on a tile.
-            def = (ContentTileDefinition) _tileDefinitionManager[tile.Value.TypeId];
+            var def = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
             sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
             return sound != null;
         }
