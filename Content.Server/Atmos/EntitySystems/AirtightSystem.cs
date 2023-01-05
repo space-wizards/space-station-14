@@ -30,7 +30,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (airtight.FixAirBlockedDirectionInitialize)
             {
                 var moveEvent = new MoveEvent(uid, default, default, Angle.Zero, xform.LocalRotation, xform, false);
-                if (AirtightRotate(uid, airtight, ref moveEvent);
+                if (AirtightRotate(uid, airtight, ref moveEvent))
                     return;
             }
 
