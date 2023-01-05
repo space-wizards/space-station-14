@@ -169,7 +169,7 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            if (HasComponent<GhostComponent>(playerEntity))
+            if (HasComp<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != default)
