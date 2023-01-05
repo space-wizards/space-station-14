@@ -44,11 +44,13 @@
   id: CloningPodSender
   name: signal-port-name-pod-receiver
   description: signal-port-description-pod-sender
+  defaultLinks: [ CloningPodReceiver ]
 
 - type: transmitterPort
   id: MedicalScannerSender
   name: signal-port-name-med-scanner-sender
   description: signal-port-description-med-scanner-sender
+  defaultLinks: [ MedicalScannerReceiver ]
 
 - type: transmitterPort
   id: ArtifactAnalyzerSender
