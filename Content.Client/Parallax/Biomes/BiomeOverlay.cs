@@ -44,7 +44,7 @@ public sealed class BiomeOverlay : Overlay
         _prototype = protoManager;
         _resource = resource;
         _biome = biome;
-        ZIndex = TileEdgeOverlay.TileEdgeZIndex - 1;
+        ZIndex = TileEdgeOverlay.TileEdgeZIndex + 1;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -87,8 +87,8 @@ public sealed class BiomeOverlay : Overlay
 
             switch (layer)
             {
-                case BiomeTileLayer tileLayer:
-                    DrawTileLayer(worldHandle, tileDimensions, tileLayer, flooredBL, ceilingTR, grid, seed, hands);
+                // NoOp
+                case BiomeTileLayer:
                     break;
                 case BiomeDecalLayer decalLayer:
                     DrawDecalLayer(prototype, worldHandle, tileDimensions, decalLayer, flooredBL, ceilingTR, grid, seed, hands);
@@ -98,186 +98,9 @@ public sealed class BiomeOverlay : Overlay
             }
         }
 
-        // Render tile edges after all previous tiles done
-        DrawTileEdges(worldHandle, prototype, flooredBL, ceilingTR, grid, seed);
-
         foreach (var handled in _handled.Values)
         {
             handled.Clear();
-        }
-    }
-
-    private void DrawTileLayer(DrawingHandleWorld screenHandle,
-        Vector2 tileSize,
-        BiomeTileLayer tileLayer,
-        Vector2 flooredBL,
-        Vector2 ceilingTR,
-        MapGridComponent? grid,
-        FastNoise seed,
-        HashSet<Vector2i> handledTiles)
-    {
-        seed.SetFrequency(tileLayer.Frequency);
-        var groups = tileLayer.Tiles.Select(o => _prototype.Index<ContentTileDefinition>(o)).ToList();
-
-        for (var x = flooredBL.X; x < ceilingTR.X; x++)
-        {
-            for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
-            {
-                var indices = new Vector2i((int) x, (int) y);
-
-                // If there's a tile there then skip drawing.
-                if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty || handledTiles.Contains(indices))
-                    continue;
-
-                if (!_biome.TryGetTile(indices, seed, tileLayer.Threshold, groups, out var tile))
-                    continue;
-
-                handledTiles.Add(indices);
-
-                var tex = _tileDefinitionManager.GetTexture(tile.Value);
-                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(indices, tileSize));
-            }
-        }
-    }
-
-    private void DrawTileEdges(DrawingHandleWorld screenHandle, BiomePrototype prototype, Vector2 flooredBL, Vector2 ceilingTR, MapGridComponent? grid, FastNoise seed)
-    {
-        for (var x = flooredBL.X; x < ceilingTR.X; x++)
-        {
-            for (var y = flooredBL.Y; y < ceilingTR.Y; y++)
-            {
-                var indices = new Vector2i((int) x, (int) y);
-
-                // Don't try to draw edges for existing tiles.
-                if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
-                    continue;
-
-                if (!_biome.TryGetBiomeTile(indices, prototype, seed, grid, out var tile))
-                    continue;
-
-                var tileDef = _tileDefinitionManager[tile.Value.TypeId];
-
-                if (tileDef.CardinalSprites.Count == 0 && tileDef.CornerSprites.Count == 0)
-                    continue;
-
-                var tileDimensions = new Vector2(1f, 1f);
-
-                // Get what tiles border us to determine what sprites we need to draw.
-                for (var i = -1; i <= 1; i++)
-                {
-                    for (var j = -1; j <= 1; j++)
-                    {
-                        if (i == 0 && j == 0)
-                            continue;
-
-                        var neighborIndices = new Vector2i(indices.X + i, indices.Y + j);
-
-                        // If it's the same tile then no edge to be drawn.
-                        if (!_biome.TryGetBiomeTile(neighborIndices, prototype, seed, grid, out var neighborTile) ||
-                            neighborTile.Value.TypeId.Equals(tile.Value.TypeId))
-                            continue;
-
-                        var direction = new Vector2i(i, j).AsDirection();
-                        var intDirection = (int) direction;
-                        var box = Box2.FromDimensions(neighborIndices, tileDimensions);
-                        var variants = tileDef.CornerSprites.Count;
-                        var variant = (neighborIndices.X + neighborIndices.Y * 4 + intDirection) % variants;
-
-                        Angle angle = Angle.Zero;
-                        Texture? texture = null;
-
-                        switch (direction)
-                        {
-                            // Corner sprites
-                            case Direction.SouthEast:
-                                if (tileDef.CornerSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
-                                        .Texture;
-                                }
-
-                                break;
-                            case Direction.NorthEast:
-                                if (tileDef.CornerSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI / 2f);
-                                }
-
-                                break;
-                            case Direction.NorthWest:
-                                if (tileDef.CornerSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI);
-                                }
-
-                                break;
-                            case Direction.SouthWest:
-                                if (tileDef.CornerSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CornerSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI * 1.5f);
-                                }
-
-                                break;
-                            // Edge sprites
-                            case Direction.South:
-                                if (tileDef.CardinalSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
-                                        .Texture;
-                                }
-
-                                break;
-                            case Direction.East:
-                                if (tileDef.CardinalSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI / 2f);
-                                }
-
-                                break;
-                            case Direction.North:
-                                if (tileDef.CardinalSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI);
-                                }
-
-                                break;
-                            case Direction.West:
-                                if (tileDef.CardinalSprites.Count > 0)
-                                {
-                                    texture = _resource.GetResource<TextureResource>(tileDef.CardinalSprites[variant])
-                                        .Texture;
-
-                                    angle = new Angle(MathF.PI * 1.5f);
-                                }
-
-                                break;
-                        }
-
-                        if (texture == null)
-                            continue;
-
-                        if (angle == Angle.Zero)
-                            screenHandle.DrawTextureRect(texture, box);
-                        else
-                            screenHandle.DrawTextureRect(texture, new Box2Rotated(box, angle, box.Center));
-                    }
-                }
-            }
         }
     }
 
@@ -301,7 +124,7 @@ public sealed class BiomeOverlay : Overlay
                 var indices = new Vector2i((int) x, (int) y);
 
                 // If there's a tile there then skip drawing.
-                if (handled.Contains(indices) || grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
+                if (handled.Contains(indices))// || grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
                     continue;
 
                 if (!_biome.TryGetBiomeTile(indices, prototype, seed, grid, out var indexTile) ||

@@ -17,7 +17,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
     private ISawmill _sawmill = default!;
     private readonly HashSet<EntityUid> _handledEntities = new();
-    private const float LoadRange = 16f;
+    private const float LoadRange = ChunkSize * 1.5f;
     private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
 
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
