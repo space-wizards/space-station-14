@@ -6,13 +6,13 @@
                 MinSize="100 200"
                 Resizable="True"
                 Title="{Loc 'guidebook-window-title'}">
-    <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+    <SplitContainer Orientation="Horizontal" HorizontalExpand="True" Name="Split">
         <!-- Guide select -->
-        <BoxContainer Orientation="Horizontal" HorizontalExpand="True" SizeFlagsStretchRatio="1">
+        <BoxContainer Orientation="Horizontal" Name="TreeBox">
             <Tree Name="Tree" VerticalExpand="True" HorizontalExpand="True"/>
             <cc:VSeparator StyleClasses="LowDivider" Margin="0 -2"/>
         </BoxContainer>
-        <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True" SizeFlagsStretchRatio="2">
+        <ScrollContainer Name="Scroll" HScrollEnabled="False" HorizontalExpand="True" VerticalExpand="True">
             <Control>
                 <BoxContainer Orientation="Vertical" Name="EntryContainer" Margin="5 5 5 5" Visible="False"/>
                 <BoxContainer Orientation="Vertical" Name="Placeholder" Margin="5 5 5 5">
@@ -21,5 +21,5 @@
                 </BoxContainer>
             </Control>
         </ScrollContainer>
-    </BoxContainer>
+    </SplitContainer>
 </controls:FancyWindow>

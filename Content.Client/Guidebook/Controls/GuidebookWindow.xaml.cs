@@ -55,8 +55,6 @@ public sealed partial class GuidebookWindow : FancyWindow
 
         if (!_parsingMan.TryAddMarkup(doc, file.ReadToEnd()))
             Logger.Error($"Failed to add contents of guide document {entry.Id}.");
-
-        EntryContainer.MaxWidth = Size.X * (2.0f / 3.0f) - 20.0f * UIScale;
     }
 
     public void UpdateGuides(
@@ -68,13 +66,23 @@ public sealed partial class GuidebookWindow : FancyWindow
         _entries = entries;
         RepopulateTree(rootEntries, forceRoot);
 
-        // why doesn't tree allow you to set the selected entry!?!? Or even retrieve existing entries???
-        // TODO fix tree shitcode and then just show the singular entry
-
-        if (Tree.ChildCount > 1)
+        Split.State = SplitContainer.SplitState.Auto;
+        if (entries.Count == 1)
         {
-            // TODO hide tree view altogether
-            // selected = WhyTheFuckDoesntTheTreeHaveAMethodToGetFuckingItems()
+            TreeBox.Visible = false;
+            Split.ResizeMode = SplitContainer.SplitResizeMode.NotResizable;
+            selected = entries.Keys.First();
+
+            // TODO make the fucking tree return its desired size. FFS.
+            Tree.MinWidth = 0;
+        }
+        else
+        {
+            TreeBox.Visible = true;
+            Split.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
+
+            // TODO make the fucking tree return its desired size. FFS.
+            Tree.MinWidth = 200f;
         }
 
         if (selected != null)
