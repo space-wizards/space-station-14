@@ -1,0 +1,32 @@
+- type: constructionGraph
+  id: LaserCarbineMakeshift
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: laser
+      steps:
+      - tag: HighPowerMicroLaser
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: high_micro_laser
+        name: high-power microlaser
+      - tag: AdvancedCapacitor
+        icon:
+          sprite: Objects/Misc/stock_parts.rsi
+          state: capacitor
+        name: advanced capacitor
+      - tag: HighPowerCell
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: high
+        name: high capacity power cell
+      - material: Cable
+        amount: 15
+      - material: Steel
+        amount: 6
+      - material: Glass
+        amount: 3
+        doAfter: 10
+  - node: laser
+    entity: WeaponMakeshiftLaser

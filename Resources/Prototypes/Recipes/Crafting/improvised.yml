@@ -86,3 +86,16 @@
     sprite: Clothing/Head/Misc/flower-crown.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: makeshift laser carbine
+  id: lasercarbinemakeshift
+  graph: LaserCarbineMakeshift
+  startNode: start
+  targetNode: laser
+  category: construction-category-weapons
+  objectType: Item
+  description: Better pray it won't burn your hands off.
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    state: icon
