@@ -22,19 +22,24 @@ public sealed partial class GuidebookWindow : FancyWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        Tree.OnItemSelected += GuideSelectOnOnItemSelected;
+        Tree.OnSelectedItemChanged += OnSelectionChanged;
     }
 
-    public void ClearSelecteddGuide()
+    private void OnSelectionChanged(TreeItem? item)
+    {
+        if (item != null && item.Metadata is GuideEntry entry)
+            ShowGuide(entry);
+        else
+            ClearSelectedGuide();
+    }
+
+    public void ClearSelectedGuide()
     {
         _currentlyShowing = null;
         Placeholder.Visible = true;
         EntryContainer.Visible = false;
         EntryContainer.RemoveAllChildren();
     }
-
-    private void GuideSelectOnOnItemSelected() =>
-        ShowGuide((GuideEntry) Tree.Selected!.Metadata!);
 
     private void ShowGuide(GuideEntry entry)
     {
@@ -65,6 +70,7 @@ public sealed partial class GuidebookWindow : FancyWindow
     {
         _entries = entries;
         RepopulateTree(rootEntries, forceRoot);
+        ClearSelectedGuide();
 
         Split.State = SplitContainer.SplitState.Auto;
         if (entries.Count == 1)
@@ -72,29 +78,17 @@ public sealed partial class GuidebookWindow : FancyWindow
             TreeBox.Visible = false;
             Split.ResizeMode = SplitContainer.SplitResizeMode.NotResizable;
             selected = entries.Keys.First();
-
-            // TODO make the fucking tree return its desired size. FFS.
-            Tree.MinWidth = 0;
         }
         else
         {
             TreeBox.Visible = true;
             Split.ResizeMode = SplitContainer.SplitResizeMode.RespectChildrenMinSize;
-
-            // TODO make the fucking tree return its desired size. FFS.
-            Tree.MinWidth = 200f;
         }
 
         if (selected != null)
         {
-            ShowGuide(_entries[selected]);
-        }
-        else if (_currentlyShowing != null && !entries.ContainsKey(_currentlyShowing))
-            ClearSelecteddGuide();
-
-        if (_currentlyShowing != null)
-        {
-            // TODO make tree actually select the selected guide, so that it is highlighted.
+            var item = Tree.Items.FirstOrDefault(x => x.Metadata is GuideEntry entry && entry.Id == selected);
+            Tree.SetSelectedIndex(item?.Index);
         }
     }
 
@@ -122,14 +116,15 @@ public sealed partial class GuidebookWindow : FancyWindow
 
         HashSet<string> addedEntries = new();
 
-        Tree.Item? parent = forcedRoot == null ? null : AddEntry(forcedRoot, null, addedEntries, false);
+        TreeItem? parent = forcedRoot == null ? null : AddEntry(forcedRoot, null, addedEntries);
         foreach (var entry in GetSortedRootEntries(roots))
         {
-            AddEntry(entry.Id, parent, addedEntries, parent != null);
+            AddEntry(entry.Id, parent, addedEntries);
         }
+        Tree.SetAllExpanded(true);
     }
 
-    private Tree.Item? AddEntry(string id, Tree.Item? parent, HashSet<string> addedEntries, bool indent)
+    private TreeItem? AddEntry(string id, TreeItem? parent, HashSet<string> addedEntries)
     {
         if (!_entries.TryGetValue(id, out var entry))
             return null;
@@ -140,14 +135,14 @@ public sealed partial class GuidebookWindow : FancyWindow
             return null;
         }
 
-        var item = Tree.CreateItem(parent);
+        var item = Tree.AddItem(parent);
         item.Metadata = entry;
         var name = Loc.GetString(entry.Name);
-        item.Text = indent ? $"› {name}" : name;
+        item.Label.Text = name;
 
         foreach (var child in entry.Children)
         {
-            AddEntry(child, item, addedEntries, true);
+            AddEntry(child, item, addedEntries);
         }
 
         return item;

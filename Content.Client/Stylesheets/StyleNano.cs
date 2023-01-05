@@ -313,6 +313,7 @@ namespace Content.Client.Stylesheets
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
+            var textureTriangleRight = resCache.GetTexture("/Textures/Interface/Nano/triangle_right.png");
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -1407,6 +1408,19 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class("PDAWindowFooterText")
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
+
+                // Fancy Tree
+                Element<ContainerButton>().Class(TreeItem.StyleClassSelected)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = new Color(55, 55, 68),
+                    }),
+
+                Element<TextureRect>().Class(TreeItem.StyleClassCollapsed)
+                    .Prop(TextureRect.StylePropertyTexture, textureTriangleRight),
+
+                Element<TextureRect>().Class(TreeItem.StyleClassExpanded)
+                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
 
             }).ToList());
         }
