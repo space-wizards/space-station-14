@@ -3,6 +3,7 @@ using Content.Shared.Parallax.Biomes;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -14,6 +15,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
+    private ISawmill _sawmill = default!;
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float LoadRange = 16f;
     private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
@@ -23,6 +25,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("biome");
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
     }
 
@@ -51,10 +54,9 @@ public sealed class BiomeSystem : SharedBiomeSystem
         {
             var pSession = (IPlayerSession) client;
 
-            if (pSession.AttachedEntity != null &&
-                !_handledEntities.Add(pSession.AttachedEntity.Value) &&
-                xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
-                biomeQuery.TryGetComponent(xform.MapUid, out var biome))
+            if (xformQuery.TryGetComponent(pSession.AttachedEntity, out var xform) &&
+                _handledEntities.Add(pSession.AttachedEntity.Value) &&
+                 biomeQuery.TryGetComponent(xform.MapUid, out var biome))
             {
                 AddChunksInRange(biome, xform.WorldPosition);
             }
@@ -72,15 +74,15 @@ public sealed class BiomeSystem : SharedBiomeSystem
             }
         }
 
-        // Load new chunks
-        biomes = EntityQueryEnumerator<BiomeComponent>();
+        var loadBiomes = EntityQueryEnumerator<BiomeComponent, MapGridComponent>();
 
-        while (biomes.MoveNext(out var biome))
+        while (loadBiomes.MoveNext(out var biome, out var grid))
         {
-            _activeChunks.Add(biome, new HashSet<Vector2i>());
+            // Load new chunks
+            LoadChunks(biome, grid);
+            // Unload old chunks
+            UnloadChunks(biome, grid);
         }
-
-        // Unload old chunks
 
         _handledEntities.Clear();
         _activeChunks.Clear();
@@ -99,6 +101,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
     private void LoadChunks(BiomeComponent component, MapGridComponent grid)
     {
         var active = _activeChunks[component];
+        var noise = new FastNoise(component.Seed);
+        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
 
         foreach (var chunk in active)
         {
@@ -106,12 +110,14 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Load NOW!
-            LoadChunk(component, grid, chunk);
+            LoadChunk(component, grid, chunk * ChunkSize, noise, prototype);
         }
     }
 
-    private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk)
+    private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype)
     {
+        _sawmill.Debug($"Loading chunk for {ToPrettyString(component.Owner)} at {chunk}");
+
         // Set tiles first
         // TODO: Pass this in
         var tiles = new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
@@ -123,10 +129,14 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
                 // If there's existing data then don't overwrite it.
-                if (grid.TryGetTileRef(indices, out _))
+                if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
                     continue;
 
-                // TODO Get tile from biomesystem (move to shared)
+                // Pass in null so we don't try to get the tileref.
+                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) || biomeTile.Value == tileRef.Tile)
+                    continue;
+
+                tiles.Add((indices, biomeTile.Value));
             }
         }
 
@@ -141,22 +151,25 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         foreach (var chunk in component.LoadedChunks)
         {
-            if (!active.Contains(chunk))
+            if (active.Contains(chunk) || !component.LoadedChunks.Remove(chunk))
                 continue;
 
             // Unload NOW!
-            UnloadChunk(component, grid, chunk);
+            UnloadChunk(component, grid, chunk * ChunkSize);
         }
     }
 
     private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk)
     {
+        _sawmill.Debug($"Unloading chunk for {ToPrettyString(component.Owner)} at {chunk}");
         // Reverse order to loading
         // Delete entities
 
         // Unset tiles (if the data is custom)
         // TODO: Pass this in
         var tiles = new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
+        var noise = new FastNoise(component.Seed);
+        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
 
         for (var x = 0; x < ChunkSize; x++)
         {
@@ -164,9 +177,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
+                // If it's default data unload the tile.
+                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) || grid.TryGetTileRef(indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
+                    continue;
 
-                // TODO Get tile from biomesystem (move to shared)
-                // If it doesn't match then don't set
+                tiles.Add((indices, Tile.Empty));
             }
         }
 

@@ -15,7 +15,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
 
-    protected const byte ChunkSize = 4;
+    protected const byte ChunkSize = 8;
 
     // TODO: Dump this
     /// <summary>
