@@ -15,10 +15,13 @@ public abstract class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
 
+    protected const byte ChunkSize = 4;
+
+    // TODO: Dump this
     /// <summary>
     /// Cache of tiles we've calculated previously.
     /// </summary>
-    protected Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> TileCache = new();
+    protected readonly Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> TileCache = new();
 
     public override void Initialize()
     {

@@ -12,4 +12,10 @@ public sealed class BiomeComponent : Component
     [ViewVariables(VVAccess.ReadWrite),
      DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
     public string BiomePrototype = "Grasslands";
+
+    /// <summary>
+    /// Currently active chunks
+    /// </summary>
+    [ViewVariables]
+    public readonly HashSet<Vector2i> LoadedChunks = new();
 }
