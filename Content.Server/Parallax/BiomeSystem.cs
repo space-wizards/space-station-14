@@ -1,3 +1,4 @@
+using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Robust.Server.Player;
@@ -14,10 +15,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly DecalSystem _decals = default!;
 
     private ISawmill _sawmill = default!;
     private readonly HashSet<EntityUid> _handledEntities = new();
-    private const float LoadRange = ChunkSize * 1.5f;
+    private const float LoadRange = ChunkSize * 1.3f;
     private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
 
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
@@ -142,6 +144,15 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         grid.SetTiles(tiles);
 
+        // Decals
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                // TODO: Goober
+            }
+        }
+
         // Now do entities
     }
 
@@ -165,6 +176,15 @@ public sealed class BiomeSystem : SharedBiomeSystem
         // Reverse order to loading
         // Delete entities
 
+        // Delete decals
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                // TODO: Goober
+            }
+        }
+
         // Unset tiles (if the data is custom)
         // TODO: Pass this in
         var tiles = new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
@@ -176,6 +196,12 @@ public sealed class BiomeSystem : SharedBiomeSystem
             for (var y = 0; y < ChunkSize; y++)
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
+
+                // Don't mess with anything that's potentially anchored.
+                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                if (anchored.MoveNext(out _))
+                    continue;
 
                 // If it's default data unload the tile.
                 if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) || grid.TryGetTileRef(indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
