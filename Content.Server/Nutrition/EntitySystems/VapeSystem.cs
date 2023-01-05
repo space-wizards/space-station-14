@@ -69,17 +69,17 @@ namespace Content.Server.Nutrition.Vape
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), args.Target.Value,
-                    Filter.Entities(args.Target.Value));
+                    args.Target.Value);
                 
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced-user", ("target", targetName)), args.User,
-                    Filter.Entities(args.User));
+                    args.User);
             }
             else
             {
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape"), args.User,
-                    Filter.Entities(args.User));
+                    args.User);
             }
 
             comp.CancelToken = new CancellationTokenSource();
@@ -121,17 +121,17 @@ namespace Content.Server.Nutrition.Vape
 
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-taste-forced", ("flavors", flavors), ("user", userName)), args.Target,
-                    Filter.Entities(args.Target));
+                    args.Target);
                 
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-user-forced", ("target", targetName)), args.User,
-                    Filter.Entities(args.User));
+                    args.User);
             }
             else
             {
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-taste", ("flavors", flavors)), args.Target,
-                    Filter.Entities(args.Target));
+                    args.Target);
             }
         }
 
