@@ -1,5 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Projectiles;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -19,6 +21,7 @@ public sealed class PortalSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPullingSystem _pulling = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -61,6 +64,18 @@ public sealed class PortalSystem : EntitySystem
         // best not.
         if (Transform(subject).Anchored)
             return;
+
+        // break pulls before portal enter so we dont break shit
+        if (TryComp<SharedPullableComponent>(subject, out var pullable) && pullable.BeingPulled)
+        {
+            _pulling.TryStopPull(pullable);
+        }
+
+        if (TryComp<SharedPullerComponent>(subject, out var pulling)
+            && pulling.Pulling != null && TryComp<SharedPullableComponent>(pulling.Pulling.Value, out var subjectPulling))
+        {
+            _pulling.TryStopPull(subjectPulling);
+        }
 
         // if they came from another portal, just return and wait for them to exit the portal
         if (HasComp<PortalTimeoutComponent>(subject))

@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'combat gloves were removed from atmosdrobe, because fighting fire is
-      not actual fighting', type: Remove}
-  id: 2335
-  time: '2022-09-17T02:05:06.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: 'Due to a mix-up in the NanoTrasen Standardized Equipment Logistics
@@ -2965,3 +2959,8 @@ Entries:
       if you are under them., type: Add}
   id: 2834
   time: '2023-01-05T05:45:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
+  id: 2835
+  time: '2023-01-05T11:36:25.0000000+00:00'
