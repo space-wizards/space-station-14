@@ -69,7 +69,8 @@ public sealed class GuidebookSystem : EntitySystem
             Text = Loc.GetString("guide-help-verb"),
             IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png",
             Act = () => OpenGuidebook(component.Guides, includeChildren: component.IncludeChildren, selected: component.Guides[0]),
-            ClientExclusive = true
+            ClientExclusive = true,
+            CloseMenu = true
         });
     }
 

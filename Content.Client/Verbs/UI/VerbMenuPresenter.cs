@@ -215,7 +215,7 @@ namespace Content.Client.Verbs.UI
         private void ExecuteVerb(Verb verb)
         {
             _verbSystem.ExecuteVerb(CurrentTarget, verb);
-            if (verb.CloseMenu)
+            if (verb.CloseMenu ?? verb.CloseMenuDefault)
                 _verbSystem.CloseAllMenus();
         }
     }

@@ -29,6 +29,7 @@ public sealed partial class GuidebookWindow : FancyWindow
     {
         _currentlyShowing = null;
         Placeholder.Visible = true;
+        EntryContainer.Visible = false;
         EntryContainer.RemoveAllChildren();
     }
 
@@ -39,6 +40,7 @@ public sealed partial class GuidebookWindow : FancyWindow
     {
         _currentlyShowing = entry.Id;
         Placeholder.Visible = false;
+        EntryContainer.Visible = true;
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
