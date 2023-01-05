@@ -1,6 +1,6 @@
-using Content.Server.Sound.Components;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Interaction.Components
+namespace Content.Shared.Sound.Components
 {
     /// <summary>
     /// Simple sound emitter that emits sound on UseInHand

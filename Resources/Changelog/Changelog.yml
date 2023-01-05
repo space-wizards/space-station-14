@@ -1,46 +1,4 @@
 Entries:
-- author: Jukereise
-  changes:
-  - {message: Beginners can now spend up to 2 hours (90 extra minutes after unlocking
-      the non-beginner jobs) as an intern (originally 30 minutes), type: Tweak}
-  id: 2328
-  time: '2022-09-16T14:45:20.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: 'Entity storage (lockers, animal crates, etc) now hold some air inside
-      them when closed. Entities inside will be exposed to that air instead of the
-      environment surrounding the storage. Now you can take animals on spacewalks!',
-    type: Add}
-  id: 2329
-  time: '2022-09-16T18:46:09.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: You can now buy jetpacks from cargo., type: Add}
-  id: 2330
-  time: '2022-09-16T21:21:46.0000000+00:00'
-- author: Rolfero
-  changes:
-  - {message: Forensic scanners can be used by a verb in the right-clicking menu.,
-    type: Add}
-  id: 2331
-  time: '2022-09-16T21:22:17.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Setting the side port output on a gas mixer now behaves as intended,
-    type: Fix}
-  id: 2332
-  time: '2022-09-16T21:34:18.0000000+00:00'
-- author: GTRsound
-  changes:
-  - {message: Picked as traitor sound changed, type: Tweak}
-  id: 2333
-  time: '2022-09-16T21:57:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed various weird issues with lathe behavior that would result in
-      them getting stuck., type: Fix}
-  id: 2334
-  time: '2022-09-16T23:49:05.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'combat gloves were removed from atmosdrobe, because fighting fire is
@@ -2957,3 +2915,53 @@ Entries:
       vapor., type: Tweak}
   id: 2827
   time: '2023-01-02T05:05:37.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Portals have been added, which teleport you randomly (if unlinked)
+      or between portals (if linked). Expect to see them used more.', type: Add}
+  - {message: 'The research director has received a new device, the ''hand teleporter''.
+      It can create portals at will, and is a traitor steal objective.', type: Add}
+  id: 2828
+  time: '2023-01-03T01:58:25.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that would sometimes cause players to appear as if they
+      were dead/horizontal., type: Fix}
+  id: 2829
+  time: '2023-01-03T06:43:35.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Hand teleporter now requires a doafter, and can''t be used when inside
+      anything.', type: Tweak}
+  - {message: Portal random teleport now teleports you less farther away at maximum.,
+    type: Tweak}
+  id: 2830
+  time: '2023-01-03T07:53:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Several new, !!fun!! artifact effects have been added.', type: Add}
+  id: 2831
+  time: '2023-01-03T23:13:11.0000000+00:00'
+- author: vanx
+  changes:
+  - {message: Doubled the paper symbol limit, type: Tweak}
+  id: 2832
+  time: '2023-01-04T06:44:17.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'The radar shown in mass scanners and shuttle consoles now resizes gracefully,
+      scaling as expected with whatever breathing room it has! (Originally merged
+      on December 30, 2022)', type: Add}
+  - {message: 'The mass scanner and shuttle consoles now have minimum and default
+      sizes to keep things relatively sane-looking (Originally merged on December
+      30, 2022)', type: Tweak}
+  - {message: The mass scanner UI now actually has a default size defined. This was
+      left out of the original PR by mistake, type: Fix}
+  id: 2833
+  time: '2023-01-04T23:34:09.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Trees will now fade out slightly instead of completely occluding you
+      if you are under them., type: Add}
+  id: 2834
+  time: '2023-01-05T05:45:23.0000000+00:00'
