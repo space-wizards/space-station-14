@@ -7,9 +7,9 @@
     - !type:DepartmentTimeRequirement
       department: Security
       time: 14400
+      inverted: true # stop playing intern if you're good at security!
     - !type:OverallPlaytimeRequirement
       time: 14400
-      inverted: true # stop playing intern if you're good at security!
   startingGear: SecurityCadetGear
   icon: "SecurityCadet"
   supervisors: job-supervisors-security
