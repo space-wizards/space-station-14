@@ -64,7 +64,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (user != null)
             {
                 var msg = component.Enabled ? "radiation-collector-component-use-on" : "radiation-collector-component-use-off";
-                _popupSystem.PopupEntity(Loc.GetString(msg), uid, Filter.Pvs(user.Value));
+                _popupSystem.PopupEntity(Loc.GetString(msg), uid);
 
             }
 

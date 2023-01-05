@@ -61,7 +61,7 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("occludesLight")]
     public bool OccludesLight = true;
 
-    [DataField("deleteContentsOnDestruction")]
+    [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteContentsOnDestruction = false;
 
     /// <summary>
@@ -114,12 +114,11 @@ public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
         Silent = silent;
     }
 }
+public sealed class StorageBeforeOpenEvent : EventArgs { }
 public sealed class StorageAfterOpenEvent : EventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
 {
-    public EntityUid Container;
-
     public HashSet<EntityUid> Contents;
 
     /// <summary>
@@ -127,9 +126,8 @@ public sealed class StorageBeforeCloseEvent : EventArgs
     /// </summary>
     public HashSet<EntityUid> BypassChecks = new();
 
-    public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
+    public StorageBeforeCloseEvent(HashSet<EntityUid> contents)
     {
-        Container = container;
         Contents = contents;
     }
 }

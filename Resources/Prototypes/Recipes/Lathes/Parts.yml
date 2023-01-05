@@ -1,7 +1,6 @@
 #Rating 1
 - type: latheRecipe
   id: CapacitorStockPart
-  icon: Objects/Misc/stock_parts.rsi/capacitor.png
   result: CapacitorStockPart
   completetime: 1
   materials:
@@ -10,7 +9,6 @@
 
 - type: latheRecipe
   id: MatterBinStockPart
-  icon: Objects/Misc/stock_parts.rsi/matter_bin.png
   result: MatterBinStockPart
   completetime: 1
   materials:
@@ -19,7 +17,6 @@
 
 - type: latheRecipe
   id: MicroLaserStockPart
-  icon: Objects/Misc/stock_parts.rsi/micro_laser.png
   result: MicroLaserStockPart
   completetime: 1
   materials:
@@ -29,7 +26,6 @@
 
 - type: latheRecipe
   id: MicroManipulatorStockPart
-  icon: Objects/Misc/stock_parts.rsi/micro_mani.png
   result: MicroManipulatorStockPart
   completetime: 1
   materials:
@@ -38,7 +34,6 @@
 
 - type: latheRecipe
   id: ScanningModuleStockPart
-  icon: Objects/Misc/stock_parts.rsi/scan_module_static.png
   result: ScanningModuleStockPart
   completetime: 1
   materials:
@@ -49,7 +44,6 @@
 #Rating 2
 - type: latheRecipe
   id: AdvancedCapacitorStockPart
-  icon: Objects/Misc/stock_parts.rsi/adv_capacitor.png
   result: AdvancedCapacitorStockPart
   completetime: 3
   materials:
@@ -59,7 +53,6 @@
 
 - type: latheRecipe
   id: AdvancedMatterBinStockPart
-  icon: Objects/Misc/stock_parts.rsi/advanced_matter_bin.png
   result: AdvancedMatterBinStockPart
   completetime: 3
   materials:
@@ -69,7 +62,6 @@
 
 - type: latheRecipe
   id: HighPowerMicroLaserStockPart
-  icon: Objects/Misc/stock_parts.rsi/high_micro_laser.png
   result: HighPowerMicroLaserStockPart
   completetime: 3
   materials:
@@ -80,7 +72,6 @@
 
 - type: latheRecipe
   id: NanoManipulatorStockPart
-  icon: Objects/Misc/stock_parts.rsi/nano_mani.png
   result: NanoManipulatorStockPart
   completetime: 3
   materials:
@@ -90,7 +81,6 @@
 
 - type: latheRecipe
   id: AdvancedScanningModuleStockPart
-  icon: Objects/Misc/stock_parts.rsi/adv_scan_module_static.png
   result: AdvancedScanningModuleStockPart
   completetime: 3
   materials:

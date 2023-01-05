@@ -54,8 +54,8 @@ namespace Content.Server.Mind.Commands
 
             if (allowSpeech)
             {
-                entityManager.EnsureComponent<SharedSpeechComponent>(uid);
-                entityManager.EnsureComponent<SharedEmotingComponent>(uid);
+                entityManager.EnsureComponent<SpeechComponent>(uid);
+                entityManager.EnsureComponent<EmotingComponent>(uid);
             }
 
             entityManager.EnsureComponent<ExaminerComponent>(uid);

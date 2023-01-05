@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -27,9 +27,9 @@ namespace Content.Server.Chemistry.ReagentEffects
                 ("organ", args.OrganEntity.GetValueOrDefault()),
             };
             if (Type == PopupRecipients.Local)
-                popupSys.PopupEntity(Loc.GetString(msg, msgArgs), args.SolutionEntity, Filter.Entities(args.SolutionEntity), VisualType);
+                popupSys.PopupEntity(Loc.GetString(msg, msgArgs), args.SolutionEntity, args.SolutionEntity, VisualType);
             else if (Type == PopupRecipients.Pvs)
-                popupSys.PopupEntity(Loc.GetString(msg, msgArgs), args.SolutionEntity, Filter.Pvs(args.SolutionEntity), VisualType);
+                popupSys.PopupEntity(Loc.GetString(msg, msgArgs), args.SolutionEntity, VisualType);
         }
     }
 

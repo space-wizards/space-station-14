@@ -22,6 +22,7 @@ using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -59,9 +60,6 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
-#if !FULL_RELEASE
-        _configManager.OverrideDefault(CCVars.CargoShuttles, false);
-#endif
         _enabled = _configManager.GetCVar(CCVars.CargoShuttles);
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
@@ -392,7 +390,7 @@ public sealed partial class CargoSystem
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            var worldAABB = xformQuery.GetComponent(grid.Owner).WorldMatrix.TransformBox(grid.LocalAABB);
             aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
@@ -405,7 +403,7 @@ public sealed partial class CargoSystem
         var offset = 0f;
         if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
-            var bounds = shuttleGrid.Grid.LocalAABB;
+            var bounds = shuttleGrid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
         }
 
@@ -501,19 +499,19 @@ public sealed partial class CargoSystem
 
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, args.Entity);
             return;
         }
 
         if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
         {
-            _popup.PopupEntity(reason, args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(reason, args.Entity, args.Entity);
             return;
         }
 
         if (IsBlocked(shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, Filter.Entities(player.Value));
+            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
             SoundSystem.Play(component.DenySound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
             return;
         };
@@ -536,7 +534,7 @@ public sealed partial class CargoSystem
         return FoundOrganics(component.Owner, mobQuery, xformQuery);
     }
 
-    private bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
+    public bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
     {
         var xform = xformQuery.GetComponent(uid);
         var childEnumerator = xform.ChildEnumerator;

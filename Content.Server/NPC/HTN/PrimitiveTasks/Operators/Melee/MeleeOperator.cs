@@ -31,6 +31,7 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.MissChance = blackboard.GetValueOrDefault<float>(NPCBlackboard.MeleeMissChance, _entManager);
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
@@ -38,7 +39,7 @@ public sealed class MeleeOperator : HTNOperator
         CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }

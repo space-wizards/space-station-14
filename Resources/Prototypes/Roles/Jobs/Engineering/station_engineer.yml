@@ -1,6 +1,7 @@
 - type: job
   id: StationEngineer
   name: job-name-engineer
+  description: job-description-engineer
   playTimeTracker: JobStationEngineer
   requirements:
     - !type:DepartmentTimeRequirement

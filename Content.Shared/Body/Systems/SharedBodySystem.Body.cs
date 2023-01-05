@@ -88,6 +88,9 @@ public partial class SharedBodySystem
         foreach (var connection in connections)
         {
             var childSlot = prototype.Slots[connection];
+            if (childSlot.Part == null)
+                continue;
+
             var childPart = Spawn(childSlot.Part, coordinates);
             var childPartComponent = Comp<BodyPartComponent>(childPart);
             var slot = CreatePartSlot(connection, parent.Owner, childPartComponent.PartType, parent);
@@ -125,7 +128,7 @@ public partial class SharedBodySystem
     {
         if (id == null ||
             !Resolve(id.Value, ref body, false) ||
-            !TryComp(body.Root.Child, out BodyPartComponent? part))
+            !TryComp(body.Root?.Child, out BodyPartComponent? part))
             yield break;
 
         yield return (body.Root.Child.Value, part);
@@ -155,14 +158,40 @@ public partial class SharedBodySystem
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             yield break;
 
-        foreach (var slot in GetPartAllSlots(body.Root.Child))
+        foreach (var slot in GetPartAllSlots(body.Root?.Child))
         {
             yield return slot;
         }
     }
 
+    /// <summary>
+    /// Returns all body part slots in the graph, including ones connected by
+    /// body parts which are null.
+    /// </summary>
+    /// <param name="partId"></param>
+    /// <param name="part"></param>
+    /// <returns></returns>
+    public IEnumerable<BodyPartSlot> GetAllBodyPartSlots(EntityUid partId, BodyPartComponent? part = null)
+    {
+        if (!Resolve(partId, ref part, false))
+            yield break;
+
+        foreach (var slot in part.Children.Values)
+        {
+            if (!TryComp<BodyPartComponent>(slot.Child, out var childPart))
+                continue;
+
+            yield return slot;
+
+            foreach (var child in GetAllBodyPartSlots(slot.Child.Value, childPart))
+            {
+                yield return child;
+            }
+        }
+    }
+
     public virtual HashSet<EntityUid> GibBody(EntityUid? partId, bool gibOrgans = false,
-        BodyComponent? body = null)
+        BodyComponent? body = null, bool deleteItems = false)
     {
         if (partId == null || !Resolve(partId.Value, ref body, false))
             return new HashSet<EntityUid>();

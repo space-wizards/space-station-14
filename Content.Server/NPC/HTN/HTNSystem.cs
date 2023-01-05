@@ -61,6 +61,20 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnLoad()
     {
+        // Clear all NPCs in case they're hanging onto stale tasks
+        foreach (var comp in EntityQuery<HTNComponent>(true))
+        {
+            comp.PlanningToken?.Cancel();
+            comp.PlanningToken = null;
+
+            if (comp.Plan != null)
+            {
+                var currentOperator = comp.Plan.CurrentOperator;
+                currentOperator.Shutdown(comp.Blackboard, HTNOperatorStatus.Failed);
+                comp.Plan = null;
+            }
+        }
+
         // Add dependencies for all operators.
         // We put code on operators as I couldn't think of a clean way to put it on systems.
         foreach (var compound in _prototypeManager.EnumeratePrototypes<HTNCompoundTask>())

@@ -1,5 +1,36 @@
 ﻿# Utility effects permanently modify the entity in some way when triggered, and they generally make it 'useful' for some purpose,
 # like turning the artifact into a tool, or gun, or whatever.
+- type: artifactEffect
+  id: EffectIntercom
+  targetDepth: 2
+  effectHint: artifact-effect-hint-communication
+  permanentComponents:
+  - type: RadioMicrophone
+    powerRequired: false
+    listenRange: 3
+    supportedChannels:
+    - Common
+    - CentCom
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
+    - Service
+    - Supply
+    - Syndicate
+
+- type: artifactEffect
+  id: EffectRandomInstrument
+  targetDepth: 2
+  effectHint: artifact-effect-hint-mental
+  permanentComponents:
+  - type: Instrument
+  - type: ActivatableUI
+    singleUser: true
+    verbText: verb-instrument-openui
+    key: enum.InstrumentUiKey.Key
+  - type: RandomInstrumentArtifact
 
 - type: artifactEffect
   id: EffectStorage
@@ -9,16 +40,30 @@
     components:
     - Item # it doesnt necessarily have to be restricted from structures, but i think it'll be better that way
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
         ents: [ ]
   - type: Storage
     capacity: 50
+
+- type: artifactEffect
+  id: EffectClearFixtures
+  targetDepth: 2
+  effectHint: artifact-effect-hint-fixtures
+  permanentComponents:
+  - type: ClearFixturesArtifact
+
+- type: artifactEffect
+  id: EffectWandering
+  targetDepth: 2
+  effectHint: artifact-effect-hint-displacement
+  permanentComponents:
+  - type: RandomWalk
+    minSpeed: 12
+    maxSpeed: 20
+    minStepCooldown: 1
+    maxStepCooldown: 3
 
 - type: artifactEffect
   id: EffectSolutionStorage
@@ -28,10 +73,6 @@
     components:
     - Item
   permanentComponents:
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -58,6 +99,9 @@
   id: EffectDrill
   targetDepth: 3
   effectHint: artifact-effect-hint-drill
+  whitelist:
+    components:
+    - Item
   permanentComponents:
   - type: GatheringTool
     damage:
@@ -101,9 +145,9 @@
   - type: RevolverAmmoProvider
     whitelist:
       tags:
-      - CartridgeMagnumHC
-      - SpeedLoaderMagnumHC
-    proto: CartridgeMagnumHC
+      - CartridgeMagnum
+      - SpeedLoaderMagnum
+    proto: CartridgeMagnum
     capacity: 7
     chambers: [ True, True, True, True, True, True, True ]
     ammoSlots: [ null, null, null, null, null, null, null ]
@@ -121,6 +165,23 @@
       path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
 
 - type: artifactEffect
+  id: EffectSentience
+  targetDepth: 3
+  effectHint: artifact-effect-hint-sentience
+  permanentComponents:
+  - type: GhostTakeoverAvailable
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: sentient artifact
+    description: |
+      Enact your eldritch whims.
+      Forcibly activate your nodes for good or for evil.
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 0.25
+    baseSprintSpeed: 0.5
+
+- type: artifactEffect
   id: EffectMultitool
   targetDepth: 3
   effectHint: artifact-effect-hint-multitool
@@ -130,6 +191,12 @@
   permanentComponents:
   - type: TilePrying
   - type: SignalLinker
+    requiredQuality: Pulsing
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalLinkerUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
+  - type: LatticeCutting
   - type: Tool
     qualities:
     - Screwing

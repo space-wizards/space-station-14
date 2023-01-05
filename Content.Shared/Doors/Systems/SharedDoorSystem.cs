@@ -29,6 +29,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -390,8 +391,8 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!collidable)
             door.CurrentlyCrushing.Clear();
 
-        if (door.Occludes && Resolve(uid, ref occluder, false))
-            occluder.Enabled = collidable;
+        if (door.Occludes)
+            _occluder.SetEnabled(uid, collidable);
     }
 
     /// <summary>

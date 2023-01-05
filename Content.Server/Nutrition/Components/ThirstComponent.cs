@@ -31,8 +31,10 @@ namespace Content.Server.Nutrition.Components
         public ThirstThreshold LastThirstThreshold;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float CurrentThirst;
+        [DataField("startingThirst")]
+        public float CurrentThirst = -1f;
 
+        [DataField("thresholds")]
         public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new()
         {
             {ThirstThreshold.OverHydrated, 600.0f},

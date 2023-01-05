@@ -32,7 +32,7 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         ///     The maximum amount of things that can be in a stack.
-        ///     Can be overriden on <see cref="SharedStackComponent"/>
+        ///     Can be overriden on <see cref="StackComponent"/>
         ///     if null, simply has unlimited max count.
         /// </summary>
         [DataField("maxCount")]

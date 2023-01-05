@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
+using Content.Server.MobState;
 using Content.Server.Roles;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.MobState.Components;
@@ -52,7 +53,7 @@ namespace Content.Server.Suspicion
         public bool IsDead()
         {
             return _entMan.TryGetComponent(Owner, out MobStateComponent? state) &&
-                   state.IsDead();
+                   _entMan.EntitySysManager.GetEntitySystem<MobStateSystem>().IsDead(Owner, state);
         }
 
         public bool IsInnocent()
