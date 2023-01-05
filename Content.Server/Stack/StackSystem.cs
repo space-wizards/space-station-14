@@ -4,7 +4,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Materials;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Stack
@@ -17,6 +16,7 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedStackSystem _sharedStack = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -101,18 +101,15 @@ namespace Content.Server.Stack
             // ??TODO??: Indexing the entity proto and extracting from its component registry could possibly be better?
             // it doesn't look like it would save LOC even compressing this to a single loop and I'm not sure what other issues it might introduce
             var firstSpawn = Spawn(materialProto.StackEntity, coordinates);
+            list.Add(firstSpawn);
 
             if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
-                return list;
-
-            // yes every time you want to get a max count on a stack component you have to index a prototype
-            if (!_prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) || stackProto.MaxCount == null)
                 return list;
 
             if (!TryComp<MaterialComponent>(firstSpawn, out var material))
                 return list;
 
-            int maxCountPerStack = (int) stackProto.MaxCount;
+            int maxCountPerStack = _sharedStack.GetMaxCount(stack);
             var materialPerStack = material._materials[materialProto.ID];
 
             var materialPerMaxCount = maxCountPerStack * materialPerStack;
@@ -136,21 +133,16 @@ namespace Content.Server.Stack
 
             while (amount > 0)
             {
+                var entity = Spawn(materialProto.StackEntity, coordinates);
+                list.Add(entity);
+                var nextStack = Comp<StackComponent>(entity);
                 if (amount > materialPerMaxCount)
                 {
-                    var entity = Spawn(materialProto.StackEntity, coordinates);
-                    list.Add(entity);
-                    var nextStack = Comp<StackComponent>(entity);
-
                     SetCount(entity, materialPerMaxCount, nextStack);
                     amount -= materialPerMaxCount;
                 }
                 else
                 {
-                    var entity = Spawn(materialProto.StackEntity, coordinates);
-                    list.Add(entity);
-                    var nextStack = Comp<StackComponent>(entity);
-
                     SetCount(entity, (amount / materialPerStack), nextStack);
                     amount = 0;
                 }

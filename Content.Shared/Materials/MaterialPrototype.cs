@@ -29,14 +29,11 @@ namespace Content.Shared.Materials
         ///     between the material and physical entities you can carry,
         ///     include which stack we should spawn by default.
         /// </summary>
-        [ViewVariables]
         [DataField("stackEntity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string StackEntity { get; } = "";
 
-        private string _name = string.Empty;
-
         [DataField("name")]
-        public string Name { get; private set; } = "";
+        public string Name = "";
 
         [DataField("color")]
         public Color Color { get; } = Color.Gray;
