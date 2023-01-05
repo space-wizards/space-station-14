@@ -83,7 +83,8 @@ namespace Content.Client.Atmos.UI
 
             foreach (GasPrototype gas in gases)
             {
-                GasList.Add(GetGasItem(gas.ID, gas.Name, GasList));
+                var gasName = Loc.GetString(gas.Name);
+                GasList.Add(GetGasItem(gas.ID, gasName, GasList));
             }
         }
 

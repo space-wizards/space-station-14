@@ -216,7 +216,6 @@
   #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
-    max: 9
     count: 1
   - type: Sprite
     state: pancakes1
@@ -249,7 +248,6 @@
   #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
-    max: 3
     count: 1
   - type: Sprite
     state: pancakesbb1
@@ -276,7 +274,6 @@
   #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
-    max: 3
     count: 1
   - type: Sprite
     state: pancakescc1

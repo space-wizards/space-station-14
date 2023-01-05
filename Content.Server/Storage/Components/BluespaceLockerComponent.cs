@@ -27,4 +27,35 @@ public sealed class BluespaceLockerComponent : Component
     /// </summary>
     [DataField("bluespaceLinks"), ViewVariables(VVAccess.ReadOnly)]
     public HashSet<EntityStorageComponent> BluespaceLinks = new();
+
+    /// <summary>
+    /// Each time the system attempts to get a link, it will link additional lockers to ensure the minimum amount
+    /// are linked.
+    /// </summary>
+    [DataField("minBluespaceLinks"), ViewVariables(VVAccess.ReadWrite)]
+    public uint MinBluespaceLinks;
+
+    /// <summary>
+    /// Determines if links automatically added are restricted to the same map
+    /// </summary>
+    [DataField("pickLinksFromSameMap"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromSameMap;
+
+    /// <summary>
+    /// Determines if links automatically added must have ResistLockerComponent
+    /// </summary>
+    [DataField("pickLinksFromResistLockers"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromResistLockers = true;
+
+    /// <summary>
+    /// Determines if links automatically added are restricted to being on a station
+    /// </summary>
+    [DataField("pickLinksFromStationGrids"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromStationGrids = true;
+
+    /// <summary>
+    /// Determines if links automatically added are bidirectional
+    /// </summary>
+    [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]
+    public bool AutoLinksBidirectional;
 }

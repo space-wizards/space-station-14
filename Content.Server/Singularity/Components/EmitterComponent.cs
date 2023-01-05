@@ -15,19 +15,11 @@ namespace Content.Server.Singularity.Components
         // Whether the power switch is on AND the machine has enough power (so is actively firing)
         [ViewVariables] public bool IsPowered;
 
-        // For the "emitter fired" sound
-        public const float Variation = 0.25f;
-        public const float Volume = 0.5f;
-        public const float Distance = 6f;
-
         /// <summary>
         /// counts the number of consecutive shots fired.
         /// </summary>
         [ViewVariables]
         public int FireShotCounter;
-
-        [DataField("fireSound")]
-        public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
 
         /// <summary>
         /// The entity that is spawned when the emitter fires.

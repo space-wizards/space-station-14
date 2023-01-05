@@ -9,7 +9,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Content.Server.Popups;
-using Robust.Shared.Player;
 using Content.Server.DoAfter;
 using System.Threading;
 
@@ -86,12 +85,15 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        // Is the target not you? If yes, use a do-after to give them time to respond.
-        if (!force && uid != user)
+        if (!force)
         {
+            // Is the target not you? If yes, use a do-after to give them time to respond.
+            //If no, do a short delay. There's no reason it should be beyond 1 second.
+            var delay = uid != user ? internals.Delay : 1.0f;
+
             internals.CancelToken?.Cancel();
             internals.CancelToken = new CancellationTokenSource();
-            _doAfter.DoAfter(new DoAfterEventArgs(user, internals.Delay, internals.CancelToken.Token, uid)
+            _doAfter.DoAfter(new DoAfterEventArgs(user, delay, internals.CancelToken.Token, uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,

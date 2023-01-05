@@ -81,3 +81,11 @@
   - accent-words-chicken-2
   - accent-words-chicken-3
   - accent-words-chicken-4
+
+- type: accent
+  id: pig
+  words:
+  - accent-words-pig-1
+  - accent-words-pig-2
+  - accent-words-pig-3
+  - accent-words-pig-4
