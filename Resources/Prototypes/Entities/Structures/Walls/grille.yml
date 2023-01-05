@@ -40,7 +40,6 @@
       damageModifierSet: FlimsyMetallic
     - type: PowerConsumer
       drawRate: 1
-      drawFromAllWires: true
     - type: Electrified
       requirePower: true
       noWindowInTile: true

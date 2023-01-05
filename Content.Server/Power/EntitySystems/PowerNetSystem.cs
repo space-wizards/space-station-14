@@ -316,27 +316,19 @@ namespace Content.Server.Power.EntitySystems
             var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
             while (enumerator.MoveNext(out var consumer))
             {
-                if (TryComp<NodeContainerComponent>(consumer.Owner, out var nodeComponent))
+                if (!consumer.Powered)
                 {
+                    // If unpowered, loop through all the wires and check their supply
+                    var nodeComponent= Comp<NodeContainerComponent>(consumer.Owner);
                     foreach (var nodeValue in nodeComponent.Nodes.Values)
                     {
-                        // Set the PowerConsumer powered/unpowered by looping through its wires and checking the supply
-                        var powered = nodeValue.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } };
-                        if (powered)
+                        var poweredWire = nodeValue.NodeGroup is IBasePowerNet { NetworkNode: { LastCombinedSupply: >0 } };
+                        if (poweredWire)
                         {
-                            consumer.PoweredBy = (true, nodeValue.NodeGroupID);
+                            // Set the consumer's voltage to the wire if it has power
+                            consumer.Voltage = (Voltage) nodeValue.NodeGroupID;
                             break;
                         }
-
-                        if (!powered)
-                            consumer.PoweredBy = (false, nodeValue.NodeGroupID);
-                    }
-
-                    // Change the voltage to the wire currently powering the consumer
-                    if (consumer.DrawFromAllWires  &&
-                        consumer.PoweredBy.Powered)
-                    {
-                        consumer.Voltage = (Voltage) consumer.PoweredBy.Wire;
                     }
                 }
 
@@ -346,7 +338,7 @@ namespace Content.Server.Power.EntitySystems
                     continue;
 
                 lastRecv = newRecv;
-                var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
+                var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate, consumer.Powered);
                 RaiseLocalEvent(consumer.Owner, ref msg);
             }
         }
@@ -487,10 +479,11 @@ namespace Content.Server.Power.EntitySystems
     ///     Raised when the amount of receiving power on a <see cref="PowerConsumerComponent"/> changes.
     /// </summary>
     [ByRefEvent]
-    public readonly record struct PowerConsumerReceivedChanged(float ReceivedPower, float DrawRate)
+    public readonly record struct PowerConsumerReceivedChanged(float ReceivedPower, float DrawRate, bool Powered)
     {
         public readonly float ReceivedPower = ReceivedPower;
         public readonly float DrawRate = DrawRate;
+        public readonly bool Powered = Powered;
     }
 
     /// <summary>

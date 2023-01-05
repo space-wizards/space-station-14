@@ -6,7 +6,7 @@ using Content.Server.NodeContainer.NodeGroups;
 namespace Content.Server.Power.Components
 {
     /// <summary>
-    ///     Draws power directly from an MV or HV wire it is on top of.
+    ///     Draws power directly from the wire it is on top of.
     /// </summary>
     [RegisterComponent]
     public sealed class PowerConsumerComponent : BaseNetConnectorComponent<IBasePowerNet>
@@ -19,17 +19,10 @@ namespace Content.Server.Power.Components
         public float DrawRate { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
         /// <summary>
-        ///  Whether to draw power from the powered wires in the entity's <see cref="NodeContainerComponent"/>
-        /// </summary>
-        [DataField("drawFromAllWires")]
-        [ViewVariables]
-        public bool DrawFromAllWires = false;
-
-        /// <summary>
-        ///  Stores the wires in the entity's <see cref="NodeContainerComponent"/> and if they have power
+        ///  True if the consumer is receiving power
         /// </summary>
         [ViewVariables]
-        public (bool Powered, NodeGroupID Wire) PoweredBy { get; set; } = new(false, default!);
+        public bool Powered { get => DrawRate <= ReceivedPower; set => Powered = value; }
 
         /// <summary>
         ///     How much power this is currently receiving from <see cref="PowerSupplierComponent"/>s.

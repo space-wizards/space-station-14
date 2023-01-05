@@ -6,7 +6,6 @@ using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Power.NodeGroups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
@@ -42,6 +41,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStutteringSystem _stutteringSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger= default!;
@@ -72,6 +72,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
+        SubscribeLocalEvent<ElectrifiedComponent, PowerConsumerReceivedChanged>(OnPowerConsumerReceivedChanged);
 
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
 
@@ -80,16 +81,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (electrified, consumer) in EntityQuery<ElectrifiedComponent, PowerConsumerComponent>())
-        {
-            var uid = consumer.Owner;
-            if (consumer.PoweredBy.Powered && !HasWindowInTile(uid, electrified))
-                _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, true);
-
-            if (!consumer.PoweredBy.Powered || HasWindowInTile(uid, electrified))
-                _appearanceSystem.SetData(consumer.Owner, ElectrifiedVisuals.Enabled, false);
-        }
-
         // Update "in progress" electrocutions
         RemQueue<ElectrocutionComponent> finishedElectrocutionsQueue = new();
         foreach (var (electrocution, consumer) in EntityQuery<ElectrocutionComponent, PowerConsumerComponent>())
@@ -106,7 +97,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         foreach (var finished in finishedElectrocutionsQueue)
         {
             var uid = finished.Owner;
-            if (EntityManager.EntityExists(finished.Electrocuting))
+            if (Exists(finished.Electrocuting))
             {
                 // TODO: damage should be scaled by shock damage multiplier
                 // TODO: better paralyze/jitter timing
@@ -122,8 +113,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
                 }
             }
 
-            EntityManager.DeleteEntity(uid);
+            Del(uid);
         }
+    }
+
+    private void OnPowerConsumerReceivedChanged(EntityUid uid, ElectrifiedComponent electrified, ref PowerConsumerReceivedChanged args)
+    {
+        electrified.Enabled = args.Powered;
+
+        if (args.Powered && !HasWindowInTile(uid, electrified))
+            _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, true);
+
+        if (!args.Powered || HasWindowInTile(uid, electrified))
+            _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, false);
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
@@ -174,9 +176,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return false;
 
         if (HasWindowInTile(uid, electrified))
-        {
             return false;
-        }
 
         siemens *= electrified.SiemensCoefficient;
         if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
@@ -212,13 +212,20 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!Resolve(uid, ref nodeContainer, false))
             return false;
 
-        var node = Comp<PowerConsumerComponent>(uid).PoweredBy.Wire;
+        Node node = default!;
+        foreach (var nodeValue in nodeContainer.Nodes.Values)
+        {
+            if (nodeValue.NodeGroupID == (NodeGroupID) Comp<PowerConsumerComponent>(uid).Voltage)
+            {
+                node = nodeValue;
+                break;
+            }
+        }
 
-        var (damageMult, timeMult) = node switch
+        var (damageMult, timeMult) = node.NodeGroupID switch
         {
             NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier,
-                electrified.MediumVoltageTimeMultiplier),
+            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
             _ => (1f, 1f)
         };
 
@@ -265,7 +272,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private bool TryDoElectrocutionPowered(
         EntityUid uid,
         EntityUid sourceUid,
-        NodeGroupID node,
+        Node node,
         int shockDamage,
         TimeSpan time,
         bool refresh,
@@ -286,16 +293,16 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
             return true;
 
-        var electrocutionEntity = EntityManager.SpawnEntity(
-            $"VirtualElectrocutionLoad{node}", sourceTransform.Coordinates);
+        var electrocutionEntity = Spawn(
+            $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
 
-        var electrocutionNode = EntityManager.GetComponent<NodeContainerComponent>(electrocutionEntity)
+        var electrocutionNode = Comp<NodeContainerComponent>(electrocutionEntity)
             .GetNode<ElectrocutionNode>("electrocution");
 
-        var electrocutionComponent = EntityManager.GetComponent<ElectrocutionComponent>(electrocutionEntity);
+        var electrocutionComponent = Comp<ElectrocutionComponent>(electrocutionEntity);
 
         electrocutionNode.CableEntity = sourceUid;
-        // electrocutionNode.NodeName = node.Name;
+        electrocutionNode.NodeName = node.Name;
 
         _nodeGroupSystem.QueueReflood(electrocutionNode);
 
@@ -405,14 +412,14 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         all.Add((entity, depth));
         visited.Add(entity);
 
-        if (EntityManager.TryGetComponent(entity, out SharedPullableComponent? pullable)
+        if (TryComp(entity, out SharedPullableComponent? pullable)
             && pullable.Puller is {Valid: true} pullerId
             && !visited.Contains(pullerId))
         {
             GetChainedElectrocutionTargetsRecurse(pullerId, depth + 1, visited, all);
         }
 
-        if (EntityManager.TryGetComponent(entity, out SharedPullerComponent? puller)
+        if (TryComp(entity, out SharedPullerComponent? puller)
             && puller.Pulling is {Valid: true} pullingId
             && !visited.Contains(pullingId))
         {
@@ -423,7 +430,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     private void OnRandomInsulationMapInit(EntityUid uid, RandomInsulationComponent randomInsulation,
         MapInitEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out InsulatedComponent? insulated))
+        if (!TryComp(uid, out InsulatedComponent? insulated))
             return;
 
         if (randomInsulation.List.Length == 0)
@@ -432,20 +439,21 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SetInsulatedSiemensCoefficient(uid, _random.Pick(randomInsulation.List), insulated);
     }
 
-    private bool HasWindowInTile(EntityUid uid, ElectrifiedComponent? electrified = null, TransformComponent? transform = null)
+    private bool HasWindowInTile(EntityUid uid, ElectrifiedComponent electrified, TransformComponent? transform = null)
     {
-        if (!Resolve(uid, ref transform, ref electrified, false))
+        if (!electrified.NoWindowInTile)
             return false;
 
-        if (electrified.NoWindowInTile)
+        if (!Resolve(uid, ref transform, false))
+            return false;
+
+        foreach (var entity in transform.Coordinates.GetEntitiesInTile(
+            LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
         {
-            foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
-            {
-                if (_tagSystem.HasTag(entity, "Window"))
-                    return true;
-            }
+            if (_tagSystem.HasTag(entity, "Window"))
+                return true;
         }
+
         return false;
     }
 
@@ -456,6 +464,7 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
             return;
         }
 
-        SoundSystem.Play(electrified.ShockNoises.GetSound(), Filter.Pvs(targetUid), targetUid, AudioParams.Default.WithVolume(electrified.ShockVolume));
+        _audioSystem.PlayPvs(_audioSystem.GetSound(electrified.ShockNoises), targetUid,
+                            AudioParams.Default.WithVolume(electrified.ShockVolume));
     }
 }

@@ -62,7 +62,7 @@ namespace Content.Server.NodeContainer.Nodes
         ///     All compatible nodes that are reachable by this node.
         ///     Effectively, active connections out of this node.
         /// </summary>
-        public readonly HashSet<Node> ReachableNodes = new();
+        [ViewVariables] public readonly HashSet<Node> ReachableNodes = new();
 
         internal int FloodGen;
         internal int UndirectGen;

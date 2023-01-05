@@ -1,3 +1,4 @@
+using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Electrocution
@@ -8,9 +9,6 @@ namespace Content.Server.Electrocution
     [RegisterComponent]
     public sealed class ElectrifiedComponent : Component
     {
-        /// <summary>
-        /// Wheter the power wire in a machine is enabled
-        /// </summary>
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
