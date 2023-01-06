@@ -45,12 +45,12 @@
   - type: Item
     heldPrefix: steel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - steel
-      - steel_2
-      - steel_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - steel
+    - steel_2
+    - steel_3
   - type: FloorTile
     outputs:
     - Plating
@@ -83,12 +83,12 @@
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasteel
-      - plasteel_2
-      - plasteel_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - plasteel
+    - plasteel_2
+    - plasteel_3
 
 - type: entity
   parent: SheetPlasteel

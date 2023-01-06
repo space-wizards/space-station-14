@@ -224,19 +224,19 @@
   #     - state: plate-small
   #     - state: pancakes1
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakes1
-          - pancakes2
-          - pancakes3
-          - pancakes4
-          - pancakes5
-          - pancakes6
-          - pancakes7
-          - pancakes8
-          - pancakes9
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+      - pancakes1
+      - pancakes2
+      - pancakes3
+      - pancakes4
+      - pancakes5
+      - pancakes6
+      - pancakes7
+      - pancakes8
+      - pancakes9
 
 - type: entity
   name: blueberry pancake
@@ -256,13 +256,13 @@
   #     - state: plate-small
   #     - state: pancakesbb1
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakesbb1
-          - pancakesbb2
-          - pancakesbb3
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+      - pancakesbb1
+      - pancakesbb2
+      - pancakesbb3
 
 - type: entity
   name: chocolate chip pancake
@@ -282,13 +282,13 @@
   #     - state: plate-small
   #     - state: pancakescc1
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - pancakescc1
-          - pancakescc2
-          - pancakescc3
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+      - pancakescc1
+      - pancakescc2
+      - pancakescc3
   - type: SolutionContainerManager
     solutions:
       food:

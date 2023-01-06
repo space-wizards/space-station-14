@@ -44,12 +44,12 @@
   - type: Sprite
     state: cloth_3
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - cloth
-      - cloth_2
-      - cloth_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - cloth
+    - cloth_2
+    - cloth_3
 
 - type: entity
   parent: MaterialCloth
@@ -75,12 +75,12 @@
   - type: Sprite
     state: durathread_3
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - durathread
-      - durathread_2
-      - durathread_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - durathread
+    - durathread_2
+    - durathread_3
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
@@ -193,12 +193,12 @@
   - type: Sprite
     state: cotton_3
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - cotton
-          - cotton_2
-          - cotton_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+      - cotton
+      - cotton_2
+      - cotton_3
 
 - type: entity
   parent: MaterialCotton

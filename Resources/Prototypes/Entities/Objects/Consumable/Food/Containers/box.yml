@@ -37,15 +37,16 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - pink-box2
-      - box3
-      - pink-box4
-      - box5
-      - pink-box6
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+    - box1
+    - pink-box2
+    - box3
+    - pink-box4
+    - box5
+    - pink-box6
 
 # Egg
 
@@ -78,21 +79,22 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - box2
-      - box3
-      - box4
-      - box5
-      - box6
-      - box7
-      - box8
-      - box9
-      - box10
-      - box11
-      - box12
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+    - box1
+    - box2
+    - box3
+    - box4
+    - box5
+    - box6
+    - box7
+    - box8
+    - box9
+    - box10
+    - box11
+    - box12
   # Someday...
   # - type: DamageOnLand
   # - type: DamageOtherOnHit
@@ -235,15 +237,16 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: box-open
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - box1
-      - box2
-      - box3
-      - box4
-      - box5
-      - box6
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+    - box1
+    - box2
+    - box3
+    - box4
+    - box5
+    - box6
 
 # Donkpocket
 

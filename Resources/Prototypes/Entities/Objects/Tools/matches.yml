@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: SmallboxItem
   parent: BaseStorageItem
   abstract: true
@@ -85,12 +85,13 @@
     visuals:
       - type: BagOpenCloseVisualizer
         openIcon: matchbox-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+      - matchbox1
+      - matchbox2
+      - matchbox3
   - type: Tag
     tags:
     - Trash

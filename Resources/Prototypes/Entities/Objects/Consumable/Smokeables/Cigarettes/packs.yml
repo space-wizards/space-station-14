@@ -25,16 +25,17 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: open
-    - type: StackVisualizer
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-      composite: true
-      stackLayers:
-      - cig1
-      - cig2
-      - cig3
-      - cig4
-      - cig5
-      - cig6
+  - type: StackVisualizer
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+    composite: true
+    stackLayers:
+    - cig1
+    - cig2
+    - cig3
+    - cig4
+    - cig5
+    - cig6
 
 - type: entity
   id: CigPackGreen

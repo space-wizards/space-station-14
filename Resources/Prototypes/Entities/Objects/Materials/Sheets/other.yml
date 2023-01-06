@@ -38,12 +38,12 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - paper
-      - paper_2
-      - paper_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - paper
+    - paper_2
+    - paper_3
 
 - type: entity
   parent: SheetPaper
@@ -72,12 +72,12 @@
   - type: Item
     heldPrefix: plasma
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasma
-      - plasma_2
-      - plasma_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - plasma
+    - plasma_2
+    - plasma_3
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager
@@ -122,12 +122,12 @@
   - type: Item
     heldPrefix: plastic
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plastic
-      - plastic_2
-      - plastic_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - plastic
+    - plastic_2
+    - plastic_3
 
 - type: entity
   parent: SheetPlastic

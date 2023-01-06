@@ -44,12 +44,12 @@
     cablePrototypeID: CableHV
     blockingWireType: HighVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilhv-10
-          - coilhv-20
-          - coilhv-30
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+      - coilhv-10
+      - coilhv-20
+      - coilhv-30
 
 - type: entity
   parent: CableHVStack
@@ -80,12 +80,12 @@
     cablePrototypeID: CableMV
     blockingWireType: MediumVoltage
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coilmv-10
-          - coilmv-20
-          - coilmv-30
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+      - coilmv-10
+      - coilmv-20
+      - coilmv-30
 
 - type: entity
   parent: CableMVStack
@@ -115,12 +115,12 @@
     cablePrototypeID: CableApcExtension
     blockingWireType: Apc
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        stackLayers:
-          - coillv-10
-          - coillv-20
-          - coillv-30
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+      - coillv-10
+      - coillv-20
+      - coillv-30
 
 - type: entity
   parent: CableApcStack

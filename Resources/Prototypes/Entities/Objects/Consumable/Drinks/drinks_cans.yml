@@ -330,13 +330,13 @@
     count:
       tags: [Cola]
   - type: Appearance
-    visuals:
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - 6pack1
-          - 6pack2
-          - 6pack3
-          - 6pack4
-          - 6pack5
-          - 6pack6
+  - type: StackVisualizer
+    netsync: false
+    composite: true
+    stackLayers:
+      - 6pack1
+      - 6pack2
+      - 6pack3
+      - 6pack4
+      - 6pack5
+      - 6pack6

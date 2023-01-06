@@ -60,12 +60,12 @@
   - type: Item
     heldPrefix: glass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - glass
-      - glass_2
-      - glass_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - glass
+    - glass_2
+    - glass_3
   - type: FloorTile
     outputs:
     - FloorGlass
@@ -102,12 +102,12 @@
   - type: Item
     heldPrefix: rglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rglass
-      - rglass_2
-      - rglass_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - rglass
+    - rglass_2
+    - rglass_3
   - type: FloorTile
     outputs:
     - FloorRGlass
@@ -144,12 +144,12 @@
   - type: Item
     heldPrefix: pglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - pglass
-      - pglass_2
-      - pglass_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - pglass
+    - pglass_2
+    - pglass_3
   - type: Construction
     graph: Glass
     node: SheetPGlass
@@ -183,12 +183,12 @@
   - type: Item
     heldPrefix: rpglass
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rpglass
-      - rpglass_2
-      - rpglass_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - rpglass
+    - rpglass_2
+    - rpglass_3
   - type: Construction
     graph: Glass
     node: SheetRPGlass

@@ -43,12 +43,12 @@
   - type: Item
     heldPrefix: gold
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - gold
-      - gold_2
-      - gold_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - gold
+    - gold_2
+    - gold_3
 
 - type: entity
   parent: IngotGold
@@ -77,12 +77,12 @@
   - type: Item
     heldPrefix: silver
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - silver
-      - silver_2
-      - silver_3
+  - type: StackVisualizer
+    netsync: false
+    stackLayers:
+    - silver
+    - silver_2
+    - silver_3
 
 - type: entity
   parent: IngotSilver
