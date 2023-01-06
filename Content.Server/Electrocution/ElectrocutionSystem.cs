@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
@@ -72,7 +71,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SubscribeLocalEvent<ElectrifiedComponent, AttackedEvent>(OnElectrifiedAttacked);
         SubscribeLocalEvent<ElectrifiedComponent, InteractHandEvent>(OnElectrifiedHandInteract);
         SubscribeLocalEvent<ElectrifiedComponent, InteractUsingEvent>(OnElectrifiedInteractUsing);
-        SubscribeLocalEvent<ElectrifiedComponent, PowerConsumerReceivedChanged>(OnPowerConsumerReceivedChanged);
 
         SubscribeLocalEvent<RandomInsulationComponent, MapInitEvent>(OnRandomInsulationMapInit);
 
@@ -81,6 +79,19 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
     public override void Update(float frameTime)
     {
+        foreach (var (electrified, consumer) in EntityQuery<ElectrifiedComponent, PowerConsumerComponent>())
+        {
+            electrified.Enabled = consumer.Powered;
+
+            var uid = electrified.Owner;
+            if (consumer.Powered && !HasWindowInTile(uid, electrified))
+                _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, true);
+
+            if (!consumer.Powered || HasWindowInTile(uid, electrified))
+                _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, false);
+            electrified.HasWindowInTile = HasWindowInTile(uid, electrified);
+        }
+
         // Update "in progress" electrocutions
         RemQueue<ElectrocutionComponent> finishedElectrocutionsQueue = new();
         foreach (var (electrocution, consumer) in EntityQuery<ElectrocutionComponent, PowerConsumerComponent>())
@@ -115,17 +126,6 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
             Del(uid);
         }
-    }
-
-    private void OnPowerConsumerReceivedChanged(EntityUid uid, ElectrifiedComponent electrified, ref PowerConsumerReceivedChanged args)
-    {
-        electrified.Enabled = args.Powered;
-
-        if (args.Powered && !HasWindowInTile(uid, electrified))
-            _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, true);
-
-        if (!args.Powered || HasWindowInTile(uid, electrified))
-            _appearanceSystem.SetData(uid, ElectrifiedVisuals.Enabled, false);
     }
 
     private void OnElectrifiedStartCollide(EntityUid uid, ElectrifiedComponent electrified, ref StartCollideEvent args)
@@ -224,8 +224,8 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
 
         var (damageMult, timeMult) = node.NodeGroupID switch
         {
-            NodeGroupID.HVPower => (electrified.HighVoltageDamageMultiplier, electrified.HighVoltageTimeMultiplier),
-            NodeGroupID.MVPower => (electrified.MediumVoltageDamageMultiplier, electrified.MediumVoltageTimeMultiplier),
+            NodeGroupID.HVPower => (electrified.HVMultiplier.Damage, electrified.HVMultiplier.Time),
+            NodeGroupID.MVPower => (electrified.MVMultiplier.Damage, electrified.MVMultiplier.Time),
             _ => (1f, 1f)
         };
 
@@ -439,21 +439,20 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
         SetInsulatedSiemensCoefficient(uid, _random.Pick(randomInsulation.List), insulated);
     }
 
-    private bool HasWindowInTile(EntityUid uid, ElectrifiedComponent electrified, TransformComponent? transform = null)
+    private bool HasWindowInTile(EntityUid uid, ElectrifiedComponent? electrified = null, TransformComponent? transform = null)
     {
-        if (!electrified.NoWindowInTile)
+        if (!Resolve(uid, ref transform, ref electrified, false))
             return false;
 
-        if (!Resolve(uid, ref transform, false))
-            return false;
-
-        foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-            LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+        if (electrified.NoWindowInTile)
         {
-            if (_tagSystem.HasTag(entity, "Window"))
-                return true;
+            foreach (var entity in transform.Coordinates.GetEntitiesInTile(
+                LookupFlags.Approximate | LookupFlags.Static, _entityLookup))
+            {
+                if (_tagSystem.HasTag(entity, "Window"))
+                    return true;
+            }
         }
-
         return false;
     }
 

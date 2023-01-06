@@ -1,4 +1,3 @@
-using Content.Server.NodeContainer.NodeGroups;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Electrocution
@@ -20,6 +19,7 @@ namespace Content.Server.Electrocution
 
         [DataField("noWindowInTile")]
         public bool NoWindowInTile { get; set; } = false;
+        public bool HasWindowInTile { get; set; } = false;
 
         [DataField("onHandInteract")]
         public bool OnHandInteract { get; set; } = true;
@@ -33,26 +33,11 @@ namespace Content.Server.Electrocution
         [DataField("usesApcPower")]
         public bool UsesApcPower { get; } = false;
 
-        [DataField("highVoltageNode")]
-        public string? HighVoltageNode { get; }
+        [DataField("HVMultiplier")]
+        public (float Damage, float Time) HVMultiplier { get; } = new(3f, 1f);
 
-        [DataField("mediumVoltageNode")]
-        public string? MediumVoltageNode { get; }
-
-        [DataField("lowVoltageNode")]
-        public string? LowVoltageNode { get; }
-
-        [DataField("highVoltageDamageMultiplier")]
-        public float HighVoltageDamageMultiplier { get; } = 3f;
-
-        [DataField("highVoltageTimeMultiplier")]
-        public float HighVoltageTimeMultiplier { get; } = 1.5f;
-
-        [DataField("mediumVoltageDamageMultiplier")]
-        public float MediumVoltageDamageMultiplier { get; } = 2f;
-
-        [DataField("mediumVoltageTimeMultiplier")]
-        public float MediumVoltageTimeMultiplier { get; } = 1.25f;
+        [DataField("MVMultiplier")]
+        public (float Damage, float Time) MVMultiplier { get; } = new(2f, 1.25f);
 
         [DataField("shockDamage")]
         public int ShockDamage { get; } = 20;

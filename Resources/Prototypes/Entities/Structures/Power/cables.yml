@@ -36,12 +36,9 @@
     onInteractUsing: false # wire-cutting handled separately.
     onBump: false
     requirePower: true
-    highVoltageNode: power
-    mediumVoltageNode: power
-    lowVoltageNode: power
   - type: CableVis
     node: power
-   
+
 
 - type: entity
   parent: CableBase
