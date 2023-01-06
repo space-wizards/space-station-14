@@ -219,22 +219,6 @@ public abstract class SharedBiomeSystem : EntitySystem
             noise.SetFrequency(oldFrequency);
             noise.SetSeed(seed);
             return true;
-
-            /* TODO for decals
-            for (var i = 0; i < decalLayer.Divisions; i++)
-            {
-                for (var j = 0; j < decalLayer.Divisions; j++)
-                {
-                    var index = new Vector2(x + i * 1f / decalLayer.Divisions, y + j * 1f / decalLayer.Divisions);
-
-                    if (!_biome.TryGetDecal(index, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
-                        continue;
-
-                    drawn = true;
-                    screenHandle.DrawTextureRect(tex, Box2.FromDimensions(index, tileSize));
-                }
-            }
-            */
         }
 
         noise.SetFrequency(oldFrequency);

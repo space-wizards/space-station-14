@@ -13,12 +13,9 @@
       divisions: 1
       frequency: 1
       decals:
-        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
-          state: flowersbr1
-        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
-          state: flowersbr2
-        - sprite: /Textures/Decals/Flora/flora_flowers.rsi
-          state: flowersbr3
+        - FlowersBROne
+        - FlowersBRTwo
+        - FlowersBRThree
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
@@ -27,14 +24,9 @@
       divisions: 2
       frequency: 1
       decals:
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushd1
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushd2
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushd3
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushd4
+        - BushDOne
+        - BushDTwo
+        - BushDThree
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
@@ -43,23 +35,26 @@
       divisions: 1
       frequency: 0.05
       decals:
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushc1
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushc2
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: bushc3
+        - BushCOne
+        - BushCTwo
+        - BushCThree
     - !type:BiomeDecalLayer
       allowedTiles:
       - FloorPlanetGrass
       divisions: 1
       decals:
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: busha1
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: busha2
-        - sprite: /Textures/Decals/Flora/flora_bushes.rsi
-          state: busha3
+        - BushAOne
+        - BushATwo
+        - BushAThree
+    - !type:BiomeEntityLayer
+      threshold: 0.9
+      frequency: 1
+      allowedTiles:
+        - FloorPlanetGrass
+      entities:
+        - FloraTree01
+        - FloraTree02
+        - FloraTree03
     - !type:BiomeTileLayer
       threshold: 0.5
       tiles:

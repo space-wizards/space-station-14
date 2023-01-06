@@ -14,6 +14,12 @@ public sealed class BiomeComponent : Component
     public string BiomePrototype = "Grasslands";
 
     /// <summary>
+    /// Decals that have been loaded as a part of this biome.
+    /// </summary>
+    [ViewVariables, DataField("decals")]
+    public Dictionary<Vector2i, HashSet<uint>> LoadedDecals = new();
+
+    /// <summary>
     /// Currently active chunks
     /// </summary>
     [ViewVariables]

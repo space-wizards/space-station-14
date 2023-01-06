@@ -1,0 +1,73 @@
+# Flowers
+- type: decal
+  id: FlowersBROne
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr1
+
+- type: decal
+  id: FlowersBRTwo
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr2
+
+- type: decal
+  id: FlowersBRThree
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_flowers.rsi
+    state: flowersbr3
+
+# Grass
+- type: decal
+  id: BushAOne
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha1
+
+- type: decal
+  id: BushATwo
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha2
+
+- type: decal
+  id: BushAThree
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: busha3
+
+- type: decal
+  id: BushCOne
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc1
+
+- type: decal
+  id: BushCTwo
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc2
+
+- type: decal
+  id: BushCThree
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushc3
+
+- type: decal
+  id: BushDOne
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd1
+
+- type: decal
+  id: BushDTwo
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd2
+
+- type: decal
+  id: BushDThree
+  sprite:
+    sprite: /Textures/Decals/Flora/flora_bushes.rsi
+    state: bushd3

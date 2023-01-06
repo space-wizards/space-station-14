@@ -162,6 +162,9 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
 
         // Decals
+        var loadedDecals = new HashSet<uint>();
+        component.LoadedDecals.Add(chunk, loadedDecals);
+
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
@@ -177,7 +180,10 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 foreach (var decal in decals)
                 {
                     // TODO: Track decals probably
-                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out _);
+                    if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out var dec))
+                        continue;
+
+                    loadedDecals.Add(dec.Value);
                 }
             }
         }
@@ -205,13 +211,12 @@ public sealed class BiomeSystem : SharedBiomeSystem
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
 
         // Delete decals
-        for (var x = 0; x < ChunkSize; x++)
+        foreach (var dec in component.LoadedDecals[chunk])
         {
-            for (var y = 0; y < ChunkSize; y++)
-            {
-                // TODO: Goober
-            }
+            _decals.RemoveDecal(grid.Owner, dec);
         }
+
+        component.LoadedDecals.Remove(chunk);
 
         // Delete entities
         for (var x = 0; x < ChunkSize; x++)
