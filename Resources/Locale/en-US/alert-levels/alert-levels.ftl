@@ -4,10 +4,10 @@ alert-level-green = Green
 alert-level-green-announcement = It is now safe to return to your workplaces.
 
 alert-level-blue = Blue
-alert-level-blue-announcement = There is an unknown threat on the station. Security is allowed to perform random checks. Crewmembers are advised to follow commands issued by any relevant authority.
+alert-level-blue-announcement = There is a confirmed threat to the station. Security should perform random checks. Crewmembers are advised to be vigilant and report suspicious activity to security.
 
 alert-level-red = Red
-alert-level-red-announcement = There is a known threat on the station. Security is allowed to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
+alert-level-red-announcement = There is an immediate threat to the station. Security should prepare to use lethal force if necessary. Crewmembers should find a safe place to shelter in, and are advised to follow any present authorities.
 
 alert-level-violet = Violet
 alert-level-violet-announcement = There is a viral threat on the station. Medical staff are advised to isolate crewmembers with any symptoms. Crewmembers are advised to distance themselves from others and perform safety measures to prevent further spread.
