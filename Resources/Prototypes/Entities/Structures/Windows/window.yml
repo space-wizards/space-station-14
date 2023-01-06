@@ -17,6 +17,7 @@
     arc: 360 # interact despite grilles
   - type: Tag
     tags:
+      - PlasmaCuttable
       - RCDDeconstructWhitelist
       - ForceFixRotations
       - Window
@@ -104,6 +105,7 @@
   - type: Tag
     tags:
       - Window
+      - PlasmaCuttable
   - type: MeleeSound
     soundGroups:
       Brute:
@@ -188,6 +190,7 @@
   - type: Tag
     tags:
       - ForceNoFixRotations
+      - PlasmaCuttable
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
@@ -215,3 +218,6 @@
     state: frosted_window
   - type: StaticPrice
     price: 0.5
+  - type: Tag
+    tags:
+      - PlasmaCuttable

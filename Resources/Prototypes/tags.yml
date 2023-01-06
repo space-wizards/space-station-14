@@ -459,6 +459,9 @@
   id: PussyWagonKeys
 
 - type: Tag
+  id: PlasmaCuttable
+
+- type: Tag
   id: Radio
 
 - type: Tag

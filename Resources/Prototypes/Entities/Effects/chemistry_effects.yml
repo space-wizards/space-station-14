@@ -111,6 +111,7 @@
   components:
   - type: Tag
     tags:
+      - PlasmaCuttable
       - RCDDeconstructWhitelist
   - type: Clickable
   - type: InteractionOutline
@@ -151,6 +152,9 @@
   - type: Sprite
     sprite: Effects/foam.rsi
     state: ironfoam
+  - type: Tag
+    tags:
+      - PlasmaCuttable
 
 - type: entity
   id: FoamedAluminiumMetal
@@ -161,3 +165,6 @@
   - type: Sprite
     sprite: Effects/foam.rsi
     state: metalfoam
+  - type: Tag
+    tags:
+      - PlasmaCuttable
