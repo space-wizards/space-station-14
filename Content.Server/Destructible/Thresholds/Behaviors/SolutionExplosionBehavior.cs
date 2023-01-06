@@ -16,7 +16,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("solution", required: true)]
         public string Solution = default!;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out var explodingSolution)
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))

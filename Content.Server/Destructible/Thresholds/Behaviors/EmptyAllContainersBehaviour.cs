@@ -8,7 +8,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public sealed class EmptyAllContainersBehaviour : IThresholdBehavior
     {
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
                 return;
