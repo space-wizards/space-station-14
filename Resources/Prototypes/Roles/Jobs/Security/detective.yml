@@ -7,6 +7,9 @@
   - !type:DepartmentTimeRequirement
     department: Security
     time: 7200
+  - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 3600
   startingGear: DetectiveGear
   icon: "Detective"
   supervisors: job-supervisors-hos
