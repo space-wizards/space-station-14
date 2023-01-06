@@ -63,7 +63,8 @@
         types:
           Blunt: 6
     - type: Paper
-      localizedContent: book-text-escalation
+      content: book-text-escalation
+      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -80,7 +81,8 @@
         types:
           Blunt: 6
     - type: Paper
-      localizedContent: book-text-escalation-sec
+      content: book-text-escalation-sec
+      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -93,7 +95,8 @@
       layers:
         - state: book5
     - type: Paper
-      localizedContent: book-text-atmos-distro
+      content: book-text-atmos-distro
+      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -106,7 +109,8 @@
       layers:
         - state: book5
     - type: Paper
-      localizedContent: book-text-atmos-waste
+      content: book-text-atmos-waste
+      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -119,7 +123,8 @@
       layers:
         - state: book5
     - type: Paper
-      localizedContent: book-text-atmos-alarms
+      content: book-text-atmos-alarms
+      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -132,4 +137,5 @@
       layers:
         - state: book5
     - type: Paper
-      localizedContent: book-text-atmos-vents
+      content: book-text-atmos-vents
+      useLocale: true

@@ -31,7 +31,8 @@
   suffix: 1
   components:
   - type: Paper
-    localizedContent: book-text-demonomicon1
+    content: book-text-demonomicon1
+    useLocale: true
 
 - type: entity
   parent: BookDemonomicon
@@ -39,7 +40,8 @@
   suffix: 2
   components:
   - type: Paper
-    localizedContent: book-text-demonomicon2
+    content: book-text-demonomicon2
+    useLocale: true
 
 - type: entity
   parent: BookDemonomicon
@@ -47,7 +49,8 @@
   suffix: 3
   components:
   - type: Paper
-    localizedContent: book-text-demonomicon2
+    content: book-text-demonomicon2
+    useLocale: true
 
 - type: entity
   name: pharmaceutical manuscript
@@ -61,7 +64,8 @@
     layers:
     - state: book_chemistry
   - type: Paper
-    localizedContent: book-text-chemistry
+    content: book-text-chemistry
+    useLocale: true
 
 - type: entity
   name: botanical textbook
@@ -75,7 +79,8 @@
     layers:
     - state: book_hydroponics_pod_people
   - type: Paper
-    localizedContent: book-text-botanics
+    content: book-text-botanics
+    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -89,7 +94,8 @@
     layers:
     - state: book5
   - type: Paper
-    localizedContent: book-text-gnomonomicon
+    content: book-text-gnomonomicon
+    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -103,7 +109,8 @@
     layers:
     - state: book_fish
   - type: Paper
-    localizedContent: book-text-fishing
+    content: book-text-fishing
+    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -117,6 +124,7 @@
     layers:
     - state: book_detective
   - type: Paper
-    localizedContent: book-text-detective
+    content: book-text-detective
+    useLocale: true
 
 # ---- End Library Salvage Fills ----
