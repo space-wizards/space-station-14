@@ -47,11 +47,12 @@ namespace Content.Server.Paper
         {
             if (paperComp.UseLocale && Loc.TryGetString(paperComp.Content, out var locString))
             {
-                paperComp.Content += locString;
-                if (paperComp.Content.Length > paperComp.ContentSize)
-                {
-                    paperComp.Content = paperComp.Content[..paperComp.ContentSize];
-                }
+                paperComp.Content = locString;
+            }
+
+            if (paperComp.Content.Length > paperComp.ContentSize)
+            {
+                paperComp.Content = paperComp.Content[..paperComp.ContentSize];
             }
         }
 
