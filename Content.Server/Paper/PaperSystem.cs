@@ -27,6 +27,7 @@ namespace Content.Server.Paper
             base.Initialize();
 
             SubscribeLocalEvent<PaperComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<PaperComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PaperComponent, BeforeActivatableUIOpenEvent>(BeforeUIOpen);
             SubscribeLocalEvent<PaperComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<PaperComponent, InteractUsingEvent>(OnInteractUsing);
@@ -34,6 +35,15 @@ namespace Content.Server.Paper
         }
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
+        {
+            paperComp.Mode = PaperAction.Read;
+            UpdateUserInterface(uid, paperComp);
+
+            UpdateAppearance(uid, paperComp);
+
+        }
+
+        private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
         {
             if (paperComp.LocContent.Length > 0 && Loc.TryGetString(paperComp.LocContent, out var locString))
             {
@@ -43,12 +53,6 @@ namespace Content.Server.Paper
                     paperComp.Content = paperComp.Content[..paperComp.ContentSize];
                 }
             }
-
-            paperComp.Mode = PaperAction.Read;
-            UpdateUserInterface(uid, paperComp);
-
-            UpdateAppearance(uid, paperComp);
-
         }
 
         private void UpdateAppearance(EntityUid uid, PaperComponent paperComp)
