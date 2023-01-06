@@ -24,7 +24,7 @@
         - !type:DeleteEntity {}
       - to: parts
         steps:
-        - material: CableApcStack1
+        - material: Cable
           amount: 5
           doAfter: 2
         - tool: Screwing
@@ -53,7 +53,7 @@
       - to: frame
         completed:
         - !type:GivePrototype
-          prototype: Cable
+          prototype: CableApcStack1
           amount: 5
         steps:
         - tool: Cutting
