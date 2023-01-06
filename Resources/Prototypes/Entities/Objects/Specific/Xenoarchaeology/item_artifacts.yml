@@ -55,6 +55,7 @@
     size: 40
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
+  - type: Actions
 
 - type: entity
   parent: BaseXenoArtifactItem

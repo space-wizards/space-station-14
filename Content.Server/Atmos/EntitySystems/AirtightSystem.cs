@@ -117,7 +117,7 @@ namespace Content.Server.Atmos.EntitySystems
             var gridUid = grid.Owner;
 
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
-            _explosionSystem.UpdateAirtightMap(gridId, pos, query);
+            _explosionSystem.UpdateAirtightMap(gridId, pos, grid, query);
             // TODO make atmos system use query
             _atmosphereSystem.InvalidateTile(gridUid, pos);
         }
