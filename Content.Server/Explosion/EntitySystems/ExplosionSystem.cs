@@ -216,7 +216,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         int maxTileBreak = int.MaxValue,
         bool canCreateVacuum = true,
         EntityUid? user = null,
-        bool addLog = false)
+        bool addLog = true)
     {
         var pos = Transform(uid);
 
@@ -245,7 +245,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         float tileBreakScale = 1f,
         int maxTileBreak = int.MaxValue,
         bool canCreateVacuum = true,
-        bool addLog = false)
+        bool addLog = true)
     {
         if (totalIntensity <= 0 || slope <= 0)
             return;
