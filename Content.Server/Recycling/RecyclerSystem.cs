@@ -15,7 +15,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Recycling;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;

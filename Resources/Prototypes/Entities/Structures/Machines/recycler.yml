@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Recycler
   parent: BaseMachinePowered
   name: recycler
@@ -50,7 +50,7 @@
       Off: []
   - type: Transform
     anchored: true
-    noRot: false    
+    noRot: false
   - type: Sprite
     netsync: false
     drawdepth: Doors
@@ -59,10 +59,8 @@
     - state: grinder-o0
       map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
-    visuals:
-    - type: RecyclerVisualizer
-      state_on: grinder-o1
-      state_off: grinder-o0
   - type: Recycler
+    state_on: grinder-o1
+    state_off: grinder-o0
   - type: Conveyor
   - type: Rotatable
