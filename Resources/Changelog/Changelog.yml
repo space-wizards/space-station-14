@@ -1,24 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'combat gloves were removed from atmosdrobe, because fighting fire is
-      not actual fighting', type: Remove}
-  id: 2335
-  time: '2022-09-17T02:05:06.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: 'Due to a mix-up in the NanoTrasen Standardized Equipment Logistics
-      Warehouse, non-clothing items were getting stocked in ''Drobe machines. We''ve
-      corrected this issue and ensured said equipment should be available in the appropriate
-      lockers instead.', type: Tweak}
-  id: 2336
-  time: '2022-09-17T14:43:34.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Cargo techs and the QM now start with an appraisal tool., type: Add}
-  - {message: You can now lathe appraisal tools., type: Add}
-  id: 2337
-  time: '2022-09-17T16:16:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a variety of wall-mounted lockers., type: Add}
@@ -2965,3 +2945,18 @@ Entries:
       if you are under them., type: Add}
   id: 2834
   time: '2023-01-05T05:45:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
+  id: 2835
+  time: '2023-01-05T11:36:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'QM, RD, and CMO players are now eligible to be traitors.', type: Add}
+  id: 2836
+  time: '2023-01-05T23:33:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Your eye rotation will now already be adjusted upon ghosting., type: Fix}
+  id: 2837
+  time: '2023-01-06T09:39:28.0000000+00:00'
