@@ -15,6 +15,8 @@ namespace Content.Shared.Disposal.Components
         /// </summary>
         public List<EntityUid> RecentlyEjected = new();
 
+        [DataField("flush_time", required: true)]
+        public readonly float FlushTime;
 
         [DataField("mobsCanEnter")]
         public bool MobsCanEnter = true;
