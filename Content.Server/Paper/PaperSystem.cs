@@ -20,6 +20,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -34,18 +35,34 @@ namespace Content.Server.Paper
 
         private void OnInit(EntityUid uid, PaperComponent paperComp, ComponentInit args)
         {
+            if (paperComp.LocContent.Length > 0 && Loc.TryGetString(paperComp.LocContent, out var locString))
+            {
+                paperComp.Content += locString;
+                if (paperComp.Content.Length > paperComp.ContentSize)
+                {
+                    paperComp.Content = paperComp.Content[..paperComp.ContentSize];
+                }
+            }
+
             paperComp.Mode = PaperAction.Read;
             UpdateUserInterface(uid, paperComp);
 
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
+            UpdateAppearance(uid, paperComp);
+
+        }
+
+        private void UpdateAppearance(EntityUid uid, PaperComponent paperComp)
+        {
+            if (HasComp<AppearanceComponent>(uid))
             {
-                if (paperComp.Content != "")
-                    appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
+                if (!string.IsNullOrWhiteSpace(paperComp.Content))
+                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written);
+                else
+                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Blank);
 
                 if (paperComp.StampState != null)
-                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
+                    _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState); // You cannot remove the stamp???
             }
-
         }
 
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
@@ -60,11 +77,13 @@ namespace Content.Server.Paper
                 return;
 
             if (paperComp.Content != "")
+            {
                 args.Message.AddMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-has-words", ("paper", uid)
                     )
                 );
+            }
 
             if (paperComp.StampedBy.Count > 0)
             {
@@ -86,7 +105,9 @@ namespace Content.Server.Paper
 
                 paperComp.Mode = PaperAction.Write;
                 UpdateUserInterface(uid, paperComp);
-                _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.Open(actor.PlayerSession);
+                var ui = _uiSystem.GetUiOrNull(uid, PaperUiKey.Key);
+                if (ui != null)
+                    _uiSystem.OpenUi(ui, actor.PlayerSession);
                 return;
             }
 
@@ -111,15 +132,16 @@ namespace Content.Server.Paper
             if (text.Length + paperComp.Content.Length <= paperComp.ContentSize)
                 paperComp.Content += text + '\n';
 
-            if (TryComp<AppearanceComponent>(uid, out var appearance))
-                appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
+            UpdateAppearance(uid, paperComp);
 
             if (TryComp<MetaDataComponent>(uid, out var meta))
                 meta.EntityDescription = "";
 
             if (args.Session.AttachedEntity != null)
+            {
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
                     $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has written on {ToPrettyString(uid):entity} the following text: {args.Text}");
+            }
 
             UpdateUserInterface(uid, paperComp);
         }
@@ -135,10 +157,10 @@ namespace Content.Server.Paper
             if (!paperComp.StampedBy.Contains(Loc.GetString(stampName)))
             {
                 paperComp.StampedBy.Add(Loc.GetString(stampName));
-                if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
+                if (paperComp.StampState == null && HasComp<AppearanceComponent>(uid))
                 {
                     paperComp.StampState = stampState;
-                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
+                    UpdateAppearance(uid, paperComp);
                 }
             }
             return true;
@@ -152,14 +174,10 @@ namespace Content.Server.Paper
             paperComp.Content = content + '\n';
             UpdateUserInterface(uid, paperComp);
 
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
+            if (!HasComp<AppearanceComponent>(uid))
                 return;
 
-            var status = string.IsNullOrWhiteSpace(content)
-                ? PaperStatus.Blank
-                : PaperStatus.Written;
-
-            appearance.SetData(PaperVisuals.Status, status);
+            UpdateAppearance(uid, paperComp);
         }
 
         public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null)
@@ -167,7 +185,11 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
+            var ui = _uiSystem.GetUiOrNull(uid, PaperUiKey.Key);
+            if (ui != null)
+            {
+                _uiSystem.TrySetUiState(uid, PaperUiKey.Key, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode)); //Where is ui non-null was needed?
+            }
         }
     }
 }

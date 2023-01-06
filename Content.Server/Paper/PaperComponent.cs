@@ -10,6 +10,9 @@ namespace Content.Server.Paper
         [DataField("content")]
         public string Content { get; set; } = "";
 
+        [DataField("localizedContent")]
+        public string LocContent = "";
+
         [DataField("contentSize")]
         public int ContentSize { get; set; } = 1000;
 
