@@ -52,6 +52,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SpellbookComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<SpellbookComponent, LearnDoAfterComplete>(OnLearnComplete);
         SubscribeLocalEvent<SpellbookComponent, LearnDoAfterCancel>(OnLearnCancel);
+        SubscribeLocalEvent<SpellbookComponent, DoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<InstantSpawnSpellEvent>(OnInstantSpawn);
         SubscribeLocalEvent<TeleportSpellEvent>(OnTeleportSpell);
@@ -59,6 +60,18 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
+    }
+
+    private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
+    {
+        if (args.Cancelled)
+            component.CancelToken = null;
+
+        else
+        {
+            component.CancelToken = null;
+            _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+        }
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)

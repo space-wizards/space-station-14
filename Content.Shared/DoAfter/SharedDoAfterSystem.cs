@@ -9,9 +9,7 @@ namespace Content.Shared.DoAfter;
 
 public abstract class SharedDoAfterSystem : EntitySystem
 {
-        // We cache these lists as to not allocate them every update tick...
-        private readonly Queue<DoAfter> _cancelled = new();
-        private readonly Queue<DoAfter> _finished = new();
+        // We cache the list as to not allocate every update tick...
         private readonly Queue<DoAfter> _pending = new();
 
         public override void Initialize()
@@ -67,7 +65,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
         {
-            if (!args.CurrentMobState.IsIncapacitated())
+            if(args.CurrentMobState != DamageState.Dead || args.CurrentMobState != DamageState.Critical)
                 return;
 
             foreach (var (_, doAfter) in component.DoAfters)
@@ -113,10 +111,10 @@ public abstract class SharedDoAfterSystem : EntitySystem
                         case DoAfterStatus.Running:
                             break;
                         case DoAfterStatus.Cancelled:
-                            _cancelled.Enqueue(doAfter);
+                            _pending.Enqueue(doAfter);
                             break;
                         case DoAfterStatus.Finished:
-                            _finished.Enqueue(doAfter);
+                            _pending.Enqueue(doAfter);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -128,49 +126,32 @@ public abstract class SharedDoAfterSystem : EntitySystem
                     if (doAfter.Status == DoAfterStatus.Cancelled)
                     {
                         Cancelled(comp, doAfter);
-                        //TODO: Add a doAfter.EventArgs.Broadcast bool to check for true or not to put in field
-                        RaiseLocalEvent(doAfter.EventArgs.User, new DoAfterEvent(true));
+                        var ev = new DoAfterEvent(true, doAfter.EventArgs);
+
+                        if (EntityManager.EntityExists(doAfter.EventArgs.User))
+                            RaiseLocalEvent(doAfter.EventArgs.User, ev, doAfter.EventArgs.Broadcast);
+
+                        if (doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target))
+                            RaiseLocalEvent(target, ev, doAfter.EventArgs.Broadcast);
+
+                        if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used))
+                            RaiseLocalEvent(used, ev, doAfter.EventArgs.Broadcast);
                     }
 
                     if (doAfter.Status == DoAfterStatus.Finished)
                     {
                         Finished(comp, doAfter);
-                        RaiseLocalEvent(doAfter.EventArgs.User, new DoAfterEvent(false));
+                        var ev = new DoAfterEvent(false, doAfter.EventArgs);
+
+                        if (EntityManager.EntityExists(doAfter.EventArgs.User))
+                            RaiseLocalEvent(doAfter.EventArgs.User, ev, doAfter.EventArgs.Broadcast);
+
+                        if (doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target))
+                            RaiseLocalEvent(target, ev, doAfter.EventArgs.Broadcast);
+
+                        if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used))
+                            RaiseLocalEvent(used, ev, doAfter.EventArgs.Broadcast);
                     }
-                }
-
-                while (_cancelled.TryDequeue(out var doAfter))
-                {
-                    Cancelled(comp, doAfter);
-
-                    if(EntityManager.EntityExists(doAfter.EventArgs.User) && doAfter.EventArgs.UserCancelledEvent != null)
-                        RaiseLocalEvent(doAfter.EventArgs.User, doAfter.EventArgs.UserCancelledEvent);
-
-                    if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used) && doAfter.EventArgs.UsedCancelledEvent != null)
-                        RaiseLocalEvent(used, doAfter.EventArgs.UsedCancelledEvent);
-
-                    if(doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target) && doAfter.EventArgs.TargetCancelledEvent != null)
-                        RaiseLocalEvent(target, doAfter.EventArgs.TargetCancelledEvent, false);
-
-                    if(doAfter.EventArgs.BroadcastCancelledEvent != null)
-                        RaiseLocalEvent(doAfter.EventArgs.BroadcastCancelledEvent);
-                }
-
-                while (_finished.TryDequeue(out var doAfter))
-                {
-                    Finished(comp, doAfter);
-
-                    if(EntityManager.EntityExists(doAfter.EventArgs.User) && doAfter.EventArgs.UserFinishedEvent != null)
-                        RaiseLocalEvent(doAfter.EventArgs.User, doAfter.EventArgs.UserFinishedEvent);
-
-                    if(doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used) && doAfter.EventArgs.UsedFinishedEvent != null)
-                        RaiseLocalEvent(used, doAfter.EventArgs.UsedFinishedEvent);
-
-                    if(doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target) && doAfter.EventArgs.TargetFinishedEvent != null)
-                        RaiseLocalEvent(target, doAfter.EventArgs.TargetFinishedEvent);
-
-                    if(doAfter.EventArgs.BroadcastFinishedEvent != null)
-                        RaiseLocalEvent(doAfter.EventArgs.BroadcastFinishedEvent);
                 }
             }
         }

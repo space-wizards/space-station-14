@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DoAfter;
 
 [RegisterComponent, NetworkedComponent]
-public abstract class DoAfterComponent : Component
+public sealed class DoAfterComponent : Component
 {
     public readonly Dictionary<byte, DoAfter> DoAfters = new();
     public readonly Dictionary<byte, DoAfter> CancelledDoAfters = new();
@@ -43,10 +43,12 @@ public sealed class DoAfterComponentState : ComponentState
 public sealed class DoAfterEvent : EntityEventArgs
 {
     public bool Cancelled;
+    public readonly DoAfterEventArgs Args;
 
-    public DoAfterEvent(bool cancelled)
+    public DoAfterEvent(bool cancelled, DoAfterEventArgs args)
     {
         Cancelled = cancelled;
+        Args = args;
     }
 }
 

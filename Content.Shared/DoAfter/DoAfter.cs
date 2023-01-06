@@ -9,9 +9,11 @@ namespace Content.Shared.DoAfter;
 [Serializable, NetSerializable]
 public sealed class DoAfter
 {
+    [NonSerialized]
     public Task<DoAfterStatus> AsTask;
 
-    private TaskCompletionSource<DoAfterStatus> Tcs;
+    [NonSerialized]
+    public TaskCompletionSource<DoAfterStatus> Tcs;
 
     public readonly DoAfterEventArgs EventArgs;
 
@@ -191,7 +193,9 @@ public sealed class DoAfter
 
     private bool IsFinished()
     {
-        if (Elapsed <= TimeSpan.FromSeconds(EventArgs.Delay))
+        var delay = TimeSpan.FromSeconds(EventArgs.Delay);
+
+        if (Elapsed <= delay)
             return false;
 
         return true;
