@@ -56,14 +56,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         args.Handled = true;
 
         // What the fuck are you doing???
-        Explode(uid, component);
+        Explode(uid, component, args.User);
     }
 
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)
     {
         if (component.IsRigged)
         {
-            Explode(uid);
+            Explode(uid, cause: null);
             return;
         }
 
@@ -87,7 +87,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         }
     }
 
-    private void Explode(EntityUid uid, BatteryComponent? battery = null)
+    private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
         _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
 
@@ -96,7 +96,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
         var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
 
-        _explosionSystem.TriggerExplosive(uid, radius: radius);
+        _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
         QueueDel(uid);
     }
 
