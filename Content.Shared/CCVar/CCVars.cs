@@ -216,6 +216,12 @@ namespace Content.Shared.CCVar
             GameRoleTimers = CVarDef.Create("game.role_timers", true, CVar.SERVER | CVar.REPLICATED);
 
         /// <summary>
+        /// Do admins bypass role timer requirements.
+        /// </summary>
+        public static readonly CVarDef<bool>
+            GameRoleTimersAdminBypass = CVarDef.Create("game.role_timer_admin_bypass", true, CVar.SERVER | CVar.REPLICATED);
+
+        /// <summary>
         ///     Whether a random position offset will be applied to the station on roundstart.
         /// </summary>
         public static readonly CVarDef<bool> StationOffset =

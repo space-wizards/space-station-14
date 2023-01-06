@@ -17,7 +17,7 @@ namespace Content.Client.Administration.Managers
         ///     Checks whether the local player is an admin.
         /// </summary>
         /// <returns>true if the local player is an admin, false otherwise even if they are deadminned.</returns>
-        bool IsActive();
+        bool IsActive(bool includeDeAdmin = false);
 
         /// <summary>
         ///     Checks whether the local player has an admin flag.

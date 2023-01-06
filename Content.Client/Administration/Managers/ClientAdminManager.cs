@@ -19,8 +19,13 @@ namespace Content.Client.Administration.Managers
 
         public event Action? AdminStatusUpdated;
 
-        public bool IsActive()
+        public bool IsActive(bool includeDeAdmin = false)
         {
+            if (includeDeAdmin)
+            {
+                return _adminData != null;
+            }
+
             return _adminData?.Active ?? false;
         }
 

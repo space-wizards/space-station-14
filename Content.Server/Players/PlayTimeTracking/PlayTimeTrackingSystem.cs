@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
@@ -23,6 +24,7 @@ namespace Content.Server.Players.PlayTimeTracking;
 /// </summary>
 public sealed class PlayTimeTrackingSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly IAfkManager _afk = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
@@ -159,8 +161,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     {
         if (!_prototypes.TryIndex<JobPrototype>(role, out var job) ||
             job.Requirements == null ||
+            _cfg.GetCVar(CCVars.GameRoleTimersAdminBypass) && _admin.IsAdmin(player, true) ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
+        {
             return true;
+        }
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
@@ -170,8 +175,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
     {
         var roles = new HashSet<string>();
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+
+        if (_cfg.GetCVar(CCVars.GameRoleTimersAdminBypass) && _admin.IsAdmin(player, true) ||
+            !_cfg.GetCVar(CCVars.GameRoleTimers))
+        {
             return roles;
+        }
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
@@ -184,11 +193,11 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
                     if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
                         continue;
 
+                    roles.Add(job.ID);
                     goto NoRole;
                 }
             }
 
-            roles.Add(job.ID);
             NoRole:;
         }
 
@@ -197,10 +206,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     public void RemoveDisallowedJobs(NetUserId userId, ref List<string> jobs)
     {
-        if (!_cfg.GetCVar(CCVars.GameRoleTimers))
+        var player = _playerManager.GetSessionByUserId(userId);
+
+        if (_cfg.GetCVar(CCVars.GameRoleTimersAdminBypass) && _admin.IsAdmin(player, true) ||
+            !_cfg.GetCVar(CCVars.GameRoleTimers))
             return;
 
-        var player = _playerManager.GetSessionByUserId(userId);
         var playTimes = _tracking.GetTrackerTimes(player);
 
         for (var i = 0; i < jobs.Count; i++)

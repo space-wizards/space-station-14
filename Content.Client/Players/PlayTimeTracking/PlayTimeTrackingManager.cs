@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using Content.Client.Administration.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
@@ -18,6 +19,7 @@ public sealed class PlayTimeTrackingManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IClientAdminManager _admin = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
 
@@ -59,30 +61,28 @@ public sealed class PlayTimeTrackingManager
         reason = null;
 
         if (job.Requirements == null ||
+            _cfg.GetCVar(CCVars.GameRoleTimersAdminBypass) && _admin.IsActive(true) ||
             !_cfg.GetCVar(CCVars.GameRoleTimers))
+        {
             return true;
+        }
 
         var player = _playerManager.LocalPlayer?.Session;
 
-        if (player == null) return true;
+        if (player == null)
+            return true;
 
-        var roles = _roles;
         var reasonBuilder = new StringBuilder();
 
-        var first = true;
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
                 continue;
-
-            if (!first)
-                reasonBuilder.Append('\n');
-            first = false;
 
             reasonBuilder.AppendLine(reason);
         }
 
-        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString();
+        reason = reasonBuilder.Length == 0 ? null : reasonBuilder.ToString().TrimEnd('\n');
         return reason == null;
     }
 }
