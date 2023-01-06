@@ -1,9 +1,4 @@
 Entries:
-- author: Sheppard
-  changes:
-  - {message: Comfy chair can now be rotated, type: Fix}
-  id: 2341
-  time: '2022-09-18T19:56:51.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed the Security Techfab not being able to print anything., type: Fix}
@@ -2960,3 +2955,8 @@ Entries:
   - {message: Rockets can now pass through portals, type: Fix}
   id: 2840
   time: '2023-01-06T23:13:22.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Wording for blue and red alert levels, type: Tweak}
+  id: 2841
+  time: '2023-01-06T23:17:18.0000000+00:00'
