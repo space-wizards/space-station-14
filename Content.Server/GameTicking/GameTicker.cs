@@ -13,6 +13,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
+using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
@@ -34,6 +35,8 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker : SharedGameTicker
     {
         [Dependency] private readonly MapLoaderSystem _map = default!;
+        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
