@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
@@ -14,6 +15,7 @@ namespace Content.Shared.Parallax.Biomes;
 public abstract class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
+    [Dependency] protected readonly ITileDefinitionManager _tileDefManager = default!;
 
     protected const byte ChunkSize = 16;
 
@@ -160,6 +162,157 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         seed.SetFrequency(oldFrequency);
         tile = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to get the relevant entity for this tile.
+    /// </summary>
+    protected bool TryGetEntity(Vector2i indices, BiomePrototype prototype, FastNoise noise, MapGridComponent grid,
+        [NotNullWhen(true)] out string? entity)
+    {
+        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        {
+            entity = null;
+            return false;
+        }
+
+        var oldFrequency = noise.GetFrequency();
+        var seed = noise.GetSeed();
+
+        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        {
+            var layer = prototype.Layers[i];
+            var offset = 0;
+
+            // Decals might block entity so need to check if there's one in front of us.
+            switch (layer)
+            {
+                case IBiomeWorldLayer worldLayer:
+                    if (!worldLayer.AllowedTiles.Contains(_tileDefManager[tileRef.Value.TypeId].ID))
+                        continue;
+
+                    offset = worldLayer.SeedOffset;
+                    noise.SetSeed(seed + offset);
+                    noise.SetFrequency(worldLayer.Frequency);
+                    break;
+                default:
+                    continue;
+            }
+
+            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
+
+            if (value <= layer.Threshold)
+            {
+                continue;
+            }
+
+            if (layer is not BiomeEntityLayer biomeLayer)
+            {
+                entity = null;
+                noise.SetFrequency(oldFrequency);
+                noise.SetSeed(seed);
+                return false;
+            }
+
+            entity = Pick(biomeLayer.Entities, (noise.GetSimplex(indices.X, indices.Y) + 1f) / 2f);
+            noise.SetFrequency(oldFrequency);
+            noise.SetSeed(seed);
+            return true;
+
+            /* TODO for decals
+            for (var i = 0; i < decalLayer.Divisions; i++)
+            {
+                for (var j = 0; j < decalLayer.Divisions; j++)
+                {
+                    var index = new Vector2(x + i * 1f / decalLayer.Divisions, y + j * 1f / decalLayer.Divisions);
+
+                    if (!_biome.TryGetDecal(index, seed, decalLayer.Threshold, decalLayer.Decals, out var tex))
+                        continue;
+
+                    drawn = true;
+                    screenHandle.DrawTextureRect(tex, Box2.FromDimensions(index, tileSize));
+                }
+            }
+            */
+        }
+
+        noise.SetFrequency(oldFrequency);
+        noise.SetSeed(seed);
+        entity = null;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to get the relevant decals for this tile.
+    /// </summary>
+    public bool TryGetDecals(Vector2i indices, BiomePrototype prototype, FastNoise noise, MapGridComponent grid,
+        [NotNullWhen(true)] out List<(string ID, Vector2 Position)>? decals)
+    {
+        if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
+        {
+            decals = null;
+            return false;
+        }
+
+        var oldFrequency = noise.GetFrequency();
+        var seed = noise.GetSeed();
+
+        for (var i = prototype.Layers.Count - 1; i >= 0; i--)
+        {
+            var layer = prototype.Layers[i];
+            var offset = 0;
+
+            // Decals might block entity so need to check if there's one in front of us.
+            switch (layer)
+            {
+                case IBiomeWorldLayer worldLayer:
+                    if (!worldLayer.AllowedTiles.Contains(_tileDefManager[tileRef.Value.TypeId].ID))
+                        continue;
+
+                    offset = worldLayer.SeedOffset;
+                    noise.SetSeed(seed + offset);
+                    noise.SetFrequency(worldLayer.Frequency);
+                    break;
+                default:
+                    continue;
+            }
+
+            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
+
+            if (value <= layer.Threshold)
+            {
+                continue;
+            }
+
+            if (layer is not BiomeDecalLayer decalLayer)
+            {
+                decals = null;
+                noise.SetFrequency(oldFrequency);
+                noise.SetSeed(seed);
+                return false;
+            }
+
+            decals = new List<(string ID, Vector2 Position)>();
+
+            for (var x = 0; x < decalLayer.Divisions; x++)
+            {
+                for (var y = 0; y < decalLayer.Divisions; y++)
+                {
+                    var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
+
+                    decals.Add((Pick(decalLayer.Decals, (noise.GetSimplex(index.X, index.Y) + 1f) / 2f), index));
+                }
+            }
+
+            noise.SetFrequency(oldFrequency);
+            noise.SetSeed(seed);
+            return true;
+        }
+
+        noise.SetFrequency(oldFrequency);
+        noise.SetSeed(seed);
+        decals = null;
         return false;
     }
 

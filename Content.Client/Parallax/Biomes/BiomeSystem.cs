@@ -21,14 +21,12 @@ public sealed class BiomeSystem : SharedBiomeSystem
     public override void Initialize()
     {
         base.Initialize();
-        _overlay.AddOverlay(new BiomeOverlay(_tileDefManager, EntityManager, _mapManager, ProtoManager, _resource, this));
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
         TileCache.Clear();
-        _overlay.RemoveOverlay<BiomeOverlay>();
     }
 
     public bool TryGetDecal(

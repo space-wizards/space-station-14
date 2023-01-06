@@ -144,16 +144,43 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         grid.SetTiles(tiles);
 
+        // Now do entities
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var indices = new Vector2i(x + chunk.X, y + chunk.Y);
+
+                // Don't mess with anything that's potentially anchored.
+                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                if (anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
+                    continue;
+
+                Spawn(entPrototype, grid.GridTileToLocal(indices));
+            }
+        }
+
         // Decals
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
             {
-                // TODO: Goober
+                var indices = new Vector2i(x + chunk.X, y + chunk.Y);
+
+                // Don't mess with anything that's potentially anchored.
+                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                if (anchored.MoveNext(out _) || !TryGetDecals(indices, prototype, noise, grid, out var decals))
+                    continue;
+
+                foreach (var decal in decals)
+                {
+                    // TODO: Track decals probably
+                    _decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out _);
+                }
             }
         }
-
-        // Now do entities
     }
 
     private void UnloadChunks(BiomeComponent component, MapGridComponent grid)
@@ -172,9 +199,10 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
     private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk)
     {
-        _sawmill.Debug($"Unloading chunk for {ToPrettyString(component.Owner)} at {chunk}");
         // Reverse order to loading
-        // Delete entities
+        _sawmill.Debug($"Unloading chunk for {ToPrettyString(component.Owner)} at {chunk}");
+        var noise = new FastNoise(component.Seed);
+        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
 
         // Delete decals
         for (var x = 0; x < ChunkSize; x++)
@@ -185,11 +213,35 @@ public sealed class BiomeSystem : SharedBiomeSystem
             }
         }
 
+        // Delete entities
+        for (var x = 0; x < ChunkSize; x++)
+        {
+            for (var y = 0; y < ChunkSize; y++)
+            {
+                var indices = new Vector2i(x + chunk.X, y + chunk.Y);
+
+                // Don't mess with anything that's potentially anchored.
+                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                if (!anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
+                    continue;
+
+                anchored = grid.GetAnchoredEntitiesEnumerator(indices);
+
+                // TODO: SHITCODE ALERT, NEED TO DIFF THE ENTITY
+                while (anchored.MoveNext(out var ent))
+                {
+                    if (MetaData(ent.Value).EntityPrototype?.ID != entPrototype)
+                        continue;
+
+                    Del(ent.Value);
+                }
+            }
+        }
+
         // Unset tiles (if the data is custom)
         // TODO: Pass this in
         var tiles = new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
-        var noise = new FastNoise(component.Seed);
-        var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
 
         for (var x = 0; x < ChunkSize; x++)
         {
