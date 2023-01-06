@@ -89,8 +89,6 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
 
     private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
-        _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
-
         if (!Resolve(uid, ref battery))
             return;
 
