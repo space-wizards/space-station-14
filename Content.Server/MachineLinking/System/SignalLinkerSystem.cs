@@ -140,7 +140,7 @@ namespace Content.Server.MachineLinking.System
                 return;
 
             foreach (var receiver in receivers)
-                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port), false);
+                RaiseLocalEvent(receiver.Uid, new SignalReceivedEvent(receiver.Port, uid), false);
         }
 
         private void OnTransmitterStartup(EntityUid uid, SignalTransmitterComponent transmitter, ComponentStartup args)
