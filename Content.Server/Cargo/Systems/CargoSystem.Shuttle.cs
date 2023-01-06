@@ -6,6 +6,7 @@ using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
 using Content.Server.Paper;
+using Content.Server.Salvage;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Components;
 using Content.Shared.Cargo;
@@ -266,6 +267,25 @@ public sealed partial class CargoSystem
         return pads;
     }
 
+    private void ReportDepartingItems(CargoShuttleComponent component)
+    {
+        //Make this use a list (comprised of SalvageMagnetComponent) instead of assigning it directly, so it can be expanded easily in the future
+        foreach (var (comp, compXform) in EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
+        {
+            if (compXform.ParentUid == component.Owner)
+             {
+                 var ev = new RecalledOnShuttleEvent(compXform.Owner);
+                 RaiseLocalEvent(compXform.Owner, ref ev);
+             }
+        }
+    }
+
+    /// <summary>
+    /// Raised by some entities when they are on a cargo shuttle that gets recalled
+    /// </summary>
+    [ByRefEvent]
+    public record struct RecalledOnShuttleEvent(EntityUid uid);
+
     #endregion
 
     #region Station
@@ -356,6 +376,7 @@ public sealed partial class CargoSystem
 
         UpdateShuttleCargoConsoles(component);
         _sawmill.Info($"Stashed cargo shuttle {ToPrettyString(uid)}");
+        ReportDepartingItems(component);
     }
 
     /// <summary>
