@@ -1,12 +1,6 @@
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Popups;
-using Content.Server.Shuttles.Systems;
 using Content.Shared.Alert;
-using Content.Shared.Shuttles.Components;
 using JetBrains.Annotations;
-using Robust.Shared.Player;
 
 namespace Content.Server.Alert.Click;
 

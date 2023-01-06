@@ -18,6 +18,12 @@ namespace Content.Server.Chemistry.EntitySystems;
 /// </summary>
 public sealed class SolutionChangedEvent : EntityEventArgs
 {
+    public readonly Solution Solution;
+
+    public SolutionChangedEvent(Solution solution)
+    {
+        Solution = solution;
+    }
 }
 
 /// <summary>
@@ -119,6 +125,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
     public void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false, ReactionMixerComponent? mixerComponent = null)
     {
+        DebugTools.Assert(solutionHolder.Name != null && TryGetSolution(uid, solutionHolder.Name, out var tmp) && tmp == solutionHolder);
+
         // Process reactions
         if (needsReactionsProcessing && solutionHolder.CanReact)
         {
@@ -126,7 +134,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
 
         UpdateAppearance(uid, solutionHolder);
-        RaiseLocalEvent(uid, new SolutionChangedEvent(), true);
+        RaiseLocalEvent(uid, new SolutionChangedEvent(solutionHolder));
     }
 
     public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
@@ -222,6 +230,51 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         targetSolution.AddSolution(addedSolution);
         UpdateChemicals(targetUid, targetSolution, true);
         return true;
+    }
+
+    /// <summary>
+    ///     Moves some quantity of a solution from one solution to another.
+    /// </summary>
+    /// <param name="sourceUid">entity holding the source solution</param>
+    /// <param name="targetUid">entity holding the target solution</param>
+    /// <param name="source">source solution</param>
+    /// <param name="target">target solution</param>
+    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
+    public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, Solution source, Solution target, FixedPoint2 quantity)
+    {
+        if (quantity < 0)
+            return TryTransferSolution(targetUid, sourceUid, target, source, -quantity);
+
+        quantity = FixedPoint2.Min(quantity, target.AvailableVolume, source.CurrentVolume);
+        if (quantity == 0)
+            return false;
+
+        // TODO after #12428 is merged, this should be made into a function that directly transfers reagents.
+        // currently this is quite inefficient.
+        target.AddSolution(source.SplitSolution(quantity));
+
+        UpdateChemicals(sourceUid, source, false);
+        UpdateChemicals(targetUid, target, true);
+        return true;
+    }
+
+    /// <summary>
+    ///     Moves some quantity of a solution from one solution to another.
+    /// </summary>
+    /// <param name="sourceUid">entity holding the source solution</param>
+    /// <param name="targetUid">entity holding the target solution</param>
+    /// <param name="source">source solution</param>
+    /// <param name="target">target solution</param>
+    /// <param name="quantity">quantity of solution to move from source to target. If this is a negative number, the source & target roles are reversed.</param>
+    public bool TryTransferSolution(EntityUid sourceUid, EntityUid targetUid, string source, string target, FixedPoint2 quantity)
+    {
+        if (!TryGetSolution(sourceUid, source, out var sourceSoln))
+            return false;
+
+        if (!TryGetSolution(targetUid, target, out var targetSoln))
+            return false;
+
+        return TryTransferSolution(sourceUid, targetUid, sourceSoln, targetSoln, quantity);
     }
 
     /// <summary>
