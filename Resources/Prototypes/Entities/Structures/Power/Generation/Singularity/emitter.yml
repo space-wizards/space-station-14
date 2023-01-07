@@ -35,6 +35,7 @@
       visible: false
   - type: Emitter
   - type: Gun
+    showExamineText: false
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     selectedMode: SemiAuto
     availableModes:
