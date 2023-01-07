@@ -34,13 +34,19 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
     #region Relays
 
-
     //Relays from the implanted to the implant
-    private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T : EntityEventArgs
+    private void RelayToImplantEvent<T>(EntityUid uid, ImplantedComponent component, T args) where T: notnull
     {
         if (!_container.TryGetContainer(uid, ImplanterComponent.ImplantSlotId, out var implantContainer))
             return;
-
+        if (typeof(T).IsValueType ) //if the event args are a ref struct, relay it as a ref
+        {
+            foreach (var implant in implantContainer.ContainedEntities)
+            {
+                RaiseLocalEvent(implant, ref args);
+            }
+            return;
+        }
         foreach (var implant in implantContainer.ContainedEntities)
         {
             RaiseLocalEvent(implant, args);

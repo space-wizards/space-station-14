@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -36,6 +35,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobThresholds.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -49,7 +49,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -70,6 +69,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
@@ -218,19 +218,16 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Critical).FirstOrNull();
-                    if (!_mobStateSystem.HasState(args.Target, Shared.MobState.MobState.Critical, mobState))
-                    {
+                    if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.MobState.MobState.Critical, out var criticalThreshold)) {
                         // We can't crit them so try killing them.
-                        var deadState = mobState.ThresholdsReverseLookup.Where(x => x.Value == Shared.MobState.MobState.Dead).FirstOrNull();
-                        if (_mobStateSystem.HasState(args.Target, Shared.MobState.MobState.Dead, mobState))
-                            return; // whelp.
-
-                        damageToDeal = deadState.Value.Key - (int) damageable.TotalDamage;
+                        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.MobState.MobState.Dead,
+                                out var deadThreshold))
+                            return;// whelp.
+                        damageToDeal = deadThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
                     else
                     {
-                        damageToDeal = critState.Value.Key - (int) damageable.TotalDamage;
+                        damageToDeal = criticalThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
 
                     if (damageToDeal <= 0)

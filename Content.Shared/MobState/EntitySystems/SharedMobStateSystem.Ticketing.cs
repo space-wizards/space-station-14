@@ -26,6 +26,8 @@ public abstract partial class SharedMobStateSystem
 
     public void ClearMobStateTickets(EntityUid target, MobStateComponent mobState, MobState state)
     {
+        if (state == MobState.Invalid)
+            return;
         mobState.StateTickets[(byte) state - 1] = 0;
         CheckTickets_Internal(target, mobState);
         Dirty(mobState);
@@ -33,6 +35,8 @@ public abstract partial class SharedMobStateSystem
 
     protected void IncrementMobStateTickets(EntityUid target, MobStateComponent mobState, MobState state)
     {
+        if (state == MobState.Invalid)
+            return;
         mobState.StateTickets[(byte) state - 1]++;
         CheckTickets_Internal(target, mobState);
         Dirty(mobState);
@@ -40,6 +44,8 @@ public abstract partial class SharedMobStateSystem
 
     protected void DecrementMobStateTickets(EntityUid target, MobStateComponent mobState, MobState state)
     {
+        if (state == MobState.Invalid)
+            return;
         var temp = mobState.StateTickets[(byte) state - 1]- 1;
         if (temp < 0)
             temp = 0;

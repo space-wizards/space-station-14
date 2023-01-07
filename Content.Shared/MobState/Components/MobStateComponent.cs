@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Linq;
 using Content.Shared.Damage;
-using Content.Shared.FixedPoint;
 using Content.Shared.MobState.EntitySystems;
+using Content.Shared.MobThresholds.Components;
+using Content.Shared.MobThresholds.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -16,7 +15,7 @@ namespace Content.Shared.MobState.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    [Access(typeof(SharedMobStateSystem))]
+    [Access(typeof(SharedMobStateSystem), typeof(MobThresholdSystem))]
     public sealed class MobStateComponent : Component
     {
         //default mobstate is always the lowest state level

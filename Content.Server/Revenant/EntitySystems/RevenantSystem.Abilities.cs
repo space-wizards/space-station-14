@@ -4,7 +4,6 @@ using Content.Shared.MobState.Components;
 using Content.Server.DoAfter;
 using Content.Shared.Revenant;
 using Robust.Shared.Random;
-using Robust.Shared.Player;
 using Robust.Shared.Map;
 using Content.Shared.Tag;
 using Content.Shared.Maps;
@@ -19,14 +18,13 @@ using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
-using Content.Shared.MobState;
 using System.Linq;
-using Content.Server.Beam;
 using Content.Server.Emag;
 using Content.Server.Humanoid;
 using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.MobThresholds.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -41,6 +39,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly DiseaseSystem _disease = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
 
     private void InitializeAbilities()
@@ -194,8 +193,8 @@ public sealed partial class RevenantSystem
         }
 
         //KILL THEMMMM
-        var damage = _mobState.GetEarliestDeadState(mobstate, 0)?.threshold;
-        if (damage == null)
+
+        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.MobState.MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);
