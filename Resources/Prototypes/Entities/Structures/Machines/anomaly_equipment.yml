@@ -6,7 +6,7 @@
   components:
   - type: Sprite
     noRot: true
-    sprite: Structures/Machines/anomaly_vessel.rsi
+    sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
     layers:
     - state: base
     - state: powered
@@ -70,3 +70,49 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
+
+- type: entity
+  id: MachineAPE
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: A.P.E.
+  description: An Anomalous Particle Emitter, capable of shooting out unstable bluespace particles which can interface with anomalies.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/Anomaly/ape.rsi
+    layers:
+    - state: base
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Transform
+    noRot: false
+  - type: Rotatable
+    rotateWhileAnchored: true
+  - type: Machine
+    board: TraversalDistorterMachineCircuitboard #CHANGE
+  - type: Lock
+    locked: false
+  - type: AccessReader
+    access: [[ "Research" ]]
+  - type: Emitter
+  - type: Gun
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/emitter.ogg
+  - type: Appearance
+  - type: WiresVisuals
+  - type: Wires
+    BoardName: "Vessel"
+    LayoutId: Vessel
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
