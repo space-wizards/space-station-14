@@ -110,7 +110,7 @@ namespace Content.Server.Stack
                 return list;
 
             int maxCountPerStack = _sharedStack.GetMaxCount(stack);
-            var materialPerStack = material._materials[materialProto.ID];
+            var materialPerStack = material.Materials[materialProto.ID];
 
             var materialPerMaxCount = maxCountPerStack * materialPerStack;
 

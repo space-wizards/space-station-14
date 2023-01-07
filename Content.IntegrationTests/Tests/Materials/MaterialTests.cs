@@ -46,10 +46,10 @@ namespace Content.IntegrationTests.Tests.Materials
                     var spawned = entityManager.SpawnEntity(proto.StackEntity, coords);
 
                     Assert.That(entityManager.HasComponent<StackComponent>(spawned),
-                        $"{proto.ID} 'stack entity' {proto.StackEntity} has the stack component");
+                        $"{proto.ID} 'stack entity' {proto.StackEntity} does not have the stack component");
 
                     Assert.That(entityManager.HasComponent<MaterialComponent>(spawned),
-                        $"{proto.ID} 'material stack' {proto.StackEntity} has the material component");
+                        $"{proto.ID} 'material stack' {proto.StackEntity} does not have the material component");
                 }
 
                 mapManager.DeleteMap(testMap.MapId);
