@@ -6,15 +6,19 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Parallax;
 
 public sealed class BiomeSystem : SharedBiomeSystem
 {
+    [Dependency] private readonly IComponentFactory _factory = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
 
     private ISawmill _sawmill = default!;
@@ -36,8 +40,6 @@ public sealed class BiomeSystem : SharedBiomeSystem
         component.Seed = _random.Next();
         Dirty(component);
     }
-
-    // TODO: Need a way to designate an area as preload (i.e. keep it loaded until someone goes nearby)
 
     public override void Update(float frameTime)
     {
@@ -217,14 +219,46 @@ public sealed class BiomeSystem : SharedBiomeSystem
         // Delete decals
         foreach (var dec in component.LoadedDecals[chunk])
         {
-            _decals.RemoveDecal(grid.Owner, dec);
+            if (!_decals.RemoveDecal(grid.Owner, dec))
+            {
+                // TODO: Flag the tile as diff
+            }
         }
 
         component.LoadedDecals.Remove(chunk);
 
         // Delete entities
+        var metaQuery = GetEntityQuery<MetaDataComponent>();
+
         foreach (var ent in component.LoadedEntities[chunk])
         {
+            // We'll diff the entity to its default prototype: if it's the same we will deload it.
+            if (metaQuery.TryGetComponent(ent, out var metadata))
+            {
+                var id = metadata.EntityPrototype?.ID;
+
+                if (id != null)
+                {
+                    var proto = ProtoManager.Index<EntityPrototype>(id);
+                    var diff = false;
+
+                    foreach (var (compName, registry) in proto.Components)
+                    {
+                        if (!HasComp(ent, _factory.GetComponent(compName).GetType()))
+                        {
+                            diff = true;
+                            break;
+                        }
+                    }
+
+                    if (diff)
+                    {
+                        // TODO: Flag tile as diff
+                        continue;
+                    }
+                }
+            }
+
             // TODO: SHITCODE ALERT, NEED TO DIFF THE ENTITY
             Del(ent);
         }
@@ -259,10 +293,5 @@ public sealed class BiomeSystem : SharedBiomeSystem
         component.LoadedChunks.Remove(chunk);
     }
 
-    // TODO: Load if in range, unload if out of range.
     // TODO: Round the view range
-    // For unloading diff entities
-
-    // TODO: For loading
-    // - Load tiles if no data exists I think, probably better
 }

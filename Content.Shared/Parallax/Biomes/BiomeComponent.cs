@@ -13,6 +13,14 @@ public sealed class BiomeComponent : Component
      DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BiomePrototype>))]
     public string BiomePrototype = "Grasslands";
 
+    // TODO: Need to flag tiles as not requiring custom data anymore, e.g. if we spawn an ent and don't unspawn it.
+
+    /// <summary>
+    /// If we've already generated a tile and couldn't deload it then we won't ever reload it in future.
+    /// </summary>
+    [DataField("modifiedTiles")]
+    public HashSet<Vector2i> ModifiedTiles = new();
+
     /// <summary>
     /// Decals that have been loaded as a part of this biome.
     /// </summary>
