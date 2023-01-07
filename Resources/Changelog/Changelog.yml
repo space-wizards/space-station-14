@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed the Security Techfab not being able to print anything., type: Fix}
-  id: 2342
-  time: '2022-09-19T00:44:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
   id: 2343
   time: '2022-09-19T19:35:31.0000000+00:00'
@@ -2960,3 +2955,8 @@ Entries:
   - {message: Wording for blue and red alert levels, type: Tweak}
   id: 2841
   time: '2023-01-06T23:17:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Prying tiles now removes the decals on them., type: Fix}
+  id: 2842
+  time: '2023-01-07T10:24:50.0000000+00:00'
