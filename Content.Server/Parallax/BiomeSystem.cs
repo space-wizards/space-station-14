@@ -145,6 +145,9 @@ public sealed class BiomeSystem : SharedBiomeSystem
         grid.SetTiles(tiles);
 
         // Now do entities
+        var loadedEntities = new List<EntityUid>();
+        component.LoadedEntities.Add(chunk, loadedEntities);
+
         for (var x = 0; x < ChunkSize; x++)
         {
             for (var y = 0; y < ChunkSize; y++)
@@ -157,7 +160,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 if (anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
                     continue;
 
-                Spawn(entPrototype, grid.GridTileToLocal(indices));
+                var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
+                loadedEntities.Add(ent);
             }
         }
 
@@ -219,30 +223,13 @@ public sealed class BiomeSystem : SharedBiomeSystem
         component.LoadedDecals.Remove(chunk);
 
         // Delete entities
-        for (var x = 0; x < ChunkSize; x++)
+        foreach (var ent in component.LoadedEntities[chunk])
         {
-            for (var y = 0; y < ChunkSize; y++)
-            {
-                var indices = new Vector2i(x + chunk.X, y + chunk.Y);
-
-                // Don't mess with anything that's potentially anchored.
-                var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
-
-                if (!anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
-                    continue;
-
-                anchored = grid.GetAnchoredEntitiesEnumerator(indices);
-
-                // TODO: SHITCODE ALERT, NEED TO DIFF THE ENTITY
-                while (anchored.MoveNext(out var ent))
-                {
-                    if (MetaData(ent.Value).EntityPrototype?.ID != entPrototype)
-                        continue;
-
-                    Del(ent.Value);
-                }
-            }
+            // TODO: SHITCODE ALERT, NEED TO DIFF THE ENTITY
+            Del(ent);
         }
+
+        component.LoadedEntities.Remove(chunk);
 
         // Unset tiles (if the data is custom)
         // TODO: Pass this in
@@ -269,6 +256,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
 
         grid.SetTiles(tiles);
+        component.LoadedChunks.Remove(chunk);
     }
 
     // TODO: Load if in range, unload if out of range.

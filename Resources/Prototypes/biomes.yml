@@ -1,10 +1,6 @@
 - type: biome
   id: Grasslands
   layers:
-    - !type:BiomeTileLayer
-      threshold: 0
-      tiles:
-        - FloorAsteroidSand
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorPlanetGrass
@@ -55,6 +51,20 @@
         - FloraTree01
         - FloraTree02
         - FloraTree03
+        - FloraTree04
+        - FloraTree05
+        - FloraTree06
+        - FloraTreeLarge01
+        - FloraTreeLarge02
+        - FloraTreeLarge03
+        - FloraTreeLarge04
+        - FloraTreeLarge05
+        - FloraTreeLarge06
+    # Fill remainder with sand.
+    - !type:BiomeTileLayer
+      threshold: 0
+      tiles:
+        - FloorAsteroidSand
     - !type:BiomeTileLayer
       threshold: 0.5
       tiles:

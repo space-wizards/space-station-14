@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
+using Robust.Shared.Console;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -177,6 +178,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
+        var tileId = _tileDefManager[tileRef.Value.TypeId].ID;
         var oldFrequency = noise.GetFrequency();
         var seed = noise.GetSeed();
 
@@ -189,7 +191,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             switch (layer)
             {
                 case IBiomeWorldLayer worldLayer:
-                    if (!worldLayer.AllowedTiles.Contains(_tileDefManager[tileRef.Value.TypeId].ID))
+                    if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
                     offset = worldLayer.SeedOffset;
@@ -239,6 +241,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
+        var tileId = _tileDefManager[tileRef.Value.TypeId].ID;
         var oldFrequency = noise.GetFrequency();
         var seed = noise.GetSeed();
 
@@ -247,11 +250,11 @@ public abstract class SharedBiomeSystem : EntitySystem
             var layer = prototype.Layers[i];
             var offset = 0;
 
-            // Decals might block entity so need to check if there's one in front of us.
+            // Entities might block decal so need to check if there's one in front of us.
             switch (layer)
             {
                 case IBiomeWorldLayer worldLayer:
-                    if (!worldLayer.AllowedTiles.Contains(_tileDefManager[tileRef.Value.TypeId].ID))
+                    if (!worldLayer.AllowedTiles.Contains(tileId))
                         continue;
 
                     offset = worldLayer.SeedOffset;

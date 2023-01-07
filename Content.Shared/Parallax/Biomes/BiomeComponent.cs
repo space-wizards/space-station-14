@@ -16,8 +16,11 @@ public sealed class BiomeComponent : Component
     /// <summary>
     /// Decals that have been loaded as a part of this biome.
     /// </summary>
-    [ViewVariables, DataField("decals")]
+    [DataField("decals")]
     public Dictionary<Vector2i, HashSet<uint>> LoadedDecals = new();
+
+    [DataField("entities")]
+    public Dictionary<Vector2i, List<EntityUid>> LoadedEntities = new();
 
     /// <summary>
     /// Currently active chunks
