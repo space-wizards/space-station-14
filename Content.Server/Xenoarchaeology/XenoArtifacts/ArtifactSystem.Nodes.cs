@@ -18,6 +18,7 @@ public sealed partial class ArtifactSystem
     /// <summary>
     /// Generate an Artifact tree with fully developed nodes.
     /// </summary>
+    /// <param name="artifact"></param>
     /// <param name="tree">The tree being generated.</param>
     /// <param name="nodeAmount">The amount of nodes it has.</param>
     private void GenerateArtifactNodeTree(EntityUid artifact, ref ArtifactTree tree, int nodeAmount)
@@ -48,7 +49,8 @@ public sealed partial class ArtifactSystem
         var node = uninitializedNodes.First();
         uninitializedNodes.Remove(node);
 
-        node.Id = _random.Next(0, 10000);
+        //random 5-digit number
+        node.Id = _random.Next(10000, 100000);
 
         //Generate the connected nodes
         var maxEdges = Math.Max(1, targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1);
@@ -80,29 +82,28 @@ public sealed partial class ArtifactSystem
 
     private ArtifactTriggerPrototype GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
-        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
+        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetTriggers = allTriggers
-            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
-
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetTriggers);
     }
 
     private ArtifactEffectPrototype GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
-        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
+        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
         var targetEffects = allEffects
-            .Where(x => x.TargetDepth == selectedRandomTargetDepth)
-            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetEffects);
     }
@@ -114,12 +115,12 @@ public sealed partial class ArtifactSystem
     /// </remarks>
     private Dictionary<int, float> GetDepthWeights(IEnumerable<int> depths, int targetDepth)
     {
+        // this function is just a normal distribution with a
+        // mean of target depth and standard deviation of 0.75
         var weights = new Dictionary<int, float>();
         foreach (var d in depths)
         {
-            //TODO: is this equation sus? idk. -emo
-            // 0.3 / (|current_iterated_depth - our_actual_depth| + 1)^2
-            var w = 0.3f / MathF.Pow(Math.Abs(d - targetDepth) + 1, 2);
+            var w = 10f / (0.75f * MathF.Sqrt(2 * MathF.PI)) * MathF.Pow(MathF.E, -MathF.Pow((d - targetDepth) / 0.75f, 2));
             weights.Add(d, w);
         }
         return weights;

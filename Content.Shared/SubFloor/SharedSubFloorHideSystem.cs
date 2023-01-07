@@ -31,6 +31,13 @@ namespace Content.Shared.SubFloor
             // Like 80% sure this doesn't need to handle re-anchoring.
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
             SubscribeLocalEvent<SubFloorHideComponent, GettingInteractedWithAttemptEvent>(OnInteractionAttempt);
+            SubscribeLocalEvent<SubFloorHideComponent, GettingAttackedAttemptEvent>(OnAttackAttempt);
+        }
+
+        private void OnAttackAttempt(EntityUid uid, SubFloorHideComponent component, ref GettingAttackedAttemptEvent args)
+        {
+            if (component.BlockInteractions && component.IsUnderCover)
+                args.Cancelled = true;
         }
 
         private void OnInteractionAttempt(EntityUid uid, SubFloorHideComponent component, GettingInteractedWithAttemptEvent args)

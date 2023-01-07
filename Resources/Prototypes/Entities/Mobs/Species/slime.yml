@@ -11,6 +11,7 @@
     state: full
   - type: Body
     prototype: Slime
+    requiredLegs: 2
   - type: Humanoid
     species: SlimePerson
   - type: Speech

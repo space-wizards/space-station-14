@@ -29956,7 +29956,8 @@ entities:
 - uid: 3046
   type: APCBasic
   components:
-  - pos: 2.5,-18.5
+  - rot: 3.141592653589793 rad
+    pos: 2.5,-18.5
     parent: 127
     type: Transform
 - uid: 3047
@@ -47076,7 +47077,7 @@ entities:
     parent: 127
     type: Transform
   - toggleAction:
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light

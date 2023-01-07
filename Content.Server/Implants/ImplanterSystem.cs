@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Guardian;
 using Content.Server.Popups;
@@ -84,10 +84,10 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     /// <param name="implanter">The implanter being used</param>
     public void TryImplant(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
         var userName = Identity.Entity(user, EntityManager);
-        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, Filter.Entities(target), PopupType.LargeCaution);
+        _popup.PopupEntity(Loc.GetString("implanter-component-implanting-target", ("user", userName)), user, target, PopupType.LargeCaution);
 
         component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();
@@ -113,7 +113,7 @@ public sealed partial class ImplanterSystem : SharedImplanterSystem
     //TODO: Remove when surgery is in
     public void TryDraw(ImplanterComponent component, EntityUid user, EntityUid target, EntityUid implanter)
     {
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
         component.CancelToken?.Cancel();
         component.CancelToken = new CancellationTokenSource();

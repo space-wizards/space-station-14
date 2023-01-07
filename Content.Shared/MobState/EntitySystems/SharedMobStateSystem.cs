@@ -1,7 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
+using Content.Shared.Database;
+using Content.Shared.Disease.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.FixedPoint;
@@ -29,6 +33,7 @@ namespace Content.Shared.MobState.EntitySystems
         [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
         [Dependency] protected readonly StatusEffectsSystem Status = default!;
         [Dependency] private   readonly StandingStateSystem _standing = default!;
+        [Dependency] private   readonly ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {
@@ -53,8 +58,22 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+            SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<MobStateComponent, AttemptSneezeCoughEvent>(OnSneezeAttempt);
             SubscribeLocalEvent<MobStateChangedEvent>(OnStateChanged);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
+        }
+
+        private void OnSleepAttempt(EntityUid uid, MobStateComponent component, ref TryingToSleepEvent args)
+        {
+            if(IsDead(uid, component))
+                args.Cancelled = true;
+        }
+
+        private void OnSneezeAttempt(EntityUid uid, MobStateComponent component, ref AttemptSneezeCoughEvent args)
+        {
+            if(IsDead(uid, component))
+                args.Cancelled = true;
         }
 
         private void OnGettingStripped(EntityUid uid, MobStateComponent component, BeforeGettingStrippedEvent args)
@@ -325,6 +344,7 @@ namespace Content.Shared.MobState.EntitySystems
             ExitState(component, old);
 
             component.CurrentState = state;
+            _adminLogger.Add(LogType.Damaged, state == DamageState.Alive ? LogImpact.Low : LogImpact.Medium, $"{ToPrettyString(component.Owner):user} state changed from {old} to {state}");
 
             EnterState(component, state);
             UpdateState(component, state, threshold);
