@@ -103,5 +103,6 @@ public sealed class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer: {message}");
     }
 }
