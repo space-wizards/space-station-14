@@ -28,6 +28,12 @@ public sealed class MaterialStorageComponent : Component
     public EntityWhitelist? EntityWhitelist;
 
     /// <summary>
+    /// Whether or not to drop contained materials when deconstructed.
+    /// </summary>
+    [DataField("dropOnDeconstruct")]
+    public bool DropOnDeconstruct = true;
+
+    /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
@@ -63,9 +69,9 @@ public enum MaterialStorageVisuals : byte
 /// event raised on the materialStorage when a material entity is inserted into it.
 /// </summary>
 [ByRefEvent]
-public readonly record struct MaterialEntityInsertedEvent(Dictionary<string, int> Materials)
+public readonly record struct MaterialEntityInsertedEvent(MaterialComponent MaterialComp)
 {
-    public readonly Dictionary<string, int> Materials = Materials;
+    public readonly MaterialComponent MaterialComp = MaterialComp;
 }
 
 /// <summary>

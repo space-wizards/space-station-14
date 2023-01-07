@@ -18,11 +18,13 @@ using Content.Shared.Spawners.Components;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Magic;
 
@@ -31,6 +33,8 @@ namespace Content.Server.Magic;
 /// </summary>
 public sealed class MagicSystem : EntitySystem
 {
+    [Dependency] private readonly ISerializationManager _seriMan = default!;
+    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -58,6 +62,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
+        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
     }
 
     private void OnInit(EntityUid uid, SpellbookComponent component, ComponentInit args)
@@ -170,6 +175,27 @@ public sealed class MagicSystem : EntitySystem
 
             var ent = Spawn(ev.Prototype, spawnCoords);
             _gunSystem.ShootProjectile(ent, ev.Target.Position - mapPos.Position, userVelocity, ev.Performer);
+        }
+    }
+
+    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
+    {
+        foreach (var toRemove in ev.ToRemove)
+        {
+            if (_compFact.TryGetRegistration(toRemove, out var registration))
+                RemComp(ev.Target, registration.Type);
+        }
+
+        foreach (var (name, data) in ev.ToAdd)
+        {
+            if (HasComp(ev.Target, data.Component.GetType()))
+                continue;
+
+            var component = (Component) _compFact.GetComponent(name);
+            component.Owner = ev.Target;
+            var temp = (object) component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            EntityManager.AddComponent(ev.Target, (Component) temp!);
         }
     }
 

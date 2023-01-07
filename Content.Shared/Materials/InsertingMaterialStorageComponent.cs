@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Materials;
@@ -14,4 +15,17 @@ public sealed class InsertingMaterialStorageComponent : Component
 
     [ViewVariables]
     public Color? MaterialColor;
+}
+
+[Serializable, NetSerializable]
+public sealed class InsertingMaterialStorageComponentState : ComponentState
+{
+    public TimeSpan EndTime;
+    public Color? MaterialColor;
+
+    public InsertingMaterialStorageComponentState(TimeSpan endTime, Color? materialColor)
+    {
+        EndTime = endTime;
+        MaterialColor = materialColor;
+    }
 }

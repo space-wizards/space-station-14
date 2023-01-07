@@ -29,6 +29,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         if (inserting && TryComp<InsertingMaterialStorageComponent>(uid, out var insertingComp))
         {
             args.Sprite.LayerSetAnimationTime(layer, 0f);
+
             args.Sprite.LayerSetVisible(layer, true);
             if (insertingComp.MaterialColor != null)
                 args.Sprite.LayerSetColor(layer, insertingComp.MaterialColor.Value);
