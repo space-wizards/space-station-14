@@ -10,9 +10,6 @@ namespace Content.Server.Paper
         [DataField("content")]
         public string Content { get; set; } = "";
 
-        [DataField("useLocale")]
-        public bool UseLocale;
-
         [DataField("contentSize")]
         public int ContentSize { get; set; } = 1000;
 

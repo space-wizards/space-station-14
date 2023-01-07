@@ -44,10 +44,8 @@ namespace Content.Server.Paper
 
         private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
         {
-            if (paperComp.UseLocale && Loc.TryGetString(paperComp.Content, out var locString))
-            {
+            if (Loc.TryGetString(paperComp.Content, out var locString))
                 paperComp.Content = locString;
-            }
 
             if (paperComp.Content.Length > paperComp.ContentSize)
             {

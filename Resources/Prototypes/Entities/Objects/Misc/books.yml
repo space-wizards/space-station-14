@@ -64,7 +64,6 @@
           Blunt: 6
     - type: Paper
       content: book-text-escalation
-      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -82,7 +81,6 @@
           Blunt: 6
     - type: Paper
       content: book-text-escalation-sec
-      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -96,7 +94,6 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-distro
-      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -110,7 +107,6 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-waste
-      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -124,7 +120,6 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-alarms
-      useLocale: true
 
 - type: entity
   parent: BookBase
@@ -138,4 +133,3 @@
         - state: book5
     - type: Paper
       content: book-text-atmos-vents
-      useLocale: true

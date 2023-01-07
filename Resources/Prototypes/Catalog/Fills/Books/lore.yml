@@ -32,7 +32,6 @@
   components:
   - type: Paper
     content: book-text-demonomicon1
-    useLocale: true
 
 - type: entity
   parent: BookDemonomicon
@@ -41,7 +40,6 @@
   components:
   - type: Paper
     content: book-text-demonomicon2
-    useLocale: true
 
 - type: entity
   parent: BookDemonomicon
@@ -50,7 +48,6 @@
   components:
   - type: Paper
     content: book-text-demonomicon2
-    useLocale: true
 
 - type: entity
   name: pharmaceutical manuscript
@@ -65,7 +62,6 @@
     - state: book_chemistry
   - type: Paper
     content: book-text-chemistry
-    useLocale: true
 
 - type: entity
   name: botanical textbook
@@ -80,7 +76,6 @@
     - state: book_hydroponics_pod_people
   - type: Paper
     content: book-text-botanics
-    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -95,7 +90,6 @@
     - state: book5
   - type: Paper
     content: book-text-gnomonomicon
-    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -110,7 +104,6 @@
     - state: book_fish
   - type: Paper
     content: book-text-fishing
-    useLocale: true
 
 - type: entity
   parent: BookBase
@@ -125,6 +118,5 @@
     - state: book_detective
   - type: Paper
     content: book-text-detective
-    useLocale: true
 
 # ---- End Library Salvage Fills ----
