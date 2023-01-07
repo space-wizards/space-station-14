@@ -1,6 +1,6 @@
 - type: material
   id: Glass
-  stackEntity: SheetGlass
+  stackEntity: SheetGlass1
   name: materials-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: glass }
   color: "#a8ccd7"
@@ -8,7 +8,7 @@
 
 - type: material
   id: ReinforcedGlass
-  stackEntity: SheetRGlass
+  stackEntity: SheetRGlass1
   name: materials-reinforced-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rglass }
   color: "#549bb0"
@@ -16,7 +16,7 @@
 
 - type: material
   id: PlasmaGlass
-  stackEntity: SheetPGlass
+  stackEntity: SheetPGlass1
   name: materials-plasma-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: pglass }
   color: "#b35989"
@@ -24,7 +24,7 @@
 
 - type: material
   id: ReinforcedPlasmaGlass
-  stackEntity: SheetRPGlass
+  stackEntity: SheetRPGlass1
   name: materials-reinforced-plasma-glass
   icon: { sprite: Objects/Materials/Sheets/glass.rsi, state: rpglass }
   color: "#8c4069"
