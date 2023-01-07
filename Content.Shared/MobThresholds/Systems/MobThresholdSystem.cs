@@ -3,7 +3,7 @@ using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.MobState.Systems;
 using Content.Shared.MobThresholds.Components;
 using Robust.Shared.GameStates;
 
@@ -11,7 +11,7 @@ namespace Content.Shared.MobThresholds.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
 {
-    [Dependency] private readonly SharedMobStateSystem _mobStateSystem= default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem= default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<MobThresholdComponent, ComponentStartup>(MobThresholdStartup);
@@ -19,7 +19,6 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobThresholdComponent, ComponentHandleState>(OnHandleComponentState);
     }
-
     private void OnHandleComponentState(EntityUid uid, MobThresholdComponent component, ComponentHandleState args)
     {
         if (args.Current is not MobThresholdComponentState state)
@@ -120,6 +119,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         var mobStateComp = EnsureComp<MobStateComponent>(uid);
         CheckThresholds(uid, mobStateComp, mobThresholdComponent, args.Damageable);
+
     }
 
     //Call this if you are somehow change the amount of damage on damageable without triggering a damageChangedEvent
@@ -138,6 +138,8 @@ public sealed class MobThresholdSystem : EntitySystem
             if (damageableComponent.TotalDamage > threshold)
                 continue;
             TriggerThreshold(target, mobStateComponent, thresholdComponent,thresholdComponent.CurrentThresholdState, mobState);
+            var ev = new MobThresholdUpdatedEvent(mobState, damageableComponent.TotalDamage, threshold);
+            RaiseLocalEvent(ref ev);
         }
     }
 
@@ -162,3 +164,5 @@ public sealed class MobThresholdSystem : EntitySystem
         return false;
     }
 }
+
+public record struct MobThresholdUpdatedEvent(MobState.MobState MobState, FixedPoint2 Damage, FixedPoint2 Threshold);

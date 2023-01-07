@@ -17,6 +17,7 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Popups;
 
 namespace Content.Server.Kitchen.EntitySystems

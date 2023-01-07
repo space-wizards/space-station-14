@@ -1,5 +1,5 @@
-using Content.Server.MobState;
 using Content.Server.Objectives.Interfaces;
+using Content.Shared.MobState.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions

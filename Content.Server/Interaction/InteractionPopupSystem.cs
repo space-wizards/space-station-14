@@ -1,10 +1,11 @@
 using Content.Server.Interaction.Components;
-using Content.Server.MobState;
+using Content.Shared.MobState;
 using Content.Server.Popups;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

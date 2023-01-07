@@ -4,6 +4,7 @@ using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.MobThresholds.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -93,7 +94,6 @@ namespace Content.Client.HealthOverlay.UI
             if (mobStateSystem.IsAlive(mobState.Owner, mobState))
             {
                 if (!mobThresholdSystem.TryGetThresholdForState(Entity,Shared.MobState.MobState.Critical, out var threshold))
-                //if (!mobStateSystem.TryGetEarliestCriticalThreshold(mobState, damageable.TotalDamage, out _, out threshold))
                 {
                     CritBar.Visible = false;
                     HealthBar.Visible = false;

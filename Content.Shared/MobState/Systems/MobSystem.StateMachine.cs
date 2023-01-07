@@ -1,9 +1,9 @@
 ﻿using Content.Shared.Database;
 using Content.Shared.MobState.Components;
 
-namespace Content.Shared.MobState.EntitySystems;
+namespace Content.Shared.MobState.Systems;
 
-public abstract partial class SharedMobStateSystem
+public abstract partial class MobStateSystem
 {
 
     //Called when a new state is entered

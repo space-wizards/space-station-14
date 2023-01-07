@@ -14,6 +14,7 @@ using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

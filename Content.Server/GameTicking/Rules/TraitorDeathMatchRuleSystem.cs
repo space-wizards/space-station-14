@@ -17,6 +17,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;

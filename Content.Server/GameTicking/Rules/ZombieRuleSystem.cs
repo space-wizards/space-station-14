@@ -16,6 +16,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;

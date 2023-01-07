@@ -4,6 +4,7 @@ using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;

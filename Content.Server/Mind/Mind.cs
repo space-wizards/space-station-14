@@ -8,6 +8,7 @@ using Content.Server.Objectives;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Network;

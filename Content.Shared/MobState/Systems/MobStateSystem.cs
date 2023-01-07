@@ -7,9 +7,10 @@ using Content.Shared.StatusEffect;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.MobState.EntitySystems;
+namespace Content.Shared.MobState.Systems;
 
-public abstract partial class SharedMobStateSystem : EntitySystem
+[Virtual]
+public partial class MobStateSystem : EntitySystem
 {
     [Dependency] protected readonly AlertsSystem Alerts = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;

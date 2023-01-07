@@ -21,6 +21,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
 using Content.Shared.Maps;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Revenant.Components;
 

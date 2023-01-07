@@ -14,6 +14,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using Content.Shared.Drunk;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;

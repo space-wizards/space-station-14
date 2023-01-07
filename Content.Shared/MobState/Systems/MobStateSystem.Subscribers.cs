@@ -15,9 +15,9 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Shared.MobState.EntitySystems;
+namespace Content.Shared.MobState.Systems;
 
-public abstract partial class SharedMobStateSystem
+public abstract partial class MobStateSystem
 {
 
     private void SubscribeMiscEvents()

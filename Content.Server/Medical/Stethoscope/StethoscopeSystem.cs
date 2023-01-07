@@ -12,6 +12,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.MobState;
+using Content.Shared.MobState.Systems;
 
 namespace Content.Server.Medical
 {

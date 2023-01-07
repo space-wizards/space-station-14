@@ -21,6 +21,7 @@ using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction.Events;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

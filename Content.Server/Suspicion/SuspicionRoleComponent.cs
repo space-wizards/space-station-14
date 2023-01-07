@@ -5,6 +5,7 @@ using Content.Server.MobState;
 using Content.Server.Roles;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Suspicion;
 
 namespace Content.Server.Suspicion

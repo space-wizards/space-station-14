@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.MobState.Components;
 using Content.Server.Damage.Components;
 using Content.Shared.Damage.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.MobThresholds.Systems;
 using Robust.Shared.Physics.Components;
 
@@ -20,7 +20,7 @@ namespace Content.Server.Contests
     ///
     public sealed class ContestsSystem : EntitySystem
     {
-        [Dependency] private readonly SharedMobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         /// <summary>
         /// Returns the roller's mass divided by the target's.

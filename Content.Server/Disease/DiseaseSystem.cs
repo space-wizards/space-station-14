@@ -17,6 +17,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.Audio;
 using Robust.Server.GameObjects;

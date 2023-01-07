@@ -10,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.MobThresholds.Systems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;

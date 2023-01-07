@@ -17,6 +17,7 @@ using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.MobState.Systems;
 
 namespace Content.Server.Cloning
 {

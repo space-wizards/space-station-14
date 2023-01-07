@@ -8,6 +8,7 @@ using Content.Shared.Database;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;

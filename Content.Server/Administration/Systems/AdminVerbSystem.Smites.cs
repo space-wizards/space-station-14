@@ -35,6 +35,7 @@ using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Content.Shared.MobThresholds.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;

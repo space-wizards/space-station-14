@@ -14,6 +14,7 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
 using Content.Server.Construction;
 using Content.Server.MobState;
+using Content.Shared.MobState.Systems;
 using Robust.Server.Containers;
 
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...

@@ -346,8 +346,10 @@ public sealed partial class BuckleSystem
             _standing.Stand(buckleId);
         }
 
-        _mobState.EnterState(mobState, mobState?.CurrentState);
-
+        if (_mobState.IsIncapacitated(buckleId, mobState))
+        {
+            _standing.Down(buckleId);
+        }
         // Sync StrapComponent data
         _appearance.SetData(oldBuckledTo.Owner, StrapVisuals.State, false);
         if (oldBuckledTo.BuckledEntities.Remove(buckleId))

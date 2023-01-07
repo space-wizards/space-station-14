@@ -14,6 +14,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Damage;
 using Content.Shared.Emag.Systems;
 using Content.Server.Construction;
+using Content.Shared.MobState.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 

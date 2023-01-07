@@ -8,6 +8,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState.Components;
+using Content.Shared.MobState.Systems;
 using Robust.Server.Player;
 
 namespace Content.Server.GameTicking

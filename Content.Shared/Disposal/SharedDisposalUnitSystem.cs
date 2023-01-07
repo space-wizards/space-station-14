@@ -3,7 +3,7 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.MobState.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;
@@ -16,7 +16,7 @@ namespace Content.Shared.Disposal
     public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         [Dependency] protected readonly IGameTiming GameTiming = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 

@@ -6,7 +6,7 @@ using Content.Server.Temperature.Systems;
 using Content.Server.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Rejuvenate;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.MobState.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Miasma
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly MetaDataSystem _metaDataSystem = default!;
 
         [Dependency] private readonly IGameTiming _timing = default!;
