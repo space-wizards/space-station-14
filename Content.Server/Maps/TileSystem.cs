@@ -70,8 +70,7 @@ public sealed class TileSystem : EntitySystem
 
         //Actually spawn the relevant tile item at the right position and give it some random offset.
         var tileItem = Spawn(tileDef.ItemDropPrototypeName, coordinates);
-        Transform(tileItem).LocalRotation
-            = _robustRandom.NextDouble() * Math.Tau;
+        Transform(tileItem).LocalRotation = _robustRandom.NextDouble() * Math.Tau;
 
         // Destroy any decals on the tile
         var decals = _decal.GetDecalsInRange(tileRef.GridUid, coordinates.SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
