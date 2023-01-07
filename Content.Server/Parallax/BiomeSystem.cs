@@ -14,11 +14,8 @@ namespace Content.Server.Parallax;
 
 public sealed class BiomeSystem : SharedBiomeSystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
 
     private ISawmill _sawmill = default!;
@@ -222,46 +219,18 @@ public sealed class BiomeSystem : SharedBiomeSystem
             if (!_decals.RemoveDecal(grid.Owner, dec))
             {
                 // TODO: Flag the tile as diff
+                // component.ModifiedTiles.Add()
             }
         }
 
         component.LoadedDecals.Remove(chunk);
 
         // Delete entities
-        var metaQuery = GetEntityQuery<MetaDataComponent>();
-
-        foreach (var ent in component.LoadedEntities[chunk])
-        {
-            // We'll diff the entity to its default prototype: if it's the same we will deload it.
-            if (metaQuery.TryGetComponent(ent, out var metadata))
-            {
-                var id = metadata.EntityPrototype?.ID;
-
-                if (id != null)
-                {
-                    var proto = ProtoManager.Index<EntityPrototype>(id);
-                    var diff = false;
-
-                    foreach (var (compName, registry) in proto.Components)
-                    {
-                        if (!HasComp(ent, _factory.GetComponent(compName).GetType()))
-                        {
-                            diff = true;
-                            break;
-                        }
-                    }
-
-                    if (diff)
-                    {
-                        // TODO: Flag tile as diff
-                        continue;
-                    }
-                }
-            }
-
-            // TODO: SHITCODE ALERT, NEED TO DIFF THE ENTITY
-            Del(ent);
-        }
+        // This is a TODO
+        // Ideally any entities that aren't modified just get deleted and re-generated later
+        // This is because if we want to save the map (e.g. persistent server) it makes the file much smaller
+        // and also if the map is enormous will make stuff like physics broadphase much faster
+        // For now we'll just leave them.
 
         component.LoadedEntities.Remove(chunk);
 

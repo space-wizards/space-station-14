@@ -1,3 +1,9 @@
+#- type: biome
+#  id: Desert
+#  layers:
+#    - !type:BiomeTileLayer
+
+
 - type: biome
   id: Grasslands
   layers:

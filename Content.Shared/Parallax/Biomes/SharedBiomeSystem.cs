@@ -16,7 +16,7 @@ namespace Content.Shared.Parallax.Biomes;
 public abstract class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
-    [Dependency] protected readonly ITileDefinitionManager _tileDefManager = default!;
+    [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
 
     protected const byte ChunkSize = 16;
 
@@ -24,7 +24,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Cache of tiles we've calculated previously.
     /// </summary>
-    protected readonly Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> TileCache = new();
+    private readonly Dictionary<BiomePrototype, Dictionary<int, Dictionary<Vector2i, Tile>>> _tileCache = new();
 
     public override void Initialize()
     {
@@ -34,12 +34,18 @@ public abstract class SharedBiomeSystem : EntitySystem
         SubscribeLocalEvent<BiomeComponent, ComponentShutdown>(OnBiomeShutdown);
     }
 
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _tileCache.Clear();
+    }
+
     private void OnBiomeShutdown(EntityUid uid, BiomeComponent component, ComponentShutdown args)
     {
         // Cleanup caching to avoid leaking over long-term.
         if (ProtoManager.TryIndex<BiomePrototype>(component.BiomePrototype, out var prototype))
         {
-            TileCache.Remove(prototype);
+            _tileCache.Remove(prototype);
         }
     }
 
@@ -50,7 +56,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
         if (component.BiomePrototype != state.Prototype && ProtoManager.TryIndex<BiomePrototype>(component.BiomePrototype, out var prototype))
         {
-            TileCache.Remove(prototype);
+            _tileCache.Remove(prototype);
         }
 
         component.Seed = state.Seed;
@@ -135,7 +141,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         var oldFrequency = seed.GetFrequency();
-        var biomeCache = TileCache.GetOrNew(prototype);
+        var biomeCache = _tileCache.GetOrNew(prototype);
         var seedCache = biomeCache.GetOrNew(seed.GetSeed());
 
         if (seedCache.TryGetValue(indices, out var cachedTile))
@@ -178,7 +184,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
-        var tileId = _tileDefManager[tileRef.Value.TypeId].ID;
+        var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldFrequency = noise.GetFrequency();
         var seed = noise.GetSeed();
 
@@ -241,7 +247,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             return false;
         }
 
-        var tileId = _tileDefManager[tileRef.Value.TypeId].ID;
+        var tileId = TileDefManager[tileRef.Value.TypeId].ID;
         var oldFrequency = noise.GetFrequency();
         var seed = noise.GetSeed();
 
