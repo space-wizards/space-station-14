@@ -1,8 +1,8 @@
 using Content.Server.Mind.Components;
 using Content.Server.Revenant.Components;
 using Content.Shared.Examine;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Random;
 
@@ -66,16 +66,16 @@ public sealed class EssenceSystem : EntitySystem
 
         switch (mob.CurrentState)
         {
-            case Shared.MobState.MobState.Alive:
+            case Shared.Mobs.MobState.Alive:
                 if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
                     component.EssenceAmount = _random.NextFloat(75f, 100f);
                 else
                     component.EssenceAmount = _random.NextFloat(45f, 70f);
                 break;
-            case Shared.MobState.MobState.Critical:
+            case Shared.Mobs.MobState.Critical:
                 component.EssenceAmount = _random.NextFloat(35f, 50f);
                 break;
-            case Shared.MobState.MobState.Dead:
+            case Shared.Mobs.MobState.Dead:
                 component.EssenceAmount = _random.NextFloat(15f, 20f);
                 break;
         }

@@ -1,5 +1,5 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
@@ -15,7 +15,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
 
     private void OnMobStateChanged(ref MobStateChangedEvent ev)
     {
-        if (ev.CurrentMobState != Shared.MobState.MobState.Dead)
+        if (ev.CurrentMobState != Shared.Mobs.MobState.Dead)
             return;
 
         var deathXform = Transform(ev.Entity);

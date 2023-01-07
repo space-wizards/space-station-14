@@ -1,5 +1,4 @@
 using System.Threading;
-using Content.Shared.MobState.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Audio;
 using Content.Shared.Jittering;
@@ -21,7 +20,8 @@ using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Robust.Shared.Player;
 using Robust.Shared.Random;

@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;

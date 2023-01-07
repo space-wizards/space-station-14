@@ -17,7 +17,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
@@ -27,6 +26,7 @@ using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == Shared.MobState.MobState.Dead ||
-                args.CurrentMobState == Shared.MobState.MobState.Critical)
+            if (args.CurrentMobState == Shared.Mobs.MobState.Dead ||
+                args.CurrentMobState == Shared.Mobs.MobState.Critical)
             {
                 ZombifyEntity(uid);
             }

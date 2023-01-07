@@ -1,6 +1,4 @@
-﻿using Content.Shared.MobState;
-
-namespace Content.Server.Explosion.Components;
+﻿namespace Content.Server.Explosion.Components;
 
 /// <summary>
 /// Use where you want something to trigger on mobstate change
@@ -13,7 +11,7 @@ public sealed class TriggerOnMobstateChangeComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("mobState", required: true)]
-    public Shared.MobState.MobState MobState = Shared.MobState.MobState.Alive;
+    public Shared.Mobs.MobState MobState = Shared.Mobs.MobState.Alive;
 
     /// <summary>
     /// If true, prevents suicide attempts for the trigger to prevent cheese.

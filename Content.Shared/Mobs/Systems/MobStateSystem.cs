@@ -1,13 +1,13 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Alert;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics.Systems;
 
-namespace Content.Shared.MobState.Systems;
+namespace Content.Shared.Mobs.Systems;
 
 [Virtual]
 public partial class MobStateSystem : EntitySystem

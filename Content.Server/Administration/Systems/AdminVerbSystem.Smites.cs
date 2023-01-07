@@ -34,9 +34,8 @@ using Content.Shared.Disease;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
-using Content.Shared.MobThresholds.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -219,9 +218,9 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.MobState.MobState.Critical, out var criticalThreshold)) {
+                    if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.Mobs.MobState.Critical, out var criticalThreshold)) {
                         // We can't crit them so try killing them.
-                        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.MobState.MobState.Dead,
+                        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.Mobs.MobState.Dead,
                                 out var deadThreshold))
                             return;// whelp.
                         damageToDeal = deadThreshold.Value.Int() - (int) damageable.TotalDamage;

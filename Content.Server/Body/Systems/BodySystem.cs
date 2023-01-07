@@ -12,7 +12,7 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Audio;

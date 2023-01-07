@@ -3,8 +3,6 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
@@ -22,6 +20,8 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
@@ -275,7 +275,7 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState == Shared.MobState.MobState.Dead)
+            if (args.CurrentMobState == Shared.Mobs.MobState.Dead)
             {
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
@@ -365,8 +365,8 @@ namespace Content.Server.Dragon
             {
                 switch (targetState.CurrentState)
                 {
-                    case Shared.MobState.MobState.Critical:
-                    case Shared.MobState.MobState.Dead:
+                    case Shared.Mobs.MobState.Critical:
+                    case Shared.Mobs.MobState.Dead:
                         component.CancelToken = new CancellationTokenSource();
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)

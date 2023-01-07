@@ -11,7 +11,7 @@ using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -58,14 +58,14 @@ namespace Content.Server.Ghost.Roles
         {
             switch (args.CurrentMobState)
             {
-                case Shared.MobState.MobState.Alive:
+                case Shared.Mobs.MobState.Alive:
                 {
                     if (!component.Taken)
                         RegisterGhostRole(component);
                     break;
                 }
-                case Shared.MobState.MobState.Critical:
-                case Shared.MobState.MobState.Dead:
+                case Shared.Mobs.MobState.Critical:
+                case Shared.Mobs.MobState.Dead:
                     UnregisterGhostRole(component);
                     break;
             }

@@ -1,8 +1,8 @@
-﻿using Content.Shared.MobState.Components;
+﻿using Content.Shared.Mobs.Components;
 
-namespace Content.Shared.MobState.Systems;
+namespace Content.Shared.Mobs.Systems;
 
-public abstract partial class MobStateSystem
+public partial class MobStateSystem
 {
 
     public void CheckTickets(EntityUid target, MobStateComponent? component)

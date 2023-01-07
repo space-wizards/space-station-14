@@ -1,11 +1,9 @@
 using Content.Shared.Damage;
-using Content.Shared.MobState.Systems;
-using Content.Shared.MobThresholds.Components;
-using Content.Shared.MobThresholds.Systems;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.MobState.Components
+namespace Content.Shared.Mobs.Components
 {
     /// <summary>
     ///     When attached to an <see cref="DamageableComponent"/>,

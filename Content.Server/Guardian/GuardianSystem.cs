@@ -7,7 +7,7 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -224,12 +224,12 @@ namespace Content.Server.Guardian
         {
             if (component.HostedGuardian == null) return;
 
-            if (args.CurrentMobState == Shared.MobState.MobState.Critical)
+            if (args.CurrentMobState == Shared.Mobs.MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
                 SoundSystem.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value);
             }
-            else if (args.CurrentMobState == Shared.MobState.MobState.Dead)
+            else if (args.CurrentMobState == Shared.Mobs.MobState.Dead)
             {
                 SoundSystem.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);

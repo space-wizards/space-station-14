@@ -2,7 +2,7 @@ using Content.Server.Body.Systems;
 using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Salvage;
 

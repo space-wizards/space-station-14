@@ -1,6 +1,6 @@
 using Content.Server.Standing;
 using Content.Shared.Hands;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Content.Shared.Vehicle.Components;
 using Robust.Shared.GameStates;
 
@@ -48,7 +48,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState is Shared.MobState.MobState.Critical or Shared.MobState.MobState.Dead)
+            if (args.CurrentMobState is Shared.Mobs.MobState.Critical or Shared.Mobs.MobState.Dead)
             {
                 UnbuckleFromVehicle(uid);
             }

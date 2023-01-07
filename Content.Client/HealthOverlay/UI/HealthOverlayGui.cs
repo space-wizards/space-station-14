@@ -3,9 +3,8 @@ using Content.Client.MobState;
 using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
-using Content.Shared.MobThresholds.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -93,7 +92,7 @@ namespace Content.Client.HealthOverlay.UI
             var mobThresholdSystem = _entities.EntitySysManager.GetEntitySystem<MobThresholdSystem>();
             if (mobStateSystem.IsAlive(mobState.Owner, mobState))
             {
-                if (!mobThresholdSystem.TryGetThresholdForState(Entity,Shared.MobState.MobState.Critical, out var threshold))
+                if (!mobThresholdSystem.TryGetThresholdForState(Entity,Shared.Mobs.MobState.Critical, out var threshold))
                 {
                     CritBar.Visible = false;
                     HealthBar.Visible = false;
@@ -110,8 +109,8 @@ namespace Content.Client.HealthOverlay.UI
                 HealthBar.Ratio = 0;
                 HealthBar.Visible = false;
 
-                if (!mobThresholdSystem.TryGetThresholdForState(Entity, Shared.MobState.MobState.Critical, out var critThreshold) ||
-                    !mobThresholdSystem.TryGetThresholdForState(Entity, Shared.MobState.MobState.Dead, out var deadThreshold))
+                if (!mobThresholdSystem.TryGetThresholdForState(Entity, Shared.Mobs.MobState.Critical, out var critThreshold) ||
+                    !mobThresholdSystem.TryGetThresholdForState(Entity, Shared.Mobs.MobState.Dead, out var deadThreshold))
                 {
                     CritBar.Visible = false;
                     return;

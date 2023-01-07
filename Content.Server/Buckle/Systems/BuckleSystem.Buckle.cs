@@ -8,7 +8,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;

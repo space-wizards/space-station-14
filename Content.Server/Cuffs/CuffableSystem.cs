@@ -13,7 +13,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Content.Server.Hands.Systems;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Cuffs
 {

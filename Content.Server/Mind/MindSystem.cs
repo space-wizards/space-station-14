@@ -4,8 +4,8 @@ using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.MobState;
 using Content.Shared.Examine;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 

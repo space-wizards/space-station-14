@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Rotatable;
 using JetBrains.Annotations;
 

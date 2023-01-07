@@ -8,7 +8,7 @@ using Content.Server.Traitor.Uplink;
 using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;

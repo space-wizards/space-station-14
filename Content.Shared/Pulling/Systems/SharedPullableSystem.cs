@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pulling.Components;
-using Content.Shared.MobState.Systems;
 using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Pulling.Systems

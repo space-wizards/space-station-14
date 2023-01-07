@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState.Components;
 
 namespace Content.Server.MobState;
 

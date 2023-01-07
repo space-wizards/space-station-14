@@ -4,7 +4,7 @@ using Content.Server.Pulling;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Buckle;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;

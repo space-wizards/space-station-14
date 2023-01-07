@@ -2,8 +2,8 @@
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.Physics.Components;

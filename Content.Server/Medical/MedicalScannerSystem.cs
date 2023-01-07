@@ -5,7 +5,6 @@ using Content.Server.Power.Components;
 using Content.Shared.Destructible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -14,7 +13,8 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
 using Content.Server.Construction;
 using Content.Server.MobState;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
 
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...

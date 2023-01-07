@@ -15,9 +15,9 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
@@ -83,7 +83,7 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == Shared.MobState.MobState.Dead)
+            if (args.CurrentMobState == Shared.Mobs.MobState.Dead)
             {
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);

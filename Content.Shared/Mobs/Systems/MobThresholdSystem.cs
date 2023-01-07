@@ -2,12 +2,10 @@
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.Systems;
-using Content.Shared.MobThresholds.Components;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.MobThresholds.Systems;
+namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
 {
@@ -19,20 +17,20 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobThresholdComponent, ComponentHandleState>(OnHandleComponentState);
     }
-    private void OnHandleComponentState(EntityUid uid, MobThresholdComponent component, ComponentHandleState args)
+    private void OnHandleComponentState(EntityUid uid, MobThresholdComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MobThresholdComponentState state)
             return;
-        component.Thresholds = state.Thresholds;
+        component.Thresholds = new SortedDictionary<FixedPoint2, MobState>(state.Thresholds);
         component.CurrentThresholdState = state.CurrentThresholdState;
     }
 
-    private void OnGetComponentState(EntityUid uid, MobThresholdComponent component, ComponentGetState args)
+    private void OnGetComponentState(EntityUid uid, MobThresholdComponent component, ref ComponentGetState args)
     {
-        args.State = new MobThresholdComponentState(component.CurrentThresholdState, component.Thresholds);
+        args.State = new MobThresholdComponentState(component.CurrentThresholdState, new Dictionary<FixedPoint2, MobState>(component.Thresholds));
     }
 
-    private void MobThresholdStartup(EntityUid uid, MobThresholdComponent component, ref ComponentStartup args)
+    private void MobThresholdStartup(EntityUid uid, MobThresholdComponent component, ComponentStartup args)
     {
         if (!HasComp<DamageableComponent>(uid))
         {
@@ -45,10 +43,10 @@ public sealed class MobThresholdSystem : EntitySystem
             mobStateComp.AllowedStates.Add(mobState);
             component.ThresholdReverseLookup.Add(mobState, damage);
         }
-        TriggerThreshold(uid, mobStateComp, component, MobState.MobState.Invalid, component.Thresholds.First().Value);
+        TriggerThreshold(uid, mobStateComp, component, MobState.Invalid, component.Thresholds.First().Value);
     }
 
-    public FixedPoint2 GetThresholdForState(EntityUid uid, MobState.MobState mobState, MobThresholdComponent? thresholdComponent)
+    public FixedPoint2 GetThresholdForState(EntityUid uid, MobState mobState, MobThresholdComponent? thresholdComponent)
     {
         if (!Resolve(uid, ref thresholdComponent) || !thresholdComponent.ThresholdReverseLookup.TryGetValue(mobState, out var threshold))
         {
@@ -57,7 +55,7 @@ public sealed class MobThresholdSystem : EntitySystem
         return threshold;
     }
 
-    public bool TryGetThresholdForState(EntityUid uid, MobState.MobState mobState,  [NotNullWhen(true)] out FixedPoint2? threshold,
+    public bool TryGetThresholdForState(EntityUid uid, MobState mobState,  [NotNullWhen(true)] out FixedPoint2? threshold,
         MobThresholdComponent? thresholdComponent = null)
     {
         if (!Resolve(uid, ref thresholdComponent) ||
@@ -88,11 +86,11 @@ public sealed class MobThresholdSystem : EntitySystem
             !TryComp<MobThresholdComponent>(ent2, out var threshold2))
             return false;
 
-        if (!TryGetThresholdForState(ent1, MobState.MobState.Dead, out var ent1DeadThreshold, threshold1))
+        if (!TryGetThresholdForState(ent1, MobState.Dead, out var ent1DeadThreshold, threshold1))
         {
             ent1DeadThreshold = 0;
         }
-        if (!TryGetThresholdForState(ent2, MobState.MobState.Dead, out var ent2DeadThreshold, threshold2))
+        if (!TryGetThresholdForState(ent2, MobState.Dead, out var ent2DeadThreshold, threshold2))
         {
             ent2DeadThreshold = 0;
         }
@@ -101,7 +99,7 @@ public sealed class MobThresholdSystem : EntitySystem
         return true;
     }
 
-    public void SetMobStateThreshold(EntityUid uid, FixedPoint2 damage, MobState.MobState mobState,
+    public void SetMobStateThreshold(EntityUid uid, FixedPoint2 damage, MobState mobState,
         MobThresholdComponent? thresholdComponent = null)
     {
         if (!Resolve(uid, ref thresholdComponent))
@@ -115,7 +113,7 @@ public sealed class MobThresholdSystem : EntitySystem
         VerifyThresholds(uid, thresholdComponent);
     }
 
-    private void OnDamaged(EntityUid uid, MobThresholdComponent mobThresholdComponent, ref DamageChangedEvent args)
+    private void OnDamaged(EntityUid uid, MobThresholdComponent mobThresholdComponent, DamageChangedEvent args)
     {
         var mobStateComp = EnsureComp<MobStateComponent>(uid);
         CheckThresholds(uid, mobStateComp, mobThresholdComponent, args.Damageable);
@@ -144,7 +142,7 @@ public sealed class MobThresholdSystem : EntitySystem
     }
 
     private void TriggerThreshold(EntityUid uid, MobStateComponent mobStateComponent, MobThresholdComponent thresholdComponent,
-        MobState.MobState oldMobState, MobState.MobState newMobState)
+        MobState oldMobState, MobState newMobState)
     {
         if (oldMobState == newMobState)
             return;
@@ -165,4 +163,4 @@ public sealed class MobThresholdSystem : EntitySystem
     }
 }
 
-public record struct MobThresholdUpdatedEvent(MobState.MobState MobState, FixedPoint2 Damage, FixedPoint2 Threshold);
+public record struct MobThresholdUpdatedEvent(MobState MobState, FixedPoint2 Damage, FixedPoint2 Threshold);

@@ -9,7 +9,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.MobThresholds.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;

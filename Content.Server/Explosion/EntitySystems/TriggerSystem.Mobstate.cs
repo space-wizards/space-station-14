@@ -1,6 +1,6 @@
 ﻿using Content.Server.Explosion.Components;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;

@@ -1,5 +1,5 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.Animations;

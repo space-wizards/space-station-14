@@ -6,7 +6,7 @@ using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Speech;
@@ -15,9 +15,9 @@ using Content.Shared.Strip.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 
-namespace Content.Shared.MobState.Systems;
+namespace Content.Shared.Mobs.Systems;
 
-public abstract partial class MobStateSystem
+public partial class MobStateSystem
 {
 
     private void SubscribeMiscEvents()

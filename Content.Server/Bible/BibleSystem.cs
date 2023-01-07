@@ -9,8 +9,8 @@ using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Systems;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -193,7 +193,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState != Shared.MobState.MobState.Dead || component.Source == null)
+            if (args.CurrentMobState != Shared.Mobs.MobState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;
