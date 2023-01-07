@@ -13,6 +13,7 @@ public sealed class DoAfter
     public Task<DoAfterStatus> AsTask;
 
     [NonSerialized]
+    [Obsolete("Will be obsolete for EventBus")]
     public TaskCompletionSource<DoAfterStatus> Tcs;
 
     public readonly DoAfterEventArgs EventArgs;
@@ -24,11 +25,9 @@ public sealed class DoAfter
     public bool Cancelled = false;
 
     //client doafter
-    public EntityUid? Target;
-
-    //client doafter
     public float Delay;
 
+    [NonSerialized]
     private readonly IGameTiming _gameTiming;
 
     public TimeSpan StartTime;
@@ -78,12 +77,14 @@ public sealed class DoAfter
         AsTask = Tcs.Task;
     }
 
+    [Obsolete("Use SharedDoAfterSystem.Cancel instead")]
     public void Cancel()
     {
         if (Status == DoAfterStatus.Running)
             Tcs.SetResult(DoAfterStatus.Cancelled);
     }
 
+    [Obsolete("Use SharedDoAfterSystem.Run instead")]
     public void Run(IEntityManager entityManager)
     {
         switch (Status)
@@ -113,6 +114,7 @@ public sealed class DoAfter
             Tcs.SetResult(DoAfterStatus.Cancelled);
     }
 
+    [Obsolete("Use SharedDoAfterSystem.IsCancelled instead")]
     private bool IsCancelled(IEntityManager entityManager)
     {
         if (!entityManager.EntityExists(EventArgs.User) || EventArgs.Target is {} target && !entityManager.EntityExists(target))
@@ -186,11 +188,13 @@ public sealed class DoAfter
         return false;
     }
 
+    [Obsolete("Use SharedDoAfterSystem.TryPostCheck instead")]
     private bool TryPostCheck()
     {
         return EventArgs.PostCheck?.Invoke() != false;
     }
 
+    [Obsolete("Use SharedDoAfterSystem.IsFinished instead")]
     private bool IsFinished()
     {
         var delay = TimeSpan.FromSeconds(EventArgs.Delay);

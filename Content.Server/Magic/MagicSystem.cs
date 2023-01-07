@@ -129,9 +129,7 @@ public sealed class MagicSystem : EntitySystem
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
-            NeedHand = true, //What, are you going to read with your eyes only??
-            TargetFinishedEvent = new LearnDoAfterComplete(args.User),
-            TargetCancelledEvent = new LearnDoAfterCancel(),
+            NeedHand = true //What, are you going to read with your eyes only??
         };
 
         _doAfter.DoAfter(doAfterEventArgs);

@@ -22,6 +22,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         public void Add(DoAfterComponent component, DoAfter doAfter)
         {
             doAfter.ID = component.RunningIndex;
+            doAfter.Delay = doAfter.EventArgs.Delay;
             component.DoAfters.Add(component.RunningIndex, doAfter);
             EnsureComp<ActiveDoAfterComponent>(component.Owner);
             component.RunningIndex++;
