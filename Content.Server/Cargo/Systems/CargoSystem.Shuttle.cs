@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.Cargo.Events;
 using Content.Server.Labels.Components;
 using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
@@ -269,7 +270,7 @@ public sealed partial class CargoSystem
 
     private void ReportDepartingItems(CargoShuttleComponent component)
     {
-        //Make this use a list (comprised of SalvageMagnetComponent) instead of assigning it directly, so it can be expanded easily in the future
+        //Make this use a list (currently comprised of only SalvageMagnetComponent) instead of assigning it directly, so it can be expanded easily in the future
         foreach (var (comp, compXform) in EntityQuery<SalvageMagnetComponent, TransformComponent>(true))
         {
             if (compXform.ParentUid == component.Owner)
@@ -279,12 +280,6 @@ public sealed partial class CargoSystem
              }
         }
     }
-
-    /// <summary>
-    /// Raised by some entities when they are on a cargo shuttle that gets recalled
-    /// </summary>
-    [ByRefEvent]
-    public record struct RecalledOnShuttleEvent(EntityUid uid);
 
     #endregion
 

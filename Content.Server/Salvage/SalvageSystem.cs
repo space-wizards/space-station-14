@@ -1,3 +1,4 @@
+using Content.Server.Cargo.Events;
 using Content.Server.GameTicking;
 using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
@@ -44,7 +45,7 @@ namespace Content.Server.Salvage
             SubscribeLocalEvent<SalvageMagnetComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SalvageMagnetComponent, ComponentShutdown>(OnMagnetRemoval);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
-            SubscribeLocalEvent<SalvageMagnetComponent, EntityPausedEvent>(OnPaused);
+            SubscribeLocalEvent<SalvageMagnetComponent, RecalledOnShuttleEvent>(OnRecalled);
 
             // Can't use RoundRestartCleanupEvent, I need to clean up before the grid, and components are gone to prevent the announcements
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRoundEnd);
@@ -167,7 +168,7 @@ namespace Content.Server.Salvage
             UpdateAppearance(uid, component);
         }
 
-        private void OnPaused(EntityUid uid, SalvageMagnetComponent component, ref EntityPausedEvent args)
+        private void OnRecalled(EntityUid uid, SalvageMagnetComponent component, ref RecalledOnShuttleEvent args)
         {
             if (component.MagnetState.StateType is not MagnetStateType.Inactive or MagnetStateType.CoolingDown)
             {
