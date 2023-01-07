@@ -142,16 +142,6 @@
     program: 124
   - type: Item
     size: 10
-  - type: Storage
-    capacity: 5
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 1.5
