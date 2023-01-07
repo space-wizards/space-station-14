@@ -143,7 +143,7 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesClown
   id: ClothingShoesCluwne
   name: cluwne shoes
   suffix: Not to be mapped
@@ -153,6 +153,3 @@
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepClown

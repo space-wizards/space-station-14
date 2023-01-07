@@ -235,7 +235,7 @@
   - type: IdentityBlocker
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: ClothingMaskClown
   id: ClothingMaskCluwne
   name: cluwne wig and mask
   suffix: Not to be mapped
@@ -245,5 +245,3 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
-  - type: BreathMask
-  - type: IdentityBlocker

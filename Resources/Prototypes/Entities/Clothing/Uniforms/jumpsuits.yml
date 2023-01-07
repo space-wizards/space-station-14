@@ -888,7 +888,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
 
 - type: entity
-  parent: ClothingUniformBase
+  parent: ClothingUniformJumpsuitClown
   id: ClothingUniformJumpsuitCluwne
   name: cluwne suit
   suffix: Not to be mapped
@@ -898,4 +898,3 @@
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
-    femaleMask: UniformTop

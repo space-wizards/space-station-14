@@ -796,7 +796,7 @@
     state: pda-detective
 
 - type: entity
-  parent: BasePDA
+  parent: ClownPDA
   id: CluwnePDA
   name: cluwne PDA
   suffix: Not to be mapped.
@@ -805,8 +805,7 @@
   - type: PDA
     id: CluwneIDCard
     penSlot:
-      startingItem: CrayonGreen # no pink crayon?!?
-      # ^ Still unacceptable.
+      startingItem: CrayonGreen
       ejectSound: /Audio/Items/bikehorn.ogg
       priority: -1
       whitelist:
@@ -816,30 +815,5 @@
     visuals:
       - type: PDAVisualizer
         state: pda-cluwne
-  - type: PDABorderColor
-    borderColor: "#C18199"
   - type: Icon
     state: pda-cluwne
-  - type: Slippery
-    paralyzeTime: 4
-    launchForwardsMultiplier: 1.5
-  - type: StepTrigger
-  - type: CollisionWake
-    enabled: false
-  - type: Physics
-    bodyType: Dynamic
-  - type: Fixtures
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "slips"
-      hard: false
-      layer:
-      - SlipLayer
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
