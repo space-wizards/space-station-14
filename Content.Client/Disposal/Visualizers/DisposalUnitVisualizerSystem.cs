@@ -59,30 +59,19 @@ namespace Content.Client.Disposal.Visualizers
                 return;
             }
 
-            switch (state)
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.Unanchored, state == VisualState.UnAnchored);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, state == VisualState.Anchored);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.BaseCharging, state == VisualState.Charging);
+
+            if (state == VisualState.Flushing)
             {
-                case VisualState.UnAnchored:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, unit.StateUnAnchored);
-                    break;
-                case VisualState.Anchored:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, unit.StateAnchored);
-                    break;
-                case VisualState.Charging:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, unit.StateCharging);
-                    break;
-                case VisualState.Flushing:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Base, unit.StateAnchored);
+                sprite.LayerSetVisible(DisposalUnitVisualLayers.Base, true);
 
-                    var animPlayer = EntityManager.GetComponent<AnimationPlayerComponent>(uid);
-
-                    if (!AnimationSystem.HasRunningAnimation(uid, AnimationKey))
-                    {
-                        AnimationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
-                    }
-
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                var animPlayer = EntityManager.GetComponent<AnimationPlayerComponent>(uid);
+                if (!AnimationSystem.HasRunningAnimation(uid, AnimationKey))
+                {
+                    AnimationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
+                }
             }
 
             if (!AppearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
@@ -90,49 +79,27 @@ namespace Content.Client.Disposal.Visualizers
                 handleState = HandleState.Normal;
             }
 
-            sprite.LayerSetVisible(DisposalUnitVisualLayers.Handle, handleState != HandleState.Normal);
-
-            switch (handleState)
-            {
-                case HandleState.Normal:
-                    break;
-                case HandleState.Engaged:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Handle, unit.OverlayEngaged);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
             if (!AppearanceSystem.TryGetData<LightState>(uid, Visuals.Light, out var lightState))
             {
                 lightState = LightState.Off;
             }
 
-            sprite.LayerSetVisible(DisposalUnitVisualLayers.Light, lightState != LightState.Off);
-
-            switch (lightState)
-            {
-                case LightState.Off:
-                    break;
-                case LightState.Charging:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Light, unit.OverlayCharging);
-                    break;
-                case LightState.Full:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Light, unit.OverlayFull);
-                    break;
-                case LightState.Ready:
-                    sprite.LayerSetState(DisposalUnitVisualLayers.Light, unit.OverlayReady);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayCharging, lightState == LightState.Charging);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayReady, lightState == LightState.Ready);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFull, lightState == LightState.Full);
         }
     }
 
     public enum DisposalUnitVisualLayers : byte
     {
+        Unanchored,
         Base,
-        Handle,
-        Light
+        BaseCharging,
+        OverlayCharging,
+        OverlayReady,
+        OverlayFull,
+        OverlayEngaged
     }
 }
