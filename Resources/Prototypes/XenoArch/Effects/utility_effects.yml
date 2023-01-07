@@ -48,11 +48,11 @@
     capacity: 50
 
 - type: artifactEffect
-  id: EffectClearFixtures
+  id: EffectPhasing
   targetDepth: 2
-  effectHint: artifact-effect-hint-fixtures
+  effectHint: artifact-effect-hint-phasing
   permanentComponents:
-  - type: ClearFixturesArtifact
+  - type: PhasingArtifact
 
 - type: artifactEffect
   id: EffectWandering
