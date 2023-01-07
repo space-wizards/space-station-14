@@ -52,6 +52,9 @@ uplink-speedloader-magnu-desc = Revolver speedloader with 6 catridges. Compatibl
 uplink-mosin-ammo-name = Box of .30 rifle magazines
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 
+uplink-pc-ammo-name = Plasma cell
+uplink-pc-ammo-desc = Universal holder for plasma storage and distribution. Contains 10 charges.
+
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
 uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
@@ -83,6 +86,9 @@ uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instan
 
 uplink-voice-mask-name = Voice Mask
 uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever you can think of.
+
+uplink-plasmacutter-name = Syndicate plasma cutter
+uplink-plasmacutter-desc = Versatile sabotage and hacking tool, uses plasma to react. It is recommended not to use on living objects, serious damage may occur.
 
 # Implants
 uplink-storage-implanter-name = Storage Implanter

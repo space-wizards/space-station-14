@@ -189,6 +189,17 @@
   categories:
   - UplinkAmmo
 
+# For the Plasma Cutter
+- type: listing
+  id: UplinkPCAmmo
+  name: uplink-pc-ammo-name
+  description: uplink-pc-ammo-desc
+  productEntity: PCAmmo
+  cost:
+    Telecrystal: 2
+  categories:
+    - UplinkAmmo
+
 #Utility
 
 - type: listing
@@ -298,6 +309,16 @@
     Telecrystal: 4
   categories:
   - UplinkUtility
+
+- type: listing
+  id: UplinkPlasmaCutter
+  name: uplink-plasmacutter-name
+  description: uplink-plasmacutter-desc
+  productEntity: SyndPlasmaCutter
+  cost:
+    Telecrystal: 8
+  categories:
+    - UplinkUtility
 
 # Implants
 

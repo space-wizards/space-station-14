@@ -12,6 +12,7 @@
     - type: Tag
       tags:
         - RCDDeconstructWhitelist
+        - PlasmaCuttable
     - type: CanBuildWindowOnTop
     - type: Sprite
       netsync: false
@@ -89,6 +90,7 @@
     - type: Tag
       tags:
         - RCDDeconstructWhitelist
+        - PlasmaCuttable
     - type: Construction
       graph: Grille
       node: grilleBroken
