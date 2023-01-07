@@ -64,6 +64,7 @@
     Steel: 150
     Glass: 900
     Gold: 50
+    
 - type: latheRecipe
   id: ThermomachineHeaterMachineCircuitBoard
   result: ThermomachineHeaterMachineCircuitBoard
