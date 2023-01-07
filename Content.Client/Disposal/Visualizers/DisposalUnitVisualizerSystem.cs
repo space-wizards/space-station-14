@@ -19,26 +19,29 @@ namespace Content.Client.Disposal.Visualizers
 
         private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
         {
+            if (!EntityManager.TryGetComponent<ISpriteComponent>(uid, out var sprite))
+            {
+                return;
+            }
+
+            var flick = new AnimationTrackSpriteFlick { LayerKey = DisposalUnitVisualLayers.Base };
+            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(disposalUnit.StateFlush, 0));
+            sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var layerIdx);
+            var originalBaseState = sprite.LayerGetState(layerIdx);
+            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, disposalUnit.FlushTime));
+
+            var sound = new AnimationTrackPlaySound();
+            sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(SoundSystem.GetSound(disposalUnit.FlushSound), 0));
+
             disposalUnit.FlushAnimation = new Animation {
                 Length = TimeSpan.FromSeconds(disposalUnit.FlushTime)
             };
-
-            var flick = new AnimationTrackSpriteFlick();
             disposalUnit.FlushAnimation.AnimationTracks.Add(flick);
-            flick.LayerKey = DisposalUnitVisualLayers.Base;
-            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(disposalUnit.StateFlush, 0));
-
-            var sound = new AnimationTrackPlaySound();
             disposalUnit.FlushAnimation.AnimationTracks.Add(sound);
-
-            sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(SoundSystem.GetSound(disposalUnit.FlushSound), 0));
 
             EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
 
-            if (EntityManager.TryGetComponent<ISpriteComponent>(uid, out var sprite))
-            {
-                UpdateState(uid, disposalUnit, sprite);
-            }
+            UpdateState(uid, disposalUnit, sprite);
         }
 
         protected override void OnAppearanceChange(EntityUid uid, DisposalUnitComponent unit, ref AppearanceChangeEvent args)

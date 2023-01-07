@@ -14,9 +14,6 @@ namespace Content.Client.Disposal.Components
         [DataField("flush_sound", required: true)]
         public readonly SoundSpecifier FlushSound = default!;
 
-        [DataField("flush_time", required: true)]
-        public readonly float FlushTime;
-
         public Animation FlushAnimation = default!;
 
         public DisposalUnitBoundUserInterfaceState? UiState;

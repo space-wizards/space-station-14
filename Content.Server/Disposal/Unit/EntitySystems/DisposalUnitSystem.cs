@@ -438,6 +438,17 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
+            if (component.State == SharedDisposalUnitComponent.PressureState.Pressurizing)
+            {
+                var oldTimeElapsed = oldPressure / PressurePerSecond;
+                if (oldTimeElapsed < component.FlushTime && (oldTimeElapsed + frameTime) >= component.FlushTime)
+                {
+                    // We've crossed over the amount of time it takes to flush. This will switch the
+                    // visuals over to a 'Charging' state.
+                    UpdateVisualState(component);
+                }
+            }
+
             Box2? disposalsBounds = null;
             var count = component.RecentlyEjected.Count;
 
@@ -559,7 +570,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.AutomaticEngageToken = null;
 
             component.Pressure = 0;
-            component.State = component.Pressure >= 1 ? SharedDisposalUnitComponent.PressureState.Ready : SharedDisposalUnitComponent.PressureState.Pressurizing;
+            component.State = SharedDisposalUnitComponent.PressureState.Pressurizing;
 
             component.Engaged = false;
 
