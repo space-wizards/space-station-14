@@ -11,7 +11,6 @@
   components:
   - type: Tag
     tags:
-      - Wall
       - PlasmaCuttable
   - type: RangedDamageSound
     soundGroups:
@@ -22,6 +21,9 @@
       Heat:
         collection:
           MetalLaserImpact
+  - type: Tag
+    tags:
+    - Wall
   - type: Sprite
     netsync: false
     drawdepth: Walls
@@ -490,7 +492,7 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
+      - Plasma
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -554,7 +556,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
   - type: Icon
@@ -600,10 +601,12 @@
   - type: Tag
     tags:
       - PlasmaCuttable
-      - Wall
   - type: Transform
     anchored: true
   - type: Clickable
+  - type: Tag
+    tags:
+    - Wall
   - type: Sprite
     netsync: false
     drawdepth: Walls
