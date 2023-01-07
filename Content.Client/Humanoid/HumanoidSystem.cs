@@ -53,12 +53,10 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
 
         var hair = new Marking(profile.Appearance.HairStyleId, new[] { profile.Appearance.HairColor });
         markings.AddBack(MarkingCategories.Hair, hair);
-        if (hair.MarkingId != HairStyles.DefaultHairStyle) humanoid.CachedHairColor = hair.MarkingColors.FirstOrDefault();
 
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
             new[] { profile.Appearance.FacialHairColor });
         markings.AddBack(MarkingCategories.FacialHair, facialHair);
-        if (facialHair.MarkingId != HairStyles.DefaultHairStyle) humanoid.CachedFacialHairColor = facialHair.MarkingColors.FirstOrDefault();
 
         markings.FilterSpecies(profile.Species, _markingManager, _prototypeManager);
 
