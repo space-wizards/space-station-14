@@ -49,7 +49,7 @@ namespace Content.Shared.Stacks
         /// Sprite layers used in stack visualizer. Sprites first in layer correspond to lower stack states
         /// e.g. <code>_spriteLayers[0]</code> is lower stack level than <code>_spriteLayers[1]</code>.
         /// </summary>
-        [DataField("stackLayers")] public readonly List<string> _spriteLayers = new();
+        [DataField("stackLayers")] public readonly List<string> SpriteLayers = new();
 
         /// <summary>
         /// Determines if the visualizer uses composite or non-composite layers for icons. Defaults to false.
@@ -64,11 +64,11 @@ namespace Content.Shared.Stacks
         /// </list>
         ///
         /// </summary>
-        [DataField("composite")] public bool _isComposite;
+        [DataField("composite")] public bool IsComposite;
 
         /// <summary>
         /// Optional RSI path to use for the <code>stackLayers<code>. If not specified, will look in the entity's sprite.
         /// </summary>
-        [DataField("sprite")] public ResourcePath? _spritePath;
+        [DataField("sprite")] public ResourcePath? SpritePath;
     }
 }

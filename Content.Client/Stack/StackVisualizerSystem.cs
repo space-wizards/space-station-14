@@ -55,14 +55,14 @@ namespace Content.Client.Stack
 
         private void OnComponentInit(EntityUid uid, StackVisualizerComponent stackComponent, ComponentInit args)
         {
-            if (stackComponent._isComposite
-                && stackComponent._spriteLayers.Count > 0
+            if (stackComponent.IsComposite
+                && stackComponent.SpriteLayers.Count > 0
                 && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(uid,
                     out var spriteComponent))
             {
-                var spritePath = stackComponent._spritePath ?? spriteComponent.BaseRSI!.Path!;
+                var spritePath = stackComponent.SpritePath ?? spriteComponent.BaseRSI!.Path!;
 
-                foreach (var sprite in stackComponent._spriteLayers)
+                foreach (var sprite in stackComponent.SpriteLayers)
                 {
                     spriteComponent.LayerMapReserveBlank(sprite);
                     spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(spritePath, sprite));
@@ -78,7 +78,7 @@ namespace Content.Client.Stack
                 return;
             }
 
-            if (stackComponent._isComposite)
+            if (stackComponent.IsComposite)
             {
                 ProcessCompositeSprites(uid, stackComponent, args.Sprite);
             }
@@ -91,14 +91,18 @@ namespace Content.Client.Stack
         private void ProcessOpaqueSprites(EntityUid uid, StackVisualizerComponent stackComponent, ISpriteComponent spriteComponent)
         {
             // Skip processing if no actual
-            if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual)) return;
-            if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount))
+            if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual))
             {
-                maxCount = stackComponent._spriteLayers.Count;
+                return;
             }
 
-            var activeLayer = ContentHelpers.RoundToEqualLevels(actual, maxCount, stackComponent._spriteLayers.Count);
-            spriteComponent.LayerSetState(IconLayer, stackComponent._spriteLayers[activeLayer]);
+            if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount))
+            {
+                maxCount = stackComponent.SpriteLayers.Count;
+            }
+
+            var activeLayer = ContentHelpers.RoundToEqualLevels(actual, maxCount, stackComponent.SpriteLayers.Count);
+            spriteComponent.LayerSetState(IconLayer, stackComponent.SpriteLayers[activeLayer]);
         }
 
         private void ProcessCompositeSprites(EntityUid uid, StackVisualizerComponent stackComponent, ISpriteComponent spriteComponent)
@@ -107,7 +111,7 @@ namespace Content.Client.Stack
             if (AppearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hide)
                 && hide)
             {
-                foreach (var transparentSprite in stackComponent._spriteLayers)
+                foreach (var transparentSprite in stackComponent.SpriteLayers)
                 {
                     spriteComponent.LayerSetVisible(transparentSprite, false);
                 }
@@ -119,14 +123,14 @@ namespace Content.Client.Stack
             if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.Actual, out var actual)) return;
             if (!AppearanceSystem.TryGetData<int>(uid, StackVisuals.MaxCount, out var maxCount))
             {
-                maxCount = stackComponent._spriteLayers.Count;
+                maxCount = stackComponent.SpriteLayers.Count;
             }
 
 
-            var activeTill = ContentHelpers.RoundToNearestLevels(actual, maxCount, stackComponent._spriteLayers.Count);
-            for (var i = 0; i < stackComponent._spriteLayers.Count; i++)
+            var activeTill = ContentHelpers.RoundToNearestLevels(actual, maxCount, stackComponent.SpriteLayers.Count);
+            for (var i = 0; i < stackComponent.SpriteLayers.Count; i++)
             {
-                spriteComponent.LayerSetVisible(stackComponent._spriteLayers[i], i < activeTill);
+                spriteComponent.LayerSetVisible(stackComponent.SpriteLayers[i], i < activeTill);
             }
         }
     }
