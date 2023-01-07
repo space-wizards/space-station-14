@@ -18,6 +18,8 @@ using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Traitor;
+using Content.Server.Traits.Assorted;
+using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Dataset;
 using Content.Shared.MobState;
 using Content.Shared.MobState.Components;
@@ -174,6 +176,11 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var name = MetaData(uid).EntityName;
         if (session != null)
             _operativePlayers.Add(name, session);
+        
+        // Corvax-DionaPacifist-Start: Allow dionas nukes to harm
+        RemComp<PacifistComponent>(uid);
+        RemComp<PacifiedComponent>(uid);
+        // Corvax-DionaPacifist-End
     }
 
     private void OnComponentRemove(EntityUid uid, NukeOperativeComponent component, ComponentRemove args)
