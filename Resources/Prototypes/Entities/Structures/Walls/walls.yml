@@ -9,9 +9,6 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: RangedDamageSound
     soundGroups:
       Brute:
@@ -60,7 +57,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
   - type: Icon
@@ -91,7 +87,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
   - type: Icon
@@ -122,7 +117,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
   - type: Icon
@@ -154,7 +148,6 @@
     tags:
       - RCDDeconstructWhitelist
       - Wall
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
   - type: Icon
@@ -187,7 +180,6 @@
       - Wall
       - Debug
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
   - type: Icon
@@ -218,7 +210,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
   - type: Icon
@@ -290,7 +281,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
   - type: Icon
@@ -321,7 +311,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
   - type: Icon
@@ -363,7 +352,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
   - type: Icon
@@ -405,7 +393,6 @@
     - type: Tag
       tags:
         - Wall
-        - PlasmaCuttable
     - type: Sprite
       sprite: Structures/Walls/plastitanium.rsi
     - type: Icon
@@ -424,7 +411,6 @@
       tags:
         - Wall
         - RCDDeconstructWhitelist
-        - PlasmaCuttable
     - type: Destructible
       thresholds:
         - trigger:
@@ -444,9 +430,6 @@
   id: WallReinforced
   name: reinforced wall
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Icon
@@ -492,7 +475,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - Plasma
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
   - type: Icon
@@ -525,7 +507,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
   - type: Icon
@@ -598,9 +579,6 @@
     snap:
     - Wall
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: Transform
     anchored: true
   - type: Clickable
@@ -662,7 +640,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/shuttle.rsi
   - type: Icon
@@ -693,7 +670,6 @@
     tags:
       - Wall
       - RCDDeconstructWhitelist
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
   - type: Construction
@@ -732,9 +708,6 @@
   name: solid wall
   suffix: rusted
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/solidrust.rsi
   - type: Icon
@@ -773,9 +746,6 @@
   id: WallUranium
   name: uranium wall
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/uranium.rsi
   - type: Icon
@@ -813,9 +783,6 @@
   id: WallWood
   name: wood wall
   components:
-  - type: Tag
-    tags:
-      - PlasmaCuttable
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
   - type: Icon

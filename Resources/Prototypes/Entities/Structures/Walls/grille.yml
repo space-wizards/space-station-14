@@ -11,7 +11,6 @@
             "/Audio/Weapons/grille_hit.ogg"
     - type: Tag
       tags:
-        - PlasmaCuttable
         - RCDDeconstructWhitelist
     - type: CanBuildWindowOnTop
     - type: Sprite
@@ -89,7 +88,6 @@
       state: grille_broken
     - type: Tag
       tags:
-        - PlasmaCuttable
         - RCDDeconstructWhitelist
     - type: Construction
       graph: Grille
