@@ -40,7 +40,6 @@ namespace Content.Server.Paper
             UpdateUserInterface(uid, paperComp);
 
             UpdateAppearance(uid, paperComp);
-
         }
 
         private void OnMapInit(EntityUid uid, PaperComponent paperComp, MapInitEvent args)
@@ -56,18 +55,20 @@ namespace Content.Server.Paper
             }
         }
 
-        private void UpdateAppearance(EntityUid uid, PaperComponent paperComp)
+        private void UpdateAppearance(EntityUid uid, PaperComponent paperComp, AppearanceComponent? appearanceComp = null)
         {
-            if (HasComp<AppearanceComponent>(uid))
+            if (!Resolve(uid, ref appearanceComp))
             {
-                if (!string.IsNullOrWhiteSpace(paperComp.Content))
-                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written);
-                else
-                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Blank);
-
-                if (paperComp.StampState != null)
-                    _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState); // You cannot remove the stamp???
+                return;
             }
+
+            if (!string.IsNullOrWhiteSpace(paperComp.Content))
+                _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearanceComp);
+            else
+                _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Blank, appearanceComp);
+
+            if (paperComp.StampState != null)
+                _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearanceComp); // You cannot remove the stamp???
         }
 
         private void BeforeUIOpen(EntityUid uid, PaperComponent paperComp, BeforeActivatableUIOpenEvent args)
@@ -110,20 +111,23 @@ namespace Content.Server.Paper
 
                 paperComp.Mode = PaperAction.Write;
                 UpdateUserInterface(uid, paperComp);
-                var ui = _uiSystem.GetUiOrNull(uid, PaperUiKey.Key);
-                if (ui != null)
-                    _uiSystem.OpenUi(ui, actor.PlayerSession);
+                _uiSystem.TryOpen(uid, PaperUiKey.Key, actor.PlayerSession);
                 return;
             }
 
             // If a stamp, attempt to stamp paper
-            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
+            if (TryComp<StampComponent>(args.Used, out var stampComp) &&
+                TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
-                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
-                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
+                    ("user", Identity.Entity(args.User, EntityManager)),
+                    ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperOtherMessage, args.User,
+                    Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
+                    ("target", Identity.Entity(args.Target, EntityManager)), ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
             }
         }
 
@@ -162,12 +166,13 @@ namespace Content.Server.Paper
             if (!paperComp.StampedBy.Contains(Loc.GetString(stampName)))
             {
                 paperComp.StampedBy.Add(Loc.GetString(stampName));
-                if (paperComp.StampState == null && HasComp<AppearanceComponent>(uid))
+                if (paperComp.StampState == null)
                 {
                     paperComp.StampState = stampState;
                     UpdateAppearance(uid, paperComp);
                 }
             }
+
             return true;
         }
 
@@ -179,9 +184,6 @@ namespace Content.Server.Paper
             paperComp.Content = content + '\n';
             UpdateUserInterface(uid, paperComp);
 
-            if (!HasComp<AppearanceComponent>(uid))
-                return;
-
             UpdateAppearance(uid, paperComp);
         }
 
@@ -190,11 +192,8 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            var ui = _uiSystem.GetUiOrNull(uid, PaperUiKey.Key);
-            if (ui != null)
-            {
-                _uiSystem.TrySetUiState(uid, PaperUiKey.Key, new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode)); //Where is ui non-null was needed?
-            }
+            _uiSystem.TrySetUiState(uid, PaperUiKey.Key,
+                new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
         }
     }
 }
