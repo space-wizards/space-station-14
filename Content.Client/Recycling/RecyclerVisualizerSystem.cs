@@ -15,14 +15,10 @@ namespace Content.Client.Recycling
 
         private void OnComponentInit(EntityUid uid, RecyclerComponent recycler, ComponentInit args)
         {
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(uid, out ISpriteComponent? sprite) ||
-                !entMan.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent<ISpriteComponent>(uid, out var sprite))
             {
-                return;
+                UpdateAppearance(uid, recycler, sprite);
             }
-
-            UpdateAppearance(uid, recycler, sprite);
         }
 
         protected override void OnAppearanceChange(EntityUid uid, RecyclerComponent recycler, ref AppearanceChangeEvent args)

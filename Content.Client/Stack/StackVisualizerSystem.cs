@@ -2,6 +2,7 @@ using Content.Shared.Rounding;
 using Content.Shared.Stacks;
 using Robust.Client.GameObjects;
 using Robust.Shared.Utility;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Client.Stack
 {
@@ -55,10 +56,7 @@ namespace Content.Client.Stack
 
         private void OnComponentInit(EntityUid uid, StackVisualizerComponent stackComponent, ComponentInit args)
         {
-            if (stackComponent.IsComposite
-                && stackComponent.SpriteLayers.Count > 0
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(uid,
-                    out var spriteComponent))
+            if (RequiresCompositeInit(uid, stackComponent, out var spriteComponent))
             {
                 var spritePath = stackComponent.SpritePath ?? spriteComponent.BaseRSI!.Path!;
 
@@ -105,6 +103,21 @@ namespace Content.Client.Stack
             spriteComponent.LayerSetState(IconLayer, stackComponent.SpriteLayers[activeLayer]);
         }
 
+        // Returns `true` and sets `spriteOut` if the `stackComponent` requires the
+        // sprite to have additional layers configured for the stack visualizer to work.
+        private bool RequiresCompositeInit(EntityUid uid, StackVisualizerComponent stackComponent, [NotNullWhen(true)] out ISpriteComponent? spriteOut)
+        {
+            spriteOut = null;
+            if ( !stackComponent.IsComposite || stackComponent.SpriteLayers.Count == 0)
+            {
+                return false;
+            }
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            return entityManager.TryGetComponent<ISpriteComponent?>(uid, out spriteOut);
+        }
+
+
         private void ProcessCompositeSprites(EntityUid uid, StackVisualizerComponent stackComponent, ISpriteComponent spriteComponent)
         {
             // If hidden, don't render any sprites
@@ -133,5 +146,6 @@ namespace Content.Client.Stack
                 spriteComponent.LayerSetVisible(stackComponent.SpriteLayers[i], i < activeTill);
             }
         }
+
     }
 }

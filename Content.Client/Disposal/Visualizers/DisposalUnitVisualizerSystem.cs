@@ -33,11 +33,9 @@ namespace Content.Client.Disposal.Visualizers
 
             sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(SoundSystem.GetSound(disposalUnit.FlushSound), 0));
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            entities.EnsureComponent<AnimationPlayerComponent>(uid);
-            var appearance = entities.EnsureComponent<ClientAppearanceComponent>(uid);
+            EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
 
-            if (entities.TryGetComponent(uid, out ISpriteComponent? sprite) && sprite != null)
+            if (EntityManager.TryGetComponent<ISpriteComponent>(uid, out var sprite))
             {
                 UpdateState(uid, disposalUnit, sprite);
             }
@@ -75,8 +73,7 @@ namespace Content.Client.Disposal.Visualizers
                 case VisualState.Flushing:
                     sprite.LayerSetState(DisposalUnitVisualLayers.Base, unit.StateAnchored);
 
-                    var entities = IoCManager.Resolve<IEntityManager>();
-                    var animPlayer = entities.GetComponent<AnimationPlayerComponent>(uid);
+                    var animPlayer = EntityManager.GetComponent<AnimationPlayerComponent>(uid);
 
                     if (!AnimationSystem.HasRunningAnimation(uid, AnimationKey))
                     {
