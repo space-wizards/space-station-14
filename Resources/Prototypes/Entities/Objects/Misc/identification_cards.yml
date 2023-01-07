@@ -571,3 +571,6 @@
     layers:
     - state: default
     - state: idcluwne
+  - type: IdCard
+    jobTitle: Cluwne
+  - type: Unremoveable
