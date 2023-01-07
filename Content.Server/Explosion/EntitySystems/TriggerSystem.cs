@@ -102,7 +102,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-			if(args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
+			if(args.OurFixture.ID == component.FixtureID)
 				Trigger(component.Owner);
         }
 
