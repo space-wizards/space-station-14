@@ -14,7 +14,7 @@ namespace Content.Client.DoAfter;
     /// such as moving.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DoAfterSystem : EntitySystem
+    public sealed class DoAfterSystem : SharedDoAfterSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IOverlayManager _overlay = default!;
@@ -49,35 +49,9 @@ namespace Content.Client.DoAfter;
             if (args.Current is not DoAfterComponentState state)
                 return;
 
-            var toRemove = new RemQueue<Shared.DoAfter.DoAfter>();
-
-            foreach (var (id, doAfter) in component.DoAfters)
+            foreach (var (_, doAfter) in state.DoAfters)
             {
-                var found = false;
-
-                foreach (var clientdoAfter in state.DoAfters)
-                {
-                    if (clientdoAfter.ID == id)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    toRemove.Add(doAfter);
-                }
-            }
-
-            foreach (var doAfter in toRemove)
-            {
-                Remove(component, doAfter);
-            }
-
-            foreach (var doAfter in state.DoAfters)
-            {
-                if (component.DoAfters.ContainsValue(doAfter))
+                if (component.DoAfters.ContainsKey(doAfter.ID))
                     continue;
 
                 component.DoAfters.Add(doAfter.ID, doAfter);
@@ -137,9 +111,7 @@ namespace Content.Client.DoAfter;
                 var doAfters = comp.DoAfters;
 
                 if (doAfters.Count == 0)
-                {
                     continue;
-                }
 
                 var userGrid = xform.Coordinates;
                 var toRemove = new RemQueue<Shared.DoAfter.DoAfter>();
@@ -148,7 +120,7 @@ namespace Content.Client.DoAfter;
                 foreach (var (id, doAfter) in doAfters)
                 {
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
-                    if ((doAfter.Elapsed.TotalSeconds + doAfter.CancelledElapsed.TotalSeconds) > doAfter.Delay + ExcessTime)
+                    if (doAfter.Elapsed.TotalSeconds + doAfter.CancelledElapsed.TotalSeconds > doAfter.Delay + ExcessTime)
                     {
                         toRemove.Add(doAfter);
                         continue;

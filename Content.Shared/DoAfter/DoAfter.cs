@@ -17,7 +17,7 @@ public sealed class DoAfter
 
     public readonly DoAfterEventArgs EventArgs;
 
-    //client doafter
+    //ID so the client DoAfterSystem can track
     public byte ID;
 
     //client doafter

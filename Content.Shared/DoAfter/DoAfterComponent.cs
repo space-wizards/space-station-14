@@ -13,23 +13,14 @@ public sealed class DoAfterComponent : Component
     // So the client knows which one to update (and so we don't send all of the do_afters every time 1 updates)
     // we'll just send them the index. Doesn't matter if it wraps around.
     public byte RunningIndex;
-
-    // To see what these do look at DoAfter and DoAfterEventArgs
-    public byte ID;
-
-    public EntityCoordinates UserGrid;
-
-    public EntityCoordinates TargetGrid;
-
-    public TimeSpan StartTime;
 }
 
 [Serializable, NetSerializable]
 public sealed class DoAfterComponentState : ComponentState
 {
-    public List<DoAfter> DoAfters;
+    public Dictionary<byte, DoAfter> DoAfters;
 
-    public DoAfterComponentState(List<DoAfter> doAfters)
+    public DoAfterComponentState(Dictionary<byte, DoAfter> doAfters)
     {
         DoAfters = doAfters;
     }
@@ -40,7 +31,7 @@ public sealed class DoAfterComponentState : ComponentState
 /// Check for cancelled, and if it is, then null the token there.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DoAfterEvent : EntityEventArgs
+public sealed class DoAfterEvent : HandledEntityEventArgs
 {
     public bool Cancelled;
     public readonly DoAfterEventArgs Args;

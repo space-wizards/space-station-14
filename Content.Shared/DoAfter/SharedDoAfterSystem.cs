@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Content.Shared.Damage;
 using Content.Shared.MobState;
-using Content.Shared.SurveillanceCamera;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.DoAfter;
@@ -22,10 +21,16 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         public void Add(DoAfterComponent component, DoAfter doAfter)
         {
+            doAfter.ID = component.RunningIndex;
             component.DoAfters.Add(component.RunningIndex, doAfter);
             EnsureComp<ActiveDoAfterComponent>(component.Owner);
             component.RunningIndex++;
             Dirty(component);
+        }
+
+        private void OnDoAfterGetState(EntityUid uid, DoAfterComponent component, ref ComponentGetState args)
+        {
+            args.State = new DoAfterComponentState(component.DoAfters);
         }
 
         public void Cancelled(DoAfterComponent component, DoAfter doAfter)
@@ -54,13 +59,6 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
             if (component.DoAfters.Count == 0)
                 RemComp<ActiveDoAfterComponent>(component.Owner);
-        }
-
-        private void OnDoAfterGetState(EntityUid uid, DoAfterComponent component, ref ComponentGetState args)
-        {
-            var toAdd = new List<DoAfter>(component.DoAfters.Count);
-
-            args.State = new DoAfterComponentState(toAdd);
         }
 
         private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)

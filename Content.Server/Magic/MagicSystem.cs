@@ -64,13 +64,20 @@ public sealed class MagicSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (args.Cancelled)
+        {
             component.CancelToken = null;
+            args.Handled = true;
+        }
 
         else
         {
             component.CancelToken = null;
             _actionsSystem.AddActions(args.Args.User, component.Spells, uid);
+            args.Handled = true;
         }
     }
 
@@ -111,7 +118,8 @@ public sealed class MagicSystem : EntitySystem
 
     private void AttemptLearn(EntityUid uid, SpellbookComponent component, UseInHandEvent args)
     {
-        if (component.CancelToken != null) return;
+        if (component.CancelToken != null)
+            return;
 
         component.CancelToken = new CancellationTokenSource();
 
