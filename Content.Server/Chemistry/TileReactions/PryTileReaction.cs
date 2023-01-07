@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reaction;
+﻿using Content.Server.Maps;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
@@ -13,7 +14,8 @@ public sealed class PryTileReaction : ITileReaction
 {
     public FixedPoint2 TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
-        tile.PryTile();
+        var sys = IoCManager.Resolve<IEntityManager>().System<TileSystem>();
+        sys.PryTile(tile);
         return reactVolume;
     }
 }
