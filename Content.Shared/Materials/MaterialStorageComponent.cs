@@ -2,6 +2,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -32,6 +33,10 @@ public sealed class MaterialStorageComponent : Component
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 
+    /// <summary>
+    /// Whether or not the visualization for the insertion animation
+    /// should ignore the color of the material being inserted.
+    /// </summary>
     [DataField("ignoreColor")]
     public bool IgnoreColor;
 
@@ -44,7 +49,7 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// How long the inserting animation will play
     /// </summary>
-    [DataField("insertionTime")]
+    [DataField("insertionTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan InsertionTime = TimeSpan.FromSeconds(0.79f); // 0.01 off for animation timing
 }
 
