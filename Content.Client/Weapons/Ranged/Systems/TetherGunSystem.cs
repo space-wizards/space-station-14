@@ -84,7 +84,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
             if (gameState is GameplayState game)
             {
-                var uid = game.GetEntityUnderPosition(mousePos);
+                var uid = game.GetClickedEntity(mousePos);
 
                 if (uid != null)
                     StartDragging(uid.Value, mousePos);
