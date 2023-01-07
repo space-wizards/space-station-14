@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
-  id: 2343
-  time: '2022-09-19T19:35:31.0000000+00:00'
 - author: lapatison
   changes:
   - {message: Open soda can no longer show error, type: Fix}
@@ -2960,3 +2955,9 @@ Entries:
   - {message: Prying tiles now removes the decals on them., type: Fix}
   id: 2842
   time: '2023-01-07T10:24:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All machines that can hold materials no longer destroy them on deconstruction.,
+    type: Add}
+  id: 2843
+  time: '2023-01-07T18:09:05.0000000+00:00'
