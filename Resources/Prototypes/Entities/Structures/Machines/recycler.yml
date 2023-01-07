@@ -53,14 +53,33 @@
     noRot: false
   - type: Sprite
     netsync: false
-    drawdepth: Doors
     sprite: Structures/Machines/recycling.rsi
     layers:
     - state: grinder-o0
-      map: ["enum.RecyclerVisualLayers.Main"]
+      map: ["enum.RecyclerVisualLayers.ConveyorOff"]
+    - state: grinder-o1
+      map: ["enum.RecyclerVisualLayers.ConveyorOn"]
+      visible: false
   - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.RecyclerVisuals.Bloody:
+        enum.RecyclerVisualLayers.ConveyorOff:
+          True: { state: grinder-o0bld }
+          False: { state: grinder-o0 }
+        enum.RecyclerVisualLayers.ConveyorOn:
+          True: { state: grinder-o1bld }
+          False: { state: grinder-o1 }
+      enum.ConveyorVisuals.State:
+        enum.RecyclerVisualLayers.ConveyorOff:
+          Off: { visible: true }
+          Forward: { visible: false }
+          Reverse: { visible: false }
+        enum.RecyclerVisualLayers.ConveyorOn:
+          Off: { visible: false }
+          Forward: { visible: true }
+          Reverse: { visible: true }
   - type: Recycler
-    state_on: grinder-o1
-    state_off: grinder-o0
   - type: Conveyor
   - type: Rotatable
+

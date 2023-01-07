@@ -7,13 +7,12 @@ namespace Content.Client.Recycling
     [ComponentReference(typeof(SharedRecyclerComponent))]
     public sealed class RecyclerComponent : SharedRecyclerComponent
     {
-        // The sprite layer to use when the recycler is on
-        [DataField("state_on")]
-        public readonly string SpriteLayerOn = "grinder-o1";
+    }
 
-        // The sprite layer to use when the recycler is off
-        [DataField("state_off")]
-        public readonly string SpriteLayerOff = "grinder-o0";
+    public enum RecyclerVisualLayers : byte
+    {
+        ConveyorOff,
+        ConveyorOn,
     }
 }
 
