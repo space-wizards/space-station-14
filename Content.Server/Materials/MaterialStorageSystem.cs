@@ -27,6 +27,9 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
     {
+        if (!component.DropOnDeconstruct)
+            return;
+
         foreach (var (material, amount) in component.Storage)
         {
             _stackSystem.SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);

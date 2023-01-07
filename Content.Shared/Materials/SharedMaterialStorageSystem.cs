@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
@@ -152,24 +152,13 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (component.EntityWhitelist?.IsValid(toInsert) == false)
             return false;
 
-        if (component.MaterialWhiteList != null)
-        {
-            var matUsed = false;
-            foreach (var mat in material.Materials)
-            {
-                if (component.MaterialWhiteList.Contains(mat.ID))
-                    matUsed = true;
-            }
-
-            if (!matUsed)
-                return false;
-        }
+        // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
         var multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
         var totalVolume = 0;
-        foreach (var (mat, vol) in component.Storage)
+        foreach (var (mat, vol) in material.Materials)
         {
-            if (!CanChangeMaterialAmount(receiver, mat, vol, component))
+            if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, component))
                 return false;
             totalVolume += vol * multiplier;
         }
@@ -177,12 +166,12 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!CanTakeVolume(receiver, totalVolume, component))
             return false;
 
-        foreach (var (mat, vol) in material._materials)
+        foreach (var (mat, vol) in material.Materials)
         {
             TryChangeMaterialAmount(receiver, mat, vol * multiplier, component);
         }
 
-        RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
+        RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material));
         return true;
     }
 

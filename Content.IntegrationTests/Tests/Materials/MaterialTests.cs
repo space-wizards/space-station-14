@@ -38,20 +38,30 @@ namespace Content.IntegrationTests.Tests.Materials
                 var allMaterialProtos = prototypeManager.EnumeratePrototypes<MaterialPrototype>();
                 var coords = testMap.GridCoords;
 
-                foreach (var proto in allMaterialProtos)
+                Assert.Multiple(() =>
                 {
-                    if (proto.StackEntity == "")
-                        continue;
+                    foreach (var proto in allMaterialProtos)
+                    {
+                        if (proto.StackEntity == "")
+                            continue;
 
-                    var spawned = entityManager.SpawnEntity(proto.StackEntity, coords);
+                        var spawned = entityManager.SpawnEntity(proto.StackEntity, coords);
 
-                    Assert.That(entityManager.HasComponent<StackComponent>(spawned),
-                        $"{proto.ID} 'stack entity' {proto.StackEntity} has the stack component");
+                        Assert.That(entityManager.TryGetComponent<StackComponent>(spawned, out var stack),
+                            $"{proto.ID} 'stack entity' {proto.StackEntity} does not have the stack component");
 
-                    Assert.That(entityManager.HasComponent<MaterialComponent>(spawned),
-                        $"{proto.ID} 'material stack' {proto.StackEntity} has the material component");
-                }
+                        Assert.That(entityManager.HasComponent<MaterialComponent>(spawned),
+                            $"{proto.ID} 'material stack' {proto.StackEntity} does not have the material component");
 
+                        StackPrototype? stackProto = null;
+                        Assert.That(stack?.StackTypeId != null && prototypeManager.TryIndex(stack.StackTypeId, out stackProto),
+                            $"{proto.ID} material has no stack prototype");
+
+                        if (stackProto != null)
+                            Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn));
+                    }
+                });
+                
                 mapManager.DeleteMap(testMap.MapId);
             });
         }

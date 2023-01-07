@@ -217,7 +217,7 @@ namespace Content.Server.Lathe
 
         private void OnMaterialEntityInserted(EntityUid uid, LatheComponent component, MaterialEntityInsertedEvent args)
         {
-            var lastMat = args.Materials.Keys.Last();
+            var lastMat = args.MaterialComp.Materials.Keys.Last();
             // We need the prototype to get the color
             _proto.TryIndex(lastMat, out MaterialPrototype? matProto);
             EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;

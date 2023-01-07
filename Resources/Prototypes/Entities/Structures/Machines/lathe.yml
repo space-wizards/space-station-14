@@ -585,6 +585,7 @@
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
+      dropOnDeconstruct: false #should drop ores instead of ingots/sheets
       whitelist:
         tags:
           - Ore
