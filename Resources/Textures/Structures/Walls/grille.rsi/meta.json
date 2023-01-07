@@ -1,5 +1,7 @@
 {
   "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "electrified_animation made by Aleksh#7552 (Discord) / Alekshhh (Github) for SS14, the other sprites are taken from tgstation at commit 17c603f1d037f22081d446b9a3f3ae8d41f52e86",
   "size": {
     "x": 32,
     "y": 32
