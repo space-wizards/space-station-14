@@ -233,3 +233,17 @@
   - type: DiseaseProtection
     protection: 0.1
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskCluwne
+  name: cluwne wig and mask
+  suffix: Not to be mapped
+  description: A cursed cluwne wig and mask.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/cluwne.rsi
+  - type: BreathMask
+  - type: IdentityBlocker

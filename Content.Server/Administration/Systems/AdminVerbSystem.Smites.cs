@@ -551,15 +551,14 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(killSign);
 
-            // TODO: Port cluwne outfit.
             Verb clown = new()
             {
-                Text = "Clown",
+                Text = "Cluwne",
                 Category = VerbCategory.Smite,
-                IconTexture = "/Textures/Objects/Fun/bikehorn.rsi/icon.png",
+                IconTexture = "/Textures/Clothing/Mask/cluwne.rsi/icon.png",
                 Act = () =>
                 {
-                    SetOutfitCommand.SetOutfit(args.Target, "ClownGear", EntityManager, (_, clothing) =>
+                    SetOutfitCommand.SetOutfit(args.Target, "CluwneGear", EntityManager, (_, clothing) =>
                     {
                         if (HasComp<ClothingComponent>(clothing))
                             EnsureComp<UnremoveableComponent>(clothing);
@@ -567,7 +566,7 @@ public sealed partial class AdminVerbSystem
                     });
                 },
                 Impact = LogImpact.Extreme,
-                Message = Loc.GetString("admin-smite-clown-description")
+                Message = Loc.GetString("admin-smite-cluwne-description")
             };
             args.Verbs.Add(clown);
 

@@ -201,3 +201,16 @@
     equippedPrefix: holding
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackCluwne
+  name: cursed giggles von honkerton
+  suffix: Not to be mapped.
+  description: Its a cursed giggles von honkerton backpack.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/cluwne.rsi
+  - type: Storage
+    storageOpenSound:
+      collection: BikeHorn

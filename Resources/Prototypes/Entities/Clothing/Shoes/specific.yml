@@ -141,3 +141,18 @@
       sprite: Clothing/Shoes/Specific/jester.rsi
     - type: Clothing
       sprite: Clothing/Shoes/Specific/jester.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesCluwne
+  name: cluwne shoes
+  suffix: Not to be mapped
+  description: "A cursed pair of cluwne shoes."
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
