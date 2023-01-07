@@ -57,8 +57,16 @@
      Gold: 100
 
 - type: latheRecipe
-  id: ThermomachineFreezerMachineCircuitBoard
-  result: ThermomachineFreezerMachineCircuitBoard
+  id: ThermomachineHeaterMachineCircuitBoard
+  result: ThermomachineHeaterMachineCircuitBoard
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 900
+    Gold: 50
+- type: latheRecipe
+  id: ThermomachineHeaterMachineCircuitBoard
+  result: ThermomachineHeaterMachineCircuitBoard
   completetime: 4
   materials:
     Steel: 150
