@@ -270,21 +270,6 @@
 
 #TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
 - type: listing
-  id: UplinkHeadset
-  name: uplink-headset-name
-  description: uplink-headset-desc
-  productEntity: ClothingHeadsetAltSyndicate
-  cost:
-    Telecrystal: 2
-  categories:
-  - UplinkUtility
-  conditions:
-    - !type:StoreWhitelistCondition
-      whitelist:
-        tags:
-          - NukeOpsUplink # nukies are not cool agents
-
-- type: listing
   id: UplinkHeadsetChameleon
   name: uplink-chameleon-headset-name
   description: uplink-chameleon-headset-desc
@@ -293,11 +278,6 @@
     Telecrystal: 3 # next step is adding encryption keys
   categories:
     - UplinkUtility
-  conditions:
-    - !type:StoreWhitelistCondition
-      blacklist:
-        tags:
-          - NukeOpsUplink
 
 - type: listing
   id: UplinkHypopen
