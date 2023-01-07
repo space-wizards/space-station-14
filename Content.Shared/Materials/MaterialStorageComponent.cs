@@ -27,6 +27,12 @@ public sealed class MaterialStorageComponent : Component
     public EntityWhitelist? EntityWhitelist;
 
     /// <summary>
+    /// Whether or not to drop contained materials when deconstructed.
+    /// </summary>
+    [DataField("dropOnDeconstruct")]
+    public bool DropOnDeconstruct = true;
+
+    /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
