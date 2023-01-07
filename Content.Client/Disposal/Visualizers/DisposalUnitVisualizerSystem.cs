@@ -56,7 +56,7 @@ namespace Content.Client.Disposal.Visualizers
         // Update visuals and tick animation
         private void UpdateState(EntityUid uid, DisposalUnitComponent unit, ISpriteComponent sprite)
         {
-            if (!AppearanceSystem.TryGetData(uid, Visuals.VisualState, out VisualState state))
+            if (!AppearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state))
             {
                 return;
             }
@@ -88,7 +88,7 @@ namespace Content.Client.Disposal.Visualizers
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (!AppearanceSystem.TryGetData(uid, Visuals.Handle, out HandleState handleState))
+            if (!AppearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
             {
                 handleState = HandleState.Normal;
             }
@@ -106,7 +106,7 @@ namespace Content.Client.Disposal.Visualizers
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (!AppearanceSystem.TryGetData(uid, Visuals.Light, out LightState lightState))
+            if (!AppearanceSystem.TryGetData<LightState>(uid, Visuals.Light, out var lightState))
             {
                 lightState = LightState.Off;
             }

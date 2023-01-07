@@ -17,7 +17,7 @@ namespace Content.Client.MedicalScanner
             base.OnChangeData(component);
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            if (!component.TryGetData(MedicalScannerVisuals.Status, out MedicalScannerStatus status)) return;
+            if (!component.TryGetData<MedicalScannerStatus>(MedicalScannerVisuals.Status, out var status)) return;
             sprite.LayerSetState(MedicalScannerVisualLayers.Machine, StatusToMachineStateId(status));
             sprite.LayerSetState(MedicalScannerVisualLayers.Terminal, StatusToTerminalStateId(status));
         }

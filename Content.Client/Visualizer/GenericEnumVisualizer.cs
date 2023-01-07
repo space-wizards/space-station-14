@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -58,7 +58,7 @@ namespace Content.Client.Visualizer
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
-            if (!component.TryGetData(Key, out object status)) return;
+            if (!component.TryGetData<object>(Key, out var status)) return;
             if (!States.TryGetValue(status, out var val)) return;
             sprite.LayerSetState(Layer, val);
         }

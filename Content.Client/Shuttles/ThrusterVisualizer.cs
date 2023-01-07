@@ -15,14 +15,14 @@ namespace Content.Client.Shuttles
             var entities = IoCManager.Resolve<IEntityManager>();
             if (!entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent)) return;
 
-            component.TryGetData(ThrusterVisualState.State, out bool state);
+            component.TryGetData<bool>(ThrusterVisualState.State, out var state);
 
             switch (state)
             {
                 case true:
                     spriteComponent.LayerSetVisible(ThrusterVisualLayers.ThrustOn, true);
 
-                    if (component.TryGetData(ThrusterVisualState.Thrusting, out bool thrusting) && thrusting)
+                    if (component.TryGetData<bool>(ThrusterVisualState.Thrusting, out var thrusting) && thrusting)
                     {
                         if (spriteComponent.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out _))
                         {

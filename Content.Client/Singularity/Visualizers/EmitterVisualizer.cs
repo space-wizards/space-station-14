@@ -25,11 +25,11 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            if (!component.TryGetData(StorageVisuals.Locked, out bool locked))
+            if (!component.TryGetData<bool>(StorageVisuals.Locked, out var locked))
                 locked = false;
 
 
-            if (!component.TryGetData(EmitterVisuals.VisualState, out EmitterVisualState state))
+            if (!component.TryGetData<EmitterVisualState>(EmitterVisuals.VisualState, out var state))
                 state = EmitterVisualState.Off;
 
             switch (state)

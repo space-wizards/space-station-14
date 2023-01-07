@@ -9,8 +9,8 @@ public sealed class ToiletVisualsSystem : VisualizerSystem<ToiletComponent>
     {
         if (args.Sprite == null) return;
 
-        AppearanceSystem.TryGetData(uid, ToiletVisuals.LidOpen, out bool lidOpen);
-        AppearanceSystem.TryGetData(uid, ToiletVisuals.SeatUp, out bool seatUp);
+        AppearanceSystem.TryGetData<bool>(uid, ToiletVisuals.LidOpen, out var lidOpen);
+        AppearanceSystem.TryGetData<bool>(uid, ToiletVisuals.SeatUp, out var seatUp);
 
         var state = (lidOpen, seatUp) switch
         {

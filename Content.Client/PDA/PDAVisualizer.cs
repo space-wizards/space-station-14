@@ -52,11 +52,11 @@ namespace Content.Client.PDA
             base.OnChangeData(component);
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
-            if (component.TryGetData(UnpoweredFlashlightVisuals.LightOn, out bool isFlashlightOn))
+            if (component.TryGetData<bool>(UnpoweredFlashlightVisuals.LightOn, out var isFlashlightOn))
             {
                 sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isFlashlightOn);
             }
-            if (component.TryGetData(PDAVisuals.IDCardInserted, out bool isCardInserted))
+            if (component.TryGetData<bool>(PDAVisuals.IDCardInserted, out var isCardInserted))
             {
                 sprite.LayerSetVisible(PDAVisualLayers.IDLight, isCardInserted);
             }

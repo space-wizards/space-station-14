@@ -47,7 +47,7 @@ namespace Content.Client.Trigger
             var entMan = IoCManager.Resolve<IEntityManager>();
             var sprite = entMan.GetComponent<ISpriteComponent>(component.Owner);
             var animPlayer = entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
-            if (!component.TryGetData(TriggerVisuals.VisualState, out TriggerVisualState state))
+            if (!component.TryGetData<TriggerVisualState>(TriggerVisuals.VisualState, out var state))
             {
                 state = TriggerVisualState.Unprimed;
             }

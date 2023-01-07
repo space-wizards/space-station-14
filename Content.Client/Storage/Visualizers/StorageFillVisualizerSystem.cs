@@ -10,7 +10,7 @@ public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVi
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData(uid, StorageFillVisuals.FillLevel, out int level))
+        if (!AppearanceSystem.TryGetData<int>(uid, StorageFillVisuals.FillLevel, out var level))
             return;
 
         var state = $"{component.FillBaseName}-{level}";

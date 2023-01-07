@@ -1,4 +1,4 @@
-﻿using Content.Shared.MachineLinking;
+using Content.Shared.MachineLinking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -35,7 +35,7 @@ namespace Content.Client.MachineLinking
                 return;
             }
 
-            if (!component.TryGetData(SignalSwitchVisuals.On, out bool on))
+            if (!component.TryGetData<bool>(SignalSwitchVisuals.On, out var on))
             {
                 return;
             }

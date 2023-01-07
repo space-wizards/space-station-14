@@ -1,4 +1,4 @@
-﻿using Robust.Client.GameObjects;
+using Robust.Client.GameObjects;
 using Content.Shared.Kitchen;
 
 namespace Content.Client.Kitchen.Visualizers
@@ -10,7 +10,7 @@ namespace Content.Client.Kitchen.Visualizers
         {
             base.OnChangeData(component);
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            component.TryGetData(ReagentGrinderVisualState.BeakerAttached, out bool hasBeaker);
+            component.TryGetData<bool>(ReagentGrinderVisualState.BeakerAttached, out var hasBeaker);
             sprite.LayerSetState(0, $"juicer{(hasBeaker ? "1" : "0")}");
         }
     }

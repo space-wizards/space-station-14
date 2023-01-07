@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -47,7 +47,7 @@ namespace Content.Client.Gravity
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
-            if (component.TryGetData(GravityGeneratorVisuals.State, out GravityGeneratorStatus state))
+            if (component.TryGetData<GravityGeneratorStatus>(GravityGeneratorVisuals.State, out var state))
             {
                 if (_spriteMap.TryGetValue(state, out var spriteState))
                 {
@@ -56,7 +56,7 @@ namespace Content.Client.Gravity
                 }
             }
 
-            if (component.TryGetData(GravityGeneratorVisuals.Charge, out float charge))
+            if (component.TryGetData<float>(GravityGeneratorVisuals.Charge, out var charge))
             {
                 var layer = sprite.LayerMapGet(GravityGeneratorVisualLayers.Core);
                 switch (charge)

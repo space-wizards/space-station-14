@@ -14,7 +14,7 @@ namespace Content.Client.Light.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
+            if (component.TryGetData<string>(ExpendableLightVisuals.Behavior, out var lightBehaviourID))
             {
                 if (entities.TryGetComponent(component.Owner, out LightBehaviourComponent? lightBehaviour))
                 {
@@ -31,7 +31,7 @@ namespace Content.Client.Light.Visualizers
                 }
             }
 
-            if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
+            if (component.TryGetData<ExpendableLightState>(ExpendableLightVisuals.State, out var state)
                 && entities.TryGetComponent(component.Owner, out ExpendableLightComponent? expendableLight))
             {
                 switch (state)

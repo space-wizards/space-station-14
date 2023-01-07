@@ -18,7 +18,7 @@ namespace Content.Client.Security
             if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
-            if (!component.TryGetData(DeployableBarrierVisuals.State, out DeployableBarrierState state))
+            if (!component.TryGetData<DeployableBarrierState>(DeployableBarrierVisuals.State, out var state))
                 return;
 
             switch (state)

@@ -52,7 +52,7 @@ namespace Content.Client.Storage.Visualizers
                 return;
             }
 
-            component.TryGetData(StorageVisuals.Open, out bool open);
+            component.TryGetData<bool>(StorageVisuals.Open, out var open);
 
             if (sprite.LayerMapTryGet(StorageVisualLayers.Door, out _))
             {
@@ -87,9 +87,9 @@ namespace Content.Client.Storage.Visualizers
                 }
             }
 
-            if (component.TryGetData(StorageVisuals.CanLock, out bool canLock) && canLock)
+            if (component.TryGetData<bool>(StorageVisuals.CanLock, out var canLock) && canLock)
             {
-                if (!component.TryGetData(StorageVisuals.Locked, out bool locked))
+                if (!component.TryGetData<bool>(StorageVisuals.Locked, out var locked))
                 {
                     locked = true;
                 }

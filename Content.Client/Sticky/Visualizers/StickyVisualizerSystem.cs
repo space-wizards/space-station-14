@@ -24,7 +24,7 @@ public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerCo
         if (args.Sprite == null)
             return;
 
-        if (!AppearanceSystem.TryGetData(uid, StickyVisuals.IsStuck, out bool isStuck))
+        if (!AppearanceSystem.TryGetData<bool>(uid, StickyVisuals.IsStuck, out var isStuck))
             return;
 
         var drawDepth = isStuck ? component.StuckDrawDepth : component.DefaultDrawDepth;

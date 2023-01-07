@@ -32,7 +32,7 @@ namespace Content.Client.PowerCell
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
 
             // Update base item
-            if (component.TryGetData(CellVisual.Occupied, out bool occupied))
+            if (component.TryGetData<bool>(CellVisual.Occupied, out var occupied))
             {
                 // TODO: don't throw if it doesn't have a full state
                 sprite.LayerSetState(Layers.Base, occupied ? "full" : "empty");
@@ -43,7 +43,7 @@ namespace Content.Client.PowerCell
             }
 
             // Update lighting
-            if (component.TryGetData(CellVisual.Light, out CellChargerStatus status))
+            if (component.TryGetData<CellChargerStatus>(CellVisual.Light, out var status))
             {
                 switch (status)
                 {

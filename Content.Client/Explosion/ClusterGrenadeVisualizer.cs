@@ -25,7 +25,7 @@ namespace Content.Client.Explosion
                 return;
             }
 
-            if (component.TryGetData(ClusterGrenadeVisuals.GrenadesCounter, out int grenadesCounter))
+            if (component.TryGetData<int>(ClusterGrenadeVisuals.GrenadesCounter, out var grenadesCounter))
             {
                 sprite.LayerSetState(0, $"{_state}-{grenadesCounter}");
             }

@@ -11,7 +11,7 @@ public sealed class WelderVisualizerSystem : VisualizerSystem<WelderComponent>
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData(uid, WelderVisuals.Lit, out bool isLit))
+        if (AppearanceSystem.TryGetData<bool>(uid, WelderVisuals.Lit, out var isLit))
         {
             args.Sprite.LayerSetVisible(WelderLayers.Flame, isLit);
         }

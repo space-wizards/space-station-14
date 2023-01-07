@@ -26,7 +26,7 @@ namespace Content.Client.Light.Visualizers
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
-            if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
+            if (!component.TryGetData<PoweredLightState>(PoweredLightVisuals.BulbState, out var state)) return;
 
             switch (state)
             {
@@ -39,7 +39,7 @@ namespace Content.Client.Light.Visualizers
                     ToggleBlinkingAnimation(component, false);
                     break;
                 case PoweredLightState.On:
-                    if (component.TryGetData(PoweredLightVisuals.Blinking, out bool isBlinking))
+                    if (component.TryGetData<bool>(PoweredLightVisuals.Blinking, out var isBlinking))
                         ToggleBlinkingAnimation(component, isBlinking);
                     if (!isBlinking)
                     {

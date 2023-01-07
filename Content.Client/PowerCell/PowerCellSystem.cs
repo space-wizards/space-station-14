@@ -23,7 +23,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         if (!args.Sprite.TryGetLayer((int) PowerCellVisualLayers.Unshaded, out var unshadedLayer))
             return;
 
-        if (_appearanceSystem.TryGetData(uid, PowerCellVisuals.ChargeLevel, out byte level))
+        if (_appearanceSystem.TryGetData<byte>(uid, PowerCellVisuals.ChargeLevel, out var level))
         {
             if (level == 0)
             {

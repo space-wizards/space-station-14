@@ -21,7 +21,7 @@ public sealed class FoldableVisualizer : AppearanceVisualizer
 
         if (!entManager.TryGetComponent(appearance.Owner, out SpriteComponent? sprite)) return;
 
-        if (appearance.TryGetData(FoldedVisuals.State, out bool folded) && folded)
+        if (appearance.TryGetData<bool>(FoldedVisuals.State, out var folded) && folded)
         {
             sprite.LayerSetState(FoldableVisualLayers.Base, $"{_key}_folded");
         }

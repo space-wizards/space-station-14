@@ -11,7 +11,7 @@ public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsCompon
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData(uid, ProduceVisuals.Potency, out float potency))
+        if (AppearanceSystem.TryGetData<float>(uid, ProduceVisuals.Potency, out var potency))
         {
             var scale = MathHelper.Lerp(component.MinimumScale, component.MaximumScale, potency / 100);
             args.Sprite.Scale = new Vector2(scale, scale);

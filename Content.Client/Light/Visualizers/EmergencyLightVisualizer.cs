@@ -1,4 +1,4 @@
-﻿using Content.Shared.Light.Component;
+using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -18,13 +18,13 @@ namespace Content.Client.Light.Visualizers
             if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
-            if (!component.TryGetData(EmergencyLightVisuals.On, out bool on))
+            if (!component.TryGetData<bool>(EmergencyLightVisuals.On, out var on))
                 on = false;
 
             sprite.LayerSetState(EmergencyLightVisualLayers.Light, on ? "emergency_light_on" : "emergency_light_off");
             sprite.LayerSetShader(EmergencyLightVisualLayers.Light, on ? "unshaded" : "shaded");
 
-            if (component.TryGetData(EmergencyLightVisuals.Color, out Color color))
+            if (component.TryGetData<Color>(EmergencyLightVisuals.Color, out var color))
             {
                 sprite.LayerSetColor(EmergencyLightVisualLayers.Light, color);
             }

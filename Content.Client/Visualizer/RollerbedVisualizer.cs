@@ -22,7 +22,7 @@ namespace Content.Client.Visualizer
 
             if (!entManager.TryGetComponent(appearance.Owner, out SpriteComponent? sprite)) return;
 
-            if (appearance.TryGetData(StrapVisuals.State, out bool strapped) && strapped)
+            if (appearance.TryGetData<bool>(StrapVisuals.State, out var strapped) && strapped)
             {
                 sprite.LayerSetState(0, $"{_key}_buckled");
             }

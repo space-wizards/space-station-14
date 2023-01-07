@@ -8,7 +8,7 @@ namespace Content.Client.Bed
         protected override void OnAppearanceChange(EntityUid uid, StasisBedVisualsComponent component, ref AppearanceChangeEvent args)
         {
             if (args.Sprite != null
-                && AppearanceSystem.TryGetData(uid, StasisBedVisuals.IsOn, out bool isOn))
+                && AppearanceSystem.TryGetData<bool>(uid, StasisBedVisuals.IsOn, out var isOn))
             {
                 args.Sprite.LayerSetVisible(StasisBedVisualLayers.IsOn, isOn);
             }

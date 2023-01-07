@@ -15,7 +15,7 @@ namespace Content.Client.Power
             base.OnChangeData(component);
 
             var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
-            var powered = component.TryGetData(PowerDeviceVisuals.Powered, out bool poweredVar) && poweredVar;
+            var powered = component.TryGetData<bool>(PowerDeviceVisuals.Powered, out var poweredVar) && poweredVar;
             sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
         }
     }

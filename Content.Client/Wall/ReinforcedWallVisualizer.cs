@@ -14,7 +14,7 @@ namespace Content.Client.Wall
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData(ReinforcedWallVisuals.DeconstructionStage, out int stage))
+            if (component.TryGetData<int>(ReinforcedWallVisuals.DeconstructionStage, out var stage))
             {
                 SetDeconstructionStage(component, stage);
             }

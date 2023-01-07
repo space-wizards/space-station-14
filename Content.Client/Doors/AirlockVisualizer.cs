@@ -154,14 +154,14 @@ namespace Content.Client.Doors
 
             var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
             var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
-            if (!component.TryGetData(DoorVisuals.State, out DoorState state))
+            if (!component.TryGetData<DoorState>(DoorVisuals.State, out var state))
             {
                 state = DoorState.Closed;
             }
 
             var door = _entMan.GetComponent<DoorComponent>(component.Owner);
 
-            if (component.TryGetData(DoorVisuals.BaseRSI, out string baseRsi))
+            if (component.TryGetData<string>(DoorVisuals.BaseRSI, out var baseRsi))
             {
                 if (!_resourceCache.TryGetResource<RSIResource>(SharedSpriteComponent.TextureRoot / baseRsi, out var res))
                 {
@@ -222,15 +222,15 @@ namespace Content.Client.Doors
             var emergencyLightsVisible = false;
             var unlitVisible = false;
 
-            if (component.TryGetData(DoorVisuals.Powered, out bool powered) && powered)
+            if (component.TryGetData<bool>(DoorVisuals.Powered, out var powered) && powered)
             {
-                boltedVisible = component.TryGetData(DoorVisuals.BoltLights, out bool lights) && lights;
-                emergencyLightsVisible = component.TryGetData(DoorVisuals.EmergencyLights, out bool eaLights) && eaLights;
+                boltedVisible = component.TryGetData<bool>(DoorVisuals.BoltLights, out var lights) && lights;
+                emergencyLightsVisible = component.TryGetData<bool>(DoorVisuals.EmergencyLights, out var eaLights) && eaLights;
                 unlitVisible = state == DoorState.Closing
                     || state == DoorState.Opening
                     || state == DoorState.Denying
                     || state == DoorState.Open && _openUnlitVisible
-                    || (component.TryGetData(DoorVisuals.ClosedLights, out bool closedLights) && closedLights);
+                    || (component.TryGetData<bool>(DoorVisuals.ClosedLights, out var closedLights) && closedLights);
             }
 
             sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);

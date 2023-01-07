@@ -20,7 +20,7 @@ namespace Content.Client.Light.Visualizers
                 return;
 
             // update sprite state
-            if (component.TryGetData(LightBulbVisuals.State, out LightBulbState state))
+            if (component.TryGetData<LightBulbState>(LightBulbVisuals.State, out var state))
             {
                 switch (state)
                 {
@@ -37,7 +37,7 @@ namespace Content.Client.Light.Visualizers
             }
 
             // also update sprites color
-            if (component.TryGetData(LightBulbVisuals.Color, out Color color))
+            if (component.TryGetData<Color>(LightBulbVisuals.Color, out var color))
             {
                 sprite.Color = color;
             }

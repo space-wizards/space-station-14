@@ -377,7 +377,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         {
             UpdateDamageVisuals(damageComponent, spriteComponent, damageVisComp);
         }
-        else if (AppearanceSystem.TryGetData(uid, DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
+        else if (AppearanceSystem.TryGetData<DamageVisualizerGroupData>(uid, DamageVisualizerKeys.DamageUpdateGroups, out var data))
         {
             UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
         }

@@ -28,7 +28,7 @@ public sealed class EnsnareableSystem : SharedEnsnareableSystem
         if (args.Sprite == null || !args.Sprite.LayerMapTryGet(EnsnaredVisualLayers.Ensnared, out var layer))
             return;
 
-        if (Appearance.TryGetData(uid, EnsnareableVisuals.IsEnsnared, out bool isEnsnared))
+        if (Appearance.TryGetData<bool>(uid, EnsnareableVisuals.IsEnsnared, out var isEnsnared))
         {
             if (component.Sprite != null)
             {

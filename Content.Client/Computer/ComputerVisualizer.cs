@@ -43,12 +43,12 @@ namespace Content.Client.Computer
 
             if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent>(component.Owner, out var sprite)) return;
 
-            if (!component.TryGetData(ComputerVisuals.Powered, out bool powered))
+            if (!component.TryGetData<bool>(ComputerVisuals.Powered, out var powered))
             {
                 powered = true;
             }
 
-            component.TryGetData(ComputerVisuals.Broken, out bool broken);
+            component.TryGetData<bool>(ComputerVisuals.Broken, out var broken);
 
             if (broken)
             {

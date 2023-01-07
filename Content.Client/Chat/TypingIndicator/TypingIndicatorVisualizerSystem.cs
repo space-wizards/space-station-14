@@ -43,7 +43,7 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
             return;
         }
 
-        AppearanceSystem.TryGetData(uid, TypingIndicatorVisuals.IsTyping, out bool isTyping);
+        AppearanceSystem.TryGetData<bool>(uid, TypingIndicatorVisuals.IsTyping, out var isTyping);
         if (args.Sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer))
         {
             args.Sprite.LayerSetVisible(layer, isTyping);

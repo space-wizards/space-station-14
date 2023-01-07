@@ -43,7 +43,7 @@ namespace Content.Client.ParticleAccelerator
 
             var entities = IoCManager.Resolve<IEntityManager>();
             if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
-            if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
+            if (!component.TryGetData<ParticleAcceleratorVisualState>(ParticleAcceleratorVisuals.VisualState, out var state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;
             }

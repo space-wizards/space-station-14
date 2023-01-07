@@ -38,12 +38,12 @@ namespace Content.Client.Recycling
         private void UpdateAppearance(EntityUid uid, RecyclerComponent recycler, ISpriteComponent sprite)
         {
             var state = recycler.SpriteLayerOff;
-            if (AppearanceSystem.TryGetData(uid, ConveyorVisuals.State, out ConveyorState conveyorState) && conveyorState != ConveyorState.Off)
+            if (AppearanceSystem.TryGetData<ConveyorState>(uid, ConveyorVisuals.State, out var conveyorState) && conveyorState != ConveyorState.Off)
             {
                 state = recycler.SpriteLayerOn;
             }
 
-            if (AppearanceSystem.TryGetData(uid, RecyclerVisuals.Bloody, out bool bloody) && bloody)
+            if (AppearanceSystem.TryGetData<bool>(uid, RecyclerVisuals.Bloody, out var bloody) && bloody)
             {
                 state += "bld";
             }

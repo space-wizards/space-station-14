@@ -16,7 +16,7 @@ namespace Content.Client.PneumaticCannon
             if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 return;
 
-            if (component.TryGetData(PneumaticCannonVisuals.Tank, out bool tank))
+            if (component.TryGetData<bool>(PneumaticCannonVisuals.Tank, out var tank))
             {
                 sprite.LayerSetVisible(PneumaticCannonVisualLayers.Tank, tank);
             }

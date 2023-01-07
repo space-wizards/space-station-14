@@ -30,13 +30,12 @@ public sealed class HandheldLightSystem : SharedHandheldLightSystem
             return;
         }
 
-        if (!_appearance.TryGetData(uid, ToggleableLightVisuals.Enabled, out bool enabled))
+        if (!_appearance.TryGetData<bool>(uid, ToggleableLightVisuals.Enabled, out var enabled))
         {
             return;
         }
 
-        if (!_appearance.TryGetData(uid, HandheldLightVisuals.Power,
-                out HandheldLightPowerStates state))
+        if (!_appearance.TryGetData<HandheldLightPowerStates>(uid, HandheldLightVisuals.Power, out var state))
         {
             return;
         }

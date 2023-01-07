@@ -7,7 +7,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
 {
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!AppearanceSystem.TryGetData(uid, SolutionContainerVisuals.VisualState, out SolutionContainerVisualState state))
+        if (!AppearanceSystem.TryGetData<SolutionContainerVisualState>(uid, SolutionContainerVisuals.VisualState, out var state))
             return;
 
         if (args.Sprite == null)

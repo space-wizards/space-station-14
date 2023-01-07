@@ -1,4 +1,4 @@
-﻿using Content.Shared.Singularity;
+using Content.Shared.Singularity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -32,7 +32,7 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            if (!component.TryGetData(SingularityVisuals.Level, out byte level))
+            if (!component.TryGetData<byte>(SingularityVisuals.Level, out var level))
             {
                 return;
             }

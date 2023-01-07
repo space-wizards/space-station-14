@@ -12,15 +12,15 @@ public sealed class RevenantSystem : VisualizerSystem<RevenantComponent>
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData(uid, RevenantVisuals.Harvesting, out bool harvesting) && harvesting)
+        if (AppearanceSystem.TryGetData<bool>(uid, RevenantVisuals.Harvesting, out var harvesting) && harvesting)
         {
             args.Sprite.LayerSetState(0, component.HarvestingState);
         }
-        else if (AppearanceSystem.TryGetData(uid, RevenantVisuals.Stunned, out bool stunned) && stunned)
+        else if (AppearanceSystem.TryGetData<bool>(uid, RevenantVisuals.Stunned, out var stunned) && stunned)
         {
             args.Sprite.LayerSetState(0, component.StunnedState);
         }
-        else if (AppearanceSystem.TryGetData(uid, RevenantVisuals.Corporeal, out bool corporeal))
+        else if (AppearanceSystem.TryGetData<bool>(uid, RevenantVisuals.Corporeal, out var corporeal))
         {
             if (corporeal)
                 args.Sprite.LayerSetState(0, component.CorporealState);

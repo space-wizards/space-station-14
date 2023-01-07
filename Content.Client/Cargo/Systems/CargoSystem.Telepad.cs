@@ -67,7 +67,7 @@ public sealed partial class CargoSystem
         if (!Resolve(component.Owner, ref sprite))
             return;
 
-        _appearanceSystem.TryGetData(uid, CargoTelepadVisuals.State, out CargoTelepadState? state);
+        _appearanceSystem.TryGetData<CargoTelepadState?>(uid, CargoTelepadVisuals.State, out var state);
         AnimationPlayerComponent? player = null;
 
         switch (state)

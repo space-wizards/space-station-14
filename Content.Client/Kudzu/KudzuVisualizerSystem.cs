@@ -11,8 +11,8 @@ namespace Content.Client.Kudzu
             if (args.Sprite == null)
                 return;
 
-            if (AppearanceSystem.TryGetData(uid, KudzuVisuals.Variant, out int var)
-                && AppearanceSystem.TryGetData(uid, KudzuVisuals.GrowthLevel, out int level))
+            if (AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.Variant, out var var)
+                && AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.GrowthLevel, out var level))
             {
                 var index = args.Sprite.LayerMapReserveBlank(component.Layer);
                 args.Sprite.LayerSetState(index, $"kudzu_{level}{var}");
