@@ -1,50 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'combat gloves were removed from atmosdrobe, because fighting fire is
-      not actual fighting', type: Remove}
-  id: 2335
-  time: '2022-09-17T02:05:06.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: 'Due to a mix-up in the NanoTrasen Standardized Equipment Logistics
-      Warehouse, non-clothing items were getting stocked in ''Drobe machines. We''ve
-      corrected this issue and ensured said equipment should be available in the appropriate
-      lockers instead.', type: Tweak}
-  id: 2336
-  time: '2022-09-17T14:43:34.0000000+00:00'
-- author: mirrorcult
-  changes:
-  - {message: Cargo techs and the QM now start with an appraisal tool., type: Add}
-  - {message: You can now lathe appraisal tools., type: Add}
-  id: 2337
-  time: '2022-09-17T16:16:36.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a variety of wall-mounted lockers., type: Add}
-  id: 2338
-  time: '2022-09-17T20:05:39.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added folding chairs. Perfect for slamming people in the back of the
-      head with., type: Add}
-  id: 2339
-  time: '2022-09-18T17:47:31.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: SMES's and substations are no longer filled upon construction, type: Remove}
-  id: 2340
-  time: '2022-09-18T18:02:45.0000000+00:00'
-- author: Sheppard
-  changes:
-  - {message: Comfy chair can now be rotated, type: Fix}
-  id: 2341
-  time: '2022-09-18T19:56:51.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the Security Techfab not being able to print anything., type: Fix}
-  id: 2342
-  time: '2022-09-19T00:44:25.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
@@ -2965,3 +2919,44 @@ Entries:
       if you are under them., type: Add}
   id: 2834
   time: '2023-01-05T05:45:23.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Pulling items through portals should no longer behave weirdly., type: Fix}
+  id: 2835
+  time: '2023-01-05T11:36:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'QM, RD, and CMO players are now eligible to be traitors.', type: Add}
+  id: 2836
+  time: '2023-01-05T23:33:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Your eye rotation will now already be adjusted upon ghosting., type: Fix}
+  id: 2837
+  time: '2023-01-06T09:39:28.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: The radar shown in mass scanners and shuttle consoles now properly scales
+      with your UI scaling setting!, type: Fix}
+  id: 2838
+  time: '2023-01-06T23:08:27.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: fix some deconstruction bugs with wallmount equipment, type: Fix}
+  id: 2839
+  time: '2023-01-06T23:13:15.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Rockets can now pass through portals, type: Fix}
+  id: 2840
+  time: '2023-01-06T23:13:22.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Wording for blue and red alert levels, type: Tweak}
+  id: 2841
+  time: '2023-01-06T23:17:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Prying tiles now removes the decals on them., type: Fix}
+  id: 2842
+  time: '2023-01-07T10:24:50.0000000+00:00'
