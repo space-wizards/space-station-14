@@ -114,19 +114,77 @@
 - type: biome
   id: Snow
   layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.8
-      frequency: 0.1
+    - !type:BiomeDecalLayer
       allowedTiles:
-        - FloorDesert
+        - FloorSnow
+      seedOffset: 4
+      threshold: 0.98
+      divisions: 1
+      frequency: 1
+      decals:
+        - grasssnowa1
+        - grasssnowa2
+        - grasssnowa3
+        - grasssnowb1
+        - grasssnowb2
+        - grasssnowb3
+        - grasssnowc1
+        - grasssnowc2
+        - grasssnowc3
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorSnow
+      seedOffset: 3
+      threshold: 0.98
+      # TODO: Fix clumping
+      divisions: 2
+      frequency: 0.5
+      decals:
+        - bushsnowa1
+        - bushsnowa2
+        - bushsnowa3
+        - bushsnowb1
+        - bushsnowb2
+        - bushsnowb3
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorSnow
+      divisions: 1
+      seedOffset: 2
+      decals:
+        - grasssnow
+        - grasssnow01
+        - grasssnow02
+        - grasssnow03
+        - grasssnow04
+        - grasssnow05
+        - grasssnow06
+        - grasssnow07
+        - grasssnow08
+        - grasssnow09
+        - grasssnow10
+        - grasssnow11
+        - grasssnow12
+        - grasssnow13
+    - !type:BiomeEntityLayer
+      seedOffset: 1
+      threshold: 0.9
+      frequency: 1
+      allowedTiles:
+        - FloorSnow
       entities:
-        - AsteroidRock
+        - FloraTreeSnow01
+        - FloraTreeSnow02
+        - FloraTreeSnow03
+        - FloraTreeSnow04
+        - FloraTreeSnow05
+        - FloraTreeSnow06
     - !type:BiomeTileLayer
       threshold: 0
       variants:
         - 0
-      tile: FloorDesert
+      tile: FloorSnow
     - !type:BiomeTileLayer
       threshold: 0.6
-      tile: FloorDesert
+      tile: FloorSnow
       frequency: 0.1

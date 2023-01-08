@@ -48,3 +48,21 @@
   itemDrop: FloorTileItemGrass
   thermalConductivity: 0.04
   heatCapacity: 10000
+
+- type: tile
+  id: FloorSnow
+  name: tiles-snow-floor
+  sprite: /Textures/Tiles/Planet/Snow/snow.png
+  variants: 13
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  #cornerSprites:
+  #  - /Textures/Tiles/Planet/Snow/single_edge.png
+  #cardinalSprites:
+  #  - /Textures/Tiles/Planet/Snow/double_edge.png
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepSnow
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000

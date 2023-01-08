@@ -159,6 +159,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 if (anchored.MoveNext(out _) || !TryGetEntity(indices, prototype, noise, grid, out var entPrototype))
                     continue;
 
+                // TODO: Fix non-anchored ents spawning.
+                // Just track loaded chunks for now.
                 var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
                 loadedEntities.Add(ent);
             }
