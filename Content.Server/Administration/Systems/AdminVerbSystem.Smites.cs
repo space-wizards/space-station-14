@@ -44,6 +44,7 @@ using Content.Shared.Popups;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
@@ -558,6 +559,10 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Clothing/Mask/cluwne.rsi/icon.png",
                 Act = () =>
                 {
+                    var meta = MetaData(args.Target);
+                    _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", args.Target)), args.Target, PopupType.LargeCaution);
+                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", meta.EntityName));
+					{ }
                     SetOutfitCommand.SetOutfit(args.Target, "CluwneGear", EntityManager, (_, clothing) =>
                     {
                         if (HasComp<ClothingComponent>(clothing))
