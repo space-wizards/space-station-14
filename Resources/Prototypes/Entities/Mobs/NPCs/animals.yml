@@ -1314,8 +1314,8 @@
   - type: MobState
     thresholds:
       0: Alive
-      75: Critical
-      125: Dead
+      50: Critical
+      75: Dead
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -1323,7 +1323,12 @@
     damage:
       types:
         Piercing: 15
-        Poison: 7
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: FluorosulfuricAcid
+          Quantity: 5
 
 - type: entity
   name: tarantula
