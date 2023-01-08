@@ -17,10 +17,18 @@ public sealed class HeadsetComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keySlotsAmount")]
     public int KeySlotsAmount = 2;
- 
+
+    /*
+     * IsKeysExtractable == true  => Human will able to screw out encryption keys with screwdriver (for KeysExtractionMethod == "Screwing")
+     * IsKeysExtractable == false => encryption keys will be locked in headset, there will be no proper way to extract them.
+    */
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isKeysExtractable")]
     public bool IsKeysExtractable = true;
+    // Shows what tool human should use to extract encryption keys from headset
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keysExtractionMethod")]
+    public string KeysExtractionMethod = "Screwing";
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyExtractionSound")]

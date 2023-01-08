@@ -185,7 +185,7 @@ public sealed class HeadsetSystem : EntitySystem
             {
                 if (_toolSystem.UseTool(
                 args.Used, args.User, uid,
-                0f, 0f, new String[] { "Screwing" },
+                0f, 0f, new String[] { component.KeysExtractionMethod },
                 doAfterCompleteEvent: null, toolComponent: tool))
                 {
                     var contained = new List<EntityUid>();
