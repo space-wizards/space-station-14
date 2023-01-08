@@ -33,3 +33,10 @@
     - /Audio/Voice/Zombie/zombie-1.ogg
     - /Audio/Voice/Zombie/zombie-2.ogg
     - /Audio/Voice/Zombie/zombie-3.ogg
+
+- type: soundCollection
+  id: CluwneScreams
+  files:
+    - /Audio/Voice/Cluwne/sound_voice_cluwnelaugh1.ogg
+    - /Audio/Voice/Cluwne/sound_voice_cluwnelaugh2.ogg
+    - /Audio/Voice/Cluwne/sound_voice_cluwnelaugh3.ogg

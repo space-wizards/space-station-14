@@ -52,6 +52,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
+using Robust.Shared.Audio;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -561,8 +562,16 @@ public sealed partial class AdminVerbSystem
                 {
                     var meta = MetaData(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", args.Target)), args.Target, PopupType.LargeCaution);
-                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", meta.EntityName));
-					{ }
+
+                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", Name(args.Target)));
+
+                    EnsureComp<BackwardsAccentComponent>(args.Target);
+
+                    var vocal = EnsureComp<VocalComponent>(args.Target);
+                    var scream = new SoundCollectionSpecifier ("CluwneScreams");
+                    vocal.FemaleScream = scream;
+                    vocal.MaleScream = scream;
+
                     SetOutfitCommand.SetOutfit(args.Target, "CluwneGear", EntityManager, (_, clothing) =>
                     {
                         if (HasComp<ClothingComponent>(clothing))
