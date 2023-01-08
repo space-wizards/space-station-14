@@ -163,8 +163,11 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
     {
-        if (!component.IsKeysLocked || !TryComp<ContainerManagerComponent>(uid, out var storage))
+        if (!TryComp<ContainerManagerComponent>(uid, out var storage))
+            return;
+        if(!component.IsKeysLocked)
         {
+            _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Entities(args.User));
             return;
         }
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
