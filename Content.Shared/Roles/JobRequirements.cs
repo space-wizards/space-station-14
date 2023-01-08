@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Players.PlayTimeTracking;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
@@ -7,17 +7,17 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Roles
 {
     /// <summary>
-    ///     Abstract class for playtime and other requirements for role gates.
+    /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class JobRequirement
-    {
-        [DataField("inverted")] public bool Inverted;
-    }
+    public abstract class JobRequirement{}
 
     [UsedImplicitly]
     public sealed class DepartmentTimeRequirement : JobRequirement
     {
+        /// <summary>
+        /// Which department needs the required amount of time
+        /// </summary>
         [DataField("department", customTypeSerializer: typeof(PrototypeIdSerializer<DepartmentPrototype>))]
         public string Department = default!;
 
@@ -25,6 +25,11 @@ namespace Content.Shared.Roles
         /// How long (in seconds) this requirement is.
         /// </summary>
         [DataField("time")] public TimeSpan Time;
+
+        /// <summary>
+        /// Should the condition be inverted?.
+        /// </summary>
+        [DataField("inverted")] public bool Inverted;
     }
 
     [UsedImplicitly]
@@ -40,6 +45,11 @@ namespace Content.Shared.Roles
         /// How long (in seconds) this requirement is.
         /// </summary>
         [DataField("time")] public TimeSpan Time;
+
+        /// <summary>
+        /// Should the condition be inverted?.
+        /// </summary>
+        [DataField("inverted")] public bool Inverted;
     }
 
     [UsedImplicitly]
@@ -49,6 +59,11 @@ namespace Content.Shared.Roles
         /// How long (in seconds) this requirement is.
         /// </summary>
         [DataField("time")] public TimeSpan Time;
+
+        /// <summary>
+        /// Should the condition be inverted?.
+        /// </summary>
+        [DataField("inverted")] public bool Inverted;
     }
 
     public static class JobRequirements
