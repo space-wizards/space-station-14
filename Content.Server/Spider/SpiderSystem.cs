@@ -8,12 +8,14 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Atmos;
 using Content.Shared.MobState.Components;
 using Content.Shared.Throwing;
+using Content.Shared.Doors.Components;
+using Content.Shared.Physics;
+using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Content.Shared.Kudzu;
 using Robust.Shared.Random;
 
 namespace Content.Server.Spider
@@ -59,55 +61,48 @@ namespace Content.Server.Spider
 
             args.Handled = true;
 
-            bool notBlocked = false;
             var coords = transform.Coordinates;
-            if (!grid.GetTileRef(coords).Tile.IsEmpty)
-            {
-                var ents = grid.GetLocal(coords);
-                bool net = false;
-                if (ents.All(x => !IsTileBlocked(x,ref net)))
-                {
-                    notBlocked = true;
-                    if (!net)
-                        EntityManager.SpawnEntity("SpiderWeb", transform.Coordinates);  
-                }
-            }
+            bool notBlocked = !IsTileBlocked(uid, coords);
 
             if (notBlocked)
             {
+                // Spawn web in center
+                if (!IsTileBlockedByWeb(coords))
+                    Spawn(component.WebPrototype, coords);  
+
+                // Spawn web in other directions
                 for (var i = 0; i < 4; i++)
                 {
                     var direction = (DirectionFlag) (1 << i);
                     coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-                    if (grid.GetTileRef(coords).Tile.IsEmpty) continue;
-                    var ents = grid.GetLocal(coords);
-
-                    if (ents.Any(x => IsTileBlockedFrom(x, direction))) continue;
-
-                    EntityManager.SpawnEntity("SpiderWeb", transform.Coordinates.Offset(direction.AsDir().ToVec()));
+                    
+                    if (!IsTileBlocked(uid, coords) && !IsTileBlockedByWeb(coords))
+                        Spawn(component.WebPrototype, coords);
                 }
             }
         }
 
-        private bool IsTileBlocked(EntityUid ent, ref bool net)
+        private bool IsTileBlocked(EntityUid user, EntityCoordinates coords)
         {
-            if (HasComp<SpiderWebObjectComponent>(ent))
-                net = true;
-            if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
-                return false;
-            return airtight.AirBlocked;
+            foreach (var entity in coords.GetEntitiesInTile())
+            {
+                IPhysBody? physics = null; // We use this to check if it's impassable
+                if ((HasComp<MobStateComponent>(entity) && entity != user) || // Is it a mob?
+                    ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
+                        && !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?
+                            return true;
+            }
+            return false;
         }
 
-        private bool IsTileBlockedFrom(EntityUid ent, DirectionFlag dir)
+        private bool IsTileBlockedByWeb(EntityCoordinates coords)
         {
-            if (HasComp<SpiderWebObjectComponent>(ent))
-                return true;
-            if (!EntityManager.TryGetComponent<AirtightComponent>(ent, out var airtight))
-                return false;
-
-            var oppositeDir = dir.AsDir().GetOpposite().ToAtmosDirection();
-
-            return airtight.AirBlocked && airtight.AirBlockedDirection.IsFlagSet(oppositeDir);
+            foreach (var entity in coords.GetEntitiesInTile())
+            {
+                if (HasComp<SpiderWebObjectComponent>(entity))
+                    return true;
+            }
+            return false;
         }
     }
 }
