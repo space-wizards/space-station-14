@@ -54,42 +54,26 @@ namespace Content.Server.Spider
 
             var transform = Transform(uid);
 
-            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
+            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+                return;
 
             args.Handled = true;
 
             var coords = transform.Coordinates;
-            bool notBlocked = !IsTileBlocked(uid, coords);
 
-            if (notBlocked)
+            // Spawn web in center
+            if (!IsTileBlockedByWeb(coords))
+                Spawn(component.WebPrototype, coords);  
+
+            // Spawn web in other directions
+            for (var i = 0; i < 4; i++)
             {
-                // Spawn web in center
-                if (!IsTileBlockedByWeb(coords))
-                    Spawn(component.WebPrototype, coords);  
-
-                // Spawn web in other directions
-                for (var i = 0; i < 4; i++)
-                {
-                    var direction = (DirectionFlag) (1 << i);
-                    coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
+                var direction = (DirectionFlag) (1 << i);
+                coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
                     
-                    if (!IsTileBlocked(uid, coords) && !IsTileBlockedByWeb(coords))
-                        Spawn(component.WebPrototype, coords);
-                }
+                if (!IsTileBlockedByWeb(coords))
+                    Spawn(component.WebPrototype, coords);
             }
-        }
-
-        private bool IsTileBlocked(EntityUid user, EntityCoordinates coords)
-        {
-            foreach (var entity in coords.GetEntitiesInTile())
-            {
-                PhysicsComponent? physics = null; // We use this to check if it's impassable
-                if ((HasComp<MobStateComponent>(entity) && entity != user) || // Is it a mob?
-                    ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
-                        && !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?
-                            return true;
-            }
-            return false;
         }
 
         private bool IsTileBlockedByWeb(EntityCoordinates coords)
