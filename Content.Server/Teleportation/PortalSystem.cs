@@ -6,7 +6,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Teleportation;
 
-public abstract class PortalSystem : SharedPortalSystem
+public sealed class PortalSystem : SharedPortalSystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -14,6 +14,6 @@ public abstract class PortalSystem : SharedPortalSystem
         EntityCoordinates target)
     {
         if (HasComp<MindComponent>(subject))
-            _adminLogger.Add(LogType.Teleport, LogImpact.Low, $"{ToPrettyString(subject):player} teleported via {ToPrettyString(portal)} from {Transform(subject).Coordinates} to {target}");
+            _adminLogger.Add(LogType.Teleport, LogImpact.Low, $"{ToPrettyString(subject):player} teleported via {ToPrettyString(portal)} from {source} to {target}");
     }
 }
