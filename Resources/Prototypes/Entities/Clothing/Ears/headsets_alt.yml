@@ -111,7 +111,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSyndicate
-  name: syndicate over-ear headset
+  name: blood-red over-ear headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protect ears from flashbangs.
   components:
   - type: Headset
@@ -124,4 +124,3 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
-

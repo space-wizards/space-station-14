@@ -259,7 +259,7 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeySyndie
-  name: dark-red encryption key
+  name: blood-red encryption key
   description: An encryption key used by... wait... Who is owner of this chip?
   components:
   - type: EncryptionKey
