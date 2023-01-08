@@ -9,7 +9,10 @@ using static Pidgin.Parser;
 
 namespace Content.Client.Guidebook;
 
-public sealed partial class GuidebookParsingManager
+/// <summary>
+///     This manager should be used to convert documents (shitty rich-text / pseudo-xaml) into UI Controls
+/// </summary>
+public sealed partial class DocumentParsingManager
 {
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
@@ -32,7 +35,7 @@ public sealed partial class GuidebookParsingManager
         DocumentParser = ControlParser.Select(x => new Document(x));
     }
 
-    public bool TryAddMarkup(Control control, string text)
+    public bool TryAddMarkup(Control control, string text, bool log = true)
     {
         try
         {
@@ -43,8 +46,8 @@ public sealed partial class GuidebookParsingManager
         }
         catch (Exception e)
         {
-            Logger.Error($"Caught error while generating markup controls. Error: {e}");
-            control.AddChild(new Label() { Text = "Error" });
+            if (log)
+                Logger.Error($"Encountered error while generating markup controls: {e}");
             return false;
         }
 

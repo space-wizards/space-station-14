@@ -12,10 +12,9 @@ namespace Content.Client.Guidebook.Controls;
 public sealed partial class GuidebookWindow : FancyWindow
 {
     [Dependency] private readonly IResourceManager _resourceManager = default!;
-    [Dependency] private readonly GuidebookParsingManager _parsingMan = default!;
+    [Dependency] private readonly DocumentParsingManager _parsingMan = default!;
 
     private Dictionary<string, GuideEntry> _entries = new();
-    private string? _currentlyShowing;
 
     public GuidebookWindow()
     {
@@ -35,7 +34,6 @@ public sealed partial class GuidebookWindow : FancyWindow
 
     public void ClearSelectedGuide()
     {
-        _currentlyShowing = null;
         Placeholder.Visible = true;
         EntryContainer.Visible = false;
         EntryContainer.RemoveAllChildren();
@@ -43,7 +41,6 @@ public sealed partial class GuidebookWindow : FancyWindow
 
     private void ShowGuide(GuideEntry entry)
     {
-        _currentlyShowing = entry.Id;
         Placeholder.Visible = false;
         EntryContainer.Visible = true;
         EntryContainer.RemoveAllChildren();
@@ -58,8 +55,11 @@ public sealed partial class GuidebookWindow : FancyWindow
         var doc = new Document();
         EntryContainer.AddChild(doc);
 
-        if (!_parsingMan.TryAddMarkup(doc, file.ReadToEnd()))
-            Logger.Error($"Failed to add contents of guide document {entry.Id}.");
+        if (_parsingMan.TryAddMarkup(doc, file.ReadToEnd()))
+            return;
+
+        doc.AddChild(new Label() { Text = "ERROR: Failed to parse document." });
+        Logger.Error($"Failed to parse contents of guide document {entry.Id}.");
     }
 
     public void UpdateGuides(

@@ -10,7 +10,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Guidebook;
 
-public sealed partial class GuidebookParsingManager
+public sealed partial class DocumentParsingManager
 {
     private const string ListBullet = "  › ";
 

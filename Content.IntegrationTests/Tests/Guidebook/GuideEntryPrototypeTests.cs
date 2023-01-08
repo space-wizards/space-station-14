@@ -21,7 +21,7 @@ public sealed class GuideEntryPrototypeTests
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
-        var parser = client.ResolveDependency<GuidebookParsingManager>();
+        var parser = client.ResolveDependency<DocumentParsingManager>();
         var prototypes = protoMan.EnumeratePrototypes<GuideEntryPrototype>().ToList();
 
         await client.WaitAssertion(() =>

@@ -61,7 +61,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
         [Dependency] private readonly NetworkResourceManager _networkResources = default!;
-        [Dependency] private readonly GuidebookParsingManager _documentParsingManager = default!;
+        [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
