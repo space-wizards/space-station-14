@@ -1,5 +1,9 @@
-using Content.Server.Communications;
-using Content.Server.Paper;
+using System.Linq;
+using Content.Server.Fax;
+using Content.Shared.GameTicking;
+using Content.Shared.Random.Helpers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Corvax.StationGoal
 {
@@ -8,22 +12,51 @@ namespace Content.Server.Corvax.StationGoal
     /// </summary>
     public sealed class StationGoalPaperSystem : EntitySystem
     {
-        [Dependency] private readonly PaperSystem _paperSystem = default!;
-
-        public void SpawnStationGoalPaper(StationGoalPrototype goal)
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly FaxSystem _faxSystem = default!;
+        
+        public override void Initialize()
         {
-            var consoles = EntityManager.EntityQuery<CommunicationsConsoleComponent>();
-            foreach (var console in consoles)
+            base.Initialize();
+            SubscribeLocalEvent<RoundStartedEvent>(OnRoundStarted);
+        }
+        
+        private void OnRoundStarted(RoundStartedEvent ev)
+        {
+            SendRandomGoal();
+        }
+
+        public bool SendRandomGoal()
+        {
+            var availableGoals = _prototypeManager.EnumeratePrototypes<StationGoalPrototype>().ToList();
+            var goal = _random.Pick(availableGoals);
+            return SendStationGoal(goal);
+        }
+
+        /// <summary>
+        ///     Send a station goal to all faxes which are authorized to receive it.
+        /// </summary>
+        /// <returns>True if at least one fax received paper</returns>
+        public bool SendStationGoal(StationGoalPrototype goal)
+        {
+            var faxes = EntityManager.EntityQuery<FaxMachineComponent>();
+            var wasSent = false;
+            foreach (var fax in faxes)
             {
-                if (!EntityManager.TryGetComponent((console).Owner, out TransformComponent? transform))
-                    continue;
+                if (!fax.ReceiveStationGoal) continue;
 
-                var consolePos = transform.MapPosition;
-                var paperId = EntityManager.SpawnEntity("StationGoalPaper", consolePos);
-                var paper = Comp<PaperComponent>(paperId);
+                var printout = new FaxPrintout(
+                    Loc.GetString(goal.Text),
+                    Loc.GetString("station-goal-fax-paper-name"),
+                    "paper_stamp-cent",
+                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                _faxSystem.Receive(fax.Owner, printout, null, fax);
 
-                _paperSystem.SetContent(paper.Owner, Loc.GetString(goal.Text));
+                wasSent = true;
             }
+
+            return wasSent;
         }
     }
 }
