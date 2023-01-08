@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Threading;
+using Content.Server.DoAfter;
 using Content.Server.Lock;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
@@ -18,6 +20,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
+    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -26,6 +29,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         SubscribeLocalEvent<BluespaceLockerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageBeforeOpenEvent>(PreOpen);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageAfterCloseEvent>(PostClose);
+        SubscribeLocalEvent<BluespaceLockerComponent, BluespaceLockerTeleportDelayComplete>(OnBluespaceLockerTeleportDelayComplete);
     }
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
@@ -39,6 +43,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (!Resolve(uid, ref entityStorageComponent))
             return;
+
+        component.CancelToken?.Cancel();
 
         // Select target
         var targetContainerStorageComponent = GetTargetStorage(component);
@@ -148,13 +154,37 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
     }
 
-
     private void PostClose(EntityUid uid, BluespaceLockerComponent component, StorageAfterCloseEvent args)
+    {
+        PostClose(uid, component);
+    }
+
+    private void OnBluespaceLockerTeleportDelayComplete(EntityUid uid, BluespaceLockerComponent component, BluespaceLockerTeleportDelayComplete args)
+    {
+        PostClose(uid, component, false);
+    }
+
+    private void PostClose(EntityUid uid, BluespaceLockerComponent component, bool doDelay = true)
     {
         EntityStorageComponent? entityStorageComponent = null;
 
         if (!Resolve(uid, ref entityStorageComponent))
             return;
+
+        component.CancelToken?.Cancel();
+
+        // Do delay
+        if (doDelay && component.Delay > 0)
+        {
+            component.CancelToken = new CancellationTokenSource();
+
+            _doAfterSystem.DoAfter(
+                new DoAfterEventArgs(uid, component.Delay, component.CancelToken.Token)
+                {
+                    UserFinishedEvent = new BluespaceLockerTeleportDelayComplete()
+                });
+            return;
+        }
 
         // Select target
         var targetContainerStorageComponent = GetTargetStorage(component);
@@ -202,5 +232,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
             _entityStorage.OpenStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
         }
+    }
+
+    private sealed class BluespaceLockerTeleportDelayComplete : EntityEventArgs
+    {
     }
 }

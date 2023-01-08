@@ -1,4 +1,6 @@
-﻿namespace Content.Server.Storage.Components;
+﻿using System.Threading;
+
+namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
 public sealed class BluespaceLockerComponent : Component
@@ -58,6 +60,13 @@ public sealed class BluespaceLockerComponent : Component
     /// </summary>
     [DataField("pickLinksFromSameAccess"), ViewVariables(VVAccess.ReadWrite)]
     public bool PickLinksFromSameAccess = true;
+
+    /// <summary>
+    /// Delay in seconds to wait after closing before transporting
+    /// </summary>
+    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
+    public int Delay;
+    public CancellationTokenSource? CancelToken;
 
     /// <summary>
     /// Determines if links automatically added are bidirectional
