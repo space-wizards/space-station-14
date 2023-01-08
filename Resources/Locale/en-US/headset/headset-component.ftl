@@ -3,7 +3,7 @@ chat-radio-message-wrap = [color={$color}]{$channel} {$name} says: "{$message}"[
 
 examine-encryption-key = It is providing these frequencies to the headset:
 examine-encryption-key-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
-examine-encryption-key-common-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
+examine-encryption-key-common-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
 
 headset-encryption-key-successfully-installed = You put the key into the headset.
 headset-encryption-key-slots-already-full = There is no place for another key.
@@ -14,7 +14,7 @@ examine-radio-frequency = It's set to broadcast over the {$frequency} frequency.
 
 examine-headset = A small screen on the headset displays the following available frequencies:
 examine-headset-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
-examine-headset-common-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
+examine-headset-common-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
 examine-headset-no-keys = It seems broken. There are no encryption keys in it.
 examine-headset-chat-prefix = Use {$prefix} for the currently tuned frequency.
 
