@@ -5,22 +5,20 @@ using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class VentCritters : StationEventSystem
+public sealed class SpiderSpawn : StationEventSystem
 {
-    public static List<string> SpawnedPrototypeChoices = new List<string>()
-        {"MobMouse", "MobMouse1", "MobMouse2"};
-
-    public override string Prototype => "VentCritters";
+    public override string Prototype => "SpiderSpawn";
 
     public override void Started()
     {
         base.Started();
-        var spawnChoice = RobustRandom.Pick(SpawnedPrototypeChoices);
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
-        var spawnAmount = (int) (RobustRandom.Next(4, 12)); // A small colony of critters.
-        Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
+        var mod = Math.Sqrt(GetSeverityModifier());
+
+        var spawnAmount = (int) (RobustRandom.Next(4, 8) * mod);
+        Sawmill.Info($"Spawning {spawnAmount} of spiders");
         foreach (var location in spawnLocations)
         {
             if (spawnAmount-- == 0)
@@ -28,7 +26,7 @@ public sealed class VentCritters : StationEventSystem
 
             var coords = EntityManager.GetComponent<TransformComponent>(location.Owner);
 
-            EntityManager.SpawnEntity(spawnChoice, coords.Coordinates);
+            EntityManager.SpawnEntity("MobGiantSpiderAngry", coords.Coordinates);
         }
     }
 }
