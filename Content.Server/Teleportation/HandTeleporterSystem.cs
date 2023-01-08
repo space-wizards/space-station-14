@@ -115,6 +115,7 @@ public sealed class HandTeleporterSystem : EntitySystem
         }
         else
         {
+            // Logging
             var portalStrings = "";
             portalStrings += ToPrettyString(component.FirstPortal!.Value);
             if (portalStrings != "")
