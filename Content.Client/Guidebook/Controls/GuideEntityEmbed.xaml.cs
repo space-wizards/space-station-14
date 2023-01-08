@@ -127,9 +127,8 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
             _entityManager.DeleteEntity(Sprite.Owner);
     }
 
-    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control, out bool instant)
+    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
     {
-        instant = true;
         if (args.Count is < 1 or > 3)
         {
             Logger.Error($"GuideEntityEmbed expected at least one argument and at most three, got {args.Count}");

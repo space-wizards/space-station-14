@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 
@@ -6,10 +6,9 @@ namespace Content.Client.Guidebook.Richtext;
 
 public sealed class Box : BoxContainer, IDocumentTag
 {
-    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control, out bool instant)
+    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
     {
         HorizontalExpand = true;
-        instant = false;
         control = this;
 
         if (args.Contains("Vertical"))

@@ -36,14 +36,9 @@ public sealed partial class DocumentParsingManager
         TrySingleNewlineToSpace, // turn single newlines into spaces
         Any // just return the character.
         );
-    #endregion
 
-    #region Quoted Text
-    // try return text wrapped in quotation marks.
-    private static readonly Parser<char, string> TryQuotedText = Try(Char('"')).Then(TextChar.Until(Char('"')).Select(string.Concat).Labelled("closing quote"));
-
-    // consumes either a block of quoted text or a single char.
-    private static readonly Parser<char, string> TryQuoteOrChar = OneOf(TryQuotedText, TextChar.Select(x => x.ToString()));
+    // Quoted text
+    private static readonly Parser<char, string> QuotedText = Char('"').Then(TextChar.Until(Try(Char('"'))).Select(string.Concat)).Labelled("quoted text");
     #endregion
 
     #region rich text-end markers
@@ -101,27 +96,29 @@ public sealed partial class DocumentParsingManager
     private static readonly Parser<char, Unit> TryTagArgEnd = OneOf(Try(Whitespace.SkipAtLeastOnce()), TryLookTagEnd);
     private static readonly Parser<char, Unit> TryTagArgDelim = OneOf(Lookahead(Try(Char('='))).ThenReturn(Unit.Value), TryTagArgEnd);
 
-    private static readonly Parser<char, string> TryTagArgKey = TryQuoteOrChar.Until(TryTagArgDelim).Select(string.Concat);
-    private static readonly Parser<char, string> TryTagArgValue = Try(Char('=').Then(TryQuoteOrChar.Until(TryTagArgEnd).Select(string.Concat))).Or(Return<string>(default!));
+    //parse tag argument key. any normal text character up until we hit a "=", whitespace or tag-end.
+    private static readonly Parser<char, string> TryTagArgKey = TextChar.Until(TryTagArgDelim).Select(string.Concat).Labelled("tag argument key");
+
+    // parse a tag argument value. This must start with a = and be wrapped in quotes. Returns a null-string if there is no value
+    private static readonly Parser<char, string> TryTagArgValue = OneOf(Try(Char('=')).Then(QuotedText), Return<string>(default!)).Labelled("tag argument value");
 
     // parser for a singular tag argument. Note that each TryQuoteOrChar will consume a whole quoted block before the Until() looks for whitespace
     private static readonly Parser<char, (string, string)> TagArgParser = Map((key, value) => (key, value), TryTagArgKey, TryTagArgValue ).Before(SkipWhitespaces);
 
     // parser for all tag arguments
-    private static readonly Parser<char, IEnumerable<(string, string)>> TagArgsParser =
-        OneOf(TryLookTagEnd.ThenReturn(Enumerable.Empty<(string, string)>()), TagArgParser.Until(TryLookTagEnd));
+    private static readonly Parser<char, IEnumerable<(string, string)>> TagArgsParser = TagArgParser.Until(TryLookTagEnd);
 
     // parser for an opening tag.
     private static Parser<char, Unit> TryOpeningTag(string tag) =>
         Try(Char('<').Then(SkipWhitespaces).Then(String(tag)).Then(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd))).Labelled($"opening {tag}");
 
     private static Parser<char, (List<string>, Dictionary<string, string>)> ParseTagArgs(string tag) =>
-        SkipWhitespaces.Then(TagArgsParser.Labelled($"{tag} arguments")).Select(ProcessArgs).Before(SkipWhitespaces);
+        TagArgsParser.Labelled($"{tag} arguments").Select(ProcessArgs).Before(SkipWhitespaces);
 
-    private static Parser<char, Unit> TryTagTerminator(string tag)
-        => Try(String("</")).Then(SkipWhitespaces).Then(String(tag)).Then(SkipWhitespaces).Then(TagEnd).Labelled($"closing {tag}");
+    private static Parser<char, Unit> TryTagTerminator(string tag) =>
+        Try(String("</")).Then(SkipWhitespaces).Then(String(tag)).Then(SkipWhitespaces).Then(TagEnd).Labelled($"closing {tag}");
 
-    // given a list of strings, split over equal signs and create a dictionary+list.
+    // given a list of key value pairs (possibly with null values), converts them to a dictionary+list.
     private static (List<string>, Dictionary<string, string>) ProcessArgs(IEnumerable<(string, string)> args)
     {
         var list = new List<string>();
@@ -130,10 +127,7 @@ public sealed partial class DocumentParsingManager
         foreach (var (key, value) in args)
         {
             if (string.IsNullOrEmpty(key))
-            {
-                Logger.Error($"Encountered empty key string while processing args: {string.Join(", ", args)}");
-                break;
-            }
+                throw new Exception($"Encountered empty key string while processing args: {string.Join(", ", args)}");
 
             if (value == null)
                 list.Add(key);
