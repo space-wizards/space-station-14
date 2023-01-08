@@ -16,6 +16,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Guidebook.Controls;
 
+/// <summary>
+///     Control for embedding an entity into a guidebook/document. This is effectively a sprite-view that supports
+///     examination, interactions, and captions.
+/// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 {
@@ -24,7 +28,6 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
     [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private readonly TagSystem _tagSystem;
-    private readonly VerbSystem _verbSystem;
     private readonly ExamineSystem _examineSystem;
     private readonly GuidebookSystem _guidebookSystem;
 
@@ -47,7 +50,6 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
         _tagSystem = _systemManager.GetEntitySystem<TagSystem>();
-        _verbSystem = _systemManager.GetEntitySystem<VerbSystem>();
         _examineSystem = _systemManager.GetEntitySystem<ExamineSystem>();
         _guidebookSystem = _systemManager.GetEntitySystem<GuidebookSystem>();
         MouseFilter = MouseFilterMode.Stop;
@@ -129,30 +131,34 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
     public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
     {
-        if (args.Count is < 1 or > 3)
+        if (args.Count != 1 )
         {
-            Logger.Error($"GuideEntityEmbed expected at least one argument and at most three, got {args.Count}");
+            Logger.Error($"Failed to parse embedded entity tag.");
             control = null;
             return false;
         }
 
-        var proto = args[0];
-        var caption = args.Contains("Caption");
-        var interactive = args.Contains("Interactive");
+        Interactive = args.Contains("Interactive");
 
-        Interactive = interactive;
-
-        var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
+        var ent = _entityManager.SpawnEntity(args[0], MapCoordinates.Nullspace);
 
         _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
         Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
 
-        if (caption)
-            Caption.Text = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
+        if (!param.TryGetValue("Caption", out var caption))
+            caption = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
 
-        if (param.TryGetValue("Scale", out var scaleStr) && float.TryParse(scaleStr, out var scale))
+        if (!string.IsNullOrEmpty(caption))
+            Caption.Text = caption;
+
+        if (param.TryGetValue("Scale", out var scaleStr))
         {
+            var scale = float.Parse(scaleStr);
             Scale = new Vector2(scale, scale);
+        }
+        else
+        {
+            Scale = (2, 2);
         }
 
         control = this;

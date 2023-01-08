@@ -8,18 +8,18 @@ In the event of a serious emergency, there's a few things you can do to help ens
 
 - If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc.
 <Box HCenter>
-<GuideEntityEmbed EmergencyMedipen Caption Scale="2"/>
-<GuideEntityEmbed SpaceMedipen Caption Scale="2"/>
+<GuideEntityEmbed EmergencyMedipen/>
+<GuideEntityEmbed SpaceMedipen/>
 </Box>
 - Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation.
 <Box HCenter>
-<GuideEntityEmbed ClothingMaskBreath Caption Scale="2"/>
-<GuideEntityEmbed EmergencyOxygenTankFilled Caption Scale="2"/>
+<GuideEntityEmbed ClothingMaskBreath/>
+<GuideEntityEmbed EmergencyOxygenTankFilled/>
 </Box>
 - If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze to stem bleeding with.
 <Box HCenter>
-<GuideEntityEmbed Gauze Caption Scale="2"/>
-<GuideEntityEmbed MaterialCloth Caption Scale="2"/>
+<GuideEntityEmbed Gauze/>
+<GuideEntityEmbed MaterialCloth/>
 </Box>
 - In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have.
 - If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available.

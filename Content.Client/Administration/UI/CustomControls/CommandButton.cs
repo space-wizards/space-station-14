@@ -39,7 +39,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
         public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
         {
-            if (args.Count != 0 || param.Count != 2 || !param.TryGetValue("text", out var text) || !param.TryGetValue("command", out var command))
+            if (args.Count != 0 || param.Count != 2 || !param.TryGetValue("Text", out var text) || !param.TryGetValue("Command", out var command))
             {
                 Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
                 control = null;

@@ -3,29 +3,29 @@ Shuttle construction is simple and easy, albeit rather expensive and hard to pul
 #Getting started
 <Box HCenter>Required parts:</Box>
 <Box HCenter>
-<GuideEntityEmbed Thruster Caption Scale="2"/>
-<GuideEntityEmbed Gyroscope Caption Scale="2"/>
-<GuideEntityEmbed ComputerShuttle Caption Scale="2"/>
-<GuideEntityEmbed SubstationBasic Caption Scale="2"/>
-<GuideEntityEmbed GeneratorPlasma Caption Scale="2"/>
+<GuideEntityEmbed Thruster/>
+<GuideEntityEmbed Gyroscope/>
+<GuideEntityEmbed ComputerShuttle/>
+<GuideEntityEmbed SubstationBasic/>
+<GuideEntityEmbed GeneratorPlasma/>
 </Box>
 <Box HCenter>
-<GuideEntityEmbed CableHVStack Caption Scale="2"/>
-<GuideEntityEmbed CableMVStack Caption Scale="2"/>
-<GuideEntityEmbed CableApcStack Caption Scale="2"/>
-<GuideEntityEmbed APCBasic Caption Scale="2"/>
+<GuideEntityEmbed CableHVStack/>
+<GuideEntityEmbed CableMVStack/>
+<GuideEntityEmbed CableApcStack/>
+<GuideEntityEmbed APCBasic/>
 </Box>
 
 <Box HCenter>Optional parts:</Box>
 <Box HCenter>
-<GuideEntityEmbed AirCanister Caption Scale="2"/>
-<GuideEntityEmbed LightTube Caption Scale="2"/>
-<GuideEntityEmbed AirlockGlassShuttle Caption Scale="2"/>
-<GuideEntityEmbed SMESBasic Caption Scale="2"/>
+<GuideEntityEmbed AirCanister/>
+<GuideEntityEmbed LightTube/>
+<GuideEntityEmbed AirlockGlassShuttle/>
+<GuideEntityEmbed SMESBasic/>
 </Box>
 <Box HCenter>
-<GuideEntityEmbed MobCorgiIan Caption Scale="2"/>
-<GuideEntityEmbed NuclearBomb Caption Scale="2"/>
+<GuideEntityEmbed MobCorgiIan/>
+<GuideEntityEmbed NuclearBomb/>
 </Box>
 
 Head out into space with steel sheets and metal rods in hand, and once you're three or more meters away from the station, click near or under you with the rods in hand. This will place some lattice, which can then be turned into plating with the steel sheets. Expand your lattice platform by clicking just off the edge with rods in hand.

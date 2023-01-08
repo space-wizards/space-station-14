@@ -25,6 +25,5 @@ public sealed class Document : BoxContainer
 
 public interface IDocumentTag
 {
-    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
-        => TryParseTag(args, param, out control);
+    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control);
 }

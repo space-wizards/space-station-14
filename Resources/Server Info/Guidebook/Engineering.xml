@@ -2,14 +2,14 @@ Engineering is a combination of construction work, repair work, maintaining a de
 
 #Tools
 <Box HCenter>
-<GuideEntityEmbed Wrench Caption Scale="2"/>
-<GuideEntityEmbed Crowbar Caption Scale="2"/>
-<GuideEntityEmbed Screwdriver Caption Scale="2"/>
-<GuideEntityEmbed Wirecutter Caption Scale="2"/>
+<GuideEntityEmbed Wrench/>
+<GuideEntityEmbed Crowbar/>
+<GuideEntityEmbed Screwdriver/>
+<GuideEntityEmbed Wirecutter/>
 </Box>
 <Box HCenter>
-<GuideEntityEmbed Welder Caption Scale="2"/>
-<GuideEntityEmbed Multitool Caption Scale="2"/>
+<GuideEntityEmbed Welder/>
+<GuideEntityEmbed Multitool/>
 </Box>
 Your core toolset is a small variety of tools. If you're an engineer, then you should have a belt on your waist containing one of each, if not you can likely find them in maintenance and tool storage within assorted toolboxes and vending machines.
 
