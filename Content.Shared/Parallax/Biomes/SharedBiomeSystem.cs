@@ -159,7 +159,7 @@ public abstract class SharedBiomeSystem : EntitySystem
 
             seed.SetFrequency(tileLayer.Frequency);
 
-            if (TryGetTile(indices, seed, tileLayer.Threshold, tileLayer.Tiles.Select(o => ProtoManager.Index<ContentTileDefinition>(o)).ToList(), out tile))
+            if (TryGetTile(indices, seed, tileLayer.Threshold, ProtoManager.Index<ContentTileDefinition>(tileLayer.Tile), tileLayer.Variants, out tile))
             {
                 seed.SetFrequency(oldFrequency);
                 seedCache[indices] = tile.Value;
@@ -312,7 +312,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public bool TryGetTile(Vector2i indices, FastNoise seed, float threshold, List<ContentTileDefinition> tiles, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetTile(Vector2i indices, FastNoise seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
         if (threshold > 0f)
         {
@@ -325,15 +325,19 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
         }
 
-        var value = (seed.GetSimplex(indices.X, indices.Y) + 1f) / 2f;
-        var tileDef = Pick(tiles, value);
         byte variant = 0;
+        var variantCount = variants?.Count ?? tileDef.Variants;
 
         // Pick a variant tile if they're available as well
-        if (tileDef.Variants > 1)
+        if (variantCount > 1)
         {
             var variantValue = (seed.GetSimplex(indices.X * 2f, indices.Y * 2f) + 1f) / 2f;
-            variant = (byte) Pick(tileDef.Variants, variantValue);
+            variant = (byte) Pick(variantCount, variantValue);
+
+            if (variants != null)
+            {
+                variant = variants[variant];
+            }
         }
 
         tile = new Tile(tileDef.TileId, 0, variant);

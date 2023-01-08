@@ -11,6 +11,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
@@ -23,6 +24,7 @@ public sealed class PlanetCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public string Command => $"planet";
@@ -30,7 +32,7 @@ public sealed class PlanetCommand : IConsoleCommand
     public string Help => Loc.GetString("cmd-planet-help", ("command", Command));
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        if (args.Length != 1)
+        if (args.Length != 2)
         {
             shell.WriteError(Loc.GetString($"cmd-planet-args"));
             return;
@@ -50,11 +52,18 @@ public sealed class PlanetCommand : IConsoleCommand
             return;
         }
 
+        if (!_protoManager.HasIndex<BiomePrototype>(args[1]))
+        {
+            shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
+            return;
+        }
+
         var mapUid = _mapManager.GetMapEntityId(mapId);
         MetaDataComponent? metadata = null;
 
         // Fake tiles
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
+        biome.BiomePrototype = args[1];
         biome.Seed = _random.Next();
         _entManager.Dirty(biome);
 
@@ -91,14 +100,21 @@ public sealed class PlanetCommand : IConsoleCommand
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        if (args.Length != 1)
+        if (args.Length == 1)
         {
-            return CompletionResult.Empty;
+            var options = _entManager.EntityQuery<MapComponent>(true)
+                .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
+
+            return CompletionResult.FromOptions(options);
         }
 
-        var options = _entManager.EntityQuery<MapComponent>(true)
-            .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
+        if (args.Length == 2)
+        {
+            var options = _protoManager.EnumeratePrototypes<BiomePrototype>()
+                .Select(o => new CompletionOption(o.ID, "Biome"));
+            return CompletionResult.FromOptions(options);
+        }
 
-        return CompletionResult.FromOptions(options);
+        return CompletionResult.Empty;
     }
 }

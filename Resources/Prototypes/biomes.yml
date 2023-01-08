@@ -1,7 +1,35 @@
-#- type: biome
-#  id: Desert
-#  layers:
-#    - !type:BiomeTileLayer
+- type: biome
+  id: Desert
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.8
+      frequency: 0.1
+      allowedTiles:
+        - FloorDesert
+      entities:
+        - AsteroidRock
+    - !type:BiomeTileLayer
+      threshold: 0
+      variants:
+        - 0
+      tile: FloorDesert
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tile: FloorDesert
+      frequency: 0.1
+
+- type: biome
+  id: LowDesert
+  layers:
+    - !type:BiomeTileLayer
+      threshold: 0
+      variants:
+        - 0
+      tile: FloorLowDesert
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tile: FloorLowDesert
+      frequency: 0.1
 
 
 - type: biome
@@ -69,12 +97,10 @@
     # Fill remainder with sand.
     - !type:BiomeTileLayer
       threshold: 0
-      tiles:
-        - FloorAsteroidSand
+      tile: FloorAsteroidSand
     - !type:BiomeTileLayer
       threshold: 0.5
-      tiles:
-      - FloorPlanetGrass
+      tile: FloorPlanetGrass
 
 #- type: biomeTileLayer
 #  id: Asteroid

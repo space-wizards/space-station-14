@@ -49,8 +49,14 @@ public sealed class BiomeTileLayer : IBiomeLayer
     [DataField("frequency")]
     public float Frequency { get; } = 0.1f;
 
-    [DataField("tiles", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
-    public List<string> Tiles = new();
+    /// <summary>
+    /// Which tile variants to use for this layer. Uses all of the tile's variants if none specified
+    /// </summary>
+    [DataField("variants")]
+    public List<byte>? Variants = null;
+
+    [DataField("tile", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
+    public string Tile = string.Empty;
 }
 
 /// <summary>

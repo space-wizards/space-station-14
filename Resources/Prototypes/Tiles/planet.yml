@@ -1,3 +1,33 @@
+# Desert
+- type: tile
+  id: FloorDesert
+  name: tiles-desert-floor
+  sprite: /Textures/Tiles/Planet/Desert/desert.png
+  variants: 6
+  placementVariants: [0, 1, 2, 3, 4, 5]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorLowDesert
+  name: tiles-low-desert-floor
+  sprite: /Textures/Tiles/Planet/Desert/low_desert.png
+  variants: 6
+  placementVariants: [0, 1, 2, 3, 4, 5]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+# Grass
 - type: tile
   id: FloorPlanetGrass
   name: tiles-grass-planet-floor
