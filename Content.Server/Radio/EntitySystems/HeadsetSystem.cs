@@ -116,8 +116,11 @@ public sealed class HeadsetSystem : EntitySystem
             args.PushMarkup(Loc.GetString("examine-headset"));
             foreach (var id in component.Channels)
             {
+                string ftlPattern = "examine-headset-channel";
+                if (id == "Common")
+                    ftlPattern = "examine-headset-common-channel";
                 var proto = _protoManager.Index<RadioChannelPrototype>(id);
-                args.PushMarkup(Loc.GetString("examine-headset-channel",
+                args.PushMarkup(Loc.GetString(ftlPattern,
                     ("color", proto.Color),
                     ("key", proto.KeyCode),
                     ("id", proto.LocalizedName),
@@ -160,7 +163,7 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, HeadsetComponent component, InteractUsingEvent args)
     {
-        if (!component.IsKeysExtractable || !TryComp<ContainerManagerComponent>(uid, out var storage))
+        if (!component.IsKeysLocked || !TryComp<ContainerManagerComponent>(uid, out var storage))
         {
             return;
         }
@@ -184,9 +187,10 @@ public sealed class HeadsetSystem : EntitySystem
             if (component.KeyContainer.ContainedEntities.Count > 0)
             {
                 if (_toolSystem.UseTool(
-                args.Used, args.User, uid,
-                0f, 0f, new String[] { component.KeysExtractionMethod },
-                doAfterCompleteEvent: null, toolComponent: tool))
+                    args.Used, args.User, uid,
+                    0f, 0f, new String[] { component.KeysExtractionMethod },
+                    doAfterCompleteEvent: null, toolComponent: tool)
+                )
                 {
                     var contained = new List<EntityUid>();
                     foreach (var i in component.KeyContainer.ContainedEntities)

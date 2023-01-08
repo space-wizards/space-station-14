@@ -22,8 +22,11 @@ public sealed class EncryptionKeySystem : EntitySystem
             args.PushMarkup(Loc.GetString("examine-encryption-key"));
             foreach (var id in component.Channels)
             {
+                string ftlPattern = "examine-encryption-key-channel";
+                if (id == "Common")
+                    ftlPattern = "examine-encryption-key-common-channel";
                 var proto = _protoManager.Index<RadioChannelPrototype>(id);
-                args.PushMarkup(Loc.GetString("examine-encryption-key-channel",
+                args.PushMarkup(Loc.GetString(ftlPattern,
                     ("color", proto.Color),
                     ("key", proto.KeyCode),
                     ("id", proto.LocalizedName),
