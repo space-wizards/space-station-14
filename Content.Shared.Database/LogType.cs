@@ -82,4 +82,5 @@ public enum LogType
     EntitySpawn = 77,
     Container = 78,
     Teleport = 79,
+    EntityDelete = 80,
 }
