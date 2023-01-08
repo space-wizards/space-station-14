@@ -54,6 +54,12 @@ public sealed class BluespaceLockerComponent : Component
     public bool PickLinksFromStationGrids = true;
 
     /// <summary>
+    /// Determines if links automatically added are restricted to having the same access
+    /// </summary>
+    [DataField("pickLinksFromSameAccess"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromSameAccess = true;
+
+    /// <summary>
     /// Determines if links automatically added are bidirectional
     /// </summary>
     [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]

@@ -5,6 +5,7 @@ using Content.Server.Resist;
 using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
+using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
 using Robust.Shared.Random;
 
@@ -94,6 +95,11 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (component.PickLinksFromResistLockers &&
             !_entityManager.HasComponent<ResistLockerComponent>(link))
+            return false;
+
+        if (component.PickLinksFromSameAccess &&
+            (_entityManager.TryGetComponent<AccessComponent>(component.Owner, out var sourceAccess) != _entityManager.TryGetComponent<AccessComponent>(link, out var targetAccess) ||
+            (sourceAccess != null && !sourceAccess.Tags.SetEquals(targetAccess!.Tags))))
             return false;
 
         return true;
