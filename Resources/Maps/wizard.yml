@@ -4870,7 +4870,7 @@ entities:
   - pos: 4.5,-11.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -4197.952
+  - SecondsUntilStateChange: -4255.4224
     state: Opening
     type: Door
 - uid: 579
@@ -6189,4 +6189,10 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 767
+  type: SpawnPointCaptain
+  components:
+  - pos: -0.5,-9.5
+    parent: 0
+    type: Transform
 ...

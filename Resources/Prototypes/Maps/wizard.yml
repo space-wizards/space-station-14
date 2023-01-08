@@ -10,3 +10,5 @@
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
       overflowJobs: []
+      availableJobs:
+        Captain: [ 1, 1 ]
