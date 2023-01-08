@@ -1,19 +1,17 @@
 using System.Linq;
 using Content.Server.Actions;
-using Content.Server.Atmos.Components;
 using Content.Server.Popups;
 using Content.Shared.Spider;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
-using Content.Shared.Atmos;
 using Content.Shared.MobState.Components;
-using Content.Shared.Throwing;
 using Content.Shared.Doors.Components;
 using Content.Shared.Physics;
 using Content.Shared.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -26,7 +24,6 @@ namespace Content.Server.Spider
         [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
@@ -86,7 +83,7 @@ namespace Content.Server.Spider
         {
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                IPhysBody? physics = null; // We use this to check if it's impassable
+                PhysicsComponent? physics = null; // We use this to check if it's impassable
                 if ((HasComp<MobStateComponent>(entity) && entity != user) || // Is it a mob?
                     ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
                         && !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?
