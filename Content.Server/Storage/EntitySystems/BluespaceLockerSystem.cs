@@ -53,12 +53,16 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (!Resolve(targetContainerStorageComponent.Owner, ref targetContainerBluespaceComponent, false))
         {
             // Move contained items
-            if (component.TransportEntities)
+            if (component.TransportEntities || component.TransportSentient)
                 foreach (var entity in targetContainerStorageComponent.Contents.ContainedEntities.ToArray())
                 {
-                    if (!component.AllowSentient && EntityManager.HasComponent<MindComponent>(entity))
-                        continue;
-                    entityStorageComponent.Contents.Insert(entity, EntityManager);
+                    if (EntityManager.HasComponent<MindComponent>(entity))
+                    {
+                        if (component.TransportSentient)
+                            entityStorageComponent.Contents.Insert(entity, EntityManager);
+                    }
+                    else if (component.TransportEntities)
+                        entityStorageComponent.Contents.Insert(entity, EntityManager);
                 }
 
             // Move contained air
@@ -150,12 +154,16 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return;
 
         // Move contained items
-        if (component.TransportEntities)
+        if (component.TransportEntities || component.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
-                if (!component.AllowSentient && EntityManager.HasComponent<MindComponent>(entity))
-                    continue;
-                targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
+                if (EntityManager.HasComponent<MindComponent>(entity))
+                {
+                    if (component.TransportSentient)
+                        targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
+                }
+                else if (component.TransportEntities)
+                    targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
             }
 
         // Move contained air

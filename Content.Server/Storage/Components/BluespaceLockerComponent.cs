@@ -18,8 +18,8 @@ public sealed class BluespaceLockerComponent : Component
     /// <summary>
     /// Determines if entities with a Mind component will be transported.
     /// </summary>
-    [DataField("allowSentient"), ViewVariables(VVAccess.ReadWrite)]
-    public bool AllowSentient = true;
+    [DataField("transportSentient"), ViewVariables(VVAccess.ReadWrite)]
+    public bool TransportSentient = true;
 
     /// <summary>
     /// If length > 0, when something is added to the storage, it will instead be teleported to a random storage
