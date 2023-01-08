@@ -1,4 +1,3 @@
-using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Spider
