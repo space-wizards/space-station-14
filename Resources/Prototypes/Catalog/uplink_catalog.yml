@@ -253,7 +253,7 @@
 - type: listing
   id: UplinkHeadset
   name: Syndicate Headset - Over-ear Headset
-  description: A headset that allows you to listen in on departmental channels, or contact our other agents.
+  description: A headset that allows you to listen in on departmental channels, or contact our other agents. Have 4 slots for encryption keys.
   productEntity: ClothingHeadsetAltSyndicate
   cost:
     Telecrystal: 3
@@ -266,7 +266,7 @@
   description: A encryption key to access the secret frequency of our special agents. Just insert it in any headset you use. And no one will know that you have a special channel with friends... or rivals.
   productEntity: EncryptionKeySyndie
   cost:
-    Telecrystal: 1
+    Telecrystal: 2
   categories:
   - UplinkUtility
 

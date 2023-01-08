@@ -7,7 +7,7 @@ examine-encryption-key-common-channel = [color={$color}]{$key} for {$id} ({$freq
 
 headset-encryption-key-successfully-installed = You put the key into the headset.
 headset-encryption-key-slots-already-full = There is no place for another key.
-headset-encryption-keys-all-extrated = You pop out the encryption keys from the headset!
+headset-encryption-keys-all-extracted = You pop out the encryption keys from the headset!
 headset-encryption-keys-no-keys = This headset doesn't have any encryption keys! No keys? How useless...
 headset-encryption-keys-are-locked = The headset's key slots are locked, you cannot extract the keys or add new in.
 

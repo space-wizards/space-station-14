@@ -216,7 +216,7 @@
   parent: EncryptionKey
   id: EncryptionKeySecurity
   name: security encryption key
-  description: An encryption key used by seccurity.
+  description: An encryption key used by security.
   components:
   - type: EncryptionKey
     channels:
@@ -230,7 +230,7 @@
   parent: EncryptionKey
   id: EncryptionKeyHOS
   name: head of security encryption key
-  description: An encryption key used by boss seccurity.
+  description: An encryption key used by boss security.
   components:
   - type: EncryptionKey
     channels:

@@ -209,7 +209,7 @@ public sealed class HeadsetSystem : EntitySystem
                     }
                     component.Channels.Clear();
 
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extrated"), uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, Filter.Entities(args.User));
                     _audio.PlayPvs(component.KeyExtractionSound, args.Target);
                 }
             }
