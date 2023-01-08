@@ -561,9 +561,10 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     var meta = MetaData(args.Target);
+                    var name = Name(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", args.Target)), args.Target, PopupType.LargeCaution);
 
-                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", Name(args.Target)));
+                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
 
                     EnsureComp<BackwardsAccentComponent>(args.Target);
 
