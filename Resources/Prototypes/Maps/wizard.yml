@@ -1,0 +1,12 @@
+- type: gameMap
+  id: Wizard
+  mapName: 'Wizard Ship'
+  mapPath: /Maps/wizard.yml
+  minPlayers: 0
+  stations:
+    Station: #TODO: Mapper, add a BecomesStation component to the primary grid of the map.
+      mapNameTemplate: '{0} Wizard {1}'
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: '14'
+      overflowJobs: []
