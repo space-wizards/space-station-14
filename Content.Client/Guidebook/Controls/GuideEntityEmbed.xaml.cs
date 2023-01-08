@@ -131,9 +131,9 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
     public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
     {
-        if (args.Count != 1 )
+        if (args.Count != 1 && args.Count != 2)
         {
-            Logger.Error($"Failed to parse embedded entity tag.");
+            Logger.Error($"Wrong number of arguments for embedded entity tag. Expected 1 or 2, but got {args.Count}. Args: {string.Join(", ", args)}");
             control = null;
             return false;
         }

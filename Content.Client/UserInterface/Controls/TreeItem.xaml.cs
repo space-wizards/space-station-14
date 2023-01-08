@@ -15,6 +15,8 @@ public sealed partial class TreeItem : PanelContainer
     public const string StyleClassCollapsed = "collapsed";
     public const string StyleClassSelected = "selected";
     public const string StyleClassTreeButton = "fancy-tree-button";
+    public const string StyleClassEvenRow = "even-row";
+    public const string StyleClassOddRow = "odd-row";
 
     public bool Collapsible { get; private set; } = true;
 
@@ -73,6 +75,8 @@ public sealed partial class TreeItem : PanelContainer
             Icon.AddStyleClass(StyleClassCollapsed);
             Icon.RemoveStyleClass(StyleClassExpanded);
         }
+
+        Tree.QueueRowStyleUpdate();
     }
 
     public void SetSelected(bool value)

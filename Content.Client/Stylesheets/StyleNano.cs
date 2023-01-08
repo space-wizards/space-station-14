@@ -113,6 +113,11 @@ namespace Content.Client.Stylesheets
         public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
 
+        // Fancy Tree elements
+        public static readonly Color FancyTreeEvenRowColor = Color.FromHex("#25252A");
+        public static readonly Color FancyTreeOddRowColor = FancyTreeEvenRowColor * new Color(0.8f, 0.8f, 0.8f);
+        public static readonly Color FancyTreeSelectedRowColor = new Color(55, 55, 68);
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -1411,17 +1416,31 @@ namespace Content.Client.Stylesheets
 
                 // Fancy Tree
                 Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassEvenRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeEvenRowColor,
+                    }),
+
+                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                    .Class(TreeItem.StyleClassOddRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeOddRowColor,
+                    }),
+
+                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
                     .Class(TreeItem.StyleClassSelected)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
-                        BackgroundColor = new Color(55, 55, 68),
+                        BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
                 Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
-                        BackgroundColor = new Color(30, 30, 35),
+                        BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
                 Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
