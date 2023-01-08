@@ -26,7 +26,7 @@ public sealed class BluespaceLockerComponent : Component
     /// from the list and the other storage will be opened.
     /// </summary>
     [DataField("bluespaceLinks"), ViewVariables(VVAccess.ReadOnly)]
-    public HashSet<EntityStorageComponent> BluespaceLinks = new();
+    public HashSet<EntityUid> BluespaceLinks = new();
 
     /// <summary>
     /// Each time the system attempts to get a link, it will link additional lockers to ensure the minimum amount

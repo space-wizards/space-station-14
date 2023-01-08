@@ -74,26 +74,26 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
     }
 
-    private bool ValidLink(BluespaceLockerComponent component, EntityStorageComponent link)
+    private bool ValidLink(BluespaceLockerComponent component, EntityUid link)
     {
-        return link.Owner.Valid && link.LifeStage != ComponentLifeStage.Deleted;
+        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted;
     }
 
-    private bool ValidAutolink(BluespaceLockerComponent component, EntityStorageComponent link)
+    private bool ValidAutolink(BluespaceLockerComponent component, EntityUid link)
     {
         if (!ValidLink(component, link))
             return false;
 
         if (component.PickLinksFromSameMap &&
-            link.Owner.ToCoordinates().GetMapId(_entityManager) == component.Owner.ToCoordinates().GetMapId(_entityManager))
+            link.ToCoordinates().GetMapId(_entityManager) == component.Owner.ToCoordinates().GetMapId(_entityManager))
             return false;
 
         if (component.PickLinksFromStationGrids &&
-            !_entityManager.HasComponent<StationMemberComponent>(link.Owner.ToCoordinates().GetGridUid(_entityManager)))
+            !_entityManager.HasComponent<StationMemberComponent>(link.ToCoordinates().GetGridUid(_entityManager)))
             return false;
 
         if (component.PickLinksFromResistLockers &&
-            !_entityManager.HasComponent<ResistLockerComponent>(link.Owner))
+            !_entityManager.HasComponent<ResistLockerComponent>(link))
             return false;
 
         return true;
@@ -113,14 +113,16 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 // Add valid candidates till MinBluespaceLinks is met
                 foreach (var storage in storages)
                 {
-                    if (!ValidAutolink(component, storage))
+                    var potentialLink = storage.Owner;
+
+                    if (!ValidAutolink(component, potentialLink))
                         continue;
 
-                    component.BluespaceLinks.Add(storage);
+                    component.BluespaceLinks.Add(potentialLink);
                     if (component.AutoLinksBidirectional)
                     {
                         _entityManager.EnsureComponent<BluespaceLockerComponent>(storage.Owner, out var targetBluespaceComponent);
-                        targetBluespaceComponent.BluespaceLinks.Add(_entityManager.GetComponent<EntityStorageComponent>(component.Owner));
+                        targetBluespaceComponent.BluespaceLinks.Add(component.Owner);
                     }
                     if (component.BluespaceLinks.Count >= component.MinBluespaceLinks)
                         break;
@@ -135,7 +137,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             var links = component.BluespaceLinks.ToArray();
             var link = links[_robustRandom.Next(0, component.BluespaceLinks.Count)];
             if (ValidLink(component, link))
-                return link;
+                return Comp<EntityStorageComponent>(link);
             component.BluespaceLinks.Remove(link);
         }
     }
