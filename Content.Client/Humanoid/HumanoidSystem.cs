@@ -30,7 +30,6 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         }
 
         humanoid.Species = profile.Species;
-        humanoid.CachedEyeColor = profile.Appearance.EyeColor;
 
         var customBaseLayers = new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>
         {
