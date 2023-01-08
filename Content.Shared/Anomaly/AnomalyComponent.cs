@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Anomaly;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
+namespace Content.Shared.Anomaly;
 
 /// <summary>
 /// This is used for tracking the general behavior of anomalies.
@@ -77,7 +79,7 @@ public sealed class AnomalyComponent : Component
     [ViewVariables]
     public bool Supercritical = false;
 
-    [ViewVariables]
+    [DataField("nextSecondUpdate", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables]
     public TimeSpan NextSecondUpdate = TimeSpan.Zero;
     #endregion
 
@@ -85,7 +87,7 @@ public sealed class AnomalyComponent : Component
     /// <summary>
     /// The time at which the next artifact pulse will occur.
     /// </summary>
-    [ViewVariables]
+    [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)),ViewVariables]
     public TimeSpan NextPulseTime = TimeSpan.MaxValue;
 
     /// <summary>
