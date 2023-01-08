@@ -263,7 +263,6 @@
   description: An encryption key used by... wait... Who is owner of this chip?
   components:
   - type: EncryptionKey
-    keySlotsAmount: 4
     channels:
     - Common
     - Syndicate
