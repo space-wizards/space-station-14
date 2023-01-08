@@ -81,4 +81,5 @@ public enum LogType
     Stamina = 76,
     EntitySpawn = 77,
     Container = 78,
+    Teleport = 79,
 }
