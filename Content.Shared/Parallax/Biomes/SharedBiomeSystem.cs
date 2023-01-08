@@ -208,15 +208,13 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
-
-            if (value <= layer.Threshold)
-            {
-                continue;
-            }
-
             if (layer is not BiomeEntityLayer biomeLayer)
             {
+                if ((noise.GetCellular(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
+                {
+                    continue;
+                }
+
                 entity = null;
                 noise.SetFrequency(oldFrequency);
                 noise.SetSeed(seed);
@@ -271,15 +269,12 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
-
-            if (value <= layer.Threshold)
-            {
-                continue;
-            }
-
+            // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
+                if ((noise.GetCellular(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
+                    continue;
+
                 decals = null;
                 noise.SetFrequency(oldFrequency);
                 noise.SetSeed(seed);
@@ -293,13 +288,23 @@ public abstract class SharedBiomeSystem : EntitySystem
                 for (var y = 0; y < decalLayer.Divisions; y++)
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
+                    var decalValue = (noise.GetCellular(index.X, index.Y) + 1f) / 2f;
 
+                    if (decalValue < decalLayer.Threshold)
+                        continue;
+
+                    DebugTools.Assert(decalValue is <= 1f and >= 0f);
                     decals.Add((Pick(decalLayer.Decals, (noise.GetSimplex(index.X, index.Y) + 1f) / 2f), index));
                 }
             }
 
             noise.SetFrequency(oldFrequency);
             noise.SetSeed(seed);
+
+            // Check other layers
+            if (decals.Count == 0)
+                continue;
+
             return true;
         }
 

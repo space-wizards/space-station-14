@@ -63,6 +63,6 @@
   canCrowbar: false
   footstepSounds:
     collection: FootstepSnow
-  friction: 0.30
+  friction: 0.20
   thermalConductivity: 0.04
   heatCapacity: 10000

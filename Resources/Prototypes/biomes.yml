@@ -118,7 +118,7 @@
       allowedTiles:
         - FloorSnow
       seedOffset: 4
-      threshold: 0.98
+      threshold: 0.90
       divisions: 1
       frequency: 1
       decals:
@@ -131,26 +131,14 @@
         - grasssnowc1
         - grasssnowc2
         - grasssnowc3
-    - !type:BiomeDecalLayer
-      allowedTiles:
-        - FloorSnow
-      seedOffset: 3
-      threshold: 0.98
-      # TODO: Fix clumping
-      divisions: 2
-      frequency: 0.5
-      decals:
-        - bushsnowa1
-        - bushsnowa2
-        - bushsnowa3
-        - bushsnowb1
-        - bushsnowb2
-        - bushsnowb3
+    # The main grass texture, this one blends in very well
     - !type:BiomeDecalLayer
       allowedTiles:
         - FloorSnow
       divisions: 1
-      seedOffset: 2
+      seedOffset: 3
+      threshold: 0.9
+      frequency: 0.05
       decals:
         - grasssnow
         - grasssnow01
@@ -166,6 +154,20 @@
         - grasssnow11
         - grasssnow12
         - grasssnow13
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorSnow
+      seedOffset: 2
+      threshold: 0.99
+      divisions: 2
+      frequency: 0.05
+      decals:
+        - bushsnowa1
+        - bushsnowa2
+        - bushsnowa3
+        - bushsnowb1
+        - bushsnowb2
+        - bushsnowb3
     - !type:BiomeEntityLayer
       seedOffset: 1
       threshold: 0.9
