@@ -62,7 +62,7 @@
     interfaces:
     - key: enum.StoreUiKey.Key
       type: StoreBoundUserInterface
-  - type: MobState
+  - type: MobThresholds
   - type: Visibility
     layer: 2 #ghost vis layer
   - type: Store

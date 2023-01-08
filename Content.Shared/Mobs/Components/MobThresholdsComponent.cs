@@ -7,7 +7,7 @@ namespace Content.Shared.Mobs.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(MobThresholdSystem))]
-public sealed class MobThresholdComponent : Component
+public sealed class MobThresholdsComponent : Component
 {
     [DataField("thresholds", required:true)]public SortedDictionary<FixedPoint2, MobState> Thresholds = new();
 

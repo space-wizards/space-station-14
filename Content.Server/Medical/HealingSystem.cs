@@ -177,7 +177,7 @@ public sealed class HealingSystem : EntitySystem
     public float GetScaledHealingPenalty(EntityUid uid, HealingComponent component)
     {
         var output = component.Delay;
-        if (!TryComp<MobThresholdComponent>(uid, out var mobThreshold) || !TryComp<DamageableComponent>(uid, out var damageable))
+        if (!TryComp<MobThresholdsComponent>(uid, out var mobThreshold) || !TryComp<DamageableComponent>(uid, out var damageable))
             return output;
 
 

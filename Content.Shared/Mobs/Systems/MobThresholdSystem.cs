@@ -12,12 +12,12 @@ public sealed class MobThresholdSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobStateSystem= default!;
     public override void Initialize()
     {
-        SubscribeLocalEvent<MobThresholdComponent, ComponentStartup>(MobThresholdStartup);
-        SubscribeLocalEvent<MobThresholdComponent, DamageChangedEvent>(OnDamaged);
-        SubscribeLocalEvent<MobThresholdComponent, ComponentGetState>(OnGetComponentState);
-        SubscribeLocalEvent<MobThresholdComponent, ComponentHandleState>(OnHandleComponentState);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
+        SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleComponentState);
     }
-    private void OnHandleComponentState(EntityUid uid, MobThresholdComponent component, ref ComponentHandleState args)
+    private void OnHandleComponentState(EntityUid uid, MobThresholdsComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MobThresholdComponentState state)
             return;
@@ -25,12 +25,12 @@ public sealed class MobThresholdSystem : EntitySystem
         component.CurrentThresholdState = state.CurrentThresholdState;
     }
 
-    private void OnGetComponentState(EntityUid uid, MobThresholdComponent component, ref ComponentGetState args)
+    private void OnGetComponentState(EntityUid uid, MobThresholdsComponent component, ref ComponentGetState args)
     {
         args.State = new MobThresholdComponentState(component.CurrentThresholdState, new Dictionary<FixedPoint2, MobState>(component.Thresholds));
     }
 
-    private void MobThresholdStartup(EntityUid uid, MobThresholdComponent component, ComponentStartup args)
+    private void MobThresholdStartup(EntityUid uid, MobThresholdsComponent component, ComponentStartup args)
     {
         if (!HasComp<DamageableComponent>(uid))
         {
@@ -46,7 +46,7 @@ public sealed class MobThresholdSystem : EntitySystem
         TriggerThreshold(uid, mobStateComp, component, MobState.Invalid, component.Thresholds.First().Value);
     }
 
-    public FixedPoint2 GetThresholdForState(EntityUid uid, MobState mobState, MobThresholdComponent? thresholdComponent)
+    public FixedPoint2 GetThresholdForState(EntityUid uid, MobState mobState, MobThresholdsComponent? thresholdComponent)
     {
         if (!Resolve(uid, ref thresholdComponent) || !thresholdComponent.ThresholdReverseLookup.TryGetValue(mobState, out var threshold))
         {
@@ -56,7 +56,7 @@ public sealed class MobThresholdSystem : EntitySystem
     }
 
     public bool TryGetThresholdForState(EntityUid uid, MobState mobState,  [NotNullWhen(true)] out FixedPoint2? threshold,
-        MobThresholdComponent? thresholdComponent = null)
+        MobThresholdsComponent? thresholdComponent = null)
     {
         if (!Resolve(uid, ref thresholdComponent) ||
             !thresholdComponent.ThresholdReverseLookup.TryGetValue(mobState, out var foundThreshold))
@@ -82,8 +82,8 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!TryComp<DamageableComponent>(ent1, out var oldDamage))
             return false;
 
-        if (!TryComp<MobThresholdComponent>(ent1, out var threshold1) ||
-            !TryComp<MobThresholdComponent>(ent2, out var threshold2))
+        if (!TryComp<MobThresholdsComponent>(ent1, out var threshold1) ||
+            !TryComp<MobThresholdsComponent>(ent2, out var threshold2))
             return false;
 
         if (!TryGetThresholdForState(ent1, MobState.Dead, out var ent1DeadThreshold, threshold1))
@@ -100,7 +100,7 @@ public sealed class MobThresholdSystem : EntitySystem
     }
 
     public void SetMobStateThreshold(EntityUid uid, FixedPoint2 damage, MobState mobState,
-        MobThresholdComponent? thresholdComponent = null)
+        MobThresholdsComponent? thresholdComponent = null)
     {
         if (!Resolve(uid, ref thresholdComponent))
             return;
@@ -113,15 +113,15 @@ public sealed class MobThresholdSystem : EntitySystem
         VerifyThresholds(uid, thresholdComponent);
     }
 
-    private void OnDamaged(EntityUid uid, MobThresholdComponent mobThresholdComponent, DamageChangedEvent args)
+    private void OnDamaged(EntityUid uid, MobThresholdsComponent mobThresholdsComponent, DamageChangedEvent args)
     {
         var mobStateComp = EnsureComp<MobStateComponent>(uid);
-        CheckThresholds(uid, mobStateComp, mobThresholdComponent, args.Damageable);
+        CheckThresholds(uid, mobStateComp, mobThresholdsComponent, args.Damageable);
 
     }
 
     //Call this if you are somehow change the amount of damage on damageable without triggering a damageChangedEvent
-    public void VerifyThresholds(EntityUid target, MobThresholdComponent? thresholdComponent = null,
+    public void VerifyThresholds(EntityUid target, MobThresholdsComponent? thresholdComponent = null,
         MobStateComponent? mobStateComponent = null,DamageableComponent? damageableComponent = null)
     {
         if (!EnsureComps(target, mobStateComponent, thresholdComponent, damageableComponent))
@@ -129,31 +129,31 @@ public sealed class MobThresholdSystem : EntitySystem
         CheckThresholds(target, mobStateComponent, thresholdComponent, damageableComponent);
     }
 
-    private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent, MobThresholdComponent thresholdComponent, DamageableComponent damageableComponent)
+    private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent, MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
     {
-        foreach (var (threshold,mobState) in thresholdComponent.Thresholds)
+        foreach (var (threshold,mobState) in thresholdsComponent.Thresholds)
         {
             if (damageableComponent.TotalDamage > threshold)
                 continue;
-            TriggerThreshold(target, mobStateComponent, thresholdComponent,thresholdComponent.CurrentThresholdState, mobState);
+            TriggerThreshold(target, mobStateComponent, thresholdsComponent,thresholdsComponent.CurrentThresholdState, mobState);
             var ev = new MobThresholdUpdatedEvent(mobState, damageableComponent.TotalDamage, threshold);
             RaiseLocalEvent(ref ev);
         }
     }
 
-    private void TriggerThreshold(EntityUid uid, MobStateComponent mobStateComponent, MobThresholdComponent thresholdComponent,
+    private void TriggerThreshold(EntityUid uid, MobStateComponent mobStateComponent, MobThresholdsComponent thresholdsComponent,
         MobState oldMobState, MobState newMobState)
     {
         if (oldMobState == newMobState)
             return;
         _mobStateSystem.ReturnMobStateTicket(uid, oldMobState, mobStateComponent);
-        thresholdComponent.CurrentThresholdState = newMobState;
-        Dirty(thresholdComponent);
+        thresholdsComponent.CurrentThresholdState = newMobState;
+        Dirty(thresholdsComponent);
         _mobStateSystem.TakeMobStateTicket(uid, newMobState, mobStateComponent);
 
     }
 
-    private bool EnsureComps(EntityUid target, [NotNullWhen(true)] MobStateComponent? mobStateComponent, [NotNullWhen(true)] MobThresholdComponent? thresholdComponent,
+    private bool EnsureComps(EntityUid target, [NotNullWhen(true)] MobStateComponent? mobStateComponent, [NotNullWhen(true)] MobThresholdsComponent? thresholdComponent,
         [NotNullWhen(true)] DamageableComponent? damageableComponent)
     {
         if (Resolve(target, ref thresholdComponent)&& Resolve(target, ref mobStateComponent) && Resolve(target, ref damageableComponent))

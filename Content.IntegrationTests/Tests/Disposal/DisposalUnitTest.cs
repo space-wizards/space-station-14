@@ -78,7 +78,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: Body
     prototype: Human
-  - type: MobState
+  - type: MobThresholds
   - type: Damageable
     damageContainer: Biological
   - type: Physics

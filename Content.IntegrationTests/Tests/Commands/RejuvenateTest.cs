@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests.Commands
   components:
   - type: Damageable
     damageContainer: Biological
-  - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical

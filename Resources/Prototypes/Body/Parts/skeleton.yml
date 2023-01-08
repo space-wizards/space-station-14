@@ -62,7 +62,7 @@
         proper: true
     - type: Examiner
     - type: DoAfter
-    - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
     - type: Tag
