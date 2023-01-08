@@ -36,7 +36,11 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             return;
         }
 
-        var dirty = data.SkinColor != component.SkinColor || data.Sex != component.Sex;
+        var dirty = data.SkinColor != component.SkinColor
+            || data.Sex != component.Sex
+            || data.HairColor != component.CachedHairColor
+            || data.FacialHairColor != component.CachedFacialHairColor
+            || data.EyeColor != component.CachedEyeColor;
         component.Sex = data.Sex;
 
         if (data.CustomBaseLayerInfo.Count != 0)
@@ -289,9 +293,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
                 humanoid.CachedHairColor,
                 humanoid.CachedFacialHairColor
             );
-        foreach (var mrk in markingColors) {
-            Logger.DebugS("kek", $"color {mrk.ToHex()} -- {markingPrototype.ID}");
-        }
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {

@@ -219,7 +219,7 @@ namespace Content.Client.Preferences.UI
 
             _hairPicker.OnColorChanged += newColor =>
             {
-                if (Profile is null)
+                if (Profile is null)//
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithHairColor(newColor.marking.MarkingColors[0]));
@@ -650,7 +650,7 @@ namespace Content.Client.Preferences.UI
                     var color = SkinColor.HumanSkinTone((int) _skinColor.Value);
 
                     CMarkings.CurrentSkinColor = color;
-                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
+                    Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));//
                     break;
                 }
                 case HumanoidSkinColor.Hues:
