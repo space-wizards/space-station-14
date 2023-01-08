@@ -1,9 +1,10 @@
+# Desert
 - type: biome
   id: Desert
   layers:
     - !type:BiomeEntityLayer
-      threshold: 0.8
-      frequency: 0.1
+      threshold: 0.9
+      frequency: 0.2
       allowedTiles:
         - FloorDesert
       entities:
@@ -21,6 +22,13 @@
 - type: biome
   id: LowDesert
   layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.9
+      frequency: 0.2
+      allowedTiles:
+        - FloorLowDesert
+      entities:
+        - AsteroidRock
     - !type:BiomeTileLayer
       threshold: 0
       variants:
@@ -31,7 +39,7 @@
       tile: FloorLowDesert
       frequency: 0.1
 
-
+# Grass
 - type: biome
   id: Grasslands
   layers:
@@ -102,7 +110,23 @@
       threshold: 0.5
       tile: FloorPlanetGrass
 
-#- type: biomeTileLayer
-#  id: Asteroid
-#  # TODO: Make tile into tiles
-#  tile: FloorAsteroidSand
+# Snow
+- type: biome
+  id: Snow
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.8
+      frequency: 0.1
+      allowedTiles:
+        - FloorDesert
+      entities:
+        - AsteroidRock
+    - !type:BiomeTileLayer
+      threshold: 0
+      variants:
+        - 0
+      tile: FloorDesert
+    - !type:BiomeTileLayer
+      threshold: 0.6
+      tile: FloorDesert
+      frequency: 0.1
