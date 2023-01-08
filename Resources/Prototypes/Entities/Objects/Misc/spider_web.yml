@@ -14,11 +14,18 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/spiderweb.rsi
-      state: spider_web_1
+      layers:
+        - state: spider_web_1
+          map: ["spiderWebLayer"]
       drawdepth: WallMountedItems
       netsync: false
     - type: Appearance
-    - type: SpiderWebVisuals
+    - type: GenericVisualizer
+      visuals:
+        enum.SpiderWebVisuals.Variant:
+            spiderWebLayer:
+                1:  {state: spider_web_1}
+                2:  {state: spider_web_2}
     - type: Clickable
     - type: Transform
       anchored: true

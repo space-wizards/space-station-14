@@ -1,2 +1,2 @@
 spider-web-action-name = Spider Web
-spider-web-action-description = Spawns web that slow your prey down.
+spider-web-action-description = Spawns a web that slows your prey down.

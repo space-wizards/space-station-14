@@ -32,7 +32,7 @@ namespace Content.Server.Spider
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SpiderWebVisualsComponent, ComponentStartup>(OnWebStartup);
+            SubscribeLocalEvent<SpiderWebObjectComponent, ComponentStartup>(OnWebStartup);
             SubscribeLocalEvent<SpiderComponent, ComponentStartup>(OnSpiderStartup);
             SubscribeLocalEvent<SpiderComponent, SpiderWebActionEvent>(OnSpawnNet);
         }
@@ -43,7 +43,7 @@ namespace Content.Server.Spider
             _action.AddAction(uid, netAction, null);
         }
 
-        private void OnWebStartup(EntityUid uid, SpiderWebVisualsComponent component, ComponentStartup args)
+        private void OnWebStartup(EntityUid uid, SpiderWebObjectComponent component, ComponentStartup args)
         {
             _appearance.SetData(uid,SpiderWebVisuals.Variant, _robustRandom.Next(1, 3));
         }

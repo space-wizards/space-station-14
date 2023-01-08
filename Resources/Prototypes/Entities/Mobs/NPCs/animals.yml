@@ -1297,8 +1297,8 @@
   - type: MobState
     thresholds:
       0: Alive
-      75: Critical
-      125: Dead
+      90: Critical
+      150: Dead
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -1308,7 +1308,7 @@
     damage:
       types:
         Piercing: 12
-        Poison: 5
+        Poison: 4
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
