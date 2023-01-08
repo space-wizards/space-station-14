@@ -1,7 +1,7 @@
 ﻿- type: guideEntry
   id: Engineering
   name: guide-entry-engineering
-  text: "/Server Info/Guidebook/Engineering.txt"
+  text: "/Server Info/Guidebook/Engineering.xml"
   children:
   - Atmospherics
   - Construction
@@ -11,33 +11,33 @@
 - type: guideEntry
   id: Construction
   name: guide-entry-construction
-  text: "/Server Info/Guidebook/Construction.txt"
+  text: "/Server Info/Guidebook/Construction.xml"
 
 - type: guideEntry
   id: Atmospherics
   name: guide-entry-atmospherics
-  text: "/Server Info/Guidebook/Atmospherics.txt"
+  text: "/Server Info/Guidebook/Atmospherics.xml"
   children:
   - Fires
 
 - type: guideEntry
   id: Fires
   name: guide-entry-fires
-  text: "/Server Info/Guidebook/Fires.txt"
+  text: "/Server Info/Guidebook/Fires.xml"
 
 - type: guideEntry
   id: ShuttleCraft
   name: guide-entry-shuttle-craft
-  text: "/Server Info/Guidebook/Shuttlecraft.txt"
+  text: "/Server Info/Guidebook/Shuttlecraft.xml"
 
 - type: guideEntry
   id: Power
   name: guide-entry-power
-  text: "/Server Info/Guidebook/Power.txt"
+  text: "/Server Info/Guidebook/Power.xml"
   children:
   - AME
 
 - type: guideEntry
   id: AME
   name: guide-entry-ame
-  text: "/Server Info/Guidebook/AME.txt"
+  text: "/Server Info/Guidebook/AME.xml"

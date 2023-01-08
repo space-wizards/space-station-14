@@ -15,7 +15,7 @@ public sealed partial class GuidebookParsingManager
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
     private readonly List<Parser<char, Control>> _tagControlParsers = new();
-    public Parser<char, Control> _controlParser = default!;
+    private Parser<char, Control> _controlParser = default!;
     public Parser<char, IEnumerable<Control>> ControlParser = default!;
     public Parser<char, Document> DocumentParser = default!;
 
