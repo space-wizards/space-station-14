@@ -566,11 +566,12 @@
   parent: IDCardStandard
   id: CluwneIDCard
   name: cluwne ID card
+  suffix: Not to be mapped
   components:
   - type: Sprite
     layers:
     - state: default
     - state: idcluwne
   - type: IdCard
-    jobTitle: Cluwne
+    jobTitle: A Pitiful Cluwne
   - type: Unremoveable

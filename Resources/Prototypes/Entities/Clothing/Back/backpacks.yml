@@ -206,7 +206,7 @@
   parent: ClothingBackpackClown
   id: ClothingBackpackCluwne
   name: cursed giggles von honkerton
-  suffix: Not to be mapped.
+  suffix: Not to be mapped
   description: Its a cursed giggles von honkerton backpack.
   components:
   - type: Sprite
