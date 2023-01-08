@@ -271,7 +271,7 @@
 #TODO: Increase the price to 4 when flashbang prof.
 - type: listing
   id: UplinkHeadset
-  name: uplink-headset-name #Syndicate Headset - Over-ear Headset
+  name: uplink-headset-name
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
@@ -281,8 +281,8 @@
 
 - type: listing
   id: UplinkHeadsetEncryptionKey
-  name: uplink-encryption-key-name #Syndicate Headset - Encryption Key
-  description: uplink-encryption-key-desc# A encryption key to access the secret frequency of our special agents. Just insert it in any headset you use. And no one will know that you have a special channel with friends... or rivals.
+  name: uplink-encryption-key-name
+  description: uplink-encryption-key-desc
   productEntity: EncryptionKeySyndie
   cost:
     Telecrystal: 2

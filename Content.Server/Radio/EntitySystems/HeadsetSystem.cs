@@ -167,7 +167,7 @@ public sealed class HeadsetSystem : EntitySystem
             return;
         if(!component.IsKeysLocked)
         {
-            _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, args.User);
             return;
         }
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
@@ -176,13 +176,13 @@ public sealed class HeadsetSystem : EntitySystem
             {
                 if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, args.User);
                     _audio.PlayPvs(component.KeyInsertionSound, args.Target);
                 }
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, args.User);
             }
         }
         if (TryComp<ToolComponent>(args.Used, out var tool))
@@ -209,13 +209,13 @@ public sealed class HeadsetSystem : EntitySystem
                     }
                     component.Channels.Clear();
 
-                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, args.User);
                     _audio.PlayPvs(component.KeyExtractionSound, args.Target);
                 }
             }
             else
             {
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, args.User);
             }
         }
     }

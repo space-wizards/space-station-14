@@ -48,8 +48,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Command
     - Common
+    - Command
     - Supply
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
@@ -118,8 +118,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Command
     - Common
+    - Command
     - Engineering
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
@@ -147,8 +147,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Command
     - Common
+    - Command
     - Medical
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
@@ -205,8 +205,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Command
     - Common
+    - Command
     - Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
@@ -220,6 +220,7 @@
   components:
   - type: EncryptionKey
     channels:
+    - Common
     - Command
     - Security
   - type: Sprite
@@ -234,8 +235,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Command
     - Common
+    - Command
     - Security
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
