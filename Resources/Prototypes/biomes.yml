@@ -19,6 +19,11 @@
       tile: FloorDesert
       frequency: 0.1
 
+# TODO: Sandstone wall
+# TODO: Rock decals
+# TODO: Water in grasslands
+# TODO: Water in desert / grass?
+# TODO: Look at weather with it
 - type: biome
   id: LowDesert
   layers:
