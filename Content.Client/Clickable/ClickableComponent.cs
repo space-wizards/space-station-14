@@ -9,8 +9,6 @@ namespace Content.Client.Clickable
     public sealed class ClickableComponent : Component
     {
         [Dependency] private readonly IClickMapManager _clickMapManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IEntityManager _entMan = default!;
 
         [DataField("bounds")] public DirBoundData? Bounds;
 
@@ -23,30 +21,31 @@ namespace Content.Client.Clickable
         /// The draw depth for the sprite that captured the click.
         /// </param>
         /// <returns>True if the click worked, false otherwise.</returns>
-        public bool CheckClick(Vector2 worldPos, out int drawDepth, out uint renderOrder)
+        public bool CheckClick(SpriteComponent sprite, TransformComponent transform, EntityQuery<TransformComponent> xformQuery, Vector2 worldPos, IEye eye, out int drawDepth, out uint renderOrder, out float bottom)
         {
-            if (!_entMan.TryGetComponent(Owner, out SpriteComponent? sprite) || !sprite.Visible)
+            if (!sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;
+                bottom = default;
                 return false;
             }
 
             drawDepth = sprite.DrawDepth;
             renderOrder = sprite.RenderOrder;
-
-            var transform = _entMan.GetComponent<TransformComponent>(Owner);
-            var worldRot = transform.WorldRotation;
+            var (spritePos, spriteRot) = transform.GetWorldPositionRotation(xformQuery);
+            var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
+            bottom = spriteBB.CalcBoundingBox().Bottom;
 
             var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 
             // This should have been the rotation of the sprite relative to the screen, but this is not the case with no-rot or directional sprites.
-            var relativeRotation = (worldRot + _eyeManager.CurrentEye.Rotation).Reduced().FlipPositive();
+            var relativeRotation = (spriteRot + eye.Rotation).Reduced().FlipPositive();
 
             Angle cardinalSnapping = sprite.SnapCardinals ? relativeRotation.GetCardinalDir().ToAngle() : Angle.Zero;
 
             // First we get `localPos`, the clicked location in the sprite-coordinate frame.
-            var entityXform = Matrix3.CreateInverseTransform(transform.WorldPosition, sprite.NoRotation ? -_eyeManager.CurrentEye.Rotation : worldRot - cardinalSnapping);
+            var entityXform = Matrix3.CreateInverseTransform(transform.WorldPosition, sprite.NoRotation ? -eye.Rotation : spriteRot - cardinalSnapping);
             var localPos = invSpriteMatrix.Transform(entityXform.Transform(worldPos));
 
             // Check explicitly defined click-able bounds
@@ -70,10 +69,10 @@ namespace Content.Client.Clickable
                 }
 
                 // Either we weren't clicking on the texture, or there wasn't one. In which case: check the RSI next
-                if (layer.State == null || layer.ActualRsi is not RSI rsi || !rsi.TryGetState(layer.State, out var rsiState))
+                if (layer.ActualRsi is not { } rsi || !rsi.TryGetState(layer.State, out var rsiState))
                     continue;
 
-                var dir = SpriteComponent.Layer.GetDirection(rsiState.Directions, relativeRotation);
+                var dir = Layer.GetDirection(rsiState.Directions, relativeRotation);
 
                 // convert to layer-local coordinates
                 layer.GetLayerDrawMatrix(dir, out var matrix);
@@ -95,6 +94,7 @@ namespace Content.Client.Clickable
 
             drawDepth = default;
             renderOrder = default;
+            bottom = default;
             return false;
         }
 

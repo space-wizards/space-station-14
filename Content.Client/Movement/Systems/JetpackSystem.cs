@@ -69,7 +69,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         if (_mapManager.TryGetGrid(gridUid, out var grid))
         {
-            coordinates = new EntityCoordinates(grid.GridEntityId, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
+            coordinates = new EntityCoordinates(grid.Owner, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
         }
         else if (uidXform.MapUid != null)
         {
