@@ -52,11 +52,11 @@ namespace Content.Server.Construction
                 if (component.TargetNode == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid, Filter.Entities(uid));
+                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-no-target-text"), uid, uid);
                 }
                 else
                 {
-                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-text"), args.User, Filter.Entities(args.User));
+                    _popup.PopupEntity(Loc.GetString("deconstructible-verb-activate-text"), args.User, args.User);
                 }
             };
 

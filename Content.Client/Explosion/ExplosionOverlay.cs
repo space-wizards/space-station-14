@@ -54,7 +54,7 @@ public sealed class ExplosionOverlay : Overlay
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var xform = xforms.GetComponent(grid.GridEntityId);
+            var xform = xforms.GetComponent(grid.Owner);
             var (_, _, worldMatrix, invWorldMatrix) = xform.GetWorldPositionRotationMatrixWithInv(xforms);
 
             gridBounds = invWorldMatrix.TransformBox(worldBounds).Enlarged(grid.TileSize * 2);

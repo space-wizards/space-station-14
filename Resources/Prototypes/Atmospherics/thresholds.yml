@@ -40,6 +40,13 @@
     threshold: 0.5
 
 - type: alarmThreshold
+  id: stationWaterVapor
+  upperBound: !type:AlarmThresholdSetting
+    threshold: 1.5
+  upperWarnAround: !type:AlarmThresholdSetting
+    threshold: 0.5
+
+- type: alarmThreshold
   id: stationNO
   upperBound: !type:AlarmThresholdSetting
     threshold: 0.01

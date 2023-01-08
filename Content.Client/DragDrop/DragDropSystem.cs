@@ -20,6 +20,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.DragDrop
@@ -306,7 +307,7 @@ namespace Content.Client.DragDrop
 
             if (_stateManager.CurrentState is GameplayState screen)
             {
-                entities = screen.GetEntitiesUnderPosition(args.Coordinates);
+                entities = screen.GetClickableEntities(args.Coordinates).ToList();
             }
             else
             {
@@ -379,7 +380,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+            var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Static);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!EntityManager.TryGetComponent(pvsEntity, out SpriteComponent? inRangeSprite) ||

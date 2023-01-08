@@ -40,7 +40,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public abstract class SharedInteractionSystem : EntitySystem
+    public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -81,6 +81,8 @@ namespace Content.Shared.Interaction
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
+
+            InitializeRelay();
         }
 
         public override void Shutdown()
@@ -224,6 +226,11 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
+            if (TryComp<InteractionRelayComponent>(user, out var relay) && relay.RelayEntity is not null)
+            {
+                UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+            }
+
             if (target != null && Deleted(target.Value))
                 return;
 
@@ -255,24 +262,24 @@ namespace Content.Shared.Interaction
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
+            var inRangeUnobstructed = target == null
+                ? !checkAccess || InRangeUnobstructed(user, coordinates)
+                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
             {
+                var ev = new InteractNoHandEvent(user, target, coordinates);
+                RaiseLocalEvent(user, ev);
+
                 if (target != null)
                 {
-                    var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev);
-
-                    var interactedEv = new InteractedNoHandEvent(target.Value, user);
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user, coordinates);
                     RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;
             }
-
-            var inRangeUnobstructed = target == null
-                ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
@@ -571,7 +578,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -716,7 +723,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;

@@ -202,7 +202,7 @@ public abstract class SharedActionsSystem : EntitySystem
             performEvent.Performer = user;
 
         // All checks passed. Perform the action!
-        PerformAction(component, act, performEvent, curTime);
+        PerformAction(user, component, act, performEvent, curTime);
     }
 
     public bool ValidateEntityTarget(EntityUid user, EntityUid target, EntityTargetAction action)
@@ -265,7 +265,7 @@ public abstract class SharedActionsSystem : EntitySystem
         return _interactionSystem.InRangeUnobstructed(user, coords, range: action.Range);
     }
 
-    public void PerformAction(ActionsComponent component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime)
+    public void PerformAction(EntityUid performer, ActionsComponent? component, ActionType action, BaseActionEvent? actionEvent, TimeSpan curTime, bool predicted = true)
     {
         var handled = false;
 
@@ -277,7 +277,7 @@ public abstract class SharedActionsSystem : EntitySystem
             actionEvent.Handled = false;
 
             if (action.Provider == null)
-                RaiseLocalEvent(component.Owner, (object) actionEvent, broadcast: true);
+                RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
             else
                 RaiseLocalEvent(action.Provider.Value, (object) actionEvent, broadcast: true);
 
@@ -285,7 +285,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         // Execute convenience functionality (pop-ups, sound, speech)
-        handled |= PerformBasicActions(component.Owner, action);
+        handled |= PerformBasicActions(performer, action, predicted);
 
         if (!handled)
             return; // no interaction occurred.
@@ -309,19 +309,19 @@ public abstract class SharedActionsSystem : EntitySystem
             action.Cooldown = (curTime, curTime + action.UseDelay.Value);
         }
 
-        if (dirty)
+        if (dirty && component != null)
             Dirty(component);
     }
 
     /// <summary>
     ///     Execute convenience functionality for actions (pop-ups, sound, speech)
     /// </summary>
-    protected virtual bool PerformBasicActions(EntityUid performer, ActionType action)
+    protected virtual bool PerformBasicActions(EntityUid performer, ActionType action, bool predicted)
     {
         if (action.Sound == null && string.IsNullOrWhiteSpace(action.Popup))
             return false;
 
-        var filter = Filter.Pvs(performer).RemoveWhereAttachedEntity(e => e == performer);
+        var filter = predicted ? Filter.PvsExcept(performer) : Filter.Pvs(performer);
 
         _audio.Play(action.Sound, filter, performer, true, action.AudioParams);
 
@@ -332,7 +332,7 @@ public abstract class SharedActionsSystem : EntitySystem
             ? Loc.GetString(action.Popup)
             : Loc.GetString(action.Popup + action.PopupToggleSuffix);
 
-        _popupSystem.PopupEntity(msg, performer, filter);
+        _popupSystem.PopupEntity(msg, performer, filter, true);
 
         return true;
     }

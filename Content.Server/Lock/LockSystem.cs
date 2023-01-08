@@ -66,7 +66,7 @@ namespace Content.Server.Lock
             if (component.Locked)
             {
                 if (!args.Silent)
-                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid, Filter.Pvs(uid));
+                    _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
                 args.Cancel();
             }
@@ -109,12 +109,13 @@ namespace Content.Server.Lock
             return true;
         }
 
-        public void Unlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
+        public void Unlock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return;
 
-            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
+            if (user is {Valid: true})
+                lockComp.Owner.PopupMessage(user.Value, Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
             lockComp.Locked = false;
 
             if (lockComp.UnlockSound != null)

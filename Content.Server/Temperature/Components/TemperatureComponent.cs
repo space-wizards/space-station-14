@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Temperature.Components
 {
@@ -24,6 +25,18 @@ namespace Content.Server.Temperature.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float ColdDamageThreshold = 260f;
 
+        /// <summary>
+        /// Overrides HeatDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentHeatDamageThreshold;
+
+        /// <summary>
+        /// Overrides ColdDamageThreshold if the entity's within a parent with the TemperatureDamageThresholdsComponent component.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float? ParentColdDamageThreshold;
+
         [DataField("specificHeat")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float SpecificHeat = 50f;
@@ -39,7 +52,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<IPhysBody?>(Owner, out var physics) && physics.FixturesMass != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(Owner, out var physics) && physics.FixturesMass != 0)
                 {
                     return SpecificHeat * physics.FixturesMass;
                 }

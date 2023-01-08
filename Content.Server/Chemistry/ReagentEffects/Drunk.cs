@@ -19,7 +19,11 @@ public sealed class Drunk : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
+        var boozePower = BoozePower;
+
+        boozePower *= args.Scale;
+
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
-        drunkSys.TryApplyDrunkenness(args.SolutionEntity, BoozePower, SlurSpeech);
+        drunkSys.TryApplyDrunkenness(args.SolutionEntity, boozePower, SlurSpeech);
     }
 }

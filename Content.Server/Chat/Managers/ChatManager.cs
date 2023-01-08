@@ -38,6 +38,7 @@ namespace Content.Server.Chat.Managers
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent
@@ -82,12 +83,13 @@ namespace Content.Server.Chat.Managers
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server announcement: {message}");
         }
 
-        public void DispatchServerMessage(IPlayerSession player, string message)
+        public void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false)
         {
             var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", FormattedMessage.EscapeText(message)));
             ChatMessageToOne(ChatChannel.Server, message, wrappedMessage, default, false, player.ConnectedClient);
 
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
+            if (!suppressLog)
+                _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Server message to {player:Player}: {message}");
         }
 
         public void SendAdminAnnouncement(string message)
@@ -191,7 +193,18 @@ namespace Content.Server.Chat.Managers
             var wrappedMessage = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
                                             ("playerName", player.Name), ("message", FormattedMessage.EscapeText(message)));
-            ChatMessageToMany(ChatChannel.Admin, message, wrappedMessage, default, false, true, clients.ToList());
+            foreach (var client in clients)
+            {
+                var isSource = client != player.ConnectedClient;
+                ChatMessageToOne(ChatChannel.AdminChat,
+                    message,
+                    wrappedMessage,
+                    default,
+                    false,
+                    client,
+                    audioPath: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundPath) : default,
+                    audioVolume: isSource ? _netConfigManager.GetClientCVar(client, CCVars.AdminChatSoundVolume) : default);
+            }
 
             _adminLogger.Add(LogType.Chat, $"Admin chat from {player:Player}: {message}");
         }
@@ -200,21 +213,21 @@ namespace Content.Server.Chat.Managers
 
         #region Utility
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false)
+        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
+            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendMessage(new MsgChatMessage() { Message = msg }, client);
 
             if (recordReplay)
                 _replay.QueueReplayMessage(msg);
         }
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, IEnumerable<INetChannel> clients, Color? colorOverride = null)
-            => ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients.ToList(), colorOverride);
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+            => ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients.ToList(), colorOverride, audioPath, audioVolume);
 
-        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, List<INetChannel> clients, Color? colorOverride = null)
+        public void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, List<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
+            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToMany(new MsgChatMessage() { Message = msg }, clients);
 
             if (recordReplay)
@@ -222,7 +235,7 @@ namespace Content.Server.Chat.Managers
         }
 
         public void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source,
-            bool hideChat, bool recordReplay, Color? colorOverride = null)
+            bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
         {
             if (!recordReplay && !filter.Recipients.Any())
                 return;
@@ -233,12 +246,12 @@ namespace Content.Server.Chat.Managers
                 clients.Add(recipient.ConnectedClient);
             }
 
-            ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients, colorOverride);
+            ChatMessageToMany(channel, message, wrappedMessage, source, hideChat, recordReplay, clients, colorOverride, audioPath, audioVolume);
         }
 
-        public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null)
+        public void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null,  string? audioPath = null, float audioVolume = 0)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride);
+            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
             _netManager.ServerSendToAll(new MsgChatMessage() { Message = msg });
 
             if (recordReplay)
