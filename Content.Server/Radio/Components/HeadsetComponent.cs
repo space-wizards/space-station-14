@@ -24,8 +24,8 @@ public sealed class HeadsetComponent : Component
     public string KeysExtractionMethod = "Screwing";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("keySlotsAmount")]
-    public int KeySlotsAmount = 2;
+    [DataField("keySlots")]
+    public int KeySlots = 2;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keyExtractionSound")]

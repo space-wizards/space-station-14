@@ -115,7 +115,7 @@
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 of them). Should protect ears from flashbangs.
   components:
   - type: Headset
-    keySlotsAmount: 4
+    keySlots: 4
   - type: ContainerFill
     containers:
       key_slots:

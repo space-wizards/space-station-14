@@ -169,7 +169,7 @@ public sealed class HeadsetSystem : EntitySystem
         }
         if (TryComp<EncryptionKeyComponent>(args.Used, out var key))
         {
-            if (component.KeySlotsAmount > component.KeyContainer.ContainedEntities.Count)
+            if (component.KeySlots > component.KeyContainer.ContainedEntities.Count)
             {
                 if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
                 {
