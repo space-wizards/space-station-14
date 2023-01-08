@@ -1,19 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
-  id: 2343
-  time: '2022-09-19T19:35:31.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Open soda can no longer show error, type: Fix}
-  id: 2344
-  time: '2022-09-19T23:47:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
-  id: 2345
-  time: '2022-09-19T23:50:32.0000000+00:00'
 - author: themias
   changes:
   - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
@@ -2960,3 +2945,21 @@ Entries:
   - {message: Prying tiles now removes the decals on them., type: Fix}
   id: 2842
   time: '2023-01-07T10:24:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All machines that can hold materials no longer destroy them on deconstruction.,
+    type: Add}
+  id: 2843
+  time: '2023-01-07T18:09:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mugs now properly display the solutions inside of them., type: Fix}
+  id: 2844
+  time: '2023-01-08T03:09:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The verb menu no longer opens when right clicking on entities in the
+      entity menu. Instead, it now automatically opens using a dropdown, like how
+      grouped entities work.', type: Tweak}
+  id: 2845
+  time: '2023-01-08T03:24:52.0000000+00:00'
