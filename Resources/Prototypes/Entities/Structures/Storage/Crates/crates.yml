@@ -312,6 +312,9 @@
         acts: [ "Destruction" ]
   - type: Physics
     bodyType: Dynamic
+  - type: EntityStorage
+    capacity: 500
+    airtight: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -319,7 +322,7 @@
         bounds: "-0.4,-0.4,0.4,0.29"
       density: 80
       mask:
-      - SmallMobMask
+      - LargeMobMask
       layer:
-      - SmallMobLayer
+      - LargeMobLayer
 

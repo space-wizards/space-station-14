@@ -67,7 +67,7 @@ namespace Content.Shared.Friction
             configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
-        public override void UpdateBeforeMapSolve(bool prediction, SharedPhysicsMapComponent mapComponent, float frameTime)
+        public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)
         {
             base.UpdateBeforeMapSolve(prediction, mapComponent, frameTime);
 

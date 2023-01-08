@@ -20,6 +20,7 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
         {"IdleRange", 7f},
         {"MaximumIdleTime", 7f},
         {MedibotInjectRange, 4f},
+        {MeleeMissChance, 0.3f},
         {"MeleeRange", 1f},
         {"MinimumIdleTime", 2f},
         {"MovementRange", 1.5f},
@@ -40,6 +41,11 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     /// </remarks>
     /// </summary>
     public bool ReadOnly = false;
+
+    public void Clear()
+    {
+        _blackboard.Clear();
+    }
 
     public NPCBlackboard ShallowClone()
     {
@@ -190,6 +196,9 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
     public const string CanMove = "CanMove";
     public const string FollowTarget = "FollowTarget";
     public const string MedibotInjectRange = "MedibotInjectRange";
+
+    public const string MeleeMissChance = "MeleeMissChance";
+
     public const string Owner = "Owner";
     public const string OwnerCoordinates = "OwnerCoordinates";
     public const string MovementTarget = "MovementTarget";
@@ -216,7 +225,6 @@ public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 
     public const string RotateSpeed = "RotateSpeed";
     public const string VisionRadius = "VisionRadius";
-    public const float MeleeRange = 1f;
 
     public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
     {
