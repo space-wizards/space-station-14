@@ -7,7 +7,7 @@ namespace Content.Shared.Teleportation.Systems;
 /// <summary>
 ///     Handles symmetrically linking two entities together, and removing links properly.
 ///     This does not do anything on its own (outside of deleting entities that have 0 links, if that option is true)
-///     Systems can do whatever they please with the linked entities, such as <see cref="PortalSystem"/>.
+///     Systems can do whatever they please with the linked entities, such as <see cref="SharedPortalSystem"/>.
 /// </summary>
 public sealed class LinkedEntitySystem : EntitySystem
 {
