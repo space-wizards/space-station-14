@@ -7,8 +7,8 @@
   - type: EnergySword
     litDamageBonus:
         types:
-            Slash: 8.5
-            Heat: 8.5
+            Slash: 9.5
+            Heat: 9.5
             Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
@@ -66,6 +66,14 @@
             Heat: 7.5
             Blunt: -1
     litDisarmMalus: 0.4
+    activateSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/ebladeon.ogg
+      params:
+        volume: -6
+    deActivateSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/ebladeoff.ogg
+      params:
+        volume: -6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_dagger.rsi
     layers:
@@ -76,6 +84,7 @@
         shader: unshaded
         map: [ "blade" ]
   - type: MeleeWeapon
+    attackRate: 1
     hidden: true
     damage:
       types:
