@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Content.Server.Buckle.Components;
+using Content.Server.Administration.Logs;
 using Content.Server.Storage.Components;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
@@ -14,12 +15,13 @@ using Content.Shared.Stunnable;
 using Content.Shared.Vehicle.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 
 namespace Content.Server.Buckle.Systems;
 
 public sealed partial class BuckleSystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
     private void InitializeBuckle()
     {
         SubscribeLocalEvent<BuckleComponent, ComponentStartup>(OnBuckleStartup);
@@ -187,7 +189,7 @@ public sealed partial class BuckleSystem
 
         if (!HasComp<SharedHandsComponent>(user))
         {
-            _popups.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, Filter.Entities(user));
+            _popups.PopupEntity(Loc.GetString("buckle-component-no-hands-message"), user, user);
             return false;
         }
 
@@ -197,7 +199,7 @@ public sealed partial class BuckleSystem
                     ? "buckle-component-already-buckled-message"
                     : "buckle-component-other-already-buckled-message",
                 ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
 
             return false;
         }
@@ -210,7 +212,7 @@ public sealed partial class BuckleSystem
                 var message = Loc.GetString(buckleId == user
                     ? "buckle-component-cannot-buckle-message"
                     : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-                _popups.PopupEntity(message, user, Filter.Entities(user));
+                _popups.PopupEntity(message, user, user);
 
                 return false;
             }
@@ -223,7 +225,7 @@ public sealed partial class BuckleSystem
             var message = Loc.GetString(buckleId == user
                 ? "buckle-component-cannot-fit-message"
                 : "buckle-component-other-cannot-fit-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
 
             return false;
         }
@@ -246,7 +248,7 @@ public sealed partial class BuckleSystem
             var message = Loc.GetString(buckleId == user
                 ? "buckle-component-cannot-buckle-message"
                 : "buckle-component-other-cannot-buckle-message", ("owner", Identity.Entity(buckleId, EntityManager)));
-            _popups.PopupEntity(message, user, Filter.Entities(user));
+            _popups.PopupEntity(message, user, user);
             return false;
         }
 
@@ -276,6 +278,12 @@ public sealed partial class BuckleSystem
                 _pulling.TryStopPull(toPullable);
             }
         }
+
+        // Logging
+        if (user != buckleId)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled {ToPrettyString(buckleId)} to {ToPrettyString(to)}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} buckled themselves to {ToPrettyString(to)}");
 
         return true;
     }
@@ -319,12 +327,18 @@ public sealed partial class BuckleSystem
                 return false;
         }
 
+        // Logging
+        if (user != buckleId)
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} unbuckled {ToPrettyString(buckleId)} from {ToPrettyString(oldBuckledTo.Owner)}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):player} unbuckled themselves from {ToPrettyString(oldBuckledTo.Owner)}");
+
         SetBuckledTo(buckle, null);
 
         var xform = Transform(buckleId);
         var oldBuckledXform = Transform(oldBuckledTo.Owner);
 
-        if (xform.ParentUid == oldBuckledXform.Owner)
+        if (xform.ParentUid == oldBuckledXform.Owner && !Terminating(xform.ParentUid))
         {
             _containers.AttachParentToContainerOrGrid(xform);
             xform.WorldRotation = oldBuckledXform.WorldRotation;

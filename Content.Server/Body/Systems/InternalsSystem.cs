@@ -9,7 +9,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Content.Server.Popups;
-using Robust.Shared.Player;
 using Content.Server.DoAfter;
 using System.Threading;
 
@@ -74,7 +73,7 @@ public sealed class InternalsSystem : EntitySystem
         // If they're not on then check if we have a mask to use
         if (internals.BreathToolEntity == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-breath-tool"), uid, user);
             return;
         }
 
@@ -82,16 +81,19 @@ public sealed class InternalsSystem : EntitySystem
 
         if (tank == null)
         {
-            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("internals-no-tank"), uid, user);
             return;
         }
 
-        // Is the target not you? If yes, use a do-after to give them time to respond.
-        if (!force && uid != user)
+        if (!force)
         {
+            // Is the target not you? If yes, use a do-after to give them time to respond.
+            //If no, do a short delay. There's no reason it should be beyond 1 second.
+            var delay = uid != user ? internals.Delay : 1.0f;
+
             internals.CancelToken?.Cancel();
             internals.CancelToken = new CancellationTokenSource();
-            _doAfter.DoAfter(new DoAfterEventArgs(user, internals.Delay, internals.CancelToken.Token, uid)
+            _doAfter.DoAfter(new DoAfterEventArgs(user, delay, internals.CancelToken.Token, uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -215,11 +217,19 @@ public sealed class InternalsSystem : EntitySystem
     public GasTankComponent? FindBestGasTank(InternalsComponent component)
     {
         // Prioritise
-        // 1. exo-slot tanks
-        // 2. in-hand tanks
-        // 3. pocket/belt tanks
+        // 1. back equipped tanks
+        // 2. exo-slot tanks
+        // 3. in-hand tanks
+        // 4. pocket/belt tanks
         InventoryComponent? inventory = null;
         ContainerManagerComponent? containerManager = null;
+
+        if (_inventory.TryGetSlotEntity(component.Owner, "back", out var backEntity, inventory, containerManager) &&
+            TryComp<GasTankComponent>(backEntity, out var backGasTank) &&
+            _gasTank.CanConnectToInternals(backGasTank))
+        {
+            return backGasTank;
+        }
 
         if (_inventory.TryGetSlotEntity(component.Owner, "suitstorage", out var entity, inventory, containerManager) &&
             TryComp<GasTankComponent>(entity, out var gasTank) &&

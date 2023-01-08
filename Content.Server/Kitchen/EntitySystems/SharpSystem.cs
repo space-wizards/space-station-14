@@ -107,7 +107,7 @@ public sealed class SharpSystem : EntitySystem
             popupType = PopupType.LargeCaution;
 
         _popupSystem.PopupEntity(Loc.GetString("butcherable-knife-butchered-success", ("target", ev.Entity), ("knife", ev.Sharp)),
-            popupEnt, Filter.Entities(ev.User), popupType);
+            popupEnt, ev.User, popupType);
 
         if (hasBody)
             _bodySystem.GibBody(body!.Owner, body: body);

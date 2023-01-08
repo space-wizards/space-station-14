@@ -44,29 +44,34 @@ namespace Content.Server.Access.Systems
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
-                         transformComponent.Coordinates, Filter.Pvs(uid), PopupType.Medium);
+                         transformComponent.Coordinates, PopupType.Medium);
                         EntityManager.SpawnEntity("FoodBadRecipe",
                             transformComponent.Coordinates);
                     }
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} burnt {ToPrettyString(uid):entity}");
                     EntityManager.QueueDeleteEntity(uid);
                     return;
                 }
                 // If they're unlucky, brick their ID
                 if (randomPick <= 0.25f)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)),
-                        uid, Filter.Pvs(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
                     access.Tags.Clear();
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
                 }
                 else
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)),
-                        uid, Filter.Pvs(uid), PopupType.Medium);
+                    _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-safe", ("id", uid)), uid, PopupType.Medium);
                 }
 
                 // Give them a wonderful new access to compensate for everything
                 var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
                 access.Tags.Add(random.ID);
+
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                        $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
             }
         }
 
@@ -94,6 +99,8 @@ namespace Content.Server.Access.Systems
                 jobTitle = null;
             }
 
+            if (id.JobTitle == jobTitle)
+                return true;
             id.JobTitle = jobTitle;
             Dirty(id);
             UpdateEntityName(uid, id);
@@ -129,6 +136,8 @@ namespace Content.Server.Access.Systems
                 fullName = null;
             }
 
+            if (id.FullName == fullName)
+                return true;
             id.FullName = fullName;
             Dirty(id);
             UpdateEntityName(uid, id);

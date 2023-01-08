@@ -1,3 +1,4 @@
+using Content.Server.MobState;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Utility;
 
@@ -5,6 +6,8 @@ namespace Content.Server.Objectives.Conditions
 {
     public abstract class KillPersonCondition : IObjectiveCondition
     {
+        protected IEntityManager EntityManager => IoCManager.Resolve<IEntityManager>();
+        protected MobStateSystem MobStateSystem => EntityManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
@@ -19,7 +22,7 @@ namespace Content.Server.Objectives.Conditions
                     return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
 
                 if (Target.OwnedEntity is {Valid: true} owned)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+                    targetName = EntityManager.GetComponent<MetaDataComponent>(owned).EntityName;
 
                 return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
             }

@@ -1,19 +1,15 @@
-﻿using Content.Server.Singularity.Components;
+using Content.Server.Singularity.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -22,6 +18,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly TagSystem _tags = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private readonly AppearanceSystem _visualizer = default!;
 
     public override void Initialize()
     {
@@ -34,6 +31,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ReAnchorEvent>(OnReanchorEvent);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         SubscribeLocalEvent<ContainmentFieldGeneratorComponent, ComponentRemove>(OnComponentRemoved);
+        SubscribeLocalEvent<ContainmentFieldGeneratorComponent, EventHorizonAttemptConsumeEntityEvent>(PreventBreach);
     }
 
     public override void Update(float frameTime)
@@ -89,7 +87,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
                 TurnOn(component);
             else if (component.Enabled && component.IsConnected)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+                _popupSystem.PopupEntity(Loc.GetString("comp-containment-toggle-warning"), args.User, args.User, PopupType.LargeCaution);
                 return;
             }
             else
@@ -114,7 +112,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (component.Enabled)
         {
-            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, Filter.Entities(args.User), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-containment-anchor-warning"), args.User, args.User, PopupType.LargeCaution);
             args.Cancel();
         }
     }
@@ -123,14 +121,14 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         component.Enabled = true;
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-on"), component.Owner);
     }
 
     private void TurnOff(ContainmentFieldGeneratorComponent component)
     {
         component.Enabled = false;
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-turned-off"), component.Owner);
     }
 
     private void OnComponentRemoved(EntityUid uid, ContainmentFieldGeneratorComponent component, ComponentRemove args)
@@ -163,7 +161,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         component.IsConnected = false;
         ChangeOnLightVisualizer(component);
         ChangeFieldVisualizer(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, Filter.Pvs(component.Owner), PopupType.LargeCaution);
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-disconnected"), component.Owner, PopupType.LargeCaution);
     }
 
     #endregion
@@ -275,7 +273,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
 
         ChangeFieldVisualizer(component);
         UpdateConnectionLights(component);
-        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner, Filter.Pvs(component.Owner));
+        _popupSystem.PopupEntity(Loc.GetString("comp-containment-connected"), component.Owner);
         return true;
     }
 
@@ -356,24 +354,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <param name="component"></param>
     private void ChangePowerVisualizer(int power, ContainmentFieldGeneratorComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        if(component.PowerBuffer == 0)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.NoPower);
-
-        if (component.PowerBuffer > 0 && component.PowerBuffer < component.PowerMinimum)
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.LowPower);
-
-        if (component.PowerBuffer >= component.PowerMinimum && component.PowerBuffer < 25)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.MediumPower);
-        }
-
-        if (component.PowerBuffer == 25)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.PowerLight, PowerLevelVisuals.HighPower);
-        }
+        _visualizer.SetData(component.Owner, ContainmentFieldGeneratorVisuals.PowerLight, component.PowerBuffer switch {
+            <=0 => PowerLevelVisuals.NoPower,
+            >=25 => PowerLevelVisuals.HighPower,
+            _ => (component.PowerBuffer < component.PowerMinimum) ? PowerLevelVisuals.LowPower : PowerLevelVisuals.MediumPower
+        });
     }
 
     /// <summary>
@@ -382,36 +367,30 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <param name="component"></param>
     private void ChangeFieldVisualizer(ContainmentFieldGeneratorComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        if (component.Connections.Count == 0 && !component.Enabled)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.NoLevel);
-        }
-
-        if (component.Connections.Count == 0 && component.Enabled)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.On);
-        }
-
-        if (component.Connections.Count == 1)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.OneField);
-        }
-
-        if (component.Connections.Count > 1)
-        {
-            appearance.SetData(ContainmentFieldGeneratorVisuals.FieldLight, FieldLevelVisuals.MultipleFields);
-        }
+        _visualizer.SetData(component.Owner, ContainmentFieldGeneratorVisuals.FieldLight, component.Connections.Count switch {
+            >1 => FieldLevelVisuals.MultipleFields,
+            1 => FieldLevelVisuals.OneField,
+            _ => component.Enabled ? FieldLevelVisuals.On : FieldLevelVisuals.NoLevel
+        });
     }
 
     private void ChangeOnLightVisualizer(ContainmentFieldGeneratorComponent component)
     {
-        if (!TryComp<AppearanceComponent>(component.Owner, out var appearance))
-            return;
-
-        appearance.SetData(ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
+        _visualizer.SetData(component.Owner, ContainmentFieldGeneratorVisuals.OnLight, component.IsConnected);
     }
     #endregion
+
+    /// <summary>
+    /// Prevents singularities from breaching containment if the containment field generator is connected.
+    /// </summary>
+    /// <param name="uid">The entity the singularity is trying to eat.</param>
+    /// <param name="comp">The containment field generator the singularity is trying to eat.</param>
+    /// <param name="args">The event arguments.</param>
+    private void PreventBreach(EntityUid uid, ContainmentFieldGeneratorComponent comp, EventHorizonAttemptConsumeEntityEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        if (comp.IsConnected && !args.EventHorizon.CanBreachContainment)
+            args.Cancel();
+    }
 }

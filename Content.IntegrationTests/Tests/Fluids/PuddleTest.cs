@@ -104,7 +104,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 sMapId = sMapManager.CreateMap();
                 sMapManager.SetMapPaused(sMapId, true);
                 sGrid = sMapManager.CreateGrid(sMapId);
-                sGridId = sGrid.GridEntityId;
+                sGridId = sGrid.Owner;
                 metaSystem.SetEntityPaused(sGridId, true); // See https://github.com/space-wizards/RobustToolbox/issues/1444
 
                 var tileDefinition = sTileDefinitionManager["UnderPlating"];

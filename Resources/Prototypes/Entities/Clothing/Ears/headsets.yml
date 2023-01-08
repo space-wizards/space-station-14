@@ -13,6 +13,7 @@
       key_slots:
       - EncryptionKeyCommon
   - type: Headset
+    defaultChannel: Common
   - type: Sprite
     state: icon
   - type: Clothing
@@ -39,6 +40,8 @@
   name: cargo headset
   description: A headset used by supply employees.
   components:
+  - type: Headset
+    defaultChannel: Supply
   - type: ContainerFill
     containers:
       key_slots:
@@ -54,6 +57,8 @@
   name: mining headset
   description: Headset used by shaft miners.
   components:
+  - type: Headset
+    defaultChannel: Supply
   - type: ContainerFill
     containers:
       key_slots:
@@ -69,6 +74,8 @@
   name: qm headset
   description: A headset used by the quartermaster.
   components:
+  - type: Headset
+    defaultChannel: Supply
   - type: ContainerFill
     containers:
       key_slots:
@@ -84,6 +91,8 @@
   name: CentCom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
+  - type: Headset
+    defaultChannel: CentCom
   - type: ContainerFill
     containers:
       key_slots:
@@ -99,6 +108,8 @@
   name: command headset
   description: A headset with a commanding channel.
   components:
+  - type: Headset
+    defaultChannel: Command
   - type: ContainerFill
     containers:
       key_slots:
@@ -114,6 +125,8 @@
   name: engineering headset
   description: A headset for engineers to chat while the station burns around them.
   components:
+  - type: Headset
+    defaultChannel: Engineering
   - type: ContainerFill
     containers:
       key_slots:
@@ -129,6 +142,8 @@
   name: ce headset
   description: A headset for the chief engineer to ignore all emergency calls on.
   components:
+  - type: Headset
+    defaultChannel: Engineering
   - type: ContainerFill
     containers:
       key_slots:
@@ -144,6 +159,8 @@
   name: medical headset
   description: A headset for the trained staff of the medbay.
   components:
+  - type: Headset
+    defaultChannel: Medical
   - type: ContainerFill
     containers:
       key_slots:
@@ -159,6 +176,8 @@
   name: medical research headset
   description: A headset that is a result of the mating between medical and science.
   components:
+  - type: Headset
+    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -170,25 +189,12 @@
 
 - type: entity
   parent: ClothingHeadset
-  id: ClothingHeadsetSecurity
-  name: security headset
-  description: This is used by your elite security force.
-  components:
-  - type: ContainerFill
-    containers:
-      key_slots:
-      - EncryptionKeySecurity
-  - type: Sprite
-    sprite: Clothing/Ears/Headsets/security.rsi
-  - type: Clothing
-    sprite: Clothing/Ears/Headsets/security.rsi
-
-- type: entity
-  parent: ClothingHeadset
   id: ClothingHeadsetScience
   name: science headset
   description: A sciency headset. Like usual.
   components:
+  - type: Headset
+    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -204,6 +210,8 @@
   name: robotics headset
   description: Made specifically for the roboticists, who cannot decide between departments.
   components:
+  - type: Headset
+    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -219,6 +227,8 @@
   name: rd headset
   description: Lamarr used to love chewing on this...
   components:
+  - type: Headset
+    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -230,10 +240,29 @@
 
 - type: entity
   parent: ClothingHeadset
+  id: ClothingHeadsetSecurity
+  name: security headset
+  description: This is used by your elite security force.
+  components:
+  - type: Headset
+    defaultChannel: Security
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeySecurity
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/security.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/security.rsi
+
+- type: entity
+  parent: ClothingHeadset
   id: ClothingHeadsetService
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
+  - type: Headset
+    defaultChannel: Service
   - type: ContainerFill
     containers:
       key_slots:

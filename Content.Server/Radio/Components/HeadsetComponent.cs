@@ -42,6 +42,12 @@ public sealed class HeadsetComponent : Component
     [ViewVariables]
     public HashSet<string> Channels = new();
 
+    // Maybe make the defaultChannel an actual channel type some day, and use that for parsing messages
+    // [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
+    // public readonly HashSet<string> defaultChannel = new();
+    [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public readonly string? defaultChannel;
+
     [DataField("enabled")]
     public bool Enabled = true;
 

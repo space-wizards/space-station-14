@@ -22,7 +22,7 @@ namespace Content.Shared.Electrocution
                 return;
 
             insulated.SiemensCoefficient = siemensCoefficient;
-            insulated.Dirty();
+            Dirty(insulated);
         }
 
         private void OnInsulatedElectrocutionAttempt(EntityUid uid, InsulatedComponent insulated, ElectrocutionAttemptEvent args)
