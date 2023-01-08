@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Open soda can no longer show error, type: Fix}
-  id: 2344
-  time: '2022-09-19T23:47:45.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
@@ -2961,3 +2956,8 @@ Entries:
     type: Add}
   id: 2843
   time: '2023-01-07T18:09:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mugs now properly display the solutions inside of them., type: Fix}
+  id: 2844
+  time: '2023-01-08T03:09:33.0000000+00:00'
