@@ -29,7 +29,5 @@ public sealed class SpellbookComponent : Component
     public readonly Dictionary<string, int> InstantSpells = new();
 
     [DataField("learnTime")]
-    public float LearnTime = .75f;
-
-    public CancellationTokenSource? CancelToken;
+    public float LearnTime = 5.0f;
 }

@@ -1,13 +1,19 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
+using Content.Shared.Hands.Components;
 using Content.Shared.MobState;
+using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.DoAfter;
 
 public abstract class SharedDoAfterSystem : EntitySystem
 {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         // We cache the list as to not allocate every update tick...
         private readonly Queue<DoAfter> _pending = new();
 
@@ -69,7 +75,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
             foreach (var (_, doAfter) in component.DoAfters)
             {
-                doAfter.Cancel();
+                Cancel(doAfter);
             }
         }
 
@@ -89,9 +95,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
             foreach (var (_, doAfter) in component.DoAfters)
             {
                 if (doAfter.EventArgs.BreakOnDamage && args.DamageDelta?.Total.Float() > doAfter.EventArgs.DamageThreshold)
-                {
-                    doAfter.Cancel();
-                }
+                    Cancel(doAfter);
             }
         }
 
@@ -103,7 +107,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
             {
                 foreach (var (_, doAfter) in comp.DoAfters.ToArray())
                 {
-                    doAfter.Run(EntityManager);
+                    Run(doAfter);
 
                     switch (doAfter.Status)
                     {
@@ -183,10 +187,134 @@ public abstract class SharedDoAfterSystem : EntitySystem
         private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
         {
             // Setup
+            eventArgs.CancelToken = new CancellationToken();
             var doAfter = new DoAfter(eventArgs, EntityManager);
             // Caller's gonna be responsible for this I guess
             var doAfterComponent = Comp<DoAfterComponent>(eventArgs.User);
+            doAfter.ID = doAfterComponent.RunningIndex;
+            doAfter.StartTime = _gameTiming.CurTime;
             Add(doAfterComponent, doAfter);
             return doAfter;
+        }
+
+        private void Run(DoAfter doAfter)
+        {
+            switch (doAfter.Status)
+            {
+                case DoAfterStatus.Running:
+                    break;
+                case DoAfterStatus.Cancelled:
+                case DoAfterStatus.Finished:
+                    return;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            doAfter.Elapsed = _gameTiming.CurTime - doAfter.StartTime;
+
+            if (IsFinished(doAfter))
+            {
+                if (!TryPostCheck(doAfter))
+                    doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+                else
+                    doAfter.Tcs.SetResult(DoAfterStatus.Finished);
+                return;
+            }
+
+            if (IsCancelled(doAfter))
+            {
+                doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.StartTime;
+                doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+            }
+        }
+
+        private bool TryPostCheck(DoAfter doAfter)
+        {
+            return doAfter.EventArgs.PostCheck?.Invoke() != false;
+        }
+
+        private bool IsFinished(DoAfter doAfter)
+        {
+            var delay = TimeSpan.FromSeconds(doAfter.EventArgs.Delay);
+
+            if (doAfter.Elapsed <= delay)
+                return false;
+
+            return true;
+        }
+
+        private bool IsCancelled(DoAfter doAfter)
+        {
+            var eventArgs = doAfter.EventArgs;
+            var xForm = GetEntityQuery<TransformComponent>();
+
+            if (!Exists(eventArgs.User) || eventArgs.Target is {} target && !Exists(target))
+                return true;
+
+            if (eventArgs.CancelToken.IsCancellationRequested)
+                return true;
+
+            //TODO: Handle Inertia in space
+            if (eventArgs.BreakOnUserMove && !xForm.GetComponent(eventArgs.User).Coordinates.InRange(EntityManager, doAfter.UserGrid, eventArgs.MovementThreshold))
+                return true;
+
+            if (eventArgs.Target != null && eventArgs.BreakOnTargetMove && !xForm.GetComponent(eventArgs.Target!.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid, eventArgs.MovementThreshold))
+                return true;
+
+            if (eventArgs.ExtraCheck != null && !eventArgs.ExtraCheck.Invoke())
+                return true;
+
+            if (eventArgs.BreakOnStun && HasComp<StunnedComponent>(eventArgs.User))
+                return true;
+
+            if (eventArgs.NeedHand)
+            {
+                if (!TryComp<SharedHandsComponent>(eventArgs.User, out var handsComp))
+                {
+                    //TODO: Figure out active hand and item values
+
+                    // If we had a hand but no longer have it that's still a paddlin'
+                    if (doAfter.ActiveHand != null)
+                        return true;
+                }
+                else
+                {
+                    var currentActiveHand = handsComp.ActiveHand?.Name;
+                    if (doAfter.ActiveHand != currentActiveHand)
+                        return true;
+
+                    var currentItem = handsComp.ActiveHandEntity;
+                    if (doAfter.ActiveItem != currentItem)
+                        return true;
+                }
+            }
+
+            if (eventArgs.DistanceThreshold != null)
+            {
+                var userXform = xForm.GetComponent(eventArgs.User);
+
+                if (eventArgs.Target != null && !eventArgs.User.Equals(eventArgs.Target))
+                {
+                    //recalculate Target location in case Target has also moved
+                    var targetCoords = xForm.GetComponent(eventArgs.Target.Value).Coordinates;
+                    if (!userXform.Coordinates.InRange(EntityManager, targetCoords, eventArgs.DistanceThreshold.Value))
+                        return true;
+                }
+
+                if (eventArgs.Used != null)
+                {
+                    var usedCoords = xForm.GetComponent(eventArgs.Used.Value).Coordinates;
+                    if (!userXform.Coordinates.InRange(EntityManager, usedCoords, eventArgs.DistanceThreshold.Value))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void Cancel(DoAfter doAfter)
+        {
+            if (doAfter.Status == DoAfterStatus.Running)
+                doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
         }
 }

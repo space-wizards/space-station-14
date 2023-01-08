@@ -147,27 +147,27 @@ namespace Content.Client.DoAfter;
                     // TODO: Add these back in when I work out some system for changing the accumulation rate
                     // based on ping. Right now these would show as cancelled near completion if we moved at the end
                     // despite succeeding.
-                    continue;
+                    //continue;
 
-                    /*if (doAfter.BreakOnUserMove)
+                    if (doAfter.EventArgs.BreakOnUserMove)
                     {
-                        if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.MovementThreshold))
+                        if (!userGrid.InRange(EntityManager, doAfter.UserGrid, doAfter.EventArgs.MovementThreshold))
                         {
                             Cancel(comp, id);
                             continue;
                         }
                     }
 
-                    if (doAfter.BreakOnTargetMove)
+                    if (doAfter.EventArgs.BreakOnTargetMove)
                     {
-                        if (!EntityManager.Deleted(doAfter.Target) &&
-                            !Transform(doAfter.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
-                                doAfter.MovementThreshold))
+                        if (!EntityManager.Deleted(doAfter.EventArgs.Target) &&
+                            !Transform(doAfter.EventArgs.Target.Value).Coordinates.InRange(EntityManager, doAfter.TargetGrid,
+                                doAfter.EventArgs.MovementThreshold))
                         {
                             Cancel(comp, id);
                             continue;
                         }
-                    }*/
+                    }
                 }
 
                 foreach (var doAfter in toRemove)

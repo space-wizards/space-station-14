@@ -1,5 +1,4 @@
 using Robust.Shared.GameStates;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.DoAfter;
@@ -35,6 +34,7 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
 {
     public bool Cancelled;
     public readonly DoAfterEventArgs Args;
+    //TODO: Either in here or in DoAfterEventArgs add a check to cancel via a second use or block repeated uses
 
     public DoAfterEvent(bool cancelled, DoAfterEventArgs args)
     {

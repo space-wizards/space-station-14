@@ -21,27 +21,26 @@ public sealed class DoAfter
     //ID so the client DoAfterSystem can track
     public byte ID;
 
-    //client doafter
     public bool Cancelled = false;
 
-    //client doafter
+    //Cache the delay so the timer properly shows
     public float Delay;
 
     [NonSerialized]
     private readonly IGameTiming _gameTiming;
 
+    //Keep track of the time this DoAfter started
     public TimeSpan StartTime;
 
+    //How long has the do after been running?
     public TimeSpan Elapsed = TimeSpan.Zero;
 
     /// <summary>
     /// Accrued time when cancelled.
     /// </summary>
-    //client doafter
-    public TimeSpan CancelledElapsed = TimeSpan.Zero;
+    public TimeSpan CancelledElapsed;
 
     public EntityCoordinates UserGrid;
-
     public EntityCoordinates TargetGrid;
 
 #pragma warning disable RA0004
@@ -49,8 +48,8 @@ public sealed class DoAfter
 #pragma warning restore RA0004
 
     // NeedHand
-    private readonly string? _activeHand;
-    private readonly EntityUid? _activeItem;
+    public readonly string? ActiveHand;
+    public readonly EntityUid? ActiveItem;
 
     public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
     {
@@ -69,8 +68,8 @@ public sealed class DoAfter
         // (or if there is no item there we need to keep it free).
         if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out SharedHandsComponent? handsComponent))
         {
-            _activeHand = handsComponent.ActiveHand?.Name;
-            _activeItem = handsComponent.ActiveHandEntity;
+            ActiveHand = handsComponent.ActiveHand?.Name;
+            ActiveItem = handsComponent.ActiveHandEntity;
         }
 
         Tcs = new TaskCompletionSource<DoAfterStatus>();
@@ -146,17 +145,17 @@ public sealed class DoAfter
             if (!entityManager.TryGetComponent(EventArgs.User, out SharedHandsComponent? handsComponent))
             {
                 // If we had a hand but no longer have it that's still a paddlin'
-                if (_activeHand != null)
+                if (ActiveHand != null)
                     return true;
             }
             else
             {
                 var currentActiveHand = handsComponent.ActiveHand?.Name;
-                if (_activeHand != currentActiveHand)
+                if (ActiveHand != currentActiveHand)
                     return true;
 
                 var currentItem = handsComponent.ActiveHandEntity;
-                if (_activeItem != currentItem)
+                if (ActiveItem != currentItem)
                     return true;
             }
         }
