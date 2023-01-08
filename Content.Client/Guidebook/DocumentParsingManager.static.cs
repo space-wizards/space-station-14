@@ -2,7 +2,6 @@ using Pidgin;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Utility;
-using System.Linq;
 using static Pidgin.Parser;
 using static Pidgin.Parser<char>;
 using static Robust.Client.UserInterface.Control;
@@ -37,8 +36,11 @@ public sealed partial class DocumentParsingManager
         Any // just return the character.
         );
 
+    // like TextChar, but not skipping whitespace around newlines
+    private static readonly Parser<char, char> QuotedTextChar = OneOf(TryEscapedChar, Any);
+
     // Quoted text
-    private static readonly Parser<char, string> QuotedText = Char('"').Then(TextChar.Until(Try(Char('"'))).Select(string.Concat)).Labelled("quoted text");
+    private static readonly Parser<char, string> QuotedText = Char('"').Then(QuotedTextChar.Until(Try(Char('"'))).Select(string.Concat)).Labelled("quoted text");
     #endregion
 
     #region rich text-end markers

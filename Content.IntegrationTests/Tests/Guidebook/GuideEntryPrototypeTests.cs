@@ -11,6 +11,7 @@ namespace Content.IntegrationTests.Tests.Guidebook;
 [TestFixture]
 [TestOf(typeof(GuidebookSystem))]
 [TestOf(typeof(GuideEntryPrototype))]
+[TestOf(typeof(DocumentParsingManager))]
 public sealed class GuideEntryPrototypeTests
 {
     [Test]
@@ -35,5 +36,7 @@ public sealed class GuideEntryPrototypeTests
                 }
             });
         });
+
+        await pairTracker.CleanReturnAsync();
     }
 }
