@@ -118,7 +118,7 @@
       allowedTiles:
         - FloorSnow
       seedOffset: 4
-      threshold: 0.90
+      threshold: 0.95
       divisions: 1
       frequency: 1
       decals:
@@ -137,7 +137,7 @@
         - FloorSnow
       divisions: 1
       seedOffset: 3
-      threshold: 0.9
+      threshold: 0.8
       frequency: 0.05
       decals:
         - grasssnow
@@ -159,8 +159,8 @@
         - FloorSnow
       seedOffset: 2
       threshold: 0.99
-      divisions: 2
-      frequency: 0.05
+      divisions: 1
+      frequency: 1
       decals:
         - bushsnowa1
         - bushsnowa2
@@ -170,7 +170,7 @@
         - bushsnowb3
     - !type:BiomeEntityLayer
       seedOffset: 1
-      threshold: 0.9
+      threshold: 0.95
       frequency: 1
       allowedTiles:
         - FloorSnow

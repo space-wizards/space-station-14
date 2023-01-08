@@ -208,13 +208,16 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
+            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
+
+            if (value < layer.Threshold)
+            {
+                DebugTools.Assert(value is <= 1f and >= 0f);
+                continue;
+            }
+
             if (layer is not BiomeEntityLayer biomeLayer)
             {
-                if ((noise.GetCellular(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
-                {
-                    continue;
-                }
-
                 entity = null;
                 noise.SetFrequency(oldFrequency);
                 noise.SetSeed(seed);
@@ -282,12 +285,13 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             decals = new List<(string ID, Vector2 Position)>();
+            var decalOffset = 0.5f / decalLayer.Divisions;
 
             for (var x = 0; x < decalLayer.Divisions; x++)
             {
                 for (var y = 0; y < decalLayer.Divisions; y++)
                 {
-                    var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
+                    var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions + decalOffset, indices.Y + y * 1f / decalLayer.Divisions + decalOffset);
                     var decalValue = (noise.GetCellular(index.X, index.Y) + 1f) / 2f;
 
                     if (decalValue < decalLayer.Threshold)
