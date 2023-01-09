@@ -4,6 +4,6 @@ ent-BasePortal = портал bluespace
 ent-PortalRed = портал bluespace
     .desc = Этот больше похож на портал redspace.
     .suffix = { "" }
-    ent-PortalBlue = портал bluespace
+ent-PortalBlue = портал bluespace
     .desc = Говоря языком дилетанта, что быстро влетает, то быстро и вылетает.
     .suffix = { "" }

@@ -220,7 +220,6 @@ public sealed partial class ExplosionSystem : EntitySystem
     {
         var pos = Transform(uid).MapPosition;
 
-
         QueueExplosion(pos, typeId, totalIntensity, slope, maxTileIntensity, tileBreakScale, maxTileBreak, canCreateVacuum, addLog: false);
 
         if (!addLog)
@@ -299,9 +298,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         var audioRange = iterationIntensity.Count * 5;
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
         SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
-
-        filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange * 50);
-        SoundSystem.Play("/Audio/Effects/explosion_distant.ogg", filter, mapEntityCoords, _audioParams);
+        SoundSystem.Play("/Audio/Effects/explosion_distant.ogg", Filter.Broadcast());
 
         return new Explosion(this,
             type,
