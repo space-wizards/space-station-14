@@ -11,11 +11,45 @@
   - type: Sprite
     sprite: Tiles/Planet/Lava/lava.rsi
     netsync: false
-    drawdepth: -12
+    drawdepth: BelowFloor
+  - type: Icon
+    sprite: Tiles/Planet/Lava/lava.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: lava
+    shader: unshaded
+  - type: Climbable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+        - TableMask
+      layer:
+        - TableLayer
+      density: 1000
+
+- type: entity
+  id: FloorLavaEntity2
+  name: lava floor
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Tiles/Planet/Lava/lava2.rsi
+    netsync: false
+    drawdepth: BelowFloor
     layers:
-      - state: lava
-        shader: unshaded
-  #- type: SyncSprite
+    - state: lava
+      shader: unshaded
   - type: Climbable
   - type: Physics
     bodyType: Static
