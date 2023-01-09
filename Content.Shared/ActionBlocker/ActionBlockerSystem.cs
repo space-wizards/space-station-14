@@ -146,7 +146,8 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
-            if (_container.IsEntityInContainer(uid))
+            _container.TryGetOuterContainer(uid, Transform(uid), out var outerContainer);
+            if (_container.IsEntityInContainer(uid) && target != outerContainer?.Owner)
             {
                 var containerEv = new CanAttackFromContainerEvent(uid, target);
                 RaiseLocalEvent(uid, containerEv);
