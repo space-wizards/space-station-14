@@ -300,6 +300,9 @@ public sealed partial class ExplosionSystem : EntitySystem
         var filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange);
         SoundSystem.Play(type.Sound.GetSound(), filter, mapEntityCoords, _audioParams);
 
+        filter = Filter.Pvs(epicenter).AddInRange(epicenter, audioRange * 50);
+        SoundSystem.Play("/Audio/Effects/explosion_distant.ogg", filter, mapEntityCoords, _audioParams);
+
         return new Explosion(this,
             type,
             spaceData,
