@@ -106,7 +106,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
                     _overlay.BruteLevel = FixedPoint2.Min(1f, bruteDamage / critThreshold).Float();
                 }
 
-                if (damageable.DamagePerGroup.TryGetValue("Asphyxiation", out var oxyDamage))
+                if (damageable.DamagePerGroup.TryGetValue("Airloss", out var oxyDamage))
                 {
                     _overlay.OxygenLevel = FixedPoint2.Min(1f, oxyDamage / critThreshold).Float();
                 }
