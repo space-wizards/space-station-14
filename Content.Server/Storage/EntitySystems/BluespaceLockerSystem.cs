@@ -196,6 +196,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         // Do delay
         if (doDelay && component.Delay > 0)
         {
+            _entityManager.EnsureComponent<DoAfterComponent>(uid);
             component.CancelToken = new CancellationTokenSource();
 
             _doAfterSystem.DoAfter(
