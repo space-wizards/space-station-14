@@ -220,3 +220,4 @@
   components:
   - type: Sprite
     state: ash
+    color: "#808080"
