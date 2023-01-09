@@ -115,6 +115,9 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
                 {
                     _overlay.BruteLevel = 0;
                 }
+
+                _overlay.CritLevel = 0;
+                _overlay.DeadLevel = 0;
                 break;
             }
             case MobState.Critical:
@@ -123,10 +126,15 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
                         FixedPoint2.Max(0.0, damageable.TotalDamage), out var critLevel))
                     return;
                 _overlay.CritLevel = critLevel.Value.Float();
+
+                _overlay.BruteLevel = 0;
+                _overlay.DeadLevel = 0;
                 break;
             }
             case MobState.Dead:
             {
+                _overlay.BruteLevel = 0;
+                _overlay.CritLevel = 0;
                 break;
             }
         }
