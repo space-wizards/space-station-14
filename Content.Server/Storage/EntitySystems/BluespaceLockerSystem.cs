@@ -101,7 +101,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private bool ValidLink(BluespaceLockerComponent component, EntityUid link)
     {
-        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted;
+        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted && link != component.Owner;
     }
 
     /// <returns>True if any HashSet in <paramref name="a"/> would grant access to <paramref name="b"/></returns>
