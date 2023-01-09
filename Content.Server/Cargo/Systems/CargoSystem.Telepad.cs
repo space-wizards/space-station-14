@@ -35,7 +35,6 @@ public sealed partial class CargoSystem
             {
                 comp.CurrentState = CargoTelepadState.Idle;
                 _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle);
-//                appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Idle);
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -111,7 +110,6 @@ public sealed partial class CargoSystem
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
         component.CurrentState = CargoTelepadState.Unpowered;
         _appearance.SetData(component.Owner, CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
-//        appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
