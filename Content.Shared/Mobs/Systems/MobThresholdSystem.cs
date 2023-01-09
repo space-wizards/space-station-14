@@ -117,6 +117,30 @@ public sealed class MobThresholdSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetDeadThreshold(EntityUid uid,[NotNullWhen(true)] out FixedPoint2? threshold,
+        MobThresholdsComponent? thresholdComponent = null)
+    {
+        threshold = null;
+        if (!Resolve(uid, ref thresholdComponent))
+            return false;
+        return TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholdComponent);
+    }
+
+    public bool TryGetDeadPercentage(EntityUid uid,FixedPoint2 damage,[NotNullWhen(true)] out FixedPoint2? percentage,
+        MobThresholdsComponent? thresholdComponent = null)
+    {
+        percentage = null;
+        if (!TryGetDeadThreshold(uid, out var threshold, thresholdComponent))
+            return false;
+        if (damage == 0)
+        {
+            percentage = 0;
+            return true;
+        }
+        percentage = FixedPoint2.Min(1.0f, damage / threshold.Value);
+        return true;
+    }
+
 
     /// <summary>
     /// Takes the damage from one entity and scales it relative to the health of another
@@ -175,6 +199,7 @@ public sealed class MobThresholdSystem : EntitySystem
         if (!EnsureComps(target, mobStateComponent, thresholdComponent, damageableComponent))
             return;
         CheckThresholds(target, mobStateComponent, thresholdComponent, damageableComponent);
+
     }
 
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent, MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
@@ -184,9 +209,9 @@ public sealed class MobThresholdSystem : EntitySystem
             if (damageableComponent.TotalDamage < threshold)
                 continue;
             TriggerThreshold(target, mobStateComponent, thresholdsComponent,thresholdsComponent.CurrentThresholdState, mobState);
-            var ev = new MobThresholdUpdatedEvent(mobState, damageableComponent.TotalDamage, threshold);
-            RaiseLocalEvent(ref ev);
         }
+        var ev = new MobThresholdDamagedEvent(target, mobStateComponent, thresholdsComponent, damageableComponent);
+        RaiseLocalEvent(target,ev, true);
         UpdateAlerts(target, thresholdsComponent, mobStateComponent.CurrentState, damageableComponent.TotalDamage);
     }
 
@@ -247,4 +272,17 @@ public sealed class MobThresholdSystem : EntitySystem
 
 }
 
-public record struct MobThresholdUpdatedEvent(MobState MobState, FixedPoint2 Damage, FixedPoint2 Threshold);
+public sealed class MobThresholdDamagedEvent : EntityEventArgs
+{
+    public MobThresholdDamagedEvent(EntityUid Entity, MobStateComponent MobStateComp, MobThresholdsComponent ThresholdComp, DamageableComponent DamageableComp)
+    {
+        this.Entity = Entity;
+        this.ThresholdComp = ThresholdComp;
+        this.DamageableComp = DamageableComp;
+        this.MobStateComp = MobStateComp;
+    }
+    public EntityUid Entity { get; init; }
+    public MobStateComponent MobStateComp { get; init; }
+    public MobThresholdsComponent ThresholdComp { get; init; }
+    public DamageableComponent DamageableComp { get; init; }
+}
