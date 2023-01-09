@@ -32,10 +32,8 @@ public sealed class EmitterSystem : SharedEmitterSystem
         if (!_appearance.TryGetData(uid, EmitterVisuals.VisualState, out EmitterVisualState state, args.Component))
             state = EmitterVisualState.Off;
 
-        Logger.Debug("not layer");
         if (!args.Sprite.LayerMapTryGet(EmitterVisualLayers.Lights, out var layer))
             return;
-        Logger.Debug("got layer");
 
         switch (state)
         {
