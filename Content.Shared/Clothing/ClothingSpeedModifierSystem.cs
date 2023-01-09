@@ -56,13 +56,13 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         if (args.Current is not ClothingSpeedModifierComponentState state)
             return;
 
-        component.WalkModifier = state.WalkModifier;
-        component.SprintModifier = state.SprintModifier;
-        component.Enabled = state.Enabled;
-
         var diff = component.Enabled != state.Enabled ||
                    !MathHelper.CloseTo(component.SprintModifier, state.SprintModifier) ||
                    !MathHelper.CloseTo(component.WalkModifier, state.WalkModifier);
+
+        component.WalkModifier = state.WalkModifier;
+        component.SprintModifier = state.SprintModifier;
+        component.Enabled = state.Enabled;
 
         if (diff && _container.TryGetContainingContainer(uid, out var container))
         {
