@@ -13,6 +13,7 @@
       Flammable: [Touch]
       Extinguish: [Touch]
       Acidic: [Touch, Ingestion]
+      Sentience: [Touch]
   - type: InputMover
   - type: MobMover
   - type: HTN

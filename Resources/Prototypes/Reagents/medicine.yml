@@ -699,6 +699,16 @@
   physicalDesc: reagent-physical-desc-enigmatic
   flavor: magical
   color: "#b50ee8"
+  reactiveEffects:
+    Sentience:
+      methods: [ Touch ]
+      effects:
+      - !type:MakeSentient
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+      - !type:Scream
+        probability: 0.1
   metabolisms:
     Medicine:
       effects:
