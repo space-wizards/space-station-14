@@ -55,6 +55,7 @@ public abstract class SharedMechSystem : EntitySystem
         SubscribeLocalEvent<SharedMechComponent, GetAdditionalAccessEvent>(OnGetAdditionalAccess);
 
         SubscribeLocalEvent<MechPilotComponent, GetMeleeWeaponEvent>(OnGetMeleeWeapon);
+        SubscribeLocalEvent<MechPilotComponent, CanAttackFromContainerEvent>(OnCanAttackFromContainer);
     }
 
     #region State Handling
@@ -443,6 +444,11 @@ public abstract class SharedMechSystem : EntitySystem
         var weapon = mech.CurrentSelectedEquipment ?? component.Mech;
         args.Weapon = weapon;
         args.Handled = true;
+    }
+
+    private void OnCanAttackFromContainer(EntityUid uid, MechPilotComponent component, CanAttackFromContainerEvent args)
+    {
+        args.CanAttack = true;
     }
 
     private void UpdateAppearance(EntityUid uid, SharedMechComponent ? component = null, AppearanceComponent? appearance = null)
