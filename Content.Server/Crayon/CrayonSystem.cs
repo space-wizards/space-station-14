@@ -71,7 +71,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         if (component.UseSound != null)
             _audio.PlayPvs(_audio.GetSound(component.UseSound), uid, AudioHelpers.WithVariation(0.125f));
-//            SoundSystem.Play(component.UseSound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
 
         // Decrease "Ammo"
         component.Charges--;
@@ -92,12 +91,10 @@ public sealed class CrayonSystem : SharedCrayonSystem
         if (!TryComp<ActorComponent>(args.User, out var actor)) return;
 
         _uiSystem.ToggleUi(component.UserInterface!, actor.PlayerSession);
-//        component.UserInterface?.Toggle(actor.PlayerSession);
 
         if (component.UserInterface?.SubscribedSessions.Contains(actor.PlayerSession) == true)
         {
             // Tell the user interface the selected stuff
-//            component.UserInterface.SetState(new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
             _uiSystem.SetUiState(component.UserInterface, new CrayonBoundUserInterfaceState(component.SelectedState, component.SelectableColor, component.Color));
         }
 
@@ -140,7 +137,6 @@ public sealed class CrayonSystem : SharedCrayonSystem
     {
         if (TryComp<ActorComponent>(args.User, out var actor))
             _uiSystem.CloseUi(component.UserInterface!, actor!.PlayerSession);
-            //component.UserInterface?.Close(actor.PlayerSession);
     }
 
     private void UseUpCrayon(EntityUid uid, EntityUid user)
