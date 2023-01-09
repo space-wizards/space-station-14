@@ -1,0 +1,9 @@
+ent-BasePortal = портал bluespace
+    .desc = Говоря языком дилетанта, что быстро влетает, то быстро и вылетает.
+    .suffix = { "" }
+ent-PortalRed = портал bluespace
+    .desc = Этот больше похож на портал redspace.
+    .suffix = { "" }
+    ent-PortalBlue = портал bluespace
+    .desc = Говоря языком дилетанта, что быстро влетает, то быстро и вылетает.
+    .suffix = { "" }
