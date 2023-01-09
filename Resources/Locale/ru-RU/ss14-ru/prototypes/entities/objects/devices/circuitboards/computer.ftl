@@ -79,3 +79,6 @@ ent-SyndicateShuttleConsoleCircuitboard = консоль управления ш
 ent-CloningConsoleComputerCircuitboard = консоль клонирования (машинная плата)
     .desc = Машинная плата для консоли клонирования.
     .suffix = { "" }
+ent-TechDiskComputerCircuitboard = технологический дисковый терминал (машинная плата)
+    .desc
+    .suffix = { "" }
