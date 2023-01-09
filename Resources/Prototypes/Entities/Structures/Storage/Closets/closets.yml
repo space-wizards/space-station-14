@@ -166,5 +166,5 @@
       autoLinksUseProperties: true
       autoLinkProperties:
         bluespaceEffectOnTeleportSource: true
-        destroyAfterUses: 1
+        destroyAfterUses: 2
         destroyType: DeleteComponent

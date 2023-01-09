@@ -373,5 +373,5 @@
         destroyType: Delete
       autoLinksUseProperties: true
       autoLinkProperties:
-        destroyAfterUses: 1
+        destroyAfterUses: 2
         destroyType: DeleteComponent
