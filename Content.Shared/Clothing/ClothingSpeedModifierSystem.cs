@@ -64,6 +64,8 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         component.SprintModifier = state.SprintModifier;
         component.Enabled = state.Enabled;
 
+        // Avoid raising the event for the container if nothing changed.
+        // We'll still set the values in case they're slightly different but within tolerance.
         if (diff && _container.TryGetContainingContainer(uid, out var container))
         {
             _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
