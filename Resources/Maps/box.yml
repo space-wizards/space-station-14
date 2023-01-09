@@ -164718,15 +164718,13 @@ entities:
 - uid: 21405
   type: GasThermoMachineHeater
   components:
-  - rot: 3.141592653589793 rad
-    pos: 74.5,-47.5
+  - pos: 74.5,-47.5
     parent: 8364
     type: Transform
 - uid: 21406
   type: GasThermoMachineFreezer
   components:
-  - rot: 3.141592653589793 rad
-    pos: 70.5,-47.5
+  - pos: 70.5,-47.5
     parent: 8364
     type: Transform
 - uid: 21407
@@ -175811,15 +175809,13 @@ entities:
 - uid: 22929
   type: GasThermoMachineHeater
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 19.5,-53.5
+  - pos: 19.5,-53.5
     parent: 8364
     type: Transform
 - uid: 22930
   type: GasThermoMachineFreezer
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 19.5,-54.5
+  - pos: 19.5,-54.5
     parent: 8364
     type: Transform
 - uid: 22931
