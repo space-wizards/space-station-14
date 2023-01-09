@@ -38,6 +38,7 @@ namespace Content.Server.Singularity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
+            SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<EmitterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<EmitterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
@@ -99,6 +100,23 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
+        private void OnApcChanged(EntityUid uid, EmitterComponent component, ref PowerChangedEvent args)
+        {
+            if (!component.IsOn)
+            {
+                return;
+            }
+
+            if (!args.Powered)
+            {
+                PowerOff(component);
+            }
+            else
+            {
+                PowerOn(component);
+            }
+        }
+
         private void OnRefreshParts(EntityUid uid, EmitterComponent component, RefreshPartsEvent args)
         {
             var powerUseRating = args.PartRatings[component.MachinePartPowerUse];
@@ -123,6 +141,8 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsOn = false;
             if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
                 powerConsumer.DrawRate = 0;
+            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var apcReceiever))
+                apcReceiever.NeedsPower = false;
             PowerOff(component);
             UpdateAppearance(component);
         }
@@ -132,6 +152,11 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsOn = true;
             if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
                 powerConsumer.DrawRate = component.PowerUseActive;
+            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var apcReceiever))
+            {
+                apcReceiever.NeedsPower = true;
+                PowerOn(component);
+            }
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance(component);
@@ -179,9 +204,6 @@ namespace Content.Server.Singularity.EntitySystems
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
-            DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
-                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
-                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
             Fire(component);
 
