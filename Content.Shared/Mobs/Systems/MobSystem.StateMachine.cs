@@ -28,9 +28,9 @@ public partial class MobStateSystem
         if (oldState == newState || !component.AllowedStates.Contains(newState))
             return false;
 
-        OnExitState(component,oldState);
+        OnExitState(component, oldState);
         component.CurrentState = newState;
-        OnEnterState(component,oldState);
+        OnEnterState(component, newState);
 
         var ev = new MobStateChangedEvent(component, oldState, newState, origin);
         OnStateChanged(component, oldState, newState);
