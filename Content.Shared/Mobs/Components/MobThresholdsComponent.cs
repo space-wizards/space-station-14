@@ -11,6 +11,8 @@ public sealed class MobThresholdsComponent : Component
 {
     [DataField("thresholds", required:true)]public SortedDictionary<FixedPoint2, MobState> Thresholds = new();
 
+    [DataField("triggersAlerts")] public bool TriggersAlerts = true;
+
     public Dictionary<MobState, FixedPoint2> ThresholdReverseLookup = new();
 
     public MobState CurrentThresholdState;

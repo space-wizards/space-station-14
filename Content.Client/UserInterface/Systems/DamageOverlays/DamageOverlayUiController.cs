@@ -1,4 +1,6 @@
-﻿using Content.Client.Gameplay;
+﻿using Content.Client.Alerts;
+using Content.Client.Gameplay;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -18,6 +20,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+    [UISystemDependency] private readonly ClientAlertsSystem _alertsSystem = default!;
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     private Overlays.DamageOverlay _overlay = default!;
 
@@ -27,7 +30,9 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<DamageChangedEvent>(OnDamageReceived);
     }
+
     public void OnStateEntered(GameplayState state)
     {
         _overlayManager.AddOverlay(_overlay);
@@ -52,6 +57,15 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
             ClearOverlay();
         }
     }
+
+    private void OnDamageReceived(DamageChangedEvent args)
+    {
+        var entity = args.Damageable.Owner;
+        if (entity != _playerManager.LocalPlayer?.ControlledEntity || !EntityManager.TryGetComponent<MobStateComponent>(entity, out var mobStateComp))
+            return;
+        OnStateUpdate(entity, mobStateComp.CurrentState, mobStateComp, null, args.Damageable);
+    }
+
     private void OnPlayerDetached(PlayerDetachedEvent args)
     {
         ClearOverlay();
@@ -67,9 +81,11 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
     private void OnStateUpdate(EntityUid entity, MobState newMobState,MobStateComponent? mobState = null,
         MobThresholdsComponent? thresholds = null, DamageableComponent? damageable = null)
     {
-        if ((mobState == null && !EntityManager.TryGetComponent(entity, out mobState))
-            || (thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds))
-            || (damageable == null && !EntityManager.TryGetComponent(entity, out damageable)))
+        if (mobState == null && !EntityManager.TryGetComponent(entity, out mobState))
+            return;
+        if (thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds))
+            return;
+        if (damageable == null && !EntityManager.TryGetComponent(entity, out damageable))
             return;
         switch (newMobState)
         {
@@ -80,12 +96,12 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
             }
             case MobState.Critical:
             {
-                _overlay.CritLevel = 1.0f;
+                //_overlay.CritLevel = 1.0f;
                 break;
             }
             case MobState.Dead:
             {
-                _overlay.DeadLevel = 1.0f;
+                //_overlay.DeadLevel = 1.0f;
                 break;
             }
             case MobState.Invalid:

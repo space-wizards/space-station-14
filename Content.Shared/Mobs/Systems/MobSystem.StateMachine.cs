@@ -9,7 +9,7 @@ public partial class MobStateSystem
     //Called when a new state is entered
     protected virtual void OnEnterState(MobStateComponent component, MobState state)
     {
-        OnStateEnteredMiscSystems(component, state);
+        OnStateEnteredSubscribers(component, state);
     }
 
     //Called right before stateChangedEvent gets raised
@@ -18,7 +18,7 @@ public partial class MobStateSystem
     //Called when exiting a state
     protected virtual void OnExitState(MobStateComponent component, MobState state)
     {
-        OnStateExitMiscSystems(component, state);
+        OnStateExitSubscribers(component, state);
     }
 
     private bool ChangeState(EntityUid origin, MobStateComponent component, MobState newState)

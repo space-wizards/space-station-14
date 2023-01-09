@@ -20,22 +20,22 @@ namespace Content.Shared.Mobs.Systems;
 public partial class MobStateSystem
 {
 
-    private void SubscribeMiscEvents()
+    private void SubscribeEvents()
     {
         SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
-        SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
-        SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(OnUseAttempt);
-        SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
-        SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
-        SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+        SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, IsEquippingAttemptEvent>(OnEquipAttempt);
-        SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+        SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, IsUnequippingAttemptEvent>(OnUnequipAttempt);
-        SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
-        SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
-        SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
-        SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(OnMoveAttempt);
-        SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+        SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, UpdateCanMoveEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, TryingToSleepEvent>(OnSleepAttempt);
         SubscribeLocalEvent<MobStateComponent, AttemptSneezeCoughEvent>(OnSneezeAttempt);
     }
@@ -62,13 +62,7 @@ public partial class MobStateSystem
             args.Multiplier /= 2;
     }
 
-    private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
-    {
-        if (IsIncapacitated(uid, component))
-            args.Cancel();
-    }
-
-    private void OnStateExitMiscSystems(MobStateComponent component, MobState state)
+    private void OnStateExitSubscribers(MobStateComponent component, MobState state)
     {
         var uid = component.Owner;
         switch (state)
@@ -95,9 +89,10 @@ public partial class MobStateSystem
         }
     }
 
-    private void OnStateEnteredMiscSystems(MobStateComponent component, MobState state)
+    private void OnStateEnteredSubscribers(MobStateComponent component, MobState state)
     {
         var uid = component.Owner;
+        _blocker.UpdateCanMove(uid); //update movement anytime a state changes
         switch (state)
         {
             case MobState.Alive:
@@ -105,7 +100,6 @@ public partial class MobStateSystem
                 _appearance.SetData(uid, MobStateVisuals.State, MobState.Alive);
                 break;
             case MobState.Critical:
-                Alerts.ShowAlert(uid, AlertType.HumanCrit);
                 _standing.Down(uid);
                 _appearance.SetData(uid, MobStateVisuals.State, MobState.Critical);
                 break;
@@ -129,12 +123,7 @@ public partial class MobStateSystem
     }
 
     #region ActionBlocker
-    private void BlockActions(MobStateChangedEvent ev)
-        {
-            _blocker.UpdateCanMove(ev.Entity);
-        }
-
-        private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
+    private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
         {
             switch (component.CurrentState)
             {
@@ -145,79 +134,18 @@ public partial class MobStateSystem
             }
         }
 
-        private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnUseAttempt(EntityUid uid, MobStateComponent component, UseAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnInteractAttempt(EntityUid uid, MobStateComponent component, InteractionAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnThrowAttempt(EntityUid uid, MobStateComponent component, ThrowAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, IsEquippingAttemptEvent args)
+    private void OnEquipAttempt(EntityUid uid, MobStateComponent component, IsEquippingAttemptEvent args)
         {
             // is this a self-equip, or are they being stripped?
             if (args.Equipee == uid)
                 CheckAct(uid, component, args);
         }
-
-        private void OnEmoteAttempt(EntityUid uid, MobStateComponent component, EmoteAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, IsUnequippingAttemptEvent args)
+    private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, IsUnequippingAttemptEvent args)
         {
             // is this a self-equip, or are they being stripped?
             if (args.Unequipee == uid)
                 CheckAct(uid, component, args);
         }
 
-        private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
-        private void OnPickupAttempt(EntityUid uid, MobStateComponent component, PickupAttemptEvent args)
-        {
-            CheckAct(uid, component, args);
-        }
-
         #endregion
-
-        private void OnMoveAttempt(EntityUid uid, MobStateComponent component, UpdateCanMoveEvent args)
-        {
-            switch (component.CurrentState)
-            {
-                case MobState.Critical:
-                case MobState.Dead:
-                    args.Cancel();
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
-        {
-            if (IsIncapacitated(uid, component))
-                args.Cancel();
-        }
-
 }

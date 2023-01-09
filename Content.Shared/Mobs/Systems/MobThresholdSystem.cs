@@ -1,18 +1,22 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobStateSystem= default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleComponentState);
@@ -32,10 +36,10 @@ public sealed class MobThresholdSystem : EntitySystem
 
     private void MobThresholdStartup(EntityUid uid, MobThresholdsComponent component, ComponentStartup args)
     {
-        if (!HasComp<DamageableComponent>(uid))
+        if (!TryComp<DamageableComponent>(uid, out var damageableComponent))
         {
             Logger.Warning("Entity: "+uid+" "+EnsureComp<MetaDataComponent>(uid).EntityName+ "Does not have a damageableComponent. Adding one!");
-            EnsureComp<DamageableComponent>(uid);
+            damageableComponent = EnsureComp<DamageableComponent>(uid);
         }
         var mobStateComp = EnsureComp<MobStateComponent>(uid);
         foreach (var (damage,mobState) in component.Thresholds)
@@ -44,6 +48,13 @@ public sealed class MobThresholdSystem : EntitySystem
             component.ThresholdReverseLookup.Add(mobState, damage);
         }
         TriggerThreshold(uid, mobStateComp, component, MobState.Invalid, component.Thresholds.First().Value);
+        UpdateAlerts(uid, component, component.Thresholds.First().Value, damageableComponent.TotalDamage);
+    }
+
+    private void MobThresholdShutdown(EntityUid uid, MobThresholdsComponent component, ComponentShutdown args)
+    {
+        if (component.TriggersAlerts)
+            _alerts.ClearAlertCategory(uid, AlertCategory.Health);
     }
 
     public FixedPoint2 GetThresholdForState(EntityUid uid, MobState mobState, MobThresholdsComponent? thresholdComponent)
@@ -97,6 +108,11 @@ public sealed class MobThresholdSystem : EntitySystem
         percentage = null;
         if (!TryGetIncapThreshold(uid, out var threshold, thresholdComponent))
             return false;
+        if (damage == 0)
+        {
+            percentage = 0;
+            return true;
+        }
         percentage = FixedPoint2.Min(1.0f, damage / threshold.Value);
         return true;
     }
@@ -150,7 +166,6 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         var mobStateComp = EnsureComp<MobStateComponent>(uid);
         CheckThresholds(uid, mobStateComp, mobThresholdsComponent, args.Damageable);
-
     }
 
     //Call this if you are somehow change the amount of damage on damageable without triggering a damageChangedEvent
@@ -172,6 +187,7 @@ public sealed class MobThresholdSystem : EntitySystem
             var ev = new MobThresholdUpdatedEvent(mobState, damageableComponent.TotalDamage, threshold);
             RaiseLocalEvent(ref ev);
         }
+        UpdateAlerts(target, thresholdsComponent, mobStateComponent.CurrentState, damageableComponent.TotalDamage);
     }
 
     private void TriggerThreshold(EntityUid uid, MobStateComponent mobStateComponent, MobThresholdsComponent thresholdsComponent,
@@ -194,6 +210,41 @@ public sealed class MobThresholdSystem : EntitySystem
         Logger.Error("Target entity does not have damageable or mobThreshold components!");
         return false;
     }
+
+
+    private void UpdateAlerts(EntityUid uid, MobThresholdsComponent thresholdComp, MobState currentMobState, FixedPoint2 damage)
+    {
+        if (!thresholdComp.TriggersAlerts) //don't handle alerts if they are managed by another system... BobbySim (soon TM)
+            return;
+        switch (currentMobState)
+        {
+            case MobState.Alive:
+            {
+                var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
+                if (TryGetIncapPercentage(uid, damage, out var percentage))
+                {
+                    severity = (short) MathF.Floor(percentage.Value.Float() *
+                                                   _alerts.GetMaxSeverity(AlertType.HumanHealth));
+                }
+                _alerts.ShowAlert(uid, AlertType.HumanHealth,severity);
+                break;
+            }
+            case MobState.Critical:
+            {
+                _alerts.ShowAlert(uid, AlertType.HumanCrit);
+                break;
+            }
+            case MobState.Dead:
+            {
+                _alerts.ShowAlert(uid, AlertType.HumanDead);
+                break;
+            }
+            case MobState.Invalid:
+            default:
+                throw new ArgumentOutOfRangeException(nameof(currentMobState), currentMobState, null);
+        }
+    }
+
 }
 
 public record struct MobThresholdUpdatedEvent(MobState MobState, FixedPoint2 Damage, FixedPoint2 Threshold);

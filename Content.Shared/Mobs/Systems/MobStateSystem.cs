@@ -12,7 +12,6 @@ namespace Content.Shared.Mobs.Systems;
 [Virtual]
 public partial class MobStateSystem : EntitySystem
 {
-    [Dependency] protected readonly AlertsSystem Alerts = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -23,8 +22,7 @@ public partial class MobStateSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeMiscEvents();
-        SubscribeLocalEvent<MobStateComponent, ComponentShutdown>(OnMobStateShutdown);
+        SubscribeEvents();
         SubscribeLocalEvent<MobStateComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobStateComponent, ComponentHandleState>(OnHandleComponentState);
     }
@@ -41,10 +39,6 @@ public partial class MobStateSystem : EntitySystem
     private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
     {
         args.State = new MobStateComponentState(component.AllowedStates, component.StateTickets);
-    }
-    private void OnMobStateShutdown(EntityUid uid, MobStateComponent component, ComponentShutdown args)
-    {
-        Alerts.ClearAlert(uid, AlertType.HumanHealth);
     }
 
     public bool HasState(EntityUid uid, MobState mobState, MobStateComponent? component = null)
