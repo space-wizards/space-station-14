@@ -35,6 +35,15 @@ public sealed class BluespaceLockerSystem : EntitySystem
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
     {
         GetTargetStorage(component);
+
+        if (component.BluespaceEffectOnInit)
+            BluespaceEffect(uid, component);
+    }
+
+    private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
+    {
+        _entityManager.SpawnEntity(component.BluespaceEffectPrototype, uid.ToCoordinates());
+        // TODO make the spawned entity follow the locker
     }
 
     private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
@@ -78,6 +87,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 entityStorageComponent.Air.CopyFromMutable(targetContainerStorageComponent.Air);
                 targetContainerStorageComponent.Air.Clear();
             }
+
+            // Bluespace effects
+            if (component.BluespaceEffectOnTeleportSource)
+                BluespaceEffect(targetContainerStorageComponent.Owner, component);
+            if (component.BluespaceEffectOnTeleportTarget)
+                BluespaceEffect(uid, component);
         }
     }
 
@@ -232,6 +247,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
             _entityStorage.OpenStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
         }
+
+        // Bluespace effects
+        if (component.BluespaceEffectOnTeleportSource)
+            BluespaceEffect(uid, component);
+        if (component.BluespaceEffectOnTeleportTarget)
+            BluespaceEffect(targetContainerStorageComponent.Owner, component);
     }
 
     private sealed class BluespaceLockerTeleportDelayComplete : EntityEventArgs

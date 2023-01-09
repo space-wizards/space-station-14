@@ -69,6 +69,28 @@ public sealed class BluespaceLockerComponent : Component
     public CancellationTokenSource? CancelToken;
 
     /// <summary>
+    /// Defines prototype to spawn for bluespace effect
+    /// </summary>
+    public string BluespaceEffectPrototype = "EffectFlashBluespace";
+
+    /// <summary>
+    /// Determines if bluespace effect is show on teleport at the source
+    /// </summary>
+    [DataField("bluespaceEffectOnTeleportSource"), ViewVariables(VVAccess.ReadWrite)]
+    public bool BluespaceEffectOnTeleportSource;
+
+    /// <summary>
+    /// Determines if bluespace effect is show on teleport at the target
+    /// </summary>
+    [DataField("bluespaceEffectOnTeleportTarget"), ViewVariables(VVAccess.ReadWrite)]
+    public bool BluespaceEffectOnTeleportTarget;
+
+    /// <summary>
+    /// Determines if bluespace effect is show on component init
+    /// </summary>
+    public bool BluespaceEffectOnInit;
+
+    /// <summary>
     /// Determines if links automatically added are bidirectional
     /// </summary>
     [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]
