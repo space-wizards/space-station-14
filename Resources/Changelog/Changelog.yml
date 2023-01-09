@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
-  id: 2346
-  time: '2022-09-19T23:54:33.0000000+00:00'
 - author: 25203
   changes:
   - {message: 'Added a computer board for the cargo shuttle console, found in QM''s
@@ -2963,3 +2958,9 @@ Entries:
       grouped entities work.', type: Tweak}
   id: 2845
   time: '2023-01-08T03:24:52.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Resolved server and client bugs that affected the way crew manifest
+      entries were being sorted., type: Fix}
+  id: 2846
+  time: '2023-01-09T03:34:43.0000000+00:00'
