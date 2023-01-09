@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -38,9 +39,20 @@ namespace Content.Server.Singularity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
+            SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerbs);
             SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<EmitterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<EmitterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+        }
+
+        private void OnGetVerbs(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+                return;
+
+            var v = new Verb()
+            {
+            };
         }
 
         private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
@@ -123,6 +135,8 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsOn = false;
             if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
                 powerConsumer.DrawRate = 0;
+            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var powerReceiver))
+                powerReceiver.Load = 0;
             PowerOff(component);
             UpdateAppearance(component);
         }
@@ -132,6 +146,8 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsOn = true;
             if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
                 powerConsumer.DrawRate = component.PowerUseActive;
+            if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var powerReceiver))
+                powerReceiver.Load = component.PowerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
             UpdateAppearance(component);
