@@ -104,6 +104,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted;
     }
 
+    /// <returns>True if any HashSet in <paramref name="a"/> exists in <paramref name="b"/></returns>
+    private bool AccessMatch(IEnumerable<HashSet<string>> a, IReadOnlyCollection<HashSet<string>> b)
+    {
+        return a.Any(aSet => b.Any(aSet.SetEquals));
+    }
+
     private bool ValidAutolink(BluespaceLockerComponent component, EntityUid link)
     {
         if (!ValidLink(component, link))
@@ -122,8 +128,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (component.PickLinksFromSameAccess &&
-            (_entityManager.TryGetComponent<AccessComponent>(component.Owner, out var sourceAccess) != _entityManager.TryGetComponent<AccessComponent>(link, out var targetAccess) ||
-            (sourceAccess != null && !sourceAccess.Tags.SetEquals(targetAccess!.Tags))))
+            (_entityManager.TryGetComponent<AccessReaderComponent>(component.Owner, out var sourceAccess) != _entityManager.TryGetComponent<AccessReaderComponent>(link, out var targetAccess) ||
+            (sourceAccess != null && !AccessMatch(sourceAccess.AccessLists, targetAccess!.AccessLists))))
             return false;
 
         return true;
