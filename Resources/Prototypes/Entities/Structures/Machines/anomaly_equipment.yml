@@ -87,6 +87,14 @@
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - state: firing
+      shader: unshaded
+      visible: false
+      map: ["enum.EmitterVisualLayers.Lights"]
+    - state: locked
+      shader: unshaded
+      visible: false
+      map: ["enum.StorageVisualLayers.Lock"]
   - type: Transform
     noRot: false
   - type: Rotatable
@@ -98,6 +106,10 @@
   - type: AccessReader
     access: [[ "Research" ]]
   - type: Emitter
+    onState: firing
+    underpoweredState: locked
+  - type: ApcPowerReceiver
+    powerLoad: 0
   - type: Gun
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     selectedMode: SemiAuto

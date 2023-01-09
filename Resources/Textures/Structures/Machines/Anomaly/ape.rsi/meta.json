@@ -12,6 +12,14 @@
       "directions": 4
     },
     {
+      "name": "firing",
+      "directions": 4
+    },
+    {
+      "name": "locked",
+      "directions": 4
+    },
+    {
       "name": "panel",
       "directions": 4
     },
