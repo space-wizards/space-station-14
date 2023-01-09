@@ -26,7 +26,7 @@ namespace Content.Shared.Interaction.Events
     {
         public EntityUid Uid;
         public EntityUid? Target;
-        public bool CanAttack = false;
+        public bool CanAttack = true;
 
         public CanAttackFromContainerEvent(EntityUid uid, EntityUid? target = null)
         {
