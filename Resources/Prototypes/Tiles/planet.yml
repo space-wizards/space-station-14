@@ -53,11 +53,19 @@
 - type: tile
   id: FloorBasalt
   name: tiles-basalt-floor
-  sprite: /Textures/Tiles/Planet/Desert/desert.png
-  variants: 6
-  placementVariants: [0, 1, 2, 3, 4, 5]
+  sprite: /Textures/Tiles/Planet/Lava/basalt/basalt.png
   isSubfloor: true
   canCrowbar: false
+  cornerSprites:
+    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge1.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge2.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge3.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge4.png
+  cardinalSprites:
+    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge1.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge2.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge3.png
+    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge4.png
   footstepSounds:
     collection: FootstepAsteroid
   friction: 0.30

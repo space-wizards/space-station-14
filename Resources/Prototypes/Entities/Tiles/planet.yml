@@ -11,11 +11,11 @@
   - type: Sprite
     sprite: Tiles/Planet/Lava/lava.rsi
     netsync: false
-    drawdepth: BelowFloor
+    drawdepth: -12
     layers:
       - state: lava
         shader: unshaded
-  - type: SyncSprite
+  #- type: SyncSprite
   - type: Climbable
   - type: Physics
     bodyType: Static
