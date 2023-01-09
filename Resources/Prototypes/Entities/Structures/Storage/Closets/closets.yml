@@ -142,6 +142,7 @@
   description: It's a storage unit... right?
   components:
     - type: BluespaceLocker
+      pickLinksFromSameMap: true
       minBluespaceLinks: 1
       behaviorProperties:
         bluespaceEffectOnTeleportSource: true
@@ -159,6 +160,7 @@
   description: It's a storage unit... right?
   components:
     - type: BluespaceLocker
+      pickLinksFromSameMap: true
       minBluespaceLinks: 1
       behaviorProperties:
         transportEntities: false
