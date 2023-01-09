@@ -13,6 +13,7 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
