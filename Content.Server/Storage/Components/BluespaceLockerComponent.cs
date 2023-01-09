@@ -91,8 +91,28 @@ public sealed class BluespaceLockerComponent : Component
     public bool BluespaceEffectOnInit;
 
     /// <summary>
+    /// Uses left before the locker is destroyed. -1 indicates infinite
+    /// </summary>
+    [DataField("destroyAfterUses"), ViewVariables(VVAccess.ReadWrite)]
+    public int DestroyAfterUses = -1;
+
+    /// <summary>
+    /// How to destroy the locker after it runs out of uses
+    /// </summary>
+    [DataField("destroyType"), ViewVariables(VVAccess.ReadWrite)]
+    public BluespaceLockerDestroyType DestroyType = BluespaceLockerDestroyType.Delete;
+
+    /// <summary>
     /// Determines if links automatically added are bidirectional
     /// </summary>
     [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]
     public bool AutoLinksBidirectional;
+}
+
+[Flags]
+public enum BluespaceLockerDestroyType : byte
+{
+    Delete = 1 << 0,
+    DeleteComponent = 1 << 1,
+    Explode = 1 << 2,
 }

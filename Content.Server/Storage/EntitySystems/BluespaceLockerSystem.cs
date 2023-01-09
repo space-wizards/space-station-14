@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Threading;
+using Content.Server.Construction.Completions;
 using Content.Server.DoAfter;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lock;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
@@ -21,6 +23,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
 
     public override void Initialize()
     {
@@ -94,6 +97,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BluespaceEffectOnTeleportTarget)
                 BluespaceEffect(uid, component);
         }
+
+        DestroyAfterLimit(uid, component);
     }
 
     private bool ValidLink(BluespaceLockerComponent component, EntityUid link)
@@ -253,6 +258,32 @@ public sealed class BluespaceLockerSystem : EntitySystem
             BluespaceEffect(uid, component);
         if (component.BluespaceEffectOnTeleportTarget)
             BluespaceEffect(targetContainerStorageComponent.Owner, component);
+
+        DestroyAfterLimit(uid, component);
+    }
+
+    private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component)
+    {
+        if (component.DestroyAfterUses == -1)
+            return;
+
+        component.DestroyAfterUses--;
+        if (component.DestroyAfterUses > 0)
+            return;
+
+        switch (component.DestroyType)
+        {
+            case BluespaceLockerDestroyType.Explode:
+                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(_entityManager),
+                    ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
+                goto case BluespaceLockerDestroyType.Delete;
+            case BluespaceLockerDestroyType.Delete:
+                _entityManager.QueueDeleteEntity(uid);
+                break;
+            case BluespaceLockerDestroyType.DeleteComponent:
+                _entityManager.RemoveComponent<BluespaceLockerComponent>(uid);
+                break;
+        }
     }
 
     private sealed class BluespaceLockerTeleportDelayComplete : EntityEventArgs
