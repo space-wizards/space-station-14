@@ -16,7 +16,7 @@ namespace Content.Shared.Roles
     public sealed class DepartmentTimeRequirement : JobRequirement
     {
         /// <summary>
-        /// Which department needs the required amount of time
+        /// Which department needs the required amount of time.
         /// </summary>
         [DataField("department", customTypeSerializer: typeof(PrototypeIdSerializer<DepartmentPrototype>))]
         public string Department = default!;
@@ -27,8 +27,14 @@ namespace Content.Shared.Roles
         [DataField("time")] public TimeSpan Time;
 
         /// <summary>
-        /// Should the condition be inverted?.
+        /// If property is <c>True</c> Requirement will inverted
+        /// and it disallow pick this job if condition was true,<br />
+        /// and it allow pick if condition was false.
         /// </summary>
+        /// <value>
+        /// <c>False</c> by default.<br />
+        /// <c>True</c> for invert general requirement
+        /// </value>
         [DataField("inverted")] public bool Inverted;
     }
 
@@ -41,28 +47,20 @@ namespace Content.Shared.Roles
         [DataField("role", customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
         public string Role = default!;
 
-        /// <summary>
-        /// How long (in seconds) this requirement is.
-        /// </summary>
+        /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
         [DataField("time")] public TimeSpan Time;
 
-        /// <summary>
-        /// Should the condition be inverted?.
-        /// </summary>
+        /// <inheritdoc cref="DepartmentTimeRequirement.Inverted"/>
         [DataField("inverted")] public bool Inverted;
     }
 
     [UsedImplicitly]
     public sealed class OverallPlaytimeRequirement : JobRequirement
     {
-        /// <summary>
-        /// How long (in seconds) this requirement is.
-        /// </summary>
+        /// <inheritdoc cref="DepartmentTimeRequirement.Time"/>
         [DataField("time")] public TimeSpan Time;
 
-        /// <summary>
-        /// Should the condition be inverted?.
-        /// </summary>
+        /// <inheritdoc cref="DepartmentTimeRequirement.Inverted"/>
         [DataField("inverted")] public bool Inverted;
     }
 
