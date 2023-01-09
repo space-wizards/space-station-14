@@ -31,14 +31,14 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public GridContainer MenuBody = new();
 
-        private ContextMenuPresenter _presenter;
+        private ContextMenuUIController _uiController;
 
-        public ContextMenuPopup (ContextMenuPresenter presenter, ContextMenuElement? parentElement) : base()
+        public ContextMenuPopup (ContextMenuUIController uiController, ContextMenuElement? parentElement) : base()
         {
             RobustXamlLoader.Load(this);
             MenuPanel.SetOnlyStyleClass(StyleClassContextMenuPopup);
 
-            _presenter = presenter;
+            _uiController = uiController;
             ParentElement = parentElement;
 
             // TODO xaml controls now have the access options -> re-xamlify all this.
@@ -52,7 +52,7 @@ namespace Content.Client.ContextMenu.UI
             MenuPanel.MaxHeight = MaxItemsBeforeScroll * (ContextMenuElement.ElementHeight + 2 * ContextMenuElement.ElementMargin) + styleSize.Y;
 
             UserInterfaceManager.ModalRoot.AddChild(this);
-            MenuBody.OnChildRemoved += ctrl => _presenter.OnRemoveElement(this, ctrl);
+            MenuBody.OnChildRemoved += ctrl => _uiController.OnRemoveElement(this, ctrl);
             MenuBody.VSeparationOverride = 0;
             MenuBody.HSeparationOverride = 0;
 
@@ -67,13 +67,13 @@ namespace Content.Client.ContextMenu.UI
             OnPopupHide += () =>
             {
                 if (ParentElement != null)
-                    _presenter.CloseSubMenus(ParentElement.ParentMenu);
+                    _uiController.CloseSubMenus(ParentElement.ParentMenu);
             };
         }
 
         protected override void Dispose(bool disposing)
         {
-            MenuBody.OnChildRemoved -= ctrl => _presenter.OnRemoveElement(this, ctrl);
+            MenuBody.OnChildRemoved -= ctrl => _uiController.OnRemoveElement(this, ctrl);
             ParentElement = null;
             base.Dispose(disposing);
         }

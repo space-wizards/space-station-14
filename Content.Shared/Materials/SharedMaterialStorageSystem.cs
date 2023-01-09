@@ -3,6 +3,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Materials;
 
@@ -12,14 +14,40 @@ namespace Content.Shared.Materials;
 /// </summary>
 public abstract class SharedMaterialStorageSystem : EntitySystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentGetState>(OnGetInsertingState);
+        SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentHandleState>(OnHandleInsertingState);
+        SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        foreach (var inserting in EntityQuery<InsertingMaterialStorageComponent>())
+        {
+            if (_timing.CurTime < inserting.EndTime)
+                continue;
+
+            _appearance.SetData(inserting.Owner, MaterialStorageVisuals.Inserting, false);
+            RemComp(inserting.Owner, inserting);
+        }
+    }
+
+    private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)
+    {
+        _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
     }
 
     private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
@@ -36,6 +64,25 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         if (state.MaterialWhitelist != null)
             component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
+    }
+
+    private void OnGetInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentGetState args)
+    {
+        args.State = new InsertingMaterialStorageComponentState(component.EndTime, component.MaterialColor);
+    }
+
+    private void OnHandleInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not InsertingMaterialStorageComponentState state)
+            return;
+
+        component.EndTime = state.EndTime;
+        component.MaterialColor = state.MaterialColor;
+    }
+
+    private void OnUnpaused(EntityUid uid, InsertingMaterialStorageComponent component, ref EntityUnpausedEvent args)
+    {
+        component.EndTime += args.PausedTime;
     }
 
     /// <summary>
@@ -128,7 +175,8 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             component.Storage.Add(materialId, 0);
         component.Storage[materialId] += volume;
 
-        RaiseLocalEvent(uid, new MaterialAmountChangedEvent());
+        var ev = new MaterialAmountChangedEvent();
+        RaiseLocalEvent(uid, ref ev);
         Dirty(component);
         return true;
     }
@@ -152,24 +200,13 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (component.EntityWhitelist?.IsValid(toInsert) == false)
             return false;
 
-        if (component.MaterialWhiteList != null)
-        {
-            var matUsed = false;
-            foreach (var mat in material.Materials)
-            {
-                if (component.MaterialWhiteList.Contains(mat.ID))
-                    matUsed = true;
-            }
+        // Material Whitelist checked implicitly by CanChangeMaterialAmount();
 
-            if (!matUsed)
-                return false;
-        }
-
-        var multiplier = TryComp<SharedStackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
+        var multiplier = TryComp<StackComponent>(toInsert, out var stackComponent) ? stackComponent.Count : 1;
         var totalVolume = 0;
-        foreach (var (mat, vol) in component.Storage)
+        foreach (var (mat, vol) in material.Materials)
         {
-            if (!CanChangeMaterialAmount(receiver, mat, vol, component))
+            if (!CanChangeMaterialAmount(receiver, mat, vol * multiplier, component))
                 return false;
             totalVolume += vol * multiplier;
         }
@@ -177,12 +214,23 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!CanTakeVolume(receiver, totalVolume, component))
             return false;
 
-        foreach (var (mat, vol) in material._materials)
+        foreach (var (mat, vol) in material.Materials)
         {
             TryChangeMaterialAmount(receiver, mat, vol * multiplier, component);
         }
 
-        RaiseLocalEvent(component.Owner, new MaterialEntityInsertedEvent(material._materials));
+        var insertingComp = EnsureComp<InsertingMaterialStorageComponent>(receiver);
+        insertingComp.EndTime = _timing.CurTime + component.InsertionTime;
+        if (!component.IgnoreColor)
+        {
+            _prototype.TryIndex<MaterialPrototype>(material.Materials.Keys.Last(), out var lastMat);
+            insertingComp.MaterialColor = lastMat?.Color;
+        }
+        _appearance.SetData(receiver, MaterialStorageVisuals.Inserting, true);
+        Dirty(insertingComp);
+
+        var ev = new MaterialEntityInsertedEvent(material);
+        RaiseLocalEvent(component.Owner, ref ev);
         return true;
     }
 
@@ -197,7 +245,7 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
         if (!Resolve(uid, ref component, false))
             return;
         var ev = new GetMaterialWhitelistEvent(uid);
-        RaiseLocalEvent(uid, ev);
+        RaiseLocalEvent(uid, ref ev);
         component.MaterialWhiteList = ev.Whitelist;
         Dirty(component);
     }

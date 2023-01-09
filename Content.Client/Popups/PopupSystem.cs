@@ -4,6 +4,8 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
+using Robust.Client.UserInterface;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -14,11 +16,13 @@ namespace Content.Client.Popups
 {
     public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IOverlayManager _overlay = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IResourceCache _resource = default!;
+        [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
 
         public IReadOnlyList<WorldPopupLabel> WorldLabels => _aliveWorldLabels;
         public IReadOnlyList<CursorPopupLabel> CursorLabels => _aliveCursorLabels;
@@ -35,7 +39,7 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             _overlay
-                .AddOverlay(new PopupOverlay(EntityManager, _prototype, _resource, this));
+                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _prototype, _resource, _uiManager, this));
         }
 
         public override void Shutdown()
@@ -105,13 +109,13 @@ namespace Content.Client.Popups
         public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
-                PopupCursor(message, type);
+                PopupEntity(message, uid, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
         {
             if (_playerManager.LocalPlayer?.Session == recipient)
-                PopupCursor(message, type);
+                PopupEntity(message, uid, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)

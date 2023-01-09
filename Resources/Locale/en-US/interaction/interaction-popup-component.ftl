@@ -14,6 +14,7 @@ petting-success-frog = You pet {THE($target)} on {POSS-ADJ($target)} slippery li
 petting-success-goat = You pet {THE($target)} on {POSS-ADJ($target)} horned floofy head.
 petting-success-goose = Against all odds, you manage to pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
 petting-success-possum = You pet {THE($target)} on {POSS-ADJ($target)} horrible little head.
+petting-success-pig = You pet {THE($target)} on {POSS-ADJ($target)} hairy head.
 petting-success-reptile = You pet {THE($target)} on {POSS-ADJ($target)} scaly little head.
 petting-success-sloth = You pet {THE($target)} on {POSS-ADJ($target)} slow moving head.
 petting-success-space-cat = You pet {THE($target)} on {POSS-ADJ($target)} glass domed head.

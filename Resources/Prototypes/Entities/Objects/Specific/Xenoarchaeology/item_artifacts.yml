@@ -46,6 +46,8 @@
       type: StorageBoundUserInterface
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+    - key: enum.InstrumentUiKey.Key
+      type: InstrumentBoundUserInterface
   - type: Appearance
   - type: StaticPrice
     price: 500
@@ -53,6 +55,7 @@
     size: 40
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
+  - type: Actions
 
 - type: entity
   parent: BaseXenoArtifactItem

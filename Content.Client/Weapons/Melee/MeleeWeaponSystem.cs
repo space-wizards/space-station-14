@@ -112,7 +112,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
                 {
-                    target = screen.GetEntityUnderPosition(mousePos);
+                    target = screen.GetClickedEntity(mousePos);
                 }
 
                 EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
@@ -191,7 +191,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // TODO: UI Refactor update I assume
             if (_stateManager.CurrentState is GameplayStateBase screen)
             {
-                target = screen.GetEntityUnderPosition(mousePos);
+                target = screen.GetClickedEntity(mousePos);
             }
 
             RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));

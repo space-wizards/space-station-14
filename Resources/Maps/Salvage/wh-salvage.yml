@@ -1731,8 +1731,7 @@ entities:
 - uid: 109
   type: filingCabinet
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 7.5,3.5
+  - pos: 7.5,3.5
     parent: 0
     type: Transform
 - uid: 110
@@ -2840,15 +2839,13 @@ entities:
 - uid: 275
   type: filingCabinetTall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,8.5
+  - pos: 10.5,8.5
     parent: 0
     type: Transform
 - uid: 276
   type: filingCabinetTall
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,7.5
+  - pos: 10.5,7.5
     parent: 0
     type: Transform
 - uid: 277
@@ -2866,8 +2863,7 @@ entities:
 - uid: 279
   type: filingCabinetDrawer
   components:
-  - rot: 3.141592653589793 rad
-    pos: 6.5,5.5
+  - pos: 6.5,5.5
     parent: 0
     type: Transform
 - uid: 280
