@@ -104,10 +104,19 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted;
     }
 
-    /// <returns>True if any HashSet in <paramref name="a"/> exists in <paramref name="b"/></returns>
-    private bool AccessMatch(IEnumerable<HashSet<string>> a, IReadOnlyCollection<HashSet<string>> b)
+    /// <returns>True if any HashSet in <paramref name="a"/> would grant access to <paramref name="b"/></returns>
+    private bool AccessMatch(IReadOnlyCollection<HashSet<string>>? a, IReadOnlyCollection<HashSet<string>>? b)
     {
-        return a.Any(aSet => b.Any(aSet.SetEquals));
+        if ((a == null || a.Count == 0) && (b == null || b.Count == 0))
+            return true;
+        if (a != null && a.Any(aSet => aSet.Count == 0))
+            return true;
+        if (b != null && b.Any(bSet => bSet.Count == 0))
+            return true;
+
+        if (a != null && b != null)
+            return a.Any(aSet => b.Any(aSet.SetEquals));
+        return false;
     }
 
     private bool ValidAutolink(BluespaceLockerComponent component, EntityUid link)
@@ -127,10 +136,13 @@ public sealed class BluespaceLockerSystem : EntitySystem
             !_entityManager.HasComponent<ResistLockerComponent>(link))
             return false;
 
-        if (component.PickLinksFromSameAccess &&
-            (_entityManager.TryGetComponent<AccessReaderComponent>(component.Owner, out var sourceAccess) != _entityManager.TryGetComponent<AccessReaderComponent>(link, out var targetAccess) ||
-            (sourceAccess != null && !AccessMatch(sourceAccess.AccessLists, targetAccess!.AccessLists))))
-            return false;
+        if (component.PickLinksFromSameAccess)
+        {
+            _entityManager.TryGetComponent<AccessReaderComponent>(component.Owner, out var sourceAccess);
+            _entityManager.TryGetComponent<AccessReaderComponent>(link, out var targetAccess);
+            if (!AccessMatch(sourceAccess?.AccessLists, targetAccess?.AccessLists))
+                return false;
+        }
 
         return true;
     }
