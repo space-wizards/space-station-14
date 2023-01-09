@@ -41,11 +41,12 @@ public sealed partial class TreeItem : PanelContainer
 
     private void OnItemRemoved(Control obj)
     {
-        if (Body.ChildCount == 0)
-        {
-            SetExpanded(false);
-            Icon.Visible = false;
-        }
+        if (Body.ChildCount != 0)
+            return;
+
+        SetExpanded(false);
+        Icon.Visible = false;
+        IconBox.Visible = Tree.AlignText;
     }
 
     private void OnItemAdded(Control obj)
@@ -54,6 +55,7 @@ public sealed partial class TreeItem : PanelContainer
             SetExpanded(true);
 
         Icon.Visible = Collapsible;
+        IconBox.Visible = Collapsible || Tree.AlignText;
     }
 
     public void SetExpanded(bool value)

@@ -14,7 +14,6 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class FancyTree : Control
 {
-    public int Indentation = 16;
     public readonly List<TreeItem> Items = new();
 
     public event Action<TreeItem?>? OnSelectedItemChanged;
@@ -22,6 +21,32 @@ public sealed partial class FancyTree : Control
     public int? SelectedIndex { get; private set; }
 
     private bool _rowStyleUpdateQueued = true;
+
+    /// <summary>
+    ///     Whether or not to draw the lines connecting parents & children.
+    /// </summary>
+    public bool DrawLines = true;
+
+    // TODO this should be a style parameter for trees & tree-items, with tree-items defaulting to the tree's value.
+    public Color LineColor = Color.White;
+
+    // TODO this should be a style parameter for trees & tree-items, with tree-items defaulting to the tree's value.
+    public int LineWidth = 2;
+
+    // TODO again this should probably have a style property, in addition to getters & setters.
+    public const int Indentation = 16;
+
+    /// <summary>
+    ///     Whether to align child entries based on the button text. If true, this means that entries without children
+    ///     will effectively have some padding due to the invisible expansion icon.
+    /// </summary>
+    public bool AlignText
+    {
+        get => _alignText;
+        set => SetAlignText(value);
+    }
+
+    private bool _alignText = true;
 
     public TreeItem? SelectedItem => SelectedIndex == null ? null : Items[SelectedIndex.Value];
 
@@ -60,12 +85,11 @@ public sealed partial class FancyTree : Control
             Body.AddChild(item);
         else
         {
-            var margin = parent.IconBox.Margin;
-            margin.Left += Indentation;
-            item.IconBox.Margin = margin;
+            item.Padding.MinWidth = parent.Padding.MinWidth + Indentation;
             parent.Body.AddChild(item);
         }
 
+        item.IconBox.Visible = _alignText;
         QueueRowStyleUpdate();
         return item;
     }
@@ -167,9 +191,40 @@ public sealed partial class FancyTree : Control
 
         index++;
 
+        if (!item.Expanded)
+            return;
+
         foreach (var child in item.Body.Children)
         {
             RecursivelyUpdateRowStyle((TreeItem) child, ref index);
+        }
+    }
+
+    private void SetAlignText(bool value)
+    {
+        if (_alignText == value)
+            return;
+
+        _alignText = value;
+
+        foreach (var child in Body.Children)
+        {
+            RecursivelyUpdateAlignment((TreeItem) child);
+        }
+    }
+
+    private void RecursivelyUpdateAlignment(TreeItem item)
+    {
+        if (item.Body.ChildCount == 0 || !item.Collapsible)
+        {
+            // hide icon box. If the box is visible, all text should be aligned.
+            item.IconBox.Visible = _alignText;
+            return;
+        }
+         
+        foreach (var child in item.Body.Children)
+        {
+            RecursivelyUpdateAlignment((TreeItem) child);
         }
     }
 }
