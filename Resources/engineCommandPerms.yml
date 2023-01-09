@@ -91,6 +91,8 @@
   - tp
   - tpto
   - respawn
+  - loadgrid
+  - tpgrid
 
 - Flags: SERVER
   Commands:
