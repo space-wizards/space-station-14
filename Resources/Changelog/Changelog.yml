@@ -1,19 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Open soda can no longer show error, type: Fix}
-  id: 2344
-  time: '2022-09-19T23:47:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
-  id: 2345
-  time: '2022-09-19T23:50:32.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
-  id: 2346
-  time: '2022-09-19T23:54:33.0000000+00:00'
 - author: 25203
   changes:
   - {message: 'Added a computer board for the cargo shuttle console, found in QM''s
@@ -2961,3 +2946,21 @@ Entries:
     type: Add}
   id: 2843
   time: '2023-01-07T18:09:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mugs now properly display the solutions inside of them., type: Fix}
+  id: 2844
+  time: '2023-01-08T03:09:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The verb menu no longer opens when right clicking on entities in the
+      entity menu. Instead, it now automatically opens using a dropdown, like how
+      grouped entities work.', type: Tweak}
+  id: 2845
+  time: '2023-01-08T03:24:52.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Resolved server and client bugs that affected the way crew manifest
+      entries were being sorted., type: Fix}
+  id: 2846
+  time: '2023-01-09T03:34:43.0000000+00:00'
