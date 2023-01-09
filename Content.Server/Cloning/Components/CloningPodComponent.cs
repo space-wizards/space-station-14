@@ -34,12 +34,6 @@ namespace Content.Server.Cloning.Components
         public string RequiredMaterial = "Biomass";
 
         /// <summary>
-        /// The entity that is spawned on machine deconstruct as well as failed cloning.
-        /// </summary>
-        [DataField("materialCloningOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string MaterialCloningOutput = "MaterialBiomass";
-
-        /// <summary>
         /// The base amount of time it takes to clone a body
         /// </summary>
         [DataField("baseCloningTime")]
