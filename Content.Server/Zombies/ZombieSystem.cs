@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
@@ -19,6 +21,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Zombies
 {
@@ -32,8 +35,9 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedMobStateSystem _state = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly SolutionContainerSystem _solution = default!;
 
         public override void Initialize()
         {
@@ -44,8 +48,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
             SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
-            SubscribeLocalEvent<ZombieComponent, ComponentStartup>(OnZombieInit);
-
+            SubscribeLocalEvent<ZombieComponent, MapInitEvent>(OnInit);
         }
 
         private void OnSleepAttempt(EntityUid uid, ActiveZombieComponent component, ref TryingToSleepEvent args)
@@ -144,6 +147,14 @@ namespace Content.Server.Zombies
             }
         }
 
+        private void OnInit(EntityUid uid, ZombieComponent? component, MapInitEvent args)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+            if (component.HealingSolution == null)
+                component.HealingSolution = new("Omnizine", 2.5);
+        }
+
         private void DoGroan(EntityUid uid, ActiveZombieComponent component)
         {
             if (component.LastDamageGroanCooldown > 0)
@@ -159,75 +170,73 @@ namespace Content.Server.Zombies
             component.LastDamageGroanCooldown = component.GroanCooldown;
         }
 
-        private void OnZombieInit(EntityUid ent, ZombieComponent component, ComponentStartup _)
-        {
-            // Brute
-            component.HealingDamageSpecifier.DamageDict["Brute"] = -10;
-            component.HealingDamageSpecifier.DamageDict["Pierce"] = -10;
-            component.HealingDamageSpecifier.DamageDict["Blunt"] = -10;
-
-            // Burn
-            component.HealingDamageSpecifier.DamageDict["Heat"] = -10;
-            component.HealingDamageSpecifier.DamageDict["Shock"] = -10;
-            component.HealingDamageSpecifier.DamageDict["Cold"] = -10;
-
-            // Zombies do not receive any Toxic or Airloss damage
-        }
-
         /// <summary>
-        /// Heals zombie if it is in bad state and not dead
+        /// Checks if selected entity is a zombie that requires healing
         /// </summary>
-        private void TryHealZombie(EntityUid ent, ZombieComponent component)
+        private bool ZombieNeedsHealing(EntityUid ent, ZombieComponent? component)
         {
-            if (!TryComp<MobStateComponent>(ent, out var state) || !TryComp<DamageableComponent>(ent, out var damage))
-            {
-                return;
-            }
+            if (!Resolve(ent, ref component))
+                return false; // no healing for non-zombies
 
+            if (!TryComp<MobStateComponent>(ent, out var state) || !TryComp<DamageableComponent>(ent, out var damage))
+                return false; // no healing for immortal
 
             if (state.CurrentState == DamageState.Critical)
-            {
-                _damageable.TryChangeDamage(ent, component.HealingDamageSpecifier, true);
-                return;
-            }
+                return true; // our zombie is in crit
 
             if (state.CurrentState != DamageState.Alive)
-                return;
+                return false; // no healing for those who suffered second death
+
             var dmg = damage.TotalDamage;
 
             // Always zero, I guess?
             var aliveThreshold = 0f;
             var critStateData = _state.GetEarliestCriticalState(state, dmg);
-            var nextThreshold = FixedPoint2.Zero;
+            FixedPoint2 nextThreshold;
             if (critStateData != null)
-            {
                 nextThreshold = critStateData.Value.threshold;
-            }
             else
             {
                 var deadStateData = _state.GetEarliestDeadState(state, dmg);
                 if (deadStateData == null)
                 {
-                    return;
+                    return false; // truly undead creature
                 }
 
                 nextThreshold = deadStateData.Value.threshold;
             }
 
-
             // Healing to 20% of HP. Not too big and not too small.
             var healingThreshold = aliveThreshold + (nextThreshold - aliveThreshold) * 0.8;
 
             if (dmg > healingThreshold)
-            {
-                _damageable.TryChangeDamage(ent, component.HealingDamageSpecifier, true);
-            }
+                return true;
+
+            return false; // this one is fine
+        }
+
+        /// <summary>
+        /// Actually heals zombie, does not check if it needs so
+        /// </summary>
+        private void TryHealZombie(EntityUid ent, ZombieComponent? component)
+        {
+            if (!HasComp<SolutionContainerManagerComponent>(ent) || !Resolve(ent, ref component))
+                return; // no solutions, not zombie
+
+            if (!_solution.TryGetInjectableSolution(ent, out var chemicalSolution))
+                return; // no chemical bloodstream
+
+            var injectedSolution = component.HealingSolution?.Clone();
+            if (injectedSolution == null)
+                injectedSolution = new Solution("Omnizine", 2.5);
+
+            _solution.Inject(ent, chemicalSolution, injectedSolution);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-
+            var curTime = _timing.CurTime;
             foreach (var zombiecomp in EntityQuery<ZombieComponent>())
             {
                 // Only zombies that are alive have this thing
@@ -249,12 +258,17 @@ namespace Content.Server.Zombies
                     }
                 }
 
-                zombiecomp.HealingAccumulator += frameTime;
-                while (zombiecomp.HealingAccumulator > zombiecomp.HealingCooldown)
+                var wasHealing = zombiecomp.IsHealing;
+                zombiecomp.IsHealing = ZombieNeedsHealing(zombiecomp.Owner, zombiecomp);
+                if (!zombiecomp.IsHealing)
+                    continue;
+                if (wasHealing && curTime - zombiecomp.HealingStart > zombiecomp.HealingCooldown)
                 {
-                    zombiecomp.HealingAccumulator -= zombiecomp.HealingCooldown;
                     TryHealZombie(zombiecomp.Owner, zombiecomp);
+                    zombiecomp.HealingStart = curTime;
                 }
+                else if (!wasHealing)
+                    zombiecomp.HealingStart = curTime; // it just started, so no action until next tick
             }
         }
     }

@@ -1,4 +1,4 @@
-using Content.Shared.Damage;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Roles;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -66,13 +66,28 @@ namespace Content.Shared.Zombies
         /// How much time passes between healing attempts
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float HealingCooldown = 30;
+        [DataField("healingCooldown")]
+        public TimeSpan HealingCooldown = TimeSpan.FromSeconds(30);
 
+        /// <summary>
+        /// Time when last healing was performed
+        /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public float HealingAccumulator;
+        [DataField("healingStart")]
+        public TimeSpan HealingStart;
 
-        // Set this up through your disease or something
-        [ViewVariables]
-        public DamageSpecifier HealingDamageSpecifier = new DamageSpecifier();
+        /// <summary>
+        /// Is this zombie currently regenerating
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("isHealing")]
+        public bool IsHealing;
+
+        /// <summary>
+        /// Solution used for zombie healing
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("healingSolution")]
+        public Solution? HealingSolution;
     }
 }
