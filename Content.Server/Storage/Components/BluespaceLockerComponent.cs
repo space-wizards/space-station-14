@@ -101,7 +101,7 @@ public record BluespaceLockerBehaviorProperties
     /// Delay to wait after closing before transporting
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
-    public int Delay { get; set; } = 0;
+    public float Delay { get; set; } = 0;
 
     /// <summary>
     /// Defines prototype to spawn for bluespace effect

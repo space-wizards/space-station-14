@@ -363,7 +363,7 @@
   description: Advanced locker technology.
   components:
     - type: BluespaceLocker
-      delay: 1
+      delay: 0.5
       minBluespaceLinks: 1
       bluespaceEffectOnInit: true
       behaviorProperties:
