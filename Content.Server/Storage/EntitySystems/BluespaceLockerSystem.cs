@@ -125,7 +125,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (component.PickLinksFromSameMap &&
-            link.ToCoordinates().GetMapId(_entityManager) == component.Owner.ToCoordinates().GetMapId(_entityManager))
+            link.ToCoordinates().GetMapId(_entityManager) != component.Owner.ToCoordinates().GetMapId(_entityManager))
             return false;
 
         if (component.PickLinksFromStationGrids &&
