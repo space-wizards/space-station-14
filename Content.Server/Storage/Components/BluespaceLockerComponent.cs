@@ -63,6 +63,8 @@ public sealed class BluespaceLockerComponent : Component
     [DataField("autoLinksUseProperties"), ViewVariables(VVAccess.ReadWrite)]
     public bool AutoLinksUseProperties;
 
+    public int UsesSinceLinkClear;
+
     /// <summary>
     /// Determines properties of automatically created links
     /// </summary>
@@ -101,7 +103,7 @@ public record BluespaceLockerBehaviorProperties
     /// Delay to wait after closing before transporting
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
-    public float Delay { get; set; } = 0;
+    public float Delay { get; set; } = 0f;
 
     /// <summary>
     /// Defines prototype to spawn for bluespace effect
@@ -132,6 +134,12 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("destroyType"), ViewVariables(VVAccess.ReadWrite)]
     public BluespaceLockerDestroyType DestroyType { get; set; } = BluespaceLockerDestroyType.Delete;
+
+    /// <summary>
+    /// Uses left before the lockers links are cleared. -1 indicates infinite
+    /// </summary>
+    [DataField("clearLinksEvery"), ViewVariables(VVAccess.ReadWrite)]
+    public int ClearLinksEvery { get; set; } = -1;
 }
 
 [Flags]

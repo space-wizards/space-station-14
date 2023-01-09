@@ -269,6 +269,16 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component)
     {
+        if (component.BehaviorProperties.ClearLinksEvery != -1)
+        {
+            component.UsesSinceLinkClear++;
+            if (component.BehaviorProperties.ClearLinksEvery >= component.UsesSinceLinkClear)
+            {
+                component.BluespaceLinks.Clear();
+                component.UsesSinceLinkClear = 0;
+            }
+        }
+
         if (component.BehaviorProperties.DestroyAfterUses == -1)
             return;
 

@@ -162,6 +162,7 @@
       minBluespaceLinks: 1
       behaviorProperties:
         bluespaceEffectOnTeleportSource: true
+        clearLinksEvery: 2
       autoLinksBidirectional: true
       autoLinksUseProperties: true
       autoLinkProperties:
