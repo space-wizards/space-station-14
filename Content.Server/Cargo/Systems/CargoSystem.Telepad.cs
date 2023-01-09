@@ -34,7 +34,7 @@ public sealed partial class CargoSystem
             if (comp.CurrentState == CargoTelepadState.Unpowered)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle);
+                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 comp.Accumulator = comp.Delay;
                 continue;
             }
@@ -45,7 +45,7 @@ public sealed partial class CargoSystem
             if (comp.Accumulator > 0f)
             {
                 comp.CurrentState = CargoTelepadState.Idle;
-                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle);
+                _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Idle, appearance);
                 continue;
             }
 
@@ -85,8 +85,7 @@ public sealed partial class CargoSystem
             UpdateOrders(orderDatabase);
 
             comp.CurrentState = CargoTelepadState.Teleporting;
-            _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
-//            appearance?.SetData(CargoTelepadVisuals.State, CargoTelepadState.Teleporting);
+            _appearance.SetData(comp.Owner, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);
             comp.Accumulator += comp.Delay;
         }
     }
@@ -109,7 +108,7 @@ public sealed partial class CargoSystem
 
         TryComp<AppearanceComponent>(component.Owner, out var appearance);
         component.CurrentState = CargoTelepadState.Unpowered;
-        _appearance.SetData(component.Owner, CargoTelepadVisuals.State, CargoTelepadState.Unpowered);
+        _appearance.SetData(component.Owner, CargoTelepadVisuals.State, CargoTelepadState.Unpowered, appearance);
     }
 
     private void OnTelepadPowerChange(EntityUid uid, CargoTelepadComponent component, ref PowerChangedEvent args)
