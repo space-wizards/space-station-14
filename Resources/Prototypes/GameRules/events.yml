@@ -12,7 +12,9 @@
   config:
     !type:StationEventRuleConfiguration
     id: BluespaceLockerLink
-    weight: 5
+    weight: 0
+    reoccurrenceDelay: 5
+    earliestStart: 1
     endAfter: 1
 
 - type: gameRule
