@@ -34,7 +34,7 @@
     - state: lock
       shader: unshaded
       visible: false
-      map: ["enum.EmitterVisualLayers.Lock"]
+      map: ["enum.StorageVisualLayers.Lock"]
   - type: Emitter
   - type: Gun
     fireRate: 10 #just has to be fast enough to keep up with upgrades
