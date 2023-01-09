@@ -49,6 +49,22 @@
   thermalConductivity: 0.04
   heatCapacity: 10000
 
+# Lava
+- type: tile
+  id: FloorBasalt
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/Desert/desert.png
+  variants: 6
+  placementVariants: [0, 1, 2, 3, 4, 5]
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+# Snow
 - type: tile
   id: FloorSnow
   name: tiles-snow-floor
@@ -66,3 +82,5 @@
   friction: 0.20
   thermalConductivity: 0.04
   heatCapacity: 10000
+
+# Wasteland
