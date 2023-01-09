@@ -46,7 +46,6 @@ public sealed class BluespaceLockerSystem : EntitySystem
     private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
     {
         _entityManager.SpawnEntity(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
-        // TODO make the spawned entity follow the locker
     }
 
     private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
