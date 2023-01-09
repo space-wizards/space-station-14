@@ -13,6 +13,7 @@ namespace Content.Shared.Gravity
 {
     public abstract partial class SharedGravitySystem : EntitySystem
     {
+        [Dependency] protected readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] protected readonly IGameTiming Timing = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -22,18 +23,28 @@ namespace Content.Shared.Gravity
             Resolve(uid, ref body, false);
 
             if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
+            {
+                _appearance.SetData(uid, GravityVisuals.Enabled, false);
                 return false;
+            }
 
             if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
+            {
+                _appearance.SetData(uid, GravityVisuals.Enabled, ignoreGravityComponent.Weightless);
                 return ignoreGravityComponent.Weightless;
+            }
 
             if (!Resolve(uid, ref xform))
+            {
+                _appearance.SetData(uid, GravityVisuals.Enabled, false);
                 return true;
+            }
 
             // If grid / map has gravity
             if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
                  TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
             {
+                _appearance.SetData(uid, GravityVisuals.Enabled, false);
                 return false;
             }
 
@@ -46,9 +57,13 @@ namespace Content.Shared.Gravity
             {
                 // TODO this should just be a event that gets relayed instead of a specific slot & component check.
                 if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
+                {
+                    _appearance.SetData(uid, GravityVisuals.Enabled, false);
                     return false;
+                }
             }
 
+            _appearance.SetData(uid, GravityVisuals.Enabled, true);
             return true;
         }
 
