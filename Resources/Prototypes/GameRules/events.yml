@@ -8,6 +8,14 @@
     endAfter: 35
 
 - type: gameRule
+  id: BluespaceLockerLink
+  config:
+    !type:StationEventRuleConfiguration
+    id: BluespaceLockerLink
+    weight: 5
+    endAfter: 1
+
+- type: gameRule
   id: BreakerFlip
   config:
     !type:StationEventRuleConfiguration
