@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading;
-using Content.Server.Construction.Completions;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Lock;

@@ -103,7 +103,7 @@ public record BluespaceLockerBehaviorProperties
     /// Delay to wait after closing before transporting
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
-    public float Delay { get; set; } = 0f;
+    public float Delay { get; set; }
 
     /// <summary>
     /// Defines prototype to spawn for bluespace effect
@@ -115,13 +115,13 @@ public record BluespaceLockerBehaviorProperties
     /// Determines if bluespace effect is show on teleport at the source
     /// </summary>
     [DataField("bluespaceEffectOnTeleportSource"), ViewVariables(VVAccess.ReadWrite)]
-    public bool BluespaceEffectOnTeleportSource { get; set; } = false;
+    public bool BluespaceEffectOnTeleportSource { get; set; }
 
     /// <summary>
     /// Determines if bluespace effect is show on teleport at the target
     /// </summary>
     [DataField("bluespaceEffectOnTeleportTarget"), ViewVariables(VVAccess.ReadWrite)]
-    public bool BluespaceEffectOnTeleportTarget { get; set; } = false;
+    public bool BluespaceEffectOnTeleportTarget { get; set; }
 
     /// <summary>
     /// Uses left before the locker is destroyed. -1 indicates infinite
