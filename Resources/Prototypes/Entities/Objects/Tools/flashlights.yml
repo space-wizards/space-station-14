@@ -116,3 +116,13 @@
   - type: PointLight
     enabled: false
     radius: 6
+
+- type: entity
+  parent: FlashlightLantern
+  id: EmptyFlashlightLantern
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

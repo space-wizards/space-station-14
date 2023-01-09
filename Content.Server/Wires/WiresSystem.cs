@@ -1,10 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
@@ -23,6 +25,7 @@ namespace Content.Server.Wires;
 public sealed class WiresSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
@@ -467,10 +470,13 @@ public sealed class WiresSystem : EntitySystem
         {
             component.IsScrewing = _toolSystem.UseTool(args.Used, args.User, uid,
                 0f, ScrewTime, new[] { "Screwing" },
-                new WireToolFinishedEvent(uid),
+                new WireToolFinishedEvent(uid, args.User),
                 new WireToolCanceledEvent(uid),
                 toolComponent: tool);
             args.Handled = component.IsScrewing;
+
+            // Log attempt
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} is screwing {ToPrettyString(uid):target}'s {(component.IsPanelOpen ? "open" : "closed")} maintenance panel at {Transform(uid).Coordinates:targetlocation}");
         }
     }
 
@@ -482,6 +488,9 @@ public sealed class WiresSystem : EntitySystem
         component.IsScrewing = false;
         component.IsPanelOpen = !component.IsPanelOpen;
         UpdateAppearance(args.Target);
+
+        // Log success
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} screwed {ToPrettyString(args.Target):target}'s maintenance panel {(component.IsPanelOpen ? "open" : "closed")}");
 
         if (component.IsPanelOpen)
         {
@@ -918,11 +927,13 @@ public sealed class WiresSystem : EntitySystem
     #region Events
     private sealed class WireToolFinishedEvent : EntityEventArgs
     {
+        public EntityUid User { get; }
         public EntityUid Target { get; }
 
-        public WireToolFinishedEvent(EntityUid target)
+        public WireToolFinishedEvent(EntityUid target, EntityUid user)
         {
             Target = target;
+            User = user;
         }
     }
 
