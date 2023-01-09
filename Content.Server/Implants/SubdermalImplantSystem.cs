@@ -17,7 +17,7 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
 
-        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEventByRef);
+        SubscribeLocalEvent<ImplantedComponent, MobStateChangedEvent>(RelayToImplantEvent);
         SubscribeLocalEvent<ImplantedComponent, SuicideEvent>(RelayToImplantEvent);
     }
 

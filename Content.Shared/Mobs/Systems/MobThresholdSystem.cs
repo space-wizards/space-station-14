@@ -69,6 +69,39 @@ public sealed class MobThresholdSystem : EntitySystem
         return true;
     }
 
+    public bool TryGetPercentageForState(EntityUid uid, MobState mobState, FixedPoint2 damage, [NotNullWhen(true)] out FixedPoint2? percentage,
+        MobThresholdsComponent? thresholdComponent = null)
+    {
+        percentage = null;
+        if (!TryGetThresholdForState(uid, mobState, out var threshold, thresholdComponent))
+        {
+            return false;
+        }
+        percentage = damage / threshold;
+        return true;
+    }
+
+    public bool TryGetIncapThreshold(EntityUid uid,[NotNullWhen(true)] out FixedPoint2? threshold,
+        MobThresholdsComponent? thresholdComponent = null)
+    {
+        threshold = null;
+        if (!Resolve(uid, ref thresholdComponent))
+            return false;
+        return TryGetThresholdForState(uid, MobState.Critical, out threshold, thresholdComponent)
+               || TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholdComponent);
+    }
+
+    public bool TryGetIncapPercentage(EntityUid uid,FixedPoint2 damage,[NotNullWhen(true)] out FixedPoint2? percentage,
+        MobThresholdsComponent? thresholdComponent = null)
+    {
+        percentage = null;
+        if (!TryGetIncapThreshold(uid, out var threshold, thresholdComponent))
+            return false;
+        percentage = FixedPoint2.Min(1.0f, damage / threshold.Value);
+        return true;
+    }
+
+
     /// <summary>
     /// Takes the damage from one entity and scales it relative to the health of another
     /// </summary>

@@ -27,7 +27,7 @@ public sealed class EssenceSystem : EntitySystem
         SubscribeLocalEvent<EssenceComponent, ExaminedEvent>(OnExamine);
     }
 
-    private void OnMobstateChanged(EntityUid uid, EssenceComponent component, ref MobStateChangedEvent args)
+    private void OnMobstateChanged(EntityUid uid, EssenceComponent component, MobStateChangedEvent args)
     {
         UpdateEssenceAmount(uid, component);
     }

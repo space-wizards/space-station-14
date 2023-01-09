@@ -129,7 +129,7 @@ public partial class MobStateSystem
     }
 
     #region ActionBlocker
-    private void BlockActions(ref MobStateChangedEvent ev)
+    private void BlockActions(MobStateChangedEvent ev)
         {
             _blocker.UpdateCanMove(ev.Entity);
         }

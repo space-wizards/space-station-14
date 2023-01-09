@@ -88,7 +88,7 @@ namespace Content.Server.DoAfter
             args.State = new DoAfterComponentState(toAdd);
         }
 
-        private void OnStateChanged(EntityUid uid, DoAfterComponent component, ref MobStateChangedEvent args)
+        private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
         {
             if (args.NewMobState == Shared.Mobs.MobState.Alive)
                 return;

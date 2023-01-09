@@ -13,7 +13,7 @@ public sealed partial class TriggerSystem
         SubscribeLocalEvent<TriggerOnMobstateChangeComponent, SuicideEvent>(OnSuicide);
     }
 
-    private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, ref MobStateChangedEvent args)
+    private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
     {
         if (component.MobState < args.NewMobState)
             return;

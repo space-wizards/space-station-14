@@ -34,8 +34,7 @@ public partial class MobStateSystem
 
         var ev = new MobStateChangedEvent(component, oldState, newState, origin);
         OnStateChanged(component, oldState, newState);
-        RaiseLocalEvent(origin, ref ev);
-
+        RaiseLocalEvent(origin, ev, true);
         _adminLogger.Add(LogType.Damaged, oldState == MobState.Alive ? LogImpact.Low : LogImpact.Medium,
             $"{ToPrettyString(component.Owner):user} state changed from {oldState} to {newState}");
         Dirty(component);

@@ -140,7 +140,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         _tracking.QueueRefreshTrackers(ev.Player);
     }
 
-    private void OnMobStateChanged(ref MobStateChangedEvent ev)
+    private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (!TryComp(ev.Entity, out ActorComponent? actor))
             return;

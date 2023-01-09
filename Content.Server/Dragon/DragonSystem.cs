@@ -271,7 +271,7 @@ namespace Content.Server.Dragon
             }
         }
 
-        private void OnMobStateChanged(EntityUid uid, DragonComponent component, ref MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, DragonComponent component, MobStateChangedEvent args)
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead

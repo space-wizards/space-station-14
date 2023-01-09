@@ -80,7 +80,7 @@ namespace Content.Shared.Stunnable
 
 
 
-        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, ref MobStateChangedEvent args)
+        private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
         {
             if (!TryComp<StatusEffectsComponent>(uid, out var status))
             {

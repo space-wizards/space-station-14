@@ -444,7 +444,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         CheckRoundShouldEnd();
     }
 
-    private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, ref MobStateChangedEvent ev)
+    private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
         if(ev.NewMobState == Shared.Mobs.MobState.Dead)
             CheckRoundShouldEnd();

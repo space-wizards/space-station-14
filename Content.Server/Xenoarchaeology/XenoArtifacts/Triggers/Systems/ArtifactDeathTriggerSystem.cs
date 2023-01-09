@@ -13,7 +13,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
     }
 
-    private void OnMobStateChanged(ref MobStateChangedEvent ev)
+    private void OnMobStateChanged(MobStateChangedEvent ev)
     {
         if (ev.NewMobState != Shared.Mobs.MobState.Dead)
             return;

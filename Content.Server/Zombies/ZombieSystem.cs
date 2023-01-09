@@ -50,7 +50,7 @@ namespace Content.Server.Zombies
             args.Cancelled = true;
         }
 
-        private void OnMobState(EntityUid uid, ZombieComponent component, ref MobStateChangedEvent args)
+        private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
             if (args.NewMobState == Shared.Mobs.MobState.Alive)
                 EnsureComp<ActiveZombieComponent>(uid);

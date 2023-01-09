@@ -18,15 +18,24 @@ public enum MobState : byte
     Dead = 3
 }
 
-[ByRefEvent]
-public readonly record struct MobStateChangedEvent(MobStateComponent Component,
-    MobState OldMobState,
-    MobState NewMobState,
-    EntityUid? Origin = null)
+public sealed class MobStateChangedEvent : EntityEventArgs
 {
+    public MobStateChangedEvent(MobStateComponent Component,
+        MobState OldMobState,
+        MobState NewMobState,
+        EntityUid? Origin = null)
+    {
+        this.Component = Component;
+        this.OldMobState = OldMobState;
+        this.NewMobState = NewMobState;
+        this.Origin = Origin;
+    }
     public EntityUid Entity => Component.Owner;
+    public MobStateComponent Component { get; init; }
+    public MobState OldMobState { get; init; }
+    public MobState NewMobState { get; init; }
+    public EntityUid? Origin { get; init; }
 }
-
 public static class A
 {
     //^.^

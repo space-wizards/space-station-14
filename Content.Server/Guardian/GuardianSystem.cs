@@ -220,7 +220,7 @@ namespace Content.Server.Guardian
         /// <summary>
         /// Triggers when the host receives damage which puts the host in either critical or killed state
         /// </summary>
-        private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, ref MobStateChangedEvent args)
+        private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
         {
             if (component.HostedGuardian == null) return;
 
