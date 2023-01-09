@@ -30,3 +30,51 @@
   entity: ClothingUniformJumpsuitSkeleton
   sponsorOnly: true
 
+# NEKISH
+- type: loadout
+  id: OldHoSJumpsuitLoadout
+  entity: ClothingUniformJumpsuitHoSOld
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSCoatLoadout
+  entity: ClothingOuterCoatHoSOvercoat
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSCapLoadout
+  entity: ClothingHeadHatCapHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSGlovesLoadout
+  entity: ClothingHandsGlovesLeatherHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSBeltLoadout
+  entity: ClothingBeltHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSBackpackLoadout
+  entity: ClothingBackpackSatchelHoS
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSBootsLoadout
+  entity: ClothingShoesBootsJack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
+
+- type: loadout
+  id: OldHoSHeadsetLoadout
+  entity: ClothingHeadsetSecurity
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity]
