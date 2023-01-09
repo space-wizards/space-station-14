@@ -1,4 +1,4 @@
-namespace Content.Client.MobState;
+namespace Content.Client.DamageState;
 
 [RegisterComponent]
 public sealed class DamageStateVisualsComponent : Component

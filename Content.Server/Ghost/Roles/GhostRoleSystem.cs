@@ -56,7 +56,7 @@ namespace Content.Server.Ghost.Roles
 
         private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, ref MobStateChangedEvent args)
         {
-            switch (args.CurrentMobState)
+            switch (args.NewMobState)
             {
                 case Shared.Mobs.MobState.Alive:
                 {

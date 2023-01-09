@@ -132,7 +132,7 @@ namespace Content.Server.NPC.Systems
             if (HasComp<ActorComponent>(uid))
                 return;
 
-            switch (args.CurrentMobState)
+            switch (args.NewMobState)
             {
                 case Shared.Mobs.MobState.Alive:
                     WakeNPC(uid, component);

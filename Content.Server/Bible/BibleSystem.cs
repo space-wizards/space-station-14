@@ -193,7 +193,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState != Shared.Mobs.MobState.Dead || component.Source == null)
+            if (args.NewMobState != Shared.Mobs.MobState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;

@@ -21,7 +21,7 @@ public enum MobState : byte
 [ByRefEvent]
 public readonly record struct MobStateChangedEvent(MobStateComponent Component,
     MobState OldMobState,
-    MobState CurrentMobState,
+    MobState NewMobState,
     EntityUid? Origin = null)
 {
     public EntityUid Entity => Component.Owner;

@@ -5,7 +5,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.MobState.Overlays;
+namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
 public sealed class DamageOverlay : Overlay
 {

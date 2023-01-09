@@ -52,7 +52,7 @@ namespace Content.Server.Zombies
 
         private void OnMobState(EntityUid uid, ZombieComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == Shared.Mobs.MobState.Alive)
+            if (args.NewMobState == Shared.Mobs.MobState.Alive)
                 EnsureComp<ActiveZombieComponent>(uid);
             else
                 RemComp<ActiveZombieComponent>(uid);

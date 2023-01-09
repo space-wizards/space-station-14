@@ -275,7 +275,7 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState == Shared.Mobs.MobState.Dead)
+            if (args.NewMobState == Shared.Mobs.MobState.Dead)
             {
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);

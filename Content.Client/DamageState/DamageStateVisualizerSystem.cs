@@ -2,7 +2,7 @@ using Content.Shared.Mobs;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.MobState;
+namespace Content.Client.DamageState;
 
 public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
 {

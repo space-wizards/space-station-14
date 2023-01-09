@@ -107,14 +107,14 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, SleepingComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == Shared.Mobs.MobState.Dead)
+            if (args.NewMobState == Shared.Mobs.MobState.Dead)
             {
                 RemComp<SpamEmitSoundComponent>(uid);
                 RemComp<SleepingComponent>(uid);
                 return;
             }
             if (TryComp<SpamEmitSoundComponent>(uid, out var spam))
-                spam.Enabled = (args.CurrentMobState == Shared.Mobs.MobState.Alive) ? true : false;
+                spam.Enabled = (args.NewMobState == Shared.Mobs.MobState.Alive) ? true : false;
         }
 
         private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)

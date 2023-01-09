@@ -90,7 +90,7 @@ namespace Content.Server.DoAfter
 
         private void OnStateChanged(EntityUid uid, DoAfterComponent component, ref MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == Shared.Mobs.MobState.Alive)
+            if (args.NewMobState == Shared.Mobs.MobState.Alive)
                 return;
 
             foreach (var (doAfter, _) in component.DoAfters)

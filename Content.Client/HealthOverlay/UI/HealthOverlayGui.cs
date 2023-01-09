@@ -1,5 +1,4 @@
 using Content.Client.IoC;
-using Content.Client.MobState;
 using Content.Client.Resources;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
