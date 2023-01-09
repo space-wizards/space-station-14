@@ -90,7 +90,7 @@ public class GunComponent : Component
     /// How fast the projectile moves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
-    public float ProjectileSpeed = 20f;
+    public float ProjectileSpeed = 25f;
 
     /// <summary>
     /// When the gun is next available to be shot.
