@@ -60,9 +60,9 @@ public sealed class LinkBluespaceLocker : IConsoleCommand
         }
         else if (targetBluespaceComponent.BluespaceLinks.Count == 0)
         {
-            targetBluespaceComponent.TransportSentient = false;
-            targetBluespaceComponent.TransportEntities = false;
-            targetBluespaceComponent.TransportGas = false;
+            targetBluespaceComponent.BehaviorProperties.TransportSentient = false;
+            targetBluespaceComponent.BehaviorProperties.TransportEntities = false;
+            targetBluespaceComponent.BehaviorProperties.TransportGas = false;
         }
     }
 }

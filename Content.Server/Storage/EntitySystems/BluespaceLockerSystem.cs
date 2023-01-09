@@ -45,7 +45,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
     {
-        _entityManager.SpawnEntity(component.BluespaceEffectPrototype, uid.ToCoordinates());
+        _entityManager.SpawnEntity(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
         // TODO make the spawned entity follow the locker
     }
 
@@ -72,29 +72,29 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (!Resolve(targetContainerStorageComponent.Owner, ref targetContainerBluespaceComponent, false))
         {
             // Move contained items
-            if (component.TransportEntities || component.TransportSentient)
+            if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
                 foreach (var entity in targetContainerStorageComponent.Contents.ContainedEntities.ToArray())
                 {
                     if (EntityManager.HasComponent<MindComponent>(entity))
                     {
-                        if (component.TransportSentient)
+                        if (component.BehaviorProperties.TransportSentient)
                             entityStorageComponent.Contents.Insert(entity, EntityManager);
                     }
-                    else if (component.TransportEntities)
+                    else if (component.BehaviorProperties.TransportEntities)
                         entityStorageComponent.Contents.Insert(entity, EntityManager);
                 }
 
             // Move contained air
-            if (component.TransportGas)
+            if (component.BehaviorProperties.TransportGas)
             {
                 entityStorageComponent.Air.CopyFromMutable(targetContainerStorageComponent.Air);
                 targetContainerStorageComponent.Air.Clear();
             }
 
             // Bluespace effects
-            if (component.BluespaceEffectOnTeleportSource)
+            if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
                 BluespaceEffect(targetContainerStorageComponent.Owner, component);
-            if (component.BluespaceEffectOnTeleportTarget)
+            if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
                 BluespaceEffect(uid, component);
         }
 
@@ -151,10 +151,15 @@ public sealed class BluespaceLockerSystem : EntitySystem
                         continue;
 
                     component.BluespaceLinks.Add(potentialLink);
-                    if (component.AutoLinksBidirectional)
+                    if (component.AutoLinksBidirectional || component.AutoLinksUseProperties)
                     {
                         _entityManager.EnsureComponent<BluespaceLockerComponent>(storage.Owner, out var targetBluespaceComponent);
-                        targetBluespaceComponent.BluespaceLinks.Add(component.Owner);
+
+                        if (component.AutoLinksBidirectional)
+                            targetBluespaceComponent.BluespaceLinks.Add(component.Owner);
+
+                        if (component.AutoLinksUseProperties)
+                            targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
                     }
                     if (component.BluespaceLinks.Count >= component.MinBluespaceLinks)
                         break;
@@ -194,13 +199,13 @@ public sealed class BluespaceLockerSystem : EntitySystem
         component.CancelToken?.Cancel();
 
         // Do delay
-        if (doDelay && component.Delay > 0)
+        if (doDelay && component.BehaviorProperties.Delay > 0)
         {
             _entityManager.EnsureComponent<DoAfterComponent>(uid);
             component.CancelToken = new CancellationTokenSource();
 
             _doAfterSystem.DoAfter(
-                new DoAfterEventArgs(uid, component.Delay, component.CancelToken.Token)
+                new DoAfterEventArgs(uid, component.BehaviorProperties.Delay, component.CancelToken.Token)
                 {
                     UserFinishedEvent = new BluespaceLockerTeleportDelayComplete()
                 });
@@ -213,20 +218,20 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return;
 
         // Move contained items
-        if (component.TransportEntities || component.TransportSentient)
+        if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
             foreach (var entity in entityStorageComponent.Contents.ContainedEntities.ToArray())
             {
                 if (EntityManager.HasComponent<MindComponent>(entity))
                 {
-                    if (component.TransportSentient)
+                    if (component.BehaviorProperties.TransportSentient)
                         targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
                 }
-                else if (component.TransportEntities)
+                else if (component.BehaviorProperties.TransportEntities)
                     targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
             }
 
         // Move contained air
-        if (component.TransportGas)
+        if (component.BehaviorProperties.TransportGas)
         {
             targetContainerStorageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
             entityStorageComponent.Air.Clear();
@@ -255,9 +260,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
 
         // Bluespace effects
-        if (component.BluespaceEffectOnTeleportSource)
+        if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
             BluespaceEffect(uid, component);
-        if (component.BluespaceEffectOnTeleportTarget)
+        if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
             BluespaceEffect(targetContainerStorageComponent.Owner, component);
 
         DestroyAfterLimit(uid, component);
@@ -265,14 +270,14 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component)
     {
-        if (component.DestroyAfterUses == -1)
+        if (component.BehaviorProperties.DestroyAfterUses == -1)
             return;
 
-        component.DestroyAfterUses--;
-        if (component.DestroyAfterUses > 0)
+        component.BehaviorProperties.DestroyAfterUses--;
+        if (component.BehaviorProperties.DestroyAfterUses > 0)
             return;
 
-        switch (component.DestroyType)
+        switch (component.BehaviorProperties.DestroyType)
         {
             case BluespaceLockerDestroyType.Explode:
                 _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(_entityManager),
