@@ -30,8 +30,7 @@ namespace Content.Shared.Mobs.Components
         /// Tickets that determine if we should be in a specific state. Tickets are checked from highest enum to lowest.
         /// If tickets are present in a state, that state is switched to, unless that state is a lower enum value.
         /// </summary>
-        public ushort[]
-            StateTickets =
+        [ViewVariables] public ushort[] StateTickets =
                 new ushort[Enum.GetValues(typeof(MobState)).Length - 1]; //subtract 1 because invalid is not a state
     }
 

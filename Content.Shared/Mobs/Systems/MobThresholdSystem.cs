@@ -166,7 +166,7 @@ public sealed class MobThresholdSystem : EntitySystem
     {
         foreach (var (threshold,mobState) in thresholdsComponent.Thresholds)
         {
-            if (damageableComponent.TotalDamage > threshold)
+            if (damageableComponent.TotalDamage < threshold)
                 continue;
             TriggerThreshold(target, mobStateComponent, thresholdsComponent,thresholdsComponent.CurrentThresholdState, mobState);
             var ev = new MobThresholdUpdatedEvent(mobState, damageableComponent.TotalDamage, threshold);

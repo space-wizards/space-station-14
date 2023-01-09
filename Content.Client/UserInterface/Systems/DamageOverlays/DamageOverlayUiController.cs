@@ -45,8 +45,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
             && EntityManager.TryGetComponent<DamageableComponent>(args.Entity, out var damageable)
            )
         {
-            _overlay.DeadLevel = 0f;
-            UpdateOverlay_internal(args.Entity,mobState, thresholds, damageable);
+            OnStateUpdate(args.Entity, mobState.CurrentState, mobState, thresholds, damageable);
         }
         else
         {
@@ -62,24 +61,40 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
     {
         if (args.Entity != _playerManager.LocalPlayer?.ControlledEntity)
             return;
-        switch (args.NewMobState)
+        OnStateUpdate(args.Entity, args.NewMobState, args.Component, null, null);
+    }
+
+    private void OnStateUpdate(EntityUid entity, MobState newMobState,MobStateComponent? mobState = null,
+        MobThresholdsComponent? thresholds = null, DamageableComponent? damageable = null)
+    {
+        if ((mobState == null && !EntityManager.TryGetComponent(entity, out mobState))
+            || (thresholds == null && !EntityManager.TryGetComponent(entity, out thresholds))
+            || (damageable == null && !EntityManager.TryGetComponent(entity, out damageable)))
+            return;
+        switch (newMobState)
         {
             case MobState.Alive:
             {
-                UpdateOverlay(args.Entity, args.Component);
+                UpdateOverlay(entity, mobState, thresholds, damageable);
                 break;
             }
             case MobState.Critical:
-            case MobState.Dead:
             {
                 _overlay.CritLevel = 1.0f;
+                break;
+            }
+            case MobState.Dead:
+            {
+                _overlay.DeadLevel = 1.0f;
                 break;
             }
             case MobState.Invalid:
             default:
                 return;
         }
+        _overlay.State = mobState.CurrentState;
     }
+
     private void ClearOverlay()
     {
         _overlay.State = MobState.Alive;
@@ -88,7 +103,8 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         _overlay.CritLevel = 0f;
     }
     //TODO: Jezi: adjust oxygen and hp overlays to use appropriate systems once bodysim is implemented
-    private void UpdateOverlay_internal(EntityUid entity,MobStateComponent mobStateComp, MobThresholdsComponent thresholds, DamageableComponent damageable)
+    private void UpdateOverlay(EntityUid entity, MobStateComponent mobState,
+        MobThresholdsComponent thresholds, DamageableComponent damageable)
     {
         if (!_mobThresholdSystem.TryGetIncapThreshold(entity, out var foundThreshold, thresholds))
             return; //this entity cannot die or crit!!
@@ -98,6 +114,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         {
             _overlay.BruteLevel = 0f;
             _overlay.OxygenLevel = 0f;
+            _overlay.CritLevel = 0;
             return;
         }
 
@@ -115,7 +132,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         {
             _overlay.BruteLevel = 0;
         }
-        _overlay.State = mobStateComp.CurrentState;
+        _overlay.State = mobState.CurrentState;
 
         if (!_mobThresholdSystem.TryGetIncapPercentage(entity, damageable.TotalDamage, out var critPercentage,
                 thresholds))
@@ -124,17 +141,6 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
             return;
         }
         _overlay.CritLevel = critPercentage.Value.Float();
-        _overlay.State = mobStateComp.CurrentState;
-    }
-
-    private void UpdateOverlay(EntityUid entity, MobStateComponent? mobState = null,
-        MobThresholdsComponent? thresholds = null, DamageableComponent? damageable = null)
-    {
-        if ((mobState != null ||EntityManager.TryGetComponent(entity, out  mobState))
-            && (thresholds != null ||EntityManager.TryGetComponent(entity, out  thresholds))
-            && (damageable != null || EntityManager.TryGetComponent(entity, out  damageable)))
-        {
-            UpdateOverlay_internal(entity, mobState, thresholds, damageable);
-        }
+        _overlay.State = mobState.CurrentState;
     }
 }
