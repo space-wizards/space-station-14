@@ -3,7 +3,6 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Storage.Components;
 using Content.Server.Visible;

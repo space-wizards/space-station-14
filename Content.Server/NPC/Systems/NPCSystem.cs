@@ -1,4 +1,3 @@
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
@@ -134,11 +133,11 @@ namespace Content.Server.NPC.Systems
 
             switch (args.NewMobState)
             {
-                case Shared.Mobs.MobState.Alive:
+                case MobState.Alive:
                     WakeNPC(uid, component);
                     break;
-                case Shared.Mobs.MobState.Critical:
-                case Shared.Mobs.MobState.Dead:
+                case MobState.Critical:
+                case MobState.Dead:
                     SleepNPC(uid, component);
                     break;
             }

@@ -1,6 +1,6 @@
 using Content.Shared.Damage;
-using Content.Server.Damage.Components;
 using Content.Shared.Damage.Components;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
 
@@ -48,9 +48,9 @@ namespace Content.Server.Contests
             // First, we'll see what health they go into crit at.
             //TODO: refactor this entire system.... Why does this exist, this shouldn't be calculated off health
             var rollerThreshold = 100f;
-            if (!_mobThresholdSystem.TryGetThresholdForState(roller, Shared.Mobs.MobState.Critical, out var rollerCritThreshold))
+            if (!_mobThresholdSystem.TryGetThresholdForState(roller, MobState.Critical, out var rollerCritThreshold))
             {
-                if (_mobThresholdSystem.TryGetThresholdForState(roller, Shared.Mobs.MobState.Critical,
+                if (_mobThresholdSystem.TryGetThresholdForState(roller, MobState.Critical,
                         out var rollerdeadThreshold))
                 {
                     rollerThreshold = rollerdeadThreshold.Value.Float();
@@ -61,9 +61,9 @@ namespace Content.Server.Contests
                 rollerThreshold = rollerCritThreshold.Value.Float();
             }
             var targetThreshold = 100f;
-            if (!_mobThresholdSystem.TryGetThresholdForState(roller, Shared.Mobs.MobState.Critical, out var targetCritThreshold))
+            if (!_mobThresholdSystem.TryGetThresholdForState(roller, MobState.Critical, out var targetCritThreshold))
             {
-                if (_mobThresholdSystem.TryGetThresholdForState(roller, Shared.Mobs.MobState.Critical,
+                if (_mobThresholdSystem.TryGetThresholdForState(roller, MobState.Critical,
                         out var targetdeadThreshold))
                 {
                     targetThreshold = targetdeadThreshold.Value.Float();

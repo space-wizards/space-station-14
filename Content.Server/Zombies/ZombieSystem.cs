@@ -52,7 +52,7 @@ namespace Content.Server.Zombies
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState == Shared.Mobs.MobState.Alive)
+            if (args.NewMobState == MobState.Alive)
                 EnsureComp<ActiveZombieComponent>(uid);
             else
                 RemComp<ActiveZombieComponent>(uid);
@@ -126,13 +126,13 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
-                if ((mobState.CurrentState == Shared.Mobs.MobState.Dead || mobState.CurrentState == Shared.Mobs.MobState.Critical)
+                if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else if (mobState.CurrentState == Shared.Mobs.MobState.Alive) //heals when zombies bite live entities
+                else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem

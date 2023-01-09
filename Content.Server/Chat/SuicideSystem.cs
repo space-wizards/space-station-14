@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Components;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;

@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Inventory;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Polymorph.Components;
 using Content.Server.Popups;
 using Content.Shared.Actions;

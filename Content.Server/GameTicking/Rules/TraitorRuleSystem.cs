@@ -5,7 +5,6 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.MobState;
 using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;

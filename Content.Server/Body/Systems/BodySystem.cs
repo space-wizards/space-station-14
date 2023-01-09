@@ -5,7 +5,6 @@ using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;

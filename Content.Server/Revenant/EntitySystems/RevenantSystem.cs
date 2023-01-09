@@ -10,7 +10,6 @@ using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
-using Content.Server.MobState;
 using Content.Server.Visible;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;

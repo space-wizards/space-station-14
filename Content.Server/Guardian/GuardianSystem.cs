@@ -224,12 +224,12 @@ namespace Content.Server.Guardian
         {
             if (component.HostedGuardian == null) return;
 
-            if (args.NewMobState == Shared.Mobs.MobState.Critical)
+            if (args.NewMobState == MobState.Critical)
             {
                 _popupSystem.PopupEntity(Loc.GetString("guardian-critical-warn"), component.HostedGuardian.Value, component.HostedGuardian.Value);
                 SoundSystem.Play("/Audio/Effects/guardian_warn.ogg", Filter.Pvs(component.HostedGuardian.Value), component.HostedGuardian.Value);
             }
-            else if (args.NewMobState == Shared.Mobs.MobState.Dead)
+            else if (args.NewMobState == MobState.Dead)
             {
                 SoundSystem.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);

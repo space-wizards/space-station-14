@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;

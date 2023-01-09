@@ -1,7 +1,6 @@
 using Content.Server.Bible.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -193,7 +192,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState != Shared.Mobs.MobState.Dead || component.Source == null)
+            if (args.NewMobState != MobState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;

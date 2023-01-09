@@ -9,7 +9,6 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Server.MobState;
 using Content.Server.Power.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Components;

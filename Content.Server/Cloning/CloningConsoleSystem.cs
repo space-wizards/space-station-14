@@ -8,7 +8,6 @@ using Content.Server.Mind.Components;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
-using Content.Server.MobState;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

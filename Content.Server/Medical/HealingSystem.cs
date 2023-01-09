@@ -4,12 +4,12 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
-using Content.Server.MobState;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
@@ -181,7 +181,7 @@ public sealed class HealingSystem : EntitySystem
             return output;
 
 
-        if (!_mobThresholdSystem.TryGetThresholdForState(uid, Shared.Mobs.MobState.Critical, out var amount,
+        if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var amount,
                 mobThreshold))
         {
             return 1;

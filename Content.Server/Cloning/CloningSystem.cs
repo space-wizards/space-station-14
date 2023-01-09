@@ -13,7 +13,6 @@ using Content.Server.EUI;
 using Content.Server.Humanoid;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MobState;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;

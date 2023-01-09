@@ -1,6 +1,5 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Components;

@@ -3,7 +3,6 @@ using Content.Server.Drone.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Popups;
 using Content.Server.Tools.Innate;
 using Content.Server.UserInterface;
@@ -83,7 +82,7 @@ namespace Content.Server.Drone
 
         private void OnMobStateChanged(EntityUid uid, DroneComponent drone, MobStateChangedEvent args)
         {
-            if (args.NewMobState == Shared.Mobs.MobState.Dead)
+            if (args.NewMobState == MobState.Dead)
             {
                 if (TryComp<InnateToolComponent>(uid, out var innate))
                     _innateToolSystem.Cleanup(uid, innate);

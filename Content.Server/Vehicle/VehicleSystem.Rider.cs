@@ -48,7 +48,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
-            if (args.NewMobState is Shared.Mobs.MobState.Critical or Shared.Mobs.MobState.Dead)
+            if (args.NewMobState is MobState.Critical or MobState.Dead)
             {
                 UnbuckleFromVehicle(uid);
             }

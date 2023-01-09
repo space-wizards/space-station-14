@@ -15,7 +15,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (ev.NewMobState != Shared.Mobs.MobState.Dead)
+        if (ev.NewMobState != MobState.Dead)
             return;
 
         var deathXform = Transform(ev.Entity);

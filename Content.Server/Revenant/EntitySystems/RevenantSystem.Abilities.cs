@@ -26,6 +26,7 @@ using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
@@ -143,7 +144,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == Shared.Mobs.MobState.Alive && !HasComp<SleepingComponent>(target))
+        if (TryComp<MobStateComponent>(target, out var mobstate) && mobstate.CurrentState == MobState.Alive && !HasComp<SleepingComponent>(target))
         {
             _popup.PopupEntity(Loc.GetString("revenant-soul-too-powerful"), target, uid);
             return;
@@ -198,7 +199,7 @@ public sealed partial class RevenantSystem
 
         //KILL THEMMMM
 
-        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, Shared.Mobs.MobState.Dead, out var damage))
+        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead, out var damage))
             return;
         DamageSpecifier dspec = new();
         dspec.DamageDict.Add("Poison", damage.Value);

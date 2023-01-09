@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;

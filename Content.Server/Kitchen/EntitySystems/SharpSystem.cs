@@ -1,7 +1,6 @@
 ﻿using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.MobState;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;

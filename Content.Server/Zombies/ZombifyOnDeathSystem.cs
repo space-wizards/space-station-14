@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState == Shared.Mobs.MobState.Dead ||
-                args.NewMobState == Shared.Mobs.MobState.Critical)
+            if (args.NewMobState == MobState.Dead ||
+                args.NewMobState == MobState.Critical)
             {
                 ZombifyEntity(uid);
             }

@@ -2,7 +2,6 @@ using Content.Server.Actions;
 using Content.Server.Bed.Components;
 using Content.Server.Bed.Sleep;
 using Content.Server.Body.Systems;
-using Content.Server.MobState;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Actions.ActionTypes;

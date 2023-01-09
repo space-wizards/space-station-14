@@ -3,7 +3,6 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
 using Content.Server.Disease.Components;
 using Content.Server.DoAfter;
-using Content.Server.MobState;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Clothing.Components;

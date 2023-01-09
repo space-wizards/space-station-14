@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Roles;
 using Content.Server.Suspicion.Roles;
 using Content.Shared.Mobs.Components;

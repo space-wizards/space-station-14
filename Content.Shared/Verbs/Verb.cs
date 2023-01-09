@@ -1,6 +1,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Verbs
 {

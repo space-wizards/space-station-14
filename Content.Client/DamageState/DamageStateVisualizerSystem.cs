@@ -10,7 +10,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
     {
         var sprite = args.Sprite;
 
-        if (sprite == null || !args.Component.TryGetData(MobStateVisuals.State, out Shared.Mobs.MobState data))
+        if (sprite == null || !args.Component.TryGetData(MobStateVisuals.State, out MobState data))
         {
             return;
         }
@@ -24,8 +24,8 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         {
             sprite.NoRotation = data switch
             {
-                Shared.Mobs.MobState.Critical => false,
-                Shared.Mobs.MobState.Dead => false,
+                MobState.Critical => false,
+                MobState.Dead => false,
                 _ => true
             };
         }
@@ -48,7 +48,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         }
 
         // So they don't draw over mobs anymore
-        if (data == Shared.Mobs.MobState.Dead)
+        if (data == MobState.Dead)
         {
             if (sprite.DrawDepth > (int) DrawDepth.FloorObjects)
             {
