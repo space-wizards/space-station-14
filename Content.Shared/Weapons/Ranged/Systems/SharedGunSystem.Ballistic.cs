@@ -120,6 +120,9 @@ public abstract partial class SharedGunSystem
             {
                 SimulateInsertAmmo(cast.Owner, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
+
+            if (cast.Owner.IsClientSide())
+                Del(cast.Owner);
         }
     }
 
