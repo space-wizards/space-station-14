@@ -1,16 +1,33 @@
 ﻿using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Consciousness.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Medical.Consciousness.Systems;
 
 public sealed class ConsciousnessSystem : EntitySystem
 {
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     public override void Initialize()
     {
         SubscribeLocalEvent<ConsciousnessComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ConsciousnessComponent, ComponentGetState>(OnComponentGetState);
         SubscribeLocalEvent<ConsciousnessComponent, ComponentHandleState>(OnComponentHandleState);
+        SubscribeLocalEvent<ConsciousnessComponent, UpdateMobStateEvent>(OnUpdateMobState);
+    }
+
+    private void OnUpdateMobState(EntityUid uid, ConsciousnessComponent component, ref UpdateMobStateEvent args)
+    {
+        if (!IsConscious(uid, out _, component))
+        {
+            if (args.Component.CurrentState == MobState.Alive && args.Component.CurrentState != MobState.Dead)
+            {
+                args.Component.CurrentState = MobState.Critical;
+            }
+            return;
+        }
+        args.Component.CurrentState = MobState.Alive;
     }
 
     private void OnComponentGetState(EntityUid uid, ConsciousnessComponent component, ref ComponentGetState args)
@@ -109,9 +126,11 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     private void CheckConsciousness(EntityUid entity, ConsciousnessComponent consciousness)
     {
+        var isConscious = IsConscious(entity, out var consciousnessValue, consciousness);
         var ev = new ConsciousnessUpdateEvent(
-            IsConscious(entity, out var consciousnessValue , consciousness),
+            isConscious,
             consciousnessValue);
         RaiseLocalEvent(entity, ev, true);
+        _mobStateSystem.UpdateMobState(entity);
     }
 }
