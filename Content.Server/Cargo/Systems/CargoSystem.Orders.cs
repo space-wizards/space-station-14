@@ -159,9 +159,7 @@ namespace Content.Server.Cargo.Systems
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.SetApproverData(idCard);
-
-
-            SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
@@ -229,14 +227,11 @@ namespace Content.Server.Cargo.Systems
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
         }
 
-        private void ConsolePopup(ICommonSession session, string text)
-        {
-            _popup.PopupCursor(text, Filter.SinglePlayer(session));
-        }
+        private void ConsolePopup(ICommonSession session, string text) => _popup.PopupCursor(text, session);
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)

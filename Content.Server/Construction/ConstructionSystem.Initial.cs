@@ -96,7 +96,7 @@ namespace Content.Server.Construction
 
             if (existed)
             {
-                _popup.PopupCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"), Filter.Entities(user));
+                _popup.PopupCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"), user);
                 return null;
             }
 
@@ -221,7 +221,7 @@ namespace Content.Server.Construction
 
             if (failed)
             {
-                _popup.PopupCursor(Loc.GetString("construction-system-construct-no-materials"), Filter.Entities(user));
+                _popup.PopupCursor(Loc.GetString("construction-system-construct-no-materials"), user);
                 FailCleanup();
                 return null;
             }
@@ -379,7 +379,7 @@ namespace Content.Server.Construction
 
             if (_container.IsEntityInContainer(user))
             {
-                _popup.PopupCursor(Loc.GetString("construction-system-inside-container"), Filter.Entities(user));
+                _popup.PopupCursor(Loc.GetString("construction-system-inside-container"), user);
                 return;
             }
 
@@ -392,7 +392,7 @@ namespace Content.Server.Construction
             {
                 if (!set.Add(ev.Ack))
                 {
-                    _popup.PopupCursor(Loc.GetString("construction-system-already-building"), Filter.Entities(user));
+                    _popup.PopupCursor(Loc.GetString("construction-system-already-building"), user);
                     return;
                 }
             }

@@ -5,54 +5,25 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation",
   "states": [
     {
-      "name": "eightdirwire",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "eightdirwire"
     },
     {
-      "name": "generator",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "generator"
     },
     {
-      "name": "provider",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "provider"
     },
     {
-      "name": "storage",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "storage"
     },
     {
-      "name": "wiredmachine",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wiredmachine"
     },
     {
-      "name": "wirelessmachine",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wirelessmachine"
     }
   ]
 }

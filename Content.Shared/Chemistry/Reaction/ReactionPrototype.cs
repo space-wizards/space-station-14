@@ -39,6 +39,12 @@ namespace Content.Shared.Chemistry.Reaction
         public float MaximumTemperature = float.PositiveInfinity;
 
         /// <summary>
+        ///     The required mixing categories for an entity to mix the solution with for the reaction to occur
+        /// </summary>
+        [DataField("requiredMixerCategories")]
+        public List<string>? MixingCategories = null;
+
+        /// <summary>
         /// Reagents created when the reaction occurs.
         /// </summary>
         [DataField("products", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]

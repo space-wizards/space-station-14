@@ -20,6 +20,7 @@ public sealed class SpraySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
 
@@ -53,7 +54,7 @@ public sealed class SpraySystem : EntitySystem
         if (solution.CurrentVolume <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid,
-                Filter.Entities(args.User));
+                args.User);
             return;
         }
 
@@ -118,7 +119,7 @@ public sealed class SpraySystem : EntitySystem
             _vaporSystem.Start(vaporComponent, vaporXform, impulseDirection, component.SprayVelocity, target, component.SprayAliveTime, args.User);
         }
 
-        SoundSystem.Play(component.SpraySound.GetSound(), Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.125f));
+        _audio.PlayPvs(component.SpraySound, uid, component.SpraySound.Params.WithVariation(0.125f));
 
         RaiseLocalEvent(uid,
             new RefreshItemCooldownEvent(curTime, curTime + TimeSpan.FromSeconds(component.CooldownTime)), true);

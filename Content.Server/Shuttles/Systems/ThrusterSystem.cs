@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Content.Server.Audio;
+using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Shuttles.Components;
@@ -58,7 +59,10 @@ namespace Content.Server.Shuttles.Systems
 
             SubscribeLocalEvent<ThrusterComponent, ExaminedEvent>(OnThrusterExamine);
 
-            _mapManager.TileChanged += OnTileChange;
+            SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+
+            SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
         }
 
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
@@ -85,24 +89,18 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _mapManager.TileChanged -= OnTileChange;
-        }
-
         private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
         {
             args.IsHot = component.Type != ThrusterType.Angular && component.IsOn;
         }
 
-        private void OnTileChange(object? sender, TileChangedEventArgs e)
+        private void OnShuttleTileChange(EntityUid uid, ShuttleComponent component, ref TileChangedEvent args)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
+            if (args.NewTile.IsSpace(_tileDefManager) || !args.OldTile.IsSpace(_tileDefManager)) return;
 
-            var tilePos = e.NewTile.GridIndices;
-            var grid = _mapManager.GetGrid(e.NewTile.GridUid);
+            var tilePos = args.NewTile.GridIndices;
+            var grid = _mapManager.GetGrid(uid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
@@ -513,6 +511,18 @@ namespace Content.Server.Shuttles.Systems
                     appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
                 }
             }
+        }
+
+        private void OnRefreshParts(EntityUid uid, ThrusterComponent component, RefreshPartsEvent args)
+        {
+            var thrustRating = args.PartRatings[component.MachinePartThrust];
+
+            component.Thrust = component.BaseThrust * MathF.Pow(component.PartRatingThrustMultiplier, thrustRating - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, ThrusterComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("thruster-comp-upgrade-thrust", component.Thrust / component.BaseThrust);
         }
 
         #endregion
