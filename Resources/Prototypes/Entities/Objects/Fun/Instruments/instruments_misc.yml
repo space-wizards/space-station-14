@@ -128,7 +128,7 @@
 
 - type: entity
   parent: PhoneInstrument
-  id: BananaPhone
+  id: BananaPhoneInstrument
   name: Banana Phone
   description: A direct line to the Honkmother. Seems to always go to voicemail.
   components:
