@@ -27,9 +27,7 @@ namespace Content.Shared.Roles
         [DataField("time")] public TimeSpan Time;
 
         /// <summary>
-        /// If property is <c>True</c> Requirement will inverted
-        /// and it disallow pick this job if condition was true,<br />
-        /// and it allow pick if condition was false.
+        /// If true, requirement will return false if playtime above the specified time.
         /// </summary>
         /// <value>
         /// <c>False</c> by default.<br />
