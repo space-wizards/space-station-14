@@ -41,5 +41,16 @@ public partial class MobStateSystem
         return true;
     }
 
+    public void UpdateMobState(EntityUid entity, MobStateComponent? component = null)
+    {
+        if (!Resolve(entity, ref component))
+            return;
 
+        var ev = new UpdateMobStateEvent { Component = component };
+        RaiseLocalEvent(entity, ref ev);
+        ChangeState(entity, component, ev.State);
+    }
 }
+
+[ByRefEvent]
+public record struct UpdateMobStateEvent(MobStateComponent Component, MobState State);

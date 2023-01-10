@@ -13,8 +13,6 @@ public sealed class MobThresholdsComponent : Component
 
     [DataField("triggersAlerts")] public bool TriggersAlerts = true;
 
-    public readonly Dictionary<MobState, FixedPoint2> ThresholdReverseLookup = new();
-
     public MobState CurrentThresholdState;
 }
 

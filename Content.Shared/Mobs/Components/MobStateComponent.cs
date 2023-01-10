@@ -25,25 +25,18 @@ namespace Content.Shared.Mobs.Components
                 MobState.Critical,
                 MobState.Dead
             };
-
-        /// <summary>
-        /// Tickets that determine if we should be in a specific state. Tickets are checked from highest enum to lowest.
-        /// If tickets are present in a state, that state is switched to, unless that state is a lower enum value.
-        /// </summary>
-        [ViewVariables] public ushort[] StateTickets =
-                new ushort[Enum.GetValues(typeof(MobState)).Length - 1]; //subtract 1 because invalid is not a state
     }
 
     [Serializable, NetSerializable]
     public sealed class MobStateComponentState : ComponentState
     {
+        public readonly MobState CurrentState;
         public readonly HashSet<MobState> AllowedStates;
-        public readonly ushort[] StateTickets;
 
-        public MobStateComponentState(HashSet<MobState> allowedStates, ushort[] stateTickets)
+        public MobStateComponentState(MobState currentState, HashSet<MobState> allowedStates)
         {
+            CurrentState = currentState;
             AllowedStates = allowedStates;
-            StateTickets = stateTickets;
         }
     }
 }

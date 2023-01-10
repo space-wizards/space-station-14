@@ -15,7 +15,6 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly StatusEffectsSystem _status = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
@@ -27,18 +26,18 @@ public partial class MobStateSystem : EntitySystem
         SubscribeLocalEvent<MobStateComponent, ComponentHandleState>(OnHandleComponentState);
     }
 
-
     private void OnHandleComponentState(EntityUid uid, MobStateComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not MobStateComponentState state)
             return;
+
+        component.CurrentState = state.CurrentState;
         component.AllowedStates = state.AllowedStates;
-        component.StateTickets = state.StateTickets;
     }
 
     private void OnGetComponentState(EntityUid uid, MobStateComponent component, ref ComponentGetState args)
     {
-        args.State = new MobStateComponentState(component.AllowedStates, component.StateTickets);
+        args.State = new MobStateComponentState(component.CurrentState, component.AllowedStates);
     }
 
     public bool HasState(EntityUid uid, MobState mobState, MobStateComponent? component = null)
