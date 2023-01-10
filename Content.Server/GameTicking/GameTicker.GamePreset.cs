@@ -17,8 +17,6 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-
         public GamePresetPrototype? Preset { get; private set; }
 
         private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
@@ -171,8 +169,7 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.HasComponent<GhostComponent>(playerEntity))
+            if (HasComp<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -196,7 +193,7 @@ namespace Content.Server.GameTicking
 
             if (canReturnGlobal && TryComp(playerEntity, out MobStateComponent? mobState))
             {
-                if (_mobStateSystem.IsCritical(playerEntity.Value, mobState))
+                if (_mobState.IsCritical(playerEntity.Value, mobState))
                 {
                     canReturn = true;
 
@@ -207,7 +204,10 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var ghost = Spawn("MobObserver", position.ToMap(entities));
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var coords = _transform.GetMoverCoordinates(position, xformQuery);
+
+            var ghost = Spawn("MobObserver", coords);
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".

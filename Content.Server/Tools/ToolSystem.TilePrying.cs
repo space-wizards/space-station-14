@@ -37,7 +37,8 @@ public sealed partial class ToolSystem
             return;
         }
 
-        grid.GetTileRef(args.Coordinates).PryTile(_mapManager, _tileDefinitionManager, EntityManager);
+        var tile = grid.GetTileRef(args.Coordinates);
+        _tile.PryTile(tile);
     }
 
     private void OnTilePryingAfterInteract(EntityUid uid, TilePryingComponent component, AfterInteractEvent args)
