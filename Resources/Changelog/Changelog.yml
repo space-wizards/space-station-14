@@ -1,10 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: New backpacks for salvage specialists, type: Add}
-  - {message: Added missing botany duffle bag, type: Add}
-  id: 2352
-  time: '2022-09-22T19:02:30.0000000+00:00'
 - author: Mervill
   changes:
   - {message: The agent id card interface now remembers the previous fake name and
@@ -2957,3 +2951,8 @@ Entries:
   - {message: Fixed togglehealthoverlay command not working, type: Fix}
   id: 2851
   time: '2023-01-10T21:36:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added showing the player name to admins on the context menu., type: Add}
+  id: 2852
+  time: '2023-01-10T21:39:48.0000000+00:00'
