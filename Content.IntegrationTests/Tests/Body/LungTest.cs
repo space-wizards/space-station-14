@@ -27,6 +27,7 @@ namespace Content.IntegrationTests.Tests.Body
   - type: MobThresholds
     thresholds:
       0: Alive
+  - type: Damageable
   - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
