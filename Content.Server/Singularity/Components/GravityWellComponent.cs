@@ -43,6 +43,11 @@ public sealed class GravityWellComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseTangentialAcceleration = 0.0f;
 
+    public Matrix3 MatrixAcceleration;
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<EntityUid> Captured = new();
+
     #region Update Timing
 
     /// <summary>

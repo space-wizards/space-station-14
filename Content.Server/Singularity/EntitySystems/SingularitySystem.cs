@@ -25,6 +25,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+    [Dependency] private readonly GravityWellSystem _gravityWellSystem = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -344,6 +345,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
         var singulos = args.Singularity;
         comp.MaxRange = GravPulseRange(singulos);
         (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
+        _gravityWellSystem.UpdateMatrix(uid, comp);
     }
 
 #endregion Event Handlers
