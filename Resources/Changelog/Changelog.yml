@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added a burger made from the beloved pet of the Head of Personnel.,
-    type: Add}
-  id: 2349
-  time: '2022-09-21T02:16:59.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Forensic pad is now tagged as a document. They can be stored in filling
@@ -2959,3 +2953,9 @@ Entries:
   - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
   id: 2848
   time: '2023-01-10T12:31:26.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Cleaned up random names, players should no longer get names that accidentally
+      break naming rules.', type: Fix}
+  id: 2849
+  time: '2023-01-10T12:45:07.0000000+00:00'
