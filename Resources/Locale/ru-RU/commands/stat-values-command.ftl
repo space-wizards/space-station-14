@@ -3,11 +3,11 @@ stat-values-server = Не может быть запущено на сервер
 stat-values-args = Неверное число аргументов, нужен 1
 stat-values-invalid = { $arg } не является действительной характеристикой!
 # Cargo
-stat-cargo-values = Цена продажи карго
+stat-cargo-values = Цена продажи груза
 stat-cargo-id = ID
 stat-cargo-price = Цена
 # Lathe
-stat-lathe-values = Цены продажи в лате
+stat-lathe-values = Стоимость печати в лате
 stat-lathe-id = ID
 stat-lathe-cost = Стоимость
 stat-lathe-sell = Цена продажи

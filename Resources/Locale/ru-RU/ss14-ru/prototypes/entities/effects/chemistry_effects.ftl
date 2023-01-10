@@ -1,13 +1,13 @@
-ent-Smoke = smoke
+ent-Smoke = дым
     .desc = { "" }
     .suffix = { "" }
-ent-Foam = foam
+ent-Foam = пена
     .desc = { "" }
     .suffix = { "" }
-ent-IronMetalFoam = железная металлическая пена
+ent-IronMetalFoam = железная пена
     .desc = { ent-Foam.desc }
     .suffix = { "" }
-ent-AluminiumMetalFoam = алюминиевая металлическая пена
+ent-AluminiumMetalFoam = алюминиевая пена
     .desc = { ent-Foam.desc }
     .suffix = { "" }
 ent-BaseFoamedMetal = base foamed metal

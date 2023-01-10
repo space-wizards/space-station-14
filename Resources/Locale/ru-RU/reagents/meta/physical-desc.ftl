@@ -82,4 +82,4 @@ reagent-physical-desc-chewy = жевательное
 reagent-physical-desc-volatile = нестабильное
 reagent-physical-desc-inky = чернильное
 reagent-physical-desc-enigmatic = загадочное
-reagent-physical-desc-exotic-smelling = экзотический запах
+reagent-physical-desc-exotic-smelling = экзотично пахнущее

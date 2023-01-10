@@ -1,4 +1,4 @@
-revenant-essence-amount = У вас [color=plum]{ $current } эссенции[/color]. Вам максимум — [color=plum]{ $max } эссенции[/color].
+revenant-essence-amount = У вас [color=plum]{ $current } эссенции[/color]. Ваш максимум — [color=plum]{ $max } эссенции[/color].
 revenant-max-essence-increased = Максимальный запас эссенции увеличился!
 revenant-not-enough-essence = Недостаточно эссенции!
 revenant-in-solid = Вы не можете использовать эту способность, пока находитесь внутри твёрдого объекта.
