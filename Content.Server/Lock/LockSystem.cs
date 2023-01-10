@@ -41,7 +41,7 @@ namespace Content.Server.Lock
         {
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearance))
             {
-                _appearanceSystem.SetData(lockComp.Owner, StorageVisuals.CanLock, true, appearance);
+                _appearanceSystem.SetData(uid, StorageVisuals.CanLock, true, appearance);
             }
         }
 
@@ -93,17 +93,17 @@ namespace Content.Server.Lock
             if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)), lockComp.Owner, user);
+            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(uid).EntityName)), uid, user);
             lockComp.Locked = true;
 
             if(lockComp.LockSound != null)
             {
-                _audio.PlayPvs(_audio.GetSound(lockComp.LockSound), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                _audio.PlayPvs(_audio.GetSound(lockComp.LockSound), uid, AudioParams.Default.WithVolume(-5));
             }
 
-            if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComp))
             {
-                _appearanceSystem.SetData(lockComp.Owner, StorageVisuals.Locked, true, appearanceComp);
+                _appearanceSystem.SetData(uid, StorageVisuals.Locked, true, appearanceComp);
             }
 
             RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(true), true);
@@ -118,19 +118,19 @@ namespace Content.Server.Lock
 
             if (user is { Valid: true })
             {
-                _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)), lockComp.Owner, user.Value);
+                _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(uid).EntityName)), uid, user.Value);
             }
 
             lockComp.Locked = false;
 
             if (lockComp.UnlockSound != null)
             {
-                _audio.PlayPvs(_audio.GetSound(lockComp.UnlockSound), lockComp.Owner, AudioParams.Default.WithVolume(-5));
+                _audio.PlayPvs(_audio.GetSound(lockComp.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
             }
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
-                _appearanceSystem.SetData(lockComp.Owner, StorageVisuals.Locked, false, appearanceComp);
+                _appearanceSystem.SetData(uid, StorageVisuals.Locked, false, appearanceComp);
             }
 
             RaiseLocalEvent(lockComp.Owner, new LockToggledEvent(false), true);
@@ -196,16 +196,16 @@ namespace Content.Server.Lock
 
         private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
         {
-            if (component.Locked == true)
+            if (component.Locked)
             {
                 if (component.UnlockSound != null)
                 {
-                    _audio.PlayPvs(_audio.GetSound(component.UnlockSound), component.Owner, AudioParams.Default.WithVolume(-5));
+                    _audio.PlayPvs(_audio.GetSound(component.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
                 }
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
                 {
-                    _appearanceSystem.SetData(component.Owner, StorageVisuals.Locked, false, appearanceComp);
+                    _appearanceSystem.SetData(uid, StorageVisuals.Locked, false, appearanceComp);
                 }
                 EntityManager.RemoveComponent<LockComponent>(uid); //Literally destroys the lock as a tell it was emagged
                 args.Handled = true;
