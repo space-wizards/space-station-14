@@ -1,6 +1,7 @@
 ﻿using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Consciousness.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.GameStates;
 
@@ -45,7 +46,6 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (args.Current is not ConsciousnessComponentState state)
             return;
-
         component.PassOutThreshold = state.PassOutThreshold;
         component.Base = state.Base;
         component.Modifier = state.Modifier;
@@ -69,10 +69,10 @@ public sealed class ConsciousnessSystem : EntitySystem
     public bool IsConscious(EntityUid entity, out FixedPoint2 consciousnessValue,
         ConsciousnessComponent? consciousness = null)
     {
-        consciousnessValue = GetConsciousness(entity, consciousness);
+        consciousnessValue = 0;
         if (!Resolve(entity, ref consciousness))
             return true;
-
+        consciousnessValue = GetConsciousness(entity, consciousness);
         return consciousnessValue > consciousness.PassOutThreshold;
     }
 
