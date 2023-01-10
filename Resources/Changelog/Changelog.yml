@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: We have added a little sticker to some of your devices that should make
-      it easier for you to figure out what that device's local address is., type: Add}
-  id: 2351
-  time: '2022-09-22T19:00:54.0000000+00:00'
 - author: Morb0
   changes:
   - {message: New backpacks for salvage specialists, type: Add}
@@ -2958,3 +2952,8 @@ Entries:
   - {message: Fixed AHelp relay to discord not working., type: Fix}
   id: 2850
   time: '2023-01-10T16:33:39.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed togglehealthoverlay command not working, type: Fix}
+  id: 2851
+  time: '2023-01-10T21:36:48.0000000+00:00'
