@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CombatMode;
 using Content.Client.ContextMenu.UI;
+using Content.Client.Gameplay;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
@@ -20,34 +22,53 @@ namespace Content.Client.Verbs.UI
     ///     This class handles the displaying of the verb menu.
     /// </summary>
     /// <remarks>
-    ///     In addition to the normal <see cref="ContextMenuPresenter"/> functionality, this also provides functions
+    ///     In addition to the normal <see cref="ContextMenuUIController"/> functionality, this also provides functions
     ///     open a verb menu for a given entity, add verbs to it, and add server-verbs when the server response is
     ///     received.
     /// </remarks>
-    public sealed class VerbMenuPresenter : ContextMenuPresenter
+    public sealed class VerbMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly ContextMenuUIController _context = default!;
 
-        private readonly CombatModeSystem _combatMode;
-        private readonly VerbSystem _verbSystem;
+        [UISystemDependency] private readonly CombatModeSystem _combatMode = default!;
+        [UISystemDependency] private readonly VerbSystem _verbSystem = default!;
 
         public EntityUid CurrentTarget;
         public SortedSet<Verb> CurrentVerbs = new();
 
-        public VerbMenuPresenter(CombatModeSystem combatMode, VerbSystem verbSystem)
+        /// <summary>
+        ///     Separate from <see cref="ContextMenuUIController.RootMenu"/>, since we can open a verb menu as a submenu
+        ///     of an entity menu element. If that happens, we need to be aware and close it properly.
+        /// </summary>
+        public ContextMenuPopup? OpenMenu = null;
+
+        public void OnStateEntered(GameplayState state)
         {
-            IoCManager.InjectDependencies(this);
-            _combatMode = combatMode;
-            _verbSystem = verbSystem;
+            _context.OnContextKeyEvent += OnKeyBindDown;
+            _context.OnContextClosed += Close;
+            _verbSystem.OnVerbsResponse += HandleVerbsResponse;
+        }
+
+        public void OnStateExited(GameplayState state)
+        {
+            _context.OnContextKeyEvent -= OnKeyBindDown;
+            _context.OnContextClosed -= Close;
+            if (_verbSystem != null)
+                _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
+            Close();
         }
 
         /// <summary>
-        ///     Open a verb menu and fill it work verbs applicable to the given target entity.
+        ///     Open a verb menu and fill it with verbs applicable to the given target entity.
         /// </summary>
         /// <param name="target">Entity to get verbs on.</param>
         /// <param name="force">Used to force showing all verbs (mostly for admins).</param>
-        public void OpenVerbMenu(EntityUid target, bool force = false)
+        /// <param name="popup">
+        ///     If this is not null, verbs will be placed into the given popup instead.
+        /// </param>
+        public void OpenVerbMenu(EntityUid target, bool force = false, ContextMenuPopup? popup=null)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} user ||
                 _combatMode.IsInCombatMode(user))
@@ -55,53 +76,59 @@ namespace Content.Client.Verbs.UI
 
             Close();
 
+            var menu = popup ?? _context.RootMenu;
+            menu.MenuBody.DisposeAllChildren();
+
             CurrentTarget = target;
             CurrentVerbs = _verbSystem.GetVerbs(target, user, Verb.VerbTypes, force);
+            OpenMenu = menu;
 
             // Fill in client-side verbs.
-            FillVerbPopup();
+            FillVerbPopup(menu);
 
             // Add indicator that some verbs may be missing.
             // I long for the day when verbs will all be predicted and this becomes unnecessary.
             if (!target.IsClientSide())
             {
-                AddElement(RootMenu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
+                _context.AddElement(menu, new ContextMenuElement(Loc.GetString("verb-system-waiting-on-server-text")));
             }
 
-            // Show the menu
-            RootMenu.SetPositionLast();
+            // if popup isn't null (ie we are opening out of an entity menu element),
+            // assume that that is going to handle opening the submenu properly
+            if (popup != null)
+                return;
+
+            // Show the menu at mouse pos
+            menu.SetPositionLast();
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
-            RootMenu.Open(box);
+            menu.Open(box);
         }
 
         /// <summary>
         ///     Fill the verb pop-up using the verbs stored in <see cref="CurrentVerbs"/>
         /// </summary>
-        private void FillVerbPopup()
+        private void FillVerbPopup(ContextMenuPopup popup)
         {
-            if (RootMenu == null)
-                return;
-
             HashSet<string> listedCategories = new();
             foreach (var verb in CurrentVerbs)
             {
                 if (verb.Category == null)
                 {
                     var element = new VerbMenuElement(verb);
-                    AddElement(RootMenu, element);
+                    _context.AddElement(popup, element);
                 }
 
                 else if (listedCategories.Add(verb.Category.Text))
-                    AddVerbCategory(verb.Category);
+                    AddVerbCategory(verb.Category, popup);
             }
 
-            RootMenu.InvalidateMeasure();
+            popup.InvalidateMeasure();
         }
 
         /// <summary>
         ///     Add a verb category button to the pop-up
         /// </summary>
-        public void AddVerbCategory(VerbCategory category)
+        public void AddVerbCategory(VerbCategory category, ContextMenuPopup popup)
         {
             // Get a list of the verbs in this category
             List<Verb> verbsInCategory = new();
@@ -119,10 +146,10 @@ namespace Content.Client.Verbs.UI
                 return;
 
             var element = new VerbMenuElement(category, verbsInCategory[0].TextStyleClass);
-            AddElement(RootMenu, element);
+            _context.AddElement(popup, element);
 
             // Create the pop-up that appears when hovering over this element
-            element.SubMenu = new ContextMenuPopup(this, element);
+            element.SubMenu = new ContextMenuPopup(_context, element);
             foreach (var verb in verbsInCategory)
             {
                 var subElement = new VerbMenuElement(verb)
@@ -130,7 +157,7 @@ namespace Content.Client.Verbs.UI
                     IconVisible = drawIcons,
                     TextVisible = !category.IconsOnly
                 };
-                AddElement(element.SubMenu, subElement);
+                _context.AddElement(element.SubMenu, subElement);
             }
 
             element.SubMenu.MenuBody.Columns = category.Columns;
@@ -139,23 +166,23 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Add verbs from the server to <see cref="CurrentVerbs"/> and update the verb menu.
         /// </summary>
-        public void AddServerVerbs(List<Verb>? verbs)
+        public void AddServerVerbs(List<Verb>? verbs, ContextMenuPopup popup)
         {
-            RootMenu.MenuBody.DisposeAllChildren();
+            popup.MenuBody.DisposeAllChildren();
 
             // Verbs may be null if the server does not think we can see the target entity. This **should** not happen.
             if (verbs == null)
             {
                 // remove "waiting for server..." and inform user that something went wrong.
-                AddElement(RootMenu, new ContextMenuElement(Loc.GetString("verb-system-null-server-response")));
+                _context.AddElement(popup, new ContextMenuElement(Loc.GetString("verb-system-null-server-response")));
                 return;
             }
 
             CurrentVerbs.UnionWith(verbs);
-            FillVerbPopup();
+            FillVerbPopup(popup);
         }
 
-        public override void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args)
+        public void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args)
         {
             if (args.Function != EngineKeyFunctions.Use && args.Function != ContentKeyFunctions.ActivateItemInWorld)
                 return;
@@ -185,7 +212,7 @@ namespace Content.Client.Verbs.UI
                 if (verbElement.SubMenu.MenuBody.ChildCount != 1
                     || verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbMenuElement)
                 {
-                    OpenSubMenu(verbElement);
+                    _context.OpenSubMenu(verbElement);
                     return;
                 }
 
@@ -200,11 +227,11 @@ namespace Content.Client.Verbs.UI
                 if (verbElement.SubMenu == null)
                 {
                     var popupElement = new ConfirmationMenuElement(verb, "Confirm");
-                    verbElement.SubMenu = new ContextMenuPopup(this, verbElement);
-                    AddElement(verbElement.SubMenu, popupElement);
+                    verbElement.SubMenu = new ContextMenuPopup(_context, verbElement);
+                    _context.AddElement(verbElement.SubMenu, popupElement);
                 }
 
-                OpenSubMenu(verbElement);
+                _context.OpenSubMenu(verbElement);
             }
             else
             {
@@ -212,11 +239,28 @@ namespace Content.Client.Verbs.UI
             }
         }
 
+        private void Close()
+        {
+            if (OpenMenu == null)
+                return;
+
+            OpenMenu.Close();
+            OpenMenu = null;
+        }
+
+        private void HandleVerbsResponse(VerbsResponseEvent msg)
+        {
+            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != msg.Entity)
+                return;
+
+            AddServerVerbs(msg.Verbs, OpenMenu);
+        }
+
         private void ExecuteVerb(Verb verb)
         {
             _verbSystem.ExecuteVerb(CurrentTarget, verb);
             if (verb.CloseMenu)
-                _verbSystem.CloseAllMenus();
+                _context.Close();
         }
     }
 }
