@@ -38,7 +38,7 @@ namespace Content.Server.Spider
 
         private void OnSpiderStartup(EntityUid uid, SpiderComponent component, ComponentStartup args)
         {
-            var netAction = new InstantAction(_proto.Index<InstantActionPrototype>("SpiderWebAction"));
+            var netAction = new InstantAction(_proto.Index<InstantActionPrototype>(component.WebActionName));
             _action.AddAction(uid, netAction, null);
         }
 

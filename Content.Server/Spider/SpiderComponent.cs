@@ -9,5 +9,8 @@ namespace Content.Server.Spider
     {
         [DataField("webPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string WebPrototype = "SpiderWeb";
+
+        [DataField("webActionName")]
+        public string WebActionName = "SpiderWebAction";
     }
 }
