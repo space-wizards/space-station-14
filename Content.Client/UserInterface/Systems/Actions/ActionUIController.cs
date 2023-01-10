@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.Construction;
@@ -205,7 +205,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        var coords = args.Coordinates.ToMap(_entities);
+        var coords = args.Coordinates;
 
         if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
         {
@@ -224,7 +224,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
             _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
@@ -256,7 +256,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
             _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));
@@ -311,11 +311,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
         if (_window != null)
         {
-            _window.OnOpen += OnWindowOpened;
-            _window.OnClose += OnWindowClosed;
-            _window.ClearButton.OnPressed += OnClearPressed;
-            _window.SearchBar.OnTextChanged += OnSearchChanged;
-            _window.FilterButton.OnItemSelected += OnFilterSelected;
+            _window.OnOpen -= OnWindowOpened;
+            _window.OnClose -= OnWindowClosed;
+            _window.ClearButton.OnPressed -= OnClearPressed;
+            _window.SearchBar.OnTextChanged -= OnSearchChanged;
+            _window.FilterButton.OnItemSelected -= OnFilterSelected;
 
             _window.Dispose();
             _window = null;

@@ -205,3 +205,47 @@
       - !type:GenericStatusEffect
         key: Muted
         component: Muted
+
+- type: reagent
+  id: NorepinephricAcid
+  name: reagent-name-norepinephric-acid
+  group: Narcotics
+  desc: reagent-desc-norepinephric-acid
+  physicalDesc: reagent-physical-desc-milky
+  flavor: salty
+  color: "#96a8b5"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:PopupMessage
+        type: Local
+        messages:
+        - generic-reagent-effect-burning-eyes
+        - generic-reagent-effect-burning-eyes-a-bit
+        - generic-reagent-effect-tearing-up
+        - norepinephricacid-effect-eyelids
+        - norepinephricacid-effect-eyes-itch
+        - norepinephricacid-effect-vision-fade
+        - norepinephricacid-effect-vision-fail
+        probability: 0.08
+      - !type:PopupMessage
+        visualType: MediumCaution
+        type: Local
+        messages:
+        - norepinephricacid-effect-eye-disconnect
+        - norepinephricacid-effect-eye-pain
+        - norepinephricacid-effect-darkness
+        - norepinephricacid-effect-blindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20
+        probability: 0.03
+        #If anyone wants to add a light dimming or grayscale effect when under 20u, be my guest
+      - !type:GenericStatusEffect
+        key: TemporaryBlindness
+        component: TemporaryBlindness
+        conditions:
+        - !type:ReagentThreshold
+          min: 20

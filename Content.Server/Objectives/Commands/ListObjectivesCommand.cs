@@ -7,7 +7,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Objectives.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Logs)]
     public sealed class ListObjectivesCommand : IConsoleCommand
     {
         public string Command => "lsobjectives";
@@ -42,7 +42,7 @@ namespace Content.Server.Objectives.Commands
             }
             for (var i = 0; i < objectives.Count; i++)
             {
-                shell.WriteLine($"- [{i}] {objectives[i]}");
+                shell.WriteLine($"- [{i + 1}] {objectives[i].Conditions[0].Title}");
             }
 
         }

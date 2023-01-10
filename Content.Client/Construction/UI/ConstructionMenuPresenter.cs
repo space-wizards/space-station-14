@@ -1,6 +1,8 @@
 using System.Linq;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Shared.Construction.Prototypes;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -67,7 +69,6 @@ namespace Content.Client.Construction.UI
         /// <summary>
         /// Constructs a new instance of <see cref="ConstructionMenuPresenter" />.
         /// </summary>
-        /// <param name="gameHud">GUI that is being presented to.</param>
         public ConstructionMenuPresenter()
         {
             // This is a lot easier than a factory
@@ -153,7 +154,7 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
-                if (!string.IsNullOrEmpty(category) && category != Loc.GetString("construction-category-all"))
+                if (!string.IsNullOrEmpty(category) && category != "construction-category-all")
                 {
                     if (recipe.Category != category)
                         continue;
@@ -177,7 +178,7 @@ namespace Content.Client.Construction.UI
             var uniqueCategories = new HashSet<string>();
 
             // hard-coded to show all recipes
-            uniqueCategories.Add(Loc.GetString("construction-category-all"));
+            uniqueCategories.Add("construction-category-all");
 
             foreach (var prototype in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -189,13 +190,13 @@ namespace Content.Client.Construction.UI
 
             _constructionView.Category.Clear();
 
-            var array = uniqueCategories.ToArray();
+            var array = uniqueCategories.OrderBy(Loc.GetString).ToArray();
             Array.Sort(array);
 
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.Category.AddItem(category, i);
+                _constructionView.Category.AddItem(Loc.GetString(category), i);
             }
 
             _constructionView.Categories = array;
@@ -203,8 +204,9 @@ namespace Content.Client.Construction.UI
 
         private void PopulateInfo(ConstructionPrototype prototype)
         {
+            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
             _constructionView.ClearRecipeInfo();
-            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, prototype.Icon.Frame0(), prototype.Type != ConstructionType.Item);
+            _constructionView.SetRecipeInfo(prototype.Name, prototype.Description, spriteSys.Frame0(prototype.Icon), prototype.Type != ConstructionType.Item);
 
             var stepList = _constructionView.RecipeStepList;
             GenerateStepList(prototype, stepList);
@@ -215,19 +217,24 @@ namespace Content.Client.Construction.UI
             if (_constructionSystem?.GetGuide(prototype) is not { } guide)
                 return;
 
+            var spriteSys = _systemManager.GetEntitySystem<SpriteSystem>();
+
             foreach (var entry in guide.Entries)
             {
                 var text = entry.Arguments != null
                     ? Loc.GetString(entry.Localization, entry.Arguments) : Loc.GetString(entry.Localization);
 
                 if (entry.EntryNumber is {} number)
+                {
                     text = Loc.GetString("construction-presenter-step-wrapper",
                         ("step-number", number), ("text", text));
+                }
 
                 // The padding needs to be applied regardless of text length... (See PadLeft documentation)
                 text = text.PadLeft(text.Length + entry.Padding);
 
-                stepList.AddItem(text, entry.Icon?.Frame0(), false);
+                var icon = entry.Icon != null ? spriteSys.Frame0(entry.Icon) : Texture.Transparent;
+                stepList.AddItem(text, icon, false);
             }
         }
 
@@ -281,7 +288,7 @@ namespace Content.Client.Construction.UI
         {
             if (_selected == null || _selected.Type != ConstructionType.Structure) return;
 
-            var constructSystem = EntitySystem.Get<ConstructionSystem>();
+            var constructSystem = _systemManager.GetEntitySystem<ConstructionSystem>();
 
             _placementManager.BeginPlacing(new PlacementInformation()
             {

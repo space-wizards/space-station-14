@@ -3,6 +3,7 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -32,10 +33,6 @@ namespace Content.Server.Atmos.EntitySystems
                 OnAirtightRotated(uid, airtight, ref moveEvent);
             }
 
-            // Adding this component will immediately anchor the entity, because the atmos system
-            // requires airtight entities to be anchored for performance.
-            xform.Anchored = true;
-
             UpdatePosition(airtight);
         }
 
@@ -46,7 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
             // If the grid is deleting no point updating atmos.
             if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                if (MetaData(grid.GridEntityId).EntityLifeStage > EntityLifeStage.MapInitialized) return;
+                if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
 
             SetAirblocked(airtight, false, xform);
@@ -56,13 +53,13 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var xform = Transform(uid);
 
-            if (!TryComp(xform.GridUid, out IMapGridComponent? grid))
+            if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;
 
             var gridId = xform.GridUid;
             var coords = xform.Coordinates;
 
-            var tilePos = grid.Grid.TileIndicesFor(coords);
+            var tilePos = grid.TileIndicesFor(coords);
 
             // Update and invalidate new position.
             airtight.LastPosition = (gridId.Value, tilePos);
@@ -91,6 +88,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void SetAirblocked(AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
         {
+            if (airtight.AirBlocked == airblocked)
+                return;
+
             if (!Resolve(airtight.Owner, ref xform)) return;
 
             airtight.AirBlocked = airblocked;
@@ -114,16 +114,12 @@ namespace Content.Server.Atmos.EntitySystems
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 return;
 
-            var gridUid = grid.GridEntityId;
+            var gridUid = grid.Owner;
 
             var query = EntityManager.GetEntityQuery<AirtightComponent>();
-            _explosionSystem.UpdateAirtightMap(gridId, pos, query);
+            _explosionSystem.UpdateAirtightMap(gridId, pos, grid, query);
             // TODO make atmos system use query
-            _atmosphereSystem.UpdateAdjacent(gridUid, pos);
             _atmosphereSystem.InvalidateTile(gridUid, pos);
-
-            if(fixVacuum)
-                _atmosphereSystem.FixTileVacuum(gridUid, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)

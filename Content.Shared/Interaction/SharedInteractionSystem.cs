@@ -40,7 +40,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public abstract class SharedInteractionSystem : EntitySystem
+    public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -81,6 +81,8 @@ namespace Content.Shared.Interaction
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
+
+            InitializeRelay();
         }
 
         public override void Shutdown()
@@ -224,10 +226,15 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
+            if (TryComp<InteractionRelayComponent>(user, out var relay) && relay.RelayEntity is not null)
+            {
+                UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+            }
+
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -255,21 +262,24 @@ namespace Content.Shared.Interaction
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
+            var inRangeUnobstructed = target == null
+                ? !checkAccess || InRangeUnobstructed(user, coordinates)
+                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+
             // Does the user have hands?
             if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
             {
+                var ev = new InteractNoHandEvent(user, target, coordinates);
+                RaiseLocalEvent(user, ev);
+
                 if (target != null)
                 {
-                    var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev);
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user, coordinates);
+                    RaiseLocalEvent(target.Value, interactedEv);
                     DoContactInteraction(user, target.Value, ev);
                 }
                 return;
             }
-
-            var inRangeUnobstructed = target == null
-                ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
@@ -554,7 +564,8 @@ namespace Content.Shared.Interaction
             else
             {
                 originPos = Transform(origin).MapPosition;
-                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
+                var otherParent = Transform(other).ParentUid;
+                targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
 
             // Do a raycast to check if relevant
@@ -567,7 +578,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -712,7 +723,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -1011,6 +1022,10 @@ namespace Content.Shared.Interaction
         public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
         {
             if (uidB == null || args?.Handled == false)
+                return;
+
+            // Entities may no longer exist (banana was eaten, or human was exploded)?
+            if (!Exists(uidA) || !Exists(uidB))
                 return;
 
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));

@@ -12,6 +12,7 @@ using Content.Shared.Singularity.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 // using static Content.Shared.Wires.SharedWiresComponent;
 using Timer = Robust.Shared.Timing.Timer;
@@ -138,11 +139,11 @@ namespace Content.Server.ParticleAccelerator.Components
                 case ParticleAcceleratorSetEnableMessage enableMessage:
                     if (enableMessage.Enabled)
                     {
-                        SwitchOn();
+                        SwitchOn(obj.Session);
                     }
                     else
                     {
-                        SwitchOff();
+                        SwitchOff(obj.Session);
                     }
 
                     break;
@@ -152,7 +153,7 @@ namespace Content.Server.ParticleAccelerator.Components
                     break;
 
                 case ParticleAcceleratorRescanPartsMessage _:
-                    RescanParts();
+                    RescanParts(obj.Session);
                     break;
             }
 
@@ -323,9 +324,9 @@ namespace Content.Server.ParticleAccelerator.Components
         }
         */
 
-        public void RescanParts()
+        public void RescanParts(IPlayerSession? playerSession = null)
         {
-            SwitchOff();
+            SwitchOff(playerSession, true);
             foreach (var part in AllParts())
             {
                 part.Master = null;
@@ -342,9 +343,9 @@ namespace Content.Server.ParticleAccelerator.Components
             var xform = _entMan.GetComponent<TransformComponent>(Owner);
 
             // Find fuel chamber first by scanning cardinals.
-            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out IMapGridComponent? grid))
+            if (xform.Anchored && _entMan.TryGetComponent(xform.GridUid, out MapGridComponent? grid))
             {
-                foreach (var maybeFuel in grid.Grid.GetCardinalNeighborCells(xform.Coordinates))
+                foreach (var maybeFuel in grid.GetCardinalNeighborCells(xform.Coordinates))
                 {
                     if (_entMan.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
@@ -452,7 +453,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 yield return _partEmitterRight;
         }
 
-        public void SwitchOn()
+        public void SwitchOn(IPlayerSession? playerSession = null)
         {
             DebugTools.Assert(_isAssembled);
 
@@ -460,6 +461,11 @@ namespace Content.Server.ParticleAccelerator.Components
             {
                 return;
             }
+
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to on");
 
             _isEnabled = true;
             UpdatePowerDraw();
@@ -478,8 +484,13 @@ namespace Content.Server.ParticleAccelerator.Components
             _partPowerBox!.PowerConsumerComponent!.DrawRate = PowerDrawFor(_selectedStrength);
         }
 
-        public void SwitchOff()
+        public void SwitchOff(IPlayerSession? playerSession = null, bool rescan = false)
         {
+            // Logging
+            _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Low, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set {_entMan.ToPrettyString(Owner)} to off{(rescan ? " via rescan" : "")}");
+
             _isEnabled = false;
             PowerOff();
             UpdateUI();
@@ -532,9 +543,24 @@ namespace Content.Server.ParticleAccelerator.Components
 
             // Logging
             _entMan.TryGetComponent(playerSession?.AttachedEntity, out MindComponent? mindComponent);
-            var humanReadableState = _isEnabled ? "Turned On" : "Turned Off";
-            if(mindComponent != null && state == MaxPower)
-                _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of the Particle Accelerator to a dangerous level while the PA was {humanReadableState}");
+            LogImpact impact;
+            switch (state)
+            {
+                default:
+                case ParticleAcceleratorPowerState.Standby:
+                case ParticleAcceleratorPowerState.Level0:
+                    impact = LogImpact.Low;
+                    break;
+                case ParticleAcceleratorPowerState.Level1:
+                    impact = LogImpact.High;
+                    break;
+                case ParticleAcceleratorPowerState.Level2:
+                case ParticleAcceleratorPowerState.Level3:
+                    impact = LogImpact.Extreme;
+                    break;
+            }
+            if(mindComponent != null)
+                _adminLogger.Add(LogType.Action, impact, $"{_entMan.ToPrettyString(mindComponent.Owner):player} has set the strength of {_entMan.ToPrettyString(Owner)} to {state}");
 
             if (_isEnabled)
             {

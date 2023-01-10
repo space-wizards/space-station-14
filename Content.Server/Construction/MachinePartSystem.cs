@@ -24,7 +24,7 @@ namespace Content.Server.Construction
             {
                 args.PushMarkup(Loc.GetString("machine-board-component-required-element-entry-text",
                                                 ("amount", amount),
-                                                ("requiredElement", Loc.GetString(part.ToString()))));
+                                                ("requiredElement", Loc.GetString(part))));
             }
 
             foreach (var (material, amount) in component.MaterialRequirements)

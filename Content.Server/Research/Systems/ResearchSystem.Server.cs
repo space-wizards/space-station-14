@@ -1,116 +1,172 @@
+using System.Linq;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Station.Systems;
-using Content.Server.Research.Components;
-using Content.Shared.Research.Prototypes;
+using Content.Shared.Research.Components;
 
-namespace Content.Server.Research;
+namespace Content.Server.Research.Systems;
 
 public sealed partial class ResearchSystem
 {
-    [Dependency] private readonly StationSystem _stationSystem = default!;
     private void InitializeServer()
     {
         SubscribeLocalEvent<ResearchServerComponent, ComponentStartup>(OnServerStartup);
         SubscribeLocalEvent<ResearchServerComponent, ComponentShutdown>(OnServerShutdown);
-    }
-
-    private void OnServerShutdown(EntityUid uid, ResearchServerComponent component, ComponentShutdown args)
-    {
-        UnregisterServer(component);
+        SubscribeLocalEvent<ResearchServerComponent, TechnologyDatabaseModifiedEvent>(OnServerDatabaseModified);
     }
 
     private void OnServerStartup(EntityUid uid, ResearchServerComponent component, ComponentStartup args)
     {
-        RegisterServer(component);
+        var unusedId = EntityQuery<ResearchServerComponent>(true)
+            .Max(s => s.Id) + 1;
+        component.Id = unusedId;
+        Dirty(component);
     }
 
-    private bool CanRun(ResearchServerComponent component)
+    private void OnServerShutdown(EntityUid uid, ResearchServerComponent component, ComponentShutdown args)
     {
-        return this.IsPowered(component.Owner, EntityManager);
+        foreach (var client in new List<EntityUid>(component.Clients))
+        {
+            UnregisterClient(client, uid, serverComponent: component, dirtyServer: false);
+        }
     }
 
-    private void UpdateServer(ResearchServerComponent component, int time)
+    private void OnServerDatabaseModified(EntityUid uid, ResearchServerComponent component, ref TechnologyDatabaseModifiedEvent args)
     {
-        if (!CanRun(component)) return;
-        component.Points += PointsPerSecond(component) * time;
+        foreach (var client in component.Clients)
+        {
+            RaiseLocalEvent(client, ref args);
+        }
     }
 
-    public bool RegisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    private bool CanRun(EntityUid uid)
     {
-        // Has to be on the same station
-        if (_stationSystem.GetOwningStation(component.Owner) != _stationSystem.GetOwningStation(clientComponent.Owner))
+        return this.IsPowered(uid, EntityManager);
+    }
+
+    private void UpdateServer(EntityUid uid, int time, ResearchServerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!CanRun(uid))
+            return;
+        AddPointsToServer(uid, PointsPerSecond(uid, component) * time, component);
+    }
+
+    /// <summary>
+    /// Registers a client to the specified server.
+    /// </summary>
+    /// <param name="client">The client being registered</param>
+    /// <param name="server">The server the client is being registered to</param>
+    /// <param name="clientComponent"></param>
+    /// <param name="serverComponent"></param>
+    /// <param name="dirtyServer">Whether or not to dirty the server component after registration</param>
+    /// <returns>Whether or not the client was successfully registered to the server</returns>
+    public bool RegisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
+        ResearchServerComponent? serverComponent = null,  bool dirtyServer = true)
+    {
+        if (!Resolve(client, ref clientComponent) || !Resolve(server, ref serverComponent))
             return false;
 
-        // TODO: This is shit but I'm just trying to fix RND for now until it gets bulldozed
-        if (TryComp<ResearchPointSourceComponent>(clientComponent.Owner, out var source))
-        {
-            if (component.PointSources.Contains(source)) return false;
-            component.PointSources.Add(source);
-            source.Server = component;
-        }
+        if (serverComponent.Clients.Contains(client))
+            return false;
 
-        if (component.Clients.Contains(clientComponent)) return false;
-        component.Clients.Add(clientComponent);
-        clientComponent.Server = component;
+        serverComponent.Clients.Add(client);
+        clientComponent.Server = server;
+
+        if (dirtyServer)
+            Dirty(serverComponent);
+
+        var ev = new ResearchRegistrationChangedEvent(server);
+        RaiseLocalEvent(client, ref ev);
         return true;
     }
 
-    public void UnregisterServerClient(ResearchServerComponent component, ResearchClientComponent clientComponent)
+    /// <summary>
+    /// Unregisterse a client from its server
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="clientComponent"></param>
+    /// <param name="dirtyServer"></param>
+    public void UnregisterClient(EntityUid client, ResearchClientComponent? clientComponent = null, bool dirtyServer = true)
     {
-        if (TryComp<ResearchPointSourceComponent>(clientComponent.Owner, out var source))
-        {
-            component.PointSources.Remove(source);
-        }
+        if (!Resolve(client, ref clientComponent))
+            return;
 
-        component.Clients.Remove(clientComponent);
+        if (clientComponent.Server is not { } server)
+            return;
+
+        UnregisterClient(client, server, clientComponent, dirtyServer: dirtyServer);
+    }
+
+    /// <summary>
+    /// Unregisters a client from its server
+    /// </summary>
+    /// <param name="client"></param>
+    /// <param name="server"></param>
+    /// <param name="clientComponent"></param>
+    /// <param name="serverComponent"></param>
+    /// <param name="dirtyServer"></param>
+    public void UnregisterClient(EntityUid client, EntityUid server, ResearchClientComponent? clientComponent = null,
+        ResearchServerComponent? serverComponent = null, bool dirtyServer = true)
+    {
+        if (!Resolve(client, ref clientComponent) || !Resolve(server, ref serverComponent))
+            return;
+
+        serverComponent.Clients.Remove(client);
         clientComponent.Server = null;
+
+        if (dirtyServer)
+        {
+            Dirty(serverComponent);
+        }
+
+        var ev = new ResearchRegistrationChangedEvent(null);
+        RaiseLocalEvent(client, ref ev);
     }
 
-    public bool IsTechnologyUnlocked(ResearchServerComponent component, TechnologyPrototype prototype,
-        TechnologyDatabaseComponent? databaseComponent = null)
-    {
-        if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
-        return databaseComponent.IsTechnologyUnlocked(prototype);
-    }
-
-    public bool CanUnlockTechnology(ResearchServerComponent component, TechnologyPrototype technology, TechnologyDatabaseComponent? databaseComponent = null)
-    {
-        if (!Resolve(component.Owner, ref databaseComponent, false))
-            return false;
-
-        if (!databaseComponent.CanUnlockTechnology(technology) ||
-            component.Points < technology.RequiredPoints ||
-            IsTechnologyUnlocked(component, technology, databaseComponent))
-            return false;
-
-        return true;
-    }
-
-    public bool UnlockTechnology(ResearchServerComponent component, TechnologyPrototype prototype,
-        TechnologyDatabaseComponent? databaseComponent = null)
-    {
-        if (!Resolve(component.Owner, ref databaseComponent, false)) return false;
-
-        if (!CanUnlockTechnology(component, prototype, databaseComponent)) return false;
-        var result = UnlockTechnology(databaseComponent, prototype);
-        if (result)
-            component.Points -= prototype.RequiredPoints;
-        return result;
-    }
-
-    public int PointsPerSecond(ResearchServerComponent component)
+    /// <summary>
+    /// Gets the amount of points generated by all the server's sources in a second.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
+    /// <returns></returns>
+    public int PointsPerSecond(EntityUid uid, ResearchServerComponent? component = null)
     {
         var points = 0;
 
-        // Is our machine powered, and are we below our limit of passive point gain?
-        if (CanRun(component) && component.Points < (component.PassiveLimitPerSource * component.PointSources.Count))
-        {
-            foreach (var source in component.PointSources)
-            {
-                if (CanProduce(source)) points += source.PointsPerSecond;
-            }
-        }
+        if (!Resolve(uid, ref component))
+            return points;
 
-        return points;
+        if (!CanRun(uid))
+            return points;
+
+        var ev = new ResearchServerGetPointsPerSecondEvent(component.Owner, points);
+        foreach (var client in component.Clients)
+        {
+            RaiseLocalEvent(client, ref ev);
+        }
+        return ev.Points;
+    }
+
+    /// <summary>
+    /// Adds a specified number of points to a server.
+    /// </summary>
+    /// <param name="uid">The server</param>
+    /// <param name="points">The amount of points being added</param>
+    /// <param name="component"></param>
+    public void AddPointsToServer(EntityUid uid, int points, ResearchServerComponent? component = null)
+    {
+        if (points == 0)
+            return;
+
+        if (!Resolve(uid, ref component))
+            return;
+        component.Points += points;
+        var ev = new ResearchServerPointsChangedEvent(uid, component.Points, points);
+        foreach (var client in component.Clients)
+        {
+            RaiseLocalEvent(client, ref ev);
+        }
+        Dirty(component);
     }
 }

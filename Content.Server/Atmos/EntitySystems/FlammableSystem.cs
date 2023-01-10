@@ -3,7 +3,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Temperature.Components;
 using Content.Server.Temperature.Systems;
-using Content.Server.Weapons.Melee.Events;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -14,6 +13,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
@@ -23,7 +23,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
-    internal sealed class FlammableSystem : EntitySystem
+    public sealed class FlammableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
@@ -35,11 +35,11 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private const float MinimumFireStacks = -10f;
-        private const float MaximumFireStacks = 20f;
+        public const float MinimumFireStacks = -10f;
+        public const float MaximumFireStacks = 20f;
         private const float UpdateTime = 1f;
 
-        private const float MinIgnitionTemperature = 373.15f;
+        public const float MinIgnitionTemperature = 373.15f;
         public const string FlammableFixtureID = "flammable";
 
         private float _timer = 0f;
@@ -274,7 +274,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, TransformComponent>())
+            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, PhysicsComponent, TransformComponent>())
             {
                 var uid = flammable.Owner;
 
@@ -335,7 +335,7 @@ namespace Content.Server.Atmos.EntitySystems
                         continue;
                     }
 
-                    var otherPhysics = EntityManager.GetComponent<IPhysBody>(uid);
+                    var otherPhysics = EntityManager.GetComponent<PhysicsComponent>(uid);
 
                     // TODO: Sloth, please save our souls!
                     if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))

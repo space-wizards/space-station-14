@@ -127,8 +127,6 @@
       mask:
       - WallLayer
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
   - type: Transform
     anchored: true
   - type: Airtight

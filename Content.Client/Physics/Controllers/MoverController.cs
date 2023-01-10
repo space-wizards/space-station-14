@@ -59,6 +59,7 @@ namespace Content.Client.Physics.Controllers
                     if (TryComp<InputMoverComponent>(player, out var mover) &&
                         TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayed))
                     {
+                        relayed.CanMove = mover.CanMove;
                         relayed.RelativeEntity = mover.RelativeEntity;
                         relayed.RelativeRotation = mover.RelativeRotation;
                         relayed.TargetRelativeRotation = mover.RelativeRotation;
@@ -139,7 +140,7 @@ namespace Content.Client.Physics.Controllers
 
         protected override bool CanSound()
         {
-            return _timing.IsFirstTimePredicted && _timing.InSimulation;
+            return _timing is { IsFirstTimePredicted: true, InSimulation: true };
         }
     }
 }

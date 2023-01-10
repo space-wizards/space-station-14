@@ -42,6 +42,8 @@
       200: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -50,6 +52,23 @@
         Piercing: 8
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true
@@ -132,6 +151,8 @@
       350: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -197,8 +218,12 @@
       0: Alive
       40: Critical
       60: Dead
+  - type: Stamina
+    excess: 60
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -207,6 +232,23 @@
         Piercing: 3
   - type: Body
     prototype: Rat
+    requiredLegs: 1 # TODO: More than 1 leg
+  - type: Hunger # probably should be prototyped
+    thresholds:
+      Overfed: 200
+      Okay: 150
+      Peckish: 100
+      Starving: 50
+      Dead: 0
+    baseDecayRate: 0.01666666666
+  - type: Thirst
+    thresholds:
+      OverHydrated: 600
+      Okay: 450
+      Thirsty: 300
+      Parched: 150
+      Dead: 0
+    baseDecayRate: 0.1
   - type: Appearance
   - type: DamageStateVisuals
     rotate: true

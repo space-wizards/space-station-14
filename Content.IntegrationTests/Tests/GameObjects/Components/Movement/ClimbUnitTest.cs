@@ -2,6 +2,7 @@
 
 using System.Threading.Tasks;
 using Content.Server.Climbing.Components;
+using Content.Shared.Climbing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -43,8 +44,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
             await server.WaitAssertion(() =>
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
                 // Spawn the entities
@@ -60,7 +59,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // // Now let's make the player enter a climbing transitioning state.
                 // climbing.IsClimbing = true;
                 // EntitySystem.Get<ClimbSystem>().MoveEntityToward(human, table, climbing:climbing);
-                // var body = entityManager.GetComponent<IPhysBody>(human);
+                // var body = entityManager.GetComponent<PhysicsComponent>(human);
                 // // TODO: Check it's climbing
                 //
                 // // Force the player out of climb state. It should immediately remove the ClimbController.

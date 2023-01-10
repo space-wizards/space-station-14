@@ -1,10 +1,8 @@
-﻿using System;
-using Content.Client.Atmos.EntitySystems;
+﻿using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Atmos.UI
 {
@@ -58,9 +56,16 @@ namespace Content.Client.Atmos.UI
 
         private void OnSelectGasPressed()
         {
-            if (_window is null || _window.SelectedGas is null) return;
-            if (!int.TryParse(_window.SelectedGas, out var gas)) return;
-            SendMessage(new GasFilterSelectGasMessage(gas));
+            if (_window is null) return;
+            if (_window.SelectedGas is null)
+            {
+                SendMessage(new GasFilterSelectGasMessage(null));
+            }
+            else
+            {
+                if (!int.TryParse(_window.SelectedGas, out var gas)) return;
+                SendMessage(new GasFilterSelectGasMessage(gas));
+            }
         }
 
         /// <summary>
@@ -80,11 +85,12 @@ namespace Content.Client.Atmos.UI
             {
                 var atmos = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
                 var gas = atmos.GetGas((Gas) cast.FilteredGas);
-                _window.SetGasFiltered(gas.ID, gas.Name);
+                var gasName = Loc.GetString(gas.Name);
+                _window.SetGasFiltered(gas.ID, gasName);
             }
             else
             {
-                _window.SetGasFiltered(null, "None");
+                _window.SetGasFiltered(null, Loc.GetString("comp-gas-filter-ui-filter-gas-none"));
             }
         }
 

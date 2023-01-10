@@ -3,13 +3,12 @@ using Content.Server.Chat.Managers;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Players;
 using Content.Server.Roles;
-using Content.Server.Store.Systems;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
+using Content.Server.MobState;
+using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Inventory;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -28,11 +27,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly StoreSystem _store = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
+
 
     public override string Prototype => "Traitor";
 
@@ -70,13 +68,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         MakeCodewords();
         if (!RuleAdded)
             return;
-
-        // If the current preset doesn't explicitly contain the traitor game rule, just carry on and remove self.
-        if (_gameTicker.Preset?.Rules.Contains(Prototype) ?? false)
-        {
-            _gameTicker.EndGameRule(_prototypeManager.Index<GameRulePrototype>(Prototype));
-            return;
-        }
 
         var minPlayers = _cfg.GetCVar(CCVars.TraitorMinPlayers);
         if (!ev.Forced && ev.Players.Length < minPlayers)
@@ -178,6 +169,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             return false;
         }
 
+        if (mind.OwnedEntity is not { } entity)
+        {
+            Logger.ErrorS("preset", "Mind picked for traitor did not have an attached entity.");
+            return false;
+        }
+
         // creadth: we need to create uplink for the antag.
         // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
@@ -196,6 +193,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
 
+        _faction.RemoveFaction(entity, "NanoTrasen", false);
+        _faction.AddFaction(entity, "Syndicate");
+
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
         var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
 
@@ -203,7 +203,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         var difficulty = 0f;
         for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
         {
-            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind);
+            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
             if (objective == null) continue;
             if (traitorRole.Mind.TryAddObjective(objective))
                 difficulty += objective.Difficulty;
@@ -328,5 +328,19 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             }
         }
         ev.AddLine(result);
+    }
+
+    public IEnumerable<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    {
+        var traitors = Traitors;
+        List<Traitor.TraitorRole> removeList = new();
+
+        return Traitors // don't want
+            .Where(t => t.Mind is not null) // no mind
+            .Where(t => t.Mind.OwnedEntity is not null) // no entity
+            .Where(t => t.Mind.Session is not null) // player disconnected
+            .Where(t => t.Mind != ourMind) // ourselves
+            .Where(t => _mobStateSystem.IsAlive((EntityUid) t.Mind.OwnedEntity!)) // dead
+            .Where(t => t.Mind.CurrentEntity == t.Mind.OwnedEntity); // not in original body
     }
 }

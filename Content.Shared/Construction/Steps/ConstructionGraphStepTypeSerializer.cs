@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Serialization.Manager;
+﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
@@ -41,14 +42,15 @@ namespace Content.Shared.Construction.Steps
         public ConstructionGraphStep Read(ISerializationManager serializationManager,
             MappingDataNode node,
             IDependencyCollection dependencies,
-            bool skipHook,
-            ISerializationContext? context = null, ConstructionGraphStep? _ = null)
+            SerializationHookContext hookCtx,
+            ISerializationContext? context = null,
+            ISerializationManager.InstantiationDelegate<ConstructionGraphStep>? instanceProvider = null)
         {
             var type = GetType(node) ??
                        throw new ArgumentException(
                            "Tried to convert invalid YAML node mapping to ConstructionGraphStep!");
 
-            return (ConstructionGraphStep)serializationManager.Read(type, node, context, skipHook)!;
+            return (ConstructionGraphStep)serializationManager.Read(type, node, hookCtx, context)!;
         }
 
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
@@ -57,7 +59,8 @@ namespace Content.Shared.Construction.Steps
         {
             var type = GetType(node);
 
-            if (type == null) return new ErrorNode(node, "No construction graph step type found.", true);
+            if (type == null)
+                return new ErrorNode(node, "No construction graph step type found.");
 
             return serializationManager.ValidateNode(type, node, context);
         }

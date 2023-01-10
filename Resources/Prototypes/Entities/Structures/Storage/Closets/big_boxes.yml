@@ -13,10 +13,11 @@
         - shape:
             !type:PhysShapeAabb
             bounds: "-0.4,-0.4,0.4,0.4"
+          density: 100
           mask:
             - MobMask
           layer:
-            - SlipLayer
+            - MobLayer
           hard: true
     - type: Pullable
     - type: CardboardBox
@@ -25,11 +26,13 @@
     - type: EntityStorage
       isCollidableWhenOpen: false
       openOnMove: false
-      airtight: false
+      airtight: true #true for now until it doesn't make a vacuum
       capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
     - type: ContainerContainer
       containers:
         entity_storage: !type:Container
+    - type: Damageable
+      damageContainer: Box
     - type: Sprite
       noRot: true
       netsync: false
@@ -46,6 +49,7 @@
     - type: Tag
       tags:
         - DoorBumpOpener
+    - type: InteractionOutline
 
 - type: entity
   id: StealthBox
@@ -54,6 +58,11 @@
   name: cardboard box #it's still just a box
   description: Kept ya waiting, huh?
   components:
+    - type: CardboardBox
+      effectSound: /Audio/Effects/chime.ogg
+    - type: Damageable
+      damageContainer: Box
+      damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
     - type: Sprite
       noRot: true
       netsync: false
@@ -69,14 +78,14 @@
           state_open: cardboard_open
     - type: Stealth
     - type: StealthOnMove
-      passiveVisibilityRate: -0.24
-      movementVisibilityRate: 0.10
+      passiveVisibilityRate: -0.37
+      movementVisibilityRate: 0.20
 
 #For admin spawning only
 - type: entity
   id: GhostBox
   parent: StealthBox
-  suffix:
+  suffix: ""
   name: ghost box
   description: Beware!
   components:

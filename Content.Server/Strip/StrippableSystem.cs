@@ -1,7 +1,6 @@
 using Content.Server.Cuffs.Components;
 using Content.Server.DoAfter;
 using Content.Server.Ensnaring;
-using Content.Server.Ensnaring.Components;
 using Content.Server.Hands.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.Components;
@@ -13,10 +12,10 @@ using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
+using Content.Shared.Ensnaring.Components;
 
 namespace Content.Server.Strip
 {
@@ -37,6 +36,7 @@ namespace Content.Server.Strip
             base.Initialize();
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
+            SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
@@ -132,6 +132,25 @@ namespace Content.Server.Strip
             args.Verbs.Add(verb);
         }
 
+        private void AddStripExamineVerb(EntityUid uid, StrippableComponent component, GetVerbsEvent<ExamineVerb> args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract || args.Target == args.User)
+                return;
+
+            if (!HasComp<ActorComponent>(args.User))
+                return;
+
+            ExamineVerb verb = new()
+            {
+                Text = Loc.GetString("strip-verb-get-data-text"),
+                IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png",
+                Act = () => StartOpeningStripper(args.User, component, true),
+                Category = VerbCategory.Examine,
+            };
+
+            args.Verbs.Add(verb);
+        }
+
         /// <summary>
         ///     Places item in user's active hand to an inventory slot.
         /// </summary>
@@ -196,7 +215,7 @@ namespace Content.Server.Strip
             {
                 var message = Loc.GetString("strippable-component-alert-owner-insert",
                     ("user", Identity.Entity(user, EntityManager)), ("item", userHands.ActiveHandEntity));
-                _popupSystem.PopupEntity(message, component.Owner, Filter.Entities(component.Owner), PopupType.Large);
+                _popupSystem.PopupEntity(message, component.Owner, component.Owner, PopupType.Large);
             }
 
             var result = await _doAfterSystem.WaitDoAfter(doAfterArgs);
@@ -245,7 +264,12 @@ namespace Content.Server.Strip
                 return true;
             }
 
-            var doAfterArgs = new DoAfterEventArgs(user, component.HandStripDelay, CancellationToken.None, component.Owner)
+            var userEv = new BeforeStripEvent(component.HandStripDelay);
+            RaiseLocalEvent(user, userEv);
+            var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
+            RaiseLocalEvent(component.Owner, ev);
+
+            var doAfterArgs = new DoAfterEventArgs(user, ev.Time, CancellationToken.None, component.Owner)
             {
                 ExtraCheck = Check,
                 BreakOnStun = true,
@@ -260,7 +284,7 @@ namespace Content.Server.Strip
                 if (handSlot.HeldEntity != null)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-insert", ("user", Identity.Entity(user, EntityManager)), ("item", handSlot.HeldEntity)), component.Owner,
-                        Filter.Entities(component.Owner), PopupType.Large);
+                        component.Owner, PopupType.Large);
                 }
             }
 
@@ -292,9 +316,9 @@ namespace Content.Server.Strip
                     return false;
                 }
 
-                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out _))
+                if (!_inventorySystem.CanUnequip(user, component.Owner, slot, out var reason))
                 {
-                    user.PopupMessageCursor(Loc.GetString("strippable-component-cannot-unequip-message", ("owner", component.Owner)));
+                    user.PopupMessageCursor(reason);
                     return false;
                 }
 
@@ -326,12 +350,12 @@ namespace Content.Server.Strip
                 if (slotDef.StripHidden)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner-hidden", ("slot", slot)), component.Owner,
-                        Filter.Entities(component.Owner), PopupType.Large);
+                        component.Owner, PopupType.Large);
                 }
                 else if (_inventorySystem.TryGetSlotEntity(component.Owner, slot, out var slotItem))
                 {
                     _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", slotItem)), component.Owner,
-                        Filter.Entities(component.Owner), PopupType.Large);
+                        component.Owner, PopupType.Large);
                 }
             }
 
@@ -376,7 +400,6 @@ namespace Content.Server.Strip
                 return true;
             }
 
-
             var userEv = new BeforeStripEvent(component.HandStripDelay);
             RaiseLocalEvent(user, userEv);
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
@@ -395,7 +418,7 @@ namespace Content.Server.Strip
             {
                 if (handSlot.HeldEntity != null)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", handSlot.HeldEntity)), component.Owner, Filter.Entities(component.Owner));
+                    _popupSystem.PopupEntity(Loc.GetString("strippable-component-alert-owner", ("user", Identity.Entity(user, EntityManager)), ("item", handSlot.HeldEntity)), component.Owner, component.Owner);
                 }
             }
 

@@ -2,6 +2,7 @@
 - type: job
   id: ERTLeader
   name: job-name-ertleader
+  description: job-description-ertleader
   playTimeTracker: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
@@ -25,7 +26,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTLeaderGearEVA
@@ -42,12 +42,12 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
-    pocket2:
 
 # Engineer
 - type: job
   id: ERTEngineer
   name: job-name-ertengineer
+  description: job-description-ertengineer
   playTimeTracker: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
@@ -71,7 +71,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTEngineerGearEVA
@@ -93,6 +92,7 @@
 - type: job
   id: ERTSecurity
   name: job-name-ertsecurity
+  description: job-description-ertsecurity
   playTimeTracker: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
@@ -116,7 +116,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTSecurityGearEVA
@@ -138,6 +137,7 @@
 - type: job
   id: ERTMedical
   name: job-name-ertmedic
+  description: job-description-ertmedic
   playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
@@ -184,6 +184,7 @@
 - type: job
   id: ERTJanitor
   name: job-name-ertjanitor
+  description: job-description-ertjanitor
   playTimeTracker: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
@@ -206,7 +207,6 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTJanitorGearEVA

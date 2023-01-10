@@ -13,3 +13,6 @@
   - type: UseDelay
   - type: StaticPrice
     price: 40
+  - type: SignalTransmitter
+    outputs:
+      Pressed: []

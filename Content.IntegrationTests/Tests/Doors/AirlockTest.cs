@@ -7,6 +7,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -60,8 +61,6 @@ namespace Content.IntegrationTests.Tests.Doors
 
             await server.WaitAssertion(() =>
             {
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
-
                 airlock = entityManager.SpawnEntity("AirlockDummy", MapCoordinates.Nullspace);
 
                 Assert.True(entityManager.TryGetComponent(airlock, out doorComponent));
@@ -116,7 +115,7 @@ namespace Content.IntegrationTests.Tests.Doors
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            IPhysBody physBody = null;
+            PhysicsComponent physBody = null;
             EntityUid physicsDummy = default;
             EntityUid airlock = default;
             DoorComponent doorComponent = null;
@@ -147,7 +146,7 @@ namespace Content.IntegrationTests.Tests.Doors
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                await server.WaitPost(() => entityManager.GetComponent<IPhysBody>(airlock).WakeBody());
+                await server.WaitPost(() => entityManager.GetComponent<PhysicsComponent>(airlock).WakeBody());
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();

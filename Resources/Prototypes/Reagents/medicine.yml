@@ -506,7 +506,11 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:ChemCureDisease
+      - !type:ChemCureDisease
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin
@@ -697,6 +701,7 @@
   desc: reagent-desc-cognizine
   group: Medicine
   physicalDesc: reagent-physical-desc-enigmatic
+  flavor: magical
   color: "#b50ee8"
   metabolisms:
     Medicine:

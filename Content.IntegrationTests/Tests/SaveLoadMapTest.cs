@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
@@ -20,9 +21,9 @@ namespace Content.IntegrationTests.Tests
 
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
+            var mapLoader = sEntities.System<MapLoaderSystem>();
             var resManager = server.ResolveDependency<IResourceManager>();
 
             await server.WaitPost(() =>
@@ -34,13 +35,13 @@ namespace Content.IntegrationTests.Tests
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(10, 10);
                     mapGrid.SetTile(new Vector2i(0,0), new Tile(1, (TileRenderFlag)1, 255));
                 }
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
-                    var mapGridEnt = mapGrid.GridEntityId;
+                    var mapGridEnt = mapGrid.Owner;
                     sEntities.GetComponent<TransformComponent>(mapGridEnt).WorldPosition = new Vector2(-8, -8);
                     mapGrid.SetTile(new Vector2i(0, 0), new Tile(2, (TileRenderFlag)1, 254));
                 }
@@ -53,24 +54,32 @@ namespace Content.IntegrationTests.Tests
             await server.WaitPost(() =>
             {
                 Assert.Multiple(() => mapLoader.LoadMap(new MapId(10), mapPath));
-                
+
             });
             await server.WaitIdleAsync();
             await server.WaitAssertion(() =>
             {
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(10, 10), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(10, 10)));
 
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(1, (TileRenderFlag)1, 255)));
                 }
                 {
-                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid))
+                    if (!mapManager.TryFindGridAt(new MapId(10), new Vector2(-8, -8), out var mapGrid) ||
+                        !sEntities.TryGetComponent<TransformComponent>(mapGrid.Owner, out var gridXform))
+                    {
                         Assert.Fail();
+                        return;
+                    }
 
-                    Assert.That(mapGrid.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
+                    Assert.That(gridXform.WorldPosition, Is.EqualTo(new Vector2(-8, -8)));
                     Assert.That(mapGrid.GetTileRef(new Vector2i(0, 0)).Tile, Is.EqualTo(new Tile(2, (TileRenderFlag)1, 254)));
                 }
             });

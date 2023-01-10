@@ -267,7 +267,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
     /// <param name="humanoid">Humanoid component of the entity</param>
     public void ToggleHiddenLayer(EntityUid uid, HumanoidVisualLayers layer, HumanoidComponent? humanoid = null)
     {
-        if (!Resolve(uid, ref humanoid))
+        if (!Resolve(uid, ref humanoid, false))
         {
             return;
         }
@@ -509,10 +509,14 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         if (age < speciesPrototype.YoungAge)
+        {
             return Loc.GetString("identity-age-young");
+        }
 
         if (age < speciesPrototype.OldAge)
-            Loc.GetString("identity-age-middle-aged");
+        {
+            return Loc.GetString("identity-age-middle-aged");
+        }
 
         return Loc.GetString("identity-age-old");
     }

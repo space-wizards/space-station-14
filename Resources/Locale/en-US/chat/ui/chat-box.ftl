@@ -1,4 +1,4 @@
-hud-chatbox-info = T to talk, Tab to cycle channels.
+hud-chatbox-info = {$talk-key} to talk, {$cycle-key} to cycle channels.
 
 hud-chatbox-select-name-prefixed = {$prefix} {$name}
 hud-chatbox-select-channel-Admin = Admin
@@ -13,7 +13,8 @@ hud-chatbox-select-channel-Damage = Damage
 hud-chatbox-select-channel-Visual = Actions
 hud-chatbox-select-channel-Radio = Radio
 
-hud-chatbox-channel-Admin = Admin
+hud-chatbox-channel-Admin = Admin Misc
+hud-chatbox-channel-AdminChat = Admin Chat
 hud-chatbox-channel-Dead = Dead
 hud-chatbox-channel-Emotes = Emotes
 hud-chatbox-channel-Local = Local

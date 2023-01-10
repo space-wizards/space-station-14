@@ -1,18 +1,19 @@
 - type: latheRecipe
   id: Handcuffs
-  icon:
-    sprite: Objects/Misc/handcuffs.rsi
-    state: handcuff
   result: Handcuffs
   completetime: 2
   materials:
     Steel: 300
 
 - type: latheRecipe
+  id: Zipties
+  result: Zipties
+  completetime: 2
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
   id: Stunbaton
-  icon:
-    sprite: Objects/Weapons/Melee/stunbaton.rsi
-    state: stunbaton_off
   result: Stunbaton
   completetime: 2
   materials:
@@ -20,10 +21,22 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: ForensicPad
+  result: ForensicPad
+  completetime: 4
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: ClothingEyesGlassesSecurity
+  result: ClothingEyesGlassesSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+
+- type: latheRecipe
   id: RiotShield
-  icon:
-    sprite: Objects/Weapons/Melee/shields.rsi
-    state: riot-icon
   result: RiotShield
   completetime: 4
   materials:
@@ -32,9 +45,6 @@
 
 - type: latheRecipe
   id: Flash
-  icon:
-    sprite: Objects/Weapons/Melee/flash.rsi
-    state: flash
   result: Flash
   completetime: 2
   materials:
@@ -44,9 +54,6 @@
 
 - type: latheRecipe
   id: ShellShotgunBeanbag
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: beanbag
   result: ShellShotgunBeanbag
   completetime: 2
   materials:
@@ -55,9 +62,6 @@
 
 - type: latheRecipe
   id: CartridgePistolRubber
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgePistolRubber
   completetime: 2
   materials:
@@ -66,9 +70,6 @@
 
 - type: latheRecipe
   id: CartridgeMagnumRubber
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeMagnumRubber
   completetime: 2
   materials:
@@ -77,9 +78,6 @@
 
 - type: latheRecipe
   id: CartridgeCaselessRifleRubber
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeCaselessRifleRubber
   completetime: 2
   materials:
@@ -88,9 +86,6 @@
 
 - type: latheRecipe
   id: CartridgeLightRifleRubber
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeLightRifleRubber
   completetime: 2
   materials:
@@ -99,9 +94,6 @@
 
 - type: latheRecipe
   id: CartridgeRifleRubber
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeRifleRubber
   completetime: 2
   materials:
@@ -110,9 +102,6 @@
 
 - type: latheRecipe
   id: CartridgePistol
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgePistol
   completetime: 2
   materials:
@@ -120,9 +109,6 @@
 
 - type: latheRecipe
   id: ShellShotgun
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: base
   result: ShellShotgun
   completetime: 2
   materials:
@@ -130,9 +116,6 @@
 
 - type: latheRecipe
   id: CartridgeMagnum
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeMagnum
   completetime: 2
   materials:
@@ -140,9 +123,6 @@
 
 - type: latheRecipe
   id: CartridgeLightRifle
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
-    state: base
   result: CartridgeLightRifle
   completetime: 2
   materials:
@@ -150,9 +130,6 @@
 
 - type: latheRecipe
   id: ShellShotgunFlare
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: flare
   result: ShellShotgunFlare
   completetime: 2
   materials:
@@ -161,12 +138,30 @@
 
 - type: latheRecipe
   id: ShellTranquilizer
-  icon:
-    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
-    state: practice
   result: ShellTranquilizer
   completetime: 4
   materials:
     Plastic: 15
     Steel: 10
     Glass: 5
+
+- type: latheRecipe
+  id: TargetHuman
+  result: TargetHuman
+  completetime: 5
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: TargetClown
+  result: TargetClown
+  completetime: 5
+  materials:
+    Steel: 10
+
+- type: latheRecipe
+  id: TargetSyndicate
+  result: TargetSyndicate
+  completetime: 5
+  materials:
+    Steel: 10

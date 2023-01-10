@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: GasTankBase
@@ -26,10 +26,15 @@
         sprite: Interface/Alerts/internals.rsi
         state: internal1
       event: !type:ToggleActionEvent
-      useDelay: 1.0
+      useDelay: 1
   - type: Explosive
     explosionType: Default
     maxIntensity: 20
+  - type: MeleeWeapon
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: GasTankBase
@@ -44,6 +49,7 @@
     air:
       volume: 70
       temperature: 293.15
+    tankLowPressure: 30.0
   - type: Clothing
     sprite: Objects/Tanks/oxygen.rsi
     slots:
@@ -99,6 +105,10 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   parent: EmergencyOxygenTank
@@ -143,6 +153,11 @@
     - Pocket
     - Belt
     - suitStorage
+  - type: MeleeWeapon
+    attackRate: 0.9
+    damage:
+      types:
+        Blunt: 7.5
 
 - type: entity
   parent: GasTankBase
