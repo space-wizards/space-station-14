@@ -14,4 +14,10 @@ public sealed class AnomalousParticleComponent : Component
     /// </summary>
     [DataField("particleType", required: true)]
     public AnomalousParticleType ParticleType;
+
+    /// <summary>
+    /// The fixture that's checked on collision.
+    /// </summary>
+    [DataField("fixtureId")]
+    public string FixtureId = "projectile";
 }

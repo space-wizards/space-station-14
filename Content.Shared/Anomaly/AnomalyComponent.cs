@@ -132,16 +132,46 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("severityParticleType")]
     public AnomalousParticleType SeverityParticleType;
+
+    /// <summary>
+    /// The amount that the <see cref="Severity"/> increases by when hit
+    /// of an anomalous particle of <seealso cref="SeverityParticleType"/>.
+    /// </summary>
+    [DataField("severityPerSeverityHit")]
+    public float SeverityPerSeverityHit = 0.05f;
+
     /// <summary>
     /// The particle type that destabilizes the anomaly.
     /// </summary>
     [DataField("destabilizingParticleType")]
     public AnomalousParticleType DestabilizingParticleType;
+
+    /// <summary>
+    /// The amount that the <see cref="Stability"/> increases by when hit
+    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
+    /// </summary>
+    [DataField("stabilityPerDestabilizingHit")]
+    public float StabilityPerDestabilizingHit = 0.06f;
+
     /// <summary>
     /// The particle type that weakens the anomalys health.
     /// </summary>
     [DataField("weakeningParticleType")]
     public AnomalousParticleType WeakeningParticleType;
+
+    /// <summary>
+    /// The amount that the <see cref="Stability"/> increases by when hit
+    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
+    /// </summary>
+    [DataField("healthPerWeakeningeHit")]
+    public float HealthPerWeakeningeHit = -0.075f;
+
+    /// <summary>
+    /// The amount that the <see cref="Stability"/> increases by when hit
+    /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
+    /// </summary>
+    [DataField("stabilityPerWeakeningeHit")]
+    public float StabilityPerWeakeningeHit = -0.04f;
 
     #region Points and Vessels
     /// <summary>

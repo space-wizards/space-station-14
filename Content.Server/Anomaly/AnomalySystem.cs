@@ -1,10 +1,12 @@
 ﻿using Content.Server.Administration.Logs;
+using Content.Server.Anomaly.Components;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Shared.Anomaly;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
+using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
@@ -30,6 +32,7 @@ public sealed partial class AnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnUnpause);
+        SubscribeLocalEvent<AnomalyComponent, StartCollideEvent>(OnStartCollide);
 
         InitializeScanner();
         InitializeVessel();
@@ -58,6 +61,30 @@ public sealed partial class AnomalySystem : EntitySystem
         component.NextPulseTime += args.PausedTime;
         component.NextSecondUpdate += args.PausedTime;
     }
+
+    private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
+    {
+        if (!TryComp<AnomalousParticleComponent>(args.OtherFixture.Body.Owner, out var particleComponent))
+            return;
+
+        if (args.OtherFixture.ID != particleComponent.FixtureId)
+            return;
+
+        if (particleComponent.ParticleType == component.DestabilizingParticleType)
+        {
+            ChangeAnomalyStability(uid, component.StabilityPerDestabilizingHit, component);
+        }
+        else if (particleComponent.ParticleType == component.SeverityParticleType)
+        {
+            ChangeAnomalySeverity(uid, component.SeverityPerSeverityHit, component);
+        }
+        else if (particleComponent.ParticleType == component.WeakeningParticleType)
+        {
+            ChangeAnomalyHealth(uid, component.HealthPerWeakeningeHit, component);
+            ChangeAnomalyStability(uid, component.StabilityPerWeakeningeHit, component);
+        }
+    }
+
 
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)
     {

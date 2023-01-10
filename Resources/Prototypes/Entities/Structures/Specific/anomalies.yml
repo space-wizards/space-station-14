@@ -8,8 +8,17 @@
   - type: Transform
     anchored: true
   - type: Physics
-    bodyType: Static
-  - type: Fixtures #TODO: this probably needs fixtures of some kind
+    bodyType: Static  
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 50
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
   - type: Sprite
     netsync: false
     sprite: Structures/Specific/anomaly.rsi

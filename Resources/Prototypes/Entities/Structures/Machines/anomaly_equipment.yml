@@ -107,7 +107,15 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
+    boltType: AnomalousParticleDelta
     underpoweredState: underpowered
+    selectableTypes:
+    - AnomalousParticleDelta
+    - AnomalousParticleEpsilon
+    - AnomalousParticleZeta
+    fireBurstSize: 1
+    baseFireBurstDelayMin: 2
+    baseFireBurstDelayMax: 6
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: Gun
