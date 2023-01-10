@@ -129,7 +129,7 @@
 - type: entity
   parent: PhoneInstrument
   id: BananaPhoneInstrument
-  name: Banana Phone
+  name: banana phone
   description: A direct line to the Honkmother. Seems to always go to voicemail.
   components:
   - type: Sprite
