@@ -1,6 +1,6 @@
-ent-ClothingBackpackSatchelHoS = head of security's satchel
-    .desc = Stylish, leather black satchel
+ent-ClothingBackpackSatchelHoS = сумка главы службы безопасности
+    .desc = Стильная кожаная чёрная сумка.
     .suffix = { "" }
 ent-ClothingBackpackSatchelSecurity = сумка главы службы безопасности
-    .desc = Стильный кожаный черная сумка
+    .desc = Стильная кожаная чёрная сумка.
     .suffix = { "" }
