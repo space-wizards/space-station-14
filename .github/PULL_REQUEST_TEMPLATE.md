@@ -9,7 +9,7 @@
 <!-- 
 PRs which make ingame changes (adding clothing, items, new features, etc) are required to have media attached that showcase the changes.
 Small fixes/refactors are exempt.
-If you include media in your pull request, we may potentially use it in the SS14 progress reports, with clear credit given.
+Any media may be used in SS14 progress reports, with clear credit given.
 
 If you're unsure whether your PR will require media, ask a maintainer.
 
