@@ -22,7 +22,7 @@ public sealed class ConsciousnessComponentState : ComponentState
     public FixedPoint2 Offset;
     public FixedPoint2 Cap;
 
-    public ConsciousnessComponentState(bool unconscious,
+    public ConsciousnessComponentState(
         FixedPoint2 passOutThreshold,
         FixedPoint2 baseValue,
         FixedPoint2 modifier,

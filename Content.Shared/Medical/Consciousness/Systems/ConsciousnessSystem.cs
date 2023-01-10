@@ -15,20 +15,31 @@ public sealed class ConsciousnessSystem : EntitySystem
 
     private void OnComponentGetState(EntityUid uid, ConsciousnessComponent component, ref ComponentGetState args)
     {
-
+        args.State = new ConsciousnessComponentState(
+            component.PassOutThreshold,
+            component.Base,
+            component.Modifier,
+            component.Offset,
+            component.Cap
+        );
     }
 
     private void OnComponentHandleState(EntityUid uid, ConsciousnessComponent component, ref ComponentHandleState args)
     {
+        if (args.Current is not ConsciousnessComponentState state)
+            return;
 
+        component.PassOutThreshold = state.PassOutThreshold;
+        component.Base = state.Base;
+        component.Modifier = state.Modifier;
+        component.Offset = state.Offset;
+        component.Cap = state.Cap;
     }
 
     private void OnComponentStartup(EntityUid uid, ConsciousnessComponent component, ComponentStartup args)
     {
         CheckConsciousness(uid, component);
     }
-
-
 
     public FixedPoint2 GetConsciousness(EntityUid entity,
         ConsciousnessComponent? consciousness = null)
@@ -44,6 +55,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         consciousnessValue = GetConsciousness(entity, consciousness);
         if (!Resolve(entity, ref consciousness))
             return true;
+
         return consciousnessValue > consciousness.PassOutThreshold;
     }
 
@@ -52,6 +64,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (!Resolve(entity, ref consciousness))
             return;
+
         var ev = new UpdateBaseConsciousnessEvent(baseValue);
         RaiseLocalEvent(entity, ref ev);
         consciousness.Base = ev.Base;
@@ -63,6 +76,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (!Resolve(entity, ref consciousness))
             return;
+
         var ev = new UpdateConsciousnessModifierEvent(modifier);
         RaiseLocalEvent(entity, ref ev);
         consciousness.Modifier = ev.Modifier;
@@ -74,6 +88,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (!Resolve(entity, ref consciousness))
             return;
+
         var ev = new UpdateConsciousnessOffsetEvent(offset);
         RaiseLocalEvent(entity, ref ev);
         consciousness.Offset = ev.Offset;
@@ -85,6 +100,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (!Resolve(entity, ref consciousness))
             return;
+
         var ev = new UpdateConsciousnessCapEvent(cap);
         RaiseLocalEvent(entity, ref ev);
         consciousness.Cap = ev.Cap;
