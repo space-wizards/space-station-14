@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: The agent id card interface now remembers the previous fake name and
-      title., type: Fix}
-  id: 2353
-  time: '2022-09-22T19:04:01.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'psychologist, detective, and reporter ID cards now display correct
@@ -2956,3 +2950,9 @@ Entries:
   - {message: Added showing the player name to admins on the context menu., type: Add}
   id: 2852
   time: '2023-01-10T21:39:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admins blowing out your eardrums when playing a global sound.,
+    type: Fix}
+  id: 2853
+  time: '2023-01-10T21:45:09.0000000+00:00'
