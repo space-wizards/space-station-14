@@ -13,7 +13,7 @@ namespace Content.Server.Singularity.EntitySystems;
 /// <summary>
 /// The server side version of <see cref="SharedGravityWellSystem"/>.
 /// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
-/// Handles the gravitational pulses they can emit.
+/// Handles the gravitational scans they can emit.
 /// </summary>
 public sealed partial class GravityWellSystem : VirtualController
 {
@@ -25,7 +25,7 @@ public sealed partial class GravityWellSystem : VirtualController
 #endregion Dependencies
 
     /// <summary>
-    /// The minimum range at which gravpulses will act.
+    /// The minimum range at which gravscans will act.
     /// Prevents division by zero problems.
     /// </summary>
     public const float MinGravWellRange = 0.00001f;
@@ -36,13 +36,13 @@ public sealed partial class GravityWellSystem : VirtualController
         SubscribeLocalEvent<GravityWellComponent, ComponentStartup>(OnGravityWellStartup);
 
         var vvHandle = _vvManager.GetTypeHandler<GravityWellComponent>();
-        vvHandle.AddPath(nameof(GravityWellComponent.TargetPulsePeriod), (_, comp) => comp.TargetPulsePeriod, SetPulsePeriod);
+        vvHandle.AddPath(nameof(GravityWellComponent.TargetScanPeriod), (_, comp) => comp.TargetScanPeriod, SetScanPeriod);
     }
 
     public override void Shutdown()
     {
         var vvHandle = _vvManager.GetTypeHandler<GravityWellComponent>();
-        vvHandle.RemovePath(nameof(GravityWellComponent.TargetPulsePeriod));
+        vvHandle.RemovePath(nameof(GravityWellComponent.TargetScanPeriod));
         base.Shutdown();
     }
 
@@ -58,37 +58,37 @@ public sealed partial class GravityWellSystem : VirtualController
         foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
         {
             var curTime = _timing.CurTime;
-            if (gravWell.NextPulseTime <= curTime)
-                Update(gravWell.Owner, curTime - gravWell.LastPulseTime, gravWell, xform);
+            if (gravWell.NextScanTime <= curTime)
+                Update(gravWell.Owner, curTime - gravWell.LastScanTime, gravWell, xform);
         }
     }
 
     /// <summary>
     /// Updates the set of captured entities for a gravity well.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to make pulse.</param>
-    /// <param name="gravWell">The state of the gravity well to make pulse.</param>
-    /// <param name="xform">The transform of the gravity well to make pulse.</param>
+    /// <param name="uid">The uid of the gravity well to make scan.</param>
+    /// <param name="gravWell">The state of the gravity well to make scan.</param>
+    /// <param name="xform">The transform of the gravity well to make scan.</param>
     private void Update(EntityUid uid, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref gravWell))
-            Update(uid, _timing.CurTime - gravWell.LastPulseTime, gravWell, xform);
+            Update(uid, _timing.CurTime - gravWell.LastScanTime, gravWell, xform);
     }
 
     /// <summary>
     /// Updates the set of captured entities for a gravity well.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to make pulse.</param>
-    /// <param name="gravWell">The state of the gravity well to make pulse.</param>
-    /// <param name="frameTime">The amount to consider as having passed since the last gravitational pulse by the gravity well. Pulse force scales with this.</param>
-    /// <param name="xform">The transform of the gravity well to make pulse.</param>
+    /// <param name="uid">The uid of the gravity well to make scan.</param>
+    /// <param name="gravWell">The state of the gravity well to make scan.</param>
+    /// <param name="frameTime">The amount to consider as having passed since the last gravitational scan by the gravity well. Scan force scales with this.</param>
+    /// <param name="xform">The transform of the gravity well to make scan.</param>
     private void Update(EntityUid uid, TimeSpan frameTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell))
             return;
 
-        gravWell.LastPulseTime = _timing.CurTime;
-        gravWell.NextPulseTime = gravWell.LastPulseTime + gravWell.TargetPulsePeriod;
+        gravWell.LastScanTime = _timing.CurTime;
+        gravWell.NextScanTime = gravWell.LastScanTime + gravWell.TargetScanPeriod;
         gravWell.Captured.Clear();
 
         if (gravWell.MaxRange < 0.0f || !Resolve(uid, ref xform))
@@ -186,12 +186,12 @@ public sealed partial class GravityWellSystem : VirtualController
     #region Getters/Setters
 
     /// <summary>
-    /// Sets the pulse period for a gravity well.
-    /// If the new pulse period implies that the gravity well was intended to pulse already it does so immediately.
+    /// Sets the scan period for a gravity well.
+    /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the pulse period for.</param>
-    /// <param name="value">The new pulse period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the pulse period for.</param>
+    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
+    /// <param name="value">The new scan period for the gravity well.</param>
+    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
     public void SetRadialAcceleration(EntityUid uid, float value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -205,12 +205,12 @@ public sealed partial class GravityWellSystem : VirtualController
     }
 
     /// <summary>
-    /// Sets the pulse period for a gravity well.
-    /// If the new pulse period implies that the gravity well was intended to pulse already it does so immediately.
+    /// Sets the scan period for a gravity well.
+    /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the pulse period for.</param>
-    /// <param name="value">The new pulse period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the pulse period for.</param>
+    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
+    /// <param name="value">The new scan period for the gravity well.</param>
+    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
     public void SetTangentialAcceleration(EntityUid uid, float value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -224,29 +224,34 @@ public sealed partial class GravityWellSystem : VirtualController
     }
 
     /// <summary>
-    /// Sets the pulse period for a gravity well.
-    /// If the new pulse period implies that the gravity well was intended to pulse already it does so immediately.
+    /// Sets the scan period for a gravity well.
+    /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the pulse period for.</param>
-    /// <param name="value">The new pulse period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the pulse period for.</param>
-    public void SetPulsePeriod(EntityUid uid, TimeSpan value, GravityWellComponent? gravWell = null)
+    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
+    /// <param name="value">The new scan period for the gravity well.</param>
+    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
+    public void SetScanPeriod(EntityUid uid, TimeSpan value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
             return;
 
-        if (MathHelper.CloseTo(gravWell.TargetPulsePeriod.TotalSeconds, value.TotalSeconds))
+        if (MathHelper.CloseTo(gravWell.TargetScanPeriod.TotalSeconds, value.TotalSeconds))
             return;
 
-        gravWell.TargetPulsePeriod = value;
-        gravWell.NextPulseTime = gravWell.LastPulseTime + gravWell.TargetPulsePeriod;
+        gravWell.TargetScanPeriod = value;
+        gravWell.NextScanTime = gravWell.LastScanTime + gravWell.TargetScanPeriod;
 
         var curTime = _timing.CurTime;
-        if (gravWell.NextPulseTime <= curTime)
-            Update(uid, curTime - gravWell.LastPulseTime, gravWell);
+        if (gravWell.NextScanTime <= curTime)
+            Update(uid, curTime - gravWell.LastScanTime, gravWell);
     }
 
-    private void UpdateMatrix(EntityUid uid, GravityWellComponent? gravWell = null)
+    /// <summary>
+    /// Updates the matrix acceleration of the gravity well to match the set radial and tangential accelerations.
+    /// </summary>
+    /// <param name="uid">The uid of the gravity well to update the matrix for.</param>
+    /// <param name="gravWell">The state of the gravity well to update the matrix for.</param>
+    public void UpdateMatrix(EntityUid uid, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
             return;
@@ -263,15 +268,15 @@ public sealed partial class GravityWellSystem : VirtualController
     #region Event Handlers
 
     /// <summary>
-    /// Resets the pulse timings of the gravity well when the components starts up.
+    /// Resets the scan timings of the gravity well when the components starts up.
     /// </summary>
     /// <param name="uid">The uid of the gravity well to start up.</param>
     /// <param name="comp">The state of the gravity well to start up.</param>
     /// <param name="args">The startup prompt arguments.</param>
     public void OnGravityWellStartup(EntityUid uid, GravityWellComponent comp, ComponentStartup args)
     {
-        comp.LastPulseTime = _timing.CurTime;
-        comp.NextPulseTime = comp.LastPulseTime + comp.TargetPulsePeriod;
+        comp.LastScanTime = _timing.CurTime;
+        comp.NextScanTime = comp.LastScanTime + comp.TargetScanPeriod;
         UpdateMatrix(uid, comp);
     }
 

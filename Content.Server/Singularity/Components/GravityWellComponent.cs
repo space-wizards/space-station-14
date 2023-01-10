@@ -19,7 +19,7 @@ public sealed class GravityWellComponent : Component
 
     /// <summary>
     /// The minimum range at which the gravity well can push/pull entities.
-    /// This is effectively hardfloored at <see cref="GravityWellSystem.MinGravPulseRange"/>.
+    /// This is effectively hardfloored at <see cref="GravityWellSystem.MinGravWellRange"/>.
     /// </summary>
     [DataField("minRange")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -43,34 +43,43 @@ public sealed class GravityWellComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseTangentialAcceleration = 0.0f;
 
+    /// <summary>
+    /// The acceleration entities will experience relative to the gravity well at a distance of 1m.
+    /// Left-multiplies with the entities displacement from the center of the gravity well.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
     public Matrix3 MatrixAcceleration;
-
+    
+    /// <summary>
+    /// The set of entities being affected by this gravity well.
+    /// All entities within this group are accelerated relative to the gravity well.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public List<EntityUid> Captured = new();
 
     #region Update Timing
 
     /// <summary>
-    /// The amount of time that should elapse between automated updates to this gravity well.
+    /// The amount of time that should elapse between automated scans for captured entities.
     /// </summary>
     [DataField("gravPulsePeriod")]
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(GravityWellSystem))]
-    public TimeSpan TargetPulsePeriod { get; internal set; } = TimeSpan.FromSeconds(0.5);
+    public TimeSpan TargetScanPeriod { get; internal set; } = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
-    /// The next time at which this gravity well should pulse.
+    /// The next time at which this gravity well scanned for captured entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(GravityWellSystem))]
-    public TimeSpan NextPulseTime { get; internal set; } = default!;
+    public TimeSpan NextScanTime { get; internal set; } = default!;
 
     /// <summary>
-    /// The last time this gravity well pulsed.
+    /// The last time this gravity well scanned for captured entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     [Access(typeof(GravityWellSystem))]
-    public TimeSpan LastPulseTime { get; internal set; } = default!;
+    public TimeSpan LastScanTime { get; internal set; } = default!;
 
     #endregion Update Timing
 }
