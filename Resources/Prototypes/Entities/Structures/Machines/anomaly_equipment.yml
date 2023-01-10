@@ -120,6 +120,7 @@
     powerLoad: 200
   - type: Gun
     fireRate: 10 #just has to be fast enough to keep up with upgrades
+    showExamineText: false
     selectedMode: SemiAuto
     availableModes:
       - SemiAuto
