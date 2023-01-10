@@ -305,7 +305,7 @@ namespace Content.Server.Administration.Systems
                         Footer = new EmbedFooter
                         {
                             Text = $"{serverName} ({round})",
-                            IconUrl = _footerIconUrl,
+                            IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl
                         },
                     },
                 },
@@ -479,7 +479,7 @@ namespace Content.Server.Administration.Systems
             public string Text { get; set; } = "";
 
             [JsonPropertyName("icon_url")]
-            public string IconUrl { get; set; } = "";
+            public string? IconUrl { get; set; }
 
             public EmbedFooter()
             {
