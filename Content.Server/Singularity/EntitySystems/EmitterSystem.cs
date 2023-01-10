@@ -1,6 +1,7 @@
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
+using Content.Server.Item;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
@@ -42,11 +43,22 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<EmitterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<EmitterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
+        }
+
+        private void OnAnchorStateChanged(EntityUid uid, EmitterComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                return;
+
+            SwitchOff(component);
         }
 
         private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
         {
-            args.Handled = true;
+            if (args.Handled)
+                return;
+
             if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
                 _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
@@ -72,6 +84,7 @@ namespace Content.Server.Singularity.EntitySystems
                 _adminLogger.Add(LogType.Emitter,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
+                args.Handled = true;
             }
             else
             {
