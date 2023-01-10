@@ -69,12 +69,9 @@ namespace Content.Client.DoAfter;
         /// <summary>
         ///     Remove a DoAfter without showing a cancellation graphic.
         /// </summary>
-        public void Remove(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter)
+        public void Remove(DoAfterComponent component, Shared.DoAfter.DoAfter doAfter, bool found = false)
         {
             component.DoAfters.Remove(doAfter.ID);
-
-            var found = false;
-
             component.CancelledDoAfters.Remove(doAfter.ID);
 
             if (!found)
@@ -120,7 +117,7 @@ namespace Content.Client.DoAfter;
                 foreach (var (id, doAfter) in doAfters)
                 {
                     // If we've passed the final time (after the excess to show completion graphic) then remove.
-                    if (doAfter.Elapsed.TotalSeconds + doAfter.CancelledElapsed.TotalSeconds > doAfter.Delay + ExcessTime)
+                    if ((float) doAfter.Elapsed.TotalSeconds + (float) doAfter.CancelledElapsed.TotalSeconds > doAfter.Delay + ExcessTime)
                     {
                         toRemove.Add(doAfter);
                         continue;
@@ -135,10 +132,8 @@ namespace Content.Client.DoAfter;
                     doAfter.Elapsed = _gameTiming.CurTime - doAfter.StartTime;
 
                     // Well we finished so don't try to predict cancels.
-                    if (doAfter.Elapsed.TotalSeconds > doAfter.Delay)
-                    {
+                    if ((float)doAfter.Elapsed.TotalSeconds > doAfter.Delay)
                         continue;
-                    }
 
                     // Predictions
                     if (comp.Owner != playerEntity)
@@ -147,7 +142,7 @@ namespace Content.Client.DoAfter;
                     // TODO: Add these back in when I work out some system for changing the accumulation rate
                     // based on ping. Right now these would show as cancelled near completion if we moved at the end
                     // despite succeeding.
-                    //continue;
+                    continue;
 
                     if (doAfter.EventArgs.BreakOnUserMove)
                     {
@@ -176,14 +171,12 @@ namespace Content.Client.DoAfter;
                 }
 
                 // Remove cancelled DoAfters after ExcessTime has elapsed
-                var toRemoveCancelled = new List<Shared.DoAfter.DoAfter>();
+                var toRemoveCancelled = new RemQueue<Shared.DoAfter.DoAfter>();
 
                 foreach (var (_, doAfter) in comp.CancelledDoAfters)
                 {
                     if ((float)doAfter.CancelledElapsed.TotalSeconds > ExcessTime)
-                    {
                         toRemoveCancelled.Add(doAfter);
-                    }
                 }
 
                 foreach (var doAfter in toRemoveCancelled)

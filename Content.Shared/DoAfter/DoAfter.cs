@@ -38,7 +38,7 @@ public sealed class DoAfter
     /// <summary>
     /// Accrued time when cancelled.
     /// </summary>
-    public TimeSpan CancelledElapsed;
+    public TimeSpan CancelledElapsed = TimeSpan.Zero;
 
     public EntityCoordinates UserGrid;
     public EntityCoordinates TargetGrid;

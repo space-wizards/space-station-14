@@ -222,10 +222,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
             }
 
             if (IsCancelled(doAfter))
-            {
-                doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.StartTime;
                 doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
-            }
         }
 
         private bool TryPostCheck(DoAfter doAfter)
