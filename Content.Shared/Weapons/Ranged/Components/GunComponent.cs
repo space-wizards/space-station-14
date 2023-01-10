@@ -113,6 +113,13 @@ public class GunComponent : Component
 
     [DataField("selectModeAction")]
     public InstantAction? SelectModeAction;
+
+    /// <summary>
+    /// Whether or not information about
+    /// the gun will be shown on examine.
+    /// </summary>
+    [DataField("showExamineText")]
+    public bool ShowExamineText = true;
 }
 
 [Flags]
