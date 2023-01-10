@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping when traversing grids and also when on a rotating grid is
-      much smoother., type: Fix}
-  id: 2348
-  time: '2022-09-21T00:12:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added a burger made from the beloved pet of the Head of Personnel.,
@@ -2960,3 +2954,8 @@ Entries:
   - {message: Fixed some unintended examine text on emitters., type: Fix}
   id: 2847
   time: '2023-01-10T11:48:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
+  id: 2848
+  time: '2023-01-10T12:31:26.0000000+00:00'
