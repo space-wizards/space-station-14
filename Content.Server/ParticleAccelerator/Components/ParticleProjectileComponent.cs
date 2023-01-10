@@ -1,6 +1,6 @@
 using Content.Server.Projectiles;
-using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
+using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;

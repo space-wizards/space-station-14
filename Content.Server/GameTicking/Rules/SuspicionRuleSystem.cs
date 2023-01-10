@@ -13,7 +13,8 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.EntityList;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Suspicion;
 using Robust.Server.GameObjects;
@@ -44,6 +45,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
@@ -294,7 +296,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
                 continue;
             }
 
-            if (!mobState.IsAlive())
+            if (!_mobStateSystem.IsAlive(playerEntity, mobState))
             {
                 continue;
             }

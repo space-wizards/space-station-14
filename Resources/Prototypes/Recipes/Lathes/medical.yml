@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: Scalpel
-  icon: { sprite: Objects/Specific/Medical/Surgery/scalpel.rsi, state: scalpel }
   result: Scalpel
   completetime: 2
   materials:
@@ -8,15 +7,13 @@
 
 - type: latheRecipe
   id: Retractor
-  icon: { sprite: Objects/Specific/Medical/Surgery/scissors.rsi, state: retractor }
-  result: Scalpel
+  result: Retractor
   completetime: 2
   materials:
     Steel: 200
 
 - type: latheRecipe
   id: Cautery
-  icon: { sprite: Objects/Specific/Medical/Surgery/cautery.rsi, state: cautery }
   result: Cautery
   completetime: 2
   materials:
@@ -24,7 +21,6 @@
 
 - type: latheRecipe
   id: Drill
-  icon: { sprite: Objects/Specific/Medical/Surgery/drill.rsi, state: drill }
   result: Drill
   completetime: 2
   materials:
@@ -33,7 +29,6 @@
 
 - type: latheRecipe
   id: Saw
-  icon: { sprite: Objects/Specific/Medical/Surgery/saw.rsi, state: saw }
   result: Saw
   completetime: 2
   materials:
@@ -41,7 +36,6 @@
 
 - type: latheRecipe
   id: Hemostat
-  icon: { sprite: Objects/Specific/Medical/Surgery/scissors.rsi, state: hemostat }
   result: Hemostat
   completetime: 2
   materials:
@@ -49,7 +43,6 @@
 
 - type: latheRecipe
   id: BodyBag
-  icon: { sprite: Objects/Specific/Medical/Morgue/bodybags.rsi, state: bag_folded }
   result: BodyBag_Folded
   completetime: 2
   materials:
@@ -57,7 +50,6 @@
 
 - type: latheRecipe
   id: HandheldCrewMonitor
-  icon: { sprite: Objects/Specific/Medical/handheldcrewmonitor.rsi, state: icon }
   result: HandheldCrewMonitor
   completetime: 2
   materials:
@@ -67,7 +59,6 @@
 
 - type: latheRecipe
   id: HandheldHealthAnalyzer
-  icon: { sprite: Objects/Specific/Medical/healthanalyzer.rsi, state: icon }
   result: HandheldHealthAnalyzer
   completetime: 4
   materials:
@@ -76,7 +67,6 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesLatex
-  icon: { sprite: Clothing/Hands/Gloves/latex.rsi, state: icon }
   result: ClothingHandsGlovesLatex
   completetime: 2
   materials:
@@ -84,7 +74,6 @@
 
 - type: latheRecipe
   id: ClothingHandsGlovesNitrile
-  icon: { sprite: Clothing/Hands/Gloves/Color/blue.rsi, state: icon }
   result: ClothingHandsGlovesNitrile
   completetime: 2
   materials:
@@ -93,7 +82,6 @@
 
 - type: latheRecipe
   id: ClothingMaskSterile
-  icon: { sprite: Clothing/Mask/sterile.rsi, state: icon }
   result: ClothingMaskSterile
   completetime: 2
   materials:
@@ -101,7 +89,6 @@
 
 - type: latheRecipe
   id: DiseaseSwab
-  icon: { sprite: Objects/Specific/Medical/mouth_swab.rsi, state: icon }
   result: DiseaseSwab
   completetime: 1
   materials:
@@ -110,7 +97,6 @@
 
 - type: latheRecipe
   id: Implanter
-  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
   result: Implanter
   completetime: 1
   materials:

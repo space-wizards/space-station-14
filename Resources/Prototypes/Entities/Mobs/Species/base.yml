@@ -190,7 +190,7 @@
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
-  - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -370,7 +370,7 @@
     - type: Appearance
     - type: Damageable
       damageContainer: Biological
-    - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical

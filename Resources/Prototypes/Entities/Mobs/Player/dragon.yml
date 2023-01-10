@@ -65,7 +65,7 @@
             - FlyingMobMask
           layer:
             - FlyingMobLayer
-    - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         450: Critical
@@ -93,7 +93,7 @@
     - type: MeleeWeapon
       hidden: true
       soundHit:
-        path: /Audio/Effects/bite.ogg
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
       damage:
         types:
           Piercing: 15

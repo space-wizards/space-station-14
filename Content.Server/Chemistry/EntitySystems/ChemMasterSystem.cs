@@ -288,17 +288,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            var filter = user.HasValue ? Filter.Entities(user.Value) : Filter.Empty();
             if (solution.TotalVolume == 0)
             {
-                _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), filter);
+                if (user.HasValue)
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-empty-text"), user.Value);
                 return false;
             }
 
             // ReSharper disable once InvertIf
             if (neededVolume > solution.CurrentVolume)
             {
-                _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), filter);
+                if (user.HasValue)
+                    _popupSystem.PopupCursor(Loc.GetString("chem-master-window-buffer-low-text"), user.Value);
                 return false;
             }
 

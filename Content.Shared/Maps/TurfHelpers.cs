@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Decals;
 using Content.Shared.Physics;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
@@ -85,90 +86,6 @@ namespace Content.Shared.Maps
         public static bool IsSpace(this TileRef tile, ITileDefinitionManager? tileDefinitionManager = null)
         {
             return tile.Tile.IsSpace(tileDefinitionManager);
-        }
-
-        public static bool PryTile(this Vector2i indices, EntityUid gridId,
-            IMapManager? mapManager = null, ITileDefinitionManager? tileDefinitionManager = null, IEntityManager? entityManager = null)
-        {
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-            var grid = mapManager.GetGrid(gridId);
-            var tileRef = grid.GetTileRef(indices);
-            return tileRef.PryTile(mapManager, tileDefinitionManager, entityManager);
-        }
-
-        public static bool PryTile(this TileRef tileRef,
-            IMapManager? mapManager = null,
-            ITileDefinitionManager? tileDefinitionManager = null,
-            IEntityManager? entityManager = null,
-            IRobustRandom? robustRandom = null)
-        {
-            var tile = tileRef.Tile;
-
-            // If the arguments are null, resolve the needed dependencies.
-            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-
-            if (tile.IsEmpty) return false;
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
-
-            if (!tileDef.CanCrowbar) return false;
-
-            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
-        }
-
-        public static bool CutTile(this TileRef tileRef,
-            IMapManager? mapManager = null,
-            ITileDefinitionManager? tileDefinitionManager = null,
-            IEntityManager? entityManager = null,
-            IRobustRandom? robustRandom = null)
-        {
-            var tile = tileRef.Tile;
-
-            // If the arguments are null, resolve the needed dependencies.
-            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-
-            if (tile.IsEmpty) return false;
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.TypeId];
-
-            if (!tileDef.CanWirecutter) return false;
-
-            return DeconstructTile(tileRef, mapManager, tileDefinitionManager, entityManager, robustRandom);
-        }
-
-        private static bool DeconstructTile(this TileRef tileRef,
-            IMapManager? mapManager = null,
-            ITileDefinitionManager? tileDefinitionManager = null,
-            IEntityManager? entityManager = null,
-            IRobustRandom? robustRandom = null)
-        {
-            var indices = tileRef.GridIndices;
-
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-            tileDefinitionManager ??= IoCManager.Resolve<ITileDefinitionManager>();
-            entityManager ??= IoCManager.Resolve<IEntityManager>();
-            robustRandom ??= IoCManager.Resolve<IRobustRandom>();
-
-            var tileDef = (ContentTileDefinition) tileDefinitionManager[tileRef.Tile.TypeId];
-            var mapGrid = mapManager.GetGrid(tileRef.GridUid);
-
-            const float margin = 0.1f;
-            var bounds = mapGrid.TileSize - margin * 2;
-            var coordinates = mapGrid.GridTileToLocal(indices)
-                .Offset(new Vector2(
-                    (robustRandom.NextFloat() - 0.5f) * bounds,
-                    (robustRandom.NextFloat() - 0.5f) * bounds));
-
-            //Actually spawn the relevant tile item at the right position and give it some random offset.
-            var tileItem = entityManager.SpawnEntity(tileDef.ItemDropPrototypeName, coordinates);
-            entityManager.GetComponent<TransformComponent>(tileItem).LocalRotation
-                = robustRandom.NextDouble() * Math.Tau;
-
-            var plating = tileDefinitionManager[tileDef.BaseTurfs[^1]];
-
-            mapGrid.SetTile(tileRef.GridIndices, new Tile(plating.TileId));
-
-            return true;
         }
 
         /// <summary>

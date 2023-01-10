@@ -24,7 +24,7 @@ namespace Content.IntegrationTests.Tests.Body
   - type: SolutionContainerManager
   - type: Body
     prototype: Human
-  - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
   - type: ThermalRegulator

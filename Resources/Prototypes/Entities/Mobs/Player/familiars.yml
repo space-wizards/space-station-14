@@ -56,7 +56,7 @@
     successChance: 0.5
     interactSuccessString: petting-success-corrupted-corgi
     interactFailureString: petting-failure-corrupted-corgi
-  - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       80: Critical
