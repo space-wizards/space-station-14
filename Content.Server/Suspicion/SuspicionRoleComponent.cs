@@ -13,8 +13,6 @@ namespace Content.Server.Suspicion
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-
         private Role? _role;
         [ViewVariables]
         private readonly HashSet<SuspicionRoleComponent> _allies = new();
