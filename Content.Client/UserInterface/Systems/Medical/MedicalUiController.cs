@@ -112,7 +112,7 @@ public sealed class MedicalUIController : UIController, IOnStateEntered<Gameplay
         if (!medicalDummyEntity.Valid || !_entities.TryGetComponent(focus, out SpriteComponent? spriteComp))
             return;
         var dummySprite = _entities.GetComponent<SpriteComponent>(medicalDummyEntity);
-        _serialization.CopyTo(spriteComp, ref dummySprite);
+        //_serialization.CopyTo(spriteComp, ref dummySprite);
     }
 
     private void UpdateMedicalFocus(EntityUid newFocus)
