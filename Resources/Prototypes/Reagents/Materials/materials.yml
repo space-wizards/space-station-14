@@ -1,6 +1,6 @@
 - type: material
   id: Biomass
-  stackEntity: MaterialBiomass
+  stackEntity: MaterialBiomass1
   name: materials-biomass
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   color: "#8A9A5B"
@@ -8,7 +8,7 @@
 
 - type: material
   id: Cloth
-  stackEntity: MaterialCloth
+  stackEntity: MaterialCloth1
   name: materials-cloth
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   color: "#e7e7de"
@@ -16,7 +16,7 @@
 
 - type: material
   id: Durathread
-  stackEntity: MaterialDurathread
+  stackEntity: MaterialDurathread1
   name: materials-durathread
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   color: "#8291a1"
@@ -24,7 +24,7 @@
 
 - type: material
   id: Plasma
-  stackEntity: SheetPlasma
+  stackEntity: SheetPlasma1
   name: materials-plasma
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plasma }
   color: "#7e009e"
@@ -32,7 +32,7 @@
 
 - type: material
   id: Plastic
-  stackEntity: SheetPlastic
+  stackEntity: SheetPlastic1
   name: materials-plastic
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: plastic }
   color: "#d9d9d9"
@@ -40,7 +40,7 @@
 
 - type: material
   id: Wood
-  stackEntity: MaterialWoodPlank
+  stackEntity: MaterialWoodPlank1
   name: materials-wood
   icon: { sprite: Objects/Materials/materials.rsi, state: wood }
   color: "#966F33"
@@ -48,7 +48,7 @@
 
 - type: material
   id: Uranium
-  stackEntity: SheetUranium
+  stackEntity: SheetUranium1
   name: materials-uranium
   icon: { sprite: Objects/Materials/Sheets/other.rsi, state: uranium }
   color: "#32a852"

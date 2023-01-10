@@ -27,6 +27,9 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
 
     private void OnDeconstructed(EntityUid uid, MaterialStorageComponent component, MachineDeconstructedEvent args)
     {
+        if (!component.DropOnDeconstruct)
+            return;
+
         foreach (var (material, amount) in component.Storage)
         {
             _stackSystem.SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
@@ -51,7 +54,6 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
         var count = stack?.Count ?? 1;
         _adminLogger.Add(LogType.Action, LogImpact.Low,
             $"{ToPrettyString(user):player} inserted {count} {ToPrettyString(toInsert):inserted} into {ToPrettyString(receiver):receiver}");
-
         return true;
     }
 }
