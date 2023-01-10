@@ -76,14 +76,19 @@ public sealed class ConsciousnessSystem : EntitySystem
         return consciousnessValue > consciousness.PassOutThreshold;
     }
 
-    public void UpdateConsciousnessValues(EntityUid entity,
+    public void UpdateConsciousness(EntityUid entity,
         ConsciousnessComponent? consciousness = null)
     {
         if (!Resolve(entity, ref consciousness))
             return;
 
-        var ev = new UpdateConsciousnessValuesEvent(consciousness);
+        var ev = new UpdateConsciousnessValuesEvent{Component = consciousness};
         RaiseLocalEvent(entity, ref ev);
+        consciousness.Base = ev.Base;
+        consciousness.Modifier = ev.Modifier;
+        consciousness.Offset = ev.Offset;
+        consciousness.PassOutThreshold = ev.PassoutThreshold;
+        consciousness.Cap = ev.Cap;
         CheckConsciousness(entity, consciousness);
     }
     private void CheckConsciousness(EntityUid entity, ConsciousnessComponent consciousness)
