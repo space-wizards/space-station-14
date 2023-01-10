@@ -22,7 +22,7 @@ Check the box below to confirm that you have in fact seen this (put an X in the 
 <!--
 Here you can fill out a changelog that will automatically be added to the game when your PR is merged.
 
-Only put changes that are important to the player on the changelog.
+Only put changes that are important and visible to the player on the changelog.
 
 Don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
 bad: - add: a new tool for engineers
