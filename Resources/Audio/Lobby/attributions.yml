@@ -36,8 +36,8 @@
 
 - files: ["title3.ogg"]
   license: "CC-BY-NC-SA-3.0"
-  copyright: "Title3 by Cuboos. It is a remix of the song 'Tintin on the Moon'. Converted from MP3 to OGG."
-  source: "https://www.youtube.com/watch?v=YKVmXn-Gv0M"
+  copyright: "Title3 by pinkblossom6. It is a remix of the song 'Tintin on the Moon'. Converted from MP4 to OGG."
+  source: "https://www.youtube.com/watch?v=d7hc_GrZP4Y"
 
 - files: ["marhaba.ogg"]
   license: "CC-BY-NC-SA-3.0"
@@ -78,3 +78,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["spaced.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "An original short piece written for SS13's vast empty space, played when you, the traitor, are launched out of the airlock after having killed over half the station, all the heads, and the entirety of the emergency response team."
+  source: "https://www.youtube.com/watch?v=rW86xYFmcVs"
