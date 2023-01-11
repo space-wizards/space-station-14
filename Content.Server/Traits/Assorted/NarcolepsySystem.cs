@@ -26,12 +26,12 @@ public sealed class NarcolepsySystem : EntitySystem
             _random.NextFloat(component.TimeBetweenIncidents.X, component.TimeBetweenIncidents.Y);
     }
 
-    public void AdjustNarcolepsyTimer(EntityUid uid, int TimerReset)
+    public void AdjustNarcolepsyTimer(EntityUid uid, int TimerReset, NarcolepsyComponent? narcolepsy = null)
     {
-        foreach (var narcolepsy in EntityQuery<NarcolepsyComponent>())
-        {
-            narcolepsy.NextIncidentTime = TimerReset;
-        }
+        if (!Resolve(uid, ref narcolepsy, false))
+            return;
+
+        narcolepsy.NextIncidentTime = TimerReset;
     }
 
     public override void Update(float frameTime)

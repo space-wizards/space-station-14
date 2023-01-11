@@ -17,7 +17,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (args.Scale != 1f)
                 return;
-            
+
             args.EntityManager.EntitySysManager.GetEntitySystem<NarcolepsySystem>().AdjustNarcolepsyTimer(args.SolutionEntity, TimerReset);
         }
     }
