@@ -13,6 +13,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         base.Initialize();
         SubscribeLocalEvent<ClimbingComponent, ComponentHandleState>(OnClimbingState);
+        SubscribeLocalEvent<ClimbableComponent, CanDropOnEvent>(OnCanDragDropOn);
     }
 
     private static void OnClimbingState(EntityUid uid, ClimbingComponent component, ref ComponentHandleState args)

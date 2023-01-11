@@ -87,7 +87,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnStrapCanDropOn(EntityUid uid, StrapComponent strap, ref CanDropOnEvent args)
     {
-        args.CanDrop = args.CanDrop && StrapCanDragDropOn(uid, args.User, uid, args.Dragged, strap);
+        args.CanDrop = StrapCanDragDropOn(uid, args.User, uid, args.Dragged, strap);
         args.Handled = true;
     }
 }

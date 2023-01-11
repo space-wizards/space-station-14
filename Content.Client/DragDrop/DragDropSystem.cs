@@ -324,11 +324,11 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return false;
         }
 
-        IList<EntityUid> entities;
+        IEnumerable<EntityUid> entities;
 
         if (_stateManager.CurrentState is GameplayState screen)
         {
-            entities = screen.GetEntitiesUnderPosition(args.Coordinates);
+            entities = screen.GetClickableEntities(args.Coordinates);
         }
         else
         {
@@ -363,7 +363,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         if (outOfRange)
         {
-            _popup.PopupEntity(Loc.GetString("drag-drop-system-out-of-range-text"), _draggedEntity.Value, Filter.Local());
+            _popup.PopupEntity(Loc.GetString("drag-drop-system-out-of-range-text"), _draggedEntity.Value, Filter.Local(), true);
         }
 
         EndDrag();
@@ -376,8 +376,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (!Exists(_draggedEntity) ||
             !Exists(_dragShadow))
         {
-            Logger.Warning("Programming error. Can't highlight drag and drop targets, not currently " +
-                           "dragging anything or dragged entity / shadow was deleted.");
             return;
         }
 
@@ -396,7 +394,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
         var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds);
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)
