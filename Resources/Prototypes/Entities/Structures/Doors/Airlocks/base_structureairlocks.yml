@@ -41,6 +41,9 @@
       - FullTileMask
       layer:
       - AirlockLayer
+  - type: LayerChangeOnWeld
+    unweldedLayer: AirlockLayer
+    weldedLayer: WallLayer
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
