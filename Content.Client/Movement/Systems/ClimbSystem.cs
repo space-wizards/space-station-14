@@ -24,7 +24,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         component.OwnerIsTransitioning = climbModeState.IsTransitioning;
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, SharedClimbableComponent component, ref CanDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropOnEvent args)
     {
         base.OnCanDragDropOn(uid, component, ref args);
 
