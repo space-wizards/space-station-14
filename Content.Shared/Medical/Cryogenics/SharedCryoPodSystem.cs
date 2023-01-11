@@ -29,7 +29,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         InitializeInsideCryoPod();
     }
 
-    protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropOnEvent args)
+    protected void OnCryoPodCanDropOn(EntityUid uid, SharedCryoPodComponent component, ref CanDropTargetEvent args)
     {
         args.CanDrop = args.CanDrop && HasComp<BodyComponent>(args.Dragged);
         args.Handled = true;

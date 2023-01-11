@@ -79,7 +79,7 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            var dragArgs = new DragDropEvent(user.Value, msg.Target);
+            var dragArgs = new DragDropDraggedEvent(user.Value, msg.Target);
 
             // trigger dragdrops on the dropped entity
             RaiseLocalEvent(msg.Dragged, ref dragArgs);
@@ -87,7 +87,7 @@ namespace Content.Server.Interaction
             if (dragArgs.Handled)
                 return;
 
-            var dropArgs = new DragDropOnEvent(user.Value, msg.Dragged);
+            var dropArgs = new DragDropTargetEvent(user.Value, msg.Dragged);
 
             RaiseLocalEvent(msg.Target, ref dropArgs);
         }

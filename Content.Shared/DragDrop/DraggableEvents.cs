@@ -16,7 +16,7 @@ public record struct CanDragEvent
 /// Raised directed on a dragged entity to indicate whether it has interactions with the target entity.
 /// </summary>
 [ByRefEvent]
-public record struct CanDropEvent(EntityUid User, EntityUid Target)
+public record struct CanDropDraggedEvent(EntityUid User, EntityUid Target)
 {
     public readonly EntityUid User = User;
     public readonly EntityUid Target = Target;
@@ -32,14 +32,14 @@ public record struct CanDropEvent(EntityUid User, EntityUid Target)
 /// Raised directed on the target entity to indicate whether it has interactions with the dragged entity.
 /// </summary>
 [ByRefEvent]
-public record struct CanDropOnEvent(EntityUid User, EntityUid Dragged)
+public record struct CanDropTargetEvent(EntityUid User, EntityUid Dragged)
 {
     public readonly EntityUid User = User;
     public readonly EntityUid Dragged = Dragged;
     public bool Handled = false;
 
     /// <summary>
-    /// <see cref="CanDropEvent"/>
+    /// <see cref="CanDropDraggedEvent"/>
     /// </summary>
     public bool CanDrop = false;
 }
@@ -48,7 +48,7 @@ public record struct CanDropOnEvent(EntityUid User, EntityUid Dragged)
 /// Raised directed on a dragged entity when it is dropped on a target entity.
 /// </summary>
 [ByRefEvent]
-public record struct DragDropEvent(EntityUid User, EntityUid Target)
+public record struct DragDropDraggedEvent(EntityUid User, EntityUid Target)
 {
     public readonly EntityUid User = User;
     public readonly EntityUid Target = Target;
@@ -59,7 +59,7 @@ public record struct DragDropEvent(EntityUid User, EntityUid Target)
 /// Raised directed on the target entity when a dragged entity is dragged onto it.
 /// </summary>
 [ByRefEvent]
-public record struct DragDropOnEvent(EntityUid User, EntityUid Dragged)
+public record struct DragDropTargetEvent(EntityUid User, EntityUid Dragged)
 {
     public readonly EntityUid User = User;
     public readonly EntityUid Dragged = Dragged;

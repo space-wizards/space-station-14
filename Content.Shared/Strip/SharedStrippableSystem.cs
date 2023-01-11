@@ -9,12 +9,12 @@ public abstract class SharedStrippableSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StrippingComponent, CanDropOnEvent>(OnCanDropOn);
-        SubscribeLocalEvent<StrippableComponent, CanDropEvent>(OnCanDrop);
-        SubscribeLocalEvent<StrippableComponent, DragDropEvent>(OnDragDrop);
+        SubscribeLocalEvent<StrippingComponent, CanDropTargetEvent>(OnCanDropOn);
+        SubscribeLocalEvent<StrippableComponent, CanDropDraggedEvent>(OnCanDrop);
+        SubscribeLocalEvent<StrippableComponent, DragDropDraggedEvent>(OnDragDrop);
     }
 
-    private void OnDragDrop(EntityUid uid, StrippableComponent component, ref DragDropEvent args)
+    private void OnDragDrop(EntityUid uid, StrippableComponent component, ref DragDropDraggedEvent args)
     {
         // If the user drags a strippable thing onto themselves.
         if (args.Handled || args.Target != args.User)
@@ -29,7 +29,7 @@ public abstract class SharedStrippableSystem : EntitySystem
 
     }
 
-    private void OnCanDropOn(EntityUid uid, StrippingComponent component, ref CanDropOnEvent args)
+    private void OnCanDropOn(EntityUid uid, StrippingComponent component, ref CanDropTargetEvent args)
     {
         args.Handled = true;
         args.CanDrop |= uid != args.Dragged &&
@@ -38,7 +38,7 @@ public abstract class SharedStrippableSystem : EntitySystem
                         HasComp<SharedHandsComponent>(args.User);
     }
 
-    private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropEvent args)
+    private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropDraggedEvent args)
     {
         args.CanDrop |= args.Target != uid &&
                         args.Target == args.User &&

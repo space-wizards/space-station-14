@@ -53,7 +53,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CryoPodComponent, CanDropOnEvent>(OnCryoPodCanDropOn);
+        SubscribeLocalEvent<CryoPodComponent, CanDropTargetEvent>(OnCryoPodCanDropOn);
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
@@ -63,7 +63,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
         SubscribeLocalEvent<CryoPodComponent, AtmosDeviceUpdateEvent>(OnCryoPodUpdateAtmosphere);
-        SubscribeLocalEvent<CryoPodComponent, DragDropOnEvent>(HandleDragDropOn);
+        SubscribeLocalEvent<CryoPodComponent, DragDropTargetEvent>(HandleDragDropOn);
         SubscribeLocalEvent<CryoPodComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<CryoPodComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CryoPodComponent, PowerChangedEvent>(OnPowerChanged);
@@ -127,7 +127,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     #region Interaction
 
-    private void HandleDragDropOn(EntityUid uid, CryoPodComponent cryoPodComponent, ref DragDropOnEvent args)
+    private void HandleDragDropOn(EntityUid uid, CryoPodComponent cryoPodComponent, ref DragDropTargetEvent args)
     {
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
         {

@@ -56,7 +56,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
-        SubscribeLocalEvent<ClimbableComponent, DragDropOnEvent>(OnClimbableDragDrop);
+        SubscribeLocalEvent<ClimbableComponent, DragDropTargetEvent>(OnClimbableDragDrop);
 
         SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
@@ -66,7 +66,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<GlassTableComponent, ClimbedOnEvent>(OnGlassClimbed);
     }
 
-    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropOnEvent args)
+    protected override void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
         base.OnCanDragDropOn(uid, component, ref args);
 
@@ -104,7 +104,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         });
     }
 
-    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropOnEvent args)
+    private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, ref DragDropTargetEvent args)
     {
         TryMoveEntity(component, args.User, args.Dragged, uid);
     }

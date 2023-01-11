@@ -480,7 +480,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (ev.Cancelled)
             return false;
 
-        var dropEv = new CanDropEvent(user, target);
+        var dropEv = new CanDropDraggedEvent(user, target);
 
         RaiseLocalEvent(dragged, ref dropEv);
 
@@ -490,7 +490,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
                 return false;
         }
 
-        var dropEv2 = new CanDropOnEvent(user, dragged);
+        var dropEv2 = new CanDropTargetEvent(user, dragged);
 
         RaiseLocalEvent(target, ref dropEv2);
 

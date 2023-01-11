@@ -35,7 +35,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<KitchenSpikeComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<KitchenSpikeComponent, InteractHandEvent>(OnInteractHand);
-            SubscribeLocalEvent<KitchenSpikeComponent, DragDropOnEvent>(OnDragDrop);
+            SubscribeLocalEvent<KitchenSpikeComponent, DragDropTargetEvent>(OnDragDrop);
 
             //DoAfter
             SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpikingFinished);
@@ -43,10 +43,10 @@ namespace Content.Server.Kitchen.EntitySystems
 
             SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
 
-            SubscribeLocalEvent<ButcherableComponent, CanDropEvent>(OnButcherableCanDrop);
+            SubscribeLocalEvent<ButcherableComponent, CanDropDraggedEvent>(OnButcherableCanDrop);
         }
 
-        private void OnButcherableCanDrop(EntityUid uid, ButcherableComponent component, ref CanDropEvent args)
+        private void OnButcherableCanDrop(EntityUid uid, ButcherableComponent component, ref CanDropDraggedEvent args)
         {
             args.Handled = true;
             args.CanDrop |= component.Type != ButcheringType.Knife;
@@ -85,7 +85,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
         }
 
-        private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, ref DragDropOnEvent args)
+        private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, ref DragDropTargetEvent args)
         {
             if (args.Handled)
                 return;

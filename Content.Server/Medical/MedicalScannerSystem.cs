@@ -42,15 +42,15 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<InteractionVerb>>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
             SubscribeLocalEvent<MedicalScannerComponent, DestructionEventArgs>(OnDestroyed);
-            SubscribeLocalEvent<MedicalScannerComponent, DragDropOnEvent>(OnDragDropOn);
+            SubscribeLocalEvent<MedicalScannerComponent, DragDropTargetEvent>(OnDragDropOn);
             SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<MedicalScannerComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<MedicalScannerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-            SubscribeLocalEvent<MedicalScannerComponent, CanDropOnEvent>(OnCanDragDropOn);
+            SubscribeLocalEvent<MedicalScannerComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
-        private void OnCanDragDropOn(EntityUid uid, MedicalScannerComponent component, ref CanDropOnEvent args)
+        private void OnCanDragDropOn(EntityUid uid, MedicalScannerComponent component, ref CanDropTargetEvent args)
         {
             args.Handled = true;
             args.CanDrop |= CanScannerInsert(uid, args.Dragged, component);
@@ -134,7 +134,7 @@ namespace Content.Server.Medical
             EjectBody(uid, scannerComponent);
         }
 
-        private void OnDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, ref DragDropOnEvent args)
+        private void OnDragDropOn(EntityUid uid, MedicalScannerComponent scannerComponent, ref DragDropTargetEvent args)
         {
             InsertBody(uid, args.Dragged, scannerComponent);
         }

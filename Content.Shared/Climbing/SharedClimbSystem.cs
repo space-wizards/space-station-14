@@ -20,7 +20,7 @@ public abstract class SharedClimbSystem : EntitySystem
             args.Cancel();
     }
 
-    protected virtual void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropOnEvent args)
+    protected virtual void OnCanDragDropOn(EntityUid uid, ClimbableComponent component, ref CanDropTargetEvent args)
     {
         args.CanDrop = HasComp<ClimbingComponent>(args.Dragged);
     }

@@ -27,7 +27,7 @@ namespace Content.Shared.Disposal
         {
             base.Initialize();
             SubscribeLocalEvent<SharedDisposalUnitComponent, PreventCollideEvent>(OnPreventCollide);
-            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDropOnEvent>(OnCanDragDropOn);
+            SubscribeLocalEvent<SharedDisposalUnitComponent, CanDropTargetEvent>(OnCanDragDropOn);
         }
 
         private void OnPreventCollide(EntityUid uid, SharedDisposalUnitComponent component, ref PreventCollideEvent args)
@@ -48,7 +48,7 @@ namespace Content.Shared.Disposal
             }
         }
 
-        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, ref CanDropOnEvent args)
+        private void OnCanDragDropOn(EntityUid uid, SharedDisposalUnitComponent component, ref CanDropTargetEvent args)
         {
             if (args.Handled)
                 return;
