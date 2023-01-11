@@ -5,7 +5,7 @@
   playTimeTracker: JobScientist
   requirements:  # Corvax-RoleTime
     - !type:OverallPlaytimeRequirement
-      time: 7200
+      time: 18000
   startingGear: ScientistGear
   icon: "Scientist"
   supervisors: job-supervisors-rd

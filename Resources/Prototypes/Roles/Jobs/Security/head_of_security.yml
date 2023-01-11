@@ -6,10 +6,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden
-      time: 7200 # Corvax-RoleTime
+      time: 36000 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 7200 # Corvax-RoleTime
+      time: 54000 # Corvax-RoleTime
 #    - !type:OverallPlaytimeRequirement
 #      time: 108000
   weight: 10
