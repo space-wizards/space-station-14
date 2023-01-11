@@ -49,12 +49,12 @@ public partial class CirculationSystem
     private bool LinkVessel(CirculationComponent circulation, CirculationVesselComponent vessel,
         EntityUid circulationEntity, EntityUid vesselEntity)
     {
-        //If this vessel contains standalone reagents, mix them with the the main reagents!
+        //If this vessel contains local reagents, mix them with the the main reagents!
         if (vessel.LocalReagents != null)
         {
             foreach (var (reagent, volume) in vessel.LocalReagents)
             {
-                AdjustReagentVolume(circulationEntity, reagent, volume, circulation);
+                AdjustSharedVolume(circulationEntity, reagent, volume, circulation);
             }
 
             vessel.LocalReagents.Clear();
@@ -84,7 +84,7 @@ public partial class CirculationSystem
         {
             var standAloneVolume = volume * GetReagentVolumeInVessel(reagentName, circulation, vessel);
             vessel.LocalReagents.Add(reagentName, standAloneVolume);
-            AdjustReagentVolume(vessel.Parent, reagentName, -standAloneVolume, circulation);
+            AdjustSharedVolume(vessel.Parent, reagentName, -standAloneVolume, circulation);
         }
 
         circulation.LinkedVessels.Remove(vesselEntity);

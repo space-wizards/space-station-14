@@ -26,12 +26,21 @@ public sealed partial class CirculationSystem : EntitySystem
         _accumulatedFrameTime -= CirculationUpdateInterval;
         foreach (var circulation in EntityQuery<CirculationComponent>())
         {
-            var updateEvent = new CirculationTickEvent(circulation, new Dictionary<string, FixedPoint2>());
-            RaiseLocalEvent(circulation.Owner, ref updateEvent);
-            foreach (var (reagentId, volumeAdjustment) in updateEvent.VolumeChanges)
-            {
-                AdjustSharedVolume(circulation.Owner, reagentId, volumeAdjustment, circulation);
-            }
+            RunCirculationTick(circulation.Owner, circulation);
+        }
+    }
+
+    private void RunCirculationTick(EntityUid circulationEntity, CirculationComponent circulation)
+    {
+        var updateEvent = new CirculationTickEvent(circulation, new Dictionary<string, FixedPoint2>());
+        RaiseLocalEvent(circulationEntity, updateEvent);
+        foreach (var vesselEntity in circulation.LinkedVessels)
+        {
+            RaiseLocalEvent(vesselEntity, updateEvent);
+        }
+        foreach (var (reagentId, volumeAdjustment) in updateEvent.VolumeChanges)
+        {
+            AdjustSharedVolume(circulation.Owner, reagentId, volumeAdjustment, circulation);
         }
     }
 
