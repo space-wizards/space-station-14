@@ -6,8 +6,8 @@
       edges:
         - to: Ghostsheet
           steps:
-            - material: BedsheetBase
-              amount: 1
+            - material: Cloth
+              amount: 10
               doAfter: 10
     - node: Ghostsheet
       entity: ClothingOuterGhostSheet
