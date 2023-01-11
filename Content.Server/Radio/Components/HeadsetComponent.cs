@@ -1,6 +1,7 @@
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Inventory;
 using Content.Shared.Radio;
+using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -13,16 +14,20 @@ namespace Content.Server.Radio.Components;
 [Access(typeof(HeadsetSystem))]
 public sealed class HeadsetComponent : Component
 {
-    /*
-     * true  => Human will able to screw out encryption keys with tool mentioned in KeysExtractionMethod and will be able to put encryption keys in headset.
-     * false => encryption keys will be locked in headset, there will be no proper way to extract them or to add keys anymore.
-    */
+    /// <summary>
+    ///     This variable indicates locked state of encryption keys, allowing or prohibbiting insert/remove them from headset.
+    ///     true  => Human will able to screw out encryption keys with tool mentioned in KeysExtractionMethod and will be able to put encryption keys in headset.
+    ///     false => encryption keys will be locked in headset, there will be no proper way to extract them or to add keys anymore.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isKeysLocked")]
     public bool IsKeysLocked = true;
-    // Shows what tool human should use to extract encryption keys from headset
+    /// <summary>
+    ///     Shows what tool human should use to extract encryption keys from headset.
+    ///     default "Screwing" means it is extracting by screwdriver.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("keysExtractionMethod")]
+    [DataField("keysExtractionMethod", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
     public string KeysExtractionMethod = "Screwing";
 
     [ViewVariables(VVAccess.ReadWrite)]

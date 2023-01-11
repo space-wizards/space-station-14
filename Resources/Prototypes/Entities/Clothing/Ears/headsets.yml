@@ -14,6 +14,7 @@
       - EncryptionKeyCommon
   - type: Headset
     defaultChannel: Common
+    keysExtractionMethod: Screwing
   - type: Sprite
     state: icon
   - type: Clothing
