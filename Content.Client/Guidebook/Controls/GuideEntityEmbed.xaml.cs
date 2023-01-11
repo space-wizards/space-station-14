@@ -148,6 +148,8 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         if (!string.IsNullOrEmpty(caption))
             Caption.Text = caption;
+        // else:
+        //   caption text already defaults to null
 
         if (args.TryGetValue("Scale", out var scaleStr))
         {
@@ -162,7 +164,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         if (args.TryGetValue("Interactive", out var interactive))
             Interactive = bool.Parse(interactive);
 
-        Margin = new Thickness(4);
+        Margin = new Thickness(4, 8);
 
         control = this;
         return true;
