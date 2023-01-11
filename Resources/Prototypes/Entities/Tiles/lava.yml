@@ -1,0 +1,37 @@
+- type: entity
+  id: FloorLavaEntity
+  name: lava floor
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Lava
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Tiles/Planet/lava.rsi
+    netsync: false
+    drawdepth: BelowFloor
+    layers:
+      - state: lava
+        shader: unshaded
+  - type: Icon
+    sprite: Tiles/Planet/lava.rsi
+    state: full
+  - type: IconSmooth
+    key: floor
+    base: lava
+  - type: Climbable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.5,-0.5,0.5,0.5"
+      mask:
+        - TableMask
+      layer:
+        - TableLayer
+      density: 1000

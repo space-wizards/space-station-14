@@ -136,8 +136,8 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            var landMsg = new LandEvent {User = thrownItem.Thrower};
-            RaiseLocalEvent(landing, landMsg, false);
+            var landEvent = new LandEvent(thrownItem.Thrower);
+            RaiseLocalEvent(landing, ref landEvent);
         }
 
         /// <summary>
