@@ -392,9 +392,18 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         // find possible targets on screen even if not reachable
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
-        var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds);
+        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        IEnumerable<EntityUid> pvsEntities;
+
+        if (_stateManager.CurrentState is GameplayStateBase state)
+        {
+            pvsEntities = state.GetClickableEntities(mousePos);
+        }
+        else
+        {
+            pvsEntities = Array.Empty<EntityUid>();
+        }
+
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)
