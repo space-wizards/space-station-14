@@ -132,7 +132,7 @@
   noSpawn: true
   suffix: DO NOT MAP
   name: admiral's cloak
-  description: A dark green cloak with a golden touch , given to those who proved themselves powerful enough.
+  description: A dark green cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admiral.rsi
