@@ -886,3 +886,64 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitErtEngineer
+  name: ert engineering jumpsuit
+  description: A suit made for the elite engineers under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitErtJanitor
+  name: ert janitorial jumpsuit
+  description: A suit made for the elite janitors under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitErtLeader
+  name: ert leader jumpsuit
+  description: A suit made for the best of the elites under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitErtMedic
+  name: ert medical jumpsuit
+  description: A suit made for the elite medics under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitErtSecurity
+  name: ert security jumpsuit
+  description: A suit made for the elite security under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
