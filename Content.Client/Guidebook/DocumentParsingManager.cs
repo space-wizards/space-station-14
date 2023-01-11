@@ -16,17 +16,22 @@ public sealed partial class DocumentParsingManager
     [Dependency] private readonly IReflectionManager _reflectionManager = default!;
     [Dependency] private readonly ISandboxHelper _sandboxHelper = default!;
 
-    private readonly List<Parser<char, Control>> _tagControlParsers = new();
+    private readonly Dictionary<string, Parser<char, Control>> _tagControlParsers = new();
+    private Parser<char, Control> _tagParser = default!;
     private Parser<char, Control> _controlParser = default!;
     public Parser<char, IEnumerable<Control>> ControlParser = default!;
 
     public void Initialize()
     {
-        _controlParser = OneOf(Rec(() => OneOf(_tagControlParsers)), TryHeaderControl, ListControlParser, TextControlParser).Before(SkipWhitespaces);
+        _tagParser = TryOpeningTag
+            .Assert(_tagControlParsers.ContainsKey, tag => $"unknown tag: {tag}")
+            .Bind(tag => _tagControlParsers[tag]);
+
+        _controlParser = OneOf(_tagParser, TryHeaderControl, ListControlParser, TextControlParser).Before(SkipWhitespaces);
 
         foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
         {
-            _tagControlParsers.Add(CreateTagControlParser(typ.Name, typ, _sandboxHelper));
+            _tagControlParsers.Add(typ.Name, CreateTagControlParser(typ.Name, typ, _sandboxHelper));
         }
 
         ControlParser = SkipWhitespaces.Then(_controlParser.Many());
@@ -67,7 +72,7 @@ public sealed partial class DocumentParsingManager
             }
             return control;
         },
-        TryOpeningTag(tagId).Then(ParseTagArgs(tagId)),
+        ParseTagArgs(tagId),
         TagContentParser(tagId)).Labelled($"{tagId} control");
 
     // Parse a bunch of controls until we encounter a matching closing tag.

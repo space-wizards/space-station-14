@@ -107,7 +107,7 @@ public sealed partial class DocumentParsingManager
     private static readonly Parser<char, Unit> TryLookTagEnd = Lookahead(OneOf(Try(TagEnd), Try(ImmediateTagEnd)));
 
     //parse tag argument key. any normal text character up until we hit a "="
-    private static readonly Parser<char, string> TagArgKey = TextChar.Until(Char('=')).Select(string.Concat).Labelled("tag argument key");
+    private static readonly Parser<char, string> TagArgKey = LetterOrDigit.Until(Char('=')).Select(string.Concat).Labelled("tag argument key");
 
     // parser for a singular tag argument. Note that each TryQuoteOrChar will consume a whole quoted block before the Until() looks for whitespace
     private static readonly Parser<char, (string, string)> TagArgParser = Map((key, value) => (key, value), TagArgKey, QuotedText).Before(SkipWhitespaces);
@@ -116,12 +116,11 @@ public sealed partial class DocumentParsingManager
     private static readonly Parser<char, IEnumerable<(string, string)>> TagArgsParser = TagArgParser.Until(TryLookTagEnd);
 
     // parser for an opening tag.
-    private static Parser<char, Unit> TryOpeningTag(string tag) =>
-        Try(Char('<')
-            .Then(SkipWhitespaces)
-            .Then(String(tag))
-            .Then(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd)))
-        .Labelled($"opening {tag}");
+    private static readonly Parser<char, string> TryOpeningTag =
+        Try(Char('<'))
+        .Then(SkipWhitespaces)
+        .Then(TextChar.Until(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd)))
+        .Select(string.Concat).Labelled($"opening tag");
 
     private static Parser<char, Dictionary<string, string>> ParseTagArgs(string tag)
     {
@@ -137,7 +136,7 @@ public sealed partial class DocumentParsingManager
             .Then(String(tag))
             .Then(SkipWhitespaces)
             .Then(TagEnd)
-            .Labelled($"closing {tag}");
+            .Labelled($"closing {tag} tag");
     }
     #endregion
 }

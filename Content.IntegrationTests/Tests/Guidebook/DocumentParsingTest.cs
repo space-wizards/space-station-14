@@ -37,7 +37,7 @@ whitespace before newlines are ignored.
 </TestControl>
 
 <TestControl key1=""value1"" key2=""value2 with spaces"" key3=""value3 with a 
-  newline"" arg4/>
+  newline""/>
 
 <TestControl > 
   <TestControl  k=""<\>\\>=\""=<-_?*3.0//"">
