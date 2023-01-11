@@ -18,7 +18,7 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     /// <remarks>
     /// Note that this doesn't refer to stability as a percentage: This is an arbitrary
-    /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DeathThreshold"/>
+    /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DecayThreshold"/>
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     public float Stability = 0.5f;
@@ -49,11 +49,11 @@ public sealed class AnomalyComponent : Component
     /// If the <see cref="Stability"/> of the anomaly exceeds this value, it
     /// becomes too unstable to support itself and starts decreasing in <see cref="Health"/>.
     /// </summary>
-    [DataField("deathThreshold"), ViewVariables(VVAccess.ReadWrite)]
-    public float DeathThreshold = 0.15f;
+    [DataField("decayhreshold"), ViewVariables(VVAccess.ReadWrite)]
+    public float DecayThreshold = 0.15f;
 
     /// <summary>
-    /// The amount of health lost when the stability is below the <see cref="DeathThreshold"/>
+    /// The amount of health lost when the stability is below the <see cref="DecayThreshold"/>
     /// </summary>
     [DataField("healthChangePerSecond"), ViewVariables(VVAccess.ReadWrite)]
     public float HealthChangePerSecond = -0.05f;

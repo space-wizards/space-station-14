@@ -25,6 +25,7 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -240,7 +241,7 @@ public sealed partial class AnomalySystem : EntitySystem
         {
             // if the stability is under the death threshold,
             // update it every second to start killing it slowly.
-            if (anomaly.Stability < anomaly.DeathThreshold &&
+            if (anomaly.Stability < anomaly.DecayThreshold &&
                 anomaly.NextSecondUpdate <= _timing.CurTime)
             {
                 ChangeAnomalyHealth(anomaly.Owner, anomaly.HealthChangePerSecond, anomaly);
@@ -252,5 +253,21 @@ public sealed partial class AnomalySystem : EntitySystem
                 DoAnomalyPulse(anomaly.Owner, anomaly);
             }
         }
+    }
+
+    /// <summary>
+    /// Gets the localized name of a particle.
+    /// </summary>
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public static string GetParticleLocale(AnomalousParticleType type)
+    {
+        return type switch
+        {
+            AnomalousParticleType.Delta => Loc.GetString("anomaly-particles-delta"),
+            AnomalousParticleType.Epsilon => Loc.GetString("anomaly-particles-epsilon"),
+            AnomalousParticleType.Zeta => Loc.GetString("anomaly-particles-zeta"),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

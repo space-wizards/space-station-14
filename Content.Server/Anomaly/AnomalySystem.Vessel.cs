@@ -94,7 +94,7 @@ public sealed partial class AnomalySystem
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
             multiplier = 1.25f; //more points for unstable
-        else if (component.Stability < component.DeathThreshold)
+        else if (component.Stability < component.DecayThreshold)
             multiplier = 0.75f; //less points if it's dying
 
         //penalty of up to 50% based on health

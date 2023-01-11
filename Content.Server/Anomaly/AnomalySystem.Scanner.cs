@@ -2,6 +2,7 @@
 using Content.Server.DoAfter;
 using Content.Shared.Anomaly;
 using Content.Shared.Interaction;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly;
 
@@ -12,9 +13,16 @@ public sealed partial class AnomalySystem
 {
     public void InitializeScanner()
     {
+        SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
         SubscribeLocalEvent<AnomalyScannerComponent, AnomalyScanFinishedEvent>(OnScannerDoAfterFinished);
         SubscribeLocalEvent<AnomalyScannerComponent, AnomalyScanCancelledEvent>(OnScannerDoAfterCancelled);
+    }
+
+    private void OnScannerUiOpened(EntityUid uid, AnomalyScannerComponent component, BoundUIOpenedEvent args)
+    {
+        var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component));
+        _ui.TrySetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
     private void OnScannerAfterInteract(EntityUid uid, AnomalyScannerComponent component, AfterInteractEvent args)
@@ -40,7 +48,6 @@ public sealed partial class AnomalySystem
     {
         component.TokenSource = null;
 
-        component.ScannedAnomaly = args.Anomaly;
         _popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Anomaly, component);
     }
@@ -54,5 +61,41 @@ public sealed partial class AnomalySystem
     {
         if (!Resolve(scanner, ref scannerComp) || !Resolve(anomaly, ref anomalyComp))
             return;
+
+        scannerComp.ScannedAnomaly = anomaly;
+    }
+
+    public FormattedMessage GetScannerMessage(AnomalyScannerComponent component)
+    {
+        var msg = new FormattedMessage();
+        if (component.ScannedAnomaly is not { } anomaly || !TryComp<AnomalyComponent>(anomaly, out var anomalyComp))
+        {
+            msg.AddMarkup(Loc.GetString("anomaly-scanner-no-anomaly"));
+            return msg;
+        }
+
+        string stateLoc;
+        if (anomalyComp.Stability < anomalyComp.DecayThreshold)
+            stateLoc = Loc.GetString("anomaly-scanner-stability-low");
+        else if (anomalyComp.Stability > anomalyComp.GrowthThreshold)
+            stateLoc =  Loc.GetString("anomaly-scanner-stability-high");
+        else
+            stateLoc =  Loc.GetString("anomaly-scanner-stability-medium");
+        msg.AddMarkup(stateLoc);
+        msg.PushNewline();
+
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-pulse-timer", ("time", anomalyComp.NextPulseTime - _timing.CurTime)));
+        msg.PushNewline();
+        msg.PushNewline();
+
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-readout"));
+        msg.PushNewline();
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-danger", ("type", GetParticleLocale(anomalyComp.SeverityParticleType))));
+        msg.PushNewline();
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-unstable", ("type", GetParticleLocale(anomalyComp.DestabilizingParticleType))));
+        msg.PushNewline();
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
+
+        return msg;
     }
 }

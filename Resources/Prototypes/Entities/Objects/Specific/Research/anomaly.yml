@@ -9,10 +9,11 @@
     netsync: false
     state: analyzer
   - type: ActivatableUI
-    key: enum.HealthAnalyzerUiKey.Key
+    key: enum.AnomalyScannerUiKey.Key
     closeOnHandDeselect: false
+    inHandsOnly: true
   - type: UserInterface
     interfaces:
-      - key: enum.HealthAnalyzerUiKey.Key
-        type: HealthAnalyzerBoundUserInterface
+      - key: enum.AnomalyScannerUiKey.Key
+        type: AnomalyScannerBoundUserInterface
   - type: AnomalyScanner

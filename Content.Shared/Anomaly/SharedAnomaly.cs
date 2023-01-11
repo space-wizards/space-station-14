@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Anomaly;
 
@@ -29,4 +30,21 @@ public enum AnomalyVesselVisuals : byte
 public enum AnomalyVesselVisualLayers : byte
 {
     Base
+}
+
+[Serializable, NetSerializable]
+public enum AnomalyScannerUiKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public sealed class AnomalyScannerUserInterfaceState : BoundUserInterfaceState
+{
+    public FormattedMessage Message;
+
+    public AnomalyScannerUserInterfaceState(FormattedMessage message)
+    {
+        Message = message;
+    }
 }
