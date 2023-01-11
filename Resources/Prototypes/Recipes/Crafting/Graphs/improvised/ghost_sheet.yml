@@ -9,5 +9,5 @@
         - material: bedsheet
           amount: 1
           doAfter: 10
-    - node: muzzle
+    - node: ghostsheet
       entity: ClothingGhostsheet
