@@ -4,10 +4,10 @@
   graph:
     - node: start
       edges:
-      - to: Ghostsheet
-        steps:
-        - material: BedsheetBase
-          amount: 1
-          doAfter: 10
+        - to: Ghostsheet
+          steps:
+            - material: white bedsheet
+              amount: 1
+              doAfter: 10
     - node: Ghostsheet
       entity: ClothingOuterGhostSheet
