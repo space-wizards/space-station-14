@@ -1,10 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'psychologist, detective, and reporter ID cards now display correct
-      layers', type: Fix}
-  id: 2354
-  time: '2022-09-22T21:00:14.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Humanoids were recently changed. Expect to see more variations of humanoids
@@ -2956,3 +2950,8 @@ Entries:
     type: Fix}
   id: 2853
   time: '2023-01-10T21:45:09.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Narcolepsy can now be treated., type: Add}
+  id: 2854
+  time: '2023-01-11T08:14:16.0000000+00:00'
