@@ -163,7 +163,7 @@ namespace Content.Server.Cargo.Systems
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} approved order [orderNum:{order.OrderNumber}, amount:{order.Amount}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
+                $"{ToPrettyString(player):user} approved order [orderNum:{order.PrintableOrderNumber}, amount:{order.Amount}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
 
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
@@ -199,7 +199,7 @@ namespace Content.Server.Cargo.Systems
 
             // Log order addition
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} added order [orderNum:{data.OrderNumber}, amount:{data.Amount}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
+                $"{ToPrettyString(player):user} added order [orderNum:{data.PrintableOrderNumber}, amount:{data.Amount}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
 
         }
 
