@@ -274,7 +274,7 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
-    fiberColor: fibers-regal-blue
+    fiberColor: fibers-regal-green
   - type: FingerprintMask
 
 - type: entity
@@ -293,7 +293,7 @@
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
-    fiberColor: fibers-regal-blue
+    fiberColor: fibers-regal-black
   - type: FingerprintMask
   - type: RestrictedClothing
     permissions:

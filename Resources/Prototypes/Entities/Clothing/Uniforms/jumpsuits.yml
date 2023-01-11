@@ -898,6 +898,13 @@
     sprite: Clothing/Uniforms/Jumpsuit/admiral.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/admiral.rsi
+  - type: Armor  # integrated ClothingOuterArmorCentcomCarapace
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
   - type: RestrictedClothing
     permissions:
       - Admin
@@ -913,6 +920,13 @@
     sprite: Clothing/Uniforms/Jumpsuit/grandadmiral.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/grandadmiral.rsi
+  - type: Armor  # integrated ClothingOuterArmorCentcomCarapace
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
   - type: RestrictedClothing
     permissions:
       - Admin

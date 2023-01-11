@@ -15,12 +15,91 @@
   id: CentcomGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitCentcomOfficial
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesLeather
     head: ClothingHeadHatCentcom
     eyes: ClothingEyesGlassesSunglasses
-    gloves: ClothingHandsGlovesColorBlack
     outerClothing: ClothingOuterVestKevlar
     id: CentcomPDA
-    ears: ClothingHeadsetAltCommand
+    ears: ClothingHeadsetCentCom
     pocket1: Paper
     pocket2: Pen
+
+- type: startingGear
+  id: CentcomOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomOfficer
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatBeretOfficer
+    eyes: ClothingEyesGlassesSunglasses
+    belt: ClothingBeltHolster
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterVestKevlar
+    id: CentcomPDA
+    ears: ClothingHeadsetCentCom
+    pocket1: MagazinePistolSubMachineGun
+    pocket2: MagazinePistolSubMachineGunTopMounted
+
+- type: startingGear
+  id: CentcomColonelGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCentcom
+    neck: ClothingNeckMantleColonel
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCentcom
+    outerClothing: ClothingOuterArmorCentcomCarapace
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+
+- type: startingGear
+  id: CentcomCommodoreGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCentcom
+    neck: ClothingNeckMantleCommodore
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCentcom
+    outerClothing: ClothingOuterArmorCentcomCarapace
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+
+- type: startingGear
+  id: CentcomMajorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCentcomFormal
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatCentcom
+    neck: ClothingNeckMantleMajor
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCentcom
+    outerClothing: ClothingOuterArmorCentcomCarapace
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+
+- type: startingGear
+  id: CentcomAdmiralGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitAdmiral
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatAdmiral
+    neck: ClothingNeckCloakAdmiral
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCentcom
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: WeaponPulsePistol
+
+- type: startingGear
+  id: CentcomGrandAdmiralGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitGrandAdmiral
+    shoes: ClothingShoesBootsCombatFilled
+    head: ClothingHeadHatGrandAdmiral
+    neck: ClothingNeckCloakGrandAdmiral
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesGrandAdmiral
+    id: CentcomPDA
+    ears: ClothingHeadsetAltCentCom
+    pocket1: WeaponPulsePistol

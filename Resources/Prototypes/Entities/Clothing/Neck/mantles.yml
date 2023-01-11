@@ -19,7 +19,7 @@
     sprite: Clothing/Neck/mantles/cemantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cemantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCMO
@@ -30,7 +30,7 @@
     sprite: Clothing/Neck/mantles/cmomantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/cmomantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOP
@@ -41,7 +41,7 @@
     sprite: Clothing/Neck/mantles/hopmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hopmantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOS
@@ -52,7 +52,7 @@
     sprite: Clothing/Neck/mantles/hosmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/hosmantle.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleRD
@@ -62,7 +62,7 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/rdmantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/rdmantle.rsi    
+    sprite: Clothing/Neck/mantles/rdmantle.rsi
 
 - type: entity
   parent: ClothingNeckBase
@@ -74,11 +74,11 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/colonelmantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/colonelmantle.rsi    
+    sprite: Clothing/Neck/mantles/colonelmantle.rsi
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckMantlecommodore
+  id: ClothingNeckMantleCommodore
   suffix: DO NOT MAP
   name: commodore's mantle
   description: A gold alloy reinforced pauldron signifying the rank of Commodore.
@@ -86,8 +86,8 @@
   - type: Sprite
     sprite: Clothing/Neck/mantles/commodoremantle.rsi
   - type: Clothing
-    sprite: Clothing/Neck/mantles/commodoremantle.rsi    
-    
+    sprite: Clothing/Neck/mantles/commodoremantle.rsi
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleMajor
