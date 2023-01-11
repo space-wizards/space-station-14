@@ -1,14 +1,14 @@
 - type: constructionGraph
-  id: Ghostsheet
+  id: ghostsheet
   start: start
   graph:
     - node: start
       edges:
-        - to: Ghostsheet
+        - to: ghostsheet
           steps:
             - material: Cloth
               amount: 10
               doAfter: 10
-    - node: Ghostsheet
+    - node: ghostsheet
       entity: ClothingOuterGhostSheet
       
