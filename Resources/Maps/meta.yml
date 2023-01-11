@@ -25921,8 +25921,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -25951,83 +25951,83 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 21.213781
-      - 79.80423
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 6666.982
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
       - 20.619795
       - 77.56971
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 6666.982
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -97635,85 +97635,69 @@ entities:
   - unspawnedCount: 12
     type: BallisticAmmoProvider
 - uid: 10383
-  type: MagazineMagnumSubMachineGun
+  type: MagazineRifle
   components:
-  - pos: -7.7974215,38.490623
+  - pos: -7.3283668,38.638325
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10384
-  type: MagazineMagnumSubMachineGun
+  type: MagazineRifle
   components:
-  - pos: -7.6567965,38.490623
+  - pos: -7.2658668,38.638325
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10385
-  type: MagazineMagnumSubMachineGun
+  type: MagazineRifle
   components:
-  - pos: -7.5161715,38.490623
+  - pos: -7.7033668,38.638325
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10386
-  type: MagazineRifle
+  type: WeaponRifleLecter
   components:
-  - pos: -7.7192965,37.5375
+  - pos: -4.5158668,38.700825
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10387
-  type: MagazineRifle
+  type: WeaponRifleLecter
   components:
-  - pos: -7.5630465,37.5375
+  - pos: -4.4846168,38.4352
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10388
+  type: WeaponRifleLecter
+  components:
+  - pos: -4.5002418,38.575825
+    parent: 0
+    type: Transform
+- uid: 10389
   type: MagazineRifle
   components:
-  - pos: -7.740036,37.46704
+  - pos: -7.4846168,38.638325
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
-- uid: 10389
-  type: MagazineMagnumSubMachineGun
-  components:
-  - pos: -7.3755465,38.490623
-    parent: 0
-    type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10390
-  type: MagazineMagnumSubMachineGun
+  type: MagazineRifle
   components:
-  - pos: -7.2349215,38.490623
+  - pos: -7.5939918,38.638325
     parent: 0
     type: Transform
-  - unspawnedCount: 25
-    type: BallisticAmmoProvider
 - uid: 10391
-  type: WeaponSubMachineGunVector
+  type: MagazineRifleRubber
   components:
-  - pos: -5.5786715,38.6625
+  - pos: -7.3908668,38.3727
     parent: 0
     type: Transform
 - uid: 10392
-  type: WeaponSubMachineGunVector
+  type: MagazineRifleRubber
   components:
-  - pos: -5.5630465,38.5375
+  - pos: -7.5314918,38.3727
     parent: 0
     type: Transform
 - uid: 10393
-  type: WeaponSubMachineGunVector
+  type: MagazineRifleRubber
   components:
-  - pos: -5.5630465,38.365623
+  - pos: -7.6877418,38.3727
     parent: 0
     type: Transform
 - uid: 10394
@@ -122211,6 +122195,8 @@ entities:
     type: Transform
   - charge: 100
     type: GravityGenerator
+  - radius: 175.75
+    type: PointLight
 - uid: 14054
   type: GeneratorPlasma
   components:
@@ -157593,7 +157579,7 @@ entities:
   - pos: 9.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -157609,7 +157595,7 @@ entities:
   - pos: 10.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -157625,7 +157611,7 @@ entities:
   - pos: 11.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -157641,7 +157627,7 @@ entities:
   - pos: 13.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -157657,7 +157643,7 @@ entities:
   - pos: 14.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -157673,7 +157659,7 @@ entities:
   - pos: 15.5,-47.5
     parent: 0
     type: Transform
-  - SecondsUntilStateChange: -2184.3267
+  - SecondsUntilStateChange: -2457.4302
     state: Closing
     type: Door
   - inputs:
@@ -194257,4 +194243,46 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 24711
+  type: MagazineRifleRubber
+  components:
+  - pos: -7.2814918,38.3727
+    parent: 0
+    type: Transform
+- uid: 24712
+  type: WeaponLaserCarbine
+  components:
+  - pos: -5.4221168,38.700825
+    parent: 0
+    type: Transform
+- uid: 24713
+  type: WeaponLaserCarbine
+  components:
+  - pos: -5.4221168,38.52895
+    parent: 0
+    type: Transform
+- uid: 24714
+  type: WeaponLaserCarbine
+  components:
+  - pos: -5.4221168,38.357075
+    parent: 0
+    type: Transform
+- uid: 24715
+  type: WeaponCapacitorRecharger
+  components:
+  - pos: -3.5,35.5
+    parent: 0
+    type: Transform
+- uid: 24716
+  type: HighPowerMicroLaserStockPart
+  components:
+  - pos: 40.44346,10.567184
+    parent: 0
+    type: Transform
+- uid: 24717
+  type: HighPowerMicroLaserStockPart
+  components:
+  - pos: 40.56846,10.489059
+    parent: 0
+    type: Transform
 ...
