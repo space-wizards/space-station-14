@@ -10,6 +10,9 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed class ResetNarcolepsy : ReagentEffect
     {
+        /// <summary>
+        /// The # of seconds the effect resets the narcolepsy timer to
+        /// </summary>
         [DataField("TimerReset")]
         public int TimerReset = 600;
 
