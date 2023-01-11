@@ -65,7 +65,7 @@ namespace Content.Shared.Zombies
         /// <summary>
         /// The EntityName of the humanoid to restore in case of cloning
         /// </summary>
-        [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.Readonly)]
+        [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
         public string BeforeZombifiedEntityName = String.Empty;
 
         /// <summary>

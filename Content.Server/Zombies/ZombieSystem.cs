@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Cloning;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Speech;
 using Content.Shared.Bed.Sleep;
@@ -32,6 +34,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
 
         public override void Initialize()
         {
