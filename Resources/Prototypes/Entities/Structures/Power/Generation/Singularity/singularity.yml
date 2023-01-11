@@ -41,7 +41,8 @@
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false
-    horizonFixtureId: EventHorizon
+    colliderFixtureId: EventHorizonCollider
+    consumerFixtureId: EventHorizonConsumer
   - type: RandomWalk # To make the singularity move around.
   - type: SingularityDistortion
   - type: RadiationSource
