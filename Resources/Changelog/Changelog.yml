@@ -1,9 +1,4 @@
 Entries:
-- author: illiux
-  changes:
-  - {message: Latejoin spawns to Pillar, type: Add}
-  id: 2357
-  time: '2022-09-23T04:19:07.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Minor update and fixes for Splitstation. Salvage is closer to Science,
@@ -2956,3 +2951,8 @@ Entries:
   - {message: Screaming now emits a popup message that others can see., type: Add}
   id: 2856
   time: '2023-01-11T09:06:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now withdraw currency from the uplink again., type: Fix}
+  id: 2857
+  time: '2023-01-11T22:03:18.0000000+00:00'
