@@ -14,7 +14,7 @@ public sealed class CirculationVesselComponent : Component
     //Reagents that are present in the vessel, these get synced with the rest of the circulation system when it updates
     [DataField("localReagents",
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
-    public Dictionary<string, FixedPoint2>? LocalReagents = null;
+    public Dictionary<string, FixedPoint2>? LocalReagents;
 
     //TODO: convert this to use a list instead of a dict
 

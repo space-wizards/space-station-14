@@ -6,7 +6,7 @@ namespace Content.Shared.Medical.Circulation.Systems;
 
 public sealed partial class CirculationSystem
 {
-    private void UpdateTotalVolume(EntityUid entity, CirculationComponent circulation)
+    private void UpdateSharedVolume(EntityUid entity, CirculationComponent circulation)
     {
         circulation.TotalReagentVolume = 0;
         foreach (var (_, volume) in circulation.Reagents)
@@ -19,7 +19,7 @@ public sealed partial class CirculationSystem
         RaiseLocalEvent(entity, ev);
     }
 
-    public bool AdjustReagentVolume(EntityUid entity, string reagentId, FixedPoint2 volume,
+    public bool AdjustSharedVolume(EntityUid entity, string reagentId, FixedPoint2 volume,
         CirculationComponent? circulation = null)
     {
         if (!Resolve(entity, ref circulation) || !_prototypeManager.TryIndex<ReagentPrototype>(reagentId, out _))
@@ -33,12 +33,12 @@ public sealed partial class CirculationSystem
         {
             circulation.Reagents.Remove(reagentId);
         }
-        UpdateTotalVolume(entity, circulation);
+        UpdateSharedVolume(entity, circulation);
         return true;
     }
 
 
-    public bool SetReagentVolume(EntityUid entity, string reagentId, FixedPoint2 volume,
+    public bool SetSharedVolume(EntityUid entity, string reagentId, FixedPoint2 volume,
         CirculationComponent? circulation = null)
     {
         if (!Resolve(entity, ref circulation) || !_prototypeManager.TryIndex<ReagentPrototype>(reagentId, out _))
@@ -52,8 +52,17 @@ public sealed partial class CirculationSystem
         {
             circulation.Reagents.Remove(reagentId);
         }
-        UpdateTotalVolume(entity, circulation);
+        UpdateSharedVolume(entity, circulation);
         return true;
+    }
+
+    private bool TryGetSharedVolume(EntityUid entity, string reagentName, out FixedPoint2 volume,
+        CirculationComponent? circulation)
+    {
+        volume = 0;
+        return _prototypeManager.TryIndex<ReagentPrototype>(reagentName, out _)
+               && Resolve(entity, ref circulation)
+               && !circulation.Reagents.TryGetValue(reagentName, out volume);
     }
 
 

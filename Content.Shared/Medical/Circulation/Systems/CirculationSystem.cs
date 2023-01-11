@@ -11,6 +11,7 @@ public sealed partial class CirculationSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private float _accumulatedFrameTime;
     public const float CirculationUpdateInterval = 0.5f;
+
     public override void Initialize()
     {
     }
@@ -29,17 +30,18 @@ public sealed partial class CirculationSystem : EntitySystem
             RaiseLocalEvent(circulation.Owner, ref updateEvent);
             foreach (var (reagentId, volumeAdjustment) in updateEvent.VolumeChanges)
             {
-                AdjustReagentVolume(circulation.Owner, reagentId, volumeAdjustment, circulation);
+                AdjustSharedVolume(circulation.Owner, reagentId, volumeAdjustment, circulation);
             }
         }
     }
+
     public bool AddNewReagentType(EntityUid entity, string reagentId, FixedPoint2 volume,
         CirculationComponent? circulation = null)
     {
         if (!Resolve(entity, ref circulation) || !_prototypeManager.TryIndex<ReagentPrototype>(reagentId, out _) ||
             !circulation.Reagents.TryAdd(reagentId, volume))
             return false;
-        UpdateTotalVolume(entity, circulation);
+        UpdateSharedVolume(entity, circulation);
         return true;
     }
 
@@ -48,17 +50,7 @@ public sealed partial class CirculationSystem : EntitySystem
         if (!Resolve(entity, ref circulation) || !_prototypeManager.TryIndex<ReagentPrototype>(reagentId, out _) ||
             !circulation.Reagents.Remove(reagentId))
             return false;
-        UpdateTotalVolume(entity, circulation);
+        UpdateSharedVolume(entity, circulation);
         return true;
-    }
-
-    private bool HasReagent(string reagentName)
-    {
-        return TryGetCirculationReagent(reagentName, out _);
-    }
-
-    private bool TryGetCirculationReagent(string reagentName, [NotNullWhen(true)] out ReagentPrototype? reagentProto)
-    {
-        return _prototypeManager.TryIndex(reagentName, out reagentProto);
     }
 }
