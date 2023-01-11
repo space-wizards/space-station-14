@@ -114,7 +114,7 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakgrandadmiral
@@ -123,12 +123,13 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/grandadmiral.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckCloadmiral
+  id: ClothingNeckCloakadmiral
   name: Admiral's cloak
   description: A dark green cloak with a golden touch , given to those who proved themselves powerful enough.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admiral.rsi
+
