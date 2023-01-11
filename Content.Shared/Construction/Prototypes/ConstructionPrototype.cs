@@ -8,8 +8,6 @@ namespace Content.Shared.Construction.Prototypes
     [Prototype("construction")]
     public sealed class ConstructionPrototype : IPrototype
     {
-        private string _category = string.Empty;
-
         [DataField("conditions")] private List<IConstructionCondition> _conditions = new();
 
         /// <summary>
@@ -54,12 +52,7 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("canBuildInImpassable")]
         public bool CanBuildInImpassable { get; private set; }
 
-        [DataField("category")]
-        public string Category
-        {
-            get => _category;
-            private set => _category = Loc.GetString(value);
-        }
+        [DataField("category")] public string Category { get; private set; } = "";
 
         [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 

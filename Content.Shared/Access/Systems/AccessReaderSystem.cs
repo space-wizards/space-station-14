@@ -108,7 +108,7 @@ namespace Content.Shared.Access.Systems
         /// <summary>
         /// Finds the access tags on the given entity
         /// </summary>
-        /// <param name="entity">The entity that to search.</param>
+        /// <param name="uid">The entity that is being searched.</param>
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
             HashSet<string>? tags = null;
@@ -117,18 +117,19 @@ namespace Content.Shared.Access.Systems
             // check entity itself
             FindAccessTagsItem(uid, ref tags, ref owned);
 
-            foreach (var item in _handsSystem.EnumerateHeld(uid))
+            FindAccessItemsInventory(uid, out var items);
+
+            var ev = new GetAdditionalAccessEvent
             {
-                FindAccessTagsItem(item, ref tags, ref owned);
+                Entities = items
+            };
+            RaiseLocalEvent(uid, ref ev);
+            foreach (var ent in ev.Entities)
+            {
+                FindAccessTagsItem(ent, ref tags, ref owned);
             }
 
-            // maybe its inside an inventory slot?
-            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
-            {
-                FindAccessTagsItem(idUid.Value, ref tags, ref owned);
-            }
-
-            return ((ICollection<string>?) tags) ?? Array.Empty<string>();
+            return (ICollection<string>?) tags ?? Array.Empty<string>();
         }
 
         /// <summary>
@@ -161,6 +162,24 @@ namespace Content.Shared.Access.Systems
                 tags = targetTags;
                 owned = false;
             }
+        }
+
+        public bool FindAccessItemsInventory(EntityUid uid, out HashSet<EntityUid> items)
+        {
+            items = new();
+
+            foreach (var item in _handsSystem.EnumerateHeld(uid))
+            {
+                items.Add(item);
+            }
+
+            // maybe its inside an inventory slot?
+            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
+            {
+                items.Add(idUid.Value);
+            }
+
+            return items.Any();
         }
 
         /// <summary>

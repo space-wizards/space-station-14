@@ -28,3 +28,5 @@
   components:
   - type: InjectableSolution
     solution: food
+  - type: RefillableSolution
+    solution: food

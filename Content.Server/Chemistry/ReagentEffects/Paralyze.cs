@@ -14,7 +14,10 @@ public sealed class Paralyze : ReagentEffect
 
     public override void Effect(ReagentEffectArgs args)
     {
-        EntitySystem.Get<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(ParalyzeTime), Refresh);
+        var paralyzeTime = ParalyzeTime;
+        paralyzeTime *= args.Scale;
+
+        EntitySystem.Get<StunSystem>().TryParalyze(args.SolutionEntity, TimeSpan.FromSeconds(paralyzeTime), Refresh);
     }
 }
 

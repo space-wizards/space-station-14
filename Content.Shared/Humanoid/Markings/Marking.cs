@@ -43,7 +43,6 @@ namespace Content.Shared.Humanoid.Markings
         ///     ID of the marking prototype.
         /// </summary>
         [DataField("markingId")]
-        [ViewVariables]
         public string MarkingId { get; } = default!;
 
         /// <summary>

@@ -20,10 +20,8 @@
         reagents:
         - ReagentId: Flour
           Quantity: 10
-  - type: Evaporation
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
 
 # Reagent Containers
 
@@ -433,7 +431,7 @@
   name: cheese wheel
   parent: FoodBakingBase
   id: FoodCheese
-  description: A big wheel of delcious Cheddar.
+  description: A big wheel of delicious Cheddar.
   components:
   - type: FlavorProfile
     flavors:

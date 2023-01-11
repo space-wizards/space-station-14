@@ -1,8 +1,7 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Content.Shared.Radio;
-using Content.Shared.Salvage;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Salvage;
 
 namespace Content.Server.Salvage
 {
@@ -48,7 +47,34 @@ namespace Content.Server.Salvage
         [DataField("magnetState")]
         public MagnetState MagnetState = MagnetState.Inactive;
 
-        [ViewVariables]
+        /// <summary>
+        ///     How long it takes for the magnet to pull in the debris
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("attachingTime")]
+        public TimeSpan AttachingTime = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///     How long the magnet can hold the debris until it starts losing the lock
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("holdTime")]
+        public TimeSpan HoldTime = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///     How long the magnet can hold the debris while losing the lock
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("detachingTime")]
+        public TimeSpan DetachingTime = TimeSpan.FromSeconds(10);
+
+        /// <summary>
+        ///     How long the magnet has to cool down after use
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("cooldownTime")]
+        public TimeSpan CooldownTime = TimeSpan.FromSeconds(10);
+
         [DataField("salvageChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
         public string SalvageChannel = "Supply";
 
@@ -68,6 +94,7 @@ namespace Content.Server.Salvage
         public int PreviousCharge = 5;
 
     }
+    [CopyByRef]
     public record struct MagnetState(MagnetStateType StateType, TimeSpan Until)
     {
         public static readonly MagnetState Inactive = new (MagnetStateType.Inactive, TimeSpan.Zero);

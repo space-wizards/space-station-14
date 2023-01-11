@@ -146,6 +146,7 @@
   - type: Tag
     tags:
     - PetWearable
+  - type: Recyclable
 
 - type: entity
   parent: ClothingMaskBase
