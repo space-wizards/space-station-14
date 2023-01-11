@@ -515,11 +515,33 @@
       
 - type: entity
   parent: ClothingHeadBase
-  id: ClothingHeadHatBeretofficer
+  id: ClothingHeadHatBeretOfficer
   name: officerberet
   description: A special beret with the NanoTrasen logo emblazoned on it. For where no man has gone before.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hats/officersbaret.rsi
+    sprite: Clothing/Head/Hats/officersberet.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hats/officersbaret.rsi
+    sprite: Clothing/Head/Hats/officersberet.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatGrandAdmiral
+  name: grandadmiralscap
+  description: It's good to be at the top.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/grandadmiralcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/grandadmiralcap.rsi
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatAdmiral
+  name: admiralscap
+  description: It's good to be a god.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/admiralcap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/admiralcap.rsi

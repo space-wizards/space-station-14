@@ -262,7 +262,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesCentcom
   name: centcom gloves
-  description: Regal green gloves, with a nice gold trim. Swanky.
+  description: Regal green gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/centcom.rsi
@@ -280,7 +280,7 @@
   parent: ClothingHandsBase
   id: ClothingHandsGlovesGrandAdmiral
   name: grand admiral gloves
-  description: Regal black gloves, with a nice gold trim. Swanky.
+  description: Regal black gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky.
   components:
   - type: Sprite
     sprite: Clothing/Hands/Gloves/grandadmiral.rsi
