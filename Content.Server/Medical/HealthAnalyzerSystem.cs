@@ -58,10 +58,7 @@ namespace Content.Server.Medical
 
             healthAnalyzer.CancelToken = new CancellationTokenSource();
 
-            if (healthAnalyzer.ScanningBeginSound != null)
-            {
-                _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
-            }
+            _audio.PlayPvs(healthAnalyzer.ScanningBeginSound, uid);
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(args.User, healthAnalyzer.ScanDelay, healthAnalyzer.CancelToken.Token, target: args.Target)
             {
@@ -78,11 +75,7 @@ namespace Content.Server.Medical
         {
             args.Component.CancelToken = null;
 
-
-            if (args.Component.ScanningEndSound != null)
-            {
-                _audio.PlayPvs(args.Component.ScanningEndSound, args.User);
-            }
+            _audio.PlayPvs(args.Component.ScanningEndSound, args.User);
 
             UpdateScannedUser(args.Component.Owner, args.User, args.Target, args.Component);
             // Below is for the traitor item
