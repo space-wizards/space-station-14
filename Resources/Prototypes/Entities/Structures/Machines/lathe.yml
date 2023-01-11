@@ -15,7 +15,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
@@ -102,7 +102,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Appearance
@@ -171,6 +171,7 @@
       - MiningDrill
       - ConveyorBeltAssembly
       - AppraisalTool
+      - RCD
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
@@ -227,6 +228,7 @@
       - PowerCellHigh  
       - SynthesizerInstrument
       - RPED
+      - NodeScanner
       - HolofanProjector
 
 - type: entity
@@ -266,6 +268,7 @@
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard
       - VaccinatorMachineCircuitboard
       - DiagnoserMachineCircuitboard
@@ -285,11 +288,13 @@
       - AutolatheMachineCircuitboard
       - ProtolatheMachineCircuitboard
       - ReagentGrinderMachineCircuitboard
+      - HotplateMachineCircuitboard
       - MicrowaveMachineCircuitboard
       - UniformPrinterMachineCircuitboard
       - ShuttleConsoleCircuitboard
       - RadarConsoleCircuitboard
       - CircuitImprinterMachineCircuitboard
+      - TechDiskComputerCircuitboard
       - DawInstrumentMachineCircuitboard
       - CloningConsoleComputerCircuitboard
       - StasisBedMachineCircuitboard
@@ -330,7 +335,7 @@
     - state: fab-idle
       map: ["enum.LatheVisualLayers.IsRunning"]
     - state: fab-load
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: fab-o
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
@@ -371,7 +376,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
@@ -427,7 +432,7 @@
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
     - state: inserting
-      map: ["enum.LatheVisualLayers.IsInserting"]
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Lathe
@@ -574,17 +579,18 @@
           shader: unshaded
           map: ["enum.PowerDeviceVisualLayers.Powered"]
         - state: inserting
-          map: ["enum.LatheVisualLayers.IsInserting"]
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: OreProcessorMachineCircuitboard
     - type: MaterialStorage
+      dropOnDeconstruct: false #should drop ores instead of ingots/sheets
+      ignoreColor: true
       whitelist:
         tags:
           - Ore
     - type: Lathe
-      ignoreColor: true
       staticRecipes:
         - SheetSteel30
         - SheetGlass30

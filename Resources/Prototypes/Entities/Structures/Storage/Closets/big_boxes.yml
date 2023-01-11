@@ -49,6 +49,7 @@
     - type: Tag
       tags:
         - DoorBumpOpener
+    - type: InteractionOutline
 
 - type: entity
   id: StealthBox

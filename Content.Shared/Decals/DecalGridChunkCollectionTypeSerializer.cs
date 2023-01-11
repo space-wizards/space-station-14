@@ -1,3 +1,4 @@
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -18,10 +19,10 @@ namespace Content.Shared.Decals
 
         public DecalGridComponent.DecalGridChunkCollection Read(ISerializationManager serializationManager,
             MappingDataNode node,
-            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null,
+            IDependencyCollection dependencies, SerializationHookContext hookCtx, ISerializationContext? context = null,
             ISerializationManager.InstantiationDelegate<DecalGridComponent.DecalGridChunkCollection>? _ = default)
         {
-            var dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, context, skipHook: skipHook, notNullableOverride: true);
+            var dictionary = serializationManager.Read<Dictionary<Vector2i, DecalChunk>>(node, hookCtx, context, notNullableOverride: true);
 
             var uids = new SortedSet<uint>();
             var uidChunkMap = new Dictionary<uint, Vector2i>();

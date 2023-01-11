@@ -30,10 +30,20 @@
     - state: beam
       shader: unshaded
       visible: false
+      map: ["enum.EmitterVisualLayers.Lights"]
     - state: lock
       shader: unshaded
       visible: false
+      map: ["enum.StorageVisualLayers.Lock"]
   - type: Emitter
+  - type: Gun
+    showExamineText: false
+    fireRate: 10 #just has to be fast enough to keep up with upgrades
+    selectedMode: SemiAuto
+    availableModes:
+      - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/emitter.ogg
   - type: PowerConsumer
     voltage: Medium
   - type: NodeContainer
@@ -65,8 +75,6 @@
   - type: Pullable
   - type: Rotatable
   - type: Appearance
-    visuals:
-    - type: EmitterVisualizer
   - type: Lock
     locked: false
   - type: AccessReader

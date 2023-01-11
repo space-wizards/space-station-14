@@ -17,12 +17,11 @@ using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.Construction;
 using Content.Server.DoAfter;
-using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
 using Content.Server.Stack;
+using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Server.Player;
@@ -77,7 +76,7 @@ namespace Content.Server.Medical.BiomassReclaimer
                     continue;
                 }
 
-                _stackSystem.SpawnMultiple(reclaimer.OutputEntityId, reclaimer.CurrentExpectedYield, Transform(reclaimer.Owner).Coordinates);
+                _stackSystem.SpawnMultipleFromMaterial((int) reclaimer.CurrentExpectedYield, "Biomass", Transform(reclaimer.Owner).Coordinates);
 
                 reclaimer.BloodReagent = null;
                 reclaimer.SpawnedEntities.Clear();

@@ -18,6 +18,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
   - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     netsync: false

@@ -3,12 +3,14 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.MobState;
 using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
 using Content.Shared.MobState.Components;
+using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -24,6 +26,7 @@ public sealed class PricingSystem : EntitySystem
 {
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     [Dependency] private readonly BodySystem _bodySystem = default!;
@@ -98,7 +101,7 @@ public sealed class PricingSystem : EntitySystem
         var partRatio = totalPartsPresent / (double) totalParts;
         var partPenalty = component.Price * (1 - partRatio) * component.MissingBodyPartPenalty;
 
-        args.Price += (component.Price - partPenalty) * (state.IsAlive() ? 1.0 : component.DeathPenalty);
+        args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
     private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
@@ -160,6 +163,16 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
+    public double GetMaterialPrice(MaterialComponent component)
+    {
+        double price = 0;
+        foreach (var (id, quantity) in component.Materials)
+        {
+            price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
+        }
+        return price;
+    }
+
     /// <summary>
     /// Appraises an entity, returning it's price.
     /// </summary>
@@ -178,10 +191,11 @@ public sealed class PricingSystem : EntitySystem
 
         if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
         {
+            var matPrice = GetMaterialPrice(material);
             if (TryComp<StackComponent>(uid, out var stack))
-                ev.Price += stack.Count * material.Materials.Sum(x => x.Price * material._materials[x.ID]);
-            else
-                ev.Price += material.Materials.Sum(x => x.Price);
+                matPrice *= stack.Count;
+
+            ev.Price += matPrice;
         }
 
         if (TryComp<ContainerManagerComponent>(uid, out var containers))

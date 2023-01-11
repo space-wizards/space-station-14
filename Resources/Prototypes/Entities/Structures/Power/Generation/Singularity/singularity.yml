@@ -13,7 +13,7 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - id: DeleteCircle
+    - id: EventHorizon
       shape:
         !type:PhysShapeCircle
           radius: 0.5
@@ -24,7 +24,15 @@
       layer:
       - AllMask
   - type: Singularity
+    energy: 180
+    level: 1
     radsPerLevel: 2
+  - type: GravityWell # To make the singularity attract things.
+  - type: EventHorizon # To make the singularity consume things.
+    radius: 0.5
+    canBreachContainment: false
+    horizonFixtureId: EventHorizon
+  - type: RandomWalk # To make the singularity move around.
   - type: SingularityDistortion
   - type: RadiationSource
     slope: 0.2 # its emit really far away
