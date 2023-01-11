@@ -5,11 +5,11 @@ nukeops-welcome =
     You are a nuclear operative. Your goal is to blow up {$station}, and ensure that it is nothing but a pile of rubble. Your bosses, the Syndicate, have provided you with the tools you'll need for the task.
     Death to Nanotrasen!
 
-nukeops-opsmajor = Syndicate major victory!
-nukeops-opsminor = Syndicate minor victory!
-nukeops-neutral = Neutral outcome!
-nukeops-crewminor = Crew minor victory!
-nukeops-crewmajor = Crew major victory!
+nukeops-opsmajor = [color=crimson]Syndicate major victory![/color]
+nukeops-opsminor = [color=crimson]Syndicate minor victory![/color]
+nukeops-neutral = [color=yellow]Neutral outcome![/color]
+nukeops-crewminor = [color=green]Crew minor victory![/color]
+nukeops-crewmajor = [color=green]Crew major victory![/color]
 
 nukeops-cond-nukeexplodedoncorrectstation = The nuclear operatives managed to blow up the station.
 nukeops-cond-nukeexplodedonnukieoutpost = The nuclear operative outpost was destroyed by a nuclear blast.
@@ -23,7 +23,8 @@ nukeops-cond-allnukiesdead = All nuclear operatives have died.
 nukeops-cond-somenukiesalive = Some nuclear operatives died.
 nukeops-cond-allnukiesalive = No nuclear operatives died.
 
-nukeops-list-start = The nuke ops were:
+nukeops-list-start = The operatives were:
+nukeops-list-name = - [color=White]{$name}[/color] ([color=gray]{$user}[/color])
 nukeops-not-enough-ready-players = Not enough players readied up for the game! There were {$readyPlayersCount} players readied up out of {$minimumPlayers} needed. Can't start Nukeops.
 nukeops-no-one-ready = No players readied up! Can't start Nukeops.
 

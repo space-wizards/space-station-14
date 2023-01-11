@@ -81,11 +81,11 @@ namespace Content.Server.Medical
             if (args.User == args.Target)
             {
                 _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-self", ("disease", args.Component.Disease)),
-                    args.User, Filter.Entities(args.User));
+                    args.User, args.User);
                 return;
             }
             _popupSystem.PopupEntity(Loc.GetString("disease-scanner-gave-other", ("target", Identity.Entity(args.Target.Value, EntityManager)), ("disease", args.Component.Disease)),
-                args.User, Filter.Entities(args.User));
+                args.User, args.User);
         }
 
         private void OpenUserInterface(EntityUid user, HealthAnalyzerComponent healthAnalyzer)

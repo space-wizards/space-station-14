@@ -77,7 +77,7 @@ namespace Content.Server.Body.Systems
                     if (_gameTiming.CurTime >= respirator.LastGaspPopupTime + respirator.GaspPopupCooldown)
                     {
                         respirator.LastGaspPopupTime = _gameTiming.CurTime;
-                        _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid, Filter.Pvs(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("lung-behavior-gasp"), uid);
                     }
 
                     TakeSuffocationDamage(uid, respirator);

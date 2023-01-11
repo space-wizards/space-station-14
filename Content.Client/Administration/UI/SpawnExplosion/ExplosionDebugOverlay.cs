@@ -66,7 +66,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
@@ -134,7 +134,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
             var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             handle.SetTransform(worldMatrix);

@@ -11,6 +11,11 @@
     damage:
       types:
         Blunt: 14
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
   - type: Item
     size: 15
   - type: Clothing

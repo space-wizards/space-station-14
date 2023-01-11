@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
@@ -6,6 +7,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Database;
 using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
@@ -26,6 +28,7 @@ namespace Content.Shared.Stunnable
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         /// <summary>
         /// Friction modifier for knocked down players.
@@ -150,7 +153,10 @@ namespace Content.Shared.Stunnable
             if (!Resolve(uid, ref status, false))
                 return false;
 
-            return _statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh);
+            if (!_statusEffectSystem.TryAddStatusEffect<StunnedComponent>(uid, "Stun", time, refresh))
+                return false;
+            _adminLogger.Add(LogType.Stamina, LogImpact.Medium, $"{ToPrettyString(uid):user} stunned for {time.Seconds} seconds");
+            return true;
         }
 
         /// <summary>

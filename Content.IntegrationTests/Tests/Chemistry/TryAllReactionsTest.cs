@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Engineering.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using NUnit.Framework;
@@ -23,7 +24,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
   - type: SolutionContainerManager
     solutions:
       beaker:
-        maxVol: 50";
+        maxVol: 50
+        canMix: true";
         [Test]
         public async Task TryAllTest()
         {
@@ -58,6 +60,14 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     }
 
                     solutionSystem.SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);
+
+                    if (reactionPrototype.MixingCategories != null)
+                    {
+                        var dummyEntity = entityManager.SpawnEntity(null, MapCoordinates.Nullspace);
+                        var mixerComponent = entityManager.AddComponent<ReactionMixerComponent>(dummyEntity);
+                        mixerComponent.ReactionTypes = reactionPrototype.MixingCategories;
+                        solutionSystem.UpdateChemicals(beaker, component, true, mixerComponent);
+                    }
                 });
 
                 await server.WaitIdleAsync();
