@@ -37,7 +37,9 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void OnRequestTTS(MsgRequestTTS ev)
     {
-        if (!_playerManager.TryGetSessionByChannel(ev.MsgChannel, out var session) ||
+        if (!_isEnabled ||
+            ev.Text.Length > MaxMessageChars ||
+            !_playerManager.TryGetSessionByChannel(ev.MsgChannel, out var session) ||
             !_prototypeManager.TryIndex<TTSVoicePrototype>(ev.VoiceId, out var protoVoice))
             return;
 

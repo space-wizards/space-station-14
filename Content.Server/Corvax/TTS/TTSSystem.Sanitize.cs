@@ -18,7 +18,7 @@ public sealed partial class TTSSystem
         text = text.Trim();
         text = Regex.Replace(text, @"<[^>]*>", "");
         text = Regex.Replace(text, @"[a-zA-Z]", ReplaceLat2Cyr, RegexOptions.Multiline | RegexOptions.IgnoreCase);
-        text = Regex.Replace(text, @"[^a-zA-Z0-9а-яА-ЯёЁ,!?+./ \r\n\t:—()-]", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        text = Regex.Replace(text, @"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
         text = Regex.Replace(text, @"(?<=[1-90])(\.|,)(?=[1-90])", " целых ");
         text = Regex.Replace(text, @"\d+", ReplaceWord2Num);
         return text;
@@ -53,6 +53,8 @@ public sealed partial class TTSSystem
             {"гп", "Гэ Пэ"},
             {"рд", "Эр Дэ"},
             {"гсб", "Гэ Эс Бэ"},
+            {"гв", "Гэ Вэ"},
+            {"нр", "Эн Эр"},
             {"срп", "Эс Эр Пэ"},
             {"цк", "Цэ Каа"},
             {"рнд", "Эр Эн Дэ"},
@@ -141,6 +143,7 @@ public sealed partial class TTSSystem
             {"f", "ф"},
             {"h", "х"},
             {"c", "ц"},
+            {"x", "кс"},
             {"ch", "ч"},
             {"sh", "ш"},
             {"jsh", "щ"},
