@@ -21,3 +21,5 @@ fibers-orange = orange
 fibers-white = white
 fibers-yellow = yellow
 fibers-regal-blue = regal blue
+fibers-regal-green = regal green
+fibers-regal-black = regal black

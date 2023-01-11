@@ -50,11 +50,14 @@ namespace Content.Server.Administration.Managers
         /// <summary>
         ///     See if a player has an admin flag.
         /// </summary>
+        /// <param name="includeInactive">
+        ///     Whether to include flags for admins that are current de-adminned.
+        /// </param>
         /// <returns>True if the player is and admin and has the specified flags.</returns>
-        bool HasAdminFlag(IPlayerSession player, AdminFlags flag)
+        bool HasAdminFlag(IPlayerSession player, AdminFlags flag, bool includeInactive = false)
         {
-            var data = GetAdminData(player);
-            return data != null && data.HasFlag(flag);
+            var data = GetAdminData(player, includeInactive);
+            return data != null && data.HasFlag(flag, includeInactive);
         }
 
         /// <summary>

@@ -118,22 +118,26 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakGrandAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: grand admiral's cloak
   description: A light grey cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/grandadmiral.rsi
+  - type: RestrictedClothing
+    permissions:
+      - Admin
+      - Fun
 
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckCloakAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: admiral's cloak
   description: A dark green cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admiral.rsi
-
+  - type: RestrictedClothing
+    permissions:
+      - Admin
