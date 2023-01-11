@@ -2,7 +2,7 @@ using Content.Server.Traits.Assorted;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 
-namespace Content.Server.Chemistry.ReagentEffects
+namespace Content.Server.Chemistry.ReagentEffects;
 {
     /// <summary>
     /// Reset narcolepsy timer
