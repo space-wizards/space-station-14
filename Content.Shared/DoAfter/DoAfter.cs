@@ -32,6 +32,9 @@ public sealed class DoAfter
     //Keep track of the time this DoAfter started
     public TimeSpan StartTime;
 
+    //Keep track of the time this DoAfter was cancelled
+    public TimeSpan CancelledTime;
+
     //How long has the do after been running?
     public TimeSpan Elapsed = TimeSpan.Zero;
 
@@ -39,6 +42,8 @@ public sealed class DoAfter
     /// Accrued time when cancelled.
     /// </summary>
     public TimeSpan CancelledElapsed = TimeSpan.Zero;
+
+    public float CancelledAccumulator;
 
     public EntityCoordinates UserGrid;
     public EntityCoordinates TargetGrid;

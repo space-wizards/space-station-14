@@ -92,6 +92,7 @@ namespace Content.Client.DoAfter;
 
             var doAfterMessage = component.DoAfters[id];
             doAfterMessage.Cancelled = true;
+            doAfterMessage.CancelledTime = _gameTiming.CurTime;
             component.CancelledDoAfters.Add(id, doAfterMessage);
         }
 
@@ -125,7 +126,7 @@ namespace Content.Client.DoAfter;
 
                     if (doAfter.Cancelled)
                     {
-                        doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.StartTime;
+                        doAfter.CancelledElapsed = _gameTiming.CurTime - doAfter.CancelledTime;
                         continue;
                     }
 
@@ -175,7 +176,9 @@ namespace Content.Client.DoAfter;
 
                 foreach (var (_, doAfter) in comp.CancelledDoAfters)
                 {
-                    if ((float)doAfter.CancelledElapsed.TotalSeconds > ExcessTime)
+                    var cancelledElapsed = (float) doAfter.CancelledElapsed.TotalSeconds;
+
+                    if (cancelledElapsed > cancelledElapsed + ExcessTime)
                         toRemoveCancelled.Add(doAfter);
                 }
 
