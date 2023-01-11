@@ -3,6 +3,7 @@ using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
 using Content.Client.Corvax.JoinQueue;
 using Content.Client.Corvax.Sponsors;
+using Content.Client.Corvax.TTS;
 using Content.Client.Options;
 using Content.Client.Eui;
 using Content.Client.Flash;
@@ -69,6 +70,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!; // Corvax-Sponsors
         [Dependency] private readonly JoinQueueManager _queueManager = default!; // Corvax-Queue
+        [Dependency] private readonly TTSManager _ttsManager = default!; // Corvax-TTS
 
         public override void Init()
         {
@@ -165,6 +167,7 @@ namespace Content.Client.Entry
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
             _sponsorsManager.Initialize(); // Corvax-Sponsors
             _queueManager.Initialize(); // Corvax-Queue
+            _ttsManager.Initialize(); // Corvax-TTS
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

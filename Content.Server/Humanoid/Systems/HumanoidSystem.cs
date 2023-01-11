@@ -108,6 +108,7 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         }
 
         EnsureDefaultMarkings(uid, humanoid);
+        SetTTSVoice(uid, profile.Sex, profile.Voice); // Corvax-TTS
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))

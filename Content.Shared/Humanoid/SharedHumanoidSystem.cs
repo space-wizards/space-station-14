@@ -19,6 +19,15 @@ public abstract class SharedHumanoidSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public const string DefaultSpecies = "Human";
+    // Corvax-TTS-Start
+    public const string DefaultVoice = "Garithos";
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Garithos"},
+        {Sex.Female, "Luna"},
+        {Sex.Unsexed, "Myron"},
+    };
+    // Corvax-TTS-End
 
     public void SetAppearance(EntityUid uid,
         string species,
