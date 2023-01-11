@@ -16,8 +16,6 @@ public sealed class CirculationVesselComponent : Component
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
     public Dictionary<string, FixedPoint2>? LocalReagents;
 
-    //TODO: convert this to use a list instead of a dict
-
     //Loose capacity of the vessel, used for calculating circulation volume/pressure. This can be exceeded
     [DataField("capacity", required: true)]
     public FixedPoint2 Capacity;
@@ -26,4 +24,13 @@ public sealed class CirculationVesselComponent : Component
 [Serializable, NetSerializable]
 public sealed class CirculationVesselComponentState : ComponentState
 {
+    public EntityUid Parent;
+    public Dictionary<string, FixedPoint2>? LocalReagents;
+    public FixedPoint2 Capacity;
+    public CirculationVesselComponentState(EntityUid parent, Dictionary<string, FixedPoint2>? localReagents, FixedPoint2 capacity)
+    {
+        Parent = parent;
+        LocalReagents = localReagents;
+        Capacity = capacity;
+    }
 }

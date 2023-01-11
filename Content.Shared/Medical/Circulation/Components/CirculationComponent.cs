@@ -20,20 +20,23 @@ public sealed class CirculationComponent : Component
     public FixedPoint2 TotalReagentVolume;
 
     //Cached total capacity of the circulatory system,
-    //this is updated anytime a circulatory vessel is added/removed/updated
+    //This is updated anytime a circulatory vessel is added/removed/updated and is used to calculate how much of
+    //each reagent to transfer to the localReagentVolume if a vessel is separated from the system
     public FixedPoint2 TotalCapacity;
 }
 
 [Serializable, NetSerializable]
-public sealed class CirculatoryComponentState : ComponentState
+public sealed class CirculationComponentState : ComponentState
 {
     public Dictionary<string, FixedPoint2> Reagents;
     public FixedPoint2 TotalReagentVolume;
+    public HashSet<EntityUid> LinkedVessels;
     public FixedPoint2 TotalCapacity;
 
-    public CirculatoryComponentState(Dictionary<string, FixedPoint2> reagents, FixedPoint2 totalReagentVolume,
+    public CirculationComponentState(Dictionary<string, FixedPoint2> reagents,HashSet<EntityUid> linkedVessels ,FixedPoint2 totalReagentVolume,
         FixedPoint2 totalCapacity)
     {
+        LinkedVessels = linkedVessels;
         TotalReagentVolume = totalReagentVolume;
         Reagents = reagents;
         TotalCapacity = totalCapacity;

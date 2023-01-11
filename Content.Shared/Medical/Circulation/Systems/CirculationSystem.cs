@@ -2,6 +2,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Circulation.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Medical.Circulation.Systems;
@@ -14,8 +15,50 @@ public sealed partial class CirculationSystem : EntitySystem
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<CirculationComponent, ComponentHandleState>(OnHandleCirculationState);
+        SubscribeLocalEvent<CirculationComponent, ComponentGetState>(OnGetCirculationState);
+        SubscribeLocalEvent<CirculationVesselComponent, ComponentHandleState>(OnHandleVesselState);
+        SubscribeLocalEvent<CirculationVesselComponent, ComponentGetState>(OnGetVesselState);
     }
-    //TODO: Event subscriptions and networking
+
+    private void OnHandleCirculationState(EntityUid uid, CirculationComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not CirculationComponentState state)
+            return;
+        component.Reagents = state.Reagents;
+        component.LinkedVessels = state.LinkedVessels;
+        component.TotalReagentVolume = state.TotalReagentVolume;
+        component.TotalCapacity = state.TotalCapacity;
+    }
+
+    private void OnGetCirculationState(EntityUid uid, CirculationComponent component, ref ComponentGetState args)
+    {
+        args.State = new CirculationComponentState(
+            component.Reagents,
+            component.LinkedVessels,
+            component.TotalReagentVolume,
+            component.TotalCapacity
+        );
+    }
+
+    private void OnHandleVesselState(EntityUid uid, CirculationVesselComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not CirculationVesselComponentState state)
+            return;
+        component.Capacity = state.Capacity;
+        component.Parent = state.Parent;
+        component.LocalReagents = state.LocalReagents;
+    }
+
+    private void OnGetVesselState(EntityUid uid, CirculationVesselComponent component, ref ComponentGetState args)
+    {
+        args.State = new CirculationVesselComponentState(
+            component.Parent,
+            component.LocalReagents,
+            component.Capacity
+        );
+    }
+
 
     public override void Update(float frameTime)
     {
@@ -38,6 +81,7 @@ public sealed partial class CirculationSystem : EntitySystem
         {
             RaiseLocalEvent(vesselEntity, updateEvent);
         }
+
         foreach (var (reagentId, volumeAdjustment) in updateEvent.VolumeChanges)
         {
             AdjustSharedVolume(circulation.Owner, reagentId, volumeAdjustment, circulation);
