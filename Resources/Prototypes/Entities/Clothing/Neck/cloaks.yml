@@ -114,3 +114,21 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/trans.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakgrandadmiral
+  name: Grand Admiral's cloak
+  description: A light grey cloak with a golden touch , given to those who proved themselves powerful enough.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/grandadmiral.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloadmiral
+  name: Admiral's cloak
+  description: A dark green cloak with a golden touch , given to those who proved themselves powerful enough.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/admiral.rsi
