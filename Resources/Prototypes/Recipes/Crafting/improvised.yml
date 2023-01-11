@@ -86,3 +86,16 @@
     sprite: Clothing/Head/Misc/flower-crown.rsi
     state: icon
   objectType: Item
+  
+- type: construction
+  name: ghost sheet
+  id: ghostsheet
+  graph: ghostsheet
+  startNode: start
+  targetNode: ghostsheet
+  category: construction-category-misc
+  objectType: Item
+  description: "spooky!!."
+  icon:
+    sprite: Clothing/outerclothing/misc/ghostsheet.rsi
+    state: icon

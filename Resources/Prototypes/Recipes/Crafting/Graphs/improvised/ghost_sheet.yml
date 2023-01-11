@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: Ghostsheet
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: Ghostsheet
+        steps:
+        - material: bedsheet
+          amount: 1
+          doAfter: 10
+    - node: muzzle
+      entity: ClothingGhostsheet
