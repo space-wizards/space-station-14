@@ -517,7 +517,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretOfficer
   noSpawn: true
-  name: officerberet
+  suffix: DO NOT MAP
+  name: officer's beret
   description: A special beret with the NanoTrasen logo emblazoned on it. For where no man has gone before.
   components:
   - type: Sprite
@@ -529,7 +530,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatGrandAdmiral
   noSpawn: true
-  name: grandadmiralscap
+  suffix: DO NOT MAP
+  name: grand admiral's cap
   description: It's good to be at the top.
   components:
   - type: Sprite
@@ -541,7 +543,8 @@
   parent: ClothingHeadBase
   id: ClothingHeadHatAdmiral
   noSpawn: true
-  name: admiralscap
+  suffix: DO NOT MAP
+  name: admiral's cap
   description: It's good to be a god.
   components:
   - type: Sprite

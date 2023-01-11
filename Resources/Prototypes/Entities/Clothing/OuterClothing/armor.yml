@@ -204,7 +204,7 @@
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorCentcomCarapace
-  noSpawn: true
+  suffix: DO NOT MAP
   name: centcom's carapace
   description: "A CentCom green alteration of the captain's carapace. Issued only to Nanotrasen's finest, although it does chafe your pecks."
   components:
