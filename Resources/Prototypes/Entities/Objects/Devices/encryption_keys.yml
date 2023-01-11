@@ -114,7 +114,7 @@
   parent: EncryptionKey
   id: EncryptionKeyCE
   name: chief engineer's encryption key
-  description: An encryption key used by boss of this station.
+  description: An encryption key used by the boss of the real men.
   components:
   - type: EncryptionKey
     channels:
