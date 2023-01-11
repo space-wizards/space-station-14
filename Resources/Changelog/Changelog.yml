@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
-      in places, type: Tweak}
-  id: 2355
-  time: '2022-09-22T22:19:00.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Gave descriptions to the shaker and shot glass., type: Add}
@@ -2955,3 +2949,10 @@ Entries:
   - {message: Narcolepsy can now be treated., type: Add}
   id: 2854
   time: '2023-01-11T08:14:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Phasing artifacts are now scannable again., type: Fix}
+  - {message: 'Artifacts can now be anchored onto the scanner, so wandering artifacts
+      are no longer essentially impossible to scan.', type: Fix}
+  id: 2855
+  time: '2023-01-11T08:16:16.0000000+00:00'
