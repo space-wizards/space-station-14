@@ -74,7 +74,6 @@ namespace Content.Server.Cloning.Systems
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<CloningPodComponent, AnchorStateChangedEvent>(OnAnchor);
             SubscribeLocalEvent<CloningPodComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
         }
 
         private void OnComponentInit(EntityUid uid, CloningPodComponent clonePod, ComponentInit args)
@@ -261,19 +260,6 @@ namespace Content.Server.Cloning.Systems
             return true;
         }
 
-        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
-        {
-            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
-            {
-                _humanoidSystem.SetBaseLayerColor(args.Target, layer, info.Color);
-                _humanoidSystem.SetBaseLayerId(args.Target, layer, info.ID);
-            }
-            _humanoidSystem.SetSkinColor(args.Target, zombiecomp.BeforeZombifiedSkinColor);
-
-            MetaData(args.Target).EntityName = zombiecomp.BeforeZombifiedEntityName;
-            args.NameHandled = true;
-        }
-
         public void UpdateStatus(CloningPodStatus status, CloningPodComponent cloningPod)
         {
             cloningPod.Status = status;
@@ -360,8 +346,8 @@ namespace Content.Server.Cloning.Systems
     {
         public bool NameHandled = false;
 
-        public EntityUid Source;
-        public EntityUid Target;
+        public readonly EntityUid Source;
+        public readonly EntityUid Target;
 
         public CloningEvent(EntityUid source, EntityUid target) {
             Source = source;

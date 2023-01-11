@@ -37,6 +37,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
+            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
 
         }
 
@@ -158,6 +159,19 @@ namespace Content.Server.Zombies
                 //either do a random accent line or scream
                 DoGroan(zombiecomp.Owner, zombiecomp);
             }
+        }
+
+        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        {
+            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+            {
+                _humanoidSystem.SetBaseLayerColor(args.Target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(args.Target, layer, info.ID);
+            }
+            _humanoidSystem.SetSkinColor(args.Target, zombiecomp.BeforeZombifiedSkinColor);
+
+            MetaData(args.Target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            args.NameHandled = true;
         }
     }
 }
