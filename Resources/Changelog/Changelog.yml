@@ -1,69 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed the medical techfab sprite breaking while printing., type: Fix}
-  id: 2343
-  time: '2022-09-19T19:35:31.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Open soda can no longer show error, type: Fix}
-  id: 2344
-  time: '2022-09-19T23:47:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Splitstation minor update. Jetpacks, CMO locker and more.', type: Add}
-  id: 2345
-  time: '2022-09-19T23:50:32.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Added a smoking pipe. Get your Sherlock Holmes on!, type: Add}
-  id: 2346
-  time: '2022-09-19T23:54:33.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: 'Added a computer board for the cargo shuttle console, found in QM''s
-      locker', type: Add}
-  - {message: Fixed a bug that made it impossible to construct a cargo shuttle computer,
-    type: Fix}
-  - {message: Cargo computer board names now match their corresponding computer, type: Fix}
-  id: 2347
-  time: '2022-09-20T09:09:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Eye lerping when traversing grids and also when on a rotating grid is
-      much smoother., type: Fix}
-  id: 2348
-  time: '2022-09-21T00:12:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added a burger made from the beloved pet of the Head of Personnel.,
-    type: Add}
-  id: 2349
-  time: '2022-09-21T02:16:59.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Forensic pad is now tagged as a document. They can be stored in filling
-      cabinets and folders., type: Fix}
-  id: 2350
-  time: '2022-09-22T15:46:11.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: We have added a little sticker to some of your devices that should make
-      it easier for you to figure out what that device's local address is., type: Add}
-  id: 2351
-  time: '2022-09-22T19:00:54.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: New backpacks for salvage specialists, type: Add}
-  - {message: Added missing botany duffle bag, type: Add}
-  id: 2352
-  time: '2022-09-22T19:02:30.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: The agent id card interface now remembers the previous fake name and
-      title., type: Fix}
-  id: 2353
-  time: '2022-09-22T19:04:01.0000000+00:00'
 - author: lapatison
   changes:
   - {message: 'psychologist, detective, and reporter ID cards now display correct
@@ -2960,3 +2895,64 @@ Entries:
   - {message: Prying tiles now removes the decals on them., type: Fix}
   id: 2842
   time: '2023-01-07T10:24:50.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: All machines that can hold materials no longer destroy them on deconstruction.,
+    type: Add}
+  id: 2843
+  time: '2023-01-07T18:09:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Mugs now properly display the solutions inside of them., type: Fix}
+  id: 2844
+  time: '2023-01-08T03:09:33.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'The verb menu no longer opens when right clicking on entities in the
+      entity menu. Instead, it now automatically opens using a dropdown, like how
+      grouped entities work.', type: Tweak}
+  id: 2845
+  time: '2023-01-08T03:24:52.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Resolved server and client bugs that affected the way crew manifest
+      entries were being sorted., type: Fix}
+  id: 2846
+  time: '2023-01-09T03:34:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed some unintended examine text on emitters., type: Fix}
+  id: 2847
+  time: '2023-01-10T11:48:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Bumped bullet speed from 20m/s to 25m/s, type: Tweak}
+  id: 2848
+  time: '2023-01-10T12:31:26.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Cleaned up random names, players should no longer get names that accidentally
+      break naming rules.', type: Fix}
+  id: 2849
+  time: '2023-01-10T12:45:07.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed AHelp relay to discord not working., type: Fix}
+  id: 2850
+  time: '2023-01-10T16:33:39.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed togglehealthoverlay command not working, type: Fix}
+  id: 2851
+  time: '2023-01-10T21:36:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added showing the player name to admins on the context menu., type: Add}
+  id: 2852
+  time: '2023-01-10T21:39:48.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed admins blowing out your eardrums when playing a global sound.,
+    type: Fix}
+  id: 2853
+  time: '2023-01-10T21:45:09.0000000+00:00'
