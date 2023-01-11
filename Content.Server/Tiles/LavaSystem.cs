@@ -58,8 +58,14 @@ public sealed class LavaSystem : EntitySystem
 
     private void OnFlammableClimb(EntityUid uid, FlammableComponent component, StartClimbEvent args)
     {
-        var comp = EnsureComp<OnLavaComponent>(uid);
-        comp.NextUpdate = _timing.CurTime;
+        if (HasComp<OnLavaComponent>(uid))
+            return;
+
+        var onLava = AddComp<OnLavaComponent>(uid);
+        // Apply the fury of a thousand suns on the initial climb.
+        _flammable.AdjustFireStacks(uid, 10f, component);
+        _flammable.Ignite(uid, component);
+        onLava.NextUpdate = _timing.CurTime;
     }
 
     public override void Update(float frameTime)
@@ -92,11 +98,11 @@ public sealed class LavaSystem : EntitySystem
 
             while (anchored.MoveNext(out var ent))
             {
-                if (!lavaQuery.HasComponent(ent.Value))
+                if (!lavaQuery.TryGetComponent(ent.Value, out var lava))
                     continue;
 
                 // Apply!
-                _flammable.AdjustFireStacks(comp.Owner, 1f, flammable);
+                _flammable.AdjustFireStacks(comp.Owner, lava.FireStacks, flammable);
                 _flammable.Ignite(comp.Owner, flammable);
                 break;
             }

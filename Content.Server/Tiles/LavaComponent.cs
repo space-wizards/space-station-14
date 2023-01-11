@@ -9,6 +9,15 @@ namespace Content.Server.Tiles;
 [RegisterComponent, Access(typeof(LavaSystem))]
 public sealed class LavaComponent : Component
 {
-    [DataField("soundDisintegration")]
+    /// <summary>
+    /// Sound played if something disintegrates in lava.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundDisintegration")]
     public SoundSpecifier DisintegrationSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+    /// <summary>
+    /// How many fire stacks are applied per second.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("fireStacks")]
+    public float FireStacks = 2f;
 }

@@ -3,6 +3,7 @@
   id: BaseItem
   abstract: true
   components:
+  - type: LavaDisintegration
   - type: Item
     size: 5
   - type: StaticPrice
