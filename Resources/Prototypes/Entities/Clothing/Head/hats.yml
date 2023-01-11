@@ -512,3 +512,14 @@
       sprite: Clothing/Head/Hats/jester2.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/jester2.rsi
+      
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretofficer
+  name: officerberet
+  description: A special beret with the NanoTrasen logo emblazoned on it. For where no man has gone before.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/officersbaret.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/officersbaret.rsi
