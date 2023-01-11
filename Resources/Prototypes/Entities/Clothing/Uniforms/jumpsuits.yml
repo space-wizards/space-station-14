@@ -889,9 +889,9 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitErtEngineer
-  name: ert engineering jumpsuit
-  description: A suit made for the elite engineers under CentCom.
+  id: ClothingUniformJumpsuitERTEngineer
+  name: ERT engineering uniform
+  description: A special suit made for the elite engineers under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
@@ -904,9 +904,9 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitErtJanitor
-  name: ert janitorial jumpsuit
-  description: A suit made for the elite janitors under CentCom.
+  id: ClothingUniformJumpsuitERTJanitor
+  name: ERT janitorial uniform
+  description: A special suit made for the elite janitors under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
@@ -915,9 +915,9 @@
     
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitErtLeader
-  name: ert leader jumpsuit
-  description: A suit made for the best of the elites under CentCom.
+  id: ClothingUniformJumpsuitERTLeader
+  name: ERT leader uniform
+  description: A special suit made for the best of the elites under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
@@ -926,9 +926,9 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitErtMedic
-  name: ert medical jumpsuit
-  description: A suit made for the elite medics under CentCom.
+  id: ClothingUniformJumpsuitERTMedic
+  name: ERT medical uniform
+  description: A special suit made for the elite medics under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
@@ -939,9 +939,9 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitErtSecurity
-  name: ert security jumpsuit
-  description: A suit made for the elite security under CentCom.
+  id: ClothingUniformJumpsuitERTSecurity
+  name: ERT security uniform
+  description: A special suit made for the elite security under CentCom.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
