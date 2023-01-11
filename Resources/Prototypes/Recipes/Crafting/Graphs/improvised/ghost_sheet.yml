@@ -6,7 +6,7 @@
       edges:
         - to: Ghostsheet
           steps:
-            - material: WoodPlank
+            - material: Bedsheets
               amount: 1
               doAfter: 10
     - node: Ghostsheet
