@@ -129,29 +129,27 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
             _entityManager.DeleteEntity(Sprite.Owner);
     }
 
-    public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
+    public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
     {
-        if (args.Count != 1 && args.Count != 2)
+        if (!args.TryGetValue("Entity", out var proto))
         {
-            Logger.Error($"Wrong number of arguments for embedded entity tag. Expected 1 or 2, but got {args.Count}. Args: {string.Join(", ", args)}");
+            Logger.Error("Entity embed tag is missing entity prototype argument");
             control = null;
             return false;
         }
 
-        Interactive = args.Contains("Interactive");
-
-        var ent = _entityManager.SpawnEntity(args[0], MapCoordinates.Nullspace);
+        var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
         _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
         Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
 
-        if (!param.TryGetValue("Caption", out var caption))
+        if (!args.TryGetValue("Caption", out var caption))
             caption = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
 
         if (!string.IsNullOrEmpty(caption))
             Caption.Text = caption;
 
-        if (param.TryGetValue("Scale", out var scaleStr))
+        if (args.TryGetValue("Scale", out var scaleStr))
         {
             var scale = float.Parse(scaleStr);
             Scale = new Vector2(scale, scale);
@@ -160,6 +158,11 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         {
             Scale = (2, 2);
         }
+
+        if (args.TryGetValue("Interactive", out var interactive))
+            Interactive = bool.Parse(interactive);
+
+        Margin = new Thickness(4);
 
         control = this;
         return true;

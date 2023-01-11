@@ -1,7 +1,6 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
@@ -37,11 +36,11 @@ whitespace before newlines are ignored.
   <TestControl/>
 </TestControl>
 
-<TestControl arg1 key1=""value1"" arg2 key2=""value2 with spaces"" arg3 key3=""value3 with a 
+<TestControl key1=""value1"" key2=""value2 with spaces"" key3=""value3 with a 
   newline"" arg4/>
 
-<TestControl   arg1  >
-  <TestControl  k=""<\>\\>=\""=<-_?*3.0//"" funnyNested\=\""Arg\"">
+<TestControl > 
+  <TestControl  k=""<\>\\>=\""=<-_?*3.0//"">
   </TestControl>
 </TestControl>";
 
@@ -102,23 +101,12 @@ whitespace before newlines are ignored.
         Assert.NotNull(subTest2);
         Assert.That(subTest2?.ChildCount, Is.EqualTo(0));
 
-        Assert.That(test1?.Args?.Count, Is.EqualTo(0));
-        Assert.That(test2?.Args?.Count, Is.EqualTo(0));
-        Assert.That(test3?.Args?.Count, Is.EqualTo(0));
-        Assert.That(test4?.Args?.Count, Is.EqualTo(4));
-        Assert.That(test5?.Args?.Count, Is.EqualTo(1));
-        Assert.That(subTest2?.Args?.Count, Is.EqualTo(1));
-
         Assert.That(test1?.Params?.Count, Is.EqualTo(0));
         Assert.That(test2?.Params?.Count, Is.EqualTo(0));
         Assert.That(test3?.Params?.Count, Is.EqualTo(0));
         Assert.That(test4?.Params?.Count, Is.EqualTo(3));
         Assert.That(test5?.Params?.Count, Is.EqualTo(0));
         Assert.That(subTest2?.Params?.Count, Is.EqualTo(1));
-
-        Assert.That(test4?.Args?.SequenceEqual(new string[] { "arg1", "arg2", "arg3", "arg4" }) ?? false);
-        Assert.That(test5?.Args?.SequenceEqual(new string[] { "arg1" }) ?? false);
-        Assert.That(subTest2?.Args?.SequenceEqual(new string[] { "funnyNested=\"Arg\"" }) ?? false);
 
         string? val = null;
         test4?.Params?.TryGetValue("key1", out val);
@@ -139,13 +127,10 @@ whitespace before newlines are ignored.
 
     public sealed class TestControl : Control, IDocumentTag
     {
-        public List<string> Args = default!;
-
         public Dictionary<string, string> Params = default!;
 
-        public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control control)
+        public bool TryParseTag(Dictionary<string, string> param, [NotNullWhen(true)] out Control control)
         {
-            Args = args;
             Params = param;
             control = this;
             return true;

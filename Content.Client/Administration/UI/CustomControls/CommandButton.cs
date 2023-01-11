@@ -37,9 +37,9 @@ namespace Content.Client.Administration.UI.CustomControls
                 IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(Command);
         }
 
-        public bool TryParseTag(List<string> args, Dictionary<string, string> param, [NotNullWhen(true)] out Control? control)
+        public bool TryParseTag(Dictionary<string, string> args, [NotNullWhen(true)] out Control? control)
         {
-            if (args.Count != 0 || param.Count != 2 || !param.TryGetValue("Text", out var text) || !param.TryGetValue("Command", out var command))
+            if (args.Count != 2 || !args.TryGetValue("Text", out var text) || !args.TryGetValue("Command", out var command))
             {
                 Logger.Error($"Invalid arguments passed to {nameof(CommandButton)}");
                 control = null;

@@ -1,3 +1,4 @@
+using System.Linq;
 using Pidgin;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -21,9 +22,11 @@ public sealed partial class DocumentParsingManager
      Try(Char('>')),
      Try(Char('\\')),
      Try(Char('-')),
-     Try(Char('\n')),
      Try(Char('=')),
-     Try(Char('"'))
+     Try(Char('"')),
+     Try(Char(' ')),
+     Try(Char('n')).ThenReturn('\n'),
+     Try(Char('t')).ThenReturn('\t')
      )));
 
     private static readonly Parser<char, Unit> SkipNewline = Whitespace.SkipUntil(Char('\n'));
@@ -72,12 +75,21 @@ public sealed partial class DocumentParsingManager
     }, TextParser).Cast<Control>()).Labelled("richtext");
     #endregion
 
-    // simple parser for a header. simply consumes anything between a # and a newline.
+    #region Headers
     private static readonly Parser<char, Control> HeaderControlParser = Try(Char('#')).Then(SkipWhitespaces.Then(Map(text => new Label()
     {
         Text = text,
-        StyleClasses = { "LabelHeading" }
+        StyleClasses = { "LabelHeadingBigger" }
     }, AnyCharExcept('\n').AtLeastOnceString()).Cast<Control>())).Labelled("header");
+
+    private static readonly Parser<char, Control> SubHeaderControlParser = Try(String("##")).Then(SkipWhitespaces.Then(Map(text => new Label()
+    {
+        Text = text,
+        StyleClasses = { "LabelHeading" }
+    }, AnyCharExcept('\n').AtLeastOnceString()).Cast<Control>())).Labelled("subheader");
+
+    private static readonly Parser<char, Control> TryHeaderControl = OneOf(SubHeaderControlParser, HeaderControlParser);
+    #endregion
 
     // Parser that consumes a - and then just parses normal rich text with some prefix text (a bullet point).
     private static readonly Parser<char, Control> ListControlParser = Try(Char('-')).Then(SkipWhitespaces).Then(Map(
@@ -94,50 +106,38 @@ public sealed partial class DocumentParsingManager
 
     private static readonly Parser<char, Unit> TryLookTagEnd = Lookahead(OneOf(Try(TagEnd), Try(ImmediateTagEnd)));
 
-    // delimiter for tag arguments (whitespace or a tag end)
-    private static readonly Parser<char, Unit> TryTagArgEnd = OneOf(Try(Whitespace.SkipAtLeastOnce()), TryLookTagEnd);
-    private static readonly Parser<char, Unit> TryTagArgDelim = OneOf(Lookahead(Try(Char('='))).ThenReturn(Unit.Value), TryTagArgEnd);
-
-    //parse tag argument key. any normal text character up until we hit a "=", whitespace or tag-end.
-    private static readonly Parser<char, string> TryTagArgKey = TextChar.Until(TryTagArgDelim).Select(string.Concat).Labelled("tag argument key");
-
-    // parse a tag argument value. This must start with a = and be wrapped in quotes. Returns a null-string if there is no value
-    private static readonly Parser<char, string> TryTagArgValue = OneOf(Try(Char('=')).Then(QuotedText), Return<string>(default!)).Labelled("tag argument value");
+    //parse tag argument key. any normal text character up until we hit a "="
+    private static readonly Parser<char, string> TagArgKey = TextChar.Until(Char('=')).Select(string.Concat).Labelled("tag argument key");
 
     // parser for a singular tag argument. Note that each TryQuoteOrChar will consume a whole quoted block before the Until() looks for whitespace
-    private static readonly Parser<char, (string, string)> TagArgParser = Map((key, value) => (key, value), TryTagArgKey, TryTagArgValue ).Before(SkipWhitespaces);
+    private static readonly Parser<char, (string, string)> TagArgParser = Map((key, value) => (key, value), TagArgKey, QuotedText).Before(SkipWhitespaces);
 
     // parser for all tag arguments
     private static readonly Parser<char, IEnumerable<(string, string)>> TagArgsParser = TagArgParser.Until(TryLookTagEnd);
 
     // parser for an opening tag.
     private static Parser<char, Unit> TryOpeningTag(string tag) =>
-        Try(Char('<').Then(SkipWhitespaces).Then(String(tag)).Then(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd))).Labelled($"opening {tag}");
+        Try(Char('<')
+            .Then(SkipWhitespaces)
+            .Then(String(tag))
+            .Then(OneOf(Whitespace.SkipAtLeastOnce(), TryLookTagEnd)))
+        .Labelled($"opening {tag}");
 
-    private static Parser<char, (List<string>, Dictionary<string, string>)> ParseTagArgs(string tag) =>
-        TagArgsParser.Labelled($"{tag} arguments").Select(ProcessArgs).Before(SkipWhitespaces);
-
-    private static Parser<char, Unit> TryTagTerminator(string tag) =>
-        Try(String("</")).Then(SkipWhitespaces).Then(String(tag)).Then(SkipWhitespaces).Then(TagEnd).Labelled($"closing {tag}");
-
-    // given a list of key value pairs (possibly with null values), converts them to a dictionary+list.
-    private static (List<string>, Dictionary<string, string>) ProcessArgs(IEnumerable<(string, string)> args)
+    private static Parser<char, Dictionary<string, string>> ParseTagArgs(string tag)
     {
-        var list = new List<string>();
-        var dict = new Dictionary<string, string>();
+        return TagArgsParser.Labelled($"{tag} arguments")
+            .Select(x => x.ToDictionary(y => y.Item1, y => y.Item2))
+            .Before(SkipWhitespaces);
+    }
 
-        foreach (var (key, value) in args)
-        {
-            if (string.IsNullOrEmpty(key))
-                throw new Exception($"Encountered empty key string while processing args: {string.Join(", ", args)}");
-
-            if (value == null)
-                list.Add(key);
-            else
-                dict.Add(key, value);
-        }
-
-        return (list, dict);
+    private static Parser<char, Unit> TryTagTerminator(string tag)
+    {
+        return Try(String("</"))
+            .Then(SkipWhitespaces)
+            .Then(String(tag))
+            .Then(SkipWhitespaces)
+            .Then(TagEnd)
+            .Labelled($"closing {tag}");
     }
     #endregion
 }

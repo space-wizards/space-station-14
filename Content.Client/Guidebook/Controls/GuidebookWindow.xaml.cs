@@ -46,12 +46,6 @@ public sealed partial class GuidebookWindow : FancyWindow
         EntryContainer.RemoveAllChildren();
         using var file = _resourceManager.ContentFileReadText(entry.Text);
 
-        EntryContainer.AddChild(new Label()
-        {
-            StyleClasses = { "LabelHeadingBigger" },
-            Text = Loc.GetString(entry.Name)
-        }); ;
-
         if (!_parsingMan.TryAddMarkup(EntryContainer, file.ReadToEnd()))
         {
             EntryContainer.AddChild(new Label() { Text = "ERROR: Failed to parse document." });

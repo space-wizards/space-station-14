@@ -19,11 +19,10 @@ public sealed partial class DocumentParsingManager
     private readonly List<Parser<char, Control>> _tagControlParsers = new();
     private Parser<char, Control> _controlParser = default!;
     public Parser<char, IEnumerable<Control>> ControlParser = default!;
-    public Parser<char, Document> DocumentParser = default!;
 
     public void Initialize()
     {
-        _controlParser = OneOf(Rec(() => OneOf(_tagControlParsers)), HeaderControlParser, ListControlParser, TextControlParser).Before(SkipWhitespaces);
+        _controlParser = OneOf(Rec(() => OneOf(_tagControlParsers)), TryHeaderControl, ListControlParser, TextControlParser).Before(SkipWhitespaces);
 
         foreach (var typ in _reflectionManager.GetAllChildren<IDocumentTag>())
         {
@@ -31,7 +30,6 @@ public sealed partial class DocumentParsingManager
         }
 
         ControlParser = SkipWhitespaces.Then(_controlParser.Many());
-        DocumentParser = ControlParser.Select(x => new Document(x));
     }
 
     public bool TryAddMarkup(Control control, string text, bool log = true)
@@ -57,7 +55,7 @@ public sealed partial class DocumentParsingManager
         (args, controls) =>
         {
             var tag = (IDocumentTag) sandbox.CreateInstance(tagType);
-            if (!tag.TryParseTag(args.Item1, args.Item2, out var control))
+            if (!tag.TryParseTag(args, out var control))
             {
                 Logger.Error($"Failed to parse {tagId} args");
                 return new Control();
@@ -70,7 +68,7 @@ public sealed partial class DocumentParsingManager
             return control;
         },
         TryOpeningTag(tagId).Then(ParseTagArgs(tagId)),
-        TagContentParser(tagId));
+        TagContentParser(tagId)).Labelled($"{tagId} control");
 
     // Parse a bunch of controls until we encounter a matching closing tag.
     private Parser<char, IEnumerable<Control>> TagContentParser(string tag) =>
