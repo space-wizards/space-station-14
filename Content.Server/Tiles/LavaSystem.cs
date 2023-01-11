@@ -1,17 +1,12 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Climbing;
-using Content.Shared.Climbing.Events;
-using Content.Shared.Throwing;
+using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
-using Robust.Shared.Map.Components;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Tiles;
 
 public sealed class LavaSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
 
@@ -19,93 +14,34 @@ public sealed class LavaSystem : EntitySystem
     {
         base.Initialize();
         // My brother in christ climbing code why are you like this.
-        SubscribeLocalEvent<FlammableComponent, StartClimbEvent>(OnFlammableClimb);
-        SubscribeLocalEvent<FlammableComponent, EndClimbEvent>(OnFlammableNoClimb);
-        SubscribeLocalEvent<OnLavaComponent, EntityUnpausedEvent>(OnLavaClimbUnpause);
-        SubscribeLocalEvent<LavaDisintegrationComponent, LandEvent>(OnThrownLand);
+        SubscribeLocalEvent<LavaComponent, StepTriggeredEvent>(OnLavaStepTriggered);
+        SubscribeLocalEvent<LavaComponent, StepTriggerAttemptEvent>(OnLavaStepTriggerAttempt);
     }
 
-    private void OnThrownLand(EntityUid uid, LavaDisintegrationComponent component, ref LandEvent args)
+    private void OnLavaStepTriggerAttempt(EntityUid uid, LavaComponent component, ref StepTriggerAttemptEvent args)
     {
-        var xform = Transform(uid);
-
-        if (!TryComp<MapGridComponent>(xform.GridUid, out var grid))
+        if (!HasComp<FlammableComponent>(args.Tripper) && !HasComp<LavaDisintegrationComponent>(args.Tripper))
             return;
 
-        var tile = grid.LocalToTile(xform.Coordinates);
-        var anchored = grid.GetAnchoredEntitiesEnumerator(tile);
-        var lavaQuery = GetEntityQuery<LavaComponent>();
+        args.Continue = true;
+    }
 
-        while (anchored.MoveNext(out var ent))
+    private void OnLavaStepTriggered(EntityUid uid, LavaComponent component, ref StepTriggeredEvent args)
+    {
+        var otherUid = args.Tripper;
+
+        if (HasComp<LavaDisintegrationComponent>(otherUid))
         {
-            if (!lavaQuery.TryGetComponent(ent.Value, out var lava))
-                continue;
-
-            QueueDel(uid);
-            _audio.PlayPvs(lava.DisintegrationSound, ent.Value);
+            QueueDel(otherUid);
+            _audio.PlayPvs(component.DisintegrationSound, uid);
+            return;
         }
-    }
-
-    private void OnFlammableNoClimb(EntityUid uid, FlammableComponent component, ref EndClimbEvent args)
-    {
-        RemCompDeferred<OnLavaComponent>(uid);
-    }
-
-    private void OnLavaClimbUnpause(EntityUid uid, OnLavaComponent component, ref EntityUnpausedEvent args)
-    {
-        component.NextUpdate += args.PausedTime;
-    }
-
-    private void OnFlammableClimb(EntityUid uid, FlammableComponent component, StartClimbEvent args)
-    {
-        if (HasComp<OnLavaComponent>(uid))
-            return;
-
-        var onLava = AddComp<OnLavaComponent>(uid);
-        // Apply the fury of a thousand suns on the initial climb.
-        _flammable.AdjustFireStacks(uid, 10f, component);
-        _flammable.Ignite(uid, component);
-        onLava.NextUpdate = _timing.CurTime;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var curTime = _timing.CurTime;
-        var lavaQuery = GetEntityQuery<LavaComponent>();
-        var flammableQuery = GetEntityQuery<FlammableComponent>();
-
-        foreach (var (comp, xform) in EntityQuery<OnLavaComponent, TransformComponent>())
+        if (TryComp<FlammableComponent>(otherUid, out var flammable))
         {
-            if (comp.NextUpdate > curTime)
-                continue;
-
-            comp.NextUpdate += TimeSpan.FromSeconds(1f);
-
-            if (!flammableQuery.TryGetComponent(comp.Owner, out var flammable))
-            {
-                RemCompDeferred<OnLavaComponent>(comp.Owner);
-                continue;
-            }
-
-            var grid = EntityManager.GetComponentOrNull<MapGridComponent>(xform.GridUid);
-
-            if (grid == null)
-                continue;
-
-            var anchored = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(xform.Coordinates));
-
-            while (anchored.MoveNext(out var ent))
-            {
-                if (!lavaQuery.TryGetComponent(ent.Value, out var lava))
-                    continue;
-
-                // Apply!
-                _flammable.AdjustFireStacks(comp.Owner, lava.FireStacks, flammable);
-                _flammable.Ignite(comp.Owner, flammable);
-                break;
-            }
+            // Apply the fury of a thousand suns
+            var multiplier = flammable.FireStacks == 0f ? 5f : 1f;
+            _flammable.AdjustFireStacks(otherUid, component.FireStacks * multiplier, flammable);
+            _flammable.Ignite(otherUid, flammable);
         }
     }
 }
