@@ -6,10 +6,45 @@
   setPreference: false
   startingGear: CentcomGear
   icon: "Nanotrasen"
-  supervisors: job-supervisors-hos
+  supervisors: job-supervisors-centcom-high
   canBeAntag: false
   accessGroups:
-  - AllAccess
+    - AllAccess
+
+- type: job
+  id: CentralCommandAdmiral
+  name: job-name-centcom-admiral
+  description: job-description-centcom-admiral
+  playTimeTracker: JobCentralCommandAdmiral
+  setPreference: false
+  startingGear: CentcomAdmiralGear
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom-high
+  canBeAntag: false
+  accessGroups:
+    - AllAccess
+#  requirements:
+#    - !type:AdminPermissionRequirement
+#      permissions:
+#        - Admin
+
+- type: job
+  id: CentralCommandGrandAdmiral
+  name: job-name-centcom-grand-admiral
+  description: job-description-centcom-grand-admiral
+  playTimeTracker: JobCentralCommandGrandAdmiral
+  setPreference: false
+  startingGear: CentcomGrandAdmiralGear
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom-you
+  canBeAntag: false
+  accessGroups:
+    - AllAccess
+#  requirements:
+#    - !type:AdminPermissionRequirement
+#      permissions:
+#        - Admin
+#        - Fun
 
 - type: startingGear
   id: CentcomGear

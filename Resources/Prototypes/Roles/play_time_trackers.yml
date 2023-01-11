@@ -23,6 +23,12 @@
   id: JobCentralCommandOfficial
 
 - type: playTimeTracker
+  id: JobCentralCommandAdmiral
+
+- type: playTimeTracker
+  id: JobCentralCommandGrandAdmiral
+
+- type: playTimeTracker
   id: JobChaplain
 
 - type: playTimeTracker
