@@ -168,9 +168,19 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if(!Resolve(uid, ref xform, ref eventHorizon))
             return;
 
+        var range2 = range * range;
+        var epicenter = xform.WorldPosition;
+        var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
         foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, range, flags: LookupFlags.Uncontained))
         {
             if (entity == uid)
+                continue;
+            if(!xformQuery.TryGetComponent(entity, out var entityXform))
+                continue;
+            
+            // GetEntitiesInRange gets everything in a _square_ centered on the given position. We are a _circle_.
+            var displacement = entityXform.WorldPosition - epicenter;
+            if (displacement.LengthSquared > range2)
                 continue;
 
             AttemptConsumeEntity(entity, eventHorizon);
@@ -374,7 +384,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
         if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
             return true;
 
-        args.Cancelled = !CanConsumeEntity(args.BodyB.Owner, (EventHorizonComponent)comp);
+        // If we can eat it we don't want to bounce off of it. If we can't eat it we want to bounce off of it (containment fields).
+        args.Cancelled = args.FixtureA.Hard && CanConsumeEntity(args.BodyB.Owner, (EventHorizonComponent)comp);
         return false;
     }
 
@@ -416,7 +427,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
-        if (args.OurFixture.ID != comp.HorizonFixtureId)
+        if (args.OurFixture.ID != comp.ConsumerFixtureId)
             return;
 
         AttemptConsumeEntity(args.OtherFixture.Body.Owner, comp);

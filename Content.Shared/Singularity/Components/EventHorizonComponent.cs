@@ -33,9 +33,18 @@ public sealed class EventHorizonComponent : Component
     /// Can be set to null, in which case no such fixture is used.
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
     /// </summary>
-    [DataField("horizonFixtureId")]
+    [DataField("consumerFixtureId")]
     [Access(friends:typeof(SharedEventHorizonSystem))]
-    public string? HorizonFixtureId = "EventHorizon";
+    public string? ConsumerFixtureId = "EventHorizonConsumer";
+
+    /// <summary>
+    /// The ID of the fixture used to detect if the event horizon has collided with any physics objects.
+    /// Can be set to null, in which case no such fixture is used.
+    /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetHorizonFixtureId"/>.
+    /// </summary>
+    [DataField("colliderFixtureId")]
+    [Access(friends:typeof(SharedEventHorizonSystem))]
+    public string? ColliderFixtureId = "EventHorizonCollider";
 
     /// <summary>
     /// Whether the entity this event horizon is attached to is being consumed by another event horizon.
