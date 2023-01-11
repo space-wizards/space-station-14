@@ -44,7 +44,7 @@ public sealed class SpawnArtifactSystem : EntitySystem
             toSpawn = _random.Pick(component.PossiblePrototypes);
 
         // select spawn position near artifact
-        var artifactCord = Transform(uid).Coordinates;
+        var artifactCord = Transform(uid).MapPosition;
         var dx = _random.NextFloat(-component.Range, component.Range);
         var dy = _random.NextFloat(-component.Range, component.Range);
         var spawnCord = artifactCord.Offset(new Vector2(dx, dy));

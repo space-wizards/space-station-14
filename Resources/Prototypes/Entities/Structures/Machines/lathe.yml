@@ -220,7 +220,8 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh
+      - PowerCellHigh  
+      - RPED
       - ProximitySensor
       - LeftArmBorg
       - RightArmBorg
@@ -300,6 +301,7 @@
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
       - ArtifactAnalyzerMachineCircuitboard
+      - TraversalDistorterMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:

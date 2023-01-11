@@ -10,7 +10,6 @@ namespace Content.Server.Recycling.Components
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
-        [ViewVariables]
         [DataField("enabled")]
         public bool Enabled = true;
 
@@ -44,5 +43,7 @@ namespace Content.Server.Recycling.Components
 
         // Ratelimit sounds to avoid spam
         public TimeSpan LastSound;
+
+        public int ItemsProcessed;
     }
 }

@@ -174,7 +174,7 @@ public partial class SharedBodySystem
     ///     Returns a list of ValueTuples of <see cref="T"/> and OrganComponent on each organ
     ///     in the given body.
     /// </summary>
-    /// <param name="uid">The entity to check for the component on.</param>
+    /// <param name="uid">The body entity id to check on.</param>
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
     public List<(T Comp, OrganComponent Organ)> GetBodyOrganComponents<T>(
@@ -185,7 +185,7 @@ public partial class SharedBodySystem
         if (!Resolve(uid, ref body))
             return new List<(T Comp, OrganComponent Organ)>();
 
-        var query = EntityManager.GetEntityQuery<T>();
+        var query = GetEntityQuery<T>();
         var list = new List<(T Comp, OrganComponent Organ)>(3);
         foreach (var organ in GetBodyOrgans(uid, body))
         {
@@ -200,7 +200,7 @@ public partial class SharedBodySystem
     ///     Tries to get a list of ValueTuples of <see cref="T"/> and OrganComponent on each organs
     ///     in the given body.
     /// </summary>
-    /// <param name="uid">The entity to check for the component on.</param>
+    /// <param name="uid">The body entity id to check on.</param>
     /// <param name="comps">The list of components.</param>
     /// <param name="body">The body to check for organs on.</param>
     /// <typeparam name="T">The component to check for.</typeparam>
@@ -219,12 +219,10 @@ public partial class SharedBodySystem
 
         comps = GetBodyOrganComponents<T>(uid, body);
 
-        if (comps.Count == 0)
-        {
-            comps = null;
-            return false;
-        }
+        if (comps.Count != 0)
+            return true;
 
-        return true;
+        comps = null;
+        return false;
     }
 }

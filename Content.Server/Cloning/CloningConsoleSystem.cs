@@ -19,7 +19,7 @@ using Content.Shared.Database;
 using Content.Shared.MachineLinking.Events;
 using Content.Shared.IdentityManagement;
 
-namespace Content.Server.Cloning.Systems
+namespace Content.Server.Cloning
 {
     [UsedImplicitly]
     public sealed class CloningConsoleSystem : EntitySystem
@@ -133,10 +133,12 @@ namespace Content.Server.Cloning.Systems
             if (!consoleComponent.CloningPodInRange || !consoleComponent.GeneticScannerInRange)
                 return;
 
-            if (scannerComp.BodyContainer.ContainedEntity is null)
+            var body = scannerComp.BodyContainer.ContainedEntity;
+
+            if (body is null)
                 return;
 
-            if (!TryComp<MindComponent>(scannerComp.BodyContainer.ContainedEntity.Value, out var mindComp))
+            if (!TryComp<MindComponent>(body, out var mindComp))
                 return;
 
             var mind = mindComp.Mind;
@@ -144,9 +146,8 @@ namespace Content.Server.Cloning.Systems
             if (mind == null || mind.UserId.HasValue == false || mind.Session == null)
                 return;
 
-            if (_cloningSystem.TryCloning(cloningPodUid, scannerComp.BodyContainer.ContainedEntity.Value, mind, cloningPod))
-                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(scannerComp.BodyContainer.ContainedEntity.Value)}.");
-
+            if (_cloningSystem.TryCloning(cloningPodUid, body.Value, mind, cloningPod, scannerComp.CloningFailChanceMultiplier))
+                _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(uid)} successfully cloned {ToPrettyString(body.Value)}.");
         }
 
         public void RecheckConnections(EntityUid console, EntityUid? cloningPod, EntityUid? scanner, CloningConsoleComponent? consoleComp = null)

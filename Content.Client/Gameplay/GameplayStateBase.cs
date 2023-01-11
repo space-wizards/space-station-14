@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Clickable;
+using Content.Client.ContextMenu.UI;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.Player;
@@ -28,17 +29,46 @@ namespace Content.Client.Gameplay
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IViewVariablesManager _vvm = default!;
 
         private ClickableEntityComparer _comparer = default!;
 
+        private (ViewVariablesPath? path, string[] segments) ResolveVVHoverObject(string path)
+        {
+            // VVs the currently hovered entity. For a nifty vv keybinding you can use:
+            //
+            // /bind v command "vv /c/enthover"
+            // /svbind
+            //
+            // Though you probably want to include a modifier like alt, as otherwise this would open VV even when typing
+            // a message into chat containing the letter v.
+
+            var segments = path.Split('/');
+
+            EntityUid? uid = null;
+            if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp && _inputManager.MouseScreenPosition.IsValid)
+                uid = GetEntityUnderPosition(vp.ScreenToMap(_inputManager.MouseScreenPosition.Position));
+            else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
+                uid = element.Entity;
+
+            return (uid != null ? new ViewVariablesInstancePath(uid) : null, segments);
+        }
+
+        private IEnumerable<string>? ListVVHoverPaths(string[] segments)
+        {
+            return null;
+        }
+
         protected override void Startup()
         {
+            _vvm.RegisterDomain("enthover", ResolveVVHoverObject, ListVVHoverPaths);
             _inputManager.KeyBindStateChanged += OnKeyBindStateChanged;
             _comparer = new ClickableEntityComparer(_entityManager);
         }
 
         protected override void Shutdown()
         {
+            _vvm.UnregisterDomain("enthover");
             _inputManager.KeyBindStateChanged -= OnKeyBindStateChanged;
         }
 

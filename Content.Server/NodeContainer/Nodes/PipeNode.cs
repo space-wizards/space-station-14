@@ -18,7 +18,6 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     The directions in which this pipe can connect to other pipes around it.
         /// </summary>
-        [ViewVariables]
         [DataField("pipeDirection")]
         private PipeDirection _originalPipeDirection;
 
@@ -97,7 +96,6 @@ namespace Content.Server.NodeContainer.Nodes
             }
         }
 
-        [ViewVariables]
         [DataField("volume")]
         public float Volume { get; set; } = DefaultVolume;
 
