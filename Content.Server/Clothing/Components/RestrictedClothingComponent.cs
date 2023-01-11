@@ -18,8 +18,8 @@ public sealed class RestrictedClothingComponent : Component
     /// <summary>
     ///     Uid that won't be affected
     /// </summary>
-    // [DataField("whitelistedUid")]
-    // public int? WhitelistedUid;
+    [DataField("whitelistedUid")]
+    public int? WhitelistedUid;
 
     /// <summary>
     ///     Always checks the whitelist
