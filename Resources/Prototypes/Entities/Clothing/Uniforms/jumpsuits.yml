@@ -890,7 +890,6 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom High Command
@@ -899,11 +898,13 @@
     sprite: Clothing/Uniforms/Jumpsuit/admiral.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/admiral.rsi
-    
+  - type: RestrictedClothing
+    permissions:
+      - Admin
+
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitGrandAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: grand admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom's highest-ranking officer
@@ -912,3 +913,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/grandadmiral.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/grandadmiral.rsi
+  - type: RestrictedClothing
+    permissions:
+      - Admin
+      - Fun

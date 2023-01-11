@@ -512,11 +512,10 @@
       sprite: Clothing/Head/Hats/jester2.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/jester2.rsi
-      
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretOfficer
-  noSpawn: true
   suffix: DO NOT MAP
   name: officer's beret
   description: A special beret with the NanoTrasen logo emblazoned on it. For where no man has gone before.
@@ -525,11 +524,10 @@
     sprite: Clothing/Head/Hats/officersberet.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/officersberet.rsi
-    
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGrandAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: grand admiral's cap
   description: It's good to be at the top.
@@ -538,11 +536,14 @@
     sprite: Clothing/Head/Hats/grandadmiralcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/grandadmiralcap.rsi
-    
+  - type: RestrictedClothing
+    permissions:
+      - Admin
+      - Fun
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAdmiral
-  noSpawn: true
   suffix: DO NOT MAP
   name: admiral's cap
   description: It's good to be a god.
@@ -551,3 +552,6 @@
     sprite: Clothing/Head/Hats/admiralcap.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/admiralcap.rsi
+  - type: RestrictedClothing
+    permissions:
+      - Admin
