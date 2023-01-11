@@ -14,7 +14,7 @@
 - type: startingGear
   id: ERTLeaderGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtLeader
+    jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -30,7 +30,7 @@
 - type: startingGear
   id: ERTLeaderGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtLeader
+    jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -60,7 +60,7 @@
 - type: startingGear
   id: ERTEngineerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtEngineer
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsWork
     head: ClothingHeadHelmetHelmet
@@ -76,7 +76,7 @@
 - type: startingGear
   id: ERTEngineerGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtEngineer
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskBreath
@@ -105,7 +105,7 @@
 - type: startingGear
   id: ERTSecurityGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtSecurity
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -121,7 +121,7 @@
 - type: startingGear
   id: ERTSecurityGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtSecurity
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -150,7 +150,7 @@
 - type: startingGear
   id: ERTMedicalGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtMedic
+    jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -166,7 +166,7 @@
 - type: startingGear
   id: ERTMedicalGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtMedic
+    jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -196,7 +196,7 @@
 - type: startingGear
   id: ERTJanitorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtJanitor
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHelmetHelmet
@@ -211,7 +211,7 @@
 - type: startingGear
   id: ERTJanitorGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitErtJanitor
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
