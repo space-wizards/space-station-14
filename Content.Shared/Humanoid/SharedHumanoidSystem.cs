@@ -24,7 +24,7 @@ public abstract class SharedHumanoidSystem : EntitySystem
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
         {Sex.Male, "Garithos"},
-        {Sex.Female, "Luna"},
+        {Sex.Female, "Maiev"},
         {Sex.Unsexed, "Myron"},
     };
     // Corvax-TTS-End

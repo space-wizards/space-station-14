@@ -50,11 +50,11 @@ public sealed partial class TTSSystem : EntitySystem
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         if (!_isEnabled ||
-            args.OriginalMessage.Length > MaxMessageChars ||
+            args.Message.Length > MaxMessageChars ||
             !_prototypeManager.TryIndex<TTSVoicePrototype>(component.VoicePrototypeId, out var protoVoice))
             return;
         
-        var soundData = await GenerateTTS(args.OriginalMessage, protoVoice.Speaker);
+        var soundData = await GenerateTTS(args.Message, protoVoice.Speaker);
         var ttsEvent = new PlayTTSEvent(uid, soundData);
 
         // Say
