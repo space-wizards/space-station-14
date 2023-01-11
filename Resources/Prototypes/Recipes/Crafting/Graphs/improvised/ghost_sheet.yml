@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ClothingOuterGhostSheet
+  id: Ghost sheet
   start: start
   graph:
     - node: start
