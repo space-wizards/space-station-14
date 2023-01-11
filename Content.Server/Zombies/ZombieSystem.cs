@@ -36,8 +36,8 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
-            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
+            SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
 
         }
 
