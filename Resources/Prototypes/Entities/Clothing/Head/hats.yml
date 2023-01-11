@@ -516,6 +516,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBeretOfficer
+  noSpawn: true
   name: officerberet
   description: A special beret with the NanoTrasen logo emblazoned on it. For where no man has gone before.
   components:
@@ -527,6 +528,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatGrandAdmiral
+  noSpawn: true
   name: grandadmiralscap
   description: It's good to be at the top.
   components:
@@ -538,6 +540,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatAdmiral
+  noSpawn: true
   name: admiralscap
   description: It's good to be a god.
   components:

@@ -890,6 +890,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitAdmiral
+  noSpawn: true
   name: admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom High Command
   components:
@@ -901,6 +902,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitGrandAdmiral
+  noSpawn: true
   name: grand admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom's highest-ranking officer
   components:

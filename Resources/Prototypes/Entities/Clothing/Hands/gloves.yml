@@ -261,6 +261,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesCentcom
+  noSpawn: true
   name: centcom gloves
   description: Regal green gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky.
   components:
@@ -279,6 +280,7 @@
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesGrandAdmiral
+  noSpawn: true
   name: grand admiral gloves
   description: Regal black gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky.
   components:
