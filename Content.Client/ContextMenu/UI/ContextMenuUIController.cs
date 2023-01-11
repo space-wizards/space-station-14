@@ -1,24 +1,26 @@
-using System;
-using System.Collections.Generic;
 using System.Threading;
+using Content.Client.Gameplay;
 using Robust.Client.UserInterface;
-using Robust.Shared.Log;
-using Robust.Shared.Maths;
+using Robust.Client.UserInterface.Controllers;
 using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Client.ContextMenu.UI
 {
     /// <summary>
-    ///     This class handles all the logic associated with showing a context menu.
+    ///     This class handles all the logic associated with showing a context menu, as well as all the state for the
+    ///     entire context menu stack, including verb and entity menus. It does not currently support multiple
+    ///     open context menus.
     /// </summary>
     /// <remarks>
     ///     This largely involves setting up timers to open and close sub-menus when hovering over other menu elements.
     /// </remarks>
-    [Virtual]
-    public class ContextMenuPresenter : IDisposable
+    public sealed class ContextMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
-        public ContextMenuPopup RootMenu;
+        /// <summary>
+        ///     Root menu of the entire context menu.
+        /// </summary>
+        public ContextMenuPopup RootMenu = default!;
         public Stack<ContextMenuPopup> Menus { get; } = new();
 
         /// <summary>
@@ -31,30 +33,36 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public CancellationTokenSource? CancelClose;
 
-        public ContextMenuPresenter()
+        public Action? OnContextClosed;
+        public Action<ContextMenuElement>? OnContextMouseEntered;
+        public Action<ContextMenuElement>? OnContextMouseExited;
+        public Action<ContextMenuElement>? OnSubMenuOpened;
+        public Action<ContextMenuElement, GUIBoundKeyEventArgs>? OnContextKeyEvent;
+
+        public void OnStateEntered(GameplayState state)
         {
             RootMenu = new(this, null);
-            RootMenu.OnPopupHide += RootMenu.MenuBody.DisposeAllChildren;
+            RootMenu.OnPopupHide += Close;
             Menus.Push(RootMenu);
         }
 
-        /// <summary>
-        ///     Dispose of all UI elements.
-        /// </summary>
-        public virtual void Dispose()
+        public void OnStateExited(GameplayState state)
         {
-            RootMenu.OnPopupHide -= RootMenu.MenuBody.DisposeAllChildren;
+            Close();
+            RootMenu.OnPopupHide -= Close;
             RootMenu.Dispose();
         }
 
         /// <summary>
         ///     Close and clear the root menu. This will also dispose any sub-menus.
         /// </summary>
-        public virtual void Close()
+        public void Close()
         {
-            RootMenu.Close();
+            RootMenu.MenuBody.DisposeAllChildren();
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
+            OnContextClosed?.Invoke();
+            RootMenu.Close();
         }
 
         /// <summary>
@@ -82,7 +90,7 @@ namespace Content.Client.ContextMenu.UI
         /// <summary>
         ///     Start a timer to open this element's sub-menu.
         /// </summary>
-        public virtual void OnMouseEntered(ContextMenuElement element)
+        private void OnMouseEntered(ContextMenuElement element)
         {
             if (!Menus.TryPeek(out var topMenu))
             {
@@ -100,6 +108,7 @@ namespace Content.Client.ContextMenu.UI
             CancelOpen?.Cancel();
             CancelOpen = new();
             Timer.Spawn(HoverDelay, () => OpenSubMenu(element), CancelOpen.Token);
+            OnContextMouseEntered?.Invoke(element);
         }
 
         /// <summary>
@@ -108,7 +117,7 @@ namespace Content.Client.ContextMenu.UI
         /// <remarks>
         ///     Note that this timer will be aborted when entering the actual sub-menu itself.
         /// </remarks>
-        public virtual void OnMouseExited(ContextMenuElement element)
+        private void OnMouseExited(ContextMenuElement element)
         {
             CancelOpen?.Cancel();
 
@@ -118,9 +127,13 @@ namespace Content.Client.ContextMenu.UI
             CancelClose?.Cancel();
             CancelClose = new();
             Timer.Spawn(HoverDelay, () => CloseSubMenus(element.ParentMenu), CancelClose.Token);
+            OnContextMouseExited?.Invoke(element);
         }
 
-        public virtual void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args) { }
+        private void OnKeyBindDown(ContextMenuElement element, GUIBoundKeyEventArgs args)
+        {
+            OnContextKeyEvent?.Invoke(element, args);
+        }
 
         /// <summary>
         ///     Opens a new sub menu, and close the old one.
@@ -128,7 +141,7 @@ namespace Content.Client.ContextMenu.UI
         /// <remarks>
         ///     If the given element has no sub-menu, just close the current one.
         /// </remarks>
-        public virtual void OpenSubMenu(ContextMenuElement element)
+        public void OpenSubMenu(ContextMenuElement element)
         {
             if (!Menus.TryPeek(out var topMenu))
             {
@@ -164,6 +177,7 @@ namespace Content.Client.ContextMenu.UI
             element.SubMenu.SetPositionLast();
 
             Menus.Push(element.SubMenu);
+            OnSubMenuOpened?.Invoke(element);
         }
 
         /// <summary>
