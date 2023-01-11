@@ -46,7 +46,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckMantleHOS
   name: head of security's mantle
-  description: Shootouts with nukies are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
+  description: Shootouts with nukies are just another tuesday for this HoS. This mantle is a symbol of commitment to the station.
   components:
   - type: Sprite
     sprite: Clothing/Neck/mantles/hosmantle.rsi
@@ -63,3 +63,37 @@
     sprite: Clothing/Neck/mantles/rdmantle.rsi
   - type: Clothing
     sprite: Clothing/Neck/mantles/rdmantle.rsi    
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleColonel
+  name: colonel's mantle
+  description: Gold alloy reinforced pauldrons signifying the rank of Colonel.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/colonelmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/colonelmantle.rsi    
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantlecommodore
+  name: commodore's mantle
+  description: A gold alloy reinforced pauldron signifying the rank of Commodore.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/commodoremantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/commodoremantle.rsi    
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleMajor
+  name: Major's mantle
+  description: A red padded pauldron signifying the rank of Major.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/majormantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/majormantle.rsi
+
