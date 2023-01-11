@@ -53,7 +53,6 @@
         Slash: 0.5
         Piercing: 0.6
         Heat: 0.5
-  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -73,7 +72,6 @@
         Piercing: 0.2
         Heat: 0.5
         Radiation: 0
-  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterArmorHeavy
@@ -138,7 +136,6 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.9
-  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -159,7 +156,6 @@
         Heat: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.8
-  - type: GroupExamine
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -180,8 +176,7 @@
         Heat: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.65
-  - type: GroupExamine
-
+    
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
@@ -205,4 +200,24 @@
     sprintModifier: 0.65 
   - type: ExplosionResistance
     damageCoefficient: 0.5
-  - type: GroupExamine
+
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterArmorCentcomCarapace
+  name: "centcom's carapace"
+  description: "A CentCom green alteration of the captain's carapace. Issued only to Nanotrasen's finest, although it does chafe your pecks."
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Armor/centcom_carapace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Armor/centcom_carapace.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+    

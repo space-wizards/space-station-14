@@ -257,3 +257,39 @@
       fiberMaterial: fibers-synthetic
       fiberColor: fibers-black
     - type: FingerprintMask
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesCentcom
+  name: centcom gloves
+  description: Regal green gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/centcom.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/centcom.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-blue
+  - type: FingerprintMask
+  
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesGrandAdmiral
+  name: grand admiral gloves
+  description: Regal black gloves, with a nice gold trim. Swanky.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/grandadmiral.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/grandadmiral.rsi
+  - type: GloveHeatResistance
+    heatResistance: 1400
+  - type: Insulated
+  - type: Fiber
+    fiberMaterial: fibers-durathread
+    fiberColor: fibers-regal-blue
+  - type: FingerprintMask
