@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: Ghostsheet
+  id: ClothingOuterGhostSheet
   start: start
   graph:
     - node: start
@@ -11,3 +11,4 @@
               doAfter: 10
     - node: Ghostsheet
       entity: ClothingOuterGhostSheet
+      
