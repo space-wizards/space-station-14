@@ -144,6 +144,17 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 return false;
         }
 
+        if (_entityManager.HasComponent<BluespaceLockerComponent>(link))
+        {
+            if (component.PickLinksFromNonBluespaceLockers)
+                return false;
+        }
+        else
+        {
+            if (component.PickLinksFromBluespaceLockers)
+                return false;
+        }
+
         return true;
     }
 

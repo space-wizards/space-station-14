@@ -43,6 +43,18 @@ public sealed class BluespaceLockerComponent : Component
     [DataField("pickLinksFromSameAccess"), ViewVariables(VVAccess.ReadWrite)]
     public bool PickLinksFromSameAccess = true;
 
+    /// <summary>
+    /// Determines if links automatically added are restricted to existing bluespace lockers
+    /// </summary>
+    [DataField("pickLinksFromBluespaceLockers"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromBluespaceLockers;
+
+    /// <summary>
+    /// Determines if links automatically added are restricted to non-bluespace lockers
+    /// </summary>
+    [DataField("pickLinksFromNonBluespaceLockers"), ViewVariables(VVAccess.ReadWrite)]
+    public bool PickLinksFromNonBluespaceLockers = true;
+
     public CancellationTokenSource? CancelToken;
 
     /// <summary>
