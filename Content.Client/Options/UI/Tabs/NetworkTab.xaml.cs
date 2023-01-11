@@ -83,9 +83,7 @@ namespace Content.Client.Options.UI.Tabs
             NetPvsSpawnSlider.Value = CVars.NetPVSEntityBudget.DefaultValue;
             NetPvsEntrySlider.Value = CVars.NetPVSEntityEnterBudget.DefaultValue;
             NetPvsLeaveSlider.Value = CVars.NetPVSEntityExitBudget.DefaultValue;
-
-            // Apparently default value doesn't get updated when using override defaults, so using a const
-            NetInterpRatioSlider.Value = EntryPoint.NetBufferSizeOverride + _stateMan.MinBufferSize;
+            NetInterpRatioSlider.Value = CVars.NetBufferSize.DefaultValue + _stateMan.MinBufferSize;
 
             UpdateChanges();
         }

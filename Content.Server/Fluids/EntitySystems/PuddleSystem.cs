@@ -1,14 +1,11 @@
-using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -22,9 +19,10 @@ namespace Content.Server.Fluids.EntitySystems
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
         [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
-        [Dependency] private readonly SlipperySystem _slipSystem = default!;
-        [Dependency] private readonly EvaporationSystem _evaporationSystem = default!;
 
+        // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
+        // loses & then gains reagents in a single tick.
+        private HashSet<EntityUid> _deletionQueue = new();
 
         public override void Initialize()
         {
@@ -33,26 +31,46 @@ namespace Content.Server.Fluids.EntitySystems
             // Shouldn't need re-anchoring.
             SubscribeLocalEvent<PuddleComponent, AnchorStateChangedEvent>(OnAnchorChanged);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
-            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
-            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnSolutionUpdate);
+            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         }
 
-        private void OnInit(EntityUid uid, PuddleComponent component, ComponentInit args)
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var ent in _deletionQueue)
+            {
+                Del(ent);
+            }
+            _deletionQueue.Clear();
+        }
+
+        private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             var solution = _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             solution.MaxVolume = FixedPoint2.New(1000);
         }
 
-        private void OnUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
+        private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
+            if (args.Solution.Name != component.SolutionName)
+                return;
+
+            if (args.Solution.CurrentVolume <= 0)
+            {
+                _deletionQueue.Add(uid);
+                return;
+            }
+
+            _deletionQueue.Remove(uid);
             UpdateSlip(uid, component);
-            UpdateVisuals(uid, component);
+            UpdateAppearance(uid, component);
         }
 
-        private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
+        private void UpdateAppearance(EntityUid uid, PuddleComponent? puddleComponent = null, AppearanceComponent? appearance = null)
         {
-            if (Deleted(puddleComponent.Owner) || EmptyHolder(uid, puddleComponent) ||
-                !EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearanceComponent))
+            if (!Resolve(uid, ref puddleComponent, ref appearance, false)
+                || EmptyHolder(uid, puddleComponent))
             {
                 return;
             }
@@ -64,22 +82,19 @@ namespace Content.Server.Fluids.EntitySystems
                               puddleComponent.OpacityModifier;
             var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
+            bool isEvaporating;
 
-            bool hasEvaporationComponent =
-                EntityManager.TryGetComponent<EvaporationComponent>(uid, out var evaporationComponent);
-            bool canEvaporate = (hasEvaporationComponent &&
-                                 (evaporationComponent!.LowerLimit == 0 ||
-                                  CurrentVolume(puddleComponent.Owner, puddleComponent) >
-                                  evaporationComponent.LowerLimit));
+            if (TryComp(uid, out EvaporationComponent? evaporation)
+                && evaporation.EvaporationToggle)// if puddle is evaporating.
+            {
+                isEvaporating = true;
+            }
+            else isEvaporating = false;
 
-            // "Does this puddle's sprite need changing to the wet floor effect sprite?"
-            bool changeToWetFloor = (CurrentVolume(puddleComponent.Owner, puddleComponent) <=
-                                     puddleComponent.WetFloorEffectThreshold
-                                     && canEvaporate);
-
-            appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
-            appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
-            appearanceComponent.SetData(PuddleVisuals.ForceWetFloorSprite, changeToWetFloor);
+            appearance.SetData(PuddleVisuals.VolumeScale, volumeScale);
+            appearance.SetData(PuddleVisuals.CurrentVolume, puddleComponent.CurrentVolume);
+            appearance.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
+            appearance.SetData(PuddleVisuals.IsEvaporatingVisual, isEvaporating);
         }
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
@@ -158,12 +173,11 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             solution.AddSolution(addedSolution);
+            _solutionContainerSystem.UpdateChemicals(puddleUid, solution, true);
             if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
                 _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
-
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {

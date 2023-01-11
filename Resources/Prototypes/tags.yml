@@ -25,6 +25,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Book
+
+- type: Tag
   id: BorgArm
 
 - type: Tag
@@ -290,6 +293,9 @@
 
 - type: Tag
   id: Ingot
+
+- type: Tag
+  id: IntercomElectronics
 
 - type: Tag
   id: JawsOfLife

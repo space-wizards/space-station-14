@@ -42,8 +42,8 @@ namespace Content.Client.Atmos.Overlays
 
             foreach (var mapGrid in _mapManager.FindGridsIntersecting(mapId, worldBounds))
             {
-                if (!_atmosDebugOverlaySystem.HasData(mapGrid.GridEntityId) ||
-                    !_entManager.TryGetComponent<TransformComponent>(mapGrid.GridEntityId, out var xform))
+                if (!_atmosDebugOverlaySystem.HasData(mapGrid.Owner) ||
+                    !_entManager.TryGetComponent<TransformComponent>(mapGrid.Owner, out var xform))
                     continue;
 
                 drawHandle.SetTransform(xform.WorldMatrix);
@@ -52,7 +52,7 @@ namespace Content.Client.Atmos.Overlays
                 {
                     foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                     {
-                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.GridEntityId, tile.GridIndices);
+                        var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Owner, tile.GridIndices);
                         if (dataMaybeNull != null)
                         {
                             var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;

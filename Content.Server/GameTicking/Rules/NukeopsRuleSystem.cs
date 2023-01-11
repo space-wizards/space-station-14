@@ -761,8 +761,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             {
                 var spawnPoint = EntityManager.SpawnEntity(_nukeopsRuleConfig.GhostSpawnPointProto, _random.Pick(spawns));
                 var spawner = EnsureComp<GhostRoleMobSpawnerComponent>(spawnPoint);
-                spawner.RoleName = nukeOpsAntag.Name;
-                spawner.RoleDescription = nukeOpsAntag.Objective;
+                spawner.RoleName = Loc.GetString(nukeOpsAntag.Name);
+                spawner.RoleDescription = Loc.GetString(nukeOpsAntag.Objective);
 
                 var nukeOpSpawner = EnsureComp<NukeOperativeSpawnerComponent>(spawnPoint);
                 nukeOpSpawner.OperativeName = spawnDetails.Name;

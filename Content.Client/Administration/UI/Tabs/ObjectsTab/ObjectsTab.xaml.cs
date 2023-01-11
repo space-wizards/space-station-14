@@ -43,7 +43,7 @@ public sealed partial class ObjectsTab : Control
         var entities = selection switch
         {
             ObjectsTabSelection.Stations => _entityManager.EntitySysManager.GetEntitySystem<StationSystem>().Stations.ToList(),
-            ObjectsTabSelection.Grids => _entityManager.EntityQuery<MapGridComponent>(true).Select(x => x.Owner).ToList(),
+            ObjectsTabSelection.Grids => _entityManager.EntityQuery<MapGridComponent>(true).Select(x => ((Component) x).Owner).ToList(),
             ObjectsTabSelection.Maps => _entityManager.EntityQuery<MapComponent>(true).Select(x => x.Owner).ToList(),
             _ => throw new ArgumentOutOfRangeException(nameof(selection), selection, null)
         };
