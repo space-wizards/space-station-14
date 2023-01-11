@@ -228,13 +228,10 @@ public sealed class HeadsetSystem : EntitySystem
         }
         if (args.Container.ContainedEntities.Contains(args.Entity))
         {
-            if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
-            {
-                UploadChannelsFromKey(component, added);
-                PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
-            }
-            return;
+            UploadChannelsFromKey(component, added);
+            PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
         }
-        RecalculateChannels(component);
+        else
+            RecalculateChannels(component);
     }
 }
