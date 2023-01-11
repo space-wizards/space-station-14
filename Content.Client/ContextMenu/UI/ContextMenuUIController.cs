@@ -62,6 +62,7 @@ namespace Content.Client.ContextMenu.UI
             CancelOpen?.Cancel();
             CancelClose?.Cancel();
             OnContextClosed?.Invoke();
+            RootMenu.Close();
         }
 
         /// <summary>
