@@ -1,4 +1,4 @@
-﻿using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -50,8 +50,8 @@ public sealed class NetProbeCartridgeSystem : EntitySystem
         //Play scanning sound with slightly randomized pitch
         //Why is there no NextFloat(float min, float max)???
         var audioParams = AudioParams.Default.WithVolume(-2f).WithPitchScale((float)_random.Next(12, 21) / 10);
-        _audioSystem.Play(component.SoundScan, Filter.Pvs(args.InteractEvent.User), target, audioParams);
-        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), Filter.Entities(args.InteractEvent.User));
+        _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, audioParams);
+        _popupSystem.PopupCursor(Loc.GetString("net-probe-scan", ("device", target)), args.InteractEvent.User);
 
 
         //Limit the amount of saved probe results to 9

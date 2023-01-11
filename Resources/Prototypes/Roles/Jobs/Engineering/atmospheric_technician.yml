@@ -1,6 +1,7 @@
 - type: job
   id: AtmosphericTechnician
   name: job-name-atmostech
+  description: job-description-atmostech
   playTimeTracker: JobAtmosphericTechnician
   requirements:
     - !type:DepartmentTimeRequirement
@@ -19,7 +20,6 @@
 - type: startingGear
   id: AtmosphericTechnicianGear
   equipment:
-    head:
     jumpsuit: ClothingUniformJumpsuitAtmos
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesColorWhite

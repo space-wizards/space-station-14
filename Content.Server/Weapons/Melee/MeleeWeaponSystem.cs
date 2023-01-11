@@ -90,7 +90,10 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (uid == null)
             return;
 
-        PopupSystem.PopupEntity(message, uid.Value, Filter.Pvs(uid.Value, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
+        if (user == null)
+            PopupSystem.PopupEntity(message, uid.Value); 
+        else
+            PopupSystem.PopupEntity(message, uid.Value, Filter.PvsExcept(user.Value, entityManager: EntityManager), true);
     }
 
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
@@ -147,7 +150,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        var filterOther = Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user);
+        var filterOther = Filter.PvsExcept(user, entityManager: EntityManager);
         var msgPrefix = "disarm-action-";
 
         if (inTargetHand == null)
@@ -160,8 +163,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
        var msgUser = Loc.GetString(msgPrefix + "popup-message-cursor", ("targetName", Identity.Entity(target, EntityManager)));
 
-        PopupSystem.PopupEntity(msgOther, user, filterOther);
-        PopupSystem.PopupEntity(msgUser, target, Filter.Entities(user));
+        PopupSystem.PopupEntity(msgOther, user, filterOther, true);
+        PopupSystem.PopupEntity(msgUser, target, user);
 
         Audio.PlayPvs(combatMode.DisarmSuccessSound, user, AudioParams.Default.WithVariation(0.025f).WithVolume(5f));
         AdminLogger.Add(LogType.DisarmedAction, $"{ToPrettyString(user):user} used disarm on {ToPrettyString(target):target}");
@@ -220,7 +223,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     public override void DoLunge(EntityUid user, Angle angle, Vector2 localPos, string? animation)
     {
-        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), Filter.Pvs(user, entityManager: EntityManager).RemoveWhereAttachedEntity(e => e == user));
+        RaiseNetworkEvent(new MeleeLungeEvent(user, angle, localPos, animation), Filter.PvsExcept(user, entityManager: EntityManager));
     }
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)

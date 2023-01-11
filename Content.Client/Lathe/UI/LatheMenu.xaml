@@ -65,12 +65,18 @@
                 VerticalExpand="True">
             </BoxContainer>
         </ScrollContainer>
-        <LineEdit
-            Name="AmountLineEdit"
-            PlaceHolder="{Loc 'lathe-menu-search-amount'}"
-            Text="1"
-            HorizontalExpand="True">
-        </LineEdit>
+        <BoxContainer
+            Orientation="Horizontal"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            SizeFlagsStretchRatio="1">
+            <Label Margin="8 0 8 0" Text="{Loc 'lathe-menu-amount'}"/>
+            <LineEdit
+                Name="AmountLineEdit"
+                PlaceHolder="0"
+                Text="1"
+                HorizontalExpand="True" />
+        </BoxContainer>
         <ItemList
             Name="Materials"
             VerticalExpand="True"

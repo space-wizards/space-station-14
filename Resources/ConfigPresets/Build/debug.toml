@@ -1,0 +1,7 @@
+﻿[events]
+# Annoying
+enabled = false
+
+[npc]
+# Makes physics etc debugging easier.
+enabled = false

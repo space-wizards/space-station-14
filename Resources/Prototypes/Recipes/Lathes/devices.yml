@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: TimerTrigger
-  icon:
-    sprite: Objects/Devices/timer.rsi
-    state: timer
   result: TimerTrigger
   completetime: 2
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: SignalTrigger
-  icon:
-    sprite: Objects/Devices/signaltrigger.rsi
-    state: signaltrigger
   result: SignalTrigger
   completetime: 2
   materials:
@@ -22,9 +16,6 @@
 
 - type: latheRecipe
   id: VoiceTrigger
-  icon:
-    sprite: Objects/Devices/voice.rsi
-    state: voice
   result: VoiceTrigger
   completetime: 2
   materials:
@@ -33,9 +24,6 @@
 
 - type: latheRecipe
   id: ChemicalPayload
-  icon:
-    sprite: Objects/Devices/payload.rsi
-    state: payload-empty
   result: ChemicalPayload
   completetime: 2
   materials:
@@ -44,9 +32,6 @@
 
 - type: latheRecipe
   id: FlashPayload
-  icon:
-    sprite: Objects/Devices/payload.rsi
-    state: payload-flash-armed
   result: FlashPayload
   completetime: 1
   materials:
@@ -57,9 +42,6 @@
 
 - type: latheRecipe
   id: Signaller
-  icon:
-    sprite: Objects/Devices/signaller.rsi
-    state: signaller
   result: RemoteSignaller
   completetime: 2
   materials:

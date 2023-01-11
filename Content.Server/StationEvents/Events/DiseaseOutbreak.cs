@@ -1,5 +1,6 @@
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
+using Content.Server.MobState;
 using Content.Server.Station.Systems;
 using Content.Shared.Disease;
 using Content.Shared.MobState.Components;
@@ -13,6 +14,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class DiseaseOutbreak : StationEventSystem
 {
     [Dependency] private readonly DiseaseSystem _diseaseSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
     public override string Prototype => "DiseaseOutbreak";
 
@@ -42,7 +44,7 @@ public sealed class DiseaseOutbreak : StationEventSystem
         List<DiseaseCarrierComponent> aliveList = new();
         foreach (var (carrier, mobState) in EntityManager.EntityQuery<DiseaseCarrierComponent, MobStateComponent>())
         {
-            if (!mobState.IsDead())
+            if (!_mobStateSystem.IsDead(mobState.Owner, mobState))
                 aliveList.Add(carrier);
         }
         RobustRandom.Shuffle(aliveList);
