@@ -197,16 +197,9 @@ public sealed class HeadsetSystem : EntitySystem
                 {
                     var contained = new List<EntityUid>();
                     foreach (var i in component.KeyContainer.ContainedEntities)
-                    {
                         contained.Add(i);
-                    }
                     foreach (var i in contained)
-                    {
-                        if (HasComp<EncryptionKeyComponent>(i))
-                        {
-                            component.KeyContainer.Remove(i);
-                        }
-                    }
+                        component.KeyContainer.Remove(i);
                     component.Channels.Clear();
 
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-all-extracted"), uid, args.User);
