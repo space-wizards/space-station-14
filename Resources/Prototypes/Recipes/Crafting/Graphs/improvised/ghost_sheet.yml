@@ -6,7 +6,7 @@
       edges:
         - to: Ghostsheet
           steps:
-            - material: white bedsheet
+            - material: BedsheetWhite
               amount: 1
               doAfter: 10
     - node: Ghostsheet
