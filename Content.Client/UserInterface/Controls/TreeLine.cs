@@ -32,7 +32,7 @@ public sealed class TreeLine : Control
         var iconPos = parent.Icon.GlobalPixelPosition - global;
         var iconSize = parent.Icon.PixelSize;
         var x = iconPos.X + iconSize.X / 2;
-        DebugTools.Assert(parent.Icon.Visible && parent.IconBox.Visible);
+        DebugTools.Assert(parent.Icon.Visible);
 
         var buttonPos = parent.Button.GlobalPixelPosition - global;
         var buttonSize = parent.Button.PixelSize;

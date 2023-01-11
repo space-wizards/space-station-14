@@ -318,7 +318,6 @@ namespace Content.Client.Stylesheets
             chatFilterButton.SetPadding(StyleBox.Margin.All, 2);
 
             var textureInvertedTriangle = resCache.GetTexture("/Textures/Interface/Nano/inverted_triangle.svg.png");
-            var textureTriangleRight = resCache.GetTexture("/Textures/Interface/Nano/triangle_right.png");
 
             var lineEditTex = resCache.GetTexture("/Textures/Interface/Nano/lineedit.png");
             var lineEdit = new StyleBoxTexture
@@ -1415,45 +1414,33 @@ namespace Content.Client.Stylesheets
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
 
                 // Fancy Tree
-                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
                     .Class(TreeItem.StyleClassEvenRow)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
                         BackgroundColor = FancyTreeEvenRowColor,
                     }),
 
-                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
                     .Class(TreeItem.StyleClassOddRow)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
                         BackgroundColor = FancyTreeOddRowColor,
                     }),
 
-                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
                     .Class(TreeItem.StyleClassSelected)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
-                Element<ContainerButton>().Class(TreeItem.StyleClassTreeButton)
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
                     .Pseudo(ContainerButton.StylePseudoClassHover)
                     .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
                     {
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
-
-                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
-                    .Class(TreeItem.StyleClassCollapsed)
-                    .Prop(TextureRect.StylePropertyTexture, textureTriangleRight),
-
-                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
-                    .Class(TreeItem.StyleClassExpanded)
-                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
-
-                Element<TextureRect>().Class(TreeItem.StyleClassTreeButton)
-                    .Class(TreeItem.StyleClassExpanded)
-                    .Prop(TextureRect.StylePropertyTexture, textureInvertedTriangle),
 
             }).ToList());
         }

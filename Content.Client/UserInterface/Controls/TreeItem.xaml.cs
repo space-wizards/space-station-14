@@ -11,14 +11,10 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class TreeItem : PanelContainer
 {
-    public const string StyleClassExpanded = "expanded";
-    public const string StyleClassCollapsed = "collapsed";
     public const string StyleClassSelected = "selected";
-    public const string StyleClassTreeButton = "fancy-tree-button";
+    public const string StyleIdentifierTreeButton = "tree-button";
     public const string StyleClassEvenRow = "even-row";
     public const string StyleClassOddRow = "odd-row";
-
-    public bool Collapsible { get; private set; } = true;
 
     public object? Metadata;
     public int Index;
@@ -31,53 +27,41 @@ public sealed partial class TreeItem : PanelContainer
     public TreeItem()
     {
         RobustXamlLoader.Load(this);
-        Button.AddStyleClass(StyleClassTreeButton);
-        Button.AddStyleClass(StyleClassCollapsed);
-        Icon.AddStyleClass(StyleClassTreeButton);
-        Icon.AddStyleClass(StyleClassCollapsed);
+        Button.StyleIdentifier = StyleIdentifierTreeButton;
         Body.OnChildAdded += OnItemAdded;
         Body.OnChildRemoved += OnItemRemoved;
     }
 
     private void OnItemRemoved(Control obj)
     {
-        if (Body.ChildCount != 0)
-            return;
+        Tree.QueueRowStyleUpdate();
 
-        SetExpanded(false);
-        Icon.Visible = false;
-        IconBox.Visible = Tree.AlignText;
+        if (Body.ChildCount == 0)
+        {
+            Body.Visible = false;
+            UpdateIcon();
+        }
     }
 
     private void OnItemAdded(Control obj)
     {
-        if (Expanded && Body.ChildCount == 1)
-            SetExpanded(true);
+        Tree.QueueRowStyleUpdate();
 
-        Icon.Visible = Collapsible;
-        IconBox.Visible = Collapsible || Tree.AlignText;
+        if (Body.ChildCount == 1)
+        {
+            Body.Visible = Expanded && Body.ChildCount != 0;
+            UpdateIcon();
+        }
     }
 
     public void SetExpanded(bool value)
     {
+        if (Expanded == value)
+            return;
+
         Expanded = value;
-        Body.Visible = Body.ChildCount > 0 && value;
-
-        if (value && Body.Visible)
-        {
-            Button.AddStyleClass(StyleClassExpanded);
-            Button.RemoveStyleClass(StyleClassCollapsed);
-            Icon.AddStyleClass(StyleClassExpanded);
-            Icon.RemoveStyleClass(StyleClassCollapsed);
-        }
-        else
-        {
-            Button.AddStyleClass(StyleClassCollapsed);
-            Button.RemoveStyleClass(StyleClassExpanded);
-            Icon.AddStyleClass(StyleClassCollapsed);
-            Icon.RemoveStyleClass(StyleClassExpanded);
-        }
-
+        Body.Visible = Expanded && Body.ChildCount > 0;
+        UpdateIcon();
         Tree.QueueRowStyleUpdate();
     }
 
@@ -87,24 +71,22 @@ public sealed partial class TreeItem : PanelContainer
         {
             OnSelected?.Invoke(this);
             Button.AddStyleClass(StyleClassSelected);
-            Icon.AddStyleClass(StyleClassSelected);
         }
         else
         {
             OnDeselected?.Invoke(this);
             Button.RemoveStyleClass(StyleClassSelected);
-            Icon.RemoveStyleClass(StyleClassSelected);
         }
     }
 
-    public void SetCollapisble(bool value)
+    public void UpdateIcon()
     {
-        if (value == Collapsible)
-            return;
+        if (Body.ChildCount == 0)
+            Icon.Texture = Tree.IconNoChildren;
+        else
+            Icon.Texture = Expanded ? Tree.IconExpanded : Tree.IconCollapsed;
 
-        Icon.Visible = value && Body.ChildCount > 1;
-        Collapsible = value;
-        if (!value && !Expanded)
-            SetExpanded(true);
+        Icon.Modulate = Tree.IconColor;
+        Icon.Visible = Icon.Texture != null || !Tree.HideEmptyIcon;
     }
 }

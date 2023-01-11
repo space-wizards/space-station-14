@@ -1,10 +1,9 @@
+using System.Linq;
 using Content.Client.Guidebook.Richtext;
 using Pidgin;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Reflection;
 using Robust.Shared.Sandboxing;
-using System.Linq;
 using static Pidgin.Parser;
 
 namespace Content.Client.Guidebook;
