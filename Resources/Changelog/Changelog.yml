@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Minor update and fixes for Splitstation. Salvage is closer to Science,
-      atmos works and other minor changes.', type: Tweak}
-  id: 2358
-  time: '2022-09-24T21:48:39.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Mouse Migration events are now less common., type: Tweak}
@@ -2956,3 +2950,9 @@ Entries:
   - {message: You can now withdraw currency from the uplink again., type: Fix}
   id: 2857
   time: '2023-01-11T22:03:18.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Rounds will now have 2 minutes between the round ending and returning
+      to the lobby., type: Tweak}
+  id: 2858
+  time: '2023-01-11T23:36:28.0000000+00:00'
