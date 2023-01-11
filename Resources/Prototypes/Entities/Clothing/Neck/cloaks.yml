@@ -117,8 +117,8 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckCloakgrandadmiral
-  name: Grand Admiral's cloak
+  id: ClothingNeckCloakGrandAdmiral
+  name: grand admiral's cloak
   description: A light grey cloak with a golden touch , given to those who proved themselves powerful enough.
   components:
   - type: Sprite
@@ -126,8 +126,8 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckCloakadmiral
-  name: Admiral's cloak
+  id: ClothingNeckCloakAdmiral
+  name: admiral's cloak
   description: A dark green cloak with a golden touch , given to those who proved themselves powerful enough.
   components:
   - type: Sprite
