@@ -89,10 +89,10 @@
   
 - type: construction
   name: ghost sheet
-  id: ghostsheet
-  graph: ghostsheet
+  id: Ghostsheet
+  graph: Ghostsheet
   startNode: start
-  targetNode: ghostsheet
+  targetNode: Ghostsheet
   category: construction-category-misc
   objectType: Item
   description: "spooky!!."
