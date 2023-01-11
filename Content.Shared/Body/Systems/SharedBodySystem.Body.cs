@@ -24,7 +24,7 @@ public partial class SharedBodySystem
 
     private void OnBodyCanDrag(EntityUid uid, BodyComponent component, ref CanDragEvent args)
     {
-        args.Handled ??= true;
+        args.Handled = true;
     }
 
     private void OnBodyInit(EntityUid bodyId, BodyComponent body, ComponentInit args)

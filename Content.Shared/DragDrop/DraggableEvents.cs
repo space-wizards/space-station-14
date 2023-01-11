@@ -7,9 +7,9 @@ namespace Content.Shared.DragDrop;
 public record struct CanDragEvent
 {
     /// <summary>
-    /// Null or false if we are unable to drag this entity.
+    /// False if we are unable to drag this entity.
     /// </summary>
-    public bool? Handled;
+    public bool Handled;
 }
 
 /// <summary>
