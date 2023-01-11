@@ -8,7 +8,7 @@ namespace Content.Shared.Cargo
     {
         public int OrderIndex;
         /// The human-readable number, when displaying this order
-        public int OrderNumber { get { return OrderIndex + 1; } }
+        public int PrintableOrderNumber { get { return OrderIndex + 1; } }
         public string ProductId;
         public int Amount;
         public string Requester;
