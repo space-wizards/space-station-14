@@ -3672,3 +3672,10 @@ Entries:
     type: Tweak
   id: 437
   time: '2023-01-10T18:36:03.0000000+00:00'
+- author: Morty
+  changes:
+  - message: "\u0418\u043D\u0442\u0435\u0433\u0440\u0438\u0440\u043E\u0432\u0430\u043D\
+      \u0430 \u0441\u0438\u0441\u0442\u0435\u043C\u0430 TTS (Text-To-Speech)"
+    type: Add
+  id: 438
+  time: '2023-01-11T02:01:21.0000000+00:00'
