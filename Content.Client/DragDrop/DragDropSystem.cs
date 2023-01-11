@@ -45,6 +45,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
+    private ISawmill _sawmill = default!;
+
     // how often to recheck possible targets (prevents calling expensive
     // check logic each update)
     private const float TargetRecheckInterval = 0.25f;
@@ -105,6 +107,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     public override void Initialize()
     {
         base.Initialize();
+        _sawmill = Logger.GetSawmill("drag_drop");
         UpdatesOutsidePrediction = true;
         UpdatesAfter.Add(typeof(EyeUpdateSystem));
 
@@ -255,8 +258,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             return;
         }
 
-        Logger.Warning("Unable to display drag shadow for {0} because it" +
-                       " has no sprite component.", EntityManager.GetComponent<MetaDataComponent>(_draggedEntity.Value).EntityName);
+        _sawmill.Warning($"Unable to display drag shadow for {ToPrettyString(_draggedEntity.Value)} because it has no sprite component.");
     }
 
     private bool UpdateDrag(float frameTime)
@@ -295,24 +297,34 @@ public sealed class DragDropSystem : SharedDragDropSystem
         {
             // haven't started the drag yet, quick mouseup, definitely treat it as a normal click by
             // replaying the original cmd
-            if (_savedMouseDown.HasValue && _mouseDownTime < MaxMouseDownTimeForReplayingClick)
+            try
             {
-                var savedValue = _savedMouseDown.Value;
-                _isReplaying = true;
-                // adjust the timing info based on the current tick so it appears as if it happened now
-                var replayMsg = savedValue.OriginalMessage;
-                var adjustedInputMsg = new FullInputCmdMessage(args.OriginalMessage.Tick, args.OriginalMessage.SubTick,
-                    replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates, replayMsg.Uid);
-
-                if (savedValue.Session != null)
+                if (_savedMouseDown.HasValue && _mouseDownTime < MaxMouseDownTimeForReplayingClick)
                 {
-                    _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use, adjustedInputMsg, true);
-                }
+                    var savedValue = _savedMouseDown.Value;
+                    _isReplaying = true;
+                    // adjust the timing info based on the current tick so it appears as if it happened now
+                    var replayMsg = savedValue.OriginalMessage;
 
-                _isReplaying = false;
+                    var adjustedInputMsg = new FullInputCmdMessage(args.OriginalMessage.Tick,
+                        args.OriginalMessage.SubTick,
+                        replayMsg.InputFunctionId, replayMsg.State, replayMsg.Coordinates, replayMsg.ScreenCoordinates,
+                        replayMsg.Uid);
+
+                    if (savedValue.Session != null)
+                    {
+                        _inputSystem.HandleInputCommand(savedValue.Session, EngineKeyFunctions.Use, adjustedInputMsg,
+                            true);
+                    }
+
+                    _isReplaying = false;
+                }
+            }
+            finally
+            {
+                EndDrag();
             }
 
-            EndDrag();
             return false;
         }
 
@@ -393,16 +405,8 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // find possible targets on screen even if not reachable
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-        IEnumerable<EntityUid> pvsEntities;
-
-        if (_stateManager.CurrentState is GameplayStateBase state)
-        {
-            pvsEntities = state.GetClickableEntities(mousePos);
-        }
-        else
-        {
-            pvsEntities = Array.Empty<EntityUid>();
-        }
+        var bounds = new Box2(mousePos.Position - 1.5f, mousePos.Position + 1.5f);
+        var pvsEntities = _lookup.GetEntitiesIntersecting(mousePos.MapId, bounds);
 
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
@@ -460,12 +464,13 @@ public sealed class DragDropSystem : SharedDragDropSystem
     ///     Are these args valid for drag-drop?
     /// </summary>
     /// <returns>
-    /// Returns null if no interactions are available. Returns false if interactions exist but are not available currently.
+    /// Returns null if no interactions are available or the user / target cannot interact with each other.
+    /// Returns false if interactions exist but are not available currently.
     /// </returns>
     private bool? ValidDragDrop(EntityUid user, EntityUid dragged, EntityUid target)
     {
         if (!_actionBlockerSystem.CanInteract(user, target))
-            return false;
+            return null;
 
         // CanInteract() doesn't support checking a second "target" entity.
         // Doing so manually:

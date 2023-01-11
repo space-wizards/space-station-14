@@ -1,4 +1,4 @@
-using Robust.Client.Input;
+﻿using Robust.Client.Input;
 using Robust.Shared.Map;
 
 namespace Content.Client.DragDrop;
@@ -81,6 +81,9 @@ public sealed class DragDropHelper<T>
     /// </summary>
     public void EndDrag()
     {
+        if (_state == DragState.NotDragging)
+            return;
+
         Dragged = default;
         _state = DragState.NotDragging;
         _onEndDrag.Invoke();
@@ -88,6 +91,9 @@ public sealed class DragDropHelper<T>
 
     private void StartDragging()
     {
+        if (_state != DragState.NotDragging)
+            return;
+
         if (_onBeginDrag.Invoke())
         {
             _state = DragState.Dragging;
