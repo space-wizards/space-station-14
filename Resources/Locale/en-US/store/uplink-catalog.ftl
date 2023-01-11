@@ -76,7 +76,7 @@ uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
 uplink-headset-name = Syndicate Over-ear Headset
-uplink-headset-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
+uplink-headset-desc = A headset that allows you to other syndicate operatives. It have 4 slots for encryption keys.
 
 uplink-encryption-key-name = Syndicate Encryption Key
 uplink-encryption-key-desc = An encryption key to access the secret frequency of our special agents. Just insert it in any headset you use. And no one will know that you have a special channel with friends... or rivals.
