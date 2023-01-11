@@ -48,16 +48,19 @@
     capacity: 50
 
 - type: artifactEffect
-  id: EffectClearFixtures
+  id: EffectPhasing
   targetDepth: 2
-  effectHint: artifact-effect-hint-fixtures
+  effectHint: artifact-effect-hint-phasing
   permanentComponents:
-  - type: ClearFixturesArtifact
+  - type: PhasingArtifact
 
 - type: artifactEffect
   id: EffectWandering
   targetDepth: 2
   effectHint: artifact-effect-hint-displacement
+  blacklist:
+    components:
+    - Item # item artifacts can't be anchored, so wanderers can't really be scanned properly
   permanentComponents:
   - type: RandomWalk
     minSpeed: 12

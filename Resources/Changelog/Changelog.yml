@@ -1,21 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'psychologist, detective, and reporter ID cards now display correct
-      layers', type: Fix}
-  id: 2354
-  time: '2022-09-22T21:00:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
-      in places, type: Tweak}
-  id: 2355
-  time: '2022-09-22T22:19:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Gave descriptions to the shaker and shot glass., type: Add}
-  id: 2356
-  time: '2022-09-22T23:55:31.0000000+00:00'
 - author: illiux
   changes:
   - {message: Latejoin spawns to Pillar, type: Add}
@@ -2956,3 +2939,20 @@ Entries:
     type: Fix}
   id: 2853
   time: '2023-01-10T21:45:09.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Narcolepsy can now be treated., type: Add}
+  id: 2854
+  time: '2023-01-11T08:14:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Phasing artifacts are now scannable again., type: Fix}
+  - {message: 'Artifacts can now be anchored onto the scanner, so wandering artifacts
+      are no longer essentially impossible to scan.', type: Fix}
+  id: 2855
+  time: '2023-01-11T08:16:16.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Screaming now emits a popup message that others can see., type: Add}
+  id: 2856
+  time: '2023-01-11T09:06:15.0000000+00:00'
