@@ -11,7 +11,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -22,7 +21,6 @@
   - type: Construction
     graph: SignalSwitchGraph
     node: SignalSwitchNode
-  - type: Fixtures
   - type: SignalTransmitter
     outputs:
       On: []
@@ -41,7 +39,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -54,7 +51,6 @@
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
-  - type: Fixtures
   - type: SignalTransmitter
     outputs:
       Pressed: []
@@ -86,7 +82,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
   - type: Transform
     anchored: true
   - type: Sprite
@@ -102,7 +97,6 @@
   - type: Construction
     graph: LightSwitchGraph
     node: LightSwitchNode
-  - type: Fixtures
 
 - type: entity
   id: TwoWayLever
@@ -158,8 +152,6 @@
   suffix: directional
   parent: SignalSwitch
   components:
-  - type: Physics
-    canCollide: false
   - type: WallMount
     arc: 180
   - type: Sprite
@@ -174,8 +166,6 @@
   suffix: directional
   parent: SignalButton
   components:
-  - type: Physics
-    canCollide: false
   - type: WallMount
     arc: 180
   - type: Sprite
@@ -190,8 +180,6 @@
   suffix: directional
   parent: ApcNetSwitch
   components:
-  - type: Physics
-    canCollide: false
   - type: WallMount
     arc: 180
   - type: Sprite
