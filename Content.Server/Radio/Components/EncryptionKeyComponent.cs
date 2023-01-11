@@ -3,7 +3,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Radio.Components;
 /// <summary>
-///     This component currently using for providing access to channels for "HeadsetComponent"s.
+///     This component currently used for providing access to channels for "HeadsetComponent"s.
 ///     It should be used for intercoms and other radios in future.
 /// </summary>
 [RegisterComponent]

@@ -44,7 +44,7 @@
   parent: EncryptionKey
   id: EncryptionKeyQM
   name: qm encryption key
-  description: An encryption key used by boss of the cargo.
+  description: An encryption key used by the boss of cargo.
   components:
   - type: EncryptionKey
     channels:
@@ -100,7 +100,7 @@
   parent: EncryptionKey
   id: EncryptionKeyEngineering
   name: engineering encryption key
-  description: An encryption key used by engineers of this station.
+  description: An encryption key used by the engineers.
   components:
   - type: EncryptionKey
     channels:
@@ -129,7 +129,7 @@
   parent: EncryptionKey
   id: EncryptionKeyMedical
   name: medical encryption key
-  description: An encryption key used in medbay of this station.
+  description: An encryption key used by those who save lives.
   components:
   - type: EncryptionKey
     channels:
@@ -143,7 +143,7 @@
   parent: EncryptionKey
   id: EncryptionKeyCMO
   name: chief medical officer encryption key
-  description: An encryption key used by chief of doctors.
+  description: An encryption key used by the chief of doctors.
   components:
   - type: EncryptionKey
     channels:
@@ -201,7 +201,7 @@
   parent: EncryptionKey
   id: EncryptionKeyRD
   name: research director's encryption key
-  description: An encryption key used to serve Fordon Griman. Seems it have signs of something red.
+  description: An encryption key used by Fordon Griman. Seems to have signs of something red, probably tomato juice?
   components:
   - type: EncryptionKey
     channels:
@@ -231,7 +231,7 @@
   parent: EncryptionKey
   id: EncryptionKeyHOS
   name: head of security encryption key
-  description: An encryption key used by boss security.
+  description: An encryption key used by the boss of security.
   components:
   - type: EncryptionKey
     channels:
