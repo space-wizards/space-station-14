@@ -213,7 +213,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         public bool TryWaking(EntityUid uid, SleepingComponent? component = null, bool force = false, EntityUid? user = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return false;
 
             if (!force && HasComp<ForcedSleepingComponent>(uid))
