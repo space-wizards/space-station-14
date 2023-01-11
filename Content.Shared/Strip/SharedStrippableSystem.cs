@@ -32,16 +32,14 @@ public abstract class SharedStrippableSystem : EntitySystem
     private void OnCanDropOn(EntityUid uid, StrippingComponent component, ref CanDropTargetEvent args)
     {
         args.Handled = true;
-        args.CanDrop |= uid != args.Dragged &&
-                        uid == args.User &&
+        args.CanDrop |= uid == args.User &&
                         HasComp<StrippableComponent>(args.Dragged) &&
                         HasComp<SharedHandsComponent>(args.User);
     }
 
     private void OnCanDrop(EntityUid uid, StrippableComponent component, ref CanDropDraggedEvent args)
     {
-        args.CanDrop |= args.Target != uid &&
-                        args.Target == args.User &&
+        args.CanDrop |= args.Target == args.User &&
                         HasComp<StrippingComponent>(args.User) &&
                         HasComp<SharedHandsComponent>(args.User);
 
