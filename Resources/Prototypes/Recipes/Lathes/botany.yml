@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: MiniHoe
-  icon:
-    sprite: Objects/Tools/Hydroponics/hoe.rsi
-    state: icon
   result: HydroponicsToolMiniHoe
   completetime: 2
   materials:
@@ -11,9 +8,6 @@
 
 - type: latheRecipe
   id: HydroponicsToolScythe
-  icon:
-    sprite: Objects/Tools/Hydroponics/scythe.rsi
-    state: icon
   result: HydroponicsToolScythe
   completetime: 2
   materials:
@@ -22,9 +16,6 @@
 
 - type: latheRecipe
   id: HydroponicsToolHatchet
-  icon:
-    sprite: Objects/Tools/Hydroponics/hatchet.rsi
-    state: icon
   result: HydroponicsToolHatchet
   completetime: 2
   materials:
@@ -33,9 +24,6 @@
 
 - type: latheRecipe
   id: Spade
-  icon:
-    sprite: Objects/Tools/Hydroponics/spade.rsi
-    state: icon
   result: HydroponicsToolSpade
   completetime: 2
   materials:

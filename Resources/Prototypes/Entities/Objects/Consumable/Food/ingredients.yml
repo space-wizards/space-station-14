@@ -17,13 +17,12 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: Flour
           Quantity: 10
-  - type: Evaporation
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
 
 # Reagent Containers
 

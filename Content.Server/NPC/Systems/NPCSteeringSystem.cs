@@ -66,6 +66,8 @@ namespace Content.Server.NPC.Systems
 
         private readonly HashSet<ICommonSession> _subscribedSessions = new();
 
+        private object _obstacles = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -76,9 +78,8 @@ namespace Content.Server.NPC.Systems
             }
 
             UpdatesBefore.Add(typeof(SharedPhysicsSystem));
-            InitializeAvoidance();
-            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
-            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
+            _configManager.OnValueChanged(CCVars.NPCEnabled, SetNPCEnabled, true);
+            _configManager.OnValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding, true);
 
             SubscribeLocalEvent<NPCSteeringComponent, ComponentShutdown>(OnSteeringShutdown);
             SubscribeNetworkEvent<RequestNPCSteeringDebugEvent>(OnDebugRequest);
@@ -88,9 +89,11 @@ namespace Content.Server.NPC.Systems
         {
             if (!obj)
             {
-                foreach (var (_, mover) in EntityQuery<NPCSteeringComponent, InputMoverComponent>())
+                foreach (var (comp, mover) in EntityQuery<NPCSteeringComponent, InputMoverComponent>())
                 {
                     mover.CurTickSprintMovement = Vector2.Zero;
+                    comp.PathfindToken?.Cancel();
+                    comp.PathfindToken = null;
                 }
             }
 
@@ -114,8 +117,8 @@ namespace Content.Server.NPC.Systems
         public override void Shutdown()
         {
             base.Shutdown();
-            ShutdownAvoidance();
             _configManager.UnsubValueChanged(CCVars.NPCEnabled, SetNPCEnabled);
+            _configManager.UnsubValueChanged(CCVars.NPCPathfinding, SetNPCPathfinding);
         }
 
         private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
@@ -131,7 +134,9 @@ namespace Content.Server.NPC.Systems
 
         private void OnSteeringShutdown(EntityUid uid, NPCSteeringComponent component, ComponentShutdown args)
         {
+            // Cancel any active pathfinding jobs as they're irrelevant.
             component.PathfindToken?.Cancel();
+            component.PathfindToken = null;
         }
 
         /// <summary>
@@ -151,7 +156,6 @@ namespace Content.Server.NPC.Systems
                 component.Flags = _pathfindingSystem.GetFlags(uid);
             }
 
-            EnsureComp<NPCRVOComponent>(uid);
             component.Coordinates = coordinates;
             return component;
         }
@@ -185,7 +189,6 @@ namespace Content.Server.NPC.Systems
 
             component.PathfindToken?.Cancel();
             component.PathfindToken = null;
-            RemComp<NPCRVOComponent>(uid);
             RemComp<NPCSteeringComponent>(uid);
         }
 
@@ -201,26 +204,26 @@ namespace Content.Server.NPC.Systems
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
 
-            var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
+            var npcs = EntityQuery<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
-            var options = new ParallelOptions()
+            var options = new ParallelOptions
             {
                 MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
             };
 
             Parallel.For(0, npcs.Length, options, i =>
             {
-                var (steering, _, mover, xform) = npcs[i];
+                var (_, steering, mover, xform) = npcs[i];
 
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
-                steering.LastSteer = mover.CurTickSprintMovement;
             });
+
 
             if (_subscribedSessions.Count > 0)
             {
                 var data = new List<NPCSteeringDebugData>(npcs.Length);
 
-                foreach (var (steering, _, mover, _) in npcs)
+                foreach (var (_, steering, mover, _) in npcs)
                 {
                     data.Add(new NPCSteeringDebugData(
                         mover.Owner,
@@ -283,8 +286,7 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            // TODO: Pause time
-            // Need it on the paused event which needs an engine PR.
+            /* If you wish to not steer every tick A) Add pause support B) fix overshoots to prevent dancing
             var nextSteer = steering.LastTimeSteer + TimeSpan.FromSeconds(1f / NPCSteeringComponent.SteerFrequency);
 
             if (nextSteer > _timing.CurTime)
@@ -292,8 +294,8 @@ namespace Content.Server.NPC.Systems
                 SetDirection(mover, steering, steering.LastSteer, false);
                 return;
             }
+            */
 
-            steering.LastTimeSteer = _timing.CurTime;
             var uid = mover.Owner;
             var interest = steering.Interest;
             var danger = steering.Danger;
@@ -305,7 +307,6 @@ namespace Content.Server.NPC.Systems
             var offsetRot = -_mover.GetParentGridAngle(mover);
             modifierQuery.TryGetComponent(uid, out var modifier);
             var moveSpeed = GetSprintSpeed(steering.Owner, modifier);
-            var tickMove = moveSpeed * frameTime;
             var body = bodyQuery.GetComponent(uid);
             var dangerPoints = steering.DangerPoints;
             dangerPoints.Clear();
@@ -327,7 +328,7 @@ namespace Content.Server.NPC.Systems
             DebugTools.Assert(!float.IsNaN(interest[0]));
 
             // Avoid static objects like walls
-            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, tickMove, layer, mask, xform, danger, dangerPoints, bodyQuery, xformQuery);
+            CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, moveSpeed, layer, mask, xform, danger, dangerPoints, bodyQuery, xformQuery);
             DebugTools.Assert(!float.IsNaN(danger[0]));
 
             Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger, bodyQuery, xformQuery);
@@ -398,10 +399,11 @@ namespace Content.Server.NPC.Systems
                 steering.PathfindToken.Token,
                 flags);
 
+            steering.PathfindToken = null;
+
             if (result.Result == PathResult.NoPath)
             {
                 steering.CurrentPath.Clear();
-                steering.PathfindToken = null;
                 steering.FailedPathCount++;
 
                 if (steering.FailedPathCount >= NPCSteeringComponent.FailedPathLimit)
@@ -417,7 +419,6 @@ namespace Content.Server.NPC.Systems
 
             PrunePath(ourPos, targetPos.Position - ourPos.Position, result.Path);
             steering.CurrentPath = result.Path;
-            steering.PathfindToken = null;
         }
 
         // TODO: Move these to movercontroller

@@ -2,6 +2,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
@@ -89,13 +90,13 @@ public class GunComponent : Component
     /// How fast the projectile moves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
-    public float ProjectileSpeed = 20f;
+    public float ProjectileSpeed = 25f;
 
     /// <summary>
     /// When the gun is next available to be shot.
     /// Can be set multiple times in a single tick due to guns firing faster than a single tick time.
     /// </summary>
-    [DataField("nextFire")]
+    [DataField("nextFire", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextFire = TimeSpan.Zero;
 
     /// <summary>
@@ -112,6 +113,13 @@ public class GunComponent : Component
 
     [DataField("selectModeAction")]
     public InstantAction? SelectModeAction;
+
+    /// <summary>
+    /// Whether or not information about
+    /// the gun will be shown on examine.
+    /// </summary>
+    [DataField("showExamineText")]
+    public bool ShowExamineText = true;
 }
 
 [Flags]

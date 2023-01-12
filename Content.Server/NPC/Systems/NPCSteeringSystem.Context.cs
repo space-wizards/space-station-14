@@ -86,7 +86,7 @@ public sealed partial class NPCSteeringSystem
         }
         else
         {
-            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.8f;
+            arrivalDistance = SharedInteractionSystem.InteractionRange - 0.65f;
         }
 
         // Check if mapids match.
@@ -105,9 +105,15 @@ public sealed partial class NPCSteeringSystem
         if (direction.Length <= arrivalDistance)
         {
             // Node needs some kind of special handling like access or smashing.
-            if (steering.CurrentPath.TryPeek(out var node))
+            if (steering.CurrentPath.TryPeek(out var node) && !node.Data.IsFreeSpace)
             {
-                var status = TryHandleFlags(steering, node, bodyQuery);
+                SteeringObstacleStatus status;
+
+                // Breaking behaviours and the likes.
+                lock (_obstacles)
+                {
+                    status = TryHandleFlags(steering, node, bodyQuery);
+                }
 
                 // TODO: Need to handle re-pathing in case the target moves around.
                 switch (status)
@@ -314,7 +320,7 @@ public sealed partial class NPCSteeringSystem
         EntityQuery<PhysicsComponent> bodyQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
-        var detectionRadius = agentRadius + moveSpeed;
+        var detectionRadius = MathF.Max(1.5f, agentRadius + moveSpeed / 4f);
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, detectionRadius, LookupFlags.Static))
         {
@@ -388,7 +394,8 @@ public sealed partial class NPCSteeringSystem
                 (layer & otherBody.CollisionMask) == 0x0 ||
                 !factionQuery.TryGetComponent(ent, out var otherFaction) ||
                 !_faction.IsFriendly(uid, ent, ourFaction, otherFaction) ||
-                Vector2.Dot(otherBody.LinearVelocity, ourVelocity) < 0f)
+                // Use <= 0 so we ignore stationary friends in case.
+                Vector2.Dot(otherBody.LinearVelocity, ourVelocity) <= 0f)
             {
                 continue;
             }
@@ -409,7 +416,7 @@ public sealed partial class NPCSteeringSystem
             obstacleDirection = offsetRot.RotateVec(obstacleDirection);
             var norm = obstacleDirection.Normalized;
             var weight = obstableDistance <= agentRadius ? 1f : (detectionRadius - obstableDistance) / detectionRadius;
-            weight *= 1.5f;
+            weight *= 1f;
 
             for (var i = 0; i < InterestDirections; i++)
             {

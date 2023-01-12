@@ -20,6 +20,7 @@
     solutions:
       beaker:
         maxVol: 50
+        canMix: true
   - type: FitsInDispenser
     solution: beaker
   - type: RefillableSolution
@@ -113,6 +114,7 @@
     solutions:
       beaker:
         maxVol: 100
+        canMix: true
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 6
@@ -169,6 +171,7 @@
     solutions:
       beaker:
         maxVol: 300
+        canMix: true
 
 - type: entity
   name: dropper
@@ -292,7 +295,7 @@
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 12 pills.
+  description: Holds up to 9 pills.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
@@ -303,7 +306,7 @@
     tags:
       - PillCanister
   - type: Storage
-    capacity: 12
+    capacity: 9
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
