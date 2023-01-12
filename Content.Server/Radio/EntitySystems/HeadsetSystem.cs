@@ -36,8 +36,8 @@ public sealed class HeadsetSystem : EntitySystem
 
         SubscribeLocalEvent<HeadsetComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HeadsetComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<HeadsetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
-        SubscribeLocalEvent<HeadsetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+        SubscribeLocalEvent<HeadsetComponent, EntInsertedIntoContainerMessage>(OnContainerInserted);
+        SubscribeLocalEvent<HeadsetComponent, EntRemovedFromContainerMessage>(OnContainerRemoved);
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
@@ -210,22 +210,26 @@ public sealed class HeadsetSystem : EntitySystem
         }
     }
 
-    private void OnContainerModified(EntityUid uid, HeadsetComponent component, ContainerModifiedMessage args)
+    private void OnContainerInserted(EntityUid uid, HeadsetComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != HeadsetComponent.KeyContainerName)
         {
             return;
         }
-        if (args.Container.ContainedEntities.Contains(args.Entity))
+        if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
         {
-            if (TryComp<EncryptionKeyComponent>(args.Entity, out var added))
-            {
-                UploadChannelsFromKey(component, added);
-                PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
-            }
+            UploadChannelsFromKey(component, added);
+            PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
+        }
+        return;
+    }
+
+    private void OnContainerRemoved(EntityUid uid, HeadsetComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (args.Container.ID != HeadsetComponent.KeyContainerName)
+        {
             return;
         }
-        else
-            RecalculateChannels(component);
+        RecalculateChannels(component);
     }
 }
