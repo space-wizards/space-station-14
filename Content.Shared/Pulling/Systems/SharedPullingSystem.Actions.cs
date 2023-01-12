@@ -39,7 +39,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!EntityManager.TryGetComponent<IPhysBody>(pulled, out var physics))
+            if (!EntityManager.TryGetComponent<PhysicsComponent>(pulled, out var physics))
             {
                 return false;
             }

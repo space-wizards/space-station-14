@@ -112,7 +112,7 @@
   description: uplink-penguin-grenade-desc
   productEntity: MobGrenadePenguin
   cost:
-    Telecrystal: 6
+    Telecrystal: 5
   categories:
     - UplinkExplosives
   conditions:
