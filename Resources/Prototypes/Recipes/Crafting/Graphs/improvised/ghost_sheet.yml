@@ -9,5 +9,5 @@
         - material: Cloth
           amount: 10
           doAfter: 10
-    - node: ghostsheet
-      entity: ghostsheet
+    - node: ClothingOuterBase
+      entity: ClothingOuterGhostSheet
