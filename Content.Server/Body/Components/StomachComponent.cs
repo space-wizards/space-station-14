@@ -23,8 +23,8 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Initial internal solution storage volume
         /// </summary>
-        [DataField("maxVolume")]
-        public FixedPoint2 InitialMaxVolume { get; private set; } = FixedPoint2.New(50);
+        [DataField("initialMaxVolume", readOnly: true)]
+        public readonly FixedPoint2 InitialMaxVolume = FixedPoint2.New(50);
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being
