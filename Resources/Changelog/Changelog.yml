@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Fixed Vector magazines showing the wrong name., type: Fix}
-  - {message: Gun descriptions now show the type of ammo it uses when examined., type: Add}
-  id: 2361
-  time: '2022-09-26T04:51:53.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar minor update. Evac is good now, additional jani closet in Dorms,
@@ -2956,3 +2950,8 @@ Entries:
   - {message: a sound effect to health analyzers on a successful scan, type: Add}
   id: 2860
   time: '2023-01-12T06:38:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eye lerping will reset on map changes., type: Tweak}
+  id: 2861
+  time: '2023-01-12T12:10:52.0000000+00:00'
