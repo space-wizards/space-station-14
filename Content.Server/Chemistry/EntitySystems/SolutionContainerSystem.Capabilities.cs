@@ -110,7 +110,7 @@ public sealed partial class SolutionContainerSystem
     {
         return !TryGetDrainableSolution(uid, out var solution)
             ? FixedPoint2.Zero
-            : solution.CurrentVolume;
+            : solution.Volume;
     }
 
     public float PercentFull(EntityUid uid)
@@ -118,7 +118,7 @@ public sealed partial class SolutionContainerSystem
         if (!TryGetDrainableSolution(uid, out var solution) || solution.MaxVolume.Equals(FixedPoint2.Zero))
             return 0;
 
-        return ((solution.CurrentVolume.Float() / solution.MaxVolume.Float()) * 100);
+        return solution.FillFraction * 100;
     }
 
     public bool TryGetFitsInDispenser(EntityUid owner,

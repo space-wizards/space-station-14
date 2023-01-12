@@ -5,6 +5,6 @@
 ///     and such.
 /// </summary>
 [RegisterComponent]
-public sealed class ClearFixturesArtifactComponent : Component
+public sealed class PhasingArtifactComponent : Component
 {
 }
