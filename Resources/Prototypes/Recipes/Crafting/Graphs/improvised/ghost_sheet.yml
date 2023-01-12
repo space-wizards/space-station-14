@@ -1,10 +1,10 @@
 - type: constructionGraph
-  id: ghostsheet
+  id: Ghostsheet
   start: start
   graph:
     - node: start
       edges:
-      - to: ghostsheet
+      - to: Ghostsheet
         steps:
         - material: Cloth
           amount: 10

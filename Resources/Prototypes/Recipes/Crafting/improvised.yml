@@ -92,10 +92,11 @@
   id: Ghostsheet
   graph: Ghostsheet
   startNode: start
-  targetNode: Ghostsheet
+  targetNode: ClothingOuterGhostSheet
   category: construction-category-misc
   objectType: Item
   description: "spooky!!."
   icon:
     sprite: Clothing/outerclothing/misc/ghostsheet.rsi
     state: icon
+    objectType: Item
