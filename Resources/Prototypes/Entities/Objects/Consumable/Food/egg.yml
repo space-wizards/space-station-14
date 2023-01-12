@@ -78,8 +78,6 @@
     sprite: Fluids/egg_splat.rsi
     state: egg-0
     netsync: false
-  - type: Puddle
-    wetFloorEffectThreshold: 0 # No wet floor sparkles
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -87,9 +85,6 @@
         reagents:
         - ReagentId: Egg
           Quantity: 2
-  - type: Evaporation
-  - type: Appearance
-  - type: PuddleVisualizer
 
 - type: entity
   name: eggshells

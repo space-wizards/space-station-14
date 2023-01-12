@@ -21,6 +21,7 @@
         - !type:GivePrototype
           prototype: SheetSteel1
           amount: 5
+        - !type:DeleteEntity {}
       - to: parts
         steps:
         - material: Cable
@@ -52,7 +53,7 @@
       - to: frame
         completed:
         - !type:GivePrototype
-          prototype: CableHVStack1
+          prototype: CableApcStack1
           amount: 5
         steps:
         - tool: Cutting

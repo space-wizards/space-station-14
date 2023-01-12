@@ -53,6 +53,7 @@
                   max: 1
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+            - !type:DumpCanisterBehavior
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: Metallic
@@ -124,6 +125,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 # Filled canisters, contain 1871.71051 moles each
 
@@ -157,6 +159,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -187,6 +190,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -218,6 +222,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -250,6 +255,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -322,6 +328,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -359,6 +366,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -395,6 +403,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
     - type: Lock
       locked: true
 
@@ -434,6 +443,7 @@
               max: 1
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
+        - !type:DumpCanisterBehavior
 
 - type: entity
   parent: GasCanister
@@ -471,6 +481,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+      - !type:DumpCanisterBehavior
   - type: Lock
     locked: true
 

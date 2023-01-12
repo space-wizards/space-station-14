@@ -25,6 +25,10 @@ namespace Content.Server.Fluids.EntitySystems
 
         public static float PuddleVolume = 1000;
 
+        // Using local deletion queue instead of the standard queue so that we can easily "undelete" if a puddle
+        // loses & then gains reagents in a single tick.
+        private HashSet<EntityUid> _deletionQueue = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,6 +40,16 @@ namespace Content.Server.Fluids.EntitySystems
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
         }
 
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+            foreach (var ent in _deletionQueue)
+            {
+                Del(ent);
+            }
+            _deletionQueue.Clear();
+        }
+
         private void OnPuddleInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             _solutionContainerSystem.EnsureSolution(uid, component.SolutionName, FixedPoint2.New(PuddleVolume), out _);
@@ -43,6 +57,16 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnSolutionUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
+            if (args.Solution.Name != component.SolutionName)
+                return;
+
+            if (args.Solution.Volume <= 0)
+            {
+                _deletionQueue.Add(uid);
+                return;
+            }
+
+            _deletionQueue.Remove(uid);
             UpdateSlip(uid, component);
             UpdateAppearance(uid, component);
         }
@@ -156,12 +180,12 @@ namespace Content.Server.Fluids.EntitySystems
             }
 
             solution.AddSolution(addedSolution, _protoMan);
+            _solutionContainerSystem.UpdateChemicals(puddleUid, solution, true);
+
             if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
             {
                 _fluidSpreaderSystem.AddOverflowingPuddle(puddleComponent.Owner, puddleComponent);
             }
-
-            RaiseLocalEvent(puddleComponent.Owner, new SolutionChangedEvent(), true);
 
             if (!sound)
             {
