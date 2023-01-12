@@ -1,16 +1,15 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
-using Content.Server.Radio.Components;
 using Content.Server.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
+using Content.Server.Radio.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
