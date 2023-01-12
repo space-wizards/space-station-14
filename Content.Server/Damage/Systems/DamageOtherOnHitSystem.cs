@@ -23,14 +23,14 @@ namespace Content.Server.Damage.Systems
         {
             var dmg = _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances, origin: args.User);
 
-            // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
-            if (dmg != null && HasComp<MobStateComponent>(args.Target))
-                _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
-
-            // Only play hitsound of thrown item and signal to stop when hitting mobs
+            // Only play hitsound and stop if hitting mobs.
             if (HasComp<MobStateComponent>(args.Target))
             {
                 _audio.Play(component.HitSound, Filter.Pvs(args.Target), args.Target);
+
+                // Log nonzero damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
+                if (dmg != null)
+                    _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
 
                 if (component.StopOnHit)
                 {

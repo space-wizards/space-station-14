@@ -119,7 +119,7 @@ namespace Content.Shared.Throwing
             }
 
             var stopThrow = new StopThrowEvent(thrownItemComponent.Thrower);
-            EntityManager.EventBus.RaiseLocalEvent(uid, ref stopThrow, true);
+            RaiseLocalEvent(uid, ref stopThrow, true);
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
@@ -132,7 +132,7 @@ namespace Content.Shared.Throwing
 
             var landing = thrownItem.Owner;
 
-            if (stopMoving && _entityManager.TryGetComponent(landing, out IPhysBody? physics))
+            if (stopMoving && EntityManager.TryGetComponent(landing, out IPhysBody? physics))
                 physics.LinearVelocity = (0, 0);
 
             // Unfortunately we can't check for hands containers as they have specific names.
