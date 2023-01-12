@@ -194,9 +194,7 @@ public sealed class HeadsetSystem : EntitySystem
                     doAfterCompleteEvent: null, toolComponent: tool)
                 )
                 {
-                    var contained = new List<EntityUid>();
-                    foreach (var i in component.KeyContainer.ContainedEntities)
-                        contained.Add(i);
+                    var contained = component.KeyContainer.ContainedEntities.ToArray<EntityUid>();
                     foreach (var i in contained)
                         component.KeyContainer.Remove(i);
                     component.Channels.Clear();
