@@ -1421,7 +1421,7 @@
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/glass_lyellow.rsi
+    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
 
 - type: entity
   parent: DrinkGlassBase
