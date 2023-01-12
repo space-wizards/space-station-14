@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Content.Server.Administration.Logs;
+using Content.Server.Maps;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -12,6 +13,7 @@ namespace Content.Server.Tools;
 public sealed partial class ToolSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     private void InitializeLatticeCutting()
     {
@@ -40,7 +42,7 @@ public sealed partial class ToolSystem
             || tile.IsBlockedTurf(true))
             return;
 
-        tile.CutTile(_mapManager, _tileDefinitionManager, EntityManager);
+        _tile.CutTile(tile);
         _adminLogger.Add(LogType.LatticeCut, LogImpact.Medium, $"{ToPrettyString(args.User):user} cut the lattice at {args.Coordinates:target}");
     }
 
