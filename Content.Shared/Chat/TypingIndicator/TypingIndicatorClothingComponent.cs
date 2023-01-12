@@ -1,8 +1,10 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Chat.TypingIndicator;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedTypingIndicatorSystem))]
 public sealed class TypingIndicatorClothingComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
