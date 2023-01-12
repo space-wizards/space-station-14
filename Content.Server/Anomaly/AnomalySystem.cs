@@ -60,7 +60,6 @@ public sealed partial class AnomalySystem : EntitySystem
     private void OnUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
     {
         component.NextPulseTime += args.PausedTime;
-        component.NextSecondUpdate += args.PausedTime;
     }
 
     private void OnStartCollide(EntityUid uid, AnomalyComponent component, ref StartCollideEvent args)
@@ -258,11 +257,9 @@ public sealed partial class AnomalySystem : EntitySystem
         {
             // if the stability is under the death threshold,
             // update it every second to start killing it slowly.
-            if (anomaly.Stability < anomaly.DecayThreshold &&
-                anomaly.NextSecondUpdate <= _timing.CurTime)
+            if (anomaly.Stability < anomaly.DecayThreshold)
             {
-                ChangeAnomalyHealth(anomaly.Owner, anomaly.HealthChangePerSecond, anomaly);
-                anomaly.NextSecondUpdate = _timing.CurTime + TimeSpan.FromSeconds(1);
+                ChangeAnomalyHealth(anomaly.Owner, anomaly.HealthChangePerSecond * frameTime, anomaly);
             }
 
             if (anomaly.NextPulseTime <= _timing.CurTime)

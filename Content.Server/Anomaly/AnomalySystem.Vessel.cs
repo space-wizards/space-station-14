@@ -2,6 +2,7 @@
 using Content.Server.Construction;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
 
@@ -20,8 +21,19 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
         SubscribeLocalEvent<AnomalyVesselComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
+        SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
+    }
+
+    private void OnExamined(EntityUid uid, AnomalyVesselComponent component, ExaminedEvent args)
+    {
+        if (!args.IsInDetailsRange)
+            return;
+
+        args.PushText(component.Anomaly == null
+            ? Loc.GetString("anomaly-vessel-component-not-assigned")
+            : Loc.GetString("anomaly-vessel-component-assigned"));
     }
 
     private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)

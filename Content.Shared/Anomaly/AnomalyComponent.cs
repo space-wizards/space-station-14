@@ -78,9 +78,6 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [ViewVariables]
     public bool Supercritical = false;
-
-    [DataField("nextSecondUpdate", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables]
-    public TimeSpan NextSecondUpdate = TimeSpan.Zero;
     #endregion
 
     #region Pulse

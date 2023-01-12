@@ -491,9 +491,9 @@
   - AnomalyScanner
 
 - type: technology
-  name: technologies-robotics-technology
-  id: RoboticsTechnology
-  description: technologies-robotics-technology-description
+  name: technologies-anomaly-technology
+  id: AnomalyTechnology
+  description: technologies-anomaly-technology-description
   icon:
     sprite: Structures/Machines/Anomaly/ape.rsi
     state: base
