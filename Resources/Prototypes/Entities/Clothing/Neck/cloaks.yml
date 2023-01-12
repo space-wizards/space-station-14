@@ -122,8 +122,6 @@
   name: grand admiral's cloak
   description: A light grey cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/grandadmiral.rsi
   - type: RestrictedClothing
@@ -138,8 +136,6 @@
   name: admiral's cloak
   description: A dark green cloak with a golden touch, given to those who proved themselves powerful enough.
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/admiral.rsi
   - type: RestrictedClothing

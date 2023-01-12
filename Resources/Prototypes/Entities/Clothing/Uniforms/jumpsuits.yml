@@ -894,8 +894,6 @@
   name: admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom High Command
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/admiral.rsi
   - type: Clothing
@@ -918,8 +916,6 @@
   name: grand admiral jumpsuit
   description: It's a jumpsuit with gold markings worn by CentCom's highest-ranking officer
   components:
-  - type: Tag
-    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/grandadmiral.rsi
   - type: Clothing
