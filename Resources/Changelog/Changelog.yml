@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixes an issue where you could insert incorrect materials into lathes
-      exactly once., type: Fix}
-  id: 2360
-  time: '2022-09-25T14:45:29.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Fixed Vector magazines showing the wrong name., type: Fix}
@@ -2957,3 +2951,8 @@ Entries:
       in maints, type: Add}
   id: 2859
   time: '2023-01-12T03:46:48.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: a sound effect to health analyzers on a successful scan, type: Add}
+  id: 2860
+  time: '2023-01-12T06:38:39.0000000+00:00'
