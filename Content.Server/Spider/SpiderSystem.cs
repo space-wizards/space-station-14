@@ -22,7 +22,6 @@ namespace Content.Server.Spider
     {
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ActionsSystem _action = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -54,26 +53,39 @@ namespace Content.Server.Spider
 
             var transform = Transform(uid);
 
-            if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
+            if (transform.GridUid == null)
                 return;
-
-            args.Handled = true;
 
             var coords = transform.Coordinates;
 
+            var result = false;
             // Spawn web in center
             if (!IsTileBlockedByWeb(coords))
-                Spawn(component.WebPrototype, coords);  
+            {
+                Spawn(component.WebPrototype, coords);
+                result = true;
+            }
 
             // Spawn web in other directions
             for (var i = 0; i < 4; i++)
             {
                 var direction = (DirectionFlag) (1 << i);
                 coords = transform.Coordinates.Offset(direction.AsDir().ToVec());
-                    
+
                 if (!IsTileBlockedByWeb(coords))
+                {
                     Spawn(component.WebPrototype, coords);
+                    result = true;
+                }
             }
+
+            if (result)
+            {
+                _popup.PopupEntity(Loc.GetString("spider-web-action-success"), args.Performer, args.Performer);
+                args.Handled = true;
+            }
+            else
+                _popup.PopupEntity(Loc.GetString("spider-web-action-fail"), args.Performer, args.Performer);
         }
 
         private bool IsTileBlockedByWeb(EntityCoordinates coords)
