@@ -5,5 +5,8 @@
 /// </summary>
 public abstract class SharedTypingIndicatorSystem : EntitySystem
 {
-
+    /// <summary>
+    ///     Default ID of <see cref="TypingIndicatorPrototype"/>
+    /// </summary>
+    public const string InitialIndicatorId = "default";
 }

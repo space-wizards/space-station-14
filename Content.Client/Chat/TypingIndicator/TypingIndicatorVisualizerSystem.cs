@@ -9,42 +9,28 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        SubscribeLocalEvent<TypingIndicatorComponent, ComponentInit>(OnInit);
-    }
-
-    private void OnInit(EntityUid uid, TypingIndicatorComponent component, ComponentInit args)
-    {
-        if (!TryComp(uid, out SpriteComponent? sprite))
-            return;
-
-        if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
-        {
-            Logger.Error($"Unknown typing indicator id: {component.Prototype}");
-            return;
-        }
-
-        var layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        sprite.LayerSetRSI(layer, proto.SpritePath);
-        sprite.LayerSetState(layer, proto.TypingState);
-        sprite.LayerSetShader(layer, proto.Shader);
-        sprite.LayerSetOffset(layer, proto.Offset);
-        sprite.LayerSetVisible(layer, false);
-    }
-
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
+        
+        if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
+        {
+            Logger.Error($"Unknown typing indicator id: {component.Prototype}");
+            return;
+        }
 
         args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping);
-        if (sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer))
-        {
-            sprite.LayerSetVisible(layer, isTyping);
-        }
+        var isLayerExist = sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
+        if (!isLayerExist)
+            layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
+        
+        sprite.LayerSetRSI(layer, proto.SpritePath);
+        sprite.LayerSetState(layer, proto.TypingState);
+        sprite.LayerSetShader(layer, proto.Shader);
+        sprite.LayerSetOffset(layer, proto.Offset);
+        sprite.LayerSetVisible(layer, isTyping);
     }
 }
