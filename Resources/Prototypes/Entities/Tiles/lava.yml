@@ -7,7 +7,7 @@
     - Wall
   components:
   - type: StepTrigger
-    requiredTriggerSpeed: 0
+    requiredTriggeredSpeed: 0
     intersectRatio: 0.1
   - type: Lava
   - type: Transform
