@@ -265,6 +265,8 @@
   name: centcom gloves
   description: Regal green gloves, with a nice gold trim, a diamond anti-shock coating, and an integrated thermal barrier. Swanky.
   components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Hands/Gloves/centcom.rsi
   - type: Clothing

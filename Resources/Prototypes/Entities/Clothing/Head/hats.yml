@@ -532,6 +532,8 @@
   name: grand admiral's cap
   description: It's good to be at the top.
   components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/grandadmiralcap.rsi
   - type: Clothing
@@ -548,6 +550,8 @@
   name: admiral's cap
   description: It's good to be a god.
   components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/Head/Hats/admiralcap.rsi
   - type: Clothing
