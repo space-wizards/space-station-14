@@ -23,7 +23,6 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 

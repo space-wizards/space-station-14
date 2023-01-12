@@ -34,7 +34,7 @@ namespace Content.Shared.Throwing
     ///     Raised directed on the target entity being hit by the thrown entity.
     /// </summary>
     [ByRefEvent]
-    public struct ThrowHitByEvent
+    public record struct ThrowHitByEvent
     {
         public EntityUid? User;
         public EntityUid Thrown;
@@ -59,7 +59,7 @@ namespace Content.Shared.Throwing
     ///     Raised directed on the thrown entity that hits another. 'User' is whoever threw it, if anyone.
     /// </summary>
     [ByRefEvent]
-    public struct ThrowDoHitEvent
+    public record struct ThrowDoHitEvent
     {
         public EntityUid? User;
         public EntityUid Thrown;
