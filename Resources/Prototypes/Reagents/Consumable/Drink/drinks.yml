@@ -330,7 +330,7 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: "#B3B599"
-  spritePath: glass_lyellow.rsi
+  spritePath: glass_light_yellow.rsi
 
 - type: reagent
   id: KiraSpecial
