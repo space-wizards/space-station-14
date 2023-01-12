@@ -316,6 +316,8 @@
       - ExosuitFabricatorMachineCircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
+      - BoozeDispenserMachineCircuitboard
+      - SodaDispenserMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
