@@ -5,11 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.MobState.Components;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 
 namespace Content.Client.HealthOverlay.UI
@@ -22,7 +18,7 @@ namespace Content.Client.HealthOverlay.UI
         public HealthOverlayGui(EntityUid entity)
         {
             IoCManager.InjectDependencies(this);
-            IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
+            UserInterfaceManager.WindowRoot.AddChild(this);
             SeparationOverride = 0;
             Orientation = LayoutOrientation.Vertical;
 

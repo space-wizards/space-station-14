@@ -14,7 +14,7 @@ public sealed class TypingIndicatorComponent : Component
     /// <summary>
     ///     Prototype id that store all visual info about typing indicator.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
-    public string Prototype = "default";
+    public string Prototype = SharedTypingIndicatorSystem.InitialIndicatorId;
 }

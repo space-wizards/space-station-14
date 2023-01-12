@@ -4,7 +4,6 @@ using Content.Server.Construction;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
-using Content.Server.Singularity.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
@@ -12,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
@@ -24,7 +24,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class EmitterSystem : EntitySystem
+    public sealed class EmitterSystem : SharedEmitterSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
