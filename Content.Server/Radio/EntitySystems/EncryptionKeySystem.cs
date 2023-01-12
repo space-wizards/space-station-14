@@ -14,6 +14,7 @@ public sealed class EncryptionKeySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<EncryptionKeyComponent, ExaminedEvent>(OnExamined);
     }
+
     private void OnExamined(EntityUid uid, EncryptionKeyComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)

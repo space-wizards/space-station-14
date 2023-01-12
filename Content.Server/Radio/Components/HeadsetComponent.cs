@@ -23,8 +23,8 @@ public sealed class HeadsetComponent : Component
     [DataField("isKeysUnlocked")]
     public bool IsKeysUnlocked = true;
     /// <summary>
-    ///     Shows what tool human should use to extract encryption keys from headset.
-    ///     default "Screwing" means it is extracting by screwdriver.
+    ///     Shows which tool a person should use to extract the encryption keys from the headset.
+    ///     default "Screwing"
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("keysExtractionMethod", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
