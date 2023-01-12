@@ -141,3 +141,17 @@
   - type: RestrictedClothing
     permissions:
       - Admin
+
+  id: ClothingNeckCloakGoliathCloak
+  name: goliath cloak
+  description: A cloak made from the hide of resilient fauna from a distant planet, though its protective value has faded with its age.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Cloaks/goliathcloak.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodGoliathCloak
+    requiredSlot:
+    - neck
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
