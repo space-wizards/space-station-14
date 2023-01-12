@@ -1,4 +1,7 @@
-﻿namespace Content.Server.Anomaly.Components;
+﻿using Content.Shared.Construction.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Server.Anomaly.Components;
 
 /// <summary>
 /// Anomaly Vessels can have an anomaly "stored" in them
@@ -22,5 +25,16 @@ public sealed class AnomalyVesselComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float PointMultiplier = 1;
 
-    //TODO: machine upgrades (just do a multiplier)
+    /// <summary>
+    /// The machine part that affects the point multiplier of the vessel
+    /// </summary>
+    [DataField("machinePartPointModifier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+    public string MachinePartPointModifier = "ScanningModule";
+
+    /// <summary>
+    /// A value used to scale the point multiplier
+    /// with the corresponding part rating.
+    /// </summary>
+    [DataField("partRatingPointModifier")]
+    public float PartRatingPointModifier = 1.5f;
 }

@@ -29,7 +29,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: Machine
-    board: TraversalDistorterMachineCircuitboard #CHANGE
+    board: AnomalyVesselCircuitboard
   - type: PointLight
     radius: 1.2
     energy: 2
@@ -75,7 +75,7 @@
   id: MachineAPE
   parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: A.P.E.
-  description: An Anomalous Particle Emitter, capable of shooting out unstable bluespace particles which can interface with anomalies.
+  description: An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
   components:
   - type: Sprite
     noRot: true
@@ -100,7 +100,7 @@
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine
-    board: TraversalDistorterMachineCircuitboard #CHANGE
+    board: APECircuitboard
   - type: Lock
     locked: false
   - type: AccessReader

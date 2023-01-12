@@ -171,6 +171,7 @@
       - MiningDrill
       - ConveyorBeltAssembly
       - AppraisalTool
+      - AnomalyScanner
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
@@ -313,6 +314,8 @@
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
+      - AnomalyVesselCircuitboard
+      - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
   - type: MaterialStorage

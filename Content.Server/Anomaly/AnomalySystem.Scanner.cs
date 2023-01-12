@@ -148,7 +148,7 @@ public sealed partial class AnomalySystem
         msg.AddMarkup(stateLoc);
         msg.PushNewline();
 
-        var points = GetAnomalyPointValue(anomaly, anomalyComp);
+        var points = GetAnomalyPointValue(anomaly, anomalyComp) / 10 * 10; //round to tens place
         msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output", ("point", points.ToString("00"))));
         msg.PushNewline();
         msg.PushNewline();

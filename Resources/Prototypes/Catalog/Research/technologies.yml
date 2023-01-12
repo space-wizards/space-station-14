@@ -488,6 +488,21 @@
   - MicroManipulatorStockPart
   - ScanningModuleStockPart
   - NodeScanner
+  - AnomalyScanner
+
+- type: technology
+  name: technologies-robotics-technology
+  id: RoboticsTechnology
+  description: technologies-robotics-technology-description
+  icon:
+    sprite: Structures/Machines/Anomaly/ape.rsi
+    state: base
+  requiredPoints: 10000
+  requiredTechnologies:
+  - ScientificTechnology
+  unlockedRecipes:
+  - AnomalyVesselCircuitboard
+  - APECircuitboard
 
 - type: technology
   name: technologies-robotics-technology

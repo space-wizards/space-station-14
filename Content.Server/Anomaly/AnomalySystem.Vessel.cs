@@ -1,4 +1,5 @@
 ﻿using Content.Server.Anomaly.Components;
+using Content.Server.Construction;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Interaction;
@@ -17,6 +18,7 @@ public sealed partial class AnomalySystem
     {
         SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
+        SubscribeLocalEvent<AnomalyVesselComponent, RefreshPartsEvent>(OnRefreshParts);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
         SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
@@ -36,6 +38,12 @@ public sealed partial class AnomalySystem
     private void OnVesselMapInit(EntityUid uid, AnomalyVesselComponent component, MapInitEvent args)
     {
         UpdateVesselAppearance(uid,  component);
+    }
+
+    private void OnRefreshParts(EntityUid uid, AnomalyVesselComponent component, RefreshPartsEvent args)
+    {
+        var modifierRating = args.PartRatings[component.MachinePartPointModifier] - 1;
+        component.PointMultiplier = MathF.Pow(component.PartRatingPointModifier, modifierRating);
     }
 
     private void OnVesselInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
@@ -96,7 +104,7 @@ public sealed partial class AnomalySystem
 
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
-            multiplier = 1.25f; //more points for unstable
+            multiplier = 1.5f; //more points for unstable
         else if (component.Stability < component.DecayThreshold)
             multiplier = 0.75f; //less points if it's dying
 
