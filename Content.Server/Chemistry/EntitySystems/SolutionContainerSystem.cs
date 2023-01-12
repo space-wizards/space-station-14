@@ -245,13 +245,13 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (quantity < 0)
             return TryTransferSolution(targetUid, sourceUid, target, source, -quantity);
 
-        quantity = FixedPoint2.Min(quantity, target.AvailableVolume, source.CurrentVolume);
+        quantity = FixedPoint2.Min(quantity, target.AvailableVolume, source.Volume);
         if (quantity == 0)
             return false;
 
-        // TODO after #12428 is merged, this should be made into a function that directly transfers reagents.
-        // currently this is quite inefficient.
-        target.AddSolution(source.SplitSolution(quantity));
+        // TODO This should be made into a function that directly transfers reagents. currently this is quite
+        // inefficient.
+        target.AddSolution(source.SplitSolution(quantity), _prototypeManager);
 
         UpdateChemicals(sourceUid, source, false);
         UpdateChemicals(targetUid, target, true);
