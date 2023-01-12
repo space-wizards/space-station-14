@@ -98,12 +98,12 @@ entities:
   components:
   - type: MetaData
   - pos: 7.1183667,4.2130127
-    parent: null
+    parent: invalid
     type: Transform
   - chunks:
       -1,-1:
         ind: -1,-1
-        tiles: WAAAAFgAAABYAAAAWAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAABYAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAWAAAAFcAAAAAAAAAWAAAAFgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAAFgAAAAZAAAAWAAAAFgAAABYAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAWAAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAABXAAAAWAAAAEgAAABIAAAASAAAAEgAAABIAAAAWAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAABYAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAAFgAAABYAAAAWAAAAFgAAABPAAAAWAAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAABYAAAAGQAAABkAAAAZAAAAWAAAABkAAAAZAAAATwAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAABkAAAAZAAAAGQAAAFgAAAAZAAAAGQAAAE8AAABYAAAAOwAAADgAAAA7AAAAOwAAADsAAAA4AAAAOwAAAFgAAAAZAAAAGQAAABkAAABYAAAAGQAAABkAAABPAAAAWAAAADsAAAA4AAAAOwAAADsAAAA7AAAAOAAAADsAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAATwAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAABkAAAAZAAAAGQAAAFgAAABYAAAAWAAAAFgAAABYAAAAOwAAADgAAAA7AAAAOwAAADsAAAA4AAAAOwAAAFgAAABYAAAAGQAAAFgAAABYAAAAOwAAADsAAAA7AAAAWAAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAABYAAAAGQAAABkAAAAZAAAAWAAAADsAAAA3AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAANwAAAA==
+        tiles: WAAAAFgAAABYAAAAWAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAABYAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAWAAAAAAAAAAAAAAAWAAAAFgAAABIAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAAFgAAAAZAAAAWAAAAFgAAABYAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAWAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAAAAAAAAWAAAAEgAAABIAAAASAAAAEgAAABIAAAAWAAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAABYAAAAVwAAAFgAAABYAAAAWAAAAFgAAABYAAAASAAAAFgAAABYAAAAWAAAAFgAAABYAAAAGQAAAFgAAABYAAAAWAAAAFgAAABQAAAAWAAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAABYAAAAGQAAABkAAAAZAAAAWAAAABkAAAAZAAAAUAAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAABkAAAAZAAAAGQAAAFgAAAAZAAAAGQAAAFAAAABYAAAAOwAAADgAAAA7AAAAOwAAADsAAAA4AAAAOwAAAFgAAAAZAAAAGQAAABkAAABYAAAAGQAAABkAAABQAAAAWAAAADsAAAA4AAAAOwAAADsAAAA7AAAAOAAAADsAAABYAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAUAAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAABkAAAAZAAAAGQAAAFgAAABYAAAAWAAAAFgAAABYAAAAOwAAADgAAAA7AAAAOwAAADsAAAA4AAAAOwAAAFgAAABYAAAAGQAAAFgAAABYAAAAOwAAADsAAAA7AAAAWAAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAABYAAAAGQAAABkAAAAZAAAAWAAAADsAAAA3AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAANwAAAA==
       -1,0:
         ind: -1,0
         tiles: OwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAANwAAADsAAABYAAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAAFgAAAA7AAAAOwAAADsAAABYAAAAOwAAADcAAAA7AAAAWAAAADsAAAA4AAAAOwAAADsAAAA7AAAAOAAAADsAAABYAAAAOwAAADgAAAA7AAAAWAAAADsAAAA3AAAAOwAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAADsAAAA4AAAAOwAAAFgAAAA7AAAANwAAADsAAABYAAAAOwAAADgAAAA7AAAAOwAAADsAAAA4AAAAOwAAAFgAAAA7AAAAOAAAADsAAABYAAAAOwAAADcAAAA7AAAAWAAAADsAAAA4AAAAOwAAADsAAAA7AAAAOAAAADsAAABYAAAAOwAAADgAAAA7AAAAWAAAADsAAAA3AAAAOwAAAFgAAAA7AAAAOAAAADsAAAA7AAAAOwAAADgAAAA7AAAAWAAAADsAAAA4AAAAOwAAAFgAAAA7AAAAOwAAADsAAABYAAAAOwAAADsAAAA7AAAAOwAAADsAAAA7AAAAOwAAAFgAAAA7AAAAOwAAADsAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAEMAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAABXAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABYAAAAVwAAAFcAAAAAAAAAAAAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAWAAAAAAAAAAAAAAAAAAAAAAAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAEMAAABDAAAAQwAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
@@ -112,13 +112,13 @@ entities:
         tiles: OwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       0,-1:
         ind: 0,-1
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGQAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADsAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7AAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOwAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       -1,-2:
         ind: -1,-2
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABXAAAAVwAAAFcAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAVwAAAFcAAABXAAAAVwAAAFcAAABXAAAAVwAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAZAAAAGQAAABkAAAAZAAAAGQAAABkAAAAZAAAAGQAAAFgAAAAAAAAAAAAAAA==
       -2,-1:
         ind: -2,-1
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFgAAABIAAAAWAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAASAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAEgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAUAAAAFAAAABQAAAAWAAAAE8AAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFAAAABQAAAAUAAAAFgAAABPAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABQAAAAUAAAAFAAAABYAAAATwAAAE8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFAAAABYAAAAWAAAAE8AAABPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAE8AAABPAAAATwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABPAAAATwAAAE8AAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAATwAAAE8AAABPAAAAWAAAADsAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAE8AAAA7AAAAOwAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABIAAAAWAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAASAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAABXAAAAWAAAAEgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAATwAAAE8AAABPAAAAWAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAFgAAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABPAAAATwAAAE8AAABYAAAAUAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAATwAAAE8AAABPAAAAWAAAAFAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAE8AAABQAAAAUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABPAAAATwAAAE8AAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAATwAAAE8AAABPAAAAWAAAADsAAAA7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAE8AAAA7AAAAOwAAAA==
       -2,0:
         ind: -2,0
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAE8AAABPAAAATwAAAE8AAAA7AAAAOwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABPAAAATwAAAE8AAABYAAAAOwAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAATwAAAE8AAABPAAAAWAAAADsAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABPAAAASwAAAFgAAAA7AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABLAAAASwAAAEsAAABYAAAAOwAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAASwAAAEsAAABLAAAAWAAAADsAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAEsAAABLAAAASwAAAFgAAAA7AAAAOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAOwAAADsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAABXAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABXAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
@@ -136,10 +136,10 @@ entities:
     type: Fixtures
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 120.2789863
+    type: GridPathfinding
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - chunkCollection:
       -1,-1:
@@ -385,518 +385,570 @@ entities:
           color: '#52B4E9FF'
           id: MiniTileWhiteInnerNe
           coordinates: -21,-1
-        130:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteInnerNe
-          coordinates: -21,-4
-        132:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerSe
-          coordinates: -20,-4
-        133:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerSw
-          coordinates: -22,-4
-        134:
+        131:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineE
           coordinates: -20,-3
-        135:
+        132:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineE
           coordinates: -20,-2
-        137:
+        134:
           color: '#52B4E9FF'
           id: MiniTileWhiteInnerSe
           coordinates: -20,-1
-        140:
+        137:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineE
           coordinates: -20,-1
-        143:
+        140:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineW
           coordinates: -22,-1
-        144:
+        141:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineW
           coordinates: -22,-2
-        145:
+        142:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineW
           coordinates: -22,-3
-        146:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineS
-          coordinates: -21,-4
-        148:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineN
-          coordinates: -17,-4
-        149:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineS
-          coordinates: -17,-8
-        150:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineW
-          coordinates: -18,-7
-        151:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineW
-          coordinates: -18,-6
-        152:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineW
-          coordinates: -18,-5
-        153:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineE
-          coordinates: -16,-5
-        154:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineE
-          coordinates: -16,-6
-        155:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteLineE
-          coordinates: -16,-7
-        156:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerSw
-          coordinates: -18,-8
-        157:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerNw
-          coordinates: -18,-4
-        158:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerNe
-          coordinates: -16,-4
-        159:
-          color: '#52B4E9FF'
-          id: MiniTileWhiteCornerSe
-          coordinates: -16,-8
-        160:
-          color: '#9FED58FF'
-          id: BrickTileWhiteLineS
-          coordinates: -21,-8
-        161:
-          color: '#9FED58FF'
-          id: BrickTileWhiteLineW
-          coordinates: -22,-7
-        162:
-          color: '#9FED58FF'
-          id: BrickTileWhiteLineE
-          coordinates: -20,-7
-        163:
-          color: '#9FED58FF'
-          id: BrickTileWhiteCornerNw
-          coordinates: -22,-6
-        164:
-          color: '#9FED58FF'
-          id: BrickTileWhiteCornerSw
-          coordinates: -22,-8
-        165:
-          color: '#9FED58FF'
-          id: BrickTileWhiteCornerNe
-          coordinates: -20,-6
-        166:
-          color: '#9FED58FF'
-          id: BrickTileWhiteCornerSe
-          coordinates: -20,-8
-        167:
-          color: '#9FED58FF'
-          id: BrickTileWhiteLineN
-          coordinates: -21,-6
-        227:
+        203:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineS
           coordinates: -1,-3
-        228:
+        204:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,-2
-        229:
+        205:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,-1
-        239:
+        215:
           color: '#D4D4D4FF'
           id: MiniTileSteelCornerSw
           coordinates: -2,-3
-        240:
+        216:
           color: '#DE3A3AFF'
           id: MiniTileSteelEndW
           coordinates: -6,-2
-        241:
+        217:
           color: '#DE3A3AFF'
           id: MiniTileSteelEndE
           coordinates: -4,-2
-        242:
+        218:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -5,-2
-        243:
+        219:
           color: '#DE3A3AFF'
           id: MiniTileSteelInnerSw
           coordinates: -5,-2
-        244:
+        220:
           color: '#DE3A3AFF'
           id: MiniTileSteelInnerSe
           coordinates: -5,-2
-        245:
+        221:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -5,-3
-        246:
+        222:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -5,-3
-        247:
+        223:
           color: '#DE3A3AFF'
           id: MiniTileSteelInnerNw
           coordinates: -5,-4
-        248:
+        224:
           color: '#DE3A3AFF'
           id: MiniTileSteelInnerNe
           coordinates: -5,-4
-        249:
+        225:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -4,-4
-        250:
+        226:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-4
-        251:
+        227:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-5
-        252:
+        228:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-6
-        253:
+        229:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-7
-        259:
+        235:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -3,-10
-        260:
+        236:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -3,-10
-        261:
+        237:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -3,-11
-        262:
+        238:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -3,-12
-        263:
+        239:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -3,-12
-        264:
+        240:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-14
-        265:
+        241:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-14
-        266:
+        242:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-15
-        267:
+        243:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-16
-        268:
+        244:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-17
-        269:
+        245:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -6,-4
-        270:
+        246:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -2,-5
-        271:
+        247:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -1,-5
-        272:
+        248:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -1,-5
-        275:
+        251:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -3,-10
-        276:
+        252:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -3,-10
-        277:
+        253:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -4,-10
-        278:
+        254:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -5,-10
-        279:
+        255:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -6,-10
-        280:
+        256:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -7,-10
-        281:
+        257:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -7,-10
-        282:
+        258:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -8,-10
-        283:
+        259:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -9,-10
-        284:
+        260:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -9,-10
-        285:
+        261:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -4,-14
-        286:
+        262:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -4,-14
-        287:
+        263:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -5,-14
-        288:
+        264:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -6,-14
-        289:
+        265:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -8,-14
-        290:
+        266:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -8,-14
-        291:
+        267:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -10,-14
-        292:
+        268:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -11,-14
-        293:
+        269:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -11,-14
-        294:
+        270:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -9,-14
-        295:
+        271:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -9,-14
-        296:
+        272:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: -7,-14
-        297:
+        273:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-14
-        298:
+        274:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-15
-        299:
+        275:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-15
-        300:
+        276:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-16
-        301:
+        277:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-17
-        302:
+        278:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -11,-17
-        303:
+        279:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -9,-12
-        304:
+        280:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -9,-11
-        305:
+        281:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -9,-10
-        306:
+        282:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -9,-10
-        307:
+        283:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -6,-7
-        308:
+        284:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -6,-5
-        309:
+        285:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -6,-4
-        310:
+        286:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -6,-6
-        311:
+        287:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -2,-8
-        312:
+        288:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -2,-7
-        313:
+        289:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -2,-7
-        314:
+        290:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -2,-6
-        315:
+        291:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -2,-5
-        316:
+        292:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineW
           coordinates: -6,-8
-        317:
+        293:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: -4,-8
-        318:
+        294:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -6,-8
-        319:
+        295:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -5,-8
-        320:
+        296:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -4,-8
-        321:
+        297:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -2,-8
-        322:
+        298:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -1,-8
-        323:
+        299:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -1,-8
-        325:
+        301:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -3,-12
-        326:
+        302:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -4,-12
-        327:
+        303:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -5,-12
-        328:
+        304:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -6,-12
-        329:
+        305:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -7,-12
-        330:
+        306:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -8,-12
-        331:
+        307:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -9,-12
-        332:
+        308:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -4,-17
-        333:
+        309:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -5,-17
-        334:
+        310:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -6,-17
-        335:
+        311:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -6,-17
-        336:
+        312:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -7,-17
-        337:
+        313:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -8,-17
-        338:
+        314:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -9,-17
-        339:
+        315:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -11,-17
-        340:
+        316:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: -10,-17
+        317:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-4
+        318:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-4
+        319:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-5
+        320:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-6
+        321:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-8
+        322:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineS
+          coordinates: -21,-8
+        323:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineS
+          coordinates: -20,-8
+        324:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineS
+          coordinates: -22,-8
+        325:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineW
+          coordinates: -22,-7
+        326:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineE
+          coordinates: -20,-8
+        327:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineE
+          coordinates: -20,-7
+        328:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineE
+          coordinates: -20,-6
+        329:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineE
+          coordinates: -20,-5
+        330:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteLineE
+          coordinates: -20,-4
+        331:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerNe
+          coordinates: -21,-4
+        332:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerSw
+          coordinates: -21,-4
+        333:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerSw
+          coordinates: -21,-5
+        334:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerSw
+          coordinates: -21,-6
+        335:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerSw
+          coordinates: -21,-7
+        336:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerNe
+          coordinates: -21,-7
+        337:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerNe
+          coordinates: -21,-6
+        338:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerNe
+          coordinates: -21,-5
+        339:
+          color: '#52B4E9FF'
+          id: MiniTileWhiteInnerNe
+          coordinates: -21,-8
+        340:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerSw
+          coordinates: -18,-5
+        341:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerSw
+          coordinates: -18,-8
+        342:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerNw
+          coordinates: -18,-6
+        343:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerNw
+          coordinates: -18,-4
+        344:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerSe
+          coordinates: -16,-5
+        345:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerSe
+          coordinates: -16,-8
+        346:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerNe
+          coordinates: -16,-4
+        347:
+          color: '#9FED58FF'
+          id: BrickTileWhiteCornerNe
+          coordinates: -16,-6
+        348:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineS
+          coordinates: -17,-8
+        349:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineS
+          coordinates: -17,-5
+        350:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineW
+          coordinates: -18,-7
+        351:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineE
+          coordinates: -16,-7
+        352:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineN
+          coordinates: -17,-4
+        353:
+          color: '#9FED58FF'
+          id: BrickTileWhiteLineN
+          coordinates: -17,-6
       -1,0:
         18:
           color: '#9FED58FF'
@@ -1178,337 +1230,337 @@ entities:
           color: '#52B4E9FF'
           id: MiniTileWhiteInnerSw
           coordinates: -21,0
-        131:
+        130:
           color: '#52B4E9FF'
           id: MiniTileWhiteCornerNw
           coordinates: -22,2
-        136:
+        133:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineE
           coordinates: -20,1
-        138:
+        135:
           color: '#52B4E9FF'
           id: MiniTileWhiteInnerNe
           coordinates: -20,0
-        139:
+        136:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineE
           coordinates: -20,0
-        141:
+        138:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineW
           coordinates: -22,1
-        142:
+        139:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineW
           coordinates: -22,0
-        147:
+        143:
           color: '#52B4E9FF'
           id: MiniTileWhiteLineN
           coordinates: -21,2
-        168:
+        144:
           color: '#52B4E9CC'
           id: ThreeQuarterTileOverlayGreyscale90
           coordinates: -20,6
-        169:
+        145:
           color: '#52B4E9CC'
           id: ThreeQuarterTileOverlayGreyscale
           coordinates: -22,6
-        170:
+        146:
           color: '#52B4E9CC'
           id: ThreeQuarterTileOverlayGreyscale180
           coordinates: -20,4
-        171:
+        147:
           color: '#52B4E9CC'
           id: ThreeQuarterTileOverlayGreyscale270
           coordinates: -22,4
-        172:
+        148:
           color: '#EFB341CC'
           id: HalfTileOverlayGreyscale
           coordinates: -21,6
-        173:
+        149:
           color: '#EFB341CC'
           id: HalfTileOverlayGreyscale180
           coordinates: -21,4
-        174:
+        150:
           color: '#EFB341CC'
           id: HalfTileOverlayGreyscale270
           coordinates: -22,5
-        175:
+        151:
           color: '#EFB341CC'
           id: HalfTileOverlayGreyscale90
           coordinates: -20,5
-        176:
+        152:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -15,9
-        177:
+        153:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -14,9
-        178:
+        154:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -13,9
-        179:
+        155:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -12,9
-        180:
+        156:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -10,9
-        181:
+        157:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -9,9
-        182:
+        158:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -8,9
-        183:
+        159:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -7,9
-        184:
+        160:
           color: '#334E6DFF'
           id: MiniTileWhiteLineW
           coordinates: -16,10
-        185:
+        161:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -14,12
-        186:
+        162:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -13,12
-        187:
+        163:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -12,12
-        188:
+        164:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -11,12
-        189:
+        165:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -10,12
-        190:
+        166:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -9,12
-        191:
+        167:
           color: '#334E6DFF'
           id: MiniTileWhiteLineN
           coordinates: -8,12
-        192:
+        168:
           color: '#334E6DFF'
           id: MiniTileWhiteLineE
           coordinates: -6,10
-        193:
+        169:
           color: '#334E6DFF'
           id: MiniTileWhiteInnerNw
           coordinates: -15,11
-        194:
+        170:
           color: '#334E6DFF'
           id: MiniTileWhiteInnerNe
           coordinates: -7,11
-        195:
+        171:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerNe
           coordinates: -7,12
-        196:
+        172:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerNe
           coordinates: -6,11
-        197:
+        173:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerSw
           coordinates: -16,9
-        198:
+        174:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerSe
           coordinates: -6,9
-        199:
+        175:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerNw
           coordinates: -16,11
-        200:
+        176:
           color: '#334E6DFF'
           id: MiniTileWhiteCornerNw
           coordinates: -15,12
-        201:
+        177:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -15,10
-        202:
+        178:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -14,11
-        203:
+        179:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -12,11
-        204:
+        180:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -10,11
-        205:
+        181:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -8,11
-        206:
+        182:
           color: '#FFFFFFFF'
           id: Bot
           coordinates: -7,10
-        207:
+        183:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -15,9
-        208:
+        184:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -13,9
-        209:
+        185:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -12,9
-        210:
+        186:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -10,9
-        211:
+        187:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -9,9
-        212:
+        188:
           color: '#FFFFFFFF'
           id: Delivery
           coordinates: -7,9
-        213:
+        189:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -13,11
-        214:
+        190:
           color: '#FFFFFFFF'
           id: StandClear
           coordinates: -9,11
-        215:
+        191:
           color: '#FFFFFFFF'
           id: Caution
           coordinates: -11,11
-        216:
+        192:
           color: '#334E6DFF'
           id: MiniTileWhiteLineS
           coordinates: -11,9
-        217:
+        193:
           angle: 3.141592653589793 rad
           color: '#FFFFFFFF'
           id: LoadingArea
           coordinates: -11,9
-        218:
+        194:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineN
           coordinates: -1,6
-        230:
+        206:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,0
-        231:
+        207:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,1
-        232:
+        208:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,2
-        233:
+        209:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,3
-        234:
+        210:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,4
-        235:
+        211:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineW
           coordinates: -2,5
-        236:
+        212:
           color: '#D4D4D4FF'
           id: MiniTileSteelCornerNw
           coordinates: -2,6
       0,0:
-        219:
+        195:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,5
-        220:
+        196:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,4
-        221:
+        197:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,3
-        222:
+        198:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,2
-        223:
+        199:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,1
-        224:
+        200:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
-        237:
+        213:
           color: '#D4D4D4FF'
           id: MiniTileSteelCornerNe
           coordinates: 0,6
       0,-1:
-        225:
+        201:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,-1
-        226:
+        202:
           color: '#D4D4D4FF'
           id: MiniTileSteelLineE
           coordinates: 0,-2
-        238:
+        214:
           color: '#D4D4D4FF'
           id: MiniTileSteelCornerSe
           coordinates: 0,-3
-        254:
+        230:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: 0,-5
-        255:
+        231:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: 0,-6
-        256:
+        232:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: 0,-7
-        257:
+        233:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: 0,-7
-        258:
+        234:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineE
           coordinates: 0,-8
-        273:
+        249:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: 0,-5
-        274:
+        250:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineN
           coordinates: 0,-5
-        324:
+        300:
           color: '#DE3A3AFF'
           id: MiniTileSteelLineS
           coordinates: 0,-8
@@ -1523,707 +1575,692 @@ entities:
       -1,4: 0
       -1,5: 0
       0,5: 0
-      -16,-16: 1
-      -16,-15: 1
-      -16,-14: 1
-      -16,-13: 1
-      -16,-12: 1
-      -16,-11: 1
-      -16,-10: 1
-      -16,-9: 1
-      -16,-8: 1
-      -16,-7: 1
-      -16,-6: 1
-      -16,-5: 1
-      -16,-4: 1
-      -16,-3: 1
-      -16,-2: 1
-      -16,-1: 1
-      -15,-16: 1
-      -15,-15: 1
-      -15,-14: 1
-      -15,-13: 1
-      -15,-12: 1
-      -15,-11: 1
-      -15,-10: 1
-      -15,-9: 1
-      -15,-8: 1
-      -15,-7: 1
-      -15,-6: 1
-      -15,-5: 1
-      -15,-4: 1
-      -15,-3: 1
-      -15,-2: 1
-      -15,-1: 1
-      -14,-16: 1
-      -14,-15: 1
-      -14,-14: 1
-      -14,-13: 1
-      -14,-12: 1
-      -14,-11: 1
-      -14,-10: 1
-      -14,-9: 1
-      -14,-8: 1
-      -14,-7: 1
-      -14,-6: 1
-      -14,-5: 1
-      -14,-4: 1
-      -14,-3: 1
-      -14,-2: 1
-      -14,-1: 1
-      -13,-16: 1
-      -13,-15: 1
-      -13,-14: 1
-      -13,-13: 1
-      -13,-12: 1
-      -13,-11: 1
-      -13,-10: 1
-      -13,-9: 1
-      -13,-8: 1
-      -13,-7: 1
-      -13,-6: 1
-      -13,-5: 1
-      -13,-4: 1
-      -13,-3: 1
-      -13,-2: 1
-      -13,-1: 1
-      -12,-16: 1
-      -12,-15: 1
-      -12,-14: 1
-      -12,-13: 1
-      -12,-12: 1
-      -12,-11: 1
-      -12,-10: 1
-      -12,-9: 1
-      -12,-8: 1
-      -12,-7: 1
-      -12,-6: 1
-      -12,-5: 1
-      -12,-4: 1
-      -12,-3: 1
-      -12,-2: 1
-      -12,-1: 1
-      -11,-16: 1
-      -11,-15: 1
-      -11,-14: 1
-      -11,-13: 1
-      -11,-12: 1
-      -11,-11: 1
-      -11,-10: 1
-      -11,-9: 1
-      -11,-8: 1
-      -11,-7: 1
-      -11,-6: 1
-      -11,-5: 1
-      -11,-4: 1
-      -11,-3: 1
-      -11,-2: 1
-      -11,-1: 1
-      -10,-16: 1
-      -10,-15: 1
-      -10,-14: 1
-      -10,-13: 1
-      -10,-12: 1
-      -10,-11: 1
-      -10,-10: 1
-      -10,-9: 1
-      -10,-8: 1
-      -10,-7: 1
-      -10,-6: 1
-      -10,-5: 1
-      -10,-4: 1
-      -10,-3: 1
-      -10,-2: 1
-      -10,-1: 1
-      -9,-16: 1
-      -9,-15: 1
-      -9,-14: 1
-      -9,-13: 1
-      -9,-12: 1
-      -9,-11: 1
-      -9,-10: 1
-      -9,-9: 1
-      -9,-8: 1
-      -9,-7: 1
-      -9,-6: 1
-      -9,-5: 1
-      -9,-4: 1
-      -9,-3: 1
-      -9,-2: 1
-      -9,-1: 1
-      -8,-16: 1
-      -8,-15: 1
-      -8,-14: 1
-      -8,-13: 1
-      -8,-12: 1
-      -8,-11: 1
-      -8,-10: 1
-      -8,-9: 1
-      -8,-8: 1
-      -8,-7: 1
-      -8,-6: 1
-      -8,-5: 1
-      -8,-4: 1
-      -8,-3: 1
-      -8,-2: 1
-      -8,-1: 1
-      -7,-16: 1
-      -7,-15: 1
-      -7,-14: 1
-      -7,-13: 1
-      -7,-12: 1
-      -7,-11: 1
-      -7,-10: 1
-      -7,-9: 1
-      -7,-8: 1
-      -7,-7: 1
-      -7,-6: 1
-      -7,-5: 1
-      -7,-4: 1
-      -7,-3: 1
-      -7,-2: 1
-      -7,-1: 1
-      -6,-16: 1
-      -6,-15: 1
-      -6,-14: 1
-      -6,-13: 1
-      -6,-12: 1
-      -6,-11: 1
-      -6,-10: 1
-      -6,-9: 1
-      -6,-8: 1
-      -6,-7: 1
-      -6,-6: 1
-      -6,-5: 1
-      -6,-4: 1
-      -6,-3: 1
-      -6,-2: 1
-      -6,-1: 1
-      -5,-16: 1
-      -5,-15: 1
-      -5,-14: 1
-      -5,-13: 1
-      -5,-12: 1
-      -5,-11: 1
-      -5,-10: 1
-      -5,-9: 1
-      -5,-8: 1
-      -5,-7: 1
-      -5,-6: 1
-      -5,-5: 1
-      -5,-4: 1
-      -5,-3: 1
-      -5,-2: 1
-      -5,-1: 1
-      -4,-16: 1
-      -4,-15: 1
-      -4,-14: 1
-      -4,-13: 1
-      -4,-12: 1
-      -4,-11: 1
-      -4,-10: 1
-      -4,-9: 1
-      -4,-8: 1
-      -4,-7: 1
-      -4,-6: 1
-      -4,-5: 1
-      -4,-4: 1
-      -4,-3: 1
-      -4,-2: 1
-      -4,-1: 1
-      -3,-16: 1
-      -3,-15: 1
-      -3,-14: 1
-      -3,-13: 1
-      -3,-12: 1
-      -3,-11: 1
-      -3,-10: 1
-      -3,-9: 1
-      -3,-8: 1
-      -3,-7: 1
-      -3,-6: 1
-      -3,-5: 1
-      -3,-4: 1
-      -3,-3: 1
-      -3,-2: 1
-      -3,-1: 1
-      -2,-14: 1
-      -2,-13: 1
-      -2,-12: 1
-      -2,-11: 1
-      -2,-10: 1
-      -2,-9: 1
-      -2,-8: 1
-      -2,-7: 1
-      -2,-6: 1
-      -2,-5: 1
-      -2,-4: 1
-      -2,-3: 1
-      -2,-2: 1
-      -2,-1: 1
-      -1,-12: 1
-      -1,-11: 1
-      -1,-10: 1
-      -1,-9: 1
-      -1,-8: 1
-      -1,-7: 1
-      -1,-6: 1
-      -1,-5: 1
-      -1,-4: 1
-      -1,-3: 1
-      -16,0: 1
-      -16,1: 1
-      -16,2: 1
-      -16,3: 1
-      -16,4: 1
-      -16,5: 1
-      -16,6: 1
-      -16,7: 1
-      -16,8: 1
-      -16,9: 1
-      -16,10: 1
-      -16,11: 1
-      -16,12: 1
-      -16,13: 1
-      -15,0: 1
-      -15,1: 1
-      -15,2: 1
-      -15,3: 1
-      -15,4: 1
-      -15,5: 1
-      -15,6: 1
-      -15,7: 1
-      -15,8: 1
-      -15,9: 1
-      -15,10: 1
-      -15,11: 1
-      -15,12: 1
-      -15,13: 1
-      -14,0: 1
-      -14,1: 1
-      -14,2: 1
-      -14,3: 1
-      -14,4: 1
-      -14,5: 1
-      -14,6: 1
-      -14,7: 1
-      -14,8: 1
-      -14,9: 1
-      -14,10: 1
-      -14,11: 1
-      -14,12: 1
-      -14,13: 1
-      -13,0: 1
-      -13,1: 1
-      -13,2: 1
-      -13,3: 1
-      -13,4: 1
-      -13,5: 1
-      -13,6: 1
-      -13,7: 1
-      -13,8: 1
-      -13,9: 1
-      -13,10: 1
-      -13,11: 1
-      -13,12: 1
-      -13,13: 1
-      -12,0: 1
-      -12,1: 1
-      -12,2: 1
-      -12,3: 1
-      -12,4: 1
-      -12,5: 1
-      -12,6: 1
-      -12,7: 1
-      -12,8: 1
-      -12,9: 1
-      -12,10: 1
-      -12,11: 1
-      -12,12: 1
-      -12,13: 1
-      -11,0: 1
-      -11,1: 1
-      -11,2: 1
-      -11,3: 1
-      -11,4: 1
-      -11,5: 1
-      -11,6: 1
-      -11,7: 1
-      -11,8: 1
-      -11,9: 1
-      -11,10: 1
-      -11,11: 1
-      -11,12: 1
-      -11,13: 1
-      -10,0: 1
-      -10,1: 1
-      -10,2: 1
-      -10,3: 1
-      -10,4: 1
-      -10,5: 1
-      -10,6: 1
-      -10,7: 1
-      -10,8: 1
-      -10,9: 1
-      -10,10: 1
-      -10,11: 1
-      -10,12: 1
-      -10,13: 1
-      -9,0: 1
-      -9,1: 1
-      -9,2: 1
-      -9,3: 1
-      -9,4: 1
-      -9,5: 1
-      -9,6: 1
-      -9,7: 1
-      -9,8: 1
-      -9,9: 1
-      -9,10: 1
-      -9,11: 1
-      -9,12: 1
-      -9,13: 1
-      -8,0: 1
-      -8,1: 1
-      -8,2: 1
-      -8,3: 1
-      -8,4: 1
-      -8,5: 1
-      -8,6: 1
-      -8,7: 1
-      -8,8: 1
-      -8,9: 1
-      -8,10: 1
-      -8,11: 1
-      -8,12: 1
-      -8,13: 1
-      -7,0: 1
-      -7,1: 1
-      -7,2: 1
-      -7,3: 1
-      -7,4: 1
-      -7,5: 1
-      -7,6: 1
-      -7,7: 1
-      -7,8: 1
-      -7,9: 1
-      -7,10: 1
-      -7,11: 1
-      -7,12: 1
-      -7,13: 1
-      -6,0: 1
-      -6,1: 1
-      -6,2: 1
-      -6,3: 1
-      -6,4: 1
-      -6,5: 1
-      -6,6: 1
-      -6,7: 1
-      -6,8: 1
-      -6,9: 1
-      -6,10: 1
-      -6,11: 1
-      -6,12: 1
-      -6,13: 1
-      -5,0: 1
-      -5,1: 1
-      -5,2: 1
-      -5,3: 1
-      -5,4: 1
-      -5,5: 1
-      -5,6: 1
-      -5,7: 1
-      -5,8: 1
-      -5,9: 1
-      -5,10: 1
-      -5,11: 1
-      -5,12: 1
-      -4,0: 1
-      -4,1: 1
-      -4,2: 1
-      -4,3: 1
-      -4,4: 1
-      -4,5: 1
-      -4,6: 1
-      -4,7: 1
-      -4,8: 1
-      -4,9: 1
-      -3,0: 1
-      -3,1: 1
-      -3,2: 1
-      -3,3: 1
-      -3,4: 1
-      -3,5: 1
-      -3,6: 1
-      -3,7: 1
-      -3,8: 1
-      -3,9: 1
-      -2,0: 1
-      -2,1: 1
-      -2,2: 1
-      -2,3: 1
-      -2,4: 1
-      -2,5: 1
-      -2,6: 1
-      -2,7: 1
-      -2,8: 1
-      -1,6: 1
-      -1,7: 1
-      -1,8: 1
-      0,0: 1
-      0,1: 1
-      0,2: 1
-      0,3: 1
-      0,4: 1
-      0,6: 1
-      0,7: 1
-      0,8: 1
-      1,0: 1
-      1,1: 1
-      1,2: 1
-      1,3: 1
-      1,4: 1
-      1,5: 1
-      1,6: 1
-      1,7: 1
-      0,-9: 1
-      0,-8: 1
-      0,-7: 1
-      0,-6: 1
-      0,-5: 1
-      0,-4: 1
-      0,-3: 1
-      0,-2: 1
-      0,-1: 1
-      1,-9: 1
-      1,-8: 1
-      1,-7: 1
-      1,-6: 1
-      1,-5: 1
-      1,-4: 1
-      1,-3: 1
-      1,-2: 1
-      1,-1: 1
-      -16,-18: 1
-      -16,-17: 1
-      -15,-18: 1
-      -15,-17: 1
-      -14,-18: 1
-      -14,-17: 1
-      -13,-19: 1
-      -13,-18: 1
-      -13,-17: 1
-      -12,-19: 1
-      -12,-18: 1
-      -12,-17: 1
-      -11,-19: 1
-      -11,-18: 1
-      -11,-17: 1
-      -10,-19: 1
-      -10,-18: 1
-      -10,-17: 1
-      -9,-19: 1
-      -9,-18: 1
-      -9,-17: 1
-      -8,-18: 1
-      -8,-17: 1
-      -7,-18: 1
-      -7,-17: 1
-      -6,-18: 1
-      -6,-17: 1
-      -5,-18: 1
-      -5,-17: 1
-      -4,-18: 1
-      -4,-17: 1
-      -3,-18: 1
-      -3,-17: 1
-      -23,-9: 1
-      -23,-8: 1
-      -23,-7: 1
-      -23,-6: 1
-      -23,-5: 1
-      -23,-4: 1
-      -23,-3: 1
-      -23,-2: 1
-      -23,-1: 1
-      -22,-9: 1
-      -22,-8: 1
-      -22,-7: 1
-      -22,-6: 1
-      -22,-5: 1
-      -22,-4: 1
-      -22,-3: 1
-      -22,-2: 1
-      -22,-1: 1
-      -21,-12: 1
-      -21,-11: 1
-      -21,-10: 1
-      -21,-9: 1
-      -21,-8: 1
-      -21,-7: 1
-      -21,-6: 1
-      -21,-5: 1
-      -21,-4: 1
-      -21,-3: 1
-      -21,-2: 1
-      -21,-1: 1
-      -20,-14: 1
-      -20,-13: 1
-      -20,-12: 1
-      -20,-11: 1
-      -20,-10: 1
-      -20,-9: 1
-      -20,-8: 1
-      -20,-7: 1
-      -20,-6: 1
-      -20,-5: 1
-      -20,-4: 1
-      -20,-3: 1
-      -20,-2: 1
-      -20,-1: 1
-      -19,-16: 1
-      -19,-15: 1
-      -19,-14: 1
-      -19,-13: 1
-      -19,-12: 1
-      -19,-11: 1
-      -19,-10: 1
-      -19,-9: 1
-      -19,-8: 1
-      -19,-7: 1
-      -19,-6: 1
-      -19,-5: 1
-      -19,-4: 1
-      -19,-3: 1
-      -19,-2: 1
-      -19,-1: 1
-      -18,-16: 1
-      -18,-15: 1
-      -18,-14: 1
-      -18,-13: 1
-      -18,-12: 1
-      -18,-11: 1
-      -18,-10: 1
-      -18,-9: 1
-      -18,-8: 1
-      -18,-7: 1
-      -18,-6: 1
-      -18,-5: 1
-      -18,-4: 1
-      -18,-3: 1
-      -18,-2: 1
-      -18,-1: 1
-      -17,-16: 1
-      -17,-15: 1
-      -17,-14: 1
-      -17,-13: 1
-      -17,-12: 1
-      -17,-11: 1
-      -17,-10: 1
-      -17,-9: 1
-      -17,-8: 1
-      -17,-7: 1
-      -17,-6: 1
-      -17,-5: 1
-      -17,-4: 1
-      -17,-3: 1
-      -17,-2: 1
-      -17,-1: 1
-      -23,0: 1
-      -23,1: 1
-      -23,2: 1
-      -23,3: 1
-      -23,4: 1
-      -23,5: 1
-      -23,6: 1
-      -23,7: 1
-      -22,0: 1
-      -22,1: 1
-      -22,2: 1
-      -22,3: 1
-      -22,4: 1
-      -22,5: 1
-      -22,6: 1
-      -22,7: 1
-      -22,8: 1
-      -21,0: 1
-      -21,1: 1
-      -21,2: 1
-      -21,3: 1
-      -21,4: 1
-      -21,5: 1
-      -21,6: 1
-      -21,7: 1
-      -21,8: 1
-      -20,0: 1
-      -20,1: 1
-      -20,2: 1
-      -20,3: 1
-      -20,4: 1
-      -20,5: 1
-      -20,6: 1
-      -20,7: 1
-      -20,8: 1
-      -19,0: 1
-      -19,1: 1
-      -19,2: 1
-      -19,3: 1
-      -19,4: 1
-      -19,5: 1
-      -19,6: 1
-      -19,7: 1
-      -19,8: 1
-      -19,9: 1
-      -18,0: 1
-      -18,1: 1
-      -18,2: 1
-      -18,3: 1
-      -18,4: 1
-      -18,5: 1
-      -18,6: 1
-      -18,7: 1
-      -18,8: 1
-      -18,9: 1
-      -17,0: 1
-      -17,1: 1
-      -17,2: 1
-      -17,3: 1
-      -17,4: 1
-      -17,5: 1
-      -17,6: 1
-      -17,7: 1
-      -17,8: 1
-      -17,9: 1
-      -17,10: 1
-      -17,11: 1
-      -17,12: 1
-      -19,-18: 1
-      -19,-17: 1
-      -18,-18: 1
-      -18,-17: 1
-      -17,-18: 1
-      -17,-17: 1
+      -16,-16: 0
+      -16,-15: 0
+      -16,-14: 0
+      -16,-13: 0
+      -16,-12: 0
+      -16,-11: 0
+      -16,-10: 0
+      -16,-9: 0
+      -16,-8: 0
+      -16,-7: 0
+      -16,-6: 0
+      -16,-5: 0
+      -16,-4: 0
+      -16,-3: 0
+      -16,-2: 0
+      -16,-1: 0
+      -15,-16: 0
+      -15,-15: 0
+      -15,-14: 0
+      -15,-13: 0
+      -15,-12: 0
+      -15,-11: 0
+      -15,-10: 0
+      -15,-9: 0
+      -15,-8: 0
+      -15,-7: 0
+      -15,-6: 0
+      -15,-5: 0
+      -15,-4: 0
+      -15,-3: 0
+      -15,-2: 0
+      -15,-1: 0
+      -14,-16: 0
+      -14,-15: 0
+      -14,-14: 0
+      -14,-13: 0
+      -14,-12: 0
+      -14,-11: 0
+      -14,-10: 0
+      -14,-9: 0
+      -14,-8: 0
+      -14,-7: 0
+      -14,-6: 0
+      -14,-5: 0
+      -14,-4: 0
+      -14,-3: 0
+      -14,-2: 0
+      -14,-1: 0
+      -13,-16: 0
+      -13,-15: 0
+      -13,-14: 0
+      -13,-13: 0
+      -13,-12: 0
+      -13,-11: 0
+      -13,-10: 0
+      -13,-9: 0
+      -13,-8: 0
+      -13,-7: 0
+      -13,-6: 0
+      -13,-5: 0
+      -13,-4: 0
+      -13,-3: 0
+      -13,-2: 0
+      -13,-1: 0
+      -12,-16: 0
+      -12,-15: 0
+      -12,-14: 0
+      -12,-13: 0
+      -12,-12: 0
+      -12,-11: 0
+      -12,-10: 0
+      -12,-9: 0
+      -12,-8: 0
+      -12,-7: 0
+      -12,-6: 0
+      -12,-5: 0
+      -12,-4: 0
+      -12,-3: 0
+      -12,-2: 0
+      -12,-1: 0
+      -11,-16: 0
+      -11,-15: 0
+      -11,-14: 0
+      -11,-13: 0
+      -11,-12: 0
+      -11,-11: 0
+      -11,-10: 0
+      -11,-9: 0
+      -11,-8: 0
+      -11,-7: 0
+      -11,-6: 0
+      -11,-5: 0
+      -11,-4: 0
+      -11,-3: 0
+      -11,-2: 0
+      -11,-1: 0
+      -10,-16: 0
+      -10,-15: 0
+      -10,-14: 0
+      -10,-13: 0
+      -10,-12: 0
+      -10,-11: 0
+      -10,-10: 0
+      -10,-9: 0
+      -10,-8: 0
+      -10,-7: 0
+      -10,-6: 0
+      -10,-5: 0
+      -10,-4: 0
+      -10,-3: 0
+      -10,-2: 0
+      -10,-1: 0
+      -9,-16: 0
+      -9,-15: 0
+      -9,-14: 0
+      -9,-13: 0
+      -9,-12: 0
+      -9,-11: 0
+      -9,-10: 0
+      -9,-9: 0
+      -9,-8: 0
+      -9,-7: 0
+      -9,-6: 0
+      -9,-5: 0
+      -9,-4: 0
+      -9,-3: 0
+      -9,-2: 0
+      -9,-1: 0
+      -8,-16: 0
+      -8,-15: 0
+      -8,-14: 0
+      -8,-13: 0
+      -8,-12: 0
+      -8,-11: 0
+      -8,-10: 0
+      -8,-9: 0
+      -8,-8: 0
+      -8,-7: 0
+      -8,-6: 0
+      -8,-5: 0
+      -8,-4: 0
+      -8,-3: 0
+      -8,-2: 0
+      -8,-1: 0
+      -7,-16: 0
+      -7,-15: 0
+      -7,-14: 0
+      -7,-13: 0
+      -7,-12: 0
+      -7,-11: 0
+      -7,-10: 0
+      -7,-9: 0
+      -7,-8: 0
+      -7,-7: 0
+      -7,-6: 0
+      -7,-5: 0
+      -7,-4: 0
+      -7,-3: 0
+      -7,-2: 0
+      -7,-1: 0
+      -6,-16: 0
+      -6,-15: 0
+      -6,-14: 0
+      -6,-13: 0
+      -6,-12: 0
+      -6,-11: 0
+      -6,-10: 0
+      -6,-9: 0
+      -6,-8: 0
+      -6,-7: 0
+      -6,-6: 0
+      -6,-5: 0
+      -6,-4: 0
+      -6,-3: 0
+      -6,-2: 0
+      -6,-1: 0
+      -5,-16: 0
+      -5,-15: 0
+      -5,-14: 0
+      -5,-13: 0
+      -5,-12: 0
+      -5,-11: 0
+      -5,-10: 0
+      -5,-9: 0
+      -5,-8: 0
+      -5,-7: 0
+      -5,-6: 0
+      -5,-5: 0
+      -5,-4: 0
+      -5,-3: 0
+      -5,-2: 0
+      -5,-1: 0
+      -4,-16: 0
+      -4,-15: 0
+      -4,-14: 0
+      -4,-13: 0
+      -4,-12: 0
+      -4,-11: 0
+      -4,-10: 0
+      -4,-9: 0
+      -4,-8: 0
+      -4,-7: 0
+      -4,-6: 0
+      -4,-5: 0
+      -4,-4: 0
+      -4,-3: 0
+      -4,-2: 0
+      -4,-1: 0
+      -3,-16: 0
+      -3,-15: 0
+      -3,-14: 0
+      -3,-13: 0
+      -3,-12: 0
+      -3,-11: 0
+      -3,-10: 0
+      -3,-9: 0
+      -3,-8: 0
+      -3,-7: 0
+      -3,-6: 0
+      -3,-5: 0
+      -3,-4: 0
+      -3,-3: 0
+      -3,-2: 0
+      -3,-1: 0
+      -2,-14: 0
+      -2,-13: 0
+      -2,-12: 0
+      -2,-11: 0
+      -2,-10: 0
+      -2,-9: 0
+      -2,-8: 0
+      -2,-7: 0
+      -2,-6: 0
+      -2,-5: 0
+      -2,-4: 0
+      -2,-3: 0
+      -2,-2: 0
+      -2,-1: 0
+      -1,-12: 0
+      -1,-11: 0
+      -1,-10: 0
+      -1,-9: 0
+      -1,-8: 0
+      -1,-7: 0
+      -1,-6: 0
+      -1,-5: 0
+      -1,-4: 0
+      -1,-3: 0
+      -16,0: 0
+      -16,1: 0
+      -16,2: 0
+      -16,3: 0
+      -16,4: 0
+      -16,5: 0
+      -16,6: 0
+      -16,7: 0
+      -16,8: 0
+      -16,9: 0
+      -16,10: 0
+      -16,11: 0
+      -16,12: 0
+      -16,13: 0
+      -15,0: 0
+      -15,1: 0
+      -15,2: 0
+      -15,3: 0
+      -15,4: 0
+      -15,5: 0
+      -15,6: 0
+      -15,7: 0
+      -15,8: 0
+      -15,9: 0
+      -15,10: 0
+      -15,11: 0
+      -15,12: 0
+      -15,13: 0
+      -14,0: 0
+      -14,1: 0
+      -14,2: 0
+      -14,3: 0
+      -14,4: 0
+      -14,5: 0
+      -14,6: 0
+      -14,7: 0
+      -14,8: 0
+      -14,9: 0
+      -14,10: 0
+      -14,11: 0
+      -14,12: 0
+      -14,13: 0
+      -13,0: 0
+      -13,1: 0
+      -13,2: 0
+      -13,3: 0
+      -13,4: 0
+      -13,5: 0
+      -13,6: 0
+      -13,7: 0
+      -13,8: 0
+      -13,9: 0
+      -13,10: 0
+      -13,11: 0
+      -13,12: 0
+      -13,13: 0
+      -12,0: 0
+      -12,1: 0
+      -12,2: 0
+      -12,3: 0
+      -12,4: 0
+      -12,5: 0
+      -12,6: 0
+      -12,7: 0
+      -12,8: 0
+      -12,9: 0
+      -12,10: 0
+      -12,11: 0
+      -12,12: 0
+      -12,13: 0
+      -11,0: 0
+      -11,1: 0
+      -11,2: 0
+      -11,3: 0
+      -11,4: 0
+      -11,5: 0
+      -11,6: 0
+      -11,7: 0
+      -11,8: 0
+      -11,9: 0
+      -11,10: 0
+      -11,11: 0
+      -11,12: 0
+      -11,13: 0
+      -10,0: 0
+      -10,1: 0
+      -10,2: 0
+      -10,3: 0
+      -10,4: 0
+      -10,5: 0
+      -10,6: 0
+      -10,7: 0
+      -10,8: 0
+      -10,9: 0
+      -10,10: 0
+      -10,11: 0
+      -10,12: 0
+      -10,13: 0
+      -9,0: 0
+      -9,1: 0
+      -9,2: 0
+      -9,3: 0
+      -9,4: 0
+      -9,5: 0
+      -9,6: 0
+      -9,7: 0
+      -9,8: 0
+      -9,9: 0
+      -9,10: 0
+      -9,11: 0
+      -9,12: 0
+      -9,13: 0
+      -8,0: 0
+      -8,1: 0
+      -8,2: 0
+      -8,3: 0
+      -8,4: 0
+      -8,5: 0
+      -8,6: 0
+      -8,7: 0
+      -8,8: 0
+      -8,9: 0
+      -8,10: 0
+      -8,11: 0
+      -8,12: 0
+      -8,13: 0
+      -7,0: 0
+      -7,1: 0
+      -7,2: 0
+      -7,3: 0
+      -7,4: 0
+      -7,5: 0
+      -7,6: 0
+      -7,7: 0
+      -7,8: 0
+      -7,9: 0
+      -7,10: 0
+      -7,11: 0
+      -7,12: 0
+      -7,13: 0
+      -6,0: 0
+      -6,1: 0
+      -6,2: 0
+      -6,3: 0
+      -6,4: 0
+      -6,5: 0
+      -6,6: 0
+      -6,7: 0
+      -6,8: 0
+      -6,9: 0
+      -6,10: 0
+      -6,11: 0
+      -6,12: 0
+      -6,13: 0
+      -5,0: 0
+      -5,1: 0
+      -5,2: 0
+      -5,3: 0
+      -5,4: 0
+      -5,5: 0
+      -5,6: 0
+      -5,7: 0
+      -5,8: 0
+      -5,9: 0
+      -5,10: 0
+      -5,11: 0
+      -5,12: 0
+      -4,0: 0
+      -4,1: 0
+      -4,2: 0
+      -4,3: 0
+      -4,4: 0
+      -4,5: 0
+      -4,6: 0
+      -4,7: 0
+      -4,8: 0
+      -4,9: 0
+      -3,0: 0
+      -3,1: 0
+      -3,2: 0
+      -3,3: 0
+      -3,4: 0
+      -3,5: 0
+      -3,6: 0
+      -3,7: 0
+      -3,8: 0
+      -3,9: 0
+      -2,0: 0
+      -2,1: 0
+      -2,2: 0
+      -2,3: 0
+      -2,4: 0
+      -2,5: 0
+      -2,6: 0
+      -2,7: 0
+      -2,8: 0
+      -1,6: 0
+      -1,7: 0
+      -1,8: 0
+      0,0: 0
+      0,1: 0
+      0,2: 0
+      0,3: 0
+      0,4: 0
+      0,6: 0
+      0,7: 0
+      0,8: 0
+      1,0: 0
+      1,1: 0
+      1,2: 0
+      1,3: 0
+      1,4: 0
+      1,5: 0
+      1,6: 0
+      1,7: 0
+      0,-9: 0
+      0,-8: 0
+      0,-7: 0
+      0,-6: 0
+      0,-5: 0
+      0,-4: 0
+      0,-3: 0
+      0,-2: 0
+      0,-1: 0
+      1,-9: 0
+      1,-8: 0
+      1,-7: 0
+      1,-6: 0
+      1,-5: 0
+      1,-4: 0
+      1,-3: 0
+      1,-2: 0
+      1,-1: 0
+      -16,-18: 0
+      -16,-17: 0
+      -15,-18: 0
+      -15,-17: 0
+      -14,-18: 0
+      -14,-17: 0
+      -13,-19: 0
+      -13,-18: 0
+      -13,-17: 0
+      -12,-19: 0
+      -12,-18: 0
+      -12,-17: 0
+      -11,-19: 0
+      -11,-18: 0
+      -11,-17: 0
+      -10,-19: 0
+      -10,-18: 0
+      -10,-17: 0
+      -9,-19: 0
+      -9,-18: 0
+      -9,-17: 0
+      -8,-18: 0
+      -8,-17: 0
+      -7,-18: 0
+      -7,-17: 0
+      -6,-18: 0
+      -6,-17: 0
+      -5,-18: 0
+      -5,-17: 0
+      -4,-18: 0
+      -4,-17: 0
+      -3,-18: 0
+      -3,-17: 0
+      -23,-9: 0
+      -23,-8: 0
+      -23,-7: 0
+      -23,-6: 0
+      -23,-5: 0
+      -23,-4: 0
+      -23,-3: 0
+      -23,-2: 0
+      -23,-1: 0
+      -22,-9: 0
+      -22,-8: 0
+      -22,-7: 0
+      -22,-6: 0
+      -22,-5: 0
+      -22,-4: 0
+      -22,-3: 0
+      -22,-2: 0
+      -22,-1: 0
+      -21,-12: 0
+      -21,-11: 0
+      -21,-10: 0
+      -21,-9: 0
+      -21,-8: 0
+      -21,-7: 0
+      -21,-6: 0
+      -21,-5: 0
+      -21,-4: 0
+      -21,-3: 0
+      -21,-2: 0
+      -21,-1: 0
+      -20,-14: 0
+      -20,-13: 0
+      -20,-12: 0
+      -20,-11: 0
+      -20,-10: 0
+      -20,-9: 0
+      -20,-8: 0
+      -20,-7: 0
+      -20,-6: 0
+      -20,-5: 0
+      -20,-4: 0
+      -20,-3: 0
+      -20,-2: 0
+      -20,-1: 0
+      -19,-16: 0
+      -19,-15: 0
+      -19,-14: 0
+      -19,-13: 0
+      -19,-12: 0
+      -19,-11: 0
+      -19,-10: 0
+      -19,-9: 0
+      -19,-8: 0
+      -19,-7: 0
+      -19,-6: 0
+      -19,-5: 0
+      -19,-4: 0
+      -19,-3: 0
+      -19,-2: 0
+      -19,-1: 0
+      -18,-16: 0
+      -18,-15: 0
+      -18,-14: 0
+      -18,-13: 0
+      -18,-12: 0
+      -18,-11: 0
+      -18,-10: 0
+      -18,-9: 0
+      -18,-8: 0
+      -18,-7: 0
+      -18,-6: 0
+      -18,-5: 0
+      -18,-4: 0
+      -18,-3: 0
+      -18,-2: 0
+      -18,-1: 0
+      -17,-16: 0
+      -17,-15: 0
+      -17,-14: 0
+      -17,-13: 0
+      -17,-12: 0
+      -17,-11: 0
+      -17,-10: 0
+      -17,-9: 0
+      -17,-8: 0
+      -17,-7: 0
+      -17,-6: 0
+      -17,-5: 0
+      -17,-4: 0
+      -17,-3: 0
+      -17,-2: 0
+      -17,-1: 0
+      -23,0: 0
+      -23,1: 0
+      -23,2: 0
+      -23,3: 0
+      -23,4: 0
+      -23,5: 0
+      -23,6: 0
+      -23,7: 0
+      -22,0: 0
+      -22,1: 0
+      -22,2: 0
+      -22,3: 0
+      -22,4: 0
+      -22,5: 0
+      -22,6: 0
+      -22,7: 0
+      -22,8: 0
+      -21,0: 0
+      -21,1: 0
+      -21,2: 0
+      -21,3: 0
+      -21,4: 0
+      -21,5: 0
+      -21,6: 0
+      -21,7: 0
+      -21,8: 0
+      -20,0: 0
+      -20,1: 0
+      -20,2: 0
+      -20,3: 0
+      -20,4: 0
+      -20,5: 0
+      -20,6: 0
+      -20,7: 0
+      -20,8: 0
+      -19,0: 0
+      -19,1: 0
+      -19,2: 0
+      -19,3: 0
+      -19,4: 0
+      -19,5: 0
+      -19,6: 0
+      -19,7: 0
+      -19,8: 0
+      -19,9: 0
+      -18,0: 0
+      -18,1: 0
+      -18,2: 0
+      -18,3: 0
+      -18,4: 0
+      -18,5: 0
+      -18,6: 0
+      -18,7: 0
+      -18,8: 0
+      -18,9: 0
+      -17,0: 0
+      -17,1: 0
+      -17,2: 0
+      -17,3: 0
+      -17,4: 0
+      -17,5: 0
+      -17,6: 0
+      -17,7: 0
+      -17,8: 0
+      -17,9: 0
+      -17,10: 0
+      -17,11: 0
+      -17,12: 0
+      -19,-18: 0
+      -19,-17: 0
+      -18,-18: 0
+      -18,-17: 0
+      -17,-18: 0
+      -17,-17: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 120
-      - 100
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 20
-      - 100
+      - 21.824879
+      - 82.10312
       - 0
       - 0
       - 0
@@ -2236,6 +2273,10 @@ entities:
       - 0
     type: GridAtmosphere
   - type: RadiationGridResistance
+  - nextShake: 0
+    shakeTimes: 10
+    type: GravityShake
+  - type: GasTileOverlay
 - uid: 1
   type: AirlockExternalGlassShuttleLocked
   components:
@@ -3644,21 +3685,24 @@ entities:
     parent: 0
     type: Transform
 - uid: 193
-  type: WallShuttle
+  type: ShuttleWindow
   components:
-  - pos: 1.5,-7.5
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-7.5
     parent: 0
     type: Transform
 - uid: 194
-  type: WallShuttle
+  type: ShuttleWindow
   components:
-  - pos: 1.5,-6.5
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-6.5
     parent: 0
     type: Transform
 - uid: 195
   type: WallShuttle
   components:
-  - pos: 1.5,-5.5
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-8.5
     parent: 0
     type: Transform
 - uid: 196
@@ -4094,15 +4138,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 268
-  type: Grille
+  type: WallShuttle
   components:
-  - pos: 0.5,-8.5
+  - rot: 3.141592653589793 rad
+    pos: -0.5,-8.5
     parent: 0
     type: Transform
 - uid: 269
   type: Grille
   components:
-  - pos: -0.5,-8.5
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-6.5
     parent: 0
     type: Transform
 - uid: 270
@@ -4172,9 +4218,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 281
-  type: ShuttleWindow
+  type: Grille
   components:
-  - pos: -0.5,-8.5
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-7.5
     parent: 0
     type: Transform
 - uid: 282
@@ -4238,9 +4285,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 292
-  type: Grille
+  type: SignVirology
   components:
-  - pos: -19.5,-4.5
+  - pos: -18.5,-4.5
     parent: 0
     type: Transform
 - uid: 293
@@ -4253,54 +4300,55 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 294
-  type: MedicalBed
+  type: WindoorMedicalLocked
   components:
-  - pos: -21.5,2.5
+  - rot: 3.141592653589793 rad
+    pos: -16.5,-5.5
     parent: 0
     type: Transform
 - uid: 295
-  type: MedicalBed
-  components:
-  - pos: -21.5,1.5
-    parent: 0
-    type: Transform
-- uid: 296
-  type: MedicalBed
-  components:
-  - pos: -19.5,1.5
-    parent: 0
-    type: Transform
-- uid: 297
   type: TableReinforcedGlass
   components:
   - pos: -15.5,-4.5
     parent: 0
     type: Transform
-- uid: 298
-  type: BedsheetMedical
+- uid: 296
+  type: WindowReinforcedDirectional
   components:
   - rot: 3.141592653589793 rad
-    pos: -21.5,2.5
+    pos: -17.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 297
+  type: BedsheetMedical
+  components:
+  - pos: -21.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 298
+  type: AirlockVirologyGlassLocked
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -18.5,-3.5
     parent: 0
     type: Transform
 - uid: 299
-  type: BedsheetMedical
+  type: BoxBodyBag
   components:
-  - rot: 3.141592653589793 rad
-    pos: -21.5,1.5
+  - pos: -15.67293,-4.217805
     parent: 0
     type: Transform
 - uid: 300
-  type: BiomassReclaimer
+  type: MedicalBed
   components:
-  - pos: -17.5,-4.5
+  - pos: -17.5,-6.5
     parent: 0
     type: Transform
 - uid: 301
-  type: BedsheetMedical
+  type: WindowReinforcedDirectional
   components:
   - rot: 3.141592653589793 rad
-    pos: -19.5,1.5
+    pos: -15.5,-5.5
     parent: 0
     type: Transform
 - uid: 302
@@ -4316,27 +4364,27 @@ entities:
     parent: 0
     type: Transform
 - uid: 304
-  type: StasisBed
+  type: MedkitToxinFilled
   components:
-  - pos: -19.5,-2.5
+  - pos: -17.353579,-4.3536377
     parent: 0
     type: Transform
 - uid: 305
-  type: StasisBed
+  type: LockerMedicalFilled
   components:
-  - pos: -19.5,-1.5
+  - pos: -21.5,-1.5
     parent: 0
     type: Transform
 - uid: 306
-  type: StasisBed
+  type: MedkitToxinFilled
   components:
-  - pos: -21.5,-2.5
+  - pos: -17.62213,-4.4942627
     parent: 0
     type: Transform
 - uid: 307
-  type: StasisBed
+  type: LockerMedicineFilled
   components:
-  - pos: -21.5,-1.5
+  - pos: -21.5,1.5
     parent: 0
     type: Transform
 - uid: 308
@@ -4376,9 +4424,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 314
-  type: WallShuttle
+  type: BoxBodyBag
   components:
-  - pos: -21.5,-4.5
+  - pos: -15.277096,-4.384472
     parent: 0
     type: Transform
 - uid: 315
@@ -4742,9 +4790,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 375
-  type: ShuttleWindow
+  type: WallShuttleDiagonal
   components:
-  - pos: 0.5,-8.5
+  - rot: 1.5707963267948966 rad
+    pos: -14.5,-18.5
     parent: 0
     type: Transform
 - uid: 376
@@ -5132,9 +5181,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 440
-  type: ShuttleWindow
+  type: LockerMedicalFilled
   components:
-  - pos: -19.5,-4.5
+  - pos: -21.5,-2.5
     parent: 0
     type: Transform
 - uid: 441
@@ -5253,9 +5302,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 460
-  type: FirelockEdge
+  type: StasisBed
   components:
-  - pos: -20.5,-4.5
+  - pos: -19.5,-7.5
     parent: 0
     type: Transform
 - uid: 461
@@ -5307,9 +5356,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 469
-  type: WindoorMedicalLocked
+  type: BedsheetGreen
   components:
-  - pos: -20.5,-4.5
+  - pos: -15.5,-7.5
     parent: 0
     type: Transform
 - uid: 470
@@ -5319,15 +5368,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 471
-  type: MedicalBed
+  type: BedsheetGreen
   components:
-  - pos: -19.5,-7.5
+  - pos: -15.5,-6.5
     parent: 0
     type: Transform
 - uid: 472
-  type: MedicalBed
+  type: BedsheetGreen
   components:
-  - pos: -21.5,-7.5
+  - pos: -15.5,-5.5
     parent: 0
     type: Transform
 - uid: 473
@@ -5339,37 +5388,37 @@ entities:
 - uid: 474
   type: BedsheetGreen
   components:
-  - pos: -21.5,-7.5
+  - pos: -17.5,-5.5
     parent: 0
     type: Transform
 - uid: 475
   type: BedsheetGreen
   components:
-  - pos: -21.5,-6.5
+  - pos: -17.5,-6.5
     parent: 0
     type: Transform
 - uid: 476
   type: BedsheetGreen
   components:
-  - pos: -21.5,-5.5
+  - pos: -17.5,-7.5
     parent: 0
     type: Transform
 - uid: 477
-  type: BedsheetGreen
+  type: MedicalBed
   components:
-  - pos: -19.5,-5.5
+  - pos: -17.5,-7.5
     parent: 0
     type: Transform
 - uid: 478
-  type: BedsheetGreen
+  type: MedicalBed
   components:
-  - pos: -19.5,-6.5
+  - pos: -15.5,-5.5
     parent: 0
     type: Transform
 - uid: 479
-  type: BedsheetGreen
+  type: MedicalBed
   components:
-  - pos: -19.5,-7.5
+  - pos: -15.5,-6.5
     parent: 0
     type: Transform
 - uid: 480
@@ -5385,79 +5434,76 @@ entities:
     parent: 0
     type: Transform
 - uid: 482
-  type: computerBodyScanner
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -17.5,-5.5
-    parent: 0
-    type: Transform
-- uid: 483
-  type: MedicalScanner
+  type: MedicalBed
   components:
   - pos: -15.5,-7.5
     parent: 0
     type: Transform
-- uid: 484
-  type: ComputerCloningConsole
+- uid: 483
+  type: ClosetL3VirologyFilled
   components:
-  - rot: 3.141592653589793 rad
-    pos: -16.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 485
-  type: CloningPod
-  components:
-  - pos: -17.5,-7.5
-    parent: 0
-    type: Transform
-- uid: 486
-  type: SignCloning
-  components:
-  - pos: -18.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 487
-  type: LockerMedical
-  components:
-  - name: шкаф для вещей погибших
-    type: MetaData
   - pos: -15.5,-3.5
     parent: 0
     type: Transform
-- uid: 488
-  type: BoxBodyBag
+- uid: 484
+  type: BedsheetMedical
   components:
-  - pos: -15.700857,-4.214354
+  - pos: -19.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 485
+  type: BedsheetMedical
+  components:
+  - pos: -21.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 486
+  type: EmergencyRollerBed
+  components:
+  - pos: -21.453726,-4.063695
+    parent: 0
+    type: Transform
+- uid: 487
+  type: StasisBed
+  components:
+  - pos: -21.5,-7.5
+    parent: 0
+    type: Transform
+- uid: 488
+  type: BedsheetMedical
+  components:
+  - pos: -19.5,-6.5
     parent: 0
     type: Transform
 - uid: 489
-  type: BoxBodyBag
+  type: MedicalBed
   components:
-  - pos: -15.232107,-4.214354
+  - pos: -17.5,-5.5
     parent: 0
     type: Transform
 - uid: 490
-  type: MaterialBiomass
+  type: EmergencyRollerBed
   components:
-  - pos: -15.811888,-4.511229
+  - pos: -21.474558,-3.2095282
     parent: 0
     type: Transform
 - uid: 491
-  type: MaterialBiomass
+  type: EmergencyRollerBed
   components:
-  - pos: -15.624388,-4.558104
+  - pos: -21.453726,-3.6470282
     parent: 0
     type: Transform
 - uid: 492
-  type: MaterialBiomass
+  type: WindoorChemistryLocked
   components:
-  - pos: -15.640013,-4.448729
+  - rot: 3.141592653589793 rad
+    pos: -19.5,3.5
     parent: 0
     type: Transform
 - uid: 493
-  type: EmergencyRollerBed
+  type: LockerMedicineFilled
   components:
-  - pos: -15.493048,-5.2628207
+  - pos: -21.5,2.5
     parent: 0
     type: Transform
 - uid: 494
@@ -5481,15 +5527,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 497
-  type: SignVirology
+  type: TableReinforcedGlass
   components:
-  - pos: -21.5,-4.5
+  - pos: -17.5,-4.5
     parent: 0
     type: Transform
 - uid: 498
-  type: ClosetL3VirologyFilled
+  type: ComputerStationRecords
   components:
-  - pos: -21.5,-3.5
+  - pos: -8.5,12.5
     parent: 0
     type: Transform
 - uid: 499
@@ -5553,10 +5599,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 509
-  type: WindoorMedicalLocked
+  type: ClothingOuterHardsuitEVAPrisoner
   components:
-  - rot: 3.141592653589793 rad
-    pos: -19.5,3.5
+  - pos: -7.3035164,-9.26952
     parent: 0
     type: Transform
 - uid: 510
@@ -5572,9 +5617,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 512
-  type: AirlockMedicalGlassLocked
+  type: ClothingOuterHardsuitEVAPrisoner
   components:
-  - pos: -18.5,-3.5
+  - pos: -6.9285164,-9.285145
     parent: 0
     type: Transform
 - uid: 513
@@ -5676,9 +5721,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 529
-  type: ComputerSurveillanceCameraMonitor
+  type: ClothingOuterHardsuitEVAPrisoner
   components:
-  - pos: -8.5,12.5
+  - pos: -6.4441414,-9.253895
     parent: 0
     type: Transform
 - uid: 530
@@ -5809,18 +5854,17 @@ entities:
     parent: 0
     type: Transform
 - uid: 550
-  type: PlushieNuke
+  type: WallShuttleDiagonal
   components:
-  - desc: Мягкая игрушка, напоминающая ядерного оперативника Синдиката, а именно особо опасного оперативника авроры. На бирке указано, что оперативники это полнейшая выдумка.
-    name: плюшевая оперативник аврора
-    type: MetaData
-  - pos: -5.6236477,11.70181
+  - rot: 3.141592653589793 rad
+    pos: -6.5,-18.5
     parent: 0
     type: Transform
 - uid: 551
-  type: ToyNuke
+  type: Thruster
   components:
-  - pos: -6.1271577,11.788935
+  - rot: 3.141592653589793 rad
+    pos: -7.5,-18.5
     parent: 0
     type: Transform
 - uid: 552
@@ -6263,21 +6307,24 @@ entities:
     parent: 0
     type: Transform
 - uid: 623
-  type: ClothingOuterSuitEmergency
+  type: Thruster
   components:
-  - pos: -7.289928,-9.20225
+  - rot: 3.141592653589793 rad
+    pos: -8.5,-18.5
     parent: 0
     type: Transform
 - uid: 624
-  type: ClothingOuterSuitEmergency
+  type: WallShuttleDiagonal
   components:
-  - pos: -6.899303,-9.2335
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-9.5
     parent: 0
     type: Transform
 - uid: 625
-  type: ClothingOuterSuitEmergency
+  type: WallShuttleDiagonal
   components:
-  - pos: -6.430553,-9.249125
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-9.5
     parent: 0
     type: Transform
 - uid: 626
@@ -10246,10 +10293,10 @@ entities:
     parent: 0
     type: Transform
 - uid: 1239
-  type: DisposalTrunk
+  type: WallShuttleDiagonal
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -1.5,-13.5
+  - rot: 3.141592653589793 rad
+    pos: -20.5,-9.5
     parent: 0
     type: Transform
 - uid: 1240
@@ -10777,41 +10824,42 @@ entities:
   type: WallShuttleDiagonal
   components:
   - rot: 1.5707963267948966 rad
-    pos: -12.5,-18.5
+    pos: -22.5,-9.5
     parent: 0
     type: Transform
 - uid: 1317
-  type: WallShuttleDiagonal
+  type: WallShuttle
   components:
   - rot: 3.141592653589793 rad
-    pos: -8.5,-18.5
+    pos: 1.5,-5.5
     parent: 0
     type: Transform
 - uid: 1318
-  type: WallShuttleDiagonal
+  type: Thruster
   components:
   - rot: 3.141592653589793 rad
-    pos: -0.5,-11.5
+    pos: -12.5,-18.5
     parent: 0
     type: Transform
 - uid: 1319
-  type: WallShuttleDiagonal
+  type: Thruster
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.5,-9.5
+  - rot: 3.141592653589793 rad
+    pos: -13.5,-18.5
     parent: 0
     type: Transform
 - uid: 1320
-  type: WallShuttleDiagonal
+  type: Thruster
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-11.5
+  - rot: 3.141592653589793 rad
+    pos: 0.5,-9.5
     parent: 0
     type: Transform
 - uid: 1321
-  type: WallShuttleDiagonal
+  type: Thruster
   components:
-  - pos: -20.5,-9.5
+  - rot: 3.141592653589793 rad
+    pos: -21.5,-9.5
     parent: 0
     type: Transform
 - uid: 1322
@@ -10853,13 +10901,6 @@ entities:
     pos: 0.5,8.5
     parent: 0
     type: Transform
-- uid: 1328
-  type: Thruster
-  components:
-  - rot: -1.5707963267948966 rad
-    pos: -0.5,-10.5
-    parent: 0
-    type: Transform
 - uid: 1329
   type: Thruster
   components:
@@ -10879,13 +10920,6 @@ entities:
   components:
   - rot: 3.141592653589793 rad
     pos: -11.5,-18.5
-    parent: 0
-    type: Transform
-- uid: 1332
-  type: Thruster
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,-10.5
     parent: 0
     type: Transform
 - uid: 1333
@@ -11118,14 +11152,6 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-- uid: 1364
-  type: Poweredlight
-  components:
-  - pos: -21.5,-5.5
-    parent: 0
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 1365
   type: Poweredlight
   components:
@@ -11140,6 +11166,15 @@ entities:
   components:
   - rot: 1.5707963267948966 rad
     pos: -18.5,6.5
+    parent: 0
+    type: Transform
+- uid: 17020
+  type: ToyMarauder
+  components:
+  - desc: Мародёр с позывным "кочевник", получил огромную огласку после вторжение ксеносов на одну из колоний, где он участвовал как защитник.
+    name: игрушечный no_mad
+    type: MetaData
+  - pos: -5.5408206,11.601788
     parent: 0
     type: Transform
 ...
