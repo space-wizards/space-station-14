@@ -21,9 +21,9 @@ namespace Content.Client.Clickable
         /// The draw depth for the sprite that captured the click.
         /// </param>
         /// <returns>True if the click worked, false otherwise.</returns>
-        public bool CheckClick(SpriteComponent sprite, EntityQuery<TransformComponent> xformQuery, Vector2 worldPos, IEye eye, out int drawDepth, out uint renderOrder, out float bottom)
+        public bool CheckClick(SpriteComponent sprite, TransformComponent transform, EntityQuery<TransformComponent> xformQuery, Vector2 worldPos, IEye eye, out int drawDepth, out uint renderOrder, out float bottom)
         {
-            if (!sprite.Visible || !xformQuery.TryGetComponent(sprite.Owner, out var transform))
+            if (!sprite.Visible)
             {
                 drawDepth = default;
                 renderOrder = default;
@@ -34,7 +34,7 @@ namespace Content.Client.Clickable
             drawDepth = sprite.DrawDepth;
             renderOrder = sprite.RenderOrder;
             var (spritePos, spriteRot) = transform.GetWorldPositionRotation(xformQuery);
-            var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye);
+            var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
             bottom = spriteBB.CalcBoundingBox().Bottom;
 
             var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());

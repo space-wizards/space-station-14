@@ -10,9 +10,6 @@ namespace Content.Shared.Traits
     [Prototype("trait")]
     public sealed class TraitPrototype : IPrototype
     {
-        private string _name = string.Empty;
-        private string? _description;
-
         [ViewVariables]
         [IdDataField]
         public string ID { get; } = default!;

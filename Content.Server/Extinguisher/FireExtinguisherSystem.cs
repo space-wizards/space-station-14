@@ -57,8 +57,6 @@ public sealed class FireExtinguisherSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = true;
-
         if (component.HasSafety && component.Safety)
         {
             _popupSystem.PopupEntity(Loc.GetString("fire-extinguisher-component-safety-on-message"), uid,
@@ -73,12 +71,14 @@ public sealed class FireExtinguisherSystem : EntitySystem
             return;
         }
 
+        args.Handled = true;
+
         var transfer = container.AvailableVolume;
         if (TryComp<SolutionTransferComponent>(uid, out var solTrans))
         {
             transfer = solTrans.TransferAmount;
         }
-        transfer = FixedPoint2.Min(transfer, targetSolution.DrainAvailable);
+        transfer = FixedPoint2.Min(transfer, targetSolution.Volume);
 
         if (transfer > 0)
         {

@@ -1,20 +1,15 @@
-using Content.Server.Singularity.Components;
 using Content.Server.Singularity.Events;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
-using System.Linq;
 using Content.Server.Popups;
 using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
 

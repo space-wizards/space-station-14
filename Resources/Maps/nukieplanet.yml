@@ -826,7 +826,6 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - chunkCollection:
       0,-1:
@@ -5768,8 +5767,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.405577
-      - 69.24003
+      - 17.89022
+      - 67.30131
       - 0
       - 0
       - 0
@@ -5784,7 +5783,12 @@ entities:
   - type: RadiationGridResistance
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 34.6548388
+    type: GridPathfinding
+  - nextShake: 0
+    shakeTimes: 10
+    type: GravityShake
+  - type: GasTileOverlay
 - uid: 105
   type: WallPlastitanium
   components:
@@ -13433,6 +13437,12 @@ entities:
       - 0
       - 0
     type: MapAtmosphere
+- uid: 1296
+  type: FloraTreeChristmas02
+  components:
+  - pos: 5.5,-3.5
+    parent: 104
+    type: Transform
 - uid: 1320
   type: SurveillanceCameraGeneral
   components:
@@ -14502,8 +14512,7 @@ entities:
 - uid: 1539
   type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,-0.5
+  - pos: 8.5,-0.5
     parent: 104
     type: Transform
 - uid: 1540

@@ -24,9 +24,11 @@ using System.Linq;
 using Content.Server.Beam;
 using Content.Server.Emag;
 using Content.Server.Humanoid;
+using Content.Server.Maps;
 using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Humanoid;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
@@ -42,6 +44,7 @@ public sealed partial class RevenantSystem
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     private void InitializeAbilities()
     {
@@ -232,7 +235,7 @@ public sealed partial class RevenantSystem
         {
             if (!tiles.TryGetValue(i, out var value))
                 continue;
-            value.PryTile();
+            _tile.PryTile(value);
         }
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.DefileRadius, LookupFlags.Approximate | LookupFlags.Static);

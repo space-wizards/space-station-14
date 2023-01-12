@@ -21,8 +21,7 @@ namespace Content.Shared.Chemistry.Reaction
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] protected readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
+        [Dependency] protected readonly ISharedAdminLogManager AdminLogger = default!;
 
         /// <summary>
         ///     A cache of all existant chemical reactions indexed by one of their
@@ -36,7 +35,12 @@ namespace Content.Shared.Chemistry.Reaction
 
             InitializeReactionCache();
             _prototypeManager.PrototypesReloaded += OnPrototypesReloaded;
-            _gamePrototypeLoadManager.GamePrototypeLoaded += InitializeReactionCache;
+        }
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _prototypeManager.PrototypesReloaded -= OnPrototypesReloaded;
         }
 
         /// <summary>
@@ -136,7 +140,7 @@ namespace Content.Shared.Chemistry.Reaction
                 var reactantName = reactantData.Key;
                 var reactantCoefficient = reactantData.Value.Amount;
 
-                if (!solution.ContainsReagent(reactantName, out var reactantQuantity))
+                if (!solution.TryGetReagent(reactantName, out var reactantQuantity))
                     return false;
 
                 if (reactantData.Value.Catalyst)
@@ -200,7 +204,7 @@ namespace Content.Shared.Chemistry.Reaction
         {
             var args = new ReagentEffectArgs(owner, null, solution,
                 randomReagent,
-                unitReactions, EntityManager, null, null);
+                unitReactions, EntityManager, null, 1f);
 
             foreach (var effect in reaction.Effects)
             {
@@ -210,7 +214,7 @@ namespace Content.Shared.Chemistry.Reaction
                 if (effect.ShouldLog)
                 {
                     var entity = args.SolutionEntity;
-                    _adminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
+                    AdminLogger.Add(LogType.ReagentEffect, effect.LogImpact,
                         $"Reaction effect {effect.GetType().Name:effect} of reaction ${reaction.ID:reaction} applied on entity {ToPrettyString(entity):entity} at {Transform(entity).Coordinates:coordinates}");
                 }
 
@@ -248,12 +252,12 @@ namespace Content.Shared.Chemistry.Reaction
             // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
             reactions.Except(toRemove);
 
-            if (products.TotalVolume <= 0)
+            if (products.Volume <= 0)
                 return true;
 
             // remove excess product
             // TODO spill excess?
-            var excessVolume = solution.TotalVolume + products.TotalVolume - maxVolume;
+            var excessVolume = solution.Volume + products.Volume - maxVolume;
             if (excessVolume > 0)
                 products.RemoveSolution(excessVolume);
 
@@ -265,7 +269,7 @@ namespace Content.Shared.Chemistry.Reaction
                     reactions.UnionWith(reactantReactions);
             }
 
-            solution.AddSolution(products);
+            solution.AddSolution(products, _prototypeManager);
             return true;
         }
 

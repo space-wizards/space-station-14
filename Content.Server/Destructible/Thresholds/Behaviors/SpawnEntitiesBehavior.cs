@@ -1,5 +1,6 @@
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
+using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 

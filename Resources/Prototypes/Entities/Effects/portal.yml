@@ -1,0 +1,51 @@
+﻿- type: entity
+  id: BasePortal
+  abstract: true
+  name: bluespace portal
+  description: Transports you to a linked destination!
+  components:
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: /Textures/Effects/portal.rsi
+  - type: Fixtures
+    fixtures:
+    - id: portalFixture
+      shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.48,0.25,0.48"
+      mask:
+      - FullTileMask
+      layer:
+      - WallLayer
+      hard: false
+  - type: Portal
+
+- type: entity
+  id: PortalRed
+  parent: BasePortal
+  description: This one looks more like a redspace portal.
+  components:
+  - type: Sprite
+    layers:
+    - state: portal-red
+  - type: PointLight
+    netsync: false
+    color: OrangeRed
+    radius: 3
+    energy: 3
+
+- type: entity
+  id: PortalBlue
+  parent: BasePortal
+  components:
+  - type: Sprite
+    layers:
+    - state: portal-blue
+  - type: PointLight
+    netsync: false
+    color: SkyBlue
+    radius: 3
+    energy: 3
