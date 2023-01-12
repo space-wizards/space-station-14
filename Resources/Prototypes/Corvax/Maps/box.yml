@@ -2,7 +2,7 @@
   id: CorvaxBox
   mapName: 'Box Station'
   mapPath: /Maps/box.yml
-  minPlayers: 0
+  minPlayers: 25
   stations:
     Boxstation:
       mapNameTemplate: '{0} Box Station {1}'

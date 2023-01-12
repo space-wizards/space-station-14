@@ -2,7 +2,7 @@
   id: CorvaxIshimura
   mapName: 'USG Ishimura'
   mapPath: /Maps/corvax_ishimura.yml
-  minPlayers: 0
+  minPlayers: 25
   stations:
     Ishimura:
       mapNameTemplate: 'USG Ишимура {1}'
