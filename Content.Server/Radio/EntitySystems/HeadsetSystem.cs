@@ -37,7 +37,7 @@ public sealed class HeadsetSystem : EntitySystem
         SubscribeLocalEvent<HeadsetComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<HeadsetComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<HeadsetComponent, EntInsertedIntoContainerMessage>(OnContainerInserted);
-        SubscribeLocalEvent<HeadsetComponent, EntRemovedFromContainerMessage>(OnContainerRemoved);
+        //SubscribeLocalEvent<HeadsetComponent, EntRemovedFromContainerMessage>(OnContainerRemoved);
     }
 
     private void OnSpeak(EntityUid uid, WearingHeadsetComponent component, EntitySpokeEvent args)
@@ -223,7 +223,7 @@ public sealed class HeadsetSystem : EntitySystem
         }
         return;
     }
-
+    /*
     private void OnContainerRemoved(EntityUid uid, HeadsetComponent component, EntRemovedFromContainerMessage args)
     {
         if (args.Container.ID != HeadsetComponent.KeyContainerName)
@@ -232,4 +232,5 @@ public sealed class HeadsetSystem : EntitySystem
         }
         RecalculateChannels(component);
     }
+    */
 }
