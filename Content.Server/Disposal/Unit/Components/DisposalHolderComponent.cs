@@ -4,6 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Disposal.Unit.Components
 {
@@ -82,7 +83,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return false;
             }
 
-            if (_entMan.TryGetComponent(entity, out IPhysBody? physics))
+            if (_entMan.TryGetComponent(entity, out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }

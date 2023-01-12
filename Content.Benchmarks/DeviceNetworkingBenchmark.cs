@@ -19,7 +19,6 @@ namespace Content.Benchmarks;
 public class DeviceNetworkingBenchmark
 {
     private PairTracker _pair = default!;
-    private IEntityManager _entityManager = default!;
     private DeviceNetworkTestSystem _deviceNetTestSystem = default!;
     private DeviceNetworkSystem _deviceNetworkSystem = default!;
     private EntityUid _sourceEntity;
@@ -56,34 +55,35 @@ public class DeviceNetworkingBenchmark
     public int EntityCount = 500;
 
     [GlobalSetup]
-    public void Setup()
+    public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        _pair = PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes}).GetAwaiter().GetResult();
+        _pair = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
         var server = _pair.Pair.Server;
 
-        _entityManager = server.ResolveDependency<IEntityManager>();
-        _deviceNetworkSystem = _entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
-        _deviceNetTestSystem = _entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
-
-        IoCManager.InitThread(_pair.Pair.Server.InstanceDependencyCollection);
-
-        var testValue = "test";
-        _payload = new NetworkPayload
+        await server.WaitPost(() =>
         {
-            ["Test"] = testValue,
-            ["testnumber"] = 1,
-            ["testbool"] = true
-        };
+            var entityManager = server.InstanceDependencyCollection.Resolve<IEntityManager>();
+            _deviceNetworkSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkSystem>();
+            _deviceNetTestSystem = entityManager.EntitySysManager.GetEntitySystem<DeviceNetworkTestSystem>();
 
-        _sourceEntity = _entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
-        _sourceWirelessEntity = _entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
+            var testValue = "test";
+            _payload = new NetworkPayload
+            {
+                ["Test"] = testValue,
+                ["testnumber"] = 1,
+                ["testbool"] = true
+            };
 
-        for (var i = 0; i < EntityCount; i++)
-        {
-            _targetEntities.Add(_entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace));
-            _targetWirelessEntities.Add(_entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace));
-        }
+            _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
+            _sourceWirelessEntity = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
+
+            for (var i = 0; i < EntityCount; i++)
+            {
+                _targetEntities.Add(entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace));
+                _targetWirelessEntities.Add(entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace));
+            }
+        });
     }
 
     [Benchmark(Baseline = true, Description = "Entity Events")]

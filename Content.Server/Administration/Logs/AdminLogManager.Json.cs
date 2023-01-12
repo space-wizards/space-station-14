@@ -24,6 +24,7 @@ public sealed partial class AdminLogManager
         foreach (var converter in _reflection.FindTypesWithAttribute<AdminLogConverterAttribute>())
         {
             var instance = _typeFactory.CreateInstance<JsonConverter>(converter);
+            (instance as IAdminLogConverter)?.Init(_dependencies);
             _jsonOptions.Converters.Add(instance);
         }
 

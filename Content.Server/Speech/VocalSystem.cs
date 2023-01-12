@@ -1,9 +1,11 @@
 using Content.Server.Humanoid;
+using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Humanoid;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -23,6 +25,7 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -90,6 +93,8 @@ public sealed class VocalSystem : EntitySystem
                 SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
         }
+
+        _popupSystem.PopupEntity(Loc.GetString("scream-action-popup"), uid, PopupType.Medium);
 
         return true;
     }

@@ -1,4 +1,4 @@
-using Content.Client.Buckle.Strap;
+using Content.Client.Rotation;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle;
 using Content.Shared.Buckle.Components;
@@ -11,14 +11,15 @@ namespace Content.Client.Buckle
     internal sealed class BuckleSystem : SharedBuckleSystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
+        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly RotationVisualizerSystem _rotationVisualizerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<BuckleComponent, ComponentHandleState>(OnBuckleHandleState);
-
-            SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
+            SubscribeLocalEvent<BuckleComponent, AppearanceChangeEvent>(OnAppearanceChange);
         }
 
         private void OnBuckleHandleState(EntityUid uid, BuckleComponent buckle, ref ComponentHandleState args)
@@ -62,16 +63,18 @@ namespace Content.Client.Buckle
             }
         }
 
-        private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
+        private void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
         {
-            if (args.Current is not StrapComponentState state)
+            if (!_appearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
+                !_appearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
+                !buckled ||
+                args.Sprite == null)
+            {
                 return;
+            }
 
-            component.Position = state.Position;
-            component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
-            component.BuckledEntities.Clear();
-            component.BuckledEntities.UnionWith(state.BuckledEntities);
-            component.MaxBuckleDistance = state.MaxBuckleDistance;
+            // Animate strapping yourself to something at a given angle
+            _rotationVisualizerSystem.AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
         }
     }
 }
