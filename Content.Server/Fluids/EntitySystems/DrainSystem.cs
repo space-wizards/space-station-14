@@ -85,11 +85,11 @@ namespace Content.Server.Fluids.EntitySystems
                     // the puddle's remaining volume (making it cleanly zero)
                     // the drain's remaining volume in its buffer.
                     var transferSolution = _solutionSystem.SplitSolution(puddle, puddleSolution,
-                        FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.CurrentVolume, drainSolution.AvailableVolume));
+                        FixedPoint2.Min(FixedPoint2.New(amount), puddleSolution.Volume, drainSolution.AvailableVolume));
 
                     _solutionSystem.TryAddSolution(drain.Owner, drainSolution, transferSolution);
 
-                    if (puddleSolution.CurrentVolume <= 0)
+                    if (puddleSolution.Volume <= 0)
                     {
                         QueueDel(puddle);
                     }
