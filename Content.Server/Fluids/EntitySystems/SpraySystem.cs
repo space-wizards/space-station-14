@@ -12,6 +12,7 @@ using Content.Shared.Vapor;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
@@ -19,6 +20,7 @@ namespace Content.Server.Fluids.EntitySystems;
 public sealed class SpraySystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
@@ -51,7 +53,7 @@ public sealed class SpraySystem : EntitySystem
             && curTime < cooldown.CooldownEnd)
             return;
 
-        if (solution.CurrentVolume <= 0)
+        if (solution.Volume <= 0)
         {
             _popupSystem.PopupEntity(Loc.GetString("spray-component-is-empty-message"), uid,
                 args.User);
@@ -76,7 +78,7 @@ public sealed class SpraySystem : EntitySystem
         var threeQuarters = diffNorm * 0.75f;
         var quarter = diffNorm * 0.25f;
 
-        var amount = Math.Max(Math.Min((solution.CurrentVolume / component.TransferAmount).Int(), component.VaporAmount), 1);
+        var amount = Math.Max(Math.Min((solution.Volume / component.TransferAmount).Int(), component.VaporAmount), 1);
         var spread = component.VaporSpread / amount;
 
         for (var i = 0; i < amount; i++)
@@ -94,7 +96,7 @@ public sealed class SpraySystem : EntitySystem
 
             var newSolution = _solutionContainerSystem.SplitSolution(uid, solution, component.TransferAmount);
 
-            if (newSolution.TotalVolume <= FixedPoint2.Zero)
+            if (newSolution.Volume <= FixedPoint2.Zero)
                 break;
 
             // Spawn the vapor cloud onto the grid/map the user is present on. Offset the start position based on how far the target destination is.
@@ -106,7 +108,7 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.Color.WithAlpha(1f));
+                appearance.SetData(VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f));
                 appearance.SetData(VaporVisuals.State, true);
             }
 
