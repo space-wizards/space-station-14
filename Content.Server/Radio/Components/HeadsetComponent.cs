@@ -20,8 +20,8 @@ public sealed class HeadsetComponent : Component
     ///     false => encryption keys will be locked in headset, there will be no proper way to extract them or to add keys anymore.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("isKeysLocked")]
-    public bool IsKeysLocked = true;
+    [DataField("isKeysUnlocked")]
+    public bool IsKeysUnlocked = true;
     /// <summary>
     ///     Shows what tool human should use to extract encryption keys from headset.
     ///     default "Screwing" means it is extracting by screwdriver.

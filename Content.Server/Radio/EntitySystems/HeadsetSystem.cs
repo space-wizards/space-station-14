@@ -164,7 +164,7 @@ public sealed class HeadsetSystem : EntitySystem
     {
         if (!TryComp<ContainerManagerComponent>(uid, out var storage))
             return;
-        if(!component.IsKeysLocked)
+        if(!component.IsKeysUnlocked)
         {
             _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, args.User);
             return;
