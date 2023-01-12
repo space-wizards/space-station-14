@@ -65,6 +65,12 @@
   - HydroponicsToolScythe
   - HydroponicsToolHatchet
   - Shovel
+  - MiniHoe
+  - Spade
+  - Clippers
+  - ButchCleaver
+  - KitchenKnife
+  - MicrowaveMachineCircuitboard
 
 - type: technology
   name: technologies-advanced-botany

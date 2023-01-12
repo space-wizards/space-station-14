@@ -17,7 +17,7 @@ namespace Content.Client.Decals
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
-        private readonly Dictionary<string, Texture> _cachedTextures = new(64);
+        private readonly Dictionary<string, (Texture Texture, bool SnapCardinals)> _cachedTextures = new(64);
 
         public DecalOverlay(
             DecalSystem decals,
@@ -56,23 +56,20 @@ namespace Content.Client.Decals
 
                 handle.SetTransform(worldMatrix);
 
-                foreach (var (_, decals) in zIndexDictionary)
+                foreach (var decals in zIndexDictionary.Values)
                 {
-                    foreach (var (_, decal) in decals)
+                    foreach (var decal in decals.Values)
                     {
-                        if (!_cachedTextures.TryGetValue(decal.Id, out var texture))
+                        if (!_cachedTextures.TryGetValue(decal.Id, out var cache) && _prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
                         {
                             var sprite = GetDecalSprite(decal.Id);
-                            texture = _sprites.Frame0(sprite);
-                            _cachedTextures[decal.Id] = texture;
+                            cache = (_sprites.Frame0(sprite), decalProto.SnapCardinals);
+                            _cachedTextures[decal.Id] = cache;
                         }
-
-                        if (!_prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
-                            continue;
 
                         var cardinal = Angle.Zero;
 
-                        if (decalProto.SnapCardinals)
+                        if (cache.SnapCardinals)
                         {
                             var worldAngle = eyeAngle + worldRot;
                             cardinal = worldAngle.GetCardinalDir().ToAngle();
@@ -81,9 +78,9 @@ namespace Content.Client.Decals
                         var angle = decal.Angle - cardinal;
 
                         if (angle.Equals(Angle.Zero))
-                            handle.DrawTexture(texture, decal.Coordinates, decal.Color);
+                            handle.DrawTexture(cache.Texture, decal.Coordinates, decal.Color);
                         else
-                            handle.DrawTexture(texture, decal.Coordinates, angle, decal.Color);
+                            handle.DrawTexture(cache.Texture, decal.Coordinates, angle, decal.Color);
                     }
                 }
             }
