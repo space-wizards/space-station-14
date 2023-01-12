@@ -23,8 +23,8 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
         }
 
         args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping);
-        var isLayerExist = sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
-        if (!isLayerExist)
+        var layerExists = sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
+        if (!layerExists)
             layer = sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
         
         sprite.LayerSetRSI(layer, proto.SpritePath);
