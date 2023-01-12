@@ -74,14 +74,12 @@
       - Crowbar
       - Multitool
       - AirlockPainter
-      - MiniHoe
-      - Shovel
-      - Spade
       - CableStack
       - HandheldGPSBasic
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+      - Pickaxe
   - type: StaticPrice
     price: 800
 
@@ -175,7 +173,10 @@
       - RCDAmmo
       - HydroponicsToolScythe
       - HydroponicsToolHatchet
+      - Clippers
+      - MiniHoe
       - Shovel
+      - Spade
       - HandheldCrewMonitor
       - Scalpel
       - Retractor
