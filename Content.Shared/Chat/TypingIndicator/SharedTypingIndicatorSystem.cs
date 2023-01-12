@@ -22,14 +22,12 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
 
     private void OnGotEquipped(EntityUid uid, TypingIndicatorClothingComponent component, GotEquippedEvent args)
     {
-        if (!TryComp(uid, out ClothingComponent? clothing))
+        if (!TryComp<ClothingComponent>(uid, out var clothing) ||
+            !TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
             return;
         
         var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
         if (!isCorrectSlot) return;
-        
-        if (!TryComp<TypingIndicatorComponent>(args.Equipee, out var indicator))
-            return;
 
         indicator.Prototype = component.Prototype;
     }
