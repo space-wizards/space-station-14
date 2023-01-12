@@ -85,6 +85,8 @@
     sprite: Clothing/Head/Hats/cardborg_h.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/cardborg_h.rsi
+  - type: TypingIndicatorClothing
+    proto: robot
 
 - type: entity
   parent: ClothingHeadBase
