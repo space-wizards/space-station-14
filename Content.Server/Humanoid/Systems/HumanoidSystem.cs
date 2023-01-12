@@ -124,21 +124,16 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         
         // Caching hair and facial hair colors from their markings
         if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0)
-        {
+                hairMarkings.Count > 0)
             humanoid.CachedHairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-        }
+        
         if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0)
-        {
+                facialHairMarkings.Count > 0)
             humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-        }
         
         if (humanoid.CustomBaseLayers.TryGetValue(HumanoidVisualLayers.Eyes, out var eyes))
-        {
             humanoid.CachedEyeColor = eyes.Color;
-        }
-
+        
         Synchronize(uid);
     }
 

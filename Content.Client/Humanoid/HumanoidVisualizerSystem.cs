@@ -56,7 +56,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         {
             ApplyBaseSprites(uid, component, args.Sprite);
             ApplySkinColor(uid, data.SkinColor, component, args.Sprite);
-            //
             component.CachedHairColor = data.HairColor;
             component.CachedFacialHairColor = data.FacialHairColor;
             component.CachedEyeColor = data.EyeColor;
