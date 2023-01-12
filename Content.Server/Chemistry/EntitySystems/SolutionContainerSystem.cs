@@ -64,13 +64,13 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
             return;
 
-        if (solutionHolder.Contents.Count == 0)
+        var primaryReagent = solutionHolder.GetPrimaryReagentId();
+
+        if (string.IsNullOrEmpty(primaryReagent))
         {
             args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
             return;
         }
-
-        var primaryReagent = solutionHolder.GetPrimaryReagentId();
 
         if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
         {

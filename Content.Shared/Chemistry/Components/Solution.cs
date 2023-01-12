@@ -233,10 +233,10 @@ namespace Content.Shared.Chemistry.Components
             return false;
         }
 
-        public string GetPrimaryReagentId()
+        public string? GetPrimaryReagentId()
         {
             if (Contents.Count == 0)
-                throw new InvalidOperationException("Solution is empty!");
+                return null;
 
             ReagentQuantity max = default;
 
