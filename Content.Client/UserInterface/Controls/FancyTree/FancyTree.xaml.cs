@@ -16,6 +16,8 @@ namespace Content.Client.UserInterface.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class FancyTree : Control
 {
+    [Dependency] private readonly IResourceCache _resCache = default!;
+
     public const string StylePropertyLineWidth = "LineWidth";
     public const string StylePropertyLineColor = "LineColor";
     public const string StylePropertyIconColor = "IconColor";
@@ -84,26 +86,23 @@ public sealed partial class FancyTree : Control
     public FancyTree()
     {
         RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
         LoadIcons();
     }
 
     private void LoadIcons()
     {
         IconColor = TryGetStyleProperty(StylePropertyIconColor, out Color color) ? color : Color.White;
-        var res = IoCManager.Resolve<IResourceCache>();
         string? path;
 
-        if (!TryGetStyleProperty(StylePropertyIconExpanded, out path))
-            path = DefaultIconExpanded;
-        IconExpanded = path == null ? null : res.GetTexture(path);
+        if (!TryGetStyleProperty(StylePropertyIconExpanded, out IconExpanded))
+            IconExpanded = _resCache.GetTexture(DefaultIconExpanded);
 
-        if (!TryGetStyleProperty(StylePropertyIconCollapsed, out path))
-            path = DefaultIconCollapsed;
-        IconCollapsed = path == null ? null : res.GetTexture(path);
+        if (!TryGetStyleProperty(StylePropertyIconCollapsed, out IconCollapsed))
+            IconCollapsed = _resCache.GetTexture(DefaultIconCollapsed);
 
-        if (!TryGetStyleProperty(StylePropertyIconNoChildren, out path))
-            path = DefaultIconNoChildren;
-        IconNoChildren = path == null ? null : res.GetTexture(path);
+        if (!TryGetStyleProperty(StylePropertyIconNoChildren, out IconNoChildren))
+            IconNoChildren = _resCache.GetTexture(DefaultIconNoChildren);
 
         foreach (var item in Body.Children)
         {
