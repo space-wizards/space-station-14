@@ -43,8 +43,11 @@ public sealed class AnomalyScannerUserInterfaceState : BoundUserInterfaceState
 {
     public FormattedMessage Message;
 
-    public AnomalyScannerUserInterfaceState(FormattedMessage message)
+    public TimeSpan? NextPulseTime;
+
+    public AnomalyScannerUserInterfaceState(FormattedMessage message, TimeSpan? nextPulseTime)
     {
         Message = message;
+        NextPulseTime = nextPulseTime;
     }
 }

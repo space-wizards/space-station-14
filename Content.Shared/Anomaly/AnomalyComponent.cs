@@ -138,7 +138,7 @@ public sealed class AnomalyComponent : Component
     /// of an anomalous particle of <seealso cref="SeverityParticleType"/>.
     /// </summary>
     [DataField("severityPerSeverityHit")]
-    public float SeverityPerSeverityHit = 0.05f;
+    public float SeverityPerSeverityHit = 0.025f;
 
     /// <summary>
     /// The particle type that destabilizes the anomaly.
@@ -151,7 +151,7 @@ public sealed class AnomalyComponent : Component
     /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
     /// </summary>
     [DataField("stabilityPerDestabilizingHit")]
-    public float StabilityPerDestabilizingHit = 0.06f;
+    public float StabilityPerDestabilizingHit = 0.04f;
 
     /// <summary>
     /// The particle type that weakens the anomalys health.
@@ -232,4 +232,34 @@ public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Super
     /// </summary>
     /// <returns></returns>
     public readonly bool Supercritical = Supercritical;
+}
+
+/// <summary>
+/// Event broadcast when an anomaly's severity is changed.
+/// </summary>
+/// <param name="Anomaly">The anomaly being changed</param>
+[ByRefEvent]
+public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly)
+{
+    public readonly EntityUid Anomaly = Anomaly;
+}
+
+/// <summary>
+/// Event broadcast when an anomaly's stability is changed.
+/// </summary>
+/// <param name="Anomaly">The anomaly being changed</param>
+[ByRefEvent]
+public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly)
+{
+    public readonly EntityUid Anomaly = Anomaly;
+}
+
+/// <summary>
+/// Event broadcast when an anomaly's health is changed.
+/// </summary>
+/// <param name="Anomaly">The anomaly being changed</param>
+[ByRefEvent]
+public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly)
+{
+    public readonly EntityUid Anomaly = Anomaly;
 }

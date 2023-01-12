@@ -19,7 +19,7 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
-        SubscribeLocalEvent<AnomalyVesselComponent, AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
+        SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
     }
 
     private void OnVesselShutdown(EntityUid uid, AnomalyVesselComponent component, ComponentShutdown args)
@@ -67,17 +67,20 @@ public sealed partial class AnomalySystem
         args.Points += (int) (GetAnomalyPointValue(anomaly) * component.PointMultiplier);
     }
 
-    private void OnVesselAnomalyShutdown(EntityUid uid, AnomalyVesselComponent component, ref AnomalyShutdownEvent args)
+    private void OnVesselAnomalyShutdown(ref AnomalyShutdownEvent args)
     {
-        if (args.Anomaly != component.Anomaly)
-            return;
+        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        {
+            if (args.Anomaly != component.Anomaly)
+                continue;
 
-        UpdateVesselAppearance(uid,  component);
-        component.Anomaly = null;
+            component.Anomaly = null;
+            UpdateVesselAppearance(component.Owner,  component);
 
-        if (!args.Supercritical)
-            return;
-        _explosion.TriggerExplosive(uid);
+            if (!args.Supercritical)
+                continue;
+            _explosion.TriggerExplosive(component.Owner);
+        }
     }
 
     /// <summary>

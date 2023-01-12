@@ -86,7 +86,6 @@ public sealed partial class AnomalySystem : EntitySystem
         }
     }
 
-
     public void DoAnomalyPulse(EntityUid uid, AnomalyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -103,6 +102,12 @@ public sealed partial class AnomalySystem : EntitySystem
             // then we need to cancel the pulse early so we don't error.
             if (component.Supercritical)
                 return;
+        }
+        else
+        {
+            // just doing this to update the scanner ui
+            // as they hook into these events
+            ChangeAnomalySeverity(uid, 0);
         }
 
         _log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
@@ -163,6 +168,9 @@ public sealed partial class AnomalySystem : EntitySystem
         var newVal = component.Stability + change;
 
         component.Stability = Math.Clamp(newVal, 0, 1);
+
+        var ev = new AnomalyStabilityChangedEvent(uid);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -182,6 +190,9 @@ public sealed partial class AnomalySystem : EntitySystem
             DoAnomalySupercriticalEvent(uid, component);
 
         component.Severity = Math.Clamp(newVal, 0, 1);
+
+        var ev = new AnomalySeverityChangedEvent(uid);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>
@@ -198,9 +209,15 @@ public sealed partial class AnomalySystem : EntitySystem
         var newVal = component.Health + change;
 
         if (newVal < 0)
+        {
             EndAnomaly(uid, component);
+            return;
+        }
 
         component.Health = Math.Clamp(newVal, 0, 1);
+
+        var ev = new AnomalyHealthChangedEvent(uid);
+        RaiseLocalEvent(ref ev);
     }
 
     /// <summary>

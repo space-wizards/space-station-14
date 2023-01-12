@@ -2,6 +2,7 @@
 using Content.Server.DoAfter;
 using Content.Shared.Anomaly;
 using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Anomaly;
@@ -17,12 +18,56 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
         SubscribeLocalEvent<AnomalyScannerComponent, AnomalyScanFinishedEvent>(OnScannerDoAfterFinished);
         SubscribeLocalEvent<AnomalyScannerComponent, AnomalyScanCancelledEvent>(OnScannerDoAfterCancelled);
+
+        SubscribeLocalEvent<AnomalyShutdownEvent>(OnScannerAnomalyShutdown);
+        SubscribeLocalEvent<AnomalySeverityChangedEvent>(OnScannerAnomalySeverityChanged);
+        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnScannerAnomalyStabilityChanged);
+        SubscribeLocalEvent<AnomalyHealthChangedEvent>(OnScannerAnomalyHealthChanged);
+    }
+
+    private void OnScannerAnomalyShutdown(ref AnomalyShutdownEvent args)
+    {
+        foreach (var component in EntityQuery<AnomalyScannerComponent>())
+        {
+            if (component.ScannedAnomaly != args.Anomaly)
+                continue;
+            UpdateScannerUi(component.Owner, component);
+        }
+    }
+
+    private void OnScannerAnomalySeverityChanged(ref AnomalySeverityChangedEvent args)
+    {
+        foreach (var component in EntityQuery<AnomalyScannerComponent>())
+        {
+            if (component.ScannedAnomaly != args.Anomaly)
+                continue;
+            UpdateScannerUi(component.Owner, component);
+        }
+    }
+
+    private void OnScannerAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    {
+        foreach (var component in EntityQuery<AnomalyScannerComponent>())
+        {
+            if (component.ScannedAnomaly != args.Anomaly)
+                continue;
+            UpdateScannerUi(component.Owner, component);
+        }
+    }
+
+    private void OnScannerAnomalyHealthChanged(ref AnomalyHealthChangedEvent args)
+    {
+        foreach (var component in EntityQuery<AnomalyScannerComponent>())
+        {
+            if (component.ScannedAnomaly != args.Anomaly)
+                continue;
+            UpdateScannerUi(component.Owner, component);
+        }
     }
 
     private void OnScannerUiOpened(EntityUid uid, AnomalyScannerComponent component, BoundUIOpenedEvent args)
     {
-        var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component));
-        _ui.TrySetUiState(uid, AnomalyScannerUiKey.Key, state);
+        UpdateScannerUi(uid, component);
     }
 
     private void OnScannerAfterInteract(EntityUid uid, AnomalyScannerComponent component, AfterInteractEvent args)
@@ -39,7 +84,7 @@ public sealed partial class AnomalySystem
         _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ScanDoAfterDuration, component.TokenSource.Token, target, uid)
         {
             DistanceThreshold = 1.5f,
-            UsedFinishedEvent = new AnomalyScanFinishedEvent(target),
+            UsedFinishedEvent = new AnomalyScanFinishedEvent(target, args.User),
             UsedCancelledEvent = new AnomalyScanCancelledEvent()
         });
     }
@@ -50,11 +95,27 @@ public sealed partial class AnomalySystem
 
         _popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Anomaly, component);
+
+        if (TryComp<ActorComponent>(args.User, out var actor))
+            _ui.TryOpen(uid, AnomalyScannerUiKey.Key, actor.PlayerSession);
     }
 
     private void OnScannerDoAfterCancelled(EntityUid uid, AnomalyScannerComponent component, AnomalyScanCancelledEvent args)
     {
         component.TokenSource = null;
+    }
+
+    public void UpdateScannerUi(EntityUid uid, AnomalyScannerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        TimeSpan? nextPulse = null;
+        if (TryComp<AnomalyComponent>(component.ScannedAnomaly, out var anomalyComponent))
+            nextPulse = anomalyComponent.NextPulseTime;
+
+        var state = new AnomalyScannerUserInterfaceState(GetScannerMessage(component), nextPulse);
+        _ui.TrySetUiState(uid, AnomalyScannerUiKey.Key, state);
     }
 
     public void UpdateScannerWithNewAnomaly(EntityUid scanner, EntityUid anomaly, AnomalyScannerComponent? scannerComp = null, AnomalyComponent? anomalyComp = null)
@@ -63,6 +124,7 @@ public sealed partial class AnomalySystem
             return;
 
         scannerComp.ScannedAnomaly = anomaly;
+        UpdateScannerUi(scanner, scannerComp);
     }
 
     public FormattedMessage GetScannerMessage(AnomalyScannerComponent component)
@@ -74,6 +136,8 @@ public sealed partial class AnomalySystem
             return msg;
         }
 
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-severity-percentage", ("percent", anomalyComp.Severity.ToString("P"))));
+        msg.PushNewline();
         string stateLoc;
         if (anomalyComp.Stability < anomalyComp.DecayThreshold)
             stateLoc = Loc.GetString("anomaly-scanner-stability-low");
@@ -84,7 +148,8 @@ public sealed partial class AnomalySystem
         msg.AddMarkup(stateLoc);
         msg.PushNewline();
 
-        msg.AddMarkup(Loc.GetString("anomaly-scanner-pulse-timer", ("time", anomalyComp.NextPulseTime - _timing.CurTime)));
+        var points = GetAnomalyPointValue(anomaly, anomalyComp);
+        msg.AddMarkup(Loc.GetString("anomaly-scanner-point-output", ("point", points.ToString("00"))));
         msg.PushNewline();
         msg.PushNewline();
 
@@ -96,6 +161,7 @@ public sealed partial class AnomalySystem
         msg.PushNewline();
         msg.AddMarkup(Loc.GetString("anomaly-scanner-particle-containment", ("type", GetParticleLocale(anomalyComp.WeakeningParticleType))));
 
+        //The timer at the end here is actually added in the ui itself.
         return msg;
     }
 }

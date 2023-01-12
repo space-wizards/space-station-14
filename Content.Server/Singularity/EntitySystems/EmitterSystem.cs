@@ -103,9 +103,6 @@ namespace Content.Server.Singularity.EntitySystems
             if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
 
-            if (!component.IsPowered)
-                return;
-
             if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
                 return;
 

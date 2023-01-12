@@ -25,9 +25,12 @@ public sealed class AnomalyScanFinishedEvent : EntityEventArgs
 {
     public EntityUid Anomaly;
 
-    public AnomalyScanFinishedEvent(EntityUid anomaly)
+    public EntityUid User;
+
+    public AnomalyScanFinishedEvent(EntityUid anomaly, EntityUid user)
     {
         Anomaly = anomaly;
+        User = user;
     }
 }
 

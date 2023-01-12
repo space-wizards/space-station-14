@@ -29,7 +29,12 @@ public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
         if (state is not AnomalyScannerUserInterfaceState msg)
             return;
 
-        _menu?.UpdateMenu(msg);
+        if (_menu == null)
+            return;
+
+        _menu.LastMessage = msg.Message;
+        _menu.NextPulseTime = msg.NextPulseTime;
+        _menu.UpdateMenu();
     }
 
     protected override void Dispose(bool disposing)

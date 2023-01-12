@@ -5,9 +5,9 @@
   description: A hand-held scanner built to collect information on various anomalous objects.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Medical/healthanalyzer.rsi
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
     netsync: false
-    state: analyzer
+    state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
     closeOnHandDeselect: false

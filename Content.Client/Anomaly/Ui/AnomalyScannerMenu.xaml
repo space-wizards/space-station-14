@@ -1,13 +1,12 @@
-﻿<DefaultWindow
+﻿<controls:FancyWindow
     xmlns="https://spacestation14.io"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
     Title="{Loc 'anomaly-scanner-ui-title'}"
-    MinSize="400 250"
-    SetSize="400 250">
-    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+    MinSize="350 260"
+    SetSize="350 260">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10 0 10 10">
         <RichTextLabel Name="Label"></RichTextLabel>
     </BoxContainer>
-</DefaultWindow>
+</controls:FancyWindow>
 
 
