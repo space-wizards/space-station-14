@@ -222,5 +222,5 @@
   - type: MobPrice
     price: 150
   - type: Appearance
-  - type: NoGravityVisuals
+  - type: FloatingVisuals
 
