@@ -1,6 +1,5 @@
 using Content.Shared.GameTicking;
 using Content.Shared.Damage;
-using Content.Shared.Stacks;
 using Content.Shared.Examine;
 using Content.Shared.Cloning;
 using Content.Shared.Atmos;
@@ -18,7 +17,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
@@ -50,8 +48,6 @@ namespace Content.Server.Cloning
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-        [Dependency] private readonly StackSystem _serverStackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -67,7 +63,6 @@ namespace Content.Server.Cloning
             SubscribeLocalEvent<CloningPodComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<CloningPodComponent, RefreshPartsEvent>(OnPartsRefreshed);
             SubscribeLocalEvent<CloningPodComponent, UpgradeExamineEvent>(OnUpgradeExamine);
-            SubscribeLocalEvent<CloningPodComponent, MachineDeconstructedEvent>(OnDeconstruct);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
             SubscribeLocalEvent<CloningPodComponent, PortDisconnectedEvent>(OnPortDisconnected);
@@ -94,11 +89,6 @@ namespace Content.Server.Cloning
         {
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-speed", component.BaseCloningTime / component.CloningTime);
             args.AddPercentageUpgrade("cloning-pod-component-upgrade-biomass-requirement", component.BiomassRequirementMultiplier);
-        }
-
-        private void OnDeconstruct(EntityUid uid, CloningPodComponent component, MachineDeconstructedEvent args)
-        {
-            _serverStackSystem.SpawnMultiple(component.MaterialCloningOutput, _material.GetMaterialAmount(uid, component.RequiredMaterial), Transform(uid).Coordinates);
         }
 
         internal void TransferMindToClone(Mind.Mind mind)
@@ -322,8 +312,7 @@ namespace Content.Server.Cloning
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            var biomassStack = Spawn(clonePod.MaterialCloningOutput, transform.Coordinates);
-            _stackSystem.SetCount(biomassStack, _robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)));
+            _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
 
             clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);
