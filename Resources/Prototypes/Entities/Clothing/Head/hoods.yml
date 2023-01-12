@@ -128,3 +128,14 @@
       coefficients:
         Heat: 0.95
         Radiation: 0.65
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodGoliathCloak
+  name: goliath cloak hood
+  description: A hood of a goliath cloak, it is made from the hide of resilient fauna from a distant planet.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/goliathcloak.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/goliathcloak.rsi

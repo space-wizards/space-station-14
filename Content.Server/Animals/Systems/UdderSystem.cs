@@ -98,7 +98,7 @@ namespace Content.Server.Animals.Systems
             if (!_solutionContainerSystem.TryGetRefillableSolution(ev.ContainerUid, out var targetSolution))
                 return;
 
-            var quantity = solution.TotalVolume;
+            var quantity = solution.Volume;
             if(quantity == 0)
             {
                 _popupSystem.PopupEntity(Loc.GetString("udder-system-dry"), uid, ev.UserUid);
