@@ -22,19 +22,13 @@ namespace Content.Shared.Gravity
             Resolve(uid, ref body, false);
 
             if ((body?.BodyType & (BodyType.Static | BodyType.Kinematic)) != 0)
-            {
                 return false;
-            }
 
             if (TryComp<MovementIgnoreGravityComponent>(uid, out var ignoreGravityComponent))
-            {
                 return ignoreGravityComponent.Weightless;
-            }
 
             if (!Resolve(uid, ref xform))
-            {
                 return true;
-            }
 
             // If grid / map has gravity
             if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
@@ -52,9 +46,7 @@ namespace Content.Shared.Gravity
             {
                 // TODO this should just be a event that gets relayed instead of a specific slot & component check.
                 if (TryComp<MagbootsComponent>(ent, out var boots) && boots.On)
-                {
                     return false;
-                }
             }
 
             return true;

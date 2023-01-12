@@ -4,10 +4,12 @@ namespace Content.Client.Gravity;
 [Access(typeof(FloatingVisualizerSystem))]
 public class FloatingVisualsComponent : Component
 {
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("animationTime")]
     public readonly float AnimationTime = 2f;
 
-    [ViewVariables]
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("offset")]
     public readonly Vector2 Offset = new(0, 0.2f);
 
     public readonly string AnimationKey = "gravity";
