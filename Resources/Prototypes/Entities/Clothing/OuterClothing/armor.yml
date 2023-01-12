@@ -176,7 +176,7 @@
         Heat: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.65
-    
+
 - type: entity
   parent: ClothingOuterBaseLarge
   id: ClothingOuterArmorChangeling
@@ -197,7 +197,7 @@
         Radiation: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.65 
+    sprintModifier: 0.65
   - type: ExplosionResistance
     damageCoefficient: 0.5
 
@@ -208,6 +208,8 @@
   name: centcom's carapace
   description: "A CentCom green alteration of the captain's carapace. Issued only to Nanotrasen's finest, although it does chafe your pecks."
   components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
   - type: Sprite
     sprite: Clothing/OuterClothing/Armor/centcom_carapace.rsi
   - type: Clothing
@@ -221,4 +223,3 @@
         Heat: 0.5
   - type: ExplosionResistance
     damageCoefficient: 0.65
-    

@@ -12,18 +12,18 @@ public sealed class RestrictedClothingComponent : Component
     /// <summary>
     ///     List of permissions required to be allowed to wear the item
     /// </summary>
-    [DataField("permissions")]
+    [DataField("permissions")] [ViewVariables(VVAccess.ReadWrite)]
     public HashSet<string> Permissions = new();
 
     /// <summary>
     ///     Uid that won't be affected
     /// </summary>
-    // [DataField("whitelistedUid")]
-    // public int? WhitelistedUid;
+    [DataField("whitelistedUid")] [ViewVariables(VVAccess.ReadWrite)]
+    public int WhitelistedUid = 0;
 
     /// <summary>
     ///     Always checks the whitelist
     /// </summary>
-    [DataField("requireWhitelist")]
+    [DataField("requireWhitelist")] [ViewVariables(VVAccess.ReadWrite)]
     public bool RequireWhitelist;
 }

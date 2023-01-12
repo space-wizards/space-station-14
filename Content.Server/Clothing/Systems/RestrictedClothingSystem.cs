@@ -37,7 +37,8 @@ public sealed class RestrictedClothingSystem : EntitySystem
         if (!TryComp(args.Equipee, out MindComponent? mind))
             return;
 
-        // TODO check whitelist
+        if (args.Equipee.GetHashCode() == component.WhitelistedUid)
+            return;
 
         bool applyEffect = !mind.HasMind || mind.Mind!.Session == null || component.RequireWhitelist;
 
