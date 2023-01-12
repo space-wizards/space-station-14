@@ -3,7 +3,7 @@ The following sounds were used from freesound:
 herbertboland - heavyskirtmovement.wav - CC BY 3.0
 vinrax - cloth-sounds.mp3 - CC BY-NC 3.0
 lordvanye - skintouching.wav - CC0 1.0
-FM Synthesis - scanner blip.wav - CC BY 4.0
+FM Synthesis - healthscanner.ogg - CC BY 4.0
 
 Additional sound effects from https://www.zapsplat.com
 
