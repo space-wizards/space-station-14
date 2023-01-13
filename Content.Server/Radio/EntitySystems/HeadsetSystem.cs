@@ -122,7 +122,14 @@ public sealed class HeadsetSystem : EntitySystem
             }
         }
     }
-    public static void GetChannelsExamine(HashSet<string> channels, ExaminedEvent args, IPrototypeManager protoManager, string channelFTLPattern)
+
+    /// <summary>
+    ///     A static method for formating list of radio channels for examine events.
+    /// </summary>
+    /// <param name="channels">HashSet of channels in headset, encryptionkey or etc.</param>
+    /// <param name="protoManager">IPrototypeManager for getting prototypes of channels with their variables.</param>
+    /// <param name="channelFTLPattern">String that provide id of pattern in .ftl files to format channel with variables of it.</param>
+    public static void GetChannelsExamine(HashSet<string> channels, ExaminedEvent examineEvent, IPrototypeManager protoManager, string channelFTLPattern)
     {
         foreach (var id in channels)
         {
@@ -130,13 +137,14 @@ public sealed class HeadsetSystem : EntitySystem
             string keyCode = "" + proto.KeyCode;
             if (id != "Common")
                 keyCode = ":" + keyCode;
-            args.PushMarkup(Loc.GetString(channelFTLPattern,
+            examineEvent.PushMarkup(Loc.GetString(channelFTLPattern,
                 ("color", proto.Color),
                 ("key", keyCode),
                 ("id", proto.LocalizedName),
                 ("freq", proto.Frequency)));
         }
     }
+
     private void OnStartup(EntityUid uid, HeadsetComponent component, ComponentStartup args)
     {
         component.KeyContainer = _container.EnsureContainer<Container>(uid, HeadsetComponent.KeyContainerName);
