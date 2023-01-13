@@ -8,10 +8,10 @@
   requirements:
     - !type:RoleTimeRequirement # Corvax-RoleTime
       role: JobChemist
-      time: 18000
+      time: 7200
     - !type:DepartmentTimeRequirement
       department: Medical
-      time: 54000 # Corvax-RoleTime
+      time: 10800 # Corvax-RoleTime
   weight: 10
   startingGear: CMOGear
   icon: "ChiefMedicalOfficer"

@@ -6,10 +6,10 @@
   requirements:
     - !type:RoleTimeRequirement
       role: JobSalvageSpecialist
-      time: 36000 # Corvax-RoleTime
+      time: 3600 # Corvax-RoleTime
     - !type:DepartmentTimeRequirement
       department: Cargo
-      time: 54000 # Corvax-RoleTime
+      time: 10800 # Corvax-RoleTime
 #    - !type:OverallPlaytimeRequirement
 #      time: 108000
   weight: 10
