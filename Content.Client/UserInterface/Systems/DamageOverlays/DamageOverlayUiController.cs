@@ -67,7 +67,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         UpdateOverlays(args.Target, args.Component);
     }
 
-    private void OnThresholdCheck(MobThresholdChecked args)
+    private void OnThresholdCheck(ref MobThresholdChecked args)
     {
 
         if (args.Target != _playerManager.LocalPlayer?.ControlledEntity)
