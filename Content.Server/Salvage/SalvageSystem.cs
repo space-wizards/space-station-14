@@ -141,8 +141,8 @@ namespace Content.Server.Salvage
 
         private void OnExamined(EntityUid uid, SalvageMagnetComponent component, ExaminedEvent args)
         {
-            bool _gotGrid = false;
-            var _remainingTime = TimeSpan.Zero;
+            var gotGrid = false;
+            var remainingTime = TimeSpan.Zero;
 
             if (!args.IsInDetailsRange)
                 return;
@@ -150,8 +150,8 @@ namespace Content.Server.Salvage
             if (EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid is EntityUid gridId &&
                 _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
             {
-                _remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
-                _gotGrid = true;
+                remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
+                gotGrid = true;
             }
             else
             {
@@ -169,12 +169,12 @@ namespace Content.Server.Salvage
                     args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-releasing"));
                     break;
                 case MagnetStateType.CoolingDown:
-                    if (_gotGrid == true)
-                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down", ("timeLeft", Math.Ceiling(_remainingTime.TotalSeconds))));
+                    if (gotGrid)
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-cooling-down", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     break;
                 case MagnetStateType.Holding:
-                    if (_gotGrid == true)
-                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(_remainingTime.TotalSeconds))));
+                    if (gotGrid)
+                        args.PushMarkup(Loc.GetString("salvage-system-magnet-examined-active", ("timeLeft", Math.Ceiling(remainingTime.TotalSeconds))));
                     break;
                 default:
                     throw new NotImplementedException("Unexpected magnet state type");
