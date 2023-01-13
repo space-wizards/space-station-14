@@ -1,4 +1,3 @@
-using System.Threading;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
@@ -6,7 +5,6 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Player;
 
 namespace Content.Server.Forensics
 {
@@ -17,16 +15,18 @@ namespace Content.Server.Forensics
     {
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
-
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+
+        private const string Sample = "sample";
+        private const string Pad = "pad";
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<TargetPadSuccessfulEvent>(OnTargetPadSuccessful);
-            SubscribeLocalEvent<PadCancelledEvent>(OnPadCancelled);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -45,7 +45,7 @@ namespace Content.Server.Forensics
 
         private void OnAfterInteract(EntityUid uid, ForensicPadComponent component, AfterInteractEvent args)
         {
-            if (component.CancelToken != null || !args.CanReach || args.Target == null)
+            if (!args.CanReach || args.Target == null)
                 return;
 
             if (HasComp<ForensicScannerComponent>(args.Target))
@@ -82,11 +82,16 @@ namespace Content.Server.Forensics
 
         private void StartScan(EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            pad.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, pad.ScanDelay, pad.CancelToken.Token, target: target)
+            var additionalArgs = new Dictionary<string, object>
             {
-                BroadcastFinishedEvent = new TargetPadSuccessfulEvent(user, target, pad.Owner, sample),
-                BroadcastCancelledEvent = new PadCancelledEvent(pad.Owner),
+                {Pad, pad.Owner},
+                {Sample, sample}
+            };
+
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, pad.ScanDelay, target: target)
+            {
+                Broadcast = true,
+                AdditionalArgs = additionalArgs,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -94,37 +99,49 @@ namespace Content.Server.Forensics
             });
         }
 
+        private void OnDoAfter(DoAfterEvent ev)
+        {
+            if (ev.Handled || ev.Cancelled || ev.Args.AdditionalArgs == null)
+                return;
+
+            if (!ev.Args.AdditionalArgs.ContainsKey(Pad) || !ev.Args.AdditionalArgs.ContainsKey(Sample))
+                return;
+
+            var pad = (EntityUid)ev.Args.AdditionalArgs[Pad];
+            var sample = (string)ev.Args.AdditionalArgs[Sample];
+
+            if (!EntityManager.TryGetComponent(pad, out ForensicPadComponent? component))
+                return;
+
+            if (ev.Args.Target != null)
+            {
+                if (HasComp<FingerprintComponent>(ev.Args.Target))
+                    MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", ev.Args.Target));
+                else
+                    MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Args.Target));
+            }
+
+            component.Sample = sample;
+            component.Used = true;
+        }
+
         /// <summary>
         /// When the forensic pad is successfully used, take their fingerprint sample and flag the pad as used.
         /// </summary>
         private void OnTargetPadSuccessful(TargetPadSuccessfulEvent ev)
         {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
-                return;
 
-            if (HasComp<FingerprintComponent>(ev.Target))
-                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", ev.Target));
-            else
-                MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Target));
-
-            component.CancelToken = null;
-            component.Sample = ev.Sample;
-            component.Used = true;
-        }
-        private void OnPadCancelled(PadCancelledEvent ev)
-        {
-            if (!EntityManager.TryGetComponent(ev.Pad, out ForensicPadComponent? component))
-                return;
-            component.CancelToken = null;
         }
 
-        private sealed class PadCancelledEvent : EntityEventArgs
+        private sealed record PadData
         {
             public EntityUid Pad;
+            public string Sample = string.Empty;
 
-            public PadCancelledEvent(EntityUid pad)
+            public PadData(EntityUid pad, string sample)
             {
                 Pad = pad;
+                Sample = sample;
             }
         }
 

@@ -1,9 +1,7 @@
 using System.Linq;
 using System.Text; // todo: remove this stinky LINQy
-using System.Threading;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Server.DoAfter;
 using Content.Server.Paper;
@@ -27,6 +25,8 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
+        private const string Scanner = "scanner";
+
         private ISawmill _sawmill = default!;
 
         public override void Initialize()
@@ -41,8 +41,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-            SubscribeLocalEvent<TargetScanSuccessfulEvent>(OnTargetScanSuccessful);
-            SubscribeLocalEvent<ScanCancelledEvent>(OnScanCancelled);
+            SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
         }
 
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
@@ -61,35 +60,34 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnScanCancelled(ScanCancelledEvent ev)
+        private void OnDoAfter(DoAfterEvent args)
         {
-            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent? scanner))
+            if (args.Handled || args.Cancelled || args.Args.AdditionalArgs == null || !args.Args.AdditionalArgs.ContainsKey(Scanner))
                 return;
 
-            scanner.CancelToken = null;
-        }
+            var scannerOwner = (EntityUid) args.Args.AdditionalArgs[Scanner];
 
-        private void OnTargetScanSuccessful(TargetScanSuccessfulEvent ev)
-        {
-            if (!EntityManager.TryGetComponent(ev.Scanner, out ForensicScannerComponent? scanner))
+            if (!EntityManager.TryGetComponent(scannerOwner, out ForensicScannerComponent? scanner))
                 return;
 
-            scanner.CancelToken = null;
-
-            if (!TryComp<ForensicsComponent>(ev.Target, out var forensics))
+            if (args.Args.Target != null)
             {
-                scanner.Fingerprints = new();
-                scanner.Fibers = new();
-            }
-            else
-            {
-                scanner.Fingerprints = forensics.Fingerprints.ToList();
-                scanner.Fibers = forensics.Fibers.ToList();
+                if (!TryComp<ForensicsComponent>(args.Args.Target, out var forensics))
+                {
+                    scanner.Fingerprints = new();
+                    scanner.Fibers = new();
+                }
+
+                else
+                {
+                    scanner.Fingerprints = forensics.Fingerprints.ToList();
+                    scanner.Fibers = forensics.Fibers.ToList();
+                }
+
+                scanner.LastScannedName = MetaData(args.Args.Target.Value).EntityName;
             }
 
-            scanner.LastScannedName = MetaData(ev.Target).EntityName;
-
-            OpenUserInterface(ev.User, scanner);
+            OpenUserInterface(args.Args.User, scanner);
         }
 
         /// <remarks>
@@ -97,11 +95,15 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            component.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, component.CancelToken.Token, target: target)
+            var additionalArgs = new Dictionary<string, object>
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(user, (EntityUid) target, component.Owner),
-                BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
+                {Scanner, component.Owner}
+            };
+
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target)
+            {
+                Broadcast = true,
+                AdditionalArgs = additionalArgs,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -245,16 +247,6 @@ namespace Content.Server.Forensics
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);
-        }
-
-        private sealed class ScanCancelledEvent : EntityEventArgs
-        {
-            public EntityUid Scanner;
-
-            public ScanCancelledEvent(EntityUid scanner)
-            {
-                Scanner = scanner;
-            }
         }
 
         private sealed class TargetScanSuccessfulEvent : EntityEventArgs

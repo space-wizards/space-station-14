@@ -91,7 +91,7 @@ public sealed class DoAfterEventArgs
     /// <summary>
     /// Any additional args that don't fit in already. Used for customization as needed.
     /// </summary>
-    public object? AdditionalArgs { get; set; }
+    public Dictionary<string, object>? AdditionalArgs { get; set; }
 
     /// <summary>
     ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.

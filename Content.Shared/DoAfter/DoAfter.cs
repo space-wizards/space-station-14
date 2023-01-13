@@ -43,8 +43,6 @@ public sealed class DoAfter
     /// </summary>
     public TimeSpan CancelledElapsed = TimeSpan.Zero;
 
-    public float CancelledAccumulator;
-
     public EntityCoordinates UserGrid;
     public EntityCoordinates TargetGrid;
 
