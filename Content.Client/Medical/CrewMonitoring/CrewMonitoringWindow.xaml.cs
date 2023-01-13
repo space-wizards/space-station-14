@@ -18,6 +18,7 @@ namespace Content.Client.Medical.CrewMonitoring
         private List<Control> _rowsContent = new();
         private List<(DirectionIcon Icon, Vector2 Position)> _directionIcons = new();
         private readonly IEyeManager _eye;
+        private readonly IEntityManager _entityManager;
 
         public static int IconSize = 16; // XAML has a `VSeparationOverride` of 20 for each row.
 
@@ -25,6 +26,7 @@ namespace Content.Client.Medical.CrewMonitoring
         {
             RobustXamlLoader.Load(this);
             _eye = IoCManager.Resolve<IEyeManager>();
+            _entityManager = IoCManager.Resolve<IEntityManager>();
         }
 
         public void ShowSensors(List<SuitSensorStatus> stSensors, Vector2 worldPosition, bool snap, float precision)
@@ -72,7 +74,7 @@ namespace Content.Client.Medical.CrewMonitoring
             }
         }
 
-        private BoxContainer GetPositionBox(MapCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
+        private BoxContainer GetPositionBox(EntityCoordinates? coordinates, Vector2 sensorPosition, bool snap, float precision)
         {
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
@@ -90,6 +92,7 @@ namespace Content.Client.Medical.CrewMonitoring
             {
                 // todo: add locations names (kitchen, bridge, etc)
                 var pos = (Vector2i) coordinates.Value.Position;
+                var mapCoords = coordinates.Value.ToMap(_entityManager).Position;
                 var dirIcon = new DirectionIcon(snap, precision)
                 {
                     SetSize = (IconSize, IconSize),
@@ -97,7 +100,7 @@ namespace Content.Client.Medical.CrewMonitoring
                 };
                 box.AddChild(dirIcon);
                 box.AddChild(new Label() { Text = pos.ToString() });
-                _directionIcons.Add((dirIcon, coordinates.Value.Position - sensorPosition));
+                _directionIcons.Add((dirIcon, mapCoords - sensorPosition));
             }
 
             return box;

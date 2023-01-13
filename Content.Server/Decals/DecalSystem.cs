@@ -159,7 +159,7 @@ namespace Content.Server.Decals
             _conf.UnsubValueChanged(CVars.NetPVS, OnPvsToggle);
         }
 
-        private void OnTileChanged(TileChangedEvent args)
+        private void OnTileChanged(ref TileChangedEvent args)
         {
             if (!args.NewTile.IsSpace(_tileDefMan))
                 return;

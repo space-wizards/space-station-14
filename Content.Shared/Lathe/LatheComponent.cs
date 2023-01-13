@@ -29,12 +29,6 @@ namespace Content.Shared.Lathe
         public List<LatheRecipePrototype> Queue = new();
 
         /// <summary>
-        /// How long the inserting animation will play
-        /// </summary>
-        [DataField("insertionTime")]
-        public float InsertionTime = 0.79f; // 0.01 off for animation timing
-
-        /// <summary>
         /// The sound that plays when the lathe is producing an item, if any
         /// </summary>
         [DataField("producingSound")]
@@ -46,9 +40,6 @@ namespace Content.Shared.Lathe
 
         [DataField("runningState", required: true)]
         public string RunningState = default!;
-
-        [DataField("ignoreColor")]
-        public bool IgnoreColor;
         #endregion
 
         /// <summary>
