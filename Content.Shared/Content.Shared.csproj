@@ -31,5 +31,5 @@
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />
-
+  <Import Project="..\RobustToolbox\MSBuild\Robust.CompNetworkGenerator.targets" />
 </Project>

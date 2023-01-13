@@ -9,12 +9,14 @@ namespace Content.Shared.Chat.TypingIndicator;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedTypingIndicatorSystem))]
-public sealed class TypingIndicatorComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class TypingIndicatorComponent : Component
 {
     /// <summary>
     ///     Prototype id that store all visual info about typing indicator.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
+    [AutoNetworkedField]
     [DataField("proto", customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
     public string Prototype = "default";
 }
