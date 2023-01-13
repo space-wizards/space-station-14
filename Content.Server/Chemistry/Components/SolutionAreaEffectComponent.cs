@@ -194,14 +194,14 @@ namespace Content.Server.Chemistry.Components
 
         public void TryAddSolution(Solution solution)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.Volume == 0)
                 return;
 
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
-                solution.SplitSolution(FixedPoint2.Min(solution.TotalVolume, solutionArea.AvailableVolume));
+                solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner, solutionArea, addSolution);
 
