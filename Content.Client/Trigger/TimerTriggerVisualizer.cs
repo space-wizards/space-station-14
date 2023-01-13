@@ -12,8 +12,8 @@ namespace Content.Client.Trigger
     {
         private const string AnimationKey = "priming_animation";
 
-        [DataField("countdown_sound", required: false)]
-        private SoundSpecifier _countdownSound = default!;
+        [DataField("countdown_sound")]
+        private SoundSpecifier? _countdownSound;
 
         private Animation PrimingAnimation = default!;
 

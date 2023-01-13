@@ -22,15 +22,13 @@ namespace Content.Shared.Research.Components
     [Serializable, NetSerializable]
     public sealed class ConsoleServerSyncMessage : BoundUserInterfaceMessage
     {
-        public ConsoleServerSyncMessage()
-        {}
+
     }
 
     [Serializable, NetSerializable]
     public sealed class ConsoleServerSelectionMessage : BoundUserInterfaceMessage
     {
-        public ConsoleServerSelectionMessage()
-        {}
+
     }
 
     [Serializable, NetSerializable]

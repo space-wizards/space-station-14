@@ -1,9 +1,7 @@
-using Content.Client.Projectiles;
+using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.Player;
-using Robust.Shared.Audio;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -42,6 +40,6 @@ public sealed class FlyBySoundSystem : SharedFlyBySoundSystem
         }
 
         // Play attached to our entity because the projectile may immediately delete or the likes.
-        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value);
+        _audio.Play(component.Sound, Filter.Local(), attachedEnt.Value, false);
     }
 }

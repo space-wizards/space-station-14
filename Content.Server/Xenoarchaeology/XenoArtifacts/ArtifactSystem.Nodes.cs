@@ -13,14 +13,15 @@ public sealed partial class ArtifactSystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    private const int MaxEdgesPerNode = 3;
+    private const int MaxEdgesPerNode = 4;
 
     /// <summary>
     /// Generate an Artifact tree with fully developed nodes.
     /// </summary>
+    /// <param name="artifact"></param>
     /// <param name="tree">The tree being generated.</param>
     /// <param name="nodeAmount">The amount of nodes it has.</param>
-    private void GenerateArtifactNodeTree(ref ArtifactTree tree, int nodeAmount)
+    private void GenerateArtifactNodeTree(EntityUid artifact, ref ArtifactTree tree, int nodeAmount)
     {
         if (nodeAmount < 1)
         {
@@ -33,14 +34,14 @@ public sealed partial class ArtifactSystem
 
         while (uninitializedNodes.Any())
         {
-            GenerateNode(ref uninitializedNodes, ref tree, nodeAmount);
+            GenerateNode(artifact, ref uninitializedNodes, ref tree, nodeAmount);
         }
     }
 
     /// <summary>
     /// Generate an individual node on the tree.
     /// </summary>
-    private void GenerateNode(ref List<ArtifactNode> uninitializedNodes, ref ArtifactTree tree, int targetNodeAmount)
+    private void GenerateNode(EntityUid artifact, ref List<ArtifactNode> uninitializedNodes, ref ArtifactTree tree, int targetNodeAmount)
     {
         if (!uninitializedNodes.Any())
             return;
@@ -48,7 +49,8 @@ public sealed partial class ArtifactSystem
         var node = uninitializedNodes.First();
         uninitializedNodes.Remove(node);
 
-        node.Id = _random.Next(0, 10000);
+        //random 5-digit number
+        node.Id = _random.Next(10000, 100000);
 
         //Generate the connected nodes
         var maxEdges = Math.Max(1, targetNodeAmount - tree.AllNodes.Count - uninitializedNodes.Count - 1);
@@ -69,8 +71,8 @@ public sealed partial class ArtifactSystem
             uninitializedNodes.Add(neighbor);
         }
 
-        node.Trigger = GetRandomTrigger(ref node);
-        node.Effect = GetRandomEffect(ref node);
+        node.Trigger = GetRandomTrigger(artifact, ref node);
+        node.Effect = GetRandomEffect(artifact, ref node);
 
         tree.AllNodes.Add(node);
     }
@@ -78,28 +80,30 @@ public sealed partial class ArtifactSystem
     //yeah these two functions are near duplicates but i don't
     //want to implement an interface or abstract parent
 
-    private ArtifactTriggerPrototype GetRandomTrigger(ref ArtifactNode node)
+    private ArtifactTriggerPrototype GetRandomTrigger(EntityUid artifact, ref ArtifactNode node)
     {
-        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>().ToList();
+        var allTriggers = _prototype.EnumeratePrototypes<ArtifactTriggerPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allTriggers.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetTriggers = allTriggers.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        var targetTriggers = allTriggers
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetTriggers);
     }
 
-    private ArtifactEffectPrototype GetRandomEffect(ref ArtifactNode node)
+    private ArtifactEffectPrototype GetRandomEffect(EntityUid artifact, ref ArtifactNode node)
     {
-        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>().ToList();
+        var allEffects = _prototype.EnumeratePrototypes<ArtifactEffectPrototype>()
+            .Where(x => (x.Whitelist?.IsValid(artifact, EntityManager) ?? true) && (!x.Blacklist?.IsValid(artifact, EntityManager) ?? true)).ToList();
         var validDepth = allEffects.Select(x => x.TargetDepth).Distinct().ToList();
 
         var weights = GetDepthWeights(validDepth, node.Depth);
         var selectedRandomTargetDepth = GetRandomTargetDepth(weights);
-        var targetEffects = allEffects.Where(x =>
-            x.TargetDepth == selectedRandomTargetDepth).ToList();
+        var targetEffects = allEffects
+            .Where(x => x.TargetDepth == selectedRandomTargetDepth).ToList();
 
         return _random.Pick(targetEffects);
     }
@@ -111,12 +115,12 @@ public sealed partial class ArtifactSystem
     /// </remarks>
     private Dictionary<int, float> GetDepthWeights(IEnumerable<int> depths, int targetDepth)
     {
+        // this function is just a normal distribution with a
+        // mean of target depth and standard deviation of 0.75
         var weights = new Dictionary<int, float>();
         foreach (var d in depths)
         {
-            //TODO: is this equation sus? idk. -emo
-            // 0.3 / (|current_iterated_depth - our_actual_depth| + 1)^2
-            var w = 0.3f / MathF.Pow(Math.Abs(d - targetDepth) + 1, 2);
+            var w = 10f / (0.75f * MathF.Sqrt(2 * MathF.PI)) * MathF.Pow(MathF.E, -MathF.Pow((d - targetDepth) / 0.75f, 2));
             weights.Add(d, w);
         }
         return weights;
@@ -158,20 +162,31 @@ public sealed partial class ArtifactSystem
         }
 
         component.CurrentNode = node;
-        node.Discovered = true;
 
         var allComponents = node.Effect.Components.Concat(node.Effect.PermanentComponents).Concat(node.Trigger.Components);
         foreach (var (name, entry) in allComponents)
         {
             var reg = _componentFactory.GetRegistration(name);
+
+            if (node.Discovered && EntityManager.HasComponent(uid, reg.Type))
+            {
+                // Don't re-add permanent components unless this is the first time you've entered this node
+                if (node.Effect.PermanentComponents.ContainsKey(name))
+                    continue;
+
+                EntityManager.RemoveComponent(uid, reg.Type);
+            }
+
             var comp = (Component) _componentFactory.GetComponent(reg);
             comp.Owner = uid;
 
             var temp = (object) comp;
-            _serialization.Copy(entry.Component, ref temp);
+            _serialization.CopyTo(entry.Component, ref temp);
+
             EntityManager.AddComponent(uid, (Component) temp!, true);
         }
 
+        node.Discovered = true;
         RaiseLocalEvent(uid, new ArtifactNodeEnteredEvent(component.CurrentNode.Id));
     }
 

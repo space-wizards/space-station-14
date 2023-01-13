@@ -34,8 +34,8 @@ namespace Content.Server.Chemistry.ReagentEffects
         public override void Effect(ReagentEffectArgs args)
         {
             var scale = ScaleByQuantity ? args.Quantity : FixedPoint2.New(1);
-            if (args.MetabolismEffects != null)
-                scale *= (args.Quantity / args.MetabolismEffects.MetabolismRate);
+            scale *= args.Scale;
+
             EntitySystem.Get<DamageableSystem>().TryChangeDamage(args.SolutionEntity, Damage * scale, IgnoreResistances);
         }
     }

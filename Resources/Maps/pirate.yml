@@ -1,5 +1,5 @@
 meta:
-  format: 2
+  format: 3
   name: DemoStation
   author: Space-Wizards
   postmapinit: false
@@ -8,71 +8,91 @@ tilemap:
   1: FloorArcadeBlue
   2: FloorArcadeBlue2
   3: FloorArcadeRed
-  4: FloorAsteroidIronsand1
-  5: FloorAsteroidIronsand2
-  6: FloorAsteroidIronsand3
-  7: FloorAsteroidIronsand4
-  8: FloorBoxing
-  9: FloorCarpetClown
-  10: FloorCarpetOffice
-  11: FloorEighties
-  12: FloorGrassJungle
-  13: FloorGym
-  14: FloorMetalDiamond
-  15: FloorShuttleBlue
-  16: FloorShuttleOrange
-  17: FloorShuttlePurple
-  18: FloorShuttleRed
-  19: FloorShuttleWhite
-  20: FloorAsteroidCoarseSand0
-  21: FloorAsteroidCoarseSand1
-  22: FloorAsteroidCoarseSand2
-  23: FloorAsteroidCoarseSandDug
-  24: FloorAsteroidSand
-  25: FloorAsteroidTile
-  26: FloorBar
-  27: FloorBlue
-  28: FloorBlueCircuit
-  29: FloorClown
-  30: FloorDark
-  31: FloorElevatorShaft
-  32: FloorFreezer
-  33: FloorGlass
-  34: FloorGold
-  35: FloorGrass
-  36: FloorGreenCircuit
-  37: FloorHydro
-  38: FloorKitchen
-  39: FloorLaundry
-  40: FloorLino
-  41: FloorMime
-  42: FloorMono
-  43: FloorReinforced
-  44: FloorRGlass
-  45: FloorRockVault
-  46: FloorShowroom
-  47: FloorSilver
-  48: FloorSnow
-  49: FloorSteel
-  50: FloorSteelDirty
-  51: FloorTechMaint
-  52: FloorWhite
-  53: FloorWood
-  54: Lattice
-  55: Plating
-grids:
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks:
-  - ind: -1,0
-    tiles: AAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAAaAAAANwAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAxAAAANwAAADEAAAA3AAAAKwAAACsAAAArAAAAKwAAACsAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAMQAAADcAAAAxAAAANwAAACsAAAArAAAAKwAAACsAAAArAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADEAAAA3AAAAMQAAADcAAAArAAAAKwAAACsAAAArAAAAKwAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAAMQAAADcAAAA3AAAAKwAAACsAAAArAAAAKwAAACsAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAAxAAAAMQAAADEAAAAxAAAANwAAADcAAAA3AAAAHgAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANQAAADcAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA3AAAANQAAADUAAAA1AAAANwAAADcAAAA3AAAAHgAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADcAAAA3AAAANwAAADcAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAA3AAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANwAAADcAAAAeAAAAHgAAAB4AAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: -1,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAADYAAAA2AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADYAAAAAAAAAAAAAADYAAAA2AAAAAAAAADYAAAA2AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANgAAADYAAAA3AAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAABoAAAA3AAAANwAAADMAAAAzAAAAMwAAADMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANQAAADUAAAAaAAAANwAAADcAAAAzAAAAMwAAADMAAAAzAAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAANQAAADUAAAA1AAAAGgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAA2AAAANwAAADUAAAA1AAAANQAAABoAAAAaAAAANwAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAANgAAADcAAAA1AAAANQAAADUAAAAaAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAADYAAAA3AAAAGgAAABoAAAAaAAAAGgAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAAA==
-  - ind: 0,0
-    tiles: NwAAADcAAAAxAAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAzAAAAMQAAADEAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAAMwAAADEAAAAxAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADMAAAAxAAAAMQAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAAMQAAADcAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAALgAAAC4AAAAuAAAALgAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAC4AAAAuAAAALgAAAC4AAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAAuAAAALgAAAC4AAAAuAAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAAzAAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADYAAAA3AAAAMwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA2AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANgAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAA3AAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: 0,-1
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAAAAAAAAAAAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgAAADYAAAAAAAAAAAAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMAAAA3AAAANwAAADcAAAA3AAAANwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzAAAANwAAADMAAAAzAAAANwAAADcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAADcAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADcAAAA3AAAANwAAADcAAAA3AAAANwAAADYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3AAAANwAAADcAAAA3AAAAKwAAADcAAAA2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwAAADcAAAA3AAAANwAAACsAAAA3AAAANgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  4: FloorAsteroidCoarseSand0
+  5: FloorAsteroidCoarseSandDug
+  6: FloorAsteroidIronsand1
+  7: FloorAsteroidIronsand2
+  8: FloorAsteroidIronsand3
+  9: FloorAsteroidIronsand4
+  10: FloorAsteroidSand
+  11: FloorAsteroidTile
+  12: FloorBar
+  13: FloorBlue
+  14: FloorBlueCircuit
+  15: FloorBoxing
+  16: FloorCarpetClown
+  17: FloorCarpetOffice
+  18: FloorCave
+  19: FloorCaveDrought
+  20: FloorClown
+  21: FloorDark
+  22: FloorDarkDiagonal
+  23: FloorDarkDiagonalMini
+  24: FloorDarkHerringbone
+  25: FloorDarkMini
+  26: FloorDarkMono
+  27: FloorDarkOffset
+  28: FloorDarkPavement
+  29: FloorDarkPavementVertical
+  30: FloorDarkPlastic
+  31: FloorDirt
+  32: FloorEighties
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGrassDark
+  39: FloorGrassJungle
+  40: FloorGrassLight
+  41: FloorGreenCircuit
+  42: FloorGym
+  43: FloorHydro
+  44: FloorKitchen
+  45: FloorLaundry
+  46: FloorLino
+  47: FloorMetalDiamond
+  48: FloorMime
+  49: FloorMono
+  50: FloorPlastic
+  51: FloorRGlass
+  52: FloorReinforced
+  53: FloorRockVault
+  54: FloorShowroom
+  55: FloorShuttleBlue
+  56: FloorShuttleOrange
+  57: FloorShuttlePurple
+  58: FloorShuttleRed
+  59: FloorShuttleWhite
+  60: FloorSilver
+  61: FloorSnow
+  62: FloorSteel
+  63: FloorSteelDiagonal
+  64: FloorSteelDiagonalMini
+  65: FloorSteelDirty
+  66: FloorSteelHerringbone
+  67: FloorSteelMini
+  68: FloorSteelMono
+  69: FloorSteelOffset
+  70: FloorSteelPavement
+  71: FloorSteelPavementVertical
+  72: FloorTechMaint
+  73: FloorTechMaint2
+  74: FloorTechMaint3
+  75: FloorWhite
+  76: FloorWhiteDiagonal
+  77: FloorWhiteDiagonalMini
+  78: FloorWhiteHerringbone
+  79: FloorWhiteMini
+  80: FloorWhiteMono
+  81: FloorWhiteOffset
+  82: FloorWhitePavement
+  83: FloorWhitePavementVertical
+  84: FloorWhitePlastic
+  85: FloorWood
+  86: FloorWoodTile
+  87: Lattice
+  88: Plating
 entities:
 - uid: 0
   type: Grille
@@ -232,13 +252,27 @@ entities:
     type: Transform
 - uid: 25
   components:
+  - type: MetaData
   - pos: 2.2710133,-2.4148211
     parent: null
     type: Transform
-  - index: 0
+  - chunks:
+      -1,0:
+        ind: -1,0
+        tiles: AAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAAAMAAAAWAAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAAA+AAAAWAAAAD4AAABYAAAANAAAADQAAAA0AAAANAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAPgAAAFgAAAA+AAAAWAAAADQAAAA0AAAANAAAADQAAAA0AAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAD4AAABYAAAAPgAAAFgAAAA0AAAANAAAADQAAAA0AAAANAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAPgAAAFgAAABYAAAANAAAADQAAAA0AAAANAAAADQAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFgAAAA+AAAAPgAAAD4AAAA+AAAAWAAAAFgAAABYAAAAFQAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAABUAAAAVAAAAFQAAABUAAAAVAAAAFQAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAVQAAAFgAAABYAAAAFQAAABUAAAAVAAAAFQAAABUAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFgAAABYAAAAVQAAAFUAAABVAAAAWAAAAFgAAABYAAAAFQAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAVAAAAFQAAABUAAAAVAAAAFQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAVwAAAFcAAABYAAAAFQAAABUAAAAVAAAAFQAAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAWAAAAFgAAAAVAAAAFQAAABUAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAABXAAAAVwAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      -1,-1:
+        ind: -1,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAVwAAAFcAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAFcAAABXAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAFcAAABXAAAAAAAAAFcAAABXAAAAVwAAAFcAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAVwAAAFcAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAAwAAABYAAAAWAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAVQAAAFUAAAAMAAAAWAAAAFgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAAVQAAAFUAAABVAAAADAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAWAAAAFUAAABVAAAAVQAAAAwAAAAMAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFgAAABVAAAAVQAAAFUAAAAMAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAFcAAABYAAAADAAAAAwAAAAMAAAADAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAA==
+      0,0:
+        ind: 0,0
+        tiles: WAAAAFgAAAA+AAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABIAAAAPgAAAD4AAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAASAAAAD4AAAA+AAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAEgAAAA+AAAAPgAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAPgAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAANgAAADYAAAA2AAAANgAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFQAAADYAAAA2AAAANgAAADYAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAA2AAAANgAAADYAAAA2AAAAWAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABIAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFcAAABYAAAASAAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABXAAAAWAAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAVwAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      0,-1:
+        ind: 0,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVwAAAFcAAAAAAAAAAAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAVwAAAFcAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAWAAAAEgAAABIAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAANAAAAFgAAABXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAADQAAABYAAAAVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - type: Broadphase
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -246,6 +280,7 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
+    enabled: True
     type: Gravity
   - chunkCollection:
       -1,0:
@@ -841,7 +876,7 @@ entities:
       -1,1: 0
       -1,2: 0
       -1,3: 0
-      -1,4: 0
+      -1,4: 2
       -1,5: 0
       -1,7: 0
       -1,8: 0
@@ -944,12 +979,12 @@ entities:
       4,14: 1
       5,1: 0
       5,2: 0
-      5,3: 0
+      5,3: 2
       5,7: 0
       5,8: 0
       5,9: 1
       6,1: 0
-      6,2: 2
+      6,2: 3
       6,3: 0
       6,5: 0
       6,6: 0
@@ -983,7 +1018,7 @@ entities:
       -5,4: 0
       -4,0: 0
       -4,4: 0
-      -3,0: 0
+      -3,0: 2
       -3,1: 0
       -3,2: 0
       -3,3: 0
@@ -1042,7 +1077,7 @@ entities:
       3,11: 0
       3,12: 0
       3,13: 0
-      3,14: 2
+      3,14: 3
       3,15: 0
       4,0: 0
       4,1: 0
@@ -1066,7 +1101,7 @@ entities:
       -1,16: 0
       -12,0: 0
       -12,1: 0
-      -12,2: 3
+      -12,2: 4
       -12,3: 0
       -12,4: 0
       -12,5: 0
@@ -1074,7 +1109,7 @@ entities:
       -11,0: 0
       -11,1: 0
       -11,2: 0
-      -11,3: 0
+      -11,3: 2
       -11,4: 0
       -11,5: 0
       -11,6: 0
@@ -1233,9 +1268,32 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       immutable: True
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -1255,6 +1313,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 220.53749
       moles:
@@ -1266,7 +1328,15 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
+  - type: OccluderTree
+  - type: Shuttle
+  - type: GridPathfinding
+  - type: RadiationGridResistance
 - uid: 26
   type: WallShuttle
   components:
@@ -1285,10 +1355,6 @@ entities:
   - pos: -3.5,11.5
     parent: 25
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 29
   type: Grille
   components:
@@ -1394,10 +1460,6 @@ entities:
   - pos: -2.5,11.5
     parent: 25
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 45
   type: ChairPilotSeat
   components:
@@ -1467,10 +1529,6 @@ entities:
   - pos: 0.5,-1.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 56
   type: WallShuttle
   components:
@@ -2087,10 +2145,6 @@ entities:
     pos: -0.5,9.5
     parent: 25
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 148
   type: WallReinforced
   components:
@@ -2290,8 +2344,6 @@ entities:
     pos: 3.5,-6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 181
   type: WallShuttleDiagonal
   components:
@@ -2306,8 +2358,6 @@ entities:
     pos: -8.5,-6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 183
   type: WallShuttleDiagonal
   components:
@@ -2348,16 +2398,12 @@ entities:
   - pos: 1.5,9.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 189
   type: Thruster
   components:
   - pos: -7.5,10.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 190
   type: GasPipeBend
   components:
@@ -2862,36 +2908,26 @@ entities:
   - pos: 3.5,-2.5
     parent: 25
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 265
   type: GeneratorUranium
   components:
   - pos: -0.5,-1.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 266
   type: GeneratorUranium
   components:
   - pos: -1.5,-1.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 267
   type: SMESBasic
   components:
   - pos: -3.5,-1.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 268
   type: CableTerminal
   components:
@@ -2957,20 +2993,12 @@ entities:
   - pos: -4.5,-5.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 278
   type: SubstationBasic
   components:
   - pos: -9.5,7.5
     parent: 25
     type: Transform
-  - containers:
-    - machine_parts
-    - machine_board
-    type: Construction
 - uid: 279
   type: CableHV
   components:
@@ -4177,28 +4205,18 @@ entities:
   - pos: -2.5,-5.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 468
   type: GravityGenerator
   components:
   - pos: -2.5,-8.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
-  - powerLoad: 2500
-    type: ApcPowerReceiver
-  - radius: 2.5
-    type: PointLight
 - uid: 469
   type: Gyroscope
   components:
   - pos: -3.5,-5.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 470
   type: Table
   components:
@@ -4254,6 +4272,11 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-beaker: !type:ContainerSlot {}
+      beakerSlot: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 478
   type: BoozeDispenser
@@ -4264,6 +4287,11 @@ entities:
     type: Transform
   - containers:
       ReagentDispenser-beaker: !type:ContainerSlot {}
+      beakerSlot: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 479
   type: AirlockEngineering
@@ -4466,8 +4494,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 512
   type: DrinkWineBottleFull
   components:
@@ -4476,8 +4502,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 513
   type: DrinkCognacBottleFull
   components:
@@ -4486,8 +4510,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 514
   type: DrinkBottleAle
   components:
@@ -4496,22 +4518,17 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 515
   type: Thruster
   components:
   - pos: 5.5,9.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 516
   type: VendingMachineCigs
   components:
-  - name: cigarette machine
+  - flags: SessionSpecific
+    name: cigarette machine
     type: MetaData
   - pos: -6.5,-5.5
     parent: 25
@@ -4676,10 +4693,13 @@ entities:
   - pos: -3.5,4.5
     parent: 25
     type: Transform
+  - canCollide: False
+    type: Physics
   - fixtures: []
     type: Fixtures
   - containers:
       charger-slot: !type:ContainerSlot {}
+      charger_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 540
   type: Table
@@ -4700,8 +4720,6 @@ entities:
     pos: 4.5,-6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 543
   type: Thruster
   components:
@@ -4709,8 +4727,6 @@ entities:
     pos: -9.5,-6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 544
   type: CratePrivateSecure
   components:
@@ -4719,16 +4735,10 @@ entities:
     type: Transform
   - locked: False
     type: Lock
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
     - EntityStorageComponent
+    - entity_storage
     type: Construction
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      paper_label: !type:ContainerSlot {}
-    type: ContainerContainer
 - uid: 545
   type: Table
   components:
@@ -4793,10 +4803,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 555
   type: ClothingHeadHatPirate
   components:
@@ -4824,8 +4830,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 558
   type: DrinkGlass
   components:
@@ -4834,8 +4838,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 559
   type: DrinkGlass
   components:
@@ -4844,8 +4846,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 560
   type: DrinkGlass
   components:
@@ -4854,8 +4854,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: DrainableSolution
 - uid: 561
   type: WeldingFuelTankFull
   components:
@@ -4902,10 +4900,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 568
   type: DrinkBottleRum
   components:
@@ -4914,10 +4908,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 569
   type: DrinkBottleRum
   components:
@@ -4926,20 +4916,19 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - solution: drink
-    type: RefillableSolution
-  - solution: drink
-    type: DrainableSolution
 - uid: 570
   type: WeaponCapacitorRecharger
   components:
-  - pos: -1.4965465,11.554127
+  - pos: -1.5,11.5
     parent: 25
     type: Transform
+  - canCollide: False
+    type: Physics
   - fixtures: []
     type: Fixtures
   - containers:
       charger-slot: !type:ContainerSlot {}
+      charger_slot: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 571
   type: RollerBed
@@ -5003,10 +4992,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 580
   type: Pen
   components:
@@ -5109,10 +5094,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 594
   type: MedkitOxygenFilled
   components:
@@ -5121,10 +5102,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 595
   type: MedkitFilled
   components:
@@ -5133,10 +5110,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 596
   type: ClothingHandsGlovesLatex
   components:
@@ -5298,10 +5271,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 619
   type: ClothingBackpackDuffel
   components:
@@ -5310,10 +5279,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 620
   type: ClothingShoesBootsMag
   components:
@@ -5349,8 +5314,6 @@ entities:
     pos: -11.5,6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 625
   type: Thruster
   components:
@@ -5358,8 +5321,6 @@ entities:
     pos: -11.5,-1.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 626
   type: Thruster
   components:
@@ -5367,8 +5328,6 @@ entities:
     pos: 6.5,-1.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 627
   type: Thruster
   components:
@@ -5376,8 +5335,6 @@ entities:
     pos: 6.5,6.5
     parent: 25
     type: Transform
-  - enabled: False
-    type: AmbientSound
 - uid: 628
   type: CableApcExtension
   components:
@@ -5438,10 +5395,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 637
   type: ClothingOuterCoatPirate
   components:
@@ -5450,10 +5403,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 638
   type: ClothingOuterCoatPirate
   components:
@@ -5462,10 +5411,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 639
   type: ClothingHeadHatPirate
   components:
@@ -5504,10 +5449,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 644
   type: ClothingOuterCoatPirate
   components:
@@ -5516,10 +5457,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 645
   type: ClothingOuterCoatPirate
   components:
@@ -5528,10 +5465,6 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - containers:
-      storagebase: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 646
   type: ClothingHeadHatPirate
   components:

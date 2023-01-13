@@ -110,7 +110,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         // Potentially change someday? who knows.
         var currentState = _stateManager.CurrentState;
 
-        if (currentState is not GameplayState screen) return;
+        if (currentState is not GameplayStateBase screen) return;
 
         EntityUid? entityToClick = null;
         var renderScale = 1;
@@ -118,7 +118,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
             && _inputManager.MouseScreenPosition.IsValid)
         {
             var mousePosWorld = vp.ScreenToMap(_inputManager.MouseScreenPosition.Position);
-            entityToClick = screen.GetEntityUnderPosition(mousePosWorld);
+            entityToClick = screen.GetClickedEntity(mousePosWorld);
 
             if (vp is ScalingViewport svp)
             {
