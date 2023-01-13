@@ -1,5 +1,4 @@
-﻿using Content.Shared.Alert;
-using Content.Shared.Bed.Sleep;
+﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.Disease.Events;
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;

@@ -35,6 +35,7 @@
       - SmallMobMask
       layer:
       - SmallMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -144,6 +145,7 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -213,6 +215,7 @@
       - SmallMobMask
       layer:
       - SmallMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive

@@ -78,6 +78,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   components:
   - type: Body
     prototype: Human
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
