@@ -1,55 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: 'psychologist, detective, and reporter ID cards now display correct
-      layers', type: Fix}
-  id: 2354
-  time: '2022-09-22T21:00:14.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Humanoids were recently changed. Expect to see more variations of humanoids
-      in places, type: Tweak}
-  id: 2355
-  time: '2022-09-22T22:19:00.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Gave descriptions to the shaker and shot glass., type: Add}
-  id: 2356
-  time: '2022-09-22T23:55:31.0000000+00:00'
-- author: illiux
-  changes:
-  - {message: Latejoin spawns to Pillar, type: Add}
-  id: 2357
-  time: '2022-09-23T04:19:07.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Minor update and fixes for Splitstation. Salvage is closer to Science,
-      atmos works and other minor changes.', type: Tweak}
-  id: 2358
-  time: '2022-09-24T21:48:39.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Mouse Migration events are now less common., type: Tweak}
-  id: 2359
-  time: '2022-09-25T04:44:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixes an issue where you could insert incorrect materials into lathes
-      exactly once., type: Fix}
-  id: 2360
-  time: '2022-09-25T14:45:29.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Fixed Vector magazines showing the wrong name., type: Fix}
-  - {message: Gun descriptions now show the type of ammo it uses when examined., type: Add}
-  id: 2361
-  time: '2022-09-26T04:51:53.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: 'Pillar minor update. Evac is good now, additional jani closet in Dorms,
-      PTech for HoP. Salvage is back near Cargo. Cargo should space less.', type: Tweak}
-  id: 2362
-  time: '2022-09-26T19:35:42.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Proper feedback for when items thrown toward the disposal bin don't
@@ -2956,3 +2905,52 @@ Entries:
     type: Fix}
   id: 2853
   time: '2023-01-10T21:45:09.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Narcolepsy can now be treated., type: Add}
+  id: 2854
+  time: '2023-01-11T08:14:16.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Phasing artifacts are now scannable again., type: Fix}
+  - {message: 'Artifacts can now be anchored onto the scanner, so wandering artifacts
+      are no longer essentially impossible to scan.', type: Fix}
+  id: 2855
+  time: '2023-01-11T08:16:16.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Screaming now emits a popup message that others can see., type: Add}
+  id: 2856
+  time: '2023-01-11T09:06:15.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now withdraw currency from the uplink again., type: Fix}
+  id: 2857
+  time: '2023-01-11T22:03:18.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Rounds will now have 2 minutes between the round ending and returning
+      to the lobby., type: Tweak}
+  id: 2858
+  time: '2023-01-11T23:36:28.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: added goliath cloaks based on the one from TG that can rarely spawn
+      in maints, type: Add}
+  id: 2859
+  time: '2023-01-12T03:46:48.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: a sound effect to health analyzers on a successful scan, type: Add}
+  id: 2860
+  time: '2023-01-12T06:38:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Eye lerping will reset on map changes., type: Tweak}
+  id: 2861
+  time: '2023-01-12T12:10:52.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Worn lawyer badge now changes the style of the typing indicator, type: Add}
+  id: 2862
+  time: '2023-01-12T12:33:57.0000000+00:00'
