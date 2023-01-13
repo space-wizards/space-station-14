@@ -18,6 +18,7 @@ namespace Content.Client.Administration.UI.Tabs
 
             _config.OnValueChanged(CCVars.OocEnabled, OocEnabledChanged, true);
             _config.OnValueChanged(CCVars.LoocEnabled, LoocEnabledChanged, true);
+            _config.OnValueChanged(CCVars.PanicBunkerEnabled, BunkerEnabledChanged, true);
         }
 
         private void OocEnabledChanged(bool value)
@@ -28,6 +29,11 @@ namespace Content.Client.Administration.UI.Tabs
         private void LoocEnabledChanged(bool value)
         {
             SetLoocButton.Pressed = value;
+        }
+
+        private void BunkerEnabledChanged(bool value)
+        {
+            SetPanicbunkerButton.Pressed = value;
         }
 
         protected override void Dispose(bool disposing)
