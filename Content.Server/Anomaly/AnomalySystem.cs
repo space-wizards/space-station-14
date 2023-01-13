@@ -1,8 +1,10 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Anomaly.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
+using Content.Server.StationEvents.Events;
 using Content.Shared.Anomaly;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
@@ -21,6 +23,7 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _log = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
@@ -35,6 +38,7 @@ public sealed partial class AnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnUnpause);
         SubscribeLocalEvent<AnomalyComponent, StartCollideEvent>(OnStartCollide);
 
+        InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
     }
@@ -247,6 +251,29 @@ public sealed partial class AnomalySystem : EntitySystem
     {
         var score = 1 + Math.Max(component.Stability - component.GrowthThreshold, 0) * 10;
         return score * component.SeverityGrowthCoefficient;
+    }
+
+    /// <summary>
+    /// Gets the amount of research points generated per second for an anomaly.
+    /// </summary>
+    /// <param name="anomaly"></param>
+    /// <param name="component"></param>
+    /// <returns>The amount of points</returns>
+    public int GetAnomalyPointValue(EntityUid anomaly, AnomalyComponent? component = null)
+    {
+        if (!Resolve(anomaly, ref component, false))
+            return 0;
+
+        var multiplier = 1f;
+        if (component.Stability > component.GrowthThreshold)
+            multiplier = 1.5f; //more points for unstable
+        else if (component.Stability < component.DecayThreshold)
+            multiplier = 0.75f; //less points if it's dying
+
+        //penalty of up to 50% based on health
+        multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
+
+        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
     }
 
     public override void Update(float frameTime)

@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: RandomAnomalySpawner
+  name: random anomaly spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - sprite: sprite: Structures/Specific/anomaly.rsi
+      state: anom1
+  - type: RandomSpawner
+    prototypes:
+    - AnomalyPyroclastic
+    chance: 1

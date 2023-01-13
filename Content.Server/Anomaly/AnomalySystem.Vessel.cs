@@ -15,7 +15,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    public void InitializeVessel()
+    private void InitializeVessel()
     {
         SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
@@ -101,29 +101,6 @@ public sealed partial class AnomalySystem
                 continue;
             _explosion.TriggerExplosive(component.Owner);
         }
-    }
-
-    /// <summary>
-    /// Gets the amount of research points generated per second for an anomaly.
-    /// </summary>
-    /// <param name="anomaly"></param>
-    /// <param name="component"></param>
-    /// <returns>The amount of points</returns>
-    public int GetAnomalyPointValue(EntityUid anomaly, AnomalyComponent? component = null)
-    {
-        if (!Resolve(anomaly, ref component, false))
-            return 0;
-
-        var multiplier = 1f;
-        if (component.Stability > component.GrowthThreshold)
-            multiplier = 1.5f; //more points for unstable
-        else if (component.Stability < component.DecayThreshold)
-            multiplier = 0.75f; //less points if it's dying
-
-        //penalty of up to 50% based on health
-        multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
-
-        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
     }
 
     /// <summary>

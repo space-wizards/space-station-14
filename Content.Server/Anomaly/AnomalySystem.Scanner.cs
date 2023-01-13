@@ -12,7 +12,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    public void InitializeScanner()
+    private void InitializeScanner()
     {
         SubscribeLocalEvent<AnomalyScannerComponent, BoundUIOpenedEvent>(OnScannerUiOpened);
         SubscribeLocalEvent<AnomalyScannerComponent, AfterInteractEvent>(OnScannerAfterInteract);
