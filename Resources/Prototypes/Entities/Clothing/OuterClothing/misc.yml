@@ -225,7 +225,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterGhostSheet
   name: ghost sheet
-  description: spooky!!.
+  description: Spooky!!!
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
