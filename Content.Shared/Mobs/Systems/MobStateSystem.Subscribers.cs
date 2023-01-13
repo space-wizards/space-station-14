@@ -19,7 +19,7 @@ namespace Content.Shared.Mobs.Systems;
 
 public partial class MobStateSystem
 {
-
+    //General purpose event subscriptions. If you can avoid it register these events inside their own systems
     private void SubscribeEvents()
     {
         SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
@@ -40,29 +40,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, AttemptSneezeCoughEvent>(OnSneezeAttempt);
     }
 
-
-    private void OnSleepAttempt(EntityUid uid, MobStateComponent component, ref TryingToSleepEvent args)
-    {
-        if(IsDead(uid, component))
-            args.Cancelled = true;
-    }
-
-    private void OnSneezeAttempt(EntityUid uid, MobStateComponent component, ref AttemptSneezeCoughEvent args)
-    {
-        if(IsDead(uid, component))
-            args.Cancelled = true;
-    }
-
-    private void OnGettingStripped(EntityUid uid, MobStateComponent component, BeforeGettingStrippedEvent args)
-    {
-        // Incapacitated or dead targets get stripped two or three times as fast. Makes stripping corpses less tedious.
-        if (IsDead(uid, component))
-            args.Multiplier /= 3;
-        else if (IsCritical(uid, component))
-            args.Multiplier /= 2;
-    }
-
-    private void OnStateExitSubscribers(MobStateComponent component, MobState state)
+    private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
         var uid = component.Owner;
         switch (state)
@@ -80,6 +58,7 @@ public partial class MobStateSystem
                 {
                     _physics.SetCanCollide(physics, true);
                 }
+
                 break;
             case MobState.Invalid:
                 //unused
@@ -89,7 +68,7 @@ public partial class MobStateSystem
         }
     }
 
-    private void OnStateEnteredSubscribers(MobStateComponent component, MobState state)
+    private void OnStateEnteredSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
         var uid = component.Owner;
         _blocker.UpdateCanMove(uid); //update movement anytime a state changes
@@ -122,30 +101,53 @@ public partial class MobStateSystem
         }
     }
 
-    #region ActionBlocker
-    private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
-        {
-            switch (component.CurrentState)
-            {
-                case MobState.Dead:
-                case MobState.Critical:
-                    args.Cancel();
-                    break;
-            }
-        }
+    #region Event Subscribers
 
-    private void OnEquipAttempt(EntityUid uid, MobStateComponent component, IsEquippingAttemptEvent args)
-        {
-            // is this a self-equip, or are they being stripped?
-            if (args.Equipee == uid)
-                CheckAct(uid, component, args);
-        }
-    private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, IsUnequippingAttemptEvent args)
-        {
-            // is this a self-equip, or are they being stripped?
-            if (args.Unequipee == uid)
-                CheckAct(uid, component, args);
-        }
+    private void OnSleepAttempt(EntityUid target, MobStateComponent component, ref TryingToSleepEvent args)
+    {
+        if (IsDead(target, component))
+            args.Cancelled = true;
+    }
 
-        #endregion
+    private void OnSneezeAttempt(EntityUid target, MobStateComponent component, ref AttemptSneezeCoughEvent args)
+    {
+        if (IsDead(target, component))
+            args.Cancelled = true;
+    }
+
+    private void OnGettingStripped(EntityUid target, MobStateComponent component, BeforeGettingStrippedEvent args)
+    {
+        // Incapacitated or dead targets get stripped two or three times as fast. Makes stripping corpses less tedious.
+        if (IsDead(target, component))
+            args.Multiplier /= 3;
+        else if (IsCritical(target, component))
+            args.Multiplier /= 2;
+    }
+
+    private void CheckAct(EntityUid target, MobStateComponent component, CancellableEntityEventArgs args)
+    {
+        switch (component.CurrentState)
+        {
+            case MobState.Dead:
+            case MobState.Critical:
+                args.Cancel();
+                break;
+        }
+    }
+
+    private void OnEquipAttempt(EntityUid target, MobStateComponent component, IsEquippingAttemptEvent args)
+    {
+        // is this a self-equip, or are they being stripped?
+        if (args.Equipee == target)
+            CheckAct(target, component, args);
+    }
+
+    private void OnUnequipAttempt(EntityUid target, MobStateComponent component, IsUnequippingAttemptEvent args)
+    {
+        // is this a self-equip, or are they being stripped?
+        if (args.Unequipee == target)
+            CheckAct(target, component, args);
+    }
+
+    #endregion
 }

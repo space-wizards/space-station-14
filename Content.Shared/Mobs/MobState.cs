@@ -18,30 +18,22 @@ public enum MobState : byte
     Dead = 3
 }
 
-public sealed class MobStateChangedEvent : EntityEventArgs
-{
-    public MobStateChangedEvent(MobStateComponent Component,
-        MobState OldMobState,
-        MobState NewMobState,
-        EntityUid? Origin = null)
-    {
-        this.Component = Component;
-        this.OldMobState = OldMobState;
-        this.NewMobState = NewMobState;
-        this.Origin = Origin;
-    }
-    public EntityUid Entity => Component.Owner;
-    public MobStateComponent Component { get; init; }
-    public MobState OldMobState { get; init; }
-    public MobState NewMobState { get; init; }
-    public EntityUid? Origin { get; init; }
-}
+/// <summary>
+/// Event that is raised whenever a MobState changes on an entity
+/// </summary>
+/// <param name="Target">The Entity whose MobState is changing</param>
+/// <param name="Component">The MobState Component owned by the Target entity</param>
+/// <param name="OldMobState">The previous MobState</param>
+/// <param name="NewMobState">The new MobState</param>
+/// <param name="Origin">The Entity that caused this state change</param>
+public record struct MobStateChangedEvent(EntityUid Target, MobStateComponent Component, MobState OldMobState,
+    MobState NewMobState, EntityUid? Origin = null);
 public static class A
 {
     //^.^
 }
 
-//TODO: This is dumb and I hate it but I don't feel like refactoring this garbage
+//This is dumb and I hate it but I don't feel like refactoring this garbage
 [Serializable, NetSerializable]
 public enum MobStateVisuals : byte
 {

@@ -25,52 +25,19 @@ public sealed class MobThresholdSystem : EntitySystem
         SubscribeLocalEvent<MobThresholdsComponent, UpdateMobStateEvent>(OnUpdateMobState);
     }
 
-    private void OnHandleComponentState(EntityUid uid, MobThresholdsComponent component, ref ComponentHandleState args)
+    #region Public API
+
+    /// <summary>
+    /// Get the Damage Threshold for the appropriate state if it exists
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="mobState">MobState we want the Damage Threshold of</param>
+    /// <param name="thresholdComponent">Threshold Component Owned by the target</param>
+    /// <returns>the threshold or 0 if it doesn't exist</returns>
+    public FixedPoint2 GetThresholdForState(EntityUid target, MobState mobState,
+        MobThresholdsComponent? thresholdComponent = null)
     {
-        if (args.Current is not MobThresholdComponentState state)
-            return;
-
-        component.Thresholds = new SortedDictionary<FixedPoint2, MobState>(state.Thresholds);
-        component.CurrentThresholdState = state.CurrentThresholdState;
-    }
-
-    private void OnGetComponentState(EntityUid uid, MobThresholdsComponent component, ref ComponentGetState args)
-    {
-        args.State = new MobThresholdComponentState(component.CurrentThresholdState,
-            new Dictionary<FixedPoint2, MobState>(component.Thresholds));
-    }
-
-    private void MobThresholdMapInit(EntityUid uid, MobThresholdsComponent component, MapInitEvent args)
-    {
-        // TODO remove when body sim is implemented
-        EnsureComp<MobStateComponent>(uid);
-        EnsureComp<DamageableComponent>(uid);
-
-        if (!component.Thresholds.TryFirstOrNull(out var newState))
-            return;
-
-        component.CurrentThresholdState = newState.Value.Value;
-
-        TriggerThreshold(uid, MobState.Invalid, newState.Value.Value, thresholds: component);
-        UpdateAlerts(uid, newState.Value.Value, component);
-    }
-
-    private void MobThresholdShutdown(EntityUid uid, MobThresholdsComponent component, ComponentShutdown args)
-    {
-        if (component.TriggersAlerts)
-            _alerts.ClearAlertCategory(uid, AlertCategory.Health);
-    }
-
-    private void OnUpdateMobState(EntityUid uid, MobThresholdsComponent component, ref UpdateMobStateEvent args)
-    {
-        if (component.CurrentThresholdState != MobState.Invalid)
-            args.State = component.CurrentThresholdState;
-    }
-
-    public FixedPoint2 GetThresholdForState(EntityUid uid, MobState mobState,
-        MobThresholdsComponent? thresholdComponent)
-    {
-        if (!Resolve(uid, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent))
             return FixedPoint2.Zero;
 
         foreach (var pair in thresholdComponent.Thresholds)
@@ -84,12 +51,20 @@ public sealed class MobThresholdSystem : EntitySystem
         return FixedPoint2.Zero;
     }
 
-    public bool TryGetThresholdForState(EntityUid uid, MobState mobState,
+    /// <summary>
+    /// Try to get the Damage Threshold for the appropriate state if it exists
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="mobState">MobState we want the Damage Threshold of</param>
+    /// <param name="threshold">The damage Threshold for the given state</param>
+    /// <param name="thresholdComponent">Threshold Component Owned by the target</param>
+    /// <returns>true if successfully retrieved a threshold</returns>
+    public bool TryGetThresholdForState(EntityUid target, MobState mobState,
         [NotNullWhen(true)] out FixedPoint2? threshold,
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(uid, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent))
             return false;
 
         foreach (var pair in thresholdComponent.Thresholds)
@@ -104,35 +79,59 @@ public sealed class MobThresholdSystem : EntitySystem
         return false;
     }
 
-    public bool TryGetPercentageForState(EntityUid uid, MobState mobState, FixedPoint2 damage,
+    /// <summary>
+    /// Try to get the a percentage of the Damage Threshold for the appropriate state if it exists
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="mobState">MobState we want the Damage Threshold of</param>
+    /// <param name="damage">The Damage being applied</param>
+    /// <param name="percentage">Percentage of Damage compared to the Threshold</param>
+    /// <param name="thresholdComponent">Threshold Component Owned by the target</param>
+    /// <returns>true if successfully retrieved a percentage</returns>
+    public bool TryGetPercentageForState(EntityUid target, MobState mobState, FixedPoint2 damage,
         [NotNullWhen(true)] out FixedPoint2? percentage,
         MobThresholdsComponent? thresholdComponent = null)
     {
         percentage = null;
-        if (!TryGetThresholdForState(uid, mobState, out var threshold, thresholdComponent))
+        if (!TryGetThresholdForState(target, mobState, out var threshold, thresholdComponent))
             return false;
 
         percentage = damage / threshold;
         return true;
     }
 
-    public bool TryGetIncapThreshold(EntityUid uid, [NotNullWhen(true)] out FixedPoint2? threshold,
+    /// <summary>
+    /// Try to get the Damage Threshold for crit or death. Outputs the first found threshold.
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="threshold">The Damage Threshold for incapacitation</param>
+    /// <param name="thresholdComponent">Threshold Component owned by the target</param>
+    /// <returns>true if successfully retrieved incapacitation threshold</returns>
+    public bool TryGetIncapThreshold(EntityUid target, [NotNullWhen(true)] out FixedPoint2? threshold,
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(uid, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent))
             return false;
 
-        return TryGetThresholdForState(uid, MobState.Critical, out threshold, thresholdComponent)
-               || TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholdComponent);
+        return TryGetThresholdForState(target, MobState.Critical, out threshold, thresholdComponent)
+               || TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
     }
 
-    public bool TryGetIncapPercentage(EntityUid uid, FixedPoint2 damage,
+    /// <summary>
+    /// Try to get a percentage of the Damage Threshold for crit or death. Outputs the first found percentage.
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="damage">The damage being applied</param>
+    /// <param name="percentage">Percentage of Damage compared to the Incapacitation Threshold</param>
+    /// <param name="thresholdComponent">Threshold Component Owned by the target</param>
+    /// <returns>true if successfully retrieved incapacitation percentage</returns>
+    public bool TryGetIncapPercentage(EntityUid target, FixedPoint2 damage,
         [NotNullWhen(true)] out FixedPoint2? percentage,
         MobThresholdsComponent? thresholdComponent = null)
     {
         percentage = null;
-        if (!TryGetIncapThreshold(uid, out var threshold, thresholdComponent))
+        if (!TryGetIncapThreshold(target, out var threshold, thresholdComponent))
             return false;
 
         if (damage == 0)
@@ -145,21 +144,37 @@ public sealed class MobThresholdSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetDeadThreshold(EntityUid uid, [NotNullWhen(true)] out FixedPoint2? threshold,
+    /// <summary>
+    /// Try to get the Damage Threshold for death
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="threshold">The Damage Threshold for death</param>
+    /// <param name="thresholdComponent">Threshold Component owned by the target</param>
+    /// <returns>true if successfully retrieved incapacitation threshold</returns>
+    public bool TryGetDeadThreshold(EntityUid target, [NotNullWhen(true)] out FixedPoint2? threshold,
         MobThresholdsComponent? thresholdComponent = null)
     {
         threshold = null;
-        if (!Resolve(uid, ref thresholdComponent))
+        if (!Resolve(target, ref thresholdComponent))
             return false;
 
-        return TryGetThresholdForState(uid, MobState.Dead, out threshold, thresholdComponent);
+        return TryGetThresholdForState(target, MobState.Dead, out threshold, thresholdComponent);
     }
 
-    public bool TryGetDeadPercentage(EntityUid uid, FixedPoint2 damage, [NotNullWhen(true)] out FixedPoint2? percentage,
+    /// <summary>
+    /// Try to get a percentage of the Damage Threshold for death
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="damage">The damage being applied</param>
+    /// <param name="percentage">Percentage of Damage compared to the Death Threshold</param>
+    /// <param name="thresholdComponent">Threshold Component Owned by the target</param>
+    /// <returns>true if successfully retrieved death percentage</returns>
+    public bool TryGetDeadPercentage(EntityUid target, FixedPoint2 damage,
+        [NotNullWhen(true)] out FixedPoint2? percentage,
         MobThresholdsComponent? thresholdComponent = null)
     {
         percentage = null;
-        if (!TryGetDeadThreshold(uid, out var threshold, thresholdComponent))
+        if (!TryGetDeadThreshold(target, out var threshold, thresholdComponent))
             return false;
 
         if (damage == 0)
@@ -171,60 +186,71 @@ public sealed class MobThresholdSystem : EntitySystem
         percentage = FixedPoint2.Min(1.0f, damage / threshold.Value);
         return true;
     }
-
 
     /// <summary>
     /// Takes the damage from one entity and scales it relative to the health of another
     /// </summary>
-    /// <param name="ent1">The entity whose damage will be scaled</param>
-    /// <param name="ent2">The entity whose health the damage will scale to</param>
+    /// <param name="target1">The entity whose damage will be scaled</param>
+    /// <param name="target2">The entity whose health the damage will scale to</param>
     /// <param name="damage">The newly scaled damage. Can be null</param>
-    public bool GetScaledDamage(EntityUid ent1, EntityUid ent2, out DamageSpecifier? damage)
+    public bool GetScaledDamage(EntityUid target1, EntityUid target2, out DamageSpecifier? damage)
     {
         damage = null;
 
-        if (!TryComp<DamageableComponent>(ent1, out var oldDamage))
+        if (!TryComp<DamageableComponent>(target1, out var oldDamage))
             return false;
 
-        if (!TryComp<MobThresholdsComponent>(ent1, out var threshold1) ||
-            !TryComp<MobThresholdsComponent>(ent2, out var threshold2))
+        if (!TryComp<MobThresholdsComponent>(target1, out var threshold1) ||
+            !TryComp<MobThresholdsComponent>(target2, out var threshold2))
             return false;
 
-        if (!TryGetThresholdForState(ent1, MobState.Dead, out var ent1DeadThreshold, threshold1))
+        if (!TryGetThresholdForState(target1, MobState.Dead, out var ent1DeadThreshold, threshold1))
             ent1DeadThreshold = 0;
 
-        if (!TryGetThresholdForState(ent2, MobState.Dead, out var ent2DeadThreshold, threshold2))
+        if (!TryGetThresholdForState(target2, MobState.Dead, out var ent2DeadThreshold, threshold2))
             ent2DeadThreshold = 0;
 
         damage = (oldDamage.Damage / ent1DeadThreshold.Value) * ent2DeadThreshold.Value;
         return true;
     }
 
-    public void SetMobStateThreshold(EntityUid uid, FixedPoint2 damage, MobState mobState,
-        MobThresholdsComponent? thresholdComponent = null)
+    /// <summary>
+    /// Set a MobState Threshold or create a new one if it doesn't exist
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="damage">Damageable Component owned by the target</param>
+    /// <param name="mobState">MobState Component owned by the target</param>
+    /// <param name="threshold">MobThreshold Component owned by the target</param>
+    public void SetMobStateThreshold(EntityUid target, FixedPoint2 damage, MobState mobState,
+        MobThresholdsComponent? threshold = null)
     {
-        if (!Resolve(uid, ref thresholdComponent))
+        if (!Resolve(target, ref threshold))
             return;
 
-        thresholdComponent.Thresholds[damage] = mobState;
-        VerifyThresholds(uid, thresholdComponent);
+        threshold.Thresholds[damage] = mobState;
+        VerifyThresholds(target, threshold);
     }
 
-    private void OnDamaged(EntityUid uid, MobThresholdsComponent mobThresholdsComponent, DamageChangedEvent args)
+    /// <summary>
+    /// Checks to see if we should change states based on thresholds.
+    /// Call this if you change the amount of damagable without triggering a damageChangedEvent or if you change
+    /// </summary>
+    /// <param name="target">Target Entity</param>
+    /// <param name="threshold">Threshold Component owned by the Target</param>
+    /// <param name="mobState">MobState Component owned by the Target</param>
+    /// <param name="damageable">Damageable Component owned by the Target</param>
+    public void VerifyThresholds(EntityUid target, MobThresholdsComponent? threshold = null,
+        MobStateComponent? mobState = null, DamageableComponent? damageable = null)
     {
-        var mobStateComp = EnsureComp<MobStateComponent>(uid);
-        CheckThresholds(uid, mobStateComp, mobThresholdsComponent, args.Damageable);
-    }
-
-    //Call this if you are somehow change the amount of damage on damageable without triggering a damageChangedEvent
-    public void VerifyThresholds(EntityUid target, MobThresholdsComponent? thresholdComponent = null,
-        MobStateComponent? mobStateComponent = null, DamageableComponent? damageableComponent = null)
-    {
-        if (!EnsureComps(target, mobStateComponent, thresholdComponent, damageableComponent))
+        if (!Resolve(target, ref mobState, ref threshold, ref damageable))
             return;
 
-        CheckThresholds(target, mobStateComponent, thresholdComponent, damageableComponent);
+        CheckThresholds(target, mobState, threshold, damageable);
     }
+
+    #endregion
+
+    #region Private Implementation
 
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
         MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
@@ -234,47 +260,38 @@ public sealed class MobThresholdSystem : EntitySystem
             if (damageableComponent.TotalDamage < threshold)
                 continue;
 
-            TriggerThreshold(target, thresholdsComponent.CurrentThresholdState, mobState, mobStateComponent, thresholdsComponent);
+            TriggerThreshold(target, thresholdsComponent.CurrentThresholdState, mobState, mobStateComponent,
+                thresholdsComponent);
         }
 
-        var ev = new MobThresholdDamagedEvent(target, mobStateComponent, thresholdsComponent, damageableComponent);
+        var ev = new MobThresholdChecked(target, mobStateComponent, thresholdsComponent, damageableComponent);
         RaiseLocalEvent(target, ev, true);
         UpdateAlerts(target, mobStateComponent.CurrentState, thresholdsComponent, damageableComponent);
     }
 
     private void TriggerThreshold(
-        EntityUid uid,
+        EntityUid target,
         MobState oldState,
         MobState newState,
         MobStateComponent? mobState = null,
         MobThresholdsComponent? thresholds = null)
     {
         if (oldState == newState ||
-            !Resolve(uid, ref mobState, ref thresholds))
+            !Resolve(target, ref mobState, ref thresholds))
         {
             return;
         }
 
         thresholds.CurrentThresholdState = newState;
-        _mobStateSystem.UpdateMobState(uid, mobState);
+        _mobStateSystem.UpdateMobState(target, mobState);
 
-        Dirty(uid);
+        Dirty(target);
     }
 
-    private bool EnsureComps(EntityUid target, [NotNullWhen(true)] MobStateComponent? mobStateComponent,
-        [NotNullWhen(true)] MobThresholdsComponent? thresholdComponent,
-        [NotNullWhen(true)] DamageableComponent? damageableComponent)
+    private void UpdateAlerts(EntityUid target, MobState currentMobState, MobThresholdsComponent? threshold = null,
+        DamageableComponent? damageable = null)
     {
-        if (Resolve(target, ref thresholdComponent) && Resolve(target, ref mobStateComponent) &&
-            Resolve(target, ref damageableComponent))
-            return true;
-        Logger.Error("Target entity does not have damageable or mobThreshold components!");
-        return false;
-    }
-
-    private void UpdateAlerts(EntityUid uid, MobState currentMobState, MobThresholdsComponent? threshold = null, DamageableComponent? damageable = null)
-    {
-        if (!Resolve(uid, ref threshold, ref damageable))
+        if (!Resolve(target, ref threshold, ref damageable))
             return;
 
         // don't handle alerts if they are managed by another system... BobbySim (soon TM)
@@ -286,23 +303,23 @@ public sealed class MobThresholdSystem : EntitySystem
             case MobState.Alive:
             {
                 var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
-                if (TryGetIncapPercentage(uid, damageable.TotalDamage, out var percentage))
+                if (TryGetIncapPercentage(target, damageable.TotalDamage, out var percentage))
                 {
-                    severity = (short)MathF.Floor(percentage.Value.Float() *
-                                                  _alerts.GetMaxSeverity(AlertType.HumanHealth));
+                    severity = (short) MathF.Floor(percentage.Value.Float() *
+                                                   _alerts.GetMaxSeverity(AlertType.HumanHealth));
                 }
 
-                _alerts.ShowAlert(uid, AlertType.HumanHealth, severity);
+                _alerts.ShowAlert(target, AlertType.HumanHealth, severity);
                 break;
             }
             case MobState.Critical:
             {
-                _alerts.ShowAlert(uid, AlertType.HumanCrit);
+                _alerts.ShowAlert(target, AlertType.HumanCrit);
                 break;
             }
             case MobState.Dead:
             {
-                _alerts.ShowAlert(uid, AlertType.HumanDead);
+                _alerts.ShowAlert(target, AlertType.HumanDead);
                 break;
             }
             case MobState.Invalid:
@@ -310,21 +327,68 @@ public sealed class MobThresholdSystem : EntitySystem
                 throw new ArgumentOutOfRangeException(nameof(currentMobState), currentMobState, null);
         }
     }
-}
 
-public sealed class MobThresholdDamagedEvent : EntityEventArgs
-{
-    public MobThresholdDamagedEvent(EntityUid Entity, MobStateComponent MobStateComp,
-        MobThresholdsComponent ThresholdComp, DamageableComponent DamageableComp)
+    private void OnDamaged(EntityUid target, MobThresholdsComponent mobThresholdsComponent, DamageChangedEvent args)
     {
-        this.Entity = Entity;
-        this.ThresholdComp = ThresholdComp;
-        this.DamageableComp = DamageableComp;
-        this.MobStateComp = MobStateComp;
+        var mobStateComp = EnsureComp<MobStateComponent>(target);
+        CheckThresholds(target, mobStateComp, mobThresholdsComponent, args.Damageable);
     }
 
-    public EntityUid Entity { get; init; }
-    public MobStateComponent MobStateComp { get; init; }
-    public MobThresholdsComponent ThresholdComp { get; init; }
-    public DamageableComponent DamageableComp { get; init; }
+    private void OnHandleComponentState(EntityUid target, MobThresholdsComponent component,
+        ref ComponentHandleState args)
+    {
+        if (args.Current is not MobThresholdComponentState state)
+            return;
+
+        component.Thresholds = new SortedDictionary<FixedPoint2, MobState>(state.Thresholds);
+        component.CurrentThresholdState = state.CurrentThresholdState;
+    }
+
+    private void OnGetComponentState(EntityUid target, MobThresholdsComponent component, ref ComponentGetState args)
+    {
+        args.State = new MobThresholdComponentState(component.CurrentThresholdState,
+            new Dictionary<FixedPoint2, MobState>(component.Thresholds));
+    }
+
+    private void MobThresholdMapInit(EntityUid target, MobThresholdsComponent component, MapInitEvent args)
+    {
+        // TODO remove when body sim is implemented
+        EnsureComp<MobStateComponent>(target);
+        EnsureComp<DamageableComponent>(target);
+
+        if (!component.Thresholds.TryFirstOrNull(out var newState))
+            return;
+
+        component.CurrentThresholdState = newState.Value.Value;
+
+        TriggerThreshold(target, MobState.Invalid, newState.Value.Value, thresholds: component);
+        UpdateAlerts(target, newState.Value.Value, component);
+    }
+
+    private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
+    {
+        if (component.TriggersAlerts)
+            _alerts.ClearAlertCategory(target, AlertCategory.Health);
+    }
+
+    private void OnUpdateMobState(EntityUid target, MobThresholdsComponent component, ref UpdateMobStateEvent args)
+    {
+        if (component.CurrentThresholdState != MobState.Invalid)
+            args.State = component.CurrentThresholdState;
+    }
+
+    #endregion
+}
+
+/// <summary>
+/// Event that triggers when an entity with a mob threshold is checked
+/// </summary>
+/// <param name="Target">Target entity</param>
+/// <param name="Threshold">Threshold Component owned by the Target</param>
+/// <param name="MobState">MobState Component owned by the Target</param>
+/// <param name="Damageable">Damageable Component owned by the Target</param>
+[ByRefEvent]
+public readonly record struct MobThresholdChecked(EntityUid Target, MobStateComponent MobState,
+    MobThresholdsComponent Threshold, DamageableComponent Damageable)
+{
 }
