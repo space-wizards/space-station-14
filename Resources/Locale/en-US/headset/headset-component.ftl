@@ -1,23 +1,21 @@
 # Chat window radio wrap (prefix and postfix)
 chat-radio-message-wrap = [color={$color}]{$channel} {$name} says: "{$message}"[/color]
 
-examine-encryption-key = It is providing these frequencies to the headset:
-examine-encryption-key-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
-examine-encryption-key-common-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
-
 headset-encryption-key-successfully-installed = You put the key into the headset.
 headset-encryption-key-slots-already-full = There is no place for another key.
 headset-encryption-keys-all-extracted = You pop out the encryption keys from the headset!
 headset-encryption-keys-no-keys = This headset doesn't have any encryption keys! No keys? How useless...
 headset-encryption-keys-are-locked = The headset's key slots are locked, you cannot extract the keys or add new in.
 
+examine-encryption-key-channels-prefix = It is providing these frequencies to the headset:
+
 examine-radio-frequency = It's set to broadcast over the {$frequency} frequency.
 
-examine-headset = A small screen on the headset displays the following available frequencies:
-examine-headset-channel = [color={$color}]:{$key} for {$id} ({$freq})[/color]
-examine-headset-common-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
+examine-headset-channels-prefix = A small screen on the headset displays the following available frequencies:
+examine-headset-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
 examine-headset-no-keys = It seems broken. There are no encryption keys in it.
-examine-headset-chat-prefix = Use {$prefix} for the currently tuned frequency.
+examine-headset-chat-prefix = Use this {$prefix} for your department's frequency.
+examine-headset-default-channel = It's indicates that default channel of this headset is [color={$color}]{$channel}[/color].
 
 chat-radio-common = Common
 chat-radio-centcom = CentCom

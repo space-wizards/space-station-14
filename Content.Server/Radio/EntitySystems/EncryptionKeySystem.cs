@@ -21,19 +21,8 @@ public sealed class EncryptionKeySystem : EntitySystem
             return;
         if(component.Channels.Count > 0)
         {
-            args.PushMarkup(Loc.GetString("examine-encryption-key"));
-            foreach (var id in component.Channels)
-            {
-                string ftlPattern = "examine-encryption-key-channel";
-                if (id == "Common")
-                    ftlPattern = "examine-encryption-key-common-channel";
-                var proto = _protoManager.Index<RadioChannelPrototype>(id);
-                args.PushMarkup(Loc.GetString(ftlPattern,
-                    ("color", proto.Color),
-                    ("key", proto.KeyCode),
-                    ("id", proto.LocalizedName),
-                    ("freq", proto.Frequency)));
-            }
+            args.PushMarkup(Loc.GetString("examine-encryption-key-channels-prefix"));
+            HeadsetSystem.GetChannelsExamine(component.Channels, args, _protoManager, "examine-headset-channel");
         }
     }
 }

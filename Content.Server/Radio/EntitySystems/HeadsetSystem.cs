@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Robust.Shared.Profiling;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -111,23 +112,31 @@ public sealed class HeadsetSystem : EntitySystem
         }
         else if (component.Channels.Count > 0)
         {
-            args.PushMarkup(Loc.GetString("examine-headset"));
-            foreach (var id in component.Channels)
+            args.PushMarkup(Loc.GetString("examine-headset-channels-prefix"));
+            HeadsetSystem.GetChannelsExamine(component.Channels, args, _protoManager, "examine-headset-channel");
+            args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ":h")));
+            if (component.defaultChannel != null)
             {
-                string ftlPattern = "examine-headset-channel";
-                if (id == "Common")
-                    ftlPattern = "examine-headset-common-channel";
-                var proto = _protoManager.Index<RadioChannelPrototype>(id);
-                args.PushMarkup(Loc.GetString(ftlPattern,
-                    ("color", proto.Color),
-                    ("key", proto.KeyCode),
-                    ("id", proto.LocalizedName),
-                    ("freq", proto.Frequency)));
+                var proto = _protoManager.Index<RadioChannelPrototype>(component.defaultChannel);
+                args.PushMarkup(Loc.GetString("examine-headset-default-channel", ("channel", component.defaultChannel), ("color", proto.Color)));
             }
-            args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
         }
     }
-
+    public static void GetChannelsExamine(HashSet<string> channels, ExaminedEvent args, IPrototypeManager protoManager, string channelFTLPattern)
+    {
+        foreach (var id in channels)
+        {
+            var proto = protoManager.Index<RadioChannelPrototype>(id);
+            string keyCode = "" + proto.KeyCode;
+            if (id != "Common")
+                keyCode = ":" + keyCode;
+            args.PushMarkup(Loc.GetString(channelFTLPattern,
+                ("color", proto.Color),
+                ("key", keyCode),
+                ("id", proto.LocalizedName),
+                ("freq", proto.Frequency)));
+        }
+    }
     private void OnStartup(EntityUid uid, HeadsetComponent component, ComponentStartup args)
     {
         component.KeyContainer = _container.EnsureContainer<Container>(uid, HeadsetComponent.KeyContainerName);
