@@ -16,7 +16,7 @@ artifact-effect-hint-storage = Внутренняя камера
 artifact-effect-hint-drill = Зазубренный вращатель
 artifact-effect-hint-soap = Смазанная поверхность
 artifact-effect-hint-communication = Коммуникации на дальние расстояния
-artifact-effect-hint-fixtures = Структурная поэтапность
+artifact-effect-hint-phasing = Структурная поэтапность
 artifact-effect-hint-sentience = Неврологическая активность
 
 # the triggers should be more obvious than the effects
