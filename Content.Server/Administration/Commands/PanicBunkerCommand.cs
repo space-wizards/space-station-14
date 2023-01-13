@@ -15,15 +15,13 @@ public sealed class PanicBunkerCommand : IConsoleCommand
     public string Help => "panicbunker";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var cfg = IoCManager.Resolve<IConfigurationManager>();
-
         if (args.Length > 1)
         {
             shell.WriteError(Loc.GetString("shell-need-between-arguments",("lower", 0), ("upper", 1)));
             return;
         }
 
-        var enabled = cfg.GetCVar(CCVars.PanicBunkerEnabled);
+        var enabled = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
         
         if (args.Length == 0)
         {
