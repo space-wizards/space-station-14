@@ -7,14 +7,15 @@ namespace Content.Server.PlasmaCutter.Components;
 [RegisterComponent]
 public sealed class PlasmaCutterComponent : Component
 {
-    private const int DefaultAmmoCount = 10;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("defaultFuelCount")] private const double DefaultFuelCount = 750;
 
     [ViewVariables(VVAccess.ReadOnly)]
-    [DataField("maxAmmo")] public int MaxAmmo = DefaultAmmoCount;
+    [DataField("maxFuel")] public double MaxFuel = DefaultFuelCount;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("ammo")]
-    public int CurrentAmmo = DefaultAmmoCount;
+    [DataField("fuel")]
+    public double CurrentFuel = DefaultFuelCount;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("delay")]

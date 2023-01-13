@@ -426,6 +426,9 @@
   id: SyndPlasmaCutter
   description: Good choice to do a sabotage, or unlock a locker.
   components:
+    - type: PlasmaCutter
+      maxFuel: 1500
+      fuel: 1500
     - type: UseDelay
       delay: 0.5
     - type: Sprite
@@ -451,17 +454,32 @@
         - back
 
 - type: entity
-  name: PC Ammo
+  name: Plasma container
   parent: BaseItem
   id: PCAmmo
   description: Plasma container for plasma cutter.
   components:
   - type: PlasmaCutterAmmo
   - type: Sprite
-    sprite: Objects/Tools/rcd.rsi
+    sprite: Objects/Tools/plasma_cutter.rsi
     state: ammo
   - type: Item
-    sprite: Objects/Tools/rcd.rsi
+    sprite: Objects/Tools/plasma_cutter.rsi
     heldPrefix: ammo
   - type: StaticPrice
     price: 75
+
+- type: entity
+  name: Syndicate plasma container
+  parent: PCAmmo
+  id: SyndPCAmmo
+  description: Better plasma container for plasma cutter.
+  components:
+  - type: PlasmaCutterAmmo
+    refillAmmo: 1000
+  - type: Sprite
+    sprite: Objects/Tools/synd_plasma_cutter.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Tools/synd_plasma_cutter.rsi
+    heldPrefix: ammo

@@ -2,11 +2,14 @@ using Content.Server.PlasmaCutter.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Server.Popups;
 
 namespace Content.Server.PlasmaCutter.Systems
 {
     public sealed class PlasmaCutterAmmoSystem : EntitySystem
     {
+        [Dependency] private readonly PopupSystem _popup = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -29,15 +32,15 @@ namespace Content.Server.PlasmaCutter.Systems
                 !EntityManager.TryGetComponent(target, out PlasmaCutterComponent? PlasmaCutterComponent))
                 return;
 
-            if (PlasmaCutterComponent.MaxAmmo - PlasmaCutterComponent.CurrentAmmo < component.RefillAmmo)
+            if (PlasmaCutterComponent.MaxFuel - PlasmaCutterComponent.CurrentFuel < component.RefillAmmo)
             {
-                PlasmaCutterComponent.Owner.PopupMessage(args.User, Loc.GetString("pc-ammo-component-after-interact-full-text"));
+                _popup.PopupEntity(Loc.GetString("pc-ammo-component-after-interact-full-text"), PlasmaCutterComponent.Owner, args.User);
                 args.Handled = true;
                 return;
             }
 
-            PlasmaCutterComponent.CurrentAmmo = Math.Min(PlasmaCutterComponent.MaxAmmo, PlasmaCutterComponent.CurrentAmmo + component.RefillAmmo);
-            PlasmaCutterComponent.Owner.PopupMessage(args.User, Loc.GetString("pc-ammo-component-after-interact-refilled-text"));
+            PlasmaCutterComponent.CurrentFuel = Math.Min(PlasmaCutterComponent.MaxFuel, PlasmaCutterComponent.CurrentFuel + component.RefillAmmo);
+            _popup.PopupEntity(Loc.GetString("pc-ammo-component-after-interact-refilled-text"), PlasmaCutterComponent.Owner, args.User);
             EntityManager.QueueDeleteEntity(uid);
 
             args.Handled = true;

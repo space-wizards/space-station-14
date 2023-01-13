@@ -53,7 +53,7 @@ uplink-mosin-ammo-name = Box of .30 rifle magazines
 uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 
 uplink-pc-ammo-name = Plasma cell
-uplink-pc-ammo-desc = Universal holder for plasma storage and distribution. Contains 10 charges.
+uplink-pc-ammo-desc = Universal holder for plasma storage and distribution. Contains 1000 fuel.
 
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit

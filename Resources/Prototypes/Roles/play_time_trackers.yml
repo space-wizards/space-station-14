@@ -5,10 +5,16 @@
 
 # Jobs
 - type: playTimeTracker
+  id: JobAI
+
+- type: playTimeTracker
   id: JobAtmosphericTechnician
 
 - type: playTimeTracker
   id: JobBartender
+
+- type: playTimeTracker
+  id: JobBorg
 
 - type: playTimeTracker
   id: JobBotanist

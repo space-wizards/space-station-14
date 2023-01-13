@@ -111,6 +111,9 @@
       - id: RubberStampCE
       - id: JetpackVoidFilled
       - id: ClothingHeadsetAltEngineering
+      - id: PlasmaCutter
+      - id: PCAmmo
+        amount: 2
 
 - type: entity
   id: LockerChiefMedicalOfficerFilled

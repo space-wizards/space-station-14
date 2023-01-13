@@ -26,9 +26,7 @@ namespace Content.Server.PlasmaCutter.Systems;
 
 public sealed class PlasmaCutterSystem : EntitySystem
 {
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-
     [Dependency] private readonly SharedItemSystem _item = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
@@ -49,10 +47,10 @@ public sealed class PlasmaCutterSystem : EntitySystem
     {
         if (!args.Handled && component.Activated) //Checking if cutter activated and handled by person
         {
-            if (component.CurrentAmmo >= 1) //Checking for ammo
+            if (component.CurrentFuel >= 50) //Checking for fuel
             {
                 args.BonusDamage += component.ActivatedMeleeDamageBonus; //If all checks done, adding bonus to damage
-                component.CurrentAmmo--;
+                component.CurrentFuel -= 50;
             }
             else
             {
@@ -64,7 +62,7 @@ public sealed class PlasmaCutterSystem : EntitySystem
     private void OnExamine(EntityUid uid, PlasmaCutterComponent component, ExaminedEvent args)
     {
         var msg = Loc.GetString("pc-component-examine-detail-count",
-            ("ammoCount", component.CurrentAmmo));
+            ("ammoCount", component.CurrentFuel));
         args.PushMarkup(msg); //If examined showing how many ammo left
     }
 
@@ -93,7 +91,7 @@ public sealed class PlasmaCutterSystem : EntitySystem
             appearance.SetData(ToggleVisuals.Toggled, false); //Setting visuals
         }
 
-        SoundSystem.Play(comp.successSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
+        SoundSystem.Play(comp.successSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
         comp.Activated = false;
     }
@@ -102,7 +100,7 @@ public sealed class PlasmaCutterSystem : EntitySystem
     {
         if (comp.Activated) //checks
             return;
-        if (comp.CurrentAmmo <= 0)
+        if (comp.CurrentFuel <= 50)
             return;
 
         var playerFilter = Filter.Pvs(comp.Owner, entityManager: EntityManager);
@@ -113,15 +111,14 @@ public sealed class PlasmaCutterSystem : EntitySystem
             appearance.SetData(ToggleVisuals.Toggled, true); //Setting visuals
         }
 
-        SoundSystem.Play(comp.successSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
+        SoundSystem.Play(comp.successSound.GetSound(), Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner);
 
         comp.Activated = true;
     }
 
     private async void OnAfterInteract(EntityUid uid, PlasmaCutterComponent pc, AfterInteractEvent args)
     {
-        if (args.Handled || !args.CanReach)
-            return;
+        if (args.Handled || !args.CanReach || !pc.Activated) return;
 
         if (pc.CancelToken != null)
         {
@@ -131,75 +128,64 @@ public sealed class PlasmaCutterSystem : EntitySystem
             return;
         }
 
-        if (!args.ClickLocation.IsValid(EntityManager)) return;
-
         var clickLocationMod = args.ClickLocation;
-        // Initial validity check
-        if (!clickLocationMod.IsValid(EntityManager))
-            return;
-        // Note: Ideally there'd be a better way, but there isn't right now.
         var gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
         if (!(gridIdOpt is EntityUid gridId) || !gridId.IsValid())
         {
             clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
             gridIdOpt = clickLocationMod.GetGridUid(EntityManager);
-            // Check if fixing it failed / get final grid ID
             if (!(gridIdOpt is EntityUid gridId2) || !gridId2.IsValid())
                 return;
             gridId = gridId2;
         }
 
+        if (!args.ClickLocation.IsValid(EntityManager)) return;
         var mapGrid = _mapManager.GetGrid(gridId);
-        var tile = mapGrid.GetTileRef(clickLocationMod);
-        var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
+        if (mapGrid == null) return;
 
-        args.Handled = true;
-        var user = args.User;
+        var tile = mapGrid.GetTileRef(args.ClickLocation);
+        var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
 
-        //Using a cutter isn't instantaneous
         pc.CancelToken = new CancellationTokenSource();
-        var doAfterEventArgs = new DoAfterEventArgs(user, pc.UseDelay, pc.CancelToken.Token, args.Target)
+        var doAfterEventArgs = new DoAfterEventArgs(args.User, pc.UseDelay, pc.CancelToken.Token, args.Target)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
             NeedHand = true,
-            ExtraCheck = () => IsPCStillValid(pc, args, mapGrid, tile) //All of the sanity checks are here
+            ExtraCheck = () => IsPCStillValid(pc, args, mapGrid, tile)
         };
-
         var result = await _doAfterSystem.WaitDoAfter(doAfterEventArgs);
-
         pc.CancelToken = null;
 
         if (result == DoAfterStatus.Cancelled)
             return;
 
-        if (args.Target != null && EntityManager.TryGetComponent<LockComponent>(args.Target.Value, out var Lock))
+        if (tile.IsBlockedTurf(true))
         {
-            Lock.Locked = false;
-            EntityManager.RemoveComponent<LockComponent>(args.Target.Value); //Literally destroys the lock as a tell it was broken
-            args.Handled = true;
-            SoundSystem.Play(pc.sparksSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), pc.Owner);
-            pc.CurrentAmmo--;
-            return;
+            if (args.Target != null)
+            {
+                if (EntityManager.TryGetComponent<LockComponent>(args.Target.Value, out var lockComp))
+                {
+                    lockComp.Locked = false;
+                    EntityManager.RemoveComponent<LockComponent>(args.Target.Value);
+                    SoundSystem.Play(pc.sparksSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), pc.Owner);
+                    _adminLogger.Add(LogType.PlasmaCutter, LogImpact.High, $"{ToPrettyString(args.User):user} used Plasma Cutter to unlock {ToPrettyString(args.Target.Value):target}");
+                    pc.CurrentFuel -= 50;
+                    args.Handled = true;
+                    return;
+                }
+                QueueDel(args.Target.Value);
+                _adminLogger.Add(LogType.PlasmaCutter, LogImpact.High, $"{ToPrettyString(args.User):user} used Plasma Cutter to delete {ToPrettyString(args.Target.Value):target}");
+            }
         }
-
-        if (!tile.IsBlockedTurf(true)) //Delete the turf
+        else
         {
             mapGrid.SetTile(snapPos, Tile.Empty);
             _adminLogger.Add(LogType.PlasmaCutter, LogImpact.High, $"{ToPrettyString(args.User):user} used Plasma Cutter to set grid: {tile.GridUid} tile: {snapPos} to space");
         }
-        else //Delete what the user targeted
-        {
-            if (args.Target is { Valid: true } target)
-            {              
-                _adminLogger.Add(LogType.PlasmaCutter, LogImpact.High, $"{ToPrettyString(args.User):user} used Plasma Cutter to delete {ToPrettyString(target):target}");
-                QueueDel(target); //Deleting target
-            }
-        }
-
         SoundSystem.Play(pc.sparksSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), pc.Owner);
-        pc.CurrentAmmo--;
-        if (pc.CurrentAmmo <= 0) //If no ammo, turning off cutter
+        pc.CurrentFuel -= 50;
+        if (pc.CurrentFuel <= 50) //If no fuel, turning off cutter
         {
             TurnOff(pc);
         }
@@ -215,7 +201,7 @@ public sealed class PlasmaCutterSystem : EntitySystem
             return false;
         }
 
-        if (pc.CurrentAmmo <= 0)
+        if (pc.CurrentFuel <= 50)
         {
             _popup.PopupEntity(Loc.GetString("pc-component-no-ammo-message"), pc.Owner, eventArgs.User);
             return false;
@@ -250,5 +236,23 @@ public sealed class PlasmaCutterSystem : EntitySystem
             return false;
         }
         return true;
+    }
+
+    public override void Update(float frameTime)
+    {
+        foreach (var entity in EntityManager.EntityQuery<PlasmaCutterComponent>())
+        {
+            if (entity.Activated)
+            {
+                double value = entity.CurrentFuel -= 0.01;
+                double rounded = Math.Round(value, 2);
+                entity.CurrentFuel = rounded;
+
+                if (entity.CurrentFuel <= 0)
+                {
+                    TurnOff(entity);
+                }
+            }
+        }
     }
 }

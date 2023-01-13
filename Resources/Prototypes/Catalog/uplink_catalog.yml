@@ -194,7 +194,7 @@
   id: UplinkPCAmmo
   name: uplink-pc-ammo-name
   description: uplink-pc-ammo-desc
-  productEntity: PCAmmo
+  productEntity: SyndPCAmmo
   cost:
     Telecrystal: 2
   categories:

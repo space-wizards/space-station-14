@@ -70,6 +70,17 @@
          0.1
         ]
       ]
+    },
+    {
+      "name": "icon"
+    },
+    {
+      "name": "ammo-inhand-left",
+      "directions": 4  
+    },
+    {
+      "name": "ammo-inhand-right",
+      "directions": 4  
     }
   ]
 }

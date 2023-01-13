@@ -4,6 +4,6 @@ namespace Content.Server.PlasmaCutter.Components
     public sealed class PlasmaCutterAmmoComponent : Component
     {
         //How much ammo we refill
-        [ViewVariables(VVAccess.ReadWrite)][DataField("refillAmmo")] public int RefillAmmo = 10;
+        [ViewVariables(VVAccess.ReadWrite)][DataField("refillAmmo")] public int RefillAmmo = 500;
     }
 }
