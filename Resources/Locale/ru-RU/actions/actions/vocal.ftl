@@ -1,2 +1,2 @@
 action-name-scream = Крикнуть
-scream-action-popup = Screams!
+scream-action-popup = Кричит!
