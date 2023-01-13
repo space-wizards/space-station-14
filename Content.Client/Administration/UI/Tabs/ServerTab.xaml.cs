@@ -44,6 +44,7 @@ namespace Content.Client.Administration.UI.Tabs
             {
                 _config.UnsubValueChanged(CCVars.OocEnabled, OocEnabledChanged);
                 _config.UnsubValueChanged(CCVars.LoocEnabled, LoocEnabledChanged);
+                _config.UnsubValueChanged(CCVars.PanicBunkerEnabled, BunkerEnabledChanged);
             }
         }
     }
