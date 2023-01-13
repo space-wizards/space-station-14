@@ -15,7 +15,7 @@ public partial class MobStateSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly LogManager _logManager = default!;
+    [Dependency] private readonly ILogManager _logManager = default!;
     private ISawmill _sawmill = default!;
 
     public override void Initialize()
