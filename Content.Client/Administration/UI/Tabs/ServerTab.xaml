@@ -5,7 +5,6 @@
     MinSize="50 50">
     <GridContainer
         Columns="4" >
-        <cc:CommandButton Command="restart" Text="{Loc server-reboot}" />
         <cc:CommandButton Command="shutdown" Text="{Loc server-shutdown}" />
         <cc:CommandButton Name="SetOocButton" Command="setooc" Text="{Loc server-ooc-toggle}" ToggleMode="True" />
         <cc:CommandButton Name="SetLoocButton" Command="setlooc" Text="{Loc server-looc-toggle}" ToggleMode="True" />
