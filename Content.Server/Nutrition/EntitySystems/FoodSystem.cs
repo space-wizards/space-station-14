@@ -163,8 +163,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             var transferAmount = args.Food.TransferAmount != null
-                ? FixedPoint2.Min((FixedPoint2) args.Food.TransferAmount, args.FoodSolution.CurrentVolume)
-                : args.FoodSolution.CurrentVolume;
+                ? FixedPoint2.Min((FixedPoint2) args.Food.TransferAmount, args.FoodSolution.Volume)
+                : args.FoodSolution.Volume;
 
             var split = _solutionContainerSystem.SplitSolution((args.Food).Owner, args.FoodSolution, transferAmount);
 

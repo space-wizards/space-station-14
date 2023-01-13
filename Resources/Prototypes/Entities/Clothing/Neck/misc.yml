@@ -42,3 +42,5 @@
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: Clothing
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
+  - type: TypingIndicatorClothing
+    proto: lawyer
