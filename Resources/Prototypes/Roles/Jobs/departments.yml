@@ -84,11 +84,3 @@
   roles:
   - ResearchDirector
   - Scientist
-
-- type: department
-  id: Synthetics
-  description: department-synthetics-description
-  color: "#32CD32"
-  roles:
-  - AI
-  - Borg
