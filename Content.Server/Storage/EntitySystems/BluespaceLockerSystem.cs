@@ -36,7 +36,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
     {
-        GetTargetStorage(component);
+        GetTarget(uid, component);
 
         if (component.BluespaceEffectOnInit)
             BluespaceEffect(uid, component);
@@ -57,21 +57,20 @@ public sealed class BluespaceLockerSystem : EntitySystem
         component.CancelToken?.Cancel();
 
         // Select target
-        var targetContainerStorageComponent = GetTargetStorage(component);
-        if (targetContainerStorageComponent == null)
+        var target = GetTarget(uid, component);
+        if (target == null)
             return;
-        BluespaceLockerComponent? targetContainerBluespaceComponent = null;
 
         // Close target if it is open
-        if (targetContainerStorageComponent.Open)
-            _entityStorage.CloseStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
+        if (target.Value.storageComponent.Open)
+            _entityStorage.CloseStorage(target.Value.uid, target.Value.storageComponent);
 
         // Apply bluespace effects if target is not a bluespace locker, otherwise let it handle it
-        if (!Resolve(targetContainerStorageComponent.Owner, ref targetContainerBluespaceComponent, false))
+        if (target.Value.bluespaceLockerComponent == null)
         {
             // Move contained items
             if (component.BehaviorProperties.TransportEntities || component.BehaviorProperties.TransportSentient)
-                foreach (var entity in targetContainerStorageComponent.Contents.ContainedEntities.ToArray())
+                foreach (var entity in target.Value.storageComponent.Contents.ContainedEntities.ToArray())
                 {
                     if (EntityManager.HasComponent<MindComponent>(entity))
                     {
@@ -85,13 +84,13 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // Move contained air
             if (component.BehaviorProperties.TransportGas)
             {
-                entityStorageComponent.Air.CopyFromMutable(targetContainerStorageComponent.Air);
-                targetContainerStorageComponent.Air.Clear();
+                entityStorageComponent.Air.CopyFromMutable(target.Value.storageComponent.Air);
+                target.Value.storageComponent.Air.Clear();
             }
 
             // Bluespace effects
             if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
-                BluespaceEffect(targetContainerStorageComponent.Owner, component);
+                BluespaceEffect(target.Value.uid, component);
             if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
                 BluespaceEffect(uid, component);
         }
@@ -99,9 +98,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
         DestroyAfterLimit(uid, component);
     }
 
-    private bool ValidLink(BluespaceLockerComponent component, EntityUid link)
+    private bool ValidLink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent)
     {
-        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted && link != component.Owner;
+        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted && link != locker;
     }
 
     /// <returns>True if any HashSet in <paramref name="a"/> would grant access to <paramref name="b"/></returns>
@@ -119,26 +118,26 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return false;
     }
 
-    private bool ValidAutolink(BluespaceLockerComponent component, EntityUid link)
+    private bool ValidAutolink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent)
     {
-        if (!ValidLink(component, link))
+        if (!ValidLink(locker, link, lockerComponent))
             return false;
 
-        if (component.PickLinksFromSameMap &&
-            link.ToCoordinates().GetMapId(_entityManager) != component.Owner.ToCoordinates().GetMapId(_entityManager))
+        if (lockerComponent.PickLinksFromSameMap &&
+            link.ToCoordinates().GetMapId(_entityManager) != locker.ToCoordinates().GetMapId(_entityManager))
             return false;
 
-        if (component.PickLinksFromStationGrids &&
+        if (lockerComponent.PickLinksFromStationGrids &&
             !_entityManager.HasComponent<StationMemberComponent>(link.ToCoordinates().GetGridUid(_entityManager)))
             return false;
 
-        if (component.PickLinksFromResistLockers &&
+        if (lockerComponent.PickLinksFromResistLockers &&
             !_entityManager.HasComponent<ResistLockerComponent>(link))
             return false;
 
-        if (component.PickLinksFromSameAccess)
+        if (lockerComponent.PickLinksFromSameAccess)
         {
-            _entityManager.TryGetComponent<AccessReaderComponent>(component.Owner, out var sourceAccess);
+            _entityManager.TryGetComponent<AccessReaderComponent>(locker, out var sourceAccess);
             _entityManager.TryGetComponent<AccessReaderComponent>(link, out var targetAccess);
             if (!AccessMatch(sourceAccess?.AccessLists, targetAccess?.AccessLists))
                 return false;
@@ -146,19 +145,19 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (_entityManager.HasComponent<BluespaceLockerComponent>(link))
         {
-            if (component.PickLinksFromNonBluespaceLockers)
+            if (lockerComponent.PickLinksFromNonBluespaceLockers)
                 return false;
         }
         else
         {
-            if (component.PickLinksFromBluespaceLockers)
+            if (lockerComponent.PickLinksFromBluespaceLockers)
                 return false;
         }
 
         return true;
     }
 
-    private EntityStorageComponent? GetTargetStorage(BluespaceLockerComponent component)
+    private (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component)
     {
         while (true)
         {
@@ -174,16 +173,16 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 {
                     var potentialLink = storage.Owner;
 
-                    if (!ValidAutolink(component, potentialLink))
+                    if (!ValidAutolink(lockerUid, potentialLink, component))
                         continue;
 
                     component.BluespaceLinks.Add(potentialLink);
                     if (component.AutoLinksBidirectional || component.AutoLinksUseProperties)
                     {
-                        _entityManager.EnsureComponent<BluespaceLockerComponent>(storage.Owner, out var targetBluespaceComponent);
+                        _entityManager.EnsureComponent<BluespaceLockerComponent>(potentialLink, out var targetBluespaceComponent);
 
                         if (component.AutoLinksBidirectional)
-                            targetBluespaceComponent.BluespaceLinks.Add(component.Owner);
+                            targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
 
                         if (component.AutoLinksUseProperties)
                             targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
@@ -200,8 +199,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // Attempt to select, validate, and return a link
             var links = component.BluespaceLinks.ToArray();
             var link = links[_robustRandom.Next(0, component.BluespaceLinks.Count)];
-            if (ValidLink(component, link))
-                return Comp<EntityStorageComponent>(link);
+            if (ValidLink(lockerUid, link, component))
+                return (link, Comp<EntityStorageComponent>(link), CompOrNull<BluespaceLockerComponent>(link));
             component.BluespaceLinks.Remove(link);
         }
     }
@@ -240,8 +239,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
 
         // Select target
-        var targetContainerStorageComponent = GetTargetStorage(component);
-        if (targetContainerStorageComponent == null)
+        var target = GetTarget(uid, component);
+        if (target == null)
             return;
 
         // Move contained items
@@ -251,46 +250,46 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 if (EntityManager.HasComponent<MindComponent>(entity))
                 {
                     if (component.BehaviorProperties.TransportSentient)
-                        targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
+                        target.Value.storageComponent.Contents.Insert(entity, EntityManager);
                 }
                 else if (component.BehaviorProperties.TransportEntities)
-                    targetContainerStorageComponent.Contents.Insert(entity, EntityManager);
+                    target.Value.storageComponent.Contents.Insert(entity, EntityManager);
             }
 
         // Move contained air
         if (component.BehaviorProperties.TransportGas)
         {
-            targetContainerStorageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
+            target.Value.storageComponent.Air.CopyFromMutable(entityStorageComponent.Air);
             entityStorageComponent.Air.Clear();
         }
 
         // Open and empty target
-        if (targetContainerStorageComponent.Open)
+        if (target.Value.storageComponent.Open)
         {
-            _entityStorage.EmptyContents(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
-            _entityStorage.ReleaseGas(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
+            _entityStorage.EmptyContents(target.Value.uid, target.Value.storageComponent);
+            _entityStorage.ReleaseGas(target.Value.uid, target.Value.storageComponent);
         }
         else
         {
-            if (targetContainerStorageComponent.IsWeldedShut)
+            if (target.Value.storageComponent.IsWeldedShut)
             {
                 // It gets bluespaced open...
-                _weldableSystem.ForceWeldedState(targetContainerStorageComponent.Owner, false);
-                if (targetContainerStorageComponent.IsWeldedShut)
-                    targetContainerStorageComponent.IsWeldedShut = false;
+                _weldableSystem.ForceWeldedState(target.Value.uid, false);
+                if (target.Value.storageComponent.IsWeldedShut)
+                    target.Value.storageComponent.IsWeldedShut = false;
             }
             LockComponent? lockComponent = null;
-            if (Resolve(targetContainerStorageComponent.Owner, ref lockComponent, false) && lockComponent.Locked)
-                _lockSystem.Unlock(lockComponent.Owner, lockComponent.Owner, lockComponent);
+            if (Resolve(target.Value.uid, ref lockComponent, false) && lockComponent.Locked)
+                _lockSystem.Unlock(target.Value.uid, target.Value.uid, lockComponent);
 
-            _entityStorage.OpenStorage(targetContainerStorageComponent.Owner, targetContainerStorageComponent);
+            _entityStorage.OpenStorage(target.Value.uid, target.Value.storageComponent);
         }
 
         // Bluespace effects
         if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
             BluespaceEffect(uid, component);
         if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
-            BluespaceEffect(targetContainerStorageComponent.Owner, component);
+            BluespaceEffect(target.Value.uid, component);
 
         DestroyAfterLimit(uid, component);
     }
