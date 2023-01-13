@@ -18,7 +18,7 @@ public sealed class BluespaceLockerLink : StationEventSystem
     {
         base.Started();
 
-        var targets = EntityManager.EntityQuery<EntityStorageComponent, ResistLockerComponent>().ToList();
+        var targets = EntityQuery<EntityStorageComponent, ResistLockerComponent>().ToList();
         _robustRandom.Shuffle(targets);
 
         foreach (var target in targets)

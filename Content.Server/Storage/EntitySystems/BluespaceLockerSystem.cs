@@ -44,7 +44,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
     {
-        _entityManager.SpawnEntity(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
+        Spawn(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
     }
 
     private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
@@ -128,22 +128,22 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (lockerComponent.PickLinksFromStationGrids &&
-            !_entityManager.HasComponent<StationMemberComponent>(link.ToCoordinates().GetGridUid(_entityManager)))
+            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(_entityManager)))
             return false;
 
         if (lockerComponent.PickLinksFromResistLockers &&
-            !_entityManager.HasComponent<ResistLockerComponent>(link))
+            !HasComp<ResistLockerComponent>(link))
             return false;
 
         if (lockerComponent.PickLinksFromSameAccess)
         {
-            _entityManager.TryGetComponent<AccessReaderComponent>(locker, out var sourceAccess);
-            _entityManager.TryGetComponent<AccessReaderComponent>(link, out var targetAccess);
+            TryComp<AccessReaderComponent>(locker, out var sourceAccess);
+            TryComp<AccessReaderComponent>(link, out var targetAccess);
             if (!AccessMatch(sourceAccess?.AccessLists, targetAccess?.AccessLists))
                 return false;
         }
 
-        if (_entityManager.HasComponent<BluespaceLockerComponent>(link))
+        if (HasComp<BluespaceLockerComponent>(link))
         {
             if (lockerComponent.PickLinksFromNonBluespaceLockers)
                 return false;
@@ -165,7 +165,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             if (component.BluespaceLinks.Count < component.MinBluespaceLinks)
             {
                 // Get an shuffle the list of all EntityStorages
-                var storages = _entityManager.EntityQuery<EntityStorageComponent>().ToArray();
+                var storages = EntityQuery<EntityStorageComponent>().ToArray();
                 _robustRandom.Shuffle(storages);
 
                 // Add valid candidates till MinBluespaceLinks is met
@@ -179,7 +179,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
                     component.BluespaceLinks.Add(potentialLink);
                     if (component.AutoLinksBidirectional || component.AutoLinksUseProperties)
                     {
-                        _entityManager.EnsureComponent<BluespaceLockerComponent>(potentialLink, out var targetBluespaceComponent);
+                        var targetBluespaceComponent = EnsureComp<BluespaceLockerComponent>(potentialLink);
 
                         if (component.AutoLinksBidirectional)
                             targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
@@ -227,7 +227,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         // Do delay
         if (doDelay && component.BehaviorProperties.Delay > 0)
         {
-            _entityManager.EnsureComponent<DoAfterComponent>(uid);
+            EnsureComp<DoAfterComponent>(uid);
             component.CancelToken = new CancellationTokenSource();
 
             _doAfterSystem.DoAfter(
@@ -320,10 +320,10 @@ public sealed class BluespaceLockerSystem : EntitySystem
                     ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:
-                _entityManager.QueueDeleteEntity(uid);
+                QueueDel(uid);
                 break;
             case BluespaceLockerDestroyType.DeleteComponent:
-                _entityManager.RemoveComponent<BluespaceLockerComponent>(uid);
+                RemComp<BluespaceLockerComponent>(uid);
                 break;
         }
     }
