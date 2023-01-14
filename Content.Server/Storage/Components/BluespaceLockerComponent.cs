@@ -69,7 +69,7 @@ public sealed class BluespaceLockerComponent : Component
     [DataField("autoLinksUseProperties"), ViewVariables(VVAccess.ReadWrite)]
     public bool AutoLinksUseProperties;
 
-    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField("usesSinceLinkClear"), ViewVariables(VVAccess.ReadOnly)]
     public int UsesSinceLinkClear;
 
     /// <summary>

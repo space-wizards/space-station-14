@@ -169,6 +169,7 @@
         clearLinksEvery: 2
       autoLinksBidirectional: true
       autoLinksUseProperties: true
+      usesSinceLinkClear: -1 # hacky
       autoLinkProperties:
         invalidateOneWayLinks: true
         transportEntities: false
