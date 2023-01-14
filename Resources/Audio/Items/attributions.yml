@@ -16,10 +16,10 @@
 - files: ["brokenbikehorn.ogg"] (modifed by github: brainfood1183 from scaryhorn.ogg) 
   license: "CC-BY-SA-3.0"
   copyright: "theOperand"
-  source: "https://github.com/tgstation/tgstation/pull/5079/files#diff-78c4d536b6f4ae7c2b4e1b036f261f21b11d063a71871e5d1bf3b89a7e20ef7f/sound/spookoween/scary_horn.ogg"
+  source: "https://github.com/tgstation/tgstation/blob/9a378933d2cfcb2c6692f5c60fbce979ac4e47c5/sound/spookoween/scary_horn.ogg"
 
 - files: ["airhorn.ogg"]
   license: "CC-BY-SA-3.0"
   copyright: "panurgomatic"
-  source: "https://github.com/tgstation/tgstation/commit/529d97cb1c105bcd548e95a9c9070bbf5253dd81#diff-6ca02ba685dd1a61b14b9064bd56602f9118813daff2ff6c41cf1c0fa5144a86/sound/items/AirHorn.ogg"
+  source: "https://github.com/tgstation/tgstation/blob/529d97cb1c105bcd548e95a9c9070bbf5253dd81/sound/items/AirHorn.ogg"
 
