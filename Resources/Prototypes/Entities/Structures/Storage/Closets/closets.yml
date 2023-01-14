@@ -163,6 +163,7 @@
       pickLinksFromSameMap: true
       minBluespaceLinks: 1
       behaviorProperties:
+        clearLinksDebluespaces: true
         transportEntities: false
         bluespaceEffectOnTeleportSource: true
         clearLinksEvery: 2
