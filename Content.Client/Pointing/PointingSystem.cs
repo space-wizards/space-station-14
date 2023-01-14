@@ -1,6 +1,6 @@
 using Content.Client.Pointing.Components;
 using Content.Client.Gravity;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
@@ -10,7 +10,7 @@ namespace Content.Client.Pointing;
 
 public sealed class PointingSystem : SharedPointingSystem
 {
-    [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly FloatingVisualizerSystem _floatingSystem = default!;
 
     public override void Initialize()

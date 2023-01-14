@@ -158,6 +158,20 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
+            var oldMapId = args.OldMapId;
+            var mapId = args.Transform.MapID;
+
+            // If we change maps then reset eye rotation entirely.
+            if (oldMapId != mapId)
+            {
+                component.RelativeEntity = relative;
+                component.TargetRelativeRotation = Angle.Zero;
+                component.RelativeRotation = Angle.Zero;
+                component.LerpAccumulator = 0f;
+                Dirty(component);
+                return;
+            }
+
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {

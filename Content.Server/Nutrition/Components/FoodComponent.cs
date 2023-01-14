@@ -71,11 +71,11 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 if (TransferAmount == null)
-                    return solution.CurrentVolume == 0 ? 0 : 1;
+                    return solution.Volume == 0 ? 0 : 1;
 
-                return solution.CurrentVolume == 0
+                return solution.Volume == 0
                     ? 0
-                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (FixedPoint2)TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2)TransferAmount).Float()));
             }
         }
     }
