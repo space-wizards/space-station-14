@@ -118,7 +118,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Clears the servers sensor status list and clears _activeServer if the server being removed is the one that's currently active
+    /// Clears the servers sensor status list
     /// </summary>
     private void OnRemove(EntityUid uid, CrewMonitoringServerComponent component, ComponentRemove args)
     {
@@ -126,7 +126,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Disconnects and clears _activeServer if the server losing power is the currently active one
+    /// Disconnects the server losing power
     /// </summary>
     private void OnPowerChanged(EntityUid uid, CrewMonitoringServerComponent component, ref PowerChangedEvent args)
     {
@@ -193,10 +193,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         server.SensorStatus.Clear();
         server.Active = false;
 
-
-        if (!_deviceNetworkSystem.IsDeviceConnected(uid, device))
-            return;
-
-        _deviceNetworkSystem.DisconnectDevice(uid, device);
+        _deviceNetworkSystem.DisconnectDevice(uid, device, false);
     }
 }

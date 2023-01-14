@@ -15,7 +15,7 @@ namespace Content.Server.DeviceNetwork.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<StationLimitedNetworkComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<StationLimitedNetworkComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<StationLimitedNetworkComponent, BeforePacketSentEvent>(OnBeforePacketSent);
         }
 
@@ -33,7 +33,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <summary>
         /// Set the station id to the one the entity is on when the station limited component is added
         /// </summary>
-        private void OnComponentInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, ComponentInit args)
+        private void OnMapInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, MapInitEvent args)
         {
             networkComponent.StationId = _stationSystem?.GetOwningStation(uid);
         }
@@ -49,6 +49,11 @@ namespace Content.Server.DeviceNetwork.Systems
             }
         }
 
+        /// <summary>
+        /// Compares the station IDs of the sending and receiving network components.
+        /// Returns false if either of them doesn't have a station ID or if their station ID isn't equal.
+        /// Returns true even when the sending entity isn't tied to a station if `allowNonStationPackets` is set to true.
+        /// </summary>
         private bool CheckStationId(EntityUid senderUid, bool allowNonStationPackets, EntityUid? receiverStationId, StationLimitedNetworkComponent? sender = null)
         {
             if (!receiverStationId.HasValue)

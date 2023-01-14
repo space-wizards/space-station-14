@@ -42,7 +42,7 @@ namespace Content.Server.Medical.CrewMonitoring
                 return;
 
             component.ConnectedSensors = sensorStatus;
-            UpdateUserInterface(uid);
+            UpdateUserInterface(uid, component);
         }
 
         private void OnUIOpened(EntityUid uid, CrewMonitoringConsoleComponent component, BoundUIOpenedEvent args)
