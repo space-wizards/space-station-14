@@ -10,7 +10,6 @@ using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
-using Content.Server.MobState;
 using Content.Server.Visible;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
@@ -21,6 +20,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Revenant.Components;
 

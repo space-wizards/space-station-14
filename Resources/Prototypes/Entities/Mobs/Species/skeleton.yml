@@ -31,6 +31,7 @@
       types:
         Bloodloss: 0
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
