@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                     var insertTransform = EntityManager.GetComponent<TransformComponent>(toInsert);
                     var unitTransform = EntityManager.GetComponent<TransformComponent>(unit);
                     // Not in a tube yet
-                    Assert.That(insertTransform.Parent, Is.EqualTo(unitTransform));
+                    Assert.That(insertTransform.ParentUid, Is.EqualTo(unit));
                 }, after: new[] {typeof(SharedDisposalUnitSystem)});
             }
         }
