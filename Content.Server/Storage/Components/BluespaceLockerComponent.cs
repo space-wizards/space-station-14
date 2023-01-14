@@ -142,6 +142,12 @@ public record BluespaceLockerBehaviorProperties
     public int DestroyAfterUses { get; set; } = -1;
 
     /// <summary>
+    /// Minimum number of entities that must be transported to count a use for <see cref="DestroyAfterUses"/>
+    /// </summary>
+    [DataField("destroyAfterUsesMinItemsToCountUse"), ViewVariables(VVAccess.ReadWrite)]
+    public int DestroyAfterUsesMinItemsToCountUse { get; set; }
+
+    /// <summary>
     /// How to destroy the locker after it runs out of uses
     /// </summary>
     [DataField("destroyType"), ViewVariables(VVAccess.ReadWrite)]

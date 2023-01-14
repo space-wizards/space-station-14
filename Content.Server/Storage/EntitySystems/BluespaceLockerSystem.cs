@@ -50,6 +50,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
     {
         EntityStorageComponent? entityStorageComponent = null;
+        int transportedEntities = 0;
 
         if (!Resolve(uid, ref entityStorageComponent))
             return;
@@ -79,11 +80,17 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 {
                     if (EntityManager.HasComponent<MindComponent>(entity))
                     {
-                        if (component.BehaviorProperties.TransportSentient)
-                            entityStorageComponent.Contents.Insert(entity, EntityManager);
+                        if (!component.BehaviorProperties.TransportSentient)
+                            continue;
+
+                        entityStorageComponent.Contents.Insert(entity, EntityManager);
+                        transportedEntities++;
                     }
                     else if (component.BehaviorProperties.TransportEntities)
+                    {
                         entityStorageComponent.Contents.Insert(entity, EntityManager);
+                        transportedEntities++;
+                    }
                 }
 
             // Move contained air
@@ -100,7 +107,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 BluespaceEffect(uid, component);
         }
 
-        DestroyAfterLimit(uid, component);
+        DestroyAfterLimit(uid, component, transportedEntities);
     }
 
     private bool ValidLink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent)
@@ -236,6 +243,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     private void PostClose(EntityUid uid, BluespaceLockerComponent component, bool doDelay = true)
     {
         EntityStorageComponent? entityStorageComponent = null;
+        int transportedEntities = 0;
 
         if (!Resolve(uid, ref entityStorageComponent))
             return;
@@ -267,11 +275,17 @@ public sealed class BluespaceLockerSystem : EntitySystem
             {
                 if (EntityManager.HasComponent<MindComponent>(entity))
                 {
-                    if (component.BehaviorProperties.TransportSentient)
-                        target.Value.storageComponent.Contents.Insert(entity, EntityManager);
+                    if (!component.BehaviorProperties.TransportSentient)
+                        continue;
+
+                    target.Value.storageComponent.Contents.Insert(entity, EntityManager);
+                    transportedEntities++;
                 }
                 else if (component.BehaviorProperties.TransportEntities)
+                {
                     target.Value.storageComponent.Contents.Insert(entity, EntityManager);
+                    transportedEntities++;
+                }
             }
 
         // Move contained air
@@ -309,11 +323,14 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
             BluespaceEffect(target.Value.uid, component);
 
-        DestroyAfterLimit(uid, component);
+        DestroyAfterLimit(uid, component, transportedEntities);
     }
 
-    private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component)
+    private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component, int transportedEntities)
     {
+        if (component.BehaviorProperties.DestroyAfterUsesMinItemsToCountUse >= transportedEntities)
+            return;
+
         if (component.BehaviorProperties.ClearLinksEvery != -1)
         {
             component.UsesSinceLinkClear++;
