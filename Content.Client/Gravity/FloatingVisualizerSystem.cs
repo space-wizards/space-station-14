@@ -14,7 +14,7 @@ public sealed class FloatingVisualizerSystem : SharedFloatingVisualizerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedFloatingVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<FloatingVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
     /// <inheritdoc/>
@@ -51,11 +51,11 @@ public sealed class FloatingVisualizerSystem : SharedFloatingVisualizerSystem
             AnimationSystem.Play(uid, animation, animationKey);
     }
 
-    private void OnAnimationCompleted(EntityUid uid, SharedFloatingVisualsComponent component, AnimationCompletedEvent args)
+    private void OnAnimationCompleted(EntityUid uid, FloatingVisualsComponent component, AnimationCompletedEvent args)
     {
         if (args.Key != component.AnimationKey)
             return;
 
-        FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime, component.HasGravity);
+        FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime, !component.CanFloat);
     }
 }

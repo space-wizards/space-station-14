@@ -7,15 +7,17 @@ namespace Content.Shared.Gravity;
 /// </summary>
 public abstract class SharedFloatingVisualizerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedGravitySystem GravitySystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedFloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<FloatingVisualsComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<GravityChangedEvent>(OnGravityChanged);
-        SubscribeLocalEvent<SharedFloatingVisualsComponent, EntParentChangedMessage>(OnEntParentChanged);
-        SubscribeLocalEvent<SharedFloatingVisualsComponent, ComponentGetState>(OnComponentGetState);
-        SubscribeLocalEvent<SharedFloatingVisualsComponent, ComponentHandleState>(OnComponentHandleState);
+        SubscribeLocalEvent<FloatingVisualsComponent, EntParentChangedMessage>(OnEntParentChanged);
+        SubscribeLocalEvent<FloatingVisualsComponent, ComponentGetState>(OnComponentGetState);
+        SubscribeLocalEvent<FloatingVisualsComponent, ComponentHandleState>(OnComponentHandleState);
     }
 
     /// <summary>
@@ -23,59 +25,54 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     /// </summary>
     public virtual void FloatAnimation(EntityUid uid, Vector2 offset, string animationKey, float animationTime, bool stop = false) { }
 
-    protected bool HasGravity(EntityUid uid, SharedFloatingVisualsComponent component, EntityUid? gridUid = null)
+    protected bool CanFloat(EntityUid uid, FloatingVisualsComponent component, TransformComponent? transform = null)
     {
-        var grid = gridUid ?? Transform(uid).GridUid;
-        if (grid == null || !TryComp<GravityComponent>(grid, out var gravity) || !gravity.Enabled)
-        {
-            component.HasGravity = false;
-            Dirty(component);
-            return false;
-        } else {
-            component.HasGravity = true;
-            Dirty(component);
-            return true;
-        }
+        component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
+        Dirty(component);
+        return component.CanFloat;
     }
 
-    private void OnComponentStartup(EntityUid uid, SharedFloatingVisualsComponent component, ComponentStartup args)
+    private void OnComponentStartup(EntityUid uid, FloatingVisualsComponent component, ComponentStartup args)
     {
-        if (!HasGravity(uid, component))
+        if (CanFloat(uid, component))
             FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
     }
 
     private void OnGravityChanged(ref GravityChangedEvent args)
     {
-        foreach (var component in EntityQuery<SharedFloatingVisualsComponent>())
+        foreach (var (floating, transform) in EntityQuery<FloatingVisualsComponent, TransformComponent>(true))
         {
-            var uid = component.Owner;
-            component.HasGravity = args.HasGravity;
-            Dirty(component);
+            if (transform.GridUid != args.ChangedGridIndex)
+                continue;
 
+            floating.CanFloat = !args.HasGravity;
+            Dirty(floating);
+
+            var uid = floating.Owner;
             if (!args.HasGravity)
-                FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
+                FloatAnimation(uid, floating.Offset, floating.AnimationKey, floating.AnimationTime);
         }
     }
 
-    private void OnEntParentChanged(EntityUid uid, SharedFloatingVisualsComponent component, ref EntParentChangedMessage args)
+    private void OnEntParentChanged(EntityUid uid, FloatingVisualsComponent component, ref EntParentChangedMessage args)
     {
-        var gridUid = args.Transform.GridUid;
-        if (!HasGravity(uid, component, gridUid))
+        var transform = args.Transform;
+        if (CanFloat(uid, component, transform))
             FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
     }
 
-    private void OnComponentGetState(EntityUid uid, SharedFloatingVisualsComponent component, ref ComponentGetState args)
+    private void OnComponentGetState(EntityUid uid, FloatingVisualsComponent component, ref ComponentGetState args)
     {
-        args.State = new SharedFloatingVisualsComponentState(component.AnimationTime, component.Offset, component.HasGravity);
+        args.State = new SharedFloatingVisualsComponentState(component.AnimationTime, component.Offset, component.CanFloat);
     }
 
-    private void OnComponentHandleState(EntityUid uid, SharedFloatingVisualsComponent component, ref ComponentHandleState args)
+    private void OnComponentHandleState(EntityUid uid, FloatingVisualsComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not SharedFloatingVisualsComponentState state)
             return;
 
         component.AnimationTime = state.AnimationTime;
         component.Offset = state.Offset;
-        component.HasGravity = state.HasGravity;
+        component.CanFloat = state.HasGravity;
     }
 }
