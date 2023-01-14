@@ -366,7 +366,7 @@
       minBluespaceLinks: 1
       bluespaceEffectOnInit: true
       behaviorProperties:
-        delay: 0.5
+        delay: 1
         bluespaceEffectOnTeleportSource: true
         bluespaceEffectOnTeleportTarget: true
         destroyAfterUses: 2
