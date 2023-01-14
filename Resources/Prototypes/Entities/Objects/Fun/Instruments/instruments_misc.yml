@@ -140,16 +140,12 @@
        path: /Audio/Items/bikehorn.ogg
   - type: Instrument
     program: 124
-  - type: Item
-    size: 10
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 1.5
   - type: StepTrigger
   - type: CollisionWake
     enabled: false
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
     - shape:
