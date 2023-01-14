@@ -69,8 +69,11 @@ public sealed class BluespaceLockerComponent : Component
     [DataField("autoLinksUseProperties"), ViewVariables(VVAccess.ReadWrite)]
     public bool AutoLinksUseProperties;
 
-    [DataField("usesSinceLinkClear"), ViewVariables(VVAccess.ReadOnly)]
+    [DataField("usesSinceLinkClear"), ViewVariables(VVAccess.ReadWrite)]
     public int UsesSinceLinkClear;
+
+    [DataField("bluespaceEffectMinInterval"), ViewVariables(VVAccess.ReadOnly)]
+    public double BluespaceEffectNextTime { get; set; }
 
     /// <summary>
     /// Determines properties of automatically created links
@@ -147,6 +150,13 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("bluespaceEffectOnTeleportTarget"), ViewVariables(VVAccess.ReadWrite)]
     public bool BluespaceEffectOnTeleportTarget { get; set; }
+
+    /// <summary>
+    /// Determines the minimum interval between bluespace effects
+    /// </summary>
+    /// <seealso cref="BluespaceEffectPrototype"/>
+    [DataField("bluespaceEffectMinInterval"), ViewVariables(VVAccess.ReadWrite)]
+    public double BluespaceEffectMinInterval { get; set; } = 2;
 
     /// <summary>
     /// Uses left before the locker is destroyed. -1 indicates infinite

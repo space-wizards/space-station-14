@@ -11,6 +11,7 @@ using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -18,6 +19,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly LockSystem _lockSystem = default!;
@@ -44,6 +46,15 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
     {
+        if (component.BehaviorProperties.BluespaceEffectMinInterval > 0)
+        {
+            var curTimeSec = _timing.CurTime.TotalSeconds;
+            if (curTimeSec < component.BluespaceEffectNextTime)
+                return;
+
+            component.BluespaceEffectNextTime = curTimeSec + component.BehaviorProperties.BluespaceEffectMinInterval;
+        }
+
         Spawn(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
     }
 
