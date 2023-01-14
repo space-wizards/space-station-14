@@ -41,21 +41,22 @@ public sealed class BluespaceLockerSystem : EntitySystem
         GetTarget(uid, component);
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
-            BluespaceEffect(uid, component);
+            BluespaceEffect(uid, component, component);
     }
 
-    private void BluespaceEffect(EntityUid uid, BluespaceLockerComponent component)
+    private void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent)
     {
-        if (component.BehaviorProperties.BluespaceEffectMinInterval > 0)
-        {
-            var curTimeSec = _timing.CurTime.TotalSeconds;
-            if (curTimeSec < component.BluespaceEffectNextTime)
-                return;
+        if (Resolve(effectTargetUid, ref effectTargetComponent, false))
+            if (effectTargetComponent!.BehaviorProperties.BluespaceEffectMinInterval > 0)
+            {
+                var curTimeTicks = _timing.CurTick.Value;
+                if (curTimeTicks < effectTargetComponent.BluespaceEffectNextTime)
+                    return;
 
-            component.BluespaceEffectNextTime = curTimeSec + component.BehaviorProperties.BluespaceEffectMinInterval;
-        }
+                effectTargetComponent.BluespaceEffectNextTime = curTimeTicks + (uint) (_timing.TickRate * effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval);
+            }
 
-        Spawn(component.BehaviorProperties.BluespaceEffectPrototype, uid.ToCoordinates());
+        Spawn(effectSourceComponent.BehaviorProperties.BluespaceEffectPrototype, effectTargetUid.ToCoordinates());
     }
 
     private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
@@ -116,9 +117,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
             // Bluespace effects
             if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
-                BluespaceEffect(target.Value.uid, component);
+                BluespaceEffect(target.Value.uid, component, target.Value.bluespaceLockerComponent);
             if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
-                BluespaceEffect(uid, component);
+                BluespaceEffect(uid, component, component);
         }
 
         DestroyAfterLimit(uid, component, transportedEntities);
@@ -352,9 +353,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         // Bluespace effects
         if (component.BehaviorProperties.BluespaceEffectOnTeleportSource)
-            BluespaceEffect(uid, component);
+            BluespaceEffect(uid, component, component);
         if (component.BehaviorProperties.BluespaceEffectOnTeleportTarget)
-            BluespaceEffect(target.Value.uid, component);
+            BluespaceEffect(target.Value.uid, component, target.Value.bluespaceLockerComponent);
 
         DestroyAfterLimit(uid, component, transportedEntities);
     }

@@ -73,7 +73,7 @@ public sealed class BluespaceLockerComponent : Component
     public int UsesSinceLinkClear;
 
     [DataField("bluespaceEffectMinInterval"), ViewVariables(VVAccess.ReadOnly)]
-    public double BluespaceEffectNextTime { get; set; }
+    public uint BluespaceEffectNextTime { get; set; }
 
     /// <summary>
     /// Determines properties of automatically created links
