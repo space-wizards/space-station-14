@@ -143,7 +143,7 @@ namespace Content.Shared.Throwing
         /// <summary>
         ///     Raises collision events on the thrown and target entities.
         /// </summary>
-        public void ThrowCollideInteraction(EntityUid? user, IPhysBody thrown, IPhysBody target)
+        public void ThrowCollideInteraction(EntityUid? user, PhysicsComponent thrown, PhysicsComponent target)
         {
             if (user is not null)
                 _adminLogger.Add(LogType.ThrowHit, LogImpact.Low,

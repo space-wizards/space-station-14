@@ -86,7 +86,7 @@ public sealed partial class MappingSystem : EntitySystem
             {
                 CheckCanInteract = false,
                 Event = actionEvent,
-                DisplayName = tileDef.Name,
+                DisplayName = Loc.GetString(tileDef.Name),
                 Icon = tileIcon
             };
 

@@ -56,12 +56,6 @@ namespace Content.Server.Medical.BiomassReclaimer
         public float YieldPerUnitMass = default;
 
         /// <summary>
-        /// The entity that is output by the reclaimer
-        /// </summary>
-        [DataField("outputEntityId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-        public string OutputEntityId = "MaterialBiomass";
-
-        /// <summary>
         /// The base yield per mass unit when no components are upgraded.
         /// </summary>
         [DataField("baseYieldPerUnitMass")]

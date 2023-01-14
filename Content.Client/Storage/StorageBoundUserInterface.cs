@@ -2,6 +2,7 @@ using Content.Client.Examine;
 using Content.Client.Storage.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
@@ -72,7 +73,7 @@ namespace Content.Client.Storage
             }
             else if (args.Function == EngineKeyFunctions.UseSecondary)
             {
-                entitySys.GetEntitySystem<VerbSystem>().VerbMenu.OpenVerbMenu(entity);
+                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(entity);
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {

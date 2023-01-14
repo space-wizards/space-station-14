@@ -46,7 +46,7 @@ namespace Content.Server.AME
                 if (_entMan.TryGetComponent(nodeOwner, out AMEShieldComponent? shield))
                 {
                     var xform = _entMan.GetComponent<TransformComponent>(nodeOwner);
-                    if (xform.GridUid != grid?.GridEntityId && !mapManager.TryGetGrid(xform.GridUid, out grid))
+                    if (xform.GridUid != grid?.Owner && !mapManager.TryGetGrid(xform.GridUid, out grid))
                         continue;
 
                     if (grid == null)

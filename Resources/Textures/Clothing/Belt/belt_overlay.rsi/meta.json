@@ -161,6 +161,10 @@
     {
       "name": "tray-equipped-BELT",
       "directions": 4
+    },
+    {
+      "name": "x4-equipped-BELT",
+      "directions": 4
     }
   ]
 }
