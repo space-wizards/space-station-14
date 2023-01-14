@@ -59,7 +59,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
                 // // Now let's make the player enter a climbing transitioning state.
                 // climbing.IsClimbing = true;
                 // EntitySystem.Get<ClimbSystem>().MoveEntityToward(human, table, climbing:climbing);
-                // var body = entityManager.GetComponent<IPhysBody>(human);
+                // var body = entityManager.GetComponent<PhysicsComponent>(human);
                 // // TODO: Check it's climbing
                 //
                 // // Force the player out of climb state. It should immediately remove the ClimbController.

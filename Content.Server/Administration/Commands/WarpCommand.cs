@@ -8,6 +8,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Administration.Commands
 {
@@ -121,7 +122,7 @@ namespace Content.Server.Administration.Commands
                 var xform = entMan.GetComponent<TransformComponent>(playerEntity);
                 xform.Coordinates = coords;
                 xform.AttachToGridOrMap();
-                if (entMan.TryGetComponent(playerEntity, out IPhysBody? physics))
+                if (entMan.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     physics.LinearVelocity = Vector2.Zero;
                 }

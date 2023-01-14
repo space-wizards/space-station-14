@@ -25,8 +25,6 @@
     - node: missingWires
       entity: UnfinishedMachineFrame
       actions:
-        - !type:SpriteStateChange
-          state: "box_0"
         - !type:EmptyAllContainers
       edges:
         - to: machineFrame
@@ -69,18 +67,28 @@
             - tool: Screwing
               doAfter: 0.5
 
-        - to: missingWires
+        - to: machineFrame
           conditions:
             - !type:EntityAnchored
-          completed:
-            - !type:SpawnPrototype
-              prototype: CableApcStack1
+            - !type:ContainerNotEmpty
+              container: machine_board
           steps:
             - tool: Prying
               doAfter: 2
               completed:
                 - !type:EmptyAllContainers
                 - !type:MachineFrameRegenerateProgress
+
+        - to: missingWires
+          conditions:
+            - !type:EntityAnchored
+            - !type:ContainerEmpty
+              container: machine_board
+              examineText: construction-condition-machine-container-empty
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
             - tool: Cutting
               doAfter: 0.25
 
