@@ -34,7 +34,7 @@ public sealed partial class AnomalyScannerMenu : FancyWindow
             msg.AddMarkup(Loc.GetString("anomaly-scanner-pulse-timer", ("time", timestring)));
         }
 
-        Label.SetMarkup(msg.ToMarkup());
+        TextDisplay.SetMarkup(msg.ToMarkup());
     }
 
     protected override void FrameUpdate(FrameEventArgs args)

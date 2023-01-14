@@ -51,3 +51,23 @@ public sealed class AnomalyScannerUserInterfaceState : BoundUserInterfaceState
         NextPulseTime = nextPulseTime;
     }
 }
+
+[Serializable, NetSerializable]
+public enum AnomalyGeneratorUiKey : byte
+{
+    Key
+}
+
+[Serializable, NetSerializable]
+public sealed class AnomalyGeneratorUserInterfaceState : BoundUserInterfaceState
+{
+    public TimeSpan? CooldownEndTime;
+
+    public float FuelCompletion;
+
+    public AnomalyGeneratorUserInterfaceState(TimeSpan? cooldownEndTime, float fuelCompletion)
+    {
+        CooldownEndTime = cooldownEndTime;
+        FuelCompletion = fuelCompletion;
+    }
+}

@@ -5,7 +5,7 @@
     MinSize="350 260"
     SetSize="350 260">
     <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="10 0 10 10">
-        <RichTextLabel Name="Label"></RichTextLabel>
+        <RichTextLabel Name="TextDisplay"></RichTextLabel>
     </BoxContainer>
 </controls:FancyWindow>
 

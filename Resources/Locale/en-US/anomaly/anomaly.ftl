@@ -20,3 +20,10 @@ anomaly-scanner-particle-danger = - [color=crimson]Danger type:[/color] {$type}
 anomaly-scanner-particle-unstable = - [color=plum]Unstable type:[/color] {$type}
 anomaly-scanner-particle-containment = - [color=goldenrod]Containment type:[/color] {$type}
 anomaly-scanner-pulse-timer = Time until next pulse: [color=gray]{$time}[/color]
+
+anomaly-generator-ui-title = anomaly generator
+anomaly-generator-fuel-display = Fuel:
+anomaly-generator-cooldown = Cooldown: [color=gray]{$time}[/color]
+anomaly-generator-no-cooldown = [color=gray]Cooldown complete[/color]
+anomaly-generator-yes-fire = Status: [color=forestgreen]Ready[/color]
+anomaly-generator-no-fire = Status: [color=crimson]Not ready[/color]

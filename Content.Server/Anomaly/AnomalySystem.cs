@@ -3,8 +3,8 @@ using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
+using Content.Server.Materials;
 using Content.Server.Popups;
-using Content.Server.StationEvents.Events;
 using Content.Shared.Anomaly;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
@@ -27,6 +27,7 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -47,7 +48,7 @@ public sealed partial class AnomalySystem : EntitySystem
     {
         component.Stability = _random.NextFloat(component.InitialStabilityRange.Item1, component.InitialStabilityRange.Item2);
         component.Severity = _random.NextFloat(component.InitialSeverityRange.Item1, component.InitialSeverityRange.Item2);
-        component.NextPulseTime = _timing.CurTime + GetPulseLength(component) * 2; //extra long the first time
+        component.NextPulseTime = _timing.CurTime + GetPulseLength(component) * 2; // longer the first time
 
         var particles = new List<AnomalousParticleType>
             { AnomalousParticleType.Delta, AnomalousParticleType.Epsilon, AnomalousParticleType.Zeta };
