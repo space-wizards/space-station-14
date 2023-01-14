@@ -1,6 +1,7 @@
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Item;
+using Content.Shared.Toilet;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.Components

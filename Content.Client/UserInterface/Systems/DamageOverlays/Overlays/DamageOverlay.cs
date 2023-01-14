@@ -1,4 +1,4 @@
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -6,7 +6,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
-namespace Content.Client.MobState.Overlays;
+namespace Content.Client.UserInterface.Systems.DamageOverlays.Overlays;
 
 public sealed class DamageOverlay : Overlay
 {
@@ -21,7 +21,7 @@ public sealed class DamageOverlay : Overlay
     private readonly ShaderInstance _oxygenShader;
     private readonly ShaderInstance _bruteShader;
 
-    public DamageState State = DamageState.Alive;
+    public MobState State = MobState.Alive;
 
     /// <summary>
     /// Handles the red pulsing overlay
@@ -79,7 +79,7 @@ public sealed class DamageOverlay : Overlay
         var lastFrameTime = (float) _timing.FrameTime.TotalSeconds;
 
         // If they just died then lerp out the white overlay.
-        if (State != DamageState.Dead)
+        if (State != MobState.Dead)
         {
             DeadLevel = 1f;
         }
@@ -169,7 +169,7 @@ public sealed class DamageOverlay : Overlay
             _oldBruteLevel = BruteLevel;
         }
 
-        level = State != DamageState.Critical ? _oldOxygenLevel : 1f;
+        level = State != MobState.Critical ? _oldOxygenLevel : 1f;
 
         if (level > 0f)
         {
@@ -215,7 +215,7 @@ public sealed class DamageOverlay : Overlay
             handle.DrawRect(viewport, Color.White);
         }
 
-        level = State != DamageState.Dead ? _oldCritLevel : DeadLevel;
+        level = State != MobState.Dead ? _oldCritLevel : DeadLevel;
 
         if (level > 0f)
         {

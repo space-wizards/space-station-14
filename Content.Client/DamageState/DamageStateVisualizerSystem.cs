@@ -1,8 +1,8 @@
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Robust.Client.GameObjects;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
-namespace Content.Client.MobState;
+namespace Content.Client.DamageState;
 
 public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
 {
@@ -10,7 +10,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
     {
         var sprite = args.Sprite;
 
-        if (sprite == null || !args.Component.TryGetData(DamageStateVisuals.State, out DamageState data))
+        if (sprite == null || !args.Component.TryGetData(MobStateVisuals.State, out MobState data))
         {
             return;
         }
@@ -24,8 +24,8 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         {
             sprite.NoRotation = data switch
             {
-                DamageState.Critical => false,
-                DamageState.Dead => false,
+                MobState.Critical => false,
+                MobState.Dead => false,
                 _ => true
             };
         }
@@ -48,7 +48,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
         }
 
         // So they don't draw over mobs anymore
-        if (data == DamageState.Dead)
+        if (data == MobState.Dead)
         {
             if (sprite.DrawDepth > (int) DrawDepth.FloorObjects)
             {
