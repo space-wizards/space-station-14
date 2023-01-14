@@ -1,5 +1,4 @@
 using Content.Server.StationEvents.Components;
-using Content.Shared.Actions;
 using Robust.Shared.Random;
 using System.Linq;
 
@@ -8,7 +7,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class VentCritters : StationEventSystem
 {
     public static List<string> SpawnedPrototypeChoices = new List<string>()
-        {"MobMouse", "MobMouse1", "MobMouse2"};
+        {"MobGiantSpiderAngry", "MobMouse", "MobMouse1", "MobMouse2"};
 
     public override string Prototype => "VentCritters";
 
@@ -19,7 +18,9 @@ public sealed class VentCritters : StationEventSystem
         var spawnLocations = EntityManager.EntityQuery<VentCritterSpawnLocationComponent>().ToList();
         RobustRandom.Shuffle(spawnLocations);
 
-        var spawnAmount = (int) (RobustRandom.Next(4, 12)); // A small colony of critters.
+        var mod = Math.Sqrt(GetSeverityModifier());
+
+        var spawnAmount = (int) (RobustRandom.Next(4, 12) * mod); // A small colony of critters.
         Sawmill.Info($"Spawning {spawnAmount} of {spawnChoice}");
         foreach (var location in spawnLocations)
         {
