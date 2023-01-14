@@ -110,7 +110,7 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out ISpriteComponent? sprite);
+            _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
 
             button.AddChild(new BoxContainer
