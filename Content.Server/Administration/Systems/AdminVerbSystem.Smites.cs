@@ -72,6 +72,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
@@ -220,19 +222,16 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Critical).FirstOrNull();
-                    if (critState is null)
-                    {
+                    if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Critical, out var criticalThreshold)) {
                         // We can't crit them so try killing them.
-                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Dead).FirstOrNull();
-                        if (deadState is null)
-                            return; // whelp.
-
-                        damageToDeal = deadState.Value.Key - (int) damageable.TotalDamage;
+                        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead,
+                                out var deadThreshold))
+                            return;// whelp.
+                        damageToDeal = deadThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
                     else
                     {
-                        damageToDeal = critState.Value.Key - (int) damageable.TotalDamage;
+                        damageToDeal = criticalThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
 
                     if (damageToDeal <= 0)

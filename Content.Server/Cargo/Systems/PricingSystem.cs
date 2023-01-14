@@ -3,13 +3,13 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.MobState;
 using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Materials;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
@@ -163,6 +163,16 @@ public sealed class PricingSystem : EntitySystem
         return price;
     }
 
+    public double GetMaterialPrice(MaterialComponent component)
+    {
+        double price = 0;
+        foreach (var (id, quantity) in component.Materials)
+        {
+            price += _prototypeManager.Index<MaterialPrototype>(id).Price * quantity;
+        }
+        return price;
+    }
+
     /// <summary>
     /// Appraises an entity, returning it's price.
     /// </summary>
@@ -181,10 +191,11 @@ public sealed class PricingSystem : EntitySystem
 
         if (TryComp<MaterialComponent>(uid, out var material) && !HasComp<StackPriceComponent>(uid))
         {
+            var matPrice = GetMaterialPrice(material);
             if (TryComp<StackComponent>(uid, out var stack))
-                ev.Price += stack.Count * material.Materials.Sum(x => x.Price * material._materials[x.ID]);
-            else
-                ev.Price += material.Materials.Sum(x => x.Price);
+                matPrice *= stack.Count;
+
+            ev.Price += matPrice;
         }
 
         if (TryComp<ContainerManagerComponent>(uid, out var containers))
