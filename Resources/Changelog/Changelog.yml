@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The biomass reclaimer's speed and yield can now be upgraded using machine
-      parts., type: Add}
-  id: 2367
-  time: '2022-09-27T08:00:30.0000000+00:00'
 - author: themias
   changes:
   - {message: You can eat with utensils again, type: Fix}
@@ -2952,3 +2946,11 @@ Entries:
   - {message: 'Resprited sterile swabs, the diagnoser, and the vaccinator.', type: Tweak}
   id: 2866
   time: '2023-01-14T03:56:11.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: fixed constant thudding sound playing when in crit, type: Fix}
+  - {message: fixed being able to attack while downed/dead, type: Fix}
+  - {message: fix for health alert not showing properly on spawn, type: Fix}
+  - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
+  id: 2867
+  time: '2023-01-14T09:32:57.0000000+00:00'
