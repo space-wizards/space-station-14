@@ -1,8 +1,0 @@
-- type: entity
-  parent: ClothingBackpackSatchel
-  id: ClothingBackpackSatchelHoS
-  name: head of security's satchel
-  description: Stylish, leather black satchel
-  components:
-    - type: Sprite
-      sprite: Corvax/Sponsor/NEKISH/Clothing/Back/Satchels/hos.rsi
