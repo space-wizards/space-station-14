@@ -1,8 +1,11 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Actions;
+using Content.Server.Clothing.Components;
 using Content.Shared.Alert;
 using Content.Shared.Clothing;
+using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using static Content.Shared.Clothing.MagbootsComponent;
 
@@ -19,7 +22,6 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
         SubscribeLocalEvent<MagbootsComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<MagbootsComponent, GotUnequippedEvent>(OnGotUnequipped);
         SubscribeLocalEvent<MagbootsComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MagbootsComponent, GetItemActionsEvent>(OnGetActions);
     }
 
     protected override void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component)
@@ -62,10 +64,5 @@ public sealed class MagbootsSystem : SharedMagbootsSystem
     private void OnGetState(EntityUid uid, MagbootsComponent component, ref ComponentGetState args)
     {
         args.State = new MagbootsComponentState(component.On);
-    }
-
-    private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)
-    {
-        args.Actions.Add(component.ToggleAction);
     }
 }
