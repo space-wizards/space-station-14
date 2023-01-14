@@ -366,6 +366,7 @@
       minBluespaceLinks: 1
       behaviorProperties:
         delay: 1
+        actOnOpen: false
         bluespaceEffectOnInit: true
         bluespaceEffectOnTeleportSource: true
         bluespaceEffectOnTeleportTarget: true
@@ -374,5 +375,7 @@
         destroyType: Delete
       autoLinksUseProperties: true
       autoLinkProperties:
+        actOnOpen: false
+        actOnClose: false
         destroyAfterUses: 2
         destroyType: DeleteComponent
