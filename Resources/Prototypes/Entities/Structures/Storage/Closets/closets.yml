@@ -170,6 +170,7 @@
       autoLinksBidirectional: true
       autoLinksUseProperties: true
       autoLinkProperties:
+        invalidateOneWayLinks: true
         transportEntities: false
         bluespaceEffectOnTeleportSource: true
         destroyAfterUses: 2
