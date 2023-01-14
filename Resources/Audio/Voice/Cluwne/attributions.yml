@@ -1,12 +1,14 @@
-- files: ["sound_voice_cluwnelaugh1.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "cluwne laugh 1 uploaded by ZeWaka and taken from goonstation github"
-  source: "https://github.com/goonstation/goonstation/blob/master/sound/voice/cluwnelaugh1.ogg"
-- files: ["sound_voice_cluwnelaugh2.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "cluwne laugh 2 uploaded by ZeWaka and taken from goonstation github."
-  source: "https://github.com/goonstation/goonstation/blob/master/sound/voice/cluwnelaugh2.ogg"
-- files: ["sound_voice_cluwnelaugh3.ogg"]
-  license: "CC-BY-NC-SA-3.0"
-  copyright: "cluwne laugh 3 uploaded by ZeWaka and taken from goonstation github."
-  source: "https://github.com/goonstation/goonstation/blob/master/sound/voice/cluwnelaugh3.ogg"
+- files: ["cluwnelaugh1.ogg"] (originally called 253525_nanakisan_evil-laugh-11, modified by github: brainfood1183).
+  license: "CC-BY-4.0"
+  copyright: Created by Nanakisan and downloaded from FreeSound.org.
+  source: "https://freesound.org/people/Nanakisan/sounds/253525/"
+
+- files: ["cluwnelaugh2.ogg"] (originally called 253529_nanakisan_evil-laugh-5, modified by github: brainfood1183).
+  license: "CC-BY-4.0"
+  copyright: Created by Nanakisan and downloaded from FreeSound.org.
+  source: "https://freesound.org/people/Nanakisan/sounds/253529/"
+
+- files: ["cluwnelaugh3.ogg"] (originally called 253524_nanakisan_evil-laugh-2, modified by github: brainfood1183).
+  license: "CC-BY-4.0"
+  copyright: Created by Nanakisan and downloaded from FreeSound.org.
+  source: "https://freesound.org/people/Nanakisan/sounds/253524/"

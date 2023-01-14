@@ -147,9 +147,10 @@
   id: ClothingShoesCluwne
   name: cluwne shoes
   suffix: Not to be mapped
-  description: "A cursed pair of cluwne shoes."
+  description: "Cursed pair of cluwne shoes."
   components:
   - type: Sprite
     sprite: Clothing/Shoes/Specific/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/cluwne.rsi
+  - type: Unremoveable

@@ -54,6 +54,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.Cluwne;
 
 namespace Content.Server.Administration.Systems;
 
@@ -553,37 +554,19 @@ public sealed partial class AdminVerbSystem
             };
             args.Verbs.Add(killSign);
 
-            Verb clown = new()
+            Verb cluwne = new()
             {
                 Text = "Cluwne",
                 Category = VerbCategory.Smite,
                 IconTexture = "/Textures/Clothing/Mask/cluwne.rsi/icon.png",
                 Act = () =>
                 {
-                    var meta = MetaData(args.Target);
-                    var name = Name(args.Target);
-                    _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", args.Target)), args.Target, PopupType.LargeCaution);
-
-                    meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
-
-                    EnsureComp<BackwardsAccentComponent>(args.Target);
-
-                    var vocal = EnsureComp<VocalComponent>(args.Target);
-                    var scream = new SoundCollectionSpecifier ("CluwneScreams");
-                    vocal.FemaleScream = scream;
-                    vocal.MaleScream = scream;
-
-                    SetOutfitCommand.SetOutfit(args.Target, "CluwneGear", EntityManager, (_, clothing) =>
-                    {
-                        if (HasComp<ClothingComponent>(clothing))
-                            EnsureComp<UnremoveableComponent>(clothing);
-                        EnsureComp<ClumsyComponent>(args.Target);
-                    });
+                    EnsureComp<CluwneComponent>(args.Target);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-cluwne-description")
             };
-            args.Verbs.Add(clown);
+            args.Verbs.Add(cluwne);
 
             Verb maiden = new()
             {

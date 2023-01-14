@@ -892,9 +892,10 @@
   id: ClothingUniformJumpsuitCluwne
   name: cluwne suit
   suffix: Not to be mapped
-  description: A cursed cluwne suit.
+  description: Cursed cluwne suit.
   components:
   - type: Sprite
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/cluwne.rsi
+  - type: Unremoveable

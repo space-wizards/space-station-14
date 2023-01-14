@@ -6,4 +6,5 @@
     shoes: ClothingShoesCluwne
     mask: ClothingMaskCluwne
     id: CluwnePDA
-    gloves: ClothingHandsGlovesColorWhite
+    gloves: ClothingHandsGlovesCluwne
+    pocket1: CluwneHorn

@@ -237,11 +237,12 @@
 - type: entity
   parent: ClothingMaskClown
   id: ClothingMaskCluwne
-  name: cluwne wig and mask
+  name: cluwne face and hair
   suffix: Not to be mapped
-  description: A cursed cluwne wig and mask.
+  description: Cursed cluwne face and hair.
   components:
   - type: Sprite
     sprite: Clothing/Mask/cluwne.rsi
   - type: Clothing
     sprite: Clothing/Mask/cluwne.rsi
+  - type: Unremoveable 

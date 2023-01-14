@@ -817,3 +817,4 @@
         state: pda-cluwne
   - type: Icon
     state: pda-cluwne
+  - type: Unremoveable
