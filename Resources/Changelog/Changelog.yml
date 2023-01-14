@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed some machines being unable to be deconstructed., type: Fix}
-  id: 2366
-  time: '2022-09-27T06:47:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The biomass reclaimer's speed and yield can now be upgraded using machine
       parts., type: Add}
   id: 2367
@@ -2952,3 +2947,8 @@ Entries:
     type: Fix}
   id: 2865
   time: '2023-01-14T01:59:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Resprited sterile swabs, the diagnoser, and the vaccinator.', type: Tweak}
+  id: 2866
+  time: '2023-01-14T03:56:11.0000000+00:00'
