@@ -245,6 +245,7 @@ public sealed class MobThresholdSystem : EntitySystem
             return;
 
         CheckThresholds(target, mobState, threshold, damageable);
+
         var ev = new MobThresholdChecked(target, mobState, threshold, damageable);
         RaiseLocalEvent(target, ref ev, true);
         UpdateAlerts(target, mobState.CurrentState, threshold, damageable);
@@ -257,26 +258,24 @@ public sealed class MobThresholdSystem : EntitySystem
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
         MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
     {
-        foreach (var (threshold, mobState) in thresholdsComponent.Thresholds)
+        foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
             if (damageableComponent.TotalDamage < threshold)
                 continue;
-            if (mobState == mobStateComponent.CurrentState)
-                return; //Do not trigger if the mobstate is the same
-            TriggerThreshold(target, thresholdsComponent.CurrentThresholdState, mobState, mobStateComponent,
-                thresholdsComponent);
+
+            TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent);
+            break;
         }
     }
 
     private void TriggerThreshold(
         EntityUid target,
-        MobState oldState,
         MobState newState,
         MobStateComponent? mobState = null,
         MobThresholdsComponent? thresholds = null)
     {
-        if (oldState == newState ||
-            !Resolve(target, ref mobState, ref thresholds))
+        if (!Resolve(target, ref mobState, ref thresholds) ||
+            mobState.CurrentState == newState)
         {
             return;
         }
