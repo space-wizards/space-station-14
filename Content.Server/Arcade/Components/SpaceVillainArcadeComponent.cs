@@ -130,7 +130,7 @@ namespace Content.Server.Arcade.Components
         {
             if (_rewardAmount > 0)
             {
-                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
                 _rewardAmount--;
             }
         }
