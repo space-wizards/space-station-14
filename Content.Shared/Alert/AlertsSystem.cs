@@ -16,6 +16,12 @@ public abstract class AlertsSystem : EntitySystem
             : null;
     }
 
+    public short GetSeverityRange(AlertType alertType)
+    {
+        var minSeverity = _typeToAlert[alertType].MinSeverity;
+        return (short)MathF.Min(minSeverity,_typeToAlert[alertType].MaxSeverity - minSeverity);
+    }
+
     public short GetMaxSeverity(AlertType alertType)
     {
         return _typeToAlert[alertType].MaxSeverity;
