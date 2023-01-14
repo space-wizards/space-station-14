@@ -41,12 +41,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
         GetTarget(uid, component);
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
-            BluespaceEffect(uid, component, component);
+            BluespaceEffect(uid, component, component, true);
     }
 
-    private void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent)
+    private void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
     {
-        if (Resolve(effectTargetUid, ref effectTargetComponent, false))
+        if (!bypassLimit && Resolve(effectTargetUid, ref effectTargetComponent, false))
             if (effectTargetComponent!.BehaviorProperties.BluespaceEffectMinInterval > 0)
             {
                 var curTimeTicks = _timing.CurTick.Value;
