@@ -233,7 +233,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
             // If there are no possible link targets and no links, return null
             if (component.BluespaceLinks.Count == 0)
+            {
+                if (component.MinBluespaceLinks == 0)
+                    RemComp<BluespaceLockerComponent>(lockerUid);
+
                 return null;
+            }
 
             // Attempt to select, validate, and return a link
             var links = component.BluespaceLinks.ToArray();
@@ -359,10 +364,6 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
                 component.BluespaceLinks.Clear();
                 component.UsesSinceLinkClear = 0;
-
-                if (component.BehaviorProperties.DestroyAfterUses == -1 &&
-                    component.MinBluespaceLinks == 0)
-                    RemComp<BluespaceLockerComponent>(uid);
             }
         }
 
