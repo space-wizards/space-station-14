@@ -17,7 +17,6 @@ public sealed class MobThresholdSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<MobThresholdsComponent, MapInitEvent>(MobThresholdMapInit);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
@@ -246,6 +245,9 @@ public sealed class MobThresholdSystem : EntitySystem
             return;
 
         CheckThresholds(target, mobState, threshold, damageable);
+        var ev = new MobThresholdChecked(target, mobState, threshold, damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, threshold, damageable);
     }
 
     #endregion
@@ -259,14 +261,11 @@ public sealed class MobThresholdSystem : EntitySystem
         {
             if (damageableComponent.TotalDamage < threshold)
                 continue;
-
+            if (mobState == mobStateComponent.CurrentState)
+                return; //Do not trigger if the mobstate is the same
             TriggerThreshold(target, thresholdsComponent.CurrentThresholdState, mobState, mobStateComponent,
                 thresholdsComponent);
         }
-
-        var ev = new MobThresholdChecked(target, mobStateComponent, thresholdsComponent, damageableComponent);
-        RaiseLocalEvent(target, ref ev, true);
-        UpdateAlerts(target, mobStateComponent.CurrentState, thresholdsComponent, damageableComponent);
     }
 
     private void TriggerThreshold(
@@ -328,10 +327,14 @@ public sealed class MobThresholdSystem : EntitySystem
         }
     }
 
-    private void OnDamaged(EntityUid target, MobThresholdsComponent mobThresholdsComponent, DamageChangedEvent args)
+    private void OnDamaged(EntityUid target, MobThresholdsComponent thresholds, DamageChangedEvent args)
     {
-        var mobStateComp = EnsureComp<MobStateComponent>(target);
-        CheckThresholds(target, mobStateComp, mobThresholdsComponent, args.Damageable);
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return;
+        CheckThresholds(target, mobState, thresholds, args.Damageable);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
     }
 
     private void OnHandleComponentState(EntityUid target, MobThresholdsComponent component,
@@ -349,22 +352,6 @@ public sealed class MobThresholdSystem : EntitySystem
         args.State = new MobThresholdComponentState(component.CurrentThresholdState,
             new Dictionary<FixedPoint2, MobState>(component.Thresholds));
     }
-
-    private void MobThresholdMapInit(EntityUid target, MobThresholdsComponent component, MapInitEvent args)
-    {
-        // TODO remove when body sim is implemented
-        EnsureComp<MobStateComponent>(target);
-        EnsureComp<DamageableComponent>(target);
-
-        if (!component.Thresholds.TryFirstOrNull(out var newState))
-            return;
-
-        component.CurrentThresholdState = newState.Value.Value;
-
-        TriggerThreshold(target, MobState.Invalid, newState.Value.Value, thresholds: component);
-        UpdateAlerts(target, newState.Value.Value, component);
-    }
-
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
     {
         if (component.TriggersAlerts)
