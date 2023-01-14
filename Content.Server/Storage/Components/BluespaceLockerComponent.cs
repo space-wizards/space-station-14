@@ -171,6 +171,12 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("clearLinksEvery"), ViewVariables(VVAccess.ReadWrite)]
     public int ClearLinksEvery { get; set; } = -1;
+
+    /// <summary>
+    /// Determines if cleared links have their component removed
+    /// </summary>
+    [DataField("clearLinksDebluespaces"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ClearLinksDebluespaces { get; set; }
 }
 
 [Flags]
