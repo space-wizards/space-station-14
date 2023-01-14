@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: You can eat with utensils again, type: Fix}
-  id: 2368
-  time: '2022-09-27T16:26:14.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: 'Gas analyzers no longer close when you move, if you''re only monitoring
@@ -2954,3 +2949,8 @@ Entries:
   - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
   id: 2867
   time: '2023-01-14T09:32:57.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added textiles crate to cargo, type: Add}
+  id: 2868
+  time: '2023-01-14T18:32:01.0000000+00:00'
