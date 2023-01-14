@@ -301,10 +301,12 @@ public sealed class MobThresholdSystem : EntitySystem
                 var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
                 if (TryGetIncapPercentage(target, damageable.TotalDamage, out var percentage))
                 {
-                    severity = (short) MathF.Floor(percentage.Value.Float() *
-                                                   _alerts.GetMaxSeverity(AlertType.HumanHealth));
-                }
 
+
+                    severity = (short) MathF.Floor(percentage.Value.Float() *
+                                                   _alerts.GetSeverityRange(AlertType.HumanHealth));
+                    severity += _alerts.GetMinSeverity(AlertType.HumanHealth);
+                }
                 _alerts.ShowAlert(target, AlertType.HumanHealth, severity);
                 break;
             }
