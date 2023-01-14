@@ -9,7 +9,6 @@ using Content.Shared.Payload.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.Manager;
-using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Payload.EntitySystems;
@@ -100,7 +99,7 @@ public sealed class PayloadSystem : EntitySystem
             component.Owner = uid;
 
             var temp = (object) component;
-            _serializationManager.Copy(data.Component, ref temp);
+            _serializationManager.CopyTo(data.Component, ref temp);
             EntityManager.AddComponent(uid, (Component)temp!);
 
             trigger.GrantedComponents.Add(registration.Type);
@@ -148,8 +147,8 @@ public sealed class PayloadSystem : EntitySystem
             || !TryComp(beakerB, out FitsInDispenserComponent? compB)
             || !_solutionSystem.TryGetSolution(beakerA, compA.Solution, out var solutionA)
             || !_solutionSystem.TryGetSolution(beakerB, compB.Solution, out var solutionB)
-            || solutionA.TotalVolume == 0
-            || solutionB.TotalVolume == 0)
+            || solutionA.Volume == 0
+            || solutionB.Volume == 0)
         {
             return;
         }
@@ -165,7 +164,7 @@ public sealed class PayloadSystem : EntitySystem
         _solutionSystem.RemoveAllSolution(beakerB, solutionB);
 
         // The grenade might be a dud. Redistribute solution:
-        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.CurrentVolume * solutionB.MaxVolume / solutionA.MaxVolume);
+        var tmpSol = _solutionSystem.SplitSolution(beakerA, solutionA, solutionA.Volume * solutionB.MaxVolume / solutionA.MaxVolume);
         _solutionSystem.TryAddSolution(beakerB, solutionB, tmpSol);
         solutionA.MaxVolume -= solutionB.MaxVolume;
         _solutionSystem.UpdateChemicals(beakerA, solutionA, false);

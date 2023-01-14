@@ -3,7 +3,6 @@ using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
@@ -17,6 +16,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 
@@ -35,7 +35,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -68,7 +68,6 @@ namespace Content.Shared.Movement.Systems
             InitializeFootsteps();
             InitializeInput();
             InitializeMob();
-            InitializePushing();
             InitializeRelay();
             _configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
             _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
@@ -82,7 +81,6 @@ namespace Content.Shared.Movement.Systems
         {
             base.Shutdown();
             ShutdownInput();
-            ShutdownPushing();
             _configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
             _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
@@ -272,10 +270,10 @@ namespace Content.Shared.Movement.Systems
 
             if (worldTotal != Vector2.Zero)
             {
-                // This should have its event run during island solver soooo
-                xform.DeferUpdates = true;
-                xform.WorldRotation = worldTotal.ToWorldAngle();
-                xform.DeferUpdates = false;
+                var worldRot = _transform.GetWorldRotation(xform);
+                _transform.SetLocalRotation(xform, xform.LocalRotation + worldTotal.ToWorldAngle() - worldRot);
+                // TODO apparently this results in a duplicate move event because "This should have its event run during
+                // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
 
                 if (!weightless && TryComp<MobMoverComponent>(mover.Owner, out var mobMover) &&
                     TryGetSound(weightless, mover, mobMover, xform, out var sound))
@@ -286,7 +284,18 @@ namespace Content.Shared.Movement.Systems
                         .WithVolume(FootstepVolume * soundModifier)
                         .WithVariation(sound.Params.Variation ?? FootstepVariation);
 
-                    _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    // If we're a relay target then predict the sound for all relays.
+                    if (TryComp<MovementRelayTargetComponent>(mover.Owner, out var targetComp))
+                    {
+                        foreach (var ent in targetComp.Entities)
+                        {
+                            _audio.PlayPredicted(sound, mover.Owner, ent, audioParams);
+                        }
+                    }
+                    else
+                    {
+                        _audio.PlayPredicted(sound, mover.Owner, mover.Owner, audioParams);
+                    }
                 }
             }
 
@@ -353,7 +362,7 @@ namespace Content.Shared.Movement.Systems
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, IPhysBody collider)
+        private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, PhysicsComponent collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRangeVV);
 
@@ -414,6 +423,12 @@ namespace Content.Shared.Movement.Systems
 
             mobMover.StepSoundDistance -= distanceNeeded;
 
+            if (TryComp<FootstepModifierComponent>(mover.Owner, out var moverModifier))
+            {
+                sound = moverModifier.Sound;
+                return true;
+            }
+
             if (_inventory.TryGetSlotEntity(mover.Owner, "shoes", out var shoes) &&
                 EntityManager.TryGetComponent<FootstepModifierComponent>(shoes, out var modifier))
             {
@@ -421,18 +436,18 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(coordinates, shoes != null, out sound);
+            return TryGetFootstepSound(xform, shoes != null, out sound);
         }
 
-        private bool TryGetFootstepSound(EntityCoordinates coordinates, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(TransformComponent xform, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
         {
             sound = null;
-            var gridUid = coordinates.GetGridUid(EntityManager);
 
             // Fallback to the map
-            if (gridUid == null)
+            if (xform.MapUid == xform.GridUid ||
+                xform.GridUid == null)
             {
-                if (TryComp<FootstepModifierComponent>(coordinates.GetMapUid(EntityManager), out var modifier))
+                if (TryComp<FootstepModifierComponent>(xform.MapUid, out var modifier))
                 {
                     sound = modifier.Sound;
                     return true;
@@ -441,10 +456,11 @@ namespace Content.Shared.Movement.Systems
                 return false;
             }
 
-            var grid = _mapManager.GetGrid(gridUid.Value);
-            var tile = grid.GetTileRef(coordinates);
+            var grid = _mapManager.GetGrid(xform.GridUid.Value);
+            var tile = grid.GetTileRef(xform.Coordinates);
 
-            if (tile.IsSpace(_tileDefinitionManager)) return false;
+            if (tile.IsSpace(_tileDefinitionManager))
+                return false;
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound

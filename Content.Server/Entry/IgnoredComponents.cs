@@ -15,7 +15,8 @@ namespace Content.Server.Entry
             "ClientEntitySpawner",
             "HandheldGPS",
             "CableVisualizer",
-            "CartridgeUi",
+            "PuddleVisualizer",
+            "UIFragment",
             "PDABorderColor",
         };
     }
