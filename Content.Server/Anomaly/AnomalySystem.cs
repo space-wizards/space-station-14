@@ -29,6 +29,7 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     /// <inheritdoc/>

@@ -61,13 +61,22 @@ public enum AnomalyGeneratorUiKey : byte
 [Serializable, NetSerializable]
 public sealed class AnomalyGeneratorUserInterfaceState : BoundUserInterfaceState
 {
-    public TimeSpan? CooldownEndTime;
+    public TimeSpan CooldownEndTime;
 
-    public float FuelCompletion;
+    public int FuelAmount;
 
-    public AnomalyGeneratorUserInterfaceState(TimeSpan? cooldownEndTime, float fuelCompletion)
+    public int FuelCost;
+
+    public AnomalyGeneratorUserInterfaceState(TimeSpan cooldownEndTime, int fuelAmount, int fuelCost)
     {
         CooldownEndTime = cooldownEndTime;
-        FuelCompletion = fuelCompletion;
+        FuelAmount = fuelAmount;
+        FuelCost = fuelCost;
     }
+}
+
+[Serializable, NetSerializable]
+public sealed class AnomalyGeneratorGenerateButtonPressedEvent : BoundUserInterfaceMessage
+{
+
 }
