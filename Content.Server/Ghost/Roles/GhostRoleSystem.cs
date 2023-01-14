@@ -11,7 +11,7 @@ using Content.Shared.Follower;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Ghost.Roles;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -56,16 +56,16 @@ namespace Content.Server.Ghost.Roles
 
         private void OnMobStateChanged(EntityUid uid, GhostRoleComponent component, MobStateChangedEvent args)
         {
-            switch (args.CurrentMobState)
+            switch (args.NewMobState)
             {
-                case DamageState.Alive:
+                case MobState.Alive:
                 {
                     if (!component.Taken)
                         RegisterGhostRole(component);
                     break;
                 }
-                case DamageState.Critical:
-                case DamageState.Dead:
+                case MobState.Critical:
+                case MobState.Dead:
                     UnregisterGhostRole(component);
                     break;
             }

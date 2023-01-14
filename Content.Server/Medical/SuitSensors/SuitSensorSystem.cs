@@ -9,11 +9,11 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Medical.SuitSensor;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -29,6 +29,7 @@ namespace Content.Server.Medical.SuitSensors
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly CrewMonitoringServerSystem _monitoringServerSystem = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _xform = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -256,7 +257,7 @@ namespace Content.Server.Medical.SuitSensors
                 return null;
 
             // check if sensor is enabled and worn by user
-            if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null)
+            if (sensor.Mode == SuitSensorMode.SensorOff || sensor.User == null || transform.GridUid == null)
                 return null;
 
             // try to get mobs id from ID slot
@@ -273,18 +274,17 @@ namespace Content.Server.Medical.SuitSensors
             // get health mob state
             var isAlive = false;
             if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
-            {
                 isAlive = _mobStateSystem.IsAlive(sensor.User.Value, mobState);
-            }
 
             // get mob total damage
             var totalDamage = 0;
-            if (EntityManager.TryGetComponent(sensor.User.Value, out DamageableComponent? damageable))
-            {
+            if (TryComp<DamageableComponent>(sensor.User.Value, out var damageable))
                 totalDamage = damageable.TotalDamage.Int();
-            }
 
             // finally, form suit sensor status
+            var xForm = Transform(sensor.User.Value);
+            var xFormQuery = GetEntityQuery<TransformComponent>();
+            var coords = _xform.GetMoverCoordinates(xForm, xFormQuery);
             var status = new SuitSensorStatus(userName, userJob);
             switch (sensor.Mode)
             {
@@ -298,7 +298,7 @@ namespace Content.Server.Medical.SuitSensors
                 case SuitSensorMode.SensorCords:
                     status.IsAlive = isAlive;
                     status.TotalDamage = totalDamage;
-                    status.Coordinates = transform.MapPosition;
+                    status.Coordinates = coords;
                     break;
             }
 
@@ -323,6 +323,7 @@ namespace Content.Server.Medical.SuitSensors
             if (status.Coordinates != null)
                 payload.Add(SuitSensorConstants.NET_CORDINATES, status.Coordinates);
 
+
             return payload;
         }
 
@@ -344,13 +345,13 @@ namespace Content.Server.Medical.SuitSensors
 
             // try get total damage and cords (optionals)
             payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
-            payload.TryGetValue(SuitSensorConstants.NET_CORDINATES, out MapCoordinates? cords);
+            payload.TryGetValue(SuitSensorConstants.NET_CORDINATES, out EntityCoordinates? cords);
 
             var status = new SuitSensorStatus(name, job)
             {
                 IsAlive = isAlive.Value,
                 TotalDamage = totalDamage,
-                Coordinates = cords
+                Coordinates = cords,
             };
             return status;
         }

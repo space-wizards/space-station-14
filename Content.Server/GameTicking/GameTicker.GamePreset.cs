@@ -3,12 +3,12 @@ using System.Linq;
 using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Components;
-using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 
 namespace Content.Server.GameTicking
@@ -171,8 +171,7 @@ namespace Content.Server.GameTicking
                 return false;
             }
 
-            var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.HasComponent<GhostComponent>(playerEntity))
+            if (HasComp<GhostComponent>(playerEntity))
                 return false;
 
             if (mind.VisitingEntity != default)
@@ -207,7 +206,10 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var ghost = Spawn("MobObserver", position.ToMap(entities));
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var coords = _transform.GetMoverCoordinates(position, xformQuery);
+
+            var ghost = Spawn("MobObserver", coords);
 
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
