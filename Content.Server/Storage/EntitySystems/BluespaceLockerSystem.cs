@@ -54,7 +54,12 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (!Resolve(uid, ref entityStorageComponent))
             return;
 
-        component.CancelToken?.Cancel();
+        if (component.CancelToken != null)
+        {
+            component.CancelToken.Cancel();
+            component.CancelToken = null;
+            return;
+        }
 
         // Select target
         var target = GetTarget(uid, component);
