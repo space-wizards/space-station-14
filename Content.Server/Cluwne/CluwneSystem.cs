@@ -4,11 +4,12 @@ using Content.Server.Popups;
 using Content.Shared.Popups;
 using Content.Server.Interaction.Components;
 using Content.Server.Speech;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Robust.Shared.Random;
 using Robust.Shared.Audio;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Stunnable;
+
 namespace Content.Server.Cluwne;
 
 public sealed class CluwneSystem : EntitySystem
@@ -30,8 +31,9 @@ public sealed class CluwneSystem : EntitySystem
 
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
-        if (args.CurrentMobState == DamageState.Dead)
-            RemComp<CluwneComponent>(uid);
+        // removes cluwne component if cluwne dies.
+        if (args.NewMobState == MobState.Dead)
+           RemComp<CluwneComponent>(uid);
 
     }
 
@@ -75,25 +77,18 @@ public sealed class CluwneSystem : EntitySystem
                 _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             }
 
-            // will scream.
-            if (_robustRandom.Prob(0.3f))
+        // will scream.
+        if (_robustRandom.Prob(0.3f))
             {
-                _vocal.TryScream(uid);
+                _audio.PlayPvs(component.Giggle, uid);
             }
 
-        // will twitch and honk.
-        if (_robustRandom.Prob(0.5f))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("cluwne-twitch", ("target", Identity.Entity(uid, EntityManager))), uid);
-                _audio.PlayPvs(component.SpawnSound, uid);
-            }
-
-            // will fidget and honk.
-        else
-            {
-                _audio.PlayPvs(component.SpawnSound, uid);
-                _popupSystem.PopupEntity(Loc.GetString("cluwne-fidgets", ("target", Identity.Entity(uid, EntityManager))), uid);
-            }
+         // will twitch and honk.
+         else
+         {
+            _popupSystem.PopupEntity(Loc.GetString("cluwne-twitch", ("target", Identity.Entity(uid, EntityManager))), uid);
+            _audio.PlayPvs(component.SpawnSound, uid);
+         }
 
         component.LastDamageGiggleCooldown = component.GiggleCooldown;
          

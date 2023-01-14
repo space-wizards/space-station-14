@@ -147,6 +147,7 @@
   id: ClothingShoesCluwne
   name: cluwne shoes
   suffix: Not to be mapped
+  noSpawn: true
   description: "Cursed pair of cluwne shoes."
   components:
   - type: Sprite

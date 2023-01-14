@@ -892,6 +892,7 @@
   id: ClothingUniformJumpsuitCluwne
   name: cluwne suit
   suffix: Not to be mapped
+  noSpawn: true
   description: Cursed cluwne suit.
   components:
   - type: Sprite

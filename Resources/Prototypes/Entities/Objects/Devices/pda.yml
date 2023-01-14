@@ -806,6 +806,7 @@
   id: CluwnePDA
   name: cluwne PDA
   suffix: Not to be mapped
+  noSpawn: true
   description: Cursed cluwne PDA.
   components:
   - type: PDA

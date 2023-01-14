@@ -262,6 +262,7 @@
   parent: ClothingHandsGlovesColorWhite
   id: ClothingHandsGlovesCluwne
   name: cluwne hands
+  noSpawn: true
   description:  A cursed pair of cluwne hands.
   components:
   - type: Unremoveable

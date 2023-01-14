@@ -239,6 +239,7 @@
   id: ClothingMaskCluwne
   name: cluwne face and hair
   suffix: Not to be mapped
+  noSpawn: true
   description: Cursed cluwne face and hair.
   components:
   - type: Sprite

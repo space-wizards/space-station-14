@@ -42,6 +42,8 @@
 - type: entity
   parent: MobHuman
   id: MobCluwne
+  name: person
+  noSpawn: true
   description: A polymorphed unfortunate.
   suffix: do not spawn.
   components:

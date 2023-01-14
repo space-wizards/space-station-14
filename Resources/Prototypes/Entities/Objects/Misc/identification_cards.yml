@@ -567,6 +567,7 @@
   id: CluwneIDCard
   name: cluwne ID card
   suffix: Not to be mapped
+  noSpawn: true
   components:
   - type: Sprite
     layers:

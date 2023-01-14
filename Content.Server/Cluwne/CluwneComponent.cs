@@ -30,6 +30,9 @@ public sealed class CluwneComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float ParalyzeTime = 2;
+	
+	[DataField("giggle")]
+    public SoundSpecifier Giggle = new SoundCollectionSpecifier("CluwneScreams");
 
     //honks when called.
     [DataField("spawnsound")]

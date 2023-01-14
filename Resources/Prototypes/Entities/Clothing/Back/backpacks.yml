@@ -207,6 +207,7 @@
   id: ClothingBackpackCluwne
   name: cursed giggles von honkerton
   suffix: Not to be mapped
+  noSpawn: true
   description: Cursed giggles von honkerton backpack.
   components:
   - type: Sprite

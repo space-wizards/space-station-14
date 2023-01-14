@@ -41,7 +41,7 @@
         Blunt: 0
 
 - type: entity
-  parent: BaseItem
+  parent: BikeHorn
   id: CluwneHorn
   name: broken bike horn
   description: A broken horn off of a bicycle.
