@@ -62,6 +62,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return;
         }
 
+        if (!component.BehaviorProperties.ActOnOpen)
+            return;
+
         // Select target
         var target = GetTarget(uid, component);
         if (target == null)
@@ -249,6 +252,9 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return;
 
         component.CancelToken?.Cancel();
+
+        if (!component.BehaviorProperties.ActOnClose)
+            return;
 
         // Do delay
         if (doDelay && component.BehaviorProperties.Delay > 0)
