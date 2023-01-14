@@ -227,8 +227,8 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:DamageStateCondition
-          damagestate: Critical
+        - !type:MobStateCondition
+          mobstate: Critical
           # they gotta be in crit first
         - !type:ReagentThreshold
           min: 0
