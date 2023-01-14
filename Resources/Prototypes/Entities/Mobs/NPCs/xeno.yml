@@ -53,6 +53,10 @@
       - MobMask
       layer:
       - MobLayer
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -128,6 +132,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -160,6 +168,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -195,6 +207,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -235,6 +251,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -275,6 +295,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -325,6 +349,10 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive

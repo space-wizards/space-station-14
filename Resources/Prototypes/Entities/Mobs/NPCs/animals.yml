@@ -95,6 +95,7 @@
       - FlyingMobMask
       layer:
       - FlyingMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -325,6 +326,7 @@
       - FlyingMobMask
       layer:
       - FlyingMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -774,6 +776,7 @@
       - SmallMobMask
       layer:
       - SmallMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -1936,6 +1939,7 @@
       - SmallMobMask
       layer:
       - SmallMobLayer
+  - type: MobState
   - type: MobThresholds
     thresholds:
       0: Alive

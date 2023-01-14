@@ -677,3 +677,39 @@
     materialRequirements:
       Steel: 10
       Plasma: 5
+      
+- type: entity
+  id: BoozeDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: booze dispenser machine board
+  description: A machine printed circuit board for a booze dispenser
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: BoozeDispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker
+
+- type: entity
+  id: SodaDispenserMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: soda dispenser machine board
+  description: A machine printed circuit board for a soda dispenser
+  components:
+    - type: Sprite
+      state: service
+    - type: MachineBoard
+      prototype: soda_dispenser
+      materialRequirements:
+        Steel: 5
+      tagRequirements:
+          GlassBeaker:
+            Amount: 1
+            DefaultPrototype: Beaker
+            ExamineName: Glass Beaker

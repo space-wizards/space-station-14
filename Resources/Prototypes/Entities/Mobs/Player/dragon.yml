@@ -65,6 +65,7 @@
             - FlyingMobMask
           layer:
             - FlyingMobLayer
+    - type: MobState
     - type: MobThresholds
       thresholds:
         0: Alive

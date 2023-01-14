@@ -130,7 +130,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         if (!RuleAdded)
             return;
-        CheckRoundEnd(ev.Entity);
+        CheckRoundEnd(ev.Target);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)

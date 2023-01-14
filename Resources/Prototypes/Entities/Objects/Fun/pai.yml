@@ -46,9 +46,9 @@
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
     # Note that the personal AI never "dies".
-  - type: MobThresholds
-    thresholds:
-      0: Alive
+  - type: MobState
+    allowedStates:
+      - Alive
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

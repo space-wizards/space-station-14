@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Bible.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Popups;
@@ -19,6 +20,7 @@ namespace Content.Server.Prayer;
 /// </remarks>
 public sealed class PrayerSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
@@ -68,9 +70,10 @@ public sealed class PrayerSystem : EntitySystem
     /// Subtly messages a player by giving them a popup and a chat message.
     /// </summary>
     /// <param name="target">The IPlayerSession that you want to send the message to</param>
+    /// <param name="source">The IPlayerSession that sent the message</param>
     /// <param name="messageString">The main message sent to the player via the chatbox</param>
     /// <param name="popupMessage">The popup to notify the player, also prepended to the messageString</param>
-    public void SendSubtleMessage(IPlayerSession target, string messageString, string popupMessage)
+    public void SendSubtleMessage(IPlayerSession target, IPlayerSession source, string messageString, string popupMessage)
     {
         if (target.AttachedEntity == null)
             return;
@@ -79,6 +82,7 @@ public sealed class PrayerSystem : EntitySystem
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.ConnectedClient);
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(target.AttachedEntity.Value):player} received subtle message from {source.Name}: {message}");
     }
 
     /// <summary>
@@ -99,5 +103,6 @@ public sealed class PrayerSystem : EntitySystem
         _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
         _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer: {message}");
     }
 }

@@ -72,6 +72,10 @@
     tags:
     - DoorBumpOpener
     - ShoesRequiredStepTriggerImmune
+  - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
   - type: MobThresholds
     thresholds:
       0: Alive

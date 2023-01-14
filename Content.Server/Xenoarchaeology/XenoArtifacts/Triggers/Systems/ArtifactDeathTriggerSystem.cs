@@ -18,7 +18,7 @@ public sealed class ArtifactDeathTriggerSystem : EntitySystem
         if (ev.NewMobState != MobState.Dead)
             return;
 
-        var deathXform = Transform(ev.Entity);
+        var deathXform = Transform(ev.Target);
 
         var toActivate = new List<ArtifactDeathTriggerComponent>();
         foreach (var (trigger, xform) in EntityQuery<ArtifactDeathTriggerComponent, TransformComponent>())

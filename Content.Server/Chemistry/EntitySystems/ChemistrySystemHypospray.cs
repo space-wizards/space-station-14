@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             _solutions.TryGetSolution(uid, component.SolutionName, out var hypoSpraySolution);
 
-            if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
+            if (hypoSpraySolution == null || hypoSpraySolution.Volume == 0)
             {
                 _popup.PopupCursor(Loc.GetString("hypospray-component-empty-message"), user);
                 return true;

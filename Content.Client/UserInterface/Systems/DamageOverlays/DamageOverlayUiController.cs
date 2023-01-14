@@ -30,7 +30,7 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttach);
         SubscribeLocalEvent<PlayerDetachedEvent>(OnPlayerDetached);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-        SubscribeLocalEvent<MobThresholdDamagedEvent>(OnThresholdCheck);
+        SubscribeLocalEvent<MobThresholdChecked>(OnThresholdCheck);
     }
 
     public void OnStateEntered(GameplayState state)
@@ -61,18 +61,18 @@ public sealed class DamageOverlayUiController : UIController, IOnStateChanged<Ga
 
     private void OnMobStateChanged(MobStateChangedEvent args)
     {
-        if (args.Entity != _playerManager.LocalPlayer?.ControlledEntity)
+        if (args.Target != _playerManager.LocalPlayer?.ControlledEntity)
             return;
 
-        UpdateOverlays(args.Entity, args.Component);
+        UpdateOverlays(args.Target, args.Component);
     }
 
-    private void OnThresholdCheck(MobThresholdDamagedEvent args)
+    private void OnThresholdCheck(ref MobThresholdChecked args)
     {
 
-        if (args.Entity != _playerManager.LocalPlayer?.ControlledEntity)
+        if (args.Target != _playerManager.LocalPlayer?.ControlledEntity)
             return;
-        UpdateOverlays(args.Entity, args.MobStateComp, args.DamageableComp, args.ThresholdComp);
+        UpdateOverlays(args.Target, args.MobState, args.Damageable, args.Threshold);
     }
 
     private void ClearOverlay()

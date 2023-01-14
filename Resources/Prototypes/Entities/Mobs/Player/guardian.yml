@@ -68,9 +68,9 @@
             - FlyingMobLayer
     - type: Damageable
       damageContainer: Biological
-    - type: MobThresholds
-      thresholds:
-        0: Alive
+    - type: MobState
+      allowedStates:
+        - Alive
     - type: HeatResistance
     - type: CombatMode
     - type: Internals

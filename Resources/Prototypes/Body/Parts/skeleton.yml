@@ -62,9 +62,9 @@
         proper: true
     - type: Examiner
     - type: DoAfter
-    - type: MobThresholds
-      thresholds:
-        0: Alive
+    - type: MobState
+      allowedStates:
+        - Alive
     - type: Tag
       tags:
         - MindTransferTarget

@@ -19,7 +19,7 @@ namespace Content.Shared.Mobs.Components
         //default mobstate is always the lowest state level
         [ViewVariables] public MobState CurrentState { get; set; } = MobState.Alive;
 
-        [DataField("allowedMobStates")] public HashSet<MobState> AllowedStates = new()
+        [DataField("allowedStates")] public HashSet<MobState> AllowedStates = new()
             {
                 MobState.Alive,
                 MobState.Critical,
