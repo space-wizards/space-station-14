@@ -1,16 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: A new speaker in the Hot Drinks machine means you can now hear it brew
-      your beverage., type: Tweak}
-  id: 2364
-  time: '2022-09-26T19:43:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added science recipes for advanced machine parts. Use these in your
-      machines to make them work better., type: Add}
-  id: 2365
-  time: '2022-09-27T02:45:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed some machines being unable to be deconstructed., type: Fix}
@@ -2953,3 +2941,14 @@ Entries:
   - {message: Fixed solution visuals not working properly, type: Fix}
   id: 2863
   time: '2023-01-14T00:21:15.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added custom diona scream sound, type: Tweak}
+  id: 2864
+  time: '2023-01-14T01:58:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that causes the verb menu to get stuck waiting for the server.,
+    type: Fix}
+  id: 2865
+  time: '2023-01-14T01:59:11.0000000+00:00'
