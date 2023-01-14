@@ -369,7 +369,8 @@
         bluespaceEffectOnInit: true
         bluespaceEffectOnTeleportSource: true
         bluespaceEffectOnTeleportTarget: true
-        destroyAfterUses: 2
+        destroyAfterUses: 1
+        destroyAfterUsesMinItemsToCountUse: 1
         destroyType: Delete
       autoLinksUseProperties: true
       autoLinkProperties:

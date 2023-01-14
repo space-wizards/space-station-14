@@ -328,7 +328,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void DestroyAfterLimit(EntityUid uid, BluespaceLockerComponent component, int transportedEntities)
     {
-        if (component.BehaviorProperties.DestroyAfterUsesMinItemsToCountUse >= transportedEntities)
+        if (component.BehaviorProperties.DestroyAfterUsesMinItemsToCountUse > transportedEntities)
             return;
 
         if (component.BehaviorProperties.ClearLinksEvery != -1)

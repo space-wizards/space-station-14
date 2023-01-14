@@ -114,7 +114,7 @@ public record BluespaceLockerBehaviorProperties
     /// <summary>
     /// Determines if bluespace effect is show on component init
     /// </summary>
-    [DataField("bluespaceEffectOnInit")]
+    [DataField("bluespaceEffectOnInit"), ViewVariables(VVAccess.ReadWrite)]
     public bool BluespaceEffectOnInit;
 
     /// <summary>
