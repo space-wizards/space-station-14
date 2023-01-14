@@ -109,13 +109,13 @@ public record BluespaceLockerBehaviorProperties
     /// <summary>
     /// Determines if the the locker will act on opens.
     /// </summary>
-    [DataField("ActOnOpen"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("actOnOpen"), ViewVariables(VVAccess.ReadWrite)]
     public bool ActOnOpen { get; set; } = true;
 
     /// <summary>
     /// Determines if the the locker will act on closes.
     /// </summary>
-    [DataField("ActOnClose"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("actOnClose"), ViewVariables(VVAccess.ReadWrite)]
     public bool ActOnClose { get; set; } = true;
 
     /// <summary>
