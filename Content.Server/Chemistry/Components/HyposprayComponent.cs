@@ -25,7 +25,7 @@ namespace Content.Server.Chemistry.Components
         {
             var solutionSys = _entMan.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
             return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
-                ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
+                ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
                 : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
     }

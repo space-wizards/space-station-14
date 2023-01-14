@@ -108,7 +108,6 @@ namespace Content.Client.ContextMenu.UI
             CancelOpen?.Cancel();
             CancelOpen = new();
             Timer.Spawn(HoverDelay, () => OpenSubMenu(element), CancelOpen.Token);
-            OnContextMouseEntered?.Invoke(element);
         }
 
         /// <summary>
@@ -170,7 +169,7 @@ namespace Content.Client.ContextMenu.UI
             // open pop-up adjacent to the parent element. We want the sub-menu elements to align with this element
             // which depends on the panel container style margins.
             var altPos = element.GlobalPosition;
-            var pos = altPos + (element.Width + 2*ContextMenuElement.ElementMargin, - 2*ContextMenuElement.ElementMargin);
+            var pos = altPos + (element.Width + 2 * ContextMenuElement.ElementMargin, -2 * ContextMenuElement.ElementMargin);
             element.SubMenu.Open(UIBox2.FromDimensions(pos, (1, 1)), altPos);
 
             // draw on top of other menus
