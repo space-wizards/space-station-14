@@ -5,9 +5,6 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-
 namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
@@ -18,6 +15,7 @@ public sealed class MobThresholdSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleComponentState);
@@ -351,6 +349,17 @@ public sealed class MobThresholdSystem : EntitySystem
         args.State = new MobThresholdComponentState(component.CurrentThresholdState,
             new Dictionary<FixedPoint2, MobState>(component.Thresholds));
     }
+
+    private void MobThresholdStartup(EntityUid target, MobThresholdsComponent thresholds, ComponentStartup args)
+    {
+        if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
+            return;
+        CheckThresholds(target, mobState, thresholds, damageable);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, damageable);
+    }
+
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
     {
         if (component.TriggersAlerts)
