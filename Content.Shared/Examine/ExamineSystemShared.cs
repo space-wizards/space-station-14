@@ -1,9 +1,9 @@
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
@@ -17,7 +17,7 @@ namespace Content.Shared.Examine
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
+        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 

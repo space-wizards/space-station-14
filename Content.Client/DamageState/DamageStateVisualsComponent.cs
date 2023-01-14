@@ -1,13 +1,13 @@
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 
-namespace Content.Client.MobState;
+namespace Content.Client.DamageState;
 
 [RegisterComponent]
 public sealed class DamageStateVisualsComponent : Component
 {
     public int? OriginalDrawDepth;
 
-    [DataField("states")] public Dictionary<DamageState, Dictionary<DamageStateVisualLayers, string>> States = new();
+    [DataField("states")] public Dictionary<MobState, Dictionary<DamageStateVisualLayers, string>> States = new();
 
     /// <summary>
     /// Should noRot be turned off when crit / dead.
