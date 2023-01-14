@@ -24,6 +24,7 @@ public partial class MobStateSystem
         SubscribeLocalEvent<MobStateComponent, BeforeGettingStrippedEvent>(OnGettingStripped);
         SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(CheckAct);
+        SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(CheckAct);
         SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(CheckAct);

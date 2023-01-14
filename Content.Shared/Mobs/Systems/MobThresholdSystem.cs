@@ -5,9 +5,6 @@ using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-
 namespace Content.Shared.Mobs.Systems;
 
 public sealed class MobThresholdSystem : EntitySystem
@@ -17,8 +14,8 @@ public sealed class MobThresholdSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<MobThresholdsComponent, MapInitEvent>(MobThresholdMapInit);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentShutdown>(MobThresholdShutdown);
+        SubscribeLocalEvent<MobThresholdsComponent, ComponentStartup>(MobThresholdStartup);
         SubscribeLocalEvent<MobThresholdsComponent, DamageChangedEvent>(OnDamaged);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentGetState>(OnGetComponentState);
         SubscribeLocalEvent<MobThresholdsComponent, ComponentHandleState>(OnHandleComponentState);
@@ -246,6 +243,10 @@ public sealed class MobThresholdSystem : EntitySystem
             return;
 
         CheckThresholds(target, mobState, threshold, damageable);
+
+        var ev = new MobThresholdChecked(target, mobState, threshold, damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, threshold, damageable);
     }
 
     #endregion
@@ -255,29 +256,24 @@ public sealed class MobThresholdSystem : EntitySystem
     private void CheckThresholds(EntityUid target, MobStateComponent mobStateComponent,
         MobThresholdsComponent thresholdsComponent, DamageableComponent damageableComponent)
     {
-        foreach (var (threshold, mobState) in thresholdsComponent.Thresholds)
+        foreach (var (threshold, mobState) in thresholdsComponent.Thresholds.Reverse())
         {
             if (damageableComponent.TotalDamage < threshold)
                 continue;
 
-            TriggerThreshold(target, thresholdsComponent.CurrentThresholdState, mobState, mobStateComponent,
-                thresholdsComponent);
+            TriggerThreshold(target, mobState, mobStateComponent, thresholdsComponent);
+            break;
         }
-
-        var ev = new MobThresholdChecked(target, mobStateComponent, thresholdsComponent, damageableComponent);
-        RaiseLocalEvent(target, ref ev, true);
-        UpdateAlerts(target, mobStateComponent.CurrentState, thresholdsComponent, damageableComponent);
     }
 
     private void TriggerThreshold(
         EntityUid target,
-        MobState oldState,
         MobState newState,
         MobStateComponent? mobState = null,
         MobThresholdsComponent? thresholds = null)
     {
-        if (oldState == newState ||
-            !Resolve(target, ref mobState, ref thresholds))
+        if (!Resolve(target, ref mobState, ref thresholds) ||
+            mobState.CurrentState == newState)
         {
             return;
         }
@@ -305,10 +301,12 @@ public sealed class MobThresholdSystem : EntitySystem
                 var severity = _alerts.GetMinSeverity(AlertType.HumanHealth);
                 if (TryGetIncapPercentage(target, damageable.TotalDamage, out var percentage))
                 {
-                    severity = (short) MathF.Floor(percentage.Value.Float() *
-                                                   _alerts.GetMaxSeverity(AlertType.HumanHealth));
-                }
 
+
+                    severity = (short) MathF.Floor(percentage.Value.Float() *
+                                                   _alerts.GetSeverityRange(AlertType.HumanHealth));
+                    severity += _alerts.GetMinSeverity(AlertType.HumanHealth);
+                }
                 _alerts.ShowAlert(target, AlertType.HumanHealth, severity);
                 break;
             }
@@ -328,10 +326,14 @@ public sealed class MobThresholdSystem : EntitySystem
         }
     }
 
-    private void OnDamaged(EntityUid target, MobThresholdsComponent mobThresholdsComponent, DamageChangedEvent args)
+    private void OnDamaged(EntityUid target, MobThresholdsComponent thresholds, DamageChangedEvent args)
     {
-        var mobStateComp = EnsureComp<MobStateComponent>(target);
-        CheckThresholds(target, mobStateComp, mobThresholdsComponent, args.Damageable);
+        if (!TryComp<MobStateComponent>(target, out var mobState))
+            return;
+        CheckThresholds(target, mobState, thresholds, args.Damageable);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, args.Damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, args.Damageable);
     }
 
     private void OnHandleComponentState(EntityUid target, MobThresholdsComponent component,
@@ -350,19 +352,14 @@ public sealed class MobThresholdSystem : EntitySystem
             new Dictionary<FixedPoint2, MobState>(component.Thresholds));
     }
 
-    private void MobThresholdMapInit(EntityUid target, MobThresholdsComponent component, MapInitEvent args)
+    private void MobThresholdStartup(EntityUid target, MobThresholdsComponent thresholds, ComponentStartup args)
     {
-        // TODO remove when body sim is implemented
-        EnsureComp<MobStateComponent>(target);
-        EnsureComp<DamageableComponent>(target);
-
-        if (!component.Thresholds.TryFirstOrNull(out var newState))
+        if (!TryComp<MobStateComponent>(target, out var mobState) || !TryComp<DamageableComponent>(target, out var damageable))
             return;
-
-        component.CurrentThresholdState = newState.Value.Value;
-
-        TriggerThreshold(target, MobState.Invalid, newState.Value.Value, thresholds: component);
-        UpdateAlerts(target, newState.Value.Value, component);
+        CheckThresholds(target, mobState, thresholds, damageable);
+        var ev = new MobThresholdChecked(target, mobState, thresholds, damageable);
+        RaiseLocalEvent(target, ref ev, true);
+        UpdateAlerts(target, mobState.CurrentState, thresholds, damageable);
     }
 
     private void MobThresholdShutdown(EntityUid target, MobThresholdsComponent component, ComponentShutdown args)
