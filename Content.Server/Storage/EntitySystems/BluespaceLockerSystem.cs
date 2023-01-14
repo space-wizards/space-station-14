@@ -38,7 +38,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     {
         GetTarget(uid, component);
 
-        if (component.BluespaceEffectOnInit)
+        if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component);
     }
 
@@ -184,13 +184,26 @@ public sealed class BluespaceLockerSystem : EntitySystem
                     component.BluespaceLinks.Add(potentialLink);
                     if (component.AutoLinksBidirectional || component.AutoLinksUseProperties)
                     {
-                        var targetBluespaceComponent = EnsureComp<BluespaceLockerComponent>(potentialLink);
+                        var targetBluespaceComponent = CompOrNull<BluespaceLockerComponent>(potentialLink);
 
-                        if (component.AutoLinksBidirectional)
+                        if (targetBluespaceComponent == null)
+                        {
+                            using var compInitializeHandle =
+                                EntityManager.AddComponentUninitialized<BluespaceLockerComponent>(potentialLink);
+                            targetBluespaceComponent = compInitializeHandle.Comp;
+
+                            if (component.AutoLinksBidirectional)
+                                targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
+
+                            if (component.AutoLinksUseProperties)
+                                targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
+
+                            compInitializeHandle.Dispose();
+                        }
+                        else if (component.AutoLinksBidirectional)
+                        {
                             targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
-
-                        if (component.AutoLinksUseProperties)
-                            targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
+                        }
                     }
                     if (component.BluespaceLinks.Count >= component.MinBluespaceLinks)
                         break;

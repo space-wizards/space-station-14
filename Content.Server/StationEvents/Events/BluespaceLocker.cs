@@ -35,10 +35,11 @@ public sealed class BluespaceLockerLink : StationEventSystem
 
             comp.PickLinksFromSameMap = true;
             comp.MinBluespaceLinks = 1;
-            comp.BluespaceEffectOnInit = true;
+            comp.BehaviorProperties.BluespaceEffectOnInit = true;
             comp.BehaviorProperties.BluespaceEffectOnTeleportSource = true;
             comp.AutoLinksBidirectional = true;
             comp.AutoLinksUseProperties = true;
+            comp.AutoLinkProperties.BluespaceEffectOnInit = true;
             comp.AutoLinkProperties.BluespaceEffectOnTeleportSource = true;
 
             compInitializeHandle.Dispose();

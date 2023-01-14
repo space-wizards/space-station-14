@@ -58,12 +58,6 @@ public sealed class BluespaceLockerComponent : Component
     public CancellationTokenSource? CancelToken;
 
     /// <summary>
-    /// Determines if bluespace effect is show on component init
-    /// </summary>
-    [DataField("bluespaceEffectOnInit")]
-    public bool BluespaceEffectOnInit;
-
-    /// <summary>
     /// Determines if links automatically added get the source locker set as a target
     /// </summary>
     [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]
@@ -116,6 +110,12 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public float Delay { get; set; }
+
+    /// <summary>
+    /// Determines if bluespace effect is show on component init
+    /// </summary>
+    [DataField("bluespaceEffectOnInit")]
+    public bool BluespaceEffectOnInit;
 
     /// <summary>
     /// Defines prototype to spawn for bluespace effect

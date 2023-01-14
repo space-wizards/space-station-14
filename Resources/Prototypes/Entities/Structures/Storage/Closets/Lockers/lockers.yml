@@ -364,9 +364,9 @@
   components:
     - type: BluespaceLocker
       minBluespaceLinks: 1
-      bluespaceEffectOnInit: true
       behaviorProperties:
         delay: 1
+        bluespaceEffectOnInit: true
         bluespaceEffectOnTeleportSource: true
         bluespaceEffectOnTeleportTarget: true
         destroyAfterUses: 2
