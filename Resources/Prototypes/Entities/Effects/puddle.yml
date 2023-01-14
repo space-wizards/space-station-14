@@ -15,11 +15,11 @@
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: slipFixture
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       mask:
@@ -28,14 +28,17 @@
       - SlipLayer
       hard: false
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 0 # non-evaporating puddles don't become sparkles.
 
 - type: entity
-  name: puddle
-  id: PuddleGeneric
-  parent: PuddleSmear
+  id: EvaporatingPuddle
+  parent: PuddleBase
+  abstract: true
+  components:
+  - type: Evaporation
+  - type: PuddleVisualizer
+    wetFloorEffectThreshold: 5
 
 - type: entity
   name: gibblets
@@ -47,16 +50,12 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
     netsync: false
-  - type: Puddle
   - type: SolutionContainerManager
     solutions:
       puddle:
         reagents:
         - ReagentId: Water
           Quantity: 10
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -64,7 +63,7 @@
 - type: entity
   name: puddle
   id: PuddleSmear
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -72,11 +71,9 @@
     state: smear-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -84,7 +81,7 @@
 - type: entity
   name: puddle
   id: PuddleSplatter
-  parent: PuddleBase
+  parent: EvaporatingPuddle
   description: A puddle of liquid.
   components:
   - type: Sprite
@@ -92,10 +89,9 @@
     state: splatter-0
     netsync: false
   - type: Puddle
-    slipThreshold: 5
+    slipThreshold: 3
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -113,26 +109,20 @@
   - type: Puddle
     overflowVolume: 50
     opacityModifier: 8
-  - type: Evaporation
-    evaporateTime: 400 # very slow
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      recolor: true
 
 - type: entity
   name: vomit
-  id: PuddleVomit # No parent because we don't want the visualizer
+  id: PuddleVomit # No parent because we don't want the VisualizerSystem to behave in the standard way
   description: Gross.
   components:
   - type: Transform
     anchored: true
   - type: Clickable
-  - type: Evaporation
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
+    - id: slipFixture
+      shape:
         !type:PhysShapeAabb
         bounds: "-0.4,-0.4,0.4,0.4"
       mask:
@@ -146,6 +136,7 @@
     netsync: false
   - type: Puddle
     slipThreshold: 5
+    recolor: false
   - type: SolutionContainerManager
     solutions:
       puddle:
@@ -158,9 +149,8 @@
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
-      customPuddleSprite: true
+  - type: PuddleVisualizer
+    customPuddleSprite: true
 
 - type: entity
   name: toxins vomit
@@ -182,8 +172,8 @@
         - ReagentId: Water
           Quantity: 5
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
+    customPuddleSprite: true
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger
@@ -199,10 +189,10 @@
     state: writing-0
     netsync: false
   - type: Puddle
+  - type: Evaporation
     evaporateTime: 10
   - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
+  - type: PuddleVisualizer
   - type: Slippery
     launchForwardsMultiplier: 2.0
   - type: StepTrigger

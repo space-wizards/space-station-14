@@ -81,8 +81,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             // oh god.
             var coords = Transform(uid).Coordinates;
-            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords,
-                Filter.Pvs(uid), PopupType.LargeCaution);
+            _popup.PopupCoordinates(Loc.GetString("immovable-rod-collided-rod-not-good"), coords, PopupType.LargeCaution);
 
             Del(uid);
             Del(ent);
@@ -96,8 +95,7 @@ public sealed class ImmovableRodSystem : EntitySystem
         {
             component.MobCount++;
 
-            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid,
-                Filter.Pvs(uid), PopupType.LargeCaution);
+            _popup.PopupEntity(Loc.GetString("immovable-rod-penetrated-mob", ("rod", uid), ("mob", ent)), uid, PopupType.LargeCaution);
             _bodySystem.GibBody(ent, body: body);
         }
 

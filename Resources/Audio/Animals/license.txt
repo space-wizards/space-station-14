@@ -30,6 +30,8 @@ The following sounds were used from freesound:
 
     snake_hiss.ogg: modified from "hissing snake sound effect" by freesound user "Garuda1982" (https://freesound.org/people/Garuda1982/sounds/541656/) licensed under CC BY 4.0. The original audio was convertred from WAV to OGG format.
 
+    pig_oink.ogg:  modified from "Pig Oink.wav" by freesound user "qubodup" (https://freesound.org/people/qubodup/sounds/442906/) licensed under CC0 1.0 (public domain). The original audio was converted from WAV to OGG format.
+
 The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
     space_dragon_roar.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0

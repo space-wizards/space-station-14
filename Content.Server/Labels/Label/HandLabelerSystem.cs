@@ -45,9 +45,9 @@ namespace Content.Server.Labels
             {
                 Act = () =>
                 {
-                    AddLabelTo(uid, handLabeler, target, out string? result);
+                    AddLabelTo(uid, handLabeler, target, out var result);
                     if (result != null)
-                        _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+                        _popupSystem.PopupEntity(result, args.User, args.User);
                 },
                 Text = labelerText
             };
@@ -62,7 +62,7 @@ namespace Content.Server.Labels
             AddLabelTo(uid, handLabeler, target, out string? result);
             if (result == null)
                 return;
-            _popupSystem.PopupEntity(result, args.User, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(result, args.User, args.User);
 
             // Log labeling
             _adminLogger.Add(LogType.Action, LogImpact.Low,

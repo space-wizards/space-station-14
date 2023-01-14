@@ -58,7 +58,7 @@ public sealed class TraversalDistorterSystem : EntitySystem
                 toPopup = Loc.GetString("traversal-distorter-set-out");
                 break;
         }
-        _popup.PopupEntity(toPopup, uid, Filter.Pvs(uid));
+        _popup.PopupEntity(toPopup, uid);
     }
 
     private void OnExamine(EntityUid uid, TraversalDistorterComponent component, ExaminedEvent args)

@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: LightTube
-  icon: { sprite: Objects/Power/light_tube.rsi, state: normal }
   result: LightTube
   completetime: 2
   materials:
@@ -9,7 +8,6 @@
 
 - type: latheRecipe
   id: LightBulb
-  icon: { sprite: Objects/Power/light_bulb.rsi, state: normal }
   result: LightBulb
   completetime: 2
   materials:
@@ -18,7 +16,6 @@
 
 - type: latheRecipe
   id: GlowstickRed
-  icon: Objects/Misc/glowstick.rsi
   result: GlowstickRed
   completetime: 2
   materials:
@@ -26,7 +23,6 @@
 
 - type: latheRecipe
   id: Flare
-  icon: Objects/Misc/flare.rsi
   result: Flare
   completetime: 2
   materials:
@@ -34,10 +30,7 @@
 
 - type: latheRecipe
   id: FlashlightLantern
-  icon:
-    sprite: Objects/Tools/flashlight.rsi
-    state: flashlight
-  result: FlashlightLantern
+  result: EmptyFlashlightLantern
   completetime: 2
   materials:
     Steel: 100
@@ -46,9 +39,6 @@
 
 - type: latheRecipe
   id: FireExtinguisher
-  icon:
-    sprite: Objects/Misc/fire_extinguisher.rsi
-    state: fire_extinguisher_closed
   result: FireExtinguisher
   completetime: 2
   materials:
@@ -56,7 +46,6 @@
 
 - type: latheRecipe
   id: Matchbox
-  icon: Objects/Tools/matches.rsi
   result: Matchbox
   completetime: 1
   materials:
@@ -64,9 +53,6 @@
 
 - type: latheRecipe
   id: Drone
-  icon:
-    sprite: Mobs/Silicon/drone.rsi
-    state: shell
   result: Drone
   completetime: 6
   materials:
@@ -76,12 +62,20 @@
 
 - type: latheRecipe
   id: SynthesizerInstrument
-  icon:
-    sprite: Objects/Fun/Instruments/h_synthesizer.rsi
-    state: icon
   result: SynthesizerInstrument
   completetime: 4
   materials:
     Steel: 300
     Plastic: 300
     Glass: 100
+
+- type: latheRecipe
+  id: NodeScanner
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    state: icon
+  result: NodeScanner
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 50
