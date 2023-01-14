@@ -177,6 +177,12 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("clearLinksDebluespaces"), ViewVariables(VVAccess.ReadWrite)]
     public bool ClearLinksDebluespaces { get; set; }
+
+    /// <summary>
+    /// Links will not be valid if they're not bidirectional
+    /// </summary>
+    [DataField("invalidateOneWayLinks"), ViewVariables(VVAccess.ReadWrite)]
+    public bool InvalidateOneWayLinks { get; set; }
 }
 
 [Flags]

@@ -113,9 +113,20 @@ public sealed class BluespaceLockerSystem : EntitySystem
         DestroyAfterLimit(uid, component, transportedEntities);
     }
 
-    private bool ValidLink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent)
+    private bool ValidLink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent, bool intendToLink = false)
     {
-        return link.Valid && TryComp<EntityStorageComponent>(link, out var linkStorage) && linkStorage.LifeStage != ComponentLifeStage.Deleted && link != locker;
+        if (!link.Valid ||
+            !TryComp<EntityStorageComponent>(link, out var linkStorage) ||
+            linkStorage.LifeStage == ComponentLifeStage.Deleted ||
+            link == locker)
+            return false;
+
+        if (lockerComponent.BehaviorProperties.InvalidateOneWayLinks &&
+            !(intendToLink && lockerComponent.AutoLinksBidirectional) &&
+            !(HasComp<BluespaceLockerComponent>(link) && Comp<BluespaceLockerComponent>(link).BluespaceLinks.Contains(locker)))
+            return false;
+
+        return true;
     }
 
     /// <returns>True if any HashSet in <paramref name="a"/> would grant access to <paramref name="b"/></returns>
@@ -135,7 +146,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private bool ValidAutolink(EntityUid locker, EntityUid link, BluespaceLockerComponent lockerComponent)
     {
-        if (!ValidLink(locker, link, lockerComponent))
+        if (!ValidLink(locker, link, lockerComponent, true))
             return false;
 
         if (lockerComponent.PickLinksFromSameMap &&
