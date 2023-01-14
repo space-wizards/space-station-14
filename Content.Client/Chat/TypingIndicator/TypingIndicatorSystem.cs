@@ -47,6 +47,7 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
         // client submitted text - hide typing indicator
         // Corvax-TypingIndicator-Start
         _isClientTyping = false;
+        _isClientChatFocused = false;
         ClientUpdateTyping();
         // Corvax-TypingIndicator-End
     }
