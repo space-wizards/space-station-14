@@ -356,7 +356,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (component.BehaviorProperties.ClearLinksEvery != -1)
         {
             component.UsesSinceLinkClear++;
-            if (component.BehaviorProperties.ClearLinksEvery >= component.UsesSinceLinkClear)
+            if (component.BehaviorProperties.ClearLinksEvery <= component.UsesSinceLinkClear)
             {
                 if (component.BehaviorProperties.ClearLinksDebluespaces)
                     foreach (var link in component.BluespaceLinks)
