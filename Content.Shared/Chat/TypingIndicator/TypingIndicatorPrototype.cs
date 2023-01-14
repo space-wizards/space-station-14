@@ -18,6 +18,10 @@ public sealed class TypingIndicatorPrototype : IPrototype
     [DataField("typingState", required: true)]
     public string TypingState = default!;
 
+    // Corvax-TypingIndicator-Start
+    [DataField("idleState", required: true)]
+    public string IdleState = default!;
+    // Corvax-TypingIndicator-End
     [DataField("offset")]
     public Vector2 Offset = new(0.5f, 0.5f);
 
