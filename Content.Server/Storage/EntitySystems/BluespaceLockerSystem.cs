@@ -338,6 +338,10 @@ public sealed class BluespaceLockerSystem : EntitySystem
             {
                 component.BluespaceLinks.Clear();
                 component.UsesSinceLinkClear = 0;
+
+                if (component.BehaviorProperties.DestroyAfterUses == -1 &&
+                    component.MinBluespaceLinks == 0)
+                    RemComp<BluespaceLockerComponent>(uid);
             }
         }
 
