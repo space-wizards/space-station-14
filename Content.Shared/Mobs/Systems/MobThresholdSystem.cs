@@ -265,7 +265,7 @@ public sealed class MobThresholdSystem : EntitySystem
         }
 
         var ev = new MobThresholdChecked(target, mobStateComponent, thresholdsComponent, damageableComponent);
-        RaiseLocalEvent(target,ref ev, true);
+        RaiseLocalEvent(target, ref ev, true);
         UpdateAlerts(target, mobStateComponent.CurrentState, thresholdsComponent, damageableComponent);
     }
 

@@ -2,6 +2,7 @@
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Mobs;
+
 /// <summary>
 ///     Defines what state an <see cref="Robust.Shared.GameObjects.EntityUid"/> is in.
 ///
@@ -28,6 +29,7 @@ public enum MobState : byte
 /// <param name="Origin">The Entity that caused this state change</param>
 public record struct MobStateChangedEvent(EntityUid Target, MobStateComponent Component, MobState OldMobState,
     MobState NewMobState, EntityUid? Origin = null);
+
 public static class A
 {
     //^.^
