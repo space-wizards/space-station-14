@@ -1,6 +1,7 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -20,8 +21,9 @@ public sealed partial class GravityWellSystem : VirtualController
     #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IViewVariablesManager _vvManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _xformSystem = default!;
     #endregion Dependencies
 
     /// <summary>
@@ -94,7 +96,7 @@ public sealed partial class GravityWellSystem : VirtualController
         if (gravWell.MaxRange < 0.0f || !Resolve(uid, ref xform))
             return;
 
-        foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, gravWell.MaxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
+        foreach(var entity in _lookupSystem.GetEntitiesInRange(xform.MapPosition, gravWell.MaxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
             if (CanGravPulseAffect(entity))
                 gravWell.Captured.Add(entity);
@@ -179,13 +181,13 @@ public sealed partial class GravityWellSystem : VirtualController
             if (epicenter.MapId != entityXform.MapID)
                 continue;
             
-            var displacement = entityXform.WorldPosition - epicenter.Position;
+            var displacement = _xformSystem.GetWorldPosition(entityXform, xformQuery) - epicenter.Position;
             var distance2 = displacement.LengthSquared;
             if (distance2 < minRange2 || distance2 > maxRange2)
                 continue;
             
             var force = (gravWell.MatrixAcceleration * displacement) * (physicsBody.Mass / distance2);
-            _physics.ApplyForce(physicsBody, force);
+            _physicsSystem.ApplyForce(entity, force, body: physicsBody); // TODO: Consider getting a query for FixtureComponents as well. It might speed this up.
         }
     }
 
