@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Rat King now moves faster and can move under doors., type: Tweak}
-  - {message: Rat Servants now have slightly more health., type: Tweak}
-  id: 2371
-  time: '2022-09-28T04:16:20.0000000+00:00'
 - author: vulppine
   changes:
   - {message: Voice masking is now possible for mobs that speak., type: Add}
@@ -2956,3 +2950,9 @@ Entries:
     type: Tweak}
   id: 2870
   time: '2023-01-15T00:52:06.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Reduced the sizes of all standard boxes to their original size of 30.
+      Enjoy the extra *1* space! (31 ->30), type: Tweak}
+  id: 2871
+  time: '2023-01-15T04:12:31.0000000+00:00'
