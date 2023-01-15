@@ -31,10 +31,7 @@ public sealed class CryoPodEjectLockWireAction: ComponentWireAction<CryoPodCompo
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
-    {
-        return true;
-    }
+    public override void Pulse(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent) { }
 
     public override StatusLightState? GetLightState(Wire wire, CryoPodComponent comp)
         => comp.Locked ? StatusLightState.On : StatusLightState.Off;

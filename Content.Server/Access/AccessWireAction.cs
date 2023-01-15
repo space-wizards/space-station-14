@@ -31,11 +31,10 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
+    public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
         comp.Enabled = false;
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
-        return true;
     }
 
     public override void Update(Wire wire)

@@ -211,29 +211,23 @@ public sealed class PowerWireAction : BaseWireAction
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid user, Wire wire)
     {
         base.Pulse(user, wire);
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
         var electrocuted = !TrySetElectrocution(user, wire, true);
 
-        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsedKey)
-            && pulsedKey)
-        {
-            return false;
-        }
+        if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsedKey) && pulsedKey)
+            return;
 
         WiresSystem.SetData(wire.Owner, PowerWireActionKey.Pulsed, true);
         WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PowerWireActionKey.PulseCancel, new TimedWireEvent(AwaitPulseCancel, wire));
 
         if (electrocuted)
-        {
-            return false;
-        }
+            return;
 
         SetPower(wire.Owner, true);
-        return true;
     }
 
     public override void Update(Wire wire)

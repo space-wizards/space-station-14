@@ -27,9 +27,8 @@ public sealed class DoorBoltLightWireAction : ComponentWireAction<AirlockCompone
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AirlockComponent comp)
+    public override void Pulse(EntityUid user, Wire wire, AirlockComponent comp)
     {
         comp.BoltLightsVisible = !comp.BoltLightsEnabled;
-        return true;
     }
 }

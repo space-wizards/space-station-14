@@ -32,11 +32,10 @@ public sealed class DoorSafetyWireAction : ComponentWireAction<AirlockComponent>
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AirlockComponent door)
+    public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
     {
         door.Safety = false;
         WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitSafetyTimerFinish, wire));
-        return true;
     }
 
     public override void Update(Wire wire)

@@ -2,7 +2,6 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Wires;
-using Content.Shared.Access.Components;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Wires;
 
@@ -47,18 +46,14 @@ public sealed class AirAlarmPanicWire : ComponentWireAction<AirAlarmComponent>
             _airAlarmSystem.SetMode(wire.Owner, devNet.Address, AirAlarmMode.Filtering, false, alarm);
         }
 
-
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AirAlarmComponent comp)
+    public override void Pulse(EntityUid user, Wire wire, AirAlarmComponent comp)
     {
-        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<DeviceNetworkComponent>(wire.Owner, out var devNet))
         {
             _airAlarmSystem.SetMode(wire.Owner, devNet.Address, AirAlarmMode.Panic, false);
         }
-
-        return true;
     }
 }

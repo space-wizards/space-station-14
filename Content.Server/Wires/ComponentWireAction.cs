@@ -15,12 +15,9 @@ public abstract class ComponentWireAction<TComponent> : BaseWireAction where TCo
             : StatusLightState.Off;
     }
 
-    public virtual bool Cut(EntityUid user, Wire wire, TComponent component)
-        => false;
-    public virtual bool Mend(EntityUid user, Wire wire, TComponent component)
-        => false;
-    public virtual bool Pulse(EntityUid user, Wire wire, TComponent component)
-        => false;
+    public abstract bool Cut(EntityUid user, Wire wire, TComponent component);
+    public abstract bool Mend(EntityUid user, Wire wire, TComponent component);
+    public abstract void Pulse(EntityUid user, Wire wire, TComponent component);
 
     public override bool Cut(EntityUid user, Wire wire)
     {
@@ -34,9 +31,10 @@ public abstract class ComponentWireAction<TComponent> : BaseWireAction where TCo
         return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Mend(user, wire, component);
     }
 
-    public override bool Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid user, Wire wire)
     {
         base.Pulse(user, wire);
-        return EntityManager.TryGetComponent(wire.Owner, out TComponent? component) && Pulse(user, wire, component);
+        if (EntityManager.TryGetComponent(wire.Owner, out TComponent? component))
+            Pulse(user, wire, component);
     }
 }

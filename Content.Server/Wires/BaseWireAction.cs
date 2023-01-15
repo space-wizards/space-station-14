@@ -61,7 +61,7 @@ public abstract class BaseWireAction : IWireAction
     public virtual bool AddWire(Wire wire, int count) => count == 1;
     public virtual bool Cut(EntityUid user, Wire wire) => Log(user, wire, "cut");
     public virtual bool Mend(EntityUid user, Wire wire) => Log(user, wire, "mended");
-    public virtual bool Pulse(EntityUid user, Wire wire) => Log(user, wire, "pulsed");
+    public virtual void Pulse(EntityUid user, Wire wire) => Log(user, wire, "pulsed");
 
     private bool Log(EntityUid user, Wire wire, string verb)
     {
@@ -73,7 +73,7 @@ public abstract class BaseWireAction : IWireAction
 
         // logs something like "... mended red POWR wire (PowerWireAction) in ...."
         _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
-        return false;
+        return true;
     }
 
     public virtual void Update(Wire wire)

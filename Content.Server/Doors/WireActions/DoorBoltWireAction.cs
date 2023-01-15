@@ -30,13 +30,11 @@ public sealed class DoorBoltWireAction : ComponentWireAction<AirlockComponent>
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AirlockComponent door)
+    public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
     {
         if (IsPowered(wire.Owner))
             door.SetBoltsWithAudio(!door.BoltsDown);
         else if (!door.BoltsDown)
             door.SetBoltsWithAudio(true);
-
-        return true;
     }
 }

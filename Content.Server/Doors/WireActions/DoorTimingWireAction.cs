@@ -41,11 +41,10 @@ public sealed class DoorTimingWireAction : ComponentWireAction<AirlockComponent>
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AirlockComponent door)
+    public override void Pulse(EntityUid user, Wire wire, AirlockComponent door)
     {
         door.AutoCloseDelayModifier = 0.5f;
         WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitTimingTimerFinish, wire));
-        return true;
     }
 
     public override void Update(Wire wire)

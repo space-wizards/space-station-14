@@ -51,13 +51,9 @@ public sealed class AtmosMonitorDeviceNetWire : ComponentWireAction<AtmosAlarmab
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
+    public override void Pulse(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
     {
         if (_alarmOnPulse)
-        {
             _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger, comp);
-        }
-
-        return true;
     }
 }
