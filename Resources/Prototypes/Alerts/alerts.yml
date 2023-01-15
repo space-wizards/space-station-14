@@ -327,7 +327,7 @@
 - type: alert
   id: Debug6
   icons:
-  - sprite: /Textures/Interface/Alerts/human_alive.rsi
-    state: health5
+  - sprite: /Textures/Interface/Alerts/human_critical.rsi
+    state: critical
   name: Debug6
   description: Debug
