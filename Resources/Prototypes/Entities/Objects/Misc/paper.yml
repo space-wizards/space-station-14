@@ -384,6 +384,27 @@
       64.0
 
 - type: entity
+  name: styledtest businesscard
+  parent: Paper
+  id: CoolPaperBusinessCard
+  description: 'An exchange has taken place.'
+  components:
+  - type: Paper
+    layers:
+    - state: paper_words
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_businesscard.svg.96dpi.png"
+    maxWritableArea: 121.0, 24.0
+    contentMargin: 145.0, 0.0, 0.0, 90.0
+
+- type: entity
   name: styledtest travelling
   parent: Paper
   id: CoolPaperTravellingAtNight
