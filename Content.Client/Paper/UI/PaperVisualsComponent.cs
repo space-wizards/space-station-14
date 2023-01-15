@@ -60,10 +60,12 @@ public sealed class PaperVisualsComponent : Component
 
     /// Modulate the style's font by this color
     [DataField("fontAccentColor")]
-    public Color FontAccentColor = Color.White;
+    public Color FontAccentColor = new Color(0x25, 0x25, 0x2a);
 
     /// This can enforce that your paper has a limited area to write in.
-    /// This will be scaled according to UI scale
+    /// If you wish to constrain only one direction, the other direction
+    /// can be unlimited by specifying a value of zero.
+    /// This will be scaled according to UI scale.
     [DataField("maxWritableArea")]
     public Vector2? MaxWritableArea = null;
 }

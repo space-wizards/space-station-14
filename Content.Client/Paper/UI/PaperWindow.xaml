@@ -3,7 +3,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
 
     <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
-            <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360">
+            <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360" MaxWidth="600">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                     <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     <Control Name="TextAlignmentPadding" VerticalAlignment="Top" />

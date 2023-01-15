@@ -91,12 +91,23 @@ namespace Content.Client.Paper.UI
 
             if (visuals.MaxWritableArea != null)
             {
+                var a = (Vector2)visuals.MaxWritableArea;
                 // Paper has requested that this has a maximum area that you can write on.
                 // So, we'll make the window non-resizable and fix the size of the content.
-                Resizable = false;
+                // Ideally, would like to be able to allow resizing only one direction.
+                Resizable = a.X <= 0.0f && a.Y <= 0.0f;
                 PaperContent.MinSize = Vector2.Zero;
-                PaperContent.MinSize = (Vector2)(visuals.MaxWritableArea);
-                PaperContent.MaxSize = (Vector2)(visuals.MaxWritableArea);
+                PaperContent.MinSize = (Vector2)(a);
+
+                if (a.X > 0.0f)
+                {
+                    PaperContent.MaxWidth = a.X;
+                }
+
+                if (a.Y > 0.0f)
+                {
+                    PaperContent.MaxHeight = a.Y;
+                }
             }
        }
 
@@ -149,10 +160,6 @@ namespace Content.Client.Paper.UI
             {
                 StampDisplay.AddChild(new StampWidget{ Stamper = stamper });
             }
-
-            // The DefaultWindow sets an arbitrary MinSize. We'll set this back so that
-            // the min size is enough to contain the content without overlapping.
-            MinSize = DesiredSize;
         }
     }
 }

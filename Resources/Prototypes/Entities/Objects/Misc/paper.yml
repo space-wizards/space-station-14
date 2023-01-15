@@ -46,7 +46,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
@@ -77,7 +76,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
     headerMargin: 0.0, 0.0, 0.0, 16.0
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
@@ -87,7 +85,7 @@
     contentImageNumLines: 2
     contentMargin: 16.0, 16.0, 16.0, 0.0
     # Make this a wide dot-matrix printer
-    maxWritableArea: 400.0, 300.0
+    maxWritableArea: 400.0, 0.0
 
 - type: entity
   name: captain's thoughts
@@ -109,7 +107,6 @@
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     backgroundModulate: "#e6e6fa"
@@ -143,7 +140,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
     backgroundModulate: "#f7e574"
@@ -167,7 +163,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_napkin.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
     backgroundScale: 2.0, 2.0
@@ -197,7 +192,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_businesscard.svg.96dpi.png"
     maxWritableArea: 121.0, 24.0
     contentMargin: 145.0, 0.0, 0.0, 90.0
@@ -216,7 +210,6 @@
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
   - type: PaperVisuals
-    fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
