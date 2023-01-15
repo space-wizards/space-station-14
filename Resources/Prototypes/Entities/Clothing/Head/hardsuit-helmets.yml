@@ -431,6 +431,8 @@
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
+  - type: PointLight
+    color: cyan
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader

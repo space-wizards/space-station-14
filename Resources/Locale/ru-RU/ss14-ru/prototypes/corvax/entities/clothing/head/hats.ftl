@@ -7,3 +7,6 @@ ent-ClothingHeadCapCentcomNaval = флотская фуражка
 ent-ClothingHeadHatBeretCentcomNaval = флотский берет
     .desc = Берет, который носят на флоте Nanotrasen.
     .suffix = { "" }
+ent-ClothingHeadHatERTLeaderBeret = берет лидера
+    .desc = Синий берет из дюраткани со значком из золота, обозначающим его владельца как лидера ОБР.
+    .suffix = { "" }

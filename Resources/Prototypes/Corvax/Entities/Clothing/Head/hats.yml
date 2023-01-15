@@ -30,3 +30,14 @@
       sprite: Corvax/Clothing/Head/Hats/centcom_naval_beret.rsi
     - type: Clothing
       sprite: Corvax/Clothing/Head/Hats/centcom_naval_beret.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatERTLeaderBeret
+  name: leader beret
+  description: A blue beret made of durathread with a genuine golden badge, denoting its owner as a Leader of ERT.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Head/Hats/ERT_leader_beret.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Head/Hats/ERT_leader_beret.rsi
