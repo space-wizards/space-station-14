@@ -8,19 +8,10 @@ namespace Content.Server.Power;
 
 // Generic power wire action. Use on anything
 // that requires power.
-[DataDefinition]
 public sealed class PowerWireAction : BaseWireAction
 {
-    [DataField("color")]
-    private Color _statusColor = Color.Red;
-
-    [DataField("name")]
-    private string _text = "POWR";
-    protected override string Text
-    {
-        get => _text;
-        set => _text = value;
-    }
+    public override Color Color { get; set; } = Color.Red;
+    public override string Name { get; set; } = "POWR";
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
@@ -29,35 +20,22 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override object StatusKey { get; } = PowerWireActionKey.Status;
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
+    public override StatusLightState? GetLightState(Wire wire)
     {
-        StatusLightState lightState = StatusLightState.Off;
         if (WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.MainWire, out int main)
             && main != wire.Id)
         {
             return null;
         }
 
-        if (IsPowered(wire.Owner))
-        {
-            if (!AllWiresMended(wire.Owner)
+        if (!AllWiresMended(wire.Owner)
                 || WiresSystem.TryGetData(wire.Owner, PowerWireActionKey.Pulsed, out bool pulsed)
                 && pulsed)
-            {
-                lightState = StatusLightState.BlinkingSlow;
-            }
-            else
-            {
-                lightState = (AllWiresCut(wire.Owner))
-                    ? StatusLightState.Off
-                    : StatusLightState.On;
-            }
+        {
+            return StatusLightState.BlinkingSlow;
         }
 
-        return new StatusLightData(
-            _statusColor,
-            lightState,
-            _text);
+        return AllWiresCut(wire.Owner) ? StatusLightState.Off : StatusLightState.On;
     }
 
     private bool AllWiresCut(EntityUid owner)

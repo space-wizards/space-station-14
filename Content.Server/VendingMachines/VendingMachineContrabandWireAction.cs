@@ -5,27 +5,23 @@ using Content.Shared.Wires;
 namespace Content.Server.VendingMachines;
 
 [DataDefinition]
-public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
+public sealed class VendingMachineContrabandWireAction : ComponentWireAction<>
 {
-    private readonly Color _color = Color.Green;
-    private readonly string _text = "MNGR";
+    public override Color Color { get; set; } = Color.Green;
+    public override string Name { get; set; } = "MNGR";
     public override object? StatusKey { get; } = ContrabandWireKey.StatusKey;
     public override object? TimeoutKey { get; } = ContrabandWireKey.TimeoutKey;
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
+    public override StatusLightState? GetLightState(Wire wire)
     {
-        var lightState = StatusLightState.Off;
-        if (IsPowered(wire.Owner) && EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
+        if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
-            lightState = vending.Contraband
+            return vending.Contraband
                 ? StatusLightState.BlinkingSlow
                 : StatusLightState.On;
         }
 
-        return new StatusLightData(
-            _color,
-            lightState,
-            _text);
+        return StatusLightState.Off;
     }
 
     public override void ToggleValue(EntityUid owner, bool setting)

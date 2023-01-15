@@ -8,12 +8,13 @@ namespace Content.Server.Wires;
 // wire actions, but it's here anyways as
 // a serializable class for consistency.
 // C'est la vie.
-[DataDefinition]
 public sealed class DummyWireAction : BaseWireAction
 {
+    public override Color Color { get; set; } = Color.White;
+    public override string Name { get; set; } = "";
+
     public override object? StatusKey { get; } = null;
 
-    public override StatusLightData? GetStatusLightData(Wire wire) => null;
     public override bool AddWire(Wire wire, int count) => true;
 
     public override bool Cut(EntityUid user, Wire wire)
