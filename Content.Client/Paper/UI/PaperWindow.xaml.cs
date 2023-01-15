@@ -83,7 +83,7 @@ namespace Content.Client.Paper.UI
                 PaperContent.PanelOverride = _paperContentTex;
             }
 
-            PaperContentContainer.Margin = new Thickness(
+            PaperContent.Margin = new Thickness(
                     visuals.ContentMargin.Left, visuals.ContentMargin.Top,
                     visuals.ContentMargin.Right, visuals.ContentMargin.Bottom);
 
