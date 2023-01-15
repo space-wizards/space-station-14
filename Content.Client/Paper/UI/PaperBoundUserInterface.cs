@@ -28,8 +28,10 @@ namespace Content.Client.Paper.UI
             _window.OnClose += Close;
             _window.Input.OnTextEntered += Input_OnTextEntered;
 
-            var visuals = entityMgr.GetComponent<PaperVisualsComponent>(Owner.Owner);
-            _window.InitVisuals(visuals);
+            if (entityMgr.TryGetComponent<PaperVisualsComponent>(Owner.Owner, out var visuals))
+            {
+                _window.InitVisuals(visuals);
+            }
 
             _window.OpenCentered();
         }
