@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Cloning Pods can now be upgraded to make them faster and use less biomass.,
-    type: Add}
-  id: 2373
-  time: '2022-09-29T02:30:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Expect a familiar ghost to be appearing around the station more often,
       this time with some new tricks!', type: Add}
   - {message: Fixed revenants spawning out into space when killed., type: Fix}
@@ -2953,3 +2947,9 @@ Entries:
   - {message: Added 23 new markings for diona's, type: Add}
   id: 2872
   time: '2023-01-15T04:54:47.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: Fixing health alerts not properly updating when players are damaged,
+    type: Fix}
+  id: 2873
+  time: '2023-01-15T07:52:20.0000000+00:00'
