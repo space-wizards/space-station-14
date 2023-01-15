@@ -47,6 +47,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Timer = Robust.Shared.Timing.Timer;
@@ -63,18 +64,20 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorageSystem = default!;
     [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -422,20 +425,24 @@ public sealed partial class AdminVerbSystem
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
-                    physics.BodyType = BodyType.Dynamic;
-                    physics.BodyStatus = BodyStatus.InAir;
-                    physics.WakeBody();
-                    foreach (var (_, fixture) in fixtures.Fixtures)
+                    _physics.SetBodyType(args.Target, BodyType.Dynamic, manager: fixtures, body: physics);
+                    _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                    _physics.WakeBody(args.Target, manager: fixtures, body: physics);
+
+                    foreach (var fixture in fixtures.Fixtures.Values)
                     {
                         if (!fixture.Hard)
                             continue;
-                        fixture.Restitution = 1.1f;
+
+                        _physics.SetRestitution(args.Target, fixture, 1.1f, false, fixtures);
                     }
 
-                    physics.LinearVelocity = _random.NextVector2(1.5f, 1.5f);
-                    physics.AngularVelocity = MathF.PI * 12;
-                    physics.LinearDamping = 0.0f;
-                    physics.AngularDamping = 0.0f;
+                    _fixtures.FixtureUpdate(args.Target, manager: fixtures, body: physics);
+
+                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(1.5f, 1.5f), manager: fixtures, body: physics);
+                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
+                    _physics.SetLinearDamping(physics, 0f);
+                    _physics.SetAngularDamping(physics, 0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-pinball-description")
@@ -452,18 +459,20 @@ public sealed partial class AdminVerbSystem
                     var xform = Transform(args.Target);
                     var fixtures = Comp<FixturesComponent>(args.Target);
                     xform.Anchored = false; // Just in case.
-                    physics.BodyType = BodyType.Dynamic;
-                    physics.BodyStatus = BodyStatus.InAir;
-                    physics.WakeBody();
-                    foreach (var (_, fixture) in fixtures.Fixtures)
+
+                    _physics.SetBodyType(args.Target, BodyType.Dynamic, body: physics);
+                    _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                    _physics.WakeBody(args.Target, manager: fixtures, body: physics);
+
+                    foreach (var fixture in fixtures.Fixtures.Values)
                     {
-                        fixture.Hard = false;
+                        _physics.SetHard(args.Target, fixture, false, manager: fixtures);
                     }
 
-                    physics.LinearVelocity = _random.NextVector2(8.0f, 8.0f);
-                    physics.AngularVelocity = MathF.PI * 12;
-                    physics.LinearDamping = 0.0f;
-                    physics.AngularDamping = 0.0f;
+                    _physics.SetLinearVelocity(args.Target, _random.NextVector2(8.0f, 8.0f), manager: fixtures, body: physics);
+                    _physics.SetAngularVelocity(args.Target, MathF.PI * 12, manager: fixtures, body: physics);
+                    _physics.SetLinearDamping(physics, 0f);
+                    _physics.SetAngularDamping(physics, 0f);
                 },
                 Impact = LogImpact.Extreme,
                 Message = Loc.GetString("admin-smite-yeet-description")

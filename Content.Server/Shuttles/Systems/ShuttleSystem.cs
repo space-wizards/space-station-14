@@ -85,15 +85,16 @@ namespace Content.Server.Shuttles.Systems
             // Look this is jank but it's a placeholder until we design it.
             if (args.NewFixtures.Count == 0) return;
 
-            var manager = Comp<FixturesComponent>(args.NewFixtures[0].Body.Owner);
+            var uid = args.NewFixtures[0].Body.Owner;
+            var manager = Comp<FixturesComponent>(uid);
 
             foreach (var fixture in args.NewFixtures)
             {
-                _physics.SetDensity(fixture, TileMassMultiplier, manager, false);
-                _fixtures.SetRestitution(fixture, 0.1f, manager, false);
+                _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
+                _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
             }
 
-            _fixtures.FixtureUpdate(manager, args.NewFixtures[0].Body);
+            _fixtures.FixtureUpdate(uid, manager: manager);
         }
 
         private void OnGridInit(GridInitializeEvent ev)
@@ -118,11 +119,11 @@ namespace Content.Server.Shuttles.Systems
 
             if (component.Enabled)
             {
-                Enable(physicsComponent);
+                Enable(uid, physicsComponent);
             }
         }
 
-        public void Toggle(ShuttleComponent component)
+        public void Toggle(EntityUid uid, ShuttleComponent component)
         {
             if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
@@ -130,28 +131,32 @@ namespace Content.Server.Shuttles.Systems
 
             if (component.Enabled)
             {
-                Enable(physicsComponent);
+                Enable(uid, physicsComponent);
             }
             else
             {
-                Disable(physicsComponent);
+                Disable(uid, physicsComponent);
             }
         }
 
-        private void Enable(PhysicsComponent component)
+        private void Enable(EntityUid uid, PhysicsComponent component)
         {
-            component.BodyType = BodyType.Dynamic;
-            component.BodyStatus = BodyStatus.InAir;
-            component.FixedRotation = false;
-            component.LinearDamping = ShuttleLinearDamping;
-            component.AngularDamping = ShuttleAngularDamping;
+            FixturesComponent? manager = null;
+
+            _physics.SetBodyType(uid, BodyType.Dynamic, manager: manager, body: component);
+            _physics.SetBodyStatus(component, BodyStatus.InAir);
+            _physics.SetFixedRotation(uid, false, manager: manager, body: component);
+            _physics.SetLinearDamping(component, ShuttleLinearDamping);
+            _physics.SetAngularDamping(component, ShuttleAngularDamping);
         }
 
-        private void Disable(PhysicsComponent component)
+        private void Disable(EntityUid uid, PhysicsComponent component)
         {
-            component.BodyType = BodyType.Static;
-            component.BodyStatus = BodyStatus.OnGround;
-            component.FixedRotation = true;
+            FixturesComponent? manager = null;
+
+            _physics.SetBodyType(uid, BodyType.Static, manager: manager, body: component);
+            _physics.SetBodyStatus(component, BodyStatus.OnGround);
+            _physics.SetFixedRotation(uid, true, manager: manager, body: component);
         }
 
         private void OnShuttleShutdown(EntityUid uid, ShuttleComponent component, ComponentShutdown args)
@@ -164,7 +169,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            Disable(physicsComponent);
+            Disable(uid, physicsComponent);
         }
     }
 }
