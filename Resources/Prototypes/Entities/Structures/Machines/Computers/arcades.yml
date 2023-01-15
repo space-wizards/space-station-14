@@ -58,6 +58,8 @@
   - type: SpaceVillainArcade
     rewardMinAmount: 5
     rewardMaxAmount: 8
+    rewardSpecialMinAmount: 1
+    rewardSpecialMaxAmount: 2
     
 - type: entity
   id: BlockGameArcade

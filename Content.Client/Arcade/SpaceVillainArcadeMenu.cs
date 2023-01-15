@@ -1,4 +1,4 @@
-﻿using Content.Client.Arcade.UI;
+using Content.Client.Arcade.UI;
 using Content.Shared.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -20,11 +20,11 @@ namespace Content.Client.Arcade
         private readonly Button[] _gameButtons = new Button[3]; //used to disable/enable all game buttons
         public SpaceVillainArcadeMenu(SpaceVillainArcadeBoundUserInterface owner)
         {
-            MinSize = SetSize = (300, 225);
+            MinSize = SetSize = (420, 225);
             Title = Loc.GetString("spacevillain-menu-title");
             Owner = owner;
 
-            var grid = new GridContainer {Columns = 1};
+            var grid = new GridContainer {Columns = 1, HorizontalAlignment = HAlignment.Center};
 
             var infoGrid = new GridContainer {Columns = 3};
             infoGrid.AddChild(new Label{ Text = Loc.GetString("spacevillain-menu-label-player"), Align = Label.AlignMode.Center });

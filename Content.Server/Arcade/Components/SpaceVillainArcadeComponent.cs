@@ -57,20 +57,38 @@ namespace Content.Server.Arcade.Components
             "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
             "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
             "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton",
-            "FoamCrossbow", "RevolverCapGun", "PlushieLizard", "PlushieSpaceLizard",
-            "PlushieNuke", "PlushieCarp", "PlushieRatvar", "PlushieNar", "PlushieSnake", "Basketball", "Football",
-            "PlushieRouny", "PlushieBee", "PlushieSlime", "BalloonCorgi", "ToySword", "CrayonBox", "BoxDonkSoftBox", "BoxCartridgeCap",
-            "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument"
+            "PlushieLizard", "PlushieSpaceLizard", "PlushieNuke", "PlushieCarp", "PlushieRatvar", "PlushieNar", "PlushieSnake",
+            "PlushieRouny", "PlushieBee", "PlushieSlime", "Basketball", "Football","BalloonCorgi", "BoxDonkSoftBox", "BoxCartridgeCap",
+            "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument", "CrayonBox"
+        };
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("possibleSpecialRewards", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+        private List<string> _possibleSpecialRewards = new List<string>()
+        {
+            "FoamCrossbow", "RevolverCapGun", "ToySword"
         };
 
         [DataField("rewardMinAmount")]
-        public int _rewardMinAmount;
+        public int RewardMinAmount;
 
         [DataField("rewardMaxAmount")]
-        public int _rewardMaxAmount;
+        public int RewardMaxAmount;
+
+        [DataField("rewardSpecialMinAmount")]
+        public int RewardSpecialMinAmount;
+
+        [DataField("rewardSpecialMaxAmount")]
+        public int RewardSpecialMaxAmount;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int _rewardAmount = 0;
+        public int RewardNormalAmount = 0;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int RewardSpecialAmount = 0;
+
+        [DataField("rewardSpecialChance"), ViewVariables(VVAccess.ReadWrite)]
+        public float RewardSpecialChance = 0.3f;
 
         protected override void Initialize()
         {
@@ -82,8 +100,8 @@ namespace Content.Server.Arcade.Components
             }
 
             // Random amount of prizes
-            _rewardAmount = new Random().Next(_rewardMinAmount, _rewardMaxAmount + 1);
-
+            RewardSpecialAmount = new Random().Next(RewardSpecialMinAmount, RewardSpecialMaxAmount + 1);
+            RewardNormalAmount = Math.Max((new Random().Next(RewardMinAmount, RewardMaxAmount + 1)) - RewardSpecialAmount, 0);
         }
 
         public void OnPowerStateChanged(PowerChangedEvent e)
@@ -128,11 +146,31 @@ namespace Content.Server.Arcade.Components
         /// </summary>
         public void ProcessWin()
         {
-            if (_rewardAmount > 0)
+            if ((RewardNormalAmount == 0) && (RewardSpecialAmount == 0))
+                return;
+
+            if (RewardSpecialAmount > 0)
             {
-                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
-                _rewardAmount--;
+                if (RewardNormalAmount > 0)
+                {
+                    if (_random.Prob(RewardSpecialChance))
+                    {
+                        _entityManager.SpawnEntity(_random.Pick(_possibleSpecialRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+                        RewardSpecialAmount--;
+                        return;
+                    }
+
+                    _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+                    RewardNormalAmount--;
+                    return;
+                }
+                _entityManager.SpawnEntity(_random.Pick(_possibleSpecialRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+                RewardSpecialAmount--;
+                return;
             }
+
+            _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+            RewardNormalAmount--;
         }
 
         /// <summary>
