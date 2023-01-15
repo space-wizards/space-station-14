@@ -25,6 +25,7 @@ namespace Content.Shared.Decals
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<DecalGridComponent, ComponentAdd>(OnCompAdd);
+            SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnCompStartup);
             SubscribeLocalEvent<DecalGridComponent, ComponentRemove>(OnCompRemove);
         }
 
@@ -40,7 +41,12 @@ namespace Content.Shared.Decals
 
         protected virtual void OnCompAdd(EntityUid uid, DecalGridComponent component, ComponentAdd args)
         {
-            var index = ChunkIndex[uid] = new();
+            ChunkIndex[uid] = new();
+        }
+
+        private void OnCompStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
+        {
+            var index = ChunkIndex[uid];
             foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
             {
                 foreach (var decalUid in decals.Decals.Keys)
