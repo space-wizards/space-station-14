@@ -14921,13 +14921,13 @@ entities:
   - unspawnedCount: 35
     type: BallisticAmmoProvider
 - uid: 1652
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 10.5,-6.5
     parent: 104
     type: Transform
 - uid: 1653
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 9.5,-6.5
     parent: 104

@@ -270,7 +270,7 @@ namespace Content.Server.Salvage
                         // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
                         continue;
                     }
-                    _transform.SetParent(playerEntityUid, salvageTransform.ParentUid);
+                    Transform(playerEntityUid).AttachParent(salvageTransform.ParentUid);
                 }
             }
 

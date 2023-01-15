@@ -57,13 +57,16 @@ public sealed partial class TriggerSystem
 
         SetProximityAppearance(uid, component);
 
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body))
+            return;
 
-        _fixtures.TryCreateFixture(body, new Fixture(body, component.Shape)
-        {
+        _fixtures.TryCreateFixture(
+            uid,
+            component.Shape,
+            TriggerOnProximityComponent.FixtureID,
+            hard: false,
             // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
-            CollisionLayer = (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
-        });
+            collisionLayer: (int) (CollisionGroup.MidImpassable | CollisionGroup.LowImpassable | CollisionGroup.HighImpassable));
     }
 
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
