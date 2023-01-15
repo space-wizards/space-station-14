@@ -133,7 +133,7 @@ public sealed partial class GravityWellSystem : VirtualController
         var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
         foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
         {
-            UpdateBeforeSolve(gravWell.Owner, physicsQuery, xformQuery, gravWell, xform);
+            UpdateBeforeSolve(gravWell.Owner, frameTime, physicsQuery, xformQuery, gravWell, xform);
         }
     }
 
@@ -143,14 +143,14 @@ public sealed partial class GravityWellSystem : VirtualController
     /// <param name="uid">The uid of the gravity well to update.</param>
     /// <param name="gravWell">The state of the gravity well to update.</param>
     /// <param name="xform">The position state of the gravity well.</param>
-    public void UpdateBeforeSolve(EntityUid uid, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
+    public void UpdateBeforeSolve(EntityUid uid, float frameTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell, ref xform))
             return;
 
         var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
         var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
-        UpdateBeforeSolve(uid, physicsQuery, xformQuery, gravWell, xform);
+        UpdateBeforeSolve(uid, frameTime, physicsQuery, xformQuery, gravWell, xform);
     }
 
     /// <summary>
@@ -163,6 +163,7 @@ public sealed partial class GravityWellSystem : VirtualController
     /// <param name="xform">The position state of the gravity well.</param>
     public void UpdateBeforeSolve(
         EntityUid uid,
+        float frameTime,
         EntityQuery<PhysicsComponent> physicsQuery, EntityQuery<TransformComponent> xformQuery,
         GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
@@ -186,8 +187,9 @@ public sealed partial class GravityWellSystem : VirtualController
             if (distance2 < minRange2 || distance2 > maxRange2)
                 continue;
 
-            var force = (gravWell.MatrixAcceleration * displacement) * (physicsBody.Mass / distance2);
-            _physicsSystem.ApplyForce(entity, force, body: physicsBody); // TODO: Consider getting a query for FixtureComponents as well. It might speed this up.
+            // Need ApplyLinearImpulse instead of ApplyForce here because impulse works on KinematicController physicsbodies (ie: humans) and ApplyForce doesn't even though they are on the whitelist.
+            var impulse = (gravWell.MatrixAcceleration * displacement) * (frameTime * physicsBody.Mass / distance2);
+            _physicsSystem.ApplyLinearImpulse(entity, impulse, body: physicsBody); // TODO: Consider getting a query for FixtureComponents as well. It might speed this up.
         }
     }
 
