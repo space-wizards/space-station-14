@@ -10,7 +10,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
@@ -50,7 +50,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
@@ -70,7 +70,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
@@ -90,7 +90,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path:
@@ -111,7 +111,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     collection: Rain
@@ -137,7 +137,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
@@ -157,7 +157,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
@@ -177,7 +177,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
@@ -197,7 +197,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
@@ -217,7 +217,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
@@ -237,7 +237,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/rain_heavy.ogg
