@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Components;
@@ -6,7 +5,6 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
-using Content.Server.Clothing.Components;
 using Content.Server.Damage.Systems;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
@@ -35,8 +33,9 @@ using Content.Shared.Disease;
 using Content.Shared.Electrocution;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Inventory;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
@@ -50,7 +49,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration.Systems;
@@ -70,6 +68,8 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PolymorphableSystem _polymorphableSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly TabletopSystem _tabletopSystem = default!;
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
@@ -218,19 +218,16 @@ public sealed partial class AdminVerbSystem
                 Act = () =>
                 {
                     int damageToDeal;
-                    var critState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Critical).FirstOrNull();
-                    if (critState is null)
-                    {
+                    if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Critical, out var criticalThreshold)) {
                         // We can't crit them so try killing them.
-                        var deadState = mobState._highestToLowestStates.Where(x => x.Value == DamageState.Dead).FirstOrNull();
-                        if (deadState is null)
-                            return; // whelp.
-
-                        damageToDeal = deadState.Value.Key - (int) damageable.TotalDamage;
+                        if (!_mobThresholdSystem.TryGetThresholdForState(args.Target, MobState.Dead,
+                                out var deadThreshold))
+                            return;// whelp.
+                        damageToDeal = deadThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
                     else
                     {
-                        damageToDeal = critState.Value.Key - (int) damageable.TotalDamage;
+                        damageToDeal = criticalThreshold.Value.Int() - (int) damageable.TotalDamage;
                     }
 
                     if (damageToDeal <= 0)

@@ -16,7 +16,7 @@ artifact-effect-hint-storage = Internal chamber
 artifact-effect-hint-drill = Serrated rotator
 artifact-effect-hint-soap = Lubricated surface
 artifact-effect-hint-communication = Long-distance communication
-artifact-effect-hint-fixtures = Structural phasing
+artifact-effect-hint-phasing = Structural phasing
 artifact-effect-hint-sentience = Neurological activity
 
 # the triggers should be more obvious than the effects
