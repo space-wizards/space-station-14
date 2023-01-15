@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="308"
-   height="64"
-   viewBox="0 0 308 64"
+   width="211"
+   height="60"
+   viewBox="0 0 211 60"
    fill="none"
    version="1.1"
    id="svg4"
@@ -100,6 +100,84 @@
            y="30.451633" />
       </g>
     </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1608">
+      <g
+         id="g1630"
+         transform="scale(0.96824607,1.0327953)">
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1610"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="1.1368795e-05" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1612"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="6.207139" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1614"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="12.414267" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1616"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="18.621393" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1618"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="24.828522" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1620"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="31.035648" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1622"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="37.242775" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1624"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="43.449905" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1626"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="55.864159" />
+        <rect
+           style="fill:#00a700;fill-opacity:1;stroke-width:0.0886665;stroke-linejoin:round"
+           id="rect1628"
+           width="145.43811"
+           height="3.8830388"
+           x="0"
+           y="49.657032" />
+      </g>
+    </clipPath>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -120,9 +198,9 @@
      inkscape:snap-object-midpoints="false"
      inkscape:snap-nodes="false"
      inkscape:snap-page="true"
-     inkscape:zoom="3.4289391"
-     inkscape:cx="163.31582"
-     inkscape:cy="19.685389"
+     inkscape:zoom="3.1246508"
+     inkscape:cx="85.769586"
+     inkscape:cy="-9.7610909"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="1"
@@ -131,40 +209,32 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showguides="true" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:87.0333px;line-height:1.25;font-family:sans-serif;display:inline;fill:#2c3b8c;fill-opacity:1;stroke:none;stroke-width:2.17583"
+     x="0"
+     y="61.706623"
+     id="text1677"
+     transform="scale(1.0327953,0.96824607)"
+     clip-path="url(#clipPath1608)"><tspan
+       sodipodi:role="line"
+       id="tspan1675"
+       x="0"
+       y="61.706623"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:City;-inkscape-font-specification:City;fill:#2c3b8c;fill-opacity:1;stroke-width:2.17583">NTX</tspan></text>
   <g
      inkscape:groupmode="layer"
-     id="layer1"
-     inkscape:label="Decoration"
-     style="display:inline" />
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Text" />
+     id="layer3"
+     inkscape:label="Bars" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:89.6359px;line-height:1.25;font-family:sans-serif;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:2.24089"
-     x="-0.71708649"
-     y="64"
-     id="text299"
-     transform="matrix(1.3056159,0,0.01462875,1.3056159,-5.3708349,-13.575443)"
-     clip-path="url(#clipPath1398)"><tspan
-       sodipodi:role="line"
-       id="tspan297"
-       x="-0.71708649"
-       y="64"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IBM 3270';-inkscape-font-specification:'IBM 3270, ';fill:#0000ff;stroke-width:2.24089">XENO</tspan></text>
-  <text
-     xml:space="preserve"
-     id="text460"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect462);fill:#000000;fill-opacity:1;stroke:none" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none"
-     x="222.8941"
-     y="58.173088"
-     id="text468"><tspan
-       sodipodi:role="line"
-       id="tspan466"
-       x="222.8941"
-       y="58.173088">Labs</tspan></text>
+     style="font-style:normal;font-weight:normal;font-size:41.0143px;line-height:1.25;font-family:sans-serif;fill:#5e975b;fill-opacity:1;stroke:none;stroke-width:1.02536"
+     x="132.87933"
+     y="55.600372"
+     id="text2013"><tspan
+       id="tspan2011"
+       x="132.87933"
+       y="55.600372"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow';fill:#5e975b;fill-opacity:1;stroke-width:1.02536"
+       sodipodi:role="line">Labs</tspan></text>
 </svg>

@@ -15,6 +15,7 @@ namespace Content.Client.Paper.UI
         // We keep a reference to the paper content texture that we create
         // so that we can modify it later.
         private StyleBoxTexture _paperContentTex = new();
+        private float _paperContentLineScale = 1.0f;
 
         public PaperWindow()
         {
@@ -81,6 +82,7 @@ namespace Content.Client.Paper.UI
                     Mode = StyleBoxTexture.StretchMode.Tile,
                 };
                 PaperContent.PanelOverride = _paperContentTex;
+                _paperContentLineScale = visuals.ContentImageNumLines;
             }
 
             PaperContent.Margin = new Thickness(
@@ -109,7 +111,19 @@ namespace Content.Client.Paper.UI
                 // This positions the texture so the font baseline is on the bottom:
                 _paperContentTex.ExpandMarginTop = font.GetDescent(UIScale);
                 // And this scales the texture so that it's a single text line:
-                _paperContentTex.TextureScale = new Vector2(1, fontLineHeight / _paperContentTex.Texture?.Height ?? fontLineHeight);
+                var scaleY = (_paperContentLineScale * fontLineHeight) / _paperContentTex.Texture?.Height ?? fontLineHeight;
+                _paperContentTex.TextureScale = new Vector2(1, scaleY);
+
+                // Now, we might need to add some padding to the text to ensure
+                // that, even if a header is specified, the text will line up with
+                // where the content image expects the font to be rendered
+                {
+                    var headerHeight = ImageHeader.Size.Y + ImageHeader.Margin.Top + ImageHeader.Margin.Bottom;
+                    var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
+                    var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
+                    var verticalMargin = fontLineHeight * paddingRequiredInLines * _paperContentLineScale;
+                    TextAlignmentPadding.Margin = new Thickness(0.0f, verticalMargin, 0.0f, 0.0f);
+                }
             }
 
             base.Draw(handle);

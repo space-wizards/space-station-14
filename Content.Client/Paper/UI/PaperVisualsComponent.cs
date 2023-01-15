@@ -46,6 +46,12 @@ public sealed class PaperVisualsComponent : Component
     [DataField("contentMargin")]
     public Box2 ContentMargin = default;
 
+    /// The number of lines that the content image represents. The
+    /// content image will be vertically tiled after this many lines
+    /// of text.
+    [DataField("contentImageNumLines")]
+    public int ContentImageNumLines = 1;
+
     // Font color
     //<todo.eoin Feels like we want full control here, not an accent on the style?
     [DataField("fontAccentColor")]

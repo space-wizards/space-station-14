@@ -31,6 +31,16 @@
   </metadata>
   <defs
      id="defs8">
+    <inkscape:path-effect
+       effect="powermask"
+       id="path-effect2519"
+       is_visible="true"
+       lpeversion="1"
+       uri="#mask-powermask-path-effect2519"
+       invert="false"
+       hide_mask="false"
+       background="true"
+       background_color="#ffffffff" />
     <filter
        id="mask-powermask-path-effect1163_inverse"
        inkscape:label="filtermask-powermask-path-effect1163"
@@ -49,6 +59,115 @@
          values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
          in="fbSourceGraphic" />
     </filter>
+    <mask
+       maskUnits="userSpaceOnUse"
+       id="mask2602">
+      <path
+         id="mask-powermask-path-effect2634_box"
+         style="fill:#ffffff;fill-opacity:1"
+         d="M -1,-0.96563349 H 77 V 33 H -1 Z" />
+      <g
+         id="g2632"
+         style="">
+        <g
+           id="g2612">
+          <circle
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0923076;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2604"
+             cx="16"
+             cy="0"
+             r="12" />
+          <circle
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0923076;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2606"
+             cx="60"
+             cy="0"
+             r="12" />
+          <circle
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0923076;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2608"
+             cx="16"
+             cy="32"
+             r="12" />
+          <circle
+             style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.0923076;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2610"
+             cx="60"
+             cy="32"
+             r="12" />
+        </g>
+        <g
+           id="g2630"
+           style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-opacity:1">
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2614"
+             cx="34"
+             cy="4"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2616"
+             cx="42"
+             cy="4"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2618"
+             cx="34"
+             cy="28"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2620"
+             cx="42"
+             cy="28"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2622"
+             cx="34"
+             cy="20"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2624"
+             cx="42"
+             cy="20"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2626"
+             cx="34"
+             cy="12"
+             r="2" />
+          <circle
+             style="fill:#000000;fill-opacity:0.797456;stroke:none;stroke-width:0.133333;stroke-linejoin:round;stroke-opacity:1"
+             id="circle2628"
+             cx="42"
+             cy="12"
+             r="2" />
+        </g>
+      </g>
+    </mask>
+    <filter
+       id="mask-powermask-path-effect2634_inverse"
+       inkscape:label="filtermask-powermask-path-effect2634"
+       style="color-interpolation-filters:sRGB"
+       height="100"
+       width="100"
+       x="-50"
+       y="-50">
+      <feColorMatrix
+         id="mask-powermask-path-effect2634_primitive1"
+         values="1"
+         type="saturate"
+         result="fbSourceGraphic" />
+      <feColorMatrix
+         id="mask-powermask-path-effect2634_primitive2"
+         values="-1 0 0 0 1 0 -1 0 0 1 0 0 -1 0 1 0 0 0 1 0 "
+         in="fbSourceGraphic" />
+    </filter>
   </defs>
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -62,43 +181,34 @@
      inkscape:window-width="1916"
      inkscape:window-height="1034"
      id="namedview6"
-     showgrid="true"
+     showgrid="false"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="13.923931"
-     inkscape:cx="30.487079"
-     inkscape:cy="12.460561"
+     inkscape:zoom="8.4422326"
+     inkscape:cx="37.667761"
+     inkscape:cy="19.130011"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg4"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
-     inkscape:deskcolor="#d1d1d1">
+     inkscape:deskcolor="#d1d1d1"
+     showguides="false">
     <inkscape:grid
        type="xygrid"
        id="grid233"
        originx="0"
        originy="0" />
   </sodipodi:namedview>
-  <path
-     id="rect1104"
-     style="fill:#ffffff;fill-opacity:1;stroke-width:1.418;stroke-linejoin:round"
-     d="M 0 0 L 0 32 L 76 32 L 76 0 L 0 0 z M 22 4 A 12 12 0 0 1 34 16 A 12 12 0 0 1 22 28 A 12 12 0 0 1 10 16 A 12 12 0 0 1 22 4 z M 54 4 A 12 12 0 0 1 66 16 A 12 12 0 0 1 54 28 A 12 12 0 0 1 42 16 A 12 12 0 0 1 54 4 z " />
   <rect
-     style="fill:#ffffff;stroke-width:1.418;stroke-linejoin:round;fill-opacity:1"
-     id="rect231"
-     width="2"
-     height="16"
-     x="37"
-     y="0" />
-  <rect
-     style="fill:#c6fbb6;stroke-width:1.418;stroke-linejoin:round;fill-opacity:0.30067122"
-     id="rect339"
-     width="2"
-     height="16"
-     x="37"
-     y="16" />
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linejoin:round;stroke-opacity:1"
+     id="rect1200"
+     width="76"
+     height="31.965633"
+     x="0"
+     y="0.034366511"
+     mask="url(#mask2602)" />
 </svg>

@@ -331,9 +331,9 @@
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
     headerMargin:
       0.0,
-      12.0,
       0.0,
-      0.0
+      0.0,
+      16.0
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
     backgroundImageTile: true #todo.eoin Want to expose the enum here
     backgroundPatchMargin:
@@ -341,11 +341,13 @@
       0.0,
       37.0,
       0.0
+    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
+    contentImageNumLines: 2
     contentMargin:
-      20.0,
-      20.0,
-      20.0,
-      20.0
+      16.0,
+      16.0,
+      16.0,
+      0.0
     maxWritableArea:
       # Make this a wide dot-matrix printer
       400.0,

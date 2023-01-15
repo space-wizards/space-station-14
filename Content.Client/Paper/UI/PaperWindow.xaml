@@ -6,6 +6,7 @@
             <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
                     <TextureButton Name="ImageHeader" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <Control Name="TextAlignmentPadding" VerticalAlignment="Top" />
                     <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                         VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
