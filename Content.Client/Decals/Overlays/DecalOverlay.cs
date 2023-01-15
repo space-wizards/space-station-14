@@ -4,7 +4,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Decals
+namespace Content.Client.Decals.Overlays
 {
     public sealed class DecalOverlay : Overlay
     {

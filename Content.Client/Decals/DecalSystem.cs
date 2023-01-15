@@ -1,3 +1,4 @@
+using Content.Client.Decals.Overlays;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
