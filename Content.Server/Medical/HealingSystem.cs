@@ -4,13 +4,14 @@ using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Medical.Components;
 using Content.Server.Stack;
-using Content.Server.MobState;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Stacks;
 using Robust.Shared.Random;
 
@@ -27,6 +28,7 @@ public sealed class HealingSystem : EntitySystem
     [Dependency] private readonly StackSystem _stacks = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
 
     public override void Initialize()
     {
@@ -175,10 +177,15 @@ public sealed class HealingSystem : EntitySystem
     public float GetScaledHealingPenalty(EntityUid uid, HealingComponent component)
     {
         var output = component.Delay;
-        if (!TryComp<MobStateComponent>(uid, out var mobState) || !TryComp<DamageableComponent>(uid, out var damageable))
+        if (!TryComp<MobThresholdsComponent>(uid, out var mobThreshold) || !TryComp<DamageableComponent>(uid, out var damageable))
             return output;
 
-        _mobStateSystem.TryGetEarliestCriticalState(mobState, 0, out var _, out var amount);
+
+        if (!_mobThresholdSystem.TryGetThresholdForState(uid, MobState.Critical, out var amount,
+                mobThreshold))
+        {
+            return 1;
+        }
         var percentDamage = (float) (damageable.TotalDamage / amount);
         //basically make it scale from 1 to the multiplier.
         var modifier = percentDamage * (component.SelfHealPenaltyMultiplier - 1) + 1;

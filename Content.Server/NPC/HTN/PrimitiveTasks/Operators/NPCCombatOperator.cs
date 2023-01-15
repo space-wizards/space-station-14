@@ -5,8 +5,8 @@ using Content.Server.NPC.Pathfinding;
 using Content.Server.NPC.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
@@ -91,7 +91,7 @@ public abstract class NPCCombatOperator : HTNOperator
                      .GetNearbyHostiles(owner, radius))
         {
             if (mobQuery.TryGetComponent(target, out var mobState) &&
-                mobState.CurrentState > DamageState.Alive ||
+                mobState.CurrentState > MobState.Alive ||
                 target == existingTarget ||
                 target == owner)
             {

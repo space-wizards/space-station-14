@@ -1,6 +1,6 @@
 ﻿using Content.Server.Explosion.Components;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Robust.Shared.Player;
 
 namespace Content.Server.Explosion.EntitySystems;
@@ -15,7 +15,7 @@ public sealed partial class TriggerSystem
 
     private void OnMobStateChanged(EntityUid uid, TriggerOnMobstateChangeComponent component, MobStateChangedEvent args)
     {
-        if (component.MobState < args.CurrentMobState)
+        if (component.MobState < args.NewMobState)
             return;
 
         //This chains Mobstate Changed triggers with OnUseTimerTrigger if they have it

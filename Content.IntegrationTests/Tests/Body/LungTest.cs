@@ -25,8 +25,9 @@ namespace Content.IntegrationTests.Tests.Body
   - type: Body
     prototype: Human
   - type: MobState
-    thresholds:
-      0: Alive
+    allowedStates:
+      - Alive
+  - type: Damageable
   - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400

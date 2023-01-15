@@ -5,9 +5,11 @@ namespace Content.Client.Chemistry.Visualizers;
 
 public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionContainerVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!args.Component.TryGetData(SolutionContainerVisuals.VisualState, out SolutionContainerVisualState state))
+        if (!_appearance.TryGetData(uid, SolutionContainerVisuals.FillFraction, out float fraction, args.Component))
             return;
 
         if (args.Sprite == null)
@@ -16,8 +18,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (!args.Sprite.LayerMapTryGet(component.Layer, out var fillLayer))
             return;
 
-        var fillPercent = state.FilledVolumePercent;
-        var closestFillSprite = (int) Math.Round(fillPercent * component.MaxFillLevels);
+        var closestFillSprite = (int) Math.Round(fraction * component.MaxFillLevels);
 
         if (closestFillSprite > 0)
         {
@@ -29,8 +30,8 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             var stateName = component.FillBaseName + closestFillSprite;
             args.Sprite.LayerSetState(fillLayer, stateName);
 
-            if (component.ChangeColor)
-                args.Sprite.LayerSetColor(fillLayer, state.Color);
+            if (component.ChangeColor && _appearance.TryGetData(uid, SolutionContainerVisuals.Color, out Color color, args.Component))
+                args.Sprite.LayerSetColor(fillLayer, color);
         }
         else
         {
