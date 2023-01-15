@@ -71,8 +71,7 @@ public sealed class WeatherCommand : IConsoleCommand
         }
         else
         {
-            shell.WriteError($"Yeah nah");
-            return;
+            shell.WriteError($"Unable to parse weather prototype");
         }
     }
 

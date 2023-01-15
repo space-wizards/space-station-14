@@ -14,9 +14,8 @@ public abstract class SharedWeatherSystem : EntitySystem
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] protected readonly IMapManager MapManager = default!;
     [Dependency] protected readonly IPrototypeManager ProtoMan = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private   readonly IRobustRandom _random = default!;
+    [Dependency] private   readonly ITileDefinitionManager _tileDefManager = default!;
 
     protected ISawmill Sawmill = default!;
 
@@ -24,6 +23,12 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         base.Initialize();
         Sawmill = Logger.GetSawmill("weather");
+        SubscribeLocalEvent<WeatherComponent, EntityUnpausedEvent>(OnWeatherUnpaused);
+    }
+
+    private void OnWeatherUnpaused(EntityUid uid, WeatherComponent component, ref EntityUnpausedEvent args)
+    {
+        component.EndTime += args.PausedTime;
     }
 
     public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, WeatherPrototype weatherProto, EntityQuery<PhysicsComponent> bodyQuery)
@@ -58,7 +63,6 @@ public abstract class SharedWeatherSystem : EntitySystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
-        // TODO: Active component.
         var curTime = Timing.CurTime;
 
         foreach (var (comp, metadata) in EntityQuery<WeatherComponent, MetaDataComponent>())
@@ -66,8 +70,8 @@ public abstract class SharedWeatherSystem : EntitySystem
             if (comp.Weather == null)
                 continue;
 
-            var pauseTime = _metadata.GetPauseTime(comp.Owner, metadata);
-            var endTime = comp.EndTime + pauseTime;
+            var uid = comp.Owner;
+            var endTime = comp.EndTime;
 
             // Ended
             if (endTime < curTime)
@@ -79,7 +83,7 @@ public abstract class SharedWeatherSystem : EntitySystem
             // Admin messed up or the likes.
             if (!ProtoMan.TryIndex<WeatherPrototype>(comp.Weather, out var weatherProto))
             {
-                // TODO: LOG
+                Sawmill.Error($"Unable to find weather prototype for {comp.Weather}, ending!");
                 EndWeather(comp);
                 continue;
             }
@@ -89,22 +93,22 @@ public abstract class SharedWeatherSystem : EntitySystem
             // Shutting down
             if (remainingTime < weatherProto.ShutdownTime)
             {
-                SetState(comp, WeatherState.Ending, weatherProto);
+                SetState(uid, comp, WeatherState.Ending, weatherProto);
             }
             // Starting up
             else
             {
-                var startTime = comp.StartTime + pauseTime;
+                var startTime = comp.StartTime;
                 var elapsed = Timing.CurTime - startTime;
 
                 if (elapsed < weatherProto.StartupTime)
                 {
-                    SetState(comp, WeatherState.Starting, weatherProto);
+                    SetState(uid, comp, WeatherState.Starting, weatherProto);
                 }
             }
 
             // Run whatever code we need.
-            Run(comp, weatherProto, comp.State);
+            Run(uid, comp, weatherProto, comp.State);
         }
     }
 
@@ -120,7 +124,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// <summary>
     /// Run every tick when the weather is running.
     /// </summary>
-    protected virtual void Run(WeatherComponent component, WeatherPrototype weather, WeatherState state) {}
+    protected virtual void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state) {}
 
     protected void StartWeather(WeatherComponent component, WeatherPrototype weather)
     {
@@ -146,13 +150,13 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(component);
     }
 
-    protected virtual bool SetState(WeatherComponent component, WeatherState state, WeatherPrototype prototype)
+    protected virtual bool SetState(EntityUid uid, WeatherComponent component, WeatherState state, WeatherPrototype prototype)
     {
         if (component.State.Equals(state))
             return false;
 
         component.State = state;
-        Sawmill.Debug($"Set weather state for {ToPrettyString(component.Owner)} to {state}");
+        Sawmill.Debug($"Set weather state for {ToPrettyString(uid)} to {state}");
         return true;
     }
 

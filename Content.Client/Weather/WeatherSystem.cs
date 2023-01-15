@@ -2,14 +2,13 @@ using Content.Shared.Weather;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 
 namespace Content.Client.Weather;
 
@@ -28,16 +27,22 @@ public sealed class WeatherSystem : SharedWeatherSystem
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
     }
 
-    protected override void Run(WeatherComponent component, WeatherPrototype weather, WeatherState state)
+    public override void Shutdown()
     {
-        base.Run(component, weather, state);
+        base.Shutdown();
+        _overlayManager.RemoveOverlay<WeatherOverlay>();
+    }
+
+    protected override void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state)
+    {
+        base.Run(uid, component, weather, state);
 
         var ent = _playerManager.LocalPlayer?.ControlledEntity;
 
         if (ent == null)
             return;
 
-        var mapUid = Transform(component.Owner).MapUid;
+        var mapUid = Transform(uid).MapUid;
         var entXform = Transform(ent.Value);
 
         // Maybe have the viewports manage this?
@@ -48,83 +53,81 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return;
         }
 
-        // TODO: Average alpha across nearby 2x2 tiles.
-        // At least, if we can change position
+        if (!Timing.IsFirstTimePredicted || component.Stream == null)
+            return;
 
-        if (Timing.IsFirstTimePredicted && component.Stream != null)
+        var stream = (AudioSystem.PlayingStream) component.Stream;
+        var alpha = GetPercent(component, mapUid.Value, weather);
+        alpha = MathF.Pow(alpha, 2f);
+        // TODO: Lerp this occlusion.
+        var occlusion = 0f;
+        // TODO: Fade-out needs to be slower
+        // TODO: HELPER PLZ
+
+        // Work out tiles nearby to determine volume.
+        if (TryComp<MapGridComponent>(entXform.GridUid, out var grid))
         {
-            var stream = (AudioSystem.PlayingStream) component.Stream;
-            var alpha = GetPercent(component, mapUid.Value, weather);
-            alpha = MathF.Pow(alpha, 2f);
-            // TODO: Lerp this occlusion.
-            var occlusion = 0f;
-            // TODO: Fade-out needs to be slower
-            // TODO: HELPER PLZ
+            // Floodfill to the nearest tile and use that for audio.
+            var seed = grid.GetTileRef(entXform.Coordinates);
+            var frontier = new Queue<TileRef>();
+            frontier.Enqueue(seed);
+            // If we don't have a nearest node don't play any sound.
+            EntityCoordinates? nearestNode = null;
+            var bodyQuery = GetEntityQuery<PhysicsComponent>();
+            var visited = new HashSet<Vector2i>();
 
-            // Work out tiles nearby to determine volume.
-            if (entXform.GridUid != null)
+            while (frontier.TryDequeue(out var node))
             {
-                // Floodfill to the nearest tile and use that for audio.
-                var grid = MapManager.GetGrid(entXform.GridUid.Value);
-                var seed = grid.GetTileRef(entXform.Coordinates);
-                var frontier = new Queue<TileRef>();
-                frontier.Enqueue(seed);
-                // If we don't have a nearest node don't play any sound.
-                EntityCoordinates? nearestNode = null;
-                var bodyQuery = GetEntityQuery<PhysicsComponent>();
-                var visited = new HashSet<Vector2i>();
+                if (!visited.Add(node.GridIndices))
+                    continue;
 
-                while (frontier.TryDequeue(out var node))
+                if (!CanWeatherAffect(grid, node, weather, bodyQuery))
                 {
-                    if (!visited.Add(node.GridIndices))
-                        continue;
-
-                    if (!CanWeatherAffect(grid, node, weather, bodyQuery))
+                    // Add neighbors
+                    // TODO: Ideally we pick some deterministically random direction and use that
+                    // We can't just do that naively here because it will flicker between nearby tiles.
+                    for (var x = -1; x <= 1; x++)
                     {
-                        // Add neighbors
-                        // TODO: Ideally we pick some deterministically random direction and use that
-                        // We can't just do that naively here because it will flicker between nearby tiles.
-                        for (var x = -1; x <= 1; x++)
+                        for (var y = -1; y <= 1; y++)
                         {
-                            for (var y = -1; y <= 1; y++)
+                            if (Math.Abs(x) == 1 && Math.Abs(y) == 1 ||
+                                x == 0 && y == 0 ||
+                                (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length > 3)
                             {
-                                if (Math.Abs(x) == 1 && Math.Abs(y) == 1 ||
-                                    x == 0 && y == 0 ||
-                                    (new Vector2(x, y) + node.GridIndices - seed.GridIndices).Length > 3)
-                                {
-                                    continue;
-                                }
-
-                                frontier.Enqueue(grid.GetTileRef(new Vector2i(x, y) + node.GridIndices));
+                                continue;
                             }
-                        }
 
-                        continue;
+                            frontier.Enqueue(grid.GetTileRef(new Vector2i(x, y) + node.GridIndices));
+                        }
                     }
 
-                    nearestNode = new EntityCoordinates(entXform.GridUid.Value,
-                        (Vector2) node.GridIndices + (grid.TileSize / 2f));
-                    break;
+                    continue;
                 }
 
-                if (nearestNode == null)
-                    alpha = 0f;
-                else
-                {
-                    var entPos = entXform.WorldPosition;
-                    var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
+                nearestNode = new EntityCoordinates(entXform.GridUid.Value,
+                    (Vector2) node.GridIndices + (grid.TileSize / 2f));
+                break;
+            }
 
+            if (nearestNode == null)
+                alpha = 0f;
+            else
+            {
+                var entPos = entXform.WorldPosition;
+                var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
+
+                if (sourceRelative.LengthSquared > 1f)
+                {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
                         new CollisionRay(entXform.WorldPosition, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
                         sourceRelative.Length, stream.TrackingEntity);
                 }
-
             }
-
-            // Full volume if not on grid
-            stream.Gain = alpha;
-            stream.Source.SetOcclusion(occlusion);
         }
+
+        // Full volume if not on grid
+        stream.Source.SetVolumeDirect(alpha);
+        stream.Source.SetOcclusion(occlusion);
     }
 
     public float GetPercent(WeatherComponent component, EntityUid mapUid, WeatherPrototype weatherProto)
@@ -151,9 +154,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
         return alpha;
     }
 
-    protected override bool SetState(WeatherComponent component, WeatherState state, WeatherPrototype prototype)
+    protected override bool SetState(EntityUid uid, WeatherComponent component, WeatherState state, WeatherPrototype prototype)
     {
-        if (!base.SetState(component, state, prototype))
+        if (!base.SetState(uid, component, state, prototype))
             return false;
 
         if (Timing.IsFirstTimePredicted)
@@ -182,11 +185,5 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
         component.EndTime = state.EndTime;
         component.StartTime = state.StartTime;
-    }
-
-    public override void Shutdown()
-    {
-        base.Shutdown();
-        _overlayManager.RemoveOverlay<WeatherOverlay>();
     }
 }
