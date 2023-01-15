@@ -1037,17 +1037,15 @@ namespace Content.Client.Preferences.UI
             };
 
             // If species can't have hair then markings shouldn't use it color
-            if(Marking.CanBeApplied(Profile.Species, Profile.Appearance.HairStyleId, _markingManager, _prototypeManager)){
-                var firstHairMarking = hairMarking.FirstOrDefault();
-                if (firstHairMarking != null) CMarkings.CurrentHairColor = firstHairMarking.MarkingColors.FirstOrDefault();
-                else CMarkings.CurrentHairColor = null;
-            } else CMarkings.CurrentHairColor = null;
-            
-            if(Marking.CanBeApplied(Profile.Species, Profile.Appearance.FacialHairStyleId, _markingManager, _prototypeManager)){
-                var firstFacialHairMarking = facialHairMarking.FirstOrDefault();
-                if (firstFacialHairMarking != null) CMarkings.CurrentFacialHairColor = firstFacialHairMarking.MarkingColors.FirstOrDefault();
-                else CMarkings.CurrentHairColor = null;
-            } else CMarkings.CurrentHairColor = null;
+            var firstHairMarking = hairMarking.FirstOrDefault();
+            if(firstHairMarking != null && Marking.CanBeApplied(Profile.Species, firstHairMarking, _markingManager, _prototypeManager))
+                CMarkings.CurrentHairColor = firstHairMarking.MarkingColors.FirstOrDefault();
+            else CMarkings.CurrentHairColor = null;
+
+            var firstFacialHairMarking = facialHairMarking.FirstOrDefault();
+            if(firstFacialHairMarking != null && Marking.CanBeApplied(Profile.Species, firstFacialHairMarking, _markingManager, _prototypeManager))
+                CMarkings.CurrentFacialHairColor = firstFacialHairMarking.MarkingColors.FirstOrDefault();
+            else CMarkings.CurrentFacialHairColor = null;
 
             _hairPicker.UpdateData(
                 hairMarking,
@@ -1086,6 +1084,7 @@ namespace Content.Client.Preferences.UI
 
         public void UpdateControls()
         {
+            Logger.DebugS("prf_edit", "Updated controls");
             if (Profile is null) return;
             UpdateNameEdit();
             UpdateFlavorTextEdit();
@@ -1096,14 +1095,14 @@ namespace Content.Client.Preferences.UI
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();
+            UpdateEyePickers();
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
-            UpdateHairPickers();
-            UpdateEyePickers();
             RebuildSpriteView();
+            UpdateHairPickers();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);
         }
