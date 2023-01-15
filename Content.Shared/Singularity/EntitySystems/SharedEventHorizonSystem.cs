@@ -143,8 +143,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <summary>
     /// Updates the state of the fixture associated with the event horizon.
     /// </summary>
-    /// <param name="eventHorizon">The uid of the event horizon associated with the fixture to update.</param>
-    /// <param name="physics">The physics component containing the fixture to update.</param>
+    /// <param name="uid">The uid of the event horizon associated with the fixture to update.</param>
+    /// <param name="fixtures">The fixture manager component containing the fixture to update.</param>
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
     public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
     {

@@ -117,6 +117,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a given entity.
     /// </summary>
+    /// <param name="hungry">The uid of the event horizon consuming the entity.</param>
     /// <param name="uid">The entity to consume.</param>
     /// <param name="eventHorizon">The event horizon consuming the given entity.</param>
     /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
@@ -130,6 +131,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon attempt to consume a given entity.
     /// </summary>
+    /// <param name="hungry">The uid of the event horizon trying to consume the entity.</param>
     /// <param name="uid">The entity to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon attempting to consume the given entity.</param>
     /// <param name="outerContainer">The innermost container of the entity to consume that isn't also being consumed by the event horizon.</param>
@@ -145,6 +147,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Checks whether an event horizon can consume a given entity.
     /// </summary>
+    /// <param name="hungry">The uid of the event horizon trying to consume the entity.</param>
     /// <param name="uid">The entity to check for consumability.</param>
     /// <param name="eventHorizon">The event horizon checking whether it can consume the entity.</param>
     public bool CanConsumeEntity(EntityUid hungry, EntityUid uid, EventHorizonComponent eventHorizon)
@@ -191,7 +194,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Excludes the event horizon itself.
     /// All immune entities within the container will be dumped to a given container or the map/grid if that is impossible.
     /// </summary>
-    /// <param name="uid">The uid of the event horizon. The single entity that is immune-by-default.</param>
+    /// <param name="hungry">The uid of the event horizon. The single entity that is immune-by-default.</param>
     /// <param name="container">The container within which to consume all entities.</param>
     /// <param name="eventHorizon">The state of the event horizon.</param>
     /// <param name="outerContainer">The location any immune entities within the container should be dumped to.</param>
@@ -236,6 +239,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a specific tile on a grid.
     /// </summary>
+    /// <param name="hungry">The uid of the singularity consuming the tile.</param>
     /// <param name="tile">The tile to consume.</param>
     /// <param name="eventHorizon">The event horizon which is consuming the tile on the grid.</param>
     public void ConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
@@ -244,6 +248,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon attempt to consume a specific tile on a grid.
     /// </summary>
+    /// <param name="hungry">The uid of the singularity trying to consume the tile.</param>
     /// <param name="tile">The tile to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon which is attempting to consume the tile on the grid.</param>
     public void AttemptConsumeTile(EntityUid hungry, TileRef tile, EventHorizonComponent eventHorizon)
@@ -252,6 +257,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon consume a set of tiles on a grid.
     /// </summary>
+    /// <param name="hungry">The uid of the singularity consuming the tiles.</param>
     /// <param name="tiles">The tiles to consume.</param>
     /// <param name="grid">The grid hosting the tiles to consume.</param>
     /// <param name="eventHorizon">The event horizon which is consuming the tiles on the grid.</param>
@@ -265,6 +271,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Makes an event horizon attempt to consume a set of tiles on a grid.
     /// </summary>
+    /// <param name="hungry">The uid of the singularity trying to consume the tiles.</param>
     /// <param name="tiles">The tiles to attempt to consume.</param>
     /// <param name="grid">The grid hosting the tiles to attempt to consume.</param>
     /// <param name="eventHorizon">The event horizon which is attempting to consume the tiles on the grid.</param>
@@ -286,6 +293,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Checks whether an event horizon can consume a given tile.
     /// This is only possible if it can also consume all entities anchored to the tile.
     /// </summary>
+    /// <param name="hungry">The uid of the singularity trying to consume the tile.</param>
     /// <param name="tile">The tile to check for consumability.</param>
     /// <param name="grid">The grid hosting the tile to check.</param>
     /// <param name="eventHorizon">The event horizon which is checking to see if it can consume the tile on the grid.</param>
