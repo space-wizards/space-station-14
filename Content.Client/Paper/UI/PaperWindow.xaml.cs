@@ -126,6 +126,7 @@ namespace Content.Client.Paper.UI
             // box immediately on the next line.
             msg.AddMarkupPermissive(state.Text.TrimEnd('\r', '\n'));
             WrittenTextLabel.SetMessage(msg);
+            WrittenTextLabel.Visible = state.Text.Length > 0;
 
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
