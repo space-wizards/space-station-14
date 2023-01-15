@@ -55,6 +55,7 @@ public sealed class GravityWellComponent : Component
     /// All entities within this group are accelerated relative to the gravity well.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
+    [Access(typeof(GravityWellSystem))]
     public List<EntityUid> Captured = new();
 
     #region Update Timing

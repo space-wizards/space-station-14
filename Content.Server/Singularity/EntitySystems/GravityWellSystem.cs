@@ -147,7 +147,7 @@ public sealed partial class GravityWellSystem : VirtualController
     {
         if(!Resolve(uid, ref gravWell, ref xform))
             return;
-        
+
         var physicsQuery = EntityManager.GetEntityQuery<PhysicsComponent>();
         var xformQuery = EntityManager.GetEntityQuery<TransformComponent>();
         UpdateBeforeSolve(uid, physicsQuery, xformQuery, gravWell, xform);
@@ -177,15 +177,15 @@ public sealed partial class GravityWellSystem : VirtualController
             if(!physicsQuery.TryGetComponent(entity, out var physicsBody)
             || !xformQuery.TryGetComponent(entity, out var entityXform))
                 continue;
-                    
+
             if (epicenter.MapId != entityXform.MapID)
                 continue;
-            
+
             var displacement = _xformSystem.GetWorldPosition(entityXform, xformQuery) - epicenter.Position;
             var distance2 = displacement.LengthSquared;
             if (distance2 < minRange2 || distance2 > maxRange2)
                 continue;
-            
+
             var force = (gravWell.MatrixAcceleration * displacement) * (physicsBody.Mass / distance2);
             _physicsSystem.ApplyForce(entity, force, body: physicsBody); // TODO: Consider getting a query for FixtureComponents as well. It might speed this up.
         }
