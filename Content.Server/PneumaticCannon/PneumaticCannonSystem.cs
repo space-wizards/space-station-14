@@ -49,7 +49,7 @@ public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
 
         if (TryComp<GunComponent>(uid, out var gun))
         {
-            gun.ProjectileSpeed = GetProjectileSpeedFromPower(component, gun);
+            gun.ProjectileSpeed = GetProjectileSpeedFromPower(component);
         }
 
         args.Handled = true;
