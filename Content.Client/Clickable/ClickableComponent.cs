@@ -98,7 +98,7 @@ namespace Content.Client.Clickable
             return false;
         }
 
-        public bool CheckDirBound(ISpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
+        public bool CheckDirBound(SpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
         {
             if (Bounds == null)
                 return false;
