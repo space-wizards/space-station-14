@@ -3,6 +3,20 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Anomaly;
 
+[Serializable, NetSerializable]
+public enum AnomalyVisuals : byte
+{
+    IsPulsing,
+    Supercritical
+}
+
+[Serializable, NetSerializable]
+public enum AnomalyVisualLayers : byte
+{
+    Base,
+    Animated
+}
+
 /// <summary>
 /// The types of anomalous particles used
 /// for interfacing with anomalies.
@@ -26,6 +40,7 @@ public enum AnomalyVesselVisuals : byte
 {
     HasAnomaly
 }
+
 [Serializable, NetSerializable]
 public enum AnomalyVesselVisualLayers : byte
 {

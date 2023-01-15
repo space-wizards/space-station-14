@@ -18,12 +18,13 @@ namespace Content.Server.Anomaly;
 /// <summary>
 /// This handles logic and interactions relating to <see cref="AnomalyComponent"/>
 /// </summary>
-public sealed partial class AnomalySystem : EntitySystem
+public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IAdminLogManager _log = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
@@ -32,9 +33,13 @@ public sealed partial class AnomalySystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
+    public const float MinParticleVariation = 0.8f;
+    public const float MaxParticleVariation = 1.2f;
+
     /// <inheritdoc/>
     public override void Initialize()
     {
+        base.Initialize();
         SubscribeLocalEvent<AnomalyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnUnpause);
@@ -76,18 +81,21 @@ public sealed partial class AnomalySystem : EntitySystem
         if (args.OtherFixture.ID != particleComponent.FixtureId)
             return;
 
+        // small function to randomize because it's easier to read like this
+        float VaryValue(float v) => v * _random.NextFloat(MinParticleVariation, MaxParticleVariation);
+
         if (particleComponent.ParticleType == component.DestabilizingParticleType)
         {
-            ChangeAnomalyStability(uid, component.StabilityPerDestabilizingHit, component);
+            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerDestabilizingHit), component);
         }
         else if (particleComponent.ParticleType == component.SeverityParticleType)
         {
-            ChangeAnomalySeverity(uid, component.SeverityPerSeverityHit, component);
+            ChangeAnomalySeverity(uid, VaryValue(component.SeverityPerSeverityHit), component);
         }
         else if (particleComponent.ParticleType == component.WeakeningParticleType)
         {
-            ChangeAnomalyHealth(uid, component.HealthPerWeakeningeHit, component);
-            ChangeAnomalyStability(uid, component.StabilityPerWeakeningeHit, component);
+            ChangeAnomalyHealth(uid, VaryValue(component.HealthPerWeakeningeHit), component);
+            ChangeAnomalyStability(uid, VaryValue(component.StabilityPerWeakeningeHit), component);
         }
     }
 
@@ -103,10 +111,6 @@ public sealed partial class AnomalySystem : EntitySystem
         if (component.Stability > component.GrowthThreshold)
         {
             ChangeAnomalySeverity(uid, GetSeverityIncreaseFromGrowth(component), component);
-            // if growth caused the anomaly to go supercritical,
-            // then we need to cancel the pulse early so we don't error.
-            if (component.Supercritical)
-                return;
         }
         else
         {
@@ -116,23 +120,47 @@ public sealed partial class AnomalySystem : EntitySystem
         }
 
         _log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
+        _audio.PlayPvs(component.PulseSound, uid);
+
+        var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
+        pulse.PulseEndTime  = _timing.CurTime + pulse.PulseDuration;
+        _appearance.SetData(uid, AnomalyVisuals.IsPulsing, true);
 
         var ev = new AnomalyPulseEvent(component.Stability, component.Severity);
         RaiseLocalEvent(uid, ref ev);
     }
 
+    /// <summary>
+    /// Begins the animation for going supercritical
+    /// </summary>
+    /// <param name="uid"></param>
+    public void StartSupercriticalEvent(EntityUid uid)
+    {
+        // don't restart it if it's already begun
+        if (HasComp<AnomalySupercriticalComponent>(uid))
+            return;
+
+        var super = EnsureComp<AnomalySupercriticalComponent>(uid);
+        super.EndTime = _timing.CurTime + super.SupercriticalDuration;
+        _appearance.SetData(uid, AnomalyVisuals.Supercritical, true);
+        Dirty(super);
+    }
+
+    /// <summary>
+    /// Does the supercritical event for the anomaly.
+    /// This isn't called once the anomaly reaches the point, but
+    /// after the animation for it going supercritical
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public void DoAnomalySupercriticalEvent(EntityUid uid, AnomalyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
-        if (component.Supercritical)
-            return;
-        component.Supercritical = true;
-
         _log.Add(LogType.Anomaly, LogImpact.Extreme, $"Anomaly {ToPrettyString(uid)} went Supercritical.");
+        _audio.PlayPvs(component.SupercriticalSound, uid);
 
-        //TODO: sfx?
         var ev = new AnomalySupercriticalEvent();
         RaiseLocalEvent(uid, ref ev);
 
@@ -155,7 +183,6 @@ public sealed partial class AnomalySystem : EntitySystem
 
         if (Terminating(uid))
             return;
-        //TODO: we might want to have some cool visual effect here.
         Del(uid);
     }
 
@@ -191,8 +218,8 @@ public sealed partial class AnomalySystem : EntitySystem
 
         var newVal = component.Severity + change;
 
-        if (newVal > 1)
-            DoAnomalySupercriticalEvent(uid, component);
+        if (newVal >= 1)
+            StartSupercriticalEvent(uid);
 
         component.Severity = Math.Clamp(newVal, 0, 1);
 
@@ -278,32 +305,12 @@ public sealed partial class AnomalySystem : EntitySystem
         return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
     }
 
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        foreach (var anomaly in EntityQuery<AnomalyComponent>())
-        {
-            // if the stability is under the death threshold,
-            // update it every second to start killing it slowly.
-            if (anomaly.Stability < anomaly.DecayThreshold)
-            {
-                ChangeAnomalyHealth(anomaly.Owner, anomaly.HealthChangePerSecond * frameTime, anomaly);
-            }
-
-            if (anomaly.NextPulseTime <= _timing.CurTime)
-            {
-                DoAnomalyPulse(anomaly.Owner, anomaly);
-            }
-        }
-    }
-
     /// <summary>
     /// Gets the localized name of a particle.
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static string GetParticleLocale(AnomalousParticleType type)
+    public string GetParticleLocale(AnomalousParticleType type)
     {
         return type switch
         {
@@ -312,5 +319,48 @@ public sealed partial class AnomalySystem : EntitySystem
             AnomalousParticleType.Zeta => Loc.GetString("anomaly-particles-zeta"),
             _ => throw new ArgumentOutOfRangeException()
         };
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var anomaly in EntityQuery<AnomalyComponent>())
+        {
+            var ent = anomaly.Owner;
+
+            // if the stability is under the death threshold,
+            // update it every second to start killing it slowly.
+            if (anomaly.Stability < anomaly.DecayThreshold)
+            {
+                ChangeAnomalyHealth(ent, anomaly.HealthChangePerSecond * frameTime, anomaly);
+            }
+
+            if (_timing.CurTime > anomaly.NextPulseTime)
+            {
+                DoAnomalyPulse(ent, anomaly);
+            }
+        }
+
+        foreach (var pulse in EntityQuery<AnomalyPulsingComponent>())
+        {
+            var ent = pulse.Owner;
+
+            if (_timing.CurTime > pulse.PulseEndTime)
+            {
+                _appearance.SetData(ent, AnomalyVisuals.IsPulsing, false);
+                RemComp(ent, pulse);
+            }
+        }
+
+        foreach (var (super, anom) in EntityQuery<AnomalySupercriticalComponent, AnomalyComponent>())
+        {
+            var ent = anom.Owner;
+
+            if (_timing.CurTime <= super.EndTime)
+                continue;
+            DoAnomalySupercriticalEvent(ent, anom);
+            RemComp(ent, super);
+        }
     }
 }

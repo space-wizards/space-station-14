@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Anomaly;
 
@@ -6,8 +8,10 @@ namespace Content.Shared.Anomaly;
 /// This is used for tracking the general behavior of anomalies.
 /// This doesn't contain the specific implementations for what
 /// they do, just the generic behaviors associated with them.
+///
+/// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class AnomalyComponent : Component
 {
     /// <summary>
@@ -72,19 +76,13 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("severityGrowthCoefficient"), ViewVariables(VVAccess.ReadWrite)]
     public float SeverityGrowthCoefficient = 0.07f;
-
-    /// <summary>
-    /// Whether or not the anomaly has gone supercritical
-    /// </summary>
-    [ViewVariables]
-    public bool Supercritical = false;
     #endregion
 
     #region Pulse
     /// <summary>
     /// The time at which the next artifact pulse will occur.
     /// </summary>
-    [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)),ViewVariables]
+    [DataField("nextPulseTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextPulseTime = TimeSpan.MaxValue;
 
     /// <summary>
@@ -104,6 +102,18 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("pulseVariation")]
     public float PulseVariation = .1f;
+
+    /// <summary>
+    /// The sound played when an anomaly pulses
+    /// </summary>
+    [DataField("pulseSound")]
+    public SoundSpecifier? PulseSound = new SoundCollectionSpecifier("RadiationPulse");
+
+    /// <summary>
+    /// The sound plays when an anomaly goes supercritical
+    /// </summary>
+    [DataField("supercriticalSound")]
+    public SoundSpecifier? SupercriticalSound = new SoundCollectionSpecifier("explosion");
     #endregion
 
     /// <summary>
@@ -122,7 +132,7 @@ public sealed class AnomalyComponent : Component
     /// Between 0 and 0.5, which should be all mild effects
     /// </remarks>
     [DataField("initialSeverityRange")]
-    public (float, float) InitialSeverityRange = (0.0f, 0.5f);
+    public (float, float) InitialSeverityRange = (0.1f, 0.5f);
 
     /// <summary>
     /// The particle type that increases the severity of the anomaly.
@@ -182,13 +192,13 @@ public sealed class AnomalyComponent : Component
     /// The minimum amount of research points generated per second
     /// </summary>
     [DataField("minPointsPerSecond")]
-    public int MinPointsPerSecond = 10;
+    public int MinPointsPerSecond;
 
     /// <summary>
     /// The maximum amount of research points generated per second
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 150;
+    public int MaxPointsPerSecond = 125;
     #endregion
 }
 

@@ -91,15 +91,17 @@ public sealed partial class AnomalySystem
     {
         foreach (var component in EntityQuery<AnomalyVesselComponent>())
         {
+            var ent = component.Owner;
+
             if (args.Anomaly != component.Anomaly)
                 continue;
 
             component.Anomaly = null;
-            UpdateVesselAppearance(component.Owner,  component);
+            UpdateVesselAppearance(ent,  component);
 
             if (!args.Supercritical)
                 continue;
-            _explosion.TriggerExplosive(component.Owner);
+            _explosion.TriggerExplosive(ent);
         }
     }
 

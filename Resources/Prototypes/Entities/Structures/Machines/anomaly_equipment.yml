@@ -125,12 +125,12 @@
     availableModes:
       - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/emitter.ogg
+      path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: Appearance
   - type: WiresVisuals
   - type: Wires
-    BoardName: "Vessel"
-    LayoutId: Vessel
+    BoardName: "Ape"
+    LayoutId: Ape
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

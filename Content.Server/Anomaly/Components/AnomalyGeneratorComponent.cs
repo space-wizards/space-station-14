@@ -34,10 +34,10 @@ public sealed class AnomalyGeneratorComponent : Component
     /// The amount of material needed to generate a single anomaly
     /// </summary>
     [DataField("materialPerAnomaly"), ViewVariables(VVAccess.ReadWrite)]
-    public int MaterialPerAnomaly = 2000; // a bit less than a stack of plasma
+    public int MaterialPerAnomaly = 1500; // a bit less than a stack of plasma
 
     /// <summary>
-    /// The random anomaly spawner
+    /// The random anomaly spawner entity
     /// </summary>
     [DataField("spawnerPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string SpawnerPrototype = "RandomAnomalySpawner";

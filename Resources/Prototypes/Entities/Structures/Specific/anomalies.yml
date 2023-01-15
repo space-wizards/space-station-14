@@ -5,6 +5,10 @@
   description: A impossible object in space, shimmering with a strange and powerful force. Standing nearby it makes you uneasy.
   components:
   - type: Anomaly
+    pulseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
   - type: Transform
     anchored: true
   - type: Physics
@@ -27,6 +31,10 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
+  - type: Appearance
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/teleport_arrival.ogg
 
 - type: entity
   id: AnomalyPyroclastic
@@ -35,8 +43,15 @@
   components:
   - type: Sprite
     layers:
+    - state: anom1
+      shader: unshaded
+      map: ["enum.AnomalyVisualLayers.Base"]
     - state: anom1-pulse
+      shader: unshaded
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
   - type: PointLight
     radius: 2.0
     energy: 5
     color: "#fca3c0"
+  - type: PyroclasticAnomaly
