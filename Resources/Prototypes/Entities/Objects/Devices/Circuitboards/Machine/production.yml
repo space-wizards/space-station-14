@@ -227,6 +227,7 @@
     materialRequirements:
       Cable: 5
   - type: Construction
+    deconstructionTarget: null
     graph: ThermomachineBoard
     node: freezer
 
@@ -247,6 +248,7 @@
       Cable: 5
   - type: Construction
     graph: ThermomachineBoard
+    deconstructionTarget: null
     node: heater
 
 - type: entity

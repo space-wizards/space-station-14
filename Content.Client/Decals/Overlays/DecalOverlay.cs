@@ -2,11 +2,10 @@ using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Decals
+namespace Content.Client.Decals.Overlays
 {
     public sealed class DecalOverlay : Overlay
     {

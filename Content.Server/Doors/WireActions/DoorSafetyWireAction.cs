@@ -13,6 +13,11 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "SAFE";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("timeout")]
     private int _timeout = 30;
@@ -38,6 +43,7 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
@@ -49,6 +55,7 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.Safety = true;
@@ -59,6 +66,7 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             door.Safety = false;
