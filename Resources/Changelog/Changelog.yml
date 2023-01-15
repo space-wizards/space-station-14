@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Expect a familiar ghost to be appearing around the station more often,
-      this time with some new tricks!', type: Add}
-  - {message: Fixed revenants spawning out into space when killed., type: Fix}
-  id: 2374
-  time: '2022-09-29T02:30:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee combat swings are now predicted. The damage effect still only
@@ -2953,3 +2946,8 @@ Entries:
     type: Fix}
   id: 2873
   time: '2023-01-15T07:52:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some instances of popup flickering, type: Fix}
+  id: 2874
+  time: '2023-01-15T18:14:21.0000000+00:00'
