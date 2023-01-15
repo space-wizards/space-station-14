@@ -50,6 +50,7 @@ namespace Content.Shared.Decals
 
         protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk) {}
 
+        // internal, so that client/predicted code doesn't accidentally remove decals. There is a public server-side function.
         protected bool RemoveDecalInternal(EntityUid gridId, uint decalId, [NotNullWhen(true)] out Decal? removed, DecalGridComponent? component = null)
         {
             removed = null;
