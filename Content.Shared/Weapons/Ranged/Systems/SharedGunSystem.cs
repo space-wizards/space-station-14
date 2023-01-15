@@ -420,9 +420,21 @@ public abstract partial class SharedGunSystem : EntitySystem
     }
 }
 
+/// <summary>
+///     Raised directed on the gun before firing to see if the shot should go through.
+/// </summary>
+/// <remarks>
+///     Handling this in server exclusively will lead to mispredicts.
+/// </remarks>
+/// <param name="User">The user that attempted to fire this gun.</param>
+/// <param name="Cancelled">Set this to true if the shot should be cancelled.</param>
 [ByRefEvent]
 public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
 
+/// <summary>
+///     Raised directed on the gun after firing.
+/// </summary>
+/// <param name="User">The user that fired this gun.</param>
 [ByRefEvent]
 public record struct GunShotEvent(EntityUid User);
 
