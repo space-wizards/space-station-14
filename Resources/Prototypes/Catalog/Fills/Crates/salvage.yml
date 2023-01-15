@@ -86,22 +86,23 @@
         #  - Pins
       - id: ClothingNeckLGBTPin
         prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckArosexualPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckAsexualPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckBisexualPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckIntersexPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckLesbianPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckNonBinaryPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckPansexualPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
       - id: ClothingNeckTransPin
-        prob: 0.025
+        orGroup: LGBTQIAPlusPins
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001
