@@ -30,14 +30,27 @@ public sealed class DoAfterComponentState : ComponentState
 /// Check for cancelled, and if it is, then null the token there.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DoAfterEvent : HandledEntityEventArgs
+/*public sealed class DoAfterEvent : HandledEntityEventArgs
 {
     public bool Cancelled;
     public readonly DoAfterEventArgs Args;
-    //TODO: Either in here or in DoAfterEventArgs add a check to cancel via a second use or block repeated uses
 
     public DoAfterEvent(bool cancelled, DoAfterEventArgs args)
     {
+        Cancelled = cancelled;
+        Args = args;
+    }
+}*/
+
+public sealed class DoAfterEvent<T> : HandledEntityEventArgs
+{
+    public T AdditionalData;
+    public bool Cancelled;
+    public readonly DoAfterEventArgs Args;
+
+    public DoAfterEvent(T additionalData, bool cancelled, DoAfterEventArgs args)
+    {
+        AdditionalData = additionalData;
         Cancelled = cancelled;
         Args = args;
     }
@@ -63,3 +76,6 @@ public enum DoAfterStatus : byte
     Cancelled,
     Finished,
 }
+
+[Serializable, NetSerializable]
+public record struct ExtraData<T>;

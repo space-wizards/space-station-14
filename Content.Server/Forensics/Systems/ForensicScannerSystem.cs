@@ -62,10 +62,10 @@ namespace Content.Server.Forensics
 
         private void OnDoAfter(DoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || args.Args.AdditionalArgs == null || !args.Args.AdditionalArgs.ContainsKey(Scanner))
+            if (args.Handled || args.Cancelled || args.Args.AdditionalData == null || !args.Args.AdditionalData.ContainsKey(Scanner))
                 return;
 
-            var scannerOwner = (EntityUid) args.Args.AdditionalArgs[Scanner];
+            var scannerOwner = (EntityUid) args.Args.AdditionalData[Scanner];
 
             if (!EntityManager.TryGetComponent(scannerOwner, out ForensicScannerComponent? scanner))
                 return;
@@ -103,7 +103,7 @@ namespace Content.Server.Forensics
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target)
             {
                 Broadcast = true,
-                AdditionalArgs = additionalArgs,
+                AdditionalData = additionalArgs,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,

@@ -26,7 +26,6 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
-            SubscribeLocalEvent<TargetPadSuccessfulEvent>(OnTargetPadSuccessful);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -82,36 +81,35 @@ namespace Content.Server.Forensics
 
         private void StartScan(EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            var additionalArgs = new Dictionary<string, object>
+            var additionalData = new Dictionary<string, object>
             {
                 {Pad, pad.Owner},
                 {Sample, sample}
             };
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, pad.ScanDelay, target: target)
+            var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target)
             {
                 Broadcast = true,
-                AdditionalArgs = additionalArgs,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = true
-            });
+            };
+
+            _doAfterSystem.SetAdditionalData(additionalData, doAfterEventArgs);
+            _doAfterSystem.DoAfter(doAfterEventArgs);
         }
 
         private void OnDoAfter(DoAfterEvent ev)
         {
-            if (ev.Handled || ev.Cancelled || ev.Args.AdditionalArgs == null)
+            if (ev.Handled
+                || ev.Cancelled
+                || !_doAfterSystem.TryGetAdditionalData(Pad, out EntityUid pad, ev.Args)
+                || !_doAfterSystem.TryGetAdditionalData(Sample, out string sample, ev.Args)
+                || !EntityManager.TryGetComponent(pad, out ForensicPadComponent? component))
+            {
                 return;
-
-            if (!ev.Args.AdditionalArgs.ContainsKey(Pad) || !ev.Args.AdditionalArgs.ContainsKey(Sample))
-                return;
-
-            var pad = (EntityUid)ev.Args.AdditionalArgs[Pad];
-            var sample = (string)ev.Args.AdditionalArgs[Sample];
-
-            if (!EntityManager.TryGetComponent(pad, out ForensicPadComponent? component))
-                return;
+            }
 
             if (ev.Args.Target != null)
             {
@@ -123,42 +121,6 @@ namespace Content.Server.Forensics
 
             component.Sample = sample;
             component.Used = true;
-        }
-
-        /// <summary>
-        /// When the forensic pad is successfully used, take their fingerprint sample and flag the pad as used.
-        /// </summary>
-        private void OnTargetPadSuccessful(TargetPadSuccessfulEvent ev)
-        {
-
-        }
-
-        private sealed record PadData
-        {
-            public EntityUid Pad;
-            public string Sample = string.Empty;
-
-            public PadData(EntityUid pad, string sample)
-            {
-                Pad = pad;
-                Sample = sample;
-            }
-        }
-
-        private sealed class TargetPadSuccessfulEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Target;
-            public EntityUid Pad;
-            public string Sample = string.Empty;
-
-            public TargetPadSuccessfulEvent(EntityUid user, EntityUid target, EntityUid pad, string sample)
-            {
-                User = user;
-                Target = target;
-                Pad = pad;
-                Sample = sample;
-            }
         }
     }
 }

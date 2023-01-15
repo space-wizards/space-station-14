@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
@@ -129,7 +130,8 @@ public abstract class SharedDoAfterSystem : EntitySystem
                     if (doAfter.Status == DoAfterStatus.Cancelled)
                     {
                         Cancelled(comp, doAfter);
-                        var ev = new DoAfterEvent(true, doAfter.EventArgs);
+                        var data = doAfter.EventArgs.AdditionalData;
+                        var ev = new DoAfterEvent(data, true, doAfter.EventArgs);
 
                         if (EntityManager.EntityExists(doAfter.EventArgs.User))
                             RaiseLocalEvent(doAfter.EventArgs.User, ev, doAfter.EventArgs.Broadcast);
@@ -307,6 +309,45 @@ public abstract class SharedDoAfterSystem : EntitySystem
             }
 
             return false;
+        }
+
+        public bool TryGetAdditionalData<T>(string key, [NotNullWhen(true)] out T data, DoAfterEventArgs doAfterEventArgs)
+        {
+            data = default!;
+
+            if (doAfterEventArgs.AdditionalData.TryGetValue(key, out var val) && val is T value)
+            {
+                data = value;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Sets a single key value pair for the AdditionalData property in <see cref="DoAfterEventArgs"/>
+        /// If you need to add multiple at the same time see the overload <see cref="SetAdditionalData(string,object,Content.Shared.DoAfter.DoAfterEventArgs)"/>
+        /// </summary>
+        /// <param name="key">The key for this data</param>
+        /// <param name="value">What the value of the data should be</param>
+        /// <param name="doAfterEventArgs">The <see cref="DoAfterEventArgs"/></param>
+        public void SetAdditionalData(string key, object value, DoAfterEventArgs doAfterEventArgs)
+        {
+            doAfterEventArgs.AdditionalData[key] = value;
+        }
+
+        /// <summary>
+        /// Sets multiple key value pairs for the AdditionalData property in <see cref="DoAfterEventArgs"/>
+        /// If you need to add only one additional datatype, see the overload <see cref="SetAdditionalData(string,object,Content.Shared.DoAfter.DoAfterEventArgs)"/>
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="doAfterEventArgs"></param>
+        public void SetAdditionalData(Dictionary<string, object> data, DoAfterEventArgs doAfterEventArgs)
+        {
+            foreach (var (key, value) in data)
+            {
+                doAfterEventArgs.AdditionalData[key] = value;
+            }
         }
 
         public void Cancel(DoAfter doAfter)

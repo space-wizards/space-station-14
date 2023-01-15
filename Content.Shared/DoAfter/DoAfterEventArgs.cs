@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Channels;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -89,9 +90,11 @@ public sealed class DoAfterEventArgs
     public Func<bool>? ExtraCheck;
 
     /// <summary>
-    /// Any additional args that don't fit in already. Used for customization as needed.
+    /// Any additional data that doesn't fit in already. Used for customization as needed.
     /// </summary>
-    public Dictionary<string, object>? AdditionalArgs { get; set; }
+    //public Dictionary<string, object> AdditionalData = new();
+
+    public ExtraData AdditionalData;
 
     /// <summary>
     ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
