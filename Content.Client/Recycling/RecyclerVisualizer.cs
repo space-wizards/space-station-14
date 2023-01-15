@@ -23,7 +23,7 @@ namespace Content.Client.Recycling
             base.InitializeEntity(entity);
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            if (!entMan.TryGetComponent(entity, out ISpriteComponent? sprite) ||
+            if (!entMan.TryGetComponent(entity, out SpriteComponent? sprite) ||
                 !entMan.TryGetComponent(entity, out AppearanceComponent? appearance))
             {
                 return;
@@ -38,7 +38,7 @@ namespace Content.Client.Recycling
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }
@@ -46,7 +46,7 @@ namespace Content.Client.Recycling
             UpdateAppearance(component, sprite);
         }
 
-        private void UpdateAppearance(AppearanceComponent component, ISpriteComponent sprite)
+        private void UpdateAppearance(AppearanceComponent component, SpriteComponent sprite)
         {
             var state = _stateOff;
             if (component.TryGetData(ConveyorVisuals.State, out ConveyorState conveyorState) && conveyorState != ConveyorState.Off)

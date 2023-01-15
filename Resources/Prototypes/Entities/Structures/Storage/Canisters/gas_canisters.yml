@@ -527,6 +527,8 @@
         layer:
         - MachineLayer
     - type: Recyclable
+    - type: StaticPrice
+      price: 60
 
 - type: entity
   parent: GasCanisterBrokenBase
