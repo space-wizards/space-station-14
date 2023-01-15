@@ -76,6 +76,3 @@ ent-ComputerSurveillanceCameraMonitor = монитор камер
 ent-ComputerSurveillanceWirelessCameraMonitor = монитор беспроводных камер
     .desc = Монитор беспроводных камер наблюдения. Вы наблюдаете за ними. Возможно.
     .suffix = { "" }
-ent-ComputerTelevision = деревянный телевизор
-    .desc = Старый телевизор, показывающий изображения с камер станции, если они работают.
-    .suffix = { "" }
