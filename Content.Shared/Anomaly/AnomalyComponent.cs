@@ -196,9 +196,10 @@ public sealed class AnomalyComponent : Component
 
     /// <summary>
     /// The maximum amount of research points generated per second
+    /// This doesn't include the point bonus for being unstable.
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 125;
+    public int MaxPointsPerSecond = 100;
     #endregion
 }
 

@@ -1,6 +1,7 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Audio;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
@@ -23,6 +24,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly IAdminLogManager _log = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
@@ -295,7 +297,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
-            multiplier = 1.5f; //more points for unstable
+            multiplier = 1.25f; //more points for unstable
         else if (component.Stability < component.DecayThreshold)
             multiplier = 0.75f; //less points if it's dying
 

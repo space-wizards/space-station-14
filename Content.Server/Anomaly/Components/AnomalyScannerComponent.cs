@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Robust.Shared.Audio;
 
 namespace Content.Server.Anomaly.Components;
 
@@ -15,10 +16,19 @@ public sealed class AnomalyScannerComponent : Component
     [ViewVariables]
     public EntityUid? ScannedAnomaly;
 
+    /// <summary>
+    /// How long the scan takes
+    /// </summary>
     [DataField("scanDoAfterDuration")]
     public float ScanDoAfterDuration = 5;
 
     public CancellationTokenSource? TokenSource;
+
+    /// <summary>
+    /// The sound plays when the scan finished
+    /// </summary>
+    [DataField("completeSound")]
+    public SoundSpecifier? CompleteSound = new SoundPathSpecifier("/Audio/Items/beep.ogg");
 }
 
 public sealed class AnomalyScanFinishedEvent : EntityEventArgs

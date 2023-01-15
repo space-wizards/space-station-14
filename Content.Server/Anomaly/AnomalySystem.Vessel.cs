@@ -123,5 +123,6 @@ public sealed partial class AnomalySystem
         {
             pointLightComponent.Enabled = on;
         }
+        _ambient.SetAmbience(uid, on);
     }
 }

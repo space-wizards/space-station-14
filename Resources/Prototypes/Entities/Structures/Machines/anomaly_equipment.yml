@@ -38,6 +38,12 @@
   - type: Wires
     BoardName: "Vessel"
     LayoutId: Vessel
+  - type: AmbientSound
+    enabled: false
+    range: 3
+    volume: -8
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:
@@ -177,6 +183,11 @@
   - type: ApcPowerReceiver
     powerLoad: 1500
   - type: ExtensionCableReceiver
+  - type: AmbientSound
+    range: 5
+    volume: -3
+    sound:
+      path: /Audio/Ambience/Objects/anomaly_generator.ogg
   - type: Physics
     bodyType: Static
   - type: AnomalyGenerator

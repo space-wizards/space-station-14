@@ -9,6 +9,11 @@
       collection: RadiationPulse
       params:
         volume: 5
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
   - type: Transform
     anchored: true
   - type: Physics
@@ -45,14 +50,30 @@
   - type: Sprite
     layers:
     - state: anom1
-      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Base"]
     - state: anom1-pulse
-      shader: unshaded
       map: ["enum.AnomalyVisualLayers.Animated"]
       visible: false
   - type: PointLight
     radius: 2.0
-    energy: 5
+    energy: 7.5
     color: "#fca3c0"
+  - type: PyroclasticAnomaly
+
+- type: entity
+  id: AnomalyGravity
+  parent: BaseAnomaly
+  suffix: Gravity
+  components:
+  - type: Sprite
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom2-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 5.0
+    energy: 20
+    color: "#1e070e"
   - type: PyroclasticAnomaly

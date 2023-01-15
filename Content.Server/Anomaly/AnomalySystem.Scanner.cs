@@ -31,7 +31,7 @@ public sealed partial class AnomalySystem
         {
             if (component.ScannedAnomaly != args.Anomaly)
                 continue;
-            UpdateScannerUi(component.Owner, component);
+            _ui.TryCloseAll(component.Owner, AnomalyScannerUiKey.Key);
         }
     }
 
@@ -83,7 +83,7 @@ public sealed partial class AnomalySystem
         component.TokenSource = new();
         _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ScanDoAfterDuration, component.TokenSource.Token, target, uid)
         {
-            DistanceThreshold = 1.5f,
+            DistanceThreshold = 2f,
             UsedFinishedEvent = new AnomalyScanFinishedEvent(target, args.User),
             UsedCancelledEvent = new AnomalyScanCancelledEvent()
         });
@@ -93,6 +93,7 @@ public sealed partial class AnomalySystem
     {
         component.TokenSource = null;
 
+        _audio.PlayPvs(component.CompleteSound, uid);
         _popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Anomaly, component);
 
