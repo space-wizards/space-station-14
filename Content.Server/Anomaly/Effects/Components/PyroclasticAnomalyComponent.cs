@@ -38,7 +38,7 @@ public sealed class PyroclasticAnomalyComponent : Component
     /// The volume of the hotspot where the anomaly is.
     /// </summary>
     [DataField("hotspotExposeVolume")]
-    public float HotspotExposeVolume = 100;
+    public float HotspotExposeVolume = 50;
 
     /// <summary>
     /// Gas released when the anomaly goes supercritical.
@@ -50,5 +50,5 @@ public sealed class PyroclasticAnomalyComponent : Component
     /// The amount of gas released when the anomaly goes supercritical
     /// </summary>
     [DataField("supercriticalMoleAmount")]
-    public float SupercriticalMoleAmount = 150f;
+    public float SupercriticalMoleAmount = 50f;
 }

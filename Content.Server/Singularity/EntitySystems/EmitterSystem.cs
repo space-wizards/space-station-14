@@ -199,9 +199,9 @@ namespace Content.Server.Singularity.EntitySystems
         {
             component.IsOn = false;
             if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
-                powerConsumer.DrawRate = 0;
+                powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var apcReceiever))
-                apcReceiever.NeedsPower = false;
+                apcReceiever.Load = 1;
             PowerOff(component);
             UpdateAppearance(component);
         }
@@ -213,7 +213,7 @@ namespace Content.Server.Singularity.EntitySystems
                 powerConsumer.DrawRate = component.PowerUseActive;
             if (TryComp<ApcPowerReceiverComponent>(component.Owner, out var apcReceiever))
             {
-                apcReceiever.NeedsPower = true;
+                apcReceiever.Load = component.PowerUseActive;
                 PowerOn(component);
             }
             // Do not directly PowerOn().

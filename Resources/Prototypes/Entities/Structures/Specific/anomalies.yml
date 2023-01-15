@@ -25,6 +25,7 @@
       - MobLayer
   - type: Sprite
     netsync: false
+    drawdepth: WallMountedItems
     sprite: Structures/Specific/anomaly.rsi
   - type: InteractionOutline
   - type: Clickable

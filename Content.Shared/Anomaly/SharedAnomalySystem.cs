@@ -16,7 +16,8 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         args.State = new AnomalySupercriticalComponentState
         {
-            EndTime = component.EndTime
+            EndTime = component.EndTime,
+            Duration = component.SupercriticalDuration
         };
     }
 
@@ -26,5 +27,6 @@ public abstract class SharedAnomalySystem : EntitySystem
             return;
 
         component.EndTime = state.EndTime;
+        component.SupercriticalDuration = state.Duration;
     }
 }

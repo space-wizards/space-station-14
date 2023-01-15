@@ -41,12 +41,22 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
 
         var indices = _xform.GetGridOrMapTilePosition(uid, xform);
         var mixture = _atmosphere.GetTileMixture(grid, map, indices, true);
-        mixture?.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
+
+        if (mixture == null)
+            return;
+        mixture.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
         if (grid is { })
         {
-            _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, component.HotspotExposeVolume, true);
+            foreach (var ind in _atmosphere.GetAdjacentTiles(grid.Value, indices))
+            {
+                var mix = _atmosphere.GetTileMixture(grid, map, indices, true);
+                if (mix is not {})
+                    continue;
+                mix.AdjustMoles(component.SupercriticalGas, component.SupercriticalMoleAmount);
+                mix.Temperature += component.HotspotExposeTemperature;
+                _atmosphere.HotspotExpose(grid.Value, indices, component.HotspotExposeTemperature, mix?.Volume ?? component.SupercriticalMoleAmount, true);
+            }
         }
-
         IgniteNearby(xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
     }
 

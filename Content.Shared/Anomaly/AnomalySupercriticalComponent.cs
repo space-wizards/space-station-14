@@ -20,11 +20,18 @@ public sealed class AnomalySupercriticalComponent : Component
     /// The length of the animation before it goes supercritical.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(15);
+    public TimeSpan SupercriticalDuration = TimeSpan.FromSeconds(10);
+
+    /// <summary>
+    /// The maximum size the anomaly scales to while going supercritical
+    /// </summary>
+    [DataField("maxScaleAmount")]
+    public float MaxScaleAmount = 3;
 }
 
 [Serializable, NetSerializable]
 public sealed class AnomalySupercriticalComponentState : ComponentState
 {
     public TimeSpan EndTime;
+    public TimeSpan Duration;
 }

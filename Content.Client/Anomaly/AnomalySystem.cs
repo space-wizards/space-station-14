@@ -1,10 +1,12 @@
 ﻿using Content.Shared.Anomaly;
 using Robust.Client.GameObjects;
+using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly;
 
 public sealed class AnomalySystem : SharedAnomalySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
@@ -40,5 +42,18 @@ public sealed class AnomalySystem : SharedAnomalySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
+
+        foreach (var (super, sprite) in EntityQuery<AnomalySupercriticalComponent, SpriteComponent>())
+        {
+            var completion = 1f - (float) ((super.EndTime - _timing.CurTime) / super.SupercriticalDuration);
+            var scale = completion * (super.MaxScaleAmount - 1f) + 1f;
+            sprite.Scale = new Vector2(scale, scale);
+
+            var transparency = (byte) (65 * (1f - completion) + 190);
+            if (transparency < sprite.Color.AByte)
+            {
+                sprite.Color = sprite.Color.WithAlpha(transparency);
+            }
+        }
     }
 }

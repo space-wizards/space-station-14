@@ -97,6 +97,16 @@
       map: ["enum.StorageVisualLayers.Lock"]
   - type: Transform
     noRot: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 190
+      mask:
+      - MachineMask
+      layer:
+      - MachineLayer
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Machine
@@ -107,6 +117,7 @@
     access: [[ "Research" ]]
   - type: Emitter
     onState: firing
+    powerUseActive: 100
     boltType: AnomalousParticleDelta
     underpoweredState: underpowered
     selectableTypes:
@@ -117,7 +128,7 @@
     baseFireBurstDelayMin: 2
     baseFireBurstDelayMax: 6
   - type: ApcPowerReceiver
-    powerLoad: 200
+    powerLoad: 100
   - type: Gun
     fireRate: 10 #just has to be fast enough to keep up with upgrades
     showExamineText: false
