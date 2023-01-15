@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
@@ -28,9 +29,9 @@ public sealed class SpreaderSystem : EntitySystem
         SubscribeLocalEvent<AirtightChanged>(OnAirtightChanged);
     }
 
-    private void OnAirtightChanged(AirtightChanged e)
+    private void OnAirtightChanged(ref AirtightChanged ev)
     {
-        UpdateNearbySpreaders((e.Airtight).Owner, e.Airtight);
+        UpdateNearbySpreaders(ev.Entity, ev.Airtight);
     }
 
     private void SpreaderAddHandler(EntityUid uid, SpreaderComponent component, ComponentAdd args)
@@ -46,15 +47,21 @@ public sealed class SpreaderSystem : EntitySystem
 
         if (!_mapManager.TryGetGrid(transform.GridUid, out var grid)) return;
 
+        var spreaderQuery = GetEntityQuery<SpreaderComponent>();
+        var tile = grid.TileIndicesFor(transform.Coordinates);
+
         for (var i = 0; i < Atmospherics.Directions; i++)
         {
             var direction = (AtmosDirection) (1 << i);
             if (!comp.AirBlockedDirection.IsFlagSet(direction)) continue;
 
-            foreach (var ent in grid.GetInDir(transform.Coordinates, direction.ToDirection()))
+            var directionEnumerator =
+                grid.GetAnchoredEntitiesEnumerator(SharedMapSystem.GetDirection(tile, direction.ToDirection()));
+
+            while (directionEnumerator.MoveNext(out var ent))
             {
-                if (EntityManager.TryGetComponent<SpreaderComponent>(ent, out var s) && s.Enabled)
-                    _edgeGrowths.Add(ent);
+                if (spreaderQuery.TryGetComponent(ent, out var s) && s.Enabled)
+                    _edgeGrowths.Add(ent.Value);
             }
         }
     }

@@ -71,13 +71,23 @@ public partial class ChatBox : UIWidget
         UpdateSelectedChannel();
     }
 
+    public void Repopulate()
+    {
+        Contents.Clear();
+
+        foreach (var message in _controller.History)
+        {
+            OnMessageAdded(message.Item2);
+        }
+    }
+
     private void OnChannelFilter(ChatChannel channel, bool active)
     {
         Contents.Clear();
 
         foreach (var message in _controller.History)
         {
-            OnMessageAdded(message);
+            OnMessageAdded(message.Item2);
         }
 
         if (active)

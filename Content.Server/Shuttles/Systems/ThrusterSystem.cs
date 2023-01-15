@@ -62,7 +62,7 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
-            _mapManager.TileChanged += OnTileChange;
+            SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
         }
 
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
@@ -89,24 +89,18 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _mapManager.TileChanged -= OnTileChange;
-        }
-
         private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
         {
             args.IsHot = component.Type != ThrusterType.Angular && component.IsOn;
         }
 
-        private void OnTileChange(object? sender, TileChangedEventArgs e)
+        private void OnShuttleTileChange(EntityUid uid, ShuttleComponent component, ref TileChangedEvent args)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
+            if (args.NewTile.IsSpace(_tileDefManager) || !args.OldTile.IsSpace(_tileDefManager)) return;
 
-            var tilePos = e.NewTile.GridIndices;
-            var grid = _mapManager.GetGrid(e.NewTile.GridUid);
+            var tilePos = args.NewTile.GridIndices;
+            var grid = _mapManager.GetGrid(uid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 

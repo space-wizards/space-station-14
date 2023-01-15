@@ -73,7 +73,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         internal bool TryAddSolution(VaporComponent vapor, Solution solution)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.Volume == 0)
             {
                 return false;
             }
@@ -122,7 +122,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (contents.CurrentVolume == 0)
+            if (contents.Volume == 0)
             {
                 // Delete this
                 EntityManager.QueueDeleteEntity(entity);

@@ -108,7 +108,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        if (!door.CurrentlyCrushing.Equals(state.CurrentlyCrushing))
+        {
+            door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        }
+
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
