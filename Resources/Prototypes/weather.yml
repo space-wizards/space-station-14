@@ -30,7 +30,7 @@
     - FloorGrassDark
     - FloorGrassJungle
     - FloorDirt
-    - FloorTileGrass
+    - FloorGrass
     - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
