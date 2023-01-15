@@ -11,7 +11,7 @@ namespace Content.Server.Medical;
 public sealed class CryoPodEjectLockWireAction: ComponentWireAction<CryoPodComponent>
 {
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "LOCK";
+    public override string Name { get; set; } = "wire-name-lock";
     public override bool RequirePower { get; set; } = false;
 
     public override object? StatusKey { get; } = CryoPodWireActionKey.Key;

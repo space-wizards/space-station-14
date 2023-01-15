@@ -8,7 +8,7 @@ namespace Content.Server.Doors;
 public sealed class DoorBoltWireAction : ComponentWireAction<AirlockComponent>
 {
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "BOLT";
+    public override string Name { get; set; } = "wire-name-door-bolt";
     
     public override StatusLightState? GetLightState(Wire wire, AirlockComponent comp)
         => comp.BoltsDown ? StatusLightState.On : StatusLightState.Off;

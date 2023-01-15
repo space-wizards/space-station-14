@@ -5,10 +5,10 @@ using Content.Shared.Wires;
 namespace Content.Server.VendingMachines;
 
 [DataDefinition]
-public sealed class VendingMachineContrabandWireAction : ComponentWireAction<>
+public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
 {
     public override Color Color { get; set; } = Color.Green;
-    public override string Name { get; set; } = "MNGR";
+    public override string Name { get; set; } = "wire-name-vending-contraband";
     public override object? StatusKey { get; } = ContrabandWireKey.StatusKey;
     public override object? TimeoutKey { get; } = ContrabandWireKey.TimeoutKey;
 

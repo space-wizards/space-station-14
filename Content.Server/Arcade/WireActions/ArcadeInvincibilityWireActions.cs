@@ -5,9 +5,9 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
 
-public sealed class ArcadePlayerInvincibleWireAction : ComponentWireAction<SharedSpaceVillainArcadeComponent>
+public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 {
-    public override string Name { get; set; } = "MNGR";
+    public override string Name { get; set; } = "wire-name-player-invincible";
 
     public override Color Color { get; set; } = Color.Purple;
 
@@ -40,13 +40,10 @@ public sealed class ArcadePlayerInvincibleWireAction : ComponentWireAction<Share
     }
 }
 
-public sealed class ArcadeEnemyInvincibleWireAction : ComponentWireAction<>
+public sealed class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
 {
-    // not displayed, just for admin logging
-    public override string Name { get; set; } = nameof(ArcadeEnemyInvincibleWireAction); 
-
-    public override Color Color { get; set; } =  default;
-    public override bool RequirePower { get; set; } = false;
+    public override string Name { get; set; } = "wire-name-player-invincible";
+    public override Color Color { get; set; } = Color.Purple;
 
     public override object? StatusKey { get; } = null;
 

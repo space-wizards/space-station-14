@@ -13,7 +13,7 @@ public sealed class AtmosMonitorDeviceNetWire : ComponentWireAction<AtmosAlarmab
     [DataField("alarmOnPulse")]
     private bool _alarmOnPulse = false;
 
-    public override string Name { get; set; } = "NETW";
+    public override string Name { get; set; } = "wire-name-device-net";
     public override Color Color { get; set; } = Color.Orange;
 
     private AtmosAlarmableSystem _atmosAlarmableSystem = default!;

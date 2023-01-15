@@ -12,7 +12,7 @@ public abstract class BaseWireAction : IWireAction
     private ISharedAdminLogManager _adminLogger = default!;
 
     /// <summary>
-    ///     Default name that gets returned by <see cref="GetStatusLightData(Wire)"/>. Also used for admin logging.
+    ///     The loc-string of the text that gets returned by <see cref="GetStatusLightData(Wire)"/>. Also used for admin logging.
     /// </summary>
     [DataField("name")]
     public abstract string Name { get; set; }
@@ -25,7 +25,7 @@ public abstract class BaseWireAction : IWireAction
 
     /// <summary>
     ///     If true, the default behavior of <see cref="GetStatusLightData(Wire)"/> will return an off-light when the
-    ///     machine is not powered.
+    ///     wire owner is not powered.
     /// </summary>
     [DataField("requirePower")]
     public virtual bool RequirePower { get; set; } = true;
@@ -33,12 +33,12 @@ public abstract class BaseWireAction : IWireAction
     public virtual StatusLightData? GetStatusLightData(Wire wire)
     {
         if (RequirePower && !IsPowered(wire.Owner))
-            return new StatusLightData(Color, StatusLightState.Off, Name);
+            return new StatusLightData(Color, StatusLightState.Off, Loc.GetString(Name));
 
         var state = GetLightState(wire);
         return state == null
             ? null
-            : new StatusLightData(Color, state.Value, Name);
+            : new StatusLightData(Color, state.Value, Loc.GetString(Name));
     }
 
     public virtual StatusLightState? GetLightState(Wire wire) => null;
@@ -59,21 +59,23 @@ public abstract class BaseWireAction : IWireAction
     }
 
     public virtual bool AddWire(Wire wire, int count) => count == 1;
-    public virtual bool Cut(EntityUid user, Wire wire)
+    public virtual bool Cut(EntityUid user, Wire wire) => Log(user, wire, "cut");
+    public virtual bool Mend(EntityUid user, Wire wire) => Log(user, wire, "mended");
+    public virtual bool Pulse(EntityUid user, Wire wire) => Log(user, wire, "pulsed");
+
+    private bool Log(EntityUid user, Wire wire, string verb)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} cut {wire.Color.Name()} {Name} in {EntityManager.ToPrettyString(wire.Owner)}");
+        var player = EntityManager.ToPrettyString(user);
+        var owner = EntityManager.ToPrettyString(wire.Owner);
+        var name = Loc.GetString(Name);
+        var color = wire.Color.Name();
+        var action = GetType().Name;
+
+        // logs something like "... mended red POWR wire (PowerWireAction) in ...."
+        _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
         return false;
     }
-    public virtual bool Mend(EntityUid user, Wire wire)
-    {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} mended {wire.Color.Name()} {Name} in {EntityManager.ToPrettyString(wire.Owner)}");
-        return false;
-    }
-    public virtual bool Pulse(EntityUid user, Wire wire)
-    {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} pulsed {wire.Color.Name()} {Name} in {EntityManager.ToPrettyString(wire.Owner)}");
-        return false;
-    }
+
     public virtual void Update(Wire wire)
     {
     }

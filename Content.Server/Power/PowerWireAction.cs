@@ -11,7 +11,7 @@ namespace Content.Server.Power;
 public sealed class PowerWireAction : BaseWireAction
 {
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "POWR";
+    public override string Name { get; set; } = "wire-name-power";
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;

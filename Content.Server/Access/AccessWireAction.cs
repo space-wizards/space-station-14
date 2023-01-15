@@ -8,7 +8,7 @@ namespace Content.Server.Access;
 public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent>
 {
     public override Color Color { get; set; } = Color.Green;
-    public override string Name { get; set; } = "ACC";
+    public override string Name { get; set; } = "wire-name-access";
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;

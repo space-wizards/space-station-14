@@ -5,10 +5,10 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
 
-public sealed class ArcadeOverflowWireAction : ComponentWireAction<>
+public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
 {
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "LMTR";
+    public override string Name { get; set; } = "wire-name-arcade-overflow";
     
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthLimiter;
 

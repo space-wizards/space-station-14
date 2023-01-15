@@ -9,7 +9,7 @@ public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<Vend
     private VendingMachineSystem _vendingMachineSystem = default!;
 
     public override Color Color { get; set; } = Color.Red;
-    public override string Name { get; set; } = "VEND";
+    public override string Name { get; set; } = "wire-name-vending-eject";
 
     public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
@@ -37,7 +37,7 @@ public sealed class VendingMachineEjectItemWireAction : ComponentWireAction<Vend
 
     public override bool Pulse(EntityUid user, Wire wire, VendingMachineComponent vending)
     {
-        _vendingMachineSystem.EjectRandom(wire.Owner, true, vending);
+        _vendingMachineSystem.EjectRandom(wire.Owner, true, vendComponent: vending);
         return true;
     }
 }
