@@ -70,3 +70,6 @@ ent-LockerEvidence = шкаф для улик
 ent-LockerSyndicatePersonal = оружейный шкаф
     .desc = Это персональное хранилище для оперативного снаряжения.
     .suffix = { "" }
+ent-LockerBluespaceStation = bluespace locker
+    .desc = Advanced locker technology.
+    .suffix = once to station

@@ -1,14 +1,11 @@
-using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Stack;
 using Content.Shared.Construction.Prototypes;
-using Content.Shared.Construction.Steps;
-using Content.Shared.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Construction
 {
@@ -87,6 +84,37 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
+            await pairTracker.CleanReturnAsync();
+        }
+
+        [Test]
+        public async Task DeconstructionIsValid()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            var server = pairTracker.Pair.Server;
+
+            var entMan = server.ResolveDependency<IEntityManager>();
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
+            var compFact = server.ResolveDependency<IComponentFactory>();
+
+            var name = compFact.GetComponentName(typeof(ConstructionComponent));
+            Assert.Multiple(() =>
+            {
+                foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (proto.Abstract || !proto.Components.TryGetValue(name, out var reg))
+                        continue;
+
+                    var comp = (ConstructionComponent) reg.Component;
+                    var target = comp.DeconstructionNode;
+                    if (target == null)
+                        continue;
+
+                    var graph = protoMan.Index<ConstructionGraphPrototype>(comp.Graph);
+                    Assert.That(graph.Nodes.ContainsKey(target), $"Invalid deconstruction node \"{target}\" on graph \"{graph.ID}\" for construction entity \"{proto.ID}\"!");
+                }
+            });
+
             await pairTracker.CleanReturnAsync();
         }
 
