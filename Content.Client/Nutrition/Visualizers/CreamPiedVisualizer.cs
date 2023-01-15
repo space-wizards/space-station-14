@@ -18,7 +18,7 @@ namespace Content.Client.Nutrition.Visualizers
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity);
 
             sprite.LayerMapReserveBlank(CreamPiedVisualLayers.Pie);
             sprite.LayerSetRSI(CreamPiedVisualLayers.Pie, "Effects/creampie.rsi");
@@ -38,7 +38,7 @@ namespace Content.Client.Nutrition.Visualizers
 
         private void SetPied(AppearanceComponent component, bool pied)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
             sprite.LayerSetVisible(CreamPiedVisualLayers.Pie, pied);
             sprite.LayerSetState(CreamPiedVisualLayers.Pie, _state);

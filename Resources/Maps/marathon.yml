@@ -68634,7 +68634,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 6451
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 18.5,44.5
     parent: 30
@@ -128800,7 +128800,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 15237
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 37.5,45.5
     parent: 30

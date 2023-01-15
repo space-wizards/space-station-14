@@ -6,6 +6,7 @@ using Robust.Shared.Physics.Systems;
 
 using Content.Shared.Ghost;
 using Content.Shared.Singularity.Components;
+using Robust.Shared.Physics;
 
 namespace Content.Shared.Singularity.EntitySystems;
 
@@ -14,10 +15,11 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// </summary>
 public abstract class SharedEventHorizonSystem : EntitySystem
 {
-#region Dependencies
+
     [Dependency] private readonly FixtureSystem _fixtures = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
-#endregion Dependencies
+
     public override void Initialize()
     {
         base.Initialize();
@@ -64,7 +66,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.Radius = value;
-        EntityManager.Dirty(eventHorizon);
+        Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -87,7 +89,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.CanBreachContainment = value;
-        EntityManager.Dirty(eventHorizon);
+        Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -133,7 +135,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.ConsumerFixtureId = value;
-        EntityManager.Dirty(eventHorizon);
+        Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -142,9 +144,9 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// Updates the state of the fixture associated with the event horizon.
     /// </summary>
     /// <param name="eventHorizon">The uid of the event horizon associated with the fixture to update.</param>
-    /// <param name="fixtures">The physics component containing the fixture to update.</param>
+    /// <param name="physics">The physics component containing the fixture to update.</param>
     /// <param name="eventHorizon">The state of the event horizon associated with the fixture to update.</param>
-    public void UpdateEventHorizonFixture(EntityUid uid, PhysicsComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
+    public void UpdateEventHorizonFixture(EntityUid uid, FixturesComponent? fixtures = null, EventHorizonComponent? eventHorizon = null)
     {
         if(!Resolve(uid, ref eventHorizon))
             return;
@@ -158,7 +160,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         // Update both fixtures the event horizon is associated with:
         if (consumerId != null)
         {
-            var consumer = _fixtures.GetFixtureOrNull(fixtures, consumerId);
+            var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
             if (consumer != null)
             {
                 var shape = (PhysShapeCircle)consumer.Shape;
@@ -169,7 +171,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         if (colliderId != null)
         {
-            var collider = _fixtures.GetFixtureOrNull(fixtures, colliderId);
+            var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
             if (collider != null)
             {
                 var shape = (PhysShapeCircle)collider.Shape;
@@ -224,8 +226,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var otherUid = args.BodyB.Owner;
 
         // For prediction reasons always want the client to ignore these.
-        if (EntityManager.HasComponent<MapGridComponent>(otherUid) ||
-            EntityManager.HasComponent<SharedGhostComponent>(otherUid))
+        if (HasComp<MapGridComponent>(otherUid) ||
+            HasComp<SharedGhostComponent>(otherUid))
         {
             args.Cancelled = true;
             return true;
@@ -233,8 +235,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
 
         // If we can, breach containment
         // otherwise, check if it's containment and just keep the collision
-        if (EntityManager.HasComponent<ContainmentFieldComponent>(otherUid) ||
-            EntityManager.HasComponent<ContainmentFieldGeneratorComponent>(otherUid))
+        if (HasComp<ContainmentFieldComponent>(otherUid) ||
+            HasComp<ContainmentFieldGeneratorComponent>(otherUid))
         {
             if (comp.CanBreachContainment)
                 args.Cancelled = true;
