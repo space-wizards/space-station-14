@@ -1,20 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: You can eat with utensils again, type: Fix}
-  id: 2368
-  time: '2022-09-27T16:26:14.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: 'Gas analyzers no longer close when you move, if you''re only monitoring
-      the environment.', type: Fix}
-  id: 2369
-  time: '2022-09-27T20:55:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now automatically enter combat mode upon turning., type: Add}
-  id: 2370
-  time: '2022-09-28T00:13:35.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Rat King now moves faster and can move under doors., type: Tweak}
@@ -2954,3 +2938,21 @@ Entries:
   - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
   id: 2867
   time: '2023-01-14T09:32:57.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added textiles crate to cargo, type: Add}
+  id: 2868
+  time: '2023-01-14T18:32:01.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added Dinnerware crate and Bar Supply crate to cargo, type: Add}
+  - {message: Moved some items from the Kitchen Supply crate to the Dinnerware Crate,
+    type: Tweak}
+  id: 2869
+  time: '2023-01-14T18:37:02.0000000+00:00'
+- author: Jackrost
+  changes:
+  - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
+    type: Tweak}
+  id: 2870
+  time: '2023-01-15T00:52:06.0000000+00:00'
