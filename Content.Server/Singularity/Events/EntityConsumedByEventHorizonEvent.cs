@@ -14,6 +14,11 @@ public sealed class EntityConsumedByEventHorizonEvent : EntityEventArgs
     public readonly EntityUid Entity;
 
     /// <summary>
+    /// The uid of the event horizon consuming the entity.
+    /// </summary>
+    public readonly EntityUid EventHorizonUid;
+
+    /// <summary>
     /// The event horizon consuming the entity.
     /// </summary>
     public readonly EventHorizonComponent EventHorizon;
@@ -24,9 +29,10 @@ public sealed class EntityConsumedByEventHorizonEvent : EntityEventArgs
     /// </summary>
     public readonly IContainer? Container;
 
-    public EntityConsumedByEventHorizonEvent(EntityUid entity, EventHorizonComponent eventHorizon, IContainer? container = null)
+    public EntityConsumedByEventHorizonEvent(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon, IContainer? container = null)
     {
         Entity = entity;
+        EventHorizonUid = eventHorizonUid;
         EventHorizon = eventHorizon;
         Container = container;
     }

@@ -4,7 +4,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Singularity.Events;
 
 /// <summary>
-/// Event raised on the event horizon entity whenever an event horizon consumes an entity.
+/// Event raised on the entity being consumed whenever an event horizon consumes an entity.
 /// </summary>
 public sealed class EventHorizonConsumedEntityEvent : EntityEventArgs
 {
@@ -12,6 +12,11 @@ public sealed class EventHorizonConsumedEntityEvent : EntityEventArgs
     /// The entity being consumed by the event horizon.
     /// </summary>
     public readonly EntityUid Entity;
+
+    /// <summary>
+    /// The uid of the event horizon consuming the entity.
+    /// </summary>
+    public readonly EntityUid EventHorizonUid;
 
     /// <summary>
     /// The event horizon consuming the target entity.
@@ -24,9 +29,10 @@ public sealed class EventHorizonConsumedEntityEvent : EntityEventArgs
     /// </summary>
     public readonly IContainer? Container;
 
-    public EventHorizonConsumedEntityEvent(EntityUid entity, EventHorizonComponent eventHorizon, IContainer? container = null)
+    public EventHorizonConsumedEntityEvent(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon, IContainer? container = null)
     {
         Entity = entity;
+        EventHorizonUid = eventHorizonUid;
         EventHorizon = eventHorizon;
         Container = container;
     }

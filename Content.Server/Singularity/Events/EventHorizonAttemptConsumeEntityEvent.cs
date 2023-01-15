@@ -14,13 +14,19 @@ public sealed class EventHorizonAttemptConsumeEntityEvent : CancellableEntityEve
     public readonly EntityUid Entity;
 
     /// <summary>
+    /// The uid of the event horizon consuming the entity.
+    /// </summary>
+    public readonly EntityUid EventHorizonUid;
+
+    /// <summary>
     /// The event horizon consuming the target entity.
     /// </summary>
     public readonly EventHorizonComponent EventHorizon;
 
-    public EventHorizonAttemptConsumeEntityEvent(EntityUid entity, EventHorizonComponent eventHorizon)
+    public EventHorizonAttemptConsumeEntityEvent(EntityUid entity, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon)
     {
         Entity = entity;
+        EventHorizonUid = eventHorizonUid;
         EventHorizon = eventHorizon;
     }
 }

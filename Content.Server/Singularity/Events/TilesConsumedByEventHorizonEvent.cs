@@ -22,14 +22,20 @@ public sealed class TilesConsumedByEventHorizonEvent : EntityEventArgs
     public readonly MapGridComponent MapGrid;
 
     /// <summary>
+    /// The uid of the event horizon consuming the entity.
+    /// </summary>
+    public readonly EntityUid EventHorizonUid;
+
+    /// <summary>
     /// The event horizon consuming the tiles.
     /// </summary>
     public readonly EventHorizonComponent EventHorizon;
 
-    public TilesConsumedByEventHorizonEvent(IReadOnlyList<(Vector2i, Tile)> tiles, MapGridComponent mapGrid, EventHorizonComponent eventHorizon)
+    public TilesConsumedByEventHorizonEvent(IReadOnlyList<(Vector2i, Tile)> tiles, MapGridComponent mapGrid, EntityUid eventHorizonUid, EventHorizonComponent eventHorizon)
     {
         Tiles = tiles;
         MapGrid = mapGrid;
+        EventHorizonUid = eventHorizonUid;
         EventHorizon = eventHorizon;
     }
 }

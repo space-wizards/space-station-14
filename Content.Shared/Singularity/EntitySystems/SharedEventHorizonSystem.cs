@@ -112,7 +112,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             return;
 
         eventHorizon.ColliderFixtureId = value;
-        EntityManager.Dirty(eventHorizon);
+        Dirty(eventHorizon);
         if (updateFixture)
             UpdateEventHorizonFixture(uid, eventHorizon: eventHorizon);
     }
@@ -154,7 +154,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
         var consumerId = eventHorizon.ConsumerFixtureId;
         var colliderId = eventHorizon.ColliderFixtureId;
         if((consumerId == null || colliderId == null)
-        || !Resolve(eventHorizon.Owner, ref fixtures, logMissing: false))
+        || !Resolve(uid, ref fixtures, logMissing: false))
             return;
 
         // Update both fixtures the event horizon is associated with:
@@ -163,9 +163,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             var consumer = _fixtures.GetFixtureOrNull(uid, consumerId, fixtures);
             if (consumer != null)
             {
-                var shape = (PhysShapeCircle)consumer.Shape;
-                shape.Radius = eventHorizon.Radius;
-                consumer.Hard = false;                
+                _physics.SetRadius(uid, consumer, consumer.Shape, eventHorizon.Radius, fixtures);
+                _physics.SetHard(uid, consumer, false, fixtures);
             }
         }
 
@@ -174,9 +173,8 @@ public abstract class SharedEventHorizonSystem : EntitySystem
             var collider = _fixtures.GetFixtureOrNull(uid, colliderId, fixtures);
             if (collider != null)
             {
-                var shape = (PhysShapeCircle)collider.Shape;
-                shape.Radius = eventHorizon.Radius;
-                collider.Hard = true;
+                _physics.SetRadius(uid, collider, collider.Shape, eventHorizon.Radius, fixtures);
+                _physics.SetHard(uid, collider, true, fixtures);
             }
         }
 
