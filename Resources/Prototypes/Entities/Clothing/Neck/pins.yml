@@ -16,8 +16,8 @@
 
 - type: entity
   parent: ClothingNeckBase
-  id: ClothingNeckArosexualPin
-  name: arosexual pin
+  id: ClothingNeckAromanticPin
+  name: aromantic pin
   description: be aro do crime
   components:
   - type: Sprite
