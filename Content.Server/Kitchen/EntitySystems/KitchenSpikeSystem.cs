@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -9,7 +8,6 @@ using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -17,6 +15,8 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 
 namespace Content.Server.Kitchen.EntitySystems

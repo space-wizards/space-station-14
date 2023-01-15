@@ -1,0 +1,12 @@
+ent-BulletCaselessRifle = bullet (.25 caseless)
+    .desc = { ent-BaseBullet.desc }
+    .suffix = { "" }
+ent-BulletCaselessRifleHighVelocity = bullet (.25 caseless high-velocity)
+    .desc = { ent-BaseBulletHighVelocity.desc }
+    .suffix = { "" }
+ent-BulletCaselessRiflePractice = bullet (.25 caseless practice)
+    .desc = { ent-BaseBulletPractice.desc }
+    .suffix = { "" }
+ent-BulletCaselessRifleRubber = bullet (.25 caseless rubber)
+    .desc = { ent-BaseBulletRubber.desc }
+    .suffix = { "" }
