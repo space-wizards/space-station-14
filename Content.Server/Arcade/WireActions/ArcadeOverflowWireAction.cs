@@ -10,6 +10,11 @@ public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
 {
     private Color _color = Color.Red;
     private string _text = "LMTR";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthLimiter;
 
