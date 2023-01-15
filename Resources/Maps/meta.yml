@@ -73609,7 +73609,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 6640
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: -10.5,57.5
     parent: 0
@@ -142270,7 +142270,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 16833
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: -49.5,-23.5
     parent: 0
@@ -180593,7 +180593,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 22605
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 0.5,-64.5
     parent: 0
@@ -191615,13 +191615,13 @@ entities:
     type: Transform
   - type: ActiveEmergencyLight
 - uid: 24288
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 23.5,0.5
     parent: 0
     type: Transform
 - uid: 24289
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: -61.5,-7.5
     parent: 0
@@ -195947,14 +195947,14 @@ entities:
     parent: 0
     type: Transform
 - uid: 24761
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - rot: -1.5707963267948966 rad
     pos: 25.5,33.5
     parent: 0
     type: Transform
 - uid: 24762
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - rot: -1.5707963267948966 rad
     pos: 25.5,31.5

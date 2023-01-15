@@ -44036,7 +44036,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 6971
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - rot: -1.5707963267948966 rad
     pos: 27.5,-1.5
@@ -51831,7 +51831,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 8201
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - rot: -1.5707963267948966 rad
     pos: 27.5,-2.5
@@ -102267,7 +102267,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 11688
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 72.5,12.5
     parent: 8364
@@ -201942,7 +201942,7 @@ entities:
     parent: 8364
     type: Transform
 - uid: 25880
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: 18.5,-10.5
     parent: 8364
@@ -205408,7 +205408,7 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 26426
-  type: SpaceVillainArcade
+  type: SpaceVillainArcadeFilled
   components:
   - pos: -4.5,45.5
     parent: 8364
