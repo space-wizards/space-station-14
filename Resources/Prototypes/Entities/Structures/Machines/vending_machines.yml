@@ -1394,11 +1394,10 @@
   parent: VendingMachine
   id: VendingMachineHappyHonk
   name: Happy Honk Dispenser
-  description: A happy honk meal box dispenser made by Honk! co..
+  description: A happy honk meal box dispenser made by Honk! co.
   components:
   - type: VendingMachine
     pack: HappyHonkDispenserInventory
-    emagPack: HappyHonkDispenserEmagInventory
     dispenseOnHitChance: 0.25
     dispenseOnHitThreshold: 2
     offState: off
