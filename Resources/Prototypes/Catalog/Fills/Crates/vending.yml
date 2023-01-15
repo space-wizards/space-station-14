@@ -132,3 +132,12 @@
   - type: StorageFill
     contents:
       - id: VendingMachineRestockTankDispenser
+
+- type: entity
+  id: CrateVendingMachineRestockHappyHonkFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockHappyHonk
+        amount: 2

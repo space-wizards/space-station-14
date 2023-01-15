@@ -1,0 +1,9 @@
+﻿- type: vendingMachineInventory
+  id: HappyHonkDispenserInventory
+  startingInventory:
+    HappyHonkRandom: 15
+    HappyHonkMime: 5
+  emaggedInventory:
+    HappyHonkCluwne: 1
+    HappyHonkNukie: 1
+
