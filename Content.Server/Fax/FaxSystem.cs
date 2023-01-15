@@ -1,4 +1,4 @@
-﻿using Content.Server.Administration;
+using Content.Server.Administration;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork;
@@ -275,8 +275,9 @@ public sealed class FaxSystem : EntitySystem
 
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<string>? stampedBy);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
-                    var printout = new FaxPrintout(content, name, stampState, stampedBy);
+                    var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
                     Receive(uid, printout, args.SenderAddress);
 
                     break;
@@ -397,12 +398,17 @@ public sealed class FaxSystem : EntitySystem
             { FaxConstants.FaxPaperContentData, paper.Content },
         };
 
+        if (metadata.EntityPrototype != null)
+        {
+            payload[FaxConstants.FaxPaperPrototypeData] = metadata.EntityPrototype.ID;
+        }
+
         if (paper.StampState != null)
         {
             payload[FaxConstants.FaxPaperStampStateData] = paper.StampState;
             payload[FaxConstants.FaxPaperStampedByData] = paper.StampedBy;
         }
-        
+
         _deviceNetworkSystem.QueuePacket(uid, component.DestinationFaxAddress, payload);
 
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{(sender != null ? ToPrettyString(sender.Value) : "Unknown"):user} sent fax from \"{component.FaxName}\" {ToPrettyString(uid)} to {faxName} ({component.DestinationFaxAddress}): {paper.Content}");
@@ -442,7 +448,9 @@ public sealed class FaxSystem : EntitySystem
             return;
 
         var printout = component.PrintingQueue.Dequeue();
-        var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
+
+        var entityToSpawn = printout.PrototypeId.Length == 0 ? "Paper" : printout.PrototypeId;
+        var printed = EntityManager.SpawnEntity(entityToSpawn, Transform(uid).Coordinates);
 
         if (TryComp<PaperComponent>(printed, out var paper))
         {
