@@ -87,7 +87,7 @@
       - id: ClothingNeckLGBTPin
         prob: 0.025
         orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckArosexualPin
+      - id: ClothingNeckAromanticPin
         orGroup: LGBTQIAPlusPins
       - id: ClothingNeckAsexualPin
         orGroup: LGBTQIAPlusPins
