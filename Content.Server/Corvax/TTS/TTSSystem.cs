@@ -21,7 +21,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly TTSManager _ttsManager = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
-    private const int MaxMessageChars = 100; // same as SingleBubbleCharLimit
+    private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
     private bool _isEnabled = false;
     
     public override void Initialize()
@@ -44,6 +44,8 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         var soundData = await GenerateTTS(ev.Text, protoVoice.Speaker);
+        if (soundData is null) return;
+        
         RaiseNetworkEvent(new PlayTTSEvent(ev.Uid, soundData), Filter.SinglePlayer(session));
     }
 
@@ -55,6 +57,8 @@ public sealed partial class TTSSystem : EntitySystem
             return;
         
         var soundData = await GenerateTTS(args.Message, protoVoice.Speaker);
+        if (soundData is null) return;
+        
         var ttsEvent = new PlayTTSEvent(uid, soundData);
 
         // Say
@@ -66,6 +70,8 @@ public sealed partial class TTSSystem : EntitySystem
         
         // Whisper
         var obfSoundData = await GenerateTTS(args.ObfuscatedMessage, protoVoice.Speaker, SpeechRate.VerySlow);
+        if (obfSoundData is null) return;
+        
         var obfTtsEvent = new PlayTTSEvent(uid, obfSoundData);
         
         var xformQuery = GetEntityQuery<TransformComponent>();
@@ -89,9 +95,11 @@ public sealed partial class TTSSystem : EntitySystem
     }
     
     // ReSharper disable once InconsistentNaming
-    private async Task<byte[]> GenerateTTS(string text, string speaker, SpeechRate rate = SpeechRate.Fast)
+    private async Task<byte[]?> GenerateTTS(string text, string speaker, SpeechRate rate = SpeechRate.Fast)
     {
         var textSanitized = Sanitize(text);
+        if (textSanitized == "") return null;
+
         var textSsml = ToSsmlText(textSanitized, rate);
         return await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
     }

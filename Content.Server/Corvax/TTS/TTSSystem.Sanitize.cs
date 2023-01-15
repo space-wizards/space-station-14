@@ -21,6 +21,7 @@ public sealed partial class TTSSystem
         text = Regex.Replace(text, @"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
         text = Regex.Replace(text, @"(?<=[1-90])(\.|,)(?=[1-90])", " целых ");
         text = Regex.Replace(text, @"\d+", ReplaceWord2Num);
+        text = text.Trim();
         return text;
     }
 
