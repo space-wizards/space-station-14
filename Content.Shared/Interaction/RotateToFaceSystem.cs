@@ -1,8 +1,8 @@
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Rotatable;
 using JetBrains.Annotations;
-using Content.Shared.MobState.EntitySystems;
 
 namespace Content.Shared.Interaction
 {
@@ -16,7 +16,7 @@ namespace Content.Shared.Interaction
     public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <summary>

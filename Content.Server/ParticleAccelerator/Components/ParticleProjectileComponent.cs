@@ -3,6 +3,7 @@ using Content.Server.Singularity.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.ParticleAccelerator.Components
@@ -18,14 +19,16 @@ namespace Content.Server.ParticleAccelerator.Components
         {
             State = state;
 
-            if (!_entMan.TryGetComponent<PhysicsComponent?>(Owner, out var physicsComponent))
+            if (!_entMan.TryGetComponent<PhysicsComponent>(Owner, out var physicsComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a CollidableComponent");
                 return;
             }
-            physicsComponent.BodyStatus = BodyStatus.InAir;
 
-            if (!_entMan.TryGetComponent<ProjectileComponent?>(Owner, out var projectileComponent))
+            var physics = _entMan.System<SharedPhysicsSystem>();
+            physics.SetBodyStatus(physicsComponent, BodyStatus.InAir);
+
+            if (!_entMan.TryGetComponent<ProjectileComponent>(Owner, out var projectileComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a ProjectileComponent");
                 return;
@@ -33,7 +36,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             _entMan.EntitySysManager.GetEntitySystem<ProjectileSystem>().SetShooter(projectileComponent, firer);
 
-            if (!_entMan.TryGetComponent<SinguloFoodComponent?>(Owner, out var singuloFoodComponent))
+            if (!_entMan.TryGetComponent<SinguloFoodComponent>(Owner, out var singuloFoodComponent))
             {
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
@@ -54,7 +57,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 appearance.SetData(ParticleAcceleratorVisuals.VisualState, state);
             }
 
-            physicsComponent.LinearVelocity = angle.ToWorldVec() * 20f;
+            physics.SetLinearVelocity(Owner, angle.ToWorldVec() * 20f, body: physicsComponent);
 
             _entMan.GetComponent<TransformComponent>(Owner).LocalRotation = angle;
             Timer.Spawn(3000, () => _entMan.DeleteEntity(Owner));

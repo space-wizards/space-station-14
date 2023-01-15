@@ -85,7 +85,7 @@ namespace Content.Client.ContextMenu.UI
                 return;
             }
 
-            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
+            EntityIcon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
 
             if (_adminManager.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
             {

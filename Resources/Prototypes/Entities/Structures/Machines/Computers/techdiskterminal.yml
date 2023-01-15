@@ -9,18 +9,10 @@
     noRot: true
     sprite: Structures/Machines/tech_disk_printer.rsi
     layers:
-    - state: icon
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: unshaded
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: unshaded
-      key: ""
-      body: icon
-      bodyBroken: icon
+    - map: ["computerLayerBody"]
+      state: icon
+    - map: ["computerLayerScreen"]
+      state: unshaded
   - type: DiskConsole
   - type: ResearchClient
   - type: ActivatableUI

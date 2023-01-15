@@ -178,7 +178,7 @@
     state: health7
   name: alerts-health-name
   description: alerts-health-desc
-  minSeverity: 0
+  minSeverity: 1
   maxSeverity: 6
 
 - type: alert

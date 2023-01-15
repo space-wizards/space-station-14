@@ -158,7 +158,7 @@ namespace Content.Client.Cargo.BUI
             if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
-            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderIndex));
         }
 
         private void ApproveOrder(ButtonEventArgs args)
@@ -169,7 +169,7 @@ namespace Content.Client.Cargo.BUI
             if (OrderCount >= OrderCapacity)
                 return;
 
-            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderIndex));
             // Most of the UI isn't predicted anyway so.
             // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
         }
