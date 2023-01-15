@@ -1,0 +1,98 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLGBTPin
+  name: lgbt pin
+  description: be gay do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/lgbtpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/lgbtpin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckArosexualPin
+  name: arosexual pin
+  description: You could probably only wear this pin once
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/aropin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/aropin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAsexualPin
+  name: asexual pin
+  description: This pin doesn't really want to stick, does it?
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/asexpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/asexpin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBisexualPin
+  name: bisexual pin
+  description: be bi do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/bipin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/bipin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckIntersexPin
+  name: intersex pin
+  description: This badge feels like... a bit too much?
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/interpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/interpin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLesbianPin
+  name: lesbian pin
+  description: be lesbian do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/lespin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/lespin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNonBinaryPin
+  name: non-binary pin
+  description: "01100010 01100101 00100000 01100111 01100001 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/nonpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/nonpin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPansexualPin
+  name: pansexual pin
+  description: This pin sadly does not reflect bullets
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/panpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/panpin.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTransPin
+  name: transgender pin
+  description: You have a feeling this badge doesn't want to be itself
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Pins/transpin.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Pins/transpin.rsi
