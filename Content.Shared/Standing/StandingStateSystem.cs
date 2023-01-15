@@ -96,7 +96,7 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(fixture, fixture.CollisionMask & ~StandingCollisionLayer);
+                    _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
 
@@ -148,7 +148,7 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(fixture, fixture.CollisionMask | StandingCollisionLayer);
+                        _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
                 }
             }
             standingState.ChangedFixtures.Clear();

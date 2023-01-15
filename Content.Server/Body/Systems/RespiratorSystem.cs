@@ -8,7 +8,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Database;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -26,7 +26,7 @@ namespace Content.Server.Body.Systems
         [Dependency] private readonly DamageableSystem _damageableSys = default!;
         [Dependency] private readonly LungSystem _lungSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         public override void Initialize()
         {

@@ -8,6 +8,7 @@ using Content.Shared.Shuttles.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Physics.Controllers
@@ -399,7 +400,7 @@ namespace Content.Server.Physics.Controllers
                                 impulse.Y = MathF.Max(impulse.Y, -shuttleVelocity.Y);
                             }
 
-                            PhysicsSystem.SetLinearVelocity(body, body.LinearVelocity + shuttleNorthAngle.RotateVec(impulse));
+                            PhysicsSystem.SetLinearVelocity(shuttle.Owner, body.LinearVelocity + shuttleNorthAngle.RotateVec(impulse), body: body);
                         }
                     }
                     else
@@ -432,7 +433,7 @@ namespace Content.Server.Physics.Controllers
                             else if (body.AngularVelocity > 0f && body.AngularVelocity + accelSpeed < 0f)
                                 accelSpeed = -body.AngularVelocity;
 
-                            PhysicsSystem.SetAngularVelocity(body, body.AngularVelocity + accelSpeed);
+                            PhysicsSystem.SetAngularVelocity(shuttle.Owner, body.AngularVelocity + accelSpeed, body: body);
                             _thruster.SetAngularThrust(shuttle, true);
                         }
                     }
@@ -440,19 +441,19 @@ namespace Content.Server.Physics.Controllers
 
                 if (linearInput.Length.Equals(0f))
                 {
-                    body.SleepingAllowed = true;
+                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
 
                     if (brakeInput.Equals(0f))
                         _thruster.DisableLinearThrusters(shuttle);
 
                     if (body.LinearVelocity.Length < 0.08)
                     {
-                        body.LinearVelocity = Vector2.Zero;
+                        PhysicsSystem.SetLinearVelocity(shuttle.Owner, Vector2.Zero, body: body);
                     }
                 }
                 else
                 {
-                    body.SleepingAllowed = false;
+                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
                     var angle = linearInput.ToWorldAngle();
                     var linearDir = angle.GetDir();
                     var dockFlag = linearDir.AsFlag();
@@ -519,23 +520,23 @@ namespace Content.Server.Physics.Controllers
                     {
                         var accelSpeed = totalForce.Length * frameTime;
                         accelSpeed = MathF.Min(accelSpeed, addSpeed);
-                        body.ApplyLinearImpulse(shuttleNorthAngle.RotateVec(totalForce.Normalized * accelSpeed));
+                        PhysicsSystem.ApplyLinearImpulse(shuttle.Owner, shuttleNorthAngle.RotateVec(totalForce.Normalized * accelSpeed), body: body);
                     }
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
                 {
                     _thruster.SetAngularThrust(shuttle, false);
-                    body.SleepingAllowed = true;
+                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, true);
 
                     if (Math.Abs(body.AngularVelocity) < 0.01f)
                     {
-                        body.AngularVelocity = 0f;
+                        PhysicsSystem.SetAngularVelocity(shuttle.Owner, 0f, body: body);
                     }
                 }
                 else
                 {
-                    body.SleepingAllowed = false;
+                    PhysicsSystem.SetSleepingAllowed(shuttle.Owner, body, false);
                     var impulse = shuttle.AngularThrust * -angularInput;
                     var wishSpeed = MathF.PI;
 
@@ -554,7 +555,7 @@ namespace Content.Server.Physics.Controllers
                         else
                             accelSpeed = MathF.Min(accelSpeed, addSpeed);
 
-                        PhysicsSystem.SetAngularVelocity(body, body.AngularVelocity + accelSpeed);
+                        PhysicsSystem.SetAngularVelocity(shuttle.Owner, body.AngularVelocity + accelSpeed, body: body);
                         _thruster.SetAngularThrust(shuttle, true);
                     }
                 }

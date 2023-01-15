@@ -54,7 +54,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     {
         if (damageVisComp.Thresholds.Count < 1)
         {
-            Logger.ErrorS(SawmillName, $"Thresholds were invalid for entity {entity}. Thresholds: {damageVisComp.Thresholds}");
+            Logger.ErrorS(SawmillName, $"ThresholdsLookup were invalid for entity {entity}. ThresholdsLookup: {damageVisComp.Thresholds}");
             damageVisComp.Valid = false;
             return;
         }
@@ -144,7 +144,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
 
         if (damageVisComp.Thresholds[0] != 0)
         {
-            Logger.ErrorS(SawmillName, $"Thresholds were invalid for entity {entity}. Thresholds: {damageVisComp.Thresholds}");
+            Logger.ErrorS(SawmillName, $"ThresholdsLookup were invalid for entity {entity}. ThresholdsLookup: {damageVisComp.Thresholds}");
             damageVisComp.Valid = false;
             return;
         }

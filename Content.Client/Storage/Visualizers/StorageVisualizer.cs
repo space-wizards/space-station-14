@@ -25,7 +25,7 @@ namespace Content.Client.Storage.Visualizers
         [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)
         {
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out ISpriteComponent? sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(entity, out SpriteComponent? sprite))
             {
                 return;
             }
@@ -47,7 +47,7 @@ namespace Content.Client.Storage.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
             {
                 return;
             }
