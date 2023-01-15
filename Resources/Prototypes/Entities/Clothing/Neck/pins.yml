@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckLGBTPin
-  name: lgbt pin
+  name: LGBT pin
   description: be gay do crime
   components:
   - type: Sprite
@@ -18,7 +18,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckArosexualPin
   name: arosexual pin
-  description: You could probably only wear this pin once
+  description: ne aro do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -34,7 +34,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckAsexualPin
   name: asexual pin
-  description: This pin doesn't really want to stick, does it?
+  description: be x do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -66,7 +66,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckIntersexPin
   name: intersex pin
-  description: This badge feels like... a bit too much?
+  description: be aro do crime
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
@@ -130,7 +130,7 @@
   parent: ClothingNeckBase
   id: ClothingNeckTransPin
   name: transgender pin
-  description: You have a feeling this badge doesn't want to be itself
+  description: You have a feeling this badge wants to be whoever they want
   components:
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
