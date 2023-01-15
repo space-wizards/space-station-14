@@ -1,4 +1,3 @@
-using System.Text;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.UserInterface;
 using Robust.Server.GameObjects;
