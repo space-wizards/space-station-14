@@ -1,12 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: Voice masking is now possible for mobs that speak., type: Add}
-  - {message: 'The Syndicate has found a supplier for voice modification tools, and
-      is now supplying them to their agents. Be aware of who you''re speaking to:
-      they might not be who they sound like.', type: Add}
-  id: 2372
-  time: '2022-09-29T02:22:27.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Cloning Pods can now be upgraded to make them faster and use less biomass.,
@@ -2956,3 +2948,8 @@ Entries:
       Enjoy the extra *1* space! (31 ->30), type: Tweak}
   id: 2871
   time: '2023-01-15T04:12:31.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added 23 new markings for diona's, type: Add}
+  id: 2872
+  time: '2023-01-15T04:54:47.0000000+00:00'
