@@ -23,6 +23,7 @@ public sealed class WeatherOverlay : Overlay
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IResourceCache _cache = default!;
+    private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;
 
@@ -30,9 +31,10 @@ public sealed class WeatherOverlay : Overlay
 
     private IRenderTexture? _blep;
 
-    public WeatherOverlay(SpriteSystem sprite, WeatherSystem weather)
+    public WeatherOverlay(SharedTransformSystem transform, SpriteSystem sprite, WeatherSystem weather)
     {
         ZIndex = ParallaxSystem.ParallaxZIndex + 1;
+        _transform = transform;
         _weather = weather;
         _sprite = sprite;
         IoCManager.InjectDependencies(this);
@@ -92,7 +94,7 @@ public sealed class WeatherOverlay : Overlay
 
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, worldAABB))
             {
-                var matrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
+                var matrix = _transform.GetWorldMatrix(grid.Owner, xformQuery);
                 Matrix3.Multiply(in matrix, in invMatrix, out var matty);
                 worldHandle.SetTransform(matty);
 
@@ -165,6 +167,8 @@ public sealed class WeatherOverlay : Overlay
         // - No rotation
         // - Storing state across frames to do scrolling and just having it always do topdown.
 
+        // I have chosen no rotation.
+
         const float scale = 1f;
         const float slowness = 0f;
         var scrolling = Vector2.Zero;
@@ -174,7 +178,7 @@ public sealed class WeatherOverlay : Overlay
         var scrolled = scrolling * (float) curTime.TotalSeconds;
 
         // Origin - start with the parallax shift itself.
-        var originBL = (position) * slowness + scrolled;
+        var originBL = position * slowness + scrolled;
 
         // Centre the image.
         originBL -= size / 2;
@@ -193,8 +197,6 @@ public sealed class WeatherOverlay : Overlay
             for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
             {
                 var box = Box2.FromDimensions((x, y), size);
-                // var boxR = new Box2Rotated(box, -rotation, box.Center);
-
                 worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
             }
         }

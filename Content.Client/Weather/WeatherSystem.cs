@@ -19,11 +19,12 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        _overlayManager.AddOverlay(new WeatherOverlay(EntityManager.System<SpriteSystem>(), this));
+        _overlayManager.AddOverlay(new WeatherOverlay(_transform, EntityManager.System<SpriteSystem>(), this));
         SubscribeLocalEvent<WeatherComponent, ComponentHandleState>(OnWeatherHandleState);
     }
 
@@ -53,12 +54,15 @@ public sealed class WeatherSystem : SharedWeatherSystem
             return;
         }
 
-        if (!Timing.IsFirstTimePredicted || component.Stream == null)
+        if (!Timing.IsFirstTimePredicted || weather.Sound == null)
             return;
 
-        var stream = (AudioSystem.PlayingStream) component.Stream;
+        component.Stream ??= _audio.PlayGlobal(weather.Sound, Filter.Local(), true);
+        var volumeMod = MathF.Pow(10, weather.Sound.Params.Volume / 10f);
+
+        var stream = (AudioSystem.PlayingStream) component.Stream!;
         var alpha = GetPercent(component, mapUid.Value, weather);
-        alpha = MathF.Pow(alpha, 2f);
+        alpha = MathF.Pow(alpha, 2f) * volumeMod;
         // TODO: Lerp this occlusion.
         var occlusion = 0f;
         // TODO: Fade-out needs to be slower
@@ -113,13 +117,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 alpha = 0f;
             else
             {
-                var entPos = entXform.WorldPosition;
+                var entPos = _transform.GetWorldPosition(entXform);
                 var sourceRelative = nearestNode.Value.ToMap(EntityManager).Position - entPos;
 
                 if (sourceRelative.LengthSquared > 1f)
                 {
                     occlusion = _physics.IntersectRayPenetration(entXform.MapID,
-                        new CollisionRay(entXform.WorldPosition, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
+                        new CollisionRay(entPos, sourceRelative.Normalized, _audio.OcclusionCollisionMask),
                         sourceRelative.Length, stream.TrackingEntity);
                 }
             }

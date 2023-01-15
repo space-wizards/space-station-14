@@ -16,6 +16,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: AshfallLight
@@ -35,6 +36,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: AshfallHeavy
@@ -54,6 +56,7 @@
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: Fallout
@@ -73,6 +76,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: Hail
@@ -93,6 +97,7 @@
       /Audio/Effects/Weather/rain.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: Rain
@@ -112,6 +117,7 @@
     collection: Rain
     params:
       loop: true
+      volume: -6
 
 - type: soundCollection
   id: Rain
@@ -137,6 +143,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: SandstormHeavy
@@ -156,6 +163,7 @@
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: SnowfallLight
@@ -175,6 +183,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: SnowfallMedium
@@ -194,6 +203,7 @@
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: SnowfallHeavy
@@ -213,6 +223,7 @@
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
       loop: true
+      volume: -6
 
 - type: weather
   id: Storm
@@ -232,3 +243,4 @@
     path: /Audio/Effects/Weather/rain_heavy.ogg
     params:
       loop: true
+      volume: -6

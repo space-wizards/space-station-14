@@ -128,7 +128,6 @@ public abstract class SharedWeatherSystem : EntitySystem
 
     protected void StartWeather(WeatherComponent component, WeatherPrototype weather)
     {
-        Sawmill.Debug($"Starting weather {weather.ID}");
         component.Weather = weather.ID;
         // TODO: ENGINE PR
         var duration = _random.NextDouble(weather.DurationMinimum.TotalSeconds, weather.DurationMaximum.TotalSeconds);
@@ -142,7 +141,6 @@ public abstract class SharedWeatherSystem : EntitySystem
     {
         component.Stream?.Stop();
         component.Stream = null;
-        Sawmill.Debug($"Stopping weather {component.Weather}");
         component.Weather = null;
         component.StartTime = TimeSpan.Zero;
         component.EndTime = TimeSpan.Zero;
@@ -156,7 +154,6 @@ public abstract class SharedWeatherSystem : EntitySystem
             return false;
 
         component.State = state;
-        Sawmill.Debug($"Set weather state for {ToPrettyString(uid)} to {state}");
         return true;
     }
 
