@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Zombies now automatically enter combat mode upon turning., type: Add}
-  id: 2370
-  time: '2022-09-28T00:13:35.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The Rat King now moves faster and can move under doors., type: Tweak}
   - {message: Rat Servants now have slightly more health., type: Tweak}
   id: 2371
@@ -2955,3 +2950,9 @@ Entries:
     type: Tweak}
   id: 2869
   time: '2023-01-14T18:37:02.0000000+00:00'
+- author: Jackrost
+  changes:
+  - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
+    type: Tweak}
+  id: 2870
+  time: '2023-01-15T00:52:06.0000000+00:00'
