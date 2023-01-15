@@ -11,6 +11,6 @@ wire-name-door-safety = SAFE
 wire-name-door-timer = TIMR
 wire-name-lock = LOCK
 wire-name-power = POWR
-wire-name-player-invincible = MNGR
+wire-name-arcade-invincible = MNGR
 wire-name-vending-contraband = MNGR
 wire-name-vending-eject = VEND

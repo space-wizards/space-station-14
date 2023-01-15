@@ -7,7 +7,7 @@ namespace Content.Server.Arcade;
 
 public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 {
-    public override string Name { get; set; } = "wire-name-player-invincible";
+    public override string Name { get; set; } = "wire-name-arcade-invincible";
 
     public override Color Color { get; set; } = Color.Purple;
 
