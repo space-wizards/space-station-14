@@ -1,5 +1,5 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.Animations;
@@ -12,7 +12,7 @@ namespace Content.Client.Pointing;
 public sealed class PointingSystem : SharedPointingSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private const string AnimationKey = "pointingarrow";
 

@@ -41,6 +41,7 @@
   parent: ArcadeBase
   components:
   - type: SpaceVillainArcade
+    rewardAmount: 0
   - type: Wires
     LayoutId: Arcade
     BoardName: "Arcade"
@@ -56,6 +57,15 @@
   - type: Computer
     board: SpaceVillainArcadeComputerCircuitboard
 
+- type: entity
+  id: SpaceVillainArcadeFilled
+  parent: SpaceVillainArcade
+  suffix: Filled
+  components:
+  - type: SpaceVillainArcade
+    rewardMinAmount: 5
+    rewardMaxAmount: 8
+    
 - type: entity
   id: BlockGameArcade
   description: An arcade cabinet with a strangely familiar game.

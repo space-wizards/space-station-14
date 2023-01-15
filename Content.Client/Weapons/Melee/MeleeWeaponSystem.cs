@@ -1,7 +1,7 @@
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.StatusEffect;

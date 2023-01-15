@@ -1,49 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Proper feedback for when items thrown toward the disposal bin don't
-      go in (25% chance to miss)., type: Add}
-  id: 2363
-  time: '2022-09-26T19:42:49.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: A new speaker in the Hot Drinks machine means you can now hear it brew
-      your beverage., type: Tweak}
-  id: 2364
-  time: '2022-09-26T19:43:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added science recipes for advanced machine parts. Use these in your
-      machines to make them work better., type: Add}
-  id: 2365
-  time: '2022-09-27T02:45:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed some machines being unable to be deconstructed., type: Fix}
-  id: 2366
-  time: '2022-09-27T06:47:05.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The biomass reclaimer's speed and yield can now be upgraded using machine
-      parts., type: Add}
-  id: 2367
-  time: '2022-09-27T08:00:30.0000000+00:00'
-- author: themias
-  changes:
-  - {message: You can eat with utensils again, type: Fix}
-  id: 2368
-  time: '2022-09-27T16:26:14.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: 'Gas analyzers no longer close when you move, if you''re only monitoring
-      the environment.', type: Fix}
-  id: 2369
-  time: '2022-09-27T20:55:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Zombies now automatically enter combat mode upon turning., type: Add}
-  id: 2370
-  time: '2022-09-28T00:13:35.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The Rat King now moves faster and can move under doors., type: Tweak}
@@ -2954,3 +2909,50 @@ Entries:
   - {message: Worn lawyer badge now changes the style of the typing indicator, type: Add}
   id: 2862
   time: '2023-01-12T12:33:57.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed solution visuals not working properly, type: Fix}
+  id: 2863
+  time: '2023-01-14T00:21:15.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added custom diona scream sound, type: Tweak}
+  id: 2864
+  time: '2023-01-14T01:58:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that causes the verb menu to get stuck waiting for the server.,
+    type: Fix}
+  id: 2865
+  time: '2023-01-14T01:59:11.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Resprited sterile swabs, the diagnoser, and the vaccinator.', type: Tweak}
+  id: 2866
+  time: '2023-01-14T03:56:11.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: fixed constant thudding sound playing when in crit, type: Fix}
+  - {message: fixed being able to attack while downed/dead, type: Fix}
+  - {message: fix for health alert not showing properly on spawn, type: Fix}
+  - {message: fixed improper sprite being shown on the hud for full health, type: Fix}
+  id: 2867
+  time: '2023-01-14T09:32:57.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added textiles crate to cargo, type: Add}
+  id: 2868
+  time: '2023-01-14T18:32:01.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added Dinnerware crate and Bar Supply crate to cargo, type: Add}
+  - {message: Moved some items from the Kitchen Supply crate to the Dinnerware Crate,
+    type: Tweak}
+  id: 2869
+  time: '2023-01-14T18:37:02.0000000+00:00'
+- author: Jackrost
+  changes:
+  - {message: Space Villain arcade prizes now limited. Number of prizes are randomized,
+    type: Tweak}
+  id: 2870
+  time: '2023-01-15T00:52:06.0000000+00:00'
