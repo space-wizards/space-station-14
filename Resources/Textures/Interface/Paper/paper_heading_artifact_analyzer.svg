@@ -198,9 +198,9 @@
      inkscape:snap-object-midpoints="false"
      inkscape:snap-nodes="false"
      inkscape:snap-page="true"
-     inkscape:zoom="3.1246508"
-     inkscape:cx="85.769586"
-     inkscape:cy="-9.7610909"
+     inkscape:zoom="2.1111586"
+     inkscape:cx="131.91808"
+     inkscape:cy="129.54972"
      inkscape:window-x="0"
      inkscape:window-y="44"
      inkscape:window-maximized="1"
@@ -209,32 +209,48 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showguides="true" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:87.0333px;line-height:1.25;font-family:sans-serif;display:inline;fill:#2c3b8c;fill-opacity:1;stroke:none;stroke-width:2.17583"
-     x="0"
-     y="61.706623"
-     id="text1677"
+  <g
+     aria-label="NTX"
      transform="scale(1.0327953,0.96824607)"
-     clip-path="url(#clipPath1608)"><tspan
-       sodipodi:role="line"
-       id="tspan1675"
-       x="0"
-       y="61.706623"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:City;-inkscape-font-specification:City;fill:#2c3b8c;fill-opacity:1;stroke-width:2.17583">NTX</tspan></text>
+     id="text1677"
+     clip-path="url(#clipPath1608)"
+     style="font-size:87.0333px;line-height:1.25;display:inline;fill:#2c3b8c;stroke-width:2.17583">
+    <path
+       d="M 53.264381,8.4422421 H 48.129416 V 61.706623 H 38.990919 Q 36.292887,57.006825 34.378154,53.264393 30.722756,45.866562 24.108225,32.8986 19.49546,24.021203 15.578961,14.621607 V 61.706623 H 1.8276993 v -8.18113 H 6.9626642 V 8.9644419 H 1.8276993 V 0.26111165 H 17.580727 Q 22.976792,11.836541 28.19879,22.193504 36.205854,38.207631 39.426086,46.127662 V 0.26111165 h 13.838295 z"
+       style="font-family:City;-inkscape-font-specification:City"
+       id="path315" />
+    <path
+       d="M 90.6887,17.493706 V 8.4422421 H 81.898337 V 53.525493 h 5.047931 v 8.18113 H 67.015642 v -8.18113 H 72.23764 V 8.4422421 H 63.447276 V 17.493706 H 54.395813 V 0.26111165 h 45.34435 V 17.493706 Z"
+       style="font-family:City;-inkscape-font-specification:City"
+       id="path317" />
+    <path
+       d="m 142.73461,8.4422421 h -4.87387 l -10.96619,22.1064589 11.48839,22.976792 h 4.78684 v 8.18113 h -11.4884 L 121.49848,39.600164 110.88042,61.706623 H 99.740158 v -8.18113 h 4.873862 L 116.18945,30.548701 105.13622,8.4422421 h -4.78683 V 0.26111165 h 11.66246 l 9.48663,21.06205935 10.1829,-21.06205935 h 11.05323 z"
+       style="font-family:City;-inkscape-font-specification:City"
+       id="path319" />
+  </g>
   <g
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Bars" />
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:41.0143px;line-height:1.25;font-family:sans-serif;fill:#5e975b;fill-opacity:1;stroke:none;stroke-width:1.02536"
-     x="132.87933"
-     y="55.600372"
-     id="text2013"><tspan
-       id="tspan2011"
-       x="132.87933"
-       y="55.600372"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow';fill:#5e975b;fill-opacity:1;stroke-width:1.02536"
-       sodipodi:role="line">Labs</tspan></text>
+  <g
+     aria-label="Labs"
+     id="text2013"
+     style="font-size:41.0143px;line-height:1.25;fill:#5e975b;stroke-width:1.02536">
+    <path
+       d="m 135.21715,31.07382 h 2.50187 v 20.055993 h 14.84718 v 2.460859 h -17.34905 z"
+       style="font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow'"
+       id="path418" />
+    <path
+       d="m 167.82354,51.129813 v -5.331859 h -8.24387 l -1.76362,1.80463 v 1.7226 l 1.7226,1.845644 z m 2.46086,0.04102 h 2.50187 v 2.378829 h -13.7808 q -0.49217,0 -0.8613,-0.369128 l -2.37883,-2.542887 q -0.36913,-0.369129 -0.36913,-0.8613 v -2.66593 q 0,-0.492172 0.36913,-0.8613 l 2.41984,-2.501873 q 0.32812,-0.328114 0.8613,-0.328114 h 8.77706 v -3.199116 l -1.68158,-1.7226 h -8.36692 v -2.419844 h 8.85909 q 0.49217,0 0.8613,0.369129 l 2.41984,2.460858 q 0.36913,0.369128 0.36913,0.820286 z"
+       style="font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow'"
+       id="path420" />
+    <path
+       d="M 175.57527,53.467629 V 28.571948 h 2.46086 v 7.546631 h 6.39823 q 0.49217,0 0.8613,0.369129 l 4.8807,4.96273 q 0.36913,0.369129 0.36913,0.861301 v 5.044759 q 0,0.492171 -0.36913,0.8613 l -5.04476,4.962731 q -0.2871,0.2871 -0.8613,0.2871 z m 2.46086,-2.337816 h 5.742 l 4.34751,-4.265487 V 42.80391 l -4.18345,-4.265487 h -5.90606 z"
+       style="font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow'"
+       id="path422" />
+    <path
+       d="m 208.14065,40.343052 -1.80463,-1.804629 h -6.31621 l -1.18941,1.230429 11.44299,9.064161 q 0.45116,0.369128 0.45116,0.902314 0,0.5742 -0.36913,0.943329 l -2.5839,2.542887 q -0.36913,0.369129 -0.8613,0.369129 l -7.38258,-0.04101 q -0.53318,0 -0.8613,-0.328114 l -2.54288,-2.460858 q -0.36913,-0.369129 -0.36913,-0.902315 v -1.1484 h 2.46085 v 0.615214 l 1.80463,1.763615 6.39824,0.04101 1.23042,-1.230429 -11.40197,-9.023146 q -0.36913,-0.2871 -0.45116,-0.902314 -0.082,-0.533186 0.32812,-0.943329 l 2.46085,-2.583901 q 0.36913,-0.369129 0.90232,-0.369129 h 7.34156 q 0.49217,0 0.8613,0.369129 l 2.54289,2.501872 q 0.36912,0.369129 0.36912,0.8613 v 1.312458 h -2.46085 z"
+       style="font-family:'IBM 3270 Semi-Narrow';-inkscape-font-specification:'IBM 3270 Semi-Narrow'"
+       id="path424" />
+  </g>
 </svg>
