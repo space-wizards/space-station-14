@@ -5,12 +5,13 @@
     <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-                    <TextureButton Name="ImageHeader" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" />
                     <Control Name="TextAlignmentPadding" VerticalAlignment="Top" />
                     <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                         VerticalAlignment="Top" HorizontalAlignment="Center"/>
                     <RichTextLabel StyleClasses="PaperWrittenText" Name="WrittenTextLabel" VerticalAlignment="Top"/>
-                    <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel" VerticalAlignment="Top" HorizontalExpand="True">
+                    <PanelContainer Name="InputContainer" StyleClasses="TransparentBorderedWindowPanel"
+                        VerticalAlignment="Top" HorizontalExpand="True">
                         <LineEdit Name="Input" StyleClasses="PaperLineEdit" Access="Public" />
                     </PanelContainer>
                 </BoxContainer>

@@ -59,12 +59,12 @@ namespace Content.Client.Paper.UI
             // Then the header:
             if (visuals.HeaderImagePath != null)
             {
-                ImageHeader.TexturePath = visuals.HeaderImagePath;
-                ImageHeader.MinSize = ImageHeader.TextureNormal?.Size ?? Vector2.Zero;
+                HeaderImage.TexturePath = visuals.HeaderImagePath;
+                HeaderImage.MinSize = HeaderImage.TextureNormal?.Size ?? Vector2.Zero;
             }
 
-            ImageHeader.ModulateSelfOverride = visuals.HeaderImageModulate;
-            ImageHeader.Margin = new Thickness(visuals.HeaderMargin.Left, visuals.HeaderMargin.Top,
+            HeaderImage.ModulateSelfOverride = visuals.HeaderImageModulate;
+            HeaderImage.Margin = new Thickness(visuals.HeaderMargin.Left, visuals.HeaderMargin.Top,
                     visuals.HeaderMargin.Right, visuals.HeaderMargin.Bottom);
 
 
@@ -118,7 +118,7 @@ namespace Content.Client.Paper.UI
                 // that, even if a header is specified, the text will line up with
                 // where the content image expects the font to be rendered
                 {
-                    var headerHeight = ImageHeader.Size.Y + ImageHeader.Margin.Top + ImageHeader.Margin.Bottom;
+                    var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
                     var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
                     var paddingRequiredInLines = (float)Math.Ceiling(headerInLines) - headerInLines;
                     var verticalMargin = fontLineHeight * paddingRequiredInLines * _paperContentLineScale;
