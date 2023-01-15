@@ -57,8 +57,15 @@ public sealed partial class TTSSystem : EntitySystem
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         if (!_isEnabled ||
-            args.Message.Length > MaxMessageChars ||
-            !_prototypeManager.TryIndex<TTSVoicePrototype>(component.VoicePrototypeId, out var protoVoice))
+            args.Message.Length > MaxMessageChars)
+            return;
+
+        var voiceId = component.VoicePrototypeId;
+        var voiceEv = new TransformSpeakerVoiceEvent(uid, voiceId);
+        RaiseLocalEvent(uid, voiceEv);
+        voiceId = voiceEv.VoiceId;
+        
+        if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
         if (args.ObfuscatedMessage != null)
@@ -116,5 +123,17 @@ public sealed partial class TTSSystem : EntitySystem
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);
 
         return await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
+    }
+}
+
+public sealed class TransformSpeakerVoiceEvent : EntityEventArgs
+{
+    public EntityUid Sender;
+    public string VoiceId;
+
+    public TransformSpeakerVoiceEvent(EntityUid sender, string voiceId)
+    {
+        Sender = sender;
+        VoiceId = voiceId;
     }
 }

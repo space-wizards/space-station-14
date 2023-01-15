@@ -84,7 +84,7 @@
                                         <OptionButton Name="CSpeciesButton" />
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
-                                <!-- Voice - Corvax - Start -->
+                                <!-- Corvax-TTS-Start -->
                                 <prefUi:HighlightedContainer>
                                     <BoxContainer Orientation="Horizontal">
                                         <Label Text="{Loc 'humanoid-profile-editor-voice-label'}" />
@@ -92,7 +92,7 @@
                                         <Button Name="CVoicePlayButton" Text="{Loc 'humanoid-profile-editor-voice-play'}" MaxWidth="80" />
                                     </BoxContainer>
                                 </prefUi:HighlightedContainer>
-                                <!-- Voice - Corvax - End -->
+                                <!-- Corvax-TTS-End -->
                             </BoxContainer>
                             <!-- Skin -->
                             <prefUi:HighlightedContainer>
