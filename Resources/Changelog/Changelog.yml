@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Cargo order sorting will now ignore case., type: Tweak}
-  id: 2376
-  time: '2022-09-29T07:09:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The duration of manual healing items on yourself now scales with how
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Fixed decal removal not working properly., type: Fix}
   id: 2875
   time: '2023-01-15T20:23:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added placement preview for decals, type: Add}
+  id: 2876
+  time: '2023-01-15T20:35:36.0000000+00:00'
