@@ -54,8 +54,8 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(ISpriteComponent),
-                    Property = nameof(ISpriteComponent.Rotation),
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

@@ -85,7 +85,7 @@ namespace Content.Client.Stack
 
             if (_isComposite
                 && _spriteLayers.Count > 0
-                && IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var spriteComponent))
+                && IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(entity, out var spriteComponent))
             {
                 var spritePath = _spritePath ?? spriteComponent.BaseRSI!.Path!;
 
@@ -104,7 +104,7 @@ namespace Content.Client.Stack
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (entities.TryGetComponent(component.Owner, out ISpriteComponent? spriteComponent))
+            if (entities.TryGetComponent(component.Owner, out SpriteComponent? spriteComponent))
             {
                 if (_isComposite)
                 {
@@ -117,7 +117,7 @@ namespace Content.Client.Stack
             }
         }
 
-        private void ProcessOpaqueSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
+        private void ProcessOpaqueSprites(AppearanceComponent component, SpriteComponent spriteComponent)
         {
             // Skip processing if no actual
             if (!component.TryGetData<int>(StackVisuals.Actual, out var actual)) return;
@@ -130,7 +130,7 @@ namespace Content.Client.Stack
             spriteComponent.LayerSetState(IconLayer, _spriteLayers[activeLayer]);
         }
 
-        private void ProcessCompositeSprites(AppearanceComponent component, ISpriteComponent spriteComponent)
+        private void ProcessCompositeSprites(AppearanceComponent component, SpriteComponent spriteComponent)
         {
             // If hidden, don't render any sprites
             if (component.TryGetData<bool>(StackVisuals.Hide, out var hide)

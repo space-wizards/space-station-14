@@ -63,6 +63,15 @@ namespace Content.Server.Arcade.Components
             "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument"
         };
 
+        [DataField("rewardMinAmount")]
+        public int _rewardMinAmount;
+
+        [DataField("rewardMaxAmount")]
+        public int _rewardMaxAmount;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int _rewardAmount = 0;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -71,6 +80,10 @@ namespace Content.Server.Arcade.Components
             {
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
+
+            // Random amount of prizes
+            _rewardAmount = new Random().Next(_rewardMinAmount, _rewardMaxAmount + 1);
+
         }
 
         public void OnPowerStateChanged(PowerChangedEvent e)
@@ -115,8 +128,11 @@ namespace Content.Server.Arcade.Components
         /// </summary>
         public void ProcessWin()
         {
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            entityManager.SpawnEntity(_random.Pick(_possibleRewards), entityManager.GetComponent<TransformComponent>(Owner).MapPosition);
+            if (_rewardAmount > 0)
+            {
+                _entityManager.SpawnEntity(_random.Pick(_possibleRewards), _entityManager.GetComponent<TransformComponent>(Owner).Coordinates);
+                _rewardAmount--;
+            }
         }
 
         /// <summary>
