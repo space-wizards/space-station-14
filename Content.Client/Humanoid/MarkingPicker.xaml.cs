@@ -91,19 +91,8 @@ public sealed partial class MarkingPicker : Control
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-        
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0 &&
-            hairMarkings[0].MarkingColors.Count > 0)
-        {
-            CurrentHairColor = hairMarkings[0].MarkingColors[0];
-        }
-        if (_currentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0 &&
-            facialHairMarkings[0].MarkingColors.Count > 0)
-        {
-            CurrentFacialHairColor = facialHairMarkings[0].MarkingColors[0];
-        }
+        CurrentHairColor = hairColor;
+        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();
@@ -121,19 +110,8 @@ public sealed partial class MarkingPicker : Control
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
         CurrentEyeColor = eyeColor;
-
-        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-            hairMarkings.Count > 0 &&
-            hairMarkings[0].MarkingColors.Count > 0)
-        {
-            CurrentHairColor = hairMarkings[0].MarkingColors[0];
-        }
-        if (_currentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-            facialHairMarkings.Count > 0 &&
-            facialHairMarkings[0].MarkingColors.Count > 0)
-        {
-            CurrentFacialHairColor = facialHairMarkings[0].MarkingColors[0];
-        }
+        CurrentHairColor = hairColor;
+        CurrentFacialHairColor = facialHairColor;
 
         Populate();
         PopulateUsed();

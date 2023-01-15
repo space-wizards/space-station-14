@@ -53,7 +53,7 @@ namespace Content.Client.Preferences.UI
         private readonly IEntityManager _entMan;
         private readonly IConfigurationManager _configurationManager;
         private readonly MarkingManager _markingManager;
-
+        
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
         private LineEdit _flavorTextEdit = null!;
@@ -250,6 +250,7 @@ namespace Content.Client.Preferences.UI
 
             _hairPicker.OnSlotRemove += _ =>
             {
+                Logger.DebugS("prf_edit", "Removed Hair Slot");
                 if (Profile is null)
                     return;
                 Profile = Profile.WithCharacterAppearance(
@@ -272,6 +273,7 @@ namespace Content.Client.Preferences.UI
 
             _hairPicker.OnSlotAdd += delegate()
             {
+                Logger.DebugS("prf_edit", "Added hair slot");
                 if (Profile is null)
                     return;
 
@@ -945,11 +947,33 @@ namespace Content.Client.Preferences.UI
                 return;
             }
 
+            // Looking for colors
+            Color? hairColor = null;
+            Color? facialHairColor = null;
+            foreach (var marking in Profile.Appearance.Markings)
+            {
+                if (!_markingManager.TryGetMarking(marking, out var markingPrototype))
+                {
+                    continue;
+                }
+
+                switch (markingPrototype.MarkingCategory) {
+                    case MarkingCategories.Hair:
+                        if (Marking.CanBeApplied(Profile.Species, marking, _markingManager, _prototypeManager)) 
+                            hairColor = marking.MarkingColors.FirstOrDefault();
+                        break;
+                    case MarkingCategories.FacialHair:
+                        if (Marking.CanBeApplied(Profile.Species, marking, _markingManager, _prototypeManager)) 
+                            facialHairColor = marking.MarkingColors.FirstOrDefault();
+                        break;
+                }
+            }
+
             CMarkings.SetData(Profile.Appearance.Markings, Profile.Species,
                 Profile.Appearance.SkinColor,
                 Profile.Appearance.EyeColor,
-                Profile.Appearance.HairColor,
-                Profile.Appearance.FacialHairColor
+                hairColor,
+                facialHairColor
             );
         }
 
@@ -995,11 +1019,11 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateHairPickers()
         {
+            Logger.DebugS("prf_edit", "Updated hair pickers");
             if (Profile == null)
             {
                 return;
             }
-
             var hairMarking = Profile.Appearance.HairStyleId switch
             {
                 HairStyles.DefaultHairStyle => new List<Marking>(),
@@ -1012,8 +1036,18 @@ namespace Content.Client.Preferences.UI
                 _ => new() { new(Profile.Appearance.FacialHairStyleId, new List<Color>() { Profile.Appearance.FacialHairColor }) },
             };
 
-            CMarkings.CurrentHairColor = Profile.Appearance.HairColor;
-            CMarkings.CurrentFacialHairColor = Profile.Appearance.FacialHairColor;
+            // If species can't have hair then markings shouldn't use it color
+            if(Marking.CanBeApplied(Profile.Species, Profile.Appearance.HairStyleId, _markingManager, _prototypeManager)){
+                var firstHairMarking = hairMarking.FirstOrDefault();
+                if (firstHairMarking != null) CMarkings.CurrentHairColor = firstHairMarking.MarkingColors.FirstOrDefault();
+                else CMarkings.CurrentHairColor = null;
+            } else CMarkings.CurrentHairColor = null;
+            
+            if(Marking.CanBeApplied(Profile.Species, Profile.Appearance.FacialHairStyleId, _markingManager, _prototypeManager)){
+                var firstFacialHairMarking = facialHairMarking.FirstOrDefault();
+                if (firstFacialHairMarking != null) CMarkings.CurrentFacialHairColor = firstFacialHairMarking.MarkingColors.FirstOrDefault();
+                else CMarkings.CurrentHairColor = null;
+            } else CMarkings.CurrentHairColor = null;
 
             _hairPicker.UpdateData(
                 hairMarking,
@@ -1062,13 +1096,13 @@ namespace Content.Client.Preferences.UI
             UpdateClothingControls();
             UpdateBackpackControls();
             UpdateAgeEdit();
-            UpdateHairPickers();
-            UpdateEyePickers();
             UpdateSaveButton();
             UpdateJobPriorities();
             UpdateAntagPreferences();
             UpdateTraitPreferences();
             UpdateMarkings();
+            UpdateHairPickers();
+            UpdateEyePickers();
             RebuildSpriteView();
 
             _preferenceUnavailableButton.SelectId((int) Profile.PreferenceUnavailable);

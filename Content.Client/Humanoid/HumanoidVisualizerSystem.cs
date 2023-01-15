@@ -315,7 +315,6 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             {
                 continue;
             }
-            
             if (setting.MarkingsMatchSkin) // Slimes use this for hair
             {
                 sprite.LayerSetColor(layerId, skinColor);

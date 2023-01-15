@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings
@@ -130,6 +132,57 @@ namespace Content.Shared.Humanoid.Markings
                 colorList.Add(Color.FromHex(color));
 
             return new Marking(split[0], colorList);
+        }
+
+        public static bool CanBeApplied(string species, string marking, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref markingManager);
+            IoCManager.Resolve(ref prototypeManager);
+
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+
+            if (!markingManager.Markings.TryGetValue(marking, out var prototype))
+                {
+                    return false;
+                }
+                if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+                {
+                    return false;
+                }
+
+                if (prototype.SpeciesRestrictions != null
+                    && !prototype.SpeciesRestrictions.Contains(species))
+                {
+                    return false;
+                }
+            return true;
+        }
+
+        public static bool CanBeApplied(string species, Marking marking, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref markingManager);
+            IoCManager.Resolve(ref prototypeManager);
+
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+
+            if (!markingManager.TryGetMarking(marking, out var prototype))
+                {
+                    return false;
+                }
+
+                if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+                {
+                    return false;
+                }
+
+                if (prototype.SpeciesRestrictions != null
+                    && !prototype.SpeciesRestrictions.Contains(species))
+                {
+                    return false;
+                }
+            return true;
         }
     }
 }
