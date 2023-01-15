@@ -8,10 +8,10 @@ namespace Content.Shared.Cargo.Events;
 [Serializable, NetSerializable]
 public sealed class CargoConsoleRemoveOrderMessage : BoundUserInterfaceMessage
 {
-    public int OrderNumber;
+    public int OrderIndex;
 
-    public CargoConsoleRemoveOrderMessage(int orderNumber)
+    public CargoConsoleRemoveOrderMessage(int orderIndex)
     {
-        OrderNumber = orderNumber;
+        OrderIndex = orderIndex;
     }
 }
