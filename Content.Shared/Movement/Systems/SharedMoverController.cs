@@ -3,7 +3,6 @@ using Content.Shared.Friction;
 using Content.Shared.Gravity;
 using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Pulling.Components;
@@ -17,6 +16,7 @@ using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Mech.Components;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Map.Components;
@@ -39,8 +39,9 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private readonly SharedBiomeSystem _biome = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -309,10 +310,10 @@ namespace Content.Shared.Movement.Systems
             if (!weightless || touching)
                 Accelerate(ref velocity, in worldTotal, accel, frameTime);
 
-            PhysicsSystem.SetLinearVelocity(physicsComponent, velocity);
+            PhysicsSystem.SetLinearVelocity(physicsComponent.Owner, velocity, body: physicsComponent);
 
             // Ensures that players do not spiiiiiiin
-            PhysicsSystem.SetAngularVelocity(physicsComponent, 0);
+            PhysicsSystem.SetAngularVelocity(physicsComponent.Owner, 0, body: physicsComponent);
         }
 
         private void Friction(float minimumFrictionSpeed, float frameTime, float friction, ref Vector2 velocity)
@@ -369,7 +370,7 @@ namespace Content.Shared.Movement.Systems
         /// </summary>
         private bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, TransformComponent transform, MobMoverComponent mover, PhysicsComponent collider)
         {
-            var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRangeVV);
+            var enlargedAABB = _lookup.GetWorldAABB(collider.Owner, transform).Enlarged(mover.GrabRangeVV);
 
             foreach (var otherCollider in broadPhaseSystem.GetCollidingEntities(transform.MapID, enlargedAABB))
             {

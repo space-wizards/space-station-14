@@ -1,6 +1,6 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pulling.Components;
-using Content.Shared.MobState.EntitySystems;
 using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Pulling.Systems
@@ -8,7 +8,7 @@ namespace Content.Shared.Pulling.Systems
     public sealed class SharedPullableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         public override void Initialize()

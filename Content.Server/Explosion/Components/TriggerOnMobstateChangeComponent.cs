@@ -1,4 +1,4 @@
-﻿using Content.Shared.MobState;
+﻿using Content.Shared.Mobs;
 
 namespace Content.Server.Explosion.Components;
 
@@ -13,7 +13,7 @@ public sealed class TriggerOnMobstateChangeComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("mobState", required: true)]
-    public DamageState MobState = DamageState.Alive;
+    public MobState MobState = MobState.Alive;
 
     /// <summary>
     /// If true, prevents suicide attempts for the trigger to prevent cheese.

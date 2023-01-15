@@ -11,5 +11,5 @@
   - type: RandomSpawner
     prototypes:
       - BlockGameArcade
-      - SpaceVillainArcade
+      - SpaceVillainArcadeFilled
     chance: 1
