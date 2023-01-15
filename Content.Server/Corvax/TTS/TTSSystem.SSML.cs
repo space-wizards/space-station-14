@@ -3,27 +3,21 @@
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {
-    private string ToSsmlText(string text, SpeechRate rate = SpeechRate.Medium)
+    private string ToSsmlText(string text, SoundTraits traits = SoundTraits.None)
     {
-        return $"<speak><prosody rate=\"{SpeechRateMap[rate]}\">{text}</prosody></speak>";
+        var result = text;
+        if (traits.HasFlag(SoundTraits.RateFast))
+            result = $"<prosody rate=\"fast\">{result}</prosody>";
+        if (traits.HasFlag(SoundTraits.PitchVerylow))
+            result = $"<prosody pitch=\"x-low\">{result}</prosody>";
+        return $"<speak>{result}</speak>";
     }
-
-    private enum SpeechRate : byte
+    
+    [Flags]
+    private enum SoundTraits : ushort
     {
-        VerySlow,
-        Slow,
-        Medium,
-        Fast,
-        VeryFast,
+        None = 0,
+        RateFast = 1 << 0,
+        PitchVerylow = 1 << 1,
     }
-
-    private static readonly IReadOnlyDictionary<SpeechRate, string> SpeechRateMap =
-        new Dictionary<SpeechRate, string>()
-        {
-            {SpeechRate.VerySlow, "x-slow"},
-            {SpeechRate.Slow, "slow"},
-            {SpeechRate.Medium, "medium"},
-            {SpeechRate.Fast, "fast"},
-            {SpeechRate.VeryFast, "x-fast"},
-        };
 }

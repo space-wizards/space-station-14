@@ -101,7 +101,11 @@ public sealed class TTSSystem : EntitySystem
 
     private void OnPlayTTS(PlayTTSEvent ev)
     {
-        if (!TryCreateAudioSource(ev.Data, out var source))
+        var volume = _volume;
+        if (ev.IsWhisper)
+            volume -= 4;
+
+        if (!TryCreateAudioSource(ev.Data, volume, out var source))
             return;
 
         var stream = new AudioStream(ev.Uid, source);
@@ -114,12 +118,12 @@ public sealed class TTSSystem : EntitySystem
             stream.Source.StopPlaying();
     }
     
-    private bool TryCreateAudioSource(byte[] data, [NotNullWhen(true)] out IClydeAudioSource? source)
+    private bool TryCreateAudioSource(byte[] data, float volume, [NotNullWhen(true)] out IClydeAudioSource? source)
     {
         var dataStream = new MemoryStream(data) { Position = 0 };
         var audioStream = _clyde.LoadAudioOggVorbis(dataStream);
         source = _clyde.CreateAudioSource(audioStream);
-        source?.SetVolume(_volume);
+        source?.SetVolume(volume);
         return source != null;
     }
 
