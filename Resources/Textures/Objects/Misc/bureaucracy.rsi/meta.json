@@ -208,6 +208,12 @@
       "name": "paper_receipt_words"
     },
     {
+      "name": "paper_dotmatrix"
+    },
+    {
+      "name": "paper_dotmatrix_words"
+    },
+    {
       "name": "pen"
     },
     {
@@ -216,7 +222,7 @@
     {
       "name": "pen_hop"
     },
-	{
+    {
       "name": "overpriced_pen"
     },
     {

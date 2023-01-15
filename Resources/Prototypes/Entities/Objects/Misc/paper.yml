@@ -33,190 +33,12 @@
   - type: Recyclable
 
 - type: entity
-  name: testpaper background
+  name: office paper
   parent: Paper
-  id: TestPaperBackground
-  description: 'A new kind of paper. This one has a background.'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-
-- type: entity
-  name: testpaper background colored
-  parent: Paper
-  id: TestPaperColoredBackground
-  description: 'A new kind of paper. This one is yellow.'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    backgroundModulate: "#f7e574"
-
-- type: entity
-  name: testpaper just lines
-  parent: Paper
-  id: TestPaperJustLines
-  description: 'A new kind of paper. This one has no boder, lines all the way to the edge!'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-
-- type: entity
-  name: testpaper just lines colored
-  parent: Paper
-  id: TestPaperJustLinesYellow
-  description: 'A new kind of paper. This one has no boder, lines all the way to the edge and yellow!'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    contentImageModulate: "#f7e574"
-
-- type: entity
-  name: testpaper bordered lines
-  parent: Paper
-  id: TestPaperBorderedLines
-  description: 'A new kind of paper. This one has a boder and lines!'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    contentMargin:
-      32.0,
-      32.0,
-      32.0,
-      32.0
-
-- type: entity
-  name: testpaper bordered lines coloured
-  parent: Paper
-  id: TestPaperBorderedLinesColored
-  description: 'A new kind of paper. This one has a boder and lines and a yellow shade!'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    contentImageModulate: "#f7e574"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundModulate: "#f7e574"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-
-- type: entity
-  name: styledtest captain's thoughts
-  parent: Paper
-  id: CoolPaperCaptainsThoughts
-  description: 'A page of the captains journal. In luxurious lavender.'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    backgroundModulate: "#e6e6fa"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    contentMargin:
-      32.0,
-      16.0,
-      32.0,
-      0.0
-
-- type: entity
-  name: styledtest office
-  parent: Paper
-  id: CoolPaperBoringOffice
+  id: PaperOffice
   description: 'A plain sheet of office paper.'
   components:
   - type: Paper
-    layers:
-    - state: paper_words
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
   - type: UserInterface
@@ -227,101 +49,27 @@
     fontAccentColor: "#25252a"
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
     contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    contentMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
 
 - type: entity
-  name: styledtest cargo
+  name: artifact analyzer printout
   parent: Paper
-  id: CoolPaperCargoInvoice
-  description: 'A single unit of bureaucracy.'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
-    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
-    backgroundModulate: "#f7e574"
-    contentImageModulate: "#f7e574"
-    backgroundPatchMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    contentMargin:
-      16.0,
-      16.0,
-      16.0,
-      16.0
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
-    headerMargin:
-      0.0,
-      12.0,
-      0.0,
-      0.0
-
-- type: entity
-  name: styledtest diagnosis
-  parent: Paper
-  id: CoolPaperDiagnosisReport
-  description: 'A chilling medical receipt.'
+  id: PaperArtifactAnalyzer
+  description: 'The readout of a device forgotten to time'
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     netsync: false
     layers:
-    - state: paper_receipt
-    - state: paper_receipt_words
+    - state: paper_dotmatrix
+    - state: paper_dotmatrix_words
       map: ["enum.PaperVisualLayers.Writing"]
       visible: false
     - state: paper_stamp-generic
       map: ["enum.PaperVisualLayers.Stamp"]
       visible: false
   - type: Paper
-    layers:
-    - state: paper_words
-  - type: ActivatableUI
-    key: enum.PaperUiKey.Key
-  - type: UserInterface
-    interfaces:
-    - key: enum.PaperUiKey.Key
-      type: PaperBoundUserInterface
-  - type: PaperVisuals
-    fontAccentColor: "#25252a"
-    backgroundImagePath: "/Textures/Interface/Paper/paper_background_perforated.svg.96dpi.png"
-    headerImagePath: "/Textures/Interface/Paper/paper_heading_virus.svg.96dpi.png"
-    headerMargin: 0.0, 0.0, 0.0, 6.0
-    backgroundImageTile: true
-    backgroundPatchMargin: 0.0, 6.0, 0.0, 6.0
-    contentMargin: 12.0, 0.0, 12.0, 0.0
-    # This is a narrow piece of paper
-    maxWritableArea: 128.0, 300.0
-
-- type: entity
-  name: styledtest artifact
-  parent: Paper
-  id: CoolPaperArtifactAnalyzer
-  description: 'The readout of a device forgotten to time'
-  components:
-  - type: Paper
-    layers:
-    - state: paper_words
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
   - type: UserInterface
@@ -331,29 +79,79 @@
   - type: PaperVisuals
     fontAccentColor: "#25252a"
     headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
-    headerMargin:
-      0.0,
-      0.0,
-      0.0,
-      16.0
+    headerMargin: 0.0, 0.0, 0.0, 16.0
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
-    backgroundImageTile: true #todo.eoin Want to expose the enum here
-    backgroundPatchMargin:
-      37.0,
-      0.0,
-      37.0,
-      0.0
+    backgroundImageTile: true
+    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
     contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
     contentImageNumLines: 2
-    contentMargin:
-      16.0,
-      16.0,
-      16.0,
-      0.0
-    maxWritableArea:
-      # Make this a wide dot-matrix printer
-      400.0,
-      260.0
+    contentMargin: 16.0, 16.0, 16.0, 0.0
+    # Make this a wide dot-matrix printer
+    maxWritableArea: 400.0, 300.0
+
+- type: entity
+  name: captain's thoughts
+  parent: Paper
+  id: PaperCaptainsThoughts
+  description: "A page of the captain's journal. In luxurious lavender."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper
+      color: "#e6e6fa"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#e6e6fa"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#e6e6fa"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: cargo invoice
+  parent: Paper
+  id: PaperCargoInvoice
+  description: 'A single unit of bureaucracy.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: Paper
+  - type: ActivatableUI
+    key: enum.PaperUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.PaperUiKey.Key
+      type: PaperBoundUserInterface
+  - type: PaperVisuals
+    fontAccentColor: "#25252a"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
 
 - type: entity
   name: styledtest napkin
@@ -362,8 +160,6 @@
   description: 'For keeping tables dry, mostly.'
   components:
   - type: Paper
-    layers:
-    - state: paper_words
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
   - type: UserInterface
@@ -394,8 +190,6 @@
   description: 'An exchange has taken place.'
   components:
   - type: Paper
-    layers:
-    - state: paper_words
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
   - type: UserInterface
@@ -415,8 +209,6 @@
   description: 'Dream-journals of Christopher Illopoly (Annotated)'
   components:
   - type: Paper
-    layers:
-    - state: paper_words
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
   - type: UserInterface

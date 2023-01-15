@@ -370,7 +370,7 @@
       state: tech_key
   - type: ResearchClient
   - type: AnalysisConsole
-    reportEntityId: CoolPaperArtifactAnalyzer
+    reportEntityId: PaperArtifactAnalyzer
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
