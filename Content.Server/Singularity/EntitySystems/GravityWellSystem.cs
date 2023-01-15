@@ -1,12 +1,12 @@
-using Robust.Shared.Physics;
+using Content.Server.Ghost.Components;
+using Content.Server.Singularity.Components;
+using Content.Shared.Singularity.EntitySystems;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
-using Content.Shared.Singularity.EntitySystems;
-
-using Content.Server.Singularity.Components;
 
 namespace Content.Server.Singularity.EntitySystems;
 
@@ -17,12 +17,12 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed partial class GravityWellSystem : VirtualController
 {
-#region Dependencies
+    #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IViewVariablesManager _vvManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-#endregion Dependencies
+    #endregion Dependencies
 
     /// <summary>
     /// The minimum range at which gravscans will act.
@@ -55,11 +55,11 @@ public sealed partial class GravityWellSystem : VirtualController
         if(!_timing.IsFirstTimePredicted)
             return;
 
+        var curTime = _timing.CurTime;
         foreach(var (gravWell, xform) in EntityManager.EntityQuery<GravityWellComponent, TransformComponent>())
         {
-            var curTime = _timing.CurTime;
             if (gravWell.NextScanTime <= curTime)
-                Update(gravWell.Owner, curTime - gravWell.LastScanTime, gravWell, xform);
+                Update(gravWell.Owner, curTime, gravWell, xform);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed partial class GravityWellSystem : VirtualController
     private void Update(EntityUid uid, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref gravWell))
-            Update(uid, _timing.CurTime - gravWell.LastScanTime, gravWell, xform);
+            Update(uid, _timing.CurTime, gravWell, xform);
     }
 
     /// <summary>
@@ -82,12 +82,12 @@ public sealed partial class GravityWellSystem : VirtualController
     /// <param name="gravWell">The state of the gravity well to make scan.</param>
     /// <param name="frameTime">The amount to consider as having passed since the last gravitational scan by the gravity well. Scan force scales with this.</param>
     /// <param name="xform">The transform of the gravity well to make scan.</param>
-    private void Update(EntityUid uid, TimeSpan frameTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
+    private void Update(EntityUid uid, TimeSpan curTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell))
             return;
 
-        gravWell.LastScanTime = _timing.CurTime;
+        gravWell.LastScanTime = curTime;
         gravWell.NextScanTime = gravWell.LastScanTime + gravWell.TargetScanPeriod;
         gravWell.Captured.Clear();
 
@@ -96,15 +96,24 @@ public sealed partial class GravityWellSystem : VirtualController
 
         foreach(var entity in _lookup.GetEntitiesInRange(xform.MapPosition, gravWell.MaxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
-            if(!TryComp<PhysicsComponent?>(entity, out var physics)
-            || physics.BodyType == BodyType.Static)
-                continue;
-
-            if(!CanGravPulseAffect(entity))
-                continue;
-            
-            gravWell.Captured.Add(entity);
+            if (CanGravPulseAffect(entity))
+                gravWell.Captured.Add(entity);
         }
+    }
+
+    /// <summary>
+    /// Checks whether an entity can be affected by gravity pulses.
+    /// TODO: Make this an event or such.
+    /// </summary>
+    /// <param name="entity">The entity to check.</param>
+    private bool CanGravPulseAffect(EntityUid entity)
+    {
+        return !(
+            EntityManager.HasComponent<GhostComponent>(entity) ||
+            EntityManager.HasComponent<MapGridComponent>(entity) ||
+            EntityManager.HasComponent<MapComponent>(entity) ||
+            EntityManager.HasComponent<GravityWellComponent>(entity)
+        );
     }
 
     #region Physics Controller
@@ -167,11 +176,10 @@ public sealed partial class GravityWellSystem : VirtualController
             || !xformQuery.TryGetComponent(entity, out var entityXform))
                 continue;
                     
-            var position = entityXform.MapPosition;
-            if (epicenter.MapId != position.MapId)
+            if (epicenter.MapId != entityXform.MapID)
                 continue;
             
-            var displacement = position.Position - epicenter.Position;
+            var displacement = entityXform.WorldPosition - epicenter.Position;
             var distance2 = displacement.LengthSquared;
             if (distance2 < minRange2 || distance2 > maxRange2)
                 continue;
