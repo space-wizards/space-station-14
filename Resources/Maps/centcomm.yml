@@ -200,7 +200,6 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - chunkCollection:
       0,-1:
@@ -5114,7 +5113,7 @@ entities:
       3,-13: 0
       3,-12: 0
       3,-11: 0
-      3,-10: 0
+      3,-10: 2
       3,-9: 0
       3,-8: 0
       3,-7: 0
@@ -5605,7 +5604,7 @@ entities:
       1,14: 0
       1,15: 0
       2,0: 0
-      2,1: 0
+      2,1: 2
       2,2: 0
       2,3: 0
       2,4: 0
@@ -8943,8 +8942,23 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.405577
-      - 69.24003
+      - 17.89022
+      - 67.30131
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
       - 0
       - 0
       - 0
@@ -8958,8 +8972,13 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 539.6480757
+    type: GridPathfinding
   - type: RadiationGridResistance
+  - nextShake: 0
+    shakeTimes: 10
+    type: GravityShake
+  - type: GasTileOverlay
 - uid: 1
   type: WallRiveted
   components:
@@ -13005,28 +13024,11 @@ entities:
     parent: 0
     type: Transform
 - uid: 641
-  type: SignalButton
+  type: TableReinforced
   components:
-  - name: West Doors
-    type: MetaData
   - pos: -1.5,0.5
     parent: 0
     type: Transform
-  - canCollide: False
-    type: Physics
-  - outputs:
-      Pressed:
-      - port: Toggle
-        uid: 1441
-      - port: Toggle
-        uid: 1440
-      - port: Toggle
-        uid: 1439
-      - port: Toggle
-        uid: 1438
-      - port: Toggle
-        uid: 1437
-    type: SignalTransmitter
 - uid: 642
   type: TableReinforced
   components:
@@ -13070,11 +13072,24 @@ entities:
     parent: 0
     type: Transform
 - uid: 649
-  type: filingCabinet
+  type: WardrobeGreen
   components:
   - pos: 2.5,1.5
     parent: 0
     type: Transform
+  - containers:
+      entity_storage: !type:Container
+        ents:
+        - 819
+        - 1193
+        - 1424
+        - 6594
+        - 6595
+        - 6596
+        - 6597
+        - 6598
+        - 6599
+    type: ContainerContainer
 - uid: 650
   type: filingCabinet
   components:
@@ -14285,11 +14300,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 819
-  type: filingCabinet
+  type: ClothingUniformJumpsuitCentcomOfficer
   components:
-  - pos: 3.5,-9.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 820
   type: TableReinforced
   components:
@@ -16536,11 +16555,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 1193
-  type: TableReinforced
+  type: ClothingUniformJumpsuitCentcomOfficial
   components:
-  - pos: 9.5,-12.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 1194
   type: TableReinforced
   components:
@@ -17963,11 +17986,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 1424
-  type: TableReinforced
+  type: ClothingOuterWinterCentcom
   components:
-  - pos: -1.5,0.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 1425
   type: CarpetBlue
   components:
@@ -18115,7 +18142,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 641
+        uid: 6602
     type: SignalReceiver
 - uid: 1438
   type: BlastDoorOpen
@@ -18128,7 +18155,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 641
+        uid: 6602
     type: SignalReceiver
 - uid: 1439
   type: BlastDoorOpen
@@ -18141,7 +18168,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 641
+        uid: 6602
     type: SignalReceiver
 - uid: 1440
   type: BlastDoorOpen
@@ -18154,7 +18181,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 641
+        uid: 6602
     type: SignalReceiver
 - uid: 1441
   type: BlastDoorOpen
@@ -18167,7 +18194,7 @@ entities:
       Close: []
       Toggle:
       - port: Pressed
-        uid: 641
+        uid: 6602
     type: SignalReceiver
 - uid: 1442
   type: Lamp
@@ -18262,7 +18289,7 @@ entities:
 - uid: 1457
   type: BoxPDA
   components:
-  - pos: -3.4708734,-2.4308956
+  - pos: 1.5702643,-2.4016738
     parent: 0
     type: Transform
 - uid: 1458
@@ -25111,7 +25138,7 @@ entities:
 - uid: 2495
   type: MaterialBiomass
   components:
-  - pos: 9.518792,-12.487031
+  - pos: 13.210049,-12.580112
     parent: 0
     type: Transform
 - uid: 2496
@@ -32939,7 +32966,7 @@ entities:
 - uid: 3749
   type: RubberStampCentcom
   components:
-  - pos: -20.485167,10.610098
+  - pos: -20.5068,11.16328
     parent: 0
     type: Transform
 - uid: 3750
@@ -51147,63 +51174,104 @@ entities:
     parent: 0
     type: Transform
 - uid: 6594
-  type: FloraTreeChristmas02
+  type: ClothingEyesGlassesSunglasses
   components:
-  - pos: 31.525515,0.32202002
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6595
-  type: Carpet
+  type: ClothingHeadsetCentCom
   components:
-  - pos: 32.5,-1.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6596
-  type: Carpet
+  type: ClothingShoesBootsJack
   components:
-  - pos: 32.5,-0.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6597
-  type: Carpet
+  type: ClothingHeadHatCentcom
   components:
-  - pos: 32.5,0.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6598
-  type: Carpet
+  type: ClothingShoesBootsJack
   components:
-  - pos: 30.5,0.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6599
-  type: Carpet
+  type: ClothingEyesGlassesSunglasses
   components:
-  - pos: 30.5,-0.5
-    parent: 0
+  - flags: InContainer
+    type: MetaData
+  - parent: 649
     type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
 - uid: 6600
-  type: Carpet
+  type: LockerMedicineFilled
   components:
-  - pos: 30.5,-1.5
+  - pos: 3.5,-9.5
     parent: 0
     type: Transform
 - uid: 6601
-  type: Carpet
+  type: VendingMachineMedical
   components:
-  - pos: 31.5,-1.5
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: 9.5,-12.5
     parent: 0
     type: Transform
 - uid: 6602
-  type: Carpet
+  type: SignalButton
   components:
-  - pos: 31.5,0.5
+  - pos: -1.5,0.5
     parent: 0
     type: Transform
+  - canCollide: False
+    type: Physics
+  - outputs:
+      Pressed:
+      - port: Toggle
+        uid: 1437
+      - port: Toggle
+        uid: 1438
+      - port: Toggle
+        uid: 1439
+      - port: Toggle
+        uid: 1440
+      - port: Toggle
+        uid: 1441
+    type: SignalTransmitter
 - uid: 6603
-  type: Carpet
+  type: PenCap
   components:
-  - pos: 31.5,-0.5
+  - pos: -20.479628,12.125576
     parent: 0
     type: Transform
 - uid: 6604
@@ -51213,21 +51281,95 @@ entities:
     parent: 0
     type: Transform
 - uid: 6605
-  type: Present
+  type: ClothingHeadHatHairflower
   components:
-  - pos: 32.18936,-1.2108301
+  - pos: -11.182456,6.7149878
     parent: 0
     type: Transform
 - uid: 6606
-  type: Present
+  type: ComputerCriminalRecords
   components:
-  - pos: 30.43936,-0.2889551
+  - rot: 1.5707963267948966 rad
+    pos: -5.5,-16.5
     parent: 0
     type: Transform
 - uid: 6607
-  type: Present
+  type: Poweredlight
   components:
-  - pos: 32.59561,0.054794908
+  - pos: -1.5,-21.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 6608
+  type: CentcomIDCardSyndie
+  components:
+  - pos: -16.408298,8.44868
+    parent: 0
+    type: Transform
+- uid: 6609
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 12.5,18.5
+    parent: 0
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 6610
+  type: ClothingNeckCloakNanotrasen
+  components:
+  - pos: -12.45408,6.654963
+    parent: 0
+    type: Transform
+- uid: 6611
+  type: ClothingUniformJumpsuitNanotrasen
+  components:
+  - pos: -4.4625416,-15.489693
+    parent: 0
+    type: Transform
+- uid: 6612
+  type: BoxFolderYellow
+  components:
+  - pos: -3.4051156,-2.37123
+    parent: 0
+    type: Transform
+- uid: 6613
+  type: ClothingNeckCloakNanotrasen
+  components:
+  - pos: -5.5094166,-15.411568
+    parent: 0
+    type: Transform
+- uid: 6614
+  type: GeneratorUranium
+  components:
+  - pos: 29.5,-23.5
+    parent: 0
+    type: Transform
+- uid: 6615
+  type: VendingMachineWallMedical
+  components:
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: 6.5,-10.5
+    parent: 0
+    type: Transform
+- uid: 6616
+  type: CableHV
+  components:
+  - pos: 29.5,-23.5
+    parent: 0
+    type: Transform
+- uid: 6617
+  type: CentcomPDA
+  components:
+  - pos: -20.428675,10.647655
+    parent: 0
+    type: Transform
+- uid: 6618
+  type: BoxFolderYellow
+  components:
+  - pos: -3.2957406,-2.449355
     parent: 0
     type: Transform
 ...
