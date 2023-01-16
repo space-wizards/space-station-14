@@ -301,14 +301,14 @@ public sealed class DoorSystem : SharedDoorSystem
             foreach (var fixture in fixtures.Fixtures.Values)
             {
                 if (fixture.CollisionLayer == (int) component.UnweldedLayer)
-                    _physics.SetCollisionLayer(fixtures, fixture, (int) component.WeldedLayer);
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
             }
         } else
         {
             foreach (var fixture in fixtures.Fixtures.Values)
             {
                 if (fixture.CollisionLayer == (int) component.WeldedLayer)
-                    _physics.SetCollisionLayer(fixtures, fixture, (int) component.UnweldedLayer);
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnweldedLayer);
             }
         }
     }
