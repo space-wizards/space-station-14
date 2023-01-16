@@ -1,11 +1,18 @@
-<DefaultWindow xmlns="https://spacestation14.io"
+<paper:PaperWindow xmlns="https://spacestation14.io"
+    xmlns:paper="clr-namespace:Content.Client.Paper.UI"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    MouseFilter="Stop" Resizable="True">
 
-    <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer StyleClasses="AngleRect" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="6">
+            <TextureButton Name="CloseButton" StyleClasses="windowCloseButton"/>
+        </PanelContainer>
+
+        <PanelContainer Name="PaperBackground" StyleClasses="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
             <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MinSize="250 360" MaxWidth="600">
                 <BoxContainer Orientation="Vertical" VerticalAlignment="Top">
-                    <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                     <Control Name="TextAlignmentPadding" VerticalAlignment="Top" />
                     <RichTextLabel Name="BlankPaperIndicator" StyleClasses="LabelSecondaryColor"
                         VerticalAlignment="Top" HorizontalAlignment="Center"/>
@@ -17,5 +24,6 @@
                 </BoxContainer>
                 <BoxContainer Name="StampDisplay" Orientation="Vertical" VerticalAlignment="Bottom" Margin="6"/>
             </PanelContainer>
-    </PanelContainer>
-</DefaultWindow>
+        </PanelContainer>
+    </BoxContainer>
+</paper:PaperWindow>

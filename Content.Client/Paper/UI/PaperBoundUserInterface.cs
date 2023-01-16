@@ -23,7 +23,6 @@ namespace Content.Client.Paper.UI
 
             _window = new PaperWindow
             {
-                Title = entityMgr.GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.Input.OnTextEntered += Input_OnTextEntered;
