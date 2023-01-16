@@ -23,7 +23,7 @@ public sealed class GravityAnomalySystem : SharedGravityAnomalySystem
         if (!TryComp<GravityWellComponent>(uid, out var gravityWell))
             return;
 
-        var accel = (component.MaxGravityWellRange - component.MinAccel) * args.Severity + component.MinAccel;
+        var accel = (component.MaxAccel - component.MinAccel) * args.Severity + component.MinAccel;
         gravityWell.BaseRadialAcceleration = accel;
         gravityWell.BaseTangentialAcceleration = accel * 0.2f;
     }

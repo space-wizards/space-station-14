@@ -1,13 +1,17 @@
-﻿using Content.Shared.Anomaly.Components;
+﻿using System.Linq;
+using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Throwing;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Anomaly.Effects;
 
 public abstract class SharedGravityAnomalySystem : EntitySystem
 {
+    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,6 +37,26 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
 
     private void OnSupercritical(EntityUid uid, GravityAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
+        var xform = Transform(uid);
+        if (!_map.TryGetGrid(xform.GridUid, out var grid))
+            return;
 
+        var worldPos = _xform.GetWorldPosition(xform);
+        var tileref = grid.GetTilesIntersecting(new Circle(worldPos, component.SpaceRange)).ToArray();
+        var tiles = tileref.Select(t => (t.GridIndices, Tile.Empty)).ToList();
+        grid.SetTiles(tiles);
+
+        var range = component.MaxThrowRange * 2;
+        var strength = component.MaxThrowStrength * 2;
+        var lookup = _lookup.GetEntitiesInRange(uid, range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        foreach (var ent in lookup)
+        {
+            var tempXform = Transform(ent);
+
+            var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
+            Logger.Debug($"{ToPrettyString(ent)}: {foo}: {foo.Normalized}: {foo.Normalized * 10}");
+            _throwing.TryThrow(ent, foo * 5, strength, uid, 0);
+        }
     }
 }
+
