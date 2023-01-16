@@ -44,7 +44,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             BluespaceEffect(uid, component, component, true);
     }
 
-    private void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
+    public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
     {
         if (!bypassLimit && Resolve(effectTargetUid, ref effectTargetComponent, false))
             if (effectTargetComponent!.BehaviorProperties.BluespaceEffectMinInterval > 0)
@@ -195,7 +195,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return true;
     }
 
-    private (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component)
+    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component)
     {
         while (true)
         {
