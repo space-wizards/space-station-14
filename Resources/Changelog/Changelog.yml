@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix combat mode and cuff interactions., type: Fix}
-  id: 2378
-  time: '2022-09-29T13:38:25.0000000+00:00'
 - author: corentt
   changes:
   - {message: Wallmount Nanomed are now fully functional !, type: Fix}
@@ -2938,3 +2933,9 @@ Entries:
       of the mouse cursor., type: Fix}
   id: 2877
   time: '2023-01-16T02:29:45.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Contents of pill canisters can now be dumped onto the ground and tables.,
+    type: Tweak}
+  id: 2878
+  time: '2023-01-16T02:37:56.0000000+00:00'
