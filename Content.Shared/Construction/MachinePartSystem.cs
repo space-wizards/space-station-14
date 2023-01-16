@@ -1,7 +1,7 @@
-using Content.Server.Construction.Components;
+using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 
-namespace Content.Server.Construction
+namespace Content.Shared.Construction
 {
     /// <summary>
     /// Deals with machine parts and machine boards.
