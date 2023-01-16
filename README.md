@@ -22,9 +22,13 @@ We are not currently accepting translations of the game on our main repository. 
 
 ## Building
 
-1. Clone this repo.
-2. Run `RUN_THIS.py` to init submodules and download the engine.
-3. Compile the solution.
+1. Open CMD (or other console application) in folder where install build.
+2. Clone this repository using `git clone (repo-url)`.
+3. Go to repo folder using `cd (repo-name)`.
+4. Run `RUN_THIS.py` to init submodules and download the engine.
+5. If you have any issues when getting started with missing files run `git submodule update --init --recursive`
+6. Compile the solution using `dotnet build`.
+7. Test run server using `dotnet run --project Content.Server`.
 
 [More detailed instructions on building the project.](https://docs.spacestation14.io/getting-started/dev-setup)
 
