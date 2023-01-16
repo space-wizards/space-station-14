@@ -441,7 +441,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// Recursively consumes all entities within a container that is consumed by the singularity.
     /// If an entity within a consumed container cannot be consumed itself it is removed from the container.
     /// </summary>
-    private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, EventHorizonConsumedEntityEvent args)
+    private void OnContainerConsumed(EntityUid uid, ContainerManagerComponent comp, ref EventHorizonConsumedEntityEvent args)
     {
         var drop_container = args.Container;
         if (drop_container is null)
