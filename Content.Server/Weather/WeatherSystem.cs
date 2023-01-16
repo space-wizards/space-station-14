@@ -85,7 +85,7 @@ public sealed class WeatherCommand : IConsoleCommand
             return CompletionResult.FromHintOptions(options, "Map Id");
         }
 
-        options.AddRange(_protoManager.EnumeratePrototypes<WeatherPrototype>().Select(o => new CompletionOption(o.ID)));
-        return CompletionResult.FromHintOptions(options, "Weather prototype");
+        var a = CompletionHelper.PrototypeIDs<WeatherPrototype>(true, _protoManager);
+        return CompletionResult.FromHintOptions(a, "Weather prototype");
     }
 }
