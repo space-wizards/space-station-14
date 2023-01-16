@@ -2,7 +2,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface.Controls;
+namespace Content.Client.UserInterface.Controls.FancyTree;
 
 /// <summary>
 ///     This is a basic control that draws the lines connecting parents & children in a tree.

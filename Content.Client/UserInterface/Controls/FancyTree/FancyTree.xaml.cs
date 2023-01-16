@@ -8,10 +8,10 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-namespace Content.Client.UserInterface.Controls;
+namespace Content.Client.UserInterface.Controls.FancyTree;
 
 /// <summary>
-///     Functionally similar to <see cref="Tree"/>, but with collapsible sections, 
+///     Functionally similar to <see cref="Tree"/>, but with collapsible sections,
 /// </summary>
 [GenerateTypedNameReferences]
 public sealed partial class FancyTree : Control
