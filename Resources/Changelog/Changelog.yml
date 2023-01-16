@@ -1,9 +1,4 @@
 Entries:
-- author: civilCornball
-  changes:
-  - {message: Fixes the recycler not recycling some trash., type: Fix}
-  id: 2380
-  time: '2022-09-29T20:44:56.0000000+00:00'
 - author: moony
   changes:
   - {message: A permanent blindness trait has been added so you no longer need to
@@ -2940,3 +2935,9 @@ Entries:
   - {message: Added butcher method to get ghost sheet, type: Add}
   id: 2879
   time: '2023-01-16T07:29:45.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: 'added medical lathe recipes for all the medkits, they cost 300 plastic,
+      are locked behind biological tech, and are empty', type: Add}
+  id: 2880
+  time: '2023-01-16T07:44:14.0000000+00:00'
