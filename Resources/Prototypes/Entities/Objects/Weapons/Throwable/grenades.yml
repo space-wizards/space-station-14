@@ -192,3 +192,5 @@
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
         enum.Trigger.TriggerVisualState.Unprimed: complete
+  - type: StaticPrice
+    price: 25

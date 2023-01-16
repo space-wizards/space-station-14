@@ -73,7 +73,7 @@ namespace Content.Server.Physics.Controllers
                 return;
 
             if (TryComp<PhysicsComponent>(pullable.Owner, out var physics))
-                physics.WakeBody();
+                PhysicsSystem.WakeBody(pullable.Owner, body: physics);
 
             _pullableSystem.StopMoveTo(pullable);
         }
@@ -164,9 +164,9 @@ namespace Content.Server.Physics.Controllers
                 var diff = movingPosition - ownerPosition;
                 var diffLength = diff.Length;
 
-                if ((diffLength < MaximumSettleDistance) && (physics.LinearVelocity.Length < MaximumSettleVelocity))
+                if (diffLength < MaximumSettleDistance && (physics.LinearVelocity.Length < MaximumSettleVelocity))
                 {
-                    physics.LinearVelocity = Vector2.Zero;
+                    PhysicsSystem.SetLinearVelocity(pullable.Owner, Vector2.Zero, body: physics);
                     _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
@@ -183,9 +183,11 @@ namespace Content.Server.Physics.Controllers
                     var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
-                physics.WakeBody();
+
+                PhysicsSystem.WakeBody(pullable.Owner, body: physics);
+
                 var impulse = accel * physics.Mass * frameTime;
-                physics.ApplyLinearImpulse(impulse);
+                PhysicsSystem.ApplyLinearImpulse(pullable.Owner, impulse, body: physics);
             }
         }
     }

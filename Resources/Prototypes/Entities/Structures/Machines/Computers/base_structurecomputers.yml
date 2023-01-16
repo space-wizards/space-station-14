@@ -1,5 +1,4 @@
 - type: entity
-  abstract: true
   parent: ComputerFrame
   id: BaseComputer
   name: computer
@@ -23,21 +22,24 @@
     sprite: Structures/Machines/computers.rsi
     netsync: false
     layers:
-    - state: computer
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: generic_key_off
-      map: ["enum.ComputerVisualizer+Layers.Keyboard"]
-    - state: generic
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
-    - state: generic_key
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.KeyboardOn"]
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: generic
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: generic
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }
   - type: LitOnPowered
   - type: PointLight
     radius: 1.5
