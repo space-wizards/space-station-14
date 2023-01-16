@@ -25,13 +25,22 @@ public sealed class GravityAnomalyComponent : Component
     public float MaxThrowStrength = 10;
 
     /// <summary>
+    /// The maximum Intensity of the RadiationSourceComponent.
+    /// Is scaled linearly with stability.
+    /// </summary>
+    [DataField("maxRadiationIntensity"), ViewVariables(VVAccess.ReadWrite)]
+    public float MaxRadiationIntensity = 3f;
+
+    /// <summary>
     /// The minimum acceleration value for GravityWellComponent
+    /// Is scaled linearly with stability.
     /// </summary>
     [DataField("minAccel"), ViewVariables(VVAccess.ReadWrite)]
     public float MinAccel = 1f;
 
     /// <summary>
     /// The maximum acceleration value for GravityWellComponent
+    /// Is scaled linearly with stability.
     /// </summary>
     [DataField("maxAccel"), ViewVariables(VVAccess.ReadWrite)]
     public float MaxAccel = 5f;

@@ -2,6 +2,7 @@
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
+using Content.Shared.Radiation.Components;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -20,9 +21,11 @@ public sealed class GravityAnomalySystem : SharedGravityAnomalySystem
 
     private void OnSeverityChanged(EntityUid uid, GravityAnomalyComponent component, ref AnomalySeverityChangedEvent args)
     {
+        if (TryComp<RadiationSourceComponent>(uid, out var radSource))
+            radSource.Intensity = component.MaxRadiationIntensity * args.Severity;
+
         if (!TryComp<GravityWellComponent>(uid, out var gravityWell))
             return;
-
         var accel = (component.MaxAccel - component.MinAccel) * args.Severity + component.MinAccel;
         gravityWell.BaseRadialAcceleration = accel;
         gravityWell.BaseTangentialAcceleration = accel * 0.2f;
