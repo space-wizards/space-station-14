@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -14,6 +15,12 @@ public abstract class AlertsSystem : EntitySystem
         return EntityManager.TryGetComponent(euid, out AlertsComponent? comp)
             ? comp.Alerts
             : null;
+    }
+
+    public short GetSeverityFromPercentage(AlertType alertType, FixedPoint2 percentage)
+    {
+        FixedPoint2.Clamp(percentage, 0, 1.0f);
+        return (short) MathF.Floor((_typeToAlert[alertType].MinSeverity+GetSeverityRange(alertType)* percentage).Float());
     }
 
     public short GetSeverityRange(AlertType alertType)
