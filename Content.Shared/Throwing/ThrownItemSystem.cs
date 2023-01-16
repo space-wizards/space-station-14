@@ -55,19 +55,16 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent) ||
-                fixturesComponent.Fixtures.Count != 1) return;
-            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
-
-            if (fixturesComponent.Fixtures.ContainsKey(ThrowingFixture))
+            if (!EntityManager.TryGetComponent(uid, out FixturesComponent? fixturesComponent) ||
+                fixturesComponent.Fixtures.Count != 1 ||
+                !TryComp<PhysicsComponent>(uid, out var body))
             {
-                Logger.Error($"Found existing throwing fixture on {component.Owner}");
                 return;
             }
+
             var fixture = fixturesComponent.Fixtures.Values.First();
             var shape = fixture.Shape;
-            var throwingFixture = new Fixture(physicsComponent, shape) { CollisionMask = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture };
-            _fixtures.TryCreateFixture(physicsComponent, throwingFixture, manager: fixturesComponent);
+            _fixtures.TryCreateFixture(uid, shape, ThrowingFixture, hard: false, collisionMask: (int) CollisionGroup.ThrownItem, manager: fixturesComponent, body: body);
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, ref StartCollideEvent args)
@@ -104,13 +101,13 @@ namespace Content.Shared.Throwing
 
         private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
-            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+            if (EntityManager.TryGetComponent(uid, out FixturesComponent? manager))
             {
-                var fixture = _fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture);
+                var fixture = _fixtures.GetFixtureOrNull(uid, ThrowingFixture, manager: manager);
 
                 if (fixture != null)
                 {
-                    _fixtures.DestroyFixture(physicsComponent, fixture);
+                    _fixtures.DestroyFixture(uid, fixture, manager: manager);
                 }
             }
 

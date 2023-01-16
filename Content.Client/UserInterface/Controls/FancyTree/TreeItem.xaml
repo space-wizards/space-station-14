@@ -1,0 +1,14 @@
+<controls:TreeItem xmlns="https://spacestation14.io"
+                   xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls.FancyTree">
+    <BoxContainer Orientation="Vertical">
+        <ContainerButton Name="Button" Access="Public">
+            <BoxContainer Orientation="Horizontal">
+                <Control Name="Padding" Access="Public"/>
+                <TextureRect Name="Icon" Access="Public" Stretch="KeepCentered" Visible="False"/>
+                <Label Margin="2 0 2 0" Name="Label" Access="Public"/>
+            </BoxContainer>
+        </ContainerButton>
+        <BoxContainer Name="Body" Access="Public" Orientation="Vertical" Visible="False"/>
+    </BoxContainer>
+    <controls:TreeLine/>
+</controls:TreeItem>

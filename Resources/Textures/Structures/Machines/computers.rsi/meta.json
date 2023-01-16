@@ -396,7 +396,7 @@
       "directions": 4
     },
     {
-      "name": "computer_broken",
+      "name": "screen_broken",
       "directions": 4
     },
     {
@@ -972,11 +972,11 @@
       ]
     },
     {
-      "name": "generic_key",
+      "name": "generic_keys",
       "directions": 4
     },
     {
-      "name": "generic_key_off",
+      "name": "generic_keyboard",
       "directions": 4
     },
     {
