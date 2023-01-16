@@ -1,9 +1,10 @@
 using Content.Shared.Construction.Prototypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Construction.Components
+namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class MachinePartComponent : Component
     {
         [DataField("part", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
