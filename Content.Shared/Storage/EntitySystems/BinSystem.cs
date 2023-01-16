@@ -7,6 +7,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Storage.EntitySystems;
@@ -16,8 +17,9 @@ namespace Content.Shared.Storage.EntitySystems;
 /// </summary>
 public sealed class BinSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly ISharedAdminLogManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
 
@@ -58,7 +60,7 @@ public sealed class BinSystem : EntitySystem
     private void OnMapInit(EntityUid uid, BinComponent component, MapInitEvent args)
     {
         // don't spawn on the client.
-        if (_timing.InPrediction)
+        if (_net.IsClient)
             return;
 
         var xform = Transform(uid);
@@ -75,8 +77,7 @@ public sealed class BinSystem : EntitySystem
 
     private void OnEntRemoved(EntityUid uid, BinComponent component, EntRemovedFromContainerMessage args)
     {
-        if (component.Items.Contains(args.Entity))
-            component.Items.Remove(args.Entity);
+        component.Items.Remove(args.Entity);
     }
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
@@ -162,11 +163,10 @@ public sealed class BinSystem : EntitySystem
         if (component.Items.Last() != toRemove)
             return false;
 
-        if (!component.ItemContainer.Contains(toRemove))
+        if (!component.ItemContainer.Remove(toRemove))
             return false;
 
         component.Items.Remove(toRemove);
-        component.ItemContainer.Remove(toRemove);
         Dirty(component);
         return true;
     }
