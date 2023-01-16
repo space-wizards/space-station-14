@@ -38,6 +38,8 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Door
   - type: Airlock
+  - type: ApcPowerReceiver
+    needsPower: false
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -54,7 +56,6 @@ namespace Content.IntegrationTests.Tests.Doors
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var doors = entityManager.EntitySysManager.GetEntitySystem<DoorSystem>();
 
