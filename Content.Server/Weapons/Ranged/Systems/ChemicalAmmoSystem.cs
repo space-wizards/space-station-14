@@ -35,7 +35,7 @@ namespace Content.Server.Weapons.Ranged.Systems
             if (!projectileSolutionContainers.Any())
                 return;
 
-            var solutionPerProjectile = ammoSolution.CurrentVolume * (1 / projectileSolutionContainers.Count);
+            var solutionPerProjectile = ammoSolution.Volume * (1 / projectileSolutionContainers.Count);
 
             foreach (var (projectileUid, projectileSolution) in projectileSolutionContainers)
             {
