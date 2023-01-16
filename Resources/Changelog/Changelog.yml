@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The duration of manual healing items on yourself now scales with how
-      much damage you have taken., type: Tweak}
-  id: 2377
-  time: '2022-09-29T07:12:16.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix combat mode and cuff interactions., type: Fix}
@@ -2938,3 +2932,9 @@ Entries:
   - {message: Added placement preview for decals, type: Add}
   id: 2876
   time: '2023-01-15T20:35:36.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Construction and crafting messages now appear above the user instead
+      of the mouse cursor., type: Fix}
+  id: 2877
+  time: '2023-01-16T02:29:45.0000000+00:00'
