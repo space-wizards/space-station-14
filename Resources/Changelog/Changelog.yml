@@ -1,9 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: Wallmount Nanomed are now fully functional !, type: Fix}
-  id: 2379
-  time: '2022-09-29T16:46:39.0000000+00:00'
 - author: civilCornball
   changes:
   - {message: Fixes the recycler not recycling some trash., type: Fix}
@@ -2939,3 +2934,9 @@ Entries:
     type: Tweak}
   id: 2878
   time: '2023-01-16T02:37:56.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Added spooky ghost sheet., type: Add}
+  - {message: Added butcher method to get ghost sheet, type: Add}
+  id: 2879
+  time: '2023-01-16T07:29:45.0000000+00:00'
