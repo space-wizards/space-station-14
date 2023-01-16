@@ -390,11 +390,16 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        ///     The number of seconds between each tip being displayed when the round is not actively going
-        ///     (i.e. postround or lobby)
+        ///     Whether tips being shown is enabled at all.
         /// </summary>
         public static readonly CVarDef<bool> TipsEnabled =
             CVarDef.Create("tips.enabled", true);
+
+        /// <summary>
+        ///     The dataset prototype to use when selecting a random tip.
+        /// </summary>
+        public static readonly CVarDef<string> TipsDataset =
+            CVarDef.Create("tips.dataset", "Tips");
 
         /// <summary>
         ///     The number of seconds between each tip being displayed when the round is not actively going
