@@ -33,7 +33,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
     public bool Interactive;
 
-    public ISpriteComponent? Sprite
+    public SpriteComponent? Sprite
     {
         get => View.Sprite;
         set => View.Sprite = value;
