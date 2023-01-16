@@ -9,10 +9,10 @@ namespace Content.Client.Light.Visualizers
     public sealed class ExpendableLightVisualizer : AppearanceVisualizer
     {
         [DataField("iconStateSpent")]
-        public string IconStateSpent { get; set; } = string.Empty;
+        public string? IconStateSpent { get; set; }
 
         [DataField("iconStateOn")]
-        public string IconStateLit { get; set; } = string.Empty;
+        public string? IconStateLit { get; set; }
 
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)
@@ -55,7 +55,7 @@ namespace Content.Client.Light.Visualizers
                         expendableLight.LoopedSound,
                         expendableLight.Owner,
                         SharedExpendableLightComponent.LoopedSoundParams);
-                    if (IconStateLit != string.Empty)
+                    if (!string.IsNullOrWhiteSpace(IconStateLit))
                     {
                         sprite.LayerSetState(2, IconStateLit);
                         sprite.LayerSetShader(2, "shaded");
@@ -66,7 +66,7 @@ namespace Content.Client.Light.Visualizers
                     break;
                 case ExpendableLightState.Dead:
                     expendableLight.PlayingStream?.Stop();
-                    if (!string.IsNullOrEmpty(IconStateSpent))
+                    if (!string.IsNullOrWhiteSpace(IconStateSpent))
                     {
                         sprite.LayerSetState(0, IconStateSpent);
                         sprite.LayerSetShader(0, "shaded");
