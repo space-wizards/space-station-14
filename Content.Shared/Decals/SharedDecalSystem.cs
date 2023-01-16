@@ -11,9 +11,6 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
-        // TODO move this data to the component
-        protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();
-
         // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
         // So if this ever needs changing, the maps need converting.
         public const int ChunkSize = 32;
@@ -24,72 +21,61 @@ namespace Content.Shared.Decals
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            SubscribeLocalEvent<DecalGridComponent, ComponentAdd>(OnCompAdd);
-            SubscribeLocalEvent<DecalGridComponent, ComponentRemove>(OnCompRemove);
+            SubscribeLocalEvent<DecalGridComponent, ComponentStartup>(OnCompStartup);
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
             EnsureComp<DecalGridComponent>(msg.EntityUid);
         }
-
-        protected virtual void OnCompRemove(EntityUid uid, DecalGridComponent component, ComponentRemove args)
+        
+        private void OnCompStartup(EntityUid uid, DecalGridComponent component, ComponentStartup args)
         {
-            ChunkIndex.Remove(uid);
-        }
-
-        protected virtual void OnCompAdd(EntityUid uid, DecalGridComponent component, ComponentAdd args)
-        {
-            var index = ChunkIndex[uid] = new();
             foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
             {
                 foreach (var decalUid in decals.Decals.Keys)
                 {
-                    index[decalUid] = indices;
+                    component.DecalIndex[decalUid] = indices;
                 }
             }
         }
 
-        protected DecalGridChunkCollection? DecalGridChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
         {
             if (!Resolve(gridEuid, ref comp))
                 return null;
 
-            return comp.ChunkCollection;
-        }
-
-        protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
-        {
-            var collection = DecalGridChunkCollection(gridEuid, comp);
-            return collection?.ChunkCollection;
+            return comp.ChunkCollection.ChunkCollection;
         }
 
         protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk) {}
 
-        protected bool RemoveDecalInternal(EntityUid gridId, uint uid)
+        // internal, so that client/predicted code doesn't accidentally remove decals. There is a public server-side function.
+        protected bool RemoveDecalInternal(EntityUid gridId, uint decalId, [NotNullWhen(true)] out Decal? removed, DecalGridComponent? component = null)
         {
-            if (!RemoveDecalHook(gridId, uid)) return false;
-
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
+            removed = null;
+            if (!Resolve(gridId, ref component))
                 return false;
-            }
 
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null || !chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Decals.Remove(uid))
+            if (!component.DecalIndex.Remove(decalId, out var indices)
+                || !component.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk)
+                || !chunk.Decals.Remove(decalId, out removed))
             {
                 return false;
             }
 
             if (chunk.Decals.Count == 0)
-                chunkCollection.Remove(indices);
+                component.ChunkCollection.ChunkCollection.Remove(indices);
 
-            ChunkIndex[gridId].Remove(uid);
             DirtyChunk(gridId, indices, chunk);
+            OnDecalRemoved(gridId, decalId, component, indices, chunk);
             return true;
         }
 
-        protected virtual bool RemoveDecalHook(EntityUid gridId, uint uid) => true;
+        protected virtual void OnDecalRemoved(EntityUid gridId, uint decalId, DecalGridComponent component, Vector2i indices, DecalChunk chunk)
+        {
+            // used by client-side overlay code
+        }
     }
 
     // TODO: Pretty sure paul was moving this somewhere but just so people know

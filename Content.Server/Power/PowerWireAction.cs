@@ -16,6 +16,11 @@ public sealed class PowerWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "POWR";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
@@ -200,6 +205,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (!TrySetElectrocution(user, wire))
             return false;
 
@@ -212,6 +218,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (!TrySetElectrocution(user, wire))
             return false;
 
@@ -228,6 +235,7 @@ public sealed class PowerWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         WiresSystem.TryCancelWireAction(wire.Owner, PowerWireActionKey.ElectrifiedCancel);
 
         var electrocuted = !TrySetElectrocution(user, wire, true);

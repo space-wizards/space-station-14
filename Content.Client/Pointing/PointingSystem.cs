@@ -66,6 +66,9 @@ public sealed class PointingSystem : SharedPointingSystem
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
     {
+        if (args.Target.IsClientSide())
+            return;
+
         // Really this could probably be a properly predicted event, but that requires reworking pointing. For now
         // I'm just adding this verb exclusively to clients so that the verb-loading pop-in on the verb menu isn't
         // as bad. Important for this verb seeing as its usually an option on just about any entity.
