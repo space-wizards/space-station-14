@@ -1,10 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
-      after contributing to Space Station 13 and Space Station 14.', type: Add}
-  id: 2386
-  time: '2022-10-02T21:26:46.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
@@ -2933,3 +2927,8 @@ Entries:
   - {message: Added a guidebook entry for machine upgrades., type: Add}
   id: 2885
   time: '2023-01-16T16:53:24.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
+  id: 2886
+  time: '2023-01-16T23:58:38.0000000+00:00'
