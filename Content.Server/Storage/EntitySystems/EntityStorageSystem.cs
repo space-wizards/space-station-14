@@ -19,6 +19,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems;
@@ -34,6 +35,7 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IMapManager _map = default!;
 
     public const string ContainerName = "entity_storage";
@@ -323,7 +325,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(toAdd, out var phys))
         {
-            if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
+            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
+
+            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
                 return false;
         }
 
@@ -387,11 +391,11 @@ public sealed class EntityStorageSystem : EntitySystem
             if (component.Open)
             {
                 component.RemovedMasks = fixture.CollisionLayer & component.MasksToRemove;
-                fixture.CollisionLayer &= ~component.MasksToRemove;
+                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer & ~component.MasksToRemove, manager: fixtures);
             }
             else
             {
-                fixture.CollisionLayer |= component.RemovedMasks;
+                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer | component.RemovedMasks, manager: fixtures);
                 component.RemovedMasks = 0;
             }
         }
