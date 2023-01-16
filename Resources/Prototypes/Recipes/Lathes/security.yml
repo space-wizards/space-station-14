@@ -149,6 +149,7 @@
   id: TargetHuman
   result: TargetHuman
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
     Steel: 10
 
@@ -156,6 +157,7 @@
   id: TargetClown
   result: TargetClown
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
     Steel: 10
 
@@ -163,5 +165,6 @@
   id: TargetSyndicate
   result: TargetSyndicate
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
     Steel: 10

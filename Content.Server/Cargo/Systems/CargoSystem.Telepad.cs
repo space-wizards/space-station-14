@@ -143,13 +143,13 @@ public sealed partial class CargoSystem
             return;
 
         // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.PrintableOrderNumber));
 
         MetaData(printed).EntityName = val;
 
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
-            ("orderNumber", data.OrderNumber),
+            ("orderNumber", data.PrintableOrderNumber),
             ("itemName", prototype.Name),
             ("requester", data.Requester),
             ("reason", data.Reason),

@@ -4,6 +4,7 @@ using Content.Client.Chat.Managers;
 using Content.Client.Eui;
 using Content.Client.Flash;
 using Content.Client.GhostKick;
+using Content.Client.Guidebook;
 using Content.Client.Info;
 using Content.Client.Input;
 using Content.Client.IoC;
@@ -60,6 +61,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly IGamePrototypeLoadManager _gamePrototypeLoadManager = default!;
         [Dependency] private readonly NetworkResourceManager _networkResources = default!;
+        [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
         [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
@@ -156,6 +158,7 @@ namespace Content.Client.Entry
             _gamePrototypeLoadManager.Initialize();
             _networkResources.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
+            _documentParsingManager.Initialize();
 
             _baseClient.RunLevelChanged += (_, args) =>
             {

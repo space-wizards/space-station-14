@@ -4,7 +4,7 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     state: margherita
   product: CrateFoodPizza
-  cost: 500
+  cost: 550
   category: Food
   group: market
 
@@ -24,10 +24,30 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     state: flour-big
   product: CrateFoodCooking
-  cost: 1500
+  cost: 750
   category: Food
   group: market
 
+- type: cargoProduct
+  id: FoodDinnerware
+  icon:
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: tin
+  product: CrateFoodDinnerware
+  cost: 750
+  category: Food
+  group: market
+
+- type: cargoProduct
+  id: FoodBarSupply
+  icon:
+    sprite: Objects/Consumable/Drinks/beerglass.rsi
+    state: icon
+  product: CrateFoodBarSupply
+  cost: 750
+  category: Food
+  group: market
+    
 - type: cargoProduct
   id: FoodCrateKvassTank
   icon:

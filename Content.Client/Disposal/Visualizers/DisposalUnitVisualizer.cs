@@ -67,7 +67,7 @@ namespace Content.Client.Disposal.Visualizers
             }
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(appearance.Owner, out ISpriteComponent? sprite))
+            if (!entities.TryGetComponent(appearance.Owner, out SpriteComponent? sprite))
             {
                 return;
             }
