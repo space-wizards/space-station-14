@@ -30,7 +30,7 @@ public sealed class DoAfterComponentState : ComponentState
 /// Check for cancelled, and if it is, then null the token there.
 /// </summary>
 [Serializable, NetSerializable]
-/*public sealed class DoAfterEvent : HandledEntityEventArgs
+public sealed class DoAfterEvent : HandledEntityEventArgs
 {
     public bool Cancelled;
     public readonly DoAfterEventArgs Args;
@@ -40,7 +40,7 @@ public sealed class DoAfterComponentState : ComponentState
         Cancelled = cancelled;
         Args = args;
     }
-}*/
+}
 
 public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 {
@@ -77,5 +77,3 @@ public enum DoAfterStatus : byte
     Finished,
 }
 
-[Serializable, NetSerializable]
-public record struct ExtraData<T>;

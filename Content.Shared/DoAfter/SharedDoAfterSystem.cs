@@ -127,35 +127,16 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
                 while (_pending.TryDequeue(out var doAfter))
                 {
-                    if (doAfter.Status == DoAfterStatus.Cancelled)
+                    if (doAfter.Status == DoAfterStatus.Cancelled && doAfter.Done != null)
                     {
                         Cancelled(comp, doAfter);
-                        var data = doAfter.EventArgs.AdditionalData;
-                        var ev = new DoAfterEvent(data, true, doAfter.EventArgs);
-
-                        if (EntityManager.EntityExists(doAfter.EventArgs.User))
-                            RaiseLocalEvent(doAfter.EventArgs.User, ev, doAfter.EventArgs.Broadcast);
-
-                        if (doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target))
-                            RaiseLocalEvent(target, ev, doAfter.EventArgs.Broadcast);
-
-                        if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used))
-                            RaiseLocalEvent(used, ev, doAfter.EventArgs.Broadcast);
+                        doAfter.Done(true);
                     }
 
-                    if (doAfter.Status == DoAfterStatus.Finished)
+                    if (doAfter.Status == DoAfterStatus.Finished && doAfter.Done != null)
                     {
                         Finished(comp, doAfter);
-                        var ev = new DoAfterEvent(false, doAfter.EventArgs);
-
-                        if (EntityManager.EntityExists(doAfter.EventArgs.User))
-                            RaiseLocalEvent(doAfter.EventArgs.User, ev, doAfter.EventArgs.Broadcast);
-
-                        if (doAfter.EventArgs.Target is {} target && EntityManager.EntityExists(target))
-                            RaiseLocalEvent(target, ev, doAfter.EventArgs.Broadcast);
-
-                        if (doAfter.EventArgs.Used is {} used && EntityManager.EntityExists(used))
-                            RaiseLocalEvent(used, ev, doAfter.EventArgs.Broadcast);
+                        doAfter.Done(false);
                     }
                 }
             }
@@ -176,14 +157,39 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return doAfter.Status;
         }
 
+
+
         /// <summary>
         ///     Creates a DoAfter without waiting for it to finish. You can use events with this.
         ///     These can be potentially cancelled by the user moving or when other things happen.
+        ///     Use this when you need to send extra data with the DoAfter
         /// </summary>
-        /// <param name="eventArgs"></param>
+        /// <param name="eventArgs">The DoAfterEventArgs</param>
+        /// <param name="data">The extra data sent over </param>
+        public void DoAfter<T>(DoAfterEventArgs eventArgs, T data)
+        {
+            var doAfter = CreateDoAfter(eventArgs);
+
+            doAfter.Done = cancelled =>
+            {
+                Send(data, cancelled, eventArgs);
+            };
+        }
+
+        /// <summary>
+        ///     Creates a DoAfter without waiting for it to finish. You can use events with this.
+        ///     These can be potentially cancelled by the user moving or when other things happen.
+        ///     Use this if you don't have any extra data to send with the DoAfter
+        /// </summary>
+        /// <param name="eventArgs">The DoAfterEventArgs</param>
         public void DoAfter(DoAfterEventArgs eventArgs)
         {
-            CreateDoAfter(eventArgs);
+            var doAfter = CreateDoAfter(eventArgs);
+
+            doAfter.Done = cancelled =>
+            {
+                Send(cancelled, eventArgs);
+            };
         }
 
         private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
@@ -311,48 +317,49 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return false;
         }
 
-        public bool TryGetAdditionalData<T>(string key, [NotNullWhen(true)] out T data, DoAfterEventArgs doAfterEventArgs)
-        {
-            data = default!;
-
-            if (doAfterEventArgs.AdditionalData.TryGetValue(key, out var val) && val is T value)
-            {
-                data = value;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Sets a single key value pair for the AdditionalData property in <see cref="DoAfterEventArgs"/>
-        /// If you need to add multiple at the same time see the overload <see cref="SetAdditionalData(string,object,Content.Shared.DoAfter.DoAfterEventArgs)"/>
-        /// </summary>
-        /// <param name="key">The key for this data</param>
-        /// <param name="value">What the value of the data should be</param>
-        /// <param name="doAfterEventArgs">The <see cref="DoAfterEventArgs"/></param>
-        public void SetAdditionalData(string key, object value, DoAfterEventArgs doAfterEventArgs)
-        {
-            doAfterEventArgs.AdditionalData[key] = value;
-        }
-
-        /// <summary>
-        /// Sets multiple key value pairs for the AdditionalData property in <see cref="DoAfterEventArgs"/>
-        /// If you need to add only one additional datatype, see the overload <see cref="SetAdditionalData(string,object,Content.Shared.DoAfter.DoAfterEventArgs)"/>
-        /// </summary>
-        /// <param name="data"></param>
-        /// <param name="doAfterEventArgs"></param>
-        public void SetAdditionalData(Dictionary<string, object> data, DoAfterEventArgs doAfterEventArgs)
-        {
-            foreach (var (key, value) in data)
-            {
-                doAfterEventArgs.AdditionalData[key] = value;
-            }
-        }
-
         public void Cancel(DoAfter doAfter)
         {
             if (doAfter.Status == DoAfterStatus.Running)
                 doAfter.Tcs.SetResult(DoAfterStatus.Cancelled);
+        }
+
+        /// <summary>
+        /// Send the DoAfter event, used where you don't need any extra data to send.
+        /// </summary>
+        /// <param name="cancelled"></param>
+        /// <param name="args"></param>
+        public void Send(bool cancelled, DoAfterEventArgs args)
+        {
+            var ev = new DoAfterEvent(cancelled, args);
+
+            if (EntityManager.EntityExists(args.User))
+                RaiseLocalEvent(args.User, ev, args.Broadcast);
+
+            if (args.Target is {} target && EntityManager.EntityExists(target))
+                RaiseLocalEvent(target, ev, args.Broadcast);
+
+            if (args.Used is {} used && EntityManager.EntityExists(used))
+                RaiseLocalEvent(used, ev, args.Broadcast);
+        }
+
+        /// <summary>
+        /// Send the DoAfter event, used where you need extra data to send
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="cancelled"></param>
+        /// <param name="args"></param>
+        /// <typeparam name="T"></typeparam>
+        public void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
+        {
+            var ev = new DoAfterEvent<T>(data, cancelled, args);
+
+            if (EntityManager.EntityExists(args.User))
+                RaiseLocalEvent(args.User, ev, args.Broadcast);
+
+            if (args.Target is {} target && EntityManager.EntityExists(target))
+                RaiseLocalEvent(target, ev, args.Broadcast);
+
+            if (args.Used is {} used && EntityManager.EntityExists(used))
+                RaiseLocalEvent(used, ev, args.Broadcast);
         }
 }

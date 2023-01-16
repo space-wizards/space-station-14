@@ -46,6 +46,9 @@ public sealed class DoAfter
     public EntityCoordinates UserGrid;
     public EntityCoordinates TargetGrid;
 
+    [NonSerialized]
+    public Action<bool>? Done;
+
 #pragma warning disable RA0004
     public DoAfterStatus Status => AsTask.IsCompletedSuccessfully ? AsTask.Result : DoAfterStatus.Running;
 #pragma warning restore RA0004

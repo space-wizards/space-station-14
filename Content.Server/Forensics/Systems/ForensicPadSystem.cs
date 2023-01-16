@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -25,7 +26,7 @@ namespace Content.Server.Forensics
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DoAfterEvent<ForensicPadData>>(OnDoAfter);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -81,11 +82,7 @@ namespace Content.Server.Forensics
 
         private void StartScan(EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            var additionalData = new Dictionary<string, object>
-            {
-                {Pad, pad.Owner},
-                {Sample, sample}
-            };
+            var padData = new ForensicPadData(pad.Owner, sample);
 
             var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target)
             {
@@ -96,17 +93,14 @@ namespace Content.Server.Forensics
                 NeedHand = true
             };
 
-            _doAfterSystem.SetAdditionalData(additionalData, doAfterEventArgs);
-            _doAfterSystem.DoAfter(doAfterEventArgs);
+            _doAfterSystem.DoAfter(doAfterEventArgs, padData);
         }
 
-        private void OnDoAfter(DoAfterEvent ev)
+        private void OnDoAfter(DoAfterEvent<ForensicPadData> ev)
         {
             if (ev.Handled
                 || ev.Cancelled
-                || !_doAfterSystem.TryGetAdditionalData(Pad, out EntityUid pad, ev.Args)
-                || !_doAfterSystem.TryGetAdditionalData(Sample, out string sample, ev.Args)
-                || !EntityManager.TryGetComponent(pad, out ForensicPadComponent? component))
+                || !EntityManager.TryGetComponent(ev.AdditionalData.Pad, out ForensicPadComponent? component))
             {
                 return;
             }
@@ -119,8 +113,14 @@ namespace Content.Server.Forensics
                     MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Args.Target));
             }
 
-            component.Sample = sample;
+            component.Sample = ev.AdditionalData.Sample;
             component.Used = true;
+        }
+
+        private record struct ForensicPadData(EntityUid Pad, string Sample)
+        {
+            public EntityUid Pad = Pad;
+            public string Sample = Sample;
         }
     }
 }

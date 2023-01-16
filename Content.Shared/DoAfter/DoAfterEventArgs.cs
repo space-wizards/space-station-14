@@ -92,9 +92,7 @@ public sealed class DoAfterEventArgs
     /// <summary>
     /// Any additional data that doesn't fit in already. Used for customization as needed.
     /// </summary>
-    //public Dictionary<string, object> AdditionalData = new();
-
-    public ExtraData AdditionalData;
+    public Dictionary<string, object> AdditionalData = new();
 
     /// <summary>
     ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.

@@ -41,7 +41,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-            SubscribeLocalEvent<DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<DoAfterEvent<ScannerData>>(OnDoAfter);
         }
 
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
@@ -60,14 +60,12 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnDoAfter(DoAfterEvent args)
+        private void OnDoAfter(DoAfterEvent<ScannerData> args)
         {
-            if (args.Handled || args.Cancelled || args.Args.AdditionalData == null || !args.Args.AdditionalData.ContainsKey(Scanner))
+            if (args.Handled || args.Cancelled)
                 return;
 
-            var scannerOwner = (EntityUid) args.Args.AdditionalData[Scanner];
-
-            if (!EntityManager.TryGetComponent(scannerOwner, out ForensicScannerComponent? scanner))
+            if (!EntityManager.TryGetComponent(args.AdditionalData.Scanner, out ForensicScannerComponent? scanner))
                 return;
 
             if (args.Args.Target != null)
@@ -95,20 +93,16 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            var additionalArgs = new Dictionary<string, object>
-            {
-                {Scanner, component.Owner}
-            };
+            var scannerData = new ScannerData(component.Owner);
 
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target)
             {
                 Broadcast = true,
-                AdditionalData = additionalArgs,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = true
-            });
+            }, scannerData);
         }
 
         private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
@@ -260,6 +254,11 @@ namespace Content.Server.Forensics
                 Target = target;
                 Scanner = scanner;
             }
+        }
+
+        private record struct ScannerData(EntityUid scanner)
+        {
+            public EntityUid Scanner = scanner;
         }
     }
 }
