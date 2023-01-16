@@ -116,8 +116,8 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     public void ConsumeEntity(EntityUid hungry, EntityUid morsel, EventHorizonComponent eventHorizon, IContainer? outerContainer = null)
     {
         EntityManager.QueueDeleteEntity(morsel);
-        var evSelf = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
-        var evEaten = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
+        var evSelf = new EntityConsumedByEventHorizonEvent(morsel, hungry, eventHorizon, outerContainer);
+        var evEaten = new EventHorizonConsumedEntityEvent(morsel, hungry, eventHorizon, outerContainer);
         RaiseLocalEvent(hungry, ref evSelf);
         RaiseLocalEvent(morsel, ref evEaten);
     }
