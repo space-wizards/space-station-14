@@ -1,16 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: A permanent blindness trait has been added so you no longer need to
-      hunt down a blindfold., type: Add}
-  - {message: 'A narcolepsy trait has been added, for if you enjoy the impending doom
-      of falling asleep mid-nukies.', type: Add}
-  - {message: You can now give yourself a runny nose and sneeze randomly on occasion
-      if that's your thing., type: Add}
-  - {message: 'You can, if you like, be permanently pacifist with no ability to fight
-      back.', type: Add}
-  id: 2381
-  time: '2022-09-29T23:23:13.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
@@ -2941,3 +2929,8 @@ Entries:
       are locked behind biological tech, and are empty', type: Add}
   id: 2880
   time: '2023-01-16T07:44:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chameleon clothing not working., type: Fix}
+  id: 2881
+  time: '2023-01-16T08:21:24.0000000+00:00'
