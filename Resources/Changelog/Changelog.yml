@@ -1,10 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: All command roles now take 30 hours of total playtime on top of other
-      requirements., type: Add}
-  id: 2383
-  time: '2022-09-30T03:53:02.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'The NPC pathfinding has been refactored and some changes have been
@@ -2934,3 +2928,10 @@ Entries:
   - {message: Added Honk mother communication device - banana phone!, type: Add}
   id: 2882
   time: '2023-01-16T14:06:29.0000000+00:00'
+- author: moony, ElectroSR
+  changes:
+  - {message: 'An in-game guide has been added. It is accessible via a keybinding
+      (defaults to numpad 0), or via some examine tooltips. Help wanted writing guides!',
+    type: Add}
+  id: 2883
+  time: '2023-01-16T15:29:47.866071+00:00'
