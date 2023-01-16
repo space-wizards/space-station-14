@@ -1,4 +1,5 @@
 using Content.Shared.Radio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.Radio.Components;
@@ -11,4 +12,7 @@ public sealed class EncryptionKeyComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new();
+
+    [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public readonly string? DefaultChannel;
 }

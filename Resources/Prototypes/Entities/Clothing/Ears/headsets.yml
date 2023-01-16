@@ -13,7 +13,6 @@
       key_slots:
       - EncryptionKeyCommon
   - type: Headset
-    defaultChannel: Common
     keysExtractionMethod: Screwing
   - type: Sprite
     state: icon
@@ -36,8 +35,6 @@
   name: cargo headset
   description: A headset used by supply employees.
   components:
-  - type: Headset
-    defaultChannel: Supply
   - type: ContainerFill
     containers:
       key_slots:
@@ -75,8 +72,6 @@
   name: CentCom headset
   description: A headset used by the upper echelons of Nanotrasen.
   components:
-  - type: Headset
-    defaultChannel: CentCom
   - type: ContainerFill
     containers:
       key_slots:
@@ -92,8 +87,6 @@
   name: command headset
   description: A headset with a commanding channel.
   components:
-  - type: Headset
-    defaultChannel: Command
   - type: ContainerFill
     containers:
       key_slots:
@@ -109,8 +102,6 @@
   name: engineering headset
   description: A headset for engineers to chat while the station burns around them.
   components:
-  - type: Headset
-    defaultChannel: Engineering
   - type: ContainerFill
     containers:
       key_slots:
@@ -137,8 +128,6 @@
   name: medical headset
   description: A headset for the trained staff of the medbay.
   components:
-  - type: Headset
-    defaultChannel: Medical
   - type: ContainerFill
     containers:
       key_slots:
@@ -154,8 +143,6 @@
   name: science headset
   description: A sciency headset. Like usual.
   components:
-  - type: Headset
-    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -212,8 +199,6 @@
   name: security headset
   description: This is used by your elite security force.
   components:
-  - type: Headset
-    defaultChannel: Security
   - type: ContainerFill
     containers:
       key_slots:
@@ -229,8 +214,6 @@
   name: service headset
   description: Headset used by the service staff, tasked with keeping the station full, happy and clean.
   components:
-  - type: Headset
-    defaultChannel: Service
   - type: ContainerFill
     containers:
       key_slots:

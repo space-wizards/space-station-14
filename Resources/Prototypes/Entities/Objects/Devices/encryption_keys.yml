@@ -22,6 +22,7 @@
   - type: EncryptionKey
     channels:
     - Common
+    defaultChannel: Common
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: cypherkey
@@ -36,6 +37,7 @@
     channels:
     - Common
     - Supply
+    defaultChannel: Supply
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: cargo_cypherkey
@@ -51,6 +53,7 @@
     - Common
     - Command
     - Supply
+    defaultChannel: Supply
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: qm_cypherkey
@@ -72,6 +75,7 @@
     - Security
     - Service
     - Supply
+    defaultChannel: CentCom
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: bin_cypherkey
@@ -92,6 +96,7 @@
     - Security
     - Service
     - Supply
+    defaultChannel: Command
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: com_cypherkey
@@ -106,6 +111,7 @@
     channels:
     - Common
     - Engineering
+    defaultChannel: Engineering
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: eng_cypherkey
@@ -121,6 +127,7 @@
     - Common
     - Command
     - Engineering
+    defaultChannel: Engineering
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: ce_cypherkey
@@ -135,6 +142,7 @@
     channels:
     - Common
     - Medical
+    defaultChannel: Medical
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: med_cypherkey
@@ -150,6 +158,7 @@
     - Common
     - Command
     - Medical
+    defaultChannel: Medical
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: cmo_cypherkey
@@ -165,6 +174,7 @@
     - Common
     - Medical
     - Science
+    defaultChannel: Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: medsci_cypherkey
@@ -179,6 +189,7 @@
     channels:
     - Common
     - Science
+    defaultChannel: Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: sci_cypherkey
@@ -193,6 +204,7 @@
     channels:
     - Common
     - Science
+    defaultChannel: Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: rob_cypherkey
@@ -208,6 +220,7 @@
     - Common
     - Command
     - Science
+    defaultChannel: Science
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: rd_cypherkey
@@ -221,8 +234,8 @@
   - type: EncryptionKey
     channels:
     - Common
-    - Command
     - Security
+    defaultChannel: Security
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: sec_cypherkey
@@ -238,6 +251,7 @@
     - Common
     - Command
     - Security
+    defaultChannel: Security
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: hos_cypherkey
@@ -253,6 +267,7 @@
     channels:
     - Common
     - Service
+    defaultChannel: Service
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: srv_cypherkey
@@ -267,6 +282,7 @@
     channels:
     - Common
     - Syndicate
+    defaultChannel: Syndicate
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: syn_cypherkey
