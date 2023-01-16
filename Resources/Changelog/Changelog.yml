@@ -1,17 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'The NPC pathfinding has been refactored and some changes have been
-      made to their behaviours as well, such as the ability to break obstacles. It''s
-      still a going concern though is much easier to tweak in future.', type: Tweak}
-  - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
-  id: 2384
-  time: '2022-09-30T04:39:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lemons now have lemon juice instead of lime juice., type: Fix}
-  id: 2385
-  time: '2022-10-02T01:40:32.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
@@ -2935,3 +2922,14 @@ Entries:
     type: Add}
   id: 2883
   time: '2023-01-16T15:29:47.866071+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Helpful tips will now appear at random in the lobby and occasionally
+      in game., type: Add}
+  id: 2884
+  time: '2023-01-16T16:52:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a guidebook entry for machine upgrades., type: Add}
+  id: 2885
+  time: '2023-01-16T16:53:24.0000000+00:00'
