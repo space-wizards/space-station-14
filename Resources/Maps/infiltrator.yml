@@ -553,7 +553,7 @@ entities:
   components:
   - type: MetaData
   - pos: 0.64252126,4.1776605
-    parent: null
+    parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -578,9 +578,10 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
+  - fixtures: []
+    type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - tiles:
       -4,-16: 0
@@ -1059,8 +1060,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 20.04244
+      - 75.39776
       - 0
       - 0
       - 0
@@ -1102,8 +1103,6 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - fixtures: []
-    type: Fixtures
   - chunkCollection:
       -1,-1:
         0:
@@ -1244,8 +1243,13 @@ entities:
     type: IFF
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
   - type: RadiationGridResistance
+  - nextShake: 0
+    shakeTimes: 10
+    type: GravityShake
+  - type: GasTileOverlay
 - uid: 74
   type: WallPlastitanium
   components:
@@ -1338,7 +1342,9 @@ entities:
     parent: 73
     type: Transform
   - toggleAction:
-      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      icon:
+        sprite: Objects/Tools/flashlight.rsi
+        state: flashlight
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       name: action-name-toggle-light
       description: action-description-toggle-light
@@ -3664,8 +3670,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -6165,8 +6171,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures

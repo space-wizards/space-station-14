@@ -723,7 +723,7 @@ entities:
   components:
   - type: MetaData
   - pos: 0.43750095,0.583333
-    parent: null
+    parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -749,7 +749,6 @@ entities:
     type: Fixtures
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
-    enabled: True
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
@@ -1002,8 +1001,13 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
   - type: RadiationGridResistance
+  - nextShake: 0
+    shakeTimes: 10
+    type: GravityShake
+  - type: GasTileOverlay
 - uid: 105
   type: WallRiveted
   components:

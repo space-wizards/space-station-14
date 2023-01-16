@@ -125,30 +125,40 @@ entities:
   - pos: 2.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5
   type: FirelockEdge
   components:
   - pos: 1.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6
   type: FirelockEdge
   components:
   - pos: 0.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7
   type: FirelockEdge
   components:
   - pos: -1.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8
   type: FirelockEdge
   components:
   - pos: -2.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9
   type: WallReinforced
   components:
@@ -194,7 +204,7 @@ entities:
 - uid: 16
   components:
   - type: MetaData
-  - parent: null
+  - parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -902,8 +912,10 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
   - type: RadiationGridResistance
+  - type: GasTileOverlay
 - uid: 17
   type: WallReinforced
   components:
@@ -3666,6 +3678,8 @@ entities:
     pos: -3.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 470
   type: FirelockEdge
   components:
@@ -3673,6 +3687,8 @@ entities:
     pos: -2.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 471
   type: FirelockEdge
   components:
@@ -3680,6 +3696,8 @@ entities:
     pos: -1.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 472
   type: FirelockEdge
   components:
@@ -3687,6 +3705,8 @@ entities:
     pos: 0.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 473
   type: FirelockEdge
   components:
@@ -3694,6 +3714,8 @@ entities:
     pos: 1.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 474
   type: FirelockEdge
   components:
@@ -3701,30 +3723,40 @@ entities:
     pos: 2.5,1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 475
   type: FirelockEdge
   components:
   - pos: -3.5,-2.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 476
   type: Firelock
   components:
   - pos: -4.5,0.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 477
   type: Firelock
   components:
   - pos: -4.5,-0.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 478
   type: Firelock
   components:
   - pos: -4.5,-1.5
     parent: 16
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 479
   type: Rack
   components:

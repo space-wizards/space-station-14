@@ -97,7 +97,7 @@ entities:
 - uid: 0
   components:
   - type: MetaData
-  - parent: null
+  - parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -119,6 +119,8 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
+  - fixtures: []
+    type: Fixtures
   - tiles:
       -1,-1: 0
       0,-1: 0
@@ -146,17 +148,17 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - fixtures: []
-    type: Fixtures
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
   - type: RadiationGridResistance
+  - type: GasTileOverlay
 - uid: 1
   type: WallReinforced
   components:

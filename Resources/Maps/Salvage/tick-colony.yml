@@ -97,7 +97,7 @@ entities:
 - uid: 0
   components:
   - type: MetaData
-  - parent: null
+  - parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -317,7 +317,9 @@ entities:
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
+  - type: GasTileOverlay
 - uid: 1
   type: AsteroidRockMining
   components:

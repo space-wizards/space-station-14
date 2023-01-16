@@ -871,15 +871,6 @@ entities:
     pos: -9.5,7.5
     parent: 127
     type: Transform
-- uid: 122
-  components:
-  - type: MetaData
-  - type: Transform
-  - index: 7
-    type: Map
-  - type: PhysicsMap
-  - type: Broadphase
-  - type: OccluderTree
 - uid: 123
   type: GasPort
   components:
@@ -912,7 +903,7 @@ entities:
   components:
   - type: MetaData
   - pos: -1.7478588,0.38306206
-    parent: 122
+    parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -10683,8 +10674,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 20.04244
+      - 75.39776
       - 0
       - 0
       - 0
@@ -11086,18 +11077,24 @@ entities:
   - pos: -2.5,4.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 178
   type: HospitalCurtainsOpen
   components:
   - pos: -2.5,7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 179
   type: HospitalCurtainsOpen
   components:
   - pos: -2.5,10.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 180
   type: WallReinforced
   components:
@@ -11442,6 +11439,8 @@ entities:
   - pos: -5.5,-9.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 234
   type: ReinforcedWindow
   components:
@@ -14164,6 +14163,8 @@ entities:
     pos: -9.5,5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 649
   type: FirelockEdge
   components:
@@ -14171,6 +14172,8 @@ entities:
     pos: -9.5,9.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 650
   type: AirSensor
   components:
@@ -14198,6 +14201,8 @@ entities:
     pos: -8.5,11.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 654
   type: AirAlarm
   components:
@@ -14263,36 +14268,48 @@ entities:
   - pos: -6.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 660
   type: Firelock
   components:
   - pos: -7.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 661
   type: Firelock
   components:
   - pos: -8.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 662
   type: FirelockGlass
   components:
   - pos: -8.5,7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 663
   type: FirelockGlass
   components:
   - pos: -7.5,7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 664
   type: FirelockGlass
   components:
   - pos: -6.5,7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 665
   type: PottedPlantRandom
   components:
@@ -14328,6 +14345,8 @@ entities:
     pos: -7.5,-1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 670
   type: Grille
   components:
@@ -14341,6 +14360,8 @@ entities:
     pos: -4.5,-1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 672
   type: PowerCellRecharger
   components:
@@ -14354,6 +14375,8 @@ entities:
     pos: -4.5,-2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 674
   type: FirelockEdge
   components:
@@ -14361,6 +14384,8 @@ entities:
     pos: -8.5,-1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 675
   type: AirSensor
   components:
@@ -15363,6 +15388,8 @@ entities:
   - pos: 24.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 832
   type: RandomSpawner
   components:
@@ -17471,6 +17498,8 @@ entities:
     pos: 27.5,-2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 1175
   type: FirelockGlass
   components:
@@ -17478,6 +17507,8 @@ entities:
     pos: 27.5,-1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 1176
   type: PlasticFlapsAirtightClear
   components:
@@ -27277,6 +27308,8 @@ entities:
   - pos: 8.5,-17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2632
   type: WallSolid
   components:
@@ -29171,6 +29204,8 @@ entities:
   - pos: 8.5,-16.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2935
   type: Grille
   components:
@@ -29310,114 +29345,152 @@ entities:
   - pos: 9.5,-15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2957
   type: FirelockGlass
   components:
   - pos: 10.5,-15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2958
   type: FirelockGlass
   components:
   - pos: 9.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2959
   type: FirelockGlass
   components:
   - pos: 10.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2960
   type: FirelockGlass
   components:
   - pos: 21.5,-8.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2961
   type: FirelockGlass
   components:
   - pos: 22.5,-8.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2962
   type: FirelockGlass
   components:
   - pos: 11.5,-2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2963
   type: FirelockGlass
   components:
   - pos: 11.5,-3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2964
   type: FirelockGlass
   components:
   - pos: 11.5,-4.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2965
   type: FirelockGlass
   components:
   - pos: 20.5,-4.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2966
   type: FirelockGlass
   components:
   - pos: 20.5,-3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2967
   type: FirelockGlass
   components:
   - pos: 20.5,-2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2968
   type: FirelockGlass
   components:
   - pos: 15.5,1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2969
   type: FirelockGlass
   components:
   - pos: 16.5,1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2970
   type: FirelockGlass
   components:
   - pos: 17.5,-8.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2971
   type: FirelockGlass
   components:
   - pos: 24.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2972
   type: FirelockGlass
   components:
   - pos: 25.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2973
   type: FirelockGlass
   components:
   - pos: 21.5,-14.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2974
   type: FirelockGlass
   components:
   - pos: 22.5,-14.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2975
   type: DisposalBend
   components:
@@ -32914,6 +32987,8 @@ entities:
   - pos: 20.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3526
   type: WallReinforced
   components:
@@ -32941,6 +33016,8 @@ entities:
   - pos: 20.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3530
   type: ReinforcedWindow
   components:
@@ -32995,24 +33072,32 @@ entities:
   - pos: 20.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3538
   type: FirelockGlass
   components:
   - pos: 11.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3539
   type: FirelockGlass
   components:
   - pos: 11.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3540
   type: FirelockGlass
   components:
   - pos: 11.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3541
   type: AirlockGlass
   components:
@@ -33238,6 +33323,8 @@ entities:
     pos: 29.5,-10.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3577
   type: WallReinforced
   components:
@@ -36930,6 +37017,8 @@ entities:
     pos: -6.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4139
   type: FirelockEdge
   components:
@@ -36937,6 +37026,8 @@ entities:
     pos: -5.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4140
   type: FirelockEdge
   components:
@@ -36944,6 +37035,8 @@ entities:
     pos: -4.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4141
   type: FirelockEdge
   components:
@@ -36951,6 +37044,8 @@ entities:
     pos: -2.5,-25.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4142
   type: FirelockEdge
   components:
@@ -36958,6 +37053,8 @@ entities:
     pos: -2.5,-26.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4143
   type: AirlockMaintGlass
   components:
@@ -39571,24 +39668,32 @@ entities:
     pos: 2.5,-28.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4549
   type: FirelockGlass
   components:
   - pos: 14.5,-32.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4550
   type: FirelockGlass
   components:
   - pos: 15.5,-32.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4551
   type: FirelockGlass
   components:
   - pos: 16.5,-32.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4552
   type: FirelockEdge
   components:
@@ -39596,6 +39701,8 @@ entities:
     pos: 22.5,-34.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4553
   type: ReinforcedWindow
   components:
@@ -39615,6 +39722,8 @@ entities:
     pos: 16.5,-30.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4556
   type: FirelockEdge
   components:
@@ -39622,6 +39731,8 @@ entities:
     pos: 16.5,-29.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4557
   type: FirelockEdge
   components:
@@ -39629,6 +39740,8 @@ entities:
     pos: 14.5,-30.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4558
   type: FirelockEdge
   components:
@@ -39636,6 +39749,8 @@ entities:
     pos: 14.5,-29.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4559
   type: FirelockGlass
   components:
@@ -39643,18 +39758,24 @@ entities:
     pos: -6.5,-11.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4560
   type: FirelockGlass
   components:
   - pos: -0.5,-16.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4561
   type: FirelockGlass
   components:
   - pos: -0.5,-17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 4562
   type: WallReinforced
   components:
@@ -42635,6 +42756,8 @@ entities:
     pos: 42.5,-12.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5002
   type: GasPipeStraight
   components:
@@ -47656,60 +47779,80 @@ entities:
   - pos: -2.5,10.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5645
   type: FirelockGlass
   components:
   - pos: -2.5,7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5646
   type: FirelockGlass
   components:
   - pos: -2.5,4.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5647
   type: FirelockGlass
   components:
   - pos: 6.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5648
   type: FirelockGlass
   components:
   - pos: 1.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5649
   type: FirelockGlass
   components:
   - pos: 0.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5650
   type: FirelockEdge
   components:
   - pos: -0.5,-7.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5651
   type: FirelockGlass
   components:
   - pos: 6.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5652
   type: FirelockGlass
   components:
   - pos: 1.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5653
   type: FirelockGlass
   components:
   - pos: 0.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5654
   type: GasVentScrubber
   components:
@@ -51215,6 +51358,8 @@ entities:
   - pos: 13.5,19.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6144
   type: AirAlarm
   components:
@@ -51633,42 +51778,56 @@ entities:
   - pos: 15.5,11.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6206
   type: FirelockGlass
   components:
   - pos: 18.5,5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6207
   type: FirelockGlass
   components:
   - pos: 16.5,5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6208
   type: FirelockGlass
   components:
   - pos: 15.5,5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6209
   type: FirelockGlass
   components:
   - pos: 16.5,11.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6210
   type: FirelockGlass
   components:
   - pos: 16.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6211
   type: FirelockGlass
   components:
   - pos: 15.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6212
   type: FirelockEdge
   components:
@@ -51676,6 +51835,8 @@ entities:
     pos: 4.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6213
   type: AirlockSalvageGlassLocked
   components:
@@ -51688,6 +51849,8 @@ entities:
   - pos: 13.5,18.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6215
   type: FirelockEdge
   components:
@@ -51695,6 +51858,8 @@ entities:
     pos: 9.5,17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6216
   type: WindoorEngineeringLocked
   components:
@@ -51709,6 +51874,8 @@ entities:
     pos: -1.5,21.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6218
   type: FirelockEdge
   components:
@@ -51716,6 +51883,8 @@ entities:
     pos: -4.5,19.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6219
   type: FirelockEdge
   components:
@@ -51723,30 +51892,40 @@ entities:
     pos: 4.5,10.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6220
   type: FirelockGlass
   components:
   - pos: -1.5,17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6221
   type: FirelockGlass
   components:
   - pos: -0.5,17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6222
   type: FirelockGlass
   components:
   - pos: 0.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6223
   type: FirelockGlass
   components:
   - pos: -2.5,14.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6224
   type: GasVentPump
   components:
@@ -54482,9 +54661,15 @@ entities:
   - pos: 24.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -76723.14
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54498,9 +54683,15 @@ entities:
   - pos: 24.5,-4.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -76723.14
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54514,9 +54705,15 @@ entities:
   - pos: 24.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -76723.14
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54530,9 +54727,13 @@ entities:
   - pos: 24.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -76723.14
-    state: Opening
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54582,9 +54783,15 @@ entities:
   - pos: 13.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54598,9 +54805,15 @@ entities:
   - pos: 14.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54614,9 +54827,15 @@ entities:
   - pos: 15.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54630,9 +54849,15 @@ entities:
   - pos: 16.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54646,9 +54871,15 @@ entities:
   - pos: 17.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54662,9 +54893,15 @@ entities:
   - pos: 18.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54678,9 +54915,13 @@ entities:
   - pos: 12.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54694,9 +54935,13 @@ entities:
   - pos: 19.5,-5.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54710,9 +54955,15 @@ entities:
   - pos: 11.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54726,9 +54977,15 @@ entities:
   - pos: 11.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54742,9 +54999,15 @@ entities:
   - pos: 20.5,-6.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54758,9 +55021,15 @@ entities:
   - pos: 20.5,-7.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77774.016
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54774,9 +55043,15 @@ entities:
   - pos: 20.5,-9.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77689.414
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54790,9 +55065,15 @@ entities:
   - pos: 20.5,-11.5
     parent: 127
     type: Transform
-  - SecondsUntilStateChange: -77689.414
-    state: Opening
+  - enabled: False
+    type: Occluder
+  - canCollide: False
+    type: Physics
+  - nextStateChange: 1.2
+    state: Open
     type: Door
+  - airBlocked: False
+    type: Airtight
   - inputs:
       Open: []
       Close: []
@@ -54828,12 +55109,16 @@ entities:
   - pos: 12.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6636
   type: FirelockGlass
   components:
   - pos: 19.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6637
   type: FirelockEdge
   components:
@@ -54841,6 +55126,8 @@ entities:
     pos: 13.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6638
   type: FirelockEdge
   components:
@@ -54848,6 +55135,8 @@ entities:
     pos: 14.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6639
   type: FirelockEdge
   components:
@@ -54855,6 +55144,8 @@ entities:
     pos: 15.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6640
   type: FirelockEdge
   components:
@@ -54862,6 +55153,8 @@ entities:
     pos: 16.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6641
   type: FirelockEdge
   components:
@@ -54869,6 +55162,8 @@ entities:
     pos: 17.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6642
   type: FirelockEdge
   components:
@@ -54876,6 +55171,8 @@ entities:
     pos: 18.5,-5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6643
   type: Stool
   components:
@@ -58089,6 +58386,8 @@ entities:
     pos: -30.5,-9.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7084
   type: FirelockEdge
   components:
@@ -58096,6 +58395,8 @@ entities:
     pos: -29.5,-9.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7085
   type: AirlockExternalGlass
   components:
@@ -61747,6 +62048,8 @@ entities:
     pos: 26.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7556
   type: FirelockEdge
   components:
@@ -61754,18 +62057,24 @@ entities:
     pos: 29.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7557
   type: FirelockEdge
   components:
   - pos: 30.5,-17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7558
   type: FirelockEdge
   components:
   - pos: 31.5,-17.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7559
   type: FirelockEdge
   components:
@@ -61773,6 +62082,8 @@ entities:
     pos: 40.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7560
   type: FirelockEdge
   components:
@@ -61780,6 +62091,8 @@ entities:
     pos: 40.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7561
   type: FirelockEdge
   components:
@@ -61787,6 +62100,8 @@ entities:
     pos: 47.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7562
   type: FirelockEdge
   components:
@@ -61794,18 +62109,24 @@ entities:
     pos: 47.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7563
   type: FirelockGlass
   components:
   - pos: 23.5,-20.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7564
   type: FirelockGlass
   components:
   - pos: 23.5,-19.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7565
   type: FireAlarm
   components:
@@ -61932,6 +62253,8 @@ entities:
     pos: 34.5,-31.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7576
   type: Firelock
   components:
@@ -61939,6 +62262,8 @@ entities:
     pos: 34.5,-32.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7577
   type: Firelock
   components:
@@ -61946,6 +62271,8 @@ entities:
     pos: 54.5,-29.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7578
   type: Firelock
   components:
@@ -61953,6 +62280,8 @@ entities:
     pos: 54.5,-30.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7579
   type: Firelock
   components:
@@ -61960,6 +62289,8 @@ entities:
     pos: 49.5,-16.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7580
   type: Firelock
   components:
@@ -61967,6 +62298,8 @@ entities:
     pos: 49.5,-15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7581
   type: Firelock
   components:
@@ -61974,6 +62307,8 @@ entities:
     pos: 32.5,-12.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7582
   type: Firelock
   components:
@@ -61981,6 +62316,8 @@ entities:
     pos: 32.5,-13.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7583
   type: FirelockEdge
   components:
@@ -61988,6 +62325,8 @@ entities:
     pos: 52.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7584
   type: FirelockEdge
   components:
@@ -61995,6 +62334,8 @@ entities:
     pos: 52.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7585
   type: FirelockEdge
   components:
@@ -62002,6 +62343,8 @@ entities:
     pos: 52.5,-24.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7586
   type: FirelockEdge
   components:
@@ -62009,6 +62352,8 @@ entities:
     pos: 52.5,-25.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7587
   type: FireAlarm
   components:
@@ -62750,6 +63095,8 @@ entities:
     pos: 61.5,-26.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7679
   type: FirelockEdge
   components:
@@ -62757,6 +63104,8 @@ entities:
     pos: 61.5,-28.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7680
   type: FirelockEdge
   components:
@@ -62764,6 +63113,8 @@ entities:
     pos: 61.5,-36.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7681
   type: FirelockEdge
   components:
@@ -62771,6 +63122,8 @@ entities:
     pos: 61.5,-34.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7682
   type: RandomSpawner
   components:
@@ -63445,6 +63798,8 @@ entities:
   - pos: 24.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63458,6 +63813,8 @@ entities:
   - pos: 25.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63471,6 +63828,8 @@ entities:
   - pos: 23.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63484,6 +63843,8 @@ entities:
   - pos: 23.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63497,6 +63858,8 @@ entities:
   - pos: 30.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63510,6 +63873,8 @@ entities:
   - pos: 31.5,-21.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63523,6 +63888,8 @@ entities:
   - pos: 32.5,-22.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63536,6 +63903,8 @@ entities:
   - pos: 32.5,-23.5
     parent: 127
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -63926,24 +64295,32 @@ entities:
   - pos: 21.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7843
   type: FirelockGlass
   components:
   - pos: 22.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7844
   type: FirelockGlass
   components:
   - pos: 10.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7845
   type: FirelockGlass
   components:
   - pos: 9.5,-0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7846
   type: ExtinguisherCabinetFilled
   components:
@@ -66178,60 +66555,80 @@ entities:
   - pos: 25.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8154
   type: FirelockGlass
   components:
   - pos: 24.5,15.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8155
   type: FirelockGlass
   components:
   - pos: 7.5,18.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8156
   type: FirelockGlass
   components:
   - pos: 6.5,18.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8157
   type: FirelockGlass
   components:
   - pos: -5.5,27.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8158
   type: FirelockGlass
   components:
   - pos: -5.5,26.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8159
   type: FirelockGlass
   components:
   - pos: -9.5,13.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8160
   type: FirelockGlass
   components:
   - pos: -9.5,14.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8161
   type: FirelockGlass
   components:
   - pos: -16.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8162
   type: FirelockGlass
   components:
   - pos: -17.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8163
   type: Table
   components:
@@ -66708,6 +67105,8 @@ entities:
     pos: 28.5,1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8239
   type: FirelockGlass
   components:
@@ -66715,6 +67114,8 @@ entities:
     pos: 28.5,2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8240
   type: ClosetMaintenanceFilledRandom
   components:
@@ -66774,42 +67175,56 @@ entities:
     pos: 29.5,19.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8244
   type: FirelockGlass
   components:
   - pos: 35.5,5.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8245
   type: FirelockGlass
   components:
   - pos: 35.5,6.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8246
   type: FirelockGlass
   components:
   - pos: 32.5,13.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8247
   type: FirelockGlass
   components:
   - pos: 25.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8248
   type: FirelockGlass
   components:
   - pos: 30.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8249
   type: FirelockGlass
   components:
   - pos: 29.5,3.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8250
   type: RandomSpawner
   components:
@@ -66941,36 +67356,48 @@ entities:
   - pos: 23.5,2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8264
   type: FirelockGlass
   components:
   - pos: 23.5,1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8265
   type: FirelockGlass
   components:
   - pos: 23.5,0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8266
   type: FirelockGlass
   components:
   - pos: 8.5,2.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8267
   type: FirelockGlass
   components:
   - pos: 8.5,1.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8268
   type: FirelockGlass
   components:
   - pos: 8.5,0.5
     parent: 127
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8269
   type: GasVentPump
   components:

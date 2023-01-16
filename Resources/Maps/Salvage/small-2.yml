@@ -98,7 +98,7 @@ entities:
   components:
   - type: MetaData
   - pos: 0.5,0.5
-    parent: null
+    parent: invalid
     type: Transform
   - chunks:
       -1,-1:
@@ -127,7 +127,8 @@ entities:
     type: Gravity
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 0.45
+    type: GridPathfinding
   - chunkCollection: {}
     type: DecalGrid
   - type: RadiationGridResistance

@@ -3901,10 +3901,11 @@ entities:
   - dockJointId: docking46345
     dockedWith: 21828
     type: Docking
-  - SecondsUntilStateChange: -12052.889
-    changeAirtight: False
-    state: Opening
+  - changeAirtight: False
+    state: Open
     type: Door
+  - canCollide: False
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
         vertices:
@@ -3925,8 +3926,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -5115,6 +5116,8 @@ entities:
   - pos: -6.5,40.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 758
   type: WallSolid
   components:
@@ -5253,7 +5256,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 4
+  - index: 3
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -6080,6 +6083,8 @@ entities:
   - pos: -31.5,0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 916
   type: CableApcExtension
   components:
@@ -6405,6 +6410,8 @@ entities:
   - pos: -4.5,40.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 965
   type: WallReinforced
   components:
@@ -7316,8 +7323,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -9256,6 +9263,8 @@ entities:
   - pos: 0.5,-33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 1431
   type: WallSolid
   components:
@@ -9534,12 +9543,16 @@ entities:
   - pos: -0.5,-33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 1477
   type: FirelockGlass
   components:
   - pos: -1.5,-33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 1478
   type: FireAlarm
   components:
@@ -14276,24 +14289,32 @@ entities:
   - pos: 56.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2254
   type: FirelockGlass
   components:
   - pos: 58.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2255
   type: FirelockGlass
   components:
   - pos: 57.5,-54.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2256
   type: FirelockGlass
   components:
   - pos: 64.5,-56.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2257
   type: StorageCanister
   components:
@@ -17494,6 +17515,8 @@ entities:
   - pos: 20.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2783
   type: WallSolid
   components:
@@ -18460,12 +18483,16 @@ entities:
   - pos: 20.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2941
   type: ShuttersNormalOpen
   components:
   - pos: 20.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -18493,6 +18520,8 @@ entities:
   - pos: -62.5,0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2945
   type: ComputerSurveillanceCameraMonitor
   components:
@@ -18505,6 +18534,8 @@ entities:
   - pos: 23.5,-17.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 2947
   type: WallReinforced
   components:
@@ -18852,6 +18883,8 @@ entities:
   - pos: 19.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -22404,8 +22437,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -22436,8 +22469,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -24926,6 +24959,8 @@ entities:
   - pos: 6.5,-46.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3993
   type: GasPressurePump
   components:
@@ -24940,6 +24975,8 @@ entities:
   - pos: 5.5,-46.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 3995
   type: Grille
   components:
@@ -32295,18 +32332,24 @@ entities:
   - pos: -19.5,-0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5183
   type: FirelockGlass
   components:
   - pos: -19.5,-1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5184
   type: FirelockGlass
   components:
   - pos: -19.5,-2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5185
   type: PottedPlant5
   components:
@@ -32638,12 +32681,16 @@ entities:
   - pos: 52.5,-26.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5236
   type: FirelockGlass
   components:
   - pos: 52.5,-27.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5237
   type: WallReinforced
   components:
@@ -33281,6 +33328,8 @@ entities:
     pos: -14.5,-13.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -33302,6 +33351,8 @@ entities:
     pos: -14.5,-14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -34116,12 +34167,16 @@ entities:
   - pos: 38.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 5463
   type: HospitalCurtainsOpen
   components:
   - pos: 38.5,-46.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 5464
   type: Carpet
   components:
@@ -34454,18 +34509,24 @@ entities:
   - pos: 65.5,-48.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5512
   type: FirelockGlass
   components:
   - pos: 66.5,-48.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5513
   type: FirelockGlass
   components:
   - pos: 67.5,-48.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5514
   type: AirlockCommandGlassLocked
   components:
@@ -34504,12 +34565,16 @@ entities:
   - pos: 65.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5519
   type: FirelockGlass
   components:
   - pos: 66.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5520
   type: CableHV
   components:
@@ -34677,18 +34742,24 @@ entities:
   - pos: 40.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5547
   type: FirelockGlass
   components:
   - pos: 34.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5548
   type: FirelockGlass
   components:
   - pos: 25.5,-26.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5549
   type: ComputerPowerMonitoring
   components:
@@ -34835,6 +34906,8 @@ entities:
   - pos: 10.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 5572
   type: CableApcExtension
   components:
@@ -34952,6 +35025,8 @@ entities:
   - pos: -12.5,-24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -34965,6 +35040,8 @@ entities:
   - pos: -12.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -34978,6 +35055,8 @@ entities:
   - pos: -12.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -35049,6 +35128,8 @@ entities:
   - pos: -3.5,-62.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5601
   type: WallReinforced
   components:
@@ -36114,12 +36195,16 @@ entities:
   - pos: -14.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5754
   type: FirelockGlass
   components:
   - pos: -12.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5755
   type: Windoor
   components:
@@ -36899,6 +36984,8 @@ entities:
   - pos: 28.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5880
   type: PlushieRGBee
   components:
@@ -37028,6 +37115,8 @@ entities:
   - pos: -10.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -37117,6 +37206,8 @@ entities:
   - pos: -10.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -37131,6 +37222,8 @@ entities:
     pos: 25.5,6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 5913
   type: CableHV
   components:
@@ -38187,6 +38280,8 @@ entities:
   - pos: -10.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -38200,6 +38295,8 @@ entities:
   - pos: 9.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -38273,6 +38370,8 @@ entities:
   - pos: 9.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -38286,6 +38385,8 @@ entities:
   - pos: 9.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -39050,6 +39151,8 @@ entities:
   - pos: 28.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6212
   type: CableApcExtension
   components:
@@ -39400,6 +39503,8 @@ entities:
   - pos: -14.5,-27.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6244
   type: APCBasic
   components:
@@ -40390,6 +40495,8 @@ entities:
   - pos: 79.5,-4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6402
   type: AirlockGlass
   components:
@@ -40774,6 +40881,8 @@ entities:
   - pos: 67.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6460
   type: WallReinforced
   components:
@@ -40798,12 +40907,16 @@ entities:
   - pos: 65.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6464
   type: FirelockGlass
   components:
   - pos: 66.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6465
   type: BedsheetSpawner
   components:
@@ -40822,12 +40935,16 @@ entities:
   - pos: 67.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6468
   type: FirelockGlass
   components:
   - pos: 76.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6469
   type: Bed
   components:
@@ -40858,12 +40975,16 @@ entities:
   - pos: 77.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6474
   type: FirelockGlass
   components:
   - pos: 78.5,-42.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6475
   type: PortableScrubber
   components:
@@ -40964,12 +41085,16 @@ entities:
   - pos: 76.5,-38.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6489
   type: FirelockGlass
   components:
   - pos: 77.5,-38.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6490
   type: PottedPlant10
   components:
@@ -42042,6 +42167,8 @@ entities:
   - pos: 21.5,24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6652
   type: AirlockGlass
   components:
@@ -42241,36 +42368,48 @@ entities:
   - pos: 15.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6683
   type: FirelockGlass
   components:
   - pos: 14.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6684
   type: FirelockGlass
   components:
   - pos: 16.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6685
   type: FirelockGlass
   components:
   - pos: 16.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6686
   type: FirelockGlass
   components:
   - pos: 14.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6687
   type: FirelockGlass
   components:
   - pos: 15.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6688
   type: VendingMachineTheater
   components:
@@ -42305,6 +42444,8 @@ entities:
   - pos: 8.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6691
   type: DisposalUnit
   components:
@@ -42472,6 +42613,8 @@ entities:
   - pos: 8.5,-30.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6715
   type: SubstationBasic
   components:
@@ -42750,6 +42893,8 @@ entities:
   - pos: -16.5,-20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6761
   type: CableHV
   components:
@@ -43652,12 +43797,16 @@ entities:
   - pos: -17.5,-20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6911
   type: FirelockGlass
   components:
   - pos: 8.5,-31.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6912
   type: ChairFolding
   components:
@@ -43698,6 +43847,8 @@ entities:
   - pos: -9.5,-31.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 6918
   type: WardrobeWhiteFilled
   components:
@@ -44432,6 +44583,8 @@ entities:
   - pos: 46.5,8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7032
   type: DisposalPipe
   components:
@@ -44487,6 +44640,8 @@ entities:
   - pos: -35.5,-2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7041
   type: GasPipeStraight
   components:
@@ -44507,6 +44662,8 @@ entities:
   - pos: -52.5,-0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7044
   type: WindowDirectional
   components:
@@ -44742,6 +44899,8 @@ entities:
   - pos: -52.5,-2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7079
   type: GasPipeStraight
   components:
@@ -45152,6 +45311,8 @@ entities:
   - pos: -6.5,-1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7141
   type: CableMV
   components:
@@ -45190,6 +45351,8 @@ entities:
   - pos: 5.5,-0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7147
   type: ReinforcedWindow
   components:
@@ -45202,6 +45365,8 @@ entities:
   - pos: -6.5,-2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7149
   type: Catwalk
   components:
@@ -45214,6 +45379,8 @@ entities:
   - pos: -6.5,-0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7151
   type: DisposalPipe
   components:
@@ -45425,6 +45592,8 @@ entities:
   - pos: -52.5,-1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7181
   type: CarpetGreen
   components:
@@ -45908,6 +46077,8 @@ entities:
   - pos: 41.5,-4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7253
   type: APCBasic
   components:
@@ -46688,6 +46859,8 @@ entities:
   - pos: -4.5,33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7358
   type: Grille
   components:
@@ -46894,6 +47067,8 @@ entities:
   - pos: 5.5,-1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7391
   type: WallReinforced
   components:
@@ -46912,6 +47087,8 @@ entities:
   - pos: 5.5,-2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7394
   type: WallReinforced
   components:
@@ -46984,6 +47161,8 @@ entities:
   - pos: -5.5,33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7406
   type: WallSolid
   components:
@@ -50483,6 +50662,8 @@ entities:
   - pos: 39.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7982
   type: WallSolid
   components:
@@ -50555,6 +50736,8 @@ entities:
   - pos: 41.5,-37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 7994
   type: WallReinforced
   components:
@@ -50609,6 +50792,8 @@ entities:
   - pos: 34.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8003
   type: WallSolid
   components:
@@ -51733,6 +51918,8 @@ entities:
   - pos: -3.5,-63.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8185
   type: CableHV
   components:
@@ -51824,6 +52011,8 @@ entities:
   - pos: -15.5,19.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8200
   type: WeaponCapacitorRecharger
   components:
@@ -53126,13 +53315,13 @@ entities:
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
+  - fixtures: []
+    type: Fixtures
   - id: Boxstation
     type: BecomesStation
   - gravityShakeSound: !type:SoundPathSpecifier
       path: /Audio/Effects/alert.ogg
     type: Gravity
-  - fixtures: []
-    type: Fixtures
   - chunkCollection:
       -1,1:
         0:
@@ -63241,7 +63430,7 @@ entities:
       -9,-13: 0
       -9,-12: 0
       -9,-11: 0
-      -9,-10: 0
+      -9,-10: 1
       -9,-9: 0
       -9,-8: 0
       -9,-7: 0
@@ -63543,7 +63732,7 @@ entities:
       10,5: 0
       10,6: 0
       10,7: 0
-      10,8: 0
+      10,8: 1
       10,9: 0
       10,10: 0
       10,11: 0
@@ -63559,7 +63748,7 @@ entities:
       11,5: 0
       11,6: 0
       11,7: 0
-      11,8: 0
+      11,8: 1
       11,9: 0
       11,10: 0
       11,11: 0
@@ -63591,7 +63780,7 @@ entities:
       13,5: 0
       13,6: 0
       13,7: 0
-      13,8: 0
+      13,8: 1
       13,9: 0
       13,10: 0
       13,11: 0
@@ -63607,7 +63796,7 @@ entities:
       14,5: 0
       14,6: 0
       14,7: 0
-      14,8: 0
+      14,8: 1
       14,9: 0
       14,10: 0
       14,11: 0
@@ -63748,7 +63937,7 @@ entities:
       7,-13: 0
       7,-12: 0
       7,-11: 0
-      7,-10: 0
+      7,-10: 1
       7,-9: 0
       7,-8: 0
       7,-7: 0
@@ -64003,7 +64192,7 @@ entities:
       -9,12: 0
       -9,13: 0
       -9,14: 0
-      -9,15: 0
+      -9,15: 1
       -8,0: 0
       -8,1: 0
       -8,2: 0
@@ -64352,7 +64541,7 @@ entities:
       29,-5: 0
       29,-4: 0
       29,-3: 0
-      29,-2: 0
+      29,-2: 1
       29,-1: 0
       30,-16: 0
       30,-15: 0
@@ -64443,7 +64632,7 @@ entities:
       -29,-10: 0
       -29,-9: 0
       -29,-8: 0
-      -29,-7: 0
+      -29,-7: 1
       -29,-6: 0
       -29,-5: 0
       -29,-4: 0
@@ -64482,7 +64671,7 @@ entities:
       -27,-3: 0
       -27,-2: 0
       -27,-1: 0
-      -26,-16: 0
+      -26,-16: 1
       -26,-15: 0
       -26,-14: 0
       -26,-13: 0
@@ -64526,7 +64715,7 @@ entities:
       -24,-7: 0
       -24,-6: 0
       -24,-5: 0
-      -24,-4: 0
+      -24,-4: 1
       -24,-3: 0
       -24,-2: 0
       -24,-1: 0
@@ -64586,7 +64775,7 @@ entities:
       -20,-11: 0
       -20,-10: 0
       -20,-9: 0
-      -20,-8: 0
+      -20,-8: 1
       -20,-7: 0
       -20,-6: 0
       -20,-5: 0
@@ -64660,12 +64849,12 @@ entities:
       -32,-17: 0
       -31,-32: 0
       -31,-31: 0
-      -31,-30: 0
+      -31,-30: 1
       -31,-29: 0
       -31,-28: 0
-      -31,-27: 0
+      -31,-27: 1
       -31,-26: 0
-      -31,-25: 0
+      -31,-25: 1
       -31,-24: 0
       -31,-23: 0
       -31,-22: 0
@@ -64786,7 +64975,7 @@ entities:
       -24,-19: 0
       -24,-18: 0
       -24,-17: 0
-      -23,-32: 0
+      -23,-32: 1
       -23,-31: 0
       -23,-30: 0
       -23,-29: 0
@@ -65003,7 +65192,7 @@ entities:
       22,-26: 0
       22,-25: 0
       22,-24: 0
-      22,-23: 0
+      22,-23: 1
       22,-22: 0
       22,-21: 0
       22,-20: 0
@@ -65027,7 +65216,7 @@ entities:
       23,-18: 0
       23,-17: 0
       24,-32: 0
-      24,-31: 0
+      24,-31: 1
       24,-30: 0
       24,-29: 0
       24,-28: 0
@@ -65142,7 +65331,7 @@ entities:
       31,-31: 0
       31,-30: 0
       31,-29: 0
-      31,-28: 0
+      31,-28: 1
       31,-27: 0
       31,-26: 0
       31,-25: 0
@@ -65158,7 +65347,7 @@ entities:
       0,-31: 0
       0,-30: 0
       0,-29: 0
-      0,-28: 0
+      0,-28: 1
       0,-27: 0
       0,-26: 0
       0,-25: 0
@@ -65247,7 +65436,7 @@ entities:
       6,-26: 0
       6,-25: 0
       6,-24: 0
-      6,-23: 0
+      6,-23: 1
       6,-22: 0
       6,-21: 0
       6,-20: 0
@@ -65466,7 +65655,7 @@ entities:
       -12,-31: 0
       -12,-30: 0
       -12,-29: 0
-      -12,-28: 0
+      -12,-28: 1
       -12,-27: 0
       -12,-26: 0
       -12,-25: 0
@@ -65614,7 +65803,7 @@ entities:
       -2,-31: 0
       -2,-30: 0
       -2,-29: 0
-      -2,-28: 0
+      -2,-28: 1
       -2,-27: 0
       -2,-26: 0
       -2,-25: 0
@@ -65747,7 +65936,7 @@ entities:
       -25,12: 0
       -24,0: 0
       -24,1: 0
-      -24,2: 0
+      -24,2: 1
       -24,3: 0
       -24,4: 0
       -24,5: 0
@@ -65764,7 +65953,7 @@ entities:
       -23,2: 0
       -23,3: 0
       -23,4: 0
-      -23,5: 0
+      -23,5: 1
       -23,6: 0
       -23,7: 0
       -23,8: 0
@@ -65902,7 +66091,7 @@ entities:
       -30,-47: 0
       -30,-46: 0
       -30,-45: 0
-      -30,-44: 0
+      -30,-44: 1
       -30,-43: 0
       -30,-42: 0
       -30,-41: 0
@@ -65918,7 +66107,7 @@ entities:
       -29,-47: 0
       -29,-46: 0
       -29,-45: 0
-      -29,-44: 0
+      -29,-44: 1
       -29,-43: 0
       -29,-42: 0
       -29,-41: 0
@@ -66000,10 +66189,10 @@ entities:
       -24,-41: 0
       -24,-40: 0
       -24,-39: 0
-      -24,-38: 0
-      -24,-37: 0
-      -24,-36: 0
-      -24,-35: 0
+      -24,-38: 1
+      -24,-37: 1
+      -24,-36: 1
+      -24,-35: 1
       -24,-34: 0
       -24,-33: 0
       -23,-48: 0
@@ -66184,7 +66373,7 @@ entities:
       -11,-45: 0
       -11,-44: 0
       -11,-43: 0
-      -11,-42: 0
+      -11,-42: 1
       -11,-41: 0
       -11,-40: 0
       -11,-39: 0
@@ -66200,7 +66389,7 @@ entities:
       -10,-45: 0
       -10,-44: 0
       -10,-43: 0
-      -10,-42: 0
+      -10,-42: 1
       -10,-41: 0
       -10,-40: 0
       -10,-39: 0
@@ -66214,7 +66403,7 @@ entities:
       -9,-47: 0
       -9,-46: 0
       -9,-45: 0
-      -9,-44: 0
+      -9,-44: 1
       -9,-43: 0
       -9,-42: 0
       -9,-41: 0
@@ -66280,7 +66469,7 @@ entities:
       -5,-45: 0
       -5,-44: 0
       -5,-43: 0
-      -5,-42: 0
+      -5,-42: 1
       -5,-41: 0
       -5,-40: 0
       -5,-39: 0
@@ -66296,7 +66485,7 @@ entities:
       -4,-45: 0
       -4,-44: 0
       -4,-43: 0
-      -4,-42: 0
+      -4,-42: 1
       -4,-41: 0
       -4,-40: 0
       -4,-39: 0
@@ -66377,7 +66566,7 @@ entities:
       1,-44: 0
       1,-43: 0
       1,-42: 0
-      1,-41: 0
+      1,-41: 1
       1,-40: 0
       1,-39: 0
       1,-38: 0
@@ -66402,7 +66591,7 @@ entities:
       2,-35: 0
       2,-34: 0
       2,-33: 0
-      3,-48: 0
+      3,-48: 1
       3,-47: 0
       3,-46: 0
       3,-45: 0
@@ -66653,7 +66842,7 @@ entities:
       18,-40: 0
       18,-39: 0
       18,-38: 0
-      18,-37: 0
+      18,-37: 1
       18,-36: 0
       18,-35: 0
       18,-34: 0
@@ -66669,7 +66858,7 @@ entities:
       19,-40: 0
       19,-39: 0
       19,-38: 0
-      19,-37: 0
+      19,-37: 1
       19,-36: 0
       19,-35: 0
       19,-34: 0
@@ -66717,8 +66906,8 @@ entities:
       22,-40: 0
       22,-39: 0
       22,-38: 0
-      22,-37: 0
-      22,-36: 0
+      22,-37: 1
+      22,-36: 1
       22,-35: 0
       22,-34: 0
       22,-33: 0
@@ -66749,7 +66938,7 @@ entities:
       24,-40: 0
       24,-39: 0
       24,-38: 0
-      24,-37: 0
+      24,-37: 1
       24,-36: 0
       24,-35: 0
       24,-34: 0
@@ -66770,12 +66959,12 @@ entities:
       25,-35: 0
       25,-34: 0
       25,-33: 0
-      26,-48: 1
-      26,-47: 1
+      26,-48: 2
+      26,-47: 2
       26,-46: 0
-      26,-45: 2
-      26,-44: 2
-      26,-43: 2
+      26,-45: 3
+      26,-44: 3
+      26,-43: 3
       26,-42: 0
       26,-41: 0
       26,-40: 0
@@ -66786,12 +66975,12 @@ entities:
       26,-35: 0
       26,-34: 0
       26,-33: 0
-      27,-48: 1
-      27,-47: 1
+      27,-48: 2
+      27,-47: 2
       27,-46: 0
-      27,-45: 2
-      27,-44: 2
-      27,-43: 2
+      27,-45: 3
+      27,-44: 3
+      27,-43: 3
       27,-42: 0
       27,-41: 0
       27,-40: 0
@@ -66802,12 +66991,12 @@ entities:
       27,-35: 0
       27,-34: 0
       27,-33: 0
-      28,-48: 1
-      28,-47: 1
+      28,-48: 2
+      28,-47: 2
       28,-46: 0
-      28,-45: 2
-      28,-44: 2
-      28,-43: 2
+      28,-45: 3
+      28,-44: 3
+      28,-43: 3
       28,-42: 0
       28,-41: 0
       28,-40: 0
@@ -67025,7 +67214,7 @@ entities:
       25,12: 0
       25,13: 0
       25,14: 0
-      25,15: 0
+      25,15: 1
       26,0: 0
       26,1: 0
       26,2: 0
@@ -67039,7 +67228,7 @@ entities:
       26,12: 0
       26,13: 0
       26,14: 0
-      26,15: 0
+      26,15: 1
       27,0: 0
       27,1: 0
       27,2: 0
@@ -67318,7 +67507,7 @@ entities:
       12,25: 0
       12,26: 0
       12,27: 0
-      12,28: 0
+      12,28: 1
       12,29: 0
       12,30: 0
       12,31: 0
@@ -67397,7 +67586,7 @@ entities:
       -15,24: 0
       -15,25: 0
       -15,26: 0
-      -15,27: 0
+      -15,27: 1
       -15,28: 0
       -15,29: 0
       -15,30: 0
@@ -67424,9 +67613,9 @@ entities:
       -13,19: 0
       -13,20: 0
       -13,21: 0
-      -13,22: 0
-      -13,23: 0
-      -13,24: 0
+      -13,22: 1
+      -13,23: 1
+      -13,24: 1
       -13,25: 0
       -13,26: 0
       -13,27: 0
@@ -67489,13 +67678,13 @@ entities:
       -9,20: 0
       -9,21: 0
       -9,22: 0
-      -9,23: 0
+      -9,23: 1
       -9,24: 0
       -9,25: 0
       -9,26: 0
       -9,27: 0
       -9,28: 0
-      -9,29: 0
+      -9,29: 1
       -9,30: 0
       -9,31: 0
       -8,16: 0
@@ -67553,7 +67742,7 @@ entities:
       -5,20: 0
       -5,21: 0
       -5,22: 0
-      -5,23: 0
+      -5,23: 1
       -5,24: 0
       -5,25: 0
       -5,26: 0
@@ -67574,7 +67763,7 @@ entities:
       -4,25: 0
       -4,26: 0
       -4,27: 0
-      -4,28: 0
+      -4,28: 1
       -4,29: 0
       -4,30: 0
       -4,31: 0
@@ -67592,7 +67781,7 @@ entities:
       -3,27: 0
       -3,28: 0
       -3,29: 0
-      -3,30: 0
+      -3,30: 1
       -3,31: 0
       -2,16: 0
       -2,17: 0
@@ -67617,7 +67806,7 @@ entities:
       -1,20: 0
       -1,21: 0
       -1,22: 0
-      -1,23: 0
+      -1,23: 1
       -1,24: 0
       -1,25: 0
       -1,26: 0
@@ -67692,11 +67881,11 @@ entities:
       19,31: 0
       20,16: 0
       20,17: 0
-      20,18: 0
+      20,18: 1
       20,19: 0
       20,20: 0
       20,21: 0
-      20,22: 0
+      20,22: 1
       20,23: 0
       20,24: 0
       20,25: 0
@@ -67763,7 +67952,7 @@ entities:
       24,22: 0
       24,23: 0
       24,24: 0
-      24,25: 0
+      24,25: 1
       24,26: 0
       24,27: 0
       24,28: 0
@@ -67967,14 +68156,14 @@ entities:
       -10,47: 0
       -9,32: 0
       -9,33: 0
-      -9,34: 0
+      -9,34: 1
       -9,35: 0
       -9,36: 0
       -9,37: 0
       -9,38: 0
-      -9,39: 0
-      -9,40: 0
-      -9,41: 0
+      -9,39: 1
+      -9,40: 1
+      -9,41: 1
       -9,42: 0
       -9,43: 0
       -9,44: 0
@@ -67983,7 +68172,7 @@ entities:
       -9,47: 0
       -8,32: 0
       -8,33: 0
-      -8,34: 0
+      -8,34: 1
       -8,35: 0
       -8,36: 0
       -8,37: 0
@@ -68065,7 +68254,7 @@ entities:
       -3,34: 0
       -3,35: 0
       -3,36: 0
-      -3,37: 0
+      -3,37: 1
       -3,38: 0
       -3,39: 0
       -3,40: 0
@@ -68147,7 +68336,7 @@ entities:
       3,36: 0
       3,37: 0
       3,38: 0
-      3,39: 0
+      3,39: 1
       3,40: 0
       3,42: 0
       3,43: 0
@@ -68189,9 +68378,9 @@ entities:
       6,36: 0
       6,37: 0
       6,38: 0
-      6,39: 0
-      6,40: 0
-      6,41: 0
+      6,39: 1
+      6,40: 1
+      6,41: 1
       6,42: 0
       6,44: 0
       7,32: 0
@@ -68238,11 +68427,11 @@ entities:
       10,34: 0
       10,35: 0
       10,36: 0
-      10,37: 0
-      10,38: 0
-      10,39: 0
-      10,40: 0
-      10,41: 0
+      10,37: 1
+      10,38: 1
+      10,39: 1
+      10,40: 1
+      10,41: 1
       10,42: 0
       10,43: 0
       11,32: 0
@@ -68319,7 +68508,7 @@ entities:
       16,35: 0
       16,36: 0
       16,37: 0
-      16,38: 0
+      16,38: 1
       16,39: 0
       16,40: 0
       16,41: 0
@@ -68572,7 +68761,7 @@ entities:
       32,14: 0
       32,15: 0
       33,0: 0
-      33,1: 0
+      33,1: 1
       33,2: 0
       33,3: 0
       33,4: 0
@@ -68601,7 +68790,7 @@ entities:
       34,13: 0
       34,14: 0
       34,15: 0
-      35,0: 3
+      35,0: 4
       35,1: 0
       35,2: 0
       35,3: 0
@@ -68616,7 +68805,7 @@ entities:
       35,13: 0
       35,14: 0
       35,15: 0
-      36,0: 3
+      36,0: 5
       36,1: 0
       36,2: 0
       36,3: 0
@@ -68631,7 +68820,7 @@ entities:
       36,13: 0
       36,14: 0
       36,15: 0
-      37,0: 3
+      37,0: 5
       37,1: 0
       37,2: 0
       37,3: 0
@@ -68646,7 +68835,7 @@ entities:
       37,13: 0
       37,14: 0
       37,15: 0
-      38,0: 3
+      38,0: 5
       38,1: 0
       38,2: 0
       38,3: 0
@@ -68662,12 +68851,12 @@ entities:
       38,13: 0
       38,14: 0
       38,15: 0
-      39,0: 3
+      39,0: 5
       39,1: 0
       39,2: 0
       39,3: 0
       39,4: 0
-      39,5: 0
+      39,5: 1
       39,6: 0
       39,7: 0
       39,8: 0
@@ -68677,7 +68866,7 @@ entities:
       39,12: 0
       39,13: 0
       39,14: 0
-      40,0: 3
+      40,0: 5
       40,1: 0
       40,2: 0
       40,3: 0
@@ -68716,7 +68905,7 @@ entities:
       42,6: 0
       42,7: 0
       42,8: 0
-      42,9: 0
+      42,9: 1
       42,10: 0
       42,11: 0
       42,12: 0
@@ -68736,7 +68925,7 @@ entities:
       43,13: 0
       43,14: 0
       43,15: 0
-      44,0: 0
+      44,0: 1
       44,1: 0
       44,2: 0
       44,3: 0
@@ -68749,7 +68938,7 @@ entities:
       44,10: 0
       44,11: 0
       44,12: 0
-      45,0: 0
+      45,0: 1
       45,1: 0
       45,2: 0
       45,3: 0
@@ -68765,7 +68954,7 @@ entities:
       45,13: 0
       45,14: 0
       45,15: 0
-      46,0: 0
+      46,0: 1
       46,1: 0
       46,2: 0
       46,3: 0
@@ -68868,7 +69057,7 @@ entities:
       -20,16: 0
       -20,17: 0
       -20,18: 0
-      -20,19: 0
+      -20,19: 1
       -20,20: 0
       -20,21: 0
       -20,22: 0
@@ -68952,7 +69141,7 @@ entities:
       -21,37: 0
       -21,38: 0
       -21,39: 0
-      -21,40: 0
+      -21,40: 1
       -21,41: 0
       -21,42: 0
       -20,32: 0
@@ -68985,7 +69174,7 @@ entities:
       -18,37: 0
       -18,38: 0
       -18,39: 0
-      -18,40: 0
+      -18,40: 1
       -18,41: 0
       -18,42: 0
       -18,43: 0
@@ -69083,7 +69272,7 @@ entities:
       -47,12: 0
       -47,13: 0
       -47,14: 0
-      -47,15: 0
+      -47,15: 1
       -46,0: 0
       -46,1: 0
       -46,2: 0
@@ -69110,7 +69299,7 @@ entities:
       -45,7: 0
       -45,8: 0
       -45,9: 0
-      -45,10: 0
+      -45,10: 1
       -45,11: 0
       -45,12: 0
       -45,13: 0
@@ -69272,11 +69461,11 @@ entities:
       -34,3: 0
       -34,4: 0
       -34,5: 0
-      -34,6: 0
+      -34,6: 1
       -34,7: 0
       -34,9: 0
       -34,10: 0
-      -34,11: 0
+      -34,11: 1
       -34,12: 0
       -34,13: 0
       -34,14: 0
@@ -69352,9 +69541,9 @@ entities:
       -44,16: 0
       -44,17: 0
       -44,19: 0
-      -44,20: 0
+      -44,20: 1
       -44,21: 0
-      -44,22: 0
+      -44,22: 1
       -44,23: 0
       -44,26: 0
       -44,28: 0
@@ -69407,7 +69596,7 @@ entities:
       -39,16: 0
       -39,17: 0
       -39,18: 0
-      -39,19: 0
+      -39,19: 1
       -39,20: 0
       -39,21: 0
       -39,22: 0
@@ -69646,7 +69835,7 @@ entities:
       -62,2: 0
       -62,3: 0
       -62,4: 0
-      -62,5: 0
+      -62,5: 1
       -62,6: 0
       -62,7: 0
       -62,8: 0
@@ -69788,7 +69977,7 @@ entities:
       -53,0: 0
       -53,1: 0
       -53,2: 0
-      -53,3: 0
+      -53,3: 1
       -53,4: 0
       -53,5: 0
       -53,6: 0
@@ -69851,7 +70040,7 @@ entities:
       -50,15: 0
       -49,0: 0
       -49,1: 0
-      -49,2: 0
+      -49,2: 1
       -49,3: 0
       -49,4: 0
       -49,5: 0
@@ -69868,7 +70057,7 @@ entities:
       -80,7: 0
       -80,8: 0
       -80,9: 0
-      -80,10: 0
+      -80,10: 1
       -80,11: 0
       -79,7: 0
       -79,8: 0
@@ -69894,13 +70083,13 @@ entities:
       -76,10: 0
       -76,11: 0
       -75,6: 0
-      -75,7: 0
+      -75,7: 1
       -75,8: 0
       -75,9: 0
       -75,10: 0
       -75,11: 0
       -74,6: 0
-      -74,7: 0
+      -74,7: 1
       -74,8: 0
       -74,9: 0
       -74,10: 0
@@ -69918,7 +70107,7 @@ entities:
       -72,10: 0
       -72,11: 0
       -71,6: 0
-      -71,7: 0
+      -71,7: 1
       -71,8: 0
       -71,9: 0
       -71,10: 0
@@ -69997,8 +70186,8 @@ entities:
       -69,19: 0
       -69,20: 0
       -68,16: 0
-      -68,17: 0
-      -68,18: 0
+      -68,17: 1
+      -68,18: 1
       -68,19: 0
       -68,20: 0
       -68,21: 0
@@ -70036,14 +70225,14 @@ entities:
       -80,-5: 0
       -80,-4: 0
       -80,-3: 0
-      -79,-16: 0
+      -79,-16: 1
       -79,-15: 0
       -79,-14: 0
       -79,-13: 0
       -79,-7: 0
       -79,-6: 0
       -79,-5: 0
-      -79,-4: 0
+      -79,-4: 1
       -79,-3: 0
       -78,-16: 0
       -78,-15: 0
@@ -70092,7 +70281,7 @@ entities:
       -74,-6: 0
       -74,-5: 0
       -74,-4: 0
-      -74,-3: 0
+      -74,-3: 1
       -74,-2: 0
       -73,-16: 0
       -73,-15: 0
@@ -70122,7 +70311,7 @@ entities:
       -71,-6: 0
       -71,-5: 0
       -71,-4: 0
-      -71,-3: 0
+      -71,-3: 1
       -71,-2: 0
       -70,-16: 0
       -70,-15: 0
@@ -70175,11 +70364,11 @@ entities:
       -66,-15: 0
       -66,-14: 0
       -66,-13: 0
-      -66,-12: 0
+      -66,-12: 1
       -66,-11: 0
       -66,-10: 0
       -66,-9: 0
-      -66,-8: 0
+      -66,-8: 1
       -66,-7: 0
       -66,-6: 0
       -66,-5: 0
@@ -70349,7 +70538,7 @@ entities:
       -56,-1: 0
       -55,-16: 0
       -55,-15: 0
-      -55,-14: 0
+      -55,-14: 1
       -55,-13: 0
       -55,-12: 0
       -55,-11: 0
@@ -70387,7 +70576,7 @@ entities:
       -53,-11: 0
       -53,-10: 0
       -53,-9: 0
-      -53,-8: 0
+      -53,-8: 1
       -53,-7: 0
       -53,-6: 0
       -53,-5: 0
@@ -70435,8 +70624,8 @@ entities:
       -50,-11: 0
       -50,-10: 0
       -50,-9: 0
-      -50,-8: 0
-      -50,-7: 0
+      -50,-8: 1
+      -50,-7: 1
       -50,-6: 0
       -50,-5: 0
       -50,-4: 0
@@ -70466,11 +70655,11 @@ entities:
       -48,-12: 0
       -48,-11: 0
       -48,-10: 0
-      -48,-9: 0
-      -48,-8: 0
-      -48,-7: 0
-      -48,-6: 0
-      -48,-5: 0
+      -48,-9: 1
+      -48,-8: 1
+      -48,-7: 1
+      -48,-6: 1
+      -48,-5: 1
       -48,-4: 0
       -48,-3: 0
       -48,-2: 0
@@ -70523,7 +70712,7 @@ entities:
       -45,-3: 0
       -45,-2: 0
       -45,-1: 0
-      -44,-16: 0
+      -44,-16: 1
       -44,-15: 0
       -44,-14: 0
       -44,-13: 0
@@ -70560,7 +70749,7 @@ entities:
       -42,-14: 0
       -42,-13: 0
       -42,-12: 0
-      -42,-11: 0
+      -42,-11: 1
       -42,-10: 0
       -42,-9: 0
       -42,-8: 0
@@ -70641,12 +70830,12 @@ entities:
       -37,-13: 0
       -37,-12: 0
       -37,-11: 0
-      -37,-10: 0
-      -37,-9: 0
-      -37,-8: 0
-      -37,-7: 0
-      -37,-6: 0
-      -37,-5: 0
+      -37,-10: 1
+      -37,-9: 1
+      -37,-8: 1
+      -37,-7: 1
+      -37,-6: 1
+      -37,-5: 1
       -37,-4: 0
       -37,-3: 0
       -37,-2: 0
@@ -70768,7 +70957,7 @@ entities:
       51,5: 0
       51,6: 0
       51,7: 0
-      51,8: 0
+      51,8: 1
       51,9: 0
       51,10: 0
       51,11: 0
@@ -70905,7 +71094,7 @@ entities:
       59,14: 0
       59,15: 0
       60,0: 0
-      60,1: 0
+      60,1: 1
       60,2: 0
       60,3: 0
       60,4: 0
@@ -71027,11 +71216,11 @@ entities:
       35,-8: 0
       35,-7: 0
       35,-6: 0
-      35,-5: 0
+      35,-5: 1
       35,-4: 0
-      35,-3: 3
-      35,-2: 3
-      35,-1: 3
+      35,-3: 5
+      35,-2: 5
+      35,-1: 5
       36,-16: 0
       36,-15: 0
       36,-14: 0
@@ -71045,9 +71234,9 @@ entities:
       36,-6: 0
       36,-5: 0
       36,-4: 0
-      36,-3: 3
-      36,-2: 3
-      36,-1: 3
+      36,-3: 5
+      36,-2: 5
+      36,-1: 5
       37,-16: 0
       37,-15: 0
       37,-14: 0
@@ -71059,11 +71248,11 @@ entities:
       37,-8: 0
       37,-7: 0
       37,-6: 0
-      37,-5: 0
+      37,-5: 1
       37,-4: 0
-      37,-3: 3
-      37,-2: 3
-      37,-1: 3
+      37,-3: 5
+      37,-2: 5
+      37,-1: 5
       38,-16: 0
       38,-15: 0
       38,-14: 0
@@ -71077,9 +71266,9 @@ entities:
       38,-6: 0
       38,-5: 0
       38,-4: 0
-      38,-3: 3
-      38,-2: 3
-      38,-1: 3
+      38,-3: 5
+      38,-2: 5
+      38,-1: 5
       39,-16: 0
       39,-15: 0
       39,-14: 0
@@ -71093,9 +71282,9 @@ entities:
       39,-6: 0
       39,-5: 0
       39,-4: 0
-      39,-3: 3
-      39,-2: 3
-      39,-1: 3
+      39,-3: 5
+      39,-2: 5
+      39,-1: 5
       40,-16: 0
       40,-15: 0
       40,-14: 0
@@ -71109,9 +71298,9 @@ entities:
       40,-6: 0
       40,-5: 0
       40,-4: 0
-      40,-3: 3
-      40,-2: 3
-      40,-1: 3
+      40,-3: 5
+      40,-2: 5
+      40,-1: 5
       41,-16: 0
       41,-15: 0
       41,-14: 0
@@ -71382,9 +71571,9 @@ entities:
       64,27: 0
       64,28: 0
       65,16: 0
-      65,17: 0
-      65,18: 0
-      65,19: 0
+      65,17: 1
+      65,18: 6
+      65,19: 1
       65,20: 0
       65,21: 0
       65,22: 0
@@ -71579,7 +71768,7 @@ entities:
       72,7: 0
       72,8: 0
       72,9: 0
-      72,10: 0
+      72,10: 1
       72,11: 0
       72,12: 0
       72,13: 0
@@ -71915,7 +72104,7 @@ entities:
       61,-4: 0
       61,-3: 0
       61,-2: 0
-      61,-1: 0
+      61,-1: 1
       62,-16: 0
       62,-15: 0
       62,-14: 0
@@ -71947,7 +72136,7 @@ entities:
       63,-4: 0
       63,-3: 0
       63,-2: 0
-      63,-1: 0
+      63,-1: 1
       -80,-18: 0
       -80,-17: 0
       -79,-18: 0
@@ -71961,13 +72150,13 @@ entities:
       -75,-18: 0
       -75,-17: 0
       -74,-18: 0
-      -74,-17: 0
+      -74,-17: 1
       -73,-18: 0
       -73,-17: 0
       -72,-18: 0
       -72,-17: 0
       -71,-18: 0
-      -71,-17: 0
+      -71,-17: 1
       -70,-18: 0
       -70,-17: 0
       -69,-18: 0
@@ -72005,7 +72194,7 @@ entities:
       -61,-18: 0
       -61,-17: 0
       -60,-22: 0
-      -60,-21: 0
+      -60,-21: 1
       -60,-20: 0
       -60,-19: 0
       -60,-18: 0
@@ -72026,7 +72215,7 @@ entities:
       -58,-17: 0
       -57,-23: 0
       -57,-22: 0
-      -57,-21: 0
+      -57,-21: 1
       -57,-20: 0
       -57,-19: 0
       -57,-18: 0
@@ -72054,7 +72243,7 @@ entities:
       -53,-18: 0
       -53,-17: 0
       -52,-20: 0
-      -52,-19: 0
+      -52,-19: 1
       -52,-18: 0
       -52,-17: 0
       -51,-20: 0
@@ -72128,7 +72317,7 @@ entities:
       -42,-24: 0
       -42,-23: 0
       -42,-22: 0
-      -42,-21: 0
+      -42,-21: 1
       -42,-20: 0
       -42,-19: 0
       -42,-18: 0
@@ -72143,7 +72332,7 @@ entities:
       -41,-24: 0
       -41,-23: 0
       -41,-22: 0
-      -41,-21: 0
+      -41,-21: 1
       -41,-20: 0
       -41,-19: 0
       -41,-18: 0
@@ -72324,7 +72513,7 @@ entities:
       -39,-47: 0
       -39,-46: 0
       -39,-45: 0
-      -39,-44: 0
+      -39,-44: 1
       -39,-43: 0
       -39,-39: 0
       -39,-38: 0
@@ -72339,7 +72528,7 @@ entities:
       -38,-38: 0
       -38,-37: 0
       -37,-48: 0
-      -37,-47: 0
+      -37,-47: 1
       -37,-46: 0
       -37,-45: 0
       -37,-44: 0
@@ -72367,7 +72556,7 @@ entities:
       -35,-38: 0
       -35,-37: 0
       -35,-33: 0
-      -34,-48: 0
+      -34,-48: 1
       -34,-47: 0
       -34,-46: 0
       -34,-45: 0
@@ -72379,16 +72568,16 @@ entities:
       -34,-37: 0
       -34,-36: 0
       -34,-33: 0
-      -33,-48: 0
+      -33,-48: 1
       -33,-47: 0
       -33,-46: 0
       -33,-45: 0
-      -33,-44: 0
+      -33,-44: 1
       -33,-43: 0
       -33,-40: 0
       -33,-39: 0
       -33,-38: 0
-      -33,-37: 0
+      -33,-37: 1
       -33,-36: 0
       -33,-35: 0
       -33,-34: 0
@@ -72558,12 +72747,12 @@ entities:
       -22,-53: 0
       -22,-52: 0
       -22,-51: 0
-      -22,-50: 0
+      -22,-50: 1
       -22,-49: 0
       -21,-62: 0
       -21,-61: 0
       -21,-60: 0
-      -21,-59: 0
+      -21,-59: 1
       -21,-58: 0
       -21,-57: 0
       -21,-56: 0
@@ -72572,7 +72761,7 @@ entities:
       -21,-53: 0
       -21,-52: 0
       -21,-51: 0
-      -21,-50: 0
+      -21,-50: 1
       -21,-49: 0
       -20,-64: 0
       -20,-63: 0
@@ -72768,7 +72957,7 @@ entities:
       -9,-49: 0
       -8,-64: 0
       -8,-63: 0
-      -8,-62: 0
+      -8,-62: 1
       -8,-61: 0
       -8,-60: 0
       -8,-59: 0
@@ -72784,7 +72973,7 @@ entities:
       -8,-49: 0
       -7,-64: 0
       -7,-63: 0
-      -7,-62: 0
+      -7,-62: 1
       -7,-61: 0
       -7,-60: 0
       -7,-59: 0
@@ -72800,7 +72989,7 @@ entities:
       -7,-49: 0
       -6,-64: 0
       -6,-63: 0
-      -6,-62: 0
+      -6,-62: 1
       -6,-61: 0
       -6,-60: 0
       -6,-59: 0
@@ -72808,7 +72997,7 @@ entities:
       -6,-57: 0
       -6,-56: 0
       -6,-55: 0
-      -6,-54: 0
+      -6,-54: 1
       -6,-53: 0
       -6,-52: 0
       -6,-51: 0
@@ -72838,7 +73027,7 @@ entities:
       -4,-59: 0
       -4,-58: 0
       -4,-57: 0
-      -4,-56: 0
+      -4,-56: 1
       -4,-55: 0
       -4,-54: 0
       -4,-53: 0
@@ -72854,7 +73043,7 @@ entities:
       -3,-59: 0
       -3,-58: 0
       -3,-57: 0
-      -3,-56: 0
+      -3,-56: 1
       -3,-55: 0
       -3,-54: 0
       -3,-53: 0
@@ -72957,7 +73146,7 @@ entities:
       3,-52: 0
       3,-51: 0
       3,-50: 0
-      3,-49: 0
+      3,-49: 1
       4,-64: 0
       4,-63: 0
       4,-62: 0
@@ -72978,7 +73167,7 @@ entities:
       5,-63: 0
       5,-62: 0
       5,-61: 0
-      5,-60: 0
+      5,-60: 1
       5,-59: 0
       5,-58: 0
       5,-57: 0
@@ -72986,7 +73175,7 @@ entities:
       5,-55: 0
       5,-54: 0
       5,-53: 0
-      5,-52: 0
+      5,-52: 1
       5,-51: 0
       5,-50: 0
       5,-49: 0
@@ -73011,7 +73200,7 @@ entities:
       7,-62: 0
       7,-61: 0
       7,-60: 0
-      7,-59: 0
+      7,-59: 1
       7,-58: 0
       7,-57: 0
       7,-56: 0
@@ -73040,8 +73229,8 @@ entities:
       8,-49: 0
       9,-64: 0
       9,-63: 0
-      9,-62: 0
-      9,-61: 0
+      9,-62: 1
+      9,-61: 1
       9,-60: 0
       9,-59: 0
       9,-58: 0
@@ -73113,9 +73302,9 @@ entities:
       13,-56: 0
       13,-55: 0
       13,-54: 0
-      13,-53: 0
-      13,-52: 0
-      13,-51: 0
+      13,-53: 1
+      13,-52: 1
+      13,-51: 1
       13,-50: 0
       13,-49: 0
       14,-64: 0
@@ -73232,11 +73421,11 @@ entities:
       36,-33: 0
       37,-48: 0
       37,-47: 0
-      37,-46: 0
+      37,-46: 1
       37,-45: 0
       37,-44: 0
-      37,-43: 0
-      37,-42: 0
+      37,-43: 1
+      37,-42: 1
       37,-41: 0
       37,-40: 0
       37,-39: 0
@@ -73414,7 +73603,7 @@ entities:
       32,-27: 0
       32,-26: 0
       32,-25: 0
-      32,-24: 0
+      32,-24: 1
       32,-23: 0
       32,-22: 0
       32,-21: 0
@@ -73530,7 +73719,7 @@ entities:
       39,-23: 0
       39,-22: 0
       39,-21: 0
-      39,-20: 0
+      39,-20: 1
       39,-19: 0
       39,-18: 0
       39,-17: 0
@@ -73578,13 +73767,13 @@ entities:
       42,-23: 0
       42,-22: 0
       42,-21: 0
-      42,-20: 0
-      42,-19: 0
-      42,-18: 0
+      42,-20: 6
+      42,-19: 6
+      42,-18: 6
       42,-17: 0
       43,-32: 0
       43,-31: 0
-      43,-30: 0
+      43,-30: 1
       43,-29: 0
       43,-28: 0
       43,-27: 0
@@ -73598,7 +73787,7 @@ entities:
       43,-19: 0
       43,-18: 0
       43,-17: 0
-      44,-32: 0
+      44,-32: 1
       44,-31: 0
       44,-30: 0
       44,-29: 0
@@ -73642,13 +73831,13 @@ entities:
       46,-23: 0
       46,-22: 0
       46,-21: 0
-      46,-20: 0
-      46,-19: 0
-      46,-18: 0
-      46,-17: 0
+      46,-20: 1
+      46,-19: 6
+      46,-18: 6
+      46,-17: 6
       47,-32: 0
       47,-31: 0
-      47,-30: 0
+      47,-30: 1
       47,-29: 0
       47,-28: 0
       47,-27: 0
@@ -73665,7 +73854,7 @@ entities:
       32,-64: 0
       32,-63: 0
       32,-62: 0
-      32,-61: 0
+      32,-61: 1
       32,-60: 0
       32,-59: 0
       32,-58: 0
@@ -73757,7 +73946,7 @@ entities:
       37,-52: 0
       37,-51: 0
       37,-50: 0
-      37,-49: 0
+      37,-49: 1
       38,-64: 0
       38,-63: 0
       38,-62: 0
@@ -73793,7 +73982,7 @@ entities:
       40,-64: 0
       40,-63: 0
       40,-62: 0
-      40,-61: 0
+      40,-61: 1
       40,-60: 0
       40,-59: 0
       40,-58: 0
@@ -73807,7 +73996,7 @@ entities:
       40,-50: 0
       40,-49: 0
       41,-64: 0
-      41,-63: 0
+      41,-63: 1
       41,-62: 0
       41,-61: 0
       41,-60: 0
@@ -73816,9 +74005,9 @@ entities:
       41,-57: 0
       41,-56: 0
       41,-55: 0
-      41,-54: 0
-      41,-53: 0
-      41,-52: 0
+      41,-54: 1
+      41,-53: 1
+      41,-52: 1
       41,-51: 0
       41,-50: 0
       41,-49: 0
@@ -73928,7 +74117,7 @@ entities:
       48,-25: 0
       48,-24: 0
       48,-23: 0
-      48,-22: 0
+      48,-22: 1
       48,-21: 0
       48,-20: 0
       48,-19: 0
@@ -73950,8 +74139,8 @@ entities:
       49,-19: 0
       49,-18: 0
       49,-17: 0
-      50,-32: 0
-      50,-31: 0
+      50,-32: 1
+      50,-31: 1
       50,-30: 0
       50,-29: 0
       50,-28: 0
@@ -73989,7 +74178,7 @@ entities:
       52,-28: 0
       52,-27: 0
       52,-26: 0
-      52,-25: 0
+      52,-25: 1
       52,-24: 0
       52,-23: 0
       52,-22: 0
@@ -74037,7 +74226,7 @@ entities:
       55,-28: 0
       55,-27: 0
       55,-26: 0
-      55,-25: 0
+      55,-25: 1
       55,-24: 0
       55,-23: 0
       55,-22: 0
@@ -74096,7 +74285,7 @@ entities:
       58,-17: 0
       59,-32: 0
       59,-31: 0
-      59,-30: 0
+      59,-30: 1
       59,-29: 0
       59,-28: 0
       59,-27: 0
@@ -74202,9 +74391,9 @@ entities:
       65,-23: 0
       65,-22: 0
       65,-21: 0
-      65,-20: 0
+      65,-20: 1
       65,-19: 0
-      65,-18: 0
+      65,-18: 1
       65,-17: 0
       66,-32: 0
       66,-31: 0
@@ -74254,7 +74443,7 @@ entities:
       68,-19: 0
       68,-18: 0
       68,-17: 0
-      69,-32: 0
+      69,-32: 1
       69,-31: 0
       69,-30: 0
       69,-29: 0
@@ -74270,7 +74459,7 @@ entities:
       69,-19: 0
       69,-18: 0
       69,-17: 0
-      70,-32: 0
+      70,-32: 1
       70,-31: 0
       70,-30: 0
       70,-29: 0
@@ -74286,7 +74475,7 @@ entities:
       70,-19: 0
       70,-18: 0
       70,-17: 0
-      71,-32: 0
+      71,-32: 1
       71,-31: 0
       71,-30: 0
       71,-29: 0
@@ -74302,7 +74491,7 @@ entities:
       71,-19: 0
       71,-18: 0
       71,-17: 0
-      72,-32: 0
+      72,-32: 1
       72,-31: 0
       72,-30: 0
       72,-29: 0
@@ -74318,7 +74507,7 @@ entities:
       72,-19: 0
       72,-18: 0
       72,-17: 0
-      73,-32: 0
+      73,-32: 1
       73,-31: 0
       73,-30: 0
       73,-29: 0
@@ -74336,11 +74525,11 @@ entities:
       73,-17: 0
       74,-32: 0
       74,-31: 0
-      74,-30: 0
+      74,-30: 1
       74,-29: 0
       74,-28: 0
       74,-27: 0
-      74,-26: 0
+      74,-26: 1
       74,-25: 0
       74,-24: 0
       74,-23: 0
@@ -74406,7 +74595,7 @@ entities:
       78,-27: 0
       78,-26: 0
       78,-25: 0
-      78,-24: 0
+      78,-24: 1
       78,-23: 0
       78,-22: 0
       78,-21: 0
@@ -74437,7 +74626,7 @@ entities:
       80,-27: 0
       80,-26: 0
       80,-25: 0
-      80,-24: 0
+      80,-24: 1
       80,-23: 0
       80,-22: 0
       80,-21: 0
@@ -74497,7 +74686,7 @@ entities:
       84,-26: 0
       84,-25: 0
       84,-24: 0
-      84,-23: 0
+      84,-23: 1
       84,-22: 0
       84,-21: 0
       84,-20: 0
@@ -74517,7 +74706,7 @@ entities:
       85,-20: 0
       85,-19: 0
       85,-18: 0
-      86,-32: 0
+      86,-32: 1
       86,-31: 0
       86,-30: 0
       86,-29: 0
@@ -74541,7 +74730,7 @@ entities:
       87,-23: 0
       87,-22: 0
       87,-21: 0
-      88,-32: 0
+      88,-32: 1
       88,-31: 0
       88,-30: 0
       88,-29: 0
@@ -74551,7 +74740,7 @@ entities:
       88,-25: 0
       88,-24: 0
       88,-23: 0
-      89,-32: 0
+      89,-32: 1
       89,-31: 0
       89,-30: 0
       89,-29: 0
@@ -74561,7 +74750,7 @@ entities:
       89,-25: 0
       89,-24: 0
       89,-23: 0
-      90,-32: 0
+      90,-32: 1
       90,-31: 0
       90,-30: 0
       90,-29: 0
@@ -74579,7 +74768,7 @@ entities:
       91,-27: 0
       91,-26: 0
       91,-25: 0
-      91,-24: 0
+      91,-24: 1
       91,-23: 0
       92,-32: 0
       92,-31: 0
@@ -74739,7 +74928,7 @@ entities:
       72,-41: 0
       72,-40: 0
       72,-39: 0
-      72,-38: 0
+      72,-38: 1
       72,-37: 0
       72,-36: 0
       72,-35: 0
@@ -74749,7 +74938,7 @@ entities:
       73,-47: 0
       73,-46: 0
       73,-45: 0
-      73,-44: 0
+      73,-44: 1
       73,-43: 0
       73,-42: 0
       73,-41: 0
@@ -74765,7 +74954,7 @@ entities:
       74,-47: 0
       74,-46: 0
       74,-45: 0
-      74,-44: 0
+      74,-44: 1
       74,-43: 0
       74,-42: 0
       74,-41: 0
@@ -75141,8 +75330,8 @@ entities:
       65,-55: 0
       65,-54: 0
       65,-53: 0
-      65,-52: 0
-      65,-51: 0
+      65,-52: 1
+      65,-51: 1
       65,-50: 0
       65,-49: 0
       66,-64: 0
@@ -75183,7 +75372,7 @@ entities:
       68,-61: 0
       68,-60: 0
       68,-59: 0
-      68,-58: 0
+      68,-58: 1
       68,-57: 0
       68,-56: 0
       68,-55: 0
@@ -75434,7 +75623,7 @@ entities:
       84,-48: 0
       84,-47: 0
       84,-46: 0
-      84,-45: 0
+      84,-45: 1
       84,-44: 0
       84,-43: 0
       84,-42: 0
@@ -75478,7 +75667,7 @@ entities:
       86,-36: 0
       86,-35: 0
       86,-34: 0
-      86,-33: 0
+      86,-33: 1
       87,-48: 0
       87,-47: 0
       87,-46: 0
@@ -75535,7 +75724,7 @@ entities:
       95,-33: 0
       80,-64: 0
       80,-63: 0
-      80,-62: 0
+      80,-62: 1
       80,-61: 0
       80,-60: 0
       80,-59: 0
@@ -75567,7 +75756,7 @@ entities:
       81,-49: 0
       82,-64: 0
       82,-63: 0
-      82,-62: 0
+      82,-62: 1
       82,-61: 0
       82,-60: 0
       82,-59: 0
@@ -75598,7 +75787,7 @@ entities:
       83,-50: 0
       83,-49: 0
       84,-61: 0
-      84,-60: 0
+      84,-60: 1
       84,-59: 0
       84,-58: 0
       84,-57: 0
@@ -75627,7 +75816,7 @@ entities:
       86,-64: 0
       86,-63: 0
       86,-61: 0
-      86,-60: 0
+      86,-60: 1
       86,-59: 0
       86,-58: 0
       86,-57: 0
@@ -75635,8 +75824,8 @@ entities:
       86,-55: 0
       86,-54: 0
       86,-53: 0
-      86,-52: 0
-      86,-51: 0
+      86,-52: 1
+      86,-51: 1
       86,-50: 0
       86,-49: 0
       87,-64: 0
@@ -75727,8 +75916,8 @@ entities:
       50,-61: 0
       50,-60: 0
       50,-59: 0
-      50,-58: 0
-      50,-57: 0
+      50,-58: 1
+      50,-57: 1
       50,-56: 0
       50,-55: 0
       50,-54: 0
@@ -75759,7 +75948,7 @@ entities:
       52,-59: 0
       52,-58: 0
       52,-57: 0
-      52,-56: 0
+      52,-56: 1
       52,-55: 0
       52,-54: 0
       52,-53: 0
@@ -75778,8 +75967,8 @@ entities:
       53,-55: 0
       53,-54: 0
       53,-53: 0
-      53,-52: 2
-      53,-51: 2
+      53,-52: 3
+      53,-51: 3
       53,-50: 0
       53,-49: 0
       54,-64: 0
@@ -75820,7 +76009,7 @@ entities:
       56,-59: 0
       56,-58: 0
       56,-57: 0
-      56,-56: 0
+      56,-56: 1
       56,-55: 0
       56,-54: 0
       56,-53: 0
@@ -76113,7 +76302,7 @@ entities:
       75,-11: 0
       75,-10: 0
       75,-9: 0
-      75,-8: 0
+      75,-8: 1
       75,-7: 0
       75,-6: 0
       75,-5: 0
@@ -76174,11 +76363,11 @@ entities:
       79,-14: 0
       79,-13: 0
       79,-12: 0
-      79,-11: 0
+      79,-11: 1
       79,-10: 0
       79,-9: 0
       79,-8: 0
-      79,-7: 0
+      79,-7: 1
       79,-6: 0
       79,-5: 0
       79,-4: 0
@@ -76219,7 +76408,7 @@ entities:
       81,-1: 0
       82,-15: 0
       82,-14: 0
-      82,-13: 0
+      82,-13: 1
       82,-12: 0
       82,-11: 0
       82,-10: 0
@@ -76323,13 +76512,13 @@ entities:
       69,-68: 0
       69,-67: 0
       69,-66: 0
-      69,-65: 0
+      69,-65: 1
       70,-70: 0
       70,-69: 0
       70,-68: 0
       70,-67: 0
       70,-66: 0
-      70,-65: 0
+      70,-65: 1
       71,-77: 0
       71,-76: 0
       71,-75: 0
@@ -76556,7 +76745,7 @@ entities:
       49,-68: 0
       49,-67: 0
       49,-66: 0
-      49,-65: 0
+      49,-65: 1
       50,-70: 0
       50,-69: 0
       50,-68: 0
@@ -76586,7 +76775,7 @@ entities:
       63,-74: 0
       63,-73: 0
       63,-72: 0
-      63,-71: 0
+      63,-71: 1
       63,-70: 0
       63,-69: 0
       63,-68: 0
@@ -76674,7 +76863,7 @@ entities:
       40,-66: 0
       40,-65: 0
       41,-75: 0
-      41,-74: 0
+      41,-74: 1
       41,-73: 0
       41,-72: 0
       41,-71: 0
@@ -76758,9 +76947,9 @@ entities:
       16,-71: 0
       16,-70: 0
       16,-68: 0
-      16,-67: 4
-      16,-66: 4
-      16,-65: 4
+      16,-67: 7
+      16,-66: 7
+      16,-65: 7
       17,-75: 0
       17,-74: 0
       17,-73: 0
@@ -76768,9 +76957,9 @@ entities:
       17,-71: 0
       17,-70: 0
       17,-68: 0
-      17,-67: 4
-      17,-66: 4
-      17,-65: 4
+      17,-67: 7
+      17,-66: 7
+      17,-65: 7
       18,-75: 0
       18,-74: 0
       18,-73: 0
@@ -76778,9 +76967,9 @@ entities:
       18,-71: 0
       18,-70: 0
       18,-68: 0
-      18,-67: 4
-      18,-66: 4
-      18,-65: 4
+      18,-67: 7
+      18,-66: 7
+      18,-65: 7
       19,-75: 0
       19,-74: 0
       19,-73: 0
@@ -77045,39 +77234,39 @@ entities:
       26,-60: 0
       26,-59: 0
       26,-58: 0
-      26,-57: 2
-      26,-56: 2
-      26,-55: 2
+      26,-57: 3
+      26,-56: 3
+      26,-55: 3
       26,-54: 0
-      26,-53: 2
-      26,-52: 2
-      26,-51: 2
+      26,-53: 3
+      26,-52: 3
+      26,-51: 3
       26,-50: 0
-      26,-49: 1
+      26,-49: 2
       27,-63: 0
       27,-59: 0
       27,-58: 0
-      27,-57: 2
-      27,-56: 2
-      27,-55: 2
+      27,-57: 3
+      27,-56: 3
+      27,-55: 3
       27,-54: 0
-      27,-53: 2
-      27,-52: 2
-      27,-51: 2
+      27,-53: 3
+      27,-52: 3
+      27,-51: 3
       27,-50: 0
-      27,-49: 1
+      27,-49: 2
       28,-64: 0
       28,-59: 0
       28,-58: 0
-      28,-57: 2
-      28,-56: 2
-      28,-55: 2
+      28,-57: 3
+      28,-56: 3
+      28,-55: 3
       28,-54: 0
-      28,-53: 2
-      28,-52: 2
-      28,-51: 2
+      28,-53: 3
+      28,-52: 3
+      28,-51: 3
       28,-50: 0
-      28,-49: 1
+      28,-49: 2
       29,-59: 0
       29,-58: 0
       29,-57: 0
@@ -77195,9 +77384,9 @@ entities:
       -11,-77: 0
       -11,-76: 0
       -11,-75: 0
-      -11,-74: 0
-      -11,-73: 0
-      -11,-72: 0
+      -11,-74: 1
+      -11,-73: 1
+      -11,-72: 1
       -11,-71: 0
       -11,-70: 0
       -11,-69: 0
@@ -77252,7 +77441,7 @@ entities:
       -8,-68: 0
       -8,-67: 0
       -8,-66: 0
-      -8,-65: 0
+      -8,-65: 1
       -7,-80: 0
       -7,-79: 0
       -7,-78: 0
@@ -77332,7 +77521,7 @@ entities:
       -3,-68: 0
       -3,-67: 0
       -3,-66: 0
-      -3,-65: 0
+      -3,-65: 1
       -2,-80: 0
       -2,-79: 0
       -2,-78: 0
@@ -77364,7 +77553,7 @@ entities:
       -1,-68: 0
       -1,-67: 0
       -1,-66: 0
-      -1,-65: 0
+      -1,-65: 1
       -32,-76: 0
       -32,-75: 0
       -32,-74: 0
@@ -77467,7 +77656,7 @@ entities:
       -23,-68: 0
       -23,-67: 0
       -23,-66: 0
-      -23,-65: 0
+      -23,-65: 1
       -22,-80: 0
       -22,-79: 0
       -22,-78: 0
@@ -77491,7 +77680,7 @@ entities:
       -21,-76: 0
       -21,-75: 0
       -21,-74: 0
-      -21,-73: 0
+      -21,-73: 1
       -21,-72: 0
       -21,-71: 0
       -21,-70: 0
@@ -77521,14 +77710,14 @@ entities:
       -19,-70: 0
       -19,-69: 0
       -19,-68: 0
-      -19,-67: 0
+      -19,-67: 1
       -19,-66: 0
       -19,-65: 0
       -18,-75: 0
-      -18,-74: 0
-      -18,-73: 0
-      -18,-72: 0
-      -18,-71: 0
+      -18,-74: 1
+      -18,-73: 1
+      -18,-72: 1
+      -18,-71: 1
       -18,-70: 0
       -18,-69: 0
       -18,-68: 0
@@ -77859,7 +78048,7 @@ entities:
       1,-69: 0
       1,-68: 0
       1,-67: 0
-      1,-66: 0
+      1,-66: 1
       1,-65: 0
       2,-80: 0
       2,-79: 0
@@ -77981,7 +78170,7 @@ entities:
       9,-75: 0
       9,-74: 0
       9,-73: 0
-      9,-72: 0
+      9,-72: 1
       9,-71: 0
       9,-70: 0
       9,-69: 0
@@ -78008,11 +78197,11 @@ entities:
       11,-78: 0
       11,-77: 0
       11,-76: 0
-      11,-75: 0
+      11,-75: 1
       11,-74: 0
       11,-73: 0
       11,-72: 0
-      11,-71: 0
+      11,-71: 1
       11,-70: 0
       11,-68: 0
       11,-67: 0
@@ -78022,16 +78211,16 @@ entities:
       12,-78: 0
       12,-77: 0
       12,-76: 0
-      12,-75: 0
+      12,-75: 1
       12,-74: 0
       12,-73: 0
       12,-72: 0
       12,-71: 0
       12,-70: 0
       12,-68: 0
-      12,-67: 5
-      12,-66: 5
-      12,-65: 5
+      12,-67: 8
+      12,-66: 8
+      12,-65: 8
       13,-79: 0
       13,-78: 0
       13,-77: 0
@@ -78043,9 +78232,9 @@ entities:
       13,-71: 0
       13,-70: 0
       13,-68: 0
-      13,-67: 5
-      13,-66: 5
-      13,-65: 5
+      13,-67: 8
+      13,-66: 8
+      13,-65: 8
       14,-75: 0
       14,-74: 0
       14,-73: 0
@@ -78053,9 +78242,9 @@ entities:
       14,-71: 0
       14,-70: 0
       14,-68: 0
-      14,-67: 5
-      14,-66: 5
-      14,-65: 5
+      14,-67: 8
+      14,-66: 8
+      14,-65: 8
       15,-75: 0
       15,-74: 0
       15,-73: 0
@@ -78335,7 +78524,7 @@ entities:
       25,-85: 0
       25,-84: 0
       25,-83: 0
-      25,-82: 0
+      25,-82: 1
       25,-81: 0
       26,-96: 0
       26,-95: 0
@@ -80109,7 +80298,7 @@ entities:
       -11,58: 0
       -10,50: 0
       -10,52: 0
-      -10,53: 0
+      -10,53: 1
       -10,54: 0
       -10,56: 0
       -10,58: 0
@@ -80119,7 +80308,7 @@ entities:
       -9,56: 0
       -9,58: 0
       -8,50: 0
-      -8,52: 0
+      -8,52: 1
       -8,53: 0
       -8,54: 0
       -8,56: 0
@@ -80198,13 +80387,13 @@ entities:
       -23,48: 0
       -23,49: 0
       -23,50: 0
-      -23,51: 0
+      -23,51: 1
       -23,52: 0
       -23,53: 0
       -23,54: 0
       -23,55: 0
       -23,58: 0
-      -22,48: 0
+      -22,48: 1
       -22,49: 0
       -22,50: 0
       -22,51: 0
@@ -80229,7 +80418,7 @@ entities:
       -20,52: 0
       -20,55: 0
       -20,58: 0
-      -19,48: 0
+      -19,48: 1
       -19,49: 0
       -19,50: 0
       -19,51: 0
@@ -80256,6 +80445,21 @@ entities:
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
       - 0
       - 0
       - 0
@@ -80299,8 +80503,38 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 235
+      moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -80342,15 +80576,7 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - joints:
-      docking46345: !type:WeldJoint
-        bodyB: 11906
-        bodyA: 8364
-        id: docking46345
-        localAnchorB: -0.5,-1
-        localAnchorA: -66.5,22
-        damping: 42.40073
-        stiffness: 380.5881
+  - joints: {}
     type: Joint
   - type: OccluderTree
   - type: Shuttle
@@ -81910,6 +82136,8 @@ entities:
   - pos: 3.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -81923,6 +82151,8 @@ entities:
   - pos: 3.5,24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -81980,6 +82210,8 @@ entities:
   - pos: 2.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -81993,6 +82225,8 @@ entities:
   - pos: 1.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82197,6 +82431,8 @@ entities:
   - pos: 18.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82210,6 +82446,8 @@ entities:
   - pos: 17.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82223,6 +82461,8 @@ entities:
   - pos: 16.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82236,6 +82476,8 @@ entities:
   - pos: 15.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82249,6 +82491,8 @@ entities:
   - pos: 14.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82262,6 +82506,8 @@ entities:
   - pos: 13.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82275,6 +82521,8 @@ entities:
   - pos: 12.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -82979,8 +83227,7 @@ entities:
     parent: 8364
     type: Transform
   - fixtures:
-    - density: 100
-      shape: !type:PolygonShape
+    - shape: !type:PolygonShape
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -82998,9 +83245,10 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
+      density: 100
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -83111,6 +83359,8 @@ entities:
   - pos: -10.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83124,6 +83374,8 @@ entities:
   - pos: -9.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83137,6 +83389,8 @@ entities:
   - pos: -8.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83150,6 +83404,8 @@ entities:
   - pos: -6.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83163,6 +83419,8 @@ entities:
   - pos: -5.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83176,6 +83434,8 @@ entities:
   - pos: -4.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83189,6 +83449,8 @@ entities:
   - pos: -2.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83202,6 +83464,8 @@ entities:
   - pos: -1.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -83215,6 +83479,8 @@ entities:
   - pos: -0.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -84176,6 +84442,8 @@ entities:
   - pos: 1.5,34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8931
   type: GasPipeStraight
   components:
@@ -84208,6 +84476,8 @@ entities:
   - pos: 2.5,34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 8935
   type: WallReinforced
   components:
@@ -85333,6 +85603,8 @@ entities:
   - pos: -44.5,20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9105
   type: DisposalPipe
   components:
@@ -86080,6 +86352,8 @@ entities:
   - pos: -0.5,29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9220
   type: ComputerResearchAndDevelopment
   components:
@@ -86387,6 +86661,8 @@ entities:
   - pos: -1.5,18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9263
   type: WallReinforced
   components:
@@ -88860,6 +89136,8 @@ entities:
   - pos: -2.5,16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -88873,6 +89151,8 @@ entities:
   - pos: -2.5,15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -88886,6 +89166,8 @@ entities:
   - pos: -2.5,14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -88899,6 +89181,8 @@ entities:
   - pos: -5.5,18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -90042,6 +90326,8 @@ entities:
   - pos: 26.5,-26.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9812
   type: WallSolid
   components:
@@ -90114,6 +90400,8 @@ entities:
   - pos: -35.5,-1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9824
   type: WindowReinforcedDirectional
   components:
@@ -90126,12 +90414,16 @@ entities:
   - pos: -9.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9826
   type: FirelockGlass
   components:
   - pos: -9.5,-30.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9827
   type: CableApcExtension
   components:
@@ -90144,12 +90436,16 @@ entities:
   - pos: -35.5,-0.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9829
   type: FirelockGlass
   components:
   - pos: -15.5,-20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9830
   type: ComfyChair
   components:
@@ -90371,6 +90667,8 @@ entities:
   - pos: 32.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 9866
   type: CableApcExtension
   components:
@@ -91366,8 +91664,7 @@ entities:
     parent: 8364
     type: Transform
   - fixtures:
-    - density: 100
-      shape: !type:PolygonShape
+    - shape: !type:PolygonShape
         vertices:
         - 0.49,-0.49
         - 0.49,0.49
@@ -91385,9 +91682,10 @@ entities:
       - BulletImpassable
       - InteractImpassable
       - Opaque
+      density: 100
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -91988,6 +92286,8 @@ entities:
   - pos: -13.5,-59.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 10099
   type: CableApcExtension
   components:
@@ -94174,6 +94474,8 @@ entities:
   - pos: 35.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -94187,6 +94489,8 @@ entities:
   - pos: 36.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -94200,6 +94504,8 @@ entities:
   - pos: 37.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -94213,6 +94519,8 @@ entities:
   - pos: 38.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -94634,6 +94942,8 @@ entities:
   - pos: 47.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 10522
   type: WallSolid
   components:
@@ -94646,6 +94956,8 @@ entities:
   - pos: 48.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 10524
   type: WaterTankHighCapacity
   components:
@@ -95194,6 +95506,8 @@ entities:
   - pos: 8.5,35.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 10604
   type: FirelockEdge
   components:
@@ -95201,6 +95515,8 @@ entities:
     pos: 26.5,6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 10605
   type: AirlockMaintLocked
   components:
@@ -97832,6 +98148,8 @@ entities:
   - pos: 8.5,-38.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11002
   type: Catwalk
   components:
@@ -98848,6 +99166,8 @@ entities:
   - pos: -17.5,-43.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11164
   type: SolarPanel
   components:
@@ -99985,8 +100305,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -100017,8 +100337,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -100282,6 +100602,8 @@ entities:
   - pos: 1.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11378
   type: AirlockGlass
   components:
@@ -101345,6 +101667,8 @@ entities:
   - pos: 18.5,-38.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11554
   type: PoweredSmallLight
   components:
@@ -101696,12 +102020,16 @@ entities:
   - pos: 3.5,24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11600
   type: FirelockGlass
   components:
   - pos: 0.5,18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11601
   type: PottedPlant12
   components:
@@ -101720,18 +102048,24 @@ entities:
   - pos: 2.5,22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11604
   type: FirelockGlass
   components:
   - pos: 3.5,23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11605
   type: FirelockGlass
   components:
   - pos: -0.5,18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11606
   type: ComputerCrewMonitoring
   components:
@@ -102459,6 +102793,8 @@ entities:
   - pos: 35.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11720
   type: SolarPanel
   components:
@@ -102477,6 +102813,8 @@ entities:
   - pos: -58.5,2.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11723
   type: SolarPanel
   components:
@@ -102495,6 +102833,8 @@ entities:
   - pos: 34.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 11726
   type: SolarPanel
   components:
@@ -103701,15 +104041,7 @@ entities:
     type: Gravity
   - chunkCollection: {}
     type: DecalGrid
-  - joints:
-      docking46345: !type:WeldJoint
-        bodyB: 11906
-        bodyA: 8364
-        id: docking46345
-        localAnchorB: -0.5,-1
-        localAnchorA: -66.5,22
-        damping: 42.40073
-        stiffness: 380.5881
+  - joints: {}
     type: Joint
   - type: OccluderTree
   - type: Shuttle
@@ -104703,6 +105035,8 @@ entities:
   - pos: 65.5,-58.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 12065
   type: ComputerMedicalRecords
   components:
@@ -107264,8 +107598,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107295,8 +107629,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107327,8 +107661,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107359,8 +107693,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107391,8 +107725,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107423,8 +107757,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107454,8 +107788,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107485,8 +107819,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -107517,8 +107851,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -108659,6 +108993,8 @@ entities:
   - pos: 32.5,-56.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 12659
   type: Catwalk
   components:
@@ -113187,24 +113523,32 @@ entities:
   - pos: 70.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13363
   type: FirelockGlass
   components:
   - pos: 62.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13364
   type: FirelockGlass
   components:
   - pos: 64.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13365
   type: FirelockGlass
   components:
   - pos: 65.5,-21.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13366
   type: WallReinforced
   components:
@@ -113217,30 +113561,40 @@ entities:
   - pos: 66.5,-21.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13368
   type: FirelockGlass
   components:
   - pos: 67.5,-21.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13369
   type: FirelockGlass
   components:
   - pos: 68.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13370
   type: FirelockGlass
   components:
   - pos: 68.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13371
   type: FirelockGlass
   components:
   - pos: 68.5,-24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13372
   type: CableMV
   components:
@@ -113283,54 +113637,72 @@ entities:
   - pos: 73.5,-12.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13379
   type: FirelockGlass
   components:
   - pos: 73.5,-13.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13380
   type: FirelockGlass
   components:
   - pos: 73.5,-14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13381
   type: FirelockGlass
   components:
   - pos: 38.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13382
   type: FirelockGlass
   components:
   - pos: 37.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13383
   type: FirelockGlass
   components:
   - pos: 36.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13384
   type: FirelockGlass
   components:
   - pos: 35.5,-10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13385
   type: FirelockGlass
   components:
   - pos: 18.5,-12.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13386
   type: FirelockGlass
   components:
   - pos: 18.5,-13.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13387
   type: CableApcExtension
   components:
@@ -113343,24 +113715,32 @@ entities:
   - pos: 18.5,-14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13389
   type: FirelockGlass
   components:
   - pos: 41.5,-12.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13390
   type: FirelockGlass
   components:
   - pos: 41.5,-13.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13391
   type: FirelockGlass
   components:
   - pos: 41.5,-14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13392
   type: CableApcExtension
   components:
@@ -113379,6 +113759,8 @@ entities:
   - pos: 41.5,-6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13395
   type: Catwalk
   components:
@@ -113445,6 +113827,8 @@ entities:
   - pos: 20.5,24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13406
   type: Autolathe
   components:
@@ -113793,6 +114177,8 @@ entities:
   - pos: 17.5,17.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13462
   type: Catwalk
   components:
@@ -113865,6 +114251,8 @@ entities:
   - pos: -18.5,-18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 13474
   type: AirlockGlass
   components:
@@ -117802,6 +118190,8 @@ entities:
   - pos: 7.5,-46.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14080
   type: PoweredSmallLight
   components:
@@ -117894,12 +118284,16 @@ entities:
   - pos: 25.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14094
   type: FirelockGlass
   components:
   - pos: 33.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14095
   type: WallReinforced
   components:
@@ -118102,24 +118496,32 @@ entities:
   - pos: -12.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14127
   type: FirelockGlass
   components:
   - pos: -12.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14128
   type: FirelockGlass
   components:
   - pos: -12.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14129
   type: FirelockGlass
   components:
   - pos: 11.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14130
   type: WindowTintedDirectional
   components:
@@ -118252,6 +118654,8 @@ entities:
   - pos: 21.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -118265,6 +118669,8 @@ entities:
   - pos: 23.5,-19.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14150
   type: VendingMachineCigs
   components:
@@ -118292,6 +118698,8 @@ entities:
   - pos: -18.5,-24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14154
   type: Poweredlight
   components:
@@ -118380,6 +118788,8 @@ entities:
   - pos: -62.5,-5.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14168
   type: PottedPlantRandom
   components:
@@ -118428,6 +118838,8 @@ entities:
   - pos: -23.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14175
   type: CableApcExtension
   components:
@@ -118574,6 +118986,8 @@ entities:
   - pos: -24.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14193
   type: Sink
   components:
@@ -118674,6 +119088,8 @@ entities:
   - pos: 26.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14209
   type: WallReinforced
   components:
@@ -118782,6 +119198,8 @@ entities:
   - pos: 27.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14221
   type: WindowDirectional
   components:
@@ -119575,12 +119993,16 @@ entities:
   - pos: -62.5,1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14343
   type: FirelockGlass
   components:
   - pos: -62.5,-4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14344
   type: CableApcExtension
   components:
@@ -120985,6 +121407,8 @@ entities:
   - pos: -18.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14557
   type: Catwalk
   components:
@@ -121283,6 +121707,8 @@ entities:
   - pos: 11.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14602
   type: RandomSpawner
   components:
@@ -121460,6 +121886,8 @@ entities:
   - pos: 11.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14631
   type: SurveillanceCameraEngineering
   components:
@@ -121882,18 +122310,24 @@ entities:
   - pos: -1.5,-52.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14698
   type: FirelockGlass
   components:
   - pos: -0.5,-52.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14699
   type: FirelockGlass
   components:
   - pos: 0.5,-52.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14700
   type: Catwalk
   components:
@@ -123226,6 +123660,8 @@ entities:
   - pos: -13.5,11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 14922
   type: Catwalk
   components:
@@ -123841,6 +124277,8 @@ entities:
   - pos: -49.5,-18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15011
   type: Catwalk
   components:
@@ -124055,6 +124493,8 @@ entities:
   - pos: 60.5,11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15045
   type: GasPort
   components:
@@ -127143,6 +127583,8 @@ entities:
   - pos: 72.5,4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15528
   type: AirlockAtmosphericsGlassLocked
   components:
@@ -127421,6 +127863,8 @@ entities:
   - pos: 50.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15567
   type: Catwalk
   components:
@@ -128184,6 +128628,8 @@ entities:
   - pos: -61.5,11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15684
   type: Rack
   components:
@@ -128496,6 +128942,8 @@ entities:
   - pos: -28.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15730
   type: AirlockMaintMedLocked
   components:
@@ -128625,6 +129073,8 @@ entities:
   - pos: 34.5,3.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15751
   type: Catwalk
   components:
@@ -129530,6 +129980,8 @@ entities:
   - pos: 2.5,-44.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 15899
   type: AirlockExternalGlassLocked
   components:
@@ -133690,6 +134142,8 @@ entities:
   - pos: 2.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -133703,6 +134157,8 @@ entities:
   - pos: 2.5,-44.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -133716,6 +134172,8 @@ entities:
   - pos: 2.5,-43.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -134863,6 +135321,8 @@ entities:
   - pos: 3.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -134876,6 +135336,8 @@ entities:
   - pos: 4.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -134889,6 +135351,8 @@ entities:
   - pos: 5.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -137774,6 +138238,8 @@ entities:
   - pos: 9.5,-62.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -137787,6 +138253,8 @@ entities:
   - pos: 7.5,-62.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -137800,6 +138268,8 @@ entities:
   - pos: 8.5,-62.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140526,6 +140996,8 @@ entities:
   - pos: 3.5,-58.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140539,6 +141011,8 @@ entities:
   - pos: 4.5,-58.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140552,6 +141026,8 @@ entities:
   - pos: 5.5,-58.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140565,6 +141041,8 @@ entities:
   - pos: 6.5,-60.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140578,6 +141056,8 @@ entities:
   - pos: 6.5,-61.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140591,6 +141071,8 @@ entities:
   - pos: 4.5,-64.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -140604,6 +141086,8 @@ entities:
   - pos: 3.5,-64.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -141150,6 +141634,8 @@ entities:
     pos: -30.5,-60.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 17666
   type: FirelockEdge
   components:
@@ -141157,6 +141643,8 @@ entities:
     pos: -19.5,-60.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 17667
   type: ComputerCargoOrders
   components:
@@ -145137,8 +145625,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -145334,8 +145822,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -147630,12 +148118,16 @@ entities:
   - pos: 34.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 18675
   type: HospitalCurtainsOpen
   components:
   - pos: 34.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 18676
   type: StasisBed
   components:
@@ -147648,12 +148140,16 @@ entities:
   - pos: 28.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 18678
   type: HospitalCurtainsOpen
   components:
   - pos: 28.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 18679
   type: SignCloning
   components:
@@ -147666,6 +148162,8 @@ entities:
   - pos: 35.5,-26.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18681
   type: AirlockEngineeringLocked
   components:
@@ -147680,6 +148178,8 @@ entities:
   - pos: 36.5,-26.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18683
   type: MedicalScanner
   components:
@@ -148121,36 +148621,48 @@ entities:
   - pos: 14.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18753
   type: FirelockGlass
   components:
   - pos: 13.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18754
   type: FirelockGlass
   components:
   - pos: 12.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18755
   type: FirelockGlass
   components:
   - pos: 11.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18756
   type: FirelockGlass
   components:
   - pos: 10.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18757
   type: FirelockGlass
   components:
   - pos: 9.5,-45.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18758
   type: PottedPlantRandom
   components:
@@ -149685,6 +150197,8 @@ entities:
   - pos: -7.5,-77.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 18988
   type: DisposalPipe
   components:
@@ -149917,6 +150431,8 @@ entities:
   - pos: 23.5,-17.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -149930,6 +150446,8 @@ entities:
   - pos: 23.5,-18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -149943,6 +150461,8 @@ entities:
   - pos: 23.5,-19.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -149956,18 +150476,24 @@ entities:
   - pos: 43.5,-32.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 19026
   type: ShuttersNormalOpen
   components:
   - pos: 43.5,-33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 19027
   type: ShuttersNormalOpen
   components:
   - pos: 43.5,-34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 19028
   type: CableTerminal
   components:
@@ -150023,36 +150549,48 @@ entities:
   - pos: -11.5,-68.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19037
   type: FirelockGlass
   components:
   - pos: -11.5,-69.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19038
   type: FirelockGlass
   components:
   - pos: 11.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19039
   type: FirelockGlass
   components:
   - pos: 12.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19040
   type: FirelockGlass
   components:
   - pos: 11.5,-53.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19041
   type: FirelockGlass
   components:
   - pos: 12.5,-53.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19042
   type: DonkpocketBoxSpawner
   components:
@@ -150698,6 +151236,8 @@ entities:
   - pos: 49.5,-61.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19145
   type: TableReinforced
   components:
@@ -150915,6 +151455,8 @@ entities:
   - pos: 23.5,-35.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19178
   type: Bed
   components:
@@ -155256,6 +155798,8 @@ entities:
   - pos: 78.5,-38.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19884
   type: CarpetOrange
   components:
@@ -155538,6 +156082,8 @@ entities:
   - pos: -4.5,33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -155588,6 +156134,8 @@ entities:
   - pos: -5.5,33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.4
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -155616,6 +156164,8 @@ entities:
   - pos: 5.5,37.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19935
   type: TwoWayLever
   components:
@@ -155880,6 +156430,8 @@ entities:
   - pos: 21.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 19973
   type: CableApcExtension
   components:
@@ -156037,8 +156589,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -156075,8 +156627,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -161559,8 +162111,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -161671,24 +162223,32 @@ entities:
   - pos: 61.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20838
   type: ShuttersWindowOpen
   components:
   - pos: 62.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20839
   type: ShuttersWindowOpen
   components:
   - pos: 63.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20840
   type: ShuttersWindowOpen
   components:
   - pos: 69.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161702,6 +162262,8 @@ entities:
   - pos: 70.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161715,6 +162277,8 @@ entities:
   - pos: 71.5,-16.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161728,6 +162292,8 @@ entities:
   - pos: 68.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161741,6 +162307,8 @@ entities:
   - pos: 68.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161754,6 +162322,8 @@ entities:
   - pos: 68.5,-24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161767,6 +162337,8 @@ entities:
   - pos: 68.5,-28.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161780,12 +162352,16 @@ entities:
   - pos: 68.5,-29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20848
   type: ShuttersWindowOpen
   components:
   - pos: 68.5,-30.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -161799,30 +162375,40 @@ entities:
   - pos: 64.5,-22.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20850
   type: ShuttersWindowOpen
   components:
   - pos: 64.5,-23.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20851
   type: ShuttersWindowOpen
   components:
   - pos: 68.5,-33.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20852
   type: ShuttersWindowOpen
   components:
   - pos: 68.5,-34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20853
   type: ShuttersWindowOpen
   components:
   - pos: 68.5,-35.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
 - uid: 20854
   type: CableApcExtension
   components:
@@ -167405,6 +167991,8 @@ entities:
   - pos: 62.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.5
+    type: Door
 - uid: 21713
   type: RollerBed
   components:
@@ -167792,12 +168380,16 @@ entities:
   - pos: 23.5,-25.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21774
   type: FirelockGlass
   components:
   - pos: 23.5,-24.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21775
   type: ChairOfficeLight
   components:
@@ -168057,6 +168649,8 @@ entities:
   - pos: -63.5,-12.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21813
   type: CableApcExtension
   components:
@@ -168069,24 +168663,32 @@ entities:
   - pos: -64.5,-12.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21815
   type: FirelockGlass
   components:
   - pos: -63.5,7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21816
   type: FirelockGlass
   components:
   - pos: -64.5,7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21817
   type: FirelockGlass
   components:
   - pos: -51.5,17.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21818
   type: Poweredlight
   components:
@@ -168114,30 +168716,40 @@ entities:
   - pos: -51.5,18.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21822
   type: FirelockGlass
   components:
   - pos: -51.5,9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21823
   type: FirelockGlass
   components:
   - pos: -51.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21824
   type: FirelockGlass
   components:
   - pos: -51.5,11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21825
   type: FirelockGlass
   components:
   - pos: -23.5,9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21826
   type: CableApcExtension
   components:
@@ -168150,6 +168762,8 @@ entities:
   - pos: -23.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21828
   type: AirlockGlassShuttle
   components:
@@ -168159,10 +168773,12 @@ entities:
   - dockJointId: docking46345
     dockedWith: 562
     type: Docking
-  - SecondsUntilStateChange: -12052.889
+  - nextStateChange: 0.4
     changeAirtight: False
-    state: Opening
+    state: Open
     type: Door
+  - canCollide: False
+    type: Physics
   - fixtures:
     - shape: !type:PolygonShape
         vertices:
@@ -168183,8 +168799,8 @@ entities:
       - InteractImpassable
       - Opaque
     - shape: !type:PhysShapeCircle
-        position: 0,-0.5
         radius: 0.2
+        position: 0,-0.5
       hard: False
       id: docking
     type: Fixtures
@@ -168194,30 +168810,40 @@ entities:
   - pos: 59.5,11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21830
   type: FirelockGlass
   components:
   - pos: 64.5,14.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21831
   type: FirelockGlass
   components:
   - pos: 75.5,-64.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21832
   type: FirelockGlass
   components:
   - pos: 75.5,-60.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21833
   type: FirelockGlass
   components:
   - pos: 65.5,-63.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21834
   type: CableApcExtension
   components:
@@ -168230,6 +168856,8 @@ entities:
   - pos: -16.5,-47.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 21836
   type: CableMV
   components:
@@ -169309,6 +169937,8 @@ entities:
     pos: 24.5,6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22012
   type: TableGlass
   components:
@@ -169328,6 +169958,8 @@ entities:
     pos: -14.5,-15.5
     parent: 8364
     type: Transform
+  - nextStateChange: 1.2
+    type: Door
   - inputs:
       Open: []
       Close: []
@@ -173511,6 +174143,8 @@ entities:
   - pos: 54.5,13.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22607
   type: WindowReinforcedDirectional
   components:
@@ -173803,6 +174437,8 @@ entities:
     pos: 9.5,1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22632
   type: FirelockEdge
   components:
@@ -173810,6 +174446,8 @@ entities:
     pos: 8.5,1.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22633
   type: AirAlarm
   components:
@@ -173954,18 +174592,24 @@ entities:
   - pos: 17.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22645
   type: FirelockGlass
   components:
   - pos: 22.5,-11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22646
   type: FirelockGlass
   components:
   - pos: 24.5,-11.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 22647
   type: AirSensor
   components:
@@ -200384,12 +201028,16 @@ entities:
     pos: -3.5,50.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25678
   type: FirelockGlass
   components:
   - pos: -3.5,51.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25679
   type: TableWood
   components:
@@ -202440,30 +203088,40 @@ entities:
   - pos: 82.5,-21.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25952
   type: FirelockGlass
   components:
   - pos: 82.5,-43.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25953
   type: FirelockGlass
   components:
   - pos: 68.5,-63.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25954
   type: FirelockGlass
   components:
   - pos: -33.5,-55.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25955
   type: FirelockGlass
   components:
   - pos: 2.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25956
   type: Grille
   components:
@@ -202482,36 +203140,48 @@ entities:
   - pos: 28.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25959
   type: FirelockGlass
   components:
   - pos: 28.5,-7.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25960
   type: FirelockGlass
   components:
   - pos: 28.5,-6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25961
   type: FirelockGlass
   components:
   - pos: 28.5,-5.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25962
   type: FirelockGlass
   components:
   - pos: 28.5,-4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25963
   type: FirelockGlass
   components:
   - pos: 29.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25964
   type: FirelockEdge
   components:
@@ -202519,6 +203189,8 @@ entities:
     pos: 30.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 25965
   type: FireAlarm
   components:
@@ -202956,30 +203628,40 @@ entities:
   - pos: 45.5,8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26032
   type: FirelockGlass
   components:
   - pos: 71.5,4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26033
   type: FirelockGlass
   components:
   - pos: 70.5,4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26034
   type: FirelockGlass
   components:
   - pos: 69.5,4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26035
   type: FirelockGlass
   components:
   - pos: 77.5,-4.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26036
   type: FirelockEdge
   components:
@@ -202987,6 +203669,8 @@ entities:
     pos: 75.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26037
   type: FirelockEdge
   components:
@@ -202994,6 +203678,8 @@ entities:
     pos: 75.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26038
   type: FirelockEdge
   components:
@@ -203001,6 +203687,8 @@ entities:
     pos: 53.5,-9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26039
   type: FirelockEdge
   components:
@@ -203008,6 +203696,8 @@ entities:
     pos: 53.5,-8.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26040
   type: TableGlass
   components:
@@ -203050,18 +203740,24 @@ entities:
   - pos: 48.5,-43.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26047
   type: FirelockGlass
   components:
   - pos: 49.5,-43.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26048
   type: FirelockGlass
   components:
   - pos: 82.5,-54.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26049
   type: SpawnVendingMachineRestockFoodDrink
   components:
@@ -203074,24 +203770,32 @@ entities:
   - pos: -23.5,-47.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26051
   type: FirelockGlass
   components:
   - pos: -3.5,-49.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26052
   type: FirelockGlass
   components:
   - pos: 56.5,5.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26053
   type: FirelockGlass
   components:
   - pos: 64.5,9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26054
   type: BoxPillCanister
   components:
@@ -203162,48 +203866,64 @@ entities:
   - pos: -7.5,-76.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26065
   type: FirelockGlass
   components:
   - pos: 6.5,-77.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26066
   type: FirelockGlass
   components:
   - pos: 6.5,-76.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26067
   type: FirelockGlass
   components:
   - pos: 6.5,-67.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26068
   type: FirelockGlass
   components:
   - pos: 6.5,-66.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26069
   type: FirelockGlass
   components:
   - pos: 6.5,-65.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26070
   type: FirelockEdge
   components:
   - pos: 8.5,-69.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26071
   type: FirelockEdge
   components:
   - pos: 9.5,-69.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26072
   type: ComfyChair
   components:
@@ -203438,42 +204158,56 @@ entities:
   - pos: -17.5,-34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26110
   type: FirelockGlass
   components:
   - pos: -18.5,-34.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26111
   type: FirelockGlass
   components:
   - pos: 7.5,29.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26112
   type: FirelockGlass
   components:
   - pos: 7.5,21.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26113
   type: FirelockGlass
   components:
   - pos: 7.5,20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26114
   type: FirelockGlass
   components:
   - pos: 7.5,19.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26115
   type: FirelockGlass
   components:
   - pos: -15.5,20.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26116
   type: Carpet
   components:
@@ -203546,36 +204280,48 @@ entities:
   - pos: -38.5,9.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26128
   type: FirelockGlass
   components:
   - pos: -26.5,10.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26129
   type: FirelockGlass
   components:
   - pos: -48.5,6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26130
   type: FirelockGlass
   components:
   - pos: -49.5,6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26131
   type: FirelockGlass
   components:
   - pos: -63.5,-6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26132
   type: FirelockGlass
   components:
   - pos: -64.5,-6.5
     parent: 8364
     type: Transform
+  - nextStateChange: 0.1
+    type: Door
 - uid: 26133
   type: Chair
   components:
