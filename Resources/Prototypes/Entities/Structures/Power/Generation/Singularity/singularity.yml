@@ -17,6 +17,7 @@
       shape:
         !type:PhysShapeCircle
           radius: 0.5
+      hard: true
       restitution: 0.9
       density: 99999
       mask:
@@ -27,8 +28,7 @@
       shape:
         !type:PhysShapeCircle
           radius: 0.5
-      restitution: 0.9
-      density: 99999
+      hard: false
       mask:
       - AllMask
       layer:
