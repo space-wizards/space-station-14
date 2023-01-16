@@ -912,6 +912,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: DiseaseProtection
+    protection: 0.1
     
 - type: entity
   parent: ClothingUniformBase
@@ -923,6 +925,12 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
 
 - type: entity
   parent: ClothingUniformBase
@@ -947,3 +955,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8
