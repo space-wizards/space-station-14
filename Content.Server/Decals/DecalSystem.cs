@@ -320,7 +320,7 @@ namespace Content.Server.Decals
         }
 
         /// <summary>
-        ///     Changes a decals position. Not this will actually result in a new decal being created, possibly on a new grid or chunk.
+        ///     Changes a decals position. Note this will actually result in a new decal being created, possibly on a new grid or chunk.
         /// </summary>
         /// <remarks>
         ///     If the new position is invalid, this will result in the decal getting deleted.
