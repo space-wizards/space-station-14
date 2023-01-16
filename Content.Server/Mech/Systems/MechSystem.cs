@@ -72,7 +72,7 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnMechCanMoveEvent(EntityUid uid, MechComponent component , UpdateCanMoveEvent args)
     {
-        if (component.Broken || component.Integrity >= 0 || component.Energy >= 0)
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
             args.Cancel();
     }
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
