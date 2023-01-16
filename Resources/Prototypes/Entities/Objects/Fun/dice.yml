@@ -7,6 +7,7 @@
   - type: ItemCooldown
   - type: UseDelay
   - type: Sprite
+    netsync: false
     sprite: Objects/Fun/dice.rsi
     noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
   - type: Tag
@@ -24,8 +25,9 @@
   - type: Dice
     sides: 100
     step: 10
+    currentSide: 100
   - type: Sprite
-    state: d100100
+    state: d100_100
 
 - type: entity
   parent: BaseDice
@@ -35,8 +37,9 @@
   components:
   - type: Dice
     sides: 20
+    currentSide: 20
   - type: Sprite
-    state: d2020
+    state: d20_20
 
 - type: entity
   parent: BaseDice
@@ -46,8 +49,9 @@
   components:
   - type: Dice
     sides: 12
+    currentSide: 12
   - type: Sprite
-    state: d1212
+    state: d12_12
 
 - type: entity
   parent: BaseDice
@@ -57,8 +61,9 @@
   components:
   - type: Dice
     sides: 10
+    currentSide: 10
   - type: Sprite
-    state: d1010
+    state: d10_10
 
 - type: entity
   parent: BaseDice
@@ -68,8 +73,9 @@
   components:
   - type: Dice
     sides: 8
+    currentSide: 8
   - type: Sprite
-    state: d88
+    state: d8_8
 
 - type: entity
   parent: BaseDice
@@ -79,8 +85,9 @@
   components:
   - type: Dice
     sides: 6
+    currentSide: 6
   - type: Sprite
-    state: d66
+    state: d6_6
 
 - type: entity
   parent: BaseDice
@@ -90,8 +97,9 @@
   components:
   - type: Dice
     sides: 4
+    currentSide: 4
   - type: Sprite
-    state: d44
+    state: d4_4
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -122,3 +130,4 @@
     damage:
       types:
         Piercing: 5
+    # I love this
