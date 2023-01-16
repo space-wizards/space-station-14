@@ -21,9 +21,7 @@ namespace Content.Client.Paper.UI
             base.Open();
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 
-            _window = new PaperWindow
-            {
-            };
+            _window = new PaperWindow();
             _window.OnClose += Close;
             _window.Input.OnTextEntered += Input_OnTextEntered;
 

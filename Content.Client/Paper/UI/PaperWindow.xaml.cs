@@ -105,19 +105,26 @@ namespace Content.Client.Paper.UI
                 // Paper has requested that this has a maximum area that you can write on.
                 // So, we'll make the window non-resizable and fix the size of the content.
                 // Ideally, would like to be able to allow resizing only one direction.
-                PaperContent.MinSize = Vector2.Zero;
-                PaperContent.MinSize = (Vector2)(a);
+                ScrollingContents.MinSize = Vector2.Zero;
+                ScrollingContents.MinSize = (Vector2)(a);
 
                 if (a.X > 0.0f)
                 {
-                    PaperContent.MaxWidth = a.X;
+                    ScrollingContents.MaxWidth = a.X;
                     _allowedResizeModes &= ~(DragMode.Left | DragMode.Right);
+
+                    // Since this dimension has been specified by the user, we
+                    // need to undo the SetSize which was configured in the xaml.
+                    // Controls use NaNs to indicate unset for this value.
+                    // This is leaky - there should be a method for this
+                    SetWidth = float.NaN;
                 }
 
                 if (a.Y > 0.0f)
                 {
-                    PaperContent.MaxHeight = a.Y;
+                    ScrollingContents.MaxHeight = a.Y;
                     _allowedResizeModes &= ~(DragMode.Top | DragMode.Bottom);
+                    SetHeight = float.NaN;
                 }
             }
        }
