@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Anomaly;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
 /// Tracks anomalies going supercritical

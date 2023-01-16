@@ -2,6 +2,7 @@
 using Content.Server.Construction;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
+using Content.Shared.Anomaly.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
@@ -118,7 +119,7 @@ public sealed partial class AnomalySystem
 
         var on = component.Anomaly != null;
 
-        _appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on);
+        Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on);
         if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
         {
             pointLightComponent.Enabled = on;

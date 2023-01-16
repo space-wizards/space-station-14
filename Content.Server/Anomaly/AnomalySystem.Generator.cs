@@ -67,7 +67,7 @@ public sealed partial class AnomalySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (_timing.CurTime < component.CooldownEndTime)
+        if (Timing.CurTime < component.CooldownEndTime)
             return;
 
         var grid = Transform(uid).GridUid;
@@ -78,7 +78,7 @@ public sealed partial class AnomalySystem
             return;
 
         SpawnOnRandomGridLocation(grid.Value, component.SpawnerPrototype);
-        component.CooldownEndTime = _timing.CurTime + component.CooldownLength;
+        component.CooldownEndTime = Timing.CurTime + component.CooldownLength;
         UpdateGeneratorUi(uid, component);
     }
 
@@ -95,8 +95,8 @@ public sealed partial class AnomalySystem
 
         for (var i = 0; i < 25; i++)
         {
-            var randomX = _random.Next((int) (gridBounds.Left * GridBoundsMultiplier), (int) (gridBounds.Right * GridBoundsMultiplier));
-            var randomY = _random.Next((int) (gridBounds.Bottom * GridBoundsMultiplier), (int) (gridBounds.Top * GridBoundsMultiplier));
+            var randomX = Random.Next((int) (gridBounds.Left * GridBoundsMultiplier), (int) (gridBounds.Right * GridBoundsMultiplier));
+            var randomY = Random.Next((int) (gridBounds.Bottom * GridBoundsMultiplier), (int) (gridBounds.Top * GridBoundsMultiplier));
 
             var tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
             if (_atmosphere.IsTileSpace(grid, Transform(grid).MapUid, tile,

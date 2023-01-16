@@ -1,8 +1,9 @@
 ﻿using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Anomaly;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
 /// This is used for tracking the general behavior of anomalies.
@@ -25,7 +26,7 @@ public sealed class AnomalyComponent : Component
     /// value that only matters in relation to the <see cref="GrowthThreshold"/> and <see cref="DecayThreshold"/>
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Stability = 0.5f;
+    public float Stability = 0f;
 
     /// <summary>
     /// How severe the effects of an anomaly are. Moves only upwards.
@@ -123,7 +124,7 @@ public sealed class AnomalyComponent : Component
     /// +/- 0.2 from perfect stability (0.5)
     /// </remarks>
     [DataField("initialStabilityRange")]
-    public (float, float) InitialStabilityRange = (0.3f, 0.7f);
+    public (float, float) InitialStabilityRange = (0.4f, 0.6f);
 
     /// <summary>
     /// The range of initial values for severity
@@ -203,6 +204,22 @@ public sealed class AnomalyComponent : Component
     #endregion
 }
 
+[Serializable, NetSerializable]
+public sealed class AnomalyComponentState : ComponentState
+{
+    public float Severity;
+    public float Stability;
+    public float Health;
+    public TimeSpan NextPulseTime;
+
+    public AnomalyComponentState(float severity, float stability, float health, TimeSpan nextPulseTime)
+    {
+        Severity = severity;
+        Stability = stability;
+        Health = health;
+        NextPulseTime = nextPulseTime;
+    }
+}
 
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
@@ -225,49 +242,27 @@ public readonly record struct AnomalySupercriticalEvent;
 /// <summary>
 /// Event broadcast after an anomaly goes supercritical
 /// </summary>
-/// <param name="Anomaly"></param>
+/// <param name="Anomaly">The anomaly being shut down.</param>
+/// <param name="Supercritical">Whether or not the anomaly shut down passively or via a supercritical event.</param>
 [ByRefEvent]
-public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Supercritical)
-{
-    /// <summary>
-    /// The anomaly being shut down.
-    /// </summary>
-    public readonly EntityUid Anomaly = Anomaly;
-
-    /// <summary>
-    /// Whether or not the anomaly shut down passively
-    /// or via a supercritical event.
-    /// </summary>
-    /// <returns></returns>
-    public readonly bool Supercritical = Supercritical;
-}
+public readonly record struct AnomalyShutdownEvent(EntityUid Anomaly, bool Supercritical);
 
 /// <summary>
 /// Event broadcast when an anomaly's severity is changed.
 /// </summary>
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly)
-{
-    public readonly EntityUid Anomaly = Anomaly;
-}
+public readonly record struct AnomalySeverityChangedEvent(EntityUid Anomaly, float Severity);
 
 /// <summary>
 /// Event broadcast when an anomaly's stability is changed.
 /// </summary>
-/// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly)
-{
-    public readonly EntityUid Anomaly = Anomaly;
-}
+public readonly record struct AnomalyStabilityChangedEvent(EntityUid Anomaly, float Stability);
 
 /// <summary>
 /// Event broadcast when an anomaly's health is changed.
 /// </summary>
 /// <param name="Anomaly">The anomaly being changed</param>
 [ByRefEvent]
-public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly)
-{
-    public readonly EntityUid Anomaly = Anomaly;
-}
+public readonly record struct AnomalyHealthChangedEvent(EntityUid Anomaly, float Health);

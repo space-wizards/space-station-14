@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
-namespace Content.Shared.Anomaly;
+namespace Content.Shared.Anomaly.Components;
 
 /// <summary>
 /// This component tracks anomalies that are currently pulsing
@@ -11,8 +11,8 @@ public sealed class AnomalyPulsingComponent : Component
     /// <summary>
     /// The time at which the pulse will be over.
     /// </summary>
-    [DataField("pulseEndTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan PulseEndTime = TimeSpan.MaxValue;
+    [DataField("endTime", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan EndTime = TimeSpan.MaxValue;
 
     /// <summary>
     /// How long the pulse visual lasts
