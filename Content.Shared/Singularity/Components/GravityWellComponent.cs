@@ -1,10 +1,9 @@
-using Content.Shared.Singularity.Components;
-using Content.Server.Singularity.EntitySystems;
+using Content.Shared.Singularity.EntitySystems;
 
-namespace Content.Server.Singularity.Components;
+namespace Content.Shared.Singularity.Components;
 
 /// <summary>
-/// The server-side version of <see cref="SharedGravityWellComponent"/>.
+/// A component that drags entities towards, away, or around itself depending on proximity.
 /// Primarily managed by <see cref="GravityWellSystem"/>.
 /// </summary>
 [RegisterComponent]
@@ -55,7 +54,7 @@ public sealed class GravityWellComponent : Component
     /// All entities within this group are accelerated relative to the gravity well.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(GravityWellSystem))]
+    [Access(typeof(SharedGravityWellSystem))]
     public List<EntityUid> Captured = new();
 
     #region Update Timing
@@ -65,21 +64,21 @@ public sealed class GravityWellComponent : Component
     /// </summary>
     [DataField("gravPulsePeriod")]
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(GravityWellSystem))]
+    [Access(typeof(SharedGravityWellSystem))]
     public TimeSpan TargetScanPeriod { get; internal set; } = TimeSpan.FromSeconds(0.5);
 
     /// <summary>
     /// The next time at which this gravity well scanned for captured entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(GravityWellSystem))]
+    [Access(typeof(SharedGravityWellSystem))]
     public TimeSpan NextScanTime { get; internal set; } = default!;
 
     /// <summary>
     /// The last time this gravity well scanned for captured entities.
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
-    [Access(typeof(GravityWellSystem))]
+    [Access(typeof(SharedGravityWellSystem))]
     public TimeSpan LastScanTime { get; internal set; } = default!;
 
     #endregion Update Timing

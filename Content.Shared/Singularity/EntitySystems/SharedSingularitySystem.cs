@@ -18,6 +18,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
+    [Dependency] private readonly SharedGravityWellSystem _gravityWellSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 #endregion Dependencies
@@ -49,6 +50,7 @@ public abstract class SharedSingularitySystem : EntitySystem
         SubscribeLocalEvent<RadiationSourceComponent, SingularityLevelChangedEvent>(UpdateRadiation);
         SubscribeLocalEvent<PhysicsComponent, SingularityLevelChangedEvent>(UpdateBody);
         SubscribeLocalEvent<EventHorizonComponent, SingularityLevelChangedEvent>(UpdateEventHorizon);
+        SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
         SubscribeLocalEvent<SingularityDistortionComponent, SingularityLevelChangedEvent>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotInsertedIntoContainerMessage>(UpdateDistortion);
         SubscribeLocalEvent<SingularityDistortionComponent, EntGotRemovedFromContainerMessage>(UpdateDistortion);
@@ -287,6 +289,20 @@ public abstract class SharedSingularitySystem : EntitySystem
         _horizons.SetRadius(uid, EventHorizonRadius(singulo), false, comp);
         _horizons.SetCanBreachContainment(uid, CanBreachContainment(singulo), false, comp);
         _horizons.UpdateEventHorizonFixture(uid, eventHorizon: comp);
+    }
+
+    /// <summary>
+    /// Updates the size and strength of the singularities gravity well when the singularities level changes.
+    /// </summary>
+    /// <param name="uid">The entity UID of the singularity.</param>
+    /// <param name="comp">The gravity well component sharing the entity with the singulo component.</param>
+    /// <param name="args">The event arguments.</param>
+    private void UpdateGravityWell(EntityUid uid, GravityWellComponent comp, SingularityLevelChangedEvent args)
+    {
+        var singulos = args.Singularity;
+        comp.MaxRange = GravPulseRange(singulos);
+        (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
+        _gravityWellSystem.UpdateMatrix(uid, comp);
     }
 
     /// <summary>

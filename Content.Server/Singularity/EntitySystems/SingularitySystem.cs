@@ -21,12 +21,11 @@ namespace Content.Server.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
-#region Dependencies
+    #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PVSOverrideSystem _pvs = default!;
-    [Dependency] private readonly GravityWellSystem _gravityWellSystem = default!;
-#endregion Dependencies
+    #endregion Dependencies
 
     /// <summary>
     /// The amount of energy singulos accumulate when they eat a tile.
@@ -52,7 +51,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         // TODO: Figure out where all this coupling should be handled.
         SubscribeLocalEvent<RandomWalkComponent, SingularityLevelChangedEvent>(UpdateRandomWalk);
-        SubscribeLocalEvent<GravityWellComponent, SingularityLevelChangedEvent>(UpdateGravityWell);
 
         var vvHandle = Vvm.GetTypeHandler<SingularityComponent>();
         vvHandle.AddPath(nameof(SingularityComponent.Energy), (_, comp) => comp.Energy, SetEnergy);
@@ -205,9 +203,9 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage <= EntityLifeStage.Initializing)
-            _audio.Play(comp.FormationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.Play(comp.FormationSound, Filter.Pvs(uid), uid, true);
 
-        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+        comp.AmbientSoundStream = _audio.Play(comp.AmbientSound, Filter.Pvs(uid), uid, true);
         UpdateSingularityLevel(uid, comp);
     }
 
@@ -237,7 +235,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 
         MetaDataComponent? metaData = null;
         if (Resolve(uid, ref metaData) && metaData.EntityLifeStage >= EntityLifeStage.Terminating)
-            _audio.Play(comp.DissipationSound, Filter.Pvs(comp.Owner), comp.Owner, true);
+            _audio.Play(comp.DissipationSound, Filter.Pvs(uid), uid, true);
     }
 
     /// <summary>
@@ -332,20 +330,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
         var scale = MathF.Max(args.NewValue, 4);
         comp.MinSpeed = 7.5f / scale;
         comp.MaxSpeed = 10f / scale;
-    }
-
-    /// <summary>
-    /// Updates the size and strength of the singularities gravity well when the singularities level changes.
-    /// </summary>
-    /// <param name="uid">The entity UID of the singularity.</param>
-    /// <param name="comp">The gravity well component sharing the entity with the singulo component.</param>
-    /// <param name="args">The event arguments.</param>
-    private void UpdateGravityWell(EntityUid uid, GravityWellComponent comp, SingularityLevelChangedEvent args)
-    {
-        var singulos = args.Singularity;
-        comp.MaxRange = GravPulseRange(singulos);
-        (comp.BaseRadialAcceleration, comp.BaseTangentialAcceleration) = GravPulseAcceleration(singulos);
-        _gravityWellSystem.UpdateMatrix(uid, comp);
     }
 
 #endregion Event Handlers

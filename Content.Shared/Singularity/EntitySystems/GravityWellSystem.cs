@@ -1,7 +1,5 @@
-using Content.Server.Ghost.Components;
-using Content.Server.Singularity.Components;
-using Content.Shared.Singularity.EntitySystems;
-using Robust.Shared.GameObjects;
+using Content.Shared.Ghost;
+using Content.Shared.Singularity.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
@@ -9,14 +7,14 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 
-namespace Content.Server.Singularity.EntitySystems;
+namespace Content.Shared.Singularity.EntitySystems;
 
 /// <summary>
 /// The server side version of <see cref="SharedGravityWellSystem"/>.
 /// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
 /// Handles the gravitational scans they can emit.
 /// </summary>
-public sealed partial class GravityWellSystem : VirtualController
+public sealed partial class SharedGravityWellSystem : VirtualController
 {
     #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -98,7 +96,7 @@ public sealed partial class GravityWellSystem : VirtualController
 
         foreach(var entity in _lookupSystem.GetEntitiesInRange(xform.MapPosition, gravWell.MaxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
-            if (CanGravPulseAffect(entity))
+            if (entity != uid && CanGravPulseAffect(entity))
                 gravWell.Captured.Add(entity);
         }
     }
@@ -111,7 +109,7 @@ public sealed partial class GravityWellSystem : VirtualController
     private bool CanGravPulseAffect(EntityUid entity)
     {
         return !(
-            EntityManager.HasComponent<GhostComponent>(entity) ||
+            EntityManager.HasComponent<SharedGhostComponent>(entity) ||
             EntityManager.HasComponent<MapGridComponent>(entity) ||
             EntityManager.HasComponent<MapComponent>(entity) ||
             EntityManager.HasComponent<GravityWellComponent>(entity)
