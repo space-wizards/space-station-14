@@ -1,9 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
-  id: 2382
-  time: '2022-09-30T00:44:28.0000000+00:00'
 - author: Emisse
   changes:
   - {message: All command roles now take 30 hours of total playtime on top of other
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Fixed chameleon clothing not working., type: Fix}
   id: 2881
   time: '2023-01-16T08:21:24.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Added Honk mother communication device - banana phone!, type: Add}
+  id: 2882
+  time: '2023-01-16T14:06:29.0000000+00:00'
