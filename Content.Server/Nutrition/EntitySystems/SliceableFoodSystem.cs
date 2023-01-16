@@ -59,7 +59,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var sliceUid = EntityManager.SpawnEntity(component.Slice, transform.Coordinates);
 
             var lostSolution = _solutionContainerSystem.SplitSolution(uid, solution,
-                solution.CurrentVolume / FixedPoint2.New(component.Count));
+                solution.Volume / FixedPoint2.New(component.Count));
 
             // Fill new slice
             FillSlice(sliceUid, lostSolution);

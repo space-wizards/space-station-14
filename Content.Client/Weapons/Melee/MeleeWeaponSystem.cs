@@ -1,7 +1,7 @@
 using Content.Client.CombatMode;
 using Content.Client.Gameplay;
 using Content.Client.Hands;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.StatusEffect;
@@ -28,7 +28,6 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
@@ -39,7 +38,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     {
         base.Initialize();
         InitializeEffect();
-        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager, _cache));
+        _overlayManager.AddOverlay(new MeleeWindupOverlay(EntityManager, _timing, _player, _protoManager));
         SubscribeAllEvent<DamageEffectEvent>(OnDamageEffect);
         SubscribeNetworkEvent<MeleeLungeEvent>(OnMeleeLunge);
     }
@@ -104,7 +103,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -113,7 +112,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
                 if (_stateManager.CurrentState is GameplayStateBase screen)
                 {
-                    target = screen.GetEntityUnderPosition(mousePos);
+                    target = screen.GetClickedEntity(mousePos);
                 }
 
                 EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(target, coordinates));
@@ -139,7 +138,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
                 if (MapManager.TryFindGridAt(mousePos, out var grid))
                 {
-                    coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                    coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
                 }
                 else
                 {
@@ -180,7 +179,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
             if (MapManager.TryFindGridAt(mousePos, out var grid))
             {
-                coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+                coordinates = EntityCoordinates.FromMap(grid.Owner, mousePos, EntityManager);
             }
             else
             {
@@ -192,7 +191,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             // TODO: UI Refactor update I assume
             if (_stateManager.CurrentState is GameplayStateBase screen)
             {
-                target = screen.GetEntityUnderPosition(mousePos);
+                target = screen.GetClickedEntity(mousePos);
             }
 
             RaisePredictiveEvent(new LightAttackEvent(target, weapon.Owner, coordinates));
@@ -240,7 +239,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 return true;
 
             if (Timing.IsFirstTimePredicted && HasComp<MobStateComponent>(ev.Target.Value))
-                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value, Filter.Local());
+                PopupSystem.PopupEntity(Loc.GetString("disarm-action-disarmable", ("targetName", ev.Target.Value)), ev.Target.Value);
 
             return false;
         }
@@ -253,7 +252,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (!Timing.IsFirstTimePredicted || uid == null)
             return;
 
-        PopupSystem.PopupEntity(message, uid.Value, Filter.Local());
+        PopupSystem.PopupEntity(message, uid.Value);
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)

@@ -1,5 +1,5 @@
 using Content.Server.Conveyor;
-using Content.Server.Gravity.EntitySystems;
+using Content.Server.Gravity;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
@@ -77,12 +77,9 @@ namespace Content.Server.Physics.Controllers
                 var shape = new PolygonShape();
                 shape.SetAsBox(0.55f, 0.55f);
 
-                _fixtures.TryCreateFixture(body, new Fixture(body, shape)
-                {
-                    ID = ConveyorFixture,
-                    CollisionLayer = (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable | CollisionGroup.Impassable),
-                    Hard = false,
-                });
+                _fixtures.TryCreateFixture(uid, shape, ConveyorFixture, hard: false,
+                    collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
+                                           CollisionGroup.Impassable), body: body);
             }
         }
 
@@ -160,7 +157,7 @@ namespace Content.Server.Physics.Controllers
                         continue;
 
                     if (physics.BodyType != BodyType.Static)
-                        _physics.WakeBody(physics);
+                        _physics.WakeBody(entity, body: physics);
                 }
             }
         }
@@ -180,7 +177,7 @@ namespace Content.Server.Physics.Controllers
             if (!TryComp<PhysicsComponent>(uid, out var body))
                 return;
 
-            _fixtures.DestroyFixture(body, ConveyorFixture);
+            _fixtures.DestroyFixture(uid, ConveyorFixture, body: body);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -237,8 +234,9 @@ namespace Content.Server.Physics.Controllers
                 transform.LocalPosition = localPos;
 
                 // Force it awake for collisionwake reasons.
-                body.Awake = true;
-                body.SleepTime = 0f;
+                // TODO: Just use sleepallowed
+                _physics.SetAwake(entity, body, true);
+                _physics.SetSleepTime(body, 0f);
             }
         }
 
@@ -289,7 +287,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var entity in comp.Intersecting)
             {
                 if (!xformQuery.TryGetComponent(entity, out var entityXform) ||
-                    entityXform.ParentUid != grid.GridEntityId)
+                    entityXform.ParentUid != grid.Owner)
                 {
                     continue;
                 }

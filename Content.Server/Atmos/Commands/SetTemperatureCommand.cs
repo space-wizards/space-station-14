@@ -43,8 +43,8 @@ namespace Content.Server.Atmos.Commands
 
             var atmospheres = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
             var indices = new Vector2i(x, y);
-            
-            var tile = atmospheres.GetTileMixture(grid.GridEntityId, null, indices, true);
+
+            var tile = atmospheres.GetTileMixture(grid.Owner, null, indices, true);
 
             if (tile == null)
             {

@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Objects/Vehicles/secway.rsi/keys.png
+      - sprite: Objects/Vehicles/secway.rsi
+        state: keys
   - type: ConditionalSpawner
     prototypes:
       - VehicleSecway
@@ -19,7 +20,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Objects/Vehicles/pussywagon.rsi/keys.png
+      - sprite: Objects/Vehicles/pussywagon.rsi
+        state: keys
   - type: ConditionalSpawner
     prototypes:
       - VehiclePussyWagon
@@ -32,7 +34,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Objects/Vehicles/atv.rsi/keys.png
+      - sprite: Objects/Vehicles/atv.rsi
+        state: keys
   - type: ConditionalSpawner
     prototypes:
       - VehicleATV

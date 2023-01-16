@@ -1,4 +1,3 @@
-using Content.Server.Buckle.Components;
 using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
@@ -14,7 +13,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
-using Content.Server.Station.Components;
+using Content.Shared.Buckle.Components;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
@@ -72,7 +72,7 @@ public sealed partial class ShuttleSystem
         SubscribeLocalEvent<FTLDestinationComponent, EntityPausedEvent>(OnDestinationPause);
     }
 
-    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, EntityPausedEvent args)
+    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, ref EntityPausedEvent args)
     {
         _console.RefreshShuttleConsoles();
     }
@@ -95,13 +95,13 @@ public sealed partial class ShuttleSystem
             return true;
         }
 
-        var bounds = xform.WorldMatrix.TransformBox(grid.Grid.LocalAABB).Enlarged(ShuttleFTLRange);
+        var bounds = xform.WorldMatrix.TransformBox(grid.LocalAABB).Enlarged(ShuttleFTLRange);
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (grid.Owner == other.GridEntityId ||
-                !bodyQuery.TryGetComponent(other.GridEntityId, out var body) ||
+            if (((Component) grid).Owner == other.Owner ||
+                !bodyQuery.TryGetComponent(other.Owner, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 
             reason = Loc.GetString("shuttle-console-proximity");
@@ -226,7 +226,7 @@ public sealed partial class ShuttleSystem
 
                     comp.State = FTLState.Travelling;
 
-                    var width = Comp<MapGridComponent>(comp.Owner).Grid.LocalAABB.Width;
+                    var width = Comp<MapGridComponent>(comp.Owner).LocalAABB.Width;
                     xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
                     xform.LocalRotation = Angle.Zero;
                     _index += width + Buffer;
@@ -234,10 +234,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 20f);
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = 0f;
-                        body.AngularDamping = 0f;
+                        _physics.SetLinearVelocity(comp.Owner, new Vector2(0f, 20f), body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, 0f);
+                        _physics.SetAngularDamping(body, 0f);
                     }
 
                     if (comp.TravelSound != null)
@@ -272,10 +272,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = Vector2.Zero;
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = ShuttleLinearDamping;
-                        body.AngularDamping = ShuttleAngularDamping;
+                        _physics.SetLinearVelocity(comp.Owner, Vector2.Zero, body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
+                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
                     }
 
                     TryComp(comp.Owner, out shuttle);
@@ -458,14 +458,23 @@ public sealed partial class ShuttleSystem
         }
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var shuttleAABB = Comp<MapGridComponent>(component.Owner).Grid.LocalAABB;
+        var shuttleAABB = Comp<MapGridComponent>(component.Owner).LocalAABB;
+        Box2 targetLocalAABB;
 
         // Spawn nearby.
         // We essentially expand the Box2 of the target area until nothing else is added then we know it's valid.
         // Can't just get an AABB of every grid as we may spawn very far away.
-        var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
-            .TransformBox(Comp<MapGridComponent>(targetUid).Grid.LocalAABB).Enlarged(shuttleAABB.Size.Length);
+        if (TryComp<MapGridComponent>(targetUid, out var targetGrid))
+        {
+            targetLocalAABB = targetGrid.LocalAABB;
+        }
+        else
+        {
+            targetLocalAABB = new Box2();
+        }
 
+        var targetAABB = _transform.GetWorldMatrix(targetXform, xformQuery)
+            .TransformBox(targetLocalAABB).Enlarged(shuttleAABB.Size.Length);
         var nearbyGrids = new HashSet<EntityUid>(1) { targetUid };
         var iteration = 0;
         var lastCount = 1;
@@ -475,10 +484,10 @@ public sealed partial class ShuttleSystem
         {
             foreach (var grid in _mapManager.FindGridsIntersecting(mapId, targetAABB))
             {
-                if (!nearbyGrids.Add(grid.GridEntityId)) continue;
+                if (!nearbyGrids.Add(grid.Owner)) continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
             }
 
             // Can do proximity
@@ -498,10 +507,10 @@ public sealed partial class ShuttleSystem
             foreach (var grid in _mapManager.GetAllGrids())
             {
                 // Don't add anymore as it is irrelevant, but that doesn't mean we need to re-do existing work.
-                if (nearbyGrids.Contains(grid.GridEntityId)) continue;
+                if (nearbyGrids.Contains(grid.Owner)) continue;
 
-                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.GridEntityId, xformQuery)
-                    .TransformBox(Comp<MapGridComponent>(grid.GridEntityId).Grid.LocalAABB));
+                targetAABB = targetAABB.Union(_transform.GetWorldMatrix(grid.Owner, xformQuery)
+                    .TransformBox(Comp<MapGridComponent>(grid.Owner).LocalAABB));
             }
 
             break;
@@ -512,8 +521,8 @@ public sealed partial class ShuttleSystem
 
         if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
         {
-            shuttleBody.LinearVelocity = Vector2.Zero;
-            shuttleBody.AngularVelocity = 0f;
+            _physics.SetLinearVelocity(component.Owner, Vector2.Zero, body: shuttleBody);
+            _physics.SetAngularVelocity(component.Owner, 0f, body: shuttleBody);
         }
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);

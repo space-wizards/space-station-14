@@ -22,6 +22,8 @@
     node: crateplastic
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: CrateBaseWeldable
@@ -280,4 +282,53 @@
     node: cratelivestock
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 125
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateRodentCage
+  name: hamster cage
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/cage.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/cage.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetPlastic:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Dynamic
+  - type: EntityStorage
+    capacity: 500
+    airtight: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.4,0.4,0.29"
+      density: 80
+      mask:
+      - LargeMobMask
+      layer:
+      - LargeMobLayer
+  - type: StaticPrice
+    price: 60
 

@@ -1,9 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
@@ -12,6 +11,7 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
+        // TODO move this data to the component
         protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
         // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
@@ -24,22 +24,33 @@ namespace Content.Shared.Decals
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
+            SubscribeLocalEvent<DecalGridComponent, ComponentAdd>(OnCompAdd);
+            SubscribeLocalEvent<DecalGridComponent, ComponentRemove>(OnCompRemove);
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            var comp = EntityManager.EnsureComponent<DecalGridComponent>(msg.EntityUid);
-            ChunkIndex[msg.EntityUid] = new();
-            foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
+            EnsureComp<DecalGridComponent>(msg.EntityUid);
+        }
+
+        protected virtual void OnCompRemove(EntityUid uid, DecalGridComponent component, ComponentRemove args)
+        {
+            ChunkIndex.Remove(uid);
+        }
+
+        protected virtual void OnCompAdd(EntityUid uid, DecalGridComponent component, ComponentAdd args)
+        {
+            var index = ChunkIndex[uid] = new();
+            foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
             {
-                foreach (var uid in decals.Keys)
+                foreach (var decalUid in decals.Decals.Keys)
                 {
-                    ChunkIndex[msg.EntityUid][uid] = indices;
+                    index[decalUid] = indices;
                 }
             }
         }
 
-        protected DecalGridComponent.DecalGridChunkCollection? DecalGridChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        protected DecalGridChunkCollection? DecalGridChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
         {
             if (!Resolve(gridEuid, ref comp))
                 return null;
@@ -47,13 +58,13 @@ namespace Content.Shared.Decals
             return comp.ChunkCollection;
         }
 
-        protected Dictionary<Vector2i, Dictionary<uint, Decal>>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        protected Dictionary<Vector2i, DecalChunk>? ChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
         {
             var collection = DecalGridChunkCollection(gridEuid, comp);
             return collection?.ChunkCollection;
         }
 
-        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices) {}
+        protected virtual void DirtyChunk(EntityUid id, Vector2i chunkIndices, DecalChunk chunk) {}
 
         protected bool RemoveDecalInternal(EntityUid gridId, uint uid)
         {
@@ -65,16 +76,16 @@ namespace Content.Shared.Decals
             }
 
             var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null || !chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Remove(uid))
+            if (chunkCollection == null || !chunkCollection.TryGetValue(indices, out var chunk) || !chunk.Decals.Remove(uid))
             {
                 return false;
             }
 
-            if (chunk.Count == 0)
+            if (chunk.Decals.Count == 0)
                 chunkCollection.Remove(indices);
 
             ChunkIndex[gridId].Remove(uid);
-            DirtyChunk(gridId, indices);
+            DirtyChunk(gridId, indices, chunk);
             return true;
         }
 

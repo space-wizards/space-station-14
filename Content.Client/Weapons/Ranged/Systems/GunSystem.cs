@@ -149,18 +149,17 @@ public sealed partial class GunSystem : SharedGunSystem
             return;
 
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-        EntityCoordinates coordinates;
 
-        // Bro why would I want a ternary here
-        // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-        if (MapManager.TryFindGridAt(mousePos, out var grid))
+        if (mousePos.MapId == MapId.Nullspace)
         {
-            coordinates = EntityCoordinates.FromMap(grid.GridEntityId, mousePos, EntityManager);
+            if (gun.ShotCounter != 0)
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = gun.Owner });
+
+            return;
         }
-        else
-        {
-            coordinates = EntityCoordinates.FromMap(MapManager.GetMapEntityId(mousePos.MapId), mousePos, EntityManager);
-        }
+
+        // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
+        var coordinates = EntityCoordinates.FromMap(entity, mousePos, EntityManager);
 
         Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
@@ -228,7 +227,7 @@ public sealed partial class GunSystem : SharedGunSystem
     protected override void Popup(string message, EntityUid? uid, EntityUid? user)
     {
         if (uid == null || user == null || !Timing.IsFirstTimePredicted) return;
-        PopupSystem.PopupEntity(message, uid.Value, Filter.Entities(user.Value));
+        PopupSystem.PopupEntity(message, uid.Value, user.Value);
     }
 
     protected override void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null)

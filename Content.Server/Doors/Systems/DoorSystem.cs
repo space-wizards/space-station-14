@@ -58,7 +58,9 @@ public sealed class DoorSystem : SharedDoorSystem
         args.Handled = true;
     }
 
-    protected override void SetCollidable(EntityUid uid, bool collidable,
+    protected override void SetCollidable(
+        EntityUid uid,
+        bool collidable,
         DoorComponent? door = null,
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
@@ -67,7 +69,7 @@ public sealed class DoorSystem : SharedDoorSystem
             return;
 
         if (door.ChangeAirtight && TryComp(uid, out AirtightComponent? airtight))
-            _airtightSystem.SetAirblocked(airtight, collidable);
+            _airtightSystem.SetAirblocked(uid, airtight, collidable);
 
         // Pathfinding / AI stuff.
         RaiseLocalEvent(new AccessReaderChangeEvent(uid, collidable));
@@ -105,16 +107,10 @@ public sealed class DoorSystem : SharedDoorSystem
         if (predicted && predictingPlayer == null)
             return;
 
-        var filter = Filter.Pvs(uid);
-
         if (predicted)
-        {
-            // This interaction is predicted, but only by the instigating user, who will have played their own sounds.
-            filter.RemoveWhereAttachedEntity(e => e == predictingPlayer);
-        }
-
-        // send the sound to players.
-        Audio.Play(soundSpecifier, filter, uid, audioParams);
+            Audio.PlayPredicted(soundSpecifier, uid, predictingPlayer, audioParams);
+        else
+            Audio.PlayPvs(soundSpecifier, uid, audioParams);
     }
 
 #region DoAfters
@@ -196,7 +192,7 @@ public sealed class DoorSystem : SharedDoorSystem
                 return true;
         }
 
-        var modEv = new DoorGetPryTimeModifierEvent();
+        var modEv = new DoorGetPryTimeModifierEvent(user);
         RaiseLocalEvent(target, modEv, false);
 
         door.BeingPried = true;

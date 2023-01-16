@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi/ano01.png
+        - sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+          state: ano01
     - type: RandomSpawner
       prototypes:
         - SimpleXenoArtifact
