@@ -15,9 +15,24 @@ public sealed class DummyWireAction : BaseWireAction
 
     public override StatusLightData? GetStatusLightData(Wire wire) => null;
     public override bool AddWire(Wire wire, int count) => true;
-    public override bool Cut(EntityUid user, Wire wire) => true;
-    public override bool Mend(EntityUid user, Wire wire) => true;
-    public override bool Pulse(EntityUid user, Wire wire) => true;
+
+    public override bool Cut(EntityUid user, Wire wire)
+    {
+        base.Cut(user, wire);
+        return true;
+    }
+
+    public override bool Mend(EntityUid user, Wire wire)
+    {
+        base.Mend(user, wire);
+        return true;
+    }
+
+    public override bool Pulse(EntityUid user, Wire wire)
+    {
+        base.Pulse(user, wire);
+        return true;
+    }
 
     // doesn't matter if you get any information off of this,
     // if you really want to mess with dummy wires, you should
