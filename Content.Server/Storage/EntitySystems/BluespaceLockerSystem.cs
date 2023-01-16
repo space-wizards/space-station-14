@@ -17,7 +17,6 @@ namespace Content.Server.Storage.EntitySystems;
 
 public sealed class BluespaceLockerSystem : EntitySystem
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
@@ -162,11 +161,11 @@ public sealed class BluespaceLockerSystem : EntitySystem
             return false;
 
         if (lockerComponent.PickLinksFromSameMap &&
-            link.ToCoordinates().GetMapId(_entityManager) != locker.ToCoordinates().GetMapId(_entityManager))
+            link.ToCoordinates().GetMapId(EntityManager) != locker.ToCoordinates().GetMapId(EntityManager))
             return false;
 
         if (lockerComponent.PickLinksFromStationGrids &&
-            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(_entityManager)))
+            !HasComp<StationMemberComponent>(link.ToCoordinates().GetGridUid(EntityManager)))
             return false;
 
         if (lockerComponent.PickLinksFromResistLockers &&
@@ -389,7 +388,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         switch (component.BehaviorProperties.DestroyType)
         {
             case BluespaceLockerDestroyType.Explode:
-                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(_entityManager),
+                _explosionSystem.QueueExplosion(uid.ToCoordinates().ToMap(EntityManager),
                     ExplosionSystem.DefaultExplosionPrototypeId, 4, 1, 2, maxTileBreak: 0);
                 goto case BluespaceLockerDestroyType.Delete;
             case BluespaceLockerDestroyType.Delete:
