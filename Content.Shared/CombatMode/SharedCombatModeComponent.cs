@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.CombatMode
 {
-    [NetworkedComponent()]
+    [NetworkedComponent, AutoGenerateComponentState]
     public abstract class SharedCombatModeComponent : Component
     {
         #region Disarm
@@ -39,6 +39,7 @@ namespace Content.Shared.CombatMode
         [DataField("combatToggleAction")]
         public InstantAction? CombatToggleAction;
 
+        [AutoNetworkedField]
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual bool IsInCombatMode
         {
@@ -54,6 +55,7 @@ namespace Content.Shared.CombatMode
             }
         }
 
+        [AutoNetworkedField]
         [ViewVariables(VVAccess.ReadWrite)]
         public virtual TargetingZone ActiveZone
         {

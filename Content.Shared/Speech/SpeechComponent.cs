@@ -8,12 +8,13 @@ namespace Content.Shared.Speech
     ///     Component required for entities to be able to speak. (TODO: Entities can speak fine without this, this only forbids them speak if they have it and enabled is false.)
     ///     Contains the option to let entities make noise when speaking, datafields for the sounds in question, and relevant AudioParams.
     /// </summary>
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed class SpeechComponent : Component
     {
         [DataField("enabled"), Access(typeof(SpeechSystem),
              Friend = AccessPermissions.ReadWrite,
              Other = AccessPermissions.Read)]
+        [AutoNetworkedField]
         public bool Enabled = true;
 
         [ViewVariables(VVAccess.ReadWrite)]

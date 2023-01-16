@@ -4,24 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Stunnable
 {
     [RegisterComponent]
-    [NetworkedComponent]
+    [NetworkedComponent, AutoGenerateComponentState]
     [Access(typeof(SharedStunSystem))]
     public sealed class SlowedDownComponent : Component
     {
+        [AutoNetworkedField]
         public float SprintSpeedModifier { get; set; } = 0.5f;
+        [AutoNetworkedField]
         public float WalkSpeedModifier { get; set; } = 0.5f;
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class SlowedDownComponentState : ComponentState
-    {
-        public float SprintSpeedModifier { get; set;  }
-        public float WalkSpeedModifier { get; set;  }
-
-        public SlowedDownComponentState(float sprintSpeedModifier, float walkSpeedModifier)
-        {
-            SprintSpeedModifier = sprintSpeedModifier;
-            WalkSpeedModifier = walkSpeedModifier;
-        }
     }
 }

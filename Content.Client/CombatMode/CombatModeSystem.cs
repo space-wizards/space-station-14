@@ -12,21 +12,6 @@ namespace Content.Client.CombatMode
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<SharedCombatModeComponent, ComponentHandleState>(OnHandleState);
-        }
-
-        private void OnHandleState(EntityUid uid, SharedCombatModeComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not CombatModeComponentState state)
-                return;
-
-            component.IsInCombatMode = state.IsInCombatMode;
-            component.ActiveZone = state.TargetingZone;
-        }
         public override void Shutdown()
         {
             CommandBinds.Unregister<CombatModeSystem>();

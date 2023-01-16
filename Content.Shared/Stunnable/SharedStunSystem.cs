@@ -48,12 +48,6 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
             SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
 
-            SubscribeLocalEvent<SlowedDownComponent, ComponentGetState>(OnSlowGetState);
-            SubscribeLocalEvent<SlowedDownComponent, ComponentHandleState>(OnSlowHandleState);
-
-            SubscribeLocalEvent<KnockedDownComponent, ComponentGetState>(OnKnockGetState);
-            SubscribeLocalEvent<KnockedDownComponent, ComponentHandleState>(OnKnockHandleState);
-
             // helping people up if they're knocked down
             SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SlowedDownComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
@@ -76,34 +70,6 @@ namespace Content.Shared.Stunnable
         private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
         {
             _blocker.UpdateCanMove(uid);
-        }
-
-        private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
-        {
-            args.State = new SlowedDownComponentState(component.SprintSpeedModifier, component.WalkSpeedModifier);
-        }
-
-        private void OnSlowHandleState(EntityUid uid, SlowedDownComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is SlowedDownComponentState state)
-            {
-                component.SprintSpeedModifier = state.SprintSpeedModifier;
-                component.WalkSpeedModifier = state.WalkSpeedModifier;
-            }
-        }
-
-        private void OnKnockGetState(EntityUid uid, KnockedDownComponent component, ref ComponentGetState args)
-        {
-            args.State = new KnockedDownComponentState(component.HelpInterval, component.HelpTimer);
-        }
-
-        private void OnKnockHandleState(EntityUid uid, KnockedDownComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is KnockedDownComponentState state)
-            {
-                component.HelpInterval = state.HelpInterval;
-                component.HelpTimer = state.HelpTimer;
-            }
         }
 
         private void OnKnockInit(EntityUid uid, KnockedDownComponent component, ComponentInit args)

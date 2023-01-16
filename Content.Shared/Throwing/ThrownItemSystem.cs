@@ -32,25 +32,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-        }
-
-        private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
-        {
-            args.State = new ThrownItemComponentState(component.Thrower);
-        }
-
-        private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not ThrownItemComponentState {Thrower: not null } state ||
-                !state.Thrower.Value.IsValid())
-            {
-                return;
-            }
-
-            component.Thrower = state.Thrower.Value;
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)

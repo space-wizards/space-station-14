@@ -51,19 +51,6 @@ namespace Content.Shared.CombatMode
             component.IsInCombatMode = !component.IsInCombatMode;
             args.Handled = true;
         }
-
-        [Serializable, NetSerializable]
-        protected sealed class CombatModeComponentState : ComponentState
-        {
-            public bool IsInCombatMode { get; }
-            public TargetingZone TargetingZone { get; }
-
-            public CombatModeComponentState(bool isInCombatMode, TargetingZone targetingZone)
-            {
-                IsInCombatMode = isInCombatMode;
-                TargetingZone = targetingZone;
-            }
-        }
     }
 
     public sealed class ToggleCombatActionEvent : InstantActionEvent { }

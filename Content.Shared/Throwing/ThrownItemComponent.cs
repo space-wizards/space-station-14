@@ -3,20 +3,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Throwing
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed class ThrownItemComponent : Component
     {
+        [AutoNetworkedField]
         public EntityUid? Thrower { get; set; }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class ThrownItemComponentState : ComponentState
-    {
-        public EntityUid? Thrower { get; }
-
-        public ThrownItemComponentState(EntityUid? thrower)
-        {
-            Thrower = thrower;
-        }
     }
 }

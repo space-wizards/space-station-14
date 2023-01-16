@@ -67,16 +67,13 @@ public abstract partial class SharedGunSystem : EntitySystem
     {
         Sawmill = Logger.GetSawmill("gun");
         Sawmill.Level = LogLevel.Info;
-        SubscribeLocalEvent<GunComponent, ComponentGetState>(OnGetState);
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
-        SubscribeLocalEvent<GunComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<GunComponent, MeleeAttackAttemptEvent>(OnGunMeleeAttempt);
 
         // Ammo providers
         InitializeBallistic();
         InitializeBattery();
-        InitializeCartridge();
         InitializeChamberMagazine();
         InitializeMagazine();
         InitializeRevolver();
@@ -127,36 +124,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userGun != gun) return;
 
         StopShooting(gun);
-    }
-
-    private void OnGetState(EntityUid uid, GunComponent component, ref ComponentGetState args)
-    {
-        args.State = new GunComponentState
-        {
-            FireRate = component.FireRate,
-            CurrentAngle = component.CurrentAngle,
-            MinAngle = component.MinAngle,
-            MaxAngle = component.MaxAngle,
-            NextFire = component.NextFire,
-            ShotCounter = component.ShotCounter,
-            SelectiveFire = component.SelectedMode,
-            AvailableSelectiveFire = component.AvailableModes,
-        };
-    }
-
-    private void OnHandleState(EntityUid uid, GunComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not GunComponentState state) return;
-
-        Sawmill.Debug($"Handle state: setting shot count from {component.ShotCounter} to {state.ShotCounter}");
-        component.FireRate = state.FireRate;
-        component.CurrentAngle = state.CurrentAngle;
-        component.MinAngle = state.MinAngle;
-        component.MaxAngle = state.MaxAngle;
-        component.NextFire = state.NextFire;
-        component.ShotCounter = state.ShotCounter;
-        component.SelectedMode = state.SelectiveFire;
-        component.AvailableModes = state.AvailableSelectiveFire;
     }
 
     public bool CanShoot(GunComponent component)
@@ -386,19 +353,6 @@ public abstract partial class SharedGunSystem : EntitySystem
         Physics.ApplyLinearImpulse(userPhysics, -impulseVector);
     }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
-
-    [Serializable, NetSerializable]
-    protected sealed class GunComponentState : ComponentState
-    {
-        public Angle CurrentAngle;
-        public Angle MinAngle;
-        public Angle MaxAngle;
-        public TimeSpan NextFire;
-        public float FireRate;
-        public int ShotCounter;
-        public SelectiveFire SelectiveFire;
-        public SelectiveFire AvailableSelectiveFire;
-    }
 
     /// <summary>
     /// Used for animated effects on the client.

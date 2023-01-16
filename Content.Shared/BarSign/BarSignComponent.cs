@@ -12,7 +12,7 @@ namespace Content.Shared.BarSign
     }
 
     [Serializable, NetSerializable]
-    public sealed class BarSignComponentState : ComponentState
+    public sealed class BarSignComponentState  : ComponentState
     {
         public string? CurrentSign;
 
