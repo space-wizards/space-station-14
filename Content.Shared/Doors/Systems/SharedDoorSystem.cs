@@ -62,31 +62,35 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
-        if (door.NextStateChange != TimeSpan.Zero)
-            _activeDoors.Add(door);
-        else
+        if (door.State != DoorState.Closed)
         {
-            // Make sure doors are not perpetually stuck opening or closing.
-            if (door.State == DoorState.Opening)
+            // TODO: I don't think this handles every scenario.
+            if (door.NextStateChange != TimeSpan.Zero)
+                _activeDoors.Add(door);
+            else
             {
-                // force to open.
-                door.State = DoorState.Open;
-                door.Partial = false;
-            }
-            if (door.State == DoorState.Closing)
-            {
-                // force to closed.
-                door.State = DoorState.Closed;
-                door.Partial = false;
-            }
+                // Make sure doors are not perpetually stuck opening or closing.
+                if (door.State == DoorState.Opening)
+                {
+                    // force to open.
+                    door.State = DoorState.Open;
+                    door.Partial = false;
+                }
+                if (door.State == DoorState.Closing)
+                {
+                    // force to closed.
+                    door.State = DoorState.Closed;
+                    door.Partial = false;
+                }
 
-            if (door.State == DoorState.Open)
-            {
-                door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
-            }
-            if (door.State == DoorState.Closed)
-            {
-                door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
+                if (door.State == DoorState.Open)
+                {
+                    door.NextStateChange = GameTiming.CurTime + door.OpenTimeOne;
+                }
+                if (door.State == DoorState.Closed)
+                {
+                    door.NextStateChange = GameTiming.CurTime + door.CloseTimeOne;
+                }
             }
         }
 
