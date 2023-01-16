@@ -5,6 +5,7 @@ using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
