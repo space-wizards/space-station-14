@@ -393,14 +393,21 @@ namespace Content.Shared.CCVar
         ///     The number of seconds between each tip being displayed when the round is not actively going
         ///     (i.e. postround or lobby)
         /// </summary>
-        public static readonly CVarDef<int> TipFrequencyOutOfRound =
-            CVarDef.Create("tips.out_of_game_frequency", 60);
+        public static readonly CVarDef<bool> TipsEnabled =
+            CVarDef.Create("tips.enabled", true);
+
+        /// <summary>
+        ///     The number of seconds between each tip being displayed when the round is not actively going
+        ///     (i.e. postround or lobby)
+        /// </summary>
+        public static readonly CVarDef<float> TipFrequencyOutOfRound =
+            CVarDef.Create("tips.out_of_game_frequency", 60f * 2);
 
         /// <summary>
         ///     The number of seconds between each tip being displayed when the round is actively going
         /// </summary>
-        public static readonly CVarDef<int> TipFrequencyInRound =
-            CVarDef.Create("pirates.max_pirates", 60 * 10);
+        public static readonly CVarDef<float> TipFrequencyInRound =
+            CVarDef.Create("pirates.max_pirates", 60f * 10);
 
         /*
          * Console
