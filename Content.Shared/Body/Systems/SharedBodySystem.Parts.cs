@@ -19,35 +19,6 @@ public partial class SharedBodySystem
     private void InitializeParts()
     {
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
-        SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
-        SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
-    }
-
-    private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
-    {
-        args.State = new BodyPartComponentState(
-            part.Body,
-            part.ParentSlot,
-            part.Children,
-            part.Organs,
-            part.PartType,
-            part.IsVital,
-            part.Symmetry
-        );
-    }
-
-    private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
-    {
-        if (args.Current is not BodyPartComponentState state)
-            return;
-
-        part.Body = state.Body;
-        part.ParentSlot = state.ParentSlot;
-        part.Children = state.Children;
-        part.Organs = state.Organs;
-        part.PartType = state.PartType;
-        part.IsVital = state.IsVital;
-        part.Symmetry = state.Symmetry;
     }
 
     private void OnPartRemoved(EntityUid uid, BodyPartComponent part, ComponentRemove args)

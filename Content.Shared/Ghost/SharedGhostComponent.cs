@@ -3,10 +3,11 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ghost
 {
-    [NetworkedComponent()]
+    [NetworkedComponent, AutoGenerateComponentState]
     public abstract class SharedGhostComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
         public bool CanGhostInteract
         {
             get => _canGhostInteract;
@@ -26,6 +27,7 @@ namespace Content.Shared.Ghost
         /// </summary>
         // TODO MIRROR change this to use friend classes when thats merged
         [ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
         public bool CanReturnToBody
         {
             get => _canReturnToBody;
@@ -39,39 +41,6 @@ namespace Content.Shared.Ghost
 
         [DataField("canReturnToBody")]
         private bool _canReturnToBody;
-
-        public override ComponentState GetComponentState()
-        {
-            return new GhostComponentState(CanReturnToBody, CanGhostInteract);
-        }
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not GhostComponentState state)
-            {
-                return;
-            }
-
-            CanReturnToBody = state.CanReturnToBody;
-            CanGhostInteract = state.CanGhostInteract;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class GhostComponentState : ComponentState
-    {
-        public bool CanReturnToBody { get; }
-        public bool CanGhostInteract { get; }
-
-        public GhostComponentState(
-            bool canReturnToBody,
-            bool canGhostInteract)
-        {
-            CanReturnToBody = canReturnToBody;
-            CanGhostInteract = canGhostInteract;
-        }
     }
 }
 

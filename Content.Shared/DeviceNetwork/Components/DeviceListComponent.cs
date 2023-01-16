@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DeviceNetwork;
 
 [RegisterComponent]
-[NetworkedComponent]
+[NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedDeviceListSystem))]
 public sealed class DeviceListComponent : Component
 {
@@ -12,6 +12,7 @@ public sealed class DeviceListComponent : Component
     /// The list of devices can or can't connect to, depending on the <see cref="IsAllowList"/> field.
     /// </summary>
     [DataField("devices")]
+    [AutoNetworkedField]
     public HashSet<EntityUid> Devices = new();
 
     /// <summary>
@@ -19,6 +20,7 @@ public sealed class DeviceListComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("deviceLimit")]
+    [AutoNetworkedField]
     public int DeviceLimit = 32;
 
     /// <summary>
@@ -26,6 +28,7 @@ public sealed class DeviceListComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isAllowList")]
+    [AutoNetworkedField]
     public bool IsAllowList = true;
 
     /// <summary>
@@ -33,20 +36,6 @@ public sealed class DeviceListComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("handleIncoming")]
+    [AutoNetworkedField]
     public bool HandleIncomingPackets = false;
-}
-
-[Serializable, NetSerializable]
-public sealed class DeviceListComponentState : ComponentState
-{
-    public readonly HashSet<EntityUid> Devices;
-    public readonly bool IsAllowList;
-    public readonly bool HandleIncomingPackets;
-
-    public DeviceListComponentState(HashSet<EntityUid> devices, bool isAllowList, bool handleIncomingPackets)
-    {
-        Devices = devices;
-        IsAllowList = isAllowList;
-        HandleIncomingPackets = handleIncomingPackets;
-    }
 }

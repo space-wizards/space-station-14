@@ -12,6 +12,7 @@ namespace Content.Client.Cuffs.Components
     {
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
+            // TODO wtf is this, use appearance data not component states
             if (curState is not HandcuffedComponentState state)
             {
                 return;

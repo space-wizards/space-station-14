@@ -9,16 +9,19 @@ namespace Content.Shared.Access.Components
     /// </summary>
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedAccessSystem))]
+    [AutoGenerateComponentState]
     public sealed class AccessComponent : Component
     {
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
         [Access(typeof(SharedAccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
+        [AutoNetworkedField(true)]
         public HashSet<string> Tags = new();
 
         /// <summary>
         ///     Access Groups. These are added to the tags during map init. After map init this will have no effect.
         /// </summary>
         [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
+        [AutoNetworkedField(true)]
         public readonly HashSet<string> Groups = new();
     }
 

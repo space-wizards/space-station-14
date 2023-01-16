@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Lathe
 {
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed class LatheComponent : Component
     {
         /// <summary>
@@ -71,6 +71,7 @@ namespace Content.Shared.Lathe
         /// A modifier that changes how much of a material is needed to print a recipe
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+        [AutoNetworkedField]
         public float MaterialUseMultiplier = 1;
 
         /// <summary>

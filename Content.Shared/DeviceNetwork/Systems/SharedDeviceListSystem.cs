@@ -5,12 +5,6 @@ namespace Content.Shared.DeviceNetwork;
 
 public abstract class SharedDeviceListSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-        SubscribeLocalEvent<DeviceListComponent, ComponentGetState>(GetDeviceListState);
-        SubscribeLocalEvent<DeviceListComponent, ComponentHandleState>(HandleDeviceListState);
-    }
-
     /// <summary>
     ///     Updates the device list stored on this entity.
     /// </summary>
@@ -50,23 +44,6 @@ public abstract class SharedDeviceListSystem : EntitySystem
             return new EntityUid[] { };
         }
         return component.Devices;
-    }
-
-    private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)
-    {
-        args.State = new DeviceListComponentState(comp.Devices, comp.IsAllowList, comp.HandleIncomingPackets);
-    }
-
-    private void HandleDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentHandleState args)
-    {
-        if (args.Current is not DeviceListComponentState state)
-        {
-            return;
-        }
-
-        comp.Devices = state.Devices;
-        comp.HandleIncomingPackets = state.HandleIncomingPackets;
-        comp.IsAllowList = state.IsAllowList;
     }
 }
 

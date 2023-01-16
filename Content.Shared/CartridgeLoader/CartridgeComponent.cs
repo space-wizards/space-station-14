@@ -7,7 +7,7 @@ namespace Content.Shared.CartridgeLoader;
 /// <summary>
 /// This is used for defining values used for displaying in the program ui in yaml
 /// </summary>
-[NetworkedComponent]
+[NetworkedComponent, AutoGenerateComponentState]
 [RegisterComponent]
 public sealed class CartridgeComponent : Component
 {
@@ -17,13 +17,8 @@ public sealed class CartridgeComponent : Component
     [DataField("icon")]
     public SpriteSpecifier? Icon;
 
+    [AutoNetworkedField]
     public InstallationStatus InstallationStatus = InstallationStatus.Cartridge;
-}
-
-[Serializable, NetSerializable]
-public sealed class CartridgeComponentState : ComponentState
-{
-    public InstallationStatus InstallationStatus;
 }
 
 [Serializable, NetSerializable]

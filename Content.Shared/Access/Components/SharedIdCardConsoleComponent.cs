@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Access.Components
 {
-    [NetworkedComponent]
+    [NetworkedComponent, AutoGenerateComponentState]
     public abstract class SharedIdCardConsoleComponent : Component
     {
         public const int MaxFullNameLength = 30;
@@ -40,6 +40,7 @@ namespace Content.Shared.Access.Components
         // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
         [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
+        [AutoNetworkedField(true)]
         public List<string> AccessLevels = new()
         {
             "Armory",

@@ -23,6 +23,5 @@ public abstract partial class SharedBodySystem : EntitySystem
 
         InitializeBody();
         InitializeParts();
-        InitializeOrgans();
     }
 }

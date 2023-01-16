@@ -15,26 +15,6 @@ public abstract class SharedLatheSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedMaterialStorageSystem _materialStorage = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
-    }
-
-    private void OnGetState(EntityUid uid, LatheComponent component, ref ComponentGetState args)
-    {
-        args.State = new LatheComponentState(component.MaterialUseMultiplier);
-    }
-
-    private void OnHandleState(EntityUid uid, LatheComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not LatheComponentState state)
-            return;
-        component.MaterialUseMultiplier = state.MaterialUseMultiplier;
-    }
-
     [PublicAPI]
     public bool CanProduce(EntityUid uid, string recipe, int amount = 1, LatheComponent? component = null)
     {
@@ -61,15 +41,4 @@ public abstract class SharedLatheSystem : EntitySystem
     }
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
-}
-
-[Serializable, NetSerializable]
-public sealed class LatheComponentState : ComponentState
-{
-    public float MaterialUseMultiplier;
-
-    public LatheComponentState(float materialUseMultiplier)
-    {
-        MaterialUseMultiplier = materialUseMultiplier;
-    }
 }

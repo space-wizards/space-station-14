@@ -21,23 +21,7 @@ namespace Content.Shared.Jittering
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<JitteringComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<JitteringComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<JitteringComponent, RejuvenateEvent>(OnRejuvenate);
-        }
-
-        private void OnGetState(EntityUid uid, JitteringComponent component, ref ComponentGetState args)
-        {
-            args.State = new JitteringComponentState(component.Amplitude, component.Frequency);
-        }
-
-        private void OnHandleState(EntityUid uid, JitteringComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not JitteringComponentState jitteringState)
-                return;
-
-            component.Amplitude = jitteringState.Amplitude;
-            component.Frequency = jitteringState.Frequency;
         }
 
         private void OnRejuvenate(EntityUid uid, JitteringComponent component, RejuvenateEvent args)
