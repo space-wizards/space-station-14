@@ -7,12 +7,9 @@ using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 using System.Linq;
 using Content.Shared.Tag;
-using Content.Shared.Tools.Components;
-using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -23,13 +20,13 @@ public abstract class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private   readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private   readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly OccluderSystem _occluder = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private   readonly OccluderSystem _occluder = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -55,6 +52,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<DoorComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<DoorComponent, EntityUnpausedEvent>(OnDoorUnpaused);
 
         SubscribeLocalEvent<DoorComponent, ActivateInWorldEvent>(OnActivate);
 
@@ -133,6 +131,11 @@ public abstract class SharedDoorSystem : EntitySystem
 
         RaiseLocalEvent(uid, new DoorStateChangedEvent(door.State), false);
         UpdateAppearance(uid, door);
+    }
+
+    private void OnDoorUnpaused(EntityUid uid, DoorComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextStateChange += args.PausedTime;
     }
 
     protected void SetState(EntityUid uid, DoorState state, DoorComponent? door = null)
@@ -574,7 +577,7 @@ public abstract class SharedDoorSystem : EntitySystem
             if (Paused(door.Owner, metadata))
                 continue;
 
-            var nextChange = door.NextStateChange + _metadata.GetPauseTime(door.Owner, metadata);
+            var nextChange = door.NextStateChange;
 
             if (nextChange < time)
                 NextState(door, time);

@@ -5,7 +5,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Timing;
 using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
 
 namespace Content.Shared.Doors.Components;
@@ -66,26 +65,6 @@ public sealed class DoorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextStateChange", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan NextStateChange;
-
-    [Obsolete("Use NextStateChange"), DataField("SecondsUntilStateChange")]
-    public float? SecondsUntilStateChange
-    {
-        get => 0f;
-        set
-        {
-            if (value == null || value.Value > 0)
-                return;
-
-            var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            NextStateChange = curTime + TimeSpan.FromSeconds(value.Value);
-
-            // Fallback for invalid data getting serialized.
-            if (NextStateChange < TimeSpan.Zero)
-            {
-                NextStateChange = curTime;
-            }
-        }
-    }
 
     /// <summary>
     ///     Whether the door is currently partially closed or open. I.e., when the door is "closing" and is already opaque,
