@@ -20,8 +20,6 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, MapInitEvent>(OnBallisticMapInit);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, TakeAmmoEvent>(OnBallisticTakeAmmo);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetAmmoCountEvent>(OnBallisticAmmoCount);
-        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentGetState>(OnBallisticGetState);
-        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentHandleState>(OnBallisticHandleState);
 
         SubscribeLocalEvent<BallisticAmmoProviderComponent, ExaminedEvent>(OnBallisticExamine);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, GetVerbsEvent<Verb>>(OnBallisticVerb);
@@ -95,31 +93,6 @@ public abstract partial class SharedGunSystem
     }
 
     protected abstract void Cycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates);
-
-    private void OnBallisticGetState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentGetState args)
-    {
-        args.State = new BallisticAmmoProviderComponentState()
-        {
-            UnspawnedCount = component.UnspawnedCount,
-            Entities = component.Entities,
-            Cycled = component.Cycled,
-        };
-    }
-
-    private void OnBallisticHandleState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not BallisticAmmoProviderComponentState state) return;
-
-        component.Cycled = state.Cycled;
-        component.UnspawnedCount = state.UnspawnedCount;
-
-        component.Entities.Clear();
-
-        foreach (var ent in state.Entities)
-        {
-            component.Entities.Add(ent);
-        }
-    }
 
     private void OnBallisticInit(EntityUid uid, BallisticAmmoProviderComponent component, ComponentInit args)
     {
@@ -210,13 +183,5 @@ public abstract partial class SharedGunSystem
 
         Appearance.SetData(appearance.Owner, AmmoVisuals.AmmoCount, GetBallisticShots(component), appearance);
         Appearance.SetData(appearance.Owner, AmmoVisuals.AmmoMax, component.Capacity, appearance);
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class BallisticAmmoProviderComponentState : ComponentState
-    {
-        public int UnspawnedCount;
-        public List<EntityUid> Entities = default!;
-        public bool Cycled;
     }
 }

@@ -27,6 +27,7 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<ProjectileBatteryAmmoProviderComponent, ExaminedEvent>(OnBatteryExamine);
     }
 
+    // can't autogen these states because of component inheritance!
     private void OnBatteryHandleState(EntityUid uid, BatteryAmmoProviderComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not BatteryAmmoProviderComponentState state) return;

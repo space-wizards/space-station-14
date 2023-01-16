@@ -13,7 +13,7 @@ namespace Content.Shared.Weapons.Melee;
 /// <summary>
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed class MeleeWeaponComponent : Component
 {
     /// <summary>
@@ -27,6 +27,7 @@ public sealed class MeleeWeaponComponent : Component
     /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [AutoNetworkedField]
     public TimeSpan NextAttack;
 
     /*
@@ -39,6 +40,7 @@ public sealed class MeleeWeaponComponent : Component
     /// How many times we can attack per second.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("attackRate")]
+    [AutoNetworkedField]
     public float AttackRate = 1f;
 
     /// <summary>
@@ -46,6 +48,7 @@ public sealed class MeleeWeaponComponent : Component
     /// Used so we can't just hold the mouse button and attack constantly.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public bool Attacking = false;
 
     /// <summary>
@@ -53,6 +56,7 @@ public sealed class MeleeWeaponComponent : Component
     /// </summary>
     /// <returns></returns>
     [ViewVariables(VVAccess.ReadWrite), DataField("windUpStart")]
+    [AutoNetworkedField]
     public TimeSpan? WindUpStart;
 
     /// <summary>
@@ -89,6 +93,7 @@ public sealed class MeleeWeaponComponent : Component
     /// Nearest edge range to hit an entity.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("range")]
+    [AutoNetworkedField]
     public float Range = 1.5f;
 
     /// <summary>
@@ -98,9 +103,11 @@ public sealed class MeleeWeaponComponent : Component
     public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [AutoNetworkedField]
     public string ClickAnimation = "WeaponArcPunch";
 
     [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    [AutoNetworkedField]
     public string WideAnimation = "WeaponArcSlash";
 
     // Sounds
@@ -138,30 +145,4 @@ public sealed class MeleeWeaponComponent : Component
 public sealed class GetMeleeWeaponEvent : HandledEntityEventArgs
 {
     public EntityUid? Weapon;
-}
-
-[Serializable, NetSerializable]
-public sealed class MeleeWeaponComponentState : ComponentState
-{
-    // None of the other data matters for client as they're not predicted.
-
-    public float AttackRate;
-    public bool Attacking;
-    public TimeSpan NextAttack;
-    public TimeSpan? WindUpStart;
-
-    public string ClickAnimation;
-    public string WideAnimation;
-    public float Range;
-
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
-    {
-        AttackRate = attackRate;
-        Attacking = attacking;
-        NextAttack = nextAttack;
-        WindUpStart = windupStart;
-        ClickAnimation = clickAnimation;
-        WideAnimation = wideAnimation;
-        Range = range;
-    }
 }

@@ -13,7 +13,7 @@ namespace Content.Shared.Materials;
 [AutoGenerateComponentState]
 public sealed class MaterialStorageComponent : Component
 {
-    [AutoNetworkedField]
+    [AutoNetworkedField(true)]
     [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     public Dictionary<string, int> Storage { get; set; } = new();
 
@@ -38,7 +38,7 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
-    [AutoNetworkedField]
+    [AutoNetworkedField(true)]
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 

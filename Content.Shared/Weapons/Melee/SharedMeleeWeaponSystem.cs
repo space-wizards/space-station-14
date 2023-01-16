@@ -57,8 +57,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         base.Initialize();
         Sawmill = Logger.GetSawmill("melee");
 
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MeleeWeaponComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<MeleeWeaponComponent, HandDeselectedEvent>(OnMeleeDropped);
         SubscribeLocalEvent<MeleeWeaponComponent, HandSelectedEvent>(OnMeleeSelected);
 
@@ -199,27 +197,6 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             return;
 
         AttemptAttack(args.SenderSession.AttachedEntity.Value, userWeapon, msg, args.SenderSession);
-    }
-
-    private void OnGetState(EntityUid uid, MeleeWeaponComponent component, ref ComponentGetState args)
-    {
-        args.State = new MeleeWeaponComponentState(component.AttackRate, component.Attacking, component.NextAttack,
-            component.WindUpStart, component.ClickAnimation, component.WideAnimation, component.Range);
-    }
-
-    private void OnHandleState(EntityUid uid, MeleeWeaponComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MeleeWeaponComponentState state)
-            return;
-
-        component.Attacking = state.Attacking;
-        component.AttackRate = state.AttackRate;
-        component.NextAttack = state.NextAttack;
-        component.WindUpStart = state.WindUpStart;
-
-        component.ClickAnimation = state.ClickAnimation;
-        component.WideAnimation = state.WideAnimation;
-        component.Range = state.Range;
     }
 
     public MeleeWeaponComponent? GetWeapon(EntityUid entity)
