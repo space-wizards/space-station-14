@@ -68,9 +68,6 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public override void Update(float frameTime)
     {
-        if(!_timing.IsFirstTimePredicted)
-            return;
-
         foreach(var (eventHorizon, xform) in EntityManager.EntityQuery<EventHorizonComponent, TransformComponent>())
         {
             var curTime = _timing.CurTime;
