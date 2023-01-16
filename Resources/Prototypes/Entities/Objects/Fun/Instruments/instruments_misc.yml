@@ -138,8 +138,6 @@
   - type: EmitSoundOnLand
     sound:
        path: /Audio/Items/bikehorn.ogg
-  - type: Instrument
-    program: 124
   - type: Slippery
     paralyzeTime: 4
     launchForwardsMultiplier: 1.5
