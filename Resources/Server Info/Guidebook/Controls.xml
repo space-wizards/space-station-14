@@ -31,7 +31,7 @@ All items have an assigned size, some too large to fit into most or all containe
 To drop items, you can press [color=#a4885c]Q[/color], and to drop them more violently (also known as throwing), you can press [color=#a4885c]ctrl-Q[/color].
 
 ## Actions
-To the right in your HUD there's a bar showing various actions you can take.
+To the left in your HUD there's a bar showing various actions you can take.
 You can hover over each one to see a name and description for the action that tells you what it is and how it works.
 You can click on an action to invoke it, or press a number key at any time to invoke the action without clicking on it.
 
