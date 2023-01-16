@@ -1,0 +1,4 @@
+author: moony, ElectroSR
+changes:
+  - type: Add # One of the following: Add, Remove, Tweak, Fix
+    message: An in-game guide has been added. It is accessible via a keybinding (defaults to numpad 0), or via some examine tooltips. Help wanted writing guides!
