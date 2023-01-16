@@ -10,8 +10,10 @@ namespace Content.Shared.Materials;
 
 [Access(typeof(SharedMaterialStorageSystem))]
 [RegisterComponent, NetworkedComponent]
+[AutoGenerateComponentState]
 public sealed class MaterialStorageComponent : Component
 {
+    [AutoNetworkedField]
     [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     public Dictionary<string, int> Storage { get; set; } = new();
 
@@ -36,6 +38,7 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// Whitelist generated on runtime for what specific materials can be inserted into this entity.
     /// </summary>
+    [AutoNetworkedField]
     [DataField("materialWhiteList", customTypeSerializer: typeof(PrototypeIdListSerializer<MaterialPrototype>))]
     public List<string>? MaterialWhiteList;
 
@@ -89,18 +92,4 @@ public record struct GetMaterialWhitelistEvent(EntityUid Storage)
     public readonly EntityUid Storage = Storage;
 
     public List<string> Whitelist = new();
-}
-
-[Serializable, NetSerializable]
-public sealed class MaterialStorageComponentState : ComponentState
-{
-    public Dictionary<string, int> Storage;
-
-    public List<string>? MaterialWhitelist;
-
-    public MaterialStorageComponentState(Dictionary<string, int> storage, List<string>? materialWhitelist)
-    {
-        Storage = storage;
-        MaterialWhitelist = materialWhitelist;
-    }
 }

@@ -25,8 +25,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
 
         SubscribeLocalEvent<MaterialStorageComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<MaterialStorageComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<MaterialStorageComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentGetState>(OnGetInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, ComponentHandleState>(OnHandleInsertingState);
         SubscribeLocalEvent<InsertingMaterialStorageComponent, EntityUnpausedEvent>(OnUnpaused);
@@ -48,22 +46,6 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     private void OnMapInit(EntityUid uid, MaterialStorageComponent component, MapInitEvent args)
     {
         _appearance.SetData(uid, MaterialStorageVisuals.Inserting, false);
-    }
-
-    private void OnGetState(EntityUid uid, MaterialStorageComponent component, ref ComponentGetState args)
-    {
-        args.State = new MaterialStorageComponentState(component.Storage, component.MaterialWhiteList);
-    }
-
-    private void OnHandleState(EntityUid uid, MaterialStorageComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not MaterialStorageComponentState state)
-            return;
-
-        component.Storage = new Dictionary<string, int>(state.Storage);
-
-        if (state.MaterialWhitelist != null)
-            component.MaterialWhiteList = new List<string>(state.MaterialWhitelist);
     }
 
     private void OnGetInsertingState(EntityUid uid, InsertingMaterialStorageComponent component, ref ComponentGetState args)
