@@ -45,7 +45,7 @@ public sealed class PrayerSystem : EntitySystem
         var prayerVerb = new ActivationVerb
         {
             Text = Loc.GetString(comp.Verb),
-            IconTexture = comp.VerbImage,
+            IconTexture = comp.VerbImage == "" ? null : comp.VerbImage,
             Act = () =>
             {
                 if (comp.BibleUserOnly && !EntityManager.TryGetComponent<BibleUserComponent>(args.User, out var bibleUser))
@@ -78,7 +78,7 @@ public sealed class PrayerSystem : EntitySystem
         if (target.AttachedEntity == null)
             return;
 
-        var message = popupMessage == "" ? "" : popupMessage + $" \"{messageString}\"";
+        var message = popupMessage == "" ? "" : popupMessage + (messageString == "" ? "" : $" \"{messageString}\"");
 
         _popupSystem.PopupEntity(popupMessage, target.AttachedEntity.Value, target, PopupType.Large);
         _chatManager.ChatMessageToOne(ChatChannel.Local, messageString, message, EntityUid.Invalid, false, target.ConnectedClient);
@@ -101,9 +101,9 @@ public sealed class PrayerSystem : EntitySystem
             return;
 
 
-        _popupSystem.PopupEntity(Loc.GetString("prayer-popup-notify-sent"), sender.AttachedEntity.Value, sender, PopupType.Medium);
+        _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement(Loc.GetString("prayer-chat-notify", ("name", sender.Name), ("message", message)));
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer: {message}");
+        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotifiactionPrefix)} <{sender.Name}>: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotifiactionPrefix)}): {message}");
     }
 }

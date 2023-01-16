@@ -18,21 +18,21 @@
         /// </summary>
         [DataField("sentMessage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public string SentMessage = "Your message has been sent to the gods...";
+        public string SentMessage = "prayer-popup-notify-pray-sent";
 
         /// <summary>
         /// Prefix used in the notification to admins
         /// </summary>
         [DataField("notifiactionPrefix")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public string NotifiactionPrefix = "PRAYER";
+        public string NotifiactionPrefix = "prayer-chat-notify-pray";
 
         /// <summary>
         /// Used in window title and context menu
         /// </summary>
         [DataField("verb")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public string Verb = "Pray";
+        public string Verb = "prayer-verbs-pray";
 
         /// <summary>
         /// Context menu image
