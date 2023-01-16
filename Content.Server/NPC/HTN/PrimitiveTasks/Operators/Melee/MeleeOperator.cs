@@ -1,8 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.NPC.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -23,7 +23,7 @@ public sealed class MeleeOperator : HTNOperator
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
     [DataField("targetState")]
-    public DamageState TargetState = DamageState.Alive;
+    public MobState TargetState = MobState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -31,6 +31,7 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.MissChance = blackboard.GetValueOrDefault<float>(NPCBlackboard.MeleeMissChance, _entManager);
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 

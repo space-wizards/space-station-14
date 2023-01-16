@@ -29,6 +29,10 @@
       - MobLayer
   - type: MovementAlwaysTouching
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       150: Dead
@@ -62,6 +66,8 @@
     coldDamageThreshold: 0
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:

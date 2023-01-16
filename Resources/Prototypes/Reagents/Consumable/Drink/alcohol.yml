@@ -122,7 +122,7 @@
     Alcohol:
       effects:
       - !type:Drunk
-        boozePower: 3
+        boozePower: 20
 
 - type: reagent
   id: Gin

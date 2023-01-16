@@ -3,8 +3,6 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
@@ -22,6 +20,9 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
@@ -188,7 +189,7 @@ namespace Content.Server.Dragon
                 // We can't predict the rift being destroyed anyway so no point adding weakened to shared.
                 dragon.WeakenedAccumulator = dragon.WeakenedDuration;
                 _movement.RefreshMovementSpeedModifiers(component.Dragon);
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, Filter.Entities(component.Dragon));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-destroyed"), component.Dragon, component.Dragon);
             }
         }
 
@@ -212,19 +213,19 @@ namespace Content.Server.Dragon
         {
             if (component.Weakened)
             {
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-weakened"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-weakened"), uid, uid);
                 return;
             }
 
             if (component.Rifts.Count >= RiftsAllowed)
             {
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-max"), uid, uid);
                 return;
             }
 
             if (component.Rifts.Count > 0 && TryComp<DragonRiftComponent>(component.Rifts[^1], out var rift) && rift.State != DragonRiftState.Finished)
             {
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-duplicate"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-duplicate"), uid, uid);
                 return;
             }
 
@@ -233,7 +234,7 @@ namespace Content.Server.Dragon
             // Have to be on a grid fam
             if (!_mapManager.TryGetGrid(xform.GridUid, out var grid))
             {
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-anchor"), uid, uid);
                 return;
             }
 
@@ -241,7 +242,7 @@ namespace Content.Server.Dragon
             {
                 if (riftXform.Coordinates.InRange(EntityManager, xform.Coordinates, RiftRange))
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, Filter.Entities(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("carp-rift-proximity", ("proximity", RiftRange)), uid, uid);
                     return;
                 }
             }
@@ -251,7 +252,7 @@ namespace Content.Server.Dragon
                 if (!tile.IsSpace(_tileDef))
                     continue;
 
-                _popupSystem.PopupEntity(Loc.GetString("carp-rift-space-proximity", ("proximity", RiftTileRadius)), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("carp-rift-space-proximity", ("proximity", RiftTileRadius)), uid, uid);
                 return;
             }
 
@@ -275,7 +276,7 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.NewMobState == MobState.Dead)
             {
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
@@ -365,8 +366,8 @@ namespace Content.Server.Dragon
             {
                 switch (targetState.CurrentState)
                 {
-                    case DamageState.Critical:
-                    case DamageState.Dead:
+                    case MobState.Critical:
+                    case MobState.Dead:
                         component.CancelToken = new CancellationTokenSource();
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)
@@ -379,14 +380,14 @@ namespace Content.Server.Dragon
                         });
                         break;
                     default:
-                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, Filter.Entities(uid));
+                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, uid);
                         break;
                 }
 
                 return;
             }
 
-            _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, Filter.Entities(uid));
+            _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
 
             if (component.SoundStructureDevour != null)
                 _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);

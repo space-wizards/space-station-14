@@ -17,9 +17,6 @@ namespace Content.Server.Cuffs.Components
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private string _brokenName = string.Empty;
-        private string _brokenDesc = string.Empty;
-
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
@@ -72,21 +69,13 @@ namespace Content.Server.Cuffs.Components
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [DataField("brokenName", readOnly: true)]
-        public string BrokenName
-        {
-            get => _brokenName;
-            private set => _brokenName = Loc.GetString(value);
-        }
+        public string BrokenName { get; private set; } = "";
 
         /// <summary>
         ///     The iconstate used for broken handcuffs
         /// </summary>
         [DataField("brokenDesc", readOnly: true)]
-        public string BrokenDesc
-        {
-            get => _brokenDesc;
-            private set => _brokenDesc = Loc.GetString(value);
-        }
+        public string BrokenDesc { get; private set; } = "";
 
         [ViewVariables]
         public bool Broken

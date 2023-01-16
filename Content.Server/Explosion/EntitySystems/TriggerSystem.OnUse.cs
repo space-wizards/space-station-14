@@ -83,7 +83,7 @@ public sealed partial class TriggerSystem
                 Act = () =>
                 {
                     component.Delay = option;
-                    _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), args.User, args.User);
                 },
             });
         }
@@ -110,7 +110,7 @@ public sealed partial class TriggerSystem
         if (component.DelayOptions[^1] <= component.Delay)
         {
             component.Delay = component.DelayOptions[0];
-            _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", component.Delay)), user, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", component.Delay)), user, user);
             return;
         }
 
@@ -119,7 +119,7 @@ public sealed partial class TriggerSystem
             if (option > component.Delay)
             {
                 component.Delay = option;
-                _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), user, Filter.Entities(user));
+                _popupSystem.PopupEntity(Loc.GetString("popup-trigger-timer-set", ("time", option)), user, user);
                 return;
             }
         }
@@ -130,12 +130,12 @@ public sealed partial class TriggerSystem
         if (comp.StartOnStick)
         {
             comp.StartOnStick = false;
-            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-off"), grenade, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-off"), grenade, user);
         }
         else
         {
             comp.StartOnStick = true;
-            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-on"), grenade, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("popup-start-on-stick-on"), grenade, user);
         }
     }
 

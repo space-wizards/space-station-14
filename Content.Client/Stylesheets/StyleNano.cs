@@ -5,6 +5,7 @@ using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
@@ -112,6 +113,11 @@ namespace Content.Client.Stylesheets
         public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
         public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
+
+        // Fancy Tree elements
+        public static readonly Color FancyTreeEvenRowColor = Color.FromHex("#25252A");
+        public static readonly Color FancyTreeOddRowColor = FancyTreeEvenRowColor * new Color(0.8f, 0.8f, 0.8f);
+        public static readonly Color FancyTreeSelectedRowColor = new Color(55, 55, 68);
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -1031,49 +1037,6 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font", notoSans16)
                     }),
 
-                // Popup messages
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmall}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.White),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageSmallCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic10),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMedium}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageMediumCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansItalic12),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLarge}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.LightGray),
-                    }),
-
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPopupMessageLargeCaution}, null, null),
-                    new[]
-                    {
-                        new StyleProperty("font", notoSansBoldItalic14),
-                        new StyleProperty("font-color", Color.Red),
-                    }),
-
                 //APC and SMES power state label colors
                 new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassPowerStateNone}, null, null), new[]
                 {
@@ -1450,6 +1413,35 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class("PDAWindowFooterText")
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
+
+                // Fancy Tree
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassEvenRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeEvenRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassOddRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeOddRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassSelected)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeSelectedRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeSelectedRowColor,
+                    }),
 
             }).ToList());
         }

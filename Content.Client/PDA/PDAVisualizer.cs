@@ -30,7 +30,7 @@ namespace Content.Client.PDA
         {
             base.InitializeEntity(entity);
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var sprite = entityManager.GetComponent<ISpriteComponent>(entity);
+            var sprite = entityManager.GetComponent<SpriteComponent>(entity);
 
             if (_state != null)
             {
@@ -50,7 +50,7 @@ namespace Content.Client.PDA
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
             if (component.TryGetData(UnpoweredFlashlightVisuals.LightOn, out bool isFlashlightOn))
             {

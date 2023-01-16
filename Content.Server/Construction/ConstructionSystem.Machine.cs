@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Examine;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;

@@ -25,6 +25,7 @@ using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
@@ -678,8 +679,8 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/halt.png",
                 Act = () =>
                 {
-                    physics.LinearVelocity = Vector2.Zero;
-                    physics.AngularVelocity = 0.0f;
+                    _physics.SetLinearVelocity(args.Target, Vector2.Zero, body: physics);
+                    _physics.SetAngularVelocity(args.Target, 0f, body: physics);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-halt-movement-description"),

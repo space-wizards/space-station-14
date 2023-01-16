@@ -45,6 +45,11 @@
       "delays": [[1.0], [1.0], [1.0], [1.0]]
     },
     {
+      "name": "equipped-MASK-pig",
+      "directions": 4,
+      "delays": [[1.0], [1.0], [1.0], [1.0]]
+    },
+    {
       "name": "up-equipped-MASK",
       "directions": 4
     },
