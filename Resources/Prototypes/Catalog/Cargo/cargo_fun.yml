@@ -52,7 +52,7 @@
   id: FunBoardGames
   icon:
     sprite: Objects/Fun/dice.rsi
-    state: d66
+    state: d6_6
   product: CrateFunBoardGames
   cost: 1500
   category: Fun
