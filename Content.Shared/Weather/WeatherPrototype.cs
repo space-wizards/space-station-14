@@ -14,11 +14,13 @@ public sealed class WeatherPrototype : IPrototype
     /// <summary>
     /// Minimum duration for the weather.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DurationMinimum = TimeSpan.FromSeconds(120);
 
     /// <summary>
     /// Maximum duration for the weather.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DurationMaximum = TimeSpan.FromSeconds(300);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("startupTime")]
@@ -38,10 +40,4 @@ public sealed class WeatherPrototype : IPrototype
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("sound")]
     public SoundSpecifier? Sound;
-
-    /// <summary>
-    /// Tiles that also have weather applied.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("tiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
-    public List<string> Tiles = new();
 }

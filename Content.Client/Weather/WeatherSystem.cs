@@ -21,6 +21,13 @@ public sealed class WeatherSystem : SharedWeatherSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
+    // Consistency isn't really important, just want to avoid sharp changes and there's no way to lerp on engine nicely atm.
+    private float _lastAlpha;
+    private float _lastOcclusion;
+
+    private const float OcclusionLerpRate = 4f;
+    private const float AlphaLerpRate = 4f;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -34,9 +41,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
         _overlayManager.RemoveOverlay<WeatherOverlay>();
     }
 
-    protected override void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state)
+    protected override void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state, float frameTime)
     {
-        base.Run(uid, component, weather, state);
+        base.Run(uid, component, weather, state, frameTime);
 
         var ent = _playerManager.LocalPlayer?.ControlledEntity;
 
@@ -49,6 +56,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
         // Maybe have the viewports manage this?
         if (mapUid == null || entXform.MapUid != mapUid)
         {
+            _lastOcclusion = 0f;
+            _lastAlpha = 0f;
             component.Stream?.Stop();
             component.Stream = null;
             return;
@@ -85,7 +94,7 @@ public sealed class WeatherSystem : SharedWeatherSystem
                 if (!visited.Add(node.GridIndices))
                     continue;
 
-                if (!CanWeatherAffect(grid, node, weather, bodyQuery))
+                if (!CanWeatherAffect(grid, node, bodyQuery))
                 {
                     // Add neighbors
                     // TODO: Ideally we pick some deterministically random direction and use that
@@ -129,9 +138,20 @@ public sealed class WeatherSystem : SharedWeatherSystem
             }
         }
 
+        if (MathHelper.CloseTo(_lastOcclusion, occlusion, 0.01f))
+            _lastOcclusion = occlusion;
+        else
+            _lastOcclusion += (occlusion - _lastOcclusion) * OcclusionLerpRate * frameTime;
+
+        if (MathHelper.CloseTo(_lastAlpha, alpha, 0.01f))
+            _lastAlpha = alpha;
+        else
+            _lastAlpha += (alpha - _lastAlpha) * AlphaLerpRate * frameTime;
+
         // Full volume if not on grid
-        stream.Source.SetVolumeDirect(alpha);
-        stream.Source.SetOcclusion(occlusion);
+        Sawmill.Debug($"Setting alpha to {alpha:0.000}");
+        stream.Source.SetVolumeDirect(_lastAlpha);
+        stream.Source.SetOcclusion(_lastOcclusion);
     }
 
     public float GetPercent(WeatherComponent component, EntityUid mapUid, WeatherPrototype weatherProto)
@@ -163,15 +183,21 @@ public sealed class WeatherSystem : SharedWeatherSystem
         if (!base.SetState(uid, component, state, prototype))
             return false;
 
-        if (Timing.IsFirstTimePredicted)
-        {
-            // TODO: Fades
-            component.Stream?.Stop();
-            component.Stream = null;
-            component.Stream = _audio.PlayGlobal(prototype.Sound, Filter.Local(), true);
-        }
+        if (!Timing.IsFirstTimePredicted)
+            return true;
 
+        // TODO: Fades
+        component.Stream?.Stop();
+        component.Stream = null;
+        component.Stream = _audio.PlayGlobal(prototype.Sound, Filter.Local(), true);
         return true;
+    }
+
+    protected override void EndWeather(WeatherComponent component)
+    {
+        _lastOcclusion = 0f;
+        _lastAlpha = 0f;
+        base.EndWeather(component);
     }
 
     private void OnWeatherHandleState(EntityUid uid, WeatherComponent component, ref ComponentHandleState args)

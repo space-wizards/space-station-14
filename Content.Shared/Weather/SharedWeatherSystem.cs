@@ -1,3 +1,4 @@
+using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
@@ -31,29 +32,28 @@ public abstract class SharedWeatherSystem : EntitySystem
         component.EndTime += args.PausedTime;
     }
 
-    public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, WeatherPrototype weatherProto, EntityQuery<PhysicsComponent> bodyQuery)
+    public bool CanWeatherAffect(MapGridComponent grid, TileRef tileRef, EntityQuery<PhysicsComponent> bodyQuery)
     {
         if (tileRef.Tile.IsEmpty)
             return true;
 
-        var tileDef = _tileDefManager[tileRef.Tile.TypeId];
+        var tileDef = (ContentTileDefinition) _tileDefManager[tileRef.Tile.TypeId];
 
-        if (weatherProto.Tiles.Contains(tileDef.ID))
+        if (!tileDef.Weather)
+            return false;
+
+        var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tileRef.GridIndices);
+
+        while (anchoredEnts.MoveNext(out var ent))
         {
-            var anchoredEnts = grid.GetAnchoredEntitiesEnumerator(tileRef.GridIndices);
-
-            while (anchoredEnts.MoveNext(out var ent))
+            if (bodyQuery.TryGetComponent(ent, out var body) && body.CanCollide)
             {
-                if (bodyQuery.TryGetComponent(ent, out var body) && body.CanCollide)
-                {
-                    return false;
-                }
+                return false;
             }
-
-            return true;
         }
 
-        return false;
+        return true;
+
     }
 
     public override void Update(float frameTime)
@@ -108,7 +108,7 @@ public abstract class SharedWeatherSystem : EntitySystem
             }
 
             // Run whatever code we need.
-            Run(uid, comp, weatherProto, comp.State);
+            Run(uid, comp, weatherProto, comp.State, frameTime);
         }
     }
 
@@ -124,7 +124,7 @@ public abstract class SharedWeatherSystem : EntitySystem
     /// <summary>
     /// Run every tick when the weather is running.
     /// </summary>
-    protected virtual void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state) {}
+    protected virtual void Run(EntityUid uid, WeatherComponent component, WeatherPrototype weather, WeatherState state, float frameTime) {}
 
     protected void StartWeather(WeatherComponent component, WeatherPrototype weather)
     {
@@ -137,7 +137,7 @@ public abstract class SharedWeatherSystem : EntitySystem
         Dirty(component);
     }
 
-    protected void EndWeather(WeatherComponent component)
+    protected virtual void EndWeather(WeatherComponent component)
     {
         component.Stream?.Stop();
         component.Stream = null;

@@ -3,15 +3,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: ashfall
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -23,15 +14,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: ashfall_light
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -43,15 +25,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: ashfall_heavy
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -63,15 +36,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: fallout
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -83,15 +47,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: hail
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path:
       /Audio/Effects/Weather/rain.ogg
@@ -104,15 +59,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: rain
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     collection: Rain
     params:
@@ -130,15 +76,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: sandstorm
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -150,15 +87,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: sandstorm_heavy
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -170,15 +98,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: snowfall_light
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -190,15 +109,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: snowfall_med
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm_weak.ogg
     params:
@@ -210,15 +120,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: snowfall_heavy
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/snowstorm.ogg
     params:
@@ -230,15 +131,6 @@
   sprite:
     sprite: /Textures/Effects/weather.rsi
     state: storm
-  tiles:
-    - FloorCave
-    - FloorCaveDrought
-    - FloorGrassLight
-    - FloorGrassDark
-    - FloorGrassJungle
-    - FloorDirt
-    - FloorGrass
-    - Lattice
   sound:
     path: /Audio/Effects/Weather/rain_heavy.ogg
     params:
