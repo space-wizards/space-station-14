@@ -11,6 +11,7 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : BaseWindow
     {
+        // <summary>
         // Size of resize handles around the paper
         private const int DRAG_MARGIN_SIZE = 16;
 
@@ -37,6 +38,10 @@ namespace Content.Client.Paper.UI
             CloseButton.OnPressed += _ => Close();
         }
 
+        /// <summary>
+        ///     Initialize this UI according to <code>visuals</code> Initializes
+        ///     textures, recalculates sizes, and applies some layout rules.
+        /// </summary>
         public void InitVisuals(PaperVisualsComponent visuals)
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
@@ -127,8 +132,13 @@ namespace Content.Client.Paper.UI
                     SetHeight = float.NaN;
                 }
             }
-       }
+        }
 
+        /// <summary>
+        ///     Control interface. We'll mostly rely on the children to do the drawing
+        ///     but in order to get lines on paper to match up with the rich text labels,
+        ///     we need to do a small calculation to sync them up.
+        /// </summary>
         protected override void Draw(DrawingHandleScreen handle)
         {
             // Now do the deferred setup of the written area. At the point
@@ -145,7 +155,9 @@ namespace Content.Client.Paper.UI
 
                 // Now, we might need to add some padding to the text to ensure
                 // that, even if a header is specified, the text will line up with
-                // where the content image expects the font to be rendered
+                // where the content image expects the font to be rendered (i.e.,
+                // adjusting the height of the header image shouldn't cause the
+                // text to be offset from a line)
                 {
                     var headerHeight = HeaderImage.Size.Y + HeaderImage.Margin.Top + HeaderImage.Margin.Bottom;
                     var headerInLines = headerHeight / (fontLineHeight * _paperContentLineScale);
@@ -158,6 +170,10 @@ namespace Content.Client.Paper.UI
             base.Draw(handle);
         }
 
+        /// <summary>
+        ///     Initialize the paper contents, i.e. the text typed by the
+        ///     user and any stamps that have peen put on the page.
+        /// </summary>
         public void Populate(SharedPaperComponent.PaperBoundUserInterfaceState state)
         {
             bool isEditing = state.Mode == SharedPaperComponent.PaperAction.Write;
@@ -180,10 +196,12 @@ namespace Content.Client.Paper.UI
             }
         }
 
-        /// BaseWindow interface. Allow users to drag UI around by grabbing
-        /// anywhere on the page (like FancyWindow) but try to calculate
-        /// reasonable dragging bounds because this UI can have round corners,
-        /// and it can be hard to judge where to click to resize.
+        /// <summary>
+        ///     BaseWindow interface. Allow users to drag UI around by grabbing
+        ///     anywhere on the page (like FancyWindow) but try to calculate
+        ///     reasonable dragging bounds because this UI can have round corners,
+        ///     and it can be hard to judge where to click to resize.
+        /// </summary>
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
             var mode = DragMode.Move;
