@@ -88,6 +88,14 @@
     access: [["Engineering"]]
 
 - type: entity
+  parent: AirlockExternal
+  id: AirlockExternalAtmosphericsLocked
+  suffix: External, Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]
+    
+- type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
   suffix: Service, Locked
@@ -328,6 +336,14 @@
   - type: AccessReader
     access: [["Engineering"]]    
 
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassAtmosphericsLocked
+  suffix: External, Glass, Atmospherics, Locked
+  components:
+  - type: AccessReader
+    access: [["Atmospherics"]]   
+    
 - type: entity
   parent: AirlockGlass
   id: AirlockKitchenGlassLocked
