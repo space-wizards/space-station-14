@@ -51,7 +51,7 @@ namespace Content.Shared.Decals
                 newDict[indices].Decals[newUid] = dictionary[indices].Decals[oldUid];
             }
 
-            return new DecalGridComponent.DecalGridChunkCollection(newDict){NextUid = nextIndex};
+            return new DecalGridComponent.DecalGridChunkCollection(newDict){NextDecalId = nextIndex};
         }
 
         public DataNode Write(ISerializationManager serializationManager,

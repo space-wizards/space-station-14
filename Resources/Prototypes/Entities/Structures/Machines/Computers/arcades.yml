@@ -16,21 +16,13 @@
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
     layers:
-    - state: arcade
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: invaders
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: invaders
   - type: Icon
     sprite: Structures/Machines/arcade.rsi
     state: arcade
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: invaders
-      key: ""
-      body: arcade
-      bodyBroken: arcade
   - type: Anchorable
   - type: Pullable
   - type: StaticPrice
@@ -38,6 +30,7 @@
 
 - type: entity
   id: SpaceVillainArcade
+  name: space villain arcade
   parent: ArcadeBase
   components:
   - type: SpaceVillainArcade
@@ -72,6 +65,13 @@
   name: NT block game
   parent: ArcadeBase
   components:
+  - type: Sprite
+    sprite: Structures/Machines/arcade.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: arcade
+    - map: ["computerLayerScreen"]
+      state: blockgame
   - type: BlockGameArcade
   - type: ActivatableUI
     key: enum.BlockGameUiKey.Key
@@ -87,10 +87,3 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: blockgame
-      key: ""
-      body: arcade
-      bodyBroken: arcade

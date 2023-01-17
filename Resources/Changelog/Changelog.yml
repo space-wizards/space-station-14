@@ -1,151 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The Rat King now moves faster and can move under doors., type: Tweak}
-  - {message: Rat Servants now have slightly more health., type: Tweak}
-  id: 2371
-  time: '2022-09-28T04:16:20.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: Voice masking is now possible for mobs that speak., type: Add}
-  - {message: 'The Syndicate has found a supplier for voice modification tools, and
-      is now supplying them to their agents. Be aware of who you''re speaking to:
-      they might not be who they sound like.', type: Add}
-  id: 2372
-  time: '2022-09-29T02:22:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Cloning Pods can now be upgraded to make them faster and use less biomass.,
-    type: Add}
-  id: 2373
-  time: '2022-09-29T02:30:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Expect a familiar ghost to be appearing around the station more often,
-      this time with some new tricks!', type: Add}
-  - {message: Fixed revenants spawning out into space when killed., type: Fix}
-  id: 2374
-  time: '2022-09-29T02:30:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee combat swings are now predicted. The damage effect still only
-      shows when the server confirms the hit., type: Fix}
-  - {message: Melee combat sprite lunge direction has been fixed., type: Fix}
-  - {message: 'You won''t pick up items (e.g. rats, spears) when trying to melee them
-      anymore.', type: Fix}
-  - {message: Melee combat now has light and heavy attacks. Light attacks under your
-      cursor and heavy attack in your cursor's direction. Heavy attacks also do more
-      DPS and can cleave but require a windup., type: Add}
-  - {message: Disarm is now on right-click when you have a free hand., type: Tweak}
-  - {message: The context menu won't show up when in combat mode anymore as right-click
-      has been repurposed., type: Tweak}
-  - {message: Most melee values have been tweaked (mainly attack rates and damage
-      values) to make weapons more distinct. DPS values are similar (excluding the
-      change in frequency on bleeding / chemical injection procs)., type: Tweak}
-  id: 2375
-  time: '2022-09-29T05:51:59.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Cargo order sorting will now ignore case., type: Tweak}
-  id: 2376
-  time: '2022-09-29T07:09:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The duration of manual healing items on yourself now scales with how
-      much damage you have taken., type: Tweak}
-  id: 2377
-  time: '2022-09-29T07:12:16.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix combat mode and cuff interactions., type: Fix}
-  id: 2378
-  time: '2022-09-29T13:38:25.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: Wallmount Nanomed are now fully functional !, type: Fix}
-  id: 2379
-  time: '2022-09-29T16:46:39.0000000+00:00'
-- author: civilCornball
-  changes:
-  - {message: Fixes the recycler not recycling some trash., type: Fix}
-  id: 2380
-  time: '2022-09-29T20:44:56.0000000+00:00'
-- author: moony
-  changes:
-  - {message: A permanent blindness trait has been added so you no longer need to
-      hunt down a blindfold., type: Add}
-  - {message: 'A narcolepsy trait has been added, for if you enjoy the impending doom
-      of falling asleep mid-nukies.', type: Add}
-  - {message: You can now give yourself a runny nose and sneeze randomly on occasion
-      if that's your thing., type: Add}
-  - {message: 'You can, if you like, be permanently pacifist with no ability to fight
-      back.', type: Add}
-  id: 2381
-  time: '2022-09-29T23:23:13.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
-  id: 2382
-  time: '2022-09-30T00:44:28.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: All command roles now take 30 hours of total playtime on top of other
-      requirements., type: Add}
-  id: 2383
-  time: '2022-09-30T03:53:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'The NPC pathfinding has been refactored and some changes have been
-      made to their behaviours as well, such as the ability to break obstacles. It''s
-      still a going concern though is much easier to tweak in future.', type: Tweak}
-  - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
-  id: 2384
-  time: '2022-09-30T04:39:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lemons now have lemon juice instead of lime juice., type: Fix}
-  id: 2385
-  time: '2022-10-02T01:40:32.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
-      after contributing to Space Station 13 and Space Station 14.', type: Add}
-  id: 2386
-  time: '2022-10-02T21:26:46.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
-  - {message: Items dropped by butchering now drop within a tight circle around the
-      butchered object., type: Tweak}
-  id: 2387
-  time: '2022-10-04T00:50:56.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
-  - {message: SMES and Substations can now be upgraded with better capacitors to hold
-      much more power!, type: Add}
-  id: 2388
-  time: '2022-10-04T00:59:40.0000000+00:00'
-- author: kognise
-  changes:
-  - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
-  - {message: the gas tank ui "toggle" button is now disabled when not wearing a breathing
-      tool, type: Fix}
-  id: 2389
-  time: '2022-10-04T01:01:20.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: 'Combat boots can now store knives, HoS, Warden and Nukies get those.',
-    type: Add}
-  - {message: 'Knives from Nukies'' backpacks, they''re in your boots now.', type: Remove}
-  id: 2390
-  time: '2022-10-04T01:01:43.0000000+00:00'
-- author: DogZeroX
-  changes:
-  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace \[REDACTED] Tech.',
-    type: Tweak}
-  id: 2391
-  time: '2022-10-04T01:05:03.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Passive research points will not generate above 30,000 stored points.
@@ -2956,3 +2809,137 @@ Entries:
     type: Tweak}
   id: 2870
   time: '2023-01-15T00:52:06.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Reduced the sizes of all standard boxes to their original size of 30.
+      Enjoy the extra *1* space! (31 ->30), type: Tweak}
+  id: 2871
+  time: '2023-01-15T04:12:31.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Added 23 new markings for diona's, type: Add}
+  id: 2872
+  time: '2023-01-15T04:54:47.0000000+00:00'
+- author: Jezithyr
+  changes:
+  - {message: Fixing health alerts not properly updating when players are damaged,
+    type: Fix}
+  id: 2873
+  time: '2023-01-15T07:52:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some instances of popup flickering, type: Fix}
+  id: 2874
+  time: '2023-01-15T18:14:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed decal removal not working properly., type: Fix}
+  id: 2875
+  time: '2023-01-15T20:23:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added placement preview for decals, type: Add}
+  id: 2876
+  time: '2023-01-15T20:35:36.0000000+00:00'
+- author: Theomund
+  changes:
+  - {message: Construction and crafting messages now appear above the user instead
+      of the mouse cursor., type: Fix}
+  id: 2877
+  time: '2023-01-16T02:29:45.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Contents of pill canisters can now be dumped onto the ground and tables.,
+    type: Tweak}
+  id: 2878
+  time: '2023-01-16T02:37:56.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Added spooky ghost sheet., type: Add}
+  - {message: Added butcher method to get ghost sheet, type: Add}
+  id: 2879
+  time: '2023-01-16T07:29:45.0000000+00:00'
+- author: nmajask
+  changes:
+  - {message: 'added medical lathe recipes for all the medkits, they cost 300 plastic,
+      are locked behind biological tech, and are empty', type: Add}
+  id: 2880
+  time: '2023-01-16T07:44:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chameleon clothing not working., type: Fix}
+  id: 2881
+  time: '2023-01-16T08:21:24.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Added Honk mother communication device - banana phone!, type: Add}
+  id: 2882
+  time: '2023-01-16T14:06:29.0000000+00:00'
+- author: moony, ElectroSR
+  changes:
+  - {message: 'An in-game guide has been added. It is accessible via a keybinding
+      (defaults to numpad 0), or via some examine tooltips. Help wanted writing guides!',
+    type: Add}
+  id: 2883
+  time: '2023-01-16T15:29:47.866071+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Helpful tips will now appear at random in the lobby and occasionally
+      in game., type: Add}
+  id: 2884
+  time: '2023-01-16T16:52:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a guidebook entry for machine upgrades., type: Add}
+  id: 2885
+  time: '2023-01-16T16:53:24.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
+  id: 2886
+  time: '2023-01-16T23:58:38.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
+      of the station such as Ian, and other animals.', type: Tweak}
+  id: 2887
+  time: '2023-01-17T01:47:41.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
+      pins', type: Add}
+  id: 2888
+  time: '2023-01-17T01:51:13.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
+      due to incorrect faction, type: Fix}
+  - {message: Fixes syndicate reinforcements not being tagged as an antag role, type: Fix}
+  - {message: Renames the syndicate reinforcement teleporter to syndicate reinforcement
+      radio, type: Tweak}
+  - {message: adds sound and cooldown feedback to the syndicate reinforcement radio.,
+    type: Add}
+  id: 2889
+  time: '2023-01-17T02:57:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added 3 unique Anomalies. These strange objects can be harnessed with
+      the power of science to generate a steady stream of points. Make sure they don't
+      go Supercritical!, type: Add}
+  - {message: Added the anomaly generator. This large machine is powered by plasma
+      and can create a random anomaly somewhere on the station. Let's hope it doesn't
+      end up somewhere bad..., type: Add}
+  - {message: 'Added the APE, which can shoot different types of particles at anomalies
+      to manipulate them.', type: Add}
+  - {message: 'Added the anomaly scanner, which can give you various data about anomalies.',
+    type: Add}
+  - {message: Added anomaly vessels. Clicking on these with an anomaly scanner will
+      assign it and produce points based on the danger of the anomaly. Be wary if
+      the vessel's anomaly goes supercritical though..., type: Add}
+  id: 2890
+  time: '2023-01-17T05:05:20.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Flashlights have been buffed., type: Tweak}
+  id: 2891
+  time: '2023-01-17T05:32:17.0000000+00:00'
