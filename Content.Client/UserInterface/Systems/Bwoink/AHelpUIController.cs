@@ -219,6 +219,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     }
 }
 
+// please kill all this indirection
 public interface IAHelpUIHandler: IDisposable
 {
     public bool IsAdmin { get; }
@@ -240,7 +241,6 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     }
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
     public bool IsAdmin => true;
-    // TODO FIX
     public bool IsOpen => Window is { Disposed: false, IsOpen: true } || ClydeWindow is { IsDisposed: false };
 
     public BwoinkWindow? Window;
