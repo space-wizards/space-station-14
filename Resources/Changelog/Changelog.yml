@@ -1,11 +1,4 @@
 Entries:
-- author: rolfero
-  changes:
-  - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
-  - {message: SMES and Substations can now be upgraded with better capacitors to hold
-      much more power!, type: Add}
-  id: 2388
-  time: '2022-10-04T00:59:40.0000000+00:00'
 - author: kognise
   changes:
   - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
@@ -2931,3 +2924,9 @@ Entries:
       of the station such as Ian, and other animals.', type: Tweak}
   id: 2887
   time: '2023-01-17T01:47:41.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
+      pins', type: Add}
+  id: 2888
+  time: '2023-01-17T01:51:13.0000000+00:00'
