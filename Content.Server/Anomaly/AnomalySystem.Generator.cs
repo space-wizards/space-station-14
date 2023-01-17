@@ -2,6 +2,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
+using Content.Shared.CCVar;
 using Content.Shared.Materials;
 using Robust.Shared.Map.Components;
 
@@ -14,15 +15,6 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    /// <summary>
-    /// A multiplier applied to the grid bounds
-    /// to make the likelihood of it spawning outside
-    /// of the main station less likely.
-    ///
-    /// tl;dr anomalies only generate on the inner __% of the station.
-    /// </summary>
-    public const float GridBoundsScale = 0.7f;
-
     private void InitializeGenerator()
     {
         SubscribeLocalEvent<AnomalyGeneratorComponent, BoundUIOpenedEvent>(OnGeneratorBUIOpened);
@@ -92,7 +84,7 @@ public sealed partial class AnomalySystem
         var targetCoords = xform.Coordinates;
         var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
         var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
-        gridBounds.Scale(GridBoundsScale);
+        gridBounds.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
         for (var i = 0; i < 25; i++)
         {
