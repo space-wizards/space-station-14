@@ -1,10 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Tranquilizer rounds come with a tranquilizer solution and can no longer
-      be injected with other chemicals, type: Tweak}
-  id: 2395
-  time: '2022-10-04T01:57:34.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee windup now only shows for yourself., type: Tweak}
@@ -2943,3 +2937,8 @@ Entries:
   - {message: Weather has been added to the game., type: Add}
   id: 2894
   time: '2023-01-17T09:26:53.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Added 360 PDA lights., type: Add}
+  id: 2895
+  time: '2023-01-17T09:28:34.0000000+00:00'
