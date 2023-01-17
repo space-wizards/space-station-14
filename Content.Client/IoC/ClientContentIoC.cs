@@ -20,6 +20,7 @@ using Content.Client.Voting;
 using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Module;
+using Content.Client.Guidebook;
 
 namespace Content.Client.IoC
 {
@@ -48,6 +49,7 @@ namespace Content.Client.IoC
             IoCManager.Register<SponsorsManager>(); // Corvax-Sponsors
             IoCManager.Register<JoinQueueManager>(); // Corvax-Queue
             IoCManager.Register<TTSManager>(); // Corvax-TTS
+            IoCManager.Register<DocumentParsingManager>();
         }
     }
 }
