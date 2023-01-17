@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
-  id: ReinforcementTeleporterSyndicate
-  name: syndicate reinforcement teleporter
+  id: ReinforcementRadioSyndicate
+  name: syndicate reinforcement radio
   description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
   components:
   - type: Sprite
