@@ -121,7 +121,7 @@
     - !type:BiomeEntityLayer
       threshold: 0.9
       frequency: 1
-      seedOffset: 1
+      seedOffset: 3
       allowedTiles:
         - FloorBasalt
       entities:
@@ -148,7 +148,17 @@
         - Basalt8
         - Basalt9
     - !type:BiomeEntityLayer
-      threshold: 0.9
+      threshold: 0.99
+      frequency: 1
+      seedOffset: 1
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - FloraRockSolid01
+        - FloraRockSolid02
+        - FloraRockSolid03
+    - !type:BiomeEntityLayer
+      threshold: 0.7
       frequency: 0.2
       allowedTiles:
         - FloorBasalt
