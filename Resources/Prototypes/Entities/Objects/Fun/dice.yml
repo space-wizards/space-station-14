@@ -18,7 +18,7 @@
 
 - type: entity
   parent: BaseDice
-  id: PercentileDice
+  id: PercentileDie
   name: Percentile Die
   description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
