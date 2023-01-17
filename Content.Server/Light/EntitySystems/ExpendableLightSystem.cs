@@ -65,7 +65,7 @@ namespace Content.Server.Light.EntitySystems
 
                         _tagSystem.AddTag(component.Owner, "Trash");
 
-                        UpdateSpriteAndSounds(component);
+                        UpdateSounds(component);
                         UpdateVisualizer(component);
 
                         if (TryComp<ItemComponent>(component.Owner, out var item))
@@ -93,7 +93,7 @@ namespace Content.Server.Light.EntitySystems
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
 
-                UpdateSpriteAndSounds(component);
+                UpdateSounds(component);
                 UpdateVisualizer(component);
 
                 return true;
@@ -124,43 +124,25 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void UpdateSpriteAndSounds(ExpendableLightComponent component)
+        private void UpdateSounds(ExpendableLightComponent component)
         {
-            if (TryComp<SpriteComponent>(component.Owner, out var sprite))
+            var uid = component.Owner;
+
+            switch (component.CurrentState)
             {
-                switch (component.CurrentState)
-                {
-                    case ExpendableLightState.Lit:
-                        _audio.PlayPvs(component.LitSound, component.Owner);
-                        if (component.IconStateLit != string.Empty)
-                        {
-                            sprite.LayerSetState(2, component.IconStateLit);
-                            sprite.LayerSetShader(2, "shaded");
-                        }
-
-                        sprite.LayerSetVisible(1, true);
-                        break;
-                    case ExpendableLightState.Fading:
-                    {
-                        break;
-                    }
-                    default:
-                    case ExpendableLightState.Dead:
-                        _audio.PlayPvs(component.DieSound, component.Owner);
-                        if (!string.IsNullOrEmpty(component.IconStateSpent))
-                        {
-                            sprite.LayerSetState(0, component.IconStateSpent);
-                            sprite.LayerSetShader(0, "shaded");
-                        }
-
-                        sprite.LayerSetVisible(1, false);
-                        break;
-                }
+                case ExpendableLightState.Lit:
+                    _audio.PlayPvs(component.LitSound, uid);
+                    break;
+                case ExpendableLightState.Fading:
+                    break;
+                default:
+                    _audio.PlayPvs(component.DieSound, uid);
+                    break;
             }
 
-            if (TryComp<ClothingComponent>(component.Owner, out var clothing))
+            if (TryComp<ClothingComponent>(uid, out var clothing))
             {
-                _clothing.SetEquippedPrefix(component.Owner, component.Activated ? "Activated" : string.Empty, clothing);
+                _clothing.SetEquippedPrefix(uid, component.Activated ? "Activated" : string.Empty, clothing);
             }
         }
 

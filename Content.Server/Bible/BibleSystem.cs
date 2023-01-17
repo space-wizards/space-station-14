@@ -1,21 +1,21 @@
-using Content.Shared.Interaction;
-using Content.Shared.Inventory;
-using Content.Shared.MobState;
-using Content.Shared.Damage;
-using Content.Shared.Verbs;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Actions;
 using Content.Server.Bible.Components;
-using Content.Server.MobState;
-using Content.Server.Popups;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
+using Content.Server.Popups;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Actions;
+using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
+using Content.Shared.Inventory;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Timing;
-using Robust.Shared.Random;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
 
 namespace Content.Server.Bible
 {
@@ -192,7 +192,7 @@ namespace Content.Server.Bible
         /// </summary>
         private void OnFamiliarDeath(EntityUid uid, FamiliarComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState != DamageState.Dead || component.Source == null)
+            if (args.NewMobState != MobState.Dead || component.Source == null)
                 return;
 
             var source = component.Source;

@@ -1,5 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -13,6 +16,7 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
 
         public override void Initialize()

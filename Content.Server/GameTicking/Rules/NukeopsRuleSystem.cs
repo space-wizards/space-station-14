@@ -19,8 +19,8 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Traitor;
 using Content.Shared.Dataset;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -310,7 +310,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         var allAlive = true;
         foreach (var (_, state) in EntityQuery<NukeOperativeComponent, MobStateComponent>())
         {
-            if (state.CurrentState is DamageState.Alive)
+            if (state.CurrentState is MobState.Alive)
             {
                 continue;
             }
@@ -415,7 +415,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             .Where(ent =>
                 ent.Item3.MapID == shuttleMapId
                 || ent.Item3.MapID == targetStationMap)
-            .Any(ent => ent.Item2.CurrentState == DamageState.Alive && ent.Item1.Running);
+            .Any(ent => ent.Item2.CurrentState == MobState.Alive && ent.Item1.Running);
 
         if (operativesAlive)
             return; // There are living operatives than can access the shuttle, or are still on the station's map.
@@ -446,7 +446,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
 
     private void OnMobStateChanged(EntityUid uid, NukeOperativeComponent component, MobStateChangedEvent ev)
     {
-        if(ev.CurrentMobState == DamageState.Dead)
+        if(ev.NewMobState == MobState.Dead)
             CheckRoundShouldEnd();
     }
 

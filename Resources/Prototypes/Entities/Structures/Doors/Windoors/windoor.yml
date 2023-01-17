@@ -206,3 +206,11 @@
   components:
   - type: AccessReader
     access: [["Research"]]
+    
+- type: entity
+  parent: WindoorSecure
+  id: WindoorHeadOfPersonnelLocked
+  suffix: HeadOfPersonnel, Locked
+  components:
+  - type: AccessReader
+    access: [["HeadOfPersonnel"]]
