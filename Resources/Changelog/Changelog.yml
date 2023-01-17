@@ -1,15 +1,4 @@
 Entries:
-- author: YanehCheck
-  changes:
-  - {message: Fixed an error in which part of a toilet sprite was offset by a pixel
-      during a specific rotation, type: Fix}
-  id: 2401
-  time: '2022-10-06T02:53:41.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Ghosts are now visible in the post-round period., type: Add}
-  id: 2402
-  time: '2022-10-06T02:55:11.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Interaction range is now based on nearest edge and not the centre of
@@ -2944,3 +2933,13 @@ Entries:
     type: Tweak}
   id: 2900
   time: '2023-01-17T18:42:20.0000000+00:00'
+- author: ga
+  changes:
+  - {message: Added chief medical officer's beret., type: Add}
+  id: 2901
+  time: '2023-01-17T18:47:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
+  id: 2902
+  time: '2023-01-17T18:47:52.0000000+00:00'
