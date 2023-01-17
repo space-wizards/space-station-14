@@ -1,0 +1,19 @@
+- type: entity
+  parent: BaseItem
+  id: AnomalyScanner
+  name: anomaly scanner
+  description: A hand-held scanner built to collect information on various anomalous objects.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Research/anomalyscanner.rsi
+    netsync: false
+    state: icon
+  - type: ActivatableUI
+    key: enum.AnomalyScannerUiKey.Key
+    closeOnHandDeselect: false
+    inHandsOnly: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.AnomalyScannerUiKey.Key
+        type: AnomalyScannerBoundUserInterface
+  - type: AnomalyScanner

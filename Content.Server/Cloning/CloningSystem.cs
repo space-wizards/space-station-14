@@ -1,6 +1,5 @@
 using Content.Shared.GameTicking;
 using Content.Shared.Damage;
-using Content.Shared.Stacks;
 using Content.Shared.Examine;
 using Content.Shared.Cloning;
 using Content.Shared.Atmos;
@@ -13,17 +12,16 @@ using Content.Server.EUI;
 using Content.Server.Humanoid;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
-using Content.Server.MobState;
 using Content.Shared.Chemistry.Components;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Chat.Systems;
 using Content.Server.Construction;
-using Content.Server.Construction.Components;
 using Content.Server.Materials;
 using Content.Server.Stack;
 using Content.Server.Jobs;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Containers;
 using Robust.Server.Player;
@@ -50,8 +48,6 @@ namespace Content.Server.Cloning
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedStackSystem _stackSystem = default!;
-        [Dependency] private readonly StackSystem _serverStackSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
@@ -316,7 +312,7 @@ namespace Content.Server.Cloning
             }
             _spillableSystem.SpillAt(uid, bloodSolution, "PuddleBlood");
 
-            _serverStackSystem.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
+            _material.SpawnMultipleFromMaterial(_robustRandom.Next(1, (int) (clonePod.UsedBiomass / 2.5)), clonePod.RequiredMaterial, Transform(uid).Coordinates);
 
             clonePod.UsedBiomass = 0;
             RemCompDeferred<ActiveCloningPodComponent>(uid);

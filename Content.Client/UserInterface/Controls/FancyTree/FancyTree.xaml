@@ -1,0 +1,6 @@
+<controls:FancyTree xmlns="https://spacestation14.io"
+                    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls.FancyTree">
+    <ScrollContainer ReturnMeasure="True">
+        <BoxContainer Orientation="Vertical" Name="Body" Access="Public" Margin="2"/>
+    </ScrollContainer>
+</controls:FancyTree>

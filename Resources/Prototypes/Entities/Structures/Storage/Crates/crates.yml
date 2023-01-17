@@ -22,6 +22,8 @@
     node: crateplastic
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   parent: CrateBaseWeldable
@@ -280,6 +282,8 @@
     node: cratelivestock
     containers:
     - entity_storage
+  - type: StaticPrice
+    price: 125
 
 - type: entity
   parent: CrateGeneric
@@ -325,4 +329,6 @@
       - LargeMobMask
       layer:
       - LargeMobLayer
+  - type: StaticPrice
+    price: 60
 
