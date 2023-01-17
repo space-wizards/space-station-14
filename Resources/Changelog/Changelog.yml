@@ -1,11 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
-  - {message: Items dropped by butchering now drop within a tight circle around the
-      butchered object., type: Tweak}
-  id: 2387
-  time: '2022-10-04T00:50:56.0000000+00:00'
 - author: rolfero
   changes:
   - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
@@ -2932,3 +2925,9 @@ Entries:
   - {message: mechs now do not move if broken or are unpowered., type: Tweak}
   id: 2886
   time: '2023-01-16T23:58:38.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
+      of the station such as Ian, and other animals.', type: Tweak}
+  id: 2887
+  time: '2023-01-17T01:47:41.0000000+00:00'
