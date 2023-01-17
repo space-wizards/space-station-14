@@ -26429,8 +26429,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 20.04244
+      - 75.39776
       - 0
       - 0
       - 0
@@ -26459,8 +26459,8 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 20.619795
-      - 77.56971
+      - 20.04244
+      - 75.39776
       - 0
       - 0
       - 0
@@ -32746,7 +32746,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 6
+  - index: 5
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -79578,8 +79578,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.04244
-      - 75.39776
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -149034,6 +149034,12 @@ entities:
   - pos: 8.5,-1.5
     parent: 60
     type: Transform
+- uid: 18112
+  type: FlashlightLantern
+  components:
+  - pos: -11.567254,3.87683
+    parent: 60
+    type: Transform
 - uid: 18113
   type: WallReinforced
   components:
@@ -149632,6 +149638,12 @@ entities:
   type: WindowReinforcedDirectional
   components:
   - pos: -5.5,-6.5
+    parent: 60
+    type: Transform
+- uid: 18212
+  type: FlashlightLantern
+  components:
+  - pos: -11.520379,3.704955
     parent: 60
     type: Transform
 - uid: 18213
@@ -151366,6 +151378,12 @@ entities:
   - pos: 6.4689946,-5.3675957
     parent: 60
     type: Transform
+- uid: 18456
+  type: FlashlightLantern
+  components:
+  - pos: 1.5308173,20.376057
+    parent: 60
+    type: Transform
 - uid: 18457
   type: DrinkGoldenCup
   components:
@@ -151496,6 +151514,12 @@ entities:
       keywords: []
       event: !type:ToggleActionEvent {}
     type: HandheldLight
+- uid: 18476
+  type: FlashlightLantern
+  components:
+  - pos: 1.6245673,20.188557
+    parent: 60
+    type: Transform
 - uid: 18477
   type: ComfyChair
   components:
@@ -152281,6 +152305,12 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 18584
+  type: FlashlightLantern
+  components:
+  - pos: -14.507572,33.107548
+    parent: 60
+    type: Transform
 - uid: 18585
   type: GasPipeStraight
   components:
@@ -153175,6 +153205,12 @@ entities:
     type: Transform
   - location: vault
     type: WarpPoint
+- uid: 18702
+  type: FlashlightLantern
+  components:
+  - pos: 9.4389305,15.704865
+    parent: 60
+    type: Transform
 - uid: 18703
   type: WarpPoint
   components:
@@ -153684,6 +153720,12 @@ entities:
   - pos: 1.5,12.5
     parent: 60
     type: Transform
+- uid: 18778
+  type: FlashlightLantern
+  components:
+  - pos: 44.40512,0.7230154
+    parent: 60
+    type: Transform
 - uid: 18779
   type: CheapRollerBed
   components:
@@ -153974,6 +154016,12 @@ entities:
   - pos: 26.5,-33.5
     parent: 60
     type: Transform
+- uid: 18824
+  type: FlashlightLantern
+  components:
+  - pos: 44.46762,0.5667654
+    parent: 60
+    type: Transform
 - uid: 18825
   type: AirSensor
   components:
@@ -154169,6 +154217,12 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 18854
+  type: FlashlightLantern
+  components:
+  - pos: -45.439228,-10.4007635
+    parent: 60
+    type: Transform
 - uid: 18855
   type: GasPipeStraight
   components:
