@@ -88,9 +88,6 @@
   - type: StorageFill
     contents:
       - id: IngotGold
-        amount: 5
+        amount: 1
       - id: DrinkGoldenCup
         prob: 0.05
-        orGroup: CupOrGold
-      - id: IngotGold
-        orGroup: CupOrGold
