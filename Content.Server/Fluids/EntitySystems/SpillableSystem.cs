@@ -95,7 +95,7 @@ public sealed class SpillableSystem : EntitySystem
             : SpillAt(solution, transformComponent.Coordinates, prototype, sound: sound, combine: combine);
     }
 
-    private void SpillOnLand(EntityUid uid, SpillableComponent component, LandEvent args)
+    private void SpillOnLand(EntityUid uid, SpillableComponent component, ref LandEvent args)
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
 
