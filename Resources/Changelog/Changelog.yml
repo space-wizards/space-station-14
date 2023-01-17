@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle impacts now have sounds, type: Add}
-  id: 2398
-  time: '2022-10-04T05:00:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can now suicide into biomass reclaimers., type: Add}
@@ -2942,3 +2937,8 @@ Entries:
   - {message: Changed golden toolbox to have a reasonable amount of gold, type: Tweak}
   id: 2897
   time: '2023-01-17T10:23:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lava has been added., type: Add}
+  id: 2898
+  time: '2023-01-17T18:25:32.0000000+00:00'
