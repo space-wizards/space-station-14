@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Passive research points will not generate above 30,000 stored points.
-      Rate or total available research is not affected. All this means is you have
-      to actively spend them, rather than let them accumulate the whole round and
-      unlock all techs at once.', type: Tweak}
-  id: 2392
-  time: '2022-10-04T01:10:17.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix melee windup persisting in some instances., type: Fix}
@@ -2943,3 +2935,9 @@ Entries:
   - {message: Flashlights have been buffed., type: Tweak}
   id: 2891
   time: '2023-01-17T05:32:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
+      snap with camera rotation., type: Tweak}
+  id: 2892
+  time: '2023-01-17T08:07:07.0000000+00:00'
