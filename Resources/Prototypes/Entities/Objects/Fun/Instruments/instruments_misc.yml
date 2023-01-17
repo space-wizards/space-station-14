@@ -56,6 +56,11 @@
     program: 124
   - type: Item
     size: 10
+  - type: Prayable
+    sentMessage: prayer-popup-notify-centcom-sent
+    notifiactionPrefix: prayer-chat-notify-centcom
+    verb: prayer-verbs-call
+    verbImage: ""
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -159,3 +164,8 @@
       density: 5
       mask:
       - ItemMask
+  - type: Prayable
+    sentMessage: prayer-popup-notify-honkmother-sent
+    notifiactionPrefix: prayer-chat-notify-honkmother
+    verb: prayer-verbs-call
+    verbImage: ""
