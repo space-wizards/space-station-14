@@ -406,13 +406,13 @@ namespace Content.Shared.CCVar
         ///     (i.e. postround or lobby)
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyOutOfRound =
-            CVarDef.Create("tips.out_of_game_frequency", 60f * 2);
+            CVarDef.Create("tips.out_of_game_frequency", 60f * 1.5f);
 
         /// <summary>
         ///     The number of seconds between each tip being displayed when the round is actively going
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
-            CVarDef.Create("tips.in_game_frequency", 60f * 30);
+            CVarDef.Create("tips.in_game_frequency", 60f * 60);
 
         /*
          * Console
