@@ -1,10 +1,4 @@
 Entries:
-- author: DogZeroX
-  changes:
-  - {message: 'Nuclear bombs are now less heavy thanks to Bluespace \[REDACTED] Tech.',
-    type: Tweak}
-  id: 2391
-  time: '2022-10-04T01:05:03.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Passive research points will not generate above 30,000 stored points.
@@ -2944,3 +2938,8 @@ Entries:
       the vessel's anomaly goes supercritical though..., type: Add}
   id: 2890
   time: '2023-01-17T05:05:20.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Flashlights have been buffed., type: Tweak}
+  id: 2891
+  time: '2023-01-17T05:32:17.0000000+00:00'
