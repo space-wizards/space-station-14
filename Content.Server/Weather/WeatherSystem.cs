@@ -6,16 +6,22 @@ using Robust.Shared.Console;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weather;
 
 public sealed class WeatherSystem : SharedWeatherSystem
 {
+    [Dependency] private readonly IConsoleHost _console = default!;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WeatherComponent, ComponentGetState>(OnWeatherGetState);
+        _console.RegisterCommand("weather",
+            Loc.GetString("cmd-weather-desc"),
+            Loc.GetString("cmd-weather-help"),
+            WeatherTwo,
+            WeatherCompletion);
     }
 
     private void OnWeatherGetState(EntityUid uid, WeatherComponent component, ref ComponentGetState args)
@@ -27,20 +33,9 @@ public sealed class WeatherSystem : SharedWeatherSystem
             StartTime = component.StartTime,
         };
     }
-}
 
-[AdminCommand(AdminFlags.Fun)]
-public sealed class WeatherCommand : IConsoleCommand
-{
-    // Wouldn't you like to know, weather boy.
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-
-    public string Command => "weather";
-    public string Description => $"Sets the weather for the current map";
-    public string Help => $"weather <mapId> <prototype / null>";
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    [AdminCommand(AdminFlags.Fun)]
+    private void WeatherTwo(IConsoleShell shell, string argstr, string[] args)
     {
         if (args.Length != 2)
         {
@@ -54,20 +49,18 @@ public sealed class WeatherCommand : IConsoleCommand
 
         var mapId = new MapId(mapInt);
 
-        if (!_mapManager.MapExists(mapId))
+        if (!MapManager.MapExists(mapId))
         {
             return;
         }
 
-        var weatherSystem = _entManager.System<WeatherSystem>();
-
         if (args[1].Equals("null"))
         {
-            weatherSystem.SetWeather(mapId, null);
+            SetWeather(mapId, null);
         }
-        else if (_protoManager.TryIndex<WeatherPrototype>(args[1], out var weatherProto))
+        else if (ProtoMan.TryIndex<WeatherPrototype>(args[1], out var weatherProto))
         {
-            weatherSystem.SetWeather(mapId, weatherProto);
+            SetWeather(mapId, weatherProto);
         }
         else
         {
@@ -75,17 +68,17 @@ public sealed class WeatherCommand : IConsoleCommand
         }
     }
 
-    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    private CompletionResult WeatherCompletion(IConsoleShell shell, string[] args)
     {
         var options = new List<CompletionOption>();
 
         if (args.Length == 1)
         {
-            options.AddRange(_entManager.EntityQuery<MapComponent>(true).Select(o => new CompletionOption(o.WorldMap.ToString())));
+            options.AddRange(EntityQuery<MapComponent>(true).Select(o => new CompletionOption(o.WorldMap.ToString())));
             return CompletionResult.FromHintOptions(options, "Map Id");
         }
 
-        var a = CompletionHelper.PrototypeIDs<WeatherPrototype>(true, _protoManager);
-        return CompletionResult.FromHintOptions(a, "Weather prototype");
+        var a = CompletionHelper.PrototypeIDs<WeatherPrototype>(true, ProtoMan);
+        return CompletionResult.FromHintOptions(a, Loc.GetString("cmd-weather-hint"));
     }
 }
