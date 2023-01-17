@@ -1,11 +1,4 @@
 Entries:
-- author: kognise
-  changes:
-  - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
-  - {message: the gas tank ui "toggle" button is now disabled when not wearing a breathing
-      tool, type: Fix}
-  id: 2389
-  time: '2022-10-04T01:01:20.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: 'Combat boots can now store knives, HoS, Warden and Nukies get those.',
@@ -2930,3 +2923,14 @@ Entries:
       pins', type: Add}
   id: 2888
   time: '2023-01-17T01:51:13.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: Fixes syndicate reinforcements getting swisscheesed by ship turrets
+      due to incorrect faction, type: Fix}
+  - {message: Fixes syndicate reinforcements not being tagged as an antag role, type: Fix}
+  - {message: Renames the syndicate reinforcement teleporter to syndicate reinforcement
+      radio, type: Tweak}
+  - {message: adds sound and cooldown feedback to the syndicate reinforcement radio.,
+    type: Add}
+  id: 2889
+  time: '2023-01-17T02:57:54.0000000+00:00'
