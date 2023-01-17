@@ -23,7 +23,6 @@
 # TODO: Rock decals
 # TODO: Water in grasslands
 # TODO: Water in desert / grass?
-# TODO: Look at weather with it
 - type: biome
   id: LowDesert
   layers:
@@ -114,6 +113,23 @@
     - !type:BiomeTileLayer
       threshold: 0.5
       tile: FloorPlanetGrass
+
+# Lava
+- type: biome
+  id: Lava
+  layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.9
+      frequency: 0.2
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - FloorLavaEntity
+    - !type:BiomeTileLayer
+      threshold: 0
+      variants:
+        - 0
+      tile: FloorBasalt
 
 # Snow
 - type: biome
