@@ -46,7 +46,7 @@
   description: This son of a gun can fire anything that fits in it using just a little gas.
   icon:
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
-    state: pneumaticCannon
+    state: icon
 
 - type: construction
   name: gauze

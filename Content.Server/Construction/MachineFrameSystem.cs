@@ -1,5 +1,6 @@
 using Content.Server.Construction.Components;
 using Content.Server.Stack;
+using Content.Shared.Construction.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;

@@ -1,11 +1,12 @@
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
-namespace Content.Server.Construction.Components
+namespace Content.Shared.Construction.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public sealed class MachineBoardComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

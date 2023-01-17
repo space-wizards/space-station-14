@@ -1,48 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where items would stop moving on conveyor belts., type: Fix}
-  id: 2382
-  time: '2022-09-30T00:44:28.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: All command roles now take 30 hours of total playtime on top of other
-      requirements., type: Add}
-  id: 2383
-  time: '2022-09-30T03:53:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'The NPC pathfinding has been refactored and some changes have been
-      made to their behaviours as well, such as the ability to break obstacles. It''s
-      still a going concern though is much easier to tweak in future.', type: Tweak}
-  - {message: NPCs require a line of sight for new targets before attacking., type: Tweak}
-  id: 2384
-  time: '2022-09-30T04:39:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Lemons now have lemon juice instead of lime juice., type: Fix}
-  id: 2385
-  time: '2022-10-02T01:40:32.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: 'Ports the Tomb of the Unknown Employee, in memory of those who died
-      after contributing to Space Station 13 and Space Station 14.', type: Add}
-  id: 2386
-  time: '2022-10-02T21:26:46.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Objects to be butchered must not be worn or be in a container., type: Fix}
-  - {message: Items dropped by butchering now drop within a tight circle around the
-      butchered object., type: Tweak}
-  id: 2387
-  time: '2022-10-04T00:50:56.0000000+00:00'
-- author: rolfero
-  changes:
-  - {message: SMES and Substations now hold a bit less power at the start., type: Tweak}
-  - {message: SMES and Substations can now be upgraded with better capacitors to hold
-      much more power!, type: Add}
-  id: 2388
-  time: '2022-10-04T00:59:40.0000000+00:00'
 - author: kognise
   changes:
   - {message: the o2 button now works for tanks clipped to a belt, type: Fix}
@@ -2934,3 +2890,43 @@ Entries:
   - {message: Fixed chameleon clothing not working., type: Fix}
   id: 2881
   time: '2023-01-16T08:21:24.0000000+00:00'
+- author: noudoit
+  changes:
+  - {message: Added Honk mother communication device - banana phone!, type: Add}
+  id: 2882
+  time: '2023-01-16T14:06:29.0000000+00:00'
+- author: moony, ElectroSR
+  changes:
+  - {message: 'An in-game guide has been added. It is accessible via a keybinding
+      (defaults to numpad 0), or via some examine tooltips. Help wanted writing guides!',
+    type: Add}
+  id: 2883
+  time: '2023-01-16T15:29:47.866071+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Helpful tips will now appear at random in the lobby and occasionally
+      in game., type: Add}
+  id: 2884
+  time: '2023-01-16T16:52:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a guidebook entry for machine upgrades., type: Add}
+  id: 2885
+  time: '2023-01-16T16:53:24.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: mechs now do not move if broken or are unpowered., type: Tweak}
+  id: 2886
+  time: '2023-01-16T23:58:38.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: 'Epinephrine will now be able to stabilize the smallest crew members
+      of the station such as Ian, and other animals.', type: Tweak}
+  id: 2887
+  time: '2023-01-17T01:47:41.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Added a new way to express yourself through small, little LGBTQIA+
+      pins', type: Add}
+  id: 2888
+  time: '2023-01-17T01:51:13.0000000+00:00'
