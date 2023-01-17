@@ -1,11 +1,10 @@
-﻿using Content.Server.Anomaly.Effects.Components;
-using Content.Server.Atmos.Components;
+﻿using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Shared.Anomaly;
+using Content.Server.Interaction;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Anomaly.Effects.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
@@ -14,10 +13,10 @@ namespace Content.Server.Anomaly.Effects;
 /// </summary>
 public sealed class PyroclasticAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
 
     /// <inheritdoc/>
@@ -90,6 +89,9 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
         foreach (var flammable in _lookup.GetComponentsInRange<FlammableComponent>(coordinates, radius))
         {
             var ent = flammable.Owner;
+            if (!_interaction.InRangeUnobstructed(coordinates.ToMap(EntityManager), ent, -1))
+                continue;
+
             var stackAmount = 1 + (int) (severity / 0.25f);
             _flammable.AdjustFireStacks(ent, stackAmount, flammable);
             _flammable.Ignite(ent, flammable);

@@ -11,4 +11,6 @@
   - type: RandomSpawner
     prototypes:
     - AnomalyPyroclastic
+    - AnomalyGravity
+    - AnomalyElectricity
     chance: 1

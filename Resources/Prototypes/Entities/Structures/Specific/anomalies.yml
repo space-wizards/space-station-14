@@ -82,3 +82,23 @@
   - type: GravityAnomaly
   - type: GravityWell
   - type: RadiationSource
+
+- type: entity
+  id: AnomalyElectricity
+  parent: BaseAnomaly
+  suffix: Electricity
+  components:
+  - type: Sprite
+    layers:
+    - state: anom3
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom3-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 5.0
+    color: "#ffffaa"
+    castShadows: false
+  - type: ElectricityAnomaly
+  - type: Electrified

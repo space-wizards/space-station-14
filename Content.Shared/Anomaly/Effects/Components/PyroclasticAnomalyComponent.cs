@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Atmos;
 
-namespace Content.Server.Anomaly.Effects.Components;
+namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
 public sealed class PyroclasticAnomalyComponent : Component
