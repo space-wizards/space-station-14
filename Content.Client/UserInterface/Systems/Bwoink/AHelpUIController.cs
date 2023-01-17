@@ -259,11 +259,21 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     {
         Window?.Close();
 
+        // popped-out window is being closed
         if (ClydeWindow != null)
         {
             ClydeWindow.RequestClosed -= OnRequestClosed;
             ClydeWindow.Dispose();
-            ClydeWindow = null;
+            // need to dispose control cause we cant reattach it directly back to the window
+            // but orphan panels first so -they- can get readded when the window is opened again
+            if (Control != null)
+            {
+                foreach (var (_, panel) in _activePanelMap)
+                {
+                    panel.Orphan();
+                }
+                Control?.Dispose();
+            }
             // window wont be closed here so we will invoke ourselves
             OnClose?.Invoke();
         }
@@ -297,20 +307,30 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
         Close();
     }
 
-    private void EnsureWindow()
+    private void EnsureControl()
     {
-        if (Window is { Disposed: false })
+        if (Control is { Disposed: false })
             return;
 
-        _activePanelMap.Clear();
         Window = new BwoinkWindow();
         Control = Window.Bwoink;
         Window.OnClose += () => { OnClose?.Invoke(); };
         Window.OnOpen += () => { OnOpen?.Invoke(); };
+
+        // need to readd any unattached panels..
+        foreach (var (_, panel) in _activePanelMap)
+        {
+            if (!Control!.BwoinkArea.Children.Contains(panel))
+            {
+                Control!.BwoinkArea.AddChild(panel);
+            }
+            panel.Visible = false;
+        }
     }
+
     public BwoinkPanel EnsurePanel(NetUserId channelId)
     {
-        EnsureWindow();
+        EnsureControl();
 
         if (_activePanelMap.TryGetValue(channelId, out var existingPanel))
             return existingPanel;
