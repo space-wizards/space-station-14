@@ -71,6 +71,14 @@
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
+  - Medkit
+  - MedkitBurn
+  - MedkitToxin
+  - MedkitO2
+  - MedkitBrute
+  - MedkitAdvanced
+  - MedkitRadiation
+  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
@@ -510,6 +518,21 @@
   - MicroManipulatorStockPart
   - ScanningModuleStockPart
   - NodeScanner
+  - AnomalyScanner
+
+- type: technology
+  name: technologies-anomaly-technology
+  id: AnomalyTechnology
+  description: technologies-anomaly-technology-description
+  icon:
+    sprite: Structures/Machines/Anomaly/ape.rsi
+    state: base
+  requiredPoints: 10000
+  requiredTechnologies:
+  - ScientificTechnology
+  unlockedRecipes:
+  - AnomalyVesselCircuitboard
+  - APECircuitboard
 
 - type: technology
   name: technologies-robotics-technology

@@ -1,5 +1,6 @@
 ### UI
 
+paper-ui-blank-page-message = This page intentionally left blank
 # Shown when paper with words examined details
 paper-component-examine-detail-has-words = На листе что-то написано.
 # Shown when paper with stamps examined

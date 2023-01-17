@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e05699709338e30ecde1bcd8f61d559ed2d7798e. stamp-warden is modified version of stamp-hos. stamp-iaa is modified version of stamp-approve.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e05699709338e30ecde1bcd8f61d559ed2d7798e. stamp-warden is modified version of stamp-hos. stamp-iaa is modified version of stamp-approve. paper_receipt by eoineoineoin",
   "size": {
     "x": 32,
     "y": 32
@@ -205,6 +205,18 @@
       "name": "paper_words-blood"
     },
     {
+      "name": "paper_receipt"
+    },
+    {
+      "name": "paper_receipt_words"
+    },
+    {
+      "name": "paper_dotmatrix"
+    },
+    {
+      "name": "paper_dotmatrix_words"
+    },
+    {
       "name": "pen"
     },
     {
@@ -213,7 +225,7 @@
     {
       "name": "pen_hop"
     },
-	{
+    {
       "name": "overpriced_pen"
     },
     {

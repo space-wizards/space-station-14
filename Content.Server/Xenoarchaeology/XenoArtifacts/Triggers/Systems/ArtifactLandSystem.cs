@@ -14,7 +14,7 @@ public sealed class ArtifactLandSystem : EntitySystem
         SubscribeLocalEvent<ArtifactLandTriggerComponent, LandEvent>(OnLand);
     }
 
-    private void OnLand(EntityUid uid, ArtifactLandTriggerComponent component, LandEvent args)
+    private void OnLand(EntityUid uid, ArtifactLandTriggerComponent component, ref LandEvent args)
     {
         _artifact.TryActivateArtifact(uid, args.User);
     }

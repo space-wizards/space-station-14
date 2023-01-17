@@ -9,6 +9,11 @@ namespace Content.Server.Arcade;
 public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 {
     private string _text = "MNGR";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
     private Color _color = Color.Purple;
 
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthManager;

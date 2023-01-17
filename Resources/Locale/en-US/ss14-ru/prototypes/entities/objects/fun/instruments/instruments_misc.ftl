@@ -22,3 +22,6 @@ ent-GunpetInstrument = gunpet
 ent-BikeHornInstrument = gilded bike horn
     .desc = An exquisitely decorated bike horn, capable of honking in a variety of notes.
     .suffix = { "" }
+ent-BananaPhoneInstrument = banana phone
+    .desc = A direct line to the Honkmother. Seems to always go to voicemail.
+    .suffix = { "" }

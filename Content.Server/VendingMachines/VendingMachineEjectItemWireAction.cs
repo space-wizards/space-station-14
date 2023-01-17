@@ -11,6 +11,11 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     private Color _color = Color.Red;
     private string _text = "VEND";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
     public override object? StatusKey { get; } = EjectWireKey.StatusKey;
 
     public override StatusLightData? GetStatusLightData(Wire wire)
@@ -40,6 +45,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             _vendingMachineSystem.SetShooting(wire.Owner, true, vending);
@@ -50,6 +56,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent(wire.Owner, out VendingMachineComponent? vending))
         {
             _vendingMachineSystem.SetShooting(wire.Owner, false, vending);
@@ -60,6 +67,7 @@ public sealed class VendingMachineEjectItemWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         _vendingMachineSystem.EjectRandom(wire.Owner, true);
 
         return true;

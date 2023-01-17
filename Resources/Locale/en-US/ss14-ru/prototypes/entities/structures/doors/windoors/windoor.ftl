@@ -76,3 +76,6 @@ ent-WindoorSecurityLocked = { ent-WindoorSecure }
 ent-WindoorScienceLocked = { ent-WindoorSecure }
     .suffix = Science, Locked
     .desc = { ent-WindoorSecure.desc }
+ent-WindoorHeadOfPersonnelLocked = { ent-WindoorSecure }
+    .suffix = HeadOfPersonnel, Locked
+    .desc = { ent-WindoorSecure.desc }

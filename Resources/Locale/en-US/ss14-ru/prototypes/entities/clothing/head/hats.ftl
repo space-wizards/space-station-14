@@ -136,3 +136,6 @@ ent-ClothingHeadHatJester = jester hat
 ent-ClothingHeadHatJesterAlt = { ent-ClothingHeadHatJester }
     .desc = { ent-ClothingHeadHatJester.desc }
     .suffix = { "" }
+ent-ClothingHeadHatBeretCmo = chief medical officer's beret
+    .desc = Turquoise beret with a cross on the front. The sight of it calms you down and makes it clear that you will be cured.
+    .suffix = { "" }
