@@ -24,6 +24,9 @@
           Asphyxiation: -1.0
     - type: MobMover
     - type: InputMover
+    - type: Vocal
+      maleScream: /Audio/Voice/Diona/diona_scream.ogg
+      femaleScream: /Audio/Voice/Diona/diona_scream.ogg
     - type: Alerts
     - type: Eye
     - type: CameraRecoil

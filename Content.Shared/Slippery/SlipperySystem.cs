@@ -85,7 +85,7 @@ namespace Content.Shared.Slippery
                 return;
 
             if (TryComp(other, out PhysicsComponent? physics))
-                _physics.SetLinearVelocity(physics, physics.LinearVelocity * component.LaunchForwardsMultiplier);
+                _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
             var playSound = !_statusEffectsSystem.HasStatusEffect(other, "KnockedDown");
 

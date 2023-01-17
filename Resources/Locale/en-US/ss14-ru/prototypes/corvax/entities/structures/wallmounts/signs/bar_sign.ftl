@@ -1,0 +1,3 @@
+ent-BarSignAlcoholic = Pour and that's it
+    .desc = Pour it on, that's all. Hard times have come...
+    .suffix = { "" }

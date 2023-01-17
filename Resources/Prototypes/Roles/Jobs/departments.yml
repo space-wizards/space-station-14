@@ -37,6 +37,7 @@
   color: "#334E6D"
   roles:
   - Captain
+  - IAA # Corvax-IAA
   - CentralCommandOfficial
   - ChiefEngineer
   - ChiefMedicalOfficer

@@ -131,10 +131,8 @@ public sealed partial class LatheMenu : DefaultWindow
                 else
                     sb.Append('\n');
 
-                var adjustedAmount = amount;
-                if (prototype.ApplyMaterialDiscount)
-                    adjustedAmount = (int) (adjustedAmount * component.MaterialUseMultiplier);
-
+                var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
+                
                 sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(Loc.GetString(proto.Name));

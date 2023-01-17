@@ -52,7 +52,7 @@ namespace Content.Server.Temperature.Components
         {
             get
             {
-                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent?>(Owner, out var physics) && physics.FixturesMass != 0)
+                if (IoCManager.Resolve<IEntityManager>().TryGetComponent<PhysicsComponent>(Owner, out var physics) && physics.FixturesMass != 0)
                 {
                     return SpecificHeat * physics.FixturesMass;
                 }
