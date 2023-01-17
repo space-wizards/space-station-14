@@ -25,6 +25,15 @@
         - Skub
         - ClothingHeadHatCatEars
         - DrinkMugDog
+        - ClothingNeckLGBTPin
+        - ClothingNeckAromanticPin
+        - ClothingNeckAsexualPin
+        - ClothingNeckBisexualPin
+        - ClothingNeckIntersexPin
+        - ClothingNeckLesbianPin
+        - ClothingNeckNonBinaryPin
+        - ClothingNeckPansexualPin
+        - ClothingNeckTransPin
         - CluwneHorn
       rareChance: 0.01
       prototypes:

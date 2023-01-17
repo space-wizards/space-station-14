@@ -83,6 +83,26 @@
         prob: 0.001
       - id: ClothingHeadHatCatEars
         prob: 0.01
+        #  - Pins
+      - id: ClothingNeckLGBTPin
+        prob: 0.025
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckAromanticPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckAsexualPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckBisexualPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckIntersexPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckLesbianPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckNonBinaryPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckPansexualPin
+        orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckTransPin
+        orGroup: LGBTQIAPlusPins
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

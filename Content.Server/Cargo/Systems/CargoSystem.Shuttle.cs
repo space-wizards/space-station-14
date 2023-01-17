@@ -228,7 +228,7 @@ public sealed partial class CargoSystem
 
             if (cappedAmount < order.Amount)
             {
-                var reducedOrder = new CargoOrderData(order.OrderNumber, order.ProductId, cappedAmount, order.Requester, order.Reason);
+                var reducedOrder = new CargoOrderData(order.OrderIndex, order.ProductId, cappedAmount, order.Requester, order.Reason);
 
                 orders.Add(reducedOrder);
                 break;
@@ -447,11 +447,11 @@ public sealed partial class CargoSystem
             {
                 // Yes this is functioning as a stack, I was too lazy to re-jig the shuttle state event.
                 orders.RemoveSwap(0);
-                orderDatabase.Orders.Remove(order.OrderNumber);
+                orderDatabase.Orders.Remove(order.OrderIndex);
             }
             else
             {
-                orderDatabase.Orders[order.OrderNumber] = order;
+                orderDatabase.Orders[order.OrderIndex] = order;
             }
         }
     }
@@ -471,13 +471,13 @@ public sealed partial class CargoSystem
             return;
 
         // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderNumber));
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.PrintableOrderNumber));
 
         MetaData(printed).EntityName = val;
 
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
-            ("orderNumber", order.OrderNumber),
+            ("orderNumber", order.PrintableOrderNumber),
             ("itemName", prototype.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),

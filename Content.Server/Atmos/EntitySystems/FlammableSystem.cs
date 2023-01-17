@@ -33,6 +33,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly FixtureSystem _fixture = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         public const float MinimumFireStacks = -10f;
@@ -92,12 +93,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp<PhysicsComponent>(uid, out var body))
                 return;
 
-            _fixture.TryCreateFixture(body, new Fixture(body, component.FlammableCollisionShape)
-            {
-                Hard = false,
-                ID = FlammableFixtureID,
-                CollisionMask = (int) CollisionGroup.FullTileLayer
-            });
+            _fixture.TryCreateFixture(uid, component.FlammableCollisionShape, FlammableFixtureID, hard: false,
+                collisionMask: (int) CollisionGroup.FullTileLayer, body: body);
         }
 
         private void OnInteractUsing(EntityUid uid, FlammableComponent flammable, InteractUsingEvent args)
@@ -274,7 +271,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, PhysicsComponent, TransformComponent>())
+            foreach (var (flammable, transform) in EntityManager.EntityQuery<FlammableComponent, TransformComponent>())
             {
                 var uid = flammable.Owner;
 
@@ -327,20 +324,21 @@ namespace Content.Server.Atmos.EntitySystems
 
                 }
 
-                foreach (var otherUid in flammable.Collided.ToArray())
+                for (var i = flammable.Collided.Count - 1; i >= 0; i--)
                 {
+                    var otherUid = flammable.Collided[i];
+
                     if (!otherUid.IsValid() || !EntityManager.EntityExists(otherUid))
                     {
-                        flammable.Collided.Remove(otherUid);
+                        flammable.Collided.RemoveAt(i);
                         continue;
                     }
 
-                    var otherPhysics = EntityManager.GetComponent<PhysicsComponent>(uid);
-
                     // TODO: Sloth, please save our souls!
-                    if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
+                    // no
+                    if (!_lookup.GetWorldAABB(uid, transform).Intersects(_lookup.GetWorldAABB(otherUid)))
                     {
-                        flammable.Collided.Remove(otherUid);
+                        flammable.Collided.RemoveAt(i);
                     }
                 }
             }
