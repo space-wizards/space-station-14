@@ -1,10 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where the singulo would bounce off of containment fields
-      like items or mobs would., type: Fix}
-  id: 2405
-  time: '2022-10-08T03:27:16.0000000+00:00'
 - author: Cheackraze
   changes:
   - {message: Added Kettle!, type: Add}
@@ -2940,3 +2934,8 @@ Entries:
     type: Add}
   id: 2904
   time: '2023-01-17T22:00:19.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Makes mobs visually float when there is no gravity, type: Add}
+  id: 2905
+  time: '2023-01-17T22:01:54.0000000+00:00'
