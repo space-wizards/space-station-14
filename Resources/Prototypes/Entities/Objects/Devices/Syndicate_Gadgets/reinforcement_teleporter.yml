@@ -16,5 +16,9 @@
     rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
   - type: EmitSoundOnUse
     sound: /Audio/Misc/emergency_meeting.ogg
+    handle: true
     params:
-      variation: 0.125
+      variation: 0.2
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 300
