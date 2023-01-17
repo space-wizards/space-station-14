@@ -532,6 +532,8 @@
   - type: Sprite
     state: fortune
   - type: Item
+  - type: RandomMetadata
+    descriptionSegments: [CookieFortuneDescriptions]
 
 - type: entity
   noSpawn: true
