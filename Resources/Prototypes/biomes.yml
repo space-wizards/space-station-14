@@ -120,6 +120,35 @@
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.9
+      frequency: 1
+      seedOffset: 1
+      allowedTiles:
+        - FloorBasalt
+      entities:
+        - BasaltOne
+        - BasaltTwo
+        - BasaltThree
+        - BasaltFour
+        - BasaltFive
+    - !type:BiomeDecalLayer
+      allowedTiles:
+        - FloorBasalt
+      seedOffset: 2
+      threshold: 0.9
+      divisions: 1
+      frequency: 1
+      decals:
+        - Basalt1
+        - Basalt2
+        - Basalt3
+        - Basalt4
+        - Basalt5
+        - Basalt6
+        - Basalt7
+        - Basalt8
+        - Basalt9
+    - !type:BiomeEntityLayer
+      threshold: 0.9
       frequency: 0.2
       allowedTiles:
         - FloorBasalt
