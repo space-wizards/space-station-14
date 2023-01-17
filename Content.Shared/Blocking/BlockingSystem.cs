@@ -8,7 +8,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
@@ -186,14 +186,12 @@ public sealed partial class BlockingSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(user, out var physicsComponent))
         {
-            var fixture = new Fixture(physicsComponent, component.Shape)
-            {
-                ID = BlockingComponent.BlockFixtureID,
-                Hard = true,
-                CollisionLayer = (int) CollisionGroup.WallLayer
-            };
-
-            _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+            _fixtureSystem.TryCreateFixture(user,
+                component.Shape,
+                BlockingComponent.BlockFixtureID,
+                hard: true,
+                collisionLayer: (int) CollisionGroup.WallLayer,
+                body: physicsComponent);
         }
 
         component.IsBlocking = true;
@@ -243,8 +241,8 @@ public sealed partial class BlockingSystem : EntitySystem
                 _transformSystem.Unanchor(xform);
 
             _actionsSystem.SetToggled(component.BlockingToggleAction, false);
-            _fixtureSystem.DestroyFixture(physicsComponent, BlockingComponent.BlockFixtureID);
-            _physics.SetBodyType(physicsComponent, blockingUserComponent.OriginalBodyType);
+            _fixtureSystem.DestroyFixture(user, BlockingComponent.BlockFixtureID, body: physicsComponent);
+            _physics.SetBodyType(user, blockingUserComponent.OriginalBodyType, body: physicsComponent);
             _popupSystem.PopupEntity(msgUser, user, user);
             _popupSystem.PopupEntity(msgOther, user, Filter.PvsExcept(user), true);
         }

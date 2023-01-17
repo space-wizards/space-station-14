@@ -1,0 +1,81 @@
+- type: entity
+  id: BasaltOne
+  name: basalt
+  description: Rock
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      sprite: /Textures/Tiles/Planet/basalt.rsi
+      layers:
+        - state: basalt1
+          shader: unshaded
+      drawdepth: LowFloors
+    - type: RequiresTile
+    - type: Transform
+      anchored: true
+    - type: Tag
+      tags:
+        - HideContextMenu
+
+- type: entity
+  id: BasaltTwo
+  parent: BasaltOne
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: basalt2
+          shader: unshaded
+
+- type: entity
+  id: BasaltThree
+  parent: BasaltOne
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: basalt3
+          shader: unshaded
+
+- type: entity
+  id: BasaltFour
+  parent: BasaltOne
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: basalt4
+          shader: unshaded
+
+- type: entity
+  id: BasaltFive
+  parent: BasaltOne
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Sprite
+      layers:
+        - state: basalt5
+          shader: unshaded
+
+- type: entity
+  id: BasaltRandom
+  parent: BasaltOne
+  suffix: Random
+  components:
+    - type: RandomSprite
+      available:
+        - 0:
+            basalt1: ""
+        - 0:
+            basalt2: ""
+        - 0:
+            basalt3: ""
+        - 0:
+            basalt4: ""
+        - 0:
+            basalt5: ""

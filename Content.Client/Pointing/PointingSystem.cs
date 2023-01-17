@@ -1,53 +1,17 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Client.Gravity;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
-using Robust.Client.Animations;
 using Robust.Client.GameObjects;
-using Robust.Shared.Animations;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
 public sealed class PointingSystem : SharedPointingSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly SharedMobStateSystem _mobState = default!;
-
-    private const string AnimationKey = "pointingarrow";
-
-    /// <summary>
-    /// How far it goes in any direction.
-    /// </summary>
-    private const float Offset = 0.25f;
-
-    /// <summary>
-    /// How long it takes to go from the bottom of the animation to the top.
-    /// </summary>
-    private const float UpTime = 0.5f;
-
-    /// <summary>
-    /// Starts at the bottom then goes up and comes back down. Seems to look nicer than starting in the middle.
-    /// </summary>
-    private static readonly Animation PointingAnimation = new Animation()
-    {
-        Length = TimeSpan.FromSeconds(2 * UpTime),
-        AnimationTracks =
-        {
-            new AnimationTrackComponentProperty()
-            {
-                ComponentType = typeof(SpriteComponent),
-                Property = nameof(SpriteComponent.Offset),
-                InterpolationMode = AnimationInterpolationMode.Linear,
-                KeyFrames =
-                {
-                    new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0f),
-                    new AnimationTrackProperty.KeyFrame(new Vector2(0f, Offset), UpTime),
-                    new AnimationTrackProperty.KeyFrame(Vector2.Zero, UpTime),
-                }
-            }
-        }
-    };
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly FloatingVisualizerSystem _floatingSystem = default!;
 
     public override void Initialize()
     {
@@ -61,11 +25,14 @@ public sealed class PointingSystem : SharedPointingSystem
 
     private void OnArrowAnimation(EntityUid uid, PointingArrowComponent component, AnimationCompletedEvent args)
     {
-        _player.Play(uid, PointingAnimation, AnimationKey);
+        _floatingSystem.FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
     }
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
     {
+        if (args.Target.IsClientSide())
+            return;
+
         // Really this could probably be a properly predicted event, but that requires reworking pointing. For now
         // I'm just adding this verb exclusively to clients so that the verb-loading pop-in on the verb menu isn't
         // as bad. Important for this verb seeing as its usually an option on just about any entity.
@@ -95,19 +62,19 @@ public sealed class PointingSystem : SharedPointingSystem
         args.Verbs.Add(verb);
     }
 
-    private void OnArrowStartup(EntityUid uid, PointingArrowComponent arrow, ComponentStartup args)
+    private void OnArrowStartup(EntityUid uid, PointingArrowComponent component, ComponentStartup args)
     {
-        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        if (TryComp<SpriteComponent>(uid, out var sprite))
         {
             sprite.DrawDepth = (int) DrawDepth.Overlays;
         }
 
-        _player.Play(uid, PointingAnimation, AnimationKey);
+        _floatingSystem.FloatAnimation(uid, component.Offset, component.AnimationKey, component.AnimationTime);
     }
 
     private void OnRogueArrowStartup(EntityUid uid, RoguePointingArrowComponent arrow, ComponentStartup args)
     {
-        if (EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
+        if (TryComp<SpriteComponent>(uid, out var sprite))
         {
             sprite.DrawDepth = (int) DrawDepth.Overlays;
             sprite.NoRotation = false;

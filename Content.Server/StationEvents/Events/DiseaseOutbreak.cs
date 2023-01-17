@@ -1,9 +1,8 @@
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
-using Content.Server.MobState;
-using Content.Server.Station.Systems;
 using Content.Shared.Disease;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents.Events;
