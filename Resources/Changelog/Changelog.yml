@@ -1,10 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Pillar minor flavour update. See PR for details. There's now a Newscaster
-      room near boxing and the abandoned theatre has some life now., type: Tweak}
-  id: 2394
-  time: '2022-10-04T01:47:24.0000000+00:00'
 - author: themias
   changes:
   - {message: Tranquilizer rounds come with a tranquilizer solution and can no longer
@@ -2944,3 +2938,8 @@ Entries:
       paper', type: Add}
   id: 2893
   time: '2023-01-17T08:32:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Weather has been added to the game., type: Add}
+  id: 2894
+  time: '2023-01-17T09:26:53.0000000+00:00'
