@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Space bears will attack again., type: Fix}
-  id: 2404
-  time: '2022-10-07T06:10:08.0000000+00:00'
 - author: keronshb
   changes:
   - {message: Fixes an issue where the singulo would bounce off of containment fields
@@ -2939,3 +2934,9 @@ Entries:
   - {message: Updated patrons and contributor credits list., type: Tweak}
   id: 2903
   time: '2023-01-17T21:42:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
+    type: Add}
+  id: 2904
+  time: '2023-01-17T22:00:19.0000000+00:00'
