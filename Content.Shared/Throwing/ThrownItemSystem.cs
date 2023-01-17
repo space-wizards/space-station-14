@@ -19,9 +19,11 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrownItemSystem : EntitySystem
     {
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -115,8 +117,10 @@ namespace Content.Shared.Throwing
             EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
-        public void LandComponent(ThrownItemComponent thrownItem)
+        public void LandComponent(ThrownItemComponent thrownItem, PhysicsComponent physics)
         {
+            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
+
             if (thrownItem.Deleted || Deleted(thrownItem.Owner) || _containerSystem.IsEntityInContainer(thrownItem.Owner)) return;
 
             var landing = thrownItem.Owner;
@@ -133,8 +137,9 @@ namespace Content.Shared.Throwing
             if (thrownItem.Thrower is not null)
                 _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(landing):entity} thrown by {ToPrettyString(thrownItem.Thrower.Value):thrower} landed.");
 
-            var landMsg = new LandEvent {User = thrownItem.Thrower};
-            RaiseLocalEvent(landing, landMsg, false);
+            _broadphase.RegenerateContacts(physics);
+            var landEvent = new LandEvent(thrownItem.Thrower);
+            RaiseLocalEvent(landing, ref landEvent);
         }
 
         /// <summary>

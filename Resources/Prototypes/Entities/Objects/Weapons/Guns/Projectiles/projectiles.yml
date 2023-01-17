@@ -266,6 +266,58 @@
   - type: TimedDespawn
     lifetime: 0.4
 
+- type: entity
+  parent: BaseBullet
+  id: AnomalousParticleDelta
+  name: delta particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Delta
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
+    layers:
+      - state: magicm
+        shader: unshaded
+  - type: Ammo
+    muzzleFlash: null
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - Opaque
+    - *flybyfixture
+  - type: Projectile
+    damage:
+      types:
+        Heat: 3
+  - type: TimedDespawn
+    lifetime: 3
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleEpsilon
+  name: epsilon particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Epsilon
+
+- type: entity
+  parent: AnomalousParticleDelta
+  id: AnomalousParticleZeta
+  name: zeta particles
+  noSpawn: true
+  components:
+  - type: AnomalousParticle
+    particleType: Zeta
+
 # Launcher projectiles (grenade / rocket)
 - type: entity
   id: BulletRocket
