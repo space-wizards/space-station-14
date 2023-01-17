@@ -1,3 +1,6 @@
+/// <summary>
+/// Inverse of combat target, this is added when we are trying to kill something.
+/// </summary>
 [RegisterComponent]
 public sealed class NPCEngagerComponent : Component
 {

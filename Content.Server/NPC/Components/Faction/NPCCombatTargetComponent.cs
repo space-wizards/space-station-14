@@ -1,8 +1,7 @@
 namespace Content.Server.NPC.Components;
 
 /// <summary>
-/// Added to the target of NPC combat operators so they can see which enemies
-/// are trying to kill them.
+/// Lets an NPC track what is (attempting to) damage it.
 /// </summary>
 [RegisterComponent]
 public sealed class NPCCombatTargetComponent : Component
