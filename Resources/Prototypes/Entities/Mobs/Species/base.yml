@@ -229,6 +229,7 @@
       - type: CreamPiedVisualizer
         state: creampie_human
   - type: RotationVisuals
+  - type: FloatingVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
