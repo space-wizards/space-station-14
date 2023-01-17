@@ -295,7 +295,7 @@
   description: uplink-voice-mask-desc
   productEntity: ClothingMaskGasVoiceMasker
   cost:
-    Telecrystal: 4
+    Telecrystal: 3
   categories:
   - UplinkUtility
 
