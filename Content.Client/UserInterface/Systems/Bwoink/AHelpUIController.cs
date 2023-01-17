@@ -264,6 +264,8 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
             ClydeWindow.RequestClosed -= OnRequestClosed;
             ClydeWindow.Dispose();
             ClydeWindow = null;
+            // window wont be closed here so we will invoke ourselves
+            OnClose?.Invoke();
         }
     }
 
@@ -299,6 +301,8 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     {
         if (Window is { Disposed: false })
             return;
+
+        _activePanelMap.Clear();
         Window = new BwoinkWindow();
         Control = Window.Bwoink;
         Window.OnClose += () => { OnClose?.Invoke(); };
