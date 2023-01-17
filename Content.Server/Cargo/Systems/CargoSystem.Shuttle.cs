@@ -465,7 +465,7 @@ public sealed partial class CargoSystem
             return;
 
         // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+        var printed = EntityManager.SpawnEntity(component.PrinterOutput, coordinates);
 
         if (!TryComp<PaperComponent>(printed, out var paper))
             return;
