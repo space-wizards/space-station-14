@@ -60,9 +60,14 @@ public abstract partial class SharedHandsSystem : EntitySystem
         // animation
         var xform = Transform(uid);
         var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
-        var initialPosition = EntityCoordinates.FromMap(EntityManager, coordinateEntity, Transform(entity).MapPosition);
 
-        PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
+        var itemPos = Transform(entity).MapPosition;
+        if (itemPos.MapId == xform.MapID)
+        {
+            // TODO max range for animation?
+            var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+            PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
+        }
         DoPickup(uid, hand, entity, handsComp);
 
         return true;

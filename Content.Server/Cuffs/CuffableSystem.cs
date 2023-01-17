@@ -86,12 +86,6 @@ namespace Content.Server.Cuffs
             if (component.Cuffing || !EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
                 return;
 
-            if (component.Broken)
-            {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), user, user);
-                return;
-            }
-
             if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))
             {
                 _popup.PopupEntity(Loc.GetString("handcuff-component-target-has-no-hands-error",("targetName", target)), user, user);

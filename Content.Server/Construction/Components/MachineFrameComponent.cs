@@ -1,4 +1,5 @@
-﻿using Content.Shared.Construction.Prototypes;
+﻿using Content.Shared.Construction.Components;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
