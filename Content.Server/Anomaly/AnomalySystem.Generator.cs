@@ -21,7 +21,7 @@ public sealed partial class AnomalySystem
     ///
     /// tl;dr anomalies only generate on the inner __% of the station.
     /// </summary>
-    public const float GridBoundsMultiplier = 0.6f;
+    public const float GridBoundsScale = 0.7f;
 
     private void InitializeGenerator()
     {
@@ -92,11 +92,12 @@ public sealed partial class AnomalySystem
         var targetCoords = xform.Coordinates;
         var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
         var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
+        gridBounds.Scale(GridBoundsScale);
 
         for (var i = 0; i < 25; i++)
         {
-            var randomX = Random.Next((int) (gridBounds.Left * GridBoundsMultiplier), (int) (gridBounds.Right * GridBoundsMultiplier));
-            var randomY = Random.Next((int) (gridBounds.Bottom * GridBoundsMultiplier), (int) (gridBounds.Top * GridBoundsMultiplier));
+            var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
+            var randomY = Random.Next((int) gridBounds.Bottom, (int)gridBounds.Top);
 
             var tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
             if (_atmosphere.IsTileSpace(grid, Transform(grid).MapUid, tile,
