@@ -88,13 +88,13 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)
     {
-         var owningStation = _stationSystem.GetOwningStation(uid);
-         if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
-         {
-             return;
-         }
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || ev.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
 
-         CloseEui(owningStation.Value, sessionCast, uid);
+        CloseEui(owningStation.Value, sessionCast, uid);
     }
 
     /// <summary>
@@ -214,6 +214,8 @@ public sealed class CrewManifestSystem : EntitySystem
 
             entries.Entries.Add(entry);
         }
+
+        entries.Entries = entries.Entries.OrderBy(e => e.JobTitle).ThenBy(e => e.Name).ToList();
 
         if (_cachedEntries.ContainsKey(station))
         {

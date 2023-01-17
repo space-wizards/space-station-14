@@ -5,7 +5,6 @@ using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
@@ -14,14 +13,15 @@ using Content.Server.Traitor;
 using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -130,7 +130,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         if (!RuleAdded)
             return;
-        CheckRoundEnd(ev.Entity);
+        CheckRoundEnd(ev.Target);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)

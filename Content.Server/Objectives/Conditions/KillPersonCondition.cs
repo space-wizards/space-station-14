@@ -1,5 +1,5 @@
-using Content.Server.MobState;
 using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Conditions
     public abstract class KillPersonCondition : IObjectiveCondition
     {
         protected IEntityManager EntityManager => IoCManager.Resolve<IEntityManager>();
-        protected MobStateSystem MobStateSystem => IoCManager.Resolve<MobStateSystem>();
+        protected MobStateSystem MobStateSystem => EntityManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
         protected Mind.Mind? Target;
         public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 

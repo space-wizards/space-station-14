@@ -25,6 +25,9 @@
   id: BodyBag
 
 - type: Tag
+  id: Book
+
+- type: Tag
   id: BorgArm
 
 - type: Tag
@@ -260,6 +263,9 @@
 
 - type: Tag
   id: Grenade
+
+- type: Tag
+  id: GuideEmbeded
 
 - type: Tag
   id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event

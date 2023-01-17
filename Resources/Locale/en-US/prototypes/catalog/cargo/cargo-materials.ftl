@@ -4,6 +4,9 @@ ent-MaterialGlass = { ent-CrateMaterialGlass }
 ent-MaterialSteel = { ent-CrateMaterialSteel }
     .desc = { ent-CrateMaterialSteel.desc }
 
+ent-MaterialTextiles = { ent-CrateMaterialTextiles }
+    .desc = { ent-CrateMaterialTextiles.desc }
+
 ent-MaterialPlastic = { ent-CrateMaterialPlastic }
     .desc = { ent-CrateMaterialPlastic.desc }
 

@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage404",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base",
+      "directions": 4
+    },
+    {
+      "name": "firing",
+      "directions": 4
+    },
+    {
+      "name": "locked",
+      "directions": 4
+    },
+    {
+      "name": "panel",
+      "directions": 4
+    },
+    {
+      "name": "underpowered",
+      "directions": 4
+    },
+    {
+      "name": "unshaded",
+      "directions": 4
+    }
+  ]
+}

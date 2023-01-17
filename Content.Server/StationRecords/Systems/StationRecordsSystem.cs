@@ -116,7 +116,7 @@ public sealed class StationRecordsSystem : EntitySystem
         {
             Name = name,
             Age = age,
-            JobTitle = jobPrototype.Name,
+            JobTitle = jobPrototype.LocalizedName,
             JobIcon = jobPrototype.Icon,
             JobPrototype = jobId,
             Species = species,

@@ -16,6 +16,7 @@
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
+        - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
         - Football
@@ -24,6 +25,15 @@
         - Skub
         - ClothingHeadHatCatEars
         - DrinkMugDog
+        - ClothingNeckLGBTPin
+        - ClothingNeckAromanticPin
+        - ClothingNeckAsexualPin
+        - ClothingNeckBisexualPin
+        - ClothingNeckIntersexPin
+        - ClothingNeckLesbianPin
+        - ClothingNeckNonBinaryPin
+        - ClothingNeckPansexualPin
+        - ClothingNeckTransPin
       rareChance: 0.01
       prototypes:
         - Lighter

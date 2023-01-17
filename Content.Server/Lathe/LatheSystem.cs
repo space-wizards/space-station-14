@@ -1,20 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.Construction;
 using Content.Server.Lathe.Components;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Content.Server.Research.Components;
-using Content.Server.Research.Systems;
 using Content.Server.UserInterface;
+using Content.Shared.Database;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -25,46 +24,33 @@ namespace Content.Server.Lathe
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
-        [Dependency] private readonly ResearchSystem _researchSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<LatheComponent, MaterialEntityInsertedEvent>(OnMaterialEntityInserted);
             SubscribeLocalEvent<LatheComponent, GetMaterialWhitelistEvent>(OnGetWhitelist);
             SubscribeLocalEvent<LatheComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<LatheComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<LatheComponent, RefreshPartsEvent>(OnPartsRefresh);
             SubscribeLocalEvent<LatheComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<LatheComponent, TechnologyDatabaseModifiedEvent>(OnDatabaseModified);
 
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
 
             SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
-            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
-            SubscribeLocalEvent<ResearchClientComponent, LatheServerSelectionMessage>(OnLatheServerSelectionMessage);
-            SubscribeLocalEvent<TechnologyDatabaseComponent, LatheServerSyncMessage>(OnLatheServerSyncMessage);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityQuery<LatheInsertingComponent>())
-            {
-                comp.TimeRemaining -= frameTime;
-
-                if (comp.TimeRemaining > 0)
-                    continue;
-
-                UpdateInsertingAppearance(comp.Owner, false);
-                RemCompDeferred(comp.Owner, comp);
-            }
-
             foreach (var (comp, lathe) in EntityQuery<LatheProducingComponent, LatheComponent>())
             {
                 if (lathe.CurrentRecipe == null)
@@ -75,7 +61,7 @@ namespace Content.Server.Lathe
             }
         }
 
-        private void OnGetWhitelist(EntityUid uid, LatheComponent component, GetMaterialWhitelistEvent args)
+        private void OnGetWhitelist(EntityUid uid, LatheComponent component, ref GetMaterialWhitelistEvent args)
         {
             if (args.Storage != uid)
                 return;
@@ -205,6 +191,11 @@ namespace Content.Server.Lathe
             args.Recipes = args.Recipes.Union(component.RecipeIds.Where(r => latheComponent.DynamicRecipes.Contains(r))).ToList();
         }
 
+        private void OnMaterialAmountChanged(EntityUid uid, LatheComponent component, ref MaterialAmountChangedEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
+        }
+
         /// <summary>
         /// Initialize the UI and appearance.
         /// Appearance requires initialization or the layers break
@@ -217,15 +208,6 @@ namespace Content.Server.Lathe
             _materialStorage.UpdateMaterialWhitelist(uid);
         }
 
-        private void OnMaterialEntityInserted(EntityUid uid, LatheComponent component, MaterialEntityInsertedEvent args)
-        {
-            var lastMat = args.Materials.Keys.Last();
-            // We need the prototype to get the color
-            _proto.TryIndex(lastMat, out MaterialPrototype? matProto);
-            EnsureComp<LatheInsertingComponent>(uid).TimeRemaining = component.InsertionTime;
-            UpdateInsertingAppearance(uid, true, matProto?.Color);
-        }
-
         /// <summary>
         /// Sets the machine sprite to either play the running animation
         /// or stop.
@@ -233,17 +215,6 @@ namespace Content.Server.Lathe
         private void UpdateRunningAppearance(EntityUid uid, bool isRunning)
         {
             _appearance.SetData(uid, LatheVisuals.IsRunning, isRunning);
-        }
-
-        /// <summary>
-        /// Sets the machine sprite to play the inserting animation
-        /// and sets the color of the inserted mat if applicable
-        /// </summary>
-        private void UpdateInsertingAppearance(EntityUid uid, bool isInserting, Color? color = null)
-        {
-            _appearance.SetData(uid, LatheVisuals.IsInserting, isInserting);
-            if (color != null)
-                _appearance.SetData(uid, LatheVisuals.InsertingColor, color);
         }
 
         private void OnPowerChanged(EntityUid uid, LatheComponent component, ref PowerChangedEvent args)
@@ -276,6 +247,11 @@ namespace Content.Server.Lathe
             args.AddPercentageUpgrade("lathe-component-upgrade-material-use", component.MaterialUseMultiplier);
         }
 
+        private void OnDatabaseModified(EntityUid uid, LatheComponent component, ref TechnologyDatabaseModifiedEvent args)
+        {
+            UpdateUserInterfaceState(uid, component);
+        }
+
         protected override bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component)
         {
             return GetAvailableRecipes(component).Contains(recipe.ID);
@@ -287,9 +263,16 @@ namespace Content.Server.Lathe
         {
             if (_proto.TryIndex(args.ID, out LatheRecipePrototype? recipe))
             {
+                var count = 0;
                 for (var i = 0; i < args.Quantity; i++)
                 {
-                    TryAddToQueue(uid, recipe, component);
+                    if (TryAddToQueue(uid, recipe, component))
+                        count++;
+                }
+                if (count > 0 && args.Session.AttachedEntity != null)
+                {
+                    _adminLogger.Add(LogType.Action, LogImpact.Low,
+                        $"{ToPrettyString(args.Session.AttachedEntity.Value):player} queued {count} {recipe.Name} at {ToPrettyString(uid):lathe}");
                 }
             }
             TryStartProducing(uid, component);
@@ -300,18 +283,6 @@ namespace Content.Server.Lathe
         {
             UpdateUserInterfaceState(uid, component);
         }
-
-        private void OnLatheServerSelectionMessage(EntityUid uid, ResearchClientComponent component, LatheServerSelectionMessage args)
-        {
-            _uiSys.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
-        }
-
-        private void OnLatheServerSyncMessage(EntityUid uid, TechnologyDatabaseComponent component, LatheServerSyncMessage args)
-        {
-            _researchSys.SyncWithServer(component);
-            UpdateUserInterfaceState(uid);
-        }
-
         #endregion
     }
 }

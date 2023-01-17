@@ -1,4 +1,3 @@
-using Content.Server.Doors.Components;
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
@@ -10,7 +9,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
@@ -20,12 +18,14 @@ namespace Content.Server.Shuttles.Systems
     public sealed partial class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+        [Dependency] private readonly AirlockSystem _airlocks = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
+        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
+        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
+        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";
@@ -70,10 +70,13 @@ namespace Content.Server.Shuttles.Systems
             // Assume the docking port itself (and its body) is valid
 
             if (!_mapManager.TryGetGrid(dockingXform.GridUid, out var grid) ||
-                !HasComp<ShuttleComponent>(grid.Owner)) return null;
+                !HasComp<ShuttleComponent>(grid.Owner))
+            {
+                return null;
+            }
 
-            var transform = body.GetTransform();
-            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body, DockingFixture);
+            var transform = _physics.GetPhysicsTransform(body.Owner, dockingXform);
+            var dockingFixture = _fixtureSystem.GetFixtureOrNull(body.Owner, DockingFixture);
 
             if (dockingFixture == null)
                 return null;
@@ -99,13 +102,13 @@ namespace Content.Server.Shuttles.Systems
                 {
                     if (!TryComp(ent, out DockingComponent? otherDocking) ||
                         !otherDocking.Enabled ||
-                        !TryComp(ent, out PhysicsComponent? otherBody))
+                        !TryComp(ent, out FixturesComponent? otherBody))
                     {
                         continue;
                     }
 
-                    var otherTransform = otherBody.GetTransform();
-                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(otherBody, DockingFixture);
+                    var otherTransform = _physics.GetPhysicsTransform(ent);
+                    var otherDockingFixture = _fixtureSystem.GetFixtureOrNull(ent, DockingFixture, manager: otherBody);
 
                     if (otherDockingFixture == null)
                     {
@@ -251,7 +254,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _fixtureSystem.DestroyFixture(physicsComponent, DockingFixture);
+            _fixtureSystem.DestroyFixture(uid, DockingFixture, body: physicsComponent);
         }
 
         private void EnableDocking(EntityUid uid, DockingComponent component)
@@ -264,24 +267,12 @@ namespace Content.Server.Shuttles.Systems
 
             component.Enabled = true;
 
-            // TODO: WTF IS THIS GARBAGE
-            var shape = new PhysShapeCircle
-            {
-                // Want half of the unit vector
-                Position = new Vector2(0f, -0.5f),
-                Radius = DockingRadius
-            };
+            var shape = new PhysShapeCircle(DockingRadius, new Vector2(0f, -0.5f));
 
             // Listen it makes intersection tests easier; you can probably dump this but it requires a bunch more boilerplate
-            var fixture = new Fixture(physicsComponent, shape)
-            {
-                ID = DockingFixture,
-                Hard = false,
-            };
-
             // TODO: I want this to ideally be 2 fixtures to force them to have some level of alignment buuuttt
             // I also need collisionmanager for that yet again so they get dis.
-            _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+            _fixtureSystem.TryCreateFixture(uid, shape, DockingFixture, hard: false, body: physicsComponent);
         }
 
         /// <summary>
@@ -359,7 +350,7 @@ namespace Content.Server.Shuttles.Systems
                     doorA.ChangeAirtight = false;
                     if (TryComp<AirlockComponent>(dockA.Owner, out var airlockA))
                     {
-                        airlockA.SetBoltsWithAudio(true);
+                        _airlocks.SetBoltsWithAudio(dockA.Owner, airlockA, true);
                     }
                 }
             }
@@ -371,7 +362,7 @@ namespace Content.Server.Shuttles.Systems
                     doorB.ChangeAirtight = false;
                     if (TryComp<AirlockComponent>(dockB.Owner, out var airlockB))
                     {
-                        airlockB.SetBoltsWithAudio(true);
+                        _airlocks.SetBoltsWithAudio(dockB.Owner, airlockB, true);
                     }
                 }
             }
@@ -407,16 +398,16 @@ namespace Content.Server.Shuttles.Systems
                 return false;
             }
 
-            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA, DockingFixture);
-            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB, DockingFixture);
+            var fixtureA = _fixtureSystem.GetFixtureOrNull(bodyA.Owner, DockingFixture);
+            var fixtureB = _fixtureSystem.GetFixtureOrNull(bodyB.Owner, DockingFixture);
 
             if (fixtureA == null || fixtureB == null)
             {
                 return false;
             }
 
-            var transformA = bodyA.GetTransform();
-            var transformB = bodyB.GetTransform();
+            var transformA = _physics.GetPhysicsTransform(dockA.Owner);
+            var transformB = _physics.GetPhysicsTransform(dockB.Owner);
             var intersect = false;
 
             for (var i = 0; i < fixtureA.Shape.ChildCount; i++)
@@ -456,12 +447,12 @@ namespace Content.Server.Shuttles.Systems
 
             if (TryComp<AirlockComponent>(dock.Owner, out var airlockA))
             {
-                airlockA.SetBoltsWithAudio(false);
+                _airlocks.SetBoltsWithAudio(dock.Owner, airlockA, false);
             }
 
             if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
             {
-                airlockB.SetBoltsWithAudio(false);
+                _airlocks.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
             }
 
             if (TryComp(dock.Owner, out DoorComponent? doorA))

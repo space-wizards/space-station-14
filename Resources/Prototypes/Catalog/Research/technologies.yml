@@ -1,4 +1,4 @@
-# In order to make this list somewhat organized, please place 
+# In order to make this list somewhat organized, please place
 # new technologies underneath their overarching "base" technology.
 
 # Base Technology
@@ -30,6 +30,25 @@
   - SprayBottle
   - BodyBag
 
+# Food/Bev Service Technology Tree
+
+- type: technology
+  name: technologies-foodbev-technology
+  id: FoodBevTechnology
+  description: technologies-food-and-beverage-technology-description
+  icon:
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    state: butch
+  requiredPoints: 5000
+  requiredTechnologies:
+  - BasicResearch
+  unlockedRecipes:
+  - ButchCleaver
+  - KitchenKnife
+  - MicrowaveMachineCircuitboard
+  - BoozeDispenserMachineCircuitboard
+  - SodaDispenserMachineCircuitboard
+
 # Biological Technology Tree
 
 - type: technology
@@ -46,9 +65,20 @@
   - HydroponicsToolScythe
   - HydroponicsToolHatchet
   - Shovel
+  - MiniHoe
+  - Spade
+  - Clippers
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard
+  - Medkit
+  - MedkitBurn
+  - MedkitToxin
+  - MedkitO2
+  - MedkitBrute
+  - MedkitAdvanced
+  - MedkitRadiation
+  - MedkitCombat
 
 - type: technology
   name: technologies-advanced-botany
@@ -103,6 +133,7 @@
   - Dropper
   - Syringe
   - ReagentGrinderMachineCircuitboard
+  - HotplateMachineCircuitboard
   - PillCanister
   - ChemistryEmptyBottle01
   - ChemicalPayload
@@ -159,6 +190,7 @@
   - MedicalScannerMachineCircuitboard
   - StasisBedMachineCircuitboard
   - CloningConsoleComputerCircuitboard
+  - CryoPodMachineCircuitboard
 
 # Security Technology Tree
 
@@ -385,7 +417,7 @@
   name: technologies-rapid-upgrade
   id: RapidUpgrade
   description: technologies-rapid-upgrade-description
-  icon: 
+  icon:
     sprite: Objects/Specific/Research/rped.rsi
     state: icon
   requiredPoints: 10000
@@ -486,6 +518,21 @@
   - MicroManipulatorStockPart
   - ScanningModuleStockPart
   - NodeScanner
+  - AnomalyScanner
+
+- type: technology
+  name: technologies-anomaly-technology
+  id: AnomalyTechnology
+  description: technologies-anomaly-technology-description
+  icon:
+    sprite: Structures/Machines/Anomaly/ape.rsi
+    state: base
+  requiredPoints: 10000
+  requiredTechnologies:
+  - ScientificTechnology
+  unlockedRecipes:
+  - AnomalyVesselCircuitboard
+  - APECircuitboard
 
 - type: technology
   name: technologies-robotics-technology

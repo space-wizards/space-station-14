@@ -18,7 +18,7 @@ namespace Content.Client.Chemistry.Visualizers
             var entities = IoCManager.Resolve<IEntityManager>();
             if (component.TryGetData<Color>(SmokeVisuals.Color, out var color))
             {
-                if (entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+                if (entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 {
                     sprite.Color = color;
                 }

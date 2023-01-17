@@ -131,16 +131,16 @@ public sealed partial class LatheMenu : DefaultWindow
                 else
                     sb.Append('\n');
 
-                var adjustedAmount = amount;
-                if (prototype.ApplyMaterialDiscount)
-                    adjustedAmount = (int) (adjustedAmount * component.MaterialUseMultiplier);
-
+                var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
+                
                 sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(Loc.GetString(proto.Name));
             }
 
-            var icon = _spriteSystem.Frame0(prototype.Icon);
+            var icon = prototype.Icon == null
+                ? _spriteSystem.GetPrototypeIcon(prototype.Result).Default
+                : _spriteSystem.Frame0(prototype.Icon);
             var canProduce = _lathe.CanProduce(lathe, prototype, quantity);
 
             var control = new RecipeControl(prototype, sb.ToString(), canProduce, icon);

@@ -20,9 +20,9 @@ public sealed class SingularityLevelChangedEvent : EntityEventArgs
     /// <summary>
     /// The singularity that just changed level.
     /// </summary>
-    public readonly SharedSingularityComponent Singularity;
+    public readonly SingularityComponent Singularity;
 
-    public SingularityLevelChangedEvent(byte newValue, byte oldValue, SharedSingularityComponent singularity)
+    public SingularityLevelChangedEvent(byte newValue, byte oldValue, SingularityComponent singularity)
     {
         NewValue = newValue;
         OldValue = oldValue;
