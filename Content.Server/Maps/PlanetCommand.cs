@@ -75,6 +75,7 @@ public sealed class PlanetCommand : IConsoleCommand
         // Daylight: D8B059
         // Midday: #E6CB8B
         // Moonlight: #2b3143
+        // Lava: #A34931
 
         var light = _entManager.EnsureComponent<MapLightComponent>(mapUid);
         light.AmbientLightColor = Color.FromHex("#D8B059");
