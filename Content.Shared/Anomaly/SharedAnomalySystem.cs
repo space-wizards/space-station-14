@@ -108,7 +108,7 @@ public abstract class SharedAnomalySystem : EntitySystem
         }
 
         Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
-        if (_net.IsClient && Timing.IsFirstTimePredicted)
+        if (_net.IsServer)
             Audio.PlayPvs(component.PulseSound, uid);
 
         var pulse = EnsureComp<AnomalyPulsingComponent>(uid);
