@@ -517,6 +517,8 @@
   - type: Item
     sprite: Objects/Storage/happyhonk/cluwne.rsi
     heldPrefix: box
+  - type: Storage
+    capacity: 40
 
 - type: entity
   id: FoodMealHappyHonkClown
