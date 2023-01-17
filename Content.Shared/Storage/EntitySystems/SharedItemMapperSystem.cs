@@ -42,12 +42,18 @@ namespace Content.Shared.Storage.EntitySystems
         private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
+            if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
+                return;
+
             UpdateAppearance(uid, itemMapper, args);
         }
 
         private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
+            if (itemMapper.ContainerWhitelist != null && !itemMapper.ContainerWhitelist.Contains(args.Container.ID))
+                return;
+
             UpdateAppearance(uid, itemMapper, args);
         }
 
@@ -76,7 +82,7 @@ namespace Content.Shared.Storage.EntitySystems
             out IReadOnlyList<string> showLayers)
         {
             var containedLayers = _container.GetAllContainers(msg.Container.Owner)
-                .SelectMany(cont => cont.ContainedEntities).ToArray();
+                .Where(c => itemMapper.ContainerWhitelist?.Contains(c.ID) ?? true).SelectMany(cont => cont.ContainedEntities).ToArray();
 
             var list = new List<string>();
             foreach (var mapLayerData in itemMapper.MapLayers.Values)
