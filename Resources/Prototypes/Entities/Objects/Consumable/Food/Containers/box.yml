@@ -388,7 +388,7 @@
     - type: BagOpenCloseVisualizer
       openIcon: box-open
   - type: Storage
-    capacity: 40
+    capacity: 30
   - type: Tag
     tags:
     - Trash
@@ -517,8 +517,6 @@
   - type: Item
     sprite: Objects/Storage/happyhonk/cluwne.rsi
     heldPrefix: box
-  - type: Storage
-    capacity: 40
 
 - type: entity
   id: FoodMealHappyHonkClown
