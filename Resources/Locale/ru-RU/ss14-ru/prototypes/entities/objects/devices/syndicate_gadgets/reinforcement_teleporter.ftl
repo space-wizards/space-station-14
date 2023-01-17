@@ -1,3 +1,3 @@
-ent-ReinforcementTeleporterSyndicate = syndicate reinforcement teleporter
-    .desc = Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
+ent-ReinforcementRadioSyndicate = радио подкрепления синдиката
+    .desc = Вызывает к вам агента крайне сомнительного качества, мгновенно! Предоставляется только основное оборудование.
     .suffix = { "" }

@@ -1,0 +1,13 @@
+guide-entry-engineering = Инженерия
+guide-entry-construction = Строительство
+guide-entry-atmospherics = Атмосфера
+guide-entry-fires = Пожары & Космос
+guide-entry-shuttle-craft = Шаттло-строй
+guide-entry-power = Электроснабжение
+guide-entry-ame = Двигатель антиматерии (ДАМ)
+guide-entry-science = Наука
+guide-entry-machine-upgrading = Улучшение Машин
+guide-entry-controls = Управление
+guide-entry-jobs = Роли
+guide-entry-survival = Выживание
+guide-entry-ss14 = Space Station 14

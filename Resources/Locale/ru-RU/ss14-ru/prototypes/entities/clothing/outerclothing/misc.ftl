@@ -58,3 +58,6 @@ ent-ClothingOuterPlagueSuit = костюм чумного доктора
 ent-ClothingOuterNunRobe = монашеская ряса
     .desc = Максимум благочестия в этой звездной системе.
     .suffix = { "" }
+ent-ClothingOuterGhostSheet = призрачное одеяло
+    .desc = Страшно!!!
+    .suffix = { "" }
