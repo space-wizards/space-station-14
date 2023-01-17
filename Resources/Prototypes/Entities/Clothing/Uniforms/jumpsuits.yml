@@ -887,6 +887,7 @@
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
 
+- type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
@@ -960,8 +961,8 @@
         Blunt: 0.8
         Slash: 0.8
         Piercing: 0.8
-- type: entity
 
+- type: entity
   parent: ClothingUniformJumpsuitClown
   id: ClothingUniformJumpsuitCluwne
   name: cluwne suit
