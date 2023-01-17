@@ -57,18 +57,18 @@ public sealed class IgnitionSourceSystem : EntitySystem
             if (!EntityManager.TryGetComponent(source, out IgnitionSourceComponent? component)
                 || !EntityManager.TryGetComponent(source, out TransformComponent? transform))
                 continue;
-            if (!EntityManager.TryGetComponent(source, out ExpendableLightComponent? expendable))
-                continue;
 
-            Logger.Debug(expendable.CurrentState.ToString());
-            if (expendable.CurrentState != ExpendableLightState.Dead)
-                SetState(source, component, true);
+            if(EntityManager.TryGetComponent(source, out ExpendableLightComponent? expendable))
+            {
+                if (expendable.CurrentState != ExpendableLightState.Dead)
+                    SetState(source, component, true);
 
-            if (expendable.CurrentState == ExpendableLightState.BrandNew)
-                SetState(source,component,false);
+                if (expendable.CurrentState == ExpendableLightState.BrandNew)
+                    SetState(source, component, false);
 
-            if (!component.State)
-                continue;
+                if (!component.State)
+                    continue;
+            }
 
             if (transform.GridUid is { } gridUid)
             {
