@@ -81,6 +81,7 @@ public enum LogType
     Stamina = 76,
     EntitySpawn = 77,
     AdminMessage = 78,
-    Teleport = 79,
-    EntityDelete = 80,
+    Anomaly = 79
+    Teleport = 80,
+    EntityDelete = 81,
 }

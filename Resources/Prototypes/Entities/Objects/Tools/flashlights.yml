@@ -74,7 +74,7 @@
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
-    radius: 4.5
+    radius: 6
   - type: Appearance
   - type: StaticPrice
     price: 40
@@ -115,7 +115,7 @@
     sprite: Objects/Tools/seclite.rsi
   - type: PointLight
     enabled: false
-    radius: 6
+    radius: 8
 
 - type: entity
   parent: FlashlightLantern

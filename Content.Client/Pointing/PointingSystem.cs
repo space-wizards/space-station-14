@@ -1,5 +1,5 @@
 using Content.Client.Pointing.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Pointing;
 using Content.Shared.Verbs;
 using Robust.Client.Animations;
@@ -12,7 +12,7 @@ namespace Content.Client.Pointing;
 public sealed class PointingSystem : SharedPointingSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     private const string AnimationKey = "pointingarrow";
 
@@ -66,6 +66,9 @@ public sealed class PointingSystem : SharedPointingSystem
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
     {
+        if (args.Target.IsClientSide())
+            return;
+
         // Really this could probably be a properly predicted event, but that requires reworking pointing. For now
         // I'm just adding this verb exclusively to clients so that the verb-loading pop-in on the verb menu isn't
         // as bad. Important for this verb seeing as its usually an option on just about any entity.

@@ -1,0 +1,104 @@
+- type: entity
+  abstract: true
+  id: BaseAnomaly
+  name: anomaly
+  description: A impossible object in space. Should you be standing this close to it?
+  components:
+  - type: Anomaly
+    pulseSound:
+      collection: RadiationPulse
+      params:
+        volume: 5
+  - type: AmbientSound
+    range: 5
+    volume: -5
+    sound:
+      path: /Audio/Ambience/anomaly_drone.ogg
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static  
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+        radius: 0.35
+      density: 50
+      mask:
+      - MobMask
+      layer:
+      - MobLayer
+  - type: Sprite
+    netsync: false
+    drawdepth: Items
+    sprite: Structures/Specific/anomaly.rsi
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Appearance
+  - type: EmitSoundOnSpawn
+    sound: 
+      path: /Audio/Effects/teleport_arrival.ogg
+
+- type: entity
+  id: AnomalyPyroclastic
+  parent: BaseAnomaly
+  suffix: Pyroclastic
+  components:
+  - type: Sprite
+    layers:
+    - state: anom1
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom1-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 7.5
+    color: "#fca3c0"
+    castShadows: false
+  - type: PyroclasticAnomaly
+
+- type: entity
+  id: AnomalyGravity
+  parent: BaseAnomaly
+  suffix: Gravity
+  components:
+  - type: Sprite
+    drawdepth: Effects #it needs to draw over stuff.
+    layers:
+    - state: anom2
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom2-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 5.0
+    energy: 20
+    color: "#1e070e"
+    castShadows: false
+  - type: GravityAnomaly
+  - type: GravityWell
+  - type: RadiationSource
+
+- type: entity
+  id: AnomalyElectricity
+  parent: BaseAnomaly
+  suffix: Electricity
+  components:
+  - type: Sprite
+    layers:
+    - state: anom3
+      map: ["enum.AnomalyVisualLayers.Base"]
+    - state: anom3-pulse
+      map: ["enum.AnomalyVisualLayers.Animated"]
+      visible: false
+  - type: PointLight
+    radius: 2.0
+    energy: 5.0
+    color: "#ffffaa"
+    castShadows: false
+  - type: ElectricityAnomaly
+  - type: Electrified

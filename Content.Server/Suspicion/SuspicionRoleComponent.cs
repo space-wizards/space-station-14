@@ -1,10 +1,10 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Roles;
 using Content.Server.Suspicion.Roles;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Suspicion;
 
 namespace Content.Server.Suspicion
@@ -13,7 +13,6 @@ namespace Content.Server.Suspicion
     public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
-
         private Role? _role;
         [ViewVariables]
         private readonly HashSet<SuspicionRoleComponent> _allies = new();
