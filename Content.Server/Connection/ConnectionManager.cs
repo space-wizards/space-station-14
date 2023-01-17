@@ -121,7 +121,7 @@ namespace Content.Server.Connection
                 var minOverallHours = _cfg.GetCVar(CCVars.PanicBunkerMinOverallHours);
                 var overallTime = ( await _db.GetPlayTimes(e.UserId)).Find(p => p.Tracker == PlayTimeTrackingShared.TrackerOverall);
                 var haveMinOverallTime = overallTime != null && overallTime.TimeSpent.TotalHours > minOverallHours;
-                
+
                 if (showReason && !haveMinOverallTime)
                 {
                     return (ConnectionDenyReason.Panic,
@@ -143,7 +143,7 @@ namespace Content.Server.Connection
                 return (ConnectionDenyReason.Full, Loc.GetString("soft-player-cap-full"), null);
             }
 
-            var bans = await _db.GetServerBansAsync(addr, userId, hwId, includeUnbanned: false);
+            var bans = await _db.GetServerBansAsync(addr, userId, null, includeUnbanned: false);
             if (bans.Count > 0)
             {
                 var firstBan = bans[0];
