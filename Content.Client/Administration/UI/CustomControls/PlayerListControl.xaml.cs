@@ -62,6 +62,11 @@ namespace Content.Client.Administration.UI.CustomControls
             }
         }
 
+        public void StopFiltering()
+        {
+            FilterLineEdit.Text = string.Empty;
+        }
+
         private void FilterList()
         {
             _sortedPlayerList.Clear();

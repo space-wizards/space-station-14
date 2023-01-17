@@ -8,6 +8,9 @@ public static class StaticPowerSystem
     // ReSharper disable once UnusedParameter.Global
     public static bool IsPowered(this EntitySystem system, EntityUid uid, IEntityManager entManager, ApcPowerReceiverComponent? receiver = null)
     {
-        return entManager.TryGetComponent<ApcPowerReceiverComponent>(uid, out receiver) && receiver.Powered;
+        if (receiver == null && !entManager.TryGetComponent(uid, out receiver))
+            return false;
+
+        return receiver.Powered;
     }
 }

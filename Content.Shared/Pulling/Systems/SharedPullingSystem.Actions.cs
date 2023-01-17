@@ -11,15 +11,17 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Pulling
 {
-    public abstract partial class SharedPullingSystem : EntitySystem
+    public abstract partial class SharedPullingSystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
@@ -102,7 +104,7 @@ namespace Content.Shared.Pulling
 
             if (TryComp<PhysicsComponent>(pullable.Owner, out var pullablePhysics))
             {
-                pullablePhysics.FixedRotation = pullable.PrevFixedRotation;
+                _physics.SetFixedRotation(pullable.Owner, pullable.PrevFixedRotation, body: pullablePhysics);
             }
 
             _pullSm.ForceRelationship(null, pullable);
@@ -198,7 +200,7 @@ namespace Content.Shared.Pulling
 
             _pullSm.ForceRelationship(puller, pullable);
             pullable.PrevFixedRotation = pullablePhysics.FixedRotation;
-            pullablePhysics.FixedRotation = pullable.FixedRotationOnPull;
+            _physics.SetFixedRotation(pullable.Owner, pullable.FixedRotationOnPull, body: pullablePhysics);
             _adminLogger.Add(LogType.Action, LogImpact.Low,
                 $"{ToPrettyString(puller.Owner):user} started pulling {ToPrettyString(pullable.Owner):target}");
             return true;

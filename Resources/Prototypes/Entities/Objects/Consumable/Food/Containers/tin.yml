@@ -74,6 +74,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: FoodTinBase
@@ -129,6 +131,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: FoodTinBase
@@ -179,6 +183,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: FoodTinBase
@@ -241,6 +247,8 @@
       - id: FoodTinMREOpen
     sound:
       path: /Audio/Items/can_open3.ogg
+  - type: StaticPrice
+    price: 50
 
 
 - type: entity

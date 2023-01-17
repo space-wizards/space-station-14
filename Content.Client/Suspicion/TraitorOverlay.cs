@@ -17,6 +17,7 @@ namespace Content.Client.Suspicion
     {
         private readonly IEntityManager _entityManager;
         private readonly IPlayerManager _playerManager;
+        private readonly EntityLookupSystem _lookup;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace;
         private readonly Font _font;
@@ -26,11 +27,12 @@ namespace Content.Client.Suspicion
         public TraitorOverlay(
             IEntityManager entityManager,
             IPlayerManager playerManager,
-            IResourceCache resourceCache)
+            IResourceCache resourceCache,
+            EntityLookupSystem lookup)
         {
             _playerManager = playerManager;
-
             _entityManager = entityManager;
+            _lookup = lookup;
 
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
@@ -77,7 +79,7 @@ namespace Content.Client.Suspicion
 
                 var (allyWorldPos, allyWorldRot) = allyXform.GetWorldPositionRotation();
 
-                var worldBox = physics.GetWorldAABB(allyWorldPos, allyWorldRot);
+                var worldBox = _lookup.GetWorldAABB(ally, allyXform);
 
                 // if not on screen, or too small, continue
                 if (!worldBox.Intersects(in viewport) || worldBox.IsEmpty())
