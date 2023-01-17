@@ -1,39 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Passive research points will not generate above 30,000 stored points.
-      Rate or total available research is not affected. All this means is you have
-      to actively spend them, rather than let them accumulate the whole round and
-      unlock all techs at once.', type: Tweak}
-  id: 2392
-  time: '2022-10-04T01:10:17.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix melee windup persisting in some instances., type: Fix}
-  id: 2393
-  time: '2022-10-04T01:12:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Pillar minor flavour update. See PR for details. There's now a Newscaster
-      room near boxing and the abandoned theatre has some life now., type: Tweak}
-  id: 2394
-  time: '2022-10-04T01:47:24.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Tranquilizer rounds come with a tranquilizer solution and can no longer
-      be injected with other chemicals, type: Tweak}
-  id: 2395
-  time: '2022-10-04T01:57:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee windup now only shows for yourself., type: Tweak}
-  id: 2396
-  time: '2022-10-04T01:58:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed capitalization in Revenant names., type: Fix}
-  id: 2397
-  time: '2022-10-04T03:33:32.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Shuttle impacts now have sounds, type: Add}
@@ -2943,3 +2908,37 @@ Entries:
   - {message: Flashlights have been buffed., type: Tweak}
   id: 2891
   time: '2023-01-17T05:32:17.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Anomaly generator now occupies 1x3 space instead of 3x3 and also doesn't
+      snap with camera rotation., type: Tweak}
+  id: 2892
+  time: '2023-01-17T08:07:07.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Nanotrasen has updated the available types of paper in the stationary
+      department, type: Add}
+  - {message: 'Disease diagnoser, artifact analyzer and cargo shuttle produce themed
+      paper', type: Add}
+  id: 2893
+  time: '2023-01-17T08:32:46.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Weather has been added to the game., type: Add}
+  id: 2894
+  time: '2023-01-17T09:26:53.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Added 360 PDA lights., type: Add}
+  id: 2895
+  time: '2023-01-17T09:28:34.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Fixed RPG-7 icon not updating correctly., type: Fix}
+  id: 2896
+  time: '2023-01-17T09:31:54.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Changed golden toolbox to have a reasonable amount of gold, type: Tweak}
+  id: 2897
+  time: '2023-01-17T10:23:48.0000000+00:00'

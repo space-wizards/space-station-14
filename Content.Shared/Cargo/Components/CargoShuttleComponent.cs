@@ -1,4 +1,6 @@
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Cargo.Components;
 
@@ -28,4 +30,11 @@ public sealed class CargoShuttleComponent : Component
     /// </summary>
     [DataField("station")]
     public EntityUid? Station;
+
+    /// <summary>
+    ///     The paper-type prototype to spawn with the order information.
+    /// </summary>
+    [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string PrinterOutput = "PaperCargoInvoice";
+
 }
