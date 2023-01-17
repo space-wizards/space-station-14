@@ -1,7 +1,7 @@
 ent-ArcadeBase = arcade
     .desc = An arcade cabinet.
     .suffix = { "" }
-ent-SpaceVillainArcade = { ent-ArcadeBase }
+ent-SpaceVillainArcade = space villain arcade
     .desc = { ent-ArcadeBase.desc }
     .suffix = { "" }
 ent-SpaceVillainArcadeFilled = { ent-SpaceVillainArcade }
