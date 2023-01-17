@@ -20,7 +20,7 @@ public sealed class DiceSystem : SharedDiceSystem
         var roll = _random.Next(1, die.Sides);
         SetCurrentSide(uid, roll, die);
 
-        _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentSide)), uid);
+        _popup.PopupEntity(Loc.GetString("dice-component-on-roll-land", ("die", uid), ("currentSide", die.CurrentValue)), uid);
         _audio.PlayPvs(die.Sound, uid);
     }
 }

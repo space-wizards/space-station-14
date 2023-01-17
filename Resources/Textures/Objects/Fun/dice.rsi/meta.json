@@ -8,34 +8,34 @@
   },
   "states": [
     {
-      "name": "d100_10"
+      "name": "percentile_10"
     },
     {
-      "name": "d100_100"
+      "name": "percentile_0"
     },
     {
-      "name": "d100_20"
+      "name": "percentile_20"
     },
     {
-      "name": "d100_30"
+      "name": "percentile_30"
     },
     {
-      "name": "d100_40"
+      "name": "percentile_40"
     },
     {
-      "name": "d100_50"
+      "name": "percentile_50"
     },
     {
-      "name": "d100_60"
+      "name": "percentile_60"
     },
     {
-      "name": "d100_70"
+      "name": "percentile_70"
     },
     {
-      "name": "d100_80"
+      "name": "percentile_80"
     },
     {
-      "name": "d100_90"
+      "name": "percentile_90"
     },
     {
       "name": "d10_1"

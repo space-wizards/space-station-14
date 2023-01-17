@@ -10,8 +10,12 @@ public sealed class DiceSystem : SharedDiceSystem
         if (!Resolve(uid, ref die) || !TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        // d100 shows a 10 for 1->10, a 20 for 11->20, etc.
-        var displayedSide = ((die.CurrentSide - 1) / die.Step + 1) * die.Step;
-        sprite.LayerSetState(0, $"d{die.Sides}_{displayedSide}");
+        // TODO maybe just move each diue to its own RSI?
+        var state = sprite.LayerGetState(0).Name;
+        if (state == null)
+            return;
+
+        var prefix = state.Substring(0, state.IndexOf('_'));
+        sprite.LayerSetState(0, $"{prefix}_{die.CurrentValue}");
     }
 }

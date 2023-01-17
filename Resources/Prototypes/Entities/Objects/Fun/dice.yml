@@ -18,16 +18,17 @@
 
 - type: entity
   parent: BaseDice
-  id: d100Dice
-  name: d100
+  id: PercentileDice
+  name: Percentile Die
   description: A die with ten sides. Works better for d100 rolls than a golf ball.
   components:
   - type: Dice
-    sides: 100
-    step: 10
-    currentSide: 100
+    sides: 10
+    multiplier: 10
+    offset: 1 # first side is a 0
+    currentSide: 1
   - type: Sprite
-    state: d100_100
+    state: percentile_0
 
 - type: entity
   parent: BaseDice
