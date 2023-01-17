@@ -10,6 +10,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Climbing;
+using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Content.Shared.GameTicking;
@@ -280,6 +281,8 @@ public sealed class ClimbSystem : SharedClimbSystem
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
+        var ev = new EndClimbEvent();
+        RaiseLocalEvent(uid, ref ev);
         Dirty(climbing);
     }
 
