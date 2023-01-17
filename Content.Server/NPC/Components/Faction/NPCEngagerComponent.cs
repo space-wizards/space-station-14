@@ -1,5 +1,5 @@
 /// <summary>
-/// Inverse of combat target, this is added when we are trying to kill something.
+/// Inverse of combat target, this is added when this entity has damaged an NPC.
 /// </summary>
 [RegisterComponent]
 public sealed class NPCEngagerComponent : Component
