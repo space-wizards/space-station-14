@@ -886,3 +886,78 @@
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/musician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTEngineer
+  name: ERT engineering uniform
+  description: A special suit made for the elite engineers under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_engineer.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTJanitor
+  name: ERT janitorial uniform
+  description: A special suit made for the elite janitors under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_janitor.rsi
+  - type: DiseaseProtection
+    protection: 0.1
+    
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTLeader
+  name: ERT leader uniform
+  description: A special suit made for the best of the elites under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_leader.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTMedic
+  name: ERT medical uniform
+  description: A special suit made for the elite medics under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_medic.rsi
+  - type: DiseaseProtection
+    protection: 0.15
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitERTSecurity
+  name: ERT security uniform
+  description: A special suit made for the elite security under CentCom.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ert_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.8

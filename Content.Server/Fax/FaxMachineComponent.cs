@@ -1,5 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Fax;
 
@@ -33,21 +35,21 @@ public sealed class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("responsePings")]
     public bool ResponsePings { get; set; } = true;
-    
+
     /// <summary>
     /// Should admins be notified on message receive
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("notifyAdmins")]
     public bool NotifyAdmins { get; set; } = false;
-    
+
     /// <summary>
     /// Should that fax receive nuke codes send by admins. Probably should be captain fax only
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("receiveNukeCodes")]
     public bool ReceiveNukeCodes { get; set; } = false;
-    
+
     /// <summary>
     /// Is fax was emaaged
     /// </summary>
@@ -134,16 +136,20 @@ public sealed class FaxPrintout
     [DataField("content")]
     public string Content { get; }
 
+    [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string PrototypeId { get; }
+
     [DataField("stampState")]
     public string? StampState { get; }
 
     [DataField("stampedBy")]
     public List<string> StampedBy { get; }
 
-    public FaxPrintout(string content, string name, string? stampState = null, List<string>? stampedBy = null)
+    public FaxPrintout(string content, string name, string? prototypeId, string? stampState = null, List<string>? stampedBy = null)
     {
         Content = content;
         Name = name;
+        PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<string>();
     }

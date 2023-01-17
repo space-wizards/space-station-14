@@ -34,6 +34,6 @@ namespace Content.Server.Atmos.Components
         ///     Used for the fixture created to handle passing firestacks when two flammable objects collide.
         /// </summary>
         [DataField("flammableCollisionShape")]
-        public IPhysShape FlammableCollisionShape = new PhysShapeCircle() { Radius = 0.35f };
+        public IPhysShape FlammableCollisionShape = new PhysShapeCircle(0.35f);
     }
 }

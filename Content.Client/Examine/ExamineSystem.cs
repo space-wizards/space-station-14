@@ -193,7 +193,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(target, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(target, out SpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView
                 {
@@ -306,6 +306,8 @@ namespace Content.Client.Examine
             if (obj.Button is ExamineButton button)
             {
                 _verbSystem.ExecuteVerb(_examinedEntity, button.Verb);
+                if (button.Verb.CloseMenu ?? button.Verb.CloseMenuDefault)
+                    CloseTooltip();
             }
         }
 

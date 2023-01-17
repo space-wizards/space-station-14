@@ -115,7 +115,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // No order to approve?
-            if (!orderDatabase.Orders.TryGetValue(args.OrderNumber, out var order) ||
+            if (!orderDatabase.Orders.TryGetValue(args.OrderIndex, out var order) ||
                 order.Approved) return;
 
             // Invalid order
@@ -159,13 +159,11 @@ namespace Content.Server.Cargo.Systems
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.SetApproverData(idCard);
-
-
-            SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
 
             // Log order approval
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} approved order [orderNum:{order.OrderNumber}, amount:{order.Amount}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
+                $"{ToPrettyString(player):user} approved order [orderIdx:{order.OrderIndex}, amount:{order.Amount}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
 
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
@@ -175,7 +173,7 @@ namespace Content.Server.Cargo.Systems
         {
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
-            RemoveOrder(orderDatabase, args.OrderNumber);
+            RemoveOrder(orderDatabase, args.OrderIndex);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
@@ -201,7 +199,7 @@ namespace Content.Server.Cargo.Systems
 
             // Log order addition
             _adminLogger.Add(LogType.Action, LogImpact.Low,
-                $"{ToPrettyString(player):user} added order [orderNum:{data.OrderNumber}, amount:{data.Amount}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
+                $"{ToPrettyString(player):user} added order [orderIdx:{data.OrderIndex}, amount:{data.Amount}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
 
         }
 
@@ -233,7 +231,7 @@ namespace Content.Server.Cargo.Systems
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
@@ -280,7 +278,7 @@ namespace Content.Server.Cargo.Systems
 
         public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
-            component.Orders.Add(data.OrderNumber, data);
+            component.Orders.Add(data.OrderIndex, data);
             UpdateOrders(component);
             return true;
         }
