@@ -10,7 +10,7 @@
     layers:
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
-  - type: stunprod
+  - type: Stunbaton
     energyPerUse: 100
   - type: MeleeWeapon
     damage:
