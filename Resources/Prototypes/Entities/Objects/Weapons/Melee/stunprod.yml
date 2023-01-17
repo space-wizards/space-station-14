@@ -10,7 +10,7 @@
     layers:
     - state: stunprod_off
       map: [ "enum.ToggleVisuals.Layer" ]
-  - type: Stunprod
+  - type: stunprod
     energyPerUse: 100
   - type: MeleeWeapon
     damage:
@@ -20,19 +20,19 @@
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
-    damage: 45
+    damage: 30
   - type: Battery
     maxCharge: 900
     startingCharge: 900
   - type: ItemCooldown
   - type: Item
     heldPrefix: off
-    size: 25
+    size: 45
   - type: Clothing
     sprite: Objects/Weapons/Melee/stunprod.rsi
     quickEquip: false
     slots:
-    - Belt
+    - back
   - type: DisarmMalus
     malus: 0.225
   - type: Appearance
