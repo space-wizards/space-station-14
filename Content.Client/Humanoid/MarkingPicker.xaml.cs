@@ -424,17 +424,28 @@ public sealed partial class MarkingPicker : Control
         var marking = (MarkingPrototype) _selectedUnusedMarking.Metadata!;
         var markingObject = marking.AsMarking();
 
-        // Coloring
-        var colors = MarkingColoring.GetMarkingLayerColors(
-            marking,
-            CurrentSkinColor,
-            CurrentEyeColor,
-            CurrentHairColor,
-            CurrentFacialHairColor
-        );
-        for (var i = 0; i < colors.Count; i++)
+        if (!_markingManager.MustMatchSkin(_currentSpecies, marking.BodyPart, _prototypeManager))
         {
-            markingObject.SetColor(i, colors[i]);
+            // Coloring
+            var colors = MarkingColoring.GetMarkingLayerColors(
+                marking,
+                CurrentSkinColor,
+                CurrentEyeColor,
+                CurrentHairColor,
+                CurrentFacialHairColor
+            );
+            for (var i = 0; i < colors.Count; i++)
+            {
+                markingObject.SetColor(i, colors[i]);
+            }
+        }
+        else
+        {
+            // Color everything in skin color
+            for (var i = 0; i < marking.Sprites.Count; i++)
+            {
+                markingObject.SetColor(i, CurrentSkinColor);
+            }
         }
 
         markingObject.Forced = Forced;

@@ -959,11 +959,11 @@ namespace Content.Client.Preferences.UI
 
                 switch (markingPrototype.MarkingCategory) {
                     case MarkingCategories.Hair:
-                        if (Marking.CanBeApplied(Profile.Species, marking, _markingManager, _prototypeManager)) 
+                        if (_markingManager.CanBeApplied(Profile.Species, marking, _prototypeManager)) 
                             hairColor = marking.MarkingColors.FirstOrDefault();
                         break;
                     case MarkingCategories.FacialHair:
-                        if (Marking.CanBeApplied(Profile.Species, marking, _markingManager, _prototypeManager)) 
+                        if (_markingManager.CanBeApplied(Profile.Species, marking, _prototypeManager)) 
                             facialHairColor = marking.MarkingColors.FirstOrDefault();
                         break;
                 }
@@ -1038,12 +1038,12 @@ namespace Content.Client.Preferences.UI
 
             // If species can't have hair then markings shouldn't use it color
             var firstHairMarking = hairMarking.FirstOrDefault();
-            if(firstHairMarking != null && Marking.CanBeApplied(Profile.Species, firstHairMarking, _markingManager, _prototypeManager))
+            if(firstHairMarking != null && _markingManager.CanBeApplied(Profile.Species, firstHairMarking, _prototypeManager))
                 CMarkings.CurrentHairColor = firstHairMarking.MarkingColors.FirstOrDefault();
             else CMarkings.CurrentHairColor = null;
 
             var firstFacialHairMarking = facialHairMarking.FirstOrDefault();
-            if(firstFacialHairMarking != null && Marking.CanBeApplied(Profile.Species, firstFacialHairMarking, _markingManager, _prototypeManager))
+            if(firstFacialHairMarking != null && _markingManager.CanBeApplied(Profile.Species, firstFacialHairMarking, _prototypeManager))
                 CMarkings.CurrentFacialHairColor = firstFacialHairMarking.MarkingColors.FirstOrDefault();
             else CMarkings.CurrentFacialHairColor = null;
 

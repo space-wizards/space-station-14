@@ -88,7 +88,6 @@ public sealed class ColoringProperties
     public bool Negative { get; } = false;
 }
 
-
 public static class MarkingColoring
 {
     /// <summary>
