@@ -43,7 +43,7 @@
       energy: 5.0
       netsync: false
     - type: IgnitionSource
-      temperature: 700
+      temperature: 400
       state: true
     - type: LightBehaviour
       behaviours:
