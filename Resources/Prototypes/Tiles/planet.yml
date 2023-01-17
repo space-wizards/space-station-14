@@ -12,6 +12,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 - type: tile
   id: FloorLowDesert
@@ -26,6 +27,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Grass
 - type: tile
@@ -48,6 +50,7 @@
   itemDrop: FloorTileItemGrass
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Lava
 - type: tile
@@ -71,6 +74,7 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Snow
 - type: tile
@@ -90,5 +94,6 @@
   friction: 0.20
   thermalConductivity: 0.04
   heatCapacity: 10000
+  weather: true
 
 # Wasteland

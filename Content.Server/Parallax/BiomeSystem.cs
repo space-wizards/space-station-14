@@ -188,7 +188,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
                     if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out var dec))
                         continue;
 
-                    loadedDecals.Add(dec.Value);
+                    loadedDecals.Add(dec);
                 }
             }
         }
