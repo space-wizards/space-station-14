@@ -10,7 +10,6 @@ using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Stack;
-using Robust.Shared.Player;
 
 namespace Content.Server.Store.Systems;
 
@@ -139,6 +138,8 @@ public sealed partial class StoreSystem : EntitySystem
         if (listing.ProductEntity != null)
         {
             var product = Spawn(listing.ProductEntity, Transform(buyer).Coordinates);
+            var ev = new ItemPurchasedEvent(buyer);
+            RaiseLocalEvent(product, ref ev);
             _hands.PickupOrDrop(buyer, product);
         }
 

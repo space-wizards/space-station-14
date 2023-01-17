@@ -1,5 +1,8 @@
 using System.Linq;
 using Content.Server.NPC.Components;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Clothing.Components;
+using Content.Server.Store.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems
@@ -24,6 +27,10 @@ namespace Content.Server.NPC.Systems
             base.Initialize();
             _sawmill = Logger.GetSawmill("faction");
             SubscribeLocalEvent<FactionComponent, ComponentStartup>(OnFactionStartup);
+            SubscribeLocalEvent<FactionComponent, GetNearbyHostilesEvent>(OnGetNearbyHostiles);
+            SubscribeLocalEvent<FactionComponent, ItemPurchasedEvent>(OnPurchased);
+            SubscribeLocalEvent<ClothingAddFactionComponent, GotEquippedEvent>(OnEquipped);
+            SubscribeLocalEvent<ClothingAddFactionComponent, GotUnequippedEvent>(OnUnequipped);
             _protoManager.PrototypesReloaded += OnProtoReload;
             RefreshFactions();
         }
@@ -42,6 +49,47 @@ namespace Content.Server.NPC.Systems
         private void OnFactionStartup(EntityUid uid, FactionComponent component, ComponentStartup args)
         {
             RefreshFactions(component);
+        }
+
+        private void OnGetNearbyHostiles(EntityUid uid, FactionComponent component, ref GetNearbyHostilesEvent args)
+        {
+            args.ExceptionalFriendlies.UnionWith(component.ExceptionalFriendlies);
+        }
+
+        /// <summary>
+        /// If we bought something we probably don't want it to start biting us after it's automatically placed in our hands.
+        /// If you do, consider finding a better solution to grenade penguin CBT.
+        /// </summary>
+        private void OnPurchased(EntityUid uid, FactionComponent component, ref ItemPurchasedEvent args)
+        {
+            component.ExceptionalFriendlies.Add(args.Purchaser);
+        }
+
+        private void OnEquipped(EntityUid uid, ClothingAddFactionComponent component, GotEquippedEvent args)
+        {
+            if (!TryComp<ClothingComponent>(uid, out var clothing))
+                return;
+
+            if (!clothing.Slots.HasFlag(args.SlotFlags))
+                return;
+
+            if (!TryComp<FactionComponent>(args.Equipee, out var factionComponent))
+                return;
+
+            if (factionComponent.Factions.Contains(component.Faction))
+                return;
+
+            component.IsActive = true;
+            AddFaction(args.Equipee, component.Faction);
+        }
+
+        private void OnUnequipped(EntityUid uid, ClothingAddFactionComponent component, GotUnequippedEvent args)
+        {
+            if (!component.IsActive)
+                return;
+
+            component.IsActive = false;
+            RemoveFaction(args.Equipee, component.Faction);
         }
 
         /// <summary>
@@ -109,7 +157,26 @@ namespace Content.Server.NPC.Systems
             if (!Resolve(entity, ref component, false))
                 return Array.Empty<EntityUid>();
 
-            return GetNearbyFactions(entity, range, component.HostileFactions);
+            var targets = new HashSet<EntityUid>();
+            var eHostiles = new HashSet<EntityUid>();
+            var eFriendlies = new HashSet<EntityUid>();
+
+            foreach (var target in GetNearbyFactions(entity, range, component.HostileFactions))
+            {
+                targets.Add(target);
+            }
+
+            var ev = new GetNearbyHostilesEvent(eHostiles, eFriendlies);
+            RaiseLocalEvent(entity, ref ev);
+
+            targets.UnionWith(ev.ExceptionalHostiles);
+
+            foreach (var friendly in ev.ExceptionalFriendlies)
+            {
+                targets.Remove(friendly);
+            }
+
+            return targets;
         }
 
         public IEnumerable<EntityUid> GetNearbyFriendlies(EntityUid entity, float range, FactionComponent? component = null)
@@ -211,5 +278,21 @@ namespace Content.Server.NPC.Systems
             sourceFaction.Hostile.Add(target);
             RefreshFactions();
         }
+
+        public void AddFriendlyEntity(EntityUid uid, EntityUid fEntity, FactionComponent? component = null)
+        {
+            if (!Resolve(uid, ref component, false))
+                return;
+
+            component.ExceptionalFriendlies.Add(fEntity);
+        }
     }
+
+    /// <summary>
+    /// Raised on an entity when it's trying to determine which nearby entities are hostile.
+    /// </summary>
+    /// <param name="ExceptionalHostiles">Entities that will be counted as hostile regardless of faction. Overriden by friendlies.</param>
+    /// <param name="ExceptionalFriendlies">Entities that will be counted as friendly regardless of faction. Overrides hostiles. </param>
+    [ByRefEvent]
+    public readonly record struct GetNearbyHostilesEvent(HashSet<EntityUid> ExceptionalHostiles, HashSet<EntityUid> ExceptionalFriendlies);
 }

@@ -25,5 +25,10 @@ namespace Content.Server.NPC.Components
         /// </summary>
         [ViewVariables]
         public readonly HashSet<string> HostileFactions = new();
+
+        /// <summary>
+        /// Permanently friendly specific entities. Our summoner, etc.
+        /// </summary>
+        public HashSet<EntityUid> ExceptionalFriendlies = new();
     }
 }

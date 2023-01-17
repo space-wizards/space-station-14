@@ -5,7 +5,6 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Mobs.Systems;
@@ -27,7 +26,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
@@ -192,9 +190,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         mind.AddRole(traitorRole);
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
-
-        _faction.RemoveFaction(entity, "NanoTrasen", false);
-        _faction.AddFaction(entity, "Syndicate");
 
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
         var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
