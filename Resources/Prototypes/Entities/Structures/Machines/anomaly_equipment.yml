@@ -163,10 +163,12 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: SpriteFade
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/Anomaly/anomaly_generator.rsi
-    snapCardinals: true
+    offset: 0,1
+    drawdepth: Mobs
     layers:
     - state: base
     - state: panel
@@ -201,7 +203,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-1.3,-1.3,1.3,1.3"
+        bounds: "-1.5,-0.5,1.5,0.6"
       density: 50
       mask:
       - LargeMobMask
