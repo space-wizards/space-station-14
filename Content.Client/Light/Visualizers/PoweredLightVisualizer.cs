@@ -25,7 +25,7 @@ namespace Content.Client.Light.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite)) return;
             if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
 
             switch (state)
