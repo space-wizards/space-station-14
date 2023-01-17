@@ -1,0 +1,22 @@
+﻿- type: dataset
+  id: Tips
+  values:
+  - "If you're on fire, you can click the alert on the right of your screen to stop, drop, and roll."
+  - "You can view and edit all keybindings used ingame at any time through the Options menu."
+  - "You can access the ingame guidebook through the escape menu, or by pressing Numpad 0 by default."
+  - "Some entities ingame have guidebook entries associated with them, which you can view by examining the entity and clicking the question mark icon."
+  - "You can make a rough examination of someone's health by examining them and clicking the plus icon."
+  - "Artifacts have the ability to gain permanent effects for some triggered nodes, including becoming an intercom or an extremely efficient generator."
+  - "You can avoid slipping on most puddles by walking. However, some strong chemicals like space lube will slip people anyway."
+  - "Botanists can mutate and crossbreed plants together to create more potent produce that also has higher yields."
+  - "Some plants, such as galaxythistle, can be ground up into extremely useful and potent medicines."
+  - "Mopping up puddles and draining them into other containers conserves the reagents found in the puddle."
+  - "Floor drains, usually found in the chef's freezer or janitor's office, rapidly consume reagent found in puddles around them--including blood."
+  - "Detectives can chase criminals more effectively by using fingerprint and fiber data obtained from forensic scans of objects the perpetrator likely interacted with."
+  - "Cognizine, a hard to manufacture chemical, makes animals sentient when they are injected with it."
+  - "Doctors can create vaccines for diseases using swabs from diseased victims."
+  - "Loaded mousetraps are incredibly effective at dealing with all manner of low-mass mobs--including Rat Servants."
+  - "Fire extinguishers can be loaded with any reagent in the game."
+  - "Some reagents, like chlorine trifluoride, have unique effects when applied by touch, such as through a spray bottle or foam."
+  - "Most machines in the game can be upgraded with high-level parts from Research and Development to great effect."
+  - "Remember to touch grass in between playing Space Station 14 every once in a while."

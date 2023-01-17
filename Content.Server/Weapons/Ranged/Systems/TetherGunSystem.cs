@@ -111,12 +111,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         if (TryComp<PhysicsComponent>(msg.Entity, out var body))
         {
-            body.BodyStatus = BodyStatus.InAir;
+            _physics.SetBodyStatus(body, BodyStatus.InAir);
         }
 
-        _physics.WakeBody(bodyA);
-        _physics.WakeBody(bodyB);
-        var joint = _joints.CreateMouseJoint(bodyA.Owner, bodyB.Owner, id: JointId);
+        _physics.WakeBody(tether, body: bodyA);
+        _physics.WakeBody(msg.Entity, body: bodyB);
+        var joint = _joints.CreateMouseJoint(tether, msg.Entity, id: JointId);
 
         SharedJointSystem.LinearStiffness(5f, 0.7f, bodyA.Mass, bodyB.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
@@ -147,8 +147,9 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         {
             Timer.Spawn(1000, () =>
             {
-                if (Deleted(body.Owner)) return;
-                body.BodyStatus = BodyStatus.OnGround;
+                if (Deleted(weh.Entity)) return;
+
+                _physics.SetBodyStatus(body, BodyStatus.OnGround);
             });
         }
 
@@ -186,7 +187,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             // Force it awake, always
             if (bodyQuery.TryGetComponent(entity.Entity, out var body))
             {
-                _physics.WakeBody(body);
+                _physics.WakeBody(entity.Entity, body: body);
             }
         }
 

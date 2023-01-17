@@ -73,6 +73,9 @@ technologies-super-powercell-printing-description = Print super powercells.
 technologies-scientific-technology = Scientific technology
 technologies-scientific-technology-description = The basics of a research team's supplies.
 
+technologies-anomaly-technology = Anomaly technology
+technologies-anomaly-technology-description = Machines for advanced anomaly containment.
+
 technologies-robotics-technology = Robotics technology
 technologies-robotics-technology-description = Parts needed for constructing mechanized friends.
 
