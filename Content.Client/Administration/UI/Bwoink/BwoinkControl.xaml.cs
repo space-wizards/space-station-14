@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.UI.CustomControls;
@@ -16,26 +16,32 @@ using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 
-namespace Content.Client.Administration.UI
+namespace Content.Client.Administration.UI.Bwoink
 {
     /// <summary>
     /// This window connects to a BwoinkSystem channel. BwoinkSystem manages the rest.
     /// </summary>
     [GenerateTypedNameReferences]
-    public sealed partial class BwoinkWindow : DefaultWindow
+    public sealed partial class BwoinkControl : Control
     {
         [Dependency] private readonly IClientAdminManager _adminManager = default!;
         [Dependency] private readonly IClientConsoleHost _console = default!;
-        private readonly AdminAHelpUIHandler _adminAHelpHelper;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        public AdminAHelpUIHandler AHelpHelper = default!;
 
         //private readonly BwoinkSystem _bwoinkSystem;
         private PlayerInfo? _currentPlayer = default;
 
-        public BwoinkWindow(AdminAHelpUIHandler adminAHelpHelper)
+        public BwoinkControl()
         {
-            _adminAHelpHelper = adminAHelpHelper;
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
+
+            var uiController = _ui.GetUIController<AHelpUIController>();
+            if (uiController.UIHelper is not AdminAHelpUIHandler helper)
+                return;
+
+            AHelpHelper = helper;
 
             _adminManager.AdminStatusUpdated += FixButtons;
             FixButtons();
@@ -46,7 +52,6 @@ namespace Content.Client.Administration.UI
                 if (sel is not null)
                 {
                     SwitchToChannel(sel.SessionId);
-                    Title = $"{sel.CharacterName} / {sel.Username}";
                 }
 
                 ChannelSelector.PlayerListContainer.DirtyList();
@@ -62,7 +67,7 @@ namespace Content.Client.Administration.UI
                     sb.Append(info.ActiveThisRound ? '○' : '·');
 
                 sb.Append(' ');
-                if (_adminAHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
+                if (AHelpHelper.TryGetChannel(info.SessionId, out var panel) && panel.Unread > 0)
                 {
                     if (panel.Unread < 11)
                         sb.Append(new Rune('➀' + (panel.Unread-1)));
@@ -81,8 +86,8 @@ namespace Content.Client.Administration.UI
 
             ChannelSelector.Comparison = (a, b) =>
             {
-                var ach = _adminAHelpHelper.EnsurePanel(a.SessionId);
-                var bch = _adminAHelpHelper.EnsurePanel(b.SessionId);
+                var ach = AHelpHelper.EnsurePanel(a.SessionId);
+                var bch = AHelpHelper.EnsurePanel(b.SessionId);
 
                 // First, sort by unread. Any chat with unread messages appears first. We just sort based on unread
                 // status, not number of unread messages, so that more recent unread messages take priority.
@@ -153,7 +158,10 @@ namespace Content.Client.Administration.UI
                     _console.ExecuteCommand($"respawn \"{_currentPlayer.Username}\"");
             };
 
-            OnOpen += () => ChannelSelector.PopulateList();
+            PopOut.OnPressed += _ =>
+            {
+                uiController.PopOut();
+            };
         }
 
         private Dictionary<Control, (CancellationTokenSource cancellation, string? originalText)> Confirmations { get; } = new();
@@ -199,7 +207,7 @@ namespace Content.Client.Administration.UI
             var sb = new StringBuilder();
             sb.Append(pl.Connected ? '●' : '○');
             sb.Append(' ');
-            if (_adminAHelpHelper.TryGetChannel(pl.SessionId, out var panel) && panel.Unread > 0)
+            if (AHelpHelper.TryGetChannel(pl.SessionId, out var panel) && panel.Unread > 0)
             {
                 if (panel.Unread < 11)
                     sb.Append(new Rune('➀' + (panel.Unread-1)));
@@ -225,7 +233,7 @@ namespace Content.Client.Administration.UI
         {
             foreach (var bw in BwoinkArea.Children)
                 bw.Visible = false;
-            var panel = _adminAHelpHelper.EnsurePanel(ch);
+            var panel = AHelpHelper.EnsurePanel(ch);
             panel.Visible = true;
         }
 
