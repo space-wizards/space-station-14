@@ -159,7 +159,7 @@
   id: MachineAnomalyGenerator
   parent: BaseMachinePowered
   name: anomaly generator
-  description: The peak of psuedoscientific technology.
+  description: The peak of pseudoscientific technology.
   placement:
     mode: AlignTileAny
   components:

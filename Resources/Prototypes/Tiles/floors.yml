@@ -1093,6 +1093,18 @@
 
 # Terrain
 - type: tile
+  id: FloorBasaslt
+  name: tiles-basalt-floor
+  sprite: /Textures/Tiles/Planet/basalt.png
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+
+- type: tile
   id: FloorSnow
   name: tiles-snow
   sprite: /Textures/Tiles/snow.png
