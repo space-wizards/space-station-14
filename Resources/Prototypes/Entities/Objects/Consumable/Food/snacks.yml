@@ -297,6 +297,8 @@
   components:
   - type: Item
     size: 10
+  - type: StaticPrice
+    price: 50
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
