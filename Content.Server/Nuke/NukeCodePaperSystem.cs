@@ -57,6 +57,7 @@ namespace Content.Server.Nuke
                 var printout = new FaxPrintout(
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
+                    null,
                     "paper_stamp-cent",
                     new() { Loc.GetString("stamp-component-stamped-name-centcom") });
                 _faxSystem.Receive(fax.Owner, printout, null, fax);
@@ -84,9 +85,9 @@ namespace Content.Server.Nuke
             {
                 return false;
             }
-            
+
             var owningStation = station ?? _station.GetOwningStation(uid);
-            
+
             // Find the first nuke that matches the passed location.
             foreach (var nuke in EntityQuery<NukeComponent>())
             {

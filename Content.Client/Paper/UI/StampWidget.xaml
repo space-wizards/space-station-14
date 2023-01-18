@@ -1,0 +1,31 @@
+<paper:StampWidget xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
+    <!--
+    <TextureButton Margin="6 6 6 2" MinSize="24 12"
+        TexturePath="/Textures/Interface/Nano/nano_stamp.192dpi.png">
+    -->
+
+
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
+            </PanelContainer.PanelOverride>
+            <Control MinSize="3 3" />
+        </PanelContainer>
+
+        <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger" FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}" Margin="12 6 12 6"/>
+
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
+            </PanelContainer.PanelOverride>
+            <Control MinSize="3 3" />
+        </PanelContainer>
+
+    </BoxContainer>
+</paper:StampWidget>

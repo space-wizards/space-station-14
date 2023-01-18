@@ -1,6 +1,9 @@
 using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Wires;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
@@ -42,11 +45,11 @@ public sealed class DoorBoltWireAction : BaseWireAction
     public override bool Cut(EntityUid user, Wire wire)
     {
         base.Cut(user, wire);
-        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
+        if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var airlock))
         {
-            door.BoltWireCut = true;
-            if (!door.BoltsDown && IsPowered(wire.Owner))
-                door.SetBoltsWithAudio(true);
+            EntityManager.System<SharedAirlockSystem>().SetBoltWireCut(airlock, true);
+            if (!airlock.BoltsDown && IsPowered(wire.Owner))
+                EntityManager.System<AirlockSystem>().SetBoltsWithAudio(wire.Owner, airlock, true);
         }
 
         return true;
@@ -56,7 +59,7 @@ public sealed class DoorBoltWireAction : BaseWireAction
     {
         base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
-            door.BoltWireCut = false;
+            EntityManager.System<SharedAirlockSystem>().SetBoltWireCut(door, true);
 
         return true;
     }
@@ -68,11 +71,11 @@ public sealed class DoorBoltWireAction : BaseWireAction
         {
             if (IsPowered(wire.Owner))
             {
-                door.SetBoltsWithAudio(!door.BoltsDown);
+                EntityManager.System<AirlockSystem>().SetBoltsWithAudio(wire.Owner, door, !door.BoltsDown);
             }
             else if (!door.BoltsDown)
             {
-                door.SetBoltsWithAudio(true);
+                EntityManager.System<AirlockSystem>().SetBoltsWithAudio(wire.Owner, door, true);
             }
 
         }

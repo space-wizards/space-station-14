@@ -154,7 +154,7 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Handled = TryDrink(args.User, args.User, component);
         }
 
-        private void HandleLand(EntityUid uid, DrinkComponent component, LandEvent args)
+        private void HandleLand(EntityUid uid, DrinkComponent component, ref LandEvent args)
         {
             if (component.Pressurized &&
                 !component.Opened &&

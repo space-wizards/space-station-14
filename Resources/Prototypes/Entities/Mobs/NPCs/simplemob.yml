@@ -222,4 +222,6 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
+  - type: Appearance
+  - type: FloatingVisuals
 
