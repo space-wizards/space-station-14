@@ -29,6 +29,8 @@ public sealed class DoAfterComponentState : ComponentState
 /// Use this event to raise your DoAfter events now.
 /// Check for cancelled, and if it is, then null the token there.
 /// </summary>
+/// TODO: Keep as overload for the classes that don't need additional data
+/// TODO: Add a networked DoAfterEvent to pass in AdditionalData for the future
 [Serializable, NetSerializable]
 public sealed class DoAfterEvent : HandledEntityEventArgs
 {
@@ -45,6 +47,7 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
 /// <summary>
 /// Use this event to raise your DoAfter events now.
 /// Check for cancelled, and if it is, then null the token there.
+/// Can't be serialized
 /// </summary>
 public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 {

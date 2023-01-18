@@ -5,7 +5,6 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -17,9 +16,6 @@ namespace Content.Server.Forensics
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
-
-        private const string Sample = "sample";
-        private const string Pad = "pad";
 
         public override void Initialize()
         {

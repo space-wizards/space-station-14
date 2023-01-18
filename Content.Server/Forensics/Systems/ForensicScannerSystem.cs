@@ -25,8 +25,6 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
-        private const string Scanner = "scanner";
-
         private ISawmill _sawmill = default!;
 
         public override void Initialize()
