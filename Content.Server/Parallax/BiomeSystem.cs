@@ -19,9 +19,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private ISawmill _sawmill = default!;
     private readonly HashSet<EntityUid> _handledEntities = new();
-    private const float LoadRange = ChunkSize * 1.3f;
+    private const float LoadRange = ChunkSize * 2f;
     private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
 
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
@@ -29,7 +28,6 @@ public sealed class BiomeSystem : SharedBiomeSystem
     public override void Initialize()
     {
         base.Initialize();
-        _sawmill = Logger.GetSawmill("biome");
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
     }
 
@@ -80,10 +78,12 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var biome, out var grid))
         {
+            var noise = new FastNoise(biome.Seed);
+
             // Load new chunks
-            LoadChunks(biome, grid);
+            LoadChunks(biome, grid, noise);
             // Unload old chunks
-            UnloadChunks(biome, grid);
+            UnloadChunks(biome, grid, noise);
         }
 
         _handledEntities.Clear();
@@ -100,10 +100,9 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void LoadChunks(BiomeComponent component, MapGridComponent grid)
+    private void LoadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
     {
         var active = _activeChunks[component];
-        var noise = new FastNoise(component.Seed);
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
         List<(Vector2i, Tile)>? tiles = null;
 
@@ -120,7 +119,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
     private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
     {
-        _sawmill.Debug($"Loading chunk for {ToPrettyString(component.Owner)} at {chunk}");
+        component.ModifiedTiles.TryGetValue(chunk, out var modified);
+        modified ??= new HashSet<Vector2i>();
 
         // Set tiles first
         for (var x = 0; x < ChunkSize; x++)
@@ -129,7 +129,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
-                if (component.ModifiedTiles.Contains(indices))
+                if (modified.Contains(indices))
                     continue;
 
                 // If there's existing data then don't overwrite it.
@@ -157,7 +157,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
-                if (component.ModifiedTiles.Contains(indices))
+                if (modified.Contains(indices))
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
@@ -174,7 +174,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
 
         // Decals
-        var loadedDecals = new HashSet<uint>();
+        var loadedDecals = new Dictionary<uint, Vector2i>();
         component.LoadedDecals.Add(chunk, loadedDecals);
 
         for (var x = 0; x < ChunkSize; x++)
@@ -183,7 +183,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
-                if (component.ModifiedTiles.Contains(indices))
+                if (modified.Contains(indices))
                     continue;
 
                 // Don't mess with anything that's potentially anchored.
@@ -194,19 +194,28 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
                 foreach (var decal in decals)
                 {
-                    // TODO: Track decals probably
                     if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out var dec))
                         continue;
 
-                    loadedDecals.Add(dec);
+                    loadedDecals.Add(dec, indices);
                 }
             }
         }
+
+        if (modified.Count == 0)
+        {
+            component.ModifiedTiles.Remove(chunk);
+        }
+        else
+        {
+            component.ModifiedTiles[chunk] = modified;
+        }
     }
 
-    private void UnloadChunks(BiomeComponent component, MapGridComponent grid)
+    private void UnloadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
     {
         var active = _activeChunks[component];
+        List<(Vector2i, Tile)>? tiles = null;
 
         foreach (var chunk in component.LoadedChunks)
         {
@@ -214,24 +223,25 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 continue;
 
             // Unload NOW!
-            UnloadChunk(component, grid, chunk * ChunkSize);
+            tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
+            UnloadChunk(component, grid, chunk * ChunkSize, noise, tiles);
         }
     }
 
-    private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk)
+    private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
-        _sawmill.Debug($"Unloading chunk for {ToPrettyString(component.Owner)} at {chunk}");
-        var noise = new FastNoise(component.Seed);
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
+        component.ModifiedTiles.TryGetValue(chunk, out var modified);
+        modified ??= new HashSet<Vector2i>();
 
         // Delete decals
-        foreach (var dec in component.LoadedDecals[chunk])
+        foreach (var (dec, indices) in component.LoadedDecals[chunk])
         {
+            // If we couldn't remove it then flag the tile to never be touched.
             if (!_decals.RemoveDecal(grid.Owner, dec))
             {
-                // TODO: Flag the tile as diff
-                // component.ModifiedTiles.Add()
+                modified.Add(indices);
             }
         }
 
@@ -247,8 +257,6 @@ public sealed class BiomeSystem : SharedBiomeSystem
         component.LoadedEntities.Remove(chunk);
 
         // Unset tiles (if the data is custom)
-        // TODO: Pass this in
-        var tiles = new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
 
         for (var x = 0; x < ChunkSize; x++)
         {
@@ -256,23 +264,37 @@ public sealed class BiomeSystem : SharedBiomeSystem
             {
                 var indices = new Vector2i(x + chunk.X, y + chunk.Y);
 
+                if (modified.Contains(indices))
+                    continue;
+
                 // Don't mess with anything that's potentially anchored.
                 var anchored = grid.GetAnchoredEntitiesEnumerator(indices);
 
                 if (anchored.MoveNext(out _))
+                {
+                    modified.Add(indices);
                     continue;
+                }
 
                 // If it's default data unload the tile.
-                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) || grid.TryGetTileRef(indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
+                if (!TryGetBiomeTile(indices, prototype, noise, null, out var biomeTile) ||
+                    grid.TryGetTileRef(indices, out var tileRef) && tileRef.Tile != biomeTile.Value)
+                {
+                    modified.Add(indices);
                     continue;
+                }
 
                 tiles.Add((indices, Tile.Empty));
             }
         }
 
         grid.SetTiles(tiles);
+        tiles.Clear();
         component.LoadedChunks.Remove(chunk);
-    }
 
-    // TODO: Round the view range
+        if (modified.Count == 0)
+        {
+            component.ModifiedTiles.Remove(chunk);
+        }
+    }
 }

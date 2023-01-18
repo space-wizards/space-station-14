@@ -17,15 +17,16 @@ public sealed class BiomeComponent : Component
 
     /// <summary>
     /// If we've already generated a tile and couldn't deload it then we won't ever reload it in future.
+    /// Stored by [Chunkorigin, Tiles]
     /// </summary>
     [DataField("modifiedTiles")]
-    public HashSet<Vector2i> ModifiedTiles = new();
+    public Dictionary<Vector2i, HashSet<Vector2i>> ModifiedTiles = new();
 
     /// <summary>
     /// Decals that have been loaded as a part of this biome.
     /// </summary>
     [DataField("decals")]
-    public Dictionary<Vector2i, HashSet<uint>> LoadedDecals = new();
+    public Dictionary<Vector2i, Dictionary<uint, Vector2i>> LoadedDecals = new();
 
     [DataField("entities")]
     public Dictionary<Vector2i, List<EntityUid>> LoadedEntities = new();
