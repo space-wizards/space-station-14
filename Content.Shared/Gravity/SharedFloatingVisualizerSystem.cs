@@ -44,7 +44,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         foreach (var (floating, transform) in EntityQuery<FloatingVisualsComponent, TransformComponent>(true))
         {
             if (transform.MapID == MapId.Nullspace)
-                return;
+                continue;
 
             if (transform.GridUid != args.ChangedGridIndex)
                 continue;

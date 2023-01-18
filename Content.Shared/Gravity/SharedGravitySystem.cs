@@ -31,9 +31,8 @@ namespace Content.Shared.Gravity
                 return true;
 
             // If grid / map has gravity
-            if (xform.MapID == MapId.Nullspace ||
-                TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
-                TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
+            if (TryComp<GravityComponent>(xform.GridUid, out var gravity) && gravity.Enabled ||
+                 TryComp<GravityComponent>(xform.MapUid, out var mapGravity) && mapGravity.Enabled)
             {
                 return false;
             }
