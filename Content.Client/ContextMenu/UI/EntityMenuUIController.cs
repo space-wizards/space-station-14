@@ -260,6 +260,8 @@ namespace Content.Client.ContextMenu.UI
             {
                 var subElement = new EntityMenuElement(entity);
                 subElement.SubMenu = new ContextMenuPopup(_context, subElement);
+                subElement.SubMenu.OnPopupOpen += () => _verb.OpenVerbMenu(group[0], popup: subElement.SubMenu);
+                subElement.SubMenu.OnPopupHide += subElement.SubMenu.MenuBody.DisposeAllChildren;
                 _context.AddElement(subMenu, subElement);
                 Elements.TryAdd(entity, subElement);
             }
