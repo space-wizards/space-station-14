@@ -82,8 +82,7 @@ public sealed partial class AnomalySystem
         var xform = Transform(grid);
 
         var targetCoords = xform.Coordinates;
-        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
-        var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
+        var gridBounds = gridComp.LocalAABB;
         gridBounds.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
         for (var i = 0; i < 25; i++)
@@ -91,8 +90,8 @@ public sealed partial class AnomalySystem
             var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
             var randomY = Random.Next((int) gridBounds.Bottom, (int)gridBounds.Top);
 
-            var tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            if (_atmosphere.IsTileSpace(grid, Transform(grid).MapUid, tile,
+            var tile = new Vector2i(randomX, randomY);
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile,
                     mapGridComp: gridComp) || _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
             {
                 continue;

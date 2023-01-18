@@ -1143,7 +1143,7 @@ namespace Content.Shared.CCVar
         ///     A scale factor applied to a grid's bounds when trying to find a spot to randomly generate an anomaly.
         /// </summary>
         public static readonly CVarDef<float> AnomalyGenerationGridBoundsScale =
-            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.7f, CVar.SERVERONLY);
+            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT
