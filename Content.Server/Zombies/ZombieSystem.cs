@@ -181,17 +181,35 @@ namespace Content.Server.Zombies
             }
         }
 
-        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        /// <summary>
+        ///     This is the function to call if you want to unzombify an entity.
+        /// </summary>
+        /// <param name="source">the entity having the ZombieComponent</param>
+        /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
+        /// <remarks>
+        ///     this currently only restore the name and skin/eye color from before zombified
+        ///     TODO: reverse everything else done in ZombifyEntity
+        /// </remarks>
+        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
         {
+            if (!Resolve(source, ref zombiecomp))
+                return false;
+
             foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
             {
-                _humanoidSystem.SetBaseLayerColor(args.Target, layer, info.Color);
-                _humanoidSystem.SetBaseLayerId(args.Target, layer, info.ID);
+                _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
             }
-            _humanoidSystem.SetSkinColor(args.Target, zombiecomp.BeforeZombifiedSkinColor);
+            _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
 
-            MetaData(args.Target).EntityName = zombiecomp.BeforeZombifiedEntityName;
-            args.NameHandled = true;
+            MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            return true;
+        }
+
+        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        {
+            if (UnZombify(args.Source, args.Target, zombiecomp))
+                args.NameHandled = true;
         }
     }
 }
