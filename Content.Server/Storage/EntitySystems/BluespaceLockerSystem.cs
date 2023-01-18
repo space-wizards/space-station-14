@@ -244,7 +244,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // If there are no possible link targets and no links, return null
             if (component.BluespaceLinks.Count == 0)
             {
-                if (component.MinBluespaceLinks == 0 && init)
+                if (component.MinBluespaceLinks == 0 && !init)
                     RemComp<BluespaceLockerComponent>(lockerUid);
 
                 return null;
