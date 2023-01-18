@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your
-      rotation. When moving from one grid to another your rotation will snap to the
-      nearest cardinal direction., type: Add}
-  id: 2410
-  time: '2022-10-09T05:45:08.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
@@ -2938,3 +2931,9 @@ Entries:
   - {message: Torches and flares are now flammable., type: Add}
   id: 2909
   time: '2023-01-18T08:45:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
+    type: Fix}
+  id: 2910
+  time: '2023-01-18T09:11:35.0000000+00:00'
