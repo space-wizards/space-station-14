@@ -56,7 +56,7 @@
 - type: tile
   id: FloorBasalt
   name: tiles-basalt-floor
-  sprite: /Textures/Tiles/Planet/Lava/basalt/basalt.png
+  sprite: /Textures/Tiles/Planet/basalt.png
   isSubfloor: true
   canCrowbar: false
   cornerSprites:
