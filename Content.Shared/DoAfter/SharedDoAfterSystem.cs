@@ -1,10 +1,9 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
@@ -71,7 +70,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
 
         private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
         {
-            if(args.CurrentMobState != DamageState.Dead || args.CurrentMobState != DamageState.Critical)
+            if (args.NewMobState != MobState.Dead || args.NewMobState != MobState.Critical)
                 return;
 
             foreach (var (_, doAfter) in component.DoAfters)

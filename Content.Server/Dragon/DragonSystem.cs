@@ -9,7 +9,6 @@ using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Humanoid;
 using Content.Server.NPC;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
@@ -355,9 +354,8 @@ namespace Content.Server.Dragon
                 {
                     case MobState.Critical:
                     case MobState.Dead:
-                        component.CancelToken = new CancellationTokenSource();
 
-                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)
+                        _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, target:target)
                         {
                             BreakOnTargetMove = true,
                             BreakOnUserMove = true,

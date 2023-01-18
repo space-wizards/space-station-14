@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 using Content.Server.Cargo.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Wires;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.VendingMachines;

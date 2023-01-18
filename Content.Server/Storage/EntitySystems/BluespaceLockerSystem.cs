@@ -10,6 +10,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.DoAfter;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
