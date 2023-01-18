@@ -739,12 +739,19 @@
 
 - type: entity
   name: guidebook monkey
-  parent: MobMonkey
+  parent: SimpleSpaceMobBase
   noSpawn: true
   id: MobGuidebookMonkey
   description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
   components:
-    - type: GuidebookControlsTest
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: monkey
+      sprite: Mobs/Animals/monkey.rsi
+  - type: Appearance
+  - type: GuidebookControlsTest
 
 - type: entity
   name: mouse
