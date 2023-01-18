@@ -15,7 +15,6 @@ public sealed class IgnitionSourceSystem : EntitySystem
 {
     /// <inheritdoc/>
     ///
-    private HashSet<EntityUid> _ignitionSources = new();
 
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
@@ -23,40 +22,23 @@ public sealed class IgnitionSourceSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<IgnitionSourceComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<IgnitionSourceComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<IgnitionSourceComponent, ComponentShutdown>(OnShutdown);
+        // ? does this need to exist
     }
 
-    public void OnStartup(EntityUid uid, IgnitionSourceComponent component, ComponentStartup args)
-    {
-        _ignitionSources.Add(uid);
-    }
 
     public void SetState(EntityUid uid, IgnitionSourceComponent component, bool newState)
     {
         component.State = newState;
     }
 
-    public void OnMapInit(EntityUid uid, IgnitionSourceComponent component, MapInitEvent args)
-    {
-        _ignitionSources.Add(uid);
-    }
-
-    public void OnShutdown(EntityUid uid, IgnitionSourceComponent component, ComponentShutdown args)
-    {
-        _ignitionSources.Remove(uid);
-    }
-
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
 
-        foreach (var source in _ignitionSources.ToArray())
+
+        foreach (var (component,transform) in EntityQuery<IgnitionSourceComponent,TransformComponent>())
         {
-            if (!EntityManager.TryGetComponent(source, out IgnitionSourceComponent? component)
-                || !EntityManager.TryGetComponent(source, out TransformComponent? transform))
-                continue;
+            var source = component.Owner;
 
             if(EntityManager.TryGetComponent(source, out ExpendableLightComponent? expendable))
             {
@@ -78,3 +60,4 @@ public sealed class IgnitionSourceSystem : EntitySystem
         }
     }
 }
+
