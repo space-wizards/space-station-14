@@ -38,6 +38,9 @@
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: Appearance
+  - type: GuideHelp
+    guides:
+    - AnomalousResearch
   - type: EmitSoundOnSpawn
     sound: 
       path: /Audio/Effects/teleport_arrival.ogg
