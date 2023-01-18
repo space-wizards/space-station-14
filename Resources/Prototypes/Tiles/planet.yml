@@ -59,16 +59,6 @@
   sprite: /Textures/Tiles/Planet/basalt.png
   isSubfloor: true
   canCrowbar: false
-  cornerSprites:
-    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge1.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge2.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge3.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/single_edge4.png
-  cardinalSprites:
-    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge1.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge2.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge3.png
-    - /Textures/Tiles/Planet/Lava/lava.rsi/double_edge4.png
   footstepSounds:
     collection: FootstepAsteroid
   friction: 0.30
