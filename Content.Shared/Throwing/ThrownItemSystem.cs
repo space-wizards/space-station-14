@@ -56,9 +56,9 @@ namespace Content.Shared.Throwing
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
-            if (!EntityManager.TryGetComponent(component.Owner, out FixturesComponent? fixturesComponent) ||
+            if (!TryComp(component.Owner, out FixturesComponent? fixturesComponent) ||
                 fixturesComponent.Fixtures.Count != 1) return;
-            if (!EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? physicsComponent)) return;
+            if (!TryComp(component.Owner, out PhysicsComponent? physicsComponent)) return;
 
             if (fixturesComponent.Fixtures.ContainsKey(ThrowingFixture))
             {
@@ -99,7 +99,7 @@ namespace Content.Shared.Throwing
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (EntityManager.TryGetComponent(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
+            if (TryComp(message.Pulled.Owner, out ThrownItemComponent? thrownItemComponent))
                 StopThrow(message.Pulled.Owner, thrownItemComponent);
         }
 
@@ -108,7 +108,7 @@ namespace Content.Shared.Throwing
         /// </summary>
         private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
-            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+            if (TryComp(uid, out PhysicsComponent? physicsComponent))
             {
                 var fixture = _fixtures.GetFixtureOrNull(physicsComponent, ThrowingFixture);
 
@@ -120,7 +120,7 @@ namespace Content.Shared.Throwing
 
             var stopThrow = new StopThrowEvent(thrownItemComponent.Thrower);
             RaiseLocalEvent(uid, ref stopThrow, true);
-            EntityManager.RemoveComponent<ThrownItemComponent>(uid);
+            RemComp<ThrownItemComponent>(uid);
         }
 
         /// <summary>
@@ -132,14 +132,15 @@ namespace Content.Shared.Throwing
 
             var landing = thrownItem.Owner;
 
-            if (stopMoving && EntityManager.TryGetComponent(landing, out IPhysBody? physics))
+            if (stopMoving && TryComp<IPhysBody?>(landing, out IPhysBody? physics))
                 physics.LinearVelocity = (0, 0);
+
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (landing.TryGetContainerMan(out var containerManager) &&
-                EntityManager.HasComponent<SharedHandsComponent>(containerManager.Owner))
+                HasComp<SharedHandsComponent>(containerManager.Owner))
             {
-                EntityManager.RemoveComponent(landing, thrownItem);
+                RemComp(landing, thrownItem);
                 return;
             }
 
