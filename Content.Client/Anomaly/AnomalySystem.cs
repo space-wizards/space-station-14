@@ -25,7 +25,7 @@ public sealed class AnomalySystem : SharedAnomalySystem
         if (!Appearance.TryGetData(uid, AnomalyVisuals.IsPulsing, out bool pulsing, args.Component))
             pulsing = false;
 
-        if (Appearance.TryGetData(uid, AnomalyVisuals.IsPulsing, out bool super, args.Component) && super)
+        if (Appearance.TryGetData(uid, AnomalyVisuals.Supercritical, out bool super, args.Component) && super)
             pulsing = super;
 
         if (HasComp<AnomalySupercriticalComponent>(uid))

@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
-using Content.Shared.Construction.Components;
-using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 
@@ -12,7 +10,6 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedAnchorableSystem _anchorable = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
