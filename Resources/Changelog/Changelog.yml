@@ -1,11 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Melee range has been temporarily standardised from 1m centre distance
-      up to 1.5m nearest edge distance until interaction outline reflects melee weapon
-      ranges., type: Tweak}
-  id: 2407
-  time: '2022-10-09T05:29:51.0000000+00:00'
 - author: FunkySphere
   changes:
   - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
@@ -2940,3 +2933,9 @@ Entries:
   - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
   id: 2906
   time: '2023-01-18T00:38:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
+    type: Fix}
+  id: 2907
+  time: '2023-01-18T06:15:53.0000000+00:00'
