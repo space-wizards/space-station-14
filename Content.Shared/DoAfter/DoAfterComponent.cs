@@ -42,6 +42,10 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
     }
 }
 
+/// <summary>
+/// Use this event to raise your DoAfter events now.
+/// Check for cancelled, and if it is, then null the token there.
+/// </summary>
 public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 {
     public T AdditionalData;
