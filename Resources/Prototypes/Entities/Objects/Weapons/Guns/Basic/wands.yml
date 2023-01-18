@@ -99,9 +99,9 @@
   name: wand of cluwning
   parent: WeaponWandPolymorphBase
   id: WeaponWandCluwne
-  description: Make their situation even worse by turning them into a cluwne.
+  description: Make their situation worse by turning them into a cluwne.
   components:
   - type: BasicEntityAmmoProvider
     proto: ProjectilePolyboltCluwne
-    capacity: 5
-    count: 5
+    capacity: 3
+    count: 3
