@@ -1,13 +1,16 @@
 using System.Linq;
 using Content.Server.Power.Components;
-using Content.Server.Solar.Components;
+using Content.Shared.Audio;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
 using Content.Shared.Solar;
+using Content.Shared.Solar.Components;
 using JetBrains.Annotations;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Solar.EntitySystems
 {
@@ -19,7 +22,7 @@ namespace Content.Server.Solar.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
         /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
@@ -65,13 +68,39 @@ namespace Content.Server.Solar.EntitySystems
         /// </summary>
         private float _updateTimer = 0f;
 
-
-
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<SolarPanelComponent, ComponentGetState>(GetSolarPanelState);
+            SubscribeLocalEvent<SolarPanelComponent, ComponentStartup>(OnSolarPanelStartup);
             RandomizeSun();
+        }
+
+        private void RefreshPanel(SolarPanelComponent panel)
+        {
+            panel.StartAngle = TargetPanelRotation;
+            panel.AngularVelocity = TargetPanelVelocity;
+            panel.LastUpdate = _gameTiming.CurTime;
+            Dirty(panel);
+        }
+
+        public void RefreshAllPanels()
+        {
+            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+            {
+                RefreshPanel(panel);
+            }
+        }
+
+        private void GetSolarPanelState(EntityUid uid, SolarPanelComponent component, ref ComponentGetState args)
+        {
+            args.State = new SolarPanelComponentState
+            {
+                Angle = component.StartAngle,
+                AngularVelocity = component.AngularVelocity,
+                LastUpdate = component.LastUpdate
+            };
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -91,7 +120,13 @@ namespace Content.Server.Solar.EntitySystems
 
         private void OnMapInit(EntityUid uid, SolarPanelComponent component, MapInitEvent args)
         {
+            RefreshPanel(component);
             UpdateSupply(uid, component);
+        }
+
+        private void OnSolarPanelStartup(EntityUid uid, SolarPanelComponent component, ComponentStartup args)
+        {
+            RefreshPanel(component);
         }
 
         public override void Update(float frameTime)
@@ -111,23 +146,19 @@ namespace Content.Server.Solar.EntitySystems
                 {
                     if (panel.Running)
                     {
-                        UpdatePanelCoverage(panel, xform, TargetPanelRotation);
-                        UpdateAppearance(panel);
+                        Angle a = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
+                        panel.Angle = a.Reduced();
+                        UpdatePanelCoverage(panel, xform);
                     }
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
                 }
             }
         }
 
-        private void UpdateAppearance(SolarPanelComponent solarPanel)
-        {
-            var uid = solarPanel.Owner;
-            _appearanceSystem.SetData(uid, SolarPanelVisuals.Angle, TargetPanelRotation);
-        }
-
-        private void UpdatePanelCoverage(SolarPanelComponent panel, TransformComponent xform, Angle panelAngle)
+        private void UpdatePanelCoverage(SolarPanelComponent panel, TransformComponent xform)
         {
             EntityUid entity = panel.Owner;
+            Angle panelAngle = panel.Angle;
 
             // So apparently, and yes, I *did* only find this out later,
             // this is just a really fancy way of saying "Lambert's law of cosines".

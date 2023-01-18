@@ -41,15 +41,22 @@ namespace Content.Server.Solar.EntitySystems
  
         private void OnUIMessage(EntityUid uid, SolarControlConsoleComponent component, SolarControlConsoleAdjustMessage msg)
         {
+            bool updated = false;
             if (double.IsFinite(msg.Rotation))
             {
                 _powerSolarSystem.TargetPanelRotation = msg.Rotation.Reduced();
+                updated = true;
             }
             if (double.IsFinite(msg.AngularVelocity))
             {
                 var degrees = msg.AngularVelocity.Degrees;
                 degrees = Math.Clamp(degrees, -PowerSolarSystem.MaxPanelVelocityDegrees, PowerSolarSystem.MaxPanelVelocityDegrees);
                 _powerSolarSystem.TargetPanelVelocity = Angle.FromDegrees(degrees);
+                updated = true;
+            }
+            if (updated)
+            {
+                _powerSolarSystem.RefreshAllPanels();
             }
         }
 
