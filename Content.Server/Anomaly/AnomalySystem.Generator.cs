@@ -2,6 +2,7 @@
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
+using Content.Shared.CCVar;
 using Content.Shared.Materials;
 using Robust.Shared.Map.Components;
 
@@ -14,15 +15,6 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem
 {
-    /// <summary>
-    /// A multiplier applied to the grid bounds
-    /// to make the likelihood of it spawning outside
-    /// of the main station less likely.
-    ///
-    /// tl;dr anomalies only generate on the inner __% of the station.
-    /// </summary>
-    public const float GridBoundsMultiplier = 0.6f;
-
     private void InitializeGenerator()
     {
         SubscribeLocalEvent<AnomalyGeneratorComponent, BoundUIOpenedEvent>(OnGeneratorBUIOpened);
@@ -90,16 +82,16 @@ public sealed partial class AnomalySystem
         var xform = Transform(grid);
 
         var targetCoords = xform.Coordinates;
-        var (gridPos, _, gridMatrix) = _transform.GetWorldPositionRotationMatrix(xform);
-        var gridBounds = gridMatrix.TransformBox(gridComp.LocalAABB);
+        var gridBounds = gridComp.LocalAABB;
+        gridBounds.Scale(_configuration.GetCVar(CCVars.AnomalyGenerationGridBoundsScale));
 
         for (var i = 0; i < 25; i++)
         {
-            var randomX = Random.Next((int) (gridBounds.Left * GridBoundsMultiplier), (int) (gridBounds.Right * GridBoundsMultiplier));
-            var randomY = Random.Next((int) (gridBounds.Bottom * GridBoundsMultiplier), (int) (gridBounds.Top * GridBoundsMultiplier));
+            var randomX = Random.Next((int) gridBounds.Left, (int) gridBounds.Right);
+            var randomY = Random.Next((int) gridBounds.Bottom, (int)gridBounds.Top);
 
-            var tile = new Vector2i(randomX - (int) gridPos.X, randomY - (int) gridPos.Y);
-            if (_atmosphere.IsTileSpace(grid, Transform(grid).MapUid, tile,
+            var tile = new Vector2i(randomX, randomY);
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile,
                     mapGridComp: gridComp) || _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
             {
                 continue;

@@ -136,7 +136,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (component.SelectableTypes.Count < 2)
                 return;
             var proto = _prototype.Index<EntityPrototype>(component.BoltType);
-            args.Message.AddText(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
+            args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
         }
 
         private void ReceivedChanged(

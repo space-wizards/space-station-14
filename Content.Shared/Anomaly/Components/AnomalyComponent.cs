@@ -179,7 +179,7 @@ public sealed class AnomalyComponent : Component
     /// of an anomalous particle of <seealso cref="DestabilizingParticleType"/>.
     /// </summary>
     [DataField("stabilityPerWeakeningeHit")]
-    public float StabilityPerWeakeningeHit = -0.02f;
+    public float StabilityPerWeakeningeHit = -0.1f;
 
     #region Points and Vessels
     /// <summary>
