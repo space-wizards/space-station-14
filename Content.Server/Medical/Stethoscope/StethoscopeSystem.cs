@@ -7,11 +7,11 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
-using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using System.Threading;
-using Content.Server.MobState;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Medical
 {

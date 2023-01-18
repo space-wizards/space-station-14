@@ -248,10 +248,10 @@
   - UplinkUtility
 
 - type: listing
-  id: UplinkReinforcementTeleporterSyndicate
-  name: uplink-reinforcement-teleporter-name
-  description: uplink-reinforcement-teleporter-desc
-  productEntity: ReinforcementTeleporterSyndicate
+  id: UplinkReinforcementRadioSyndicate
+  name: uplink-reinforcement-radio-name
+  description: uplink-reinforcement-radio-desc
+  productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
     Telecrystal: 20

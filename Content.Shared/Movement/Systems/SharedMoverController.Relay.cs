@@ -44,6 +44,7 @@ public abstract partial class SharedMoverController
         component.RelayEntity = relayEntity;
         targetComp = EnsureComp<MovementRelayTargetComponent>(relayEntity);
         targetComp.Entities.Add(uid);
+        DebugTools.Assert(targetComp.Entities.Count <= 1, "Multiple relayed movers are not supported at the moment");
         Dirty(component);
         Dirty(targetComp);
     }
@@ -114,6 +115,7 @@ public abstract partial class SharedMoverController
 
         component.Entities.Clear();
         component.Entities.AddRange(state.Entities);
+        DebugTools.Assert(component.Entities.Count <= 1, "Multiple relayed movers are not supported at the moment");
     }
 
     private void OnTargetRelayGetState(EntityUid uid, MovementRelayTargetComponent component, ref ComponentGetState args)

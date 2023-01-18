@@ -69,6 +69,11 @@ namespace Content.Shared.Maps
         [DataField("isSpace")] public bool IsSpace { get; private set; }
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
+        /// <summary>
+        /// Can weather affect this tile.
+        /// </summary>
+        [DataField("weather")] public bool Weather = false;
+
         public void AssignTileId(ushort id)
         {
             TileId = id;

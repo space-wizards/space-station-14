@@ -71,7 +71,7 @@
       randomMode: false
       controlsLocked: true
       mode: SensorCords
-      activationContainer: "ImplantContainer"
+      activationContainer: "implant"
     - type: DeviceNetwork
       deviceNetId: Wireless
       transmitFrequencyId: SuitSensor
