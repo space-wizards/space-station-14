@@ -90,6 +90,7 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       50: Critical

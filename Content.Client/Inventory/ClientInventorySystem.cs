@@ -101,7 +101,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
-            var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
+            var sprite = EntityManager.GetComponentOrNull<SpriteComponent>(args.Equipment);
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite,
                 HasComp<ClientStorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
@@ -340,7 +340,7 @@ namespace Content.Client.Inventory
         public readonly record struct SlotSpriteUpdate(
             string Group,
             string Name,
-            ISpriteComponent? Sprite,
+            SpriteComponent? Sprite,
             bool ShowStorage
         );
     }

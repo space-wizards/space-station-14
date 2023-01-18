@@ -6,8 +6,10 @@ using Content.Shared.Doors.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -114,6 +116,7 @@ namespace Content.IntegrationTests.Tests.Doors
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var physicsSystem = entityManager.System<SharedPhysicsSystem>();
 
             PhysicsComponent physBody = null;
             EntityUid physicsDummy = default;
@@ -140,13 +143,19 @@ namespace Content.IntegrationTests.Tests.Doors
             await server.WaitIdleAsync();
 
             // Push the human towards the airlock
-            await server.WaitAssertion(() => Assert.That(physBody != null));
-            await server.WaitPost(() => physBody.LinearVelocity = (0.5f, 0));
+            await server.WaitAssertion(() => Assert.That(physBody, Is.Not.EqualTo(null)));
+            await server.WaitPost(() =>
+            {
+                physicsSystem.SetLinearVelocity(physicsDummy, new Vector2(0.5f, 0f), body: physBody);
+            });
 
             for (var i = 0; i < 240; i += 10)
             {
                 // Keep the airlock awake so they collide
-                await server.WaitPost(() => entityManager.GetComponent<PhysicsComponent>(airlock).WakeBody());
+                await server.WaitPost(() =>
+                {
+                    physicsSystem.WakeBody(airlock);
+                });
 
                 await server.WaitRunTicks(10);
                 await server.WaitIdleAsync();

@@ -13,6 +13,8 @@ namespace Content.Client.Decals
         [Dependency] private readonly SpriteSystem _sprites = default!;
 
         private DecalOverlay _overlay = default!;
+
+        // TODO move this data to the component
         public readonly Dictionary<EntityUid, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
         private readonly Dictionary<EntityUid, Dictionary<uint, int>> _decalZIndexIndex = new();
 
@@ -25,8 +27,6 @@ namespace Content.Client.Decals
 
             SubscribeLocalEvent<DecalGridComponent, ComponentHandleState>(OnHandleState);
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
-            SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
         }
 
         public void ToggleOverlay()
@@ -41,16 +41,18 @@ namespace Content.Client.Decals
             }
         }
 
-        private void OnGridRemoval(GridRemovalEvent ev)
+        protected override void OnCompRemove(EntityUid uid, DecalGridComponent component, ComponentRemove args)
         {
-            DecalRenderIndex.Remove(ev.EntityUid);
-            _decalZIndexIndex.Remove(ev.EntityUid);
+            DecalRenderIndex.Remove(uid);
+            _decalZIndexIndex.Remove(uid);
+            base.OnCompRemove(uid, component, args);
         }
 
-        private void OnGridInitialize(GridInitializeEvent ev)
+        protected override void OnCompAdd(EntityUid uid, DecalGridComponent component, ComponentAdd args)
         {
-            DecalRenderIndex[ev.EntityUid] = new();
-            _decalZIndexIndex[ev.EntityUid] = new();
+            DecalRenderIndex[uid] = new();
+            _decalZIndexIndex[uid] = new();
+            base.OnCompAdd(uid, component, args);
         }
 
         public override void Shutdown()

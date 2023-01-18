@@ -1,6 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using Robust.Shared;
-using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -13,6 +11,7 @@ namespace Content.Shared.Decals
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] protected readonly IMapManager MapManager = default!;
 
+        // TODO move this data to the component
         protected readonly Dictionary<EntityUid, Dictionary<uint, Vector2i>> ChunkIndex = new();
 
         // Note that this constant is effectively baked into all map files, because of how they save the grid decal component.
@@ -25,22 +24,33 @@ namespace Content.Shared.Decals
             base.Initialize();
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
+            SubscribeLocalEvent<DecalGridComponent, ComponentAdd>(OnCompAdd);
+            SubscribeLocalEvent<DecalGridComponent, ComponentRemove>(OnCompRemove);
         }
 
         private void OnGridInitialize(GridInitializeEvent msg)
         {
-            var comp = EntityManager.EnsureComponent<DecalGridComponent>(msg.EntityUid);
-            ChunkIndex[msg.EntityUid] = new();
-            foreach (var (indices, decals) in comp.ChunkCollection.ChunkCollection)
+            EnsureComp<DecalGridComponent>(msg.EntityUid);
+        }
+
+        protected virtual void OnCompRemove(EntityUid uid, DecalGridComponent component, ComponentRemove args)
+        {
+            ChunkIndex.Remove(uid);
+        }
+
+        protected virtual void OnCompAdd(EntityUid uid, DecalGridComponent component, ComponentAdd args)
+        {
+            var index = ChunkIndex[uid] = new();
+            foreach (var (indices, decals) in component.ChunkCollection.ChunkCollection)
             {
-                foreach (var uid in decals.Decals.Keys)
+                foreach (var decalUid in decals.Decals.Keys)
                 {
-                    ChunkIndex[msg.EntityUid][uid] = indices;
+                    index[decalUid] = indices;
                 }
             }
         }
 
-        protected DecalGridComponent.DecalGridChunkCollection? DecalGridChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
+        protected DecalGridChunkCollection? DecalGridChunkCollection(EntityUid gridEuid, DecalGridComponent? comp = null)
         {
             if (!Resolve(gridEuid, ref comp))
                 return null;

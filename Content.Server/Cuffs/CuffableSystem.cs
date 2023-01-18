@@ -13,7 +13,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Content.Server.Hands.Systems;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Cuffs
 {
@@ -23,7 +23,7 @@ namespace Content.Server.Cuffs
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()

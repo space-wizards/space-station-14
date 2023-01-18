@@ -311,7 +311,8 @@ public sealed class MagicSystem : EntitySystem
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
-        Comp<PhysicsComponent>(ev.Target).ApplyLinearImpulse(impulseVector);
+
+        _physics.ApplyLinearImpulse(ev.Target, impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;

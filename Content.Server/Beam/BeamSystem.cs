@@ -81,17 +81,19 @@ public sealed class BeamSystem : SharedBeamSystem
 
         if (TryComp<PhysicsComponent>(ent, out var physics) && TryComp<BeamComponent>(ent, out var beam))
         {
-            var fixture = new Fixture(physics, shape)
-            {
-                ID = "BeamBody",
-                Hard = false,
-                CollisionMask = (int)CollisionGroup.ItemMask,
-                CollisionLayer = (int)CollisionGroup.MobLayer
-            };
+            FixturesComponent? manager = null;
+            _fixture.TryCreateFixture(
+                ent,
+                shape,
+                "BeamBody",
+                hard: false,
+                collisionMask: (int)CollisionGroup.ItemMask,
+                collisionLayer: (int)CollisionGroup.MobLayer,
+                manager: manager,
+                body: physics);
 
-            _fixture.TryCreateFixture(physics, fixture);
-            _physics.SetBodyType(physics, BodyType.Dynamic);
-            _physics.SetCanCollide(physics, true);
+            _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
+            _physics.SetCanCollide(ent, true, manager: manager, body: physics);
 
             var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
             RaiseNetworkEvent(beamVisualizerEvent);

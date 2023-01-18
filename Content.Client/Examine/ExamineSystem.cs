@@ -193,7 +193,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(target, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(target, out SpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView
                 {

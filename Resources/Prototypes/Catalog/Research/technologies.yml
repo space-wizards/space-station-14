@@ -30,6 +30,25 @@
   - SprayBottle
   - BodyBag
 
+# Food/Bev Service Technology Tree
+
+- type: technology
+  name: technologies-foodbev-technology
+  id: FoodBevTechnology
+  description: technologies-food-and-beverage-technology-description
+  icon:
+    sprite: Objects/Weapons/Melee/cleaver.rsi
+    state: butch
+  requiredPoints: 5000
+  requiredTechnologies:
+  - BasicResearch
+  unlockedRecipes:
+  - ButchCleaver
+  - KitchenKnife
+  - MicrowaveMachineCircuitboard
+  - BoozeDispenserMachineCircuitboard
+  - SodaDispenserMachineCircuitboard
+
 # Biological Technology Tree
 
 - type: technology
@@ -46,6 +65,9 @@
   - HydroponicsToolScythe
   - HydroponicsToolHatchet
   - Shovel
+  - MiniHoe
+  - Spade
+  - Clippers
   - ButchCleaver
   - KitchenKnife
   - MicrowaveMachineCircuitboard

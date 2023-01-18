@@ -262,17 +262,8 @@ namespace Content.Server.Shuttles.Systems
                         component.BurnPoly.Count > 0)
                     {
                         var shape = new PolygonShape();
-
                         shape.SetVertices(component.BurnPoly);
-
-                        var fixture = new Fixture(physicsComponent, shape)
-                        {
-                            ID = BurnFixture,
-                            Hard = false,
-                            CollisionLayer = (int) CollisionGroup.FullTileMask
-                        };
-
-                        _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int) CollisionGroup.FullTileMask);
                     }
 
                     break;
@@ -352,7 +343,7 @@ namespace Content.Server.Shuttles.Systems
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _fixtureSystem.DestroyFixture(physicsComponent, BurnFixture);
+                _fixtureSystem.DestroyFixture(uid, BurnFixture, body: physicsComponent);
             }
 
             _activeThrusters.Remove(component);

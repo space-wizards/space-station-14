@@ -21,7 +21,7 @@ namespace Content.Client.Power.APC
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.Panel, sprite.AddLayerState("apc0"));
 
@@ -47,7 +47,7 @@ namespace Content.Client.Power.APC
             base.OnChangeData(component);
 
             var ent = IoCManager.Resolve<IEntityManager>();
-            var sprite = ent.GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = ent.GetComponent<SpriteComponent>(component.Owner);
             if (component.TryGetData<ApcPanelState>(ApcVisuals.PanelState, out var panelState))
             {
                 switch (panelState)

@@ -234,10 +234,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 20f);
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = 0f;
-                        body.AngularDamping = 0f;
+                        _physics.SetLinearVelocity(comp.Owner, new Vector2(0f, 20f), body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, 0f);
+                        _physics.SetAngularDamping(body, 0f);
                     }
 
                     if (comp.TravelSound != null)
@@ -272,10 +272,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = Vector2.Zero;
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = ShuttleLinearDamping;
-                        body.AngularDamping = ShuttleAngularDamping;
+                        _physics.SetLinearVelocity(comp.Owner, Vector2.Zero, body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
+                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
                     }
 
                     TryComp(comp.Owner, out shuttle);
@@ -521,8 +521,8 @@ public sealed partial class ShuttleSystem
 
         if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
         {
-            shuttleBody.LinearVelocity = Vector2.Zero;
-            shuttleBody.AngularVelocity = 0f;
+            _physics.SetLinearVelocity(component.Owner, Vector2.Zero, body: shuttleBody);
+            _physics.SetAngularVelocity(component.Owner, 0f, body: shuttleBody);
         }
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);

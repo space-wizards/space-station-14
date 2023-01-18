@@ -191,6 +191,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -371,6 +372,7 @@
     - type: Damageable
       damageContainer: Biological
     - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical

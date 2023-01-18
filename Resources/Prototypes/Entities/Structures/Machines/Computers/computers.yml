@@ -4,14 +4,18 @@
   name: alerts computer
   description: Used to access the station's automated alert system.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: atmos_key
-      screen: "alert-2"
   - type: Computer
     board: AlertsComputerCircuitboard
   - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: alert-2
+    - map: ["computerLayerKeys"]
+      state: atmos_key
 
 - type: entity
   parent: BaseComputer
@@ -43,22 +47,20 @@
   description: Used to pilot a shuttle.
   abstract: true
   components:
-    - type: ShuttleConsole
-    - type: ActivatableUI
-      key: enum.ShuttleConsoleUiKey.Key
-    - type: ActivatableUIRequiresPower
-    - type: UserInterface
-      interfaces:
-        - key: enum.ShuttleConsoleUiKey.Key
-          type: ShuttleConsoleBoundUserInterface
-    - type: RadarConsole
-    - type: ExtensionCableReceiver
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#43ccb5"
-    - type: Rotatable
-      rotateWhileAnchored: true
+  - type: ShuttleConsole
+  - type: ActivatableUI
+    key: enum.ShuttleConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.ShuttleConsoleUiKey.Key
+        type: ShuttleConsoleBoundUserInterface
+  - type: RadarConsole
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#43ccb5"
+  - type: Rotatable
+    rotateWhileAnchored: true
 
 - type: entity
   parent: BaseComputerShuttle
@@ -66,13 +68,18 @@
   name: shuttle console
   description: Used to pilot a shuttle.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: generic_key
-          screen: shuttle
-    - type: Computer
-      board: ShuttleConsoleCircuitboard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shuttle
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+  - type: Computer
+    board: ShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -80,22 +87,27 @@
   name: syndicate shuttle console
   description: Used to pilot a syndicate shuttle.
   components:
-    - type: Tag
-      tags:
-        - Syndicate
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: syndie_key
-          screen: syndishuttle
-    - type: RadarConsole
-      maxRange: 1536
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#c94242"
-    - type: Computer
-      board: SyndicateShuttleConsoleCircuitboard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: syndishuttle
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+  - type: Tag
+    tags:
+      - Syndicate
+  - type: RadarConsole
+    maxRange: 1536
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c94242"
+  - type: Computer
+    board: SyndicateShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputerShuttle
@@ -103,20 +115,25 @@
   name: cargo shuttle console
   description: Used to pilot the cargo shuttle.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: generic_key
-          screen: shuttle
-    - type: CargoPilotConsole
-    - type: RadarConsole
-      maxRange: 256
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#c94242"
-    - type: Computer
-      board: CargoShuttleConsoleCircuitboard
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shuttle
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+  - type: CargoPilotConsole
+  - type: RadarConsole
+    maxRange: 256
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#c94242"
+  - type: Computer
+    board: CargoShuttleConsoleCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -124,29 +141,24 @@
   name: IFF computer
   description: Allows you to control the IFF characteristics of this vessel.
   components:
-    - type: IFFConsole
-    - type: Sprite
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body" ]
-          state: computer
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          sprite: Structures/Shuttles/iff.rsi
-          state: helm
-          shader: unshaded
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          screen: helm
-    - type: ActivatableUI
-      key: enum.IFFConsoleUiKey.Key
-    - type: UserInterface
-      interfaces:
-        - key: enum.IFFConsoleUiKey.Key
-          type: IFFConsoleBoundUserInterface
+  - type: IFFConsole
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      sprite: Structures/Shuttles/iff.rsi
+      state: helm
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+  - type: ActivatableUI
+    key: enum.IFFConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.IFFConsoleUiKey.Key
+        type: IFFConsoleBoundUserInterface
 
 - type: entity
   parent: ComputerIFF
@@ -155,32 +167,16 @@
   suffix: Syndicate
   description: Allows you to control the IFF and stealth characteristics of this vessel.
   components:
-    - type: IFFConsole
-      allowedFlags:
-        - Hide
-        - HideLabel
-    - type: Sprite
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body" ]
-          state: computer
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          sprite: Structures/Shuttles/iff.rsi
-          state: helm
-          shader: unshaded
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          screen: helm
-    - type: ActivatableUI
-      key: enum.IFFConsoleUiKey.Key
-    - type: UserInterface
-      interfaces:
-        - key: enum.IFFConsoleUiKey.Key
-          type: IFFConsoleBoundUserInterface
+  - type: IFFConsole
+    allowedFlags:
+      - Hide
+      - HideLabel
+  - type: ActivatableUI
+    key: enum.IFFConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.IFFConsoleUiKey.Key
+        type: IFFConsoleBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -188,11 +184,16 @@
   name: power monitoring computer
   description: It monitors power levels across the station.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: power_key
-      screen: power_monitor
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: power_monitor
+    - map: ["computerLayerKeys"]
+      state: power_key
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -219,11 +220,16 @@
   name: medical records computer
   description: This can be used to check medical records.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: med_key
-      screen: medcomp
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: medcomp
+    - map: ["computerLayerKeys"]
+      state: med_key
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -237,11 +243,16 @@
   name: criminal records computer
   description: This can be used to check criminal records.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: security_key
-      screen: explosive
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: explosive
+    - map: ["computerLayerKeys"]
+      state: security_key
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -255,19 +266,19 @@
   name: station records computer
   description: This can be used to check station records.
   components:
-    - type: GeneralStationRecordConsole
-    - type: UserInterface
-      interfaces:
-        - key: enum.GeneralStationRecordConsoleKey.Key
-          type: GeneralStationRecordConsoleBoundUserInterface
-    - type: ActivatableUI
-      key: enum.GeneralStationRecordConsoleKey.Key
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#1f8c28"
-    - type: Computer
-      board: CriminalRecordsComputerCircuitboard
+  - type: GeneralStationRecordConsole
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneralStationRecordConsoleKey.Key
+        type: GeneralStationRecordConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GeneralStationRecordConsoleKey.Key
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#1f8c28"
+  - type: Computer
+    board: CriminalRecordsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -275,29 +286,34 @@
   name: crew monitoring console
   description: Used to monitor active health sensors built into most of the crew's uniforms.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: med_key
-          screen: crew
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#006400"
-    - type: Computer
-      board: CrewMonitoringComputerCircuitboard
-    - type: ActivatableUI
-      key: enum.CrewMonitoringUIKey.Key
-    - type: UserInterface
-      interfaces:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: crew
+    - map: ["computerLayerKeys"]
+      state: med_key
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#006400"
+  - type: Computer
+    board: CrewMonitoringComputerCircuitboard
+  - type: ActivatableUI
+    key: enum.CrewMonitoringUIKey.Key
+  - type: UserInterface
+    interfaces:
         - key: enum.CrewMonitoringUIKey.Key
           type: CrewMonitoringBoundUserInterface
-    - type: CrewMonitoringConsole
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: SuitSensor
-    - type: WirelessNetworkConnection
-      range: 500
+  - type: CrewMonitoringConsole
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SuitSensor
+  - type: WirelessNetworkConnection
+    range: 500
 
 - type: entity
   parent: BaseComputer
@@ -305,11 +321,16 @@
   name: R&D computer
   description: A computer used to interface with R&D tools.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: rd_key
-      screen: rdcomp
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: rdcomp
+    - map: ["computerLayerKeys"]
+      state: rd_key
   - type: ResearchClient
   - type: ResearchConsole
   - type: TechnologyDatabase
@@ -337,11 +358,16 @@
   name: analysis console
   description: A computer used to interface with the artifact analyzer.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: artifact
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: artifact
+    - map: ["computerLayerKeys"]
+      state: tech_key
   - type: ResearchClient
   - type: AnalysisConsole
   - type: DeviceList
@@ -403,11 +429,16 @@
     - key: enum.IdCardConsoleUiKey.Key
       type: IdCardConsoleBoundUserInterface
   - type: CrewManifestViewer
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: id_key
-      screen: id
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: id
+    - map: ["computerLayerKeys"]
+      state: id_key
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
@@ -437,11 +468,6 @@
     interfaces:
     - key: enum.BodyScannerUiKey.Key
       type: BodyScannerBoundUserInterface
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: generic
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Computer
@@ -457,11 +483,16 @@
   name: communications computer
   description: This can be used for various important functions. Still under development.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: comm
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: AccessReader
     access: [[ "Command" ]]
   - type: CommunicationsConsole
@@ -485,11 +516,16 @@
   name: syndicate communications computer
   description: This can be used for various important functions. Still under development.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: syndie_key
-      screen: comm_syndie
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
   - type: AccessReader
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
@@ -511,11 +547,16 @@
   name: solar control computer
   description: A controller for solar panel arrays.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: solar_screen
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: solar_screen
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: SolarControlConsole
   - type: ActivatableUI
     key: enum.SolarControlConsoleUiKey.Key
@@ -533,31 +574,35 @@
     tags:
       - DroneUsable
 
-
 - type: entity
   parent: BaseComputer
   id: ComputerRadar
   name: mass scanner computer
   description: A computer for detecting nearby bodies, displaying them by position and mass.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: generic_key
-          screen: solar_screen
-    - type: RadarConsole
-    - type: ActivatableUI
-      key: enum.RadarConsoleUiKey.Key
-    - type: UserInterface
-      interfaces:
-        - key: enum.RadarConsoleUiKey.Key
-          type: RadarConsoleBoundUserInterface
-    - type: Computer
-      board: RadarConsoleCircuitboard
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#e6e227"
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: solar_screen
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+  - type: RadarConsole
+  - type: ActivatableUI
+    key: enum.RadarConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.RadarConsoleUiKey.Key
+        type: RadarConsoleBoundUserInterface
+  - type: Computer
+    board: RadarConsoleCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#e6e227"
 
 - type: entity
   id: ComputerCargoShuttle
@@ -565,11 +610,16 @@
   name: cargo shuttle computer
   description: Used to order the shuttle.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: supply
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: supply
+    - map: ["computerLayerKeys"]
+      state: tech_key
   - type: CargoShuttleConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Shuttle
@@ -592,11 +642,16 @@
   name: cargo request computer
   description: Used to order supplies and approve requests.
   components:
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: tech_key
-      screen: request
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: request
+    - map: ["computerLayerKeys"]
+      state: tech_key
   - type: CargoOrderConsole
   - type: ActivatableUI
     key: enum.CargoConsoleUiKey.Orders
@@ -623,11 +678,16 @@
   - type: DeviceList
   - type: DeviceNetwork
     deviceNetId: Wired
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      key: generic_key
-      screen: dna
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: dna
+    - map: ["computerLayerKeys"]
+      state: generic_keys
   - type: ApcPowerReceiver
     powerLoad: 3100 #We want this to fail first so I transferred most of the scanner and pod's power here. (3500 in total)
   - type: Computer
@@ -656,29 +716,34 @@
   name: camera monitor
   description: A surveillance camera monitor. You're watching them. Maybe.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: tech_key
-          screen: cameras
-    - type: Computer
-      board: SurveillanceCameraMonitorCircuitboard
-    - type: DeviceNetwork
-      deviceNetId: Wired
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WiredNetworkConnection
-    - type: DeviceNetworkRequiresPower
-    - type: SurveillanceCameraMonitor
-    - type: ActivatableUI
-      key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresVision
-    - type: Transform
-      anchored: true
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurveillanceCameraMonitorUiKey.Key
-          type: SurveillanceCameraMonitorBoundUserInterface
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: cameras
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: Computer
+    board: SurveillanceCameraMonitorCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wired
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WiredNetworkConnection
+  - type: DeviceNetworkRequiresPower
+  - type: SurveillanceCameraMonitor
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUserInterface
 
 - type: entity
   parent: BaseComputer
@@ -686,69 +751,33 @@
   name: wireless camera monitor
   description: A wireless surveillance camera monitor. You're watching them. Maybe.
   components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          key: tech_key
-          screen: cameras
-    - type: Computer
-      board: SurveillanceWirelessCameraMonitorCircuitboard
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequencyId: SurveillanceCamera
-      transmitFrequencyId: SurveillanceCamera
-    - type: WirelessNetworkConnection
-      range: 200
-    - type: DeviceNetworkRequiresPower
-    - type: Speech
-    - type: SurveillanceCameraSpeaker
-    - type: SurveillanceCameraMonitor
-      speechEnabled: true
-    - type: ActivatableUI
-      key: enum.SurveillanceCameraMonitorUiKey.Key
-    - type: ActivatableUIRequiresVision
-    - type: UserInterface
-      interfaces:
-        - key: enum.SurveillanceCameraMonitorUiKey.Key
-          type: SurveillanceCameraMonitorBoundUserInterface
-
-- type: entity
-  parent: ComputerSurveillanceWirelessCameraMonitor
-  id: ComputerTelevision
-  name: wooden television
-  description: Finally, some decent reception around here...
-  components:
-    - type: Appearance
-      visuals:
-        - type: ComputerVisualizer
-          body: television
-          bodyBroken: television_broken
-          screen: detective_television
-    - type: Computer
-      board: ComputerTelevisionCircuitboard
-    - type: Sprite
-      sprite: Structures/Machines/computers.rsi
-      layers:
-        - map: [ "enum.ComputerVisualizer+Layers.KeyboardOn" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Keyboard" ]
-          visible: false
-        - map: [ "enum.ComputerVisualizer+Layers.Body"]
-          state: television
-        - map: [ "enum.ComputerVisualizer+Layers.Screen" ]
-          state: detective_television
-          shader: unshaded
-    - type: PointLight
-      radius: 1.5
-      energy: 1.6
-      color: "#b89f25"
-    - type: Fixtures
-      fixtures:
-        - shape:
-            !type:PhysShapeAabb
-            bounds: "-0.25,-0.25,0.25,0.25"
-          density: 200
-          mask:
-            - TabletopMachineMask
-          layer:
-            - TabletopMachineLayer
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: cameras
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: Computer
+    board: SurveillanceWirelessCameraMonitorCircuitboard
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+    receiveFrequencyId: SurveillanceCamera
+    transmitFrequencyId: SurveillanceCamera
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceNetworkRequiresPower
+  - type: Speech
+  - type: SurveillanceCameraSpeaker
+  - type: SurveillanceCameraMonitor
+    speechEnabled: true
+  - type: ActivatableUI
+    key: enum.SurveillanceCameraMonitorUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: UserInterface
+    interfaces:
+      - key: enum.SurveillanceCameraMonitorUiKey.Key
+        type: SurveillanceCameraMonitorBoundUserInterface

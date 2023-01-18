@@ -383,7 +383,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         const float impulseStrength = 85.0f; //The bullet impulse strength, TODO: In the future we might want to make it more projectile dependent
         var impulseVector =  shotDirection * impulseStrength;
-        Physics.ApplyLinearImpulse(userPhysics, -impulseVector);
+        Physics.ApplyLinearImpulse(userPhysics.Owner, -impulseVector, body: userPhysics);
     }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
