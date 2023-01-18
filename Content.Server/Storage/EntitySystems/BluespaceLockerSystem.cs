@@ -220,9 +220,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
                         if (targetBluespaceComponent == null)
                         {
-                            using var compInitializeHandle =
-                                EntityManager.AddComponentUninitialized<BluespaceLockerComponent>(potentialLink);
-                            targetBluespaceComponent = compInitializeHandle.Comp;
+                            targetBluespaceComponent = AddComp<BluespaceLockerComponent>(potentialLink);
 
                             if (component.AutoLinksBidirectional)
                                 targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
@@ -230,7 +228,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
                             if (component.AutoLinksUseProperties)
                                 targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
 
-                            compInitializeHandle.Dispose();
+                            GetTarget(potentialLink, targetBluespaceComponent, true);
+                            BluespaceEffect(potentialLink, targetBluespaceComponent, targetBluespaceComponent, true);
                         }
                         else if (component.AutoLinksBidirectional)
                         {
