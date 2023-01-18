@@ -936,6 +936,8 @@
       - Admin
       - Fun
 
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitERTEngineer
   name: ERT engineering uniform
   description: A special suit made for the elite engineers under CentCom.
