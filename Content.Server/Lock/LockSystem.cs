@@ -94,10 +94,7 @@ namespace Content.Server.Lock
             lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
             lockComp.Locked = true;
 
-            if(lockComp.LockSound != null)
-            {
-                SoundSystem.Play(lockComp.LockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
-            }
+            SoundSystem.Play(lockComp.LockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
@@ -118,10 +115,7 @@ namespace Content.Server.Lock
                 lockComp.Owner.PopupMessage(user.Value, Loc.GetString("lock-comp-do-unlock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(lockComp.Owner).EntityName)));
             lockComp.Locked = false;
 
-            if (lockComp.UnlockSound != null)
-            {
-                SoundSystem.Play(lockComp.UnlockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
-            }
+            SoundSystem.Play(lockComp.UnlockSound.GetSound(), Filter.Pvs(lockComp.Owner), lockComp.Owner, AudioParams.Default.WithVolume(-5));
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
@@ -191,12 +185,9 @@ namespace Content.Server.Lock
 
         private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
         {
-            if (component.Locked == true)
+            if (component.Locked)
             {
-                if (component.UnlockSound != null)
-                {
-                    SoundSystem.Play(component.UnlockSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-5));
-                }
+                SoundSystem.Play(component.UnlockSound.GetSound(), Filter.Pvs(component.Owner), component.Owner, AudioParams.Default.WithVolume(-5));
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
                 {

@@ -33,7 +33,7 @@ namespace Content.Client.Atmos.UI
             PumpPressureOutputInput.OnTextChanged += _ => SetOutputPressureButton.Disabled = false;
             SetOutputPressureButton.OnPressed += _ =>
             {
-                PumpOutputPressureChanged?.Invoke(PumpPressureOutputInput.Text ??= "");
+                PumpOutputPressureChanged?.Invoke(PumpPressureOutputInput.Text);
                 SetOutputPressureButton.Disabled = true;
             };
 

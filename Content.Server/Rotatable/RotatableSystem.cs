@@ -19,7 +19,7 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetVerbsEvent<Verb> args)
         {
-            if (!args.CanAccess || !args.CanInteract || component.MirrorEntity == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             Verb verb = new();

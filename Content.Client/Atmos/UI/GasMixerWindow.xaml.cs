@@ -39,7 +39,7 @@ namespace Content.Client.Atmos.UI
             MixerPressureOutputInput.OnTextChanged += _ => SetOutputPressureButton.Disabled = false;
             SetOutputPressureButton.OnPressed += _ =>
             {
-                MixerOutputPressureChanged?.Invoke(MixerPressureOutputInput.Text ??= "");
+                MixerOutputPressureChanged?.Invoke(MixerPressureOutputInput.Text);
                 SetOutputPressureButton.Disabled = true;
             };
 
@@ -62,7 +62,7 @@ namespace Content.Client.Atmos.UI
 
             SetMixerPercentageButton.OnPressed += _ =>
             {
-                MixerNodePercentageChanged?.Invoke(NodeOneLastEdited ? MixerNodeOneInput.Text ??= "" : MixerNodeTwoInput.Text ??= "");
+                MixerNodePercentageChanged?.Invoke(NodeOneLastEdited ? MixerNodeOneInput.Text : MixerNodeTwoInput.Text);
                 SetMixerPercentageButton.Disabled = true;
             };
         }

@@ -171,7 +171,7 @@ namespace Content.Client.ContextMenu.UI
         /// </summary>
         public override void FrameUpdate(FrameEventArgs args)
         {
-            if (!_updating || _context.RootMenu == null)
+            if (!_updating)
                 return;
 
             if (!_context.RootMenu.Visible)

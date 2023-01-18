@@ -33,7 +33,7 @@ public sealed partial class ThresholdBoundControl : BoxContainer
     public void SetValue(float value)
     {
         _value = value;
-        CSpinner.Value = (float) ScaledValue!;
+        CSpinner.Value = ScaledValue;
     }
 
     public void SetEnabled(bool enabled)
@@ -72,7 +72,7 @@ public sealed partial class ThresholdBoundControl : BoxContainer
         CBoundLabel.Text = controlLabel;
 
         CSpinner.Value = ScaledValue;
-        CBoundEnabled.Pressed = _value != null;
+        CBoundEnabled.Pressed = true;
 
         CSpinner.OnValueChanged += SpinnerValueChanged;
         CBoundEnabled.OnToggled += CheckboxToggled;

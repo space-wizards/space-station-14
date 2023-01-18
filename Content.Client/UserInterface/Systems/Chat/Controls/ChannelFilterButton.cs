@@ -74,7 +74,6 @@ public sealed class ChannelFilterButton : ContainerButton
 
     private void UpdateChildColors()
     {
-        if (_textureRect == null) return;
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

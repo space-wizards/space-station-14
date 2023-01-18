@@ -112,7 +112,6 @@ public sealed class MenuButton : ContainerButton
 
     private void UpdateChildColors()
     {
-        if (_buttonIcon == null || _buttonLabel == null) return;
         switch (DrawMode)
         {
             case DrawModeEnum.Normal:

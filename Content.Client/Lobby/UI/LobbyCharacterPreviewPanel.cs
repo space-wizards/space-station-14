@@ -143,7 +143,7 @@ namespace Content.Client.Lobby.UI
             var highPriorityJob = profile.JobPriorities.FirstOrDefault(p => p.Value == JobPriority.High).Key;
 
             // ReSharper disable once ConstantNullCoalescingCondition
-            var job = protoMan.Index<JobPrototype>(highPriorityJob ?? SharedGameTicker.FallbackOverflowJob);
+            var job = protoMan.Index<JobPrototype>(highPriorityJob);
 
             if (job.StartingGear != null && invSystem.TryGetSlots(dummy, out var slots))
             {

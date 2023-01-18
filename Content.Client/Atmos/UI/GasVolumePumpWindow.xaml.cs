@@ -33,7 +33,7 @@ namespace Content.Client.Atmos.UI
             PumpTransferRateInput.OnTextChanged += _ => SetTransferRateButton.Disabled = false;
             SetTransferRateButton.OnPressed += _ =>
             {
-                PumpTransferRateChanged?.Invoke(PumpTransferRateInput.Text ??= "");
+                PumpTransferRateChanged?.Invoke(PumpTransferRateInput.Text);
                 SetTransferRateButton.Disabled = true;
             };
 

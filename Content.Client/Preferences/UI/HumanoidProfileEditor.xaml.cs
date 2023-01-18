@@ -840,10 +840,7 @@ namespace Content.Client.Preferences.UI
 
         private void UpdateFlavorTextEdit()
         {
-            if(_flavorTextEdit != null)
-            {
-                _flavorTextEdit.Text = Profile?.FlavorText ?? "";
-            }
+            _flavorTextEdit.Text = Profile?.FlavorText ?? "";
         }
 
         private void UpdateAgeEdit()
@@ -1130,12 +1127,9 @@ namespace Content.Client.Preferences.UI
                     Stretch = TextureRect.StretchMode.KeepCentered
                 };
 
-                if (job.Icon != null)
-                {
-                    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
-                        job.Icon);
-                    icon.Texture = specifier.Frame0();
-                }
+                var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/job_icons.rsi"),
+                    job.Icon);
+                icon.Texture = specifier.Frame0();
 
                 _requirementsLabel = new Label()
                 {

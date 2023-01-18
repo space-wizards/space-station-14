@@ -79,13 +79,6 @@ namespace Content.Server.Preferences.Managers
             var profile = message.Profile;
             var userId = message.MsgChannel.UserId;
 
-            if (profile == null)
-            {
-                Logger.WarningS("prefs",
-                    $"User {userId} sent a {nameof(MsgUpdateCharacter)} with a null profile in slot {slot}.");
-                return;
-            }
-
             if (!_cachedPlayerPrefs.TryGetValue(userId, out var prefsData) || !prefsData.PrefsLoaded)
             {
                 Logger.WarningS("prefs", $"User {userId} tried to modify preferences before they loaded.");

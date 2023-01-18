@@ -28,9 +28,6 @@ namespace Content.Server.Armor
 
         private void GetArmorPrice(EntityUid uid, ArmorComponent component, ref PriceCalculationEvent args)
         {
-            if (component.Modifiers == null)
-                return;
-
             double price = 0;
 
             foreach (var modifier in component.Modifiers.Coefficients)
@@ -74,14 +71,9 @@ namespace Content.Server.Armor
 
             var armorModifiers = component.Modifiers;
 
-            if (armorModifiers == null)
-                return;
-
             var examineMarkup = GetArmorExamine(armorModifiers);
 
             _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
-
-            return;
         }
 
         private static FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)

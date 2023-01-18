@@ -634,11 +634,11 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
-            _explosionData.Add(new()
+            _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
-                Lookup = entMan.GetComponent<BroadphaseComponent>(((Component) grid.Grid).Owner),
-                MapGrid = grid.Grid
+                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
+                MapGrid = grid.Grid,
             });
         }
 

@@ -15,24 +15,22 @@ namespace Content.Server.Ghost
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
+            if (shell.Player is not IPlayerSession player)
             {
-                shell?.WriteLine("You have no session, you can't ghost.");
+                shell.WriteLine("You have no session, you can't ghost.");
                 return;
             }
 
             var mind = player.ContentData()?.Mind;
             if (mind == null)
             {
-                shell?.WriteLine("You have no Mind, you can't ghost.");
+                shell.WriteLine("You have no Mind, you can't ghost.");
                 return;
             }
 
-            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true, viaCommand:true))
+            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true, viaCommand: true))
             {
-                shell?.WriteLine("You can't ghost right now.");
-                return;
+                shell.WriteLine("You can't ghost right now.");
             }
         }
     }

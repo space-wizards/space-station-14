@@ -51,7 +51,6 @@ namespace Content.Client.Chemistry.UI
         public void UpdateReagentsList(List<string> inventory)
         {
             if (ChemicalList == null) return;
-            if (inventory == null) return;
 
             ChemicalList.Children.Clear();
 
