@@ -1,31 +1,23 @@
 # Desert
-- type: biome
-  id: Desert
-  layers:
-    - !type:BiomeEntityLayer
-      threshold: 0.9
-      frequency: 0.2
-      allowedTiles:
-        - FloorDesert
-      entities:
-        - AsteroidRock
-    - !type:BiomeTileLayer
-      threshold: 0
-      variants:
-        - 0
-      tile: FloorDesert
-    - !type:BiomeTileLayer
-      threshold: 0.6
-      tile: FloorDesert
-      frequency: 0.1
-
 # TODO: Sandstone wall
 # TODO: Rock decals
+# TODO: Don't normalise from 0-1
+# TODO: Performance
 # TODO: Water in grasslands
 # TODO: Water in desert / grass?
 - type: biome
   id: LowDesert
   layers:
+    - !type:BiomeEntityLayer
+      threshold: 0.99
+      frequency: 1
+      seedOffset: 1
+      allowedTiles:
+        - FloorLowDesert
+      entities:
+        - FloraRockSolid01
+        - FloraRockSolid02
+        - FloraRockSolid03
     - !type:BiomeEntityLayer
       threshold: 0.9
       frequency: 0.2

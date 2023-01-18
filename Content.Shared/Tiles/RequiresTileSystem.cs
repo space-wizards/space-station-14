@@ -17,9 +17,6 @@ public sealed class RequiresTileSystem : EntitySystem
             return;
 
         var anchored = grid.GetAnchoredEntitiesEnumerator(ev.NewTile.GridIndices);
-        if (anchored.Equals(AnchoredEntitiesEnumerator.Empty))
-            return;
-
         var query = GetEntityQuery<RequiresTileComponent>();
 
         while (anchored.MoveNext(out var ent))
