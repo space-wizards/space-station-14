@@ -1,10 +1,4 @@
 Entries:
-- author: Cheackraze
-  changes:
-  - {message: Added Kettle!, type: Add}
-  - {message: Removed Meta, type: Remove}
-  id: 2406
-  time: '2022-10-09T02:27:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Melee range has been temporarily standardised from 1m centre distance
@@ -2939,3 +2933,10 @@ Entries:
   - {message: Makes mobs visually float when there is no gravity, type: Add}
   id: 2905
   time: '2023-01-17T22:01:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Buffed containment particles for A.P.E.s, type: Tweak}
+  - {message: Fixed some text formatting issues on various anomaly equipment., type: Fix}
+  - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
+  id: 2906
+  time: '2023-01-18T00:38:12.0000000+00:00'
