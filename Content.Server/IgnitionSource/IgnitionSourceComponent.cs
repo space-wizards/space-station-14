@@ -7,9 +7,9 @@
 [Access(typeof(IgnitionSourceSystem))]
 public sealed class IgnitionSourceComponent : Component
 {
-    [DataField("state")]
-    public bool State = false;
+    [DataField("ignited")]
+    public bool Ignited = false;
 
     [DataField("temperature")]
-    public int emperature;
+    public int Temperature;
 }

@@ -44,7 +44,7 @@
       netsync: false
     - type: IgnitionSource
       temperature: 400
-      state: true
+      ignited: false
     - type: LightBehaviour
       behaviours:
         - !type:RandomizeBehaviour # immediately make it bright and flickery

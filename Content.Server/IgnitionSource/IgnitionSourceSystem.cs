@@ -19,16 +19,9 @@ public sealed class IgnitionSourceSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
 
-
-    public override void Initialize()
+    private void SetIgnited(EntityUid uid, IgnitionSourceComponent component, bool newState)
     {
-        // ? does this need to exist
-    }
-
-
-    public void SetState(EntityUid uid, IgnitionSourceComponent component, bool newState)
-    {
-        component.State = newState;
+        component.Ignited = newState;
     }
 
     public override void Update(float frameTime)
@@ -43,21 +36,20 @@ public sealed class IgnitionSourceSystem : EntitySystem
             if(EntityManager.TryGetComponent(source, out ExpendableLightComponent? expendable))
             {
                 if (expendable.CurrentState != ExpendableLightState.Dead)
-                    SetState(source, component, true);
+                    SetIgnited(source, component, true);
 
                 if (expendable.CurrentState == ExpendableLightState.BrandNew)
-                    SetState(source, component, false);
+                    SetIgnited(source, component, false);
 
-                if (!component.State)
+                if (!component.Ignited)
                     continue;
             }
 
             if (transform.GridUid is { } gridUid)
             {
                 var position = _transformSystem.GetGridOrMapTilePosition(source, transform);
-                _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
+                _atmosphereSystem.HotspotExpose(gridUid, position, component.Temperature, 50, true);
             }
         }
     }
 }
-
