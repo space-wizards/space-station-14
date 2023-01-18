@@ -195,5 +195,5 @@ ui-options-net-pvs-leave-tooltip =
     сущности вне поля зрения. Снижение этого параметра может помочь
     уменьшить "захлебывания" при ходьбе, но иногда может 
     привести к неправильным предугадываниям и другим проблемам.
-cmd-options-desc = Opens options menu, optionally with a specific tab selected.
-cmd-options-help = Usage: options [tab]
+cmd-options-desc = Открывает меню опций, опционально с конкретно выбранной вкладкой.
+cmd-options-help = Использование: options [tab]

@@ -1,12 +1,12 @@
-ent-BaseAnomaly = anomaly
-    .desc = A impossible object in space. Should you be standing this close to it?
+ent-BaseAnomaly = аномалия
+    .desc = Непостижимый объект в пространстве. Стоит ли стоять так близко к нему?
     .suffix = { "" }
 ent-AnomalyPyroclastic = { ent-BaseAnomaly }
-    .suffix = Pyroclastic
+    .suffix = Пирокластический
     .desc = { ent-BaseAnomaly.desc }
 ent-AnomalyGravity = { ent-BaseAnomaly }
-    .suffix = Gravity
+    .suffix = Гравитационный
     .desc = { ent-BaseAnomaly.desc }
 ent-AnomalyElectricity = { ent-BaseAnomaly }
-    .suffix = Electricity
+    .suffix = Электрический
     .desc = { ent-BaseAnomaly.desc }

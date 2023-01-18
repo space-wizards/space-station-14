@@ -77,5 +77,5 @@ ent-WindoorJanitorLocked = { ent-Windoor }
     .suffix = Уборщик, Закрыто
     .desc = { ent-Windoor.desc }
 ent-WindoorHeadOfPersonnelLocked = { ent-WindoorSecure }
-    .suffix = HeadOfPersonnel, Locked
+    .suffix = ГлаваПерсонала, Закрыто
     .desc = { ent-WindoorSecure.desc }

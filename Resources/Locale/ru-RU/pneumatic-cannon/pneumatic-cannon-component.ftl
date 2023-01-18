@@ -1,6 +1,6 @@
 ### Loc for the pneumatic cannon.
 
-pneumatic-cannon-component-itemslot-name = Gas Tank
+pneumatic-cannon-component-itemslot-name = Газовый баллон
 
 ## Shown when trying to fire, but no gas
 

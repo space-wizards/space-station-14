@@ -1,3 +1,3 @@
-ent-AnomalyScanner = anomaly scanner
-    .desc = A hand-held scanner built to collect information on various anomalous objects.
+ent-AnomalyScanner = сканер аномалий
+    .desc = Ручной сканер, предназначенный для получения информации о различных аномальных объектах.
     .suffix = { "" }
