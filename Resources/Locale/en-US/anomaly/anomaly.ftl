@@ -1,3 +1,5 @@
+anomaly-component-contact-damage = The anomaly sears off your skin!
+
 anomaly-vessel-component-anomaly-assigned = Anomaly assigned to vessel.
 anomaly-vessel-component-not-assigned = This vessel is not assigned to any anomaly. Try using a scanner on it.
 anomaly-vessel-component-assigned = This vessel is currently assigned to an anomaly.

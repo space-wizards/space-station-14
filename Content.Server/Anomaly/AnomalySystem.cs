@@ -4,12 +4,8 @@ using Content.Server.Audio;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
-using Content.Server.Popups;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
-using Content.Shared.Damage;
-using Content.Shared.Interaction;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
@@ -22,11 +18,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -41,29 +35,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         SubscribeLocalEvent<AnomalyComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AnomalyComponent, StartCollideEvent>(OnStartCollide);
 
-        SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
-
         InitializeGenerator();
         InitializeScanner();
         InitializeVessel();
-    }
-
-    private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)
-    {
-        DoAnomalyBurnDamage(uid, args.User, component);
-        args.Handled = true;
-    }
-
-    private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
-    {
-        DoAnomalyBurnDamage(uid, args.User, component);
-    }
-
-    public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
-    {
-        Audio.PlayPvs(component.AnomalyContactDamageSound, source);
-        _damageable.TryChangeDamage(target, component.AnomalyContactDamage, true);
     }
 
     private void OnMapInit(EntityUid uid, AnomalyComponent component, MapInitEvent args)
