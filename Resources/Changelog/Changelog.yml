@@ -1,9 +1,4 @@
 Entries:
-- author: FunkySphere
-  changes:
-  - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
-  id: 2408
-  time: '2022-10-09T05:30:43.0000000+00:00'
 - author: vulppine
   changes:
   - {message: NanoTrasen has supplied your stations with better routers! The static
@@ -2939,3 +2934,8 @@ Entries:
     type: Fix}
   id: 2907
   time: '2023-01-18T06:15:53.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Wizard ship, type: Add}
+  id: 2908
+  time: '2023-01-18T08:09:50.0000000+00:00'
