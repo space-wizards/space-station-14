@@ -2,7 +2,7 @@
   abstract: true
   id: BaseAnomaly
   name: anomaly
-  description: A impossible object in space. Should you be standing this close to it?
+  description: An impossible object. Should you be standing this close to it?
   components:
   - type: Anomaly
     pulseSound:

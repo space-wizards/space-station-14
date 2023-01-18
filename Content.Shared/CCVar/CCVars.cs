@@ -406,13 +406,13 @@ namespace Content.Shared.CCVar
         ///     (i.e. postround or lobby)
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyOutOfRound =
-            CVarDef.Create("tips.out_of_game_frequency", 60f * 2);
+            CVarDef.Create("tips.out_of_game_frequency", 60f * 1.5f);
 
         /// <summary>
         ///     The number of seconds between each tip being displayed when the round is actively going
         /// </summary>
         public static readonly CVarDef<float> TipFrequencyInRound =
-            CVarDef.Create("tips.in_game_frequency", 60f * 30);
+            CVarDef.Create("tips.in_game_frequency", 60f * 60);
 
         /*
          * Console
@@ -1134,6 +1134,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> BiomassEasyMode =
             CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
+
+        /*
+         * Anomaly
+         */
+
+        /// <summary>
+        ///     A scale factor applied to a grid's bounds when trying to find a spot to randomly generate an anomaly.
+        /// </summary>
+        public static readonly CVarDef<float> AnomalyGenerationGridBoundsScale =
+            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT

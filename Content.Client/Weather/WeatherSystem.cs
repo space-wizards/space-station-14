@@ -149,7 +149,6 @@ public sealed class WeatherSystem : SharedWeatherSystem
             _lastAlpha += (alpha - _lastAlpha) * AlphaLerpRate * frameTime;
 
         // Full volume if not on grid
-        Sawmill.Debug($"Setting alpha to {alpha:0.000}");
         stream.Source.SetVolumeDirect(_lastAlpha);
         stream.Source.SetOcclusion(_lastOcclusion);
     }
