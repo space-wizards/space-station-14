@@ -40,6 +40,10 @@ public sealed partial class MarkingPicker : Control
     public Color? CurrentHairColor;
     public Color? CurrentFacialHairColor;
 
+    // If hair color must be skin color
+    public bool SkinHairColor = false;
+    public bool SkinFacialHairColor = false;
+
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
 
     public string IgnoreCategories
@@ -431,8 +435,8 @@ public sealed partial class MarkingPicker : Control
                 marking,
                 CurrentSkinColor,
                 CurrentEyeColor,
-                CurrentHairColor,
-                CurrentFacialHairColor
+                SkinHairColor ? CurrentSkinColor : CurrentHairColor,
+                SkinFacialHairColor ? CurrentSkinColor : CurrentFacialHairColor
             );
             for (var i = 0; i < colors.Count; i++)
             {

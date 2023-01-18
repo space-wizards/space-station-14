@@ -123,13 +123,21 @@ public sealed partial class HumanoidSystem : SharedHumanoidSystem
         humanoid.Age = profile.Age;
         
         // Caching hair and facial hair colors from their markings
-        if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+        {
+            if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
                 hairMarkings.Count > 0)
             humanoid.CachedHairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else humanoid.CachedHairColor = profile.Appearance.SkinColor;
         
-        if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
+        {
+            if (humanoid.CurrentMarkings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
                 facialHairMarkings.Count > 0)
             humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else humanoid.CachedFacialHairColor = profile.Appearance.SkinColor;
         
         if (humanoid.CustomBaseLayers.TryGetValue(HumanoidVisualLayers.Eyes, out var eyes))
             humanoid.CachedEyeColor = eyes.Color;

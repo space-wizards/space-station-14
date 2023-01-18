@@ -50,24 +50,34 @@ public sealed class HumanoidSystem : SharedHumanoidSystem
         markings.RemoveCategory(MarkingCategories.Hair);
         markings.RemoveCategory(MarkingCategories.FacialHair);
 
-        Color? hairColor = null;
         var hair = new Marking(profile.Appearance.HairStyleId, new[] { profile.Appearance.HairColor });
         markings.AddBack(MarkingCategories.Hair, hair);
 
-        Color? facialHairColor = null;
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
             new[] { profile.Appearance.FacialHairColor });
         markings.AddBack(MarkingCategories.FacialHair, facialHair);
 
         markings.FilterSpecies(profile.Species, _markingManager, _prototypeManager);
 
-        if (markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+        // hair colors
+        Color? hairColor = null;
+        if (!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+        {
+            if (markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
                 hairMarkings.Count > 0)
             hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-        if (markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+        }
+        else hairColor = profile.Appearance.SkinColor;
+
+        Color? facialHairColor = null;
+        if (!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+        {
+            if (markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
                 facialHairMarkings.Count > 0)
             facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-
+        }
+        else facialHairColor = profile.Appearance.SkinColor;
+        
         SetAppearance(uid,
             profile.Species,
             customBaseLayers,
