@@ -73,7 +73,7 @@ namespace Content.Shared.Humanoid.Markings
                 return 1;
             }
 
-            return string.Compare(MarkingId, marking.MarkingId, StringComparison.InvariantCulture);
+            return string.Compare(MarkingId, marking.MarkingId, StringComparison.Ordinal);
         }
 
         public int CompareTo(string? markingId)
@@ -81,7 +81,7 @@ namespace Content.Shared.Humanoid.Markings
             if (markingId == null)
                 return 1;
 
-            return string.Compare(MarkingId, markingId, StringComparison.InvariantCulture);
+            return string.Compare(MarkingId, markingId, StringComparison.Ordinal);
         }
 
         public bool Equals(Marking? other)

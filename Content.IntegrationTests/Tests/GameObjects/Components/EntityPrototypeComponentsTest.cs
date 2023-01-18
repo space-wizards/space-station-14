@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                 .ToList()
                 .AsParallel()
                 .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith(".", StringComparison.InvariantCulture))
+                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();

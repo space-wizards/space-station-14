@@ -94,7 +94,7 @@ namespace Content.Shared.Chemistry.Reaction
             if (Products.Count != other.Products.Count)
                 return Products.Count - other.Products.Count;
 
-            return string.Compare(ID, other.ID, StringComparison.InvariantCulture);
+            return string.Compare(ID, other.ID, StringComparison.Ordinal);
         }
     }
 
