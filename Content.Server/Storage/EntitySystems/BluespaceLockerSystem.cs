@@ -37,7 +37,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
     {
-        GetTarget(uid, component);
+        GetTarget(uid, component, true);
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component, component, true);
@@ -194,7 +194,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return true;
     }
 
-    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component)
+    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component, bool init = false)
     {
         while (true)
         {
@@ -245,7 +245,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // If there are no possible link targets and no links, return null
             if (component.BluespaceLinks.Count == 0)
             {
-                if (component.MinBluespaceLinks == 0)
+                if (component.MinBluespaceLinks == 0 && init)
                     RemComp<BluespaceLockerComponent>(lockerUid);
 
                 return null;
