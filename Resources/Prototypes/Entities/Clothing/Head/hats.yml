@@ -560,6 +560,8 @@
     permissions:
       - Admin
       
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatBeretCmo
   name: chief medical officer's beret
   description: Turquoise beret with a cross on the front. The sight of it calms you down and makes it clear that you will be cured.
