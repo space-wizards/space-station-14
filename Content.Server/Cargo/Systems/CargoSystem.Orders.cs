@@ -291,7 +291,7 @@ namespace Content.Server.Cargo.Systems
         {
             // We need an arbitrary unique ID to idenitfy orders, since they may
             // want to be cancelled later.
-            return orderDB.NumOrdersCreated++;
+            return ++orderDB.NumOrdersCreated;
         }
 
         public void RemoveOrder(StationCargoOrderDatabaseComponent orderDB, int index)
@@ -345,12 +345,12 @@ namespace Content.Server.Cargo.Systems
                 if (TryComp<PaperComponent>(printed, out var paper))
                 {
                     // fill in the order data
-                    var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.PrintableOrderNumber));
+                    var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderId));
                     MetaData(printed).EntityName = val;
 
                     _paperSystem.SetContent(printed, Loc.GetString(
                                 "cargo-console-paper-print-text",
-                                ("orderNumber", order.PrintableOrderNumber),
+                                ("orderNumber", order.OrderId),
                                 ("itemName", MetaData(item).EntityName),
                                 ("requester", order.Requester),
                                 ("reason", order.Reason),

@@ -12,11 +12,6 @@ namespace Content.Shared.Cargo
         public readonly int OrderId;
 
         /// <summary>
-        /// The human-readable number, when displaying this order
-        /// </summary>
-        public int PrintableOrderNumber { get { return OrderId + 1; } }
-
-        /// <summary>
         /// Prototype id for the item to create
         /// </summary>
         public readonly string ProductId;
