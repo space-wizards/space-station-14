@@ -1,6 +1,0 @@
-- type: gameMap
-  id: Wizard
-  mapName: 'Wizard Ship'
-  mapPath: /Maps/wizard.yml
-  minPlayers: 0
-  stations: {}
