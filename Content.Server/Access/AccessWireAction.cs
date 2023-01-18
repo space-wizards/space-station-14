@@ -13,6 +13,11 @@ public sealed class AccessWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "ACC";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
@@ -39,6 +44,7 @@ public sealed class AccessWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
@@ -50,6 +56,7 @@ public sealed class AccessWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
             access.Enabled = true;
@@ -60,6 +67,7 @@ public sealed class AccessWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
         {
             access.Enabled = false;

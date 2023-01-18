@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using System.Net.Mail;
 
 namespace Content.Shared.Lathe;
 
@@ -50,15 +51,16 @@ public abstract class SharedLatheSystem : EntitySystem
 
         foreach (var (material, needed) in recipe.RequiredMaterials)
         {
-            var adjustedAmount = recipe.ApplyMaterialDiscount
-                ? (int) (needed * component.MaterialUseMultiplier)
-                : needed;
+            var adjustedAmount = AdjustMaterial(needed, recipe.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
             if (_materialStorage.GetMaterialAmount(component.Owner, material) < adjustedAmount * amount)
                 return false;
         }
         return true;
     }
+
+    public static int AdjustMaterial(int original, bool reduce, float multiplier)
+        => reduce ? (int) MathF.Ceiling(original * multiplier) : original;
 
     protected abstract bool HasRecipe(EntityUid uid, LatheRecipePrototype recipe, LatheComponent component);
 }

@@ -197,6 +197,9 @@ binds:
 - function: OpenCraftingMenu
   type: State
   key: G
+- function: OpenGuidebook
+  type: State
+  key: NumpadNum0
 - function: OpenAHelp
   type: State
   key: F1

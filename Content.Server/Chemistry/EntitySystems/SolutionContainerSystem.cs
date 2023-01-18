@@ -35,6 +35,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     [Dependency]
     private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
 
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -98,9 +100,8 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             || !Resolve(uid, ref appearanceComponent, false))
             return;
 
-        var filledVolumePercent = solution.FillFraction * 100;
-        appearanceComponent.SetData(SolutionContainerVisuals.VisualState,
-            new SolutionContainerVisualState(solution.GetColor(_prototypeManager), filledVolumePercent));
+        _appearance.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
+        _appearance.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
     }
 
     /// <summary>

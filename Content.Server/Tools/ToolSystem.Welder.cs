@@ -161,6 +161,9 @@ namespace Content.Server.Tools
             var ev = new WelderToggledEvent(false);
             RaiseLocalEvent(welder.Owner, ev, false);
 
+            var hotEvent = new IsHotEvent() {IsHot = false};
+            RaiseLocalEvent(uid, hotEvent);
+
             // Layer 1 is the flame.
             _appearanceSystem.SetData(uid, WelderVisuals.Lit, false);
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, false);
@@ -219,6 +222,8 @@ namespace Content.Server.Tools
             args.Handled = TryToggleWelder(uid, args.User, welder);
             if (args.Handled)
                 args.WasLogged = true;
+            var hotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, hotEvent);
         }
 
         private void OnWelderAfterInteract(EntityUid uid, WelderComponent welder, AfterInteractEvent args)
@@ -328,6 +333,7 @@ namespace Content.Server.Tools
             if (_welderTimer < WelderUpdateTimer)
                 return;
 
+
             // TODO Use an "active welder" component instead, EntityQuery over that.
             foreach (var tool in _activeWelders.ToArray())
             {
@@ -338,12 +344,6 @@ namespace Content.Server.Tools
 
                 if (!_solutionContainerSystem.TryGetSolution(tool, welder.FuelSolution, out var solution, solutionContainer))
                     continue;
-
-                if (transform.GridUid is { } gridUid)
-                {
-                    var position = _transformSystem.GetGridOrMapTilePosition(tool, transform);
-                    _atmosphereSystem.HotspotExpose(gridUid, position, 700, 50, true);
-                }
 
                 solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 

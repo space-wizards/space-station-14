@@ -1,0 +1,11 @@
+﻿- type: guideEntry
+  id: Science
+  name: guide-entry-science
+  text: "/Server Info/Guidebook/Science.xml"
+  children:
+  - MachineUpgrading
+
+- type: guideEntry
+  id: MachineUpgrading
+  name: guide-entry-machine-upgrading
+  text: "/Server Info/Guidebook/MachineUpgrading.xml"

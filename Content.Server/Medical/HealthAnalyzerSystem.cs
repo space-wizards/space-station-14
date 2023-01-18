@@ -6,7 +6,7 @@ using Content.Server.Popups;
 using Content.Shared.Damage;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Audio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;

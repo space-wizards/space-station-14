@@ -2,40 +2,64 @@
   name: improvised pneumatic cannon
   parent: BaseStorageItem
   id: WeaponImprovisedPneumaticCannon
-  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon. Doesn't accept tanks without enough gas.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     netsync: false
     layers:
-    - state: pneumaticCannon
-      map: [ "enum.PneumaticCannonVisualLayers.Base" ]
-    - state: oxygen
-      map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
+    - state: icon
+    - state: tank
+      map: [ "tank" ]
       visible: false
   - type: Item
     size: 50
   - type: Clothing
-    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     quickEquip: false
     slots:
     - Back
+  - type: Gun
+    fireRate: 2
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+  - type: ContainerAmmoProvider
+    container: storagebase
   - type: PneumaticCannon
   - type: Storage
-    # todo mirror pneum replace with ecs/evnts
-    clickInsert: false
     capacity: 30
   - type: Appearance
-    visuals:
-    - type: PneumaticCannonVisualizer
+  - type: ItemMapper
+    containerWhitelist: [gas_tank]
+    mapLayers:
+      tank:
+        whitelist:
+          components:
+          - GasTank
   - type: Construction
     graph: PneumaticCannon
     node: cannon
+  - type: ItemSlots
+    slots:
+      gas_tank:
+        name: pneumatic-cannon-component-itemslot-name
+        whitelist:
+          components:
+          - GasTank
+        insertSound:
+          path: /Audio/Weapons/click.ogg
+          params:
+            volume: -3
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
         ents: []
-      PneumaticCannon-gasTank: !type:ContainerSlot
+      gas_tank: !type:ContainerSlot
 
 - type: entity
   name: pie cannon
@@ -51,13 +75,19 @@
     whitelist:
       components:
       - CreamPie
-    clickInsert: false
     capacity: 40
-  - type: PneumaticCannon
-    gasTankRequired: false
-    throwStrength: 30
-    baseThrowRange: 12
-    fireInterval: 0.4
+  - type: Gun
+    fireRate: 1
+    selectedMode: SemiAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Effects/thunk.ogg
+    soundEmpty:
+      path: /Audio/Items/hiss.ogg
+  - type: ContainerAmmoProvider
+    container: storagebase
   - type: Item
     size: 50
   - type: Clothing
@@ -69,4 +99,3 @@
     containers:
       storagebase: !type:Container
         ents: []
-      PneumaticCannon-gasTank: !type:ContainerSlot
