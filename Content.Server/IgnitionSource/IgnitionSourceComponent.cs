@@ -10,6 +10,6 @@ public sealed class IgnitionSourceComponent : Component
     [DataField("ignited")]
     public bool Ignited = false;
 
-    [DataField("temperature")]
+    [DataField("temperature", required = true)]
     public int Temperature;
 }
