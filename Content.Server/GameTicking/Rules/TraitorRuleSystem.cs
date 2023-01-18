@@ -5,9 +5,10 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.MobState;
+using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -26,7 +27,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
@@ -168,6 +169,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             return false;
         }
 
+        if (mind.OwnedEntity is not { } entity)
+        {
+            Logger.ErrorS("preset", "Mind picked for traitor did not have an attached entity.");
+            return false;
+        }
+
         // creadth: we need to create uplink for the antag.
         // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
@@ -185,6 +192,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         mind.AddRole(traitorRole);
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
+
+        _faction.RemoveFaction(entity, "NanoTrasen", false);
+        _faction.AddFaction(entity, "Syndicate");
 
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
         var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);

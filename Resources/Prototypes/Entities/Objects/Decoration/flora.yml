@@ -37,6 +37,7 @@
   description: Yep, it's a tree.
   abstract: true
   components:
+  - type: SpriteFade
   - type: Clickable
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_trees.rsi

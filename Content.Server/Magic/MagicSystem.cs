@@ -3,7 +3,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.DoAfter;
-using Content.Server.Doors.Components;
+using Content.Server.Doors.Systems;
 using Content.Server.Magic.Events;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Actions;
@@ -20,10 +20,10 @@ using Content.Shared.Storage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Magic;
 
@@ -32,9 +32,12 @@ namespace Content.Server.Magic;
 /// </summary>
 public sealed class MagicSystem : EntitySystem
 {
+    [Dependency] private readonly ISerializationManager _seriMan = default!;
+    [Dependency] private readonly IComponentFactory _compFact = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
@@ -43,6 +46,7 @@ public sealed class MagicSystem : EntitySystem
     [Dependency] private readonly GunSystem _gunSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -58,6 +62,7 @@ public sealed class MagicSystem : EntitySystem
         SubscribeLocalEvent<SmiteSpellEvent>(OnSmiteSpell);
         SubscribeLocalEvent<WorldSpawnSpellEvent>(OnWorldSpawn);
         SubscribeLocalEvent<ProjectileSpellEvent>(OnProjectileSpell);
+        SubscribeLocalEvent<ChangeComponentsSpellEvent>(OnChangeComponentsSpell);
     }
 
     private void OnDoAfter(EntityUid uid, SpellbookComponent component, DoAfterEvent args)
@@ -165,6 +170,27 @@ public sealed class MagicSystem : EntitySystem
         }
     }
 
+    private void OnChangeComponentsSpell(ChangeComponentsSpellEvent ev)
+    {
+        foreach (var toRemove in ev.ToRemove)
+        {
+            if (_compFact.TryGetRegistration(toRemove, out var registration))
+                RemComp(ev.Target, registration.Type);
+        }
+
+        foreach (var (name, data) in ev.ToAdd)
+        {
+            if (HasComp(ev.Target, data.Component.GetType()))
+                continue;
+
+            var component = (Component) _compFact.GetComponent(name);
+            component.Owner = ev.Target;
+            var temp = (object) component;
+            _seriMan.CopyTo(data.Component, ref temp);
+            EntityManager.AddComponent(ev.Target, (Component) temp!);
+        }
+    }
+
     private List<EntityCoordinates> GetSpawnPositions(TransformComponent casterXform, MagicSpawnData data)
     {
         switch (data)
@@ -238,7 +264,7 @@ public sealed class MagicSystem : EntitySystem
 
         _transformSystem.SetCoordinates(args.Performer, args.Target);
         transform.AttachToGridOrMap();
-        SoundSystem.Play(args.BlinkSound.GetSound(), Filter.Pvs(args.Target), args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
+        _audio.PlayPvs(args.BlinkSound, args.Performer, AudioParams.Default.WithVolume(args.BlinkVolume));
         args.Handled = true;
     }
 
@@ -255,13 +281,13 @@ public sealed class MagicSystem : EntitySystem
         var transform = Transform(args.Performer);
         var coords = transform.Coordinates;
 
-        SoundSystem.Play(args.KnockSound.GetSound(), Filter.Pvs(coords), args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
+        _audio.PlayPvs(args.KnockSound, args.Performer, AudioParams.Default.WithVolume(args.KnockVolume));
 
         //Look for doors and don't open them if they're already open.
         foreach (var entity in _lookup.GetEntitiesInRange(coords, args.Range))
         {
             if (TryComp<AirlockComponent>(entity, out var airlock))
-                airlock.BoltsDown = false;
+                _airlock.SetBoltsDown(entity, airlock, false);
 
             if (TryComp<DoorComponent>(entity, out var doorComp) && doorComp.State is not DoorState.Open)
                 _doorSystem.StartOpening(doorComp.Owner);
@@ -277,7 +303,8 @@ public sealed class MagicSystem : EntitySystem
 
         var direction = Transform(ev.Target).MapPosition.Position - Transform(ev.Performer).MapPosition.Position;
         var impulseVector = direction * 10000;
-        Comp<PhysicsComponent>(ev.Target).ApplyLinearImpulse(impulseVector);
+
+        _physics.ApplyLinearImpulse(ev.Target, impulseVector);
 
         if (!TryComp<BodyComponent>(ev.Target, out var body))
             return;

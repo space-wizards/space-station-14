@@ -73,7 +73,7 @@ namespace Content.Client.Fluids
                 bool wetFloorEffectNeeded;
 
                 if (isEvaporating
-                    && currentVolume < component.WetFloorEffectThreshold)
+                    && currentVolume <= component.WetFloorEffectThreshold)
                 {
                     wetFloorEffectNeeded = true;
                 }

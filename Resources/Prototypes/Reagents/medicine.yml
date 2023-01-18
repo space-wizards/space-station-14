@@ -227,9 +227,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         - !type:ReagentThreshold
           min: 0
           max: 20
@@ -506,7 +506,11 @@
   metabolisms:
     Medicine:
       effects:
-        - !type:ChemCureDisease
+      - !type:ChemCureDisease
+      - !type:HealthChange
+        damage:
+          types:
+            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

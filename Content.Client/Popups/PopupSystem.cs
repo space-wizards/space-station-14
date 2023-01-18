@@ -39,7 +39,7 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             _overlay
-                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _prototype, _resource, _uiManager, this));
+                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this));
         }
 
         public override void Shutdown()
@@ -109,13 +109,13 @@ namespace Content.Client.Popups
         public override void PopupEntity(string message, EntityUid uid, EntityUid recipient, PopupType type = PopupType.Small)
         {
             if (_playerManager.LocalPlayer?.ControlledEntity == recipient)
-                PopupCursor(message, type);
+                PopupEntity(message, uid, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, ICommonSession recipient, PopupType type = PopupType.Small)
         {
             if (_playerManager.LocalPlayer?.Session == recipient)
-                PopupCursor(message, type);
+                PopupEntity(message, uid, type);
         }
 
         public override void PopupEntity(string message, EntityUid uid, Filter filter, bool recordReplay, PopupType type=PopupType.Small)

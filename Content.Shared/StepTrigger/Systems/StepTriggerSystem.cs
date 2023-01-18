@@ -1,6 +1,7 @@
 using Content.Shared.StepTrigger.Components;
 using Robust.Shared.Collections;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 
@@ -16,6 +17,18 @@ public sealed class StepTriggerSystem : EntitySystem
         SubscribeLocalEvent<StepTriggerComponent, ComponentHandleState>(TriggerHandleState);
 
         SubscribeLocalEvent<StepTriggerComponent, StartCollideEvent>(HandleCollide);
+#if DEBUG
+        SubscribeLocalEvent<StepTriggerComponent, ComponentStartup>(OnStartup);
+    }
+
+    private void OnStartup(EntityUid uid, StepTriggerComponent component, ComponentStartup args)
+    {
+        if (!component.Active)
+            return;
+
+        if (!TryComp(uid, out FixturesComponent? fixtures) || fixtures.FixtureCount == 0)
+            Logger.Warning($"{ToPrettyString(uid)} has an active step trigger without any fixtures.");
+#endif
     }
 
     public override void Update(float frameTime)

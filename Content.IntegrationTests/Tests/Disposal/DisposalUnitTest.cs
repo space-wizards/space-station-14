@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                     var insertTransform = EntityManager.GetComponent<TransformComponent>(toInsert);
                     var unitTransform = EntityManager.GetComponent<TransformComponent>(unit);
                     // Not in a tube yet
-                    Assert.That(insertTransform.Parent, Is.EqualTo(unitTransform));
+                    Assert.That(insertTransform.ParentUid, Is.EqualTo(unit));
                 }, after: new[] {typeof(SharedDisposalUnitSystem)});
             }
         }
@@ -79,6 +79,11 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Body
     prototype: Human
   - type: MobState
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      100: Critical
+      200: Dead
   - type: Damageable
     damageContainer: Biological
   - type: Physics

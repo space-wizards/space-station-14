@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Content.Client.Actions;
 using Content.Client.Construction;
@@ -224,7 +224,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
             _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
@@ -256,7 +256,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
                 action.Event.Performer = user;
             }
 
-            _actionsSystem.PerformAction(actionComp, action, action.Event, _timing.CurTime);
+            _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
             _entities.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));

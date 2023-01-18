@@ -18,9 +18,9 @@ namespace Content.Server.Actions
             base.Initialize();
         }
 
-        protected override bool PerformBasicActions(EntityUid user, ActionType action)
+        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
         {
-            var result = base.PerformBasicActions(user, action);
+            var result = base.PerformBasicActions(user, action, predicted);
 
             if (!string.IsNullOrWhiteSpace(action.Speech))
             {

@@ -29,7 +29,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true))
+            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true, viaCommand:true))
             {
                 shell?.WriteLine("You can't ghost right now.");
                 return;

@@ -33,6 +33,102 @@
   - type: Recyclable
 
 - type: entity
+  name: office paper
+  parent: Paper
+  id: PaperOffice
+  description: 'A plain sheet of office paper.'
+  components:
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+
+- type: entity
+  name: artifact analyzer printout
+  parent: Paper
+  id: PaperArtifactAnalyzer
+  description: 'The readout of a device forgotten to time'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper_dotmatrix
+    - state: paper_dotmatrix_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_artifact_analyzer.svg.96dpi.png"
+    headerMargin: 0.0, 0.0, 0.0, 16.0
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_dotmatrix.svg.96dpi.png"
+    backgroundImageTile: true
+    backgroundPatchMargin: 37.0, 0.0, 37.0, 0.0
+    contentImagePath: "/Textures/Interface/Paper/paper_content_dotmatrix.svg.96dpi.png"
+    contentImageNumLines: 2
+    contentMargin: 16.0, 16.0, 16.0, 0.0
+    # Make this a wide dot-matrix printer
+    maxWritableArea: 400.0, 0.0
+
+- type: entity
+  name: captain's thoughts
+  parent: Paper
+  id: PaperCaptainsThoughts
+  description: "A page of the captain's journal. In luxurious lavender."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper
+      color: "#e6e6fa"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#e6e6fa"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_captains_thoughts.svg.96dpi.png"
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    backgroundModulate: "#e6e6fa"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: cargo invoice
+  parent: Paper
+  id: PaperCargoInvoice
+  description: 'A single unit of bureaucracy.'
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
+    layers:
+    - state: paper
+      color: "#f7e574"
+    - state: paper_words
+      map: ["enum.PaperVisualLayers.Writing"]
+      color: "#f7e574"
+      visible: false
+    - state: paper_stamp-generic
+      map: ["enum.PaperVisualLayers.Stamp"]
+      visible: false
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+    contentImagePath: "/Textures/Interface/Paper/paper_content_lined.svg.96dpi.png"
+    backgroundModulate: "#f7e574"
+    contentImageModulate: "#f7e574"
+    backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+    contentMargin: 16.0, 16.0, 16.0, 16.0
+    headerImagePath: "/Textures/Interface/Paper/paper_heading_cargo_invoice.svg.96dpi.png"
+    headerMargin: 0.0, 12.0, 0.0, 0.0
+
+- type: entity
   parent: Paper
   id: PaperWritten
   noSpawn: true
@@ -171,11 +267,11 @@
     contents:
       - id: Paper
         prob: 0.5
-      - id: Paper
+      - id: PaperOffice
         prob: 0.4
       - id: Paper
         prob: 0.3
-      - id: Paper
+      - id: PaperOffice
         prob: 0.2
       - id: Paper
         prob: 0.2
