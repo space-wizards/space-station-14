@@ -1,5 +1,7 @@
 using System.Linq;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Systems;
+using Content.Server.Chat.Managers;
 using Content.Server.Mind.Components;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
@@ -20,6 +22,7 @@ namespace Content.Server.AME.Components
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IChatManager _chat = default!;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
         private bool _injecting;
@@ -183,6 +186,19 @@ namespace Content.Server.AME.Components
 
                 if (msg.Button == UiButton.ToggleInjection)
                     _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to {humanReadableState}");
+
+                // Admin alert
+                if (mindComponent.HasMind)
+                {
+                    var adminSystem = _entities.System<AdminSystem>();
+                    var antag = mindComponent.Mind!.UserId != null
+                                && adminSystem.PlayerList.ContainsKey(mindComponent.Mind!.UserId.Value)
+                                && adminSystem.PlayerList[mindComponent.Mind!.UserId.Value].Antag;
+                    if (GetCoreCount() * 2 == InjectionAmount - 2
+                        && msg.Button == UiButton.IncreaseFuel)
+                        _chat.SendAdminAlert(
+                            $"{mindComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} increased AME over safe limit to {InjectionAmount}");
+                }
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals();
