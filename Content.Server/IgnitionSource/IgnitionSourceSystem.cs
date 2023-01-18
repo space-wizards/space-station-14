@@ -1,23 +1,31 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Light.Components;
-using Content.Shared.Light.Component;
+﻿using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
-using Serilog;
 
 namespace Content.Server.IgnitionSource;
 
 /// <summary>
-/// This handles ignition
+/// This handles ignition, Jez basically coded this.
 /// </summary>
+///
 public sealed class IgnitionSourceSystem : EntitySystem
 {
     /// <inheritdoc/>
     ///
-
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly TransformSystem _transformSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<IgnitionSourceComponent,IsHotEvent>(OnIsHot);
+    }
+
+    private void OnIsHot(EntityUid uid, IgnitionSourceComponent component, IsHotEvent args)
+    {
+        Logger.Debug(args.IsHot.ToString());
+        SetIgnited(uid,component,args.IsHot);
+    }
 
     private void SetIgnited(EntityUid uid, IgnitionSourceComponent component, bool newState)
     {
@@ -28,22 +36,11 @@ public sealed class IgnitionSourceSystem : EntitySystem
     {
         base.Update(frameTime);
 
-
         foreach (var (component,transform) in EntityQuery<IgnitionSourceComponent,TransformComponent>())
         {
             var source = component.Owner;
-
-            if(EntityManager.TryGetComponent(source, out ExpendableLightComponent? expendable))
-            {
-                if (expendable.CurrentState != ExpendableLightState.Dead)
-                    SetIgnited(source, component, true);
-
-                if (expendable.CurrentState == ExpendableLightState.BrandNew)
-                    SetIgnited(source, component, false);
-
-                if (!component.Ignited)
-                    continue;
-            }
+            if (!component.Ignited)
+                continue;
 
             if (transform.GridUid is { } gridUid)
             {
@@ -51,5 +48,6 @@ public sealed class IgnitionSourceSystem : EntitySystem
                 _atmosphereSystem.HotspotExpose(gridUid, position, component.Temperature, 50, true);
             }
         }
+
     }
 }

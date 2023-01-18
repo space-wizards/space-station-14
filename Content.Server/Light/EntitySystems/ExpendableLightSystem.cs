@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Tag;
+using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -153,6 +154,9 @@ namespace Content.Server.Light.EntitySystems
                             sprite.LayerSetShader(0, "shaded");
                         }
 
+                        var isHotEvent = new IsHotEvent() {IsHot = false};
+                        RaiseLocalEvent(component.Owner, isHotEvent);
+
                         sprite.LayerSetVisible(1, false);
                         break;
                 }
@@ -177,7 +181,11 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)
         {
+
             if (args.Handled) return;
+
+            var isHotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, isHotEvent);
 
             if (TryActivate(component))
                 args.Handled = true;
