@@ -6,6 +6,7 @@ using Robust.Client.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Physics.Controllers
 {
@@ -52,21 +53,11 @@ namespace Content.Client.Physics.Controllers
             if (_playerManager.LocalPlayer?.ControlledEntity is not {Valid: true} player)
                 return;
 
-            if (TryComp<RelayInputMoverComponent>(player, out var relayMover))
+            if (TryComp<RelayInputMoverComponent>(player, out var relayMover)
+                && TryComp(relayMover.RelayEntity, out MovementRelayTargetComponent? targetComp))
             {
-                if (relayMover.RelayEntity != null)
-                {
-                    if (TryComp<InputMoverComponent>(player, out var mover) &&
-                        TryComp<InputMoverComponent>(relayMover.RelayEntity, out var relayed))
-                    {
-                        relayed.CanMove = mover.CanMove;
-                        relayed.RelativeEntity = mover.RelativeEntity;
-                        relayed.RelativeRotation = mover.RelativeRotation;
-                        relayed.TargetRelativeRotation = mover.RelativeRotation;
-                    }
-
-                    HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
-                }
+                DebugTools.Assert(targetComp.Entities.Count <= 1, "Multiple relayed movers are not supported at the moment");
+                HandleClientsideMovement(relayMover.RelayEntity.Value, frameTime);
             }
 
             HandleClientsideMovement(player, frameTime);
@@ -75,6 +66,8 @@ namespace Content.Client.Physics.Controllers
         private void HandleClientsideMovement(EntityUid player, float frameTime)
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
+            var moverQuery = GetEntityQuery<InputMoverComponent>();
+            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
 
             if (!TryComp(player, out InputMoverComponent? mover) ||
                 !xformQuery.TryGetComponent(player, out var xform))
@@ -82,7 +75,7 @@ namespace Content.Client.Physics.Controllers
                 return;
             }
 
-            PhysicsComponent? body = null;
+            PhysicsComponent? body;
             TransformComponent? xformMover = xform;
 
             if (mover.ToParent && HasComp<RelayInputMoverComponent>(xform.ParentUid))
@@ -135,7 +128,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
-            HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
+            HandleMobMovement(player, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
         }
 
         protected override bool CanSound()

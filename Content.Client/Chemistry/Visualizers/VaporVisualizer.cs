@@ -63,7 +63,7 @@ namespace Content.Client.Chemistry.Visualizers
 
         private void SetColor(AppearanceComponent component, Color color)
         {
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
 
             sprite.Color = color;
         }

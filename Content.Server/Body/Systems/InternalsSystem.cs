@@ -198,8 +198,7 @@ public sealed class InternalsSystem : EntitySystem
     {
         return TryComp(component.BreathToolEntity, out BreathToolComponent? breathTool) &&
                breathTool.IsFunctional &&
-               TryComp(component.GasTankEntity, out GasTankComponent? gasTank) &&
-               gasTank.Air != null;
+               TryComp(component.GasTankEntity, out GasTankComponent? _);
     }
 
     private short GetSeverity(InternalsComponent component)
@@ -207,9 +206,8 @@ public sealed class InternalsSystem : EntitySystem
         if (component.BreathToolEntity == null || !AreInternalsWorking(component)) return 2;
 
         // If pressure in the tank is below low pressure threshhold, flash warning on internals UI
-        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank)
-            && gasTank.IsLowPressure)
-                return 0;
+        if (TryComp<GasTankComponent>(component.GasTankEntity, out var gasTank) && gasTank.IsLowPressure)
+            return 0;
 
         return 1;
     }

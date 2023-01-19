@@ -46,7 +46,7 @@
   components:
   - type: Construction
     graph: LightFixture
-    node: tubeLight
+    node: groundLight
   - type: Sprite
     sprite: Structures/Lighting/LightPosts/small_light_post.rsi
     snapCardinals: true
@@ -117,3 +117,5 @@
     damage:
       types:
         Heat: 20
+  - type: StaticPrice
+    price: 25
