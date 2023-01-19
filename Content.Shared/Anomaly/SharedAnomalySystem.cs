@@ -127,12 +127,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         {
             ChangeAnomalySeverity(uid, GetSeverityIncreaseFromGrowth(component), component);
         }
-        else
-        {
-            // just doing this to update the scanner ui
-            // as they hook into these events
-            ChangeAnomalySeverity(uid, 0);
-        }
+
+        var stability = Random.NextFloat(-component.PulseStabilityVariation, component.PulseStabilityVariation);
+        ChangeAnomalyStability(uid, stability, component);
 
         Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
         Audio.PlayPvs(component.PulseSound, uid);

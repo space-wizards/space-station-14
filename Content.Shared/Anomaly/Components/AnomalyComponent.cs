@@ -106,6 +106,13 @@ public sealed class AnomalyComponent : Component
     public float PulseVariation = .1f;
 
     /// <summary>
+    /// The largest value by which the anomaly will vary in stability for each pulse.
+    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// </summary>
+    [DataField("pulseStabilityVariation")]
+    public float PulseStabilityVariation = 0.05f;
+
+    /// <summary>
     /// The sound played when an anomaly pulses
     /// </summary>
     [DataField("pulseSound")]

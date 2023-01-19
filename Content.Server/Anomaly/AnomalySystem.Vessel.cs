@@ -21,6 +21,7 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, ComponentShutdown>(OnVesselShutdown);
         SubscribeLocalEvent<AnomalyVesselComponent, MapInitEvent>(OnVesselMapInit);
         SubscribeLocalEvent<AnomalyVesselComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<AnomalyVesselComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         SubscribeLocalEvent<AnomalyVesselComponent, InteractUsingEvent>(OnVesselInteractUsing);
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
@@ -57,6 +58,11 @@ public sealed partial class AnomalySystem
     {
         var modifierRating = args.PartRatings[component.MachinePartPointModifier] - 1;
         component.PointMultiplier = MathF.Pow(component.PartRatingPointModifier, modifierRating);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, AnomalyVesselComponent component, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("anomaly-vessel-component-upgrade-output", component.PointMultiplier);
     }
 
     private void OnVesselInteractUsing(EntityUid uid, AnomalyVesselComponent component, InteractUsingEvent args)
