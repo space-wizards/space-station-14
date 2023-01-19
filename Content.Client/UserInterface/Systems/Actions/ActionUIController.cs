@@ -886,7 +886,6 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     /// If currently targeting with no slot or a different slot, switches to
     /// targeting with the specified slot.
     /// </summary>
-    /// <param name="slot"></param>
     public void ToggleTargeting(TargetedAction action)
     {
         if (SelectingTargetFor == action)
@@ -952,7 +951,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         _targetOutline?.Disable();
         _interactionOutline?.SetEnabled(true);
 
-        if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay) || handOverlay == null)
+        if (!_overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
             return;
 
         handOverlay.IconOverride = null;

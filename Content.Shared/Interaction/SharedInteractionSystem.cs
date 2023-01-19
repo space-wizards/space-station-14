@@ -532,9 +532,9 @@ namespace Content.Shared.Interaction
                 TryComp<TransformComponent>(origin, out var xformA))
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
-                var xfA = new Robust.Shared.Physics.Transform(worldPosA, worldRotA);
+                var xfA = new Transform(worldPosA, worldRotA);
                 var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
-                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, parentRotB + otherAngle);
+                var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
                 if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,

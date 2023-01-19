@@ -6,12 +6,12 @@ using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Disease.Effects
 {
-    [UsedImplicitly]
     /// <summary>
     /// Plays a popup on the host's transform.
     /// Supports passing the host's entity metadata
     /// in PVS ones with {$person}
     /// </summary>
+    [UsedImplicitly]
     public sealed class DiseasePopUp : DiseaseEffect
     {
         [DataField("message")]

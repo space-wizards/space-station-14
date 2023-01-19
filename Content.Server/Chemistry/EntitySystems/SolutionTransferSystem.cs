@@ -130,7 +130,6 @@ namespace Content.Server.Chemistry.EntitySystems
                             ("target", target)));
 
                     args.Handled = true;
-                    return;
                 }
             }
         }

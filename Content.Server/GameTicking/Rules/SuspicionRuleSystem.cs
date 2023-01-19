@@ -114,7 +114,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Suspicion.");
             ev.Cancel();
-            return;
         }
     }
 
@@ -176,8 +175,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             traitors.Add(traitorRole);
 
             // try to place uplink
-            if (!_uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance))
-                continue;
+            _uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance);
         }
 
         foreach (var player in list)

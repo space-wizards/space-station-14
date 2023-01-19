@@ -159,13 +159,13 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryMixAndOverflow(beaker, solution, oilAdded, threshold, out var overflowingSolution));
 
-            Assert.That((FixedPoint2) solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
+            Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
             solution.TryGetReagent("Water", out var waterMix);
             solution.TryGetReagent("Oil", out var oilMix);
             Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
             Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
 
-            Assert.That((FixedPoint2) overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
+            Assert.That(overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
             overflowingSolution.TryGetReagent("Water", out var waterOverflow);
             overflowingSolution.TryGetReagent("Oil", out var oilOverFlow);
             Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
