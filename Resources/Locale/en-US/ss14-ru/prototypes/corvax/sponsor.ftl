@@ -34,3 +34,6 @@ ent-ClothingOuterCoatHoSOvercoat = armored overcoat
 ent-ClothingUniformJumpsuitHoSOld = old head of security's jumpsuit
     .desc = Pretty old stuff for these times, bringing back old memories...
     .suffix = Sponsor
+ent-ClothingHandsWatchDivine = divine watches
+    .desc = This watch can only be worn by a divine person
+    .suffix = { "" }

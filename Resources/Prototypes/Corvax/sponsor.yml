@@ -174,3 +174,33 @@
       sprite: Corvax/Sponsor/NEKISH/Clothing/Uniforms/Jumpsuit/hos.rsi
     - type: Clothing
       sprite: Corvax/Sponsor/NEKISH/Clothing/Uniforms/Jumpsuit/hos.rsi
+
+# ken41k
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsWatchDivine
+  name: divine watches
+  description: This watch can only be worn by a divine person
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Hands/Accessories/watch.rsi
+
+- type: marking
+  id: AugmentsRoboticRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  sponsorOnly: true
+  sprites:
+    - sprite: Corvax/Mobs/Customization/augments.rsi
+      state: robotic_r_arm
+
+- type: marking
+  id: AugmentsRoboticRightHand
+  bodyPart: RHand
+  markingCategory: Arms
+  sponsorOnly: true
+  sprites:
+    - sprite: Corvax/Mobs/Customization/augments.rsi
+      state: robotic_r_hand

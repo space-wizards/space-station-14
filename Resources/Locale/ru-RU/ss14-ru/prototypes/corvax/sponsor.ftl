@@ -34,3 +34,6 @@ ent-ClothingOuterCoatHoSOvercoat = бронированная шинель
 ent-ClothingUniformJumpsuitHoSOld = старый комбинезон главы службы безопасности
     .desc = Довольно старая вещь для этих времён, навевающая старые воспоминания...
     .suffix = Спонсор
+ent-ClothingHandsWatchDivine = божественные часы
+    .desc = Эти часы может носить только божественная личность
+    .suffix = { "" }

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/9e969fd0168e7a87ae2f5f9ef3455908bc7943e4",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "robotic_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "robotic_r_hand",
+      "directions": 4
+    }
+  ]
+}
