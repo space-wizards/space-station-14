@@ -285,7 +285,7 @@ namespace Content.Server.Construction
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert, EntityManager))
+                    if(!insertStep.EntityValid(insert, EntityManager, _factory))
                         return HandleResult.False;
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.

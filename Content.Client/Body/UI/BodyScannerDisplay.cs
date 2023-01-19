@@ -109,11 +109,12 @@ namespace Content.Client.Body.UI
             _bodyPartsList.Clear();
 
             var bodySystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<SharedBodySystem>();
+            var factory = IoCManager.Resolve<IComponentFactory>();
             var i = 0;
             foreach (var part in bodySystem.GetBodyChildren(_currentEntity))
             {
                 _bodyPartsList[i++] = part.Component.ParentSlot!;
-                BodyPartList.AddItem(Loc.GetString(part.Component.Name));
+                BodyPartList.AddItem(Loc.GetString(factory.GetComponentName(part.Component.GetType())));
             }
         }
 
