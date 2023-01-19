@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed not being able to deconstruct several machines., type: Fix}
-  id: 2413
-  time: '2022-10-09T18:38:36.0000000+00:00'
 - author: Rane
   changes:
   - {message: You'll no longer be tasked to keep 'fellow traitor' yourself alive.
@@ -2938,3 +2933,8 @@ Entries:
       about it!, type: Add}
   id: 2912
   time: '2023-01-19T11:00:17.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: minor update to the pirate shuttle, type: Tweak}
+  id: 2913
+  time: '2023-01-19T11:02:48.0000000+00:00'
