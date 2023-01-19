@@ -42,7 +42,7 @@ namespace Content.Server.GameTicking
 
                     var record = await _dbManager.GetPlayerRecordByUserId(args.Session.UserId);
                     var firstConnection = record != null &&
-                                          record.FirstSeenTime == record.LastSeenTime;
+                                          Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
 
                     _chatManager.SendAdminAnnouncement(firstConnection
                         ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
