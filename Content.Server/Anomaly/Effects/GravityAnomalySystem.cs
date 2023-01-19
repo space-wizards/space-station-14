@@ -1,4 +1,4 @@
-﻿using Content.Server.Singularity.Components;
+﻿using Content.Shared.Singularity.Components;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects;
 using Content.Shared.Anomaly.Effects.Components;
