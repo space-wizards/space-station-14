@@ -83,7 +83,6 @@ namespace Content.Server.Cuffs.Components
         /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
-        /// <param name="prototype"></param>
         public bool TryAddNewCuffs(EntityUid user, EntityUid handcuff)
         {
             if (!_entMan.HasComponent<HandcuffComponent>(handcuff))
@@ -262,8 +261,6 @@ namespace Content.Server.Cuffs.Components
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-fail-message"));
             }
-
-            return;
         }
 
         //Lord forgive me for putting this here

@@ -15,8 +15,7 @@ namespace Content.Server.Utility.Commands
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (argStr.Length > Command.Length)
-                shell.WriteLine(argStr.Substring(Command.Length+1));
-            return;
+                shell.WriteLine(argStr.Substring(Command.Length + 1));
         }
     }
 }

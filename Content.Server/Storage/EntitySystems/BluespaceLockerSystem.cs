@@ -38,7 +38,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
     {
-        GetTarget(uid, component);
+        GetTarget(uid, component, true);
 
         if (component.BehaviorProperties.BluespaceEffectOnInit)
             BluespaceEffect(uid, component, component, true);
@@ -47,7 +47,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
     {
         if (!bypassLimit && Resolve(effectTargetUid, ref effectTargetComponent, false))
-            if (effectTargetComponent!.BehaviorProperties.BluespaceEffectMinInterval > 0)
+            if (effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval > 0)
             {
                 var curTimeTicks = _timing.CurTick.Value;
                 if (curTimeTicks < effectTargetComponent.BluespaceEffectNextTime)
@@ -195,7 +195,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         return true;
     }
 
-    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component)
+    public (EntityUid uid, EntityStorageComponent storageComponent, BluespaceLockerComponent? bluespaceLockerComponent)? GetTarget(EntityUid lockerUid, BluespaceLockerComponent component, bool init = false)
     {
         while (true)
         {
@@ -221,9 +221,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
                         if (targetBluespaceComponent == null)
                         {
-                            using var compInitializeHandle =
-                                EntityManager.AddComponentUninitialized<BluespaceLockerComponent>(potentialLink);
-                            targetBluespaceComponent = compInitializeHandle.Comp;
+                            targetBluespaceComponent = AddComp<BluespaceLockerComponent>(potentialLink);
 
                             if (component.AutoLinksBidirectional)
                                 targetBluespaceComponent.BluespaceLinks.Add(lockerUid);
@@ -231,7 +229,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
                             if (component.AutoLinksUseProperties)
                                 targetBluespaceComponent.BehaviorProperties = component.AutoLinkProperties with {};
 
-                            compInitializeHandle.Dispose();
+                            GetTarget(potentialLink, targetBluespaceComponent, true);
+                            BluespaceEffect(potentialLink, targetBluespaceComponent, targetBluespaceComponent, true);
                         }
                         else if (component.AutoLinksBidirectional)
                         {
@@ -246,7 +245,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
             // If there are no possible link targets and no links, return null
             if (component.BluespaceLinks.Count == 0)
             {
-                if (component.MinBluespaceLinks == 0)
+                if (component.MinBluespaceLinks == 0 && !init)
                     RemComp<BluespaceLockerComponent>(lockerUid);
 
                 return null;

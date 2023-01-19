@@ -33,7 +33,7 @@ namespace Content.Server.Inventory
 
         private void OnOpenSlotStorage(OpenSlotStorageNetworkMessage ev, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not EntityUid { Valid: true } uid)
+            if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
                     return;
 
             if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
@@ -62,8 +62,8 @@ namespace Content.Server.Inventory
                     //drops everything in the target's inventory on the ground
                     containerSlot.EmptyContainer();
                 }
-                /// This takes the objects we removed and stored earlier
-                /// and actually equips all of it to the new entity
+                // This takes the objects we removed and stored earlier
+                // and actually equips all of it to the new entity
                 foreach (var item in inventoryEntities)
                 {
                     if (item.Value != null)

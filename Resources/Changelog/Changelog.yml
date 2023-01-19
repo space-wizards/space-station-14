@@ -1,34 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Melee range has been temporarily standardised from 1m centre distance
-      up to 1.5m nearest edge distance until interaction outline reflects melee weapon
-      ranges., type: Tweak}
-  id: 2407
-  time: '2022-10-09T05:29:51.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
-  id: 2408
-  time: '2022-10-09T05:30:43.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has supplied your stations with better routers! The static
-      you see will now disappear much more faster than before!, type: Tweak}
-  id: 2409
-  time: '2022-10-09T05:32:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your
-      rotation. When moving from one grid to another your rotation will snap to the
-      nearest cardinal direction., type: Add}
-  id: 2410
-  time: '2022-10-09T05:45:08.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
-  id: 2411
-  time: '2022-10-09T05:52:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed incorrect popup for inserting materials into machines., type: Fix}
@@ -2940,3 +2910,30 @@ Entries:
   - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
   id: 2906
   time: '2023-01-18T00:38:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
+    type: Fix}
+  id: 2907
+  time: '2023-01-18T06:15:53.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Wizard ship, type: Add}
+  id: 2908
+  time: '2023-01-18T08:09:50.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Torches and flares are now flammable., type: Add}
+  id: 2909
+  time: '2023-01-18T08:45:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
+    type: Fix}
+  id: 2910
+  time: '2023-01-18T09:11:35.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Crew monitor now sorts by character name, type: Tweak}
+  id: 2911
+  time: '2023-01-19T03:02:45.0000000+00:00'
