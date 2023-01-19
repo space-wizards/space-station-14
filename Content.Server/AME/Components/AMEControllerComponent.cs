@@ -192,8 +192,7 @@ namespace Content.Server.AME.Components
                 {
                     var adminSystem = _entities.System<AdminSystem>();
                     var antag = mindComponent.Mind!.UserId != null
-                                && adminSystem.PlayerList.ContainsKey(mindComponent.Mind!.UserId.Value)
-                                && adminSystem.PlayerList[mindComponent.Mind!.UserId.Value].Antag;
+                                && (adminSystem.GetCachedPlayerInfo(mindComponent.Mind!.UserId.Value)?.Antag ?? false);
                     if (GetCoreCount() * 2 == InjectionAmount - 2
                         && msg.Button == UiButton.IncreaseFuel)
                         _chat.SendAdminAlert(
