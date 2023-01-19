@@ -1,5 +1,5 @@
 ent-BaseAnomaly = аномалия
-    .desc = Невозможный объект в космосе. Стоит ли стоять так близко к нему?
+    .desc = Невозможный объект. Стоит ли стоять так близко к нему?
     .suffix = { "" }
 ent-AnomalyPyroclastic = { ent-BaseAnomaly }
     .suffix = пирокластическая
