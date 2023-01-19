@@ -1,55 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: 'Interaction range is now based on nearest edge and not the centre of
-      entities, giving larger entities the same distance from its edge to interact
-      with as smaller entities. The interaction range has been dropped from 2m (centre
-      of each entity) to 1.5m (nearest edge of each entity) to compensate. In some
-      scenarios the range will go up and in some it will go down.', type: Tweak}
-  id: 2403
-  time: '2022-10-06T13:37:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Space bears will attack again., type: Fix}
-  id: 2404
-  time: '2022-10-07T06:10:08.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where the singulo would bounce off of containment fields
-      like items or mobs would., type: Fix}
-  id: 2405
-  time: '2022-10-08T03:27:16.0000000+00:00'
-- author: Cheackraze
-  changes:
-  - {message: Added Kettle!, type: Add}
-  - {message: Removed Meta, type: Remove}
-  id: 2406
-  time: '2022-10-09T02:27:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee range has been temporarily standardised from 1m centre distance
-      up to 1.5m nearest edge distance until interaction outline reflects melee weapon
-      ranges., type: Tweak}
-  id: 2407
-  time: '2022-10-09T05:29:51.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
-  id: 2408
-  time: '2022-10-09T05:30:43.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has supplied your stations with better routers! The static
-      you see will now disappear much more faster than before!, type: Tweak}
-  id: 2409
-  time: '2022-10-09T05:32:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your
-      rotation. When moving from one grid to another your rotation will snap to the
-      nearest cardinal direction., type: Add}
-  id: 2410
-  time: '2022-10-09T05:45:08.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
@@ -2943,3 +2892,48 @@ Entries:
   - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
   id: 2902
   time: '2023-01-17T18:47:52.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Updated patrons and contributor credits list., type: Tweak}
+  id: 2903
+  time: '2023-01-17T21:42:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
+    type: Add}
+  id: 2904
+  time: '2023-01-17T22:00:19.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Makes mobs visually float when there is no gravity, type: Add}
+  id: 2905
+  time: '2023-01-17T22:01:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Buffed containment particles for A.P.E.s, type: Tweak}
+  - {message: Fixed some text formatting issues on various anomaly equipment., type: Fix}
+  - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
+  id: 2906
+  time: '2023-01-18T00:38:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
+    type: Fix}
+  id: 2907
+  time: '2023-01-18T06:15:53.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Wizard ship, type: Add}
+  id: 2908
+  time: '2023-01-18T08:09:50.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Torches and flares are now flammable., type: Add}
+  id: 2909
+  time: '2023-01-18T08:45:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
+    type: Fix}
+  id: 2910
+  time: '2023-01-18T09:11:35.0000000+00:00'
