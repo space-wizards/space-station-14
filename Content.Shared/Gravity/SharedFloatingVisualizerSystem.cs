@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Gravity;
 
@@ -42,6 +43,9 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     {
         foreach (var (floating, transform) in EntityQuery<FloatingVisualsComponent, TransformComponent>(true))
         {
+            if (transform.MapID == MapId.Nullspace)
+                continue;
+
             if (transform.GridUid != args.ChangedGridIndex)
                 continue;
 
