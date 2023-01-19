@@ -28,6 +28,9 @@ namespace Content.Server.Armor
 
         private void GetArmorPrice(EntityUid uid, ArmorComponent component, ref PriceCalculationEvent args)
         {
+            if (component.Modifiers == null)
+                return;
+
             double price = 0;
 
             foreach (var modifier in component.Modifiers.Coefficients)
@@ -70,6 +73,9 @@ namespace Content.Server.Armor
                 return;
 
             var armorModifiers = component.Modifiers;
+
+            if (armorModifiers == null)
+                return;
 
             var examineMarkup = GetArmorExamine(armorModifiers);
 

@@ -110,6 +110,8 @@ namespace Content.Server.Medical
 
         private void OnListenCancelled(ListenCancelledEvent ev)
         {
+            if (ev.Component == null)
+                return;
             ev.Component.CancelToken = null;
         }
         // construct the doafter and start it

@@ -317,6 +317,9 @@ namespace Content.Server.GameTicking
             var allMinds = Get<MindTrackerSystem>().AllMinds;
             foreach (var mind in allMinds)
             {
+                if (mind == null)
+                    continue;
+
                 // Some basics assuming things fail
                 var userId = mind.OriginalOwnerUserId;
                 var playerOOCName = userId.ToString();
@@ -327,13 +330,11 @@ namespace Content.Server.GameTicking
                 {
                     connected = true;
                 }
-
                 PlayerData? contentPlayerData = null;
                 if (_playerManager.TryGetPlayerData(userId, out var playerData))
                 {
                     contentPlayerData = playerData.ContentData();
                 }
-
                 // Finish
                 var antag = mind.AllRoles.Any(role => role.Antagonist);
 

@@ -111,6 +111,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             foreach (var node in component.Nodes.Values)
             {
+                if (node == null) continue;
                 switch (node.NodeGroupID)
                 {
                     case NodeGroupID.HVPower:

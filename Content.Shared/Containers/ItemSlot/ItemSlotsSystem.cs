@@ -427,7 +427,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName;
+                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item.Value).EntityName ?? string.Empty;
 
                 AlternativeVerb verb = new();
                 verb.IconEntity = slot.Item;
@@ -464,7 +464,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName;
+                    : EntityManager.GetComponent<MetaDataComponent>(slot.Item!.Value).EntityName ?? string.Empty;
 
                 InteractionVerb takeVerb = new();
                 takeVerb.IconEntity = slot.Item;
@@ -490,7 +490,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 var verbSubject = slot.Name != string.Empty
                     ? Loc.GetString(slot.Name)
-                    : Name(args.Using.Value);
+                    : Name(args.Using.Value) ?? string.Empty;
 
                 InteractionVerb insertVerb = new();
                 insertVerb.IconEntity = args.Using;

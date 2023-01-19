@@ -15,7 +15,8 @@ namespace Content.Server.Ghost
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (shell.Player is not IPlayerSession player)
+            var player = shell.Player as IPlayerSession;
+            if (player == null)
             {
                 shell.WriteLine("You have no session, you can't ghost.");
                 return;
@@ -28,7 +29,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true, viaCommand: true))
+            if (!EntitySystem.Get<GameTicker>().OnGhostAttempt(mind, true, viaCommand:true))
             {
                 shell.WriteLine("You can't ghost right now.");
             }

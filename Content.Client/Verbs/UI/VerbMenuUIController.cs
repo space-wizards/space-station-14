@@ -55,7 +55,8 @@ namespace Content.Client.Verbs.UI
         {
             _context.OnContextKeyEvent -= OnKeyBindDown;
             _context.OnContextClosed -= Close;
-            _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
+            if (_verbSystem != null)
+                _verbSystem.OnVerbsResponse -= HandleVerbsResponse;
             Close();
         }
 

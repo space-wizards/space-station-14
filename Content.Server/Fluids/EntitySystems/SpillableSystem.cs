@@ -267,8 +267,8 @@ public sealed class SpillableSystem : EntitySystem
     {
         component.CancelToken = null;
 
-        // Solution gone by other means before doafter completes
-        if (ev.Solution.Volume == 0)
+        //solution gone by other means before doafter completes
+        if (ev.Solution == null || ev.Solution.Volume == 0)
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
