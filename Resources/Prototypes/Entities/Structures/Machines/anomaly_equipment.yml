@@ -140,7 +140,6 @@
     powerLoad: 100
   - type: GuideHelp
     guides:
-    - AnomalousResearch
     - APE
   - type: Gun
     fireRate: 10 #just has to be fast enough to keep up with upgrades
