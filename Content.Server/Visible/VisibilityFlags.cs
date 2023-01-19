@@ -6,5 +6,6 @@ namespace Content.Server.Visible
         None   = 0,
         Normal = 1 << 0,
         Ghost  = 1 << 1,
+        Aghost = 1 << 2,
     }
 }
