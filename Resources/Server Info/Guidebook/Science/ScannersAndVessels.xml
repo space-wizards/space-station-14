@@ -1,7 +1,7 @@
 <Document>
 ## Anomaly Scanner
 
-The Anomaly Scanner is used to gather various information on anomalies. They spawn inside of the lockers in the science department.
+The Anomaly Scanner is used to gather various information on anomalies. They can be found inside of the lockers in the science department.
 
 <Box>
 <GuideEntityEmbed Entity="AnomalyScanner"/>
@@ -11,7 +11,7 @@ Scanning an anomaly shows the severity, general stability, approximate point out
 
 ## Anomaly Vessel
 
-The anomaly vessel is a machine that generates points from anomalies. Simply click on an empty vessel with an anomaly scanner, and the anomaly that was last scanned will be synced with the vessel.
+The anomaly vessel is a machine that generates points from anomalies. Use the anomaly scanner on an empty vessel, and the anomaly that was last scanned will be synced with the vessel.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAnomalyVessel"/>
