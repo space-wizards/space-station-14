@@ -22,7 +22,7 @@ namespace Content.Server.Forensics
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<DoAfterEvent<ForensicPadData>>(OnDoAfter);
+            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicPadData>>(OnDoAfter);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -68,21 +68,20 @@ namespace Content.Server.Forensics
                     _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-user", ("target", Identity.Entity(args.Target.Value, EntityManager))), args.Target.Value, args.User);
                     _popupSystem.PopupEntity(Loc.GetString("forensic-pad-start-scan-target", ("user", Identity.Entity(args.User, EntityManager))), args.Target.Value, args.Target.Value);
                 }
-                StartScan(args.User, args.Target.Value, component, fingerprint.Fingerprint);
+                StartScan(uid, args.User, args.Target.Value, component, fingerprint.Fingerprint);
                 return;
             }
 
             if (TryComp<FiberComponent>(args.Target, out var fiber))
-                StartScan(args.User, args.Target.Value, component, string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
+                StartScan(uid, args.User, args.Target.Value, component, string.IsNullOrEmpty(fiber.FiberColor) ? Loc.GetString("forensic-fibers", ("material", fiber.FiberMaterial)) : Loc.GetString("forensic-fibers-colored", ("color", fiber.FiberColor), ("material", fiber.FiberMaterial)));
         }
 
-        private void StartScan(EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
+        private void StartScan(EntityUid used, EntityUid user, EntityUid target, ForensicPadComponent pad, string sample)
         {
-            var padData = new ForensicPadData(pad.Owner, sample);
+            var padData = new ForensicPadData(sample);
 
-            var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target)
+            var doAfterEventArgs = new DoAfterEventArgs(user, pad.ScanDelay, target: target, used: used)
             {
-                Broadcast = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
@@ -92,30 +91,29 @@ namespace Content.Server.Forensics
             _doAfterSystem.DoAfter(doAfterEventArgs, padData);
         }
 
-        private void OnDoAfter(DoAfterEvent<ForensicPadData> ev)
+        private void OnDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicPadData> args)
         {
-            if (ev.Handled
-                || ev.Cancelled
-                || !EntityManager.TryGetComponent(ev.AdditionalData.Pad, out ForensicPadComponent? component))
+            if (args.Handled
+                || args.Cancelled
+                || !EntityManager.TryGetComponent(args.Args.Used, out ForensicPadComponent? padComponent))
             {
                 return;
             }
 
-            if (ev.Args.Target != null)
+            if (args.Args.Target != null)
             {
-                if (HasComp<FingerprintComponent>(ev.Args.Target))
-                    MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", ev.Args.Target));
+                if (HasComp<FingerprintComponent>(args.Args.Target))
+                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", args.Args.Target));
                 else
-                    MetaData(component.Owner).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", ev.Args.Target));
+                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", args.Args.Target));
             }
 
-            component.Sample = ev.AdditionalData.Sample;
-            component.Used = true;
+            padComponent.Sample = args.AdditionalData.Sample;
+            padComponent.Used = true;
         }
 
-        private record struct ForensicPadData(EntityUid Pad, string Sample)
+        private record struct ForensicPadData(string Sample)
         {
-            public EntityUid Pad = Pad;
             public string Sample = Sample;
         }
     }

@@ -39,7 +39,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<ForensicScannerComponent, GetVerbsEvent<UtilityVerb>>(OnUtilityVerb);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerPrintMessage>(OnPrint);
             SubscribeLocalEvent<ForensicScannerComponent, ForensicScannerClearMessage>(OnClear);
-            SubscribeLocalEvent<DoAfterEvent<ScannerData>>(OnDoAfter);
+            SubscribeLocalEvent<ForensicScannerComponent, DoAfterEvent>(OnDoAfter);
         }
 
         private void UpdateUserInterface(EntityUid uid, ForensicScannerComponent component)
@@ -58,12 +58,12 @@ namespace Content.Server.Forensics
             }
         }
 
-        private void OnDoAfter(DoAfterEvent<ScannerData> args)
+        private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)
         {
             if (args.Handled || args.Cancelled)
                 return;
 
-            if (!EntityManager.TryGetComponent(args.AdditionalData.Scanner, out ForensicScannerComponent? scanner))
+            if (!EntityManager.TryGetComponent(uid, out ForensicScannerComponent? scanner))
                 return;
 
             if (args.Args.Target != null)
@@ -91,16 +91,13 @@ namespace Content.Server.Forensics
         /// </remarks>
         private void StartScan(EntityUid uid, ForensicScannerComponent component, EntityUid user, EntityUid target)
         {
-            var scannerData = new ScannerData(component.Owner);
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, target: target, used: uid)
             {
-                Broadcast = true,
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 NeedHand = true
-            }, scannerData);
+            });
         }
 
         private void OnUtilityVerb(EntityUid uid, ForensicScannerComponent component, GetVerbsEvent<UtilityVerb> args)
@@ -239,24 +236,6 @@ namespace Content.Server.Forensics
             component.LastScannedName = string.Empty;
 
             UpdateUserInterface(uid, component);
-        }
-
-        private sealed class TargetScanSuccessfulEvent : EntityEventArgs
-        {
-            public EntityUid User;
-            public EntityUid Target;
-            public EntityUid Scanner;
-            public TargetScanSuccessfulEvent(EntityUid user, EntityUid target, EntityUid scanner)
-            {
-                User = user;
-                Target = target;
-                Scanner = scanner;
-            }
-        }
-
-        private record struct ScannerData(EntityUid scanner)
-        {
-            public EntityUid Scanner = scanner;
         }
     }
 }

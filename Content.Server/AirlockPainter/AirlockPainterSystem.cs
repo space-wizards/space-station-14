@@ -87,7 +87,7 @@ namespace Content.Server.AirlockPainter
                 return;
             }
             component.IsSpraying = true;
-            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.SprayTime, default, target)
+            var doAfterEventArgs = new DoAfterEventArgs(args.User, component.SprayTime, target:target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
