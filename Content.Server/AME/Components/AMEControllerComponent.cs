@@ -188,16 +188,8 @@ namespace Content.Server.AME.Components
                     _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{_entities.ToPrettyString(mindComponent.Owner):player} has set the AME to {humanReadableState}");
 
                 // Admin alert
-                if (mindComponent.HasMind)
-                {
-                    var adminSystem = _entities.System<AdminSystem>();
-                    var antag = mindComponent.Mind!.UserId != null
-                                && (adminSystem.GetCachedPlayerInfo(mindComponent.Mind!.UserId.Value)?.Antag ?? false);
-                    if (GetCoreCount() * 2 == InjectionAmount - 2
-                        && msg.Button == UiButton.IncreaseFuel)
-                        _chat.SendAdminAlert(
-                            $"{mindComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} increased AME over safe limit to {InjectionAmount}");
-                }
+                if (GetCoreCount() * 2 == InjectionAmount - 2 && msg.Button == UiButton.IncreaseFuel)
+                    _chat.SendAdminAlert(player, $"increased AME over safe limit to {InjectionAmount}", mindComponent);
             }
 
             GetAMENodeGroup()?.UpdateCoreVisuals();
