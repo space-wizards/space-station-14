@@ -1,8 +1,10 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
+using Content.Server.Visible;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -12,6 +14,7 @@ namespace Content.Server.Administration.Commands
     public sealed class AGhost : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private readonly EntityManager _entMan = default!;
 
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";
@@ -63,6 +66,10 @@ namespace Content.Server.Administration.Commands
                 _entities.GetComponent<MetaDataComponent>(ghost).EntityName = player.Name;
                 mind.TransferTo(ghost);
             }
+
+            // So aghosts can see other aghosts hidden by the hide aghost command
+            if (_entMan.TryGetComponent(ghost, out EyeComponent? eyeComponent))
+                eyeComponent.VisibilityMask = (uint) VisibilityFlags.Ghost | (uint) VisibilityFlags.Aghost + 1;
 
             var comp = _entities.GetComponent<GhostComponent>(ghost);
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
