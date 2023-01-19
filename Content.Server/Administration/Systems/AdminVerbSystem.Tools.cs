@@ -826,8 +826,6 @@ public sealed partial class AdminVerbSystem
                     yield return ent;
                 }
             }
-
-            yield break;
         }
 
         else if (HasComp<MapComponent>(target))
@@ -839,8 +837,6 @@ public sealed partial class AdminVerbSystem
                     yield return ent;
                 }
             }
-
-            yield break;
         }
         else
         {

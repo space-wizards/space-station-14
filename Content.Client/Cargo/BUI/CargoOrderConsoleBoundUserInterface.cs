@@ -75,8 +75,8 @@ namespace Content.Client.Cargo.BUI
                 description.PushColor(Color.White); // Rich text default color is grey
                 if (row.MainButton.ToolTip != null)
                     description.AddText(row.MainButton.ToolTip);
-                    _orderMenu.Description.SetMessage(description);
 
+                _orderMenu.Description.SetMessage(description);
                 _product = row.Product;
                 _orderMenu.ProductName.Text = row.ProductName.Text;
                 _orderMenu.PointCost.Text = row.PointCost.Text;

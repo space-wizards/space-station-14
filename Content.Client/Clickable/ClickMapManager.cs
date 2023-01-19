@@ -53,7 +53,7 @@ namespace Content.Client.Clickable
                 var pathStr = obj.Path.ToString();
                 foreach (var path in IgnoreTexturePaths)
                 {
-                    if (pathStr.StartsWith(path))
+                    if (pathStr.StartsWith(path, StringComparison.Ordinal))
                         return;
                 }
 

@@ -141,7 +141,7 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             return;
 
         UIHelper?.Dispose();
-        var ownerUserId = _playerManager!.LocalPlayer!.UserId;
+        var ownerUserId = _playerManager.LocalPlayer!.UserId;
         UIHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId) : new UserAHelpUIHandler(ownerUserId);
 
         UIHelper.SendMessageAction = (userId, textMessage) => _bwoinkSystem?.Send(userId, textMessage);

@@ -46,7 +46,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
     public void BluespaceEffect(EntityUid effectTargetUid, BluespaceLockerComponent effectSourceComponent, BluespaceLockerComponent? effectTargetComponent, bool bypassLimit = false)
     {
         if (!bypassLimit && Resolve(effectTargetUid, ref effectTargetComponent, false))
-            if (effectTargetComponent!.BehaviorProperties.BluespaceEffectMinInterval > 0)
+            if (effectTargetComponent.BehaviorProperties.BluespaceEffectMinInterval > 0)
             {
                 var curTimeTicks = _timing.CurTick.Value;
                 if (curTimeTicks < effectTargetComponent.BluespaceEffectNextTime)

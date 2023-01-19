@@ -347,7 +347,7 @@ namespace Content.Server.Chemistry.EntitySystems
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
                 var quantity = solution?.Volume ?? FixedPoint2.Zero;
-                return ((string, FixedPoint2 quantity))(Name(pill), quantity:(FixedPoint2) quantity);
+                return (Name(pill), quantity);
             })).ToList();
 
             return pills is null

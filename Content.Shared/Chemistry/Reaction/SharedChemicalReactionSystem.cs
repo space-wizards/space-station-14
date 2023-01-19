@@ -247,7 +247,7 @@ namespace Content.Shared.Chemistry.Reaction
 
             // did any reaction occur?
             if (products == null)
-                return false; ;
+                return false;
 
             // Remove any reactions that were not applicable. Avoids re-iterating over them in future.
             reactions.Except(toRemove);
