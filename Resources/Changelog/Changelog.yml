@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed incorrect popup for inserting materials into machines., type: Fix}
-  id: 2412
-  time: '2022-10-09T18:16:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed not being able to deconstruct several machines., type: Fix}
   id: 2413
   time: '2022-10-09T18:38:36.0000000+00:00'
@@ -2937,3 +2932,9 @@ Entries:
   - {message: Crew monitor now sorts by character name, type: Tweak}
   id: 2911
   time: '2023-01-19T03:02:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adds guidebook entries for anomalies and anomaly equipment. Read all
+      about it!, type: Add}
+  id: 2912
+  time: '2023-01-19T11:00:17.0000000+00:00'
