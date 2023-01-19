@@ -29,9 +29,16 @@ public sealed class ToggleAghostVisibility : IConsoleCommand
         var _visibilitySystem = entityManager.EntitySysManager.GetEntitySystem<VisibilitySystem>();
 
         if (visibility.Layer == (int) VisibilityFlags.Ghost)
+        {
             _visibilitySystem.SetLayer(visibility, (int) VisibilityFlags.Aghost);
+            shell.WriteLine("You are now hidden from normal ghosts.");
+        }
         else
+        {
             _visibilitySystem.SetLayer(visibility, (int) VisibilityFlags.Ghost);
+            shell.WriteLine("Normal ghosts can now see you.");
+        }
+
 
 
     }
