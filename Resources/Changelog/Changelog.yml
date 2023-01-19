@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: You'll no longer be tasked to keep 'fellow traitor' yourself alive.
-      That objective now checks that you aren't getting yourself as a target., type: Fix}
-  - {message: 'New objective: Ensure another traitor completes at like half of their
-      objectives.', type: Add}
-  id: 2414
-  time: '2022-10-09T19:09:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
@@ -2938,3 +2930,9 @@ Entries:
   - {message: minor update to the pirate shuttle, type: Tweak}
   id: 2913
   time: '2023-01-19T11:02:48.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Neither monkeys on the guidebook nor people outside your view float,
+    type: Fix}
+  id: 2914
+  time: '2023-01-19T23:48:29.0000000+00:00'
