@@ -116,7 +116,9 @@ namespace Content.Client.Preferences.UI
             foreach (var (slot, character) in _preferencesManager.Preferences!.Characters)
             {
                 if (character is null)
+                {
                     continue;
+                }
 
                 numberOfFullSlots++;
                 var characterPickerButton = new CharacterPickerButton(_entityManager,

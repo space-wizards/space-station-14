@@ -12,6 +12,9 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+            if (args.Reagent == null)
+                return;
+
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
                     .TryGetSolution(args.SolutionEntity, _solution, out var solutionContainer))
