@@ -90,22 +90,13 @@ namespace Content.Server.Nutrition.EntitySystems
                 else
                 {
                     //general approximation
-                    string remainingString;
-                    switch ((int)_solutionContainerSystem.PercentFull(uid))
+                    var remainingString = (int) _solutionContainerSystem.PercentFull(uid) switch
                     {
-                        case int perc when perc == 100:
-                            remainingString = "drink-component-on-examine-is-full";
-                            break;
-                        case int perc when perc > 66:
-                            remainingString = "drink-component-on-examine-is-mostly-full";
-                            break;
-                        case int perc when perc > 33:
-                            remainingString = HalfEmptyOrHalfFull(args);
-                            break;
-                        default:
-                            remainingString = "drink-component-on-examine-is-mostly-empty";
-                            break;
-                    }
+                        100 => "drink-component-on-examine-is-full",
+                        > 66 => "drink-component-on-examine-is-mostly-full",
+                        > 33 => HalfEmptyOrHalfFull(args),
+                        _ => "drink-component-on-examine-is-mostly-empty",
+                    };
                     args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
                 }
             }
@@ -154,7 +145,7 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Handled = TryDrink(args.User, args.User, component);
         }
 
-        private void HandleLand(EntityUid uid, DrinkComponent component, LandEvent args)
+        private void HandleLand(EntityUid uid, DrinkComponent component, ref LandEvent args)
         {
             if (component.Pressurized &&
                 !component.Opened &&

@@ -188,7 +188,7 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
     {
-        /// ???? why ?????
+        // ???? why ?????
         Dirty(component);
     }
 

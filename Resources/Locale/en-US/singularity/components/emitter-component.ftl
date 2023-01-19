@@ -13,3 +13,6 @@ comp-emitter-not-anchored = The {$target} isn't anchored to the ground!
 
 # Upgrades
 emitter-component-upgrade-fire-rate = fire rate
+
+emitter-component-current-type = The current selected type is: {$type}.
+emitter-component-type-set = Type set to: {$type}

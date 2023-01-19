@@ -48,3 +48,11 @@
     Steel: 100
     Plastic: 200
     Glass: 100
+
+- type: latheRecipe
+  id: AnomalyScanner
+  result: AnomalyScanner
+  completetime: 2
+  materials:
+    Plastic: 200
+    Glass: 150

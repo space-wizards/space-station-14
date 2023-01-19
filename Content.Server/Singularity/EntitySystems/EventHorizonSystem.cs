@@ -229,12 +229,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// </summary>
     public void ConsumeTiles(EntityUid hungry, List<(Vector2i, Tile)> tiles, EntityUid gridId, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
-        if (tiles.Count > 0)
-        {
-            var ev = new TilesConsumedByEventHorizonEvent(tiles, gridId, grid, hungry, eventHorizon);
-            RaiseLocalEvent(hungry, ref ev);
-            grid.SetTiles(tiles);
-        }
+        if (tiles.Count <= 0)
+            return;
+
+        var ev = new TilesConsumedByEventHorizonEvent(tiles, gridId, grid, hungry, eventHorizon);
+        RaiseLocalEvent(hungry, ref ev);
+        grid.SetTiles(tiles);
     }
 
     /// <summary>
@@ -333,13 +333,13 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <summary>
     /// Prevents a singularity from colliding with anything it is incapable of consuming.
     /// </summary>
-    protected override sealed bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    protected override bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
     {
         if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
             return true;
 
         // If we can eat it we don't want to bounce off of it. If we can't eat it we want to bounce off of it (containment fields).
-        args.Cancelled = args.FixtureA.Hard && CanConsumeEntity(uid, args.BodyB.Owner, (EventHorizonComponent)comp);
+        args.Cancelled = args.FixtureA.Hard && CanConsumeEntity(uid, args.BodyB.Owner, comp);
         return false;
     }
 
@@ -400,10 +400,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
     /// <summary>
     /// Handles event horizons deciding to escape containers they are inserted into.
-    /// Delegates the actual escape to <see cref="EventHorizonSystem.OnEventHorizonContained(EventHorizonContainedEvent)"> on a delay.
+    /// Delegates the actual escape to <see cref="EventHorizonSystem.OnEventHorizonContained(EventHorizonContainedEvent)" /> on a delay.
     /// This ensures that the escape is handled after all other handlers for the insertion event and satisfies the assertion that
     ///     the inserted entity SHALL be inside of the specified container after all handles to the entity event
-    ///     <see cref="EntGotInsertedIntoContainerMessage"> are processed.
+    ///     <see cref="EntGotInsertedIntoContainerMessage" /> are processed.
     /// </summary>
     private void OnEventHorizonContained(EntityUid uid, EventHorizonComponent comp, EntGotInsertedIntoContainerMessage args) {
         // Delegates processing an event until all queued events have been processed.

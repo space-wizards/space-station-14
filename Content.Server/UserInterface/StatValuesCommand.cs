@@ -84,7 +84,7 @@ public sealed class StatValuesCommand : IConsoleCommand
             if (price == 0)
                 continue;
 
-            values.Add(new string[]
+            values.Add(new[]
             {
                 id,
                 $"{price:0}",

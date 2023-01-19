@@ -3,11 +3,11 @@ using Content.Shared.Disease;
 
 namespace Content.Server.Disease.Components
 {
-    [RegisterComponent]
     /// <summary>
     /// For mouth swabs used to collect and process
     /// disease samples.
     /// </summary>
+    [RegisterComponent]
     public sealed class DiseaseSwabComponent : Component
     {
         /// <summary>
