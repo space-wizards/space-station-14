@@ -52,10 +52,7 @@ namespace Content.Server.Forensics
                 component.PrintReadyAt);
 
             if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
-            {
                 _sawmill.Warning($"{ToPrettyString(uid)} was unable to set UI state.");
-                return;
-            }
         }
 
         private void OnDoAfter(EntityUid uid, ForensicScannerComponent component, DoAfterEvent args)

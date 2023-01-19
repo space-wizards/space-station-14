@@ -49,6 +49,7 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
 /// Check for cancelled, and if it is, then null the token there.
 /// Can't be serialized
 /// </summary>
+/// TODO: Net/Serilization isn't supported so this needs to be networked somehow
 public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 {
     public T AdditionalData;
