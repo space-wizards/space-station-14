@@ -81,7 +81,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 
@@ -239,7 +238,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         float chance = (1f / _playersPerTraitor);
 
-        /// If we have too many traitors, divide by how many players below target for next traitor we are.
+        // If we have too many traitors, divide by how many players below target for next traitor we are.
         if (ev.JoinOrder < target)
         {
             chance /= (target - ev.JoinOrder);
@@ -252,7 +251,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         // Now that we've calculated our chance, roll and make them a traitor if we roll under.
         // You get one shot.
-        if (_random.Prob((float) chance))
+        if (_random.Prob(chance))
         {
             MakeTraitor(ev.Player);
         }
@@ -330,10 +329,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         ev.AddLine(result);
     }
 
-    public IEnumerable<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    public IEnumerable<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
     {
         var traitors = Traitors;
-        List<Traitor.TraitorRole> removeList = new();
+        List<TraitorRole> removeList = new();
 
         return Traitors // don't want
             .Where(t => t.Mind is not null) // no mind

@@ -306,6 +306,8 @@ namespace Content.Client.Examine
             if (obj.Button is ExamineButton button)
             {
                 _verbSystem.ExecuteVerb(_examinedEntity, button.Verb);
+                if (button.Verb.CloseMenu ?? button.Verb.CloseMenuDefault)
+                    CloseTooltip();
             }
         }
 

@@ -40,7 +40,7 @@ namespace Content.Server.Dice
             Roll(uid, component);
         }
 
-        private void OnLand(EntityUid uid, DiceComponent component, LandEvent args)
+        private void OnLand(EntityUid uid, DiceComponent component, ref LandEvent args)
         {
             Roll(uid, component);
         }

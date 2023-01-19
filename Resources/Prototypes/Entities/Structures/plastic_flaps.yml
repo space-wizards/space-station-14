@@ -42,6 +42,8 @@
   - type: Construction
     graph: PlasticFlapsGraph
     node: plasticFlaps
+  - type: StaticPrice
+    price: 150
 
 - type: entity
   id: PlasticFlapsOpaque

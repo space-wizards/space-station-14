@@ -17,7 +17,7 @@ namespace Content.Shared.Storage.Components
 
         /// <summary>
         /// Cancellation token for the doafter.
-        /// <summary>
+        /// </summary>
         public CancellationTokenSource? CancelToken;
     }
 }

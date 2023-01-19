@@ -241,7 +241,7 @@ void main()
 
             _vdSetTexture.Name = "SetTexture";
 
-            io.Fonts.SetTexID((nint) 0);
+            io.Fonts.SetTexID(0);
             io.Fonts.ClearTexData();
 
             _vdGfxDevice.ResizeMainWindow((uint) w, (uint) h);

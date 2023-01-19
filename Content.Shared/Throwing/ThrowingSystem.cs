@@ -82,8 +82,7 @@ public sealed class ThrowingSystem : EntitySystem
 
         if (time < FlyTime)
         {
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-            _thrownSystem.LandComponent(comp);
+            _thrownSystem.LandComponent(comp, physics);
         }
         else
         {
@@ -94,8 +93,7 @@ public sealed class ThrowingSystem : EntitySystem
                 if (physics.Deleted)
                     return;
 
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-                _thrownSystem.LandComponent(comp);
+                _thrownSystem.LandComponent(comp, physics);
             });
         }
 

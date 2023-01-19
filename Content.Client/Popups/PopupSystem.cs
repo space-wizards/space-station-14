@@ -39,7 +39,7 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
             _overlay
-                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _prototype, _resource, _uiManager, this));
+                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this));
         }
 
         public override void Shutdown()

@@ -40,15 +40,14 @@ namespace Content.Server.Chat.Commands
             {
                 // Prevent the player from returning to the body.
                 // Note that mind cannot be null because otherwise victim would be null.
-                gameTicker.OnGhostAttempt(mind!, false);
+                gameTicker.OnGhostAttempt(mind, false);
                 return;
             }
 
             if (gameTicker.OnGhostAttempt(mind, true))
                 return;
 
-            shell?.WriteLine("You can't ghost right now.");
-
+            shell.WriteLine("You can't ghost right now.");
         }
     }
 }

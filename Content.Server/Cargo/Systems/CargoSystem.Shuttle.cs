@@ -288,7 +288,7 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        if (!_map.TryLoad(CargoMap.Value, prototype.Path.ToString(), out var gridList) || gridList == null)
+        if (!_map.TryLoad(CargoMap.Value, prototype.Path.ToString(), out var gridList))
         {
             _sawmill.Error($"Could not load the cargo shuttle!");
             return;
@@ -465,7 +465,7 @@ public sealed partial class CargoSystem
             return;
 
         // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+        var printed = EntityManager.SpawnEntity(component.PrinterOutput, coordinates);
 
         if (!TryComp<PaperComponent>(printed, out var paper))
             return;
@@ -519,7 +519,7 @@ public sealed partial class CargoSystem
             _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
             _audio.PlayPvs(_audio.GetSound(component.DenySound), uid);
             return;
-        };
+        }
 
         SellPallets(shuttle, bank);
         _console.RefreshShuttleConsoles();
