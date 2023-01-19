@@ -93,7 +93,7 @@ namespace Content.Shared.DragDrop
         /// </summary>
         /// <param name="user">The entity doing the drag and drop.</param>
         /// <param name="dragged">The entity that is being dragged and dropped.</param>
-        /// <param name="target">The entity that <see cref="dropped"/> is being dropped onto.</param>
+        /// <param name="target">The entity that <see cref="dragged"/> is being dropped onto.</param>
         public CanDropEvent(EntityUid user, EntityUid dragged, EntityUid target) : base(user, dragged)
         {
             Target = target;

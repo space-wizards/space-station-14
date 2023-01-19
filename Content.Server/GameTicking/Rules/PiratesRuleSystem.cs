@@ -256,7 +256,6 @@ public sealed class PiratesRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("nukeops-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 }

@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
-  id: 2411
-  time: '2022-10-09T05:52:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed incorrect popup for inserting materials into machines., type: Fix}
@@ -2937,3 +2932,8 @@ Entries:
     type: Fix}
   id: 2910
   time: '2023-01-18T09:11:35.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Crew monitor now sorts by character name, type: Tweak}
+  id: 2911
+  time: '2023-01-19T03:02:45.0000000+00:00'

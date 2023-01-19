@@ -268,7 +268,7 @@ public sealed class WiresSystem : EntitySystem
     /// <summary>
     ///     Tries to cancel an active wire action via the given key that it's stored in.
     /// </summary>
-    /// <param id="key">The key used to cancel the action.</param>
+    /// <param name="key">The key used to cancel the action.</param>
     public bool TryCancelWireAction(EntityUid owner, object key)
     {
         if (TryGetData(owner, key, out CancellationTokenSource? token))
@@ -283,9 +283,9 @@ public sealed class WiresSystem : EntitySystem
     /// <summary>
     ///     Starts a timed action for this entity.
     /// </summary>
-    /// <param id="delay">How long this takes to finish</param>
-    /// <param id="key">The key used to cancel the action</param>
-    /// <param id="onFinish">The event that is sent out when the wire is finished <see cref="TimedWireEvent" /></param>
+    /// <param name="delay">How long this takes to finish</param>
+    /// <param name="key">The key used to cancel the action</param>
+    /// <param name="onFinish">The event that is sent out when the wire is finished <see cref="TimedWireEvent" /></param>
     public void StartWireAction(EntityUid owner, float delay, object key, TimedWireEvent onFinish)
     {
         if (!HasComp<WiresComponent>(owner))
@@ -841,7 +841,7 @@ public sealed class WiresSystem : EntitySystem
     /// <summary>
     ///     Tries to get the stateful data stored in this entity's WiresComponent.
     /// </summary>
-    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
+    /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     public bool TryGetData<T>(EntityUid uid, object identifier, [NotNullWhen(true)] out T? data, WiresComponent? wires = null)
     {
         data = default(T);
@@ -863,8 +863,8 @@ public sealed class WiresSystem : EntitySystem
     /// <summary>
     ///     Sets data in the entity's WiresComponent state dictionary by key.
     /// </summary>
-    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
-    /// <param id="data">The data to store using the given identifier.</param>
+    /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
+    /// <param name="data">The data to store using the given identifier.</param>
     public void SetData(EntityUid uid, object identifier, object data, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))
@@ -896,7 +896,7 @@ public sealed class WiresSystem : EntitySystem
     /// <summary>
     ///     Removes data from this entity stored in the given key from the entity's WiresComponent.
     /// </summary>
-    /// <param id="identifier">The key that stores the data in the WiresComponent.</param>
+    /// <param name="identifier">The key that stores the data in the WiresComponent.</param>
     public void RemoveData(EntityUid uid, object identifier, WiresComponent? wires = null)
     {
         if (!Resolve(uid, ref wires))

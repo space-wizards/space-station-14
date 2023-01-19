@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(configManager.GetCVar<bool>(CCVars.GameLobbyEnabled), Is.EqualTo(false));
+                Assert.That(configManager.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(false));
                 configManager.SetCVar(CCVars.GameLobbyEnabled, lobbyEnabled);
 
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
