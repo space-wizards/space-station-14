@@ -100,17 +100,17 @@ public sealed class SpeciesPrototype : IPrototype
     public SpeciesNaming Naming { get; } = SpeciesNaming.FirstLast;
 
     [DataField("sexes")]
-    public List<Sex> Sexes { get; } = new List<Sex>(){ Sex.Male, Sex.Female };
+    public List<Sex> Sexes { get; } = new() { Sex.Male, Sex.Female };
 
     /// <summary>
     ///     Characters younger than this are too young to be hired by Nanotrasen.
-    /// <summary>
+    /// </summary>
     [DataField("minAge")]
     public int MinAge = 18;
 
     /// <summary>
     ///     Characters younger than this appear young.
-    /// <summary>
+    /// </summary>
     [DataField("youngAge")]
     public int YoungAge = 30;
 
@@ -123,7 +123,7 @@ public sealed class SpeciesPrototype : IPrototype
     /// <summary>
     ///     Characters cannot be older than this. Only used for restrictions...
     ///     although imagine if ghosts could age people WYCI...
-    /// <summary>
+    /// </summary>
     [DataField("maxAge")]
     public int MaxAge = 120;
 }
@@ -132,5 +132,5 @@ public enum SpeciesNaming : byte
 {
     FirstLast,
     FirstDashFirst,
-    TheFirstofLast
+    TheFirstofLast,
 }

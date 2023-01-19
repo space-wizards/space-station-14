@@ -33,7 +33,7 @@ public sealed partial class ThresholdBoundControl : BoxContainer
     public void SetValue(float value)
     {
         _value = value;
-        CSpinner.Value = (float) ScaledValue!;
+        CSpinner.Value = ScaledValue;
     }
 
     public void SetEnabled(bool enabled)

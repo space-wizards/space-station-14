@@ -403,7 +403,7 @@ namespace Content.Server.NodeContainer.EntitySystems
 
             foreach (var network in _nodeGroups)
             {
-                msg.Groups.Add(VisMakeGroupState(network!));
+                msg.Groups.Add(VisMakeGroupState(network));
             }
 
             RaiseNetworkEvent(msg, player.ConnectedClient);

@@ -8,6 +8,7 @@ using Content.Server.Popups;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Server.GameObjects;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
 namespace Content.Server.Anomaly;
@@ -17,6 +18,7 @@ namespace Content.Server.Anomaly;
 /// </summary>
 public sealed partial class AnomalySystem : SharedAnomalySystem
 {
+    [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;

@@ -1,97 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Shuttle impacts now have sounds, type: Add}
-  id: 2398
-  time: '2022-10-04T05:00:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: You can now suicide into biomass reclaimers., type: Add}
-  id: 2399
-  time: '2022-10-04T11:08:47.0000000+00:00'
-- author: Vordenburg
-  changes:
-  - {message: Added the Escape on the Emergency Shuttle objective., type: Add}
-  - {message: Removed the Stay Alive objective., type: Remove}
-  id: 2400
-  time: '2022-10-04T21:57:15.0000000+00:00'
-- author: YanehCheck
-  changes:
-  - {message: Fixed an error in which part of a toilet sprite was offset by a pixel
-      during a specific rotation, type: Fix}
-  id: 2401
-  time: '2022-10-06T02:53:41.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Ghosts are now visible in the post-round period., type: Add}
-  id: 2402
-  time: '2022-10-06T02:55:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Interaction range is now based on nearest edge and not the centre of
-      entities, giving larger entities the same distance from its edge to interact
-      with as smaller entities. The interaction range has been dropped from 2m (centre
-      of each entity) to 1.5m (nearest edge of each entity) to compensate. In some
-      scenarios the range will go up and in some it will go down.', type: Tweak}
-  id: 2403
-  time: '2022-10-06T13:37:22.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Space bears will attack again., type: Fix}
-  id: 2404
-  time: '2022-10-07T06:10:08.0000000+00:00'
-- author: keronshb
-  changes:
-  - {message: Fixes an issue where the singulo would bounce off of containment fields
-      like items or mobs would., type: Fix}
-  id: 2405
-  time: '2022-10-08T03:27:16.0000000+00:00'
-- author: Cheackraze
-  changes:
-  - {message: Added Kettle!, type: Add}
-  - {message: Removed Meta, type: Remove}
-  id: 2406
-  time: '2022-10-09T02:27:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee range has been temporarily standardised from 1m centre distance
-      up to 1.5m nearest edge distance until interaction outline reflects melee weapon
-      ranges., type: Tweak}
-  id: 2407
-  time: '2022-10-09T05:29:51.0000000+00:00'
-- author: FunkySphere
-  changes:
-  - {message: Captain's antique laser gun has now the size of 25, type: Tweak}
-  id: 2408
-  time: '2022-10-09T05:30:43.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has supplied your stations with better routers! The static
-      you see will now disappear much more faster than before!, type: Tweak}
-  id: 2409
-  time: '2022-10-09T05:32:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Camera rotation controls have been added. Numpad 7-8-9 now control your
-      rotation. When moving from one grid to another your rotation will snap to the
-      nearest cardinal direction., type: Add}
-  id: 2410
-  time: '2022-10-09T05:45:08.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some toolboxes from the toolbox crates being empty.., type: Fix}
-  id: 2411
-  time: '2022-10-09T05:52:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed incorrect popup for inserting materials into machines., type: Fix}
-  id: 2412
-  time: '2022-10-09T18:16:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed not being able to deconstruct several machines., type: Fix}
-  id: 2413
-  time: '2022-10-09T18:38:36.0000000+00:00'
 - author: Rane
   changes:
   - {message: You'll no longer be tasked to keep 'fellow traitor' yourself alive.
@@ -2942,3 +2849,92 @@ Entries:
   - {message: Changed golden toolbox to have a reasonable amount of gold, type: Tweak}
   id: 2897
   time: '2023-01-17T10:23:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Lava has been added., type: Add}
+  id: 2898
+  time: '2023-01-17T18:25:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added basalt tiles for lava planets., type: Add}
+  id: 2899
+  time: '2023-01-17T18:28:38.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: The red phone can now be used to leave a message for Central Command,
+    type: Tweak}
+  - {message: The banana phone can now be used to leave a message for the Honkmother,
+    type: Tweak}
+  id: 2900
+  time: '2023-01-17T18:42:20.0000000+00:00'
+- author: ga
+  changes:
+  - {message: Added chief medical officer's beret., type: Add}
+  id: 2901
+  time: '2023-01-17T18:47:18.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ahelp window for admins can now pop out into an OS window., type: Add}
+  id: 2902
+  time: '2023-01-17T18:47:52.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Updated patrons and contributor credits list., type: Tweak}
+  id: 2903
+  time: '2023-01-17T21:42:03.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Added proper ERT uniforms. You can now kick syndicate ass in style.,
+    type: Add}
+  id: 2904
+  time: '2023-01-17T22:00:19.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Makes mobs visually float when there is no gravity, type: Add}
+  id: 2905
+  time: '2023-01-17T22:01:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Buffed containment particles for A.P.E.s, type: Tweak}
+  - {message: Fixed some text formatting issues on various anomaly equipment., type: Fix}
+  - {message: 'Fixed anomalies always spawning at 0, 0.', type: Fix}
+  id: 2906
+  time: '2023-01-18T00:38:12.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed verb menu sometimes not appearing. when using the context menu,',
+    type: Fix}
+  id: 2907
+  time: '2023-01-18T06:15:53.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the Wizard ship, type: Add}
+  id: 2908
+  time: '2023-01-18T08:09:50.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Torches and flares are now flammable., type: Add}
+  id: 2909
+  time: '2023-01-18T08:45:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix rotation visualizers not lerping properly (bed buckling and knockdown).,
+    type: Fix}
+  id: 2910
+  time: '2023-01-18T09:11:35.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Crew monitor now sorts by character name, type: Tweak}
+  id: 2911
+  time: '2023-01-19T03:02:45.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adds guidebook entries for anomalies and anomaly equipment. Read all
+      about it!, type: Add}
+  id: 2912
+  time: '2023-01-19T11:00:17.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: minor update to the pirate shuttle, type: Tweak}
+  id: 2913
+  time: '2023-01-19T11:02:48.0000000+00:00'

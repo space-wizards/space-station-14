@@ -20,7 +20,7 @@ namespace Content.Shared.Chemistry.Components
             public FixedPoint2 TotalVolume { get; }
             public InjectorToggleMode CurrentMode { get; }
 
-            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, SharedInjectorComponent.InjectorToggleMode currentMode)
+            public InjectorComponentState(FixedPoint2 currentVolume, FixedPoint2 totalVolume, InjectorToggleMode currentMode)
             {
                 CurrentVolume = currentVolume;
                 TotalVolume = totalVolume;

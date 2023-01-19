@@ -52,7 +52,7 @@ namespace Content.Client.Computer
     }
 
     /// <summary>
-    /// This class is to avoid a lot of <> being written when we just want to refer to SendMessage.
+    /// This class is to avoid a lot of &lt;&gt; being written when we just want to refer to SendMessage.
     /// We could instead qualify a lot of generics even further, but that is a waste of time.
     /// </summary>
     [Virtual]
