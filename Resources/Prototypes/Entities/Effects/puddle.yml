@@ -64,20 +64,23 @@
 - type: entity
   name: puddle
   id: PuddleSmear
-  parent: EvaporatingPuddle
   description: A puddle of liquid.
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: Sprite
-    sprite: Fluids/smear.rsi # Placeholder
-    state: smear-0
-    netsync: false
-  - type: Puddle
-    slipThreshold: 3
-  - type: Appearance
-  - type: PuddleVisualizer
-  - type: Slippery
-    launchForwardsMultiplier: 2.0
-  - type: StepTrigger
+    - type: Transform
+      noRot: true
+      anchored: true
+    - type: Sprite
+      sprite: Fluids/weh.rsi
+      state: splat0
+      netsync: false
+    - type: Icon
+      sprite: Fluids/weh.rsi
+      state: full
+    - type: IconSmooth
+      key: puddles
+      base: splat
 
 - type: entity
   name: puddle

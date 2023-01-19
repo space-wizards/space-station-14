@@ -1,0 +1,46 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "now beri",
+    "states": [
+        {
+            "name": "full"
+        },
+        {
+            "name": "splat0",
+            "directions": 4
+        },
+        {
+            "name": "splat1",
+            "directions": 4
+        },
+        {
+            "name": "splat2",
+            "directions": 4
+        },
+        {
+            "name": "splat3",
+            "directions": 4
+        },
+        {
+            "name": "splat4",
+            "directions": 4
+        },
+        {
+            "name": "splat5",
+            "directions": 4
+        },
+        {
+            "name": "splat6",
+            "directions": 4
+        },
+        {
+            "name": "splat7",
+            "directions": 4
+        }
+    ]
+}
