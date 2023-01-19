@@ -1,10 +1,12 @@
 ﻿<Document>
-# Construction
+# Строительство
 
-By pressing [color=#a4885c]G[/color], one can open the construction menu, which allows you to craft and build a variety of objects.
+При нажатии [color=#a4885c]G[/color], откроется меню строительства, что позволит вам создать различные объекты.
 
-When placing objects that "snap" to the grid, you can hold [color=#a4885c]shift[/color] to place an entire line at a time, and [color=#a4885c]ctrl[/color] to place an entire square at a time.
+Нажмите на "Разместить призрак конструкции" и кликните по полу, вы также можете [color=#a4885c]удерживать Shift[/color] дабы устанавливать целую линию, или [color=#a4885c]Ctrl[/color] чтобы разместить квадрат.
 
-When crafting objects with a lot of ingredients, keep in mind you don't have to hold everything at once, you can simply place the ingredients on the floor or on a table near you and they'll be used up during crafting like normal.
+Чтобы стереть призрак конструкции, нажмите "Режим ластика" и удалите ненужное.
+
+При создании вещей с множеством ингредиентов учтите, что вы не удержите всё сразу, вы можете просто положить предметы на пол или на стол рядом с вами и создание будет работать.
 
 </Document>

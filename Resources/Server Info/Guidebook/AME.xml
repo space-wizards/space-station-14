@@ -1,17 +1,17 @@
 <Document>
-# Antimatter Engine (AME)
+# Двигатель на Антиматерии (ДАМ)
 
-The AME is one of the simplest engines available. You put together the multi-tile structure, stick some fuel into it, and you're all set. This doesn't mean it isn't potentially dangerous with overheating though.
+ДАМ это один из простейших двигателей в игре. Вы просто собираете его, вставляете топливо, и всё готово. Но это не означает, что не существует угрозы перегрева.
 
-## Construction
-<Box>Required parts:</Box>
+## Строительство
+<Box>Требуется:</Box>
 <Box>
 <GuideEntityEmbed Entity="AMEController"/>
 <GuideEntityEmbed Entity="AMEPart"/>
 <GuideEntityEmbed Entity="AMEJar"/>
 </Box>
 
-To assemble an AME, start by wrenching down the controller on the far end of a HV wire. On most stations, there's catwalks to assist with this. From there, start putting down a 3x3 or larger square of AME parts in preparation for construction, making sure to maximize the number of "center" pieces that are surrounded on all 8 sides.
+Чтобы собрать ДАМ, сначала прикрепите Контроллер ДАМ к полу с ВВ кабелем. На большинстве станций это место отмечено мостиком. Потом, разложите части ДАМ квадратом 3х3, убедитесь, что части разложены по всем сторонам вокруг ядра.
 
-Once this is done, you can use a multitool to convert each AME part into shielding, which should form a finished AME configuration. From there, insert a fuel jar, set the fuel rate to [color=#a4885c]twice the core count or less[/color], and turn on injection.
+После этого, используйте мультитул, чтобы превратить части ДАМ в Экранирование, тем самым завершив постройку ДАМ. Далее вставте в Контроллер ДАМ топливный бак, установите количество впрыска [color=#a4885c]не более чем количество ядер умноженое на 2[/color], и нажмите "Переключение впрыска".
 </Document>
