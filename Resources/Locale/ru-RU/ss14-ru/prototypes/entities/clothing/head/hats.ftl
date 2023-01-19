@@ -136,3 +136,6 @@ ent-ClothingHeadHatJester = шутовской колпак
 ent-ClothingHeadHatJesterAlt = { ent-ClothingHeadHatJester }
     .desc = { ent-ClothingHeadHatJester.desc }
     .suffix = { "" }
+ent-ClothingHeadHatBeretCmo = берет главного врача
+    .desc = Бирюзовый берет с крестом на лицевой стороне. Вид его успокаивает вас и дает понять, что вы будете вылечены.
+    .suffix = { "" }
