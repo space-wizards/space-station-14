@@ -1,10 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: Fixes supply blast doors not letting crates pass when the underlying
-      conveyor belts get turned on., type: Fix}
-  id: 2426
-  time: '2022-10-11T07:28:47.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Layout optimizations for Kettle, type: Tweak}
@@ -2929,3 +2923,9 @@ Entries:
       box close., type: Tweak}
   id: 2925
   time: '2023-01-20T15:07:02.0000000+00:00'
+- author: vanx
+  changes:
+  - {message: Increased the book symbol limit so you can fit all your stories in,
+    type: Tweak}
+  id: 2926
+  time: '2023-01-20T15:19:26.0000000+00:00'
