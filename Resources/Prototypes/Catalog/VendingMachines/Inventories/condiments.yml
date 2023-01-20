@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: CondimentInventory
   startingInventory:
-
     FoodCondimentPacketAstrotame: 5
     FoodCondimentPacketBbq: 5
     FoodCondimentPacketFrostoil: 5
