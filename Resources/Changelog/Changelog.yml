@@ -1,12 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: 'Players can no longer call restart votes, as a hotfix for a UI bug.
-      This functionality will come back later.', type: Remove}
-  id: 2436
-  time: '2022-10-13T00:55:42.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: 'The sandbox button is no longer always visible, even if you can''t
       use it.', type: Fix}
   id: 2437
@@ -2934,3 +2928,9 @@ Entries:
   - {message: hypopen now has size of normal pen, type: Tweak}
   id: 2935
   time: '2023-01-20T16:11:24.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Added a delay at the start of Traitor mode before players are selected
+      to be an antagonist., type: Add}
+  id: 2936
+  time: '2023-01-20T16:18:47.0000000+00:00'
