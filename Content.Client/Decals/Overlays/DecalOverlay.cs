@@ -3,13 +3,11 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Decals.Overlays
 {
     public sealed class DecalOverlay : Overlay
     {
-        private readonly DecalSystem _decals;
         private readonly SpriteSystem _sprites;
         private readonly IEntityManager _entManager;
         private readonly IPrototypeManager _prototypeManager;
@@ -19,12 +17,10 @@ namespace Content.Client.Decals.Overlays
         private readonly Dictionary<string, (Texture Texture, bool SnapCardinals)> _cachedTextures = new(64);
 
         public DecalOverlay(
-            DecalSystem decals,
             SpriteSystem sprites,
             IEntityManager entManager,
             IPrototypeManager prototypeManager)
         {
-            _decals = decals;
             _sprites = sprites;
             _entManager = entManager;
             _prototypeManager = prototypeManager;
@@ -37,16 +33,13 @@ namespace Content.Client.Decals.Overlays
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
             var eyeAngle = args.Viewport.Eye?.Rotation ?? Angle.Zero;
 
-            foreach (var (gridId, zIndexDictionary) in _decals.DecalRenderIndex)
+            foreach (var (decalGrid, xform) in _entManager.EntityQuery<DecalGridComponent, TransformComponent>(true))
             {
+                var gridId = decalGrid.Owner;
+                var zIndexDictionary = decalGrid.DecalRenderIndex;
+
                 if (zIndexDictionary.Count == 0)
                     continue;
-
-                if (!xformQuery.TryGetComponent(gridId, out var xform))
-                {
-                    Logger.Error($"Tried to draw decals on a non-existent grid. GridUid: {gridId}");
-                    continue;
-                }
 
                 if (xform.MapID != args.MapId)
                     continue;
@@ -61,8 +54,7 @@ namespace Content.Client.Decals.Overlays
                     {
                         if (!_cachedTextures.TryGetValue(decal.Id, out var cache) && _prototypeManager.TryIndex<DecalPrototype>(decal.Id, out var decalProto))
                         {
-                            var sprite = GetDecalSprite(decal.Id);
-                            cache = (_sprites.Frame0(sprite), decalProto.SnapCardinals);
+                            cache = (_sprites.Frame0(decalProto.Sprite), decalProto.SnapCardinals);
                             _cachedTextures[decal.Id] = cache;
                         }
 
@@ -85,15 +77,6 @@ namespace Content.Client.Decals.Overlays
             }
 
             handle.SetTransform(Matrix3.Identity);
-        }
-
-        public SpriteSpecifier GetDecalSprite(string id)
-        {
-            if (_prototypeManager.TryIndex<DecalPrototype>(id, out var proto))
-                return proto.Sprite;
-
-            Logger.Error($"Unknown decal prototype: {id}");
-            return new SpriteSpecifier.Texture(new ResourcePath("/Textures/noSprite.png"));
         }
     }
 }

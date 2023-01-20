@@ -45,4 +45,10 @@ public sealed class BallisticAmmoProviderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
     public bool Cycled = true;
+
+    /// <summary>
+    /// Is it okay for this entity to directly transfer its valid ammunition into another provider?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("mayTransfer")]
+    public bool MayTransfer = false;
 }

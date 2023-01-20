@@ -62,29 +62,22 @@ namespace Content.Server.Physics.Controllers
 
             var bodyQuery = GetEntityQuery<PhysicsComponent>();
             var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
+            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
             var moverQuery = GetEntityQuery<InputMoverComponent>();
 
             foreach (var mover in EntityQuery<InputMoverComponent>(true))
             {
-                if (relayQuery.TryGetComponent(mover.Owner, out var relayed) && relayed.RelayEntity != null)
-                {
-                    if (moverQuery.TryGetComponent(relayed.RelayEntity, out var relayMover))
-                    {
-                        relayMover.CanMove = mover.CanMove;
-                        relayMover.RelativeEntity = mover.RelativeEntity;
-                        relayMover.RelativeRotation = mover.RelativeRotation;
-                        relayMover.TargetRelativeRotation = mover.TargetRelativeRotation;
-                        continue;
-                    }
-                }
+                var uid = mover.Owner;
+                if (relayQuery.HasComponent(uid))
+                    continue;
 
-                if (!xformQuery.TryGetComponent(mover.Owner, out var xform))
+                if (!xformQuery.TryGetComponent(uid, out var xform))
                 {
                     continue;
                 }
 
-                PhysicsComponent? body = null;
+                PhysicsComponent? body;
                 var xformMover = xform;
 
                 if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
@@ -95,12 +88,12 @@ namespace Content.Server.Physics.Controllers
                         continue;
                     }
                 }
-                else if (!bodyQuery.TryGetComponent(mover.Owner, out body))
+                else if (!bodyQuery.TryGetComponent(uid, out body))
                 {
                     continue;
                 }
 
-                HandleMobMovement(mover, body, xformMover, frameTime, xformQuery);
+                HandleMobMovement(uid, mover, body, xformMover, frameTime, xformQuery, moverQuery, relayTargetQuery);
             }
 
             HandleShuttleMovement(frameTime);

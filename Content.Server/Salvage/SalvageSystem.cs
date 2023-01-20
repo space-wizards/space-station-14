@@ -271,7 +271,7 @@ namespace Content.Server.Salvage
         {
             TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
 
-            var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
+            var forcedSalvage = _configurationManager.GetCVar(CCVars.SalvageForced);
             List<SalvageMapPrototype> allSalvageMaps;
             if (string.IsNullOrWhiteSpace(forcedSalvage))
             {

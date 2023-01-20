@@ -93,7 +93,6 @@ public sealed partial class ShuttleSystem
         {
             args.Cancel();
             _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
-            return;
         }
     }
 

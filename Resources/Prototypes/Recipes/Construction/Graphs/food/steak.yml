@@ -1,0 +1,119 @@
+# regular steak
+- type: constructionGraph
+  id: MeatSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: meat steak
+      steps:
+      - minTemperature: 335
+
+  - node: meat steak
+    entity: FoodMeatCooked
+
+# penguin steak
+- type: constructionGraph
+  id: PenguinSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked penguin
+      steps:
+      - minTemperature: 345
+
+  - node: cooked penguin
+    entity: FoodMeatPenguinCooked
+
+# chicken steak
+- type: constructionGraph
+  id: ChickenSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked chicken
+      steps:
+      - minTemperature: 345
+
+  - node: cooked chicken
+    entity: FoodMeatChickenCooked
+
+# duck steak
+- type: constructionGraph
+  id: DuckSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked duck
+      steps:
+      - minTemperature: 335 #duck is actually culinarily red meat IRL and has a lower min temp than other poultry
+
+  - node: cooked duck
+    entity: FoodMeatDuckCooked
+
+# lizard steak
+- type: constructionGraph
+  id: LizardSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: lizard steak
+      steps:
+      - minTemperature: 345
+
+  - node: lizard steak
+    entity: FoodMeatLizardCooked
+
+# bear steak
+- type: constructionGraph
+  id: BearSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: filet migrawr
+      steps:
+      - minTemperature: 345 #apparently trichinellosis is a concern
+
+  - node: filet migrawr
+    entity: FoodMealBearsteak
+
+# crab steak
+- type: constructionGraph
+  id: CrabSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: cooked crab
+      steps:
+      - minTemperature: 335
+
+  - node: cooked crab
+    entity: FoodMeatCrabCooked
+
+# goliath steak
+- type: constructionGraph
+  id: GoliathSteak
+  start: start
+  graph:
+
+  - node: start
+    edges:
+    - to: goliath steak
+      steps:
+      - minTemperature: 345 #I dunno what this is but I don't want whatever parasites are inside
+
+  - node: goliath steak
+    entity: FoodMeatGoliathCooked
