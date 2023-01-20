@@ -74,7 +74,6 @@ namespace Content.Shared.Humanoid
                     // use the Sublayers method to hide the rest of the parts,
                     // if that's what you're looking for
                     return HumanoidVisualLayers.Head;
-                    break;
                 case BodyPartType.Arm:
                     switch (part.Symmetry)
                     {

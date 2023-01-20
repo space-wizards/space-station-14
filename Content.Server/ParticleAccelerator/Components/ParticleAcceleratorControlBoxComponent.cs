@@ -100,14 +100,7 @@ namespace Content.Server.ParticleAccelerator.Components
 
             Owner.EnsureComponent(out _apcPowerReceiverComponent);
 
-            _apcPowerReceiverComponent!.Load = 250;
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            // UpdateWireStatus();
+            _apcPowerReceiverComponent.Load = 250;
         }
 
         // This is the power state for the PA control box itself.

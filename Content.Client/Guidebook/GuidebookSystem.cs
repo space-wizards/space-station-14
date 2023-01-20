@@ -205,7 +205,7 @@ public sealed class GuidebookSystem : EntitySystem
         bool includeChildren = true,
         string? selected = null)
     {
-        Dictionary<string, GuideEntry>? guides = new();
+        Dictionary<string, GuideEntry> guides = new();
         foreach (var guideId in guideList)
         {
             if (!_prototypeManager.TryIndex<GuideEntryPrototype>(guideId, out var guide))

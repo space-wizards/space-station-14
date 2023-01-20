@@ -270,7 +270,7 @@ namespace Content.Shared.FixedPoint
 
     public static class FixedPointEnumerableExt
     {
-        public static FixedPoint2 Sum(this System.Collections.Generic.IEnumerable<FixedPoint2> source)
+        public static FixedPoint2 Sum(this IEnumerable<FixedPoint2> source)
         {
             var acc = FixedPoint2.Zero;
 

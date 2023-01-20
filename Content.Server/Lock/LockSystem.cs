@@ -96,10 +96,7 @@ namespace Content.Server.Lock
             _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-do-lock-success", ("entityName", EntityManager.GetComponent<MetaDataComponent>(uid).EntityName)), uid, user);
             lockComp.Locked = true;
 
-            if(lockComp.LockSound != null)
-            {
-                _audio.PlayPvs(_audio.GetSound(lockComp.LockSound), uid, AudioParams.Default.WithVolume(-5));
-            }
+            _audio.PlayPvs(_audio.GetSound(lockComp.LockSound), uid, AudioParams.Default.WithVolume(-5));
 
             if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComp))
             {
@@ -123,10 +120,7 @@ namespace Content.Server.Lock
 
             lockComp.Locked = false;
 
-            if (lockComp.UnlockSound != null)
-            {
-                _audio.PlayPvs(_audio.GetSound(lockComp.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
-            }
+            _audio.PlayPvs(_audio.GetSound(lockComp.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
 
             if (EntityManager.TryGetComponent(lockComp.Owner, out AppearanceComponent? appearanceComp))
             {
@@ -198,10 +192,7 @@ namespace Content.Server.Lock
         {
             if (component.Locked)
             {
-                if (component.UnlockSound != null)
-                {
-                    _audio.PlayPvs(_audio.GetSound(component.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
-                }
+                _audio.PlayPvs(_audio.GetSound(component.UnlockSound), uid, AudioParams.Default.WithVolume(-5));
 
                 if (EntityManager.TryGetComponent(component.Owner, out AppearanceComponent? appearanceComp))
                 {

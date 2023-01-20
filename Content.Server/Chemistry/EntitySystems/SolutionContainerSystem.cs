@@ -365,7 +365,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// </summary>
     /// <param name="uid">EntityUid to which to add solution</param>
     /// <param name="name">name for the solution</param>
-    /// <param name="minVol">Ensures that the solution's maximum volume is larger than this value./param>
+    /// <param name="minVol">Ensures that the solution's maximum volume is larger than this value.</param>
     /// <param name="solutionsMgr">solution components used in resolves</param>
     /// <returns>solution</returns>
     public Solution EnsureSolution(EntityUid uid, string name, FixedPoint2 minVol, out bool existed,
@@ -397,7 +397,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     {
         if (!Resolve(uid, ref solutionsMgr, false))
             solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
-        
+
         if (!solutionsMgr.Solutions.TryGetValue(name, out var existing))
         {
             var newSolution = new Solution(reagents, setMaxVol);

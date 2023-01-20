@@ -284,7 +284,7 @@ namespace Content.Shared.Verbs
     /// <remarks>
     ///     Add a component to the user's entity and sub to the get verbs event
     ///     and it'll appear in the verbs menu on any target.
-    /// </summary>
+    /// </remarks>
     [Serializable, NetSerializable]
     public sealed class InnateVerb : Verb
     {

@@ -46,7 +46,7 @@ namespace Content.Client.Paper.UI
         {
             var resCache = IoCManager.Resolve<IResourceCache>();
 
-            /// Initialize the background:
+            // Initialize the background:
             PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate;
             var backgroundImage = visuals.BackgroundImagePath != null? resCache.GetResource<TextureResource>(visuals.BackgroundImagePath) : null;
             if (backgroundImage != null)
@@ -111,7 +111,7 @@ namespace Content.Client.Paper.UI
                 // So, we'll make the window non-resizable and fix the size of the content.
                 // Ideally, would like to be able to allow resizing only one direction.
                 ScrollingContents.MinSize = Vector2.Zero;
-                ScrollingContents.MinSize = (Vector2)(a);
+                ScrollingContents.MinSize = a;
 
                 if (a.X > 0.0f)
                 {

@@ -1,11 +1,30 @@
 ﻿- type: guideEntry
   id: Science
   name: guide-entry-science
-  text: "/Server Info/Guidebook/Science.xml"
+  text: "/Server Info/Guidebook/Science/Science.xml"
   children:
+  - AnomalousResearch
   - MachineUpgrading
+
+- type: guideEntry
+  id: AnomalousResearch
+  name: guide-entry-anomalous-research
+  text: "/Server Info/Guidebook/Science/AnomalousResearch.xml"
+  children:
+  - APE
+  - ScannersAndVessels
+
+- type: guideEntry
+  id: ScannersAndVessels
+  name: guide-entry-scanners-and-vessels
+  text: "/Server Info/Guidebook/Science/ScannersAndVessels.xml"
+
+- type: guideEntry
+  id: APE
+  name: guide-entry-ape
+  text: "/Server Info/Guidebook/Science/APE.xml"
 
 - type: guideEntry
   id: MachineUpgrading
   name: guide-entry-machine-upgrading
-  text: "/Server Info/Guidebook/MachineUpgrading.xml"
+  text: "/Server Info/Guidebook/Science/MachineUpgrading.xml"
