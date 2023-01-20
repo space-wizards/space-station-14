@@ -1,12 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Some spicy foods now cause you to heat up and get burn damage instead
-      of being poisoned., type: Tweak}
-  - {message: The same spicy foods now satiate hunger better due to them being actually
-      spicy., type: Add}
-  id: 2416
-  time: '2022-10-09T19:25:22.0000000+00:00'
 - author: vulppine
   changes:
   - {message: NanoTrasen has finally upgraded all of our nuclear bombs! They no longer
@@ -2938,3 +2930,8 @@ Entries:
       twice., type: Fix}
   id: 2915
   time: '2023-01-20T00:37:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes will now automatically stack their output., type: Tweak}
+  id: 2916
+  time: '2023-01-20T04:06:02.0000000+00:00'
