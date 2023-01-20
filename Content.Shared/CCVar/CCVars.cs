@@ -352,6 +352,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
 
+        public static readonly CVarDef<float> TraitorStartDelay =
+            CVarDef.Create("traitor.start_delay", 4f * 60f);
+
+        public static readonly CVarDef<float> TraitorStartDelayVariance =
+            CVarDef.Create("traitor.start_delay_variance", 3f * 60f);
+
         /*
          * TraitorDeathMatch
          */
