@@ -1,13 +1,4 @@
 Entries:
-- author: Jezithyr
-  changes:
-  - {message: Reworked action bar UI, type: Tweak}
-  - {message: Updated visuals for hands and chat, type: Tweak}
-  - {message: Added dragging actions from their window, type: Add}
-  - {message: Fixed resolution scaling for some widgets, type: Fix}
-  - {message: Fixed showing no actions when no filters are applied, type: Fix}
-  id: 2430
-  time: '2022-10-12T08:32:42.598514+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed chat staying focused after sending a message., type: Fix}
@@ -2930,3 +2921,12 @@ Entries:
   - {message: added Condiment Station, type: Add}
   id: 2929
   time: '2023-01-20T15:56:06.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: 'Digesting most food will take a bit longer, as your body breaks things
+      down. This also means OwOnavirus is easier to cure.', type: Tweak}
+  - {message: 'Creatures with animal metabolisms will build up allicin and theobromine
+      more rapidly, making the intended toxin behavior actually work.', type: Fix}
+  - {message: Sugar pills don't satiate anymore. Foods with sugar still do., type: Fix}
+  id: 2930
+  time: '2023-01-20T16:01:11.0000000+00:00'
