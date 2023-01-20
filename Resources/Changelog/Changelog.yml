@@ -1,17 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed not being able to examine and right click entities in backpacks,
-    type: Fix}
-  id: 2433
-  time: '2022-10-12T16:35:25.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed prediction and popups for actions, type: Fix}
-  id: 2434
-  time: '2022-10-12T16:35:36.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fix ghost roles button text not showing when latejoining as an observer,
     type: Fix}
   id: 2435
@@ -2931,3 +2920,16 @@ Entries:
       look just like the real thing!', type: Tweak}
   id: 2932
   time: '2023-01-20T16:06:33.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: You can now transfer ammunition between magazines and boxes by clicking
+      on one with the other., type: Add}
+  id: 2933
+  time: '2023-01-20T16:08:17.0000000+00:00'
+- author: timothyteakettle
+  changes:
+  - {message: removed plates from steaks (pending a new plating system), type: Remove}
+  - {message: 'steaks use construction graphs to be cooked now, requiring a temperature
+      of 305K to be cooked', type: Add}
+  id: 2934
+  time: '2023-01-20T16:09:13.0000000+00:00'
