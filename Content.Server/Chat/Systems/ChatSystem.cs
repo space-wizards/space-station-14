@@ -119,6 +119,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void TrySendInGameICMessage(EntityUid source, string message, InGameICChatType desiredType, bool hideChat, bool hideGlobalGhostChat = false,
         IConsoleShell? shell = null, IPlayerSession? player = null, string? nameOverride = null, bool checkRadioPrefix = true)
     {
+
         if (HasComp<GhostComponent>(source))
         {
             // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
@@ -130,6 +131,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player?.AttachedEntity is { Valid: true } entity && source != entity)
         {
             return;
+        }
+
+        if(player != null)
+        {
+            if (_chatManager.IsFlooding(player))
+            return;
+
+            _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
         }
 
         if (!CanSendInGame(message, shell, player))
@@ -196,6 +205,9 @@ public sealed partial class ChatSystem : SharedChatSystem
             (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
             sendType = InGameOOCChatType.Dead;
 
+        if (_chatManager.IsFlooding(player))
+            return;
+
         switch (sendType)
         {
             case InGameOOCChatType.Dead:
@@ -205,6 +217,8 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendLOOC(source, player, message, hideChat);
                 break;
         }
+
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
 
     #region Announcements
@@ -398,6 +412,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat, false);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
+
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
 
     private void SendDeadChat(EntityUid source, IPlayerSession player, string message, bool hideChat)
@@ -424,6 +440,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, false, clients.ToList());
 
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
     #endregion
 
@@ -544,7 +561,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         foreach (var player in _playerManager.Sessions)
         {
-            if (player.AttachedEntity is not {Valid: true} playerEntity)
+            if (player.AttachedEntity is not { Valid: true } playerEntity)
                 continue;
 
             var transformEntity = xforms.GetComponent(playerEntity);
@@ -600,7 +617,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 ///     This event is raised before chat messages are sent out to clients. This enables some systems to send the chat
 ///     messages to otherwise out-of view entities (e.g. for multiple viewports from cameras).
 /// </summary>
-public record class ExpandICChatRecipientstEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
+public record ExpandICChatRecipientstEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
 {
 }
 

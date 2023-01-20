@@ -34,5 +34,8 @@ namespace Content.Server.Chat.Managers
         void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
 
         bool MessageCharacterLimit(IPlayerSession player, string message);
+
+        void UpdateLastSay(IPlayerSession player, long time);
+        bool IsFlooding(IPlayerSession player);
     }
 }
