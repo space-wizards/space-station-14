@@ -19,6 +19,7 @@
       - TableMask
       layer:
       - TableLayer
+  - type: SpriteFade
   - type: Sprite
     netsync: false
   - type: Icon
