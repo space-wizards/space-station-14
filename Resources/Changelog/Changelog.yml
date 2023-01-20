@@ -1,17 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: NanoTrasen has finally upgraded all of our nuclear bombs! They no longer
-      all use the exact same code., type: Tweak}
-  id: 2417
-  time: '2022-10-09T19:28:08.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Healing ticks when you metabolize less reagent than each tick takes
-      away are now scaled accordingly. In other words, 0.1u of omnizine is no longer
-      identical to 0.5u of omnizine, and will heal 5 times less.', type: Fix}
-  id: 2418
-  time: '2022-10-09T19:40:50.0000000+00:00'
 - author: themias
   changes:
   - {message: Dumping a mop bucket now has a short delay, type: Tweak}
@@ -2935,3 +2922,19 @@ Entries:
   - {message: Lathes will now automatically stack their output., type: Tweak}
   id: 2916
   time: '2023-01-20T04:06:02.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Added vinegar recipe, it can be created by mixing ethanol and oxygen',
+    type: Add}
+  - {message: 'Added mayo recipe, it can be created by mixing eggs, oil, and vinegar
+      or lemon juice', type: Add}
+  - {message: Added ketchunaise recipe, type: Add}
+  - {message: 'Added recipe of Posca - old Roman beverage - that can be created from
+      vinegar, salt, and water', type: Add}
+  id: 2917
+  time: '2023-01-20T13:46:43.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Remove galoshes from janidrobe, type: Tweak}
+  id: 2918
+  time: '2023-01-20T13:47:14.0000000+00:00'
