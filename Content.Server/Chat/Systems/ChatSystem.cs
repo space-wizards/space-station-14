@@ -105,9 +105,6 @@ public sealed partial class ChatSystem : SharedChatSystem
             _configurationManager.SetCVar(CCVars.OocEnabled, true);
     }
 
-    // flood protect
-    private Dictionary<IPlayerSession, long> LastSaysTable = new Dictionary<IPlayerSession, long>();
-
     /// <summary>
     ///     Sends an in-character chat message to relevant clients.
     /// </summary>
@@ -138,15 +135,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if(player != null)
         {
-            if (!LastSaysTable.ContainsKey(player))
-            {
-                LastSaysTable[player] = 0;
-            }
-
-            if (IsFlooding(player))
+            if (_chatManager.IsFlooding(player))
             return;
 
-            LastSaysTable[player] = DateTimeOffset.Now.ToUnixTimeSeconds();
+            _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
         }
 
         if (!CanSendInGame(message, shell, player))
@@ -205,11 +197,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (player?.AttachedEntity is not { Valid: true } entity || source != entity)
             return;
 
-        if (!LastSaysTable.ContainsKey(player))
-        {
-            LastSaysTable[player] = 0;
-        }
-
         message = SanitizeInGameOOCMessage(message);
 
         var sendType = type;
@@ -218,7 +205,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             (HasComp<GhostComponent>(source) || _mobStateSystem.IsDead(source)))
             sendType = InGameOOCChatType.Dead;
 
-        if (IsFlooding(player))
+        if (_chatManager.IsFlooding(player))
             return;
 
         switch (sendType)
@@ -231,7 +218,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 break;
         }
 
-        LastSaysTable[player] = DateTimeOffset.Now.ToUnixTimeSeconds();
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
 
     #region Announcements
@@ -426,7 +413,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         SendInVoiceRange(ChatChannel.LOOC, message, wrappedMessage, source, hideChat, false);
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"LOOC from {player:Player}: {message}");
 
-        LastSaysTable[player] = DateTimeOffset.Now.ToUnixTimeSeconds();
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
 
     private void SendDeadChat(EntityUid source, IPlayerSession player, string message, bool hideChat)
@@ -453,7 +440,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         _chatManager.ChatMessageToMany(ChatChannel.Dead, message, wrappedMessage, source, hideChat, false, clients.ToList());
 
-        LastSaysTable[player] = DateTimeOffset.Now.ToUnixTimeSeconds();
+        _chatManager.UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
     }
     #endregion
 
@@ -471,28 +458,6 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         _replay.QueueReplayMessage(new ChatMessage(channel, message, wrappedMessage, source, hideChat));
-    }
-
-    private void SendFloodAlert(IPlayerSession player)
-    {
-        var message = Loc.GetString("chat-manager-flood-message",
-            ("delay", 3 - (DateTimeOffset.Now.ToUnixTimeSeconds() - LastSaysTable[player])));
-
-        _chatManager.ChatMessageToOne(ChatChannel.Local, "", message, EntityUid.Invalid, false, player.ConnectedClient);
-    }
-
-    /// <summary>
-    ///     Returns true if the given player is flooding.
-    /// </summary>
-    ///
-    private bool IsFlooding(IPlayerSession player)
-    {
-        bool result = LastSaysTable[player] + 3 > DateTimeOffset.Now.ToUnixTimeSeconds();
-
-        if (result)
-            SendFloodAlert(player);
-
-        return result;
     }
 
     /// <summary>

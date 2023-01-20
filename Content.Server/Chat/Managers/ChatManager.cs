@@ -133,6 +133,11 @@ namespace Content.Server.Chat.Managers
                 return;
             }
 
+            if (IsFlooding(player))
+            return;
+
+            UpdateLastSay(player, DateTimeOffset.Now.ToUnixTimeSeconds());
+
             switch (type)
             {
                 case OOCChatType.OOC:
@@ -212,6 +217,47 @@ namespace Content.Server.Chat.Managers
         #endregion
 
         #region Utility
+
+        // flood protect
+        private Dictionary<IPlayerSession, long> LastSaysTable = new Dictionary<IPlayerSession, long>();
+
+        private void SendFloodAlert(IPlayerSession player)
+        {
+            var message = Loc.GetString("chat-manager-flood-message",
+                ("delay", 3 - (DateTimeOffset.Now.ToUnixTimeSeconds() - LastSaysTable[player])));
+
+            ChatMessageToOne(ChatChannel.Local, "", message, EntityUid.Invalid, false, player.ConnectedClient);
+        }
+
+        /// <summary>
+        ///     Returns true if the given player is flooding.
+        /// </summary>
+        ///
+        public bool IsFlooding(IPlayerSession player)
+        {
+
+            if (!LastSaysTable.ContainsKey(player))
+            {
+                LastSaysTable[player] = 0;
+            }
+
+            bool result = LastSaysTable[player] + 3 > DateTimeOffset.Now.ToUnixTimeSeconds();
+
+            if (result)
+                SendFloodAlert(player);
+
+            return result;
+        }
+
+        public void UpdateLastSay(IPlayerSession player, long time)
+        {
+            if(!LastSaysTable.ContainsKey(player))
+            {
+                LastSaysTable[player] = 0;
+            }
+
+            LastSaysTable[player] = time;
+        }
 
         public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0)
         {
