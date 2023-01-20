@@ -1,9 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Added a crafting recipe for the muzzle, type: Add}
-  id: 2420
-  time: '2022-10-09T19:46:46.0000000+00:00'
 - author: keronshb
   changes:
   - {message: 'Cardboard Boxes have been added. They''re large boxes that can hold
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Fixed zipties not not being properly removeable., type: Fix}
   id: 2919
   time: '2023-01-20T13:48:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Tabletops can now fade their sprites like trees., type: Tweak}
+  id: 2920
+  time: '2023-01-20T13:49:22.0000000+00:00'
