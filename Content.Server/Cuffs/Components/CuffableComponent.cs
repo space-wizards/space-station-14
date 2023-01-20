@@ -96,13 +96,6 @@ namespace Content.Server.Cuffs.Components
             return true;
         }
 
-        public void CuffedStateChanged()
-        {
-            UpdateAlert();
-            var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
-        }
-
         /// <summary>
         ///     Adds virtual cuff items to the user's hands.
         /// </summary>
