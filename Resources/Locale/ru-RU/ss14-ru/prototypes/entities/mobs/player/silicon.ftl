@@ -1,9 +1,9 @@
 ent-PlayerSiliconBase = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-Drone = drone
+ent-Drone = дрон
     .desc = { ent-PlayerSiliconBase.desc }
     .suffix = { "" }
-ent-Onestar = onestar mecha
-    .desc = { ent-PlayerSiliconBase.desc }
+ent-Onestar = ванстар меха
+    .desc = Вы - экспериментальный меха, созданный неизвестно кем, все, что вы знаете, это то, что у вас есть оружие и вы обнаруживаете поблизости движущиеся плотские цели...
     .suffix = { "" }

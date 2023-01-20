@@ -49,6 +49,6 @@ ent-SpawnMobBear = спавнер космический медведь
 ent-SpawnMobHamsterHamlet = спавнер хомяк Гамлет
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
-ent-SpawnMobAlexander = Alexander Spawner
+ent-SpawnMobAlexander = спавнер Саня
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
