@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Dumping a mop bucket now has a short delay, type: Tweak}
-  id: 2419
-  time: '2022-10-09T19:46:08.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Added a crafting recipe for the muzzle, type: Add}
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Remove galoshes from janidrobe, type: Tweak}
   id: 2918
   time: '2023-01-20T13:47:14.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed zipties not not being properly removeable., type: Fix}
+  id: 2919
+  time: '2023-01-20T13:48:20.0000000+00:00'
