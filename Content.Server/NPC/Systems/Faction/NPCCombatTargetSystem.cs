@@ -9,6 +9,13 @@ namespace Content.Server.NPC.Systems
     public sealed class NPCCombatTargetSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<NPCComponent, DamageChangedEvent>(OnDamageChanged);
+            SubscribeLocalEvent<NPCCombatTargetComponent, GetNearbyHostilesEvent>(OnAddHostiles);
+            SubscribeLocalEvent<NPCEngagerComponent, ComponentShutdown>(OnShutdown);
+        }
 
         public override void Update(float frameTime)
         {
@@ -23,13 +30,6 @@ namespace Content.Server.NPC.Systems
 
                 RemCompDeferred<NPCEngagerComponent>(engager.Owner);
             }
-        }
-        public override void Initialize()
-        {
-            base.Initialize();
-            SubscribeLocalEvent<NPCComponent, DamageChangedEvent>(OnDamageChanged);
-            SubscribeLocalEvent<NPCCombatTargetComponent, GetNearbyHostilesEvent>(OnAddHostiles);
-            SubscribeLocalEvent<NPCEngagerComponent, ComponentShutdown>(OnShutdown);
         }
 
         private void OnDamageChanged(EntityUid uid, NPCComponent component, DamageChangedEvent args)
@@ -56,6 +56,7 @@ namespace Content.Server.NPC.Systems
         {
             args.ExceptionalHostiles.UnionWith(component.EngagingEnemies);
         }
+
         private void OnShutdown(EntityUid uid, NPCEngagerComponent component, ComponentShutdown args)
         {
             foreach (var enemy in component.EngagedEnemies)

@@ -4,6 +4,7 @@
 [RegisterComponent]
 public sealed class NPCEngagerComponent : Component
 {
+    [DataField("decay")]
     public TimeSpan Decay = TimeSpan.FromSeconds(7);
 
     public TimeSpan? RemoveWhen;
