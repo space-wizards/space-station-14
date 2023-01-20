@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix Centcomm map loading failing., type: Fix}
-  id: 2424
-  time: '2022-10-10T23:35:22.0000000+00:00'
 - author: Macoron
   changes:
   - {message: 'Radiation has been reworked. It can now be blocked by structures like
@@ -2929,3 +2924,8 @@ Entries:
   - {message: Fix popup flickering., type: Fix}
   id: 2923
   time: '2023-01-20T14:19:02.0000000+00:00'
+- author: gus
+  changes:
+  - {message: Plastic utensils are now trash., type: Tweak}
+  id: 2924
+  time: '2023-01-20T14:48:53.0000000+00:00'
