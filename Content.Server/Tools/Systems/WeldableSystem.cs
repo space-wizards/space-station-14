@@ -4,6 +4,8 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Tools.Systems;
 
@@ -11,6 +13,8 @@ public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
 
     public override void Initialize()
     {
@@ -18,6 +22,7 @@ public sealed class WeldableSystem : EntitySystem
         SubscribeLocalEvent<WeldableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<WeldableComponent, WeldFinishedEvent>(OnWeldFinished);
         SubscribeLocalEvent<WeldableComponent, WeldCancelledEvent>(OnWeldCanceled);
+        SubscribeLocalEvent<LayerChangeOnWeldComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<WeldableComponent, ExaminedEvent>(OnExamine);
     }
 
@@ -93,6 +98,28 @@ public sealed class WeldableSystem : EntitySystem
     private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
     {
         component.BeingWelded = false;
+    }
+
+    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, WeldableChangedEvent args)
+    {
+        if (!TryComp<FixturesComponent>(uid, out var fixtures))
+            return;
+
+        if (args.IsWelded)
+        {
+            foreach (var fixture in fixtures.Fixtures.Values)
+            {
+                if (fixture.CollisionLayer == (int) component.UnweldedLayer)
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
+            }
+        } else
+        {
+            foreach (var fixture in fixtures.Fixtures.Values)
+            {
+                if (fixture.CollisionLayer == (int) component.WeldedLayer)
+                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnweldedLayer);
+            }
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WeldableComponent? component = null)

@@ -1,6 +1,6 @@
 using Content.Shared.Physics;
 
-namespace Content.Server.Doors.Components
+namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
     public sealed class LayerChangeOnWeldComponent : Component
