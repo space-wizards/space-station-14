@@ -14,21 +14,12 @@ public sealed class AnomalySpawn : StationEventSystem
 
     public readonly string AnomalySpawnerPrototype = "RandomAnomalySpawner";
 
-    public readonly List<string> PossibleSighting = new()
-    {
-        "anomaly-spawn-sighting-1",
-        "anomaly-spawn-sighting-2",
-        "anomaly-spawn-sighting-3",
-        "anomaly-spawn-sighting-4",
-        "anomaly-spawn-sighting-5"
-    };
-
     public override void Added()
     {
         base.Added();
 
         var str = Loc.GetString("anomaly-spawn-event-announcement",
-            ("sighting", Loc.GetString(_random.Pick(PossibleSighting))));
+            ("sighting", Loc.GetString($"anomaly-spawn-sighting-{_random.Next(1, 6)}")));
         ChatSystem.DispatchGlobalAnnouncement(str, colorOverride: Color.FromHex("#18abf5"));
     }
 

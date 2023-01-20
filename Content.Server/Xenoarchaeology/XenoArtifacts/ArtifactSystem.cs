@@ -40,13 +40,9 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// </summary>
     /// <remarks>
     /// General balancing (for fully unlocked artifacts):
-    /// Simple (1-2 Nodes): ~10K
-    /// Medium (5-8 Nodes): ~30-40K
-    /// Complex (7-12 Nodes): ~60-80K
-    ///
-    /// Simple artifacts should be enough to unlock a few techs.
-    /// Medium should get you partway through a tree.
-    /// Complex should get you through a full tree and then some.
+    /// Simple (1-2 Nodes): 1-2K
+    /// Medium (5-8 Nodes): 6-7K
+    /// Complex (7-12 Nodes): 10-11K
     /// </remarks>
     private void GetPrice(EntityUid uid, ArtifactComponent component, ref PriceCalculationEvent args)
     {
@@ -79,7 +75,14 @@ public sealed partial class ArtifactSystem : EntitySystem
     /// Calculates how many research points the artifact is worht
     /// </summary>
     /// <remarks>
-    /// Rebalance this shit at some point. Definitely OP.
+    /// General balancing (for fully unlocked artifacts):
+    /// Simple (1-2 Nodes): ~10K
+    /// Medium (5-8 Nodes): ~30-40K
+    /// Complex (7-12 Nodes): ~60-80K
+    ///
+    /// Simple artifacts should be enough to unlock a few techs.
+    /// Medium should get you partway through a tree.
+    /// Complex should get you through a full tree and then some.
     /// </remarks>
     public int GetResearchPointValue(EntityUid uid, ArtifactComponent? component = null)
     {
