@@ -1,10 +1,4 @@
 Entries:
-- author: Rapidgame7
-  changes:
-  - {message: Improved error pop-up when failing to insert an item into storage containers.,
-    type: Tweak}
-  id: 2423
-  time: '2022-10-10T22:19:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix Centcomm map loading failing., type: Fix}
@@ -2930,3 +2924,8 @@ Entries:
   - {message: Fix mechs being able to pickup portals, type: Fix}
   id: 2922
   time: '2023-01-20T14:14:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix popup flickering., type: Fix}
+  id: 2923
+  time: '2023-01-20T14:19:02.0000000+00:00'
