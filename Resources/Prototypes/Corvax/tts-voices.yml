@@ -33,13 +33,6 @@
   roundStart: false
 
 - type: ttsVoice
-  id: Random
-  name: tts-voice-name-random
-  sex: Unsexed
-  speaker: random
-  roundStart: false
-
-- type: ttsVoice
   id: Arthas
   name: tts-voice-name-arthas
   sex: Male
