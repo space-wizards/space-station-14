@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
-  id: 2415
-  time: '2022-10-09T19:13:30.0000000+00:00'
 - author: router
   changes:
   - {message: Some spicy foods now cause you to heat up and get burn damage instead
@@ -2936,3 +2931,10 @@ Entries:
     type: Fix}
   id: 2914
   time: '2023-01-19T23:48:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Updated engine to 0.85.0.0, type: Tweak}
+  - {message: Slipping should no longer mispredict. The drop sound will still play
+      twice., type: Fix}
+  id: 2915
+  time: '2023-01-20T00:37:34.0000000+00:00'
