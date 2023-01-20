@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed a bug that would sometimes cause the client to crash when playing
-      particular ghost roles (e.g., mice).', type: Fix}
-  id: 2428
-  time: '2022-10-12T00:55:00.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: Added National Coming Out Day as a holiday., type: Add}
@@ -2930,3 +2924,9 @@ Entries:
       typing indicator, type: Add}
   id: 2927
   time: '2023-01-20T15:23:10.0000000+00:00'
+- author: Rane
+  changes:
+  - {message: Fixed not being able to attack people who picked you up or attack lockers
+      and crates from the inside., type: Fix}
+  id: 2928
+  time: '2023-01-20T15:48:28.0000000+00:00'
