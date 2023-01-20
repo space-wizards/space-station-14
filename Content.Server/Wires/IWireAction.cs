@@ -45,7 +45,7 @@ public interface IWireAction
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
+    /// <returns>true if successful, false otherwise.</returns>
     public bool Cut(EntityUid user, Wire wire);
 
     /// <summary>
@@ -53,7 +53,7 @@ public interface IWireAction
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
+    /// <returns>true if successful, false otherwise.</returns>
     public bool Mend(EntityUid user, Wire wire);
 
     /// <summary>
@@ -61,7 +61,7 @@ public interface IWireAction
     /// </summary>
     /// <param name="user">The user attempting to interact with the wire.</param>
     /// <param name="wire">The wire being interacted with.</param>
-    /// <returns>true if successful, false otherwise.</summary>
+    /// <returns>true if successful, false otherwise.</returns>
     public bool Pulse(EntityUid user, Wire wire);
 
     /// <summary>

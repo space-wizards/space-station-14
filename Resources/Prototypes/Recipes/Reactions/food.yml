@@ -98,6 +98,40 @@
       amount: 5
   products:
     Ketchup: 15
+
+- type: reaction
+  id: CookingMayoVinegar
+  reactants:
+    Vinegar:
+      amount: 5
+    Oil:
+      amount: 5
+    Egg:
+      amount: 6
+  products:
+    Mayo: 15
+
+- type: reaction
+  id: CookingMayoLemon
+  reactants:
+    JuiceLemon:
+      amount: 5
+    Oil:
+      amount: 5
+    Egg:
+      amount: 6
+  products:
+    Mayo: 15
+
+- type: reaction
+  id: CookingKetchunaise
+  reactants:
+    Ketchup:
+      amount: 5
+    Mayo:
+      amount: 5
+  products:
+    Ketchunaise: 10
     
 - type: reaction
   id: CookingBbqSauce
@@ -122,6 +156,16 @@
       amount: 5
   products:
     Hotsauce: 15
+
+- type: reaction
+  id: CookingVinegar
+  reactants:
+    Ethanol:
+      amount: 5
+    Oxygen:
+      amount: 5
+  products:
+    Vinegar: 10
 
 - type: reaction
   id: CreateMeatball

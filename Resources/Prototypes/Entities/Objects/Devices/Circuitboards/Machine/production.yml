@@ -180,6 +180,38 @@
         Cable: 1
 
 - type: entity
+  parent: BaseMachineCircuitboard
+  id: AnomalyVesselCircuitboard
+  name: anomaly vessel machine board
+  description: A machine printed circuit board for an anomaly vessel
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAnomalyVessel
+      requirements:
+        ScanningModule: 5
+      materialRequirements:
+        Cable: 1
+        PlasmaGlass: 10
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: APECircuitboard
+  name: A.P.E. machine board
+  description: A machine printed circuit board for an A.P.E.
+  components:
+    - type: Sprite
+      state: science
+    - type: MachineBoard
+      prototype: MachineAPE
+      requirements:
+        Capacitor: 1
+        Laser: 3
+      materialRequirements:
+        Cable: 1
+
+- type: entity
   id: ThermomachineFreezerMachineCircuitBoard
   parent: BaseMachineCircuitboard
   name: freezer thermomachine machine board

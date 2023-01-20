@@ -8,7 +8,7 @@ namespace Content.Shared.Stacks
     public sealed class StackPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

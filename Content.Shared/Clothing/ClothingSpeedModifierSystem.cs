@@ -125,7 +125,5 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
         }
 
         _examine.AddDetailedExamineVerb(args, component, msg, Loc.GetString("clothing-speed-examinable-verb-text"), "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png", Loc.GetString("clothing-speed-examinable-verb-message"));
-
-        return;
     }
 }

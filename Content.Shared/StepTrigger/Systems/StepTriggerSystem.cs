@@ -13,14 +13,15 @@ public sealed class StepTriggerSystem : EntitySystem
 
     public override void Initialize()
     {
+        UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<StepTriggerComponent, ComponentGetState>(TriggerGetState);
         SubscribeLocalEvent<StepTriggerComponent, ComponentHandleState>(TriggerHandleState);
 
-        SubscribeLocalEvent<StepTriggerComponent, StartCollideEvent>(HandleCollide);
+        SubscribeLocalEvent<StepTriggerComponent, StartCollideEvent>(OnStartCollide);
+        SubscribeLocalEvent<StepTriggerComponent, EndCollideEvent>(OnEndCollide);
 #if DEBUG
         SubscribeLocalEvent<StepTriggerComponent, ComponentStartup>(OnStartup);
     }
-
     private void OnStartup(EntityUid uid, StepTriggerComponent component, ComponentStartup args)
     {
         if (!component.Active)
@@ -41,7 +42,7 @@ public sealed class StepTriggerSystem : EntitySystem
             if (!Update(trigger, transform, query))
                 continue;
 
-            RemComp(trigger.Owner, active);
+            RemCompDeferred(trigger.Owner, active);
         }
     }
 
@@ -51,54 +52,46 @@ public sealed class StepTriggerSystem : EntitySystem
             component.Colliding.Count == 0)
             return true;
 
-        var remQueue = new ValueList<EntityUid>();
         foreach (var otherUid in component.Colliding)
         {
-            var shouldRemoveFromColliding = UpdateColliding(component, transform, otherUid, query);
-            if (!shouldRemoveFromColliding)
-                continue;
-
-            remQueue.Add(otherUid);
-        }
-
-        if (remQueue.Count > 0)
-        {
-            foreach (var uid in remQueue)
-            {
-                component.Colliding.Remove(uid);
-                component.CurrentlySteppedOn.Remove(uid);
-            }
-
-            Dirty(component);
+            UpdateColliding(component, transform, otherUid, query);
         }
 
         return false;
     }
 
-    private bool UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
+    private void UpdateColliding(StepTriggerComponent component, TransformComponent ownerTransform, EntityUid otherUid, EntityQuery<PhysicsComponent> query)
     {
         if (!query.TryGetComponent(otherUid, out var otherPhysics))
-            return true;
+            return;
 
         // TODO: This shouldn't be calculating based on world AABBs.
         var ourAabb = _entityLookup.GetWorldAABB(component.Owner, ownerTransform);
         var otherAabb = _entityLookup.GetWorldAABB(otherUid);
 
         if (!ourAabb.Intersects(otherAabb))
-            return true;
+        {
+            if (component.CurrentlySteppedOn.Remove(otherUid))
+            {
+                Dirty(component);
+            }
+            return;
+        }
 
         if (otherPhysics.LinearVelocity.Length < component.RequiredTriggerSpeed
             || component.CurrentlySteppedOn.Contains(otherUid)
             || otherAabb.IntersectPercentage(ourAabb) < component.IntersectRatio
             || !CanTrigger(component.Owner, otherUid, component))
-            return false;
+        {
+            return;
+        }
 
         var ev = new StepTriggeredEvent { Source = component.Owner, Tripper = otherUid };
         RaiseLocalEvent(component.Owner, ref ev, true);
 
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(component);
-        return false;
+        return;
     }
 
     private bool CanTrigger(EntityUid uid, EntityUid otherUid, StepTriggerComponent component)
@@ -113,7 +106,7 @@ public sealed class StepTriggerSystem : EntitySystem
         return msg.Continue && !msg.Cancelled;
     }
 
-    private void HandleCollide(EntityUid uid, StepTriggerComponent component, ref StartCollideEvent args)
+    private void OnStartCollide(EntityUid uid, StepTriggerComponent component, ref StartCollideEvent args)
     {
         var otherUid = args.OtherFixture.Body.Owner;
 
@@ -125,10 +118,30 @@ public sealed class StepTriggerSystem : EntitySystem
 
         EnsureComp<StepTriggerActiveComponent>(uid);
 
-        component.Colliding.Add(otherUid);
+        if (component.Colliding.Add(otherUid))
+        {
+            Dirty(component);
+        }
     }
 
-    private static void TriggerHandleState(EntityUid uid, StepTriggerComponent component, ref ComponentHandleState args)
+    private void OnEndCollide(EntityUid uid, StepTriggerComponent component, ref EndCollideEvent args)
+    {
+        var otherUid = args.OtherFixture.Body.Owner;
+
+        if (!component.Colliding.Remove(otherUid))
+            return;
+
+        component.CurrentlySteppedOn.Remove(otherUid);
+        Dirty(component);
+
+        if (component.Colliding.Count == 0)
+        {
+            RemCompDeferred<StepTriggerActiveComponent>(uid);
+        }
+    }
+
+
+    private void TriggerHandleState(EntityUid uid, StepTriggerComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StepTriggerComponentState state)
             return;
@@ -142,6 +155,15 @@ public sealed class StepTriggerSystem : EntitySystem
 
         component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
         component.Colliding.UnionWith(state.Colliding);
+
+        if (component.Colliding.Count > 0)
+        {
+            EnsureComp<StepTriggerActiveComponent>(uid);
+        }
+        else
+        {
+            RemCompDeferred<StepTriggerActiveComponent>(uid);
+        }
     }
 
     private static void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
@@ -188,20 +210,6 @@ public sealed class StepTriggerSystem : EntitySystem
 
         component.Active = active;
         Dirty(component);
-    }
-
-    
-    /// <summary>
-    ///  Copy constructor to copy initial fields from source to destination.
-    /// </summary>
-    /// <param name="destUid">Entity to which we copy <paramref name="srcStep"/> properties</param>
-    /// <param name="srcStep">Component that contains relevant properties</param>
-    public void CopyConstruct(EntityUid destUid, StepTriggerComponent srcStep)
-    {
-        var destTrigger = EntityManager.EnsureComponent<StepTriggerComponent>(destUid);
-        destTrigger.Active = srcStep.Active;
-        destTrigger.IntersectRatio = srcStep.IntersectRatio;
-        destTrigger.RequiredTriggerSpeed = srcStep.RequiredTriggerSpeed;
     }
 }
 

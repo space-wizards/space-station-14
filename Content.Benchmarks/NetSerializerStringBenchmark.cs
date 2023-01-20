@@ -377,7 +377,7 @@ namespace Content.Benchmarks
 					throw new EndOfStreamException();
 
 				streamBytesLeft -= bytesInBuffer;
-				bool flush = streamBytesLeft == 0 ? true : false;
+				bool flush = streamBytesLeft == 0;
 
 				bool completed = false;
 
