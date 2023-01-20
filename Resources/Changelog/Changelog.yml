@@ -1,9 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Layout optimizations for Kettle, type: Tweak}
-  id: 2427
-  time: '2022-10-11T14:01:07.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed a bug that would sometimes cause the client to crash when playing
@@ -2929,3 +2924,9 @@ Entries:
     type: Tweak}
   id: 2926
   time: '2023-01-20T15:19:26.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Cardborg outer clothes and cardborg hat now changes the style of the
+      typing indicator, type: Add}
+  id: 2927
+  time: '2023-01-20T15:23:10.0000000+00:00'
