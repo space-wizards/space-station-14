@@ -8,7 +8,7 @@
     edges:
     - to: meat steak
       steps:
-      - minTemperature: 305
+      - minTemperature: 335
 
   - node: meat steak
     entity: FoodMeatCooked
@@ -23,7 +23,7 @@
     edges:
     - to: cooked penguin
       steps:
-      - minTemperature: 305
+      - minTemperature: 345
 
   - node: cooked penguin
     entity: FoodMeatPenguinCooked
@@ -38,7 +38,7 @@
     edges:
     - to: cooked chicken
       steps:
-      - minTemperature: 305
+      - minTemperature: 345
 
   - node: cooked chicken
     entity: FoodMeatChickenCooked
@@ -53,7 +53,7 @@
     edges:
     - to: cooked duck
       steps:
-      - minTemperature: 305
+      - minTemperature: 335 #duck is actually culinarily red meat IRL and has a lower min temp than other poultry
 
   - node: cooked duck
     entity: FoodMeatDuckCooked
@@ -68,7 +68,7 @@
     edges:
     - to: lizard steak
       steps:
-      - minTemperature: 305
+      - minTemperature: 345
 
   - node: lizard steak
     entity: FoodMeatLizardCooked
@@ -83,7 +83,7 @@
     edges:
     - to: filet migrawr
       steps:
-      - minTemperature: 305
+      - minTemperature: 345 #apparently trichinellosis is a concern
 
   - node: filet migrawr
     entity: FoodMealBearsteak
@@ -98,12 +98,12 @@
     edges:
     - to: cooked crab
       steps:
-      - minTemperature: 305
+      - minTemperature: 335
 
   - node: cooked crab
     entity: FoodMeatCrabCooked
 
-# crab steak
+# goliath steak
 - type: constructionGraph
   id: GoliathSteak
   start: start
@@ -113,7 +113,7 @@
     edges:
     - to: goliath steak
       steps:
-      - minTemperature: 305
+      - minTemperature: 345 #I dunno what this is but I don't want whatever parasites are inside
 
   - node: goliath steak
     entity: FoodMeatGoliathCooked
