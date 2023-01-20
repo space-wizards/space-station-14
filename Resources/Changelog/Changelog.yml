@@ -1,25 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: You'll no longer be tasked to keep 'fellow traitor' yourself alive.
-      That objective now checks that you aren't getting yourself as a target., type: Fix}
-  - {message: 'New objective: Ensure another traitor completes at like half of their
-      objectives.', type: Add}
-  id: 2414
-  time: '2022-10-09T19:09:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: All salvages with asteroids now have higher ore yield., type: Tweak}
-  id: 2415
-  time: '2022-10-09T19:13:30.0000000+00:00'
-- author: router
-  changes:
-  - {message: Some spicy foods now cause you to heat up and get burn damage instead
-      of being poisoned., type: Tweak}
-  - {message: The same spicy foods now satiate hunger better due to them being actually
-      spicy., type: Add}
-  id: 2416
-  time: '2022-10-09T19:25:22.0000000+00:00'
 - author: vulppine
   changes:
   - {message: NanoTrasen has finally upgraded all of our nuclear bombs! They no longer
@@ -2938,3 +2917,21 @@ Entries:
   - {message: minor update to the pirate shuttle, type: Tweak}
   id: 2913
   time: '2023-01-19T11:02:48.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: Neither monkeys on the guidebook nor people outside your view float,
+    type: Fix}
+  id: 2914
+  time: '2023-01-19T23:48:29.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Updated engine to 0.85.0.0, type: Tweak}
+  - {message: Slipping should no longer mispredict. The drop sound will still play
+      twice., type: Fix}
+  id: 2915
+  time: '2023-01-20T00:37:34.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes will now automatically stack their output., type: Tweak}
+  id: 2916
+  time: '2023-01-20T04:06:02.0000000+00:00'
