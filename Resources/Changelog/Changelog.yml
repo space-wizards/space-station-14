@@ -1,10 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: 'Radiation has been reworked. It can now be blocked by structures like
-      walls, shutters or airlocks and will lose intensity over distance.', type: Tweak}
-  id: 2425
-  time: '2022-10-11T03:09:10.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: Fixes supply blast doors not letting crates pass when the underlying
@@ -2929,3 +2923,9 @@ Entries:
   - {message: Plastic utensils are now trash., type: Tweak}
   id: 2924
   time: '2023-01-20T14:48:53.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed barotrauma damage to be much more deadly. Keep your survival
+      box close., type: Tweak}
+  id: 2925
+  time: '2023-01-20T15:07:02.0000000+00:00'
