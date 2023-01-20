@@ -63,7 +63,7 @@ public sealed partial class AnomalySystem
     {
         if (component.Anomaly != null ||
             !TryComp<AnomalyScannerComponent>(args.Used, out var scanner) ||
-            scanner.ScannedAnomaly is not {} anomaly)
+            scanner.ScannedAnomaly is not { } anomaly)
         {
             return;
         }

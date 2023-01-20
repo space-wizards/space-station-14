@@ -566,8 +566,6 @@ public sealed partial class PathfindingSystem
                             start = new Vector2i(nextX, nextY);
                             data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
                         }
-
-                        continue;
                     }
                 }
 

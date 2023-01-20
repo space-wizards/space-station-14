@@ -130,7 +130,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (tool.Qualities.Contains(door.PryingQuality))
         {
             args.Handled = TryPryDoor(uid, args.Used, args.User, door);
-            return;
         }
     }
 

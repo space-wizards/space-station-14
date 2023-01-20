@@ -42,6 +42,9 @@
       radius: 1.0
       energy: 5.0
       netsync: false
+    - type: IgnitionSource
+      temperature: 400
+      ignited: false
     - type: LightBehaviour
       behaviours:
         - !type:RandomizeBehaviour # immediately make it bright and flickery

@@ -10,7 +10,7 @@ namespace Content.Server.GameTicking.Presets
     [Prototype("gamePreset")]
     public sealed class GamePresetPrototype : IPrototype
     {
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("alias")]

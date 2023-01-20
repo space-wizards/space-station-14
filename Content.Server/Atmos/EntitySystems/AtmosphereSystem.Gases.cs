@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
-        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions;
 
         /// <summary>
         ///     Cached array of gas specific heats.

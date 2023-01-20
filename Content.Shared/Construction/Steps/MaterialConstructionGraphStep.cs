@@ -23,7 +23,7 @@ namespace Content.Shared.Construction.Steps
             examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", material.Name)));
         }
 
-        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)
         {
             return entityManager.TryGetComponent(uid, out StackComponent? stack) && stack.StackTypeId == MaterialPrototypeId && stack.Count >= Amount;
         }
