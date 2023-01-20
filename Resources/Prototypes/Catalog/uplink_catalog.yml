@@ -49,7 +49,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   productEntity: EnergySword
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
   - UplinkWeapons
 
@@ -60,7 +60,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDagger
   cost:
-    Telecrystal: 2
+    Telecrystal: 3
   categories:
   - UplinkWeapons
 
@@ -275,9 +275,9 @@
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 2
+    Telecrystal: 2 # next step is adding encryption keys
   categories:
-  - UplinkUtility
+    - UplinkUtility
 
 - type: listing
   id: UplinkHypopen
