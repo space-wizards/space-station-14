@@ -27,12 +27,12 @@ public abstract class BaseWireAction : IWireAction
     ///     If true, the default behavior of <see cref="GetStatusLightData(Wire)"/> will return an off-light when the
     ///     wire owner is not powered.
     /// </summary>
-    [DataField("requirePower")]
-    public virtual bool RequirePower { get; set; } = true;
+    [DataField("lightRequiresPower")]
+    public virtual bool LightRequiresPower { get; set; } = true;
 
     public virtual StatusLightData? GetStatusLightData(Wire wire)
     {
-        if (RequirePower && !IsPowered(wire.Owner))
+        if (LightRequiresPower && !IsPowered(wire.Owner))
             return new StatusLightData(Color, StatusLightState.Off, Loc.GetString(Name));
 
         var state = GetLightState(wire);

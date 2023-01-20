@@ -12,7 +12,7 @@ public sealed class CryoPodEjectLockWireAction: ComponentWireAction<CryoPodCompo
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-lock";
-    public override bool RequirePower { get; set; } = false;
+    public override bool LightRequiresPower { get; set; } = false;
 
     public override object? StatusKey { get; } = CryoPodWireActionKey.Key;
     public override bool Cut(EntityUid user, Wire wire, CryoPodComponent cryoPodComponent)
