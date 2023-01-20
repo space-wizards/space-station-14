@@ -29,7 +29,7 @@ public sealed class CluwneComponent : Component
     public float Accumulator = 0f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float ParalyzeTime = 2;
+    public float ParalyzeTime = 2f;
 	
 	[DataField("giggle")]
     public SoundSpecifier Giggle = new SoundCollectionSpecifier("CluwneScreams");

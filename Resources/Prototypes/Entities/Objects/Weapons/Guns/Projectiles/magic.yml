@@ -116,7 +116,7 @@
   id: ProjectilePolyboltCluwne
   parent: ProjectilePolyboltBase
   name: cluwne polybolt
-  description: konH KonH!
+  description: knoH KnoH!
   noSpawn: true
   components:
   - type: PolymorphOnCollide
