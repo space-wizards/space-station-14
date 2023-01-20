@@ -32,6 +32,7 @@ public sealed class MoppingSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, DoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<TransferCancelledEvent>(OnTransferCancelled);
         SubscribeLocalEvent<TransferCompleteEvent>(OnTransferComplete);
     }
@@ -229,7 +230,7 @@ public sealed class MoppingSystem : EntitySystem
         if (!component.InteractingEntities.Add(target))
             return;
 
-        var doAfterArgs = new DoAfterEventArgs(user, delay, target: target)
+        var doAfterArgs = new DoAfterEventArgs(user, delay, target: target, used:used)
         {
             BreakOnUserMove = true,
             BreakOnStun = true,
@@ -240,6 +241,11 @@ public sealed class MoppingSystem : EntitySystem
         };
 
         _doAfterSystem.DoAfter(doAfterArgs);
+    }
+
+    private void OnDoAfter(EntityUid uid, AbsorbentComponent component, DoAfterEvent args)
+    {
+        throw new NotImplementedException();
     }
 
     private void OnTransferComplete(TransferCompleteEvent ev)
