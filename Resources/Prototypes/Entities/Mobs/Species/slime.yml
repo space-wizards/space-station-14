@@ -32,7 +32,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.3 #per second, scales with pressure and other constants. Twice as much as humans.
+        Blunt: 0.45 #per second, scales with pressure and other constants. Slighty more than humans.
   - type: Reactive
     groups:
       Flammable: [ Touch ]
