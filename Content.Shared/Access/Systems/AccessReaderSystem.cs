@@ -4,9 +4,9 @@ using Content.Shared.Inventory;
 using Content.Shared.Emag.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Access.Components;
+using Content.Shared.DeviceLinking.Events;
 using Robust.Shared.Prototypes;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.MachineLinking.Events;
 
 namespace Content.Shared.Access.Systems
 {

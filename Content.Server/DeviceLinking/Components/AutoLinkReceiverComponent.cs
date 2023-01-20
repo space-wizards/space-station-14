@@ -1,4 +1,4 @@
-namespace Content.Server.MachineLinking.Components;
+namespace Content.Server.DeviceLinking.Components;
 
 /// <summary>
 /// This is used for automatic linkage with buttons and other transmitters.

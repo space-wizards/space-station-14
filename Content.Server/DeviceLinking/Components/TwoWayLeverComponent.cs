@@ -1,7 +1,8 @@
+using Content.Shared.DeviceLinking;
 using Content.Shared.MachineLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.MachineLinking.Components
+namespace Content.Server.DeviceLinking.Components
 {
     [RegisterComponent]
     public sealed class TwoWayLeverComponent : Component

@@ -1,15 +1,14 @@
 using System.Linq;
 using Content.Client.Actions;
-using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
-namespace Content.Client.NetworkConfigurator;
+namespace Content.Client.NetworkConfigurator.Systems;
 
 public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {

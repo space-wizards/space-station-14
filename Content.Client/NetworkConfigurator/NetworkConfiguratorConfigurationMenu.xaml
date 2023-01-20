@@ -15,6 +15,6 @@
             <Button Name="Copy" Text="Copy" Access="Public" ToolTip="{Loc 'network-configurator-tooltip-copy'}" HorizontalExpand="True" StyleClasses="OpenRight"/>
             <Button Name="Show" Text="Show" Access="Public" ToggleMode="True" ToolTip="{Loc 'network-configurator-tooltip-show'}" HorizontalExpand="True" StyleClasses="ButtonSquare"/>
         </BoxContainer>
-        <Label Name="Count" HorizontalAlignment="Right" />
+        <Label Name="Count" StyleClasses="LabelSubText" HorizontalAlignment="Right" Margin="0 0 12 8"/>
     </BoxContainer>
 </controls:FancyWindow>

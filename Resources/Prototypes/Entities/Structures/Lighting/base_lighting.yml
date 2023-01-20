@@ -265,11 +265,16 @@
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
+  #- type: SignalReceiver
+  #  inputs:
+  #    On: []
+  #    Off: []
+  #    Toggle: []
 
 - type: entity
   id: PoweredSmallLight

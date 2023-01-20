@@ -14,7 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
-using Content.Shared.MachineLinking.Events;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Cloning.Systems
@@ -66,15 +66,15 @@ namespace Content.Server.Cloning.Systems
 
         private void OnNewLink(EntityUid uid, CloningConsoleComponent component, NewLinkEvent args)
         {
-            if (TryComp<MedicalScannerComponent>(args.Receiver, out var scanner) && args.TransmitterPort == CloningConsoleComponent.ScannerPort)
+            if (TryComp<MedicalScannerComponent>(args.Sink, out var scanner) && args.SourcePort == CloningConsoleComponent.ScannerPort)
             {
-                component.GeneticScanner = args.Receiver;
+                component.GeneticScanner = args.Sink;
                 scanner.ConnectedConsole = uid;
             }
 
-            if (TryComp<CloningPodComponent>(args.Receiver, out var pod) && args.TransmitterPort == CloningConsoleComponent.PodPort)
+            if (TryComp<CloningPodComponent>(args.Sink, out var pod) && args.SourcePort == CloningConsoleComponent.PodPort)
             {
-                component.CloningPod = args.Receiver;
+                component.CloningPod = args.Sink;
                 pod.ConnectedConsole = uid;
             }
             RecheckConnections(uid, component.CloningPod, component.GeneticScanner, component);

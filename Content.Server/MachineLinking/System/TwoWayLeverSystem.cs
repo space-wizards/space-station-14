@@ -1,4 +1,6 @@
+using Content.Server.DeviceLinking.Components;
 using Content.Server.MachineLinking.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 

@@ -1,4 +1,5 @@
 using Content.Shared.Actions;
+using Content.Shared.DeviceNetwork.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 

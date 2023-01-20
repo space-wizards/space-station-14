@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Popups;
@@ -10,7 +11,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Content.Shared.Verbs;
 using Robust.Shared.Prototypes;
-using Content.Shared.MachineLinking.Events;
 
 namespace Content.Server.MachineLinking.System
 {
