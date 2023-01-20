@@ -1,16 +1,4 @@
 Entries:
-- author: keronshb
-  changes:
-  - {message: 'Cardboard Boxes have been added. They''re large boxes that can hold
-      a single person inside, and that person can move the box! If the box is opened,
-      everyone around them is in for a surprise.', type: Add}
-  - {message: 'Adds the Stealth component! Anything that has it will become invisible
-      if they stand still for a period of time, and gradually becomes visible while
-      moving.', type: Add}
-  - {message: 'Adds Stealth Box, which is a box that goes invisible and will be a
-      traitor item to be added in the future!', type: Add}
-  id: 2421
-  time: '2022-10-09T22:17:53.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed firelock construction not working. Deconstructing existing firelocks
@@ -2938,3 +2926,8 @@ Entries:
   - {message: Tabletops can now fade their sprites like trees., type: Tweak}
   id: 2920
   time: '2023-01-20T13:49:22.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed the syringe icon in the lathe being displayed incorrectly, type: Fix}
+  id: 2921
+  time: '2023-01-20T13:57:50.0000000+00:00'
