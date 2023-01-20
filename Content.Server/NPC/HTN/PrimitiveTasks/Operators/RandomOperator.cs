@@ -6,6 +6,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
 public sealed class RandomOperator : HTNOperator
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
 
     /// <summary>
@@ -30,8 +31,8 @@ public sealed class RandomOperator : HTNOperator
         {
             {
                 TargetKey,
-                _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey),
-                    blackboard.GetValueOrDefault<float>(MaxKey))
+                _random.NextFloat(blackboard.GetValueOrDefault<float>(MinKey, _entManager),
+                    blackboard.GetValueOrDefault<float>(MaxKey, _entManager))
             }
         });
     }

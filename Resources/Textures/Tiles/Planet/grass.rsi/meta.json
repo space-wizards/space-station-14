@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/discordia-space/CEV-Eris/commit/026ee3250ac1de938b503e3eb46ad73dd9c3ca82",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "grass0"
+    },
+    {
+      "name": "grass1"
+    },
+    {
+      "name": "grass2"
+    },
+    {
+      "name": "grass3"
+    },
+    {
+      "name": "grass_edges",
+      "directions": 8
+    },
+    {
+      "name": "grass_edges_old",
+      "directions": 8
+    },
+    {
+      "name": "grass_corners",
+      "directions": 8
+    },
+    {
+      "name": "grass_edge_corner",
+      "directions": 8
+    }
+  ]
+}

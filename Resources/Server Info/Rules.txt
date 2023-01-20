@@ -1,62 +1,84 @@
-[color=#ff0000]You must be 16 or older to play. Users under 16 will be banned immediately and be unbanned when they are old enough.[/color]
+[color=#ff0000]YOU MUST BE AT LEAST 16 YEARS OF AGE TO PLAY ON WIZARD'S DEN SERVERS. ANY USER SUSPECTED OF BEING UNDER 16 YEARS OF AGE WILL BE BANNED UNTIL THEY ARE OF AGE.[/color]
 
-[color=#a4885c]The[/color] [color=#ffd700]Golden[/color] [color=#a4885c]Rule.[/color] Admins can disregard any and all of these rules if they deem it in the best interest of the current round, server, and/or community at large. They will of course be held fully accountable for their actions if they exercise this privilege.
+[color=#ff0000]DISCONNECTING FROM OR IGNORING/EVADING ADMIN-HELPS WILL RESULT IN AN APPEAL ONLY BAN.[/color]
 
-[color=#a4885c]1.[/color] Don’t be a dick. We’re all here to have fun.
-    - Antagonists have lots of leeway here since ruining the round is kind of their job, but if your actions degrade the experience for most of the server, you may be asked to refrain from doing it in the future.
-    - Be considerate of what other players want. If everyone is dead, don't stall the end of the round to finish your personal projects (such as building a shuttle), and don't call the shuttle early just because you don't feel like playing anymore or want a different gamemode.
-    - Just because the shuttle has departed does not mean the round is over. Standard rules still apply until the round summary screen pops up.
+This is the "short" form of the rules, which has all the information any regular player should need. You can find the "long" form of the rules with more examples & clarifications of any ambiguity on our wiki at [color=#a4885c]wiki.spacestation14.io[/color], should you need it.
 
-[color=#a4885c]2.[/color] These are english servers. Do not speak other languages in IC or OOC, our staff cannot moderate it and you will be asked to stop.
+[color=#a4885c]0.[/color] [color=#a4885c]The[/color] [color=#ffd700]Golden[/color] [color=#a4885c]Rule.[/color] Admins may excercise discretion with rules as they see fit. If you rule lawyer or line skirt, you will get removed. Admins will answer for use of this privilege.
 
-[color=#a4885c]3.[/color] These servers are "Low Roleplay", meaning that while you don't need to be perfectly in character, basic roleplaying standards like not using emoji/emoticons or textspeak (:), :D, xD, lol, etc.) in speech, and using real names for characters, are expected to be followed.
+[color=#ff0000]ZERO TOLERANCE RULES[/color]
 
-[color=#a4885c]4.[/color] Follow basic common sense--you cannot murder someone because they slipped you on a banana.
-    - This isn't a deathmatch, be humane.
-    - What is considered a reasonable reason to escalate conflict is listed below under ESCALATION RULES and is at the discretion of admins.
-    - Declaring a revolution or going on strike is an antagonist only activity. "Cargonia" and other departmental revolutions are prohibited unless admin permission is obtained.
+[color=#a4885c]1.[/color] Absolutely no hate speech, slurs, bigotry, IC specism (demeaning other characters in-game due to their in-game race), or anything even remotely similar. (YOU WILL GET PERMABANNED)
 
-[color=#a4885c]5.[/color] Erotic Roleplay (ERP) is [color=#ff0000]not allowed under any circumstance[/color]. This includes any direct or implied sexual acts as well as explicit mentions of sexual behavior.
+[color=#a4885c]2.[/color] Absolutely no Erotic Roleplay (ERP) or sexual content, including direct or indirect mentions of sexual behavior or actions. (YOU WILL GET PERMABANNED) (Leeway is given to insults, ex: 'You are a dickhead', do not push it)
 
-[color=#a4885c]6.[/color] Harassment of other players for OOC/meta reasons is [color=#ff0000]not allowed[/color].
-	- Annoying somebody in a round for IC/RP reasons is fine. Doing it consistently across multiple rounds for OOC reasons (“I don’t like this player” AKA metagrudging) to the point where it becomes seriously problematic for the other player(s) is [color=#ff0000]not[/color].
+[color=#a4885c]3.[/color] Don't communicate in-game/in-character information through methods outside of the game (such as talking in Discord with other users actively playing or by talking to your sibling across the room while you are both playing). This is referred to as "Metacomming" and we are not able to police it, therefore it is strictly forbidden. (BOTH OR ALL OF YOU WILL GET PERMABANNED)
 
-[color=#a4885c]7.[/color] Hate speech, slurs and bigotry are not allowed.
-	- Intentionally seeking to demean others due to their actual or perceived race, sex, gender, sexual orientation or the like is not tolerated.
-	- Words that are closely tied to real life slurs are [color=#ff0000]not allowed[/color].
-    - Species-ism (IC or OOC bigotry against other in-game species) is also NOT ALLOWED. Not even for roleplay or because it's your "character".
+[color=#a4885c]4.[/color] Attempting to evade game bans will result in an automatic appeal-only permanent ban that is only appealable after six months. Attempting to evade job bans will result in an appeal-only permanent ban. (YOU WILL GET BANNED MUCH WORSE THAN YOU ALREADY WERE)
 
-[color=#a4885c]8.[/color] Offensive/bad/out-of-character character names and descriptions put you at the mercy of administrators, from receiving brain damage to becoming valid to straight up getting banned on the spot depending on how bad they are.
-    - Character names should be something that a member of that species would reasonably have.
-    - No famous real or fictional names of characters.
+[color=#ff0000]GENERAL ETIQUETTE[/color]
 
-[color=#a4885c]9.[/color] Knowingly using exploits, external programs, or other unintended game mechanics to gain in-game advantages or to lag/crash the server is [color=#ff0000]not allowed[/color].
+[color=#a4885c]5.[/color] These are English servers. Speak only English in IC and OOC.
 
-[color=#a4885c]10.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
-	- Admins may ask players in possession of multiple alt accounts to choose one to play on and ban the other accounts.
-	- If you are caught knowingly using alt accounts you may have your main account banned as well.
+[color=#a4885c]6.[/color] Don't use exploits or external programs to play, gain an advantage, or disrupt the round/server. This includes autoclickers and auto-hotkey scripts.
 
-[color=#a4885c]11.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
-	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
-    - This is a roleplaying game, thus IC conflicts must only be resolved with IC (Local) chat. Utilizing voice chat, calling across the room, OOC, or other out-of-game communication methods to coordinate in-game actions is forbidden and will result in a [color=#ff0000]appeal-only permanent ban[/color] in most cases.
-    - Using emotes or LOOC to bypass IC chat restrictions (accents, unconsciousness, death) is not allowed.
-    - Preemptive spacing or destruction of high-risk items also falls under this rule.
+[color=#a4885c]7.[/color] Don't "multi-key" (utilize multiple alt accounts). Users knowingly using multiple SS14 accounts will have all of their accounts banned.
 
-[color=#a4885c]12.[/color] Security is expected to use non-lethal measures unless faced with lethal force or a situation where non-lethal measures aren't possible.
-    - If you still manage to kill someone as security, get them cloned immediately, and make sure their stuff is returned, unless they are a confirmed antagonist. Security should make their best effort to keep criminals alive and in custody.
+[color=#a4885c]8.[/color] Do not ignore the admin help relay or abuse it by flooding it with garbage, checking for admins before stating a problem (ex: "hello?", "any admins?"), or sending messages of no substance. All admin helps are sent to the SS14 Discord.
 
-[color=#a4885c]13.[/color] Prisoners should generally not be given sentences longer than 10 minutes. Antagonists or repeat offenders may be permabrigged, and only [color=#ff0000]in the very worst cases approved by the Captain[/color], executed.
-    - As there is no official space law for this server, security generally act to maintain order and safety on station and protect Nanotrasen assets.
+[color=#ff0000]IN GAME & ROLEPLAY RULES[/color]
 
-ESCALATION RULES
+[color=#a4885c]9.[/color] Pick a realistic name that could appear on a birth certificate with at least a first and last name (leeway is given to this for Clowns, Mimes, and non-human races).
+    - Names of notable famous or fictional persons or names that resemble/parody them are strictly forbidden. You are not clever if you slightly change a famous name around. Terrible names open you up to being politely reminded to change it, smited, or instantly banned, depending on severity.
 
-Self-defense is always allowed, to the extent of saving your own life. Preemptively attacking/maiming someone or hitting someone while they are already incapacitated is not considered self-defense. Stun weapons in the hands of someone with intent to kill are considered to be of the same severity as lethal weapons for the purposes of self-defense.
+[color=#a4885c]10.[/color] Act like an actual human being on a space station in a low-roleplay (LRP) environment. Do not use text speak or emoticons IC, and do not refer to OOC things like admins in-game.
 
-Minor conflicts and scuffles are allowed, given that the wronged party has reasonable justification. If you are wronged, you are expected to handle the conflict non-lethally whenever possible, escalating in severity as the conflict continues.
-As the defending party the rate of escalation increases with you, up to and including violence, while the instigator is always able to respond in kind.
+[color=#a4885c]11.[/color] Don't be a dick. You are playing a multiplayer game with other people who also want to enjoy the game.
+    - Do not intentionally make other players' lives hell for your own amusement.
+    - Antagonists have lots of leeway with this rule and may kill/sabotage as they see fit, but if it degrades the experience for majority of the rest of the server you will be told to stop.
+    - [color=#ff0000]THE ROUND IS NOT OVER UNTIL THE END-ROUND SUMMARY APPEARS. KILLING SOMEONE FOR NO REASON BEFORE THIS WILL BE HANDLED ACCORDINGLY.[/color]
 
-If a conflict leads to violence and either participant is incapacitated, the standing participant is expected to make an effort to treat the other, unless they have reason to believe the other was an antagonist.
-Once treated the conflict is over; any new conflict with either individual must escalate once again. If you get into a conflict again with that individual, they may be removed permanently from the round.
+[color=#a4885c]12.[/color] Don't harass or target players across rounds for actions in prior rounds or for actions outside of the game (this is referred to as "Metagrudging".)
+    - Annoying players for IC reasons in the current round is fine; doing it across rounds or as a ghost role after they kill you is not.
 
-Not all conflicts should be solved in character. If a non-antagonist conflict has escalated to the point of interfering with the round in a detrimental way, Admin Help is preferred as a solution.
-If you're unsure whether escalation is justified in a given conflict, don't be afraid to use Admin Help and ask for clarification.
+[color=#a4885c]13.[/color] Don't use information gained from outside your character's knowledge to gain an advantage (this is referred to as "Metagaming").
+    - Using information you gain from outside your own character (such as spectating while a ghost, through screenshots or metacomms, or other means) to your advantage is strictly forbidden. You remember all events up until you fall unconscious, even after cloning. If you take a ghost role, unless otherwise stated, you DO NOT REMEMBER ANYTHING from your past life.
+
+[color=#a4885c]14.[/color] Follow escalation rules and don't murder someone for slipping you, use common sense.
+    - You can defend yourself to the extent of protecting your own life.
+    - Security is unique in escalation and can escalate to less lethal to arrest criminals as needed.
+    - Don't outright leave people to die if you get in a fight, make an effort to heal them or bring them to Medbay.
+    - Adminhelp the situation if you think someone is over-escalating.
+    - Department strikes, revolutions (ex: cargonia and any variation thereof), or cults are antagonist-only activites and are forbidden without admin permission.
+
+[color=#a4885c]15.[/color] Don't immediately ghost or suicide from your role if you do not get antagonist (referred to as "Antag-rolling").
+    - This is not fair to other players actually waiting patiently for an antagonist round. Alternatively, if you do not want to play an antagonist or do not want to cause conflict, do not opt-in for antagonist roles.
+
+[color=#a4885c]16.[/color] Don't rush for or prepare equipment unrelated to your job for no purpose other then to have it "just in case" (referred to as "Powergaming").
+    - A medical doctor does not need insulated gloves, and the Head of Personnel does not need to give themselves armory access so they can go grab a gun.
+    - Don't manufacture weapons, bombs, or death poisons before you know of any reason you would need them.
+
+[color=#a4885c]17.[/color] Intentionally making yourself a major problem/annoyance/disruption for the crew or other players at large while not an antagonist is forbidden (referred to as "self-antagging").
+
+[color=#ff0000]SECURITY & COMMAND RULES[/color]
+If you regularly play Security or Command roles and got this far, I applaud you for reading.
+
+[color=#a4885c]18.[/color] If you sign up for a Command or Security role, you are expected to know the basics of the game, your job, and the job(s) you supervise, if any.
+    - Failure to know your job or how to play the game in general as Command or Security is liable to result in a job ban.
+    - As a Command or Security role, don't make friends with antagonists and trade contraband with them.
+    - Don't engage in common troublemaker behavior and lawbreaking as a Command or Security role.
+    - Do not immediately abandon your position as a Command role and go do whatever you want instead of managing your department/the station.
+
+[color=#a4885c]19.[/color] Security/Command should try to remain non-lethal and effect arrests, except in the following special circumstances, where they may choose to use lethal force:
+    - Lethal force is used against you (ex: firearms, lasers, disabling weapons with intent to kill, deadly melee weapons)
+    - Suspect is wearing clothing or showing immediately dangerous equipment only used by enemy agents/antagonists (ex: Syndicate EVA Suit, Bloodred Hardsuit, Holoparasite, C-20R, etc.)
+    - You determine that your life or the life of an innocent is in immediate danger
+    - The suspect is unable to be safely detained by less-lethal means
+    - If no other reasonable options are readily available and allowing the suspect to continue would be an unreasonable danger to the station/crew
+
+Security/Command will be expected to answer for use of lethal force. Security/Command will be expected to effect arrests on criminals and prevent them from dying while in custody, even if lethal force is used, unless there is strong reason to believe the criminal is an antagonist. Security/Command is strongly encouraged, but not required, to clone antagonists and effect a permabrigging or other sentence as deemed appropriate.
+
+[color=#a4885c]20.[/color] Security/Command are expected to protect detainees in their custody to the best of their ability so as long as it does not come to unreasonable risk to themselves, the crew or the station at large to do so.
+    - Brig times should generally not exceed 10 minutes. Repeat offenders or antagonists may be permabrigged.
+    - Detainees that die in your custody must be cloned unless they have been (legally) executed or there is strong reason to believe they are an antagonist.
+    - Executions must be for a permabriggable crime and approved by the Captain/Acting Captain, who will answer for approving it alongside Security's chain of command. As there is no space law, Security/Command acts to maintain the safety of the station and its inhabitants, as well as Nanotrasen assets.

@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Dragon;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dragon;

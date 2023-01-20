@@ -86,6 +86,10 @@
           0.2
         ]
       ]
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
     }
   ]
 }

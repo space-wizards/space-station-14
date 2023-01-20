@@ -1,0 +1,26 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <Button Disabled="True"
+            Margin="0 0 0 0"
+            HorizontalExpand="True"
+            VerticalExpand="True"
+            StyleClasses="ButtonSquare">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" VerticalExpand="True" VerticalAlignment="Top">
+            <BoxContainer HorizontalExpand="True" VerticalExpand="True" Orientation="Horizontal">
+                <SpriteView
+                    Name="EquipmentView"
+                    OverrideDirection="South"
+                    MinSize="32 32"
+                    SetSize="32 32"
+                    Scale="1 1"
+                    RectClipContent="True"/>
+                <RichTextLabel Name="EquipmentName" VerticalAlignment="Center"/>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextureButton Name="RemoveButton" Scale="0.5 0.5"></TextureButton>
+                </BoxContainer>
+            </BoxContainer>
+            <customControls:HSeparator Name="Separator" StyleClasses="LowDivider" Visible="False"/>
+            <BoxContainer Name="CustomControlContainer" Margin="0 10 0 0" HorizontalExpand="True" VerticalExpand="True"></BoxContainer>
+        </BoxContainer>
+    </Button>
+</Control>

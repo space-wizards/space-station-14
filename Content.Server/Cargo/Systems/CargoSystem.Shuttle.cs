@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
@@ -16,11 +15,14 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -36,10 +38,10 @@ public sealed partial class CargoSystem
 
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapLoader _loader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PricingSystem _pricing = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
@@ -58,9 +60,6 @@ public sealed partial class CargoSystem
 
     private void InitializeShuttle()
     {
-#if !FULL_RELEASE
-        _configManager.OverrideDefault(CCVars.CargoShuttles, false);
-#endif
         _enabled = _configManager.GetCVar(CCVars.CargoShuttles);
         // Don't want to immediately call this as shuttles will get setup in the natural course of things.
         _configManager.OnValueChanged(CCVars.CargoShuttles, SetCargoShuttleEnabled);
@@ -229,7 +228,7 @@ public sealed partial class CargoSystem
 
             if (cappedAmount < order.Amount)
             {
-                var reducedOrder = new CargoOrderData(order.OrderNumber, order.ProductId, cappedAmount, order.Requester, order.Reason);
+                var reducedOrder = new CargoOrderData(order.OrderIndex, order.ProductId, cappedAmount, order.Requester, order.Reason);
 
                 orders.Add(reducedOrder);
                 break;
@@ -289,13 +288,18 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        var (_, shuttleUid) = _loader.LoadGrid(CargoMap.Value, prototype.Path.ToString());
-        var xform = Transform(shuttleUid!.Value);
-        MetaData(shuttleUid!.Value).EntityName = name;
+        if (!_map.TryLoad(CargoMap.Value, prototype.Path.ToString(), out var gridList))
+        {
+            _sawmill.Error($"Could not load the cargo shuttle!");
+            return;
+        }
+        var shuttleUid = gridList[0];
+        var xform = Transform(shuttleUid);
+        MetaData(shuttleUid).EntityName = name;
 
         // TODO: Something better like a bounds check.
         xform.LocalPosition += 100 * _index;
-        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid!.Value);
+        var comp = EnsureComp<CargoShuttleComponent>(shuttleUid);
         comp.Station = component.Owner;
         comp.Coordinates = xform.Coordinates;
 
@@ -303,7 +307,7 @@ public sealed partial class CargoSystem
         comp.NextCall = _timing.CurTime + TimeSpan.FromSeconds(comp.Cooldown);
         UpdateShuttleCargoConsoles(comp);
         _index++;
-        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid!.Value)}");
+        _sawmill.Info($"Added cargo shuttle to {ToPrettyString(shuttleUid)}");
     }
 
     private void SellPallets(CargoShuttleComponent component, StationBankAccountComponent bank)
@@ -391,7 +395,7 @@ public sealed partial class CargoSystem
 
         foreach (var grid in _mapManager.GetAllMapGrids(xform.MapID))
         {
-            var worldAABB = xformQuery.GetComponent(grid.GridEntityId).WorldMatrix.TransformBox(grid.LocalAABB);
+            var worldAABB = xformQuery.GetComponent(grid.Owner).WorldMatrix.TransformBox(grid.LocalAABB);
             aabb = aabb?.Union(worldAABB) ?? worldAABB;
         }
 
@@ -404,7 +408,7 @@ public sealed partial class CargoSystem
         var offset = 0f;
         if (TryComp<MapGridComponent>(orderDatabase.Shuttle, out var shuttleGrid))
         {
-            var bounds = shuttleGrid.Grid.LocalAABB;
+            var bounds = shuttleGrid.LocalAABB;
             offset = MathF.Max(bounds.Width, bounds.Height) / 2f;
         }
 
@@ -443,11 +447,11 @@ public sealed partial class CargoSystem
             {
                 // Yes this is functioning as a stack, I was too lazy to re-jig the shuttle state event.
                 orders.RemoveSwap(0);
-                orderDatabase.Orders.Remove(order.OrderNumber);
+                orderDatabase.Orders.Remove(order.OrderIndex);
             }
             else
             {
-                orderDatabase.Orders[order.OrderNumber] = order;
+                orderDatabase.Orders[order.OrderIndex] = order;
             }
         }
     }
@@ -461,19 +465,19 @@ public sealed partial class CargoSystem
             return;
 
         // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+        var printed = EntityManager.SpawnEntity(component.PrinterOutput, coordinates);
 
         if (!TryComp<PaperComponent>(printed, out var paper))
             return;
 
         // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderNumber));
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.PrintableOrderNumber));
 
         MetaData(printed).EntityName = val;
 
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
-            ("orderNumber", order.OrderNumber),
+            ("orderNumber", order.PrintableOrderNumber),
             ("itemName", prototype.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),
@@ -500,22 +504,22 @@ public sealed partial class CargoSystem
 
         if (!TryComp<CargoShuttleComponent>(orderDatabase.Shuttle, out var shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(Loc.GetString("cargo-no-shuttle"), args.Entity, args.Entity);
             return;
         }
 
         if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
         {
-            _popup.PopupEntity(reason, args.Entity, Filter.Entities(args.Entity));
+            _popup.PopupEntity(reason, args.Entity, args.Entity);
             return;
         }
 
         if (IsBlocked(shuttle))
         {
-            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, Filter.Entities(player.Value));
-            SoundSystem.Play(component.DenySound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
+            _audio.PlayPvs(_audio.GetSound(component.DenySound), uid);
             return;
-        };
+        }
 
         SellPallets(shuttle, bank);
         _console.RefreshShuttleConsoles();
@@ -535,7 +539,7 @@ public sealed partial class CargoSystem
         return FoundOrganics(component.Owner, mobQuery, xformQuery);
     }
 
-    private bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
+    public bool FoundOrganics(EntityUid uid, EntityQuery<MobStateComponent> mobQuery, EntityQuery<TransformComponent> xformQuery)
     {
         var xform = xformQuery.GetComponent(uid);
         var childEnumerator = xform.ChildEnumerator;

@@ -46,7 +46,7 @@
         toggleAction:
           name: action-name-show-solar-console
           description: action-description-show-solar-console
-          icon: Structures/Machines/parts.rsi/box_0.png
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
           iconOn: Structures/Machines/parts.rsi/box_2.png
           keywords: [ "AI", "console", "interface" ]
           priority: -10
@@ -55,7 +55,7 @@
         toggleAction:
           name: action-name-show-communications-console
           description: action-description-show-communications-console
-          icon: Structures/Machines/parts.rsi/box_0.png
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
           iconOn: Structures/Machines/parts.rsi/box_2.png
           keywords: [ "AI", "console", "interface" ]
           priority: -10
@@ -64,7 +64,7 @@
         toggleAction:
           name: action-name-show-radar-console
           description: action-description-show-radar-console
-          icon: Structures/Machines/parts.rsi/box_0.png
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
           iconOn: Structures/Machines/parts.rsi/box_2.png
           keywords: [ "AI", "console", "interface" ]
           priority: -10
@@ -73,7 +73,7 @@
         toggleAction:
           name: action-name-show-cargo-console
           description: action-description-show-cargo-console
-          icon: Structures/Machines/parts.rsi/box_0.png
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
           iconOn: Structures/Machines/parts.rsi/box_2.png
           keywords: [ "AI", "console", "interface" ]
           priority: -10
@@ -82,7 +82,7 @@
         toggleAction:
           name: action-name-show-crew-monitoring-console
           description: action-description-crew-monitoring-console
-          icon: Structures/Machines/parts.rsi/box_0.png
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
           iconOn: Structures/Machines/parts.rsi/box_2.png
           keywords: [ "AI", "console", "interface" ]
           priority: -10

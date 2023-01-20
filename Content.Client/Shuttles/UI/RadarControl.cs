@@ -23,9 +23,6 @@ public sealed class RadarControl : Control
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     private const float ScrollSensitivity = 8f;
-
-    public const int MinimapRadius = 320;
-    private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
     /// <summary>
@@ -49,8 +46,9 @@ public sealed class RadarControl : Control
     /// </summary>
     public float MaxRadarRange { get; private set; } = 256f * 10f;
 
-    private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
+    private int MinimapRadius => (int) Math.Min(Size.X, Size.Y) / 2;
+    private Vector2 MidPoint => (Size / 2) * UIScale;
+    private int SizeFull => (int) (MinimapRadius * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => RadarRange != 0 ? ScaledMinimapRadius / RadarRange : 0f;
 
@@ -130,8 +128,8 @@ public sealed class RadarControl : Control
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -146,14 +144,14 @@ public sealed class RadarControl : Control
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle((MidPoint.X, MidPoint.Y), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine((MidPoint.X, MidPoint.Y) - aExtent, (MidPoint.X, MidPoint.Y) + aExtent, gridLines);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();
@@ -202,17 +200,17 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.GridEntityId == ourGridId)
+            if (grid.Owner == ourGridId)
                 continue;
 
-            var gridBody = bodyQuery.GetComponent(grid.GridEntityId);
+            var gridBody = bodyQuery.GetComponent(grid.Owner);
             if (gridBody.Mass < 10f)
             {
-                ClearLabel(grid.GridEntityId);
+                ClearLabel(grid.Owner);
                 continue;
             }
 
-            _entManager.TryGetComponent<IFFComponent>(grid.GridEntityId, out var iff);
+            _entManager.TryGetComponent<IFFComponent>(grid.Owner, out var iff);
 
             // Hide it entirely.
             if (iff != null &&
@@ -221,14 +219,14 @@ public sealed class RadarControl : Control
                 continue;
             }
 
-            shown.Add(grid.GridEntityId);
-            var name = metaQuery.GetComponent(grid.GridEntityId).EntityName;
+            shown.Add(grid.Owner);
+            var name = metaQuery.GetComponent(grid.Owner).EntityName;
 
             if (name == string.Empty)
                 name = Loc.GetString("shuttle-console-unknown");
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
-            var gridFixtures = fixturesQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
+            var gridFixtures = fixturesQuery.GetComponent(grid.Owner);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
             var color = iff?.Color ?? IFFComponent.IFFColor;
@@ -240,14 +238,14 @@ public sealed class RadarControl : Control
                 var gridBounds = grid.LocalAABB;
                 Label label;
 
-                if (!_iffControls.TryGetValue(grid.GridEntityId, out var control))
+                if (!_iffControls.TryGetValue(grid.Owner, out var control))
                 {
                     label = new Label()
                     {
                         HorizontalAlignment = HAlignment.Left,
                     };
 
-                    _iffControls[grid.GridEntityId] = label;
+                    _iffControls[grid.Owner] = label;
                     AddChild(label);
                 }
                 else
@@ -277,13 +275,13 @@ public sealed class RadarControl : Control
             }
             else
             {
-                ClearLabel(grid.GridEntityId);
+                ClearLabel(grid.Owner);
             }
 
             // Detailed view
             DrawGrid(handle, matty, gridFixtures, color);
 
-            DrawDocks(handle, grid.GridEntityId, matty);
+            DrawDocks(handle, grid.Owner, matty);
         }
 
         foreach (var (ent, _) in _iffControls)

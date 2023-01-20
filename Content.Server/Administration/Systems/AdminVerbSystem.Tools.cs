@@ -23,13 +23,16 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Doors.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Physics;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
@@ -70,7 +73,7 @@ public sealed partial class AdminVerbSystem
                         : "/Textures/Interface/AdminActions/bolt.png",
                     Act = () =>
                     {
-                        airlock.SetBoltsWithAudio(!airlock.BoltsDown);
+                        _airlockSystem.SetBoltsWithAudio(args.Target, airlock, !airlock.BoltsDown);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(airlock.BoltsDown
@@ -88,7 +91,7 @@ public sealed partial class AdminVerbSystem
                     IconTexture = "/Textures/Interface/AdminActions/emergency_access.png",
                     Act = () =>
                     {
-                        _airlockSystem.ToggleEmergencyAccess(airlock);
+                        _airlockSystem.ToggleEmergencyAccess(args.Target, airlock);
                     },
                     Impact = LogImpact.Medium,
                     Message = Loc.GetString(airlock.EmergencyAccess
@@ -677,8 +680,8 @@ public sealed partial class AdminVerbSystem
                 IconTexture = "/Textures/Interface/AdminActions/halt.png",
                 Act = () =>
                 {
-                    physics.LinearVelocity = Vector2.Zero;
-                    physics.AngularVelocity = 0.0f;
+                    _physics.SetLinearVelocity(args.Target, Vector2.Zero, body: physics);
+                    _physics.SetAngularVelocity(args.Target, 0f, body: physics);
                 },
                 Impact = LogImpact.Medium,
                 Message = Loc.GetString("admin-trick-halt-movement-description"),
@@ -823,8 +826,6 @@ public sealed partial class AdminVerbSystem
                     yield return ent;
                 }
             }
-
-            yield break;
         }
 
         else if (HasComp<MapComponent>(target))
@@ -836,8 +837,6 @@ public sealed partial class AdminVerbSystem
                     yield return ent;
                 }
             }
-
-            yield break;
         }
         else
         {

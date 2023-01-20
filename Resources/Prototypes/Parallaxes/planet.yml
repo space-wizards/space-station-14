@@ -14,6 +14,16 @@
       scrolling: "0.1, -0.05"
 
 - type: parallax
+  id: Grass
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/grass.rsi/grass0.png"
+      slowness: 0
+      scale: "1, 1"
+      shader: ""
+
+- type: parallax
   id: Snow
   layers:
     - texture:

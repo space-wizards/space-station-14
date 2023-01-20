@@ -17,7 +17,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
@@ -27,6 +26,7 @@ using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead ||
-                args.CurrentMobState == DamageState.Critical)
+            if (args.NewMobState == MobState.Dead ||
+                args.NewMobState == MobState.Critical)
             {
                 ZombifyEntity(uid);
             }
@@ -121,7 +121,8 @@ namespace Content.Server.Zombies
             var melee = EnsureComp<MeleeWeaponComponent>(target);
             melee.ClickAnimation = zombiecomp.AttackAnimation;
             melee.WideAnimation = zombiecomp.AttackAnimation;
-            melee.Range = 0.75f;
+            melee.Range = 1.5f;
+            Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
@@ -155,7 +156,7 @@ namespace Content.Server.Zombies
             _serverInventory.TryUnequip(target, "gloves", true, true);
 
             //popup
-            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, Filter.Pvs(target), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("zombie-transform", ("target", target)), target, PopupType.LargeCaution);
 
             //Make it sentient if it's an animal or something
             if (!HasComp<InputMoverComponent>(target)) //this component is cursed and fucks shit up
@@ -170,8 +171,8 @@ namespace Content.Server.Zombies
                 _damageable.SetAllDamage(damageablecomp, 0);
 
             //gives it the funny "Zombie ___" name.
-            if (TryComp<MetaDataComponent>(target, out var meta))
-                meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
+            var meta = MetaData(target);
+            meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
 

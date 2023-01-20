@@ -15,3 +15,6 @@ ent-FunBoardGames = { ent-CrateFunBoardGames }
 
 ent-FunATV = { ent-CrateFunATV }
     .desc = { ent-CrateFunATV.desc }
+
+ent-FunParty = { ent-CrateFunParty }
+    .desc = { ent-CrateFunParty.desc }

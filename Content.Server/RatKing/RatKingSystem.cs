@@ -46,7 +46,7 @@ namespace Content.Server.RatKing
             //make sure the hunger doesn't go into the negatives
             if (hunger.CurrentHunger < component.HungerPerArmyUse)
             {
-                _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, Filter.Entities(uid));
+                _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
@@ -69,13 +69,13 @@ namespace Content.Server.RatKing
             //make sure the hunger doesn't go into the negatives
             if (hunger.CurrentHunger < component.HungerPerDomainUse)
             {
-                _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, Filter.Entities(uid));
+                _popup.PopupEntity(Loc.GetString("rat-king-too-hungry"), uid, uid);
                 return;
             }
             args.Handled = true;
             hunger.CurrentHunger -= component.HungerPerDomainUse;
 
-            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid, Filter.Pvs(uid));
+            _popup.PopupEntity(Loc.GetString("rat-king-domain-popup"), uid);
 
             var transform = Transform(uid);
             var indices = _xform.GetGridOrMapTilePosition(uid, transform);

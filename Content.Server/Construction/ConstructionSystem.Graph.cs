@@ -3,6 +3,7 @@ using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -229,7 +230,12 @@ namespace Content.Server.Construction
             ||  GetNodeFromGraph(graph, id) is not {} node)
                 return false;
 
+            var oldNode = construction.Node;
             construction.Node = id;
+
+            if (userUid != null)
+                _adminLogger.Add(LogType.Construction, LogImpact.Low,
+                    $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
             if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)

@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Interaction
 {
@@ -37,44 +38,57 @@ namespace Content.Shared.Interaction
         }
     }
 
-    public sealed class InteractNoHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    /// <summary>
+    /// Low-level interaction event used for entities without hands.
+    /// </summary>
+    /// <remarks>
+    /// SHIT IS CURSED.
+    /// </remarks>
+    //TODO: KILLLLLLL
+    public sealed class InteractNoHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.
         /// </summary>
-        public EntityUid User { get; }
+        public EntityUid User;
 
         /// <summary>
         ///     Entity that was interacted on.
         /// </summary>
-        public EntityUid Target { get; }
+        public EntityUid? Target;
 
-        public InteractNoHandEvent(EntityUid user, EntityUid target)
+        public EntityCoordinates ClickLocation;
+
+        public InteractNoHandEvent(EntityUid user, EntityUid? target, EntityCoordinates clickLocation)
         {
             User = user;
             Target = target;
+            ClickLocation = clickLocation;
         }
     }
 
     /// <summary>
     /// Reverse of the InteractNoHandEvent - raised on what was interacted on, rather than the other way around.
     /// </summary>
-    public sealed class InteractedNoHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
+    public sealed class InteractedNoHandEvent : HandledEntityEventArgs
     {
         /// <summary>
         /// Entity that was interacted on
         /// </summary>
-        public EntityUid Target { get; }
+        public EntityUid Target;
 
         /// <summary>
         /// Entity that triggered this interaction
         /// </summary>
-        public EntityUid User { get; }
+        public EntityUid User;
 
-        public InteractedNoHandEvent(EntityUid target, EntityUid user)
+        public EntityCoordinates ClickLocation;
+
+        public InteractedNoHandEvent(EntityUid target, EntityUid user, EntityCoordinates clickLocation)
         {
             Target = target;
             User = user;
+            ClickLocation = clickLocation;
         }
     }
 }

@@ -2,6 +2,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Construction

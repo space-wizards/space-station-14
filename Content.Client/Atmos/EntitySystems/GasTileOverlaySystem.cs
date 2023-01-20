@@ -1,11 +1,11 @@
 using Content.Client.Atmos.Overlays;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Atmos.EntitySystems;
-using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Utility;
+using Robust.Shared.GameStates;
 
 namespace Content.Client.Atmos.EntitySystems
 {
@@ -22,15 +22,10 @@ namespace Content.Client.Atmos.EntitySystems
         {
             base.Initialize();
             SubscribeNetworkEvent<GasOverlayUpdateEvent>(HandleGasOverlayUpdate);
-            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
+            SubscribeLocalEvent<GasTileOverlayComponent, ComponentHandleState>(OnHandleState);
 
             _overlay = new GasTileOverlay(this, EntityManager, _resourceCache, ProtoMan, _spriteSys);
             _overlayMan.AddOverlay(_overlay);
-        }
-
-        public override void Reset(RoundRestartCleanupEvent ev)
-        {
-            _overlay.TileData.Clear();
         }
 
         public override void Shutdown()
@@ -39,32 +34,59 @@ namespace Content.Client.Atmos.EntitySystems
             _overlayMan.RemoveOverlay(_overlay);
         }
 
+
+        private void OnHandleState(EntityUid gridUid, GasTileOverlayComponent comp, ref ComponentHandleState args)
+        {
+            if (args.Current is not GasTileOverlayState state)
+                return;
+
+            // is this a delta or full state?
+            if (!state.FullState)
+            {
+                foreach (var index in comp.Chunks.Keys)
+                {
+                    if (!state.AllChunks!.Contains(index))
+                        comp.Chunks.Remove(index);
+                }
+            }
+            else
+            {
+                foreach (var index in comp.Chunks.Keys)
+                {
+                    if (!state.Chunks.ContainsKey(index))
+                        comp.Chunks.Remove(index);
+                }
+            }
+
+            foreach (var (index, data) in state.Chunks)
+            {
+                comp.Chunks[index] = data;
+            }
+        }
+
         private void HandleGasOverlayUpdate(GasOverlayUpdateEvent ev)
         {
             foreach (var (grid, removedIndicies) in ev.RemovedChunks)
             {
-                if (!_overlay.TileData.TryGetValue(grid, out var chunks))
+                if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
 
                 foreach (var index in removedIndicies)
                 {
-                    chunks.Remove(index);
+                    comp.Chunks.Remove(index);
                 }
             }
 
             foreach (var (grid, gridData) in ev.UpdatedChunks)
             {
-                var chunks = _overlay.TileData.GetOrNew(grid);
+                if (!TryComp(grid, out GasTileOverlayComponent? comp))
+                    continue;
+
                 foreach (var chunkData in gridData)
                 {
-                    chunks[chunkData.Index] = chunkData;
+                    comp.Chunks[chunkData.Index] = chunkData;
                 }
             }
-        }
-
-        private void OnGridRemoved(GridRemovalEvent ev)
-        {
-            _overlay.TileData.Remove(ev.EntityUid);
         }
     }
 }

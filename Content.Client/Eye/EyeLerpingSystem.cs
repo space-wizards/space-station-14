@@ -32,6 +32,7 @@ public sealed class EyeLerpingSystem : EntitySystem
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
         UpdatesBefore.Add(typeof(EyeUpdateSystem));
+        UpdatesOutsidePrediction = true;
     }
 
     private void OnEyeStartup(EntityUid uid, EyeComponent component, ComponentStartup args)

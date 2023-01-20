@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.Reagent
     public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]
@@ -84,6 +84,9 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public readonly List<ReagentEffect> PlantMetabolisms = new(0);
 
+        [DataField("pricePerUnit")]
+        public float PricePerUnit { get; }
+
         /// <summary>
         /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
         /// </summary>
@@ -130,7 +133,7 @@ namespace Content.Shared.Chemistry.Reagent
 
             var entMan = IoCManager.Resolve<IEntityManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
-            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, null);
+            var args = new ReagentEffectArgs(plantHolder.Value, null, solution, this, amount.Quantity, entMan, null, 1f);
             foreach (var plantMetabolizable in PlantMetabolisms)
             {
                 if (!plantMetabolizable.ShouldApply(args, random))

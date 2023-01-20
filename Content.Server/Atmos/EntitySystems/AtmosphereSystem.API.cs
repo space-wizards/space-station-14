@@ -1,9 +1,11 @@
 using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.EntitySystems;
@@ -296,7 +298,14 @@ public partial class AtmosphereSystem
         (EntityUid GridId, Vector2i Tile, ReactionResult Result = default, bool Handled = false);
 
     [ByRefEvent] private record struct IsTileAirBlockedMethodEvent
-        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false);
+        (EntityUid Grid, Vector2i Tile, AtmosDirection Direction = AtmosDirection.All, MapGridComponent? MapGridComponent = null, bool Result = false, bool Handled = false)
+    {
+        /// <summary> 
+        ///     True if one of the enabled blockers has <see cref="AirtightComponent.NoAirWhenFullyAirBlocked"/>. Note
+        ///     that this does not actually check if all directions are blocked.
+        /// </summary>
+        public bool NoAir = false;
+    }
 
     [ByRefEvent] private record struct IsTileSpaceMethodEvent
         (EntityUid? Grid, EntityUid? Map, Vector2i Tile, MapGridComponent? MapGridComponent = null, bool Result = true, bool Handled = false);

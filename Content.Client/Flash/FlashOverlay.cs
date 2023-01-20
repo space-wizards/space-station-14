@@ -76,7 +76,7 @@ namespace Content.Client.Flash
 
         protected override void DisposeBehavior()
         {
-            base.Dispose();
+            base.DisposeBehavior();
             _screenshotTexture = null;
         }
     }

@@ -40,7 +40,7 @@
     anchored: true
     noRot: false
   - type: ApcPowerReceiver
-    powerLoad: 15000 #really freaking high
+    powerLoad: 15000
     needsPower: false #only turns on when scanning
   - type: UpgradePowerDraw
     powerDrawMultiplier: 0.80
@@ -59,6 +59,53 @@
     energy: 1.6
     color: "#b53ca1"
   - type: LitOnPowered
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+
+- type: entity
+  id: MachineTraversalDistorter
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: traversal distorter
+  description: A machine capable of distorting the traversal of artifact nodes.
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: Structures/Machines/traversal_distorter.rsi
+    drawdepth: FloorObjects
+    layers:
+    - state: icon
+    - state: unshaded
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: Physics
+    bodyType: Static
+    canCollide: true
+  - type: Fixtures
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.35,-0.35,0.35,0.35"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: False
+  - type: Transform
+    noRot: false
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.80
+    scaling: Exponential
+  - type: TraversalDistorter
+  - type: Machine
+    board: TraversalDistorterMachineCircuitboard
   - type: Appearance
   - type: GenericVisualizer
     visuals:

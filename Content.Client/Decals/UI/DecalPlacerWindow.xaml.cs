@@ -20,7 +20,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 
     private PaletteColorPicker? _picker;
 
-    private Dictionary<string, Texture>? _decals;
+    private SortedDictionary<string, Texture>? _decals;
     private string? _selected;
     private Color _color = Color.White;
     private bool _useColor;
@@ -170,7 +170,7 @@ public sealed partial class DecalPlacerWindow : DefaultWindow
 
     public void Populate(IEnumerable<DecalPrototype> prototypes)
     {
-        _decals = new Dictionary<string, Texture>();
+        _decals = new SortedDictionary<string, Texture>();
         foreach (var decalPrototype in prototypes)
         {
             if (decalPrototype.ShowMenu)

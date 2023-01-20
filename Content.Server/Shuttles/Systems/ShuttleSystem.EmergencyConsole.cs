@@ -92,8 +92,7 @@ public sealed partial class ShuttleSystem
         if (!_configManager.GetCVar(CCVars.EmergencyEarlyLaunchAllowed))
         {
             args.Cancel();
-            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, Filter.Entities(args.User));
-            return;
+            _popup.PopupEntity(Loc.GetString("emergency-shuttle-console-no-early-launches"), uid, args.User);
         }
     }
 
@@ -182,7 +181,7 @@ public sealed partial class ShuttleSystem
 
         if (!_reader.FindAccessTags(player.Value).Contains(EmergencyRepealAllAccess))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), player.Value, PopupType.Medium);
             return;
         }
 
@@ -201,7 +200,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), player.Value, PopupType.Medium);
             return;
         }
 
@@ -222,7 +221,7 @@ public sealed partial class ShuttleSystem
 
         if (!_idSystem.TryFindIdCard(player.Value, out var idCard) || !_reader.IsAllowed(idCard.Owner, uid))
         {
-            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), Filter.Entities(player.Value), PopupType.Medium);
+            _popup.PopupCursor(Loc.GetString("emergency-shuttle-console-denied"), args.Session, PopupType.Medium);
             return;
         }
 

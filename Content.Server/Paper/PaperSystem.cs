@@ -9,6 +9,7 @@ using Content.Shared.Paper;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
+using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
@@ -59,7 +60,7 @@ namespace Content.Server.Paper
                 return;
 
             if (paperComp.Content != "")
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-has-words", ("paper", uid)
                     )
@@ -67,9 +68,8 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                args.Message.PushNewline();
                 string commaSeparated = string.Join(", ", paperComp.StampedBy);
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
                 );
@@ -94,9 +94,9 @@ namespace Content.Server.Paper
             {
                 // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.Pvs(args.User, entityManager: EntityManager).RemoveWhereAttachedEntity(puid => puid == args.User));
+                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, Filter.Entities(args.User));
+                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
             }
         }
 
@@ -105,8 +105,10 @@ namespace Content.Server.Paper
             if (string.IsNullOrEmpty(args.Text))
                 return;
 
-            if (args.Text.Length + paperComp.Content.Length <= paperComp.ContentSize)
-                paperComp.Content += args.Text + '\n';
+            var text = FormattedMessage.EscapeText(args.Text);
+
+            if (text.Length + paperComp.Content.Length <= paperComp.ContentSize)
+                paperComp.Content += text + '\n';
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
                 appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
@@ -164,7 +166,7 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
+            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
 }

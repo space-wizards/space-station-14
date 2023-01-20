@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Examine;
+using Content.Shared.Construction.Components;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
@@ -76,8 +77,8 @@ public sealed partial class ConstructionSystem
         var output = new Dictionary<string, float>();
         foreach (var type in _prototypeManager.EnumeratePrototypes<MachinePartPrototype>())
         {
-            var amount = 0;
-            var sumRating = 0;
+            var amount = 0f;
+            var sumRating = 0f;
             foreach (var part in parts.Where(part => part.PartType == type.ID))
             {
                 amount++;

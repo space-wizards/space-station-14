@@ -71,17 +71,13 @@ namespace Content.Server.Shuttles.Systems
 
             if (HasComp<FTLComponent>(xform.GridUid))
             {
-                if (args.Session.AttachedEntity != null)
-                    _popup.PopupCursor(Loc.GetString("shuttle-console-in-ftl"), Filter.Entities(args.Session.AttachedEntity.Value));
-
+                _popup.PopupCursor(Loc.GetString("shuttle-console-in-ftl"), args.Session);
                 return;
             }
 
             if (!_shuttle.CanFTL(shuttle.Owner, out var reason))
             {
-                if (args.Session.AttachedEntity != null)
-                    _popup.PopupCursor(reason, Filter.Entities(args.Session.AttachedEntity.Value));
-
+                _popup.PopupCursor(reason, args.Session);
                 return;
             }
 

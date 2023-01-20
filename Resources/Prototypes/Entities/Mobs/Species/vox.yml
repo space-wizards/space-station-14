@@ -81,6 +81,7 @@
       - map: [ "pocket2" ]
   - type: Body
     prototype: Vox
+    requiredLegs: 2
   # Vox nitrogen stuff is handled in their metabolism
   - type: Respirator
     damage:
@@ -110,4 +111,5 @@
     species: Vox
   - type: Body
     prototype: Vox
+    requiredLegs: 2
 

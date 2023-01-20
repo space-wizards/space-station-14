@@ -140,13 +140,13 @@ public sealed class CrematoriumSystem : EntitySystem
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
-                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity, Filter.Pvs(entity));
+                _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message"), entity);
             }
         }
 
         _popup.PopupEntity(Loc.GetString("crematorium-entity-storage-component-suicide-message-others",
             ("victim", Identity.Entity(victim, EntityManager))),
-            victim, Filter.PvsExcept(victim), PopupType.LargeCaution);
+            victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
         if (_entityStorage.CanInsert(uid))
         {

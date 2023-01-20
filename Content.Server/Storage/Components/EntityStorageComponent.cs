@@ -29,11 +29,9 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("removedMasks")]
     public int RemovedMasks;
 
-    [ViewVariables]
     [DataField("capacity")]
     public int Capacity = 30;
 
-    [ViewVariables]
     [DataField("isCollidableWhenOpen")]
     public bool IsCollidableWhenOpen;
 
@@ -54,7 +52,6 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("enteringOffsetCollisionFlags")]
     public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
-    [ViewVariables]
     [DataField("enteringRange")]
     public float EnteringRange = 0.18f;
 
@@ -64,7 +61,7 @@ public sealed class EntityStorageComponent : Component, IGasMixtureHolder
     [DataField("occludesLight")]
     public bool OccludesLight = true;
 
-    [DataField("deleteContentsOnDestruction")]
+    [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
     public bool DeleteContentsOnDestruction = false;
 
     /// <summary>
@@ -117,12 +114,11 @@ public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
         Silent = silent;
     }
 }
+public sealed class StorageBeforeOpenEvent : EventArgs { }
 public sealed class StorageAfterOpenEvent : EventArgs { }
 public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
 public sealed class StorageBeforeCloseEvent : EventArgs
 {
-    public EntityUid Container;
-
     public HashSet<EntityUid> Contents;
 
     /// <summary>
@@ -130,9 +126,8 @@ public sealed class StorageBeforeCloseEvent : EventArgs
     /// </summary>
     public HashSet<EntityUid> BypassChecks = new();
 
-    public StorageBeforeCloseEvent(EntityUid container, HashSet<EntityUid> contents)
+    public StorageBeforeCloseEvent(HashSet<EntityUid> contents)
     {
-        Container = container;
         Contents = contents;
     }
 }

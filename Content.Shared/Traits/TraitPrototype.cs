@@ -10,9 +10,6 @@ namespace Content.Shared.Traits
     [Prototype("trait")]
     public sealed class TraitPrototype : IPrototype
     {
-        private string _name = string.Empty;
-        private string? _description;
-
         [ViewVariables]
         [IdDataField]
         public string ID { get; } = default!;
@@ -21,21 +18,13 @@ namespace Content.Shared.Traits
         ///     The name of this trait.
         /// </summary>
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
+        public string Name { get; private set; } = "";
 
         /// <summary>
         ///     The description of this trait.
         /// </summary>
         [DataField("description")]
-        public string? Description
-        {
-            get => _description;
-            private set => _description = value is null ? null : Loc.GetString(value);
-        }
+        public string? Description { get; private set; }
 
         /// <summary>
         ///     Don't apply this trait to entities this whitelist IS NOT valid for.

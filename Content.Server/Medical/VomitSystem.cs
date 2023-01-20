@@ -28,13 +28,13 @@ namespace Content.Server.Medical
         /// </summary>
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
-            /// Main requirement: You have a stomach
+            // Main requirement: You have a stomach
             var stomachList = _bodySystem.GetBodyOrganComponents<StomachComponent>(uid);
             if (stomachList.Count == 0)
             {
                 return;
             }
-            /// Vomiting makes you hungrier and thirstier
+            // Vomiting makes you hungrier and thirstier
             if (TryComp<HungerComponent>(uid, out var hunger))
                 hunger.UpdateFood(hungerAdded);
 
@@ -53,7 +53,7 @@ namespace Content.Server.Medical
 
             SoundSystem.Play("/Audio/Effects/Fluids/splat.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
-            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
             // Get the solution of the puddle we spawned
             if (!_solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
                 return;

@@ -1,6 +1,7 @@
 - type: job
   id: Scientist
   name: job-name-scientist
+  description: job-description-scientist
   playTimeTracker: JobScientist
   startingGear: ScientistGear
   icon: "Scientist"

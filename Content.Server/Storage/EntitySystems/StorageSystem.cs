@@ -29,6 +29,8 @@ using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Implants.Components;
 using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems
@@ -60,8 +62,9 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
-            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing, after: new []{ typeof(ItemSlotsSystem)} );
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<ServerStorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<ServerStorageComponent, DestructionEventArgs>(OnDestroy);
             SubscribeLocalEvent<ServerStorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
@@ -275,6 +278,17 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             OpenStorageUI(uid, args.User, storageComp);
+        }
+
+        /// <summary>
+        /// Specifically for storage implants.
+        /// </summary>
+        private void OnImplantActivate(EntityUid uid, ServerStorageComponent storageComp, OpenStorageImplantEvent args)
+        {
+            if (args.Handled || !TryComp<TransformComponent>(uid, out var xform))
+                return;
+
+            OpenStorageUI(uid, xform.ParentUid, storageComp);
         }
 
         /// <summary>
@@ -708,7 +722,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             if (!storageComp.ShowPopup) return;
 
-            _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
+            _popupSystem.PopupEntity(Loc.GetString(message), player, player);
         }
 
         /// <summary>

@@ -1,10 +1,8 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
-using Content.Server.Damage.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
 using Content.Server.Interaction.Components;
-using Content.Server.Projectiles.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
@@ -12,6 +10,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -79,7 +78,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg"), gun.Owner);
                     Audio.PlayPvs(new SoundPathSpecifier("/Audio/Items/bikehorn.ogg"), gun.Owner);
 
-                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value, Filter.Pvs(user.Value, entityManager: EntityManager));
+                    PopupSystem.PopupEntity(Loc.GetString("gun-clumsy"), user.Value);
                     Del(gun.Owner);
                     return;
                 }
@@ -92,10 +91,15 @@ public sealed partial class GunSystem : SharedGunSystem
         var mapAngle = mapDirection.ToAngle();
         var angle = GetRecoilAngle(Timing.CurTime, gun, mapDirection.ToAngle());
 
+        // If applicable, this ensures the projectile is parented to grid on spawn, instead of the map.
+        EntityCoordinates fromEnt = MapManager.TryFindGridAt(fromMap, out var grid)
+            ? fromCoordinates.WithEntityId(grid.Owner, EntityManager)
+            : new(MapManager.GetMapEntityId(fromMap.MapId), fromMap.Position);
+
         // Update shot based on the recoil
         toMap = fromMap.Position + angle.ToVec() * mapDirection.Length;
         mapDirection = toMap - fromMap.Position;
-        var entityDirection = Transform(fromCoordinates.EntityId).InvWorldMatrix.Transform(toMap) - fromCoordinates.Position;
+        var gunVelocity = Physics.GetMapLinearVelocity(gun.Owner);
 
         // I must be high because this was getting tripped even when true.
         // DebugTools.Assert(direction != Vector2.Zero);
@@ -116,15 +120,15 @@ public sealed partial class GunSystem : SharedGunSystem
 
                             for (var i = 0; i < cartridge.Count; i++)
                             {
-                                var uid = Spawn(cartridge.Prototype, fromMap);
-                                ShootProjectile(uid, angles[i].ToVec(), user, gun.ProjectileSpeed);
+                                var uid = Spawn(cartridge.Prototype, fromEnt);
+                                ShootProjectile(uid, angles[i].ToVec(), gunVelocity, user, gun.ProjectileSpeed);
                                 shotProjectiles.Add(uid);
                             }
                         }
                         else
                         {
-                            var uid = Spawn(cartridge.Prototype, fromMap);
-                            ShootProjectile(uid, mapDirection, user, gun.ProjectileSpeed);
+                            var uid = Spawn(cartridge.Prototype, fromEnt);
+                            ShootProjectile(uid, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
                             shotProjectiles.Add(uid);
                         }
 
@@ -167,7 +171,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         break;
                     }
 
-                    ShootProjectile(newAmmo.Owner, mapDirection, user, gun.ProjectileSpeed);
+                    ShootProjectile(newAmmo.Owner, mapDirection, gunVelocity, user, gun.ProjectileSpeed);
                     break;
                 case HitscanPrototype hitscan:
                     var ray = new CollisionRay(fromMap.Position, mapDirection.Normalized, hitscan.CollisionMask);
@@ -183,31 +187,38 @@ public sealed partial class GunSystem : SharedGunSystem
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
 
                         if (hitscan.StaminaDamage > 0f)
-                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage);
+                            _stamina.TakeStaminaDamage(hitEntity, hitscan.StaminaDamage, source:user);
 
                         var dmg = hitscan.Damage;
 
+                        bool deleted = false;
+                        string hitName = ToPrettyString(hitEntity);
                         if (dmg != null)
                             dmg = Damageable.TryChangeDamage(hitEntity, dmg, origin: user);
 
+                        // check null again, as TryChangeDamage returns modified damage values
                         if (dmg != null)
                         {
-                            if (dmg.Total > FixedPoint2.Zero)
-                            {
-                                RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {result.HitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
-                            }
+                            deleted = Deleted(hitEntity);
 
-                            PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            if (!deleted)
+                            {
+                                if (dmg.Total > FixedPoint2.Zero)
+                                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {result.HitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
+
+                                // TODO get fallback position for playing hit sound.
+                                PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
+                            }
 
                             if (user != null)
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"{ToPrettyString(user.Value):user} hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"{ToPrettyString(user.Value):user} hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                             else
                             {
                                 Logs.Add(LogType.HitScanHit,
-                                    $"Hit {ToPrettyString(hitEntity):target} using hitscan and dealt {dmg.Total:damage} damage");
+                                    $"Hit {hitName:target} using hitscan and dealt {dmg.Total:damage} damage");
                             }
                         }
                     }
@@ -229,11 +240,15 @@ public sealed partial class GunSystem : SharedGunSystem
         }, false);
     }
 
-    public void ShootProjectile(EntityUid uid, Vector2 direction, EntityUid? user = null, float speed = 20f)
+    public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
-        physics.BodyStatus = BodyStatus.InAir;
-        Physics.SetLinearVelocity(physics, direction.Normalized * speed);
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
+
+        var targetMapVelocity = gunVelocity + direction.Normalized * speed;
+        var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
+        var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         if (user != null)
         {
@@ -292,19 +307,13 @@ public sealed partial class GunSystem : SharedGunSystem
 
     public void PlayImpactSound(EntityUid otherEntity, DamageSpecifier? modifiedDamage, SoundSpecifier? weaponSound, bool forceWeaponSound)
     {
-        if (Deleted(otherEntity))
-            return;
+        DebugTools.Assert(!Deleted(otherEntity), "Impact sound entity was deleted");
 
         // Like projectiles and melee,
         // 1. Entity specific sound
         // 2. Ammo's sound
         // 3. Nothing
         var playedSound = false;
-
-        // woops the other entity is deleted
-        // someone needs to handle this better. for now i'm just gonna make it not crash the server -rane
-        if (Deleted(otherEntity))
-            return;
 
         if (!forceWeaponSound && modifiedDamage != null && modifiedDamage.Total > 0 && TryComp<RangedDamageSoundComponent>(otherEntity, out var rangedSound))
         {

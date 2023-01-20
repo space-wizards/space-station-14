@@ -1,6 +1,7 @@
 ﻿- type: job
   id: SecurityCadet
   name: job-name-cadet
+  description: job-description-cadet
   playTimeTracker: JobSecurityCadet
   requirements:
     - !type:DepartmentTimeRequirement

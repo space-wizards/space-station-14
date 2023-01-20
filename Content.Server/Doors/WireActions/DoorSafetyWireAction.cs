@@ -1,6 +1,8 @@
 using Content.Server.Doors.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
+using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Doors;
@@ -13,6 +15,11 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     [DataField("name")]
     private string _text = "SAFE";
+    protected override string Text
+    {
+        get => _text;
+        set => _text = value;
+    }
 
     [DataField("timeout")]
     private int _timeout = 30;
@@ -38,10 +45,11 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Cut(EntityUid user, Wire wire)
     {
+        base.Cut(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
             WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-            door.Safety = false;
+            EntityManager.System<SharedAirlockSystem>().SetSafety(door, false);
         }
 
         return true;
@@ -49,9 +57,10 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Mend(EntityUid user, Wire wire)
     {
+        base.Mend(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            door.Safety = true;
+            EntityManager.System<SharedAirlockSystem>().SetSafety(door, true);
         }
 
         return true;
@@ -59,9 +68,10 @@ public sealed class DoorSafetyWireAction : BaseWireAction
 
     public override bool Pulse(EntityUid user, Wire wire)
     {
+        base.Pulse(user, wire);
         if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
         {
-            door.Safety = false;
+            EntityManager.System<SharedAirlockSystem>().SetSafety(door, false);
             WiresSystem.StartWireAction(wire.Owner, _timeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitSafetyTimerFinish, wire));
         }
 
@@ -82,7 +92,7 @@ public sealed class DoorSafetyWireAction : BaseWireAction
         {
             if (EntityManager.TryGetComponent<AirlockComponent>(wire.Owner, out var door))
             {
-                door.Safety = true;
+                EntityManager.System<SharedAirlockSystem>().SetSafety(door, true);
             }
         }
     }

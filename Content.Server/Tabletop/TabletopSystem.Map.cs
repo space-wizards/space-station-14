@@ -1,5 +1,6 @@
 using Content.Shared.GameTicking;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Tabletop
 {

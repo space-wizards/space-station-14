@@ -23,7 +23,7 @@ public sealed class RandomTeleportArtifactSystem : EntitySystem
     private void OnActivate(EntityUid uid, RandomTeleportArtifactComponent component, ArtifactActivatedEvent args)
     {
         var xform = Transform(uid);
-        _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, Filter.Pvs(uid), PopupType.Medium);
+        _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, PopupType.Medium);
 
         xform.Coordinates = xform.Coordinates.Offset(_random.NextVector2(component.Range));
     }

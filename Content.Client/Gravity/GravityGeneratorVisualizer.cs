@@ -11,9 +11,10 @@ namespace Content.Client.Gravity
         [DataField("spritemap")]
         private Dictionary<string, string> _rawSpriteMap
         {
-            get => _spriteMap.ToDictionary(x => x.Value.ToString().ToLower(), x => x.Value);
+            get => _spriteMap.ToDictionary(x => x.Key.ToString().ToLower(), x => x.Value);
             set
             {
+                _spriteMap.Clear();
                 // Get Sprites for each status
                 foreach (var status in (GravityGeneratorStatus[]) Enum.GetValues(typeof(GravityGeneratorStatus)))
                 {

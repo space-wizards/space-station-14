@@ -34,7 +34,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-mind-message"))), uid, args.User);
             return;
         }
 
@@ -44,7 +44,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-user-mind-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-user-mind-message"))), uid, args.User);
             return;
         }
 
@@ -53,7 +53,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))), uid, args.User);
             return;
         }
 
@@ -63,7 +63,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
             _popup.PopupEntity(Loc.GetString(
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
-                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))), uid, Filter.Entities(args.User));
+                    Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-owner-message"))), uid, args.User);
             return;
         }
 
@@ -73,7 +73,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
                     Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-pda-different-user-message"))), uid, Filter.Entities(args.User));
+                        "traitor-death-match-redemption-component-interact-using-pda-different-user-message"))), uid, args.User);
             return;
         }
 
@@ -89,7 +89,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
                 "traitor-death-match-redemption-component-interact-using-main-message",
                 ("secondMessage",
                     Loc.GetString(
-                        "traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))), uid, Filter.Entities(args.User));
+                        "traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))), uid, args.User);
             return;
         }
 
@@ -104,7 +104,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
         EntityManager.DeleteEntity(victimUplink.Owner);
 
         _popup.PopupEntity(Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message",
-                ("tcAmount", transferAmount)), uid, Filter.Entities(args.User));
+                ("tcAmount", transferAmount)), uid, args.User);
 
         args.Handled = true;
     }

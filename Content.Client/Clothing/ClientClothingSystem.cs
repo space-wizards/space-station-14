@@ -219,8 +219,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
         if (slot == "jumpsuit" && sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out var suitLayer))
         {
-            if (_appearance.TryGetData(equipee, HumanoidVisualizerKey.Key, out object? obj)
-                && obj is HumanoidVisualizerData data
+            if (_appearance.TryGetData<HumanoidVisualizerData>(equipee, HumanoidVisualizerKey.Key, out var data)
                 && data.Sex == Sex.Female)
             {
                 sprite.LayerSetState(suitLayer, clothingComponent.FemaleMask switch
@@ -297,6 +296,11 @@ public sealed class ClientClothingSystem : ClothingSystem
             {
                 layer.SetRsi(clothingSprite.BaseRSI);
             }
+
+            // Another "temporary" fix for clothing stencil masks.
+            // Sprite layer redactor when
+            if (slot == "jumpsuit")
+                layerData.Shader ??= "StencilDraw";
 
             sprite.LayerSetData(index, layerData);
             layer.Offset += slotDef.Offset;

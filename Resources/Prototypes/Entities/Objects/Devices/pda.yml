@@ -33,14 +33,13 @@
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
     enabled: false
     radius: 1.5
     softness: 5
-    mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
   - type: Ringer
   - type: DeviceNetwork
@@ -141,6 +140,8 @@
     state: pda-internmed
   - type: HealthAnalyzer
     scanDelay: 1.4
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -493,6 +494,8 @@
     state: pda-cmo
   - type: HealthAnalyzer
     scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -513,6 +516,8 @@
     state: pda-medical
   - type: HealthAnalyzer
     scanDelay: 1.2
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA

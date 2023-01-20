@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.Commands
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var tiles = 0;
-            foreach (var tile in atmosphereSystem.GetAllMixtures(gridComp.GridEntityId, true))
+            foreach (var tile in atmosphereSystem.GetAllMixtures(gridComp.Owner, true))
             {
                 tiles++;
                 tile.Temperature = temperature;

@@ -22,7 +22,7 @@
                         <Label Name="ConnectStatus" StyleClasses="LabelSubText" Align="Center" />
                     </BoxContainer>
                     <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False">
-                        <Label Name="ConnectFailReason" Align="Center" />
+                        <RichTextLabel Name="ConnectFailReason" VerticalAlignment="Stretch"/>
                         <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />

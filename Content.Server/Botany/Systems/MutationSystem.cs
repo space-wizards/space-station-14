@@ -7,14 +7,14 @@ public class MutationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     /// <summary>
-    // Main idea: Simulate genetic mutation using random binary flips.  Each
-    // seed attribute can be encoded with a variable number of bits, e.g.
-    // NutrientConsumption is represented by 5 bits randomly distributed in the
-    // plant's genome which thermometer code the floating value between 0.1 and
-    // 5. 1 unit of mutation flips one bit in the plant's genome, which changes
-    // NutrientConsumption if one of those 5 bits gets affected.
-    //
-    // You MUST clone() seed before mutating it!
+    /// Main idea: Simulate genetic mutation using random binary flips.  Each
+    /// seed attribute can be encoded with a variable number of bits, e.g.
+    /// NutrientConsumption is represented by 5 bits randomly distributed in the
+    /// plant's genome which thermometer code the floating value between 0.1 and
+    /// 5. 1 unit of mutation flips one bit in the plant's genome, which changes
+    /// NutrientConsumption if one of those 5 bits gets affected.
+    ///
+    /// You MUST clone() seed before mutating it!
     /// </summary>
     public void MutateSeed(SeedData seed, float severity)
     {
@@ -112,8 +112,10 @@ public class MutationSystem : EntitySystem
             return;
         }
 
-        // Starting number of bits that are high, between 0 and n.
+        // Starting number of bits that are high, between 0 and bits.
         int n = (int)Math.Round((val - min) / (max - min) * bits);
+        // val may be outside the range of min/max due to starting prototype values, so clamp
+        n = Math.Clamp(n, 0, bits);
 
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;

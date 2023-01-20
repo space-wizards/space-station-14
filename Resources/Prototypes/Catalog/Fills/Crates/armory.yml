@@ -21,6 +21,15 @@
         amount: 3
 
 - type: entity
+  id: CrateTrackingImplants
+  parent: CrateWeaponSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: TrackingImplanter
+        amount: 5
+
+- type: entity
   id: CrateArmoryLaser
   parent: CrateWeaponSecure
   components:

@@ -199,7 +199,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         _playingCollection = _currentCollection;
         var file = _robustRandom.Pick(_currentCollection.PickFiles).ToString();
-        _ambientStream = _audio.PlayGlobal(file, Filter.Local(),
+        _ambientStream = _audio.PlayGlobal(file, Filter.Local(), false,
             _ambientParams.WithVolume(_ambientParams.Volume + _configManager.GetCVar(CCVars.AmbienceVolume)));
     }
 
@@ -304,7 +304,7 @@ public sealed class BackgroundAudioSystem : EntitySystem
             return;
         }
 
-        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(),
+        _lobbyStream = _audio.PlayGlobal(file, Filter.Local(), false,
             _lobbyParams.WithVolume(_lobbyParams.Volume + _configManager.GetCVar(CCVars.LobbyMusicVolume)));
     }
 

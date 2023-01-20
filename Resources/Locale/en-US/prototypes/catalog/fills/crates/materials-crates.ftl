@@ -4,6 +4,9 @@ ent-CrateMaterialGlass = Glass sheet crate
 ent-CrateMaterialSteel = Steel sheet crate
     .desc = 90 sheets of steel.
 
+ent-CrateMaterialTextiles = Textiles crate
+    .desc = 60 pieces of cloth and 30 pieces of durathread.
+
 ent-CrateMaterialPlastic = Plastic sheet crate
     .desc = 90 sheets of plastic.
 

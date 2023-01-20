@@ -23,6 +23,8 @@
         reagents:
         - ReagentId: Water
           Quantity: 50
+  - type: TrashOnEmpty
+    solution: drink
 
 - type: entity
   parent: DrinkBase

@@ -49,8 +49,8 @@
     Blunt: 1.2
     Slash: 0.5
     Piercing: 1.0
-    Heat: 0
-    Shock: 0
+    Heat: 0.8
+    Shock: 0 #glass is an insulator!
   flatReductions:
     Blunt: 5
     Slash: 5
@@ -61,12 +61,13 @@
     Blunt: 1.0
     Slash: 0.3
     Piercing: 0.6
-    Heat: 0
+    Heat: 0.5
     Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 10
+    Slash: 7
     Piercing: 5
+    Heat: 5
 
 - type: damageModifierSet
   id: Wood

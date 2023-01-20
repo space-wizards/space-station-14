@@ -10,6 +10,14 @@ artifact-effect-hint-consumption = Energy consumption
 artifact-effect-hint-release = Energy release
 artifact-effect-hint-biochemical = Biochemical disruption
 artifact-effect-hint-destruction = Station-wide destruction
+artifact-effect-hint-gun = Small entity accelerator
+artifact-effect-hint-multitool = Utility conglomerate
+artifact-effect-hint-storage = Internal chamber
+artifact-effect-hint-drill = Serrated rotator
+artifact-effect-hint-soap = Lubricated surface
+artifact-effect-hint-communication = Long-distance communication
+artifact-effect-hint-phasing = Structural phasing
+artifact-effect-hint-sentience = Neurological activity
 
 # the triggers should be more obvious than the effects
 # gives people an idea of what to do: don't be too specific (i.e. no "welders")
@@ -25,3 +33,4 @@ artifact-trigger-hint-death = Life essence
 artifact-trigger-hint-radiation = Radiation
 artifact-trigger-hint-pressure = Extreme pressure
 artifact-trigger-hint-gas = Gas
+artifact-trigger-hint-land = Active deceleration

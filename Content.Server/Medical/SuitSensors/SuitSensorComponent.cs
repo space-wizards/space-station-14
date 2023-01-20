@@ -35,6 +35,12 @@ namespace Content.Server.Medical.SuitSensors
         public string ActivationSlot = "jumpsuit";
 
         /// <summary>
+        /// Activate sensor if user has this in a sensor-compatible container.
+        /// </summary>
+        [DataField("activationContainer")]
+        public string? ActivationContainer;
+
+        /// <summary>
         ///     How often does sensor update its owners status (in seconds). Limited by the system update rate.
         /// </summary>
         [DataField("updateRate")]
@@ -43,6 +49,7 @@ namespace Content.Server.Medical.SuitSensors
         /// <summary>
         ///     Current user that wears suit sensor. Null if nobody wearing it.
         /// </summary>
+        [ViewVariables]
         public EntityUid? User = null;
 
         /// <summary>

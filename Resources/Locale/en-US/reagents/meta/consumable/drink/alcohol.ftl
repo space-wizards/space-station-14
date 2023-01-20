@@ -22,8 +22,8 @@ reagent-desc-ethanol = A simple alcohol, makes you drunk if consumed, flammable.
 reagent-name-gin = gin
 reagent-desc-gin = A distilled alcoholic drink that derives its predominant flavour from juniper berries.
 
-reagent-name-kahlua = kahlua
-reagent-desc-kahlua = A widely known, Mexican coffee-flavoured liqueur.
+reagent-name-coffeeliqueur = coffee liqueur
+reagent-desc-coffeeliqueur = Liquor flavoured with cold brewed coffee and spices.
 
 reagent-name-melon-liquor = melon liquor
 reagent-desc-melon-liquor = A relatively sweet and fruity 46 proof liquor.
@@ -121,8 +121,8 @@ reagent-desc-doctors-delight = A gulp a day keeps the MediBot away. That's proba
 reagent-name-driest-martini = driest martini
 reagent-desc-driest-martini = Only for the experienced. You think you see sand floating in the glass.
 
-reagent-name-erika-suprise = erika suprise
-reagent-desc-erika-suprise = The surprise is, it's green!
+reagent-name-erika-surprise = erika surprise
+reagent-desc-erika-surprise = The surprise is, it's green!
 
 reagent-name-gargle-blaster = Pan-Galactic Gargle Blaster
 reagent-desc-gargle-blaster = Whoah, this stuff looks volatile!

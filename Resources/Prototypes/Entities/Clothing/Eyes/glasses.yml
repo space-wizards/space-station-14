@@ -130,3 +130,4 @@
     modifiers:
       coefficients:
         Heat: 0.95
+  - type: GroupExamine

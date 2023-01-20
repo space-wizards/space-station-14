@@ -1,6 +1,4 @@
 ﻿using Content.Shared.FixedPoint;
-using Content.Shared.Vapor;
-using Robust.Shared.Map;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -9,7 +7,6 @@ namespace Content.Server.Chemistry.Components
     {
         public const string SolutionName = "vapor";
 
-        [ViewVariables]
         [DataField("transferAmount")]
         public FixedPoint2 TransferAmount = FixedPoint2.New(0.5);
 

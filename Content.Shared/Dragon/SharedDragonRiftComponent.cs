@@ -6,7 +6,7 @@ namespace Content.Shared.Dragon;
 [NetworkedComponent]
 public abstract class SharedDragonRiftComponent : Component
 {
-    [ViewVariables, DataField("state")]
+    [DataField("state")]
     public DragonRiftState State = DragonRiftState.Charging;
 }
 

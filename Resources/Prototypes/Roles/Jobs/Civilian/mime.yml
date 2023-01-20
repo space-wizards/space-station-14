@@ -1,6 +1,7 @@
 - type: job
   id: Mime
   name: job-name-mime
+  description: job-description-mime
   playTimeTracker: JobMime
   startingGear: MimeGear
   icon: "Mime"

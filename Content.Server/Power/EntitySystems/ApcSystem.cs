@@ -69,7 +69,7 @@ namespace Content.Server.Power.EntitySystems
             else
             {
                 _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                    Filter.Entities(args.Session.AttachedEntity.Value), PopupType.Medium);
+                    args.Session, PopupType.Medium);
             }
         }
 
@@ -199,7 +199,7 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
-            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
+            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
             {
                 args.Handled = true;
             }

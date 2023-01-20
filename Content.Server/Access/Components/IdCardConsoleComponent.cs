@@ -95,12 +95,20 @@ namespace Content.Server.Access.Components
             }
 
             var accessSystem = _entities.EntitySysManager.GetEntitySystem<AccessSystem>();
+            var oldTags = accessSystem.TryGetTags(targetIdEntity) ?? new List<string>();
+            oldTags = oldTags.ToList();
+
+            if (oldTags.SequenceEqual(newAccessList))
+                return;
+
+            var addedTags = newAccessList.Except(oldTags).Select(tag => "+" + tag).ToList();
+            var removedTags = oldTags.Except(newAccessList).Select(tag => "-" + tag).ToList();
             accessSystem.TrySetTags(targetIdEntity, newAccessList);
 
             /*TODO: ECS IdCardConsoleComponent and then log on card ejection, together with the save.
             This current implementation is pretty shit as it logs 27 entries (27 lines) if someone decides to give themselves AA*/
             _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                $"{_entities.ToPrettyString(player):player} has modified {_entities.ToPrettyString(targetIdEntity):entity} with the following accesses: [{string.Join(", ", newAccessList)}]");
+                $"{_entities.ToPrettyString(player):player} has modified {_entities.ToPrettyString(targetIdEntity):entity} with the following accesses: [{String.Join(", ", addedTags.Union(removedTags))}] [{string.Join(", ", newAccessList)}]");
 
             UpdateStationRecord(targetIdEntity, newFullName, newJobTitle, newJobProto);
         }

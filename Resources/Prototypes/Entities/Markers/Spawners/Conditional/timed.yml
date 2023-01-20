@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Mobs/Species/Human/parts.rsi/full.png
+        - sprite: Mobs/Species/Human/parts.rsi
+          state: full
         - state: ai
     - type: Timer
     - type: TimedSpawner
@@ -26,7 +27,8 @@
     - type: Sprite
       layers:
       - state: blue
-      - texture: Mobs/Aliens/Xenos/burrower.rsi/crit.png
+      - sprite: Mobs/Aliens/Xenos/burrower.rsi
+        state: crit
       - state: ai
     - type: Timer
     - type: TimedSpawner
@@ -45,7 +47,8 @@
     - type: Sprite
       layers:
         - state: blue
-        - texture: Mobs/Animals/mouse.rsi/icon-2.png
+        - sprite: Mobs/Animals/mouse.rsi
+          state: icon-2
         - state: timed
     - type: Timer
     - type: TimedSpawner

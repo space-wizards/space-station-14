@@ -24,6 +24,7 @@ public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogMa
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IDynamicTypeFactory _typeFactory = default!;
     [Dependency] private readonly IReflectionManager _reflection = default!;
+    [Dependency] private readonly IDependencyCollection _dependencies = default!;
 
     public const string SawmillId = "admin.logs";
 

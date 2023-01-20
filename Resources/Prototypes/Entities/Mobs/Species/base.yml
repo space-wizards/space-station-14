@@ -39,7 +39,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 0.35 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -106,6 +106,8 @@
       - map: [ "enum.HumanoidVisualLayers.LLeg" ]
       - shader: StencilClear
         sprite: Mobs/Species/Human/parts.rsi #PJB on stencil clear being on the left leg: "...this is 'fine'" -https://github.com/space-wizards/space-station-14/pull/12217#issuecomment-1291677115
+        # its fine, but its still very stupid that it has to be done like this instead of allowing sprites to just directly insert a stencil clear.
+        # sprite refactor when
         state: l_leg
       - shader: StencilMask
         map: [ "enum.HumanoidVisualLayers.StencilMask" ]
@@ -175,6 +177,7 @@
     species: Human
   - type: Body
     prototype: Human
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
@@ -188,6 +191,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -222,10 +226,10 @@
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
     visuals:
-      - type: RotationVisualizer
-      - type: BuckleVisualizer
       - type: CreamPiedVisualizer
         state: creampie_human
+  - type: RotationVisuals
+  - type: FloatingVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -364,16 +368,16 @@
       species: Human
     - type: Body
       prototype: Human
+      requiredLegs: 2
+    - type: Appearance
     - type: Damageable
       damageContainer: Biological
     - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical
         200: Dead
-    - type: Appearance
-      visuals:
-      - type: RotationVisualizer
     - type: UserInterface
       interfaces:
         - key: enum.HumanoidMarkingModifierKey.Key # sure, this can go here too

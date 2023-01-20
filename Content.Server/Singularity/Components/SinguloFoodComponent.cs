@@ -8,6 +8,6 @@ namespace Content.Server.Singularity.Components
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("energy")]
-        public int Energy { get; set; } = 1;
+        public float Energy { get; set; } = 1f;
     }
 }

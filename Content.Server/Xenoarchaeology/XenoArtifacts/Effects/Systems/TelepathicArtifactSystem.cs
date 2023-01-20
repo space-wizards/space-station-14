@@ -44,7 +44,7 @@ public sealed class TelepathicArtifactSystem : EntitySystem
             var msg = Loc.GetString(msgId);
 
             // show it as a popup, but only for the victim
-            _popupSystem.PopupEntity(msg, victimUid, Filter.Entities(victimUid));
+            _popupSystem.PopupEntity(msg, victimUid, victimUid);
         }
     }
 }

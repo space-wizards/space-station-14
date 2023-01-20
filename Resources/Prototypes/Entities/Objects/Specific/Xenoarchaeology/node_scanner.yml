@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: BaseItem
+  id: NodeScanner
+  name: node scanner
+  description: The archeologist's friend, able to identify the node of an artifact with only a single scan.
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+      state: icon
+      netsync: false
+    - type: Item
+      sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
+    - type: NodeScanner
+    - type: UseDelay
+      delay: 3

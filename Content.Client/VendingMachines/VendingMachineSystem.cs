@@ -23,8 +23,7 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
             return;
 
         if (!TryComp<AppearanceComponent>(uid, out var appearance) ||
-            !_appearanceSystem.TryGetData(uid, VendingMachineVisuals.VisualState, out var visualStateObject, appearance) ||
-            visualStateObject is not VendingMachineVisualState visualState)
+            !_appearanceSystem.TryGetData<VendingMachineVisualState>(uid, VendingMachineVisuals.VisualState, out var visualState, appearance))
         {
             visualState = VendingMachineVisualState.Normal;
         }
@@ -137,20 +136,4 @@ public sealed class VendingMachineSystem : SharedVendingMachineSystem
 
         sprite.LayerSetVisible(actualLayer, false);
     }
-}
-
-public enum VendingMachineVisualLayers : byte
-{
-    /// <summary>
-    /// Off / Broken. The other layers will overlay this if the machine is on.
-    /// </summary>
-    Base,
-    /// <summary>
-    /// Normal / Deny / Eject
-    /// </summary>    
-    BaseUnshaded,
-    /// <summary>
-    /// Screens that are persistent (where the machine is not off or broken)
-    /// </summary>
-    Screen
 }

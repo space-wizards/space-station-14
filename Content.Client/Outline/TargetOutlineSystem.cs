@@ -117,7 +117,7 @@ public sealed class TargetOutlineSystem : EntitySystem
         // TODO: Duplicated in SpriteSystem and DragDropSystem. Should probably be cached somewhere for a frame?
         var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
         var bounds = new Box2(mousePos - LookupSize / 2f, mousePos + LookupSize / 2f);
-        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Anchored);
+        var pvsEntities = _lookup.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.Static);
         var spriteQuery = GetEntityQuery<SpriteComponent>();
 
         foreach (var entity in pvsEntities)

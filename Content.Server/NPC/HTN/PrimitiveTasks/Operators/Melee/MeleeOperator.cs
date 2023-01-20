@@ -1,9 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.MobState;
 using Content.Server.NPC.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
 
@@ -17,14 +16,14 @@ public sealed class MeleeOperator : HTNOperator
     /// <summary>
     /// Key that contains the target entity.
     /// </summary>
-    [ViewVariables, DataField("targetKey", required: true)]
+    [DataField("targetKey", required: true)]
     public string TargetKey = default!;
 
     /// <summary>
     /// Minimum damage state that the target has to be in for us to consider attacking.
     /// </summary>
-    [ViewVariables, DataField("targetState")]
-    public DamageState TargetState = DamageState.Alive;
+    [DataField("targetState")]
+    public MobState TargetState = MobState.Alive;
 
     // Like movement we add a component and pass it off to the dedicated system.
 
@@ -32,6 +31,7 @@ public sealed class MeleeOperator : HTNOperator
     {
         base.Startup(blackboard);
         var melee = _entManager.EnsureComponent<NPCMeleeCombatComponent>(blackboard.GetValue<EntityUid>(NPCBlackboard.Owner));
+        melee.MissChance = blackboard.GetValueOrDefault<float>(NPCBlackboard.MeleeMissChance, _entManager);
         melee.Target = blackboard.GetValue<EntityUid>(TargetKey);
     }
 
@@ -39,7 +39,7 @@ public sealed class MeleeOperator : HTNOperator
         CancellationToken cancelToken)
     {
         // Don't attack if they're already as wounded as we want them.
-        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target))
+        if (!blackboard.TryGetValue<EntityUid>(TargetKey, out var target, _entManager))
         {
             return (false, null);
         }

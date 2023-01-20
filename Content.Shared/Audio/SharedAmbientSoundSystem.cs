@@ -11,24 +11,46 @@ namespace Content.Shared.Audio
             SubscribeLocalEvent<AmbientSoundComponent, ComponentHandleState>(HandleCompState);
         }
 
-        public void SetAmbience(EntityUid uid, bool value)
+        public virtual void SetAmbience(EntityUid uid, bool value, AmbientSoundComponent? ambience = null)
         {
-            // Reason I didn't make this eventbus for the callers is because it seemed a bit silly
-            // trying to account for damageable + powered + toggle, plus we can't just check if it's powered.
-            // So we'll just call it directly for whatever.
-            if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambience) ||
-                ambience.Enabled == value) return;
+            if (!Resolve(uid, ref ambience, false) || ambience.Enabled == value)
+                return;
 
             ambience.Enabled = value;
+            QueueUpdate(uid, ambience);
+            Dirty(ambience);
+        }
+
+        public virtual void SetRange(EntityUid uid, float value, AmbientSoundComponent? ambience = null)
+        {
+            if (!Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Range, value))
+                return;
+
+            ambience.Range = value;
+            QueueUpdate(uid, ambience);
+            Dirty(ambience);
+        }
+
+        protected virtual void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
+        {
+            // client side tree
+        }
+
+        public virtual void SetVolume(EntityUid uid, float value, AmbientSoundComponent? ambience = null)
+        {
+            if (!Resolve(uid, ref ambience, false) || MathHelper.CloseToPercent(ambience.Volume, value))
+                return;
+
+            ambience.Volume = value;
             Dirty(ambience);
         }
 
         private void HandleCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not AmbientSoundComponentState state) return;
-            component.Enabled = state.Enabled;
-            component.Range = state.Range;
-            component.Volume = state.Volume;
+            SetAmbience(uid, state.Enabled, component);
+            SetRange(uid, state.Range, component);
+            SetVolume(uid, state.Volume, component);
         }
 
         private void GetCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentGetState args)

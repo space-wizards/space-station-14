@@ -149,7 +149,7 @@ namespace Content.Client.Actions
         /// <summary>
         ///     Execute convenience functionality for actions (pop-ups, sound, speech)
         /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action)
+        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
         {
             var performedAction = action.Sound != null
                                   || !string.IsNullOrWhiteSpace(action.UserPopup)
@@ -233,7 +233,7 @@ namespace Content.Client.Actions
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;
 
-                PerformAction(PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
             {
@@ -295,7 +295,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("action", out var actionNode))
                     continue;
 
-                var action = _serialization.Read<ActionType>(actionNode);
+                var action = _serialization.Read<ActionType>(actionNode, notNullableOverride: true);
 
                 if (PlayerActions.Actions.TryGetValue(action, out var existingAction))
                 {
@@ -310,7 +310,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
 
-                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode);
+                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode, notNullableOverride: true);
 
                 foreach (var index in nodeAssignments)
                 {

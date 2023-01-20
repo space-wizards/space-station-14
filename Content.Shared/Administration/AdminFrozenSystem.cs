@@ -7,6 +7,7 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 
 namespace Content.Shared.Administration;
@@ -29,6 +30,7 @@ public sealed class AdminFrozenSystem : EntitySystem
         SubscribeLocalEvent<AdminFrozenComponent, UpdateCanMoveEvent>(OnUpdateCanMove);
         SubscribeLocalEvent<AdminFrozenComponent, PullAttemptEvent>(OnPullAttempt);
         SubscribeLocalEvent<AdminFrozenComponent, AttackAttemptEvent>(OnAttempt);
+        SubscribeLocalEvent<AdminFrozenComponent, ChangeDirectionAttemptEvent>(OnAttempt);
     }
 
     private void OnAttempt(EntityUid uid, AdminFrozenComponent component, CancellableEntityEventArgs args)

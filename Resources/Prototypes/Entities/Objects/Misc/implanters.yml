@@ -1,0 +1,146 @@
+﻿# Implanters
+
+- type: entity
+  name: implanter
+  description: a syringe fitted to be used exclusively with implants
+  id: BaseImplanter
+  parent: BaseItem
+  abstract: true
+  components:
+    - type: ItemSlots
+    - type: ContainerContainer
+      containers:
+        implanter_slot: !type:ContainerSlot { }
+    - type: Implanter
+      currentMode: Draw
+      implanterSlot:
+        name: Implant
+        priority: 0
+        whitelist:
+          tags:
+            - SubdermalImplant
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      netsync: false
+      state: syringe_base0
+      layers:
+        - state: syringe4
+          map: [ "implantFull" ]
+          color: '#1cd94e'
+          visible: false
+        - state: syringe_base0
+          map: [ "implantOnly" ]
+    - type: Item
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      heldPrefix: 0
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.ImplanterVisuals.Full:
+          implantFull:
+            True: {visible: true}
+            False: {visible: false}
+        enum.ImplanterImplantOnlyVisuals.ImplantOnly:
+          implantOnly:
+            True: {state: broken}
+            False: {state: syringe_base0}
+
+- type: entity
+  id: Implanter
+  parent: BaseImplanter
+  components:
+    - type: Tag
+      tags:
+        - Trash
+
+- type: entity
+  id: BaseImplantOnlyImplanter
+  parent: Implanter
+  description: a single use implanter
+  abstract: true
+  components:
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      netsync: false
+      state: syringe_base0
+      layers:
+        - state: syringe4
+          map: [ "implantFull" ]
+          color: '#1cd94e'
+          visible: true
+        - state: syringe_base0
+          map: [ "implantOnly" ]
+    - type: Implanter
+      currentMode: Inject
+      implantOnly: true
+
+#Fun implanters
+
+- type: entity
+  id: SadTromboneImplanter
+  name: sad trombone implanter
+  description: a single use implanter, the implant plays a sad tune on death
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: SadTromboneImplant
+
+- type: entity
+  id: LightImplanter
+  name: light implanter
+  description: a single use implanter, the implant emits light on activation
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: LightImplant
+
+#Security implanters
+
+- type: entity
+  id: TrackingImplanter
+  name: tracking implanter
+  description: a single use implanter, the implant tracks
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: TrackingImplant
+
+#Traitor implanters
+
+- type: entity
+  id: StorageImplanter
+  name: storage implanter
+  description: a single use implanter, the implant grants hidden storage
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: StorageImplant
+
+- type: entity
+  id: FreedomImplanter
+  name: freedom implanter
+  description: a single use implanter, the implant lets the user break out of hand restraints three times
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: FreedomImplant
+
+#Nuclear Operative/Special implanters
+
+- type: entity
+  id: MicroBombImplanter
+  name: micro bomb implanter
+  description: a single use implanter, the implant is permanent and blows the user up on death
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MicroBombImplant
+
+- type: entity
+  id: MacroBombImplanter
+  name: macro bomb implanter
+  description: a single use implanter, the implant creates a large explosion on death after the alloted time
+  parent: BaseImplantOnlyImplanter
+  components:
+    - type: Implanter
+      implant: MacroBombImplant

@@ -22,6 +22,21 @@
   - type: Pullable
   - type: Clickable
   - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 40
+        behaviors:
+          - !type:EmptyAllContainersBehaviour
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -31,9 +46,7 @@
         bounds: "-0.10,-0.10,0.10,0.10"
       density: 500
       mask:
-        - MachineMask
-      layer:
-        - HighImpassable
+        - TabletopMachineMask
   - type: ItemSlots
     slots:
       charger_slot:

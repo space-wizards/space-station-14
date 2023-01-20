@@ -1,9 +1,9 @@
 using Content.Client.Resources;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.DoAfter;
 
@@ -17,11 +17,12 @@ public sealed class DoAfterOverlay : Overlay
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
 
-    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager, IResourceCache cache)
+    public DoAfterOverlay(IEntityManager entManager, IPrototypeManager protoManager)
     {
         _entManager = entManager;
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        _barTexture = cache.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png");
+        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        _barTexture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
 
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }

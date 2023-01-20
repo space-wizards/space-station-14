@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Xenoarchaeology.Equipment;
 
@@ -41,19 +42,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
 
     public bool CanPrint;
 
-    public int? Id;
-
-    public int? Depth;
-
-    public int? Edges;
-
-    public bool? Triggered;
-
-    public string? EffectProto;
-
-    public string? TriggerProto;
-
-    public int? PointValue;
+    public FormattedMessage? ScanReport;
 
     public bool Scanning;
 
@@ -62,8 +51,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
     public TimeSpan TotalTime;
 
     public AnalysisConsoleScanUpdateState(EntityUid? artifact, bool analyzerConnected, bool serverConnected, bool canScan, bool canPrint,
-        int? id, int? depth, int? edges, bool? triggered, string? effectProto, string? triggerProto, int? pointValue,
-        bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
+        FormattedMessage? scanReport, bool scanning, TimeSpan timeRemaining, TimeSpan totalTime)
     {
         Artifact = artifact;
         AnalyzerConnected = analyzerConnected;
@@ -71,13 +59,7 @@ public sealed class AnalysisConsoleScanUpdateState : BoundUserInterfaceState
         CanScan = canScan;
         CanPrint = canPrint;
 
-        Id = id;
-        Depth = depth;
-        Edges = edges;
-        Triggered = triggered;
-        EffectProto = effectProto;
-        TriggerProto = triggerProto;
-        PointValue = pointValue;
+        ScanReport = scanReport;
 
         Scanning = scanning;
         TimeRemaining = timeRemaining;

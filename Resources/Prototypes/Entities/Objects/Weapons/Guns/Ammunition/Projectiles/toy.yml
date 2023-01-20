@@ -12,3 +12,4 @@
       sprite: Objects/Fun/toys.rsi
       layers:
         - state: foamdart
+    - type: Recyclable

@@ -51,7 +51,7 @@ public sealed class RevenantComponent : Component
     /// <summary>
     /// The duration of the soul search
     /// </summary>
-    [ViewVariables, DataField("soulSearchDuration")]
+    [DataField("soulSearchDuration")]
     public float SoulSearchDuration = 2.5f;
 
     /// <summary>
@@ -59,7 +59,7 @@ public sealed class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [ViewVariables, DataField("harvestDebuffs")]
+    [DataField("harvestDebuffs")]
     public Vector2 HarvestDebuffs = (5, 5);
 
     /// <summary>
@@ -86,7 +86,7 @@ public sealed class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [ViewVariables, DataField("defileDebuffs")]
+    [DataField("defileDebuffs")]
     public Vector2 DefileDebuffs = (1, 4);
 
     /// <summary>
@@ -121,7 +121,7 @@ public sealed class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [ViewVariables, DataField("overloadDebuffs")]
+    [DataField("overloadDebuffs")]
     public Vector2 OverloadDebuffs = (3, 8);
 
     /// <summary>
@@ -149,7 +149,7 @@ public sealed class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [ViewVariables, DataField("blightDebuffs")]
+    [DataField("blightDebuffs")]
     public Vector2 BlightDebuffs = (2, 5);
 
     /// <summary>
@@ -177,7 +177,7 @@ public sealed class RevenantComponent : Component
     /// the first float corresponds to amount of time the entity is stunned.
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
-    [ViewVariables, DataField("malfunctionDebuffs")]
+    [DataField("malfunctionDebuffs")]
     public Vector2 MalfunctionDebuffs = (2, 8);
 
     /// <summary>

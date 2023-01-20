@@ -90,7 +90,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor in-between.
     /// </summary>
-    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, BaseContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null)
+    public bool TryDropIntoContainer(EntityUid uid, EntityUid entity, IContainer targetContainer, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null)
     {
         if (!Resolve(uid, ref handsComp))
             return false;

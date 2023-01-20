@@ -105,7 +105,7 @@ namespace Content.Server.StationEvents.Events
             _announceCancelToken = new CancellationTokenSource();
             Timer.Spawn(3000, () =>
             {
-                _audioSystem.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), AudioParams.Default.WithVolume(-4f));
+                _audioSystem.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), true, AudioParams.Default.WithVolume(-4f));
             }, _announceCancelToken.Token);
             _unpowered.Clear();
 

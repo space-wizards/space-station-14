@@ -1,9 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools.Components
 {
-    [RegisterComponent] // TODO move tool system to shared, and make it a friend.
+    [RegisterComponent, NetworkedComponent] // TODO move tool system to shared, and make it a friend.
     public sealed class ToolComponent : Component
     {
         [DataField("qualities")]

@@ -11,6 +11,12 @@ public sealed class NPCMeleeCombatComponent : Component
     /// </summary>
     [ViewVariables] public EntityUid Weapon;
 
+    /// <summary>
+    /// If the target is moving what is the chance for this NPC to miss.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float MissChance;
+
     [ViewVariables]
     public EntityUid Target;
 

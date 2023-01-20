@@ -14,8 +14,8 @@ namespace Content.Server.Administration.Commands
     public sealed class BanCommand : IConsoleCommand
     {
         public string Command => "ban";
-        public string Description => "Bans somebody";
-        public string Help => $"Usage: {Command} <name or user ID> <reason> [duration in minutes, leave out or 0 for permanent ban]";
+        public string Description => Loc.GetString("cmd-ban-desc");
+        public string Help => Loc.GetString("cmd-ban-help", ("Command", Command));
 
         public async void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -54,7 +54,7 @@ namespace Content.Server.Administration.Commands
             var located = await locator.LookupIdByNameOrIdAsync(target);
             if (located == null)
             {
-                shell.WriteError("Unable to find a player with that name.");
+                shell.WriteError(Loc.GetString("cmd-ban-player"));
                 return;
             }
 
@@ -64,7 +64,7 @@ namespace Content.Server.Administration.Commands
 
             if (player != null && player.UserId == targetUid)
             {
-                shell.WriteLine("You can't ban yourself!");
+                shell.WriteLine(Loc.GetString("cmd-ban-self"));
                 return;
             }
 
@@ -118,11 +118,11 @@ namespace Content.Server.Administration.Commands
             {
                 var playerMgr = IoCManager.Resolve<IPlayerManager>();
                 var options = playerMgr.ServerSessions.Select(c => c.Name).OrderBy(c => c).ToArray();
-                return CompletionResult.FromHintOptions(options, "<name/user ID>");
+                return CompletionResult.FromHintOptions(options, Loc.GetString("cmd-ban-hint"));
             }
 
             if (args.Length == 2)
-                return CompletionResult.FromHint("<reason>");
+                return CompletionResult.FromHint(Loc.GetString("cmd-ban-hint-reason"));
 
             if (args.Length == 3)
             {
@@ -133,7 +133,7 @@ namespace Content.Server.Administration.Commands
                     new("10080", "1 week"),
                 };
 
-                return CompletionResult.FromHintOptions(durations, "[duration]");
+                return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));
             }
 
             return CompletionResult.Empty;

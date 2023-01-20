@@ -8,7 +8,6 @@ public sealed class CanEscapeInventoryComponent : Component
     /// <summary>
     /// Base doafter length for uncontested breakouts.
     /// </summary>
-    [ViewVariables]
     [DataField("baseResistTime")]
     public float BaseResistTime = 5f;
 

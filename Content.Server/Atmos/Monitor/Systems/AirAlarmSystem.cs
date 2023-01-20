@@ -297,7 +297,7 @@ public sealed class AirAlarmSystem : EntitySystem
 
         if (!_accessSystem.IsAllowed(user.Value, reader))
         {
-            _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, Filter.Entities(user.Value));
+            _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
             return false;
         }
 

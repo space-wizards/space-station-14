@@ -71,23 +71,24 @@ public sealed class UpgradePowerSystem : EntitySystem
 
     private void OnSupplierRefreshParts(EntityUid uid, UpgradePowerSupplierComponent component, RefreshPartsEvent args)
     {
-        if (!TryComp<PowerSupplierComponent>(uid, out var powa))
-            return;
-
+        var supply = component.BaseSupplyRate;
         var rating = args.PartRatings[component.MachinePartPowerSupply];
         switch (component.Scaling)
         {
             case MachineUpgradeScalingType.Linear:
-                powa.MaxSupply += component.BaseSupplyRate * (rating - 1);
+                supply += component.BaseSupplyRate * (rating - 1);
                 break;
             case MachineUpgradeScalingType.Exponential:
-                powa.MaxSupply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
+                supply *= MathF.Pow(component.PowerSupplyMultiplier, rating - 1);
                 break;
             default:
                 Logger.Error($"invalid power scaling type for {ToPrettyString(uid)}.");
-                powa.MaxSupply = component.BaseSupplyRate;
+                supply = component.BaseSupplyRate;
                 break;
         }
+
+        if (TryComp<PowerSupplierComponent>(uid, out var powa))
+            powa.MaxSupply = supply;
     }
 
     private void OnSupplierUpgradeExamine(EntityUid uid, UpgradePowerSupplierComponent component, UpgradeExamineEvent args)

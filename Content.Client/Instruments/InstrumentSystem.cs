@@ -150,13 +150,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         var tick = instrument.Renderer.SequencerTick-1;
 
         instrument.MidiEventBuffer.Add(RobustMidiEvent.SystemReset(tick));
-
-        // We add a "all notes off" message.
-        for (byte i = 0; i < 16; i++)
-        {
-            //instrument.MidiEventBuffer.Add(RobustMidiEvent.AllNotesOff(i, tick));
-        }
-
         instrument.Renderer.PlayerTick = playerTick;
     }
 
@@ -265,7 +258,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             instrument.SequenceStartTick = midiEv.MidiEvent.Min(x => x.Tick) - 1;
         }
 
-        var sqrtLag = MathF.Sqrt(_netManager.ServerChannel!.Ping / 1000f);
+        var sqrtLag = MathF.Sqrt((_netManager.ServerChannel?.Ping ?? 0)/ 1000f);
         var delay = (uint) (renderer.SequencerTimeScale * (.2 + sqrtLag));
         var delta = delay - instrument.SequenceStartTick;
 

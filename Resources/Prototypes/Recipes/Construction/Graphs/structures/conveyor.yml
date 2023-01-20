@@ -29,3 +29,6 @@
           steps:
             - tool: Prying
               doAfter: 3
+          completed:
+            - !type:SetAnchor
+              value: false

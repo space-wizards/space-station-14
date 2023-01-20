@@ -1,8 +1,7 @@
-using Content.Server.Buckle.Components;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.MobState;
 using Content.Server.Standing;
 using Content.Shared.Hands;
+using Content.Shared.Mobs;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Vehicle
@@ -49,7 +48,7 @@ namespace Content.Server.Vehicle
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, RiderComponent rider, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState is DamageState.Critical or DamageState.Dead)
+            if (args.NewMobState is MobState.Critical or MobState.Dead)
             {
                 UnbuckleFromVehicle(uid);
             }
@@ -57,10 +56,7 @@ namespace Content.Server.Vehicle
 
         public void UnbuckleFromVehicle(EntityUid uid)
         {
-            if (!TryComp<BuckleComponent>(uid, out var buckle))
-                return;
-
-            buckle.TryUnbuckle(uid, true);
+            _buckle.TryUnbuckle(uid, uid, true);
         }
     }
 }
