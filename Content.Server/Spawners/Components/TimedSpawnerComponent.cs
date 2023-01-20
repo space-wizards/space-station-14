@@ -31,7 +31,7 @@ namespace Content.Server.Spawners.Components
         [DataField("MaximumEntitiesSpawned")]
         public int MaximumEntitiesSpawned { get; set; } = 1;
 
-        private CancellationTokenSource? TokenSource;
+        public CancellationTokenSource? TokenSource;
 
         void ISerializationHooks.AfterDeserialization()
         {
@@ -43,12 +43,6 @@ namespace Content.Server.Spawners.Components
         {
             base.Initialize();
             SetupTimer();
-        }
-
-        protected override void Shutdown()
-        {
-            base.Shutdown();
-            TokenSource?.Cancel();
         }
 
         private void SetupTimer()

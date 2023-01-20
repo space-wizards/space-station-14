@@ -150,13 +150,6 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         var tick = instrument.Renderer.SequencerTick-1;
 
         instrument.MidiEventBuffer.Add(RobustMidiEvent.SystemReset(tick));
-
-        // We add a "all notes off" message.
-        for (byte i = 0; i < 16; i++)
-        {
-            //instrument.MidiEventBuffer.Add(RobustMidiEvent.AllNotesOff(i, tick));
-        }
-
         instrument.Renderer.PlayerTick = playerTick;
     }
 

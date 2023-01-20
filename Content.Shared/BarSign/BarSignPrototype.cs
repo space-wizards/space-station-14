@@ -6,7 +6,7 @@ namespace Content.Shared.BarSign
     public sealed class BarSignPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
 

@@ -57,7 +57,7 @@ namespace Content.Shared.Construction.Prototypes
         [DataField("objectType")] public ConstructionType Type { get; private set; } = ConstructionType.Structure;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("placementMode")]

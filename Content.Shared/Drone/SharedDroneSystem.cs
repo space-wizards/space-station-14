@@ -4,11 +4,6 @@ namespace Content.Shared.Drone
 {
     public abstract class SharedDroneSystem : EntitySystem
     {
-         public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         [Serializable, NetSerializable]
         public enum DroneVisuals : byte
         {

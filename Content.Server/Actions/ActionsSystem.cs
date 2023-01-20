@@ -13,11 +13,6 @@ namespace Content.Server.Actions
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
         {
             var result = base.PerformBasicActions(user, action, predicted);

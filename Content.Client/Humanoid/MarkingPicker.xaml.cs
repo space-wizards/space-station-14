@@ -282,6 +282,7 @@ public sealed partial class MarkingPicker : Control
                 _currentMarkings.ShiftRankUpFromEnd(_selectedMarkingCategory, src);
                 break;
             // do nothing?
+            // ReSharper disable once RedundantEmptySwitchSection
             default:
                 break;
         }
