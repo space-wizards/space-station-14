@@ -1317,7 +1317,6 @@
       50: Critical
       75: Dead
   - type: MeleeWeapon
-    hidden: true
     angle: 0
     animation: WeaponArcBite
     damage:
