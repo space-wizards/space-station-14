@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed firelock construction not working. Deconstructing existing firelocks
-      is still bugged., type: Fix}
-  id: 2422
-  time: '2022-10-10T02:36:28.0000000+00:00'
 - author: Rapidgame7
   changes:
   - {message: Improved error pop-up when failing to insert an item into storage containers.,
@@ -2931,3 +2925,8 @@ Entries:
   - {message: Fixed the syringe icon in the lathe being displayed incorrectly, type: Fix}
   id: 2921
   time: '2023-01-20T13:57:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mechs being able to pickup portals, type: Fix}
+  id: 2922
+  time: '2023-01-20T14:14:00.0000000+00:00'
