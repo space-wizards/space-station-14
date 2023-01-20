@@ -208,7 +208,7 @@ namespace Content.Shared.Stacks
             var map = xform.MapID;
             var bounds = _physics.GetWorldAABB(uid);
             var intersecting = _entityLookup.GetComponentsIntersecting<StackComponent>(map, bounds,
-                LookupFlags.Approximate | LookupFlags.Uncontained);
+                LookupFlags.Dynamic | LookupFlags.Sundries);
 
             var merged = false;
             foreach (var otherStack in intersecting)
