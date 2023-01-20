@@ -5,7 +5,6 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Item;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -29,7 +28,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnDestroyed(EntityUid uid, SecretStashComponent component, DestructionEventArgs args)
         {
-            component.ItemContainer.EmptyContainer();
+            _containerSystem.EmptyContainer(component.ItemContainer, attachToGridOrMap: true);
         }
 
         /// <summary>

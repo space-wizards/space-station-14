@@ -1,7 +1,7 @@
 using System.Linq;
-using Content.Server.Buckle.Components;
 using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;

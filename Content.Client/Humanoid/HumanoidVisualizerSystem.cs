@@ -108,23 +108,23 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
         SpriteComponent sprite)
     {
         // skip this entire thing if both sets are empty
-        if (humanoid.CurrentMarkings.Count == 0 && newMarkings.Count == 0)
+        if (humanoid.CurrentClientMarkings.Count == 0 && newMarkings.Count == 0)
         {
             return;
         }
 
         var dirtyMarkings = new List<int>();
-        var dirtyRangeStart = humanoid.CurrentMarkings.Count == 0 ? 0 : -1;
+        var dirtyRangeStart = humanoid.CurrentClientMarkings.Count == 0 ? 0 : -1;
 
         // edge cases:
-        // humanoid.CurrentMarkings < newMarkings.Count
+        // humanoid.CurrentClientMarkings < newMarkings.Count
         // - check if count matches this condition before diffing
-        // - if count is unequal, set dirty range to start from humanoid.CurrentMarkings.Count
-        // humanoid.CurrentMarkings > newMarkings.Count, no dirty markings
+        // - if count is unequal, set dirty range to start from humanoid.CurrentClientMarkings.Count
+        // humanoid.CurrentClientMarkings > newMarkings.Count, no dirty markings
         // - break count upon meeting this condition
-        // - clear markings from newMarkings.Count to humanoid.CurrentMarkings.Count - newMarkings.Count
+        // - clear markings from newMarkings.Count to humanoid.CurrentClientMarkings.Count - newMarkings.Count
 
-        for (var i = 0; i < humanoid.CurrentMarkings.Count; i++)
+        for (var i = 0; i < humanoid.CurrentClientMarkings.Count; i++)
         {
             // if we've reached the end of the new set of markings,
             // then that means it's time to finish
@@ -135,7 +135,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
 
             // if the marking is different here, set the range start to i and break, we need
             // to rebuild all markings starting from i
-            if (humanoid.CurrentMarkings[i].MarkingId != newMarkings[i].MarkingId)
+            if (humanoid.CurrentClientMarkings[i].MarkingId != newMarkings[i].MarkingId)
             {
                 dirtyRangeStart = i;
                 break;
@@ -146,7 +146,7 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             // however: if the hidden layers are set to dirty, then we need to
             // instead just add every single marking, since we don't know ahead of time
             // where these markings go
-            if (humanoid.CurrentMarkings[i] != newMarkings[i] || layersDirty)
+            if (humanoid.CurrentClientMarkings[i] != newMarkings[i] || layersDirty)
             {
                 dirtyMarkings.Add(i);
             }
@@ -162,49 +162,49 @@ public sealed class HumanoidVisualizerSystem : VisualizerSystem<HumanoidComponen
             ApplyMarking(uid, dirtyMarking, newMarkings[i].MarkingColors, newMarkings[i].Visible, humanoid, sprite);
         }
 
-        if (humanoid.CurrentMarkings.Count < newMarkings.Count && dirtyRangeStart < 0)
+        if (humanoid.CurrentClientMarkings.Count < newMarkings.Count && dirtyRangeStart < 0)
         {
-            dirtyRangeStart = humanoid.CurrentMarkings.Count;
+            dirtyRangeStart = humanoid.CurrentClientMarkings.Count;
         }
 
         if (dirtyRangeStart >= 0)
         {
             var range = newMarkings.GetRange(dirtyRangeStart, newMarkings.Count - dirtyRangeStart);
 
-            if (humanoid.CurrentMarkings.Count > 0)
+            if (humanoid.CurrentClientMarkings.Count > 0)
             {
-                var oldRange = humanoid.CurrentMarkings.GetRange(dirtyRangeStart, humanoid.CurrentMarkings.Count - dirtyRangeStart);
+                var oldRange = humanoid.CurrentClientMarkings.GetRange(dirtyRangeStart, humanoid.CurrentClientMarkings.Count - dirtyRangeStart);
                 ClearMarkings(uid, oldRange, humanoid, sprite);
             }
 
             ApplyMarkings(uid, range, humanoid, sprite);
         }
-        else if (humanoid.CurrentMarkings.Count != newMarkings.Count)
+        else if (humanoid.CurrentClientMarkings.Count != newMarkings.Count)
         {
             if (newMarkings.Count == 0)
             {
                 ClearAllMarkings(uid, humanoid, sprite);
             }
-            else if (humanoid.CurrentMarkings.Count > newMarkings.Count)
+            else if (humanoid.CurrentClientMarkings.Count > newMarkings.Count)
             {
                 var rangeStart = newMarkings.Count;
-                var rangeCount = humanoid.CurrentMarkings.Count - newMarkings.Count;
-                var range = humanoid.CurrentMarkings.GetRange(rangeStart, rangeCount);
+                var rangeCount = humanoid.CurrentClientMarkings.Count - newMarkings.Count;
+                var range = humanoid.CurrentClientMarkings.GetRange(rangeStart, rangeCount);
 
                 ClearMarkings(uid, range, humanoid, sprite);
             }
         }
 
-        if (dirtyMarkings.Count > 0 || dirtyRangeStart >= 0 || humanoid.CurrentMarkings.Count != newMarkings.Count)
+        if (dirtyMarkings.Count > 0 || dirtyRangeStart >= 0 || humanoid.CurrentClientMarkings.Count != newMarkings.Count)
         {
-            humanoid.CurrentMarkings = newMarkings;
+            humanoid.CurrentClientMarkings = newMarkings;
         }
     }
 
     private void ClearAllMarkings(EntityUid uid, HumanoidComponent humanoid,
         SpriteComponent spriteComp)
     {
-        ClearMarkings(uid, humanoid.CurrentMarkings, humanoid, spriteComp);
+        ClearMarkings(uid, humanoid.CurrentClientMarkings, humanoid, spriteComp);
     }
 
     private void ClearMarkings(EntityUid uid, List<Marking> markings, HumanoidComponent humanoid,

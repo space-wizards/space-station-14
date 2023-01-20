@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -86,7 +87,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
                     if (TryComp<StackComponent>(item, out var stack))
                     {
-                        var totalVolume = solution.TotalVolume * stack.Count;
+                        var totalVolume = solution.Volume * stack.Count;
                         if (totalVolume <= 0)
                             continue;
 
@@ -101,7 +102,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     }
                     else
                     {
-                        if (solution.TotalVolume > containerSolution.AvailableVolume)
+                        if (solution.Volume > containerSolution.AvailableVolume)
                             continue;
 
                         QueueDel(item);

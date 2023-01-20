@@ -1,0 +1,26 @@
+<Document>
+# Science
+
+Science, often called Research and Development, is a job made up of both generating research points to unlock new technologies as well as using said technologies to produce new items at lathes to help out the station.
+
+## Technologies
+<Box>
+<GuideEntityEmbed Entity="ComputerResearchAndDevelopment"/>
+<GuideEntityEmbed Entity="ResearchAndDevelopmentServer"/>
+</Box>
+The most important thing inside your department is the R&D server, which stores unlocked technologies, and the R&D computer, which allows you to unlock technologies.
+
+Each technology costs [color=#a4885c]Research Points[/color] and unlocks recipes at lathes. Some technologies will also have prerequesites you have to unlock before you can research them.
+
+## Lathes
+<Box>
+<GuideEntityEmbed Entity="Protolathe"/>
+<GuideEntityEmbed Entity="CircuitImprinter"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="ExosuitFabricator"/>
+<GuideEntityEmbed Entity="MedicalTechFab"/>
+</Box>
+At a lathe, you can sync to a server to allow it print whatever recipes you have unlocked. Recipes require various materials (steel, glass, plastic, gold, plasma) which can be acquired at Cargo or Salvage.
+
+</Document>

@@ -27,7 +27,7 @@ public sealed class ClearBluespaceLockerLinks : IConsoleCommand
 
         var entityManager = IoCManager.Resolve<IEntityManager>();
 
-        if (entityManager.TryGetComponent<EntityStorageComponent>(entityUid, out var originComponent))
+        if (entityManager.TryGetComponent<BluespaceLockerComponent>(entityUid, out var originComponent))
             entityManager.RemoveComponent(entityUid, originComponent);
     }
 }

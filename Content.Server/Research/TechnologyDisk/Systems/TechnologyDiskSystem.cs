@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Content.Server.Popups;
-using Content.Server.Research.Components;
 using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Shared.Examine;
@@ -39,7 +38,7 @@ public sealed class TechnologyDiskSystem : EntitySystem
         {
             foreach (var recipe in component.Recipes)
             {
-                _research.AddLatheRecipe(database, recipe, false);
+                _research.AddLatheRecipe(target, recipe, database, false);
             }
             Dirty(database);
         }

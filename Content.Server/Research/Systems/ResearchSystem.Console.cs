@@ -1,8 +1,6 @@
 using Content.Server.Power.EntitySystems;
 using Content.Server.Research.Components;
 using Content.Shared.Research.Components;
-using Content.Shared.Research.Prototypes;
-using Robust.Server.Player;
 
 namespace Content.Server.Research.Systems;
 
@@ -11,66 +9,39 @@ public sealed partial class ResearchSystem
     private void InitializeConsole()
     {
         SubscribeLocalEvent<ResearchConsoleComponent, ConsoleUnlockTechnologyMessage>(OnConsoleUnlock);
-        SubscribeLocalEvent<ResearchConsoleComponent, ConsoleServerSyncMessage>(OnConsoleSync);
-        SubscribeLocalEvent<ResearchConsoleComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
         SubscribeLocalEvent<ResearchConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
-    }
-
-    private void OnConsoleSelect(EntityUid uid, ResearchConsoleComponent component, ConsoleServerSelectionMessage args)
-    {
-        if (!HasComp<TechnologyDatabaseComponent>(uid) ||
-            !HasComp<ResearchClientComponent>(uid) ||
-            !this.IsPowered(uid, EntityManager))
-            return;
-
-        _uiSystem.TryOpen(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
-    }
-
-    private void OnConsoleSync(EntityUid uid, ResearchConsoleComponent component, ConsoleServerSyncMessage args)
-    {
-        if (!TryComp<TechnologyDatabaseComponent>(uid, out var database) ||
-            !HasComp<ResearchClientComponent>(uid) ||
-            !this.IsPowered(uid, EntityManager))
-            return;
-
-        SyncWithServer(database);
-        UpdateConsoleInterface(component);
+        SubscribeLocalEvent<ResearchConsoleComponent, ResearchRegistrationChangedEvent>(OnConsoleRegistrationChanged);
+        SubscribeLocalEvent<ResearchConsoleComponent, TechnologyDatabaseModifiedEvent>(OnConsoleDatabaseModified);
     }
 
     private void OnConsoleUnlock(EntityUid uid, ResearchConsoleComponent component, ConsoleUnlockTechnologyMessage args)
     {
-        if (!TryComp<TechnologyDatabaseComponent>(uid, out var database) ||
-            !TryComp<ResearchClientComponent>(uid, out var client) ||
-            !this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
-        if (!_prototypeManager.TryIndex(args.Id, out TechnologyPrototype? tech) ||
-            client.Server == null ||
-            !CanUnlockTechnology(client.Server, tech))
+        if (!UnlockTechnology(uid, args.Id))
             return;
 
-        if (!UnlockTechnology(client.Server, tech))
-            return;
-
-        SyncWithServer(database);
-        Dirty(database);
-        UpdateConsoleInterface(component);
+        SyncClientWithServer(uid);
+        UpdateConsoleInterface(uid, component);
     }
 
-    private void UpdateConsoleInterface(ResearchConsoleComponent component, ResearchClientComponent? clientComponent = null)
+    private void UpdateConsoleInterface(EntityUid uid, ResearchConsoleComponent? component = null, ResearchClientComponent? clientComponent = null)
     {
+        if (!Resolve(uid, ref component, ref clientComponent, false))
+            return;
+
         ResearchConsoleBoundInterfaceState state;
 
-        if (!Resolve(component.Owner, ref clientComponent, false) ||
-            clientComponent.Server == null)
+        if (TryGetClientServer(uid, out var server, out var serverComponent, clientComponent))
         {
-            state = new ResearchConsoleBoundInterfaceState(default, default);
+            var points = clientComponent.ConnectedToServer ? serverComponent.Points : 0;
+            var pointsPerSecond = clientComponent.ConnectedToServer ? PointsPerSecond(server.Value, serverComponent) : 0;
+            state = new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
         }
         else
         {
-            var points = clientComponent.ConnectedToServer ? clientComponent.Server.Points : 0;
-            var pointsPerSecond = clientComponent.ConnectedToServer ? PointsPerSecond(clientComponent.Server) : 0;
-            state = new ResearchConsoleBoundInterfaceState(points, pointsPerSecond);
+            state = new ResearchConsoleBoundInterfaceState(default, default);
         }
 
         _uiSystem.TrySetUiState(component.Owner, ResearchConsoleUiKey.Key, state);
@@ -80,7 +51,17 @@ public sealed partial class ResearchSystem
     {
         if (!_uiSystem.IsUiOpen(uid, ResearchConsoleUiKey.Key))
             return;
-        UpdateConsoleInterface(component);
+        UpdateConsoleInterface(uid, component);
     }
 
+    private void OnConsoleRegistrationChanged(EntityUid uid, ResearchConsoleComponent component, ref ResearchRegistrationChangedEvent args)
+    {
+        SyncClientWithServer(uid);
+        UpdateConsoleInterface(uid, component);
+    }
+
+    private void OnConsoleDatabaseModified(EntityUid uid, ResearchConsoleComponent component, ref TechnologyDatabaseModifiedEvent args)
+    {
+        UpdateConsoleInterface(uid, component);
+    }
 }

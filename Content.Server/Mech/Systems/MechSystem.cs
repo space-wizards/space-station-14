@@ -4,13 +4,17 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Mech.Components;
 using Content.Server.Power.Components;
+using Content.Server.Tools;
 using Content.Server.Wires;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Components;
 using Content.Shared.Mech.EntitySystems;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Containers;
@@ -28,6 +32,7 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -52,6 +57,10 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
 
+        SubscribeLocalEvent<MechComponent, UpdateCanMoveEvent>(OnMechCanMoveEvent);
+
+
+        SubscribeLocalEvent<MechPilotComponent, ToolUserAttemptUseEvent>(OnToolUseAttempt);
         SubscribeLocalEvent<MechPilotComponent, InhaleLocationEvent>(OnInhale);
         SubscribeLocalEvent<MechPilotComponent, ExhaleLocationEvent>(OnExhale);
         SubscribeLocalEvent<MechPilotComponent, AtmosExposedGetAirEvent>(OnExpose);
@@ -61,6 +70,11 @@ public sealed class MechSystem : SharedMechSystem
         #endregion
     }
 
+    private void OnMechCanMoveEvent(EntityUid uid, MechComponent component , UpdateCanMoveEvent args)
+    {
+        if (component.Broken || component.Integrity <= 0 || component.Energy <= 0)
+            args.Cancel();
+    }
     private void OnInteractUsing(EntityUid uid, MechComponent component, InteractUsingEvent args)
     {
         if (TryComp<WiresComponent>(uid, out var wires) && !wires.IsPanelOpen)
@@ -69,6 +83,7 @@ public sealed class MechSystem : SharedMechSystem
         if (component.BatterySlot.ContainedEntity == null && TryComp<BatteryComponent>(args.Used, out var battery))
         {
             InsertBattery(uid, args.Used, component, battery);
+            _actionBlocker.UpdateCanMove(uid);
             return;
         }
 
@@ -91,8 +106,8 @@ public sealed class MechSystem : SharedMechSystem
     private void OnRemoveBatteryFinished(EntityUid uid, MechComponent component, MechRemoveBatteryFinishedEvent args)
     {
         component.EntryTokenSource = null;
-
         RemoveBattery(uid, component);
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnRemoveBatteryCancelled(EntityUid uid, MechComponent component, MechRemoveBatteryCancelledEvent args)
@@ -117,6 +132,7 @@ public sealed class MechSystem : SharedMechSystem
             InsertBattery(uid, battery, component);
         }
 
+        _actionBlocker.UpdateCanMove(uid);
         Dirty(component);
     }
 
@@ -135,6 +151,12 @@ public sealed class MechSystem : SharedMechSystem
     {
         args.Handled = true;
         ToggleMechUi(uid, component);
+    }
+
+    private void OnToolUseAttempt(EntityUid uid, MechPilotComponent component, ref ToolUserAttemptUseEvent args)
+    {
+        if (args.Target == component.Mech)
+            args.Cancelled = true;
     }
 
     private void OnAlternativeVerb(EntityUid uid, MechComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -204,6 +226,7 @@ public sealed class MechSystem : SharedMechSystem
     {
         component.EntryTokenSource = null;
         TryInsert(uid, args.User, component);
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnExitFinished(EntityUid uid, MechComponent component, MechExitFinishedEvent args)
@@ -337,6 +360,7 @@ public sealed class MechSystem : SharedMechSystem
         base.BreakMech(uid, component);
 
         _ui.TryCloseAll(uid, MechUiKey.Key);
+        _actionBlocker.UpdateCanMove(uid);
     }
 
     public override bool TryChangeEnergy(EntityUid uid, FixedPoint2 delta, SharedMechComponent? component = null)
@@ -361,6 +385,7 @@ public sealed class MechSystem : SharedMechSystem
             component.Energy = batteryComp.CurrentCharge;
             Dirty(component);
         }
+        _actionBlocker.UpdateCanMove(uid);
         return true;
     }
 
@@ -376,6 +401,8 @@ public sealed class MechSystem : SharedMechSystem
         component.Energy = battery.CurrentCharge;
         component.MaxEnergy = battery.MaxCharge;
 
+        _actionBlocker.UpdateCanMove(uid);
+
         Dirty(component);
         UpdateUserInterface(uid, component);
     }
@@ -388,6 +415,8 @@ public sealed class MechSystem : SharedMechSystem
         _container.EmptyContainer(component.BatterySlot);
         component.Energy = 0;
         component.MaxEnergy = 0;
+
+        _actionBlocker.UpdateCanMove(uid);
 
         Dirty(component);
         UpdateUserInterface(uid, component);

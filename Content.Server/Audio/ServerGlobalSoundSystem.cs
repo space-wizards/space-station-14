@@ -76,7 +76,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
     public void PlayGlobalSoundCommand(IConsoleShell shell, string argStr, string[] args)
     {
         Filter filter;
-        var audio = AudioParams.Default.WithVolume(-8);
+        var audio = AudioParams.Default;
 
         bool replay = true;
 
@@ -139,6 +139,7 @@ public sealed class ServerGlobalSoundSystem : SharedGlobalSoundSystem
                 break;
         }
 
+        audio = audio.AddVolume(-8);
         PlayAdminGlobal(filter, args[0], audio, replay);
     }
 }

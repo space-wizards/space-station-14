@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading;
+using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
@@ -10,6 +11,7 @@ using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.Destructible;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
@@ -36,6 +38,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
@@ -152,6 +155,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 Act = () =>
                 {
                     _handsSystem.TryDropIntoContainer(args.User, args.Using.Value, component.Container, checkActionBlocker: false, args.Hands);
+                    _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Using.Value)} into {ToPrettyString(uid)}");
                     AfterInsert(component, args.Using.Value);
                 }
             };
@@ -168,11 +172,15 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (unit.Container.Insert(toInsert))
-                AfterInsert(unit, toInsert);
+            if (!unit.Container.Insert(toInsert))
+                return;
+            if (ev.User != null)
+                _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                    $"{ToPrettyString(ev.User.Value):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(unit.Owner)}");
+            AfterInsert(unit, toInsert);
         }
 
-        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, DisposalUnitComponent? disposal = null)
+        public void DoInsertDisposalUnit(EntityUid unit, EntityUid toInsert, EntityUid user, DisposalUnitComponent? disposal = null)
         {
             if (!Resolve(unit, ref disposal))
                 return;
@@ -180,6 +188,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!disposal.Container.Insert(toInsert))
                 return;
 
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(user):player} inserted {ToPrettyString(toInsert)} into {ToPrettyString(unit)}");
             AfterInsert(disposal, toInsert);
         }
 
@@ -207,14 +216,20 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 case SharedDisposalUnitComponent.UiButton.Eject:
                     TryEjectContents(component);
+                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit eject button on {ToPrettyString(uid)}");
                     break;
                 case SharedDisposalUnitComponent.UiButton.Engage:
                     ToggleEngage(component);
+                    _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit flush button on {ToPrettyString(uid)}, it's now {(component.Engaged ? "on" : "off")}");
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
                     TogglePower(component);
                     _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), component.Owner,
                         AudioParams.Default.WithVolume(-2f));
+                    if (EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
+                    {
+                        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -274,6 +289,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} inserted {ToPrettyString(args.Used)} into {ToPrettyString(uid)}");
             AfterInsert(component, args.Used);
             args.Handled = true;
         }
@@ -291,6 +307,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
+            if (args.User != null)
+                _adminLogger.Add(LogType.Landed, LogImpact.Low, $"{ToPrettyString(args.Thrown)} thrown by {ToPrettyString(args.User.Value):player} landed in {ToPrettyString(uid)}");
             AfterInsert(component, args.Thrown);
         }
 

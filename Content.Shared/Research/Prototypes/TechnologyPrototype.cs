@@ -12,7 +12,7 @@ namespace Content.Shared.Research.Prototypes
         ///     The ID of this technology prototype.
         /// </summary>
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

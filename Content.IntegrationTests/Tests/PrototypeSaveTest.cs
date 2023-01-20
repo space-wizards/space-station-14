@@ -54,7 +54,6 @@ public sealed class PrototypeSaveTest
         "SignalSwitch",
         "SignalButton",
         "ApcNetSwitch",
-        "TetherEntity",
         "SignalButtonExt1",
         "SignalButtonExt2",
         "SignalButtonExt3",

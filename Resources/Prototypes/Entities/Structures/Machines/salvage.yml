@@ -62,6 +62,10 @@
     offset: 0, 0
     offsetRadiusMin: 24
     offsetRadiusMax: 48
+    attachingTime: 30
+    holdTime: 240
+    detachingTime: 30
+    cooldownTime: 60
   - type: ApcPowerReceiver
     powerLoad: 2500 # TODO change this to a HV power draw that really hits the grid hard WHEN active
 

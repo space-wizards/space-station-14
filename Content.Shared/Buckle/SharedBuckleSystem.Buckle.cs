@@ -13,15 +13,15 @@ public abstract partial class SharedBuckleSystem
 {
     private void InitializeBuckle()
     {
-        SubscribeLocalEvent<SharedBuckleComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<SharedBuckleComponent, DownAttemptEvent>(HandleDown);
-        SubscribeLocalEvent<SharedBuckleComponent, StandAttemptEvent>(HandleStand);
-        SubscribeLocalEvent<SharedBuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
-        SubscribeLocalEvent<SharedBuckleComponent, UpdateCanMoveEvent>(HandleMove);
-        SubscribeLocalEvent<SharedBuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
+        SubscribeLocalEvent<BuckleComponent, PreventCollideEvent>(PreventCollision);
+        SubscribeLocalEvent<BuckleComponent, DownAttemptEvent>(HandleDown);
+        SubscribeLocalEvent<BuckleComponent, StandAttemptEvent>(HandleStand);
+        SubscribeLocalEvent<BuckleComponent, ThrowPushbackAttemptEvent>(HandleThrowPushback);
+        SubscribeLocalEvent<BuckleComponent, UpdateCanMoveEvent>(HandleMove);
+        SubscribeLocalEvent<BuckleComponent, ChangeDirectionAttemptEvent>(OnBuckleChangeDirectionAttempt);
     }
 
-    private void PreventCollision(EntityUid uid, SharedBuckleComponent component, ref PreventCollideEvent args)
+    private void PreventCollision(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
     {
         if (args.BodyB.Owner != component.LastEntityBuckledTo)
             return;
@@ -30,25 +30,25 @@ public abstract partial class SharedBuckleSystem
             args.Cancelled = true;
     }
 
-    private void HandleDown(EntityUid uid, SharedBuckleComponent component, DownAttemptEvent args)
+    private void HandleDown(EntityUid uid, BuckleComponent component, DownAttemptEvent args)
     {
         if (component.Buckled)
             args.Cancel();
     }
 
-    private void HandleStand(EntityUid uid, SharedBuckleComponent component, StandAttemptEvent args)
+    private void HandleStand(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
     {
         if (component.Buckled)
             args.Cancel();
     }
 
-    private void HandleThrowPushback(EntityUid uid, SharedBuckleComponent component, ThrowPushbackAttemptEvent args)
+    private void HandleThrowPushback(EntityUid uid, BuckleComponent component, ThrowPushbackAttemptEvent args)
     {
         if (component.Buckled)
             args.Cancel();
     }
 
-    private void HandleMove(EntityUid uid, SharedBuckleComponent component, UpdateCanMoveEvent args)
+    private void HandleMove(EntityUid uid, BuckleComponent component, UpdateCanMoveEvent args)
     {
         if (component.LifeStage > ComponentLifeStage.Running)
             return;
@@ -58,13 +58,13 @@ public abstract partial class SharedBuckleSystem
             args.Cancel();
     }
 
-    private void OnBuckleChangeDirectionAttempt(EntityUid uid, SharedBuckleComponent component, ChangeDirectionAttemptEvent args)
+    private void OnBuckleChangeDirectionAttempt(EntityUid uid, BuckleComponent component, ChangeDirectionAttemptEvent args)
     {
         if (component.Buckled)
             args.Cancel();
     }
 
-    public bool IsBuckled(EntityUid uid, SharedBuckleComponent? component = null)
+    public bool IsBuckled(EntityUid uid, BuckleComponent? component = null)
     {
         return Resolve(uid, ref component, false) && component.Buckled;
     }
@@ -75,7 +75,7 @@ public abstract partial class SharedBuckleSystem
     /// <param name="buckleId">The entity to reattach.</param>
     /// <param name="strap">The strap to reattach to.</param>
     /// <param name="buckle">The buckle component of the entity to reattach.</param>
-    public void ReAttach(EntityUid buckleId, SharedStrapComponent strap, SharedBuckleComponent? buckle = null)
+    public void ReAttach(EntityUid buckleId, StrapComponent strap, BuckleComponent? buckle = null)
     {
         if (!Resolve(buckleId, ref buckle, false))
             return;

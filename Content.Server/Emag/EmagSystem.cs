@@ -69,7 +69,6 @@ namespace Content.Server.Emag
                     args.User, PopupType.Medium);
                 _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(args.User):player} emagged {ToPrettyString(args.Target.Value):target}");
                 component.Charges--;
-                return;
             }
         }
 

@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.Reagent
     public sealed class ReagentPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name", required: true)]

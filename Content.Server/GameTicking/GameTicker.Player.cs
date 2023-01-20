@@ -1,3 +1,4 @@
+using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
@@ -14,13 +15,14 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IServerDbManager _dbManager = default!;
 
         private void InitializePlayer()
         {
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
-        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
+        private async void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             var session = args.Session;
 
@@ -38,7 +40,13 @@ namespace Content.Server.GameTicking
                     // timer time must be > tick length
                     Timer.Spawn(0, args.Session.JoinGame);
 
-                    _chatManager.SendAdminAnnouncement(Loc.GetString("player-join-message", ("name", args.Session.Name)));
+                    var record = await _dbManager.GetPlayerRecordByUserId(args.Session.UserId);
+                    var firstConnection = record != null &&
+                                          Math.Abs((record.FirstSeenTime - record.LastSeenTime).TotalMinutes) < 1;
+
+                    _chatManager.SendAdminAnnouncement(firstConnection
+                        ? Loc.GetString("player-first-join-message", ("name", args.Session.Name))
+                        : Loc.GetString("player-join-message", ("name", args.Session.Name)));
 
                     if (LobbyEnabled && _roundStartCountdownHasNotStartedYetDueToNoPlayers)
                     {

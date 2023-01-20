@@ -5,10 +5,11 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
-using Content.Server.MobState;
+using Content.Server.NPC.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Preferences;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -30,6 +31,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly FactionSystem _faction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -108,7 +110,6 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 
@@ -218,6 +219,12 @@ public sealed class TraitorRuleSystem : GameRuleSystem
             return false;
         }
 
+        if (mind.OwnedEntity is not { } entity)
+        {
+            Logger.ErrorS("preset", "Mind picked for traitor did not have an attached entity.");
+            return false;
+        }
+
         // creadth: we need to create uplink for the antag.
         // PDA should be in place already
         DebugTools.AssertNotNull(mind.OwnedEntity);
@@ -235,6 +242,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         mind.AddRole(traitorRole);
         Traitors.Add(traitorRole);
         traitorRole.GreetTraitor(Codewords);
+
+        _faction.RemoveFaction(entity, "NanoTrasen", false);
+        _faction.AddFaction(entity, "Syndicate");
 
         var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
         var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
@@ -286,7 +296,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         float chance = (1f / _playersPerTraitor);
 
-        /// If we have too many traitors, divide by how many players below target for next traitor we are.
+        // If we have too many traitors, divide by how many players below target for next traitor we are.
         if (ev.JoinOrder < target)
         {
             chance /= (target - ev.JoinOrder);
@@ -299,7 +309,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem
 
         // Now that we've calculated our chance, roll and make them a traitor if we roll under.
         // You get one shot.
-        if (_random.Prob((float) chance))
+        if (_random.Prob(chance))
         {
             MakeTraitor(ev.Player);
         }
@@ -377,10 +387,10 @@ public sealed class TraitorRuleSystem : GameRuleSystem
         ev.AddLine(result);
     }
 
-    public IEnumerable<Traitor.TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
+    public IEnumerable<TraitorRole> GetOtherTraitorsAliveAndConnected(Mind.Mind ourMind)
     {
         var traitors = Traitors;
-        List<Traitor.TraitorRole> removeList = new();
+        List<TraitorRole> removeList = new();
 
         return Traitors // don't want
             .Where(t => t.Mind is not null) // no mind

@@ -49,12 +49,6 @@ public static class PoolManager
         (CCVars.NetPVS.Name, "false", true),
         (CCVars.NPCMaxUpdates.Name, "999999", true),
         (CCVars.SysWinTickPeriod.Name, "0", true),
-        (CCVars.ContactMinimumThreads.Name, "1", true),
-        (CCVars.ContactMultithreadThreshold.Name, "999", true),
-        (CCVars.PositionConstraintsMinimumThread.Name, "1", true),
-        (CCVars.PositionConstraintsPerThread.Name, "999", true),
-        (CCVars.VelocityConstraintMinimumThreads.Name, "1", true),
-        (CCVars.VelocityConstraintsPerThread.Name, "999", true),
         (CCVars.ThreadParallelCount.Name, "1", true),
         (CCVars.GameRoleTimers.Name, "false", false),
     };

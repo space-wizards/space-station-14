@@ -45,7 +45,6 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
         {
             AnimationSystem.Stop(animationComp, animationKey);
         }
-        spriteComp.Rotation = rotation;
 
         var animation = new Animation
         {
@@ -54,8 +53,8 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(ISpriteComponent),
-                    Property = nameof(ISpriteComponent.Rotation),
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

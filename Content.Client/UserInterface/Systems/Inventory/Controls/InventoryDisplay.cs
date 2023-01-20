@@ -21,7 +21,7 @@ public sealed class InventoryDisplay : LayoutContainer
         AddChild(resizer);
     }
 
-    public SlotControl? AddButton(SlotControl newButton, Vector2i buttonOffset)
+    public SlotControl AddButton(SlotControl newButton, Vector2i buttonOffset)
     {
         AddChild(newButton);
         HorizontalExpand = true;

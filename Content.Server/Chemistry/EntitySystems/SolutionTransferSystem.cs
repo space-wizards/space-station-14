@@ -130,7 +130,6 @@ namespace Content.Server.Chemistry.EntitySystems
                             ("target", target)));
 
                     args.Handled = true;
-                    return;
                 }
             }
         }
@@ -156,7 +155,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return FixedPoint2.Zero;
             }
 
-            if (source.DrainAvailable == 0)
+            if (source.Volume == 0)
             {
                 sourceEntity.PopupMessage(user,
                     Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
@@ -178,7 +177,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return FixedPoint2.Zero;
             }
 
-            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.DrainAvailable, target.AvailableVolume));
+            var actualAmount = FixedPoint2.Min(amount, FixedPoint2.Min(source.Volume, target.AvailableVolume));
 
             var solutionSystem = Get<SolutionContainerSystem>();
             var solution = solutionSystem.Drain(sourceEntity, source, actualAmount);

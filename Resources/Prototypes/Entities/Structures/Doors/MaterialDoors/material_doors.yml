@@ -57,8 +57,6 @@
     key: walls
     mode: NoSprite
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
 
 - type: entity
   id: MetalDoor
