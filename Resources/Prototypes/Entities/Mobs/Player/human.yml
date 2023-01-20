@@ -45,6 +45,9 @@
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
+    - type: Faction
+      factions:
+      - Syndicate
 
 # Nuclear Operative
 - type: entity

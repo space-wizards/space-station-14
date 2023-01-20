@@ -1,15 +1,14 @@
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Atmos.Visuals
+namespace Content.Shared.Atmos.Visuals;
+
+/// <summary>
+/// Used for the visualizer
+/// </summary>
+[Serializable, NetSerializable]
+public enum PortableScrubberVisuals : byte
 {
-    [Serializable, NetSerializable]
-    /// <summary>
-    /// Used for the visualizer
-    /// </summary>
-    public enum PortableScrubberVisuals : byte
-    {
-        IsFull,
-        IsRunning,
-        IsDraining
-    }
+    IsFull,
+    IsRunning,
+    IsDraining,
 }

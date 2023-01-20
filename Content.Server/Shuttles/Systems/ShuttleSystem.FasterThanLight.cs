@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Doors.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
@@ -25,6 +26,7 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -100,7 +102,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (((Component) grid).Owner == other.Owner ||
+            if (grid.Owner == other.Owner ||
                 !bodyQuery.TryGetComponent(other.Owner, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 
@@ -344,7 +346,7 @@ public sealed partial class ShuttleSystem
             if (xform.ParentUid != uid) continue;
 
             _doors.TryClose(door.Owner);
-            door.SetBoltsWithAudio(enabled);
+            _airlock.SetBoltsWithAudio(door.Owner, door, enabled);
         }
     }
 

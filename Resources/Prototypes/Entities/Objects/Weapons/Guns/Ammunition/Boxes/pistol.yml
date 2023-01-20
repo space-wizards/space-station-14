@@ -5,6 +5,7 @@
   name: ammunition box (.35 auto)
   components:
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgePistol

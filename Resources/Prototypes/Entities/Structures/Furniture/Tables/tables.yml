@@ -52,6 +52,7 @@
   name: wooden counter frame
   description: Pieces of wood that make the frame of a table.
   components:
+  - type: SpriteFade
   - type: Sprite
     sprite: Structures/Furniture/Tables/counterwood.rsi
   - type: Icon

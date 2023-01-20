@@ -40,7 +40,7 @@ namespace Content.Server.AirlockPainter
         {
             ev.Component.IsSpraying = false;
             if (TryComp<AppearanceComponent>(ev.Target, out var appearance) &&
-                TryComp<PaintableAirlockComponent>(ev.Target, out PaintableAirlockComponent? airlock))
+                TryComp(ev.Target, out PaintableAirlockComponent? airlock))
             {
                 SoundSystem.Play(ev.Component.SpraySound.GetSound(), Filter.Pvs(ev.UsedTool, entityManager:EntityManager), ev.UsedTool);
                 appearance.SetData(DoorVisuals.BaseRSI, ev.Sprite);
