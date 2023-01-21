@@ -122,7 +122,7 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (hwId != null)
+            if (hwId != null && hwId.Value.Length > 0)
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
@@ -304,7 +304,7 @@ namespace Content.Server.Database
                 query = query == null ? newQ : query.Union(newQ);
             }
 
-            if (hwId != null)
+            if (hwId != null && hwId.Value.Length > 0)
             {
                 var newQ = db.PgDbContext.RoleBan
                     .Include(p => p.Unban)

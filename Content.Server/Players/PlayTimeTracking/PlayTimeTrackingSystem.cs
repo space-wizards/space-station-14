@@ -7,8 +7,8 @@ using Content.Server.Roles;
 using Content.Server.Database;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -77,7 +77,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (!TryComp<MobStateComponent>(attached, out var state))
             return false;
 
-        return state.CurrentState is DamageState.Alive or DamageState.Critical;
+        return state.CurrentState is MobState.Alive or MobState.Critical;
     }
 
     public IEnumerable<string> GetTimedRoles(Mind.Mind mind)
@@ -145,7 +145,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnMobStateChanged(MobStateChangedEvent ev)
     {
-        if (!TryComp(ev.Entity, out ActorComponent? actor))
+        if (!TryComp(ev.Target, out ActorComponent? actor))
             return;
 
         _tracking.QueueRefreshTrackers(actor.PlayerSession);

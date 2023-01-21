@@ -133,7 +133,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Heal the entity for 40 damage, down to 60
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*-4, true);
 
-                // Thresholds don't work backwards
+                // ThresholdsLookup don't work backwards
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Damage for 10, up to 70
@@ -145,7 +145,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Heal by 30, down to 40
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage*-3, true);
 
-                // Thresholds don't work backwards
+                // ThresholdsLookup don't work backwards
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Damage up to 50 again

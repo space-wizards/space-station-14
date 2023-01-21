@@ -99,6 +99,10 @@
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       60: Dead
@@ -193,6 +197,10 @@
     baseWalkSpeed : 3
     baseSprintSpeed : 2
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       1000: Dead

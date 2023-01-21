@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Cargo.Systems;
+using Content.Server.GameTicking;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Xenoarchaeology.Equipment.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -24,8 +26,10 @@ public sealed partial class ArtifactSystem : EntitySystem
 
         SubscribeLocalEvent<ArtifactComponent, MapInitEvent>(OnInit);
         SubscribeLocalEvent<ArtifactComponent, PriceCalculationEvent>(GetPrice);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEnd);
 
         InitializeCommands();
+        InitializeActions();
     }
 
     private void OnInit(EntityUid uid, ArtifactComponent component, MapInitEvent args)
@@ -250,5 +254,18 @@ public sealed partial class ArtifactSystem : EntitySystem
             return;
 
         component.CurrentNode.NodeData[key] = value;
+    }
+
+    /// <summary>
+    /// Make shit go ape on round-end
+    /// </summary>
+    private void OnRoundEnd(RoundEndTextAppendEvent ev)
+    {
+        foreach (var artifactComp in EntityQuery<ArtifactComponent>())
+        {
+            artifactComp.CooldownTime = TimeSpan.Zero;
+            var timerTrigger = EnsureComp<ArtifactTimerTriggerComponent>(artifactComp.Owner);
+            timerTrigger.ActivationRate = TimeSpan.FromSeconds(0.5); //HAHAHAHAHAHAHAHAHAH -emo
+        }
     }
 }

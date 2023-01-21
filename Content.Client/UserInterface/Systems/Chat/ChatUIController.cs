@@ -40,6 +40,7 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _state = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -122,7 +123,7 @@ public sealed class ChatUIController : UIController
     /// </summary>
     private readonly Dictionary<ChatChannel, int> _unreadMessages = new();
 
-    public readonly List<ChatMessage> History = new();
+    public readonly List<(GameTick, ChatMessage)> History = new();
 
     // Maintains which channels a client should be able to filter (for showing in the chatbox)
     // and select (for attempting to send on).
@@ -639,12 +640,12 @@ public sealed class ChatUIController : UIController
 
     private void OnChatMessage(MsgChatMessage message) => ProcessChatMessage(message.Message);
 
-    public void ProcessChatMessage(ChatMessage msg)
+    public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {
         // Log all incoming chat to repopulate when filter is un-toggled
         if (!msg.HideChat)
         {
-            History.Add(msg);
+            History.Add((_timing.CurTick, msg));
             MessageAdded?.Invoke(msg);
 
             if (!msg.Read)
@@ -660,7 +661,7 @@ public sealed class ChatUIController : UIController
         }
 
         // Local messages that have an entity attached get a speech bubble.
-        if (msg.SenderEntity == default)
+        if (!speechBubble || msg.SenderEntity == default)
             return;
 
         switch (msg.Channel)
@@ -709,6 +710,14 @@ public sealed class ChatUIController : UIController
     public void NotifyChatTextChange()
     {
         _typingIndicator?.ClientChangedChatText();
+    }
+
+    public void Repopulate()
+    {
+        foreach (var chat in _chats)
+        {
+            chat.Repopulate();
+        }
     }
 
     private readonly record struct SpeechBubbleData(string Message, SpeechBubble.SpeechType Type);

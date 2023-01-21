@@ -25,7 +25,7 @@ namespace Content.Client.Wall
             var entity = component.Owner;
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(entity, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(entity, out SpriteComponent? sprite)) return;
 
             var index = sprite.LayerMapReserveBlank(ReinforcedWallVisualLayers.Deconstruction);
 

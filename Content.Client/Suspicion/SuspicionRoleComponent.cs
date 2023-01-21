@@ -68,7 +68,8 @@ namespace Content.Client.Suspicion
             }
 
             _overlayActive = true;
-            var overlay = new TraitorOverlay(IoCManager.Resolve<IEntityManager>(), IoCManager.Resolve<IPlayerManager>(), _resourceCache);
+            var entManager = IoCManager.Resolve<IEntityManager>();
+            var overlay = new TraitorOverlay(entManager, IoCManager.Resolve<IPlayerManager>(), _resourceCache, entManager.System<EntityLookupSystem>());
             _overlayManager.AddOverlay(overlay);
         }
 

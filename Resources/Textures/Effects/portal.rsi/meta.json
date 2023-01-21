@@ -8,7 +8,7 @@
     "copyright": "https://github.com/discordia-space/CEV-Eris/raw/237d8f7894617007d75c71d5d9feb4354c78debd/icons/obj/stationobjs.dmi",
     "states": [
         {
-            "name": "portal-pending",
+            "name": "portal-blue",
             "delays": [[
                 0.1,
                 0.1,
@@ -27,7 +27,26 @@
             ]]
         },
         {
-            "name": "portal-unconnected",
+            "name": "portal-red",
+            "delays": [[
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1,
+                0.1
+            ]]
+        },
+        {
+            "name": "portal",
             "delays": [[
                 0.1,
                 0.1,

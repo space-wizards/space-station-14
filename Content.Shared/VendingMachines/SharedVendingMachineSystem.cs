@@ -15,6 +15,17 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
     protected virtual void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
     {
+        RestockInventoryFromPrototype(uid, component);
+    }
+
+    public void RestockInventoryFromPrototype(EntityUid uid,
+        VendingMachineComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+        {
+            return;
+        }
+
         if (!_prototypeManager.TryIndex(component.PackPrototypeId, out VendingMachineInventoryPrototype? packPrototype))
             return;
 
@@ -64,27 +75,37 @@ public abstract class SharedVendingMachineSystem : EntitySystem
             return;
         }
 
-        var inventory = new Dictionary<string, VendingMachineInventoryEntry>();
+        Dictionary<string, VendingMachineInventoryEntry> inventory;
+        switch (type)
+        {
+            case InventoryType.Regular:
+                inventory = component.Inventory;
+                break;
+            case InventoryType.Emagged:
+                inventory = component.EmaggedInventory;
+                break;
+            case InventoryType.Contraband:
+                inventory = component.ContrabandInventory;
+                break;
+            default:
+                return;
+        }
 
         foreach (var (id, amount) in entries)
         {
             if (_prototypeManager.HasIndex<EntityPrototype>(id))
             {
-                inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount));
+                if (inventory.TryGetValue(id, out VendingMachineInventoryEntry? entry))
+                    // Prevent a machine's stock from going over three times
+                    // the prototype's normal amount. This is an arbitrary
+                    // number and meant to be a convenience for someone
+                    // restocking a machine who doesn't want to force vend out
+                    // all the items just to restock one empty slot without
+                    // losing the rest of the restock.
+                    entry.Amount = Math.Min(entry.Amount + amount, 3 * amount);
+                else
+                    inventory.Add(id, new VendingMachineInventoryEntry(type, id, amount));
             }
-        }
-
-        switch (type)
-        {
-            case InventoryType.Regular:
-                component.Inventory = inventory;
-                break;
-            case InventoryType.Emagged:
-                component.EmaggedInventory = inventory;
-                break;
-            case InventoryType.Contraband:
-                component.ContrabandInventory = inventory;
-                break;
         }
     }
 }

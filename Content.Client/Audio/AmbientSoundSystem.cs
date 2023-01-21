@@ -86,6 +86,7 @@ namespace Content.Client.Audio
         {
             base.Initialize();
             UpdatesOutsidePrediction = true;
+            UpdatesAfter.Add(typeof(AmbientSoundTreeSystem));
 
             _cfg.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
             _cfg.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);

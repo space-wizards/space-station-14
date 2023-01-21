@@ -71,6 +71,8 @@
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: bowl
