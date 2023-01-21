@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
                 // We step through tiles according to the pressure direction on the current tile.
                 // The goal is to get a general direction of the airflow in the area.
                 // 3 is the magic number - enough to go around corners, but not U-turns.
-                var curTile = tile!;
+                var curTile = tile;
                 for (var i = 0; i < 3; i++)
                 {
                     if (curTile.PressureDirection == AtmosDirection.Invalid

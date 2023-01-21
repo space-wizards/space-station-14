@@ -1,7 +1,5 @@
 <paper:PaperWindow xmlns="https://spacestation14.io"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI"
-    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     MouseFilter="Stop" Resizable="True" MinSize="150 150"
     SetSize="300 400"> <!-- Provide some reasonable sizes by default. Can be changed by the component -->
 

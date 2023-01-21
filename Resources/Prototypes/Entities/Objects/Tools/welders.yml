@@ -62,6 +62,8 @@
   - type: RequiresEyeProtection
   - type: StaticPrice
     price: 40
+  - type: IgnitionSource
+    temperature: 700
 
 - type: entity
   name: industrial welding tool

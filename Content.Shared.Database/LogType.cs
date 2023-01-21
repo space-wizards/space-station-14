@@ -82,6 +82,7 @@ public enum LogType
     EntitySpawn = 77,
     AdminMessage = 78,
     Anomaly = 79,
-    Teleport = 80,
-    EntityDelete = 81,
+    WireHacking = 80,
+    Teleport = 81,
+    EntityDelete = 82,
 }

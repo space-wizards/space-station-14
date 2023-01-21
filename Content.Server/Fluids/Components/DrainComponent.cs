@@ -32,7 +32,7 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         /// How often in seconds the drain checks for puddles around it.
         /// If the EntityQuery seems a bit unperformant this can be increased.
-        /// <summary>
+        /// </summary>
         [DataField("drainFrequency")]
         public float DrainFrequency = 1f;
     }

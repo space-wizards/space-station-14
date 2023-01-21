@@ -41,7 +41,7 @@ public sealed class BluespaceLockerLink : StationEventSystem
             comp.AutoLinksUseProperties = true;
             comp.AutoLinkProperties.BluespaceEffectOnInit = true;
             comp.AutoLinkProperties.BluespaceEffectOnTeleportSource = true;
-            _bluespaceLocker.GetTarget(potentialLink, comp);
+            _bluespaceLocker.GetTarget(potentialLink, comp, true);
             _bluespaceLocker.BluespaceEffect(potentialLink, comp, comp, true);
 
             Sawmill.Info($"Converted {ToPrettyString(potentialLink)} to bluespace locker");
