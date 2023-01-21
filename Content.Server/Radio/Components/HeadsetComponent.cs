@@ -52,6 +52,12 @@ public sealed class HeadsetComponent : Component
     // Maybe make the defaultChannel an actual channel type some day, and use that for parsing messages
     // [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     // public readonly HashSet<string> defaultChannel = new();
+
+    /// <summary>
+    ///     This variable defines what channel will be used with using ":h" (department channel prefix).
+    ///     Headset read DefaultChannel of first encryption key installed.
+    ///     Do not change this variable from headset or VV, better change encryption keys and UpdateDefaultChannel.
+    /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public string? DefaultChannel;
 

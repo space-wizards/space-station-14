@@ -192,7 +192,7 @@ public sealed class HeadsetSystem : EntitySystem
         {
             if (component.KeySlots > component.KeyContainer.ContainedEntities.Count)
             {
-                if (_container.TryRemoveFromContainer(args.Used) && InstallKey(component, args.Used, key))
+                if (InstallKey(component, args.Used, key))
                 {                    
                     _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, args.User);
                     _audio.PlayPvs(component.KeyInsertionSound, args.Target);

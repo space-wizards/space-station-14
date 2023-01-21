@@ -13,6 +13,11 @@ public sealed class EncryptionKeyComponent : Component
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new();
 
+
+    /// <summary>
+    ///     This variable defines what channel will be used with using ":h" (department channel prefix).
+    ///     Headset read DefaultChannel of first encryption key installed.
+    /// </summary>
     [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
     public readonly string? DefaultChannel;
 }
