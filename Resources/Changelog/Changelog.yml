@@ -1,11 +1,6 @@
 Entries:
 - author: mirrorcult
   changes:
-  - {message: The changelog button in the escape menu now functions again., type: Fix}
-  id: 2438
-  time: '2022-10-13T01:25:45.0000000+00:00'
-- author: mirrorcult
-  changes:
   - {message: PDAs/other items can now be activated in your inventory again., type: Fix}
   id: 2439
   time: '2022-10-13T02:26:27.0000000+00:00'
@@ -2934,3 +2929,8 @@ Entries:
       internal temp rather than a hot summer day., type: Tweak}
   id: 2937
   time: '2023-01-20T18:03:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added guidebook entries for Xenoarchaeology. Read all about it!, type: Add}
+  id: 2938
+  time: '2023-01-21T00:39:25.0000000+00:00'
