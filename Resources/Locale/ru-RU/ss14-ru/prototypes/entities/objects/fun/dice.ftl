@@ -1,8 +1,8 @@
 ent-BaseDice = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
-ent-d100Dice = d100
-    .desc = Кость со ста сторонами. Наверное, не совсем сбалансирован...
+ent-PercentileDie = Percentile Die
+    .desc = A die with ten sides. Works better for d100 rolls than a golf ball.
     .suffix = { "" }
 ent-d20Dice = d20
     .desc = Кость с 20 сторонами. Предпочтительная кость для броска в Гейм-мастера.
