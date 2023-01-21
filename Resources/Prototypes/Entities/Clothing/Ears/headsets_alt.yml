@@ -15,8 +15,6 @@
   id: ClothingHeadsetAltCargo
   name: quartermaster's over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Supply
   - type: ContainerFill
     containers:
       key_slots:
@@ -31,8 +29,6 @@
   id: ClothingHeadsetAltCentCom
   name: CentCom over-ear headset
   components:
-  - type: Headset
-    defaultChannel: CentCom
   - type: ContainerFill
     containers:
       key_slots:
@@ -47,8 +43,6 @@
   id: ClothingHeadsetAltCommand
   name: command over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Command
   - type: ContainerFill
     containers:
       key_slots:
@@ -63,8 +57,6 @@
   id: ClothingHeadsetAltEngineering
   name: chief engineer's over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Engineering
   - type: ContainerFill
     containers:
       key_slots:
@@ -79,8 +71,6 @@
   id: ClothingHeadsetAltMedical
   name: chief medical officer's over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Medical
   - type: ContainerFill
     containers:
       key_slots:
@@ -95,8 +85,6 @@
   id: ClothingHeadsetAltSecurity
   name: head of security's over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Security
   - type: ContainerFill
     containers:
       key_slots:
@@ -111,8 +99,6 @@
   id: ClothingHeadsetAltScience
   name: research director's over-ear headset
   components:
-  - type: Headset
-    defaultChannel: Science
   - type: ContainerFill
     containers:
       key_slots:
@@ -128,8 +114,6 @@
   name: blood-red over-ear headset
   description: An updated, modular syndicate intercom that fits over the head and takes encryption keys (there are 4 slots for them).
   components:
-  - type: Headset
-    defaultChannel: Syndicate
     keySlots: 4
   - type: ContainerFill
     containers:
