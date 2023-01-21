@@ -92,7 +92,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
             return;
 
-        if (component.Bonk && _cfg.GetCVar(CCVars.GameTableBonk))
+        if (HasComp<BonkableComponent>(args.Target) && _cfg.GetCVar(CCVars.GameTableBonk))
             return;
 
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
@@ -117,8 +117,11 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
-        if (TryBonk(component, user))
-            return;
+        if (TryComp<BonkableComponent>(climbable, out var bonkComponent))
+        {
+            if (TryBonk(component, bonkComponent, user))
+                return;
+        }
 
         _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
@@ -130,24 +133,21 @@ public sealed class ClimbSystem : SharedClimbSystem
         });
     }
 
-    private bool TryBonk(ClimbableComponent component, EntityUid user)
+    private bool TryBonk(ClimbableComponent climbComponent, BonkableComponent bonkComponent, EntityUid user)
     {
-        if (!component.Bonk)
-            return false;
-
         if (!_cfg.GetCVar(CCVars.GameTableBonk))
         {
             // Not set to always bonk, try clumsy roll.
-            if (!_interactionSystem.TryRollClumsy(user, component.BonkClumsyChance))
+            if (!_interactionSystem.TryRollClumsy(user, bonkComponent.BonkClumsyChance))
                 return false;
         }
 
         // BONK!
 
-        _audioSystem.PlayPvs(component.BonkSound, component.Owner);
-        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(component.BonkTime), true);
+        _audioSystem.PlayPvs(bonkComponent.BonkSound, climbComponent.Owner);
+        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkComponent.BonkTime), true);
 
-        if (component.BonkDamage is { } bonkDmg)
+        if (bonkComponent.BonkDamage is { } bonkDmg)
             _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
 
         return true;
@@ -289,7 +289,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <summary>
     ///     Checks if the user can vault the target
     /// </summary>
-    /// <param name="component">The component of the entity that is being vaulted</param>
+    /// <param name="component">The bonkComponent of the entity that is being vaulted</param>
     /// <param name="user">The entity that wants to vault</param>
     /// <param name="target">The object that is being vaulted</param>
     /// <param name="reason">The reason why it cant be dropped</param>
@@ -324,7 +324,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <summary>
     ///     Checks if the user can vault the dragged entity onto the the target
     /// </summary>
-    /// <param name="component">The climbable component of the object being vaulted onto</param>
+    /// <param name="component">The climbable bonkComponent of the object being vaulted onto</param>
     /// <param name="user">The user that wants to vault the entity</param>
     /// <param name="dragged">The entity that is being vaulted</param>
     /// <param name="target">The object that is being vaulted onto</param>
