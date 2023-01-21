@@ -12,7 +12,7 @@ namespace Content.Shared.Polymorph
     public sealed class PolymorphPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]

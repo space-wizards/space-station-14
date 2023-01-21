@@ -110,7 +110,7 @@ namespace Content.Server.Tabletop
                 {
                     EntityManager.RemoveComponent<TabletopGamerComponent>(gamer.Owner);
                     return;
-                };
+                }
 
                 var gamerUid = (gamer).Owner;
 

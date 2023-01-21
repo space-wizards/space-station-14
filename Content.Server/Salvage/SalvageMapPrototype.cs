@@ -7,7 +7,7 @@ namespace Content.Server.Salvage
     public sealed class SalvageMapPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

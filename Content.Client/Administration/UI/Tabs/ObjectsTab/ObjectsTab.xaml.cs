@@ -32,7 +32,7 @@ public sealed partial class ObjectsTab : Control
         foreach (var type in Enum.GetValues(typeof(ObjectsTabSelection)))
         {
             _selections.Add((ObjectsTabSelection)type!);
-            ObjectTypeOptions.AddItem(Enum.GetName((ObjectsTabSelection)type!)!);
+            ObjectTypeOptions.AddItem(Enum.GetName((ObjectsTabSelection)type)!);
         }
 
         RefreshObjectList(_selections[ObjectTypeOptions.SelectedId]);
@@ -43,9 +43,9 @@ public sealed partial class ObjectsTab : Control
         var entities = selection switch
         {
             ObjectsTabSelection.Stations => _entityManager.EntitySysManager.GetEntitySystem<StationSystem>().Stations.ToList(),
-            ObjectsTabSelection.Grids => _entityManager.EntityQuery<MapGridComponent>(true).Select(x => ((Component) x).Owner).ToList(),
+            ObjectsTabSelection.Grids => _entityManager.EntityQuery<MapGridComponent>(true).Select(x => x.Owner).ToList(),
             ObjectsTabSelection.Maps => _entityManager.EntityQuery<MapComponent>(true).Select(x => x.Owner).ToList(),
-            _ => throw new ArgumentOutOfRangeException(nameof(selection), selection, null)
+            _ => throw new ArgumentOutOfRangeException(nameof(selection), selection, null),
         };
 
         foreach (var control in _objects)

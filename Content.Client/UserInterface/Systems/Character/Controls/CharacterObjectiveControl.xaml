@@ -1,6 +1,5 @@
 ﻿<controls:CharacterObjectiveControl
     xmlns="https://spacestation14.io"
-    xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Character.Controls"
     Orientation="Vertical"
     Modulate="#808080">

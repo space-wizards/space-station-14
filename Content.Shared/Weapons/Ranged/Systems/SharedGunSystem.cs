@@ -81,6 +81,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         InitializeMagazine();
         InitializeRevolver();
         InitializeBasicEntity();
+        InitializeContainer();
 
         // Interactions
         SubscribeLocalEvent<GunComponent, GetVerbsEvent<AlternativeVerb>>(OnAltVerb);
@@ -205,11 +206,13 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void AttemptShoot(EntityUid user, GunComponent gun)
     {
-        if (gun.FireRate <= 0f) return;
+        if (gun.FireRate <= 0f)
+            return;
 
         var toCoordinates = gun.ShootCoordinates;
 
-        if (toCoordinates == null) return;
+        if (toCoordinates == null)
+            return;
 
         if (TagSystem.HasTag(user, "GunsDisabled"))
         {
@@ -217,11 +220,13 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
+
         var curTime = Timing.CurTime;
 
         // Need to do this to play the clicking sound for empty automatic weapons
         // but not play anything for burst fire.
-        if (gun.NextFire > curTime) return;
+        if (gun.NextFire > curTime)
+            return;
 
         // First shot
         if (gun.ShotCounter == 0 && gun.NextFire < curTime)
@@ -269,7 +274,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         // where the gun may be SemiAuto or Burst.
         gun.ShotCounter += shots;
 
-        if (ev.Ammo.Count <= 0)
+        var attemptEv = new AttemptShootEvent(user);
+        RaiseLocalEvent(gun.Owner, ref attemptEv);
+
+        if (ev.Ammo.Count <= 0 || attemptEv.Cancelled)
         {
             // Play empty gun sounds if relevant
             // If they're firing an existing clip then don't play anything.
@@ -288,6 +296,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         // Shoot confirmed - sounds also played here in case it's invalid (e.g. cartridge already spent).
         Shoot(gun, ev.Ammo, fromCoordinates, toCoordinates.Value, user);
+        var shotEv = new GunShotEvent(user);
+        RaiseLocalEvent(gun.Owner, ref shotEv);
         // Projectiles cause impulses especially important in non gravity environments
         if (TryComp<PhysicsComponent>(user, out var userPhysics))
         {
@@ -383,7 +393,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         const float impulseStrength = 85.0f; //The bullet impulse strength, TODO: In the future we might want to make it more projectile dependent
         var impulseVector =  shotDirection * impulseStrength;
-        Physics.ApplyLinearImpulse(userPhysics, -impulseVector);
+        Physics.ApplyLinearImpulse(userPhysics.Owner, -impulseVector, body: userPhysics);
     }
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
@@ -409,6 +419,24 @@ public abstract partial class SharedGunSystem : EntitySystem
         public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 }
+
+/// <summary>
+///     Raised directed on the gun before firing to see if the shot should go through.
+/// </summary>
+/// <remarks>
+///     Handling this in server exclusively will lead to mispredicts.
+/// </remarks>
+/// <param name="User">The user that attempted to fire this gun.</param>
+/// <param name="Cancelled">Set this to true if the shot should be cancelled.</param>
+[ByRefEvent]
+public record struct AttemptShootEvent(EntityUid User, bool Cancelled=false);
+
+/// <summary>
+///     Raised directed on the gun after firing.
+/// </summary>
+/// <param name="User">The user that fired this gun.</param>
+[ByRefEvent]
+public record struct GunShotEvent(EntityUid User);
 
 public enum EffectLayers : byte
 {
