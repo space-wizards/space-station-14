@@ -84,4 +84,14 @@ public sealed class CCCVars
     /// </summary>
     public static readonly CVarDef<int> TTSMaxCache =
         CVarDef.Create("tts.max_cache", 250, CVar.SERVERONLY | CVar.ARCHIVE);
+    
+    /*
+     * Peaceful Round End
+     */
+    
+    /// <summary>
+    /// Making everyone a pacifist at the end of a round.
+    /// </summary>
+    public static readonly CVarDef<bool> PeacefulRoundEnd =
+        CVarDef.Create("game.peaceful_end", true, CVar.SERVERONLY);
 }
