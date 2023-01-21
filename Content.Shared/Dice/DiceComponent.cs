@@ -35,10 +35,10 @@ public sealed class DiceComponent : Component
     [Serializable, NetSerializable]
     public sealed class DiceState : ComponentState
     {
-        public int CurrentSide { get; set; } = 20;
-        public DiceState(int side)
+        public readonly int CurrentValue;
+        public DiceState(int value)
         {
-            CurrentSide = side;
+            CurrentValue = value;
         }
     }
 }
