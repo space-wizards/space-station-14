@@ -1,9 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: PDAs/other items can now be activated in your inventory again., type: Fix}
-  id: 2439
-  time: '2022-10-13T02:26:27.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
@@ -2934,3 +2929,16 @@ Entries:
   - {message: Added guidebook entries for Xenoarchaeology. Read all about it!, type: Add}
   id: 2938
   time: '2023-01-21T00:39:25.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Reduced point output for both anomalies and artifacts, type: Tweak}
+  - {message: Added a station event for anomalies to spawn., type: Tweak}
+  - {message: 'The superheated anomalous surface of an anomaly imparts nasty burns,
+      even through protective covering.', type: Tweak}
+  - {message: The bluespace artifact station event now scales properly with survival
+      rounds., type: Fix}
+  - {message: Fixed missing upgrade examine text on the anomaly vessel., type: Fix}
+  - {message: Anomalies now slightly fluctuate in stability on each pulse. Better
+      hope you don't push it over the edge., type: Add}
+  id: 2939
+  time: '2023-01-21T00:42:38.0000000+00:00'
