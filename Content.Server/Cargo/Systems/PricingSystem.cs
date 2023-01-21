@@ -3,7 +3,7 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Stack;
+using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -16,6 +16,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+
+using static Content.Shared.Storage.EntitySpawnCollection;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -184,6 +186,41 @@ public sealed class PricingSystem : EntitySystem
     /// </remarks>
     public double GetPrice(EntityUid uid)
     {
+        // If this item has a SpawnItemsOnUseComponent, we ignore everything else (including StaticPrice) and just
+        // return combined price of the items that would be spawned on use
+        if (TryComp<SpawnItemsOnUseComponent>(uid, out var spawnItemsOnUse))
+        {
+            double price = 0;
+            var ungrouped = CollectOrGroups(spawnItemsOnUse.Items, out var orGroups);
+
+            foreach (var entry in ungrouped)
+            {
+                var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+
+                // Calculate the average price of the possible spawned items
+                price += GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
+
+                EntityManager.DeleteEntity(protUid);
+            }
+
+            foreach (var group in orGroups)
+            {
+                foreach (var entry in group.Entries)
+                {
+                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
+
+                    // Calculate the average price of the possible spawned items
+                    price += GetPrice(protUid) *
+                             (entry.SpawnProbability / group.CumulativeProbability) *
+                             entry.GetAmount(getAverage: true);
+
+                    EntityManager.DeleteEntity(protUid);
+                }
+            }
+
+            return price;
+        }
+
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
 
