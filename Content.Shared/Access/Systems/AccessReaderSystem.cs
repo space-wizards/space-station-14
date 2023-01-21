@@ -44,7 +44,7 @@ namespace Content.Shared.Access.Systems
             }
         }
 
-        private void OnEmagged(EntityUid uid, AccessReaderComponent reader, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
         {
             if (reader.Enabled)
             {
