@@ -10,18 +10,18 @@ namespace Content.Client.Disposal.Systems
 {
     public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
-        public List<DisposalUnitComponent> PressuringDisposals = new();
+        public List<EntityUid> PressuringDisposals = new();
 
-        public void UpdateActive(DisposalUnitComponent component, bool active)
+        public void UpdateActive(EntityUid disposalEntity, bool active)
         {
             if (active)
             {
-                if (!PressuringDisposals.Contains(component))
-                    PressuringDisposals.Add(component);
+                if (!PressuringDisposals.Contains(disposalEntity))
+                    PressuringDisposals.Add(disposalEntity);
             }
             else
             {
-                PressuringDisposals.Remove(component);
+                PressuringDisposals.Remove(disposalEntity);
             }
         }
 
@@ -30,17 +30,21 @@ namespace Content.Client.Disposal.Systems
             base.FrameUpdate(frameTime);
             for (var i = PressuringDisposals.Count - 1; i >= 0; i--)
             {
-                var comp = PressuringDisposals[i];
-                if (!UpdateInterface(comp)) continue;
+                var disposal = PressuringDisposals[i];
+                if (!UpdateInterface(disposal)) continue;
                 PressuringDisposals.RemoveAt(i);
             }
         }
 
-        private bool UpdateInterface(DisposalUnitComponent component)
+        private bool UpdateInterface(EntityUid disposalUnit)
         {
+            if (!TryComp(disposalUnit, out DisposalUnitComponent? component) || component.Deleted)
+            {
+                return true;
+            }
             if (component.Deleted) return true;
 
-            if (!EntityManager.TryGetComponent(component.Owner, out ClientUserInterfaceComponent? userInterface)) return true;
+            if (!EntityManager.TryGetComponent(disposalUnit, out ClientUserInterfaceComponent? userInterface)) return true;
 
             var state = component.UiState;
             if (state == null) return true;

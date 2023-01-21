@@ -1,12 +1,9 @@
-﻿using Content.Client.Disposal.Components;
+using Content.Client.Disposal.Components;
 using Content.Client.Disposal.Systems;
 using Content.Shared.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.UI
@@ -76,7 +73,9 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out DisposalUnitComponent? component)) return;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var entityId = Owner.Owner;
+            if (!entityManager.TryGetComponent(entityId, out DisposalUnitComponent? component)) return;
 
             switch (state)
             {
@@ -91,7 +90,7 @@ namespace Content.Client.Disposal.UI
                     break;
             }
 
-            EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);
+            entityManager.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)
