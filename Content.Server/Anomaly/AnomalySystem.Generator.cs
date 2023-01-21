@@ -74,7 +74,7 @@ public sealed partial class AnomalySystem
         UpdateGeneratorUi(uid, component);
     }
 
-    private void SpawnOnRandomGridLocation(EntityUid grid, string toSpawn)
+    public void SpawnOnRandomGridLocation(EntityUid grid, string toSpawn)
     {
         if (!TryComp<MapGridComponent>(grid, out var gridComp))
             return;
