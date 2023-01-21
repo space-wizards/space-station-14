@@ -61,6 +61,7 @@ public sealed class HeadsetSystem : EntitySystem
             PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
         }
     }
+
     private void PushRadioChannelsToOwner(EntityUid uid, HeadsetComponent component, ActiveRadioComponent activeRadio)
     {
         activeRadio.Channels.UnionWith(component.Channels);
@@ -159,11 +160,13 @@ public sealed class HeadsetSystem : EntitySystem
         }
         return false;
     }
+
     private void UploadChannelsFromKey(HeadsetComponent component, EncryptionKeyComponent key)
     {
         foreach (var j in key.Channels)
             component.Channels.Add(j);
     }
+
     public void RecalculateChannels(HeadsetComponent component)
     {
         component.Channels.Clear();
@@ -225,6 +228,7 @@ public sealed class HeadsetSystem : EntitySystem
             }
         }
     }
+
     private void UpdateDefaultChannel(HeadsetComponent component)
     {
         if (component.KeyContainer.ContainedEntities.Count >= 1)
@@ -232,6 +236,7 @@ public sealed class HeadsetSystem : EntitySystem
         else
             component.DefaultChannel = null;
     }
+
     private void OnContainerInserted(EntityUid uid, HeadsetComponent component, EntInsertedIntoContainerMessage args)
     {
         if (args.Container.ID != HeadsetComponent.KeyContainerName)
