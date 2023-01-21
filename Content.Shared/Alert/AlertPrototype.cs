@@ -16,7 +16,7 @@ namespace Content.Shared.Alert
         /// <summary>
         /// Type of alert, no 2 alert prototypes should have the same one.
         /// </summary>
-        [IdDataFieldAttribute]
+        [IdDataField]
         public AlertType AlertType { get; private set; }
 
         /// <summary>

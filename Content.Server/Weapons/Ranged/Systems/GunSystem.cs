@@ -243,12 +243,12 @@ public sealed partial class GunSystem : SharedGunSystem
     public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
-        physics.BodyStatus = BodyStatus.InAir;
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
 
         var targetMapVelocity = gunVelocity + direction.Normalized * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
-        Physics.SetLinearVelocity(physics, finalLinear);
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         if (user != null)
         {

@@ -14,7 +14,7 @@ namespace Content.Client.Tabletop.Visualizers
         public override void OnChangeData(AppearanceComponent appearance)
         {
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent<ISpriteComponent>(appearance.Owner, out var sprite))
+            if (!entities.TryGetComponent<SpriteComponent>(appearance.Owner, out var sprite))
             {
                 return;
             }

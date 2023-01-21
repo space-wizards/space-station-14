@@ -2,11 +2,14 @@ using Content.Server.GameTicking;
 using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEventSystem
     {
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+
         public override string Prototype => "MeteorSwarm";
 
         private float _cooldown;
@@ -70,12 +73,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in MapManager.GetAllMapGrids(mapId))
             {
-                if (!TryComp<PhysicsComponent>(grid.Owner, out var gridBody))
-                {
-                    continue;
-                }
-
-                var aabb = gridBody.GetWorldAABB();
+                var aabb = _physics.GetWorldAABB(grid.Owner);
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
 
@@ -97,15 +95,15 @@ namespace Content.Server.StationEvents.Events
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = EntityManager.SpawnEntity("MeteorLarge", spawnPosition);
                 var physics = EntityManager.GetComponent<PhysicsComponent>(meteor);
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
-                physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
-                physics.ApplyAngularImpulse(
-                    // Get a random angular velocity.
-                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() +
-                                    MinAngularVelocity));
-                // TODO: God this disgusts me but projectile needs a refactor.
+                _physics.SetBodyStatus(physics, BodyStatus.InAir);
+                _physics.SetLinearDamping(physics, 0f);
+                _physics.SetAngularDamping(physics, 0f);
+                _physics.ApplyLinearImpulse(meteor, -offset.Normalized * MeteorVelocity * physics.Mass, body: physics);
+                _physics.ApplyAngularImpulse(
+                    meteor,
+                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * RobustRandom.NextFloat() + MinAngularVelocity),
+                    body: physics);
+
                 EnsureComp<TimedDespawnComponent>(meteor).Lifetime = 120f;
             }
         }

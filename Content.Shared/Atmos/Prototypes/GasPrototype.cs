@@ -13,7 +13,7 @@ namespace Content.Shared.Atmos.Prototypes
         // TODO: Add interfaces for gas behaviours e.g. breathing, burning
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

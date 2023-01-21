@@ -203,6 +203,22 @@
      Gold: 100
 
 - type: latheRecipe
+  id: AnomalyVesselCircuitboard
+  result: AnomalyVesselCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: APECircuitboard
+  result: APECircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   result: ReagentGrinderMachineCircuitboard
   completetime: 4
@@ -503,3 +519,21 @@
   materials:
     Steel: 100
     Glass: 900
+
+- type: latheRecipe
+  id: BoozeDispenserMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: BoozeDispenserMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: SodaDispenserMachineCircuitboard
+  icon: { sprite: Objects/Misc/module.rsi, state: id_mod }
+  result: SodaDispenserMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900

@@ -1,7 +1,6 @@
 using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
-using Content.Shared.Materials;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -16,7 +15,6 @@ namespace Content.Server.Stack
     public sealed class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedStackSystem _sharedStack = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 
@@ -91,78 +89,21 @@ namespace Content.Server.Stack
         ///     Say you want to spawn 97 units of something that has a max stack count of 30.
         ///     This would spawn 3 stacks of 30 and 1 stack of 7.
         /// </summary>
-        public List<EntityUid> SpawnMultiple(int amount, MaterialPrototype materialProto, EntityCoordinates coordinates)
+        public List<EntityUid> SpawnMultiple(string entityPrototype, int amount, EntityCoordinates spawnPosition)
         {
-            var list = new List<EntityUid>();
-            if (amount <= 0)
-                return list;
-
-            // At least 1 is being spawned, we'll use the first to extract otherwise inaccessible information
-            // ??TODO??: Indexing the entity proto and extracting from its component registry could possibly be better?
-            // it doesn't look like it would save LOC even compressing this to a single loop and I'm not sure what other issues it might introduce
-            var firstSpawn = Spawn(materialProto.StackEntity, coordinates);
-            list.Add(firstSpawn);
-
-            if (!TryComp<StackComponent>(firstSpawn, out var stack) || stack.StackTypeId == null)
-                return list;
-
-            if (!TryComp<MaterialComponent>(firstSpawn, out var material))
-                return list;
-
-            int maxCountPerStack = _sharedStack.GetMaxCount(stack);
-            var materialPerStack = material.Materials[materialProto.ID];
-
-            var materialPerMaxCount = maxCountPerStack * materialPerStack;
-
-            // no material duping for you
-            if (amount < materialPerStack)
-            {
-                Del(firstSpawn);
-                return list;
-            }
-
-            if (amount > materialPerMaxCount)
-            {
-                SetCount(firstSpawn, maxCountPerStack, stack);
-                amount -= materialPerMaxCount;
-            } else
-            {
-                SetCount(firstSpawn, (amount / materialPerStack), stack);
-                amount = 0;
-            }
-
+            var proto = _prototypeManager.Index<EntityPrototype>(entityPrototype);
+            proto.TryGetComponent<StackComponent>(out var stack);
+            var maxCountPerStack = GetMaxCount(stack);
+            var spawnedEnts = new List<EntityUid>();
             while (amount > 0)
             {
-                var entity = Spawn(materialProto.StackEntity, coordinates);
-                list.Add(entity);
-                var nextStack = Comp<StackComponent>(entity);
-                if (amount > materialPerMaxCount)
-                {
-                    SetCount(entity, materialPerMaxCount, nextStack);
-                    amount -= materialPerMaxCount;
-                }
-                else
-                {
-                    SetCount(entity, (amount / materialPerStack), nextStack);
-                    amount = 0;
-                }
+                var entity = Spawn(entityPrototype, spawnPosition);
+                spawnedEnts.Add(entity);
+                var countAmount = Math.Min(maxCountPerStack, amount);
+                SetCount(entity, countAmount);
+                amount -= countAmount;
             }
-            return list;
-        }
-
-        /// <summary>
-        ///     Spawn an amount of a material in stack entities. Note the 'amount' is material dependent. 1 biomass = 1 biomass in its stack,
-        ///     but 100 plasma = 1 sheet of plasma, etc.
-        /// </summary>
-        public List<EntityUid> SpawnMultipleFromMaterial(int amount, string material, EntityCoordinates coordinates)
-        {
-            if (!_prototypeManager.TryIndex<MaterialPrototype>(material, out var stackType))
-            {
-                Logger.Error("Failed to index material prototype " + material);
-                return new List<EntityUid>();
-            }
-
-            return SpawnMultiple(amount, stackType, coordinates);
+            return spawnedEnts;
         }
 
         private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetVerbsEvent<AlternativeVerb> args)

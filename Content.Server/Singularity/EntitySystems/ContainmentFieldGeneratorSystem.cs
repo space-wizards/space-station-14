@@ -322,8 +322,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     {
         if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
         {
-            bool hasAnyConnection = component.Connections != null;
-            pointLightComponent.Enabled = hasAnyConnection;
+            pointLightComponent.Enabled = component.Connections.Count > 0;
         }
     }
 

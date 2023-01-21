@@ -139,3 +139,6 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: Tag
+    tags:
+      - WhitelistChameleon

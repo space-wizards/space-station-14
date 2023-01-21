@@ -83,7 +83,9 @@ namespace Content.Shared.Lathe
         /// The value that is used to calculate the modifier <see cref="MaterialUseMultiplier"/>
         /// </summary>
         [DataField("partRatingMaterialUseMultiplier")]
-        public float PartRatingMaterialUseMultiplier = 0.75f;
+        public float PartRatingMaterialUseMultiplier = DefaultPartRatingMaterialUseMultiplier;
+
+        public const float DefaultPartRatingMaterialUseMultiplier = 0.75f;
         #endregion
     }
 

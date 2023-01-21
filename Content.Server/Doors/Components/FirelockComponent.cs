@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.Doors.Components;
 
 namespace Content.Server.Doors.Components

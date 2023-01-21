@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Station.Components;
@@ -14,7 +13,8 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.EntityList;
 using Content.Shared.GameTicking;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Content.Shared.Suspicion;
 using Robust.Server.GameObjects;
@@ -114,7 +114,6 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement("No players readied up! Can't start Suspicion.");
             ev.Cancel();
-            return;
         }
     }
 
@@ -176,8 +175,7 @@ public sealed class SuspicionRuleSystem : GameRuleSystem
             traitors.Add(traitorRole);
 
             // try to place uplink
-            if (!_uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance))
-                continue;
+            _uplink.AddUplink(mind.OwnedEntity!.Value, traitorStartingBalance);
         }
 
         foreach (var player in list)

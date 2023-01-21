@@ -107,15 +107,15 @@ namespace Content.Server.Dragon
         [ViewVariables(VVAccess.ReadWrite), DataField("devourWhitelist")]
         public EntityWhitelist? DevourWhitelist = new()
         {
-            Components = new string[]
+            Components = new[]
             {
                 "Door",
                 "MobState",
             },
-            Tags = new List<string>()
+            Tags = new List<string>
             {
                 "Wall",
-            }
+            },
         };
 
         /// <summary>
