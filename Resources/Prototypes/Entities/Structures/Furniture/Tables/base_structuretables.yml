@@ -29,7 +29,6 @@
     base: state_
   - type: Climbable
   - type: Bonkable
-    bonk: true
     bonkDamage:
       types:
         Blunt: 4
