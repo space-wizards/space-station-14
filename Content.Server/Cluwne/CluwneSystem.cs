@@ -104,7 +104,7 @@ public sealed class CluwneSystem : EntitySystem
             cluwnecomp.LastGiggleCooldown -= frameTime;
 
 
-            if (_timing.CurTime <= cluwnecomp.GiggleGoChance)
+            if (_timing.CurTime <= cluwnecomp.GiggleGoChance) 
                 continue;
 
             cluwnecomp.GiggleGoChance += TimeSpan.FromSeconds(cluwnecomp.RandomGiggleAttempt);
