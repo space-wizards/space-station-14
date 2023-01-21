@@ -29,6 +29,7 @@ namespace Content.Server.Administration.Commands
 
             if (!_entityManager.TrySystem(out TagSystem? tagSystem))
                 return;
+            _entityManager.EnsureComponent<TagComponent>(entityUid);
 
             if (tagSystem.TryAddTag(entityUid, args[1]))
             {
