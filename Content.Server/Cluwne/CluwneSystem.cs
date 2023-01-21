@@ -11,6 +11,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Cluwne;
 
@@ -22,6 +23,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -99,12 +101,13 @@ public sealed class CluwneSystem : EntitySystem
 
         foreach (var cluwnecomp in EntityQuery<CluwneComponent>())
         {
-            cluwnecomp.Accumulator += frameTime;
             cluwnecomp.LastGiggleCooldown -= frameTime;
 
-            if (cluwnecomp.Accumulator < cluwnecomp.RandomGiggleAttempt)
+
+            if (_timing.CurTime <= cluwnecomp.GiggleGoChance)
                 continue;
-            cluwnecomp.Accumulator -= cluwnecomp.RandomGiggleAttempt;
+
+            cluwnecomp.GiggleGoChance += TimeSpan.FromSeconds(cluwnecomp.RandomGiggleAttempt);
 
             if (!_robustRandom.Prob(cluwnecomp.GiggleChance))
                 continue;

@@ -1,6 +1,7 @@
 using Content.Server.Speech.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cluwne;
@@ -9,7 +10,7 @@ namespace Content.Server.Cluwne;
 public sealed class CluwneComponent : Component
 {
     /// <summary>
-    /// Giggle emote timings.
+    /// Giggle emote chances.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float GiggleChance = 0.2f;
@@ -23,8 +24,11 @@ public sealed class CluwneComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float LastGiggleCooldown = 0f;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float Accumulator = 0f;
+    /// <summary>
+    ///gigle emote timespan.
+    /// </summary>
+    [DataField("giggleGoChance", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan GiggleGoChance = TimeSpan.Zero;
 
     /// <summary>
     /// amount of time cluwne is paralyzed for when falling over.
@@ -33,7 +37,7 @@ public sealed class CluwneComponent : Component
     public float ParalyzeTime = 2f;
 
     /// <summary>
-    /// makes a noise when called.
+    /// sound specifiers for giggles and noises.
     /// </summary>
     [DataField("giggle")]
     public SoundSpecifier Giggle = new SoundCollectionSpecifier("CluwneScreams");
