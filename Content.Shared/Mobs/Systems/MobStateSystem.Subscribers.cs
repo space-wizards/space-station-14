@@ -42,21 +42,20 @@ public partial class MobStateSystem
 
     private void OnStateExitSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
-        var uid = component.Owner;
         switch (state)
         {
             case MobState.Alive:
                 //unused
                 break;
             case MobState.Critical:
-                _standing.Stand(uid);
+                _standing.Stand(target);
                 break;
             case MobState.Dead:
-                RemComp<CollisionWakeComponent>(uid);
-                _standing.Stand(uid);
-                if (!_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+                RemComp<CollisionWakeComponent>(target);
+                _standing.Stand(target);
+                if (!_standing.IsDown(target) && TryComp<PhysicsComponent>(target, out var physics))
                 {
-                    _physics.SetCanCollide(physics, true);
+                    _physics.SetCanCollide(target, true, body: physics);
                 }
 
                 break;
@@ -70,28 +69,27 @@ public partial class MobStateSystem
 
     private void OnStateEnteredSubscribers(EntityUid target, MobStateComponent component, MobState state)
     {
-        var uid = component.Owner;
-        _blocker.UpdateCanMove(uid); //update movement anytime a state changes
+        _blocker.UpdateCanMove(target); //update movement anytime a state changes
         switch (state)
         {
             case MobState.Alive:
-                _standing.Stand(uid);
-                _appearance.SetData(uid, MobStateVisuals.State, MobState.Alive);
+                _standing.Stand(target);
+                _appearance.SetData(target, MobStateVisuals.State, MobState.Alive);
                 break;
             case MobState.Critical:
-                _standing.Down(uid);
-                _appearance.SetData(uid, MobStateVisuals.State, MobState.Critical);
+                _standing.Down(target);
+                _appearance.SetData(target, MobStateVisuals.State, MobState.Critical);
                 break;
             case MobState.Dead:
-                EnsureComp<CollisionWakeComponent>(uid);
-                _standing.Down(uid);
+                EnsureComp<CollisionWakeComponent>(target);
+                _standing.Down(target);
 
-                if (_standing.IsDown(uid) && TryComp<PhysicsComponent>(uid, out var physics))
+                if (_standing.IsDown(target) && TryComp<PhysicsComponent>(target, out var physics))
                 {
-                    _physics.SetCanCollide(physics, false);
+                    _physics.SetCanCollide(target, false, body: physics);
                 }
 
-                _appearance.SetData(uid, MobStateVisuals.State, MobState.Dead);
+                _appearance.SetData(target, MobStateVisuals.State, MobState.Dead);
                 break;
             case MobState.Invalid:
                 //unused;

@@ -60,7 +60,7 @@ public sealed class ThrowingSystem : EntitySystem
         comp.Thrower = user;
         // Give it a l'il spin.
         if (!_tagSystem.HasTag(uid, "NoSpinOnThrow"))
-            _physics.ApplyAngularImpulse(physics, ThrowAngularImpulse);
+            _physics.ApplyAngularImpulse(uid, ThrowAngularImpulse, body: physics);
         else
         {
             if (transform == null)
@@ -75,15 +75,14 @@ public sealed class ThrowingSystem : EntitySystem
             _interactionSystem.ThrownInteraction(user.Value, uid);
 
         var impulseVector = direction.Normalized * strength * physics.Mass;
-        _physics.ApplyLinearImpulse(physics, impulseVector);
+        _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
         var time = (direction / strength).Length;
 
         if (time < FlyTime)
         {
-            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-            _thrownSystem.LandComponent(comp);
+            _thrownSystem.LandComponent(comp, physics);
         }
         else
         {
@@ -94,8 +93,7 @@ public sealed class ThrowingSystem : EntitySystem
                 if (physics.Deleted)
                     return;
 
-                _physics.SetBodyStatus(physics, BodyStatus.OnGround);
-                _thrownSystem.LandComponent(comp);
+                _thrownSystem.LandComponent(comp, physics);
             });
         }
 
@@ -109,7 +107,7 @@ public sealed class ThrowingSystem : EntitySystem
             RaiseLocalEvent(physics.Owner, msg);
 
             if (!msg.Cancelled)
-                _physics.ApplyLinearImpulse(userPhysics, -impulseVector * pushbackRatio);
+                _physics.ApplyLinearImpulse(user.Value, -impulseVector * pushbackRatio, body: userPhysics);
         }
     }
 }

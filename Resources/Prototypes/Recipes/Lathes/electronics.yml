@@ -203,6 +203,22 @@
      Gold: 100
 
 - type: latheRecipe
+  id: AnomalyVesselCircuitboard
+  result: AnomalyVesselCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: APECircuitboard
+  result: APECircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
   result: ReagentGrinderMachineCircuitboard
   completetime: 4

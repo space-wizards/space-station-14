@@ -20,6 +20,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -36,6 +37,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -226,7 +228,7 @@ namespace Content.Server.Ghost
             xform.Coordinates = Transform(msg.Target).Coordinates;
             xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
-                physics.LinearVelocity = Vector2.Zero;
+                _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
 
         private void DeleteEntity(EntityUid uid)

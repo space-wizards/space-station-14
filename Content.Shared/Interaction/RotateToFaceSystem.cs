@@ -95,7 +95,7 @@ namespace Content.Shared.Interaction
                 if (suid != null)
                 {
                     // We're buckled to another object. Is that object rotatable?
-                    if (TryComp<RotatableComponent>(suid.Value!, out var rotatable) && rotatable.RotateWhileAnchored)
+                    if (TryComp<RotatableComponent>(suid.Value, out var rotatable) && rotatable.RotateWhileAnchored)
                     {
                         // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
                         // (Since the user being buckled to it holds it down with their weight.)

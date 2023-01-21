@@ -2,6 +2,7 @@
 using Content.Server.Resist;
 using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
 using Robust.Shared.Random;
@@ -11,6 +12,7 @@ namespace Content.Server.StationEvents.Events;
 public sealed class BluespaceLockerLink : StationEventSystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly BluespaceLockerSystem _bluespaceLocker = default!;
 
     public override string Prototype => "BluespaceLockerLink";
 
@@ -30,18 +32,17 @@ public sealed class BluespaceLockerLink : StationEventSystem
                 !HasComp<StationMemberComponent>(potentialLink.ToCoordinates().GetGridUid(EntityManager)))
                 continue;
 
-            using var compInitializeHandle = EntityManager.AddComponentUninitialized<BluespaceLockerComponent>(potentialLink);
-            var comp = compInitializeHandle.Comp;
+            var comp = AddComp<BluespaceLockerComponent>(potentialLink);
 
             comp.PickLinksFromSameMap = true;
             comp.MinBluespaceLinks = 1;
-            comp.BluespaceEffectOnInit = true;
             comp.BehaviorProperties.BluespaceEffectOnTeleportSource = true;
             comp.AutoLinksBidirectional = true;
             comp.AutoLinksUseProperties = true;
+            comp.AutoLinkProperties.BluespaceEffectOnInit = true;
             comp.AutoLinkProperties.BluespaceEffectOnTeleportSource = true;
-
-            compInitializeHandle.Dispose();
+            _bluespaceLocker.GetTarget(potentialLink, comp, true);
+            _bluespaceLocker.BluespaceEffect(potentialLink, comp, comp, true);
 
             Sawmill.Info($"Converted {ToPrettyString(potentialLink)} to bluespace locker");
 

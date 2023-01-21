@@ -484,8 +484,8 @@ namespace Content.Server.Atmos.EntitySystems
                 var gridPhysics = Comp<PhysicsComponent>(mapGrid.Owner);
 
                 // TODO ATMOS: Come up with better values for these.
-                gridPhysics.ApplyLinearImpulse(direction * totalMolesRemoved * gridPhysics.Mass);
-                gridPhysics.ApplyAngularImpulse(Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved);
+                _physics.ApplyLinearImpulse(mapGrid.Owner, direction * totalMolesRemoved * gridPhysics.Mass, body: gridPhysics);
+                _physics.ApplyAngularImpulse(mapGrid.Owner, Vector2.Cross(tile.GridIndices - gridPhysics.LocalCenter, direction) * totalMolesRemoved, body: gridPhysics);
             }
 
             if(tileCount > 10 && (totalMolesRemoved / tileCount) > 20)

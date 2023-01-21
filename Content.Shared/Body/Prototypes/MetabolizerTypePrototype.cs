@@ -5,7 +5,7 @@ namespace Content.Shared.Body.Prototypes
     [Prototype("metabolizerType")]
     public sealed class MetabolizerTypePrototype : IPrototype
     {
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
     }
 }

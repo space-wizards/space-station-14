@@ -25,7 +25,7 @@ public sealed class FollowerSystem : EntitySystem
         if (!HasComp<SharedGhostComponent>(ev.User))
             return;
 
-        if (ev.User == ev.Target)
+        if (ev.User == ev.Target || ev.Target.IsClientSide())
             return;
 
         var verb = new AlternativeVerb

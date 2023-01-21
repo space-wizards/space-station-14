@@ -116,6 +116,7 @@
   - type: Construction
     graph: ShotgunSawn
     node: shotgundoublebarreled
+    deconstructionTarget: null
 
 - type: entity
   name: Enforcer
@@ -161,3 +162,4 @@
   - type: Construction
     graph: ShotgunSawn
     node: shotgunsawn
+    deconstructionTarget: null

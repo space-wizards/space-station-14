@@ -30,17 +30,18 @@ namespace Content.Server.Disease.Effects
                 return;
 
             var stream = bloodstream.ChemicalSolution;
-            if (stream != null)
-            {
-                var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-                if (Reagent != null)
-                {
-                    if (Amount < 0 && stream.ContainsReagent(Reagent))
-                        solutionSys.TryRemoveReagent(args.DiseasedEntity, stream, Reagent, -Amount);
-                    if (Amount > 0)
-                        solutionSys.TryAddReagent(args.DiseasedEntity, stream, Reagent, Amount, out _);
-                }
-            }
+            if (stream == null)
+                return;
+
+            var solutionSys = args.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+            if (Reagent == null)
+                return;
+
+            if (Amount < 0 && stream.ContainsReagent(Reagent))
+                solutionSys.TryRemoveReagent(args.DiseasedEntity, stream, Reagent, -Amount);
+
+            if (Amount > 0)
+                solutionSys.TryAddReagent(args.DiseasedEntity, stream, Reagent, Amount, out _);
         }
     }
 }

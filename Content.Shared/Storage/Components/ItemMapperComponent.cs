@@ -60,6 +60,12 @@ namespace Content.Shared.Storage.Components
 
         [DataField("sprite")] public ResourcePath? RSIPath;
 
+        /// <summary>
+        ///     If this exists, shown layers will only consider entities in the given containers.
+        /// </summary>
+        [DataField("containerWhitelist")]
+        public HashSet<string>? ContainerWhitelist;
+
         public readonly List<string> SpriteLayers = new();
     }
 }
