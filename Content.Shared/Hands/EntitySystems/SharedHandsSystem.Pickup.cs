@@ -139,7 +139,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (!handContainer.Insert(entity, EntityManager))
         {
-            Logger.Error($"Failed to insert {ToPrettyString(entity)} into users hand container. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
+            Logger.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
         }
 
