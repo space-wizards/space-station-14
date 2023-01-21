@@ -81,5 +81,6 @@ public enum LogType
     Stamina = 76,
     EntitySpawn = 77,
     AdminMessage = 78,
-    Anomaly = 79
+    Anomaly = 79,
+    WireHacking = 80,
 }

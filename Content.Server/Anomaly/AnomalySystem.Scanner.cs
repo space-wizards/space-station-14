@@ -95,7 +95,7 @@ public sealed partial class AnomalySystem
         component.TokenSource = null;
 
         Audio.PlayPvs(component.CompleteSound, uid);
-        _popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
+        Popup.PopupEntity(Loc.GetString("anomaly-scanner-component-scan-complete"), uid);
         UpdateScannerWithNewAnomaly(uid, args.Anomaly, component);
 
         if (TryComp<ActorComponent>(args.User, out var actor))
