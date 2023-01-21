@@ -97,14 +97,17 @@ namespace Content.Client.Disposal.Visualizers
 
             sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
-            if (!AppearanceSystem.TryGetData<LightState>(uid, Visuals.Light, out var lightState))
+            if (!AppearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState))
             {
-                lightState = LightState.Off;
+                lightState = LightStates.Off;
             }
 
-            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayCharging, lightState == LightState.Charging);
-            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayReady, lightState == LightState.Ready);
-            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFull, lightState == LightState.Full);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayCharging,
+                    (lightState & LightStates.Charging) != 0);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayReady,
+                    (lightState & LightStates.Ready) != 0);
+            sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayFull,
+                    (lightState & LightStates.Full) != 0);
         }
     }
 

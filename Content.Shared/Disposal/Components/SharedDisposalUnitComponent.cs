@@ -46,12 +46,12 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum LightState : byte
+        public enum LightStates : byte
         {
-            Off,
-            Charging,
-            Full,
-            Ready
+            Off = 0,
+            Charging = 1 << 0,
+            Full = 1 << 1,
+            Ready = 1 << 2
         }
 
         [Serializable, NetSerializable]

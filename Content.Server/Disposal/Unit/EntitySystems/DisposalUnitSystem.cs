@@ -600,7 +600,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.UnAnchored, appearance);
                 _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Handle, SharedDisposalUnitComponent.HandleState.Normal, appearance);
-                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off, appearance);
+                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightStates.Off, appearance);
                 return;
             }
 
@@ -612,26 +612,31 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!component.Powered)
             {
-                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off, appearance);
+                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightStates.Off, appearance);
                 return;
             }
 
+            var lightState = SharedDisposalUnitComponent.LightStates.Off;
             if (flush)
             {
                 _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing, appearance);
-                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off, appearance);
-                return;
             }
 
             if (component.Container.ContainedEntities.Count > 0)
             {
-                _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Full, appearance);
-                return;
+                lightState |= SharedDisposalUnitComponent.LightStates.Full;
             }
 
-            _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, component.Pressure < 1
-                ? SharedDisposalUnitComponent.LightState.Charging
-                : SharedDisposalUnitComponent.LightState.Ready, appearance);
+            if (component.Pressure < 1)
+            {
+                lightState |= SharedDisposalUnitComponent.LightStates.Charging;
+            }
+            else if (!component.Engaged)
+            {
+                lightState |= SharedDisposalUnitComponent.LightStates.Ready;
+            }
+
+            _appearance.SetData(unit, SharedDisposalUnitComponent.Visuals.Light, lightState, appearance);
         }
 
         public void Remove(EntityUid disposalUnit, DisposalUnitComponent component, EntityUid toRemove)
