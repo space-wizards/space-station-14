@@ -3,7 +3,6 @@ using Content.Server.Administration;
 using Content.Server.Body.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Storage.Components;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -16,8 +15,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-
-using static Content.Shared.Storage.EntitySpawnCollection;
 
 namespace Content.Server.Cargo.Systems;
 
@@ -90,6 +87,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateMobPrice(EntityUid uid, MobPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<BodyComponent>(uid, out var body) || !TryComp<MobStateComponent>(uid, out var state))
         {
             Logger.ErrorS("pricing", $"Tried to get the mob price of {ToPrettyString(uid)}, which has no {nameof(BodyComponent)} and no {nameof(MobStateComponent)}.");
@@ -108,6 +108,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateStackPrice(EntityUid uid, StackPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         if (!TryComp<StackComponent>(uid, out var stack))
         {
             Logger.ErrorS("pricing", $"Tried to get the stack price of {ToPrettyString(uid)}, which has no {nameof(StackComponent)}.");
@@ -119,6 +122,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateSolutionPrice(EntityUid uid, SolutionContainerManagerComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         var price = 0f;
 
         foreach (var solution in component.Solutions.Values)
@@ -135,6 +141,9 @@ public sealed class PricingSystem : EntitySystem
 
     private void CalculateStaticPrice(EntityUid uid, StaticPriceComponent component, ref PriceCalculationEvent args)
     {
+        if (args.Handled)
+            return;
+
         args.Price += component.Price;
     }
 
@@ -186,43 +195,11 @@ public sealed class PricingSystem : EntitySystem
     /// </remarks>
     public double GetPrice(EntityUid uid)
     {
-        // If this item has a SpawnItemsOnUseComponent, we ignore everything else (including StaticPrice) and just
-        // return combined price of the items that would be spawned on use
-        if (TryComp<SpawnItemsOnUseComponent>(uid, out var spawnItemsOnUse))
-        {
-            double price = 0;
-            var ungrouped = CollectOrGroups(spawnItemsOnUse.Items, out var orGroups);
-
-            foreach (var entry in ungrouped)
-            {
-                var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
-
-                // Calculate the average price of the possible spawned items
-                price += GetPrice(protUid) * entry.SpawnProbability * entry.GetAmount(getAverage: true);
-
-                EntityManager.DeleteEntity(protUid);
-            }
-
-            foreach (var group in orGroups)
-            {
-                foreach (var entry in group.Entries)
-                {
-                    var protUid = Spawn(entry.PrototypeId, MapCoordinates.Nullspace);
-
-                    // Calculate the average price of the possible spawned items
-                    price += GetPrice(protUid) *
-                             (entry.SpawnProbability / group.CumulativeProbability) *
-                             entry.GetAmount(getAverage: true);
-
-                    EntityManager.DeleteEntity(protUid);
-                }
-            }
-
-            return price;
-        }
-
         var ev = new PriceCalculationEvent();
         RaiseLocalEvent(uid, ref ev);
+
+        if (ev.Handled)
+            return ev.Price;
 
         //TODO: Add an OpaqueToAppraisal component or similar for blocking the recursive descent into containers, or preventing material pricing.
 
@@ -285,6 +262,11 @@ public struct PriceCalculationEvent
     /// The total price of the entity.
     /// </summary>
     public double Price = 0;
+
+    /// <summary>
+    /// Whether this event was already handled.
+    /// </summary>
+    public bool Handled = false;
 
     public PriceCalculationEvent() { }
 }
