@@ -13,7 +13,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltCargo
-  name: qm over-ear headset
+  name: quartermaster's over-ear headset
   components:
   - type: Headset
     defaultChannel: Supply
