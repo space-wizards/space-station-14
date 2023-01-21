@@ -61,7 +61,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltEngineering
-  name: ce over-ear headset
+  name: chief engineer's over-ear headset
   components:
   - type: Headset
     defaultChannel: Engineering
@@ -77,7 +77,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltMedical
-  name: cmo over-ear headset
+  name: chief medical officer's over-ear headset
   components:
   - type: Headset
     defaultChannel: Medical
@@ -93,7 +93,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltSecurity
-  name: security command over-ear headset
+  name: head of security's over-ear headset
   components:
   - type: Headset
     defaultChannel: Security
@@ -109,7 +109,7 @@
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
-  name: rd over-ear headset
+  name: research director's over-ear headset
   components:
   - type: Headset
     defaultChannel: Science
