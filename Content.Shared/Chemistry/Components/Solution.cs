@@ -317,7 +317,7 @@ namespace Content.Shared.Chemistry.Components
             if (scale == 1)
                 return;
 
-            if (scale == 0)
+            if (scale <= 0)
             {
                 RemoveAllSolution();
                 return;
@@ -326,7 +326,7 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity *= scale;
             Volume *= scale;
 
-            for (int i = 0; i <= Contents.Count; i++)
+            for (int i = 0; i < Contents.Count; i++)
             {
                 var old = Contents[i];
                 Contents[i] = new ReagentQuantity(old.ReagentId, old.Quantity * scale);
