@@ -238,8 +238,7 @@
   parent: ClothingMaskClown
   id: ClothingMaskCluwne
   name: cluwne face and hair
-  suffix: Not to be mapped
-  noSpawn: true
+  suffix: Unremoveable
   description: Cursed cluwne face and hair.
   components:
   - type: Sprite

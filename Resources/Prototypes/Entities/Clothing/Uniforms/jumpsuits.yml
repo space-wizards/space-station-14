@@ -966,8 +966,7 @@
   parent: ClothingUniformJumpsuitClown
   id: ClothingUniformJumpsuitCluwne
   name: cluwne suit
-  suffix: Not to be mapped
-  noSpawn: true
+  suffix: Unremoveable
   description: Cursed cluwne suit.
   components:
   - type: Sprite

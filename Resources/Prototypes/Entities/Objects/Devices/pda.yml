@@ -804,8 +804,7 @@
   parent: ClownPDA
   id: CluwnePDA
   name: cluwne PDA
-  suffix: Not to be mapped
-  noSpawn: true
+  suffix: Unremoveable
   description: Cursed cluwne PDA.
   components:
   - type: PDA

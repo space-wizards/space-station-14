@@ -45,8 +45,5 @@
   name: person
   noSpawn: true
   description: A polymorphed unfortunate.
-  suffix: do not spawn.
   components:
   - type: Cluwne
-  - type: InputMover
-  - type: MobMover

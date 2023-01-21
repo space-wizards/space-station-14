@@ -566,8 +566,7 @@
   parent: IDCardStandard
   id: CluwneIDCard
   name: cluwne ID card
-  suffix: Not to be mapped
-  noSpawn: true
+  suffix: Unremoveable
   components:
   - type: Sprite
     layers:
