@@ -39,6 +39,22 @@ namespace Content.Server.Administration.Commands
                 shell.WriteError($@"Could not add {args[1]} to {entityUid}.");
             }
         }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHint(Loc.GetString("shell-argument-uid"));
+            }
+
+            if (args.Length == 2)
+            {
+                return CompletionResult.FromHintOptions(CompletionHelper.PrototypeIDs<TagPrototype>(),
+                    Loc.GetString("tag-command-arg-tag"));
+            }
+
+            return CompletionResult.Empty;
+        }
     }
 
     [AdminCommand(AdminFlags.Debug)]
@@ -75,6 +91,22 @@ namespace Content.Server.Administration.Commands
             {
                 shell.WriteError($@"Could not remove {args[1]} from {entityUid}.");
             }
+        }
+
+        public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+        {
+            if (args.Length == 1)
+            {
+                return CompletionResult.FromHint(Loc.GetString("shell-argument-uid"));
+            }
+
+            if (args.Length == 2&& EntityUid.TryParse(args[0], out var entityUid) && _entityManager.TryGetComponent(entityUid, out TagComponent? tagComponent))
+            {
+                return CompletionResult.FromHintOptions(tagComponent.Tags,
+                    Loc.GetString("tag-command-arg-tag"));
+            }
+
+            return CompletionResult.Empty;
         }
     }
 }
