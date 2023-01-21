@@ -1485,8 +1485,8 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
-  - id: Dart
-    type: BecomesStation
+  - type: Shuttle
+  - type: GridPathfinding  
   - type: RadiationGridResistance
 - uid: 2
   type: Grille

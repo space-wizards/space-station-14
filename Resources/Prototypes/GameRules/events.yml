@@ -1,4 +1,13 @@
 ﻿- type: gameRule
+  id: AnomalySpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: AnomalySpawn
+    weight: 10
+    startAfter: 30
+    endAfter: 35
+
+- type: gameRule
   id: BluespaceArtifact
   config:
     !type:StationEventRuleConfiguration

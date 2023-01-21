@@ -188,7 +188,7 @@ namespace Content.Server.Lock
             args.Verbs.Add(verb);
         }
 
-        private void OnEmagged(EntityUid uid, LockComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, LockComponent component, ref GotEmaggedEvent args)
         {
             if (component.Locked)
             {

@@ -51,6 +51,25 @@ public sealed class ArtifactComponent : Component
     /// </summary>
     [DataField("lastActivationTime", customTypeSerializer: typeof(TimespanSerializer))]
     public TimeSpan LastActivationTime;
+
+    /// <summary>
+    /// The base price of each node for an artifact
+    /// </summary>
+    [DataField("pricePerNode")]
+    public int PricePerNode = 500;
+
+    /// <summary>
+    /// The base amount of research points for each artifact node.
+    /// </summary>
+    [DataField("pointsPerNode")]
+    public int PointsPerNode = 5000;
+
+    /// <summary>
+    /// A multiplier that is raised to the power of the average depth of a node.
+    /// Used for calculating the research point value of an artifact node.
+    /// </summary>
+    [DataField("pointDangerMultiplier")]
+    public float PointDangerMultiplier = 1.35f;
 }
 
 /// <summary>

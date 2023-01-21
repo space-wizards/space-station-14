@@ -203,6 +203,7 @@ namespace Content.Server.Doors.Systems
 
             component.BoltsDown = newBolts;
             Audio.PlayPvs(newBolts ? component.BoltDownSound : component.BoltUpSound, uid);
+            UpdateBoltLightStatus(uid, component);
         }
 
         public bool GetBoltLightsVisible(EntityUid uid, AirlockComponent component)

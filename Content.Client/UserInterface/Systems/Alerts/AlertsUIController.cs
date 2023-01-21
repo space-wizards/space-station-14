@@ -1,4 +1,4 @@
-﻿using Content.Client.Alerts;
+using Content.Client.Alerts;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Alerts.Widgets;
 using Content.Shared.Alert;
@@ -26,7 +26,17 @@ public sealed class AlertsUIController : UIController, IOnStateEntered<GameplayS
     private void SystemOnSyncAlerts(object? sender, IReadOnlyDictionary<AlertKey, AlertState> e)
     {
         if (sender is ClientAlertsSystem system)
+        {
             UI?.SyncControls(system, system.AlertOrder, e);
+        }
+
+        // The UI can change underneath us if the user switches between HUD layouts
+        // So ensure we're subscribed to the AlertPressed callback.
+        if (UI != null)
+        {
+            UI.AlertPressed -= OnAlertPressed; // Ensure we don't hook into the callback twice
+            UI.AlertPressed += OnAlertPressed;
+        }
     }
 
     public void OnSystemLoaded(ClientAlertsSystem system)
