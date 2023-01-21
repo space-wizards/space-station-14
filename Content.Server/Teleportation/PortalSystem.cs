@@ -10,6 +10,7 @@ public sealed class PortalSystem : SharedPortalSystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
+    // TODO Move to shared
     protected override void LogTeleport(EntityUid portal, EntityUid subject, EntityCoordinates source,
         EntityCoordinates target)
     {
