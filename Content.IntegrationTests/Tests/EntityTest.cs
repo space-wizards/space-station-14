@@ -46,14 +46,14 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await server.WaitRunTicks(5);
+            await server.WaitRunTicks(15);
 
             await server.WaitPost(() =>
             {
                 var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
-                    if(!entityMan.Deleted(meta.Owner))
+                    if(!meta.EntityDeleted)
                         entityMan.DeleteEntity(meta.Owner);
                 }
 
@@ -89,13 +89,13 @@ namespace Content.IntegrationTests.Tests
                     entityMan.SpawnEntity(protoId, coord);
                 }
             });
-            await server.WaitRunTicks(5);
+            await server.WaitRunTicks(15);
             await server.WaitPost(() =>
             {
                 var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
                 foreach (var meta in entityMetas)
                 {
-                    if(!entityMan.Deleted(meta.Owner))
+                    if(!meta.EntityDeleted)
                         entityMan.DeleteEntity(meta.Owner);
                 }
 
@@ -103,6 +103,58 @@ namespace Content.IntegrationTests.Tests
             });
             await pairTracker.CleanReturnAsync();
         }
+
+        /// <summary>
+        ///     Variant of <see cref="SpawnAndDeleteAllEntitiesInTheSameSpot"/> that also launches a client and dirties
+        ///     all components on every entity.
+        /// </summary>
+        [Test]
+        public async Task SpawnAndDirtyAllEntities()
+        {
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = false, Destructive = true });
+            var server = pairTracker.Pair.Server;
+
+            IEntityManager entityMan = null;
+
+            await server.WaitPost(() =>
+            {
+                entityMan = IoCManager.Resolve<IEntityManager>();
+                var mapManager = IoCManager.Resolve<IMapManager>();
+
+                var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
+                var protoIds = prototypeMan
+                    .EnumeratePrototypes<EntityPrototype>()
+                    .Where(p => !p.Abstract)
+                    .Select(p => p.ID)
+                    .ToList();
+                var mapId = mapManager.CreateMap();
+                var grid = mapManager.CreateGrid(mapId);
+                var coord = new EntityCoordinates(grid.Owner, 0, 0);
+                foreach (var protoId in protoIds)
+                {
+                    var ent = entityMan.SpawnEntity(protoId, coord);
+                    foreach (var (netId, component) in entityMan.GetNetComponents(ent))
+                    {
+                        entityMan.Dirty(component);
+                    }
+                }
+            });
+            await server.WaitRunTicks(15);
+            await server.WaitPost(() =>
+            {
+                var entityMetas = entityMan.EntityQuery<MetaDataComponent>(true).ToList();
+                foreach (var meta in entityMetas)
+                {
+                    if (!meta.EntityDeleted)
+                        entityMan.DeleteEntity(meta.Owner);
+                }
+
+                Assert.That(entityMan.EntityCount, Is.Zero);
+            });
+            await pairTracker.CleanReturnAsync();
+        }
+
+
         [Test]
         public async Task AllComponentsOneToOneDeleteTest()
         {
