@@ -1,9 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed inventory button hover indicators not appearing anymore., type: Fix}
-  id: 2440
-  time: '2022-10-13T05:07:27.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Bandaid medibots spamming speech., type: Fix}
@@ -2942,3 +2937,8 @@ Entries:
       hope you don't push it over the edge., type: Add}
   id: 2939
   time: '2023-01-21T00:42:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The lesbian flag pin is no longer upside down., type: Fix}
+  id: 2940
+  time: '2023-01-21T03:16:34.0000000+00:00'
