@@ -2,6 +2,7 @@
   name: filing cabinet
   parent: BaseStructureDynamic
   id: filingCabinet
+  suffix: Empty
   description: A cabinet for all your filing needs.
   components:
   - type: Storage
@@ -84,6 +85,7 @@
   name: tall cabinet
   parent: filingCabinet
   id: filingCabinetTall
+  suffix: Empty
   components:
   - type: Sprite
     sprite: Structures/Storage/cabinets.rsi
@@ -136,6 +138,7 @@
   name: chest drawer
   parent: BaseStructureDynamic
   id: filingCabinetDrawer
+  suffix: Empty
   description: A small drawer for all your filing needs, Now with wheels!
   components:
   - type: Storage
