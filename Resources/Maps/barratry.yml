@@ -33731,38 +33731,38 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.935778
-      - 71.2346
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 16.429127
-      - 61.804813
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
       - 18.405577
       - 69.24003
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 15.521976
+      - 58.3922
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 17.89022
+      - 67.30131
       - 0
       - 0
       - 0
@@ -127824,4 +127824,128 @@ entities:
   - pos: -72.53069,14.567188
     parent: 1
     type: Transform
+- uid: 13776
+  type: SpawnPointObserver
+  components:
+  - pos: -37.5,32.5
+    parent: 1
+    type: Transform
+- uid: 13777
+  type: WarpPoint
+  components:
+  - pos: -37.5,37.5
+    parent: 1
+    type: Transform
+  - location: Bar
+    type: WarpPoint
+- uid: 13778
+  type: WarpPoint
+  components:
+  - pos: -56.5,57.5
+    parent: 1
+    type: Transform
+  - location: Sec
+    type: WarpPoint
+- uid: 13779
+  type: WarpPoint
+  components:
+  - pos: -77.5,45.5
+    parent: 1
+    type: Transform
+  - location: Atmos
+    type: WarpPoint
+- uid: 13780
+  type: WarpPoint
+  components:
+  - pos: -85.5,28.5
+    parent: 1
+    type: Transform
+  - location: PA Room
+    type: WarpPoint
+- uid: 13781
+  type: WarpPoint
+  components:
+  - pos: -66.5,32.5
+    parent: 1
+    type: Transform
+- uid: 13782
+  type: WarpPoint
+  components:
+  - pos: -66.5,18.5
+    parent: 1
+    type: Transform
+  - location: AME
+    type: WarpPoint
+- uid: 13783
+  type: WarpPoint
+  components:
+  - pos: -32.5,26.5
+    parent: 1
+    type: Transform
+  - location: Theatre
+    type: WarpPoint
+- uid: 13784
+  type: WarpPoint
+  components:
+  - pos: -21.5,40.5
+    parent: 1
+    type: Transform
+  - location: HoP
+    type: WarpPoint
+- uid: 13785
+  type: WarpPoint
+  components:
+  - pos: -16.5,60.5
+    parent: 1
+    type: Transform
+  - location: Bridge
+    type: WarpPoint
+- uid: 13786
+  type: WarpPoint
+  components:
+  - pos: 7.5,26.5
+    parent: 1
+    type: Transform
+  - location: Med
+    type: WarpPoint
+- uid: 13787
+  type: WarpPoint
+  components:
+  - pos: 27.5,13.5
+    parent: 1
+    type: Transform
+  - location: Evac
+    type: WarpPoint
+- uid: 13788
+  type: WarpPoint
+  components:
+  - pos: 15.5,-0.5
+    parent: 1
+    type: Transform
+  - location: Chapel
+    type: WarpPoint
+- uid: 13789
+  type: WarpPoint
+  components:
+  - pos: -7.5,-1.5
+    parent: 1
+    type: Transform
+  - location: Science
+    type: WarpPoint
+- uid: 13790
+  type: WarpPoint
+  components:
+  - pos: -38.5,-5.5
+    parent: 1
+    type: Transform
+  - location: Cargo
+    type: WarpPoint
+- uid: 13791
+  type: WarpPoint
+  components:
+  - pos: -73.5,-2.5
+    parent: 1
+    type: Transform
+  - location: Arrivals
+    type: WarpPoint
 ...
