@@ -40,6 +40,42 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+      
+- type: entity
+  parent: filingCabinet
+  id: filingCabinetRandom
+  suffix: Random
+  components:
+  - type: StorageFill
+    contents:
+      - id: Pen
+        prob: 0.1
+      - id: Paper
+        prob: 0.5
+      - id: Paper
+        prob: 0.2
+      - id: PaperOffice
+        prob: 0.5
+      - id: PaperOffice
+        prob: 0.1
+      - id: BoxFolderBlue
+        prob: 0.20
+        orGroup: Folder
+      - id: BoxFolderRed
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderYellow
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderWhite
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderGrey
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderBlack
+        prob: 0.16
+        orGroup: Folder
 
 - type: entity
   name: tall cabinet
@@ -53,6 +89,42 @@
     visuals:
     - type: BagOpenCloseVisualizer
       openIcon: tallcabinet-open
+      
+- type: entity
+  parent: filingCabinetTall
+  id: filingCabinetTallRandom
+  suffix: Random
+  components:
+  - type: StorageFill
+    contents:
+      - id: Pen
+        prob: 0.1
+      - id: Paper
+        prob: 0.5
+      - id: Paper
+        prob: 0.2
+      - id: PaperOffice
+        prob: 0.5
+      - id: PaperOffice
+        prob: 0.1
+      - id: BoxFolderBlue
+        prob: 0.20
+        orGroup: Folder
+      - id: BoxFolderRed
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderYellow
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderWhite
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderGrey
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderBlack
+        prob: 0.16
+        orGroup: Folder
 
 - type: entity
   name: chest drawer
@@ -96,3 +168,39 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+      
+- type: entity
+  parent: filingCabinetDrawer
+  id: filingCabinetDrawerRandom
+  suffix: Random
+  components:
+  - type: StorageFill
+    contents:
+      - id: Pen
+        prob: 0.1
+      - id: Paper
+        prob: 0.5
+      - id: Paper
+        prob: 0.2
+      - id: PaperOffice
+        prob: 0.5
+      - id: PaperOffice
+        prob: 0.1
+      - id: BoxFolderBlue
+        prob: 0.20
+        orGroup: Folder
+      - id: BoxFolderRed
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderYellow
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderWhite
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderGrey
+        prob: 0.16
+        orGroup: Folder
+      - id: BoxFolderBlack
+        prob: 0.16
+        orGroup: Folder
