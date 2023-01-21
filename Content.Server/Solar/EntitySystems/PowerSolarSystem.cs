@@ -71,7 +71,6 @@ namespace Content.Server.Solar.EntitySystems
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolarPanelComponent, ComponentGetState>(GetSolarPanelState);
-            SubscribeLocalEvent<SolarPanelComponent, ComponentStartup>(OnSolarPanelStartup);
             RandomizeSun();
         }
 
@@ -120,11 +119,6 @@ namespace Content.Server.Solar.EntitySystems
         {
             RefreshPanel(component);
             UpdateSupply(uid, component);
-        }
-
-        private void OnSolarPanelStartup(EntityUid uid, SolarPanelComponent component, ComponentStartup args)
-        {
-            RefreshPanel(component);
         }
 
         public override void Update(float frameTime)
