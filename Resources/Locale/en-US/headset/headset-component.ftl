@@ -4,8 +4,8 @@ chat-radio-message-wrap = [color={$color}]{$channel} {$name} says: "{$message}"[
 headset-encryption-key-successfully-installed = You put the key into the headset.
 headset-encryption-key-slots-already-full = There is no place for another key.
 headset-encryption-keys-all-extracted = You pop out the encryption keys from the headset!
-headset-encryption-keys-no-keys = This headset doesn't have any encryption keys! No keys? How useless...
-headset-encryption-keys-are-locked = The headset's key slots are locked, you cannot extract the keys or add new in.
+headset-encryption-keys-no-keys = This headset has no encryption keys!
+headset-encryption-keys-are-locked = The headset's key slots are locked, you cannot add or remove any keys.
 
 examine-encryption-key-channels-prefix = It is providing these frequencies to the headset:
 

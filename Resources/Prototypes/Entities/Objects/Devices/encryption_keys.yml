@@ -1,4 +1,3 @@
-#EncryptionKeyComponent, EncryptionKeySystem
 - type: entity
   abstract: true
   parent: BaseItem
@@ -16,7 +15,7 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyCommon
-  name: passanger encryption key
+  name: passenger encryption key
   description: An encryption key used by anyone.
   components:
   - type: EncryptionKey
@@ -45,7 +44,7 @@
 - type: entity
   parent: EncryptionKey
   id: EncryptionKeyQM
-  name: qm encryption key
+  name: quartermaster's encryption key
   description: An encryption key used by the boss of cargo.
   components:
   - type: EncryptionKey
@@ -151,7 +150,7 @@
   parent: EncryptionKey
   id: EncryptionKeyCMO
   name: chief medical officer encryption key
-  description: An encryption key used by the chief of doctors.
+  description: An encryption key used by the head of the medical department.
   components:
   - type: EncryptionKey
     channels:
@@ -213,7 +212,7 @@
   parent: EncryptionKey
   id: EncryptionKeyRD
   name: research director's encryption key
-  description: An encryption key used by Fordon Griman. Seems to have signs of something red, probably tomato juice?
+  description: An encryption key used by the head of the science department. Looks like it's been chewed on.
   components:
   - type: EncryptionKey
     channels:
@@ -255,7 +254,6 @@
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: hos_cypherkey
-
 
 - type: entity
   parent: EncryptionKey

@@ -15,9 +15,9 @@ namespace Content.Server.Radio.Components;
 public sealed class HeadsetComponent : Component
 {
     /// <summary>
-    ///     This variable indicates locked state of encryption keys, allowing or prohibbiting insert/remove them from headset.
-    ///     true  => Human will able to screw out encryption keys with tool mentioned in KeysExtractionMethod and will be able to put encryption keys in headset.
-    ///     false => encryption keys will be locked in headset, there will be no proper way to extract them or to add keys anymore.
+    ///     This variable indicates locked state of encryption keys, allowing or prohibiting inserting and removing of encryption keys from headset.
+    ///     true  => User are able to remove encryption keys with tool mentioned in KeysExtractionMethod, and put encryption keys in headset.
+    ///     false => encryption keys are locked in headset, they can't be properly removed or added.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isKeysUnlocked")]
