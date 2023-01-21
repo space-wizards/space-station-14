@@ -8,13 +8,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-
-/// <summary>
-/// Materials and stacks have some odd relationships to entities,
-/// so we need some test coverage for them.
-/// </summary>
 namespace Content.IntegrationTests.Tests.Materials
 {
+    /// <summary>
+    /// Materials and stacks have some odd relationships to entities,
+    /// so we need some test coverage for them.
+    /// </summary>
     [TestFixture]
     [TestOf(typeof(StackSystem))]
     [TestOf(typeof(MaterialPrototype))]
@@ -61,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Materials
                             Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn));
                     }
                 });
-                
+
                 mapManager.DeleteMap(testMap.MapId);
             });
         }

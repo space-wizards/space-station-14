@@ -101,8 +101,8 @@ namespace Content.Tools
                 var outB = new byte[ExpectedChunkSize];
 
                 {
-                    using (var outS = new MemoryStream(outB))
-                    using (var outW = new BinaryWriter(outS))
+                    using var outS = new MemoryStream(outB);
+                    using var outW = new BinaryWriter(outS);
 
                     for (var i = 0; i < ExpectedChunkSize; i += 4)
                     {
@@ -239,8 +239,8 @@ namespace Content.Tools
             if (!MapEntity(otherMapped))
                 return false;
             // Merge stuff that isn't components
-            var path = "Entity" + (other["uid"].ToString());
-            YamlTools.MergeYamlMappings(ours, based, otherMapped, path, new string[] {"components"});
+            var path = "Entity" + other["uid"];
+            YamlTools.MergeYamlMappings(ours, based, otherMapped, path, new[] {"components"});
             // Components are special
             var ourComponents = new Dictionary<string, YamlMappingNode>();
             var basedComponents = new Dictionary<string, YamlMappingNode>();
@@ -278,7 +278,7 @@ namespace Content.Tools
 
         public bool MapEntity(YamlMappingNode other)
         {
-            var path = "Entity" + (other["uid"].ToString());
+            var path = "Entity" + other["uid"];
             if (other.Children.ContainsKey("components"))
             {
                 var components = (YamlSequenceNode) other["components"];
@@ -341,7 +341,7 @@ namespace Content.Tools
                         if (!MapEntityRecursiveAndBadly(kvp.Key, path))
                             return false;
                     foreach (var kvp in subMapping)
-                        if (!MapEntityRecursiveAndBadly(kvp.Value, path + "/" + kvp.Key.ToString()))
+                        if (!MapEntityRecursiveAndBadly(kvp.Value, path + "/" + kvp.Key))
                             return false;
                     return true;
                 case YamlScalarNode subScalar:

@@ -241,13 +241,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         loader.BackgroundPrograms.Remove(cartridgeUid);
     }
 
-    protected override void OnItemInserted(EntityUid uid, Shared.CartridgeLoader.CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
+    protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
         RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(uid));
         base.OnItemInserted(uid, loader, args);
     }
 
-    protected override void OnItemRemoved(EntityUid uid, Shared.CartridgeLoader.CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
+    protected override void OnItemRemoved(EntityUid uid, CartridgeLoaderComponent loader, EntRemovedFromContainerMessage args)
     {
         var deactivate = loader.BackgroundPrograms.Remove(args.Entity);
 

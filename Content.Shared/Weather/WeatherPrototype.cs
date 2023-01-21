@@ -9,7 +9,7 @@ namespace Content.Shared.Weather;
 [Prototype("weather")]
 public sealed class WeatherPrototype : IPrototype
 {
-    [IdDataFieldAttribute] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; } = default!;
 
     /// <summary>
     /// Minimum duration for the weather.

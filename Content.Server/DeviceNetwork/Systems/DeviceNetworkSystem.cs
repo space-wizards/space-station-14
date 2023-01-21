@@ -174,7 +174,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!Resolve(uid, ref device, false))
                 return;
 
-            if (device.Address == address && device.CustomAddress == true) return;
+            if (device.Address == address && device.CustomAddress) return;
 
             var deviceNet = GetNetwork(device.DeviceNetId);
             deviceNet.Remove(device);
