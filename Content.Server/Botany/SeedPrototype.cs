@@ -218,7 +218,6 @@ public class SeedData
     public SoundSpecifier MandragoraSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
 
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("screaming")] public bool Screaming;
 
     [DataField("bioluminescent")] public bool Bioluminescent;
