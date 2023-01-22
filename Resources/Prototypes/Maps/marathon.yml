@@ -7,6 +7,7 @@
   stations:
     Marathon:
       mapNameTemplate: '{0} Marathon Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'

@@ -140,7 +140,7 @@ namespace Content.Server.Light.EntitySystems
 
             // removing a working bulb, so require a delay
             light.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs((EntityUid) userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
@@ -273,41 +273,38 @@ namespace Content.Server.Light.EntitySystems
                 appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
-            else
+
+            switch (lightBulb.State)
             {
-
-                switch (lightBulb.State)
-                {
-                    case LightBulbState.Normal:
-                        if (powerReceiver.Powered && light.On)
+                case LightBulbState.Normal:
+                    if (powerReceiver.Powered && light.On)
+                    {
+                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
+                        var time = _gameTiming.CurTime;
+                        if (time > light.LastThunk + ThunkDelay)
                         {
-                            SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
-                            var time = _gameTiming.CurTime;
-                            if (time > light.LastThunk + ThunkDelay)
-                            {
-                                light.LastThunk = time;
-                                SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
-                            }
+                            light.LastThunk = time;
+                            SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
                         }
-                        else
-                        {
-                            SetLight(uid, false, light: light);
-                            appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
-                        }
-                        break;
-                    case LightBulbState.Broken:
+                    }
+                    else
+                    {
                         SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
-                        break;
-                    case LightBulbState.Burned:
-                        SetLight(uid, false, light: light);
-                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
-                        break;
-                }
-
-                powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
+                        appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
+                    }
+                    break;
+                case LightBulbState.Broken:
+                    SetLight(uid, false, light: light);
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
+                    break;
+                case LightBulbState.Burned:
+                    SetLight(uid, false, light: light);
+                    appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
+                    break;
             }
+
+            powerReceiver.Load = (light.On && lightBulb.State == LightBulbState.Normal) ? lightBulb.PowerUse : 0;
         }
 
         /// <summary>

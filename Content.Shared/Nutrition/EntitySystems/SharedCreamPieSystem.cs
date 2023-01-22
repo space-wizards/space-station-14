@@ -45,7 +45,7 @@ namespace Content.Shared.Nutrition.EntitySystems
             }
         }
 
-        private void OnCreamPieLand(EntityUid uid, CreamPieComponent component, LandEvent args)
+        private void OnCreamPieLand(EntityUid uid, CreamPieComponent component, ref LandEvent args)
         {
             SplatCreamPie(uid, component);
         }

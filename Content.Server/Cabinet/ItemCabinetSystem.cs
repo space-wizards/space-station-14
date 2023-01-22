@@ -12,6 +12,7 @@ namespace Content.Server.Cabinet
 {
     public sealed class ItemCabinetSystem : EntitySystem
     {
+        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         public override void Initialize()
@@ -33,7 +34,7 @@ namespace Content.Server.Cabinet
 
         private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
+            _itemSlotsSystem.AddItemSlot(uid, _factory.GetComponentName(cabinet.GetType()), cabinet.CabinetSlot);
         }
         private void OnComponentRemove(EntityUid uid, ItemCabinetComponent cabinet, ComponentRemove args)
         {

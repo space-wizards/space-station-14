@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Client.Administration.Managers;
+using Content.Client.Administration.Systems;
 using Content.Shared.Administration;
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
@@ -7,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Utility;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -14,8 +17,11 @@ namespace Content.Client.ContextMenu.UI
     {
         public const string StyleClassEntityMenuCountText = "contextMenuCount";
 
-        [Dependency] private IEntityManager _entityManager = default!;
-        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IClientAdminManager _adminManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
+        private AdminSystem _adminSystem;
 
         /// <summary>
         ///     The entity that can be accessed by interacting with this element.
@@ -36,6 +42,8 @@ namespace Content.Client.ContextMenu.UI
         public EntityMenuElement(EntityUid? entity = null)
         {
             IoCManager.InjectDependencies(this);
+
+            _adminSystem = _entityManager.System<AdminSystem>();
 
             CountLabel = new Label { StyleClasses = { StyleClassEntityMenuCountText } };
             Icon.AddChild(new LayoutContainer() { Children = { EntityIcon, CountLabel } });
@@ -77,12 +85,21 @@ namespace Content.Client.ContextMenu.UI
                 return;
             }
 
-            EntityIcon.Sprite = _entityManager.GetComponentOrNull<ISpriteComponent>(entity);
+            EntityIcon.Sprite = _entityManager.GetComponentOrNull<SpriteComponent>(entity);
 
-            var admin = IoCManager.Resolve<IClientAdminManager>();
+            if (_adminManager.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
+            {
+                var representation = _entityManager.ToPrettyString(entity.Value);
+                var name = representation.Name;
+                var id = representation.Uid;
+                var prototype = representation.Prototype;
+                var playerName =
+                    representation.Session?.Name ??
+                    _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
+                var deleted = representation.Deleted;
 
-            if (admin.HasFlag(AdminFlags.Admin | AdminFlags.Debug))
-                Text = _entityManager.ToPrettyString(entity.Value);
+                Text = $"{name} ({id}{(representation.Prototype != null ? $", {prototype}" : "")}{(playerName != null ? $", {playerName}" : "")}){(deleted ? "D" : "")}";
+            }
             else
                 Text = Identity.Name(entity.Value, _entityManager, _playerManager.LocalPlayer!.ControlledEntity!);
         }

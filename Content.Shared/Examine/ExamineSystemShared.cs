@@ -1,12 +1,13 @@
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
@@ -17,7 +18,7 @@ namespace Content.Shared.Examine
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
+        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -46,6 +47,9 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
+            if (entity.IsClientSide())
+                return true;
+
             // check if the mob is in critical or dead
             if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
@@ -158,7 +162,8 @@ namespace Content.Shared.Examine
             var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && length > range) return false;
+            // TODO: This rounding check is here because the API is kinda eh
+            if (range > 0f && length > range + 0.01f) return false;
 
             if (MathHelper.CloseTo(length, 0)) return true;
 

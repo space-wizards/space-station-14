@@ -85,7 +85,7 @@ namespace Content.Client.Clickable
                 // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
                 // This **can** differ from the dir defined before, but can also just be the same.
                 if (sprite.EnableDirectionOverride)
-                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);;
+                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);
                 dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi!, layer.State, dir, layer.AnimationFrame, layerImagePos))
@@ -98,7 +98,7 @@ namespace Content.Client.Clickable
             return false;
         }
 
-        public bool CheckDirBound(ISpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
+        public bool CheckDirBound(SpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
         {
             if (Bounds == null)
                 return false;

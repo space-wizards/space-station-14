@@ -128,7 +128,7 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             case EntityTargetAction entityAction:
 
-                if (ev.EntityTarget is not EntityUid { Valid: true } entityTarget)
+                if (ev.EntityTarget is not { Valid: true } entityTarget)
                 {
                     Logger.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
                     return;

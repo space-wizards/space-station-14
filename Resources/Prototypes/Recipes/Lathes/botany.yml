@@ -29,3 +29,14 @@
   materials:
     Steel: 200
     Plastic: 100
+    
+- type: latheRecipe
+  id: Clippers
+  icon:
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+    state: icon
+  result: HydroponicsToolClippers
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 100

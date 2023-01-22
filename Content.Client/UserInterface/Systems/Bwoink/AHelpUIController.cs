@@ -1,7 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.Administration.Managers;
 using Content.Client.Administration.Systems;
 using Content.Client.Administration.UI;
+using Content.Client.Administration.UI.Bwoink;
 using Content.Client.Administration.UI.CustomControls;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
@@ -11,6 +13,7 @@ using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -19,6 +22,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using BwoinkPanel = Content.Client.Administration.UI.Bwoink.BwoinkPanel;
 
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
@@ -28,13 +32,14 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
     [Dependency] private readonly IClientAdminManager _adminManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IClyde _clyde = default!;
+    [Dependency] private readonly IUserInterfaceManager _uiManager = default!;
     private BwoinkSystem? _bwoinkSystem;
     private MenuButton? AhelpButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AHelpButton;
-    private IAHelpUIHandler? _uiHelper;
+    public IAHelpUIHandler? UIHelper;
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(_uiHelper == null);
+        DebugTools.Assert(UIHelper == null);
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
 
         CommandBinds.Builder
@@ -65,23 +70,24 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     private void OnAdminStatusUpdated()
     {
-        if (_uiHelper is not { IsOpen: true })
+        if (UIHelper is not { IsOpen: true })
             return;
         EnsureUIHelper();
     }
 
+
     private void AHelpButtonPressed(BaseButton.ButtonEventArgs obj)
     {
         EnsureUIHelper();
-        _uiHelper!.ToggleWindow();
+        UIHelper!.ToggleWindow();
     }
 
     public void OnStateExited(GameplayState state)
     {
         SetAHelpPressed(false);
         _adminManager.AdminStatusUpdated -= OnAdminStatusUpdated;
-        _uiHelper?.Dispose();
-        _uiHelper = null;
+        UIHelper?.Dispose();
+        UIHelper = null;
         CommandBinds.Unregister<AHelpUIController>();
     }
     public void OnSystemLoaded(BwoinkSystem system)
@@ -120,33 +126,33 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
         }
 
         EnsureUIHelper();
-        if (!_uiHelper!.IsOpen)
+        if (!UIHelper!.IsOpen)
         {
             AhelpButton?.StyleClasses.Add(MenuButton.StyleClassRedTopButton);
         }
-        _uiHelper!.Receive(message);
+        UIHelper!.Receive(message);
     }
 
     public void EnsureUIHelper()
     {
         var isAdmin = _adminManager.HasFlag(AdminFlags.Adminhelp);
 
-        if (_uiHelper != null && _uiHelper.IsAdmin == isAdmin)
+        if (UIHelper != null && UIHelper.IsAdmin == isAdmin)
             return;
 
-        _uiHelper?.Dispose();
-        var ownerUserId = _playerManager!.LocalPlayer!.UserId;
-        _uiHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId) : new UserAHelpUIHandler(ownerUserId);
+        UIHelper?.Dispose();
+        var ownerUserId = _playerManager.LocalPlayer!.UserId;
+        UIHelper = isAdmin ? new AdminAHelpUIHandler(ownerUserId) : new UserAHelpUIHandler(ownerUserId);
 
-        _uiHelper.SendMessageAction = (userId, textMessage) => _bwoinkSystem?.Send(userId, textMessage);
-        _uiHelper.OnClose += () => { SetAHelpPressed(false); };
-        _uiHelper.OnOpen +=  () => { SetAHelpPressed(true); };
-        SetAHelpPressed(_uiHelper.IsOpen);
+        UIHelper.SendMessageAction = (userId, textMessage) => _bwoinkSystem?.Send(userId, textMessage);
+        UIHelper.OnClose += () => { SetAHelpPressed(false); };
+        UIHelper.OnOpen +=  () => { SetAHelpPressed(true); };
+        SetAHelpPressed(UIHelper.IsOpen);
     }
 
     public void Close()
     {
-        _uiHelper?.Close();
+        UIHelper?.Close();
     }
 
     public void Open()
@@ -157,24 +163,63 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
             return;
         }
         EnsureUIHelper();
-        if (_uiHelper!.IsOpen)
+        if (UIHelper!.IsOpen)
             return;
-        _uiHelper!.Open(localPlayer.UserId);
+        UIHelper!.Open(localPlayer.UserId);
     }
     public void Open(NetUserId userId)
     {
         EnsureUIHelper();
-        if (!_uiHelper!.IsAdmin)
+        if (!UIHelper!.IsAdmin)
             return;
-        _uiHelper?.Open(userId);
+        UIHelper?.Open(userId);
     }
+
     public void ToggleWindow()
     {
         EnsureUIHelper();
-        _uiHelper?.ToggleWindow();
+        UIHelper?.ToggleWindow();
+    }
+
+
+    public void PopOut()
+    {
+        EnsureUIHelper();
+        if (UIHelper is not AdminAHelpUIHandler helper)
+            return;
+
+        if (helper.Window == null || helper.Control == null)
+        {
+            return;
+        }
+
+        helper.Control.Orphan();
+        helper.Window.Dispose();
+        helper.Window = null;
+
+        var monitor = _clyde.EnumerateMonitors().First();
+
+        helper.ClydeWindow = _clyde.CreateWindow(new WindowCreateParameters
+        {
+            Maximized = false,
+            Title = "Admin Help",
+            Monitor = monitor,
+            Width = 900,
+            Height = 500
+        });
+
+        helper.ClydeWindow.RequestClosed += helper.OnRequestClosed;
+        helper.ClydeWindow.DisposeOnClose = true;
+
+        helper.WindowRoot = _uiManager.CreateWindowRoot(helper.ClydeWindow);
+        helper.WindowRoot.AddChild(helper.Control);
+
+        helper.Control.PopOut.Disabled = true;
+        helper.Control.PopOut.Visible = false;
     }
 }
 
+// please kill all this indirection
 public interface IAHelpUIHandler: IDisposable
 {
     public bool IsAdmin { get; }
@@ -196,31 +241,54 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     }
     private readonly Dictionary<NetUserId, BwoinkPanel> _activePanelMap = new();
     public bool IsAdmin => true;
-    public bool IsOpen => _window is { Disposed: false, IsOpen: true };
-    private BwoinkWindow? _window;
+    public bool IsOpen => Window is { Disposed: false, IsOpen: true } || ClydeWindow is { IsDisposed: false };
+
+    public BwoinkWindow? Window;
+    public WindowRoot? WindowRoot;
+    public IClydeWindow? ClydeWindow;
+    public BwoinkControl? Control;
 
     public void Receive(SharedBwoinkSystem.BwoinkTextMessage message)
     {
-        var window = EnsurePanel(message.UserId);
-        window.ReceiveLine(message);
-        _window?.OnBwoink(message.UserId);
+        var panel = EnsurePanel(message.UserId);
+        panel.ReceiveLine(message);
+        Control?.OnBwoink(message.UserId);
     }
 
     public void Close()
     {
-        _window?.Close();
+        Window?.Close();
+
+        // popped-out window is being closed
+        if (ClydeWindow != null)
+        {
+            ClydeWindow.RequestClosed -= OnRequestClosed;
+            ClydeWindow.Dispose();
+            // need to dispose control cause we cant reattach it directly back to the window
+            // but orphan panels first so -they- can get readded when the window is opened again
+            if (Control != null)
+            {
+                foreach (var (_, panel) in _activePanelMap)
+                {
+                    panel.Orphan();
+                }
+                Control?.Dispose();
+            }
+            // window wont be closed here so we will invoke ourselves
+            OnClose?.Invoke();
+        }
     }
 
     public void ToggleWindow()
     {
         EnsurePanel(_ownerId);
-        if (_window!.IsOpen)
+        if (IsOpen)
         {
-            _window.Close();
+            Close();
         }
         else
         {
-            _window.OpenCentered();
+            Window!.OpenCentered();
         }
     }
 
@@ -231,28 +299,46 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     public void Open(NetUserId channelId)
     {
         SelectChannel(channelId);
-        _window?.OpenCentered();
+        Window?.OpenCentered();
     }
 
-    private void EnsureWindow()
+    public void OnRequestClosed(WindowRequestClosedEventArgs args)
     {
-        if (_window is { Disposed: false })
-            return;
-        _window = new BwoinkWindow(this);
-        _window.OnClose += () => { OnClose?.Invoke(); };
-        _window.OnOpen += () => { OnOpen?.Invoke(); };
+        Close();
     }
+
+    private void EnsureControl()
+    {
+        if (Control is { Disposed: false })
+            return;
+
+        Window = new BwoinkWindow();
+        Control = Window.Bwoink;
+        Window.OnClose += () => { OnClose?.Invoke(); };
+        Window.OnOpen += () => { OnOpen?.Invoke(); };
+
+        // need to readd any unattached panels..
+        foreach (var (_, panel) in _activePanelMap)
+        {
+            if (!Control!.BwoinkArea.Children.Contains(panel))
+            {
+                Control!.BwoinkArea.AddChild(panel);
+            }
+            panel.Visible = false;
+        }
+    }
+
     public BwoinkPanel EnsurePanel(NetUserId channelId)
     {
-        EnsureWindow();
+        EnsureControl();
 
         if (_activePanelMap.TryGetValue(channelId, out var existingPanel))
             return existingPanel;
 
         _activePanelMap[channelId] = existingPanel = new BwoinkPanel(text => SendMessageAction?.Invoke(channelId, text));
         existingPanel.Visible = false;
-        if (!_window!.BwoinkArea.Children.Contains(existingPanel))
-            _window.BwoinkArea.AddChild(existingPanel);
+        if (!Control!.BwoinkArea.Children.Contains(existingPanel))
+            Control.BwoinkArea.AddChild(existingPanel);
 
         return existingPanel;
     }
@@ -261,13 +347,14 @@ public sealed class AdminAHelpUIHandler : IAHelpUIHandler
     private void SelectChannel(NetUserId uid)
     {
         EnsurePanel(uid);
-        _window!.SelectChannel(uid);
+        Control!.SelectChannel(uid);
     }
 
     public void Dispose()
     {
-        _window?.Dispose();
-        _window = null;
+        Window?.Dispose();
+        Window = null;
+        Control = null;
         _activePanelMap.Clear();
     }
 }
@@ -307,6 +394,11 @@ public sealed class UserAHelpUIHandler : IAHelpUIHandler
         {
             _window.OpenCentered();
         }
+    }
+
+    // user can't pop out their window.
+    public void PopOut()
+    {
     }
 
     public event Action? OnClose;

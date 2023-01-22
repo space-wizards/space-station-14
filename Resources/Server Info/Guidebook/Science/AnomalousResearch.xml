@@ -1,0 +1,41 @@
+<Document>
+# Anomalous Research
+
+Anomalous Research is a subdepartment of Science focused around the containment and manipulation of various unique anomalies.
+
+## Equipment
+<Box>
+<GuideEntityEmbed Entity="AnomalyScanner"/>
+<GuideEntityEmbed Entity="MachineAnomalyVessel"/>
+<GuideEntityEmbed Entity="MachineAPE"/>
+</Box>
+
+Scanners, vessels, and A.P.E.s are all used in the containment and observation of anomalies.
+
+<Box>
+<GuideEntityEmbed Entity="MachineAnomalyGenerator"/>
+</Box>
+
+The anomaly generator can produce a random anomaly somewhere on the station at the cost of plasma.
+
+## Anomalies
+Anomalies are static objects that appear on the station. They cannot be moved, and must be worked around, no matter their location.
+
+<Box>
+<GuideEntityEmbed Entity="AnomalyPyroclastic"/>
+</Box>
+
+Each anomaly has three main stats, two of which can be seen in anomaly scans:
+
+- [color=#a4885c]Severity:[/color] This is a numerical value corresponding to the danger of an anomaly.
+- [color=#a4885c]Stability:[/color] Shown as either decaying, stable, or growing; this is how frequently and widespread the effects will be.
+- [color=#a4885c]Health:[/color] Health is a hidden stat. It decreases when you use [color=#a4885c]containment particles[/color] on an anomaly. If you use too many, the anomaly will disappear.
+
+## Pulses and Supercritical Events
+The most dangerous effects of anomalies are seen during [color=#a4885c]pulses[/color] and [color=#a4885c]supercritical events[/color].
+
+Pulses are semi-regular bursts of anomalous effects. They're moderately dangerous, scaling with both the severity and stability of an anomaly.
+
+Supercritical events are only seen if an anomaly reaches 100% severity. If this happens, the anomaly will swell before disappearing into a catastrophic event. These should be avoided at all costs!
+
+</Document>
