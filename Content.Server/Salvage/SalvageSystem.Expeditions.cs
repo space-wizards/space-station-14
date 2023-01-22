@@ -5,6 +5,7 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Extraction;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -190,8 +191,7 @@ public sealed partial class SalvageSystem
         }
 
         grid.SetTiles(tiles);
-        // TODO: Better
-        Spawn("FTLPoint", new EntityCoordinates(grid.Owner, Vector2.Zero));
+        var ftlUid = Spawn("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
 
         switch (config.Expedition)
         {

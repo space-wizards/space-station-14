@@ -81,7 +81,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            _shuttle.FTLTravel(shuttle, args.Destination, hyperspaceTime: _shuttle.TransitTime);
+            _shuttle.FTLTravel(shuttle, args.Destination);
         }
 
         private void OnDock(DockEvent ev)
