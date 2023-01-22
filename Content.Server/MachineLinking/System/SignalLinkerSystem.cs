@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Tools;
 using Content.Shared.DeviceLinking.Events;

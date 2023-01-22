@@ -1,15 +1,14 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.MachineLinking.Components;
+using Content.Server.MachineLinking.System;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Interaction;
-using Content.Shared.MachineLinking;
 using Content.Shared.Verbs;
 
-namespace Content.Server.MachineLinking.System
+namespace Content.Server.DeviceLinking.Systems
 {
     public sealed class TwoWayLeverSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
 
         const string _leftToggleImage = "rotate_ccw.svg.192dpi.png";
         const string _rightToggleImage = "rotate_cw.svg.192dpi.png";
@@ -24,7 +23,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnInit(EntityUid uid, TwoWayLeverComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureTransmitterPorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
+            _signalSystem.EnsureSourcePorts(uid, component.LeftPort, component.RightPort, component.MiddlePort);
         }
 
         private void OnActivated(EntityUid uid, TwoWayLeverComponent component, ActivateInWorldEvent args)

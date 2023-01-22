@@ -242,10 +242,15 @@
       inlet: inlet
       outlet: outlet
       canLink: true
-    - type: SignalReceiver
-      inputs:
-        Pressurize: []
-        Depressurize: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
+      ports:
+        - Pressurize
+        - Depressurize
     - type: Construction
       graph: GasBinary
       node: dualportventpump

@@ -18,9 +18,7 @@
       startOnStick: true
       canToggleStartOnStick: true
     - type: TriggerOnSignal
-    - type: SignalReceiver
-      inputs:
-        Trigger: []
+    - type: DeviceLinkSink
     - type: Sticky
       stickDelay: 5
       unstickDelay: 5

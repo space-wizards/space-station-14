@@ -84,9 +84,15 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetwork
-    deviceNetId: Apc
+    deviceNetId: Wireless
     receiveFrequencyId: SmartLight
-  - type: ApcNetworkConnection
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSink
+    ports:
+      - On
+      - Off
+      - Toggle
   - type: Construction
     graph: LightFixture
     node: groundLight
@@ -95,11 +101,6 @@
     - type: PoweredLightVisualizer
       blinkingSound:
         path: "/Audio/Machines/light_tube_on.ogg"
-  - type: SignalReceiver
-    inputs:
-      On: []
-      Off: []
-      Toggle: []
 
 - type: entity
   id: PoweredLightPostSmall

@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Events;
 using Content.Server.Paper;
 using Content.Server.Power.Components;
 using Content.Server.Research.Systems;

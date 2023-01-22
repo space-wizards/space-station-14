@@ -1,14 +1,14 @@
 using Content.Server.DeviceLinking.Components;
-using Content.Server.MachineLinking.Components;
-using JetBrains.Annotations;
+using Content.Server.MachineLinking.System;
 using Content.Shared.Interaction.Events;
+using JetBrains.Annotations;
 
-namespace Content.Server.MachineLinking.System
+namespace Content.Server.DeviceLinking.Systems
 {
     [UsedImplicitly]
     public sealed class SignallerSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -18,7 +18,7 @@ namespace Content.Server.MachineLinking.System
 
         private void OnInit(EntityUid uid, SignallerComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureTransmitterPorts(uid, component.Port);
+            _signalSystem.EnsureSourcePorts(uid, component.Port);
         }
 
         private void OnUseInHand(EntityUid uid, SignallerComponent component, UseInHandEvent args)
@@ -27,6 +27,6 @@ namespace Content.Server.MachineLinking.System
                 return;
             _signalSystem.InvokePort(uid, component.Port);
             args.Handled = true;
-        }   
+        }
     }
 }

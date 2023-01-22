@@ -1,7 +1,7 @@
 using Content.Server.Conveyor;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Gravity;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
@@ -14,7 +14,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Controllers;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 
@@ -27,7 +26,7 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly RecyclerSystem _recycler = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -70,7 +69,7 @@ namespace Content.Server.Physics.Controllers
 
         private void OnInit(EntityUid uid, ConveyorComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
+            _signalSystem.EnsureSinkPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
 
             if (TryComp<PhysicsComponent>(uid, out var body))
             {

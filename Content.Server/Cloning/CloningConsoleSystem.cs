@@ -2,17 +2,17 @@ using System.Linq;
 using JetBrains.Annotations;
 using Content.Server.Medical.Components;
 using Content.Server.Cloning.Components;
-using Content.Server.MachineLinking.Components;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Mind.Components;
-using Content.Server.MachineLinking.System;
-using Content.Server.MachineLinking.Events;
 using Content.Server.UserInterface;
 using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Content.Shared.Cloning.CloningConsole;
 using Content.Shared.Cloning;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mobs.Components;
@@ -23,7 +23,7 @@ namespace Content.Server.Cloning
     [UsedImplicitly]
     public sealed class CloningConsoleSystem : EntitySystem
     {
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly CloningSystem _cloningSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -44,7 +44,7 @@ namespace Content.Server.Cloning
 
         private void OnInit(EntityUid uid, CloningConsoleComponent component, ComponentInit args)
         {
-            _signalSystem.EnsureTransmitterPorts(uid, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
+            _signalSystem.EnsureSourcePorts(uid, CloningConsoleComponent.ScannerPort, CloningConsoleComponent.PodPort);
         }
         private void OnButtonPressed(EntityUid uid, CloningConsoleComponent consoleComponent, UiButtonPressedMessage args)
         {
@@ -68,20 +68,20 @@ namespace Content.Server.Cloning
 
         private void OnMapInit(EntityUid uid, CloningConsoleComponent component, MapInitEvent args)
         {
-            if (!TryComp<SignalTransmitterComponent>(uid, out var receiver))
+            if (!TryComp<DeviceLinkSourceComponent>(uid, out var receiver))
                 return;
 
             foreach (var port in receiver.Outputs.Values.SelectMany(ports => ports))
             {
-                if (TryComp<MedicalScannerComponent>(port.Uid, out var scanner))
+                if (TryComp<MedicalScannerComponent>(port, out var scanner))
                 {
-                    component.GeneticScanner = port.Uid;
+                    component.GeneticScanner = port;
                     scanner.ConnectedConsole = uid;
                 }
 
-                if (TryComp<CloningPodComponent>(port.Uid, out var pod))
+                if (TryComp<CloningPodComponent>(port, out var pod))
                 {
-                    component.CloningPod = port.Uid;
+                    component.CloningPod = port;
                     pod.ConnectedConsole = uid;
                 }
             }

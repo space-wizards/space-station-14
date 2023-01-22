@@ -23,45 +23,14 @@
     graph: SignalSwitchGraph
     node: SignalSwitchNode
   - type: Fixtures
-  - type: SignalTransmitter
-    outputs:
-      On: []
-      Off: []
-
-- type: entity
-  id: DeviceLinkSwitch
-  name: device link switch
-  description: It's a switch for toggling power to things.
-  placement:
-    mode: SnapgridCenter
-    snap:
-      - Wallmount
-  components:
-    - type: WallMount
-      arc: 360
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-    - type: Sprite
-      sprite: Structures/Wallmounts/switch.rsi
-      state: on
-    - type: DeviceNetwork
-      deviceNetId: Wireless
-      receiveFrequency: 222
-    - type: UseDelay
-      delay: 0.5 # prevent light-toggling auto-clickers.
-    - type: Rotatable
-    #- type: Construction
-    #  graph: SignalSwitchGraph
-    #  node: SignalSwitchNode
-    - type: Fixtures
-    - type: DeviceLinkSource
-      ports:
-        - Pressed
-    #- type: SignalTransmitter
-    #  outputs:
-    #    On: []
-    #    Off: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    ports:
+      - On
+      - Off
 
 - type: entity
   id: SignalButton
@@ -90,9 +59,13 @@
     graph: SignalButtonGraph
     node: SignalButtonNode
   - type: Fixtures
-  - type: SignalTransmitter
-    outputs:
-      Pressed: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -179,8 +152,12 @@
     - type: Construction
       graph: LeverGraph
       node: LeverNode
-    - type: SignalTransmitter
-      outputs:
-        Left: []
-        Right: []
-        Middle: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSource
+      ports:
+        - Left
+        - Right
+        - Middle
