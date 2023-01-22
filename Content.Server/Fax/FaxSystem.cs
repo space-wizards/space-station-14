@@ -226,7 +226,7 @@ public sealed class FaxSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnEmagged(EntityUid uid, FaxMachineComponent component, GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, FaxMachineComponent component, ref GotEmaggedEvent args)
     {
         if (component.Emagged)
             return;
