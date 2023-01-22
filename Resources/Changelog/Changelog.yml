@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Bandaid medibots spamming speech., type: Fix}
-  id: 2441
-  time: '2022-10-13T10:36:29.0000000+00:00'
 - author: DrSmugleaf
   changes:
   - {message: Fixed some actions such as PDA and helmet lights having the same icon.,
@@ -2942,3 +2937,8 @@ Entries:
   - {message: The lesbian flag pin is no longer upside down., type: Fix}
   id: 2940
   time: '2023-01-21T03:16:34.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Correct bolts light state display, type: Fix}
+  id: 2941
+  time: '2023-01-21T16:33:12.0000000+00:00'

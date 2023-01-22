@@ -314,6 +314,9 @@ public sealed class WiresSystem : EntitySystem
     {
         foreach (var (owner, activeWires) in _activeWires)
         {
+            if (!HasComp<WiresComponent>(owner))
+                _activeWires.Remove(owner);
+
             foreach (var wire in activeWires)
             {
                 if (wire.CancelToken.IsCancellationRequested)
