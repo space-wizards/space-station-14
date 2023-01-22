@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Server.UserInterface;
@@ -82,7 +83,7 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                string commaSeparated = string.Join(", ", paperComp.StampedBy);
+                string commaSeparated = string.Join(", ", paperComp.StampedBy.Select(s => Loc.GetString(s.StampName)));
                 args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
@@ -109,11 +110,15 @@ namespace Content.Server.Paper
             if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, GetStampInfo(stampComp), stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
-                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
-                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self", ("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
-                    _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
-
+                var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
+                        ("user", Identity.Entity(args.User, EntityManager)),
+                        ("target", Identity.Entity(args.Target, EntityManager)),
+                        ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
+                var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
+                        ("target", Identity.Entity(args.Target, EntityManager)),
+                        ("stamp", args.Used));
+                _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
                 UpdateUserInterface(uid, paperComp);
             }
         }

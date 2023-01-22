@@ -382,6 +382,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-mime
+    stampedColor: "#ffffff"
     stampState: "paper_stamp-mime"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -397,6 +398,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-captain
+    stampedColor: "#3681bb"
     stampState: "paper_stamp-cap"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -409,6 +411,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-centcom
+    stampedColor: "#006600"
     stampState: "paper_stamp-cent"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -421,6 +424,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-chaplain
+    stampedColor: "#d70601"
     stampState: "paper_stamp-chaplain"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -433,6 +437,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-clown
+    stampedColor: "#ff33cc"
     stampState: "paper_stamp-clown"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -448,6 +453,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-cmo
+    stampedColor: "#33ccff"
     stampState: "paper_stamp-cmo"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -460,6 +466,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-denied
+    stampedColor: "#a23e3e"
     stampState: "paper_stamp-deny"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -472,6 +479,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-approved
+    stampedColor: "#00be00"
     stampState: "paper_stamp-iaa"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -484,6 +492,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hop
+    stampedColor: "#6ec0ea"
     stampState: "paper_stamp-hop"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -496,6 +505,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-hos
+    stampedColor: "#cc0000"
     stampState: "paper_stamp-hos"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -508,6 +518,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-qm
+    stampedColor: "#a23e3e"
     stampState: "paper_stamp-qm"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -520,6 +531,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-rd
+    stampedColor: "#1f66a0"
     stampState: "paper_stamp-rd"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -532,6 +544,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-warden
+    stampedColor: "#5b0000"
     stampState: "paper_stamp-warden"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -544,6 +557,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-trader
+    stampedColor: "#000000"
     stampState: "paper_stamp-trader"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -556,6 +570,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-syndicate
+    stampedColor: "#850000"
     stampState: "paper_stamp-syndicate"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
@@ -568,6 +583,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-ce
+    stampedColor: "#e1e100"
     stampState: "paper_stamp-ce"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
