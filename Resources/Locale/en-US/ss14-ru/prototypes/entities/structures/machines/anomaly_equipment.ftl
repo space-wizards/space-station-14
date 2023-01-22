@@ -5,5 +5,5 @@ ent-MachineAPE = A.P.E.
     .desc = An Anomalous Particle Emitter, capable of shooting out unstable particles which can interface with anomalies.
     .suffix = { "" }
 ent-MachineAnomalyGenerator = anomaly generator
-    .desc = The peak of psuedoscientific technology.
+    .desc = The peak of pseudoscientific technology.
     .suffix = { "" }

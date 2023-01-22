@@ -73,17 +73,15 @@ namespace Content.Shared.Humanoid.Markings
                 return 1;
             }
 
-            return MarkingId.CompareTo(marking.MarkingId);
+            return string.Compare(MarkingId, marking.MarkingId, StringComparison.Ordinal);
         }
 
         public int CompareTo(string? markingId)
         {
             if (markingId == null)
-            {
                 return 1;
-            }
 
-            return MarkingId.CompareTo(markingId);
+            return string.Compare(MarkingId, markingId, StringComparison.Ordinal);
         }
 
         public bool Equals(Marking? other)

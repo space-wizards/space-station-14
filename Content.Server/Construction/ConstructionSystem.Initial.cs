@@ -23,7 +23,7 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-
+        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
@@ -192,7 +192,7 @@ namespace Content.Server.Construction
                     case ArbitraryInsertConstructionGraphStep arbitraryStep:
                         foreach (var entity in EnumerateNearby(user))
                         {
-                            if (!arbitraryStep.EntityValid(entity, EntityManager))
+                            if (!arbitraryStep.EntityValid(entity, EntityManager, _factory))
                                 continue;
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))
@@ -455,7 +455,7 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case EntityInsertConstructionGraphStep entityInsert:
-                        if (entityInsert.EntityValid(holding, EntityManager))
+                        if (entityInsert.EntityValid(holding, EntityManager, _factory))
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:
@@ -490,7 +490,7 @@ namespace Content.Server.Construction
             EntityManager.GetComponent<TransformComponent>(structure).Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
-            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has started construction on the ghost of a {ev.PrototypeName}");
+            _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }
     }

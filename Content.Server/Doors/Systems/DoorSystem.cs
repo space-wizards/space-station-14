@@ -130,7 +130,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (tool.Qualities.Contains(door.PryingQuality))
         {
             args.Handled = TryPryDoor(uid, args.Used, args.User, door);
-            return;
         }
     }
 
@@ -268,7 +267,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if (Tags.HasTag(otherUid, "DoorBumpOpener"))
             TryOpen(uid, door, otherUid);
     }
-    private void OnEmagged(EntityUid uid, DoorComponent door, GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, DoorComponent door, ref GotEmaggedEvent args)
     {
         if(TryComp<AirlockComponent>(uid, out var airlockComponent))
         {

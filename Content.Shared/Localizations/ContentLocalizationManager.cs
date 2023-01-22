@@ -100,7 +100,7 @@ namespace Content.Shared.Localizations
                 iargs[i - 2] = n;
             }
 
-            if (!ut!.TryGetUnit(max, out var mu))
+            if (!ut.TryGetUnit(max, out var mu))
                 throw new ArgumentException("Unit out of range for type");
 
             var fargs = new object[iargs.Length];

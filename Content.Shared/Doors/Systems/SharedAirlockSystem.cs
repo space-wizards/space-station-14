@@ -62,17 +62,11 @@ public abstract class SharedAirlockSystem : EntitySystem
 
     public void SetSafety(AirlockComponent component, bool value)
     {
-        if (component.Safety == value)
-            return;
-
         component.Safety = value;
     }
 
     public void SetBoltWireCut(AirlockComponent component, bool value)
     {
-        if (component.BoltWireCut == value)
-            return;
-
         component.BoltWireCut = value;
     }
 }

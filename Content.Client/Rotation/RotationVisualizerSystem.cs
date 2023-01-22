@@ -45,7 +45,6 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
         {
             AnimationSystem.Stop(animationComp, animationKey);
         }
-        spriteComp.Rotation = rotation;
 
         var animation = new Animation
         {

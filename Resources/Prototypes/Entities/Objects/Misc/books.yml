@@ -11,6 +11,7 @@
     - state: book0
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Paper
+    contentSize: 3000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false

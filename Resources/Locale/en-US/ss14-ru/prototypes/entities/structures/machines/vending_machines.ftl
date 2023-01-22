@@ -1,6 +1,9 @@
 ent-VendingMachine = vending machine
     .desc = Just add capitalism!
     .suffix = { "" }
+ent-VendingMachineCondiments = Condiment Station
+    .desc = Slather these thick gooey substances on your food for a full flavor effect.
+    .suffix = { "" }
 ent-VendingMachineAmmo = Liberation Station
     .desc = An overwhelming amount of ancient patriotism washes over you just by looking at the machine.
     .suffix = { "" }

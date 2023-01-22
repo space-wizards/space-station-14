@@ -12,6 +12,9 @@ gun-FullAuto = авто
 gun-ballistic-cycle = Перезарядка
 gun-ballistic-cycled = Перезаряжено
 gun-ballistic-cycled-empty = Разряжено
+gun-ballistic-transfer-invalid = { CAPITALIZE(THE($ammoEntity)) } won't fit inside { THE($targetEntity) }!
+gun-ballistic-transfer-empty = { CAPITALIZE(THE($entity)) } is empty.
+gun-ballistic-transfer-target-full = { CAPITALIZE(THE($entity)) } is already fully loaded.
 # CartridgeAmmo
 gun-cartridge-spent = Он [color=red]израсходован[/color].
 gun-cartridge-unspent = Он [color=lime]не израсходован[/color].

@@ -1,6 +1,9 @@
 ent-VendingMachine = торговый автомат
     .desc = Просто добавь капитализма!
     .suffix = { "" }
+ent-VendingMachineCondiments = Condiment Station
+    .desc = Slather these thick gooey substances on your food for a full flavor effect.
+    .suffix = { "" }
 ent-VendingMachineAmmo = Станция Свободы
     .desc = При одном только взгляде на машину вас охватывает непреодолимое чувство древнего патриотизма.
     .suffix = { "" }
