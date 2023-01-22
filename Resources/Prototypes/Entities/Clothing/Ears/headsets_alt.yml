@@ -103,7 +103,7 @@
     sprite: Clothing/Ears/Headsets/engineering.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/engineering.rsi
- 
+
 - type: entity
   parent: ClothingHeadsetAlt
   id: ClothingHeadsetAltScience
@@ -150,3 +150,6 @@
     sprite: Clothing/Ears/Headsets/syndicate.rsi
   - type: Clothing
     sprite: Clothing/Ears/Headsets/syndicate.rsi
+  - type: Tag
+    tags:
+      - WhitelistChameleon

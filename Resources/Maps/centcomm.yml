@@ -33065,7 +33065,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3765
-  type: d100Dice
+  type: PercentileDie
   components:
   - pos: -18.522638,2.6762333
     parent: 0

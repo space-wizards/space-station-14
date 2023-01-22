@@ -112,7 +112,7 @@ namespace Content.Server.Bed
             UpdateMetabolisms(uid, component, args.Powered);
         }
 
-        private void OnEmagged(EntityUid uid, StasisBedComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
             // Repeatable
             // Reset any metabolisms first so they receive the multiplier correctly
