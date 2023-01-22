@@ -311,6 +311,22 @@ binds:
   type: State
   key: BackSpace
   canRepeat: true
+- function: TextDelete
+  type: State
+  key: Delete
+  canRepeat: true
+- function: TextWordBackspace
+  type: State
+  key: BackSpace
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
+- function: TextWordDelete
+  type: State
+  key: Delete
+  mod1: Control
+  canRepeat: true
+  allowSubCombs: true
 - function: TextNewline
   type: State
   key: Return
@@ -368,10 +384,6 @@ binds:
 - function: TextScrollToBottom
   type: State
   key: PageDown
-- function: TextDelete
-  type: State
-  key: Delete
-  canRepeat: true
 - function: TextTabComplete
   type: State
   key: Tab
