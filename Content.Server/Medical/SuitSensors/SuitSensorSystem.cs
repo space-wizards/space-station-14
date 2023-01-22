@@ -38,7 +38,6 @@ namespace Content.Server.Medical.SuitSensors
         {
             base.Initialize();
             SubscribeLocalEvent<SuitSensorComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<SuitSensorComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<SuitSensorComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<SuitSensorComponent, GotUnequippedEvent>(OnUnequipped);
             SubscribeLocalEvent<SuitSensorComponent, ExaminedEvent>(OnExamine);
@@ -102,6 +101,8 @@ namespace Content.Server.Medical.SuitSensors
 
         private void OnMapInit(EntityUid uid, SuitSensorComponent component, MapInitEvent args)
         {
+            component.StationId = _stationSystem.GetOwningStation(uid);
+
             // generate random mode
             if (component.RandomMode)
             {
@@ -115,11 +116,6 @@ namespace Content.Server.Medical.SuitSensors
                 };
                 component.Mode = _random.Pick(modesDist);
             }
-        }
-
-        private void OnComponentInit(EntityUid uid, SuitSensorComponent component, ComponentInit args)
-        {
-            component.StationId = _stationSystem.GetOwningStation(uid);
         }
 
         private void OnEquipped(EntityUid uid, SuitSensorComponent component, GotEquippedEvent args)
