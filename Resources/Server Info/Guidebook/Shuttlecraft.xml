@@ -1,17 +1,31 @@
 <Document>
-# Постройка шаттлов
+# Шатлло-строй
 
 Постройка шаттлов простая и лёгкая, хотя и довольно долгая и трудная задача чтобы осуществить её в течении часа. Это хорошее занятие, если вы имеете достаточно свободного времени и хотите испытать себя.
 ## Приступая к работе
 <Box>Нужные части:</Box>
 <Box>
 <GuideEntityEmbed Entity="Thruster"/>
+<GuideEntityEmbed Entity="Gyroscope"/>
+<GuideEntityEmbed Entity="ComputerShuttle"/>
+<GuideEntityEmbed Entity="SubstationBasic"/>
+<GuideEntityEmbed Entity="GeneratorPlasma"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="CableHVStack"/>
+<GuideEntityEmbed Entity="CableMVStack"/>
+<GuideEntityEmbed Entity="CableApcStack"/>
 <GuideEntityEmbed Entity="APCBasic"/>
 </Box>
 <Box>Необязательные части:</Box>
 <Box>
 <GuideEntityEmbed Entity="AirCanister"/>
 <GuideEntityEmbed Entity="LightTube"/>
+<GuideEntityEmbed Entity="AirlockGlassShuttle"/>
+<GuideEntityEmbed Entity="SMESBasic"/>
+</Box>
+<Box>
+<GuideEntityEmbed Entity="MobCorgiIan"/>
 <GuideEntityEmbed Entity="NuclearBomb"/>
 </Box>
 
