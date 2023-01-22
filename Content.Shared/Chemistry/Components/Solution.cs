@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.Components
     public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // This is a list because it is actually faster to add and remove reagents from
-        // a list than a dictionary, though contains-reagent checks are slightly slower, 
+        // a list than a dictionary, though contains-reagent checks are slightly slower,
         [DataField("reagents")]
         public List<ReagentQuantity> Contents = new(2);
 
@@ -317,16 +317,16 @@ namespace Content.Shared.Chemistry.Components
             if (scale == 1)
                 return;
 
-            if (scale == 0)
+            if (scale <= 0)
             {
                 RemoveAllSolution();
                 return;
             }
-            
+
             _heatCapacity *= scale;
             Volume *= scale;
 
-            for (int i = 0; i <= Contents.Count; i++)
+            for (int i = 0; i < Contents.Count; i++)
             {
                 var old = Contents[i];
                 Contents[i] = new ReagentQuantity(old.ReagentId, old.Quantity * scale);
@@ -498,7 +498,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Variant of <see cref="SplitSolution(FixedPoint2)"/> that doesn't return a new solution containing the removed reagents.
         /// </summary>
-        /// <param name="quantity">The quantity of this solution to remove</param>
+        /// <param name="toTake">The quantity of this solution to remove</param>
         public void RemoveSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)

@@ -17,6 +17,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Shared.Construction.Components;
 
 namespace Content.IntegrationTests.Tests;
 
@@ -148,7 +149,7 @@ public sealed class MaterialArbitrageTest
                 spawnedOnDestroy.Add(proto.ID, (spawnedEnts, spawnedMats));
         }
 
-        // This is the main loop where we actually check for destruction arbitrage 
+        // This is the main loop where we actually check for destruction arbitrage
         Assert.Multiple(async () =>
         {
             foreach (var (id, (spawnedEnts, spawnedMats)) in spawnedOnDestroy)
@@ -183,7 +184,7 @@ public sealed class MaterialArbitrageTest
                 }
             }
         });
-        
+
         // Finally, lets also check for deconstruction arbitrage.
         // Get ingredients returned when deconstructing an entity
         Dictionary<string, Dictionary<string, int>> deconstructionMaterials = new();

@@ -178,7 +178,7 @@ public abstract class SharedEventHorizonSystem : EntitySystem
     /// <param name="uid">The entity that is trying to collide with another entity.</param>
     /// <param name="comp">The event horizon of the former.</param>
     /// <param name="args">The event arguments.</param>
-    /// <returns>A bool indicating whether the collision prevention has been handled.</return>
+    /// <returns>A bool indicating whether the collision prevention has been handled.</returns>
     protected virtual bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
     {
         var otherUid = args.BodyB.Owner;

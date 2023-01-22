@@ -58,12 +58,6 @@ public sealed class BluespaceLockerComponent : Component
     public CancellationTokenSource? CancelToken;
 
     /// <summary>
-    /// Determines if bluespace effect is show on component init
-    /// </summary>
-    [DataField("bluespaceEffectOnInit")]
-    public bool BluespaceEffectOnInit;
-
-    /// <summary>
     /// Determines if links automatically added get the source locker set as a target
     /// </summary>
     [DataField("autoLinksBidirectional"), ViewVariables(VVAccess.ReadWrite)]
@@ -75,7 +69,11 @@ public sealed class BluespaceLockerComponent : Component
     [DataField("autoLinksUseProperties"), ViewVariables(VVAccess.ReadWrite)]
     public bool AutoLinksUseProperties;
 
+    [DataField("usesSinceLinkClear"), ViewVariables(VVAccess.ReadWrite)]
     public int UsesSinceLinkClear;
+
+    [DataField("bluespaceEffectMinInterval"), ViewVariables(VVAccess.ReadOnly)]
+    public uint BluespaceEffectNextTime { get; set; }
 
     /// <summary>
     /// Determines properties of automatically created links
@@ -112,10 +110,28 @@ public record BluespaceLockerBehaviorProperties
     public bool TransportSentient { get; set; } = true;
 
     /// <summary>
+    /// Determines if the the locker will act on opens.
+    /// </summary>
+    [DataField("actOnOpen"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ActOnOpen { get; set; } = true;
+
+    /// <summary>
+    /// Determines if the the locker will act on closes.
+    /// </summary>
+    [DataField("actOnClose"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ActOnClose { get; set; } = true;
+
+    /// <summary>
     /// Delay to wait after closing before transporting
     /// </summary>
     [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public float Delay { get; set; }
+
+    /// <summary>
+    /// Determines if bluespace effect is show on component init
+    /// </summary>
+    [DataField("bluespaceEffectOnInit"), ViewVariables(VVAccess.ReadWrite)]
+    public bool BluespaceEffectOnInit;
 
     /// <summary>
     /// Defines prototype to spawn for bluespace effect
@@ -136,10 +152,23 @@ public record BluespaceLockerBehaviorProperties
     public bool BluespaceEffectOnTeleportTarget { get; set; }
 
     /// <summary>
+    /// Determines the minimum interval between bluespace effects
+    /// </summary>
+    /// <seealso cref="BluespaceEffectPrototype"/>
+    [DataField("bluespaceEffectMinInterval"), ViewVariables(VVAccess.ReadWrite)]
+    public double BluespaceEffectMinInterval { get; set; } = 2;
+
+    /// <summary>
     /// Uses left before the locker is destroyed. -1 indicates infinite
     /// </summary>
     [DataField("destroyAfterUses"), ViewVariables(VVAccess.ReadWrite)]
     public int DestroyAfterUses { get; set; } = -1;
+
+    /// <summary>
+    /// Minimum number of entities that must be transported to count a use for <see cref="DestroyAfterUses"/>
+    /// </summary>
+    [DataField("destroyAfterUsesMinItemsToCountUse"), ViewVariables(VVAccess.ReadWrite)]
+    public int DestroyAfterUsesMinItemsToCountUse { get; set; }
 
     /// <summary>
     /// How to destroy the locker after it runs out of uses
@@ -152,6 +181,18 @@ public record BluespaceLockerBehaviorProperties
     /// </summary>
     [DataField("clearLinksEvery"), ViewVariables(VVAccess.ReadWrite)]
     public int ClearLinksEvery { get; set; } = -1;
+
+    /// <summary>
+    /// Determines if cleared links have their component removed
+    /// </summary>
+    [DataField("clearLinksDebluespaces"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ClearLinksDebluespaces { get; set; }
+
+    /// <summary>
+    /// Links will not be valid if they're not bidirectional
+    /// </summary>
+    [DataField("invalidateOneWayLinks"), ViewVariables(VVAccess.ReadWrite)]
+    public bool InvalidateOneWayLinks { get; set; }
 }
 
 [Flags]
