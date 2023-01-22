@@ -215,7 +215,7 @@ public class SeedData
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
     [DataField("mandragoraSound")]
-    public SoundSpecifier MandragoraSound = new SoundPathSpecifier("/Audio/Animals/monkey_scream.ogg");
+    public SoundSpecifier MandragoraSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
 
     [ViewVariables(VVAccess.ReadWrite)]

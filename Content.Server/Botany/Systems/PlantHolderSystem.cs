@@ -13,8 +13,37 @@ using Content.Shared.Examine;
 using Content.Shared.Tag;
 using Content.Shared.FixedPoint;
 using Content.Shared.Botany;
+using System;
+using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Botany.Components;
+using Content.Server.Popups;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.Components;
+using Content.Server.Ghost.Roles.Components;
+using Content.Server.Hands.Components;
+using Content.Server.Kitchen.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Examine;
+using Content.Shared.Tag;
+using Content.Shared.FixedPoint;
+using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
+using Robust.Shared.Timing;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Server.Placement;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
@@ -220,7 +249,7 @@ namespace Content.Server.Botany.Systems
 
                 var split = _solutionSystem.Drain(solutionEntity, solution, amount);
 
-                if (split.TotalVolume == 0)
+                if (split.Volume == 0)
                 {
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
                         ("owner", args.Used)), args.User);
@@ -229,7 +258,7 @@ namespace Content.Server.Botany.Systems
 
                 _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", uid),
-                    ("amount", split.TotalVolume)), args.User, PopupType.Medium);
+                    ("amount", split.Volume)), args.User, PopupType.Medium);
 
                 _solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
@@ -299,7 +328,7 @@ namespace Content.Server.Botany.Systems
                 {
                     // This deliberately discards overfill.
                     _solutionSystem.TryAddSolution(args.Used, solution2,
-                        _solutionSystem.SplitSolution(args.Used, solution2, solution2.TotalVolume));
+                        _solutionSystem.SplitSolution(args.Used, solution2, solution2.Volume));
 
                     ForceUpdateByExternalCause(uid, component);
                 }
@@ -818,7 +847,7 @@ namespace Content.Server.Botany.Systems
             if (!_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution))
                 return;
 
-            if (solution.TotalVolume > 0 && component.MutationLevel < 25)
+            if (solution.Volume > 0 && component.MutationLevel < 25)
             {
                 var amt = FixedPoint2.New(1);
                 foreach (var (reagentId, quantity) in _solutionSystem.RemoveEachReagent(uid, solution, amt))
