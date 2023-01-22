@@ -1,9 +1,11 @@
 using System.Linq;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Systems;
+using Content.Server.Cloning;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Speech;
 using Content.Shared.Bed.Sleep;
@@ -32,6 +34,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
 
         public override void Initialize()
         {
@@ -39,6 +42,7 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
+            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
             SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
             SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
@@ -175,6 +179,37 @@ namespace Content.Server.Zombies
                 //either do a random accent line or scream
                 DoGroan(zombiecomp.Owner, zombiecomp);
             }
+        }
+
+        /// <summary>
+        ///     This is the function to call if you want to unzombify an entity.
+        /// </summary>
+        /// <param name="source">the entity having the ZombieComponent</param>
+        /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
+        /// <remarks>
+        ///     this currently only restore the name and skin/eye color from before zombified
+        ///     TODO: reverse everything else done in ZombifyEntity
+        /// </remarks>
+        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+        {
+            if (!Resolve(source, ref zombiecomp))
+                return false;
+
+            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+            {
+                _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
+            }
+            _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+
+            MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            return true;
+        }
+
+        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        {
+            if (UnZombify(args.Source, args.Target, zombiecomp))
+                args.NameHandled = true;
         }
     }
 }
