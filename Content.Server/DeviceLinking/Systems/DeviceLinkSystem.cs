@@ -466,7 +466,8 @@ public sealed class DeviceLinkSystem : EntitySystem
 
     private bool InRange(EntityUid sourceUid, EntityUid sinkUid, float range, ApcPowerReceiverComponent? sourcePowerReceiver = null, ApcPowerReceiverComponent? sinkPowerReceiver = null)
     {
-        if (Resolve(sourceUid, ref sourcePowerReceiver) && Resolve(sinkUid, ref sinkPowerReceiver) && sourcePowerReceiver.Provider?.Net == sinkPowerReceiver.Provider?.Net)
+        if (Resolve(sourceUid, ref sourcePowerReceiver, false) && Resolve(sinkUid, ref sinkPowerReceiver, false)
+            && sourcePowerReceiver.Provider?.Net == sinkPowerReceiver.Provider?.Net)
             return false;
 
         return Transform(sourceUid).MapPosition.InRange(Transform(sinkUid).MapPosition, range);
