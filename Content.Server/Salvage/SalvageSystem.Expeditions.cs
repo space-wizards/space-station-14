@@ -8,7 +8,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
-using Content.Shared.Parallax;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -31,6 +30,20 @@ public sealed partial class SalvageSystem
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ComponentInit>(OnSalvageConsoleInit);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, EntParentChangedMessage>(OnSalvageConsoleParent);
         SubscribeLocalEvent<SalvageExpeditionConsoleComponent, ClaimSalvageMessage>(OnSalvageClaimMessage);
+
+        SubscribeLocalEvent<SalvageExpeditionDataComponent, EntityUnpausedEvent>(OnDataUnpaused);
+
+        SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
+    }
+
+    private void OnDataUnpaused(EntityUid uid, SalvageExpeditionDataComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextOffer += args.PausedTime;
+    }
+
+    private void OnExpeditionUnpaused(EntityUid uid, SalvageExpeditionComponent component, ref EntityUnpausedEvent args)
+    {
+        component.EndTime += args.PausedTime;
     }
 
     private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
@@ -167,6 +180,7 @@ public sealed partial class SalvageSystem
 
     private void SpawnMission(SalvageMission mission, EntityUid station)
     {
+        var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.AddUninitializedMap(mapId);
@@ -176,9 +190,12 @@ public sealed partial class SalvageSystem
         var gravity = EnsureComp<GravityComponent>(mapUid);
         gravity.Enabled = true;
         Dirty(gravity, metadata);
-        EnsureComp<MapLightComponent>(mapUid);
-        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
 
+        var lighting = EnsureComp<MapLightComponent>(mapUid);
+        lighting.AmbientLightColor = config.Light;
+        Dirty(lighting);
+
+        var atmos = EnsureComp<MapAtmosphereComponent>(mapUid);
         atmos.Space = false;
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
@@ -186,13 +203,10 @@ public sealed partial class SalvageSystem
 
         atmos.Mixture = new GasMixture(2500)
         {
-            Temperature = 293.15f,
+            Temperature = config.Temperature,
             Moles = moles,
         };
 
-        var footstep = EnsureComp<FootstepModifierComponent>(mapUid);
-        footstep.Sound = new SoundCollectionSpecifier("FootstepGrass");
-        Dirty(footstep, metadata);
         _mapManager.DoMapInitialize(mapId);
 
         var light = EnsureComp<MapLightComponent>(mapUid);
@@ -200,7 +214,6 @@ public sealed partial class SalvageSystem
 
         // No point raising an event for this when it's 1-1.
         SalvageCaveJob job;
-        var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
         var random = new Random(mission.Seed);
 
         // Setup expedition

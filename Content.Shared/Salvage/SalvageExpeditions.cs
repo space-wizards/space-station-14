@@ -75,6 +75,7 @@ public sealed class SalvageMission
     [ViewVariables]
     public ushort Index;
 
+    // TODO: Typeserializer
     [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true)]
     public string Config = default!;
 

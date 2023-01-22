@@ -1,5 +1,6 @@
-using Content.Shared.Salvage;
+using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Salvage.Expeditions;
 
@@ -7,6 +8,15 @@ namespace Content.Server.Salvage.Expeditions;
 public sealed class SalvageExpeditionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
+
+    [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomePrototype>))]
+    public string Biome = string.Empty;
+
+    [DataField("light")]
+    public Color Light = Color.Black;
+
+    [DataField("temperature")]
+    public float Temperature = 293.15f;
 
     [DataField("expedition", required: true)] public ISalvageMission Expedition = default!;
 

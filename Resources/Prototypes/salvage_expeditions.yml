@@ -1,6 +1,8 @@
 # Expedition configs
 - type: salvageExpedition
   id: CaveStructures
+  biome: LowDesert
+  light: "#E6CB8B"
   expedition: !type:SalvageStructure
   environment: !type:SalvageCaveGen
   minDuration: 540
