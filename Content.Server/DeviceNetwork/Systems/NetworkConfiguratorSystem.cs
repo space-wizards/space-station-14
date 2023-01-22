@@ -278,7 +278,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OnAddInteractVerb(EntityUid uid, NetworkConfiguratorComponent configurator, GetVerbsEvent<UtilityVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue || !HasComp<DeviceNetworkComponent>(args.Target))
+        if (!args.CanAccess || !args.CanInteract || !args.Using.HasValue)
             return;
 
         var verb = new UtilityVerb
@@ -287,17 +287,17 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             Impact = LogImpact.Low
         };
 
-        if (!configurator.LinkModeActive)
-        {
-            var isDeviceList = HasComp<DeviceListComponent>(args.Target);
-            verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
-            verb.IconTexture = isDeviceList ? "/Textures/Interface/VerbIcons/settings.svg.192dpi.png" : "/Textures/Interface/VerbIcons/in.svg.192dpi.png";
-        }
-        else
+        if (configurator.LinkModeActive)
         {
             var linkStarted = configurator.ActiveDeviceLink.HasValue;
             verb.Text = Loc.GetString(linkStarted ? "network-configurator-link" : "network-configurator-start-link");
             verb.IconTexture = "/Textures/Interface/VerbIcons/in.svg.192dpi.png";
+        }
+        else if (!HasComp<DeviceNetworkComponent>(args.Target))
+        {
+            var isDeviceList = HasComp<DeviceListComponent>(args.Target);
+            verb.Text = Loc.GetString(isDeviceList ? "network-configurator-configure" : "network-configurator-save-device");
+            verb.IconTexture = isDeviceList ? "/Textures/Interface/VerbIcons/settings.svg.192dpi.png" : "/Textures/Interface/VerbIcons/in.svg.192dpi.png";
         }
 
         args.Verbs.Add(verb);
@@ -389,7 +389,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         DeviceLinkSourceComponent? sourceComponent = null, DeviceLinkSinkComponent? sinkComponent = null,
         DeviceNetworkComponent? sourceNetworkComponent = null, DeviceNetworkComponent? sinkNetworkComponent = null)
     {
-        if(!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent) || !Resolve(sourceUid, ref sourceNetworkComponent) || !Resolve(sinkUid, ref sinkNetworkComponent))
+        if(!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
             return;
 
         var sources = _deviceLinkSystem.GetSourcePorts(sourceUid, sourceComponent);
@@ -397,7 +397,10 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         var links = _deviceLinkSystem.GetLinks(sourceUid, sinkUid, sourceComponent);
         var defaults = _deviceLinkSystem.GetDefaults(sources);
 
-        var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceNetworkComponent.Address, sinkNetworkComponent.Address, defaults);
+        var sourceAddress = Resolve(sourceUid, ref sourceNetworkComponent) ? sourceNetworkComponent.Address : "";
+        var sinkAddress = Resolve(sinkUid, ref sinkNetworkComponent) ? sinkNetworkComponent.Address : "";
+
+        var state = new DeviceLinkUserInterfaceState(sources, sinks, links, sourceAddress, sinkAddress, defaults);
         _uiSystem.TrySetUiState(configuratorUid, NetworkConfiguratorUiKey.Link, state);
     }
 

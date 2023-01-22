@@ -216,6 +216,8 @@ public sealed class DeviceLinkSystem : EntitySystem
     public void EnsureSourcePorts(EntityUid uid, params string[] ports)
     {
         var comp = EnsureComp<DeviceLinkSourceComponent>(uid);
+        comp.Ports ??= new HashSet<string>();
+
         foreach (var port in ports)
         {
             comp.Ports?.Add(port);
@@ -225,6 +227,8 @@ public sealed class DeviceLinkSystem : EntitySystem
     public void EnsureSinkPorts(EntityUid uid, params string[] ports)
     {
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
+        comp.Ports ??= new HashSet<string>();
+
         foreach (var port in ports)
         {
             comp.Ports?.Add(port);
