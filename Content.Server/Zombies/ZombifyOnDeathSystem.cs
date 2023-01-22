@@ -127,6 +127,10 @@ namespace Content.Server.Zombies
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
             {
+                //store some values before changing them in case the humanoid get cloned later
+                zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
@@ -172,6 +176,7 @@ namespace Content.Server.Zombies
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
+            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
             meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);
