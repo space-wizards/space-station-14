@@ -2,12 +2,12 @@
 
 namespace Content.Shared.DeviceLinking;
 
-/// <summary>
-/// This is used for...
-/// </summary>
 [RegisterComponent]
 public sealed class DeviceLinkSinkComponent : Component
 {
+    /// <summary>
+    /// The ports this sink has
+    /// </summary>
     [DataField("ports", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SinkPortPrototype>))]
     public HashSet<string>? Ports;
 

@@ -60,6 +60,9 @@ public sealed class DeviceLinkSystem : EntitySystem
     }
 
     #region Link Validation
+    /// <summary>
+    /// Removes invalid links where the saved sink doesn't exist/have a sink component for example
+    /// </summary>
     private void OnSourceStartup(EntityUid sourceUid, DeviceLinkSourceComponent sourceComponent, ComponentStartup args)
     {
         List<EntityUid> invalidSinks = new();
@@ -85,6 +88,9 @@ public sealed class DeviceLinkSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Same with <see cref="OnSourceStartup"/> but also checks that the saved ports are present on the sink
+    /// </summary>
     private void OnSinkStartup(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentStartup args)
     {
         List<EntityUid> invalidSources = new();
@@ -129,6 +135,9 @@ public sealed class DeviceLinkSystem : EntitySystem
     }
     #endregion
 
+    /// <summary>
+    /// Ensures that its links get deleted when a source gets removed
+    /// </summary>
     private void OnSourceRemoved(EntityUid uid, DeviceLinkSourceComponent component, ComponentRemove args)
     {
         foreach (var sinkUid in component.LinkedPorts.Keys)
@@ -137,6 +146,9 @@ public sealed class DeviceLinkSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Ensures that its links get deleted when a sink gets removed
+    /// </summary>
     private void OnSinkRemoved(EntityUid sinkUid, DeviceLinkSinkComponent sinkComponent, ComponentRemove args)
     {
         foreach (var linkedSource in sinkComponent.LinkedSources)
@@ -211,7 +223,7 @@ public sealed class DeviceLinkSystem : EntitySystem
 
     #region Ports
     /// <summary>
-    ///     Convenience function to add several ports to an entity.
+    /// Convenience function to add several ports to an entity
     /// </summary>
     public void EnsureSourcePorts(EntityUid uid, params string[] ports)
     {
@@ -224,6 +236,9 @@ public sealed class DeviceLinkSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Convenience function to add several ports to an entity.
+    /// </summary>
     public void EnsureSinkPorts(EntityUid uid, params string[] ports)
     {
         var comp = EnsureComp<DeviceLinkSinkComponent>(uid);
@@ -235,6 +250,10 @@ public sealed class DeviceLinkSystem : EntitySystem
         }
     }
 
+    /// <summary>
+    /// Retrieves the available ports from a source
+    /// </summary>
+    /// <returns>A list of source port prototypes</returns>
     public List<SourcePortPrototype> GetSourcePorts(EntityUid sourceUid, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || sourceComponent.Ports == null)
@@ -249,6 +268,10 @@ public sealed class DeviceLinkSystem : EntitySystem
         return sourcePorts;
     }
 
+    /// <summary>
+    /// Retrieves the available ports from a sink
+    /// </summary>
+    /// <returns>A list of sink port prototypes</returns>
     public List<SinkPortPrototype> GetSinkPorts(EntityUid sinkUid, DeviceLinkSinkComponent? sinkComponent = null)
     {
         if (!Resolve(sinkUid, ref sinkComponent) || sinkComponent.Ports == null)
@@ -264,10 +287,8 @@ public sealed class DeviceLinkSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Convenience function to retrieve the name of a port prototype.
+    /// Convenience function to retrieve the name of a port prototype
     /// </summary>
-    /// <param name="port"></param>
-    /// <returns></returns>
     public string PortName<TPort>(string port) where TPort : DevicePortPrototype, IPrototype
     {
         if (!_prototypeManager.TryIndex<TPort>(port, out var proto))
@@ -278,6 +299,10 @@ public sealed class DeviceLinkSystem : EntitySystem
     #endregion
 
     #region Links
+    /// <summary>
+    /// Returns the links of a source
+    /// </summary>
+    /// <returns>A list of sink and source port ids that are linked together</returns>
     public HashSet<(string source, string sink)> GetLinks(EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || !sourceComponent.LinkedPorts.TryGetValue(sinkUid, out var links))
@@ -286,6 +311,11 @@ public sealed class DeviceLinkSystem : EntitySystem
         return links;
     }
 
+    /// <summary>
+    /// Returns the default links for the given list of source port prototypes
+    /// </summary>
+    /// <param name="sources">The list of source port prototypes to get the default links for</param>
+    /// <returns>A list of sink and source port ids</returns>
     public List<(string source, string sink)> GetDefaults(List<SourcePortPrototype> sources)
     {
         var defaults = new List<(string, string)>();
@@ -303,6 +333,14 @@ public sealed class DeviceLinkSystem : EntitySystem
         return defaults;
     }
 
+    /// <summary>
+    /// Links the given source and sink by their default links
+    /// </summary>
+    /// <param name="userId">Optinal user uid for displaying popups</param>
+    /// <param name="sourceUid">The source uid</param>
+    /// <param name="sinkUid">The sink uid</param>
+    /// <param name="sourceComponent"></param>
+    /// <param name="sinkComponent"></param>
     public void LinkDefaults(EntityUid? userId, EntityUid sourceUid, EntityUid sinkUid, DeviceLinkSourceComponent? sourceComponent = null, DeviceLinkSinkComponent? sinkComponent = null)
     {
         if (!Resolve(sourceUid, ref sourceComponent) || !Resolve(sinkUid, ref sinkComponent))
@@ -316,10 +354,17 @@ public sealed class DeviceLinkSystem : EntitySystem
             _popupSystem.PopupCursor(Loc.GetString("signal-linking-verb-success", ("machine", sourceUid)), userId.Value);
     }
 
+
     /// <summary>
     /// Saves multiple links between a source and a sink device.
     /// Ignores links where either the source or sink port aren't present
     /// </summary>
+    /// <param name="userId">Optinal user uid for displaying popups</param>
+    /// <param name="sourceUid">The source uid</param>
+    /// <param name="sinkUid">The sink uid</param>
+    /// <param name="links">List of source and sink ids to link</param>
+    /// <param name="sourceComponent"></param>
+    /// <param name="sinkComponent"></param>
     public void SaveLinks(EntityUid? userId, EntityUid sourceUid, EntityUid sinkUid, List<(string source, string sink)> links,
         DeviceLinkSourceComponent? sourceComponent = null, DeviceLinkSinkComponent? sinkComponent = null)
     {
@@ -356,6 +401,9 @@ public sealed class DeviceLinkSystem : EntitySystem
             sinkComponent.LinkedSources.Add(sourceUid);
     }
 
+    /// <summary>
+    /// Removes all links between a source and a sink
+    /// </summary>
     public void RemoveSinkFromSource(EntityUid sourceUid, EntityUid sinkUid,
         DeviceLinkSourceComponent? sourceComponent = null, DeviceLinkSinkComponent? sinkComponent = null)
     {
@@ -431,6 +479,11 @@ public sealed class DeviceLinkSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Checks if a source and a sink can be linked by allowing other systems to veto the link
+    /// and by optionally checking if they are in range of each other
+    /// </summary>
+    /// <returns></returns>
     private bool CanLink(EntityUid? userId, EntityUid sourceUid, EntityUid sinkUid, string source, string sink,
         bool checkRange = true, DeviceLinkSourceComponent? sourceComponent = null)
     {
