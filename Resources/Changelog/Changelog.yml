@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Filing cabinets are now movable., type: Tweak}
-  id: 2445
-  time: '2022-10-14T20:10:05.0000000+00:00'
 - author: corentt
   changes:
   - {message: You can no longer call a vote for gamemode if only one is available.,
@@ -2938,3 +2933,8 @@ Entries:
   - {message: Spiders can make web that slows down everyone but them now, type: Add}
   id: 2944
   time: '2023-01-22T22:50:05.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: The cloning machine now handles better cloning zombies., type: Fix}
+  id: 2945
+  time: '2023-01-22T23:36:03.0000000+00:00'
