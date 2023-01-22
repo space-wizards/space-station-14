@@ -35,7 +35,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// </summary>
         private void OnMapInit(EntityUid uid, StationLimitedNetworkComponent networkComponent, MapInitEvent args)
         {
-            networkComponent.StationId = _stationSystem?.GetOwningStation(uid);
+            networkComponent.StationId = _stationSystem.GetOwningStation(uid);
         }
 
         /// <summary>
