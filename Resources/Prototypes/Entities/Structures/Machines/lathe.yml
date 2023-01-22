@@ -73,6 +73,7 @@
       - Wrench
       - Crowbar
       - Multitool
+      - NetworkConfigurator
       - AirlockPainter
       - CableStack
       - HandheldGPSBasic
@@ -227,7 +228,7 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - NodeScanner
