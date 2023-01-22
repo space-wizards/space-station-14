@@ -7,6 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Spider
 {
     [RegisterComponent, NetworkedComponent]
+    [Access(typeof(SharedSpiderSystem))]
     public sealed class SpiderComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]

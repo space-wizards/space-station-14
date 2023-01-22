@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Spider
 {
-    public sealed class SpiderSystem : EntitySystem
+    public sealed class SpiderSystem : SharedSpiderSystem
     {
         [Dependency] private readonly PopupSystem _popup = default!;
 
@@ -32,7 +32,7 @@ namespace Content.Server.Spider
 
             var coords = transform.Coordinates;
 
-            // TO-DO generic way to get certain coordinates
+            // TODO generic way to get certain coordinates
 
             var result = false;
             // Spawn web in center

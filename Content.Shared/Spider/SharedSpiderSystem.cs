@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Spider
 {
-    public sealed class SharedSpiderSystem : EntitySystem
+    public abstract class SharedSpiderSystem : EntitySystem
     {
         [Dependency] private readonly SharedActionsSystem _action = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
