@@ -1,15 +1,15 @@
 # names that get displayed in the wire hacking hud & admin logs.
 
-wire-name-access = ACC
-wire-name-arcade-overflow = LMTR
-wire-name-air-alarm-panic = PANC
-wire-name-device-net = NETW
-wire-name-bolt-light = BLIT
-wire-name-door-bolt = BOLT
-wire-name-door-safety = SAFE
-wire-name-door-timer = TIMR
-wire-name-lock = LOCK
-wire-name-power = POWR
-wire-name-arcade-invincible = MNGR
-wire-name-vending-contraband = MNGR
-wire-name-vending-eject = VEND
+wire-name-access = ДСТП
+wire-name-arcade-overflow = ЛИМТ
+wire-name-air-alarm-panic = ПНИК
+wire-name-device-net = СЕТЬ
+wire-name-bolt-light = СВЕТ
+wire-name-door-bolt = БОЛТ
+wire-name-door-safety = БЕЗП
+wire-name-door-timer = ТЙМР
+wire-name-lock = БЛОК
+wire-name-power = ПИТН
+wire-name-arcade-invincible = МНЖР
+wire-name-vending-contraband = МНЖР
+wire-name-vending-eject = ТОРГ

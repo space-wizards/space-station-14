@@ -1,8 +1,8 @@
-anomaly-component-contact-damage = The anomaly sears off your skin!
+anomaly-component-contact-damage = Аномалия сдирает с вас кожу!
 anomaly-vessel-component-anomaly-assigned = Аномалия присвоена сосуду.
 anomaly-vessel-component-not-assigned = Этому сосуду не присвоена ни одна аномалия. Попробуйте использовать на нём сканер.
 anomaly-vessel-component-assigned = Этому сосуду уже присвоена аномалия.
-anomaly-vessel-component-upgrade-output = point output
+anomaly-vessel-component-upgrade-output = генерация очков
 anomaly-particles-delta = Дельта-частицы
 anomaly-particles-epsilon = Эпсилон-частицы
 anomaly-particles-zeta = Зета-частицы
