@@ -1,4 +1,3 @@
-using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
@@ -7,14 +6,42 @@ using Content.Shared.Wires;
 namespace Content.Server.Wires;
 
 /// <summary><see cref="IWireAction" /></summary>
+[ImplicitDataDefinitionForInheritors]
 public abstract class BaseWireAction : IWireAction
 {
     private ISharedAdminLogManager _adminLogger = default!;
-    protected virtual string Text
+
+    /// <summary>
+    ///     The loc-string of the text that gets returned by <see cref="GetStatusLightData(Wire)"/>. Also used for admin logging.
+    /// </summary>
+    [DataField("name")]
+    public abstract string Name { get; set; }
+
+    /// <summary>
+    ///     Default color that gets returned by <see cref="GetStatusLightData(Wire)"/>.
+    /// </summary>
+    [DataField("color")]
+    public abstract Color Color { get; set; }
+
+    /// <summary>
+    ///     If true, the default behavior of <see cref="GetStatusLightData(Wire)"/> will return an off-light when the
+    ///     wire owner is not powered.
+    /// </summary>
+    [DataField("lightRequiresPower")]
+    public virtual bool LightRequiresPower { get; set; } = true;
+
+    public virtual StatusLightData? GetStatusLightData(Wire wire)
     {
-        get => GetType().Name.Replace("WireAction", "");
-        set { }
+        if (LightRequiresPower && !IsPowered(wire.Owner))
+            return new StatusLightData(Color, StatusLightState.Off, Loc.GetString(Name));
+
+        var state = GetLightState(wire);
+        return state == null
+            ? null
+            : new StatusLightData(Color, state.Value, Loc.GetString(Name));
     }
+
+    public virtual StatusLightState? GetLightState(Wire wire) => null;
 
     public IEntityManager EntityManager = default!;
     public WiresSystem WiresSystem = default!;
@@ -32,31 +59,27 @@ public abstract class BaseWireAction : IWireAction
     }
 
     public virtual bool AddWire(Wire wire, int count) => count == 1;
-    public virtual bool Cut(EntityUid user, Wire wire)
+    public virtual bool Cut(EntityUid user, Wire wire) => Log(user, wire, "cut");
+    public virtual bool Mend(EntityUid user, Wire wire) => Log(user, wire, "mended");
+    public virtual void Pulse(EntityUid user, Wire wire) => Log(user, wire, "pulsed");
+
+    private bool Log(EntityUid user, Wire wire, string verb)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} cut {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
-        return false;
+        var player = EntityManager.ToPrettyString(user);
+        var owner = EntityManager.ToPrettyString(wire.Owner);
+        var name = Loc.GetString(Name);
+        var color = wire.Color.Name();
+        var action = GetType().Name;
+
+        // logs something like "... mended red POWR wire (PowerWireAction) in ...."
+        _adminLogger.Add(LogType.WireHacking, LogImpact.Medium, $"{player} {verb} {color} {name} wire ({action}) in {owner}");
+        return true;
     }
-    public virtual bool Mend(EntityUid user, Wire wire)
-    {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} mended {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
-        return false;
-    }
-    public virtual bool Pulse(EntityUid user, Wire wire)
-    {
-        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{EntityManager.ToPrettyString(user):player} pulsed {wire.Color.Name()} {Text} in {EntityManager.ToPrettyString(wire.Owner)}");
-        return false;
-    }
+
     public virtual void Update(Wire wire)
     {
-        return;
     }
-    public abstract StatusLightData? GetStatusLightData(Wire wire);
 
-    // most things that use wires are powered by *something*, so
-    //
-    // this isn't required by any wire system methods though, so whatever inherits it here
-    // can use it
     /// <summary>
     ///     Utility function to check if this given entity is powered.
     /// </summary>

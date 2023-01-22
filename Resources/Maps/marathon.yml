@@ -156547,7 +156547,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 19473
-  type: d100Dice
+  type: PercentileDie
   components:
   - rot: 1.5707963267948966 rad
     pos: -57.4998,-65.351234

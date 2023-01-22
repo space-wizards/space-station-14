@@ -9,6 +9,9 @@
       collection: RadiationPulse
       params:
         volume: 5
+    anomalyContactDamage:
+      types:
+        Radiation: 10
   - type: AmbientSound
     range: 5
     volume: -5
@@ -35,8 +38,6 @@
   - type: InteractionOutline
   - type: Clickable
   - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Appearance
   - type: GuideHelp
     guides:

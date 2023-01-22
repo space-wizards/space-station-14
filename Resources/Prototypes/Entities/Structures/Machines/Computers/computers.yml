@@ -395,6 +395,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
 
 - type: entity
   parent: BaseComputer

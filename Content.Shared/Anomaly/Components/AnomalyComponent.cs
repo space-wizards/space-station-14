@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -105,6 +106,13 @@ public sealed class AnomalyComponent : Component
     public float PulseVariation = .1f;
 
     /// <summary>
+    /// The largest value by which the anomaly will vary in stability for each pulse.
+    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// </summary>
+    [DataField("pulseStabilityVariation")]
+    public float PulseStabilityVariation = 0.05f;
+
+    /// <summary>
     /// The sound played when an anomaly pulses
     /// </summary>
     [DataField("pulseSound")]
@@ -200,8 +208,36 @@ public sealed class AnomalyComponent : Component
     /// This doesn't include the point bonus for being unstable.
     /// </summary>
     [DataField("maxPointsPerSecond")]
-    public int MaxPointsPerSecond = 100;
+    public int MaxPointsPerSecond = 65;
+
+    /// <summary>
+    /// The multiplier applied to the point value for the
+    /// anomaly being above the <see cref="GrowthThreshold"/>
+    /// </summary>
+    [DataField("growingPointMultiplier")]
+    public float GrowingPointMultiplier = 1.2f;
+
+    /// <summary>
+    /// The multiplier applied to the point value for the
+    /// anomaly being below the <see cref="DecayThreshold"/>
+    /// </summary>
+    [DataField("decayingPointMultiplier")]
+    public float DecayingPointMultiplier = 0.75f;
     #endregion
+
+    /// <summary>
+    /// The amount of damage dealt when either a player touches the anomaly
+    /// directly or by hitting the anomaly.
+    /// </summary>
+    [DataField("anomalyContactDamage", required: true)]
+    public DamageSpecifier AnomalyContactDamage = default!;
+
+    /// <summary>
+    /// The sound effect played when a player
+    /// burns themselves on an anomaly via contact.
+    /// </summary>
+    [DataField("anomalyContactDamageSound")]
+    public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
 }
 
 [Serializable, NetSerializable]
