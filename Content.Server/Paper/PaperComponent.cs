@@ -14,7 +14,7 @@ namespace Content.Server.Paper
         public int ContentSize { get; set; } = 6000;
 
         [DataField("stampedBy")]
-        public List<string> StampedBy { get; set; } = new();
+        public List<StampInfo> StampedBy { get; set; } = new();
         /// <summary>
         ///     Stamp to be displayed on the paper, state from beauracracy.rsi
         /// </summary>

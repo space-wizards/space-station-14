@@ -1,5 +1,14 @@
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Paper
 {
+    [Serializable, NetSerializable]
+    public struct StampInfo
+    {
+        public string StampName;
+        public Color StampColor;
+    };
+
     [RegisterComponent]
     public sealed class StampComponent : Component
     {
@@ -13,5 +22,10 @@ namespace Content.Shared.Paper
         /// </summary>
         [DataField("stampState")]
         public string StampState { get; set; } = "paper_stamp-generic";
+        /// <summary>
+        /// The color of the ink used by the stamp in UIs
+        /// </summary>
+        [DataField("stampedColor")]
+        public Color StampedColor { get; set; } = Color.FromHex("#BB3232"); // StyleNano.DangerousRedFore
     }
 }

@@ -199,7 +199,7 @@ namespace Content.Client.Paper.UI
             StampDisplay.RemoveAllChildren();
             foreach(var stamper in state.StampedBy)
             {
-                StampDisplay.AddChild(new StampWidget{ Stamper = stamper });
+                StampDisplay.AddChild(new StampWidget{ StampInfo = stamper });
             }
         }
 

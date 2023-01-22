@@ -106,7 +106,7 @@ namespace Content.Server.Paper
             }
 
             // If a stamp, attempt to stamp paper
-            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, stampComp.StampedName, stampComp.StampState, paperComp))
+            if (TryComp<StampComponent>(args.Used, out var stampComp) && TryStamp(uid, GetStampInfo(stampComp), stampComp.StampState, paperComp))
             {
                 // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other", ("user", Identity.Entity(args.User, EntityManager)),("target", Identity.Entity(args.Target, EntityManager)),("stamp", args.Used));
@@ -116,6 +116,14 @@ namespace Content.Server.Paper
 
                 UpdateUserInterface(uid, paperComp);
             }
+        }
+
+        private StampInfo GetStampInfo(StampComponent stamp)
+        {
+            return new StampInfo {
+                StampName = stamp.StampedName,
+                StampColor = stamp.StampedColor
+            };
         }
 
         private void OnInputTextMessage(EntityUid uid, PaperComponent paperComp, PaperInputTextMessage args)
@@ -150,18 +158,20 @@ namespace Content.Server.Paper
         /// <summary>
         ///     Accepts the name and state to be stamped onto the paper, returns true if successful.
         /// </summary>
-        public bool TryStamp(EntityUid uid, string stampName, string stampState, PaperComponent? paperComp = null)
+        public bool TryStamp(EntityUid uid, StampInfo stampInfo, string spriteStampState, PaperComponent? paperComp = null)
         {
             if (!Resolve(uid, ref paperComp))
                 return false;
 
-            if (!paperComp.StampedBy.Contains(Loc.GetString(stampName)))
+            if (!paperComp.StampedBy.Contains(stampInfo))
             {
-                paperComp.StampedBy.Add(Loc.GetString(stampName));
+                paperComp.StampedBy.Add(stampInfo);
                 if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
                 {
-                    paperComp.StampState = stampState;
+                    paperComp.StampState = spriteStampState;
+                    //<todo.eoin Allow multitple stamps on sprite
                     _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
+                    //<todo.eoin Modulate sprites - need to edit the images first
                 }
             }
             return true;
