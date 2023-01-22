@@ -31,7 +31,7 @@
       - state: equipped-head-unshaded
         shader: unshaded
   - type: PointLight
-    color: "#59ffac"
+    color: "#adffe6"
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 10000
@@ -88,7 +88,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering.rsi
   - type: PointLight
-    color: "#ffba59"
+    color: "#ffdbad"
   - type: PressureProtection
     highPressureMultiplier: 0.1
     lowPressureMultiplier: 1000
@@ -105,7 +105,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/engineering-white.rsi
   - type: PointLight
-    color: "#d0ff59"
+    color: "#daffad"
   - type: PressureProtection
     highPressureMultiplier: 0.08
     lowPressureMultiplier: 1000
@@ -137,7 +137,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/medical.rsi
   - type: PointLight
-    color: "#59c8ff"
+    color: "#adf1ff"
   - type: PressureProtection
     highPressureMultiplier: 0.6
     lowPressureMultiplier: 5500
@@ -156,7 +156,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/rd.rsi
   - type: PointLight
-    color: "#a659ff"
+    color: "#d6adff"
   - type: PressureProtection
     highPressureMultiplier: 0.60
     lowPressureMultiplier: 5500
@@ -197,7 +197,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security.rsi
   - type: PointLight
-    color: "#ff5959"
+    color: "#ffadad"
   - type: PressureProtection
     highPressureMultiplier: 0.525
     lowPressureMultiplier: 10000
@@ -220,7 +220,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/security-red.rsi
   - type: PointLight
-    color: "#ff5959"
+    color: "#ffadad"
   - type: PressureProtection
     highPressureMultiplier: 0.45
     lowPressureMultiplier: 10000
@@ -268,7 +268,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/wizard.rsi
   - type: PointLight
-    color: "#ff59d6"
+    color: "#ffadfb"
   - type: PressureProtection
     highPressureMultiplier: 0.27
     lowPressureMultiplier: 1000
@@ -444,7 +444,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertleader.rsi
   - type: PointLight
-    color: "#5983ff"
+    color: "#addbff"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -456,7 +456,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertengineer.rsi
   - type: PointLight
-    color: "#baff59"
+    color: "#f4ffad"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -468,7 +468,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertmedical.rsi
   - type: PointLight
-    color: "#a8ffda"
+    color: "#adffec"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -480,7 +480,7 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertsecurity.rsi
   - type: PointLight
-    color: "#ff5959"
+    color: "#ffadc6"
 
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
@@ -492,4 +492,4 @@
   - type: Clothing
     sprite: Clothing/Head/Hardsuits/ERThelmets/ertjanitor.rsi
   - type: PointLight
-    color: "#bd59ff"
+    color: "#cbadff"
