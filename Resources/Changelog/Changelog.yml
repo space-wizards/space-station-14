@@ -1,18 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed new actions not appearing on the action bar and window automatically.,
-    type: Fix}
-  - {message: Fixed old actions not being removed from the action bar and window automatically.,
-    type: Fix}
-  id: 2443
-  time: '2022-10-13T18:10:47.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Fixed reinforced walls being easier to break than normal steel walls.,
-    type: Fix}
-  id: 2444
-  time: '2022-10-14T02:17:08.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Filing cabinets are now movable., type: Tweak}
@@ -2939,3 +2925,16 @@ Entries:
   - {message: Over 50 new fortunes can be found in fortune cookie, type: Add}
   id: 2942
   time: '2023-01-22T13:20:17.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed most hardsuit light colors to be unique., type: Tweak}
+  id: 2943
+  time: '2023-01-22T18:57:10.0000000+00:00'
+- author: Jack Rost
+  changes:
+  - {message: 'Spiders have more damage and hp, cant slip and can pull stuff around
+      now', type: Tweak}
+  - {message: Critters spawn now doesn't depend on the chaos level, type: Tweak}
+  - {message: Spiders can make web that slows down everyone but them now, type: Add}
+  id: 2944
+  time: '2023-01-22T22:50:05.0000000+00:00'
