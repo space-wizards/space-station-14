@@ -41,7 +41,7 @@
 - type: guideEntry
   id: NetworkConfigurator
   name: guide-entry-network-configurator
-  text: "/Server Info/Guidebook/Network Configurator.xml"
+  text: "/Server Info/Guidebook/Network_Configurator.xml"
 
 
 - type: guideEntry
