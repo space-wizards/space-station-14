@@ -4,22 +4,9 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
 
-    <BoxContainer Orientation="Vertical">
-        <PanelContainer Name="TopBorder">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
-            </PanelContainer.PanelOverride>
-            <Control MinSize="3 3" />
-        </PanelContainer>
-
-        <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger" FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}" Margin="12 6 12 6"/>
-
-        <PanelContainer Name="BottomBorder">
-            <PanelContainer.PanelOverride>
-                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
-            </PanelContainer.PanelOverride>
-            <Control MinSize="3 3" />
-        </PanelContainer>
-
-    </BoxContainer>
+    <PanelContainer Name="StampBorder">
+        <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
+            FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}"
+            Margin="12 6 12 6"/>
+    </PanelContainer>
 </paper:StampWidget>
