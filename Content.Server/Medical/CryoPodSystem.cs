@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
@@ -89,10 +89,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
                 continue;
             cryoPod.NextInjectionTime = curTime + TimeSpan.FromSeconds(cryoPod.BeakerTransferTime);
 
-            if (
-                !itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent)
-                || !fitsInDispenserQuery.TryGetComponent(cryoPod.Owner, out var fitsInDispenserComponent)
-                || !solutionContainerManagerQuery.TryGetComponent(cryoPod.Owner, out var solutionContainerManagerComponent))
+            if (!itemSlotsQuery.TryGetComponent(cryoPod.Owner, out var itemSlotsComponent))
             {
                 continue;
             }
@@ -101,6 +98,9 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
             if (container != null
                 && container.Value.Valid
                 && patient != null
+                && fitsInDispenserQuery.TryGetComponent(container, out var fitsInDispenserComponent)
+                && solutionContainerManagerQuery.TryGetComponent(container,
+                    out var solutionContainerManagerComponent)
                 && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution, dispenserFits: fitsInDispenserComponent, solutionManager: solutionContainerManagerComponent))
             {
                 if (!bloodStreamQuery.TryGetComponent(patient, out var bloodstream))
@@ -204,7 +204,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (args.IsInDetailsRange && container != null && _solutionContainerSystem.TryGetFitsInDispenser(container.Value, out var containerSolution))
         {
             args.PushMarkup(Loc.GetString("cryo-pod-examine", ("beaker", Name(container.Value))));
-            if (containerSolution.CurrentVolume == 0)
+            if (containerSolution.Volume == 0)
             {
                 args.PushMarkup(Loc.GetString("cryo-pod-empty-beaker"));
             }

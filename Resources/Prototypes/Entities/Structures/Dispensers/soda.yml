@@ -14,4 +14,9 @@
     pack: SodaDispenserInventory
     emagPack: SodaDispenserEmagInventory
   - type: Transform
-    noRot: false 
+    noRot: false  
+  - type: Machine
+    board: SodaDispenserMachineCircuitboard
+  - type: Wires
+    BoardName: "SodaDispenser"
+    LayoutId: SodaDispenser

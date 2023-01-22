@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!TryComp(uid, out MapGridComponent? mapGridComp))
                 return true;
 
-            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(((Component) mapGridComp).Owner).MapID);
+            var mapUid = _mapManager.GetMapEntityIdOrThrow(Transform(mapGridComp.Owner).MapID);
 
             var volume = GetVolumeForTiles(mapGridComp, 1);
 

@@ -12,20 +12,9 @@ namespace Content.Shared.Projectiles
         [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? ImpactEffect;
 
-        private bool _ignoreShooter = true;
         public EntityUid Shooter { get; set; }
 
-        public bool IgnoreShooter
-        {
-            get => _ignoreShooter;
-            set
-            {
-                if (_ignoreShooter == value) return;
-
-                _ignoreShooter = value;
-                Dirty();
-            }
-        }
+        public bool IgnoreShooter = true;
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

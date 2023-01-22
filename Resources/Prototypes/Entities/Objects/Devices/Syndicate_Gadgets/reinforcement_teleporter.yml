@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
-  id: ReinforcementTeleporterSyndicate
-  name: syndicate reinforcement teleporter
+  id: ReinforcementRadioSyndicate
+  name: syndicate reinforcement radio
   description: Call in a syndicate agent of questionable quality, instantly! Only basic equipment provided.
   components:
   - type: Sprite
@@ -14,3 +14,8 @@
     name: Syndicate Agent
     description: Someone needs reinforcements. You, the first person the syndicate could find, will help them.
     rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+  - type: EmitSoundOnUse
+    sound: /Audio/Misc/emergency_meeting.ogg
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 300

@@ -61,10 +61,7 @@ namespace Content.Client.DragDrop
         /// <param name="onBeginDrag"><see cref="OnBeginDrag"/></param>
         /// <param name="onContinueDrag"><see cref="OnContinueDrag"/></param>
         /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
-        /// <param name="deadzone">drag will be triggered when mouse leaves
-        ///     this deadzone around the mousedown position</param>
-        public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag,
-            OnEndDrag onEndDrag)
+        public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag, OnEndDrag onEndDrag)
         {
             _inputManager = IoCManager.Resolve<IInputManager>();
             _onBeginDrag = onBeginDrag;

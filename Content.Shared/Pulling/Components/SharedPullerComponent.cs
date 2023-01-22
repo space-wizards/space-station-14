@@ -18,12 +18,6 @@
         [DataField("needsHands")]
         public bool NeedsHands = true;
 
-        protected override void Shutdown()
-        {
-            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
-            base.Shutdown();
-        }
-
         protected override void OnRemove()
         {
             if (Pulling != default)

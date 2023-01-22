@@ -32,7 +32,7 @@ namespace Content.Shared.Projectiles
         }
 
         [NetSerializable, Serializable]
-        protected sealed class ProjectileComponentState : ComponentState
+        public sealed class ProjectileComponentState : ComponentState
         {
             public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {
@@ -45,7 +45,7 @@ namespace Content.Shared.Projectiles
         }
 
         [Serializable, NetSerializable]
-        protected sealed class ImpactEffectEvent : EntityEventArgs
+        public sealed class ImpactEffectEvent : EntityEventArgs
         {
             public string Prototype;
             public EntityCoordinates Coordinates;

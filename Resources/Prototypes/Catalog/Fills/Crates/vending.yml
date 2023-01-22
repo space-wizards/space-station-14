@@ -1,0 +1,134 @@
+- type: entity
+  id: CrateVendingMachineRestockBoozeFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockBooze
+
+- type: entity
+  id: CrateVendingMachineRestockClothesFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockClothes
+      - id: VendingMachineRestockCostumes
+
+- type: entity
+  id: CrateVendingMachineRestockDinnerwareFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockDinnerware
+
+- type: entity
+  id: CrateVendingMachineRestockEngineeringFilled
+  parent: CrateEngineeringSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockEngineering
+
+- type: entity
+  id: CrateVendingMachineRestockGamesFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockGames
+
+- type: entity
+  id: CrateVendingMachineRestockHotDrinksFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockHotDrinks
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockMedicalFilled
+  parent: CrateMedicalSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockMedical
+
+- type: entity
+  id: CrateVendingMachineRestockNutriMaxFilled
+  parent: CrateHydroSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockNutriMax
+
+- type: entity
+  id: CrateVendingMachineRestockPTechFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockPTech
+
+- type: entity
+  id: CrateVendingMachineRestockRobustSoftdrinksFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockRobustSoftdrinks
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockSalvageEquipmentFilled
+  parent: CrateGenericSteel
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockSalvageEquipment
+
+- type: entity
+  id: CrateVendingMachineRestockSecTechFilled
+  parent: CrateSecgear
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockSecTech
+
+- type: entity
+  id: CrateVendingMachineRestockSeedsFilled
+  parent: CrateHydroSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockSeeds
+
+- type: entity
+  id: CrateVendingMachineRestockSmokesFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockSmokes
+        amount: 2
+
+- type: entity
+  id: CrateVendingMachineRestockSnacksFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockChang
+      - id: VendingMachineRestockDiscountDans
+      - id: VendingMachineRestockDonut
+      - id: VendingMachineRestockGetmoreChocolateCorp
+
+- type: entity
+  id: CrateVendingMachineRestockTankDispenserFilled
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: VendingMachineRestockTankDispenser
