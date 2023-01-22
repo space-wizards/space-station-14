@@ -720,11 +720,26 @@
   name: salvage expeditions computer
   description: Used take salvage missions.
   components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: [ "computerLayerScreen" ]
+          state: mining
+        - map: ["computerLayerKeys"]
+          state: tech_key
     - type: Appearance
+    - type: GenericVisualizer
       visuals:
-        - type: ComputerVisualizer
-          key: tech_key
-          screen: mining
+        enum.ComputerVisuals.Powered:
+          computerLayerScreen:
+            True: { visible: true, shader: unshaded }
+            False: { visible: false }
+          computerLayerKeys:
+            True: { visible: true, shader: unshaded }
+            False: { visible: true }
     - type: SalvageExpeditionConsole
     - type: ActivatableUI
       key: enum.SalvageConsoleUiKey.Expedition

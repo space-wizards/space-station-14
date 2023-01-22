@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -233,7 +234,7 @@ public sealed class SalvageCaveJob : Job<bool>
         }
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(_uid);
-        biome.Prototype = "Grasslands";
+        biome.BiomePrototype = "LowDesert";
         _entManager.Dirty(biome);
         _expedition.Phase = SalvagePhase.Initializing;
         return true;
