@@ -108,7 +108,9 @@
   - type: Tool
     qualities:
     - Pulsing
-  - type: SignalLinker
+  - type: Tag
+    tags:
+      - Multitool
 
 - type: entity
   name: cowelding tool

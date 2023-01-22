@@ -184,14 +184,9 @@
   - type: Tool
     qualities:
       - Pulsing
-  - type: SignalLinker
-    inHandsOnly: true
-  - type: UserInterface
-    interfaces:
-    - key: enum.SignalLinkerUiKey.Key
-      type: SignalPortSelectorBoundUserInterface
   - type: Tag
     tags:
+      - Multitool
       - DroneUsable
   - type: StaticPrice
     price: 60
@@ -364,13 +359,10 @@
   - type: Item
     sprite: Objects/Tools/omnitool.rsi
     size: 20
+  - type: Tag
+    tags:
+    - Multitool
   - type: TilePrying
-  - type: SignalLinker
-    requiredQuality: Pulsing
-  - type: UserInterface
-    interfaces:
-      - key: enum.SignalLinkerUiKey.Key
-        type: SignalPortSelectorBoundUserInterface
   - type: Tool
     qualities:
       - Screwing

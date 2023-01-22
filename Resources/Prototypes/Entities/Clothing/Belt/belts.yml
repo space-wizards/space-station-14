@@ -11,6 +11,7 @@
   - type: Clothing
     sprite: Clothing/Belt/utility.rsi
   - type: Storage
+    capacity: 45
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -25,9 +26,10 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
@@ -57,8 +59,8 @@
           - Wrench
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
 
@@ -73,7 +75,7 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    capacity: 100
+    capacity: 105
     # TODO: Fill this out more.
     whitelist:
       tags:
@@ -90,9 +92,10 @@
         - CigPack
         - Radio
         - HolofanProjector
+        - Multitool
       components:
         - AirlockPainter
-        - SignalLinker
+        - NetworkConfigurator
         - RCD
         - RCDAmmo
         - Welder
@@ -128,8 +131,8 @@
           - Screwdriver
       multitool:
         whitelist:
-          components:
-          - SignalLinker
+          tags:
+            - Multitool
       wrench:
         whitelist:
           tags:

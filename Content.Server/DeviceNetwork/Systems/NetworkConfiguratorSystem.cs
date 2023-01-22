@@ -328,7 +328,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
         }
 
-        if (configurator.LinkModeActive && configurator.ActiveDeviceLink.HasValue && (HasComp<DeviceLinkSinkComponent>(args.Target) || HasComp<DeviceLinkSourceComponent>(args.Target)))
+        if (configurator is {LinkModeActive: true, ActiveDeviceLink: { }} && (HasComp<DeviceLinkSinkComponent>(args.Target) || HasComp<DeviceLinkSourceComponent>(args.Target)))
         {
             AlternativeVerb verb = new()
             {

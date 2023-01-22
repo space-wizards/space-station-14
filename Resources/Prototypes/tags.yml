@@ -393,6 +393,9 @@
   id: Mop
 
 - type: Tag
+  id: Multitool
+
+- type: Tag
   id: NoSpinOnThrow
 
 - type: Tag
