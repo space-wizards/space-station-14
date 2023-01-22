@@ -2,7 +2,6 @@
 using Content.Shared.DeviceNetwork;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.NetworkConfigurator;
 
@@ -15,14 +14,12 @@ public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
     private NetworkConfiguratorLinkMenu? _linkMenu;
 
     private NetworkConfiguratorSystem _netConfig;
-    private DeviceListSystem _deviceList;
 
     public NetworkConfiguratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
     {
         IoCManager.InjectDependencies(this);
 
         _netConfig = _entityManager.System<NetworkConfiguratorSystem>();
-        _deviceList = _entityManager.System<DeviceListSystem>();
     }
 
     public void OnRemoveButtonPressed(string address)

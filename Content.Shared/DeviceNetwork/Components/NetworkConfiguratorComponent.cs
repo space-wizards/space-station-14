@@ -1,4 +1,5 @@
 using Content.Shared.DeviceLinking;
+using Content.Shared.DeviceNetwork.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -41,20 +42,31 @@ public sealed class NetworkConfiguratorComponent : Component
     [DataField("devices")]
     public Dictionary<string, EntityUid> Devices = new();
 
+    [DataField("useDelay")]
+    public TimeSpan UseDelay = TimeSpan.FromSeconds(0.5);
+
+    [DataField("lastUseAttempt")]
+    public TimeSpan LastUseAttempt;
+
     [DataField("soundNoAccess")]
     public SoundSpecifier SoundNoAccess = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
     [DataField("soundLinkStart")]
-    public SoundSpecifier SoundLinkStart = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
+    public SoundSpecifier SoundLinkStart = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
+
+    [DataField("soundSwitchMode")]
+    public SoundSpecifier SoundSwitchMode = new SoundPathSpecifier("/Audio/Machines/beep.ogg");
 }
 
 [Serializable, NetSerializable]
 public sealed class NetworkConfiguratorComponentState : ComponentState
 {
     public readonly EntityUid? ActiveDeviceList;
+    public readonly bool LinkModeActive;
 
-    public NetworkConfiguratorComponentState(EntityUid? activeDeviceList)
+    public NetworkConfiguratorComponentState(EntityUid? activeDeviceList, bool linkModeActive)
     {
         ActiveDeviceList = activeDeviceList;
+        LinkModeActive = linkModeActive;
     }
 }

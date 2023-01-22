@@ -3,7 +3,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract class SharedNetworkConfiguratorSystem : EntitySystem
 {
@@ -18,7 +18,7 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
     private void GetNetworkConfiguratorState(EntityUid uid, NetworkConfiguratorComponent comp,
         ref ComponentGetState args)
     {
-        args.State = new NetworkConfiguratorComponentState(comp.ActiveDeviceList);
+        args.State = new NetworkConfiguratorComponentState(comp.ActiveDeviceList, comp.LinkModeActive);
     }
 
     private void HandleNetworkConfiguratorState(EntityUid uid, NetworkConfiguratorComponent comp,
@@ -30,9 +30,22 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
         }
 
         comp.ActiveDeviceList = state.ActiveDeviceList;
+        comp.LinkModeActive = state.LinkModeActive;
     }
 }
 
 public sealed class ClearAllOverlaysEvent : InstantActionEvent
 {
+}
+
+[Serializable, NetSerializable]
+public enum NetworkConfiguratorVisuals
+{
+    Mode
+}
+
+[Serializable, NetSerializable]
+public enum NetworkConfiguratorLayers
+{
+    ModeLight
 }

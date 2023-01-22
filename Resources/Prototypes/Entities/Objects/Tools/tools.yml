@@ -210,6 +210,7 @@
       layers:
         - state: icon
         - state: mode-list
+          map: ["enum.NetworkConfiguratorLayers.ModeLight"]
           shader: unshaded
     - type: Item
       size: 5
@@ -218,6 +219,13 @@
       quickEquip: false
       slots:
         - Belt
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.NetworkConfiguratorVisuals.Mode:
+          enum.NetworkConfiguratorLayers.ModeLight:
+            True: { state: mode-link }
+            False: { state: mode-list }
     - type: NetworkConfigurator
     - type: ActivatableUI
       key: enum.NetworkConfiguratorUiKey.List
@@ -307,7 +315,7 @@
   components:
   - type: RCD
     ammo: 0
-  
+
 - type: entity
   name: RCD Ammo
   parent: BaseItem

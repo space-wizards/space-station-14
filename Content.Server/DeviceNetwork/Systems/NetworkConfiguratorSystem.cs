@@ -8,15 +8,16 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceNetwork.Systems;
 
@@ -30,6 +31,8 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -72,9 +75,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             }
 
             //The network configurator is a handheld device. There can only ever be an ui session open for the player holding the device.
-            var ui = _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure);
-            if (ui != null)
-                _uiSystem.CloseAll(ui);
+            _uiSystem.TryCloseAll(component.Owner, NetworkConfiguratorUiKey.Configure);
         }
     }
 
@@ -140,7 +141,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         if (configurator.ActiveDeviceLink == target)
         {
-            _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, Filter.Entities(user));
+            _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-stopped"), target.Value, user);
             configurator.ActiveDeviceLink = null;
             return;
         }
@@ -157,13 +158,14 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started",  ("device", Name(target.Value))), target.Value, Filter.Entities(user));
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-link-mode-started",  ("device", Name(target.Value))), target.Value, user);
         configurator.ActiveDeviceLink = target;
     }
 
     private void TryLinkDefaults(EntityUid uid, NetworkConfiguratorComponent configurator, EntityUid? targetUid, EntityUid user)
     {
-        if (!configurator.LinkModeActive || !configurator.ActiveDeviceLink.HasValue || !targetUid.HasValue || configurator.ActiveDeviceLink == targetUid)
+        if (!configurator.LinkModeActive || !configurator.ActiveDeviceLink.HasValue
+            || !targetUid.HasValue || configurator.ActiveDeviceLink == targetUid)
             return;
 
         if (!HasComp<DeviceLinkSourceComponent>(targetUid) && !HasComp<DeviceLinkSinkComponent>(targetUid))
@@ -187,7 +189,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (_accessSystem.IsAllowed(user.Value, reader))
             return true;
 
-        _audioSystem.Play(component.SoundNoAccess, Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
+        _audioSystem.Play(component.SoundNoAccess, Filter.Pvs(user.Value), target, true, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
@@ -195,11 +197,14 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     private void OnComponentRemoved(EntityUid uid, DeviceListComponent component, ComponentRemove args)
     {
-        _uiSystem.GetUiOrNull(component.Owner, NetworkConfiguratorUiKey.Configure)?.CloseAll();
+        _uiSystem.TryCloseAll(uid, NetworkConfiguratorUiKey.Configure);
     }
 
     private void SwitchMode(EntityUid? userUid, EntityUid configuratorUid, NetworkConfiguratorComponent configurator)
     {
+        if (delay(configurator))
+            return;
+
         configurator.LinkModeActive = !configurator.LinkModeActive;
 
         if (!userUid.HasValue)
@@ -210,7 +215,26 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         var locString = configurator.LinkModeActive ? "network-configurator-mode-link" : "network-configurator-mode-list";
         _popupSystem.PopupEntity(Loc.GetString("network-configurator-switched-mode", ("mode", Loc.GetString(locString))),
-            configuratorUid, Filter.Entities(userUid.Value));
+            configuratorUid, userUid.Value);
+
+        Dirty(configurator);
+        _appearanceSystem.SetData(configuratorUid, NetworkConfiguratorVisuals.Mode, configurator.LinkModeActive);
+
+        var pitch = configurator.LinkModeActive ? 1 : 0.8f;
+        _audioSystem.Play(configurator.SoundSwitchMode, Filter.Pvs(userUid.Value), configuratorUid, true, AudioParams.Default.WithVolume(1.5f).WithPitchScale(pitch));
+    }
+
+    /// <summary>
+    /// Returns true if the last time this method was called is earlier than the configurators use delay.
+    /// </summary>
+    private bool delay(NetworkConfiguratorComponent configurator)
+    {
+        var currentTime = _gameTiming.CurTime;
+        if (currentTime < configurator.LastUseAttempt + configurator.UseDelay)
+            return true;
+
+        configurator.LastUseAttempt = currentTime;
+        return false;
     }
 
     #region Interactions
@@ -338,6 +362,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
     private void OpenDeviceLinkUi(EntityUid configuratorUid, EntityUid? targetUid, EntityUid userUid, NetworkConfiguratorComponent configurator)
     {
+        if (delay(configurator))
+            return;
+
         if (!targetUid.HasValue || !configurator.ActiveDeviceLink.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
@@ -378,6 +405,9 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
     /// </summary>
     private void OpenDeviceListUi(EntityUid? targetUid, EntityUid userUid, NetworkConfiguratorComponent configurator)
     {
+        if (delay(configurator))
+            return;
+
         if (!targetUid.HasValue || !TryComp(userUid, out ActorComponent? actor) || !AccessCheck(targetUid.Value, userUid, configurator))
             return;
 
