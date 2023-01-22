@@ -19,14 +19,16 @@ namespace Content.Client.Disposal.Visualizers
 
         private void OnComponentInit(EntityUid uid, DisposalUnitComponent disposalUnit, ComponentInit args)
         {
-            if (!EntityManager.TryGetComponent<SpriteComponent>(uid, out var sprite))
-            {
+            if (!TryComp<SpriteComponent>(uid, out var sprite))
                 return;
-            }
 
-            sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx);
+            if(!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
+                return; // Couldn't find the "normal" layer to return to after flush animation
+
+            if(!sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
+                return; // Couldn't find the flush animation layer
+
             var originalBaseState = sprite.LayerGetState(baseLayerIdx);
-            sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx);
             var flushState = sprite.LayerGetState(flushLayerIdx);
 
             // Setup the flush animation to play
@@ -53,7 +55,7 @@ namespace Content.Client.Disposal.Visualizers
                 }
             };
 
-            EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
+            EnsureComp<AnimationPlayerComponent>(uid);
 
             UpdateState(uid, disposalUnit, sprite);
         }
@@ -83,8 +85,8 @@ namespace Content.Client.Disposal.Visualizers
 
             if (state == VisualState.Flushing)
             {
-                var animPlayer = EntityManager.GetComponent<AnimationPlayerComponent>(uid);
-                if (!AnimationSystem.HasRunningAnimation(uid, AnimationKey))
+                if (HasComp<AnimationPlayerComponent>(uid) &&
+                    !AnimationSystem.HasRunningAnimation(uid, AnimationKey))
                 {
                     AnimationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
                 }

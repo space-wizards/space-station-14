@@ -10,7 +10,7 @@ namespace Content.Client.Disposal.Systems
 {
     public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
-        public List<EntityUid> PressuringDisposals = new();
+        private List<EntityUid> PressuringDisposals = new();
 
         public void UpdateActive(EntityUid disposalEntity, bool active)
         {
@@ -31,7 +31,9 @@ namespace Content.Client.Disposal.Systems
             for (var i = PressuringDisposals.Count - 1; i >= 0; i--)
             {
                 var disposal = PressuringDisposals[i];
-                if (!UpdateInterface(disposal)) continue;
+                if (!UpdateInterface(disposal))
+                    continue;
+
                 PressuringDisposals.RemoveAt(i);
             }
         }
@@ -39,15 +41,15 @@ namespace Content.Client.Disposal.Systems
         private bool UpdateInterface(EntityUid disposalUnit)
         {
             if (!TryComp(disposalUnit, out DisposalUnitComponent? component) || component.Deleted)
-            {
                 return true;
-            }
-            if (component.Deleted) return true;
-
-            if (!EntityManager.TryGetComponent(disposalUnit, out ClientUserInterfaceComponent? userInterface)) return true;
+            if (component.Deleted)
+                return true;
+            if (!TryComp(disposalUnit, out ClientUserInterfaceComponent? userInterface))
+                return true;
 
             var state = component.UiState;
-            if (state == null) return true;
+            if (state == null)
+                return true;
 
             foreach (var inter in userInterface.Interfaces)
             {
