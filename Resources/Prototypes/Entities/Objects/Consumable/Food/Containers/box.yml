@@ -176,6 +176,8 @@
     - state: box
     - state: box-open
       map: ["enum.StorageVisualLayers.Door"]
+  - type: StaticPrice
+    price: 0
   - type: StorageFill
     contents:
     - id: FoodPizzaArnold
