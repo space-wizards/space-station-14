@@ -1,14 +1,6 @@
 Entries:
 - author: DrSmugleaf
   changes:
-  - {message: Fixed some actions such as PDA and helmet lights having the same icon.,
-    type: Fix}
-  - {message: Fixed showing nothing when dragging some actions such as the helmet
-      light., type: Fix}
-  id: 2442
-  time: '2022-10-13T17:14:53.0000000+00:00'
-- author: DrSmugleaf
-  changes:
   - {message: Fixed new actions not appearing on the action bar and window automatically.,
     type: Fix}
   - {message: Fixed old actions not being removed from the action bar and window automatically.,
@@ -2942,3 +2934,8 @@ Entries:
   - {message: Correct bolts light state display, type: Fix}
   id: 2941
   time: '2023-01-21T16:33:12.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Over 50 new fortunes can be found in fortune cookie, type: Add}
+  id: 2942
+  time: '2023-01-22T13:20:17.0000000+00:00'
