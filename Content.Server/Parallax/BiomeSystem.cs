@@ -9,6 +9,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
 
@@ -29,6 +30,18 @@ public sealed class BiomeSystem : SharedBiomeSystem
     {
         base.Initialize();
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
+        SubscribeLocalEvent<BiomeComponent, TileChangedEvent>(OnBiomeTileChanged);
+    }
+
+    private void OnBiomeTileChanged(EntityUid uid, BiomeComponent component, ref TileChangedEvent args)
+    {
+        if (component.Generating)
+            return;
+
+        var chunk = SharedMapSystem.GetChunkIndices(args.NewTile.GridIndices, ChunkSize);
+        var modifiedChunk = component.ModifiedTiles.GetOrNew(chunk);
+        var relative = SharedMapSystem.GetChunkRelative(args.NewTile.GridIndices, ChunkSize);
+        modifiedChunk.Add(relative);
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
@@ -78,12 +91,13 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var biome, out var grid))
         {
-            var noise = new FastNoise(biome.Seed);
+            biome.Generating = true;
 
-            // Load new chunks
+            var noise = new FastNoise(biome.Seed);
             LoadChunks(biome, grid, noise);
-            // Unload old chunks
             UnloadChunks(biome, grid, noise);
+
+            biome.Generating = false;
         }
 
         _handledEntities.Clear();

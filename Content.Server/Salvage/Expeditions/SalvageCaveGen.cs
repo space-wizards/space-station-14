@@ -1,5 +1,6 @@
 namespace Content.Server.Salvage.Expeditions;
 
+[Obsolete]
 [DataDefinition]
 public sealed class SalvageCaveGen : ISalvageProcgen
 {

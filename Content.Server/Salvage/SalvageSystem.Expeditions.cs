@@ -3,14 +3,17 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
+using Content.Server.Salvage.Expeditions.Extraction;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Components;
+using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
@@ -44,32 +47,6 @@ public sealed partial class SalvageSystem
     private void OnExpeditionUnpaused(EntityUid uid, SalvageExpeditionComponent component, ref EntityUnpausedEvent args)
     {
         component.EndTime += args.PausedTime;
-    }
-
-    private void OnSalvageClaimMessage(EntityUid uid, SalvageExpeditionConsoleComponent component, ClaimSalvageMessage args)
-    {
-        var station = _station.GetOwningStation(uid);
-
-        if (!TryComp<SalvageExpeditionDataComponent>(station, out var data) || data.Claimed)
-            return;
-
-        if (!data.Missions.TryGetValue(args.Index, out var mission))
-            return;
-
-        SpawnMission(mission, station.Value);
-
-        data.ActiveMission = args.Index;
-        UpdateConsoles(data);
-    }
-
-    private void OnSalvageConsoleInit(EntityUid uid, SalvageExpeditionConsoleComponent component, ComponentInit args)
-    {
-        UpdateConsole(component);
-    }
-
-    private void OnSalvageConsoleParent(EntityUid uid, SalvageExpeditionConsoleComponent component, ref EntParentChangedMessage args)
-    {
-        UpdateConsole(component);
     }
 
     private void OnSalvageExpStationInit(StationInitializedEvent ev)
@@ -140,42 +117,10 @@ public sealed partial class SalvageSystem
         }
     }
 
-    private void UpdateConsoles(SalvageExpeditionDataComponent component)
-    {
-        var state = GetState(component);
-
-        foreach (var (console, xform, uiComp) in EntityQuery<SalvageExpeditionConsoleComponent, TransformComponent, ServerUserInterfaceComponent>(true))
-        {
-            var station = _station.GetOwningStation(console.Owner, xform);
-
-            if (station != component.Owner)
-                continue;
-
-            _ui.TrySetUiState(console.Owner, SalvageConsoleUiKey.Expedition, state, ui: uiComp);
-        }
-    }
-
     private SalvageExpeditionConsoleState GetState(SalvageExpeditionDataComponent component)
     {
         var missions = component.Missions.Values.ToList();
         return new SalvageExpeditionConsoleState(component.Claimed, component.ActiveMission, missions);
-    }
-
-    private void UpdateConsole(SalvageExpeditionConsoleComponent component)
-    {
-        var station = _station.GetOwningStation(component.Owner);
-        SalvageExpeditionConsoleState state;
-
-        if (TryComp<SalvageExpeditionDataComponent>(station, out var dataComponent))
-        {
-            state = GetState(dataComponent);
-        }
-        else
-        {
-            state = new SalvageExpeditionConsoleState(false, 0, new List<SalvageMission>());
-        }
-
-        _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);
     }
 
     private void SpawnMission(SalvageMission mission, EntityUid station)
@@ -186,6 +131,12 @@ public sealed partial class SalvageSystem
         _mapManager.AddUninitializedMap(mapId);
         MetaDataComponent? metadata = null;
         var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
+
+        // Setup mission configs
+        var biome = EnsureComp<BiomeComponent>(mapUid);
+        biome.BiomePrototype = config.Biome;
+        var biomeProto = _prototypeManager.Index<BiomePrototype>(config.Biome);
+        Dirty(biome);
 
         var gravity = EnsureComp<GravityComponent>(mapUid);
         gravity.Enabled = true;
@@ -209,11 +160,7 @@ public sealed partial class SalvageSystem
 
         _mapManager.DoMapInitialize(mapId);
 
-        var light = EnsureComp<MapLightComponent>(mapUid);
-        light.AmbientLightColor = new Color(2, 2, 2);
-
         // No point raising an event for this when it's 1-1.
-        SalvageCaveJob job;
         var random = new Random(mission.Seed);
 
         // Setup expedition
@@ -223,8 +170,31 @@ public sealed partial class SalvageSystem
         expedition.Faction = config.Factions[random.Next(config.Factions.Count)];
         expedition.Config = config.ID;
 
+        // Setup the landing pad
+        var landingPadDimensions = new Vector2(64f, 64f);
+
+        var tiles = new List<(Vector2i Indices, Tile Tile)>((int) (landingPadDimensions.X * landingPadDimensions.Y));
+        var noise = new FastNoise(mission.Seed);
+
+        for (var x = 0; x < 64; x++)
+        {
+            for (var y = 0; y < 64; y++)
+            {
+                var indices = new Vector2i(x, y);
+
+                if (!_biome.TryGetBiomeTile(indices, biomeProto, noise, grid, out var tile))
+                    continue;
+
+                tiles.Add((new Vector2i(x, y), tile.Value));
+            }
+        }
+
+        grid.SetTiles(tiles);
+
         switch (config.Expedition)
         {
+            case SalvageExtraction:
+                break;
             case SalvageStructure:
                 EnsureComp<SalvageStructureExpeditionComponent>(mapUid);
                 break;
@@ -232,26 +202,6 @@ public sealed partial class SalvageSystem
                 return;
         }
 
-        switch (config.Environment)
-        {
-            case SalvageCaveGen cave:
-                job = new SalvageCaveJob(
-                    EntityManager,
-                    _prototypeManager,
-                    _tileDefManager,
-                    mapUid,
-                    grid,
-                    expedition,
-                    config,
-                    cave,
-                    SalvageGenTime,
-                    random,
-                    new FastNoise(mission.Seed));
-                break;
-            default:
-                return;
-        }
-
-        _salvageQueue.EnqueueJob(job);
+        // _salvageQueue.EnqueueJob(job);
     }
 }

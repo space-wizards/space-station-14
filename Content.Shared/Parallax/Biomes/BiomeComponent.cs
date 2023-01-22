@@ -36,4 +36,10 @@ public sealed class BiomeComponent : Component
     /// </summary>
     [ViewVariables]
     public readonly HashSet<Vector2i> LoadedChunks = new();
+
+    /// <summary>
+    /// Are we currently in the process of generating?
+    /// Used to flag modified tiles without callers having to deal with it.
+    /// </summary>
+    public bool Generating = false;
 }
