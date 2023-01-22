@@ -39,9 +39,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
             return;
 
         var chunk = SharedMapSystem.GetChunkIndices(args.NewTile.GridIndices, ChunkSize);
-        var modifiedChunk = component.ModifiedTiles.GetOrNew(chunk);
-        var relative = SharedMapSystem.GetChunkRelative(args.NewTile.GridIndices, ChunkSize);
-        modifiedChunk.Add(relative);
+        var modifiedChunk = component.ModifiedTiles.GetOrNew(chunk * ChunkSize);
+        modifiedChunk.Add(args.NewTile.GridIndices);
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)

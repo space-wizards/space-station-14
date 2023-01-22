@@ -171,14 +171,14 @@ public sealed partial class SalvageSystem
         expedition.Config = config.ID;
 
         // Setup the landing pad
-        var landingPadDimensions = new Vector2(64f, 64f);
+        var landingPadExtents = new Vector2i(32, 32);
 
-        var tiles = new List<(Vector2i Indices, Tile Tile)>((int) (landingPadDimensions.X * landingPadDimensions.Y));
+        var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
         var noise = new FastNoise(mission.Seed);
 
-        for (var x = 0; x < 64; x++)
+        for (var x = -landingPadExtents.X; x < landingPadExtents.X; x++)
         {
-            for (var y = 0; y < 64; y++)
+            for (var y = -landingPadExtents.Y; y < landingPadExtents.Y; y++)
             {
                 var indices = new Vector2i(x, y);
 
@@ -190,6 +190,8 @@ public sealed partial class SalvageSystem
         }
 
         grid.SetTiles(tiles);
+        // TODO: Better
+        Spawn("FTLPoint", new EntityCoordinates(grid.Owner, Vector2.Zero));
 
         switch (config.Expedition)
         {
