@@ -1,24 +1,24 @@
 <Document>
-## Anomaly Scanner
+## Сканер аномалий
 
-The Anomaly Scanner is used to gather various information on anomalies. They can be found inside of the lockers in the science department.
+Сканер аномалий используется для получения информации об аномалии. Их можно найти в шкафах учёных.
 
 <Box>
 <GuideEntityEmbed Entity="AnomalyScanner"/>
 </Box>
 
-Scanning an anomaly shows the severity, general stability, approximate point output, reactions with particle types, and time until the next pulse. The reaction types, specifically, can be used in conjunction with the A.P.E. to manipulate anomalies.
+Сканер показывает уровень Угрозы, стабильность, приблизительный вывод, реакцию аномалии на разные виды частиц, и время до следующего импульса.
 
-## Anomaly Vessel
+## Сосуды аномалий
 
-The anomaly vessel is a machine that generates points from anomalies. Use the anomaly scanner on an empty vessel, and the anomaly that was last scanned will be synced with the vessel.
+Сосуды аномалий генерируют очки исследований. Просканируйте аномалию, нажмите сканером по сосуду и всё готово.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAnomalyVessel"/>
 </Box>
 
-The amount of points a vessel generates per second is based on the severity, stability, and health of an anomaly. The higher each of these values, the higher the point output will be.
+Очки исследований выдаются в секунду, их количество зависит от Угрозы, Стабильности и Здоровья аномалии. Чем выше каждое значение, тем больше будет вырабатываться очков.
 
-Be careful: if an anomaly goes [color=#a4885c]supercritical[/color], the vessel it is linked to will explode. This may damage the station and nearby equipment.
+Осторожно: если уровень Угрозы аномалии будет равен [color=#a4885c]100%[/color], связанный с ней сосуд взорвётся.
 
 </Document>
