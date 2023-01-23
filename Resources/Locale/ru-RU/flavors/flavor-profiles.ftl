@@ -38,6 +38,7 @@ flavor-base-creamy = сливочно
 flavor-base-fizzy = шипуче
 flavor-base-shocking = шокирующе
 flavor-base-cheap = дёшево
+flavor-base-piquant = пикантно
 # lmao
 flavor-base-terrible = ужасно
 

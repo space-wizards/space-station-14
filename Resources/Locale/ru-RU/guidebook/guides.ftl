@@ -13,4 +13,7 @@ guide-entry-survival = Выживание
 guide-entry-anomalous-research = Исследование Аномалий
 guide-entry-scanners-and-vessels = Сканеры и Сосуды
 guide-entry-ape = И.А.Ч.
+guide-entry-xenoarchaeology = Ксеноархеология
+guide-entry-artifact-reports = Отчеты об артефактах
+guide-entry-traversal-distorter = Поперечный искатель
 guide-entry-ss14 = Space Station 14

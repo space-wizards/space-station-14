@@ -1,4 +1,4 @@
-bluespace-artifact-event-announcement = Наши приборы зафиксировали приближающийся аномальный объект. Пожалуйста, незамедлительно сообщайте научному отделу о { $sighting }.
+bluespace-artifact-event-announcement = Наши приборы зафиксировали приближающийся объект инородного происхождения. Пожалуйста, незамедлительно сообщайте научному отделу о { $sighting }.
 bluespace-artifact-sighting-1 = ярких вспышках света
 bluespace-artifact-sighting-2 = странных звуках, доносящихся из технических туннелей
 bluespace-artifact-sighting-3 = неестественных конструкциях

@@ -1,5 +1,11 @@
 action-name-spell-rune-flash = Руна вспышки
 action-description-spell-rune-flash = Вызывает руну, которая ослепляет при использовании.
+action-name-spell-rune-explosion = Руна взрыва
+action-description-spell-rune-explosion = Вызывает руну, которая взрывается при использовании.
+action-name-spell-rune-ignite = Руна воспламенения
+action-description-spell-rune-ignite = Призывает руну, которая при использовании воспламеняется.
+action-name-spell-rune-stun = Руна оглушения
+action-description-spell-rune-stun = Призывает руну, которая при использовании оглушает.
 action-name-spell-forcewall = Силовой барьер
 action-description-spell-forcewall = Создает магический барьер.
 action-speech-spell-forcewall = TARCOL MINTI ZHERI

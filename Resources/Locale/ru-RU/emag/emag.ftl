@@ -7,4 +7,9 @@ emag-charges-remaining =
        *[other] зарядов
     }.
 emag-max-charges = Он имеет [color=green]максимум[/color] зарядов.
-emag-recharging = До нового заряда осталось [color=yellow]{ $seconds }[/color] секунд.
+emag-recharging =
+    { $seconds ->
+        [one] До нового заряда осталась [color=yellow]{ $seconds }[/color] секунда.
+        [few] До нового заряда осталось [color=yellow]{ $seconds }[/color] секунды.
+       *[other] До нового заряда осталось [color=yellow]{ $seconds }[/color] секунд.
+    }

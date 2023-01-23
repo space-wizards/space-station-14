@@ -27,9 +27,10 @@ game-ticker-get-info-preround-text =
 game-ticker-no-map-selected = [color=red]Карта не выбрана![/color]
 game-ticker-player-no-jobs-available-when-joining = При попытке присоединиться к игре ни одной роли не было доступно.
 # Displayed in chat to admins when a player joins
-player-join-message = Игрок { $name } присоединился к серверу!
+player-join-message = Игрок { $name } присоединился.
+player-first-join-message = Игрок { $name } присоединился впервые.
 # Displayed in chat to admins when a player leaves
-player-leave-message = Игрок { $name } покинул сервер!
+player-leave-message = Игрок { $name } покинул сервер.
 latejoin-arrival-announcement =
     { $character } ({ $job }) { $gender ->
         [male] прибыл
