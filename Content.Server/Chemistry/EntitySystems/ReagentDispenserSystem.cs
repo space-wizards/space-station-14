@@ -89,7 +89,7 @@ namespace Content.Server.Chemistry.EntitySystems
             return inventory;
         }
 
-        private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, ref GotEmaggedEvent args)
         {
             if (!reagentDispenser.IsEmagged)
             {
