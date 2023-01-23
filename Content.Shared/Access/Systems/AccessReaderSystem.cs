@@ -132,6 +132,9 @@ namespace Content.Shared.Access.Systems
             return reader.AccessLists.Count == 0 || reader.AccessLists.Any(a => a.IsSubsetOf(accessTags));
         }
 
+        /// <summary>
+        /// Compares the given stationrecordkeys with the accessreader to see if it is allowed.
+        /// </summary>
         public bool AreStationRecordKeysAllowed(ICollection<StationRecordKey> keys, AccessReaderComponent reader)
         {
             return keys.Any() && reader.AccessKeys.Any(keys.Contains);
@@ -267,7 +270,7 @@ namespace Content.Shared.Access.Systems
         }
 
         /// <summary>
-        ///     Try to find <see cref="AccessComponent"/> on this item
+        ///     Try to find <see cref="StationRecordKeyStorageComponent"/> on this item
         ///     or inside this item (if it's pda)
         /// </summary>
         private bool FindStationRecordKeyItem(EntityUid uid, [NotNullWhen(true)] out StationRecordKey? key)
