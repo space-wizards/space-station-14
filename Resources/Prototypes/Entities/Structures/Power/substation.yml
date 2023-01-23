@@ -102,6 +102,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -202,6 +203,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
