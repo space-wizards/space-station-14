@@ -182,7 +182,7 @@ public sealed class DeviceLinkSystem : EntitySystem
                     continue;
 
                 //Just skip using device networking if the source or the sink doesn't support it
-                if (!HasComp<DeviceNetworkComponent>(sinkUid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
+                if (!HasComp<DeviceNetworkComponent>(uid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
                 {
                     RaiseLocalEvent(sinkUid, new SignalReceivedEvent(sink));
                     continue;
