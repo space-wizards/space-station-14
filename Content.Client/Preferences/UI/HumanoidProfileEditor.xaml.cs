@@ -1160,9 +1160,9 @@ namespace Content.Client.Preferences.UI
 
                 _jobTitle = new Label()
                 {
-                    Margin = new Thickness(5f,0,0,0),
+                    Margin = new Thickness(5f,0,5f,0),
                     Text = job.LocalizedName,
-                    MinSize = (175, 0),
+                    MinSize = (180, 0),
                     MouseFilter = MouseFilterMode.Stop
                 };
 
@@ -1205,7 +1205,7 @@ namespace Content.Client.Preferences.UI
                 var btn = new Button
                 {
                     Text = text,
-                    MinWidth = 100
+                    MinWidth = 90
                 };
                 return btn;
             }
