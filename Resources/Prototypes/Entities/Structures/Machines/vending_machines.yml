@@ -1448,7 +1448,7 @@
   - type: Advertise
     pack: HappyHonkAds
   - type: AccessReader
-    access: [["Kitchen", "Theatre"]]
+    access: [["Kitchen"], ["Theatre"]]
 
 # Gas Tank Dispenser
 
