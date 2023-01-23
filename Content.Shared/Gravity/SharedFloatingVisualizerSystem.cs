@@ -28,6 +28,12 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
 
     protected bool CanFloat(EntityUid uid, FloatingVisualsComponent component, TransformComponent? transform = null)
     {
+        if (!Resolve(uid, ref transform))
+            return false;
+
+        if (transform.MapID == MapId.Nullspace)
+            return false;
+
         component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
         Dirty(component);
         return component.CanFloat;

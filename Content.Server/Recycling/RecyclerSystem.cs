@@ -189,7 +189,7 @@ namespace Content.Server.Recycling
             QueueDel(component.Owner);
         }
 
-        private void OnEmagged(EntityUid uid, RecyclerComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, RecyclerComponent component, ref GotEmaggedEvent args)
         {
             if (!component.Safe) return;
             component.Safe = false;

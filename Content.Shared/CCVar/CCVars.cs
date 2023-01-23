@@ -250,7 +250,7 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /// <summary>
         /// Show reason of disconnect for user or not.
@@ -351,6 +351,12 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
+
+        public static readonly CVarDef<float> TraitorStartDelay =
+            CVarDef.Create("traitor.start_delay", 4f * 60f);
+
+        public static readonly CVarDef<float> TraitorStartDelayVariance =
+            CVarDef.Create("traitor.start_delay_variance", 3f * 60f);
 
         /*
          * TraitorDeathMatch
