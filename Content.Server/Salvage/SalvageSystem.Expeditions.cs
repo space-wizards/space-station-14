@@ -5,15 +5,11 @@ using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Extraction;
 using Content.Server.Salvage.Expeditions.Structure;
-using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Salvage;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
@@ -25,7 +21,6 @@ public sealed partial class SalvageSystem
 {
     private const int MissionLimit = 5;
 
-    private const double SalvageGenTime = 0.005;
     private readonly JobQueue _salvageQueue = new();
 
     private void InitializeExpeditions()
@@ -37,7 +32,17 @@ public sealed partial class SalvageSystem
 
         SubscribeLocalEvent<SalvageExpeditionDataComponent, EntityUnpausedEvent>(OnDataUnpaused);
 
+        SubscribeLocalEvent<SalvageExpeditionComponent, ComponentShutdown>(OnExpeditionShutdown);
         SubscribeLocalEvent<SalvageExpeditionComponent, EntityUnpausedEvent>(OnExpeditionUnpaused);
+    }
+
+    private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
+    {
+        // Finish mission
+        if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
+        {
+            FinishExpedition(data);
+        }
     }
 
     private void OnDataUnpaused(EntityUid uid, SalvageExpeditionDataComponent component, ref EntityUnpausedEvent args)
@@ -74,12 +79,6 @@ public sealed partial class SalvageSystem
         {
             if (comp.EndTime < currentTime)
             {
-                // Finish mission
-                if (TryComp<SalvageExpeditionDataComponent>(comp.Station, out var data))
-                {
-                    FinishExpedition(data);
-                }
-
                 QueueDel(comp.Owner);
             }
         }

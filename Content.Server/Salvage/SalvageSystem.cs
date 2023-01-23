@@ -24,10 +24,10 @@ namespace Content.Server.Salvage
 {
     public sealed partial class SalvageSystem : SharedSalvageSystem
     {
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;

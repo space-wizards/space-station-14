@@ -6,9 +6,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
@@ -20,10 +18,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-    private readonly HashSet<EntityUid> _handledEntities = new();
     private const float LoadRange = ChunkSize * 2f;
     private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
 
+    // Cleared at the end of each tick.
+    private readonly HashSet<EntityUid> _handledEntities = new();
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
 
     public override void Initialize()
@@ -163,6 +162,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         // Now do entities
         var loadedEntities = new List<EntityUid>();
         component.LoadedEntities.Add(chunk, loadedEntities);
+        var xformQuery = GetEntityQuery<TransformComponent>();
 
         for (var x = 0; x < ChunkSize; x++)
         {
@@ -182,6 +182,8 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 // TODO: Fix non-anchored ents spawning.
                 // Just track loaded chunks for now.
                 var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
+                var xform = xformQuery.GetComponent(ent);
+                _transform.AnchorEntity(xform);
                 loadedEntities.Add(ent);
             }
         }

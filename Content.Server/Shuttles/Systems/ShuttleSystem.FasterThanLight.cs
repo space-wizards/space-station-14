@@ -273,6 +273,20 @@ public sealed partial class ShuttleSystem
                     SetDockBolts(uid, false);
                     SetDocks(uid, true);
 
+                    TryComp(uid, out shuttle);
+
+                    if (comp.TargetUid != null && shuttle != null)
+                    {
+                        if (comp.Dock)
+                            TryFTLDock(shuttle, comp.TargetUid.Value);
+                        else
+                            TryFTLProximity(shuttle, comp.TargetUid.Value);
+                    }
+                    else
+                    {
+                        xform.Coordinates = comp.TargetCoordinates;
+                    }
+
                     if (TryComp(uid, out body))
                     {
                         _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
@@ -288,20 +302,6 @@ public sealed partial class ShuttleSystem
                         {
                             Enable(uid, body);
                         }
-                    }
-
-                    TryComp(uid, out shuttle);
-
-                    if (comp.TargetUid != null && shuttle != null)
-                    {
-                        if (comp.Dock)
-                            TryFTLDock(shuttle, comp.TargetUid.Value);
-                        else
-                            TryFTLProximity(shuttle, comp.TargetUid.Value);
-                    }
-                    else
-                    {
-                        xform.Coordinates = comp.TargetCoordinates;
                     }
 
                     if (shuttle != null)
