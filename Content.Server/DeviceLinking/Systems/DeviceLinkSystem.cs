@@ -160,7 +160,7 @@ public sealed class DeviceLinkSystem : EntitySystem
     #region Sending & Receiving
     /// <summary>
     /// Sends a network payload directed at the sink entity.
-    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the sink doesn't have a <see cref="DeviceNetworkComponent"/>
+    /// Just raises a <see cref="SignalReceivedEvent"/> without data if the source or the sink doesn't have a <see cref="DeviceNetworkComponent"/>
     /// </summary>
     /// <param name="uid">The source uid that invokes the port</param>
     /// <param name="port">The port to invoke</param>
@@ -181,8 +181,8 @@ public sealed class DeviceLinkSystem : EntitySystem
                 if (source != port)
                     continue;
 
-                //Just skip using device networking if the sink doesn't support it
-                if (!TryComp(sinkUid, out DeviceNetworkComponent? sinkNetworkComponent))
+                //Just skip using device networking if the source or the sink doesn't support it
+                if (!HasComp<DeviceNetworkComponent>(sinkUid) || !TryComp<DeviceNetworkComponent?>(sinkUid, out var sinkNetworkComponent))
                 {
                     RaiseLocalEvent(sinkUid, new SignalReceivedEvent(sink));
                     continue;
