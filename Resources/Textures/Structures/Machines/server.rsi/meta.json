@@ -26,6 +26,10 @@
         {
             "name": "server_o"
 
+        },
+        {
+            "name": "variant-crew"
+
         }
     ]
 }
