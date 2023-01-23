@@ -1,0 +1,1 @@
+motd-wrap-message = Message of the Day: {$motd}
