@@ -61,3 +61,6 @@ ent-VendingMachineRestockSmokes = ShadyCigs restock box
 ent-VendingMachineRestockTankDispenser = tank dispenser resupply box
     .desc = Capable of replacing tanks in a gas tank dispenser. Handle with care.
     .suffix = { "" }
+ent-VendingMachineRestockHappyHonk = happy honk restock box
+    .desc = place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
+    .suffix = { "" }
