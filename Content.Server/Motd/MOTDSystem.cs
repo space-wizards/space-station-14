@@ -20,6 +20,7 @@ public sealed class MOTDSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        _messageOfTheDay = _configurationManager.GetCVar(CCVars.MOTD);
         _configurationManager.OnValueChanged(CCVars.MOTD, _onMOTDChanged);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(_onGameRunLevelChanged);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(_onPlayerJoinedLobby);
@@ -89,7 +90,7 @@ public sealed class MOTDSystem : EntitySystem
 
     private void _onMOTDChanged(string val)
     {
-        if (_messageOfTheDay == val)
+        if (val == _messageOfTheDay)
             return;
         
         _messageOfTheDay = val;

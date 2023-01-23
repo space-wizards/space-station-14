@@ -14,6 +14,11 @@ using Robust.Shared.Console;
 
 namespace Content.Server.Motd;
 
+/// <summary>
+/// A console command which either prints the current message of the day or sets the current message of the day.
+/// Setting the message of the day is a privileged action that can only be performed by the server host or admins with the <see cref="AdminFlag.Admin"/> flag.
+/// Printing the message of the day, on the other hand, is an unprivileged action any player may perform.
+/// </summary>
 [AnyCommand]
 internal sealed class MOTDCommand : IConsoleCommand
 {
@@ -27,7 +32,7 @@ internal sealed class MOTDCommand : IConsoleCommand
     #endregion Dependencies
 
     public string Command => "motd";
-    public string Description => "Print or set the Message Of The Day (MOTD).";
+    public string Description => "Print or set the Message Of The Day.";
     public string Help => "motd [ <text> ]";
     
     public void Execute(IConsoleShell shell, string argStr, string[] args)
@@ -43,7 +48,7 @@ internal sealed class MOTDCommand : IConsoleCommand
         // Set MOTD
         if (player != null && !_adminManager.HasAdminFlag(player, AdminFlags.Admin))
         {
-            shell.WriteError($"You do not have the permissions necessary to set the message of the day for this server.");
+            shell.WriteError("You do not have the permissions necessary to set the message of the day for this server.");
             return;
         }
 
@@ -52,6 +57,7 @@ internal sealed class MOTDCommand : IConsoleCommand
             return;
         
         _configurationManager.SetCVar(CCVars.MOTD, motd); // A hook in MOTDSystem broadcasts changes to the MOTD to everyone so we don't need to do it here.
+        shell.WriteLine(Loc.GetString("motd-wrap-message", ("motd", motd)));
         if (string.IsNullOrEmpty(motd))
             _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} cleared the MOTD for the server.");
         else
