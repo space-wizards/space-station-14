@@ -388,7 +388,7 @@
     - type: BagOpenCloseVisualizer
       openIcon: box-open
   - type: Storage
-    capacity: 30
+    capacity: 35
   - type: Tag
     tags:
     - Trash
@@ -435,8 +435,6 @@
       - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: ClothingHeadHatBunny
         orGroup: GiftPool
@@ -577,8 +575,6 @@
       - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: ClothingHeadHatBunny
         orGroup: GiftPool
