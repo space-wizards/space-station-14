@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
-    type: Tweak}
-  id: 2447
-  time: '2022-10-15T04:10:46.0000000+00:00'
 - author: Nairod
   changes:
   - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
@@ -2938,3 +2932,8 @@ Entries:
       crew monitors., type: Add}
   id: 2946
   time: '2023-01-23T01:07:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix flipflopping between buckle and crit rotations., type: Fix}
+  id: 2947
+  time: '2023-01-23T20:50:35.0000000+00:00'
