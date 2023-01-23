@@ -1,3 +1,6 @@
+using Content.Shared.StationRecords;
+using Robust.Shared.Serialization;
+
 namespace Content.Shared.Access.Components
 {
     /// <summary>
@@ -25,5 +28,31 @@ namespace Content.Shared.Access.Components
         /// </summary>
         [DataField("access")]
         public List<HashSet<string>> AccessLists = new();
+
+        /// <summary>
+        /// A list of valid stationrecordkeys
+        /// </summary>
+        [DataField("accessKeys")]
+        public HashSet<StationRecordKey> AccessKeys = new();
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AccessReaderComponentState : ComponentState
+    {
+        public bool Enabled;
+
+        public HashSet<string> DenyTags;
+
+        public List<HashSet<string>> AccessLists;
+
+        public HashSet<StationRecordKey> AccessKeys;
+
+        public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+        {
+            Enabled = enabled;
+            DenyTags = denyTags;
+            AccessLists = accessLists;
+            AccessKeys = accessKeys;
+        }
     }
 }
