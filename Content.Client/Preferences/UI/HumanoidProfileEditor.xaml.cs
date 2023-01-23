@@ -410,7 +410,8 @@ namespace Content.Client.Preferences.UI
                             new Label
                             {
                                 Text = Loc.GetString("humanoid-profile-editor-department-jobs-label",
-                                    ("departmentName", departmentName))
+                                    ("departmentName", departmentName)),
+                                Margin = new Thickness(5f, 0, 0, 0)
                             }
                         }
                     });
