@@ -1415,6 +1415,41 @@
   - type: AccessReader
     access: [["Medical"]]
 
+- type: entity
+  parent: VendingMachine
+  id: VendingMachineHappyHonk
+  name: Happy Honk Dispenser
+  description: A happy honk meal box dispenser made by honk! co.
+  components:
+  - type: VendingMachine
+    pack: HappyHonkDispenserInventory
+    dispenseOnHitChance: 0.25
+    dispenseOnHitThreshold: 2
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+    denyState: deny-unshaded
+    ejectDelay: 1.9
+    soundVend: /Audio/Items/bikehorn.ogg
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/happyhonk.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3c5eb5"
+  - type: Advertise
+    pack: HappyHonkAds
+  - type: AccessReader
+    access: [["Kitchen"]]
+
 # Gas Tank Dispenser
 
 - type: entity
