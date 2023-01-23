@@ -60,20 +60,26 @@ public sealed partial class ChatSystem : SharedChatSystem
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled = false;
     private readonly bool _adminLoocEnabled = true;
+    private string _motd = "";
+    public string MOTD => _motd;
 
     public override void Initialize()
     {
         InitializeRadio();
         _configurationManager.OnValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged, true);
         _configurationManager.OnValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged, true);
+        _configurationManager.OnValueChanged(CCVars.MOTD, OnMOTDChanged, true);
 
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameChange);
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoined);
     }
 
     public override void Shutdown()
     {
         ShutdownRadio();
         _configurationManager.UnsubValueChanged(CCVars.LoocEnabled, OnLoocEnabledChanged);
+        _configurationManager.UnsubValueChanged(CCVars.DeadLoocEnabled, OnDeadLoocEnabledChanged);
+        _configurationManager.UnsubValueChanged(CCVars.MOTD, OnMOTDChanged);
     }
 
     private void OnLoocEnabledChanged(bool val)
@@ -94,15 +100,78 @@ public sealed partial class ChatSystem : SharedChatSystem
             Loc.GetString(val ? "chat-manager-dead-looc-chat-enabled-message" : "chat-manager-dead-looc-chat-disabled-message"));
     }
 
+    private void OnMOTDChanged(string val)
+    {
+        if (_motd == val)
+            return;
+        
+        _motd = val;
+        TrySendMOTD();
+    }
+
     private void OnGameChange(GameRunLevelChangedEvent ev)
     {
-        if (_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
-            return;
+        switch(ev.New)
+        {
+            case GameRunLevel.PreRoundLobby:
+                TrySendMOTD();
+                break;
+            case GameRunLevel.InRound:
+                if(!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
+                    _configurationManager.SetCVar(CCVars.OocEnabled, false);
+                break;
+            case GameRunLevel.PostRound:
+                if(!_configurationManager.GetCVar(CCVars.OocEnableDuringRound))
+                    _configurationManager.SetCVar(CCVars.OocEnabled, true);
+                break;
+        }
+    }
 
-        if (ev.New == GameRunLevel.InRound)
-            _configurationManager.SetCVar(CCVars.OocEnabled, false);
-        else if (ev.New == GameRunLevel.PostRound)
-            _configurationManager.SetCVar(CCVars.OocEnabled, true);
+    private void OnPlayerJoined(PlayerJoinedLobbyEvent ev)
+    {
+        TrySendMOTD(ev.PlayerSession);
+    }
+
+    /// <summary>
+    /// Sends the message of the day to all players.
+    /// </summary>
+    public void TrySendMOTD()
+    {
+        if (string.IsNullOrEmpty(_motd))
+            return;
+        
+        var wrappedMOTD = Loc.GetString("chat-manager-send-motd-wrap-message", ("motd", _motd));
+        _chatManager.ChatMessageToAll(ChatChannel.Server, _motd, wrappedMOTD, EntityUid.Invalid, hideChat: false, recordReplay: true);
+    }
+
+    /// <summary>
+    /// Sends the message of the day to a player.
+    /// </summary>
+    public void TrySendMOTD(IPlayerSession session)
+    {
+        if (string.IsNullOrEmpty(_motd))
+            return;
+        
+        var wrappedMOTD = Loc.GetString("chat-manager-send-motd-wrap-message", ("motd", _motd));
+        _chatManager.ChatMessageToOne(ChatChannel.Server, _motd, wrappedMOTD, EntityUid.Invalid, hideChat: false, client: session.ConnectedClient);
+    }
+
+    /// <summary>
+    /// Sends the message of the day to a specific console shell.
+    /// </summary>
+    /// <remarks>
+    /// Used by the get MOTD command to send the message of the day to the requesting player.
+    /// We can't tell if they are using the `console or /console so we send to both.
+    /// </remarks>
+    public void TrySendMOTD(IConsoleShell shell)
+    {
+        if (string.IsNullOrEmpty(_motd))
+            return;
+        
+        var wrappedMOTD = Loc.GetString("chat-manager-send-motd-wrap-message", ("motd", _motd));
+        shell.WriteLine(wrappedMOTD);
+        if (shell.Player != null)
+            _chatManager.ChatMessageToOne(ChatChannel.Server, _motd, wrappedMOTD, EntityUid.Invalid, hideChat: false, client: shell.Player.ConnectedClient);
     }
 
     /// <summary>
