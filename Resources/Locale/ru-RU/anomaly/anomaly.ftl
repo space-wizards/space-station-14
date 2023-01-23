@@ -13,7 +13,7 @@ anomaly-scanner-severity-percentage = Текущая серьёзность: [co
 anomaly-scanner-stability-low = Текущая стабильность аномалии: [color=gold]Распадается[/color]
 anomaly-scanner-stability-medium = Текущая стабильность аномалии: [color=forestgreen]Стабильно[/color]
 anomaly-scanner-stability-high = Текущая стабильность аномалии: [color=crimson]Растёт[/color]
-anomaly-scanner-point-output = Приблизительный точечный вывод: [color=gray]{ $point }[/color]
+anomaly-scanner-point-output = Приблизительная генерация очков: [color=gray]{ $point }[/color]
 anomaly-scanner-particle-readout = Анализ реакции частиц:
 anomaly-scanner-particle-danger = - [color=crimson]Опасный тип:[/color] { $type }
 anomaly-scanner-particle-unstable = - [color=plum]Нестабильный тип:[/color] { $type }
