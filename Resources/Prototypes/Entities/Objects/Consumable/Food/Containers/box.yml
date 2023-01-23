@@ -388,7 +388,7 @@
     - type: BagOpenCloseVisualizer
       openIcon: box-open
   - type: Storage
-    capacity: 35
+    capacity: 30
   - type: Tag
     tags:
     - Trash
