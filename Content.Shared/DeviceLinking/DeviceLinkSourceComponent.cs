@@ -3,6 +3,7 @@
 namespace Content.Shared.DeviceLinking;
 
 [RegisterComponent]
+[Access(typeof(SharedDeviceLinkSystem))]
 public sealed class DeviceLinkSourceComponent : Component
 {
     /// <summary>
@@ -25,8 +26,6 @@ public sealed class DeviceLinkSourceComponent : Component
 
     /// <summary>
     ///     Limits the range devices can be linked across.
-    ///     Devices farther than this range can still linked if they are
-    ///     on the same apc net.
     /// </summary>
     [DataField("range")]
     [ViewVariables(VVAccess.ReadWrite)]

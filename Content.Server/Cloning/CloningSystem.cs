@@ -18,6 +18,7 @@ using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Materials;
 using Content.Server.Jobs;
+using Content.Shared.DeviceLinking.Events;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Zombies;

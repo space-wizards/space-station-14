@@ -3,6 +3,7 @@
 namespace Content.Shared.DeviceLinking;
 
 [RegisterComponent]
+[Access(typeof(SharedDeviceLinkSystem))]
 public sealed class DeviceLinkSinkComponent : Component
 {
     /// <summary>
