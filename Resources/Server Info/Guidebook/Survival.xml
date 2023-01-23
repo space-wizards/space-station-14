@@ -1,32 +1,32 @@
-﻿<Document>
-# Survival
+<Document>
+# Выживание
 
-It is generally wise to avoid situations that will cause you harm, because medical can only heal you so much when there's nuclear operatives on your doorstep.
+Как правило, разумным будет избегать ситуаций, которые могут вам навредить, ведь медики могут лишь немного подлатать вас, пока на вашем пороге стоят Ядерные оперативники.
 
-## Identifying your situation
-Your PDA contains both a vessel name and list of crew currently active in your vessel, a reminder for your name if needed, and your assigned job for the shift, allowing you to quickly assess the situation.
+## Идентифицируй свою ситуацию
+В твоём КПК есть название судна и манифест экипажа на нём, напоминание о вашем имени, если это необходимо, и ваша должность на эту смену. Это позволяет вам оценить ситуацию на этой смене.
 
-## Emergency Treatment
-In the event of a serious emergency, there's a few things you can do to help ensure your long-term survival, including:
+## Неотложная помощь
+Во время серьёзной угрозы, в вашем аварийном наборе есть пара вещей, которые могут обеспечить долгосрочное выживание, включает:
 
-- If entering critical condition, use the emergency medipen from your emergency box, it'll make sure you don't end up unable to do anything. Emergency medipens can also be used to revive people currently in crit on the floor, and to prolong the amount of time you have to deal with poisons/etc.
+- В критическом состоянии, используйте экстренный медипен, он позволит вам не быть неспособным делать что-либо. Экстренные медипены можно так же использовать на людях, лежащих в критическом состоянии прямо на полу, а так же для увеличения времени, которое ваш организм может продержаться в борьбе с ядами.
 <Box>
 <GuideEntityEmbed Entity="EmergencyMedipen"/>
 <GuideEntityEmbed Entity="SpaceMedipen"/>
 </Box>
-- Your emergency box contains a breath mask and oxygen tank, which can help you survive longer in a spacing situation.
+- В вашем аварийном наборе есть дыхательная маска и кислородный баллон. Они помогут вам продержаться в условиях космоса.
 <Box>
 <GuideEntityEmbed Entity="ClothingMaskBreath"/>
 <GuideEntityEmbed Entity="EmergencyOxygenTankFilled"/>
 </Box>
-- If actively bleeding out, or simply wishing to prepare, it's possible to slice up cloth items with a knife or other sharp object and use the resulting cloth to create gauze to stem bleeding with.
+- При активном кровотечении или просто желании подготовиться можно разрезать тканевые изделия ножом или другим острым предметом и использовать полученную ткань для создания марлевого бинта для остановки кровотечения.
 <Box>
 <GuideEntityEmbed Entity="Gauze"/>
 <GuideEntityEmbed Entity="MaterialCloth"/>
 </Box>
-- In lieu of an actual health analyzer, simply examining yourself and using the detailed examine is a good way to figure out what wounds you have.
-- If going blind, carrots are another way to treat the issue (as they contain Oculine, the chemistry drug used to treat blindness) should they be available.
-- Well-made meals (cooked food not from a vending machine) is generally much better for your overall health and can help heal smaller wounds more quickly.
-- Simple bed rest cures the majority of diseases and also allows wounds to close up on their own. Medical beds are best for this, providing a sterile surface and support for all damaged body parts, but any bed works. Even sitting down helps, if only a little.
-
+- Если у вас нет настоящего анализатора здоровья, просто осмотрите себя, так вы сможете увидеть какие повреждения у вас есть.
+- Если вы ослепли, морковь - один из способов решения этой проблемы (потому что она содержит Окулин, химический препарат, используемый для лечения слепоты), обычно она легкодоступна.
+- Хорошо приготовленная еда (не еда из торговых автоматов) улучшает общее здоровье и способна ускорить заживление ран.
+- Обычный постельный режим излечивает большинство заболеваний, а так же позволяет вашим ранам заживать самостоятельно. Медицинские кровати лучше в этом деле, они включают стерильность и поддержку повреждённых конечностей, но и обычных кроватей хватает. Даже сидение помогает, но лишь немного.
+- Если у вас кровотечение, или вы просто хотите подготовиться, вы можете разрезать вещи из ткани с помощью ножа или другого острого объекта и использовать ткань для остановки кровотечения.
 </Document>

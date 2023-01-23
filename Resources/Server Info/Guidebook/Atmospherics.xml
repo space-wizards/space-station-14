@@ -1,34 +1,34 @@
 ﻿<Document>
-# Atmospherics
+# Атмосферный
 
-Atmospherics setups are a necessity for your long-term comfort but are generally undocumented, resulting in them being a bit tricky to set up. The following attempts to cover the basics.
+Настройки атмосферы необходимы для вашего долгосрочного комфорта, но, как правило, не имеют документации, в результате чего их немного сложно настроить. Ниже предпринята попытка охватить основы.
 
-## Standard Mix
-Breathing pure O2 or pure N2 is generally bad for the health of your crew, and it is recommended to instead aim for a mix of [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color] It's recommended that your gas mixer setup be set to output at least 1000kPa for faster re-pressurization of rooms.
+## Стандартная смесь
+Дыхание чистым О2 или N2 вредно для здоровья экипажа, поэтому рекомендуем сразу использовать смесь [color=#a4885c]78% N2 и 22% O2 под 101.24кПа.[/color] Рекомендуется, чтобы ваш газовый смеситель был настроен на выход не менее 1000 кПа для более быстрого восстановления давления в помещениях.
 <Box>
 <GuideEntityEmbed Entity="OxygenCanister"/>
 <GuideEntityEmbed Entity="NitrogenCanister"/>
 <GuideEntityEmbed Entity="AirCanister"/>
 </Box>
-Variations on this mix may be necessary for the long-term comfort of atypical crew, for example crew who require a plasma gas mix to survive. For atypical crew, it is recommended to try and give them their own personal space, isolated by either airlock or disposals section. Keep in mind both methods are leaky and you will need scrubbers on both sides of the lock to clean up any leaked gasses.
+Вариации этой смеси могут быть необходимы для долгосрочного комфорта нетипичного экипажа, например, экипажа, которому для выживания требуется смесь плазменных газов. Для нетипичных членов экипажа рекомендуется попытаться обеспечить им личное пространство, изолированное либо шлюзом, либо отсеком утилизации. Помните, что оба метода негерметичны, и вам понадобятся скрубберы с обеих сторон шлюза для очистки любых просочившихся газов.
 <Box>
 <GuideEntityEmbed Entity="PlasmaCanister"/>
 <GuideEntityEmbed Entity="StorageCanister"/>
 </Box>
-## Vents and Scrubbers
-Vents and scrubbers are core atmospherics devices that fill and cleanse rooms, respectively. They can be reconfigured by installing an air alarm, allowing you to change them from their default settings. By default, they are configured for filling rooms to standard pressure (101.24kPa) and to remove all non-O2/N2 gasses from a room.
+## Вентиляции и скрубберы
+Вентиляторы и скрубберы - это основные атмосферные устройства, которые заполняют и очищают помещения соответственно. Они могут быть перенастроены путем установки воздушной сигнализации, что позволяет изменить их настройки по умолчанию. По умолчанию они настроены на заполнение помещений до стандартного давления (101,24 кПа) и на удаление из помещения всех газов, не содержащих O2/N2.
 <Box>
 <GuideEntityEmbed Entity="GasVentPump"/>
 <GuideEntityEmbed Entity="GasVentScrubber"/>
 </Box>
-During standard operation, if a vent detects that the outside environment is space, it will automatically cease operation until a minimum pressure is reached to avoid destruction of necessary gasses. This can be fixed by pressurizing the room up to that minimum pressure by refilling it with gas canister (potentially multiple, if the room is of significant size).
+При стандартной эксплуатации, если вентсистема обнаруживает, что внешняя среда является космосом, она автоматически прекращает работу до достижения минимального давления, чтобы избежать разрушения необходимых газов. Это можно исправить, нагнетая давление в помещении до этого минимального давления путем открытия канистр с газом (потенциально нескольких, если помещение значительных размеров).
 
-Should you encounter a situation where scrubbers aren't cleaning a room fast enough, employ portable scrubbers by dragging them to the affected location and wrenching them down. They work much faster than typical scrubbers and can clean up a room quite quickly. Large spills may require you to employ multiple.
+Если вы столкнулись с ситуацией, когда скрубберы не могут очистить помещение достаточно быстро, используйте портативные скрубберы, подтащив их к месту загрязнения и закрутив гаечным ключом. Они работают гораздо быстрее, чем обычные скрубберы, и могут довольно быстро очистить помещение. При больших разливах может потребоваться использование нескольких таких машин.
 <Box>
 <GuideEntityEmbed Entity="PortableScrubber"/>
 </Box>
-## Reference Sheet
-- Standard atmospheric mix is [color=#a4885c]78% N2 and 22% O2 at 101.24kPa.[/color]
-- Gas obeys real math. You can use the equation PV = nRT (Pressure kPa * Volume L = Moles * R * Temperature K) to derive information you might need to know about a gas. R is approximately 8.31446
+## Справочный лист
+- Стандартная смесь это [color=#a4885c]78% N2 и 22% O2 под 101.24kPa.[/color]
+- Газ подчиняется реальной математике. Вы можете использовать уравнение PV = nRT (давление кПа * объем L = моли * R * температура K) для получения информации о газе. R составляет приблизительно 8,31446
 
 </Document>
