@@ -1,10 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: You can no longer call a vote for gamemode if only one is available.,
-    type: Remove}
-  id: 2446
-  time: '2022-10-15T04:10:10.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
@@ -2938,3 +2932,9 @@ Entries:
   - {message: The cloning machine now handles better cloning zombies., type: Fix}
   id: 2945
   time: '2023-01-22T23:36:03.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: The crew monitoring server. It relays the status of suit sensors to
+      crew monitors., type: Add}
+  id: 2946
+  time: '2023-01-23T01:07:57.0000000+00:00'
