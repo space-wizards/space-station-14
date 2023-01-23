@@ -1203,7 +1203,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("chat.show_typing_indicator", true, CVar.CLIENTONLY);
 
         public static readonly CVarDef<string> MOTD =
-            CVarDef.Create("chat.motd", "", CVar.SERVER, "A message broadcase to all connected players when they join the server.");
+            CVarDef.Create("chat.motd", "", CVar.SERVER, "A message broadcasted to every player that joins the server.");
 
         /*
          * AFK
