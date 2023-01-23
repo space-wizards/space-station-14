@@ -18,6 +18,15 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
         if (!args.Sprite.LayerMapTryGet(component.Layer, out var fillLayer))
             return;
 
+        // Currently some solution methods such as overflowing will try to update appearance with a
+        // volume greater than the max volume. We'll clamp it so players don't see
+        // a giant error sign and error for debug.
+        if (fraction > 1f)
+        {
+            Logger.Error("Attempted to set solution container visuals volume ratio on " + ToPrettyString(uid) + " to a value greater than 100% of it's max volume.");
+            fraction = 1f;
+        }
+
         var closestFillSprite = (int) Math.Round(fraction * component.MaxFillLevels);
 
         if (closestFillSprite > 0)
