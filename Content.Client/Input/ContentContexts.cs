@@ -84,6 +84,7 @@ namespace Content.Client.Input
             aghost.AddFunction(ContentKeyFunctions.Drop);
             aghost.AddFunction(ContentKeyFunctions.UseItemInHand);
             aghost.AddFunction(ContentKeyFunctions.AltUseItemInHand);
+            aghost.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
             aghost.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
             aghost.AddFunction(ContentKeyFunctions.TryPullObject);
