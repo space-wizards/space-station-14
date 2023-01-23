@@ -45,10 +45,7 @@ namespace Content.Server.Climbing
 
         private void OnDragDrop(EntityUid user, BonkableComponent bonkComponent, DragDropEvent args)
         {
-            if (TryBonk(args.Dragged, bonkComponent))
-            {
-                return;
-            }
+            TryBonk(args.Dragged, bonkComponent);
         }
     }
 }
