@@ -522,7 +522,6 @@
   id: FoodMealHappyHonkClown
   parent: HappyHonk
   suffix: random food spawner meal
-  noSpawn: true
   components:
   - type: StorageFill
     contents:
@@ -575,8 +574,6 @@
       - id: ToyDurand
         orGroup: GiftPool
       - id: ToySkeleton
-        orGroup: GiftPool
-      - id: FoamBlade
         orGroup: GiftPool
       - id: ToySkeleton
         orGroup: GiftPool
