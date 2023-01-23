@@ -368,3 +368,233 @@
     contents:
     - id: FoodDonkpocketDink
       amount: 6
+
+- type: entity
+  id: HappyHonk
+  parent: BoxCardboard
+  name: happy honk meal
+  suffix: Toy Safe
+  description: The toy is more edible than the food.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/clown.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/clown.rsi
+    heldPrefix: box
+  - type: Appearance
+    visuals:
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+  - type: Storage
+    capacity: 30
+  - type: Tag
+    tags:
+    - Trash
+  - type: StorageFill
+    contents:
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyAssistant
+        orGroup: GiftPool
+      - id: ToyGriffin
+        orGroup: GiftPool
+      - id: ToyHonk
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyGygax
+        orGroup: GiftPool
+      - id: ToyOdysseus
+        orGroup: GiftPool
+      - id: ToyOwlman
+        orGroup: GiftPool
+      - id: ToyDeathRipley
+        orGroup: GiftPool
+      - id: ToyPhazon
+        orGroup: GiftPool
+      - id: ToyFireRipley
+        orGroup: GiftPool
+      - id: ToyReticence
+        orGroup: GiftPool
+      - id: ToyRipley
+        orGroup: GiftPool
+      - id: ToySeraph
+        orGroup: GiftPool
+      - id: ToyDurand
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: ClothingHeadHatBunny
+        orGroup: GiftPool
+      - id: PersonalAI
+        orGroup: GiftPool
+      - id: CrayonBox
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BikeHorn
+        prob: 0.5
+        orGroup: GiftPool
+      - id: GoldenBikeHorn
+        prob: 0.1
+        orGroup: GiftPool
+
+- type: entity
+  id: HappyHonkMime
+  parent: HappyHonk
+  description: A limited mime edition of the happy honk meal.
+  suffix: Toy Safe
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/mime.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/mime.rsi
+    heldPrefix: box
+
+- type: entity
+  id: HappyHonkNukie
+  parent: HappyHonk
+  name: robust nukie meal
+  description: A sus meal with a potentially explosive surprise.
+  suffix: Toy Unsafe
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/nukie.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/nukie.rsi
+    heldPrefix: box
+  - type: StorageFill
+    contents:
+      - id: C4
+        prob: 0.02
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: BalloonSyn
+        prob: 0.6
+        orGroup: GiftPool
+      - id: PlushieNuke
+        orGroup: GiftPool
+
+- type: entity
+  id: HappyHonkCluwne
+  parent: HappyHonk
+  name: woeful cluwne meal
+  description: Nothing good can come of this.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/happyhonk/cluwne.rsi
+    state: box
+  - type: Item
+    sprite: Objects/Storage/happyhonk/cluwne.rsi
+    heldPrefix: box
+
+- type: entity
+  id: FoodMealHappyHonkClown
+  parent: HappyHonk
+  suffix: random food spawner meal
+  noSpawn: true
+  components:
+  - type: StorageFill
+    contents:
+      - id: FoodBurgerCrazy
+        orGroup: Burgers
+      - id: FoodBurgerCheese
+        orGroup: Burgers
+      - id: DrinkColaCan
+        orGroup: DrinkPool
+      - id: DrinkLemonLimeCan
+        orGroup: DrinkPool
+      - id: DrinkIcedTeaCan
+        orGroup: DrinkPool
+      - id: ToyMouse
+        orGroup: GiftPool
+      - id: ToyAi
+        orGroup: GiftPool
+      - id: ToyNuke
+        orGroup: GiftPool
+      - id: ToyAssistant
+        orGroup: GiftPool
+      - id: ToyGriffin
+        orGroup: GiftPool
+      - id: ToyHonk
+        orGroup: GiftPool
+      - id: ToyIan
+        orGroup: GiftPool
+      - id: ToyMarauder
+        orGroup: GiftPool
+      - id: ToyMauler
+        orGroup: GiftPool
+      - id: ToyGygax
+        orGroup: GiftPool
+      - id: ToyOdysseus
+        orGroup: GiftPool
+      - id: ToyOwlman
+        orGroup: GiftPool
+      - id: ToyDeathRipley
+        orGroup: GiftPool
+      - id: ToyPhazon
+        orGroup: GiftPool
+      - id: ToyFireRipley
+        orGroup: GiftPool
+      - id: ToyReticence
+        orGroup: GiftPool
+      - id: ToyRipley
+        orGroup: GiftPool
+      - id: ToySeraph
+        orGroup: GiftPool
+      - id: ToyDurand
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: FoamBlade
+        orGroup: GiftPool
+      - id: ToySkeleton
+        orGroup: GiftPool
+      - id: ClothingHeadHatBunny
+        orGroup: GiftPool
+      - id: PersonalAI
+        orGroup: GiftPool
+      - id: CrayonBox
+        orGroup: GiftPool
+      - id: ToySword
+        orGroup: GiftPool
+      - id: RevolverCapGun
+        orGroup: GiftPool
+      - id: ToyRubberDuck
+        orGroup: GiftPool
+      - id: BikeHorn
+        prob: 0.5
+        orGroup: GiftPool
+      - id: GoldenBikeHorn
+        prob: 0.1
+        orGroup: GiftPool

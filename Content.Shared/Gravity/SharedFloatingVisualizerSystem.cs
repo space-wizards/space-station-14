@@ -1,4 +1,5 @@
 using Robust.Shared.GameStates;
+using Robust.Shared.Map;
 
 namespace Content.Shared.Gravity;
 
@@ -27,6 +28,12 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
 
     protected bool CanFloat(EntityUid uid, FloatingVisualsComponent component, TransformComponent? transform = null)
     {
+        if (!Resolve(uid, ref transform))
+            return false;
+
+        if (transform.MapID == MapId.Nullspace)
+            return false;
+
         component.CanFloat = GravitySystem.IsWeightless(uid, xform: transform);
         Dirty(component);
         return component.CanFloat;
@@ -42,6 +49,9 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
     {
         foreach (var (floating, transform) in EntityQuery<FloatingVisualsComponent, TransformComponent>(true))
         {
+            if (transform.MapID == MapId.Nullspace)
+                continue;
+
             if (transform.GridUid != args.ChangedGridIndex)
                 continue;
 

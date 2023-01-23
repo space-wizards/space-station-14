@@ -17,3 +17,6 @@
       - key: enum.AnomalyScannerUiKey.Key
         type: AnomalyScannerBoundUserInterface
   - type: AnomalyScanner
+  - type: GuideHelp
+    guides:
+    - ScannersAndVessels

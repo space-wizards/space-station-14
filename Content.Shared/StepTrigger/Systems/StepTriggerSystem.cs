@@ -13,6 +13,7 @@ public sealed class StepTriggerSystem : EntitySystem
 
     public override void Initialize()
     {
+        UpdatesOutsidePrediction = true;
         SubscribeLocalEvent<StepTriggerComponent, ComponentGetState>(TriggerGetState);
         SubscribeLocalEvent<StepTriggerComponent, ComponentHandleState>(TriggerHandleState);
 
