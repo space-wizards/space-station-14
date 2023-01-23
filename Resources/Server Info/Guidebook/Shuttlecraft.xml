@@ -1,10 +1,9 @@
 <Document>
-# Shuttle-craft
+# Шатлло-строй
 
-Shuttle construction is simple and easy, albeit rather expensive and hard to pull off within an hour. It's a good activity if you have a significant amount of spare time on your hands and want a bit of a challenge.
-
-## Getting started
-<Box>Required parts:</Box>
+Постройка шаттлов простая и лёгкая, хотя и довольно долгая и трудная задача чтобы осуществить её в течении часа. Это хорошее занятие, если вы имеете достаточно свободного времени и хотите испытать себя.
+## Приступая к работе
+<Box>Нужные части:</Box>
 <Box>
 <GuideEntityEmbed Entity="Thruster"/>
 <GuideEntityEmbed Entity="Gyroscope"/>
@@ -18,8 +17,7 @@ Shuttle construction is simple and easy, albeit rather expensive and hard to pul
 <GuideEntityEmbed Entity="CableApcStack"/>
 <GuideEntityEmbed Entity="APCBasic"/>
 </Box>
-
-<Box>Optional parts:</Box>
+<Box>Необязательные части:</Box>
 <Box>
 <GuideEntityEmbed Entity="AirCanister"/>
 <GuideEntityEmbed Entity="LightTube"/>
@@ -31,10 +29,10 @@ Shuttle construction is simple and easy, albeit rather expensive and hard to pul
 <GuideEntityEmbed Entity="NuclearBomb"/>
 </Box>
 
-Head out into space with steel sheets and metal rods in hand, and once you're three or more meters away from the station, click near or under you with the rods in hand. This will place some lattice, which can then be turned into plating with the steel sheets. Expand your lattice platform by clicking just off the edge with rods in hand.
+Отправляйтесь в космос со стержнями и листами стали, как только вы окажетесь достаточно далеко от станции, нажмите рядом или под собой со стержнями в руке. Это позволит разместить вам решётку, а потом в обшивку с помощью листов стали. Расширяйте свою платформу, нажимая на пустые клетки рядом с краями.
 
-From there, once you have the shape you want, bring out and install thrusters at the edges. They must be pointing outward into space to function and will not fire if there's a tile in the way of the nozzle. Install a gyroscope where convenient, and use your substation and generator to set up power. Construct a wall on top of an MV cable and then install an APC on that to power the devices onboard.
+После того как вы достигните нужной вам формы, разместите двигатели по краям. Для работы они должны быть направлены в космос, так же они не будут работать если перед ними окажется занятая плитка. Установите гироскоп там где считаете нужным и используйте генератор и подстанцию для постройки проводки. Проведите СВ провод и постройте над ним стену, а затем постройте на стене ЛКП. После этого вы можете запитать устройства на шаттле.
 
-Finally, install the shuttle computer wherever is convenient and ensure all your thrusters and gyroscopes are receiving power. If they are, congratulations, you should have a functional shuttle! Making it livable and good looking is left as an exercise to the reader.
+Наконец, установите консоль управления шаттлом там где нужно и убедитесь что все двигатели и устройства запитаны. Если это так - поздравляю! У вас получился функциональный шаттл. А вот сделать его пригодным для жизни и красивым - задача читателя.
 
 </Document>

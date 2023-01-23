@@ -1,37 +1,36 @@
 <Document>
-# Power
-
-SS14 has a fairly in-depth power system through which all devices on the station receive electricity. It's divided into three main powernets; HV, LV, and MV.
+# Мощность
+КС14 имеет довольно проработанную систему электричества, через которую все устройства на станции получают электропитание. Есть три основные энергосети: НВ, СВ и ВВ.
 <Box>
 <GuideEntityEmbed Entity="CableHVStack"/>
 <GuideEntityEmbed Entity="CableMVStack"/>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
 
-## Cabling
-The three major cable types (HV, MV, and LV) can be used to form independent powernets. Examine them for a description of their uses.
+## Проводка
+Три основных типа кабелей (НВ, СВ, и ВВ) могут быть использованы для формирования независимых сетей питания. Осмотрите их, чтобы получить представление о том, как их использовать.
 <Box>
 <GuideEntityEmbed Entity="CableHV"/>
 <GuideEntityEmbed Entity="CableMV"/>
 <GuideEntityEmbed Entity="CableApcExtension"/>
 </Box>
 
-## Power storage
-Each power storage device presented functions as the transformer for its respective power level (HV, MV, and LV) and also provides a fairly sizable backup battery to help flatten out spikes and dips in power usage.
+## Накопление энергии
+Каждое представленное устройство накопления энергии работает как трансформатор для соотвествующего типа (НВ, СВ, и ВВ), а так же обеспечивает довольно значительную резервную батарею, позволяющую конпенсировать всплески потребления электроэнергии.
 <Box>
 <GuideEntityEmbed Entity="SMESBasic"/>
 <GuideEntityEmbed Entity="SubstationBasic"/>
 <GuideEntityEmbed Entity="APCBasic"/>
 </Box>
 
-## Ramping
-Contrary to what one might expect from a video game electrical simulation, power is not instantly provided upon request. Generators and batteries take time to ramp up to match the draw imposed on them, which leads to brownouts when there are large changes in current draw all at once, for example when batteries run out.
+## Наращивание мощности
+Вопреки тому, что можно было ожидать от симуляции электричества в видеоигре, питание не появляется мгновенно. Генераторам и батареям требуется время, чтобы нарастить мощность в соотвествии с потребляемым током, что приводит к отлючению питания при значительных одновременных изменениях потребляемого тока, например, когда садятся батареи.
 
-## Installing power storage
-Substations are the most self-explanatory. Simply install the machine on top of an MV and HV cable, it will draw power from the HV cable to provide to MV.
+## Установка накопителей
+Подстанции являются наиболее понятными. Просто установите устройство на СВ и ВВ. Подстанция будет получать питание от ВВ и перенаправлять на СВ.
 
-Installing APCs is similarly simple, except APCs are exclusively wallmounted machinery and cannot be installed on the floor. Make sure it has both MV and LV connections.
+ЛКП так же просты, за исключением того, что ЛКП можно ставить исключительно на стены. ЛКП будет получать питание от СВ и перенаправлять на НВ.
 
-Installing a SMES requires you construct a cable terminal to use as the input. The SMES will draw power from the terminal and send power out from underneath. The terminal will ensure that the HV input and HV output do not connect. Avoid connecting a SMES to itself, this will result in a short circuit which can result in power flickering or outages depending on severity.
+СМЭСы требуют установки кабельной клеммы в качестве входа. СМЭС будет получать энергию через клеммы и подавать её на провод под собой. Клемма гарантирует, что высоковольтный вход и высоковольтный выход не соединяются.Избегайте подключения СМЭСа к самому себе, это приведет к короткому замыканию, которое может привести к мерцанию питания или перебоям в подаче электроэнергии в зависимости от серьезности.
 
 </Document>
