@@ -6,6 +6,9 @@
   id: RandomHumanoidSpawnerERTLeader
   name: ERT leader
   components:
+    - type: Sprite
+      sprite: Mobs/Species/Human/parts.rsi
+      state: full
     - type: Icon
       sprite: Markers/jobs.rsi
       state: ertleader
