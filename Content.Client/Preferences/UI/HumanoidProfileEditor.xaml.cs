@@ -1111,7 +1111,8 @@ namespace Content.Client.Preferences.UI
                     ButtonStyle = StyleBase.ButtonOpenBoth,
                     LastButtonStyle = StyleBase.ButtonOpenLeft
                 };
-
+                //Override default radio option button width
+                _optionButton.GenerateItem = GenerateButton;
                 // Text, Value
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-high-button"), (int) JobPriority.High);
                 _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-job-priority-medium-button"), (int) JobPriority.Medium);
@@ -1159,6 +1160,7 @@ namespace Content.Client.Preferences.UI
 
                 _jobTitle = new Label()
                 {
+                    Margin = new Thickness(5f,0,0,0),
                     Text = job.LocalizedName,
                     MinSize = (175, 0),
                     MouseFilter = MouseFilterMode.Stop
@@ -1196,6 +1198,16 @@ namespace Content.Client.Preferences.UI
                 _requirementsLabel.Visible = false;
                 _lockStripe.Visible = false;
                 _optionButton.Visible = true;
+            }
+
+            private Button GenerateButton(string text, int value)
+            {
+                var btn = new Button
+                {
+                    Text = text,
+                    MinWidth = 100
+                };
+                return btn;
             }
         }
 
