@@ -107,7 +107,7 @@
   - type: StorageFill
     contents:
       - id: Pen
-        prob: 0.1
+        prob: 0.5
       - id: PaperOffice
       - id: PaperOffice
         prob: 0.5
