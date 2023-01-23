@@ -97,7 +97,7 @@
     pack: CondimentVendAds
   - type: Speech
   - type: Transform
-    noRot: false 
+    noRot: false
 
 - type: entity
   parent: VendingMachine
@@ -181,8 +181,8 @@
     energy: 1.3
     color: "#ffb0b0"
   - type: AccessReader
-    access: [["HeadOfPersonnel"]]  
-      
+    access: [["HeadOfPersonnel"]]
+
 - type: entity
   parent: VendingMachine
   id: VendingMachineChefvend
@@ -1448,7 +1448,7 @@
   - type: Advertise
     pack: HappyHonkAds
   - type: AccessReader
-    access: [["Kitchen"]]
+    access: [["Kitchen"], ["Theatre"]]
 
 # Gas Tank Dispenser
 
