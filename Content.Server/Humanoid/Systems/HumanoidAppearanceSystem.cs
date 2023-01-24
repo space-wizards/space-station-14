@@ -77,8 +77,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
-        SetBaseLayerColor(uid, HumanoidVisualLayers.Eyes, profile.Appearance.EyeColor, false);
-        humanoid.EyeColor = profile.Appearance.EyeColor;
 
         humanoid.MarkingSet.Clear();
 

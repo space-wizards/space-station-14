@@ -37,7 +37,7 @@ public sealed partial class HumanoidAppearanceSystem
                     HumanoidMarkingModifierKey.Key,
                     new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
                         component.SkinColor,
-                        component.CachedEyeColor,
+                        component.EyeColor,
                         component.CachedHairColor,
                         component.CachedFacialHairColor,
                         component.CustomBaseLayers
@@ -73,7 +73,7 @@ public sealed partial class HumanoidAppearanceSystem
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
                         component.SkinColor,
-                        component.CachedEyeColor,
+                        component.EyeColor,
                         component.CachedHairColor,
                         component.CachedFacialHairColor,
                         component.CustomBaseLayers
@@ -100,7 +100,7 @@ public sealed partial class HumanoidAppearanceSystem
                 HumanoidMarkingModifierKey.Key,
                 new HumanoidMarkingModifierState(component.MarkingSet, component.Species,
                         component.SkinColor,
-                        component.CachedEyeColor,
+                        component.EyeColor,
                         component.CachedHairColor,
                         component.CachedFacialHairColor,
                         component.CustomBaseLayers
