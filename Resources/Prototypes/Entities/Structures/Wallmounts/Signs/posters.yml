@@ -475,15 +475,6 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandGotWood
-  name: "Got Wood?"
-  description: "A grimy old advert for a seedy lumber company. \"You got a friend in me.\" is scrawled in the corner."
-  components:
-  - type: Sprite
-    state: poster49_contraband
-
-- type: entity
-  parent: PosterBase
   id: PosterContrabandWehWatches
   name: "Weh Watches"
   description: "A poster depicting a loveable green lizard."
