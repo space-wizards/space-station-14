@@ -69,8 +69,8 @@
     - type: Damageable
       damageContainer: Biological
     - type: MobState
-      thresholds:
-        0: Alive
+      allowedStates:
+        - Alive
     - type: HeatResistance
     - type: CombatMode
     - type: Internals

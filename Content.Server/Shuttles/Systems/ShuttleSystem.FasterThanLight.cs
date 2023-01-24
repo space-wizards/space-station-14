@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Doors.Components;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 
@@ -25,6 +26,7 @@ public sealed partial class ShuttleSystem
      * This is a way to move a shuttle from one location to another, via an intermediate map for fanciness.
      */
 
+    [Dependency] private readonly AirlockSystem _airlock = default!;
     [Dependency] private readonly DoorSystem _doors = default!;
     [Dependency] private readonly ShuttleConsoleSystem _console = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -100,7 +102,7 @@ public sealed partial class ShuttleSystem
 
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
-            if (((Component) grid).Owner == other.Owner ||
+            if (grid.Owner == other.Owner ||
                 !bodyQuery.TryGetComponent(other.Owner, out var body) ||
                 body.Mass < ShuttleFTLMassThreshold) continue;
 
@@ -234,10 +236,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = new Vector2(0f, 20f);
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = 0f;
-                        body.AngularDamping = 0f;
+                        _physics.SetLinearVelocity(comp.Owner, new Vector2(0f, 20f), body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, 0f);
+                        _physics.SetAngularDamping(body, 0f);
                     }
 
                     if (comp.TravelSound != null)
@@ -272,10 +274,10 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(comp.Owner, out body))
                     {
-                        body.LinearVelocity = Vector2.Zero;
-                        body.AngularVelocity = 0f;
-                        body.LinearDamping = ShuttleLinearDamping;
-                        body.AngularDamping = ShuttleAngularDamping;
+                        _physics.SetLinearVelocity(comp.Owner, Vector2.Zero, body: body);
+                        _physics.SetAngularVelocity(comp.Owner, 0f, body: body);
+                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
+                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
                     }
 
                     TryComp(comp.Owner, out shuttle);
@@ -344,7 +346,7 @@ public sealed partial class ShuttleSystem
             if (xform.ParentUid != uid) continue;
 
             _doors.TryClose(door.Owner);
-            door.SetBoltsWithAudio(enabled);
+            _airlock.SetBoltsWithAudio(door.Owner, door, enabled);
         }
     }
 
@@ -521,8 +523,8 @@ public sealed partial class ShuttleSystem
 
         if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
         {
-            shuttleBody.LinearVelocity = Vector2.Zero;
-            shuttleBody.AngularVelocity = 0f;
+            _physics.SetLinearVelocity(component.Owner, Vector2.Zero, body: shuttleBody);
+            _physics.SetAngularVelocity(component.Owner, 0f, body: shuttleBody);
         }
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);

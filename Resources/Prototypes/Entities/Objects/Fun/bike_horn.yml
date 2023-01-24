@@ -39,3 +39,23 @@
     damage:
       types:
         Blunt: 0
+
+- type: entity
+  parent: BikeHorn
+  id: GoldenBikeHorn
+  name: golden honker
+  suffix: not to be mapped.
+  description: A happy honk prize, pray to the gods for your reward.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/goldbikehorn.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/goldbikehorn.rsi
+    size: 5
+  - type: Clothing
+    sprite: Objects/Fun/goldbikehorn.rsi
+    slots: [Belt]
+  - type: Prayable
+  - type: StaticPrice
+    price: 1000

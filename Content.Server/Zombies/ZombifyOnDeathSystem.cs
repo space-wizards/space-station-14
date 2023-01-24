@@ -17,7 +17,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
@@ -27,6 +26,7 @@ using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead ||
-                args.CurrentMobState == DamageState.Critical)
+            if (args.NewMobState == MobState.Dead ||
+                args.NewMobState == MobState.Critical)
             {
                 ZombifyEntity(uid);
             }
@@ -127,6 +127,10 @@ namespace Content.Server.Zombies
             //We have specific stuff for humanoid zombies because they matter more
             if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
+                //store some values before changing them in case the humanoid get cloned later
+                zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
@@ -172,6 +176,7 @@ namespace Content.Server.Zombies
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
+            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
             meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);

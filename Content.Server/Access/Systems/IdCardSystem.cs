@@ -40,7 +40,7 @@ namespace Content.Server.Access.Systems
                 // if really unlucky, burn card
                 if (randomPick <= 0.15f)
                 {
-                    TryComp<TransformComponent>(uid, out TransformComponent? transformComponent);
+                    TryComp(uid, out TransformComponent? transformComponent);
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),

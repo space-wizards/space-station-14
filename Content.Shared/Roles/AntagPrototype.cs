@@ -13,7 +13,7 @@ namespace Content.Shared.Roles
         private string? _description = string.Empty;
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

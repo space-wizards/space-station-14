@@ -5,7 +5,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Station.Components;
@@ -16,6 +15,7 @@ using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -600,7 +600,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 ///     This event is raised before chat messages are sent out to clients. This enables some systems to send the chat
 ///     messages to otherwise out-of view entities (e.g. for multiple viewports from cameras).
 /// </summary>
-public record class ExpandICChatRecipientstEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
+public record ExpandICChatRecipientstEvent(EntityUid Source, float VoiceRange, Dictionary<ICommonSession, ChatSystem.ICChatRecipientData> Recipients)
 {
 }
 

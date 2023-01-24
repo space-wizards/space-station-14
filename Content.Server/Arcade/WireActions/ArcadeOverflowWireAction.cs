@@ -5,12 +5,11 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
 
-[DataDefinition]
 public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
 {
-    private Color _color = Color.Red;
-    private string _text = "LMTR";
-
+    public override Color Color { get; set; } = Color.Red;
+    public override string Name { get; set; } = "wire-name-arcade-overflow";
+    
     public override object? StatusKey { get; } = SharedSpaceVillainArcadeComponent.Indicators.HealthLimiter;
 
     public override void ToggleValue(EntityUid owner, bool setting)
@@ -27,20 +26,15 @@ public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
             && !arcade.OverflowFlag;
     }
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
+    public override StatusLightState? GetLightState(Wire wire)
     {
-        var lightState = StatusLightState.Off;
-
-        if (IsPowered(wire.Owner) && EntityManager.HasComponent<SpaceVillainArcadeComponent>(wire.Owner))
+        if (EntityManager.HasComponent<SpaceVillainArcadeComponent>(wire.Owner))
         {
-            lightState = !GetValue(wire.Owner)
+            return !GetValue(wire.Owner)
                 ? StatusLightState.BlinkingSlow
                 : StatusLightState.On;
         }
 
-        return new StatusLightData(
-            _color,
-            lightState,
-            _text);
+        return StatusLightState.Off;
     }
 }

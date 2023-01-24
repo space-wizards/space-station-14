@@ -127,6 +127,7 @@
       - id: ClothingBackpackDuffelSurgeryFilled
       - id: ClothingOuterCoatLabCmo
       - id: ClothingMaskSterile
+      - id: ClothingHeadHatBeretCmo
       - id: ClothingOuterHardsuitMedical
       - id: DiagnoserMachineCircuitboard
       - id: VaccinatorMachineCircuitboard
