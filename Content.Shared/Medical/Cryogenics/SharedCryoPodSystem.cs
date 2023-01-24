@@ -123,7 +123,7 @@ public abstract partial class SharedCryoPodSystem: EntitySystem
         }
     }
 
-    protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, GotEmaggedEvent args)
+    protected void OnEmagged(EntityUid uid, SharedCryoPodComponent? cryoPodComponent, ref GotEmaggedEvent args)
     {
         if (!Resolve(uid, ref cryoPodComponent))
         {
