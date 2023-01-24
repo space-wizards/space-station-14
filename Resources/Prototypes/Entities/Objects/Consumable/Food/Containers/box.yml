@@ -164,6 +164,8 @@
     - type: StorageVisualizer
       state_open: box-open
       state_closed: box
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   name: pizza box
@@ -436,8 +438,6 @@
         orGroup: GiftPool
       - id: FoamBlade
         orGroup: GiftPool
-      - id: ToySkeleton
-        orGroup: GiftPool
       - id: ClothingHeadHatBunny
         orGroup: GiftPool
       - id: PersonalAI
@@ -577,8 +577,6 @@
       - id: ToySkeleton
         orGroup: GiftPool
       - id: FoamBlade
-        orGroup: GiftPool
-      - id: ToySkeleton
         orGroup: GiftPool
       - id: ClothingHeadHatBunny
         orGroup: GiftPool

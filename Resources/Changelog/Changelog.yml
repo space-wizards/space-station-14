@@ -1,22 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
-    type: Tweak}
-  id: 2447
-  time: '2022-10-15T04:10:46.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
-    type: Add}
-  id: 2448
-  time: '2022-10-15T04:11:59.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: Adds a cooldown of 1 second when attempting to wake up someone else.,
-    type: Fix}
-  id: 2449
-  time: '2022-10-15T04:13:24.0000000+00:00'
 - author: checkraze
   changes:
   - {message: fixes some device links, type: Fix}
@@ -2938,3 +2920,19 @@ Entries:
       crew monitors., type: Add}
   id: 2946
   time: '2023-01-23T01:07:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix flipflopping between buckle and crit rotations., type: Fix}
+  id: 2947
+  time: '2023-01-23T20:50:35.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed a bug where the happy honk meal could not spawn with the foamblade,
+    type: Fix}
+  id: 2948
+  time: '2023-01-24T00:35:55.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
+  id: 2949
+  time: '2023-01-24T00:36:50.0000000+00:00'
