@@ -594,7 +594,7 @@
       types:
         Blunt: 0
   - type: Item
-    size: 24
+    size: 20
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown

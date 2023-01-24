@@ -5,7 +5,7 @@
   id: BaseMobSkeletonPerson
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Skeleton
   - type: Icon
     sprite: Mobs/Species/Skeleton/parts.rsi
@@ -70,5 +70,5 @@
   noSpawn: true
   description: A dummy skeleton meant to be used in character setup.
   components:
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Skeleton

@@ -65,16 +65,22 @@ namespace Content.Client.Buckle
 
         private void OnAppearanceChange(EntityUid uid, BuckleComponent component, ref AppearanceChangeEvent args)
         {
+            if (!TryComp<RotationVisualsComponent>(uid, out var rotVisuals))
+                return;
+
             if (!_appearanceSystem.TryGetData<int>(uid, StrapVisuals.RotationAngle, out var angle, args.Component) ||
                 !_appearanceSystem.TryGetData<bool>(uid, BuckleVisuals.Buckled, out var buckled, args.Component) ||
                 !buckled ||
                 args.Sprite == null)
             {
+                _rotationVisualizerSystem.SetHorizontalAngle(uid, RotationVisualsComponent.DefaultRotation, rotVisuals);
                 return;
             }
 
             // Animate strapping yourself to something at a given angle
-            _rotationVisualizerSystem.AnimateSpriteRotation(args.Sprite, Angle.FromDegrees(angle), 0.125f);
+            _rotationVisualizerSystem.SetHorizontalAngle(uid, Angle.FromDegrees(angle), rotVisuals);
+            // TODO: Dump this when buckle is better
+            _rotationVisualizerSystem.AnimateSpriteRotation(uid, args.Sprite, rotVisuals.HorizontalRotation, 0.125f);
         }
     }
 }
