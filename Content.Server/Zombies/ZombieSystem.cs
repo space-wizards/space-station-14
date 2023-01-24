@@ -34,7 +34,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly HumanoidSystem _humanoidSystem = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
 
         public override void Initialize()
         {

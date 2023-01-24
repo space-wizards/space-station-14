@@ -187,7 +187,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <param name="uid">The humanoid mob's UID.</param>
     /// <param name="layer">The layer to target on this humanoid mob.</param>
     /// <param name="color">The color to set this base layer to.</param>
-    public void SetBaseLayerColor(EntityUid uid, HumanoidVisualLayers layer, Color color, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
+    public void SetBaseLayerColor(EntityUid uid, HumanoidVisualLayers layer, Color? color, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
             return;
