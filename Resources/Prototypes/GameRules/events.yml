@@ -134,6 +134,15 @@
     endAfter: 1
 
 - type: gameRule
+  id: AccidentalReward
+  config:
+    !type:StationEventRuleConfiguration
+    id: AccidentalReward
+    weight: 5
+    startAfter: 1
+    endAfter: 180
+
+- type: gameRule
   id: KudzuGrowth
   config:
     !type:StationEventRuleConfiguration
@@ -226,7 +235,7 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    endAfter: 60    
+    endAfter: 60
 
 - type: gameRule
   id: ZombieOutbreak
