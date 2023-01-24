@@ -1,0 +1,46 @@
+﻿<Document>
+# Controls
+
+<Box Orientation="Vertical">You can change the keybinds at any time here:</Box>
+<Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 1"/></Box>
+
+## Basic controls
+We shall politely assume you already know how WASD to walk works.
+Beyond that, there's a handful primary interactions in SS14, ordered by importance:
+
+- [color=#a4885c]Left click[/color] to pick up items and activate objects like buttons or computers, and [color=#a4885c]E[/color] to activate items. You can also press [color=#a4885c]alt[/color] while doing this to trigger alternate interactions for some objects.
+- You can also quickly activate items you're holding by pressing [color=#a4885c]Z[/color] and [color=#a4885c]alt-Z[/color] respectively.
+- [color=#a4885c]Right click[/color] to open the context menu. You can then either left click an entry just like you would in the world, or right click it again to open the verb menu, which gives you more complex ways to interact with an object.
+- You can [color=#a4885c]shift-left click[/color] objects to examine them, and get their name and a detailed (though often humorous) description.
+
+You can quickly try out these controls with the monkey below (note: clicking it only works in-game and not in the lobby), and at any point in this guidebook if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
+
+
+<GuideEntityEmbed Entity="MobGuidebookMonkey" Interactive="True" Caption=""/>
+
+## Inventory
+In order to move items around in your inventory and between containers, you can click the item (or item name) to move it to your active hand, and then click the spot you want it to go (either a slot in your HUD, or the container).
+
+The items in your hands are only active one at a time, in order to swap between what you're currently using, you can press [color=#a4885c]X[/color] on your keyboard to change active hands.
+
+Opening containers in your inventory is easy as well, either hover over the item and activate it with [color=#a4885c]E[/color] or [color=#a4885c]Z[/color], or click on the bag icon in the bottom right corner of the slot it is in.
+
+When you open a container a window will pop up showing the contents of the container and how much space it has available to hold things.
+All items have an assigned size, some too large to fit into most or all containers.
+
+To drop items, you can press [color=#a4885c]Q[/color], and to drop them more violently (also known as throwing), you can press [color=#a4885c]ctrl-Q[/color].
+
+## Actions
+To the left in your HUD there's a bar showing various actions you can take.
+You can hover over each one to see a name and description for the action that tells you what it is and how it works.
+You can click on an action to invoke it, or press a number key at any time to invoke the action without clicking on it.
+
+In order to rearrange your actions, simply drag and drop them to other slots, right click to remove them, and press the gear icon at the top of the bar to open a menu to (re)add them.
+You have 10 pages of actions total that you can switch between by pressing [color=#a4885c]shift-(number)[/color].
+Additionally, you can press the lock icon to prevent the action bar from being modified.
+
+## Movement
+There's a good few things that can modify your movement, most notably slipping (which requires you to walk with [color=#a4885c]shift[/color] to avoid, usually.) and a lack of gravity.
+Slipping simply stuns you for a bit, but no gravity can be deadly if you're off station and wander more than about 1.5m away from the nearest wall or solid structure, as you'll lose your grip and no longer be able to move without throwing something.
+
+</Document>

@@ -204,7 +204,7 @@ namespace Content.Server.NPC.Systems
             var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
             var xformQuery = GetEntityQuery<TransformComponent>();
 
-            var npcs = EntityQuery<NPCSteeringComponent, ActiveNPCComponent, InputMoverComponent, TransformComponent>()
+            var npcs = EntityQuery<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>()
                 .ToArray();
             var options = new ParallelOptions
             {
@@ -213,7 +213,7 @@ namespace Content.Server.NPC.Systems
 
             Parallel.For(0, npcs.Length, options, i =>
             {
-                var (steering, _, mover, xform) = npcs[i];
+                var (_, steering, mover, xform) = npcs[i];
 
                 Steer(steering, mover, xform, modifierQuery, bodyQuery, xformQuery, frameTime);
             });
@@ -223,7 +223,7 @@ namespace Content.Server.NPC.Systems
             {
                 var data = new List<NPCSteeringDebugData>(npcs.Length);
 
-                foreach (var (steering, _, mover, _) in npcs)
+                foreach (var (_, steering, mover, _) in npcs)
                 {
                     data.Add(new NPCSteeringDebugData(
                         mover.Owner,

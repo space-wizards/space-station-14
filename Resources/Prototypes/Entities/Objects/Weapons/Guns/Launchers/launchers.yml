@@ -80,8 +80,8 @@
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 1
-    zeroVisible: true
+    steps: 2
+    zeroVisible: false
   - type: Appearance
 
 - type: entity

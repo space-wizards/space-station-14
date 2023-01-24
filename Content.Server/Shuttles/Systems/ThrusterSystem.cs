@@ -62,7 +62,7 @@ namespace Content.Server.Shuttles.Systems
             SubscribeLocalEvent<ThrusterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<ThrusterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
 
-            _mapManager.TileChanged += OnTileChange;
+            SubscribeLocalEvent<ShuttleComponent, TileChangedEvent>(OnShuttleTileChange);
         }
 
         private void OnThrusterExamine(EntityUid uid, ThrusterComponent component, ExaminedEvent args)
@@ -89,24 +89,18 @@ namespace Content.Server.Shuttles.Systems
             }
         }
 
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _mapManager.TileChanged -= OnTileChange;
-        }
-
         private void OnIsHotEvent(EntityUid uid, ThrusterComponent component, IsHotEvent args)
         {
             args.IsHot = component.Type != ThrusterType.Angular && component.IsOn;
         }
 
-        private void OnTileChange(object? sender, TileChangedEventArgs e)
+        private void OnShuttleTileChange(EntityUid uid, ShuttleComponent component, ref TileChangedEvent args)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (e.NewTile.IsSpace(_tileDefManager) || !e.OldTile.IsSpace(_tileDefManager)) return;
+            if (args.NewTile.IsSpace(_tileDefManager) || !args.OldTile.IsSpace(_tileDefManager)) return;
 
-            var tilePos = e.NewTile.GridIndices;
-            var grid = _mapManager.GetGrid(e.NewTile.GridUid);
+            var tilePos = args.NewTile.GridIndices;
+            var grid = _mapManager.GetGrid(uid);
             var xformQuery = GetEntityQuery<TransformComponent>();
             var thrusterQuery = GetEntityQuery<ThrusterComponent>();
 
@@ -268,17 +262,8 @@ namespace Content.Server.Shuttles.Systems
                         component.BurnPoly.Count > 0)
                     {
                         var shape = new PolygonShape();
-
                         shape.SetVertices(component.BurnPoly);
-
-                        var fixture = new Fixture(physicsComponent, shape)
-                        {
-                            ID = BurnFixture,
-                            Hard = false,
-                            CollisionLayer = (int) CollisionGroup.FullTileMask
-                        };
-
-                        _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int) CollisionGroup.FullTileMask);
                     }
 
                     break;
@@ -358,7 +343,7 @@ namespace Content.Server.Shuttles.Systems
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _fixtureSystem.DestroyFixture(physicsComponent, BurnFixture);
+                _fixtureSystem.DestroyFixture(uid, BurnFixture, body: physicsComponent);
             }
 
             _activeThrusters.Remove(component);

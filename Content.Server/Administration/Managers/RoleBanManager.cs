@@ -115,7 +115,7 @@ public sealed class RoleBanManager
         if (!_cachedRoleBans.TryGetValue(playerUserId, out var roleBans))
             return null;
         return roleBans
-            .Where(ban => ban.Role.StartsWith(JobPrefix))
+            .Where(ban => ban.Role.StartsWith(JobPrefix, StringComparison.Ordinal))
             .Select(ban => ban.Role[JobPrefix.Length..])
             .ToHashSet();
     }

@@ -175,6 +175,8 @@
   - type: Tag
     tags:
     - Wooden
+  - type: StaticPrice
+    price: 75
 
 - type: entity
   name: ritual chair

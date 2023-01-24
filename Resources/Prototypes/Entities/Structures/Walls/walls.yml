@@ -42,8 +42,6 @@
       - WallLayer
       density: 1000
   - type: Occluder
-    sizeX: 32
-    sizeY: 32
   - type: Airtight
   - type: StaticPrice
     price: 75

@@ -22,10 +22,11 @@ public sealed class AbsorbentComponent : Component
     public FixedPoint2 ResidueAmount = FixedPoint2.New(10); // Should be higher than MopLowerLimit
 
     /// <summary>
-    ///     To leave behind a wet floor, this tool will be unable to take from puddles with a volume less than this amount.
+    ///     To leave behind a wet floor, this tool will be unable to take from puddles with a volume less than this
+    ///     amount. This limit is ignored if the target puddle does not evaporate.
     /// </summary>
-    [DataField("mopLowerLimit")]
-    public FixedPoint2 MopLowerLimit = FixedPoint2.New(5);
+    [DataField("lowerLimit")]
+    public FixedPoint2 LowerLimit = FixedPoint2.New(5);
 
     [DataField("pickupSound")]
     public SoundSpecifier PickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
@@ -34,9 +35,9 @@ public sealed class AbsorbentComponent : Component
     public SoundSpecifier TransferSound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
 
     /// <summary>
-    ///     Multiplier for the do_after delay for how quickly the mopping happens.
+    ///     Quantity of reagent that this mop can pick up per second. Determines the length of the do-after.
     /// </summary>
-    [DataField("mopSpeed")] public float MopSpeed = 1;
+    [DataField("speed")] public float Speed = 10;
 
     /// <summary>
     ///     How many entities can this tool interact with at once?

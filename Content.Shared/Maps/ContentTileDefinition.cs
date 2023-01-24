@@ -23,7 +23,7 @@ namespace Content.Shared.Maps
         [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [IdDataFieldAttribute] public string ID { get; } = string.Empty;
+        [IdDataField] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
@@ -68,6 +68,11 @@ namespace Content.Shared.Maps
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
+
+        /// <summary>
+        /// Can weather affect this tile.
+        /// </summary>
+        [DataField("weather")] public bool Weather = false;
 
         public void AssignTileId(ushort id)
         {

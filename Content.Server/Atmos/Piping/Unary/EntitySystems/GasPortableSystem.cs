@@ -59,7 +59,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             foreach (var entityUid in grid.GetLocal(coordinates))
             {
-                if (EntityManager.TryGetComponent<GasPortComponent>(entityUid, out port))
+                if (EntityManager.TryGetComponent(entityUid, out port))
                 {
                     return true;
                 }

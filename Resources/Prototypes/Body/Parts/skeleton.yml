@@ -63,8 +63,8 @@
     - type: Examiner
     - type: DoAfter
     - type: MobState
-      thresholds:
-        0: Alive
+      allowedStates:
+        - Alive
     - type: Tag
       tags:
         - MindTransferTarget

@@ -1,8 +1,8 @@
-﻿using Content.Server.Research.Components;
-using Content.Server.Research.Systems;
+﻿using Content.Server.Research.Systems;
 using Content.Server.Research.TechnologyDisk.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Research;
+using Content.Shared.Research.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
@@ -20,6 +20,7 @@ public sealed class DiskConsoleSystem : EntitySystem
     {
         SubscribeLocalEvent<DiskConsoleComponent, DiskConsolePrintDiskMessage>(OnPrintDisk);
         SubscribeLocalEvent<DiskConsoleComponent, ResearchServerPointsChangedEvent>(OnPointsChanged);
+        SubscribeLocalEvent<DiskConsoleComponent, ResearchRegistrationChangedEvent>(OnRegistrationChanged);
         SubscribeLocalEvent<DiskConsoleComponent, BeforeActivatableUIOpenEvent>(OnBeforeUiOpen);
 
         SubscribeLocalEvent<DiskConsolePrintingComponent, ComponentShutdown>(OnShutdown);
@@ -41,20 +42,29 @@ public sealed class DiskConsoleSystem : EntitySystem
 
     private void OnPrintDisk(EntityUid uid, DiskConsoleComponent component, DiskConsolePrintDiskMessage args)
     {
-        if (!TryComp<ResearchClientComponent>(uid, out var client) || client.Server == null)
+        if (HasComp<DiskConsolePrintingComponent>(uid))
             return;
 
-        if (client.Server.Points < component.PricePerDisk)
+        if (!_research.TryGetClientServer(uid, out var server, out var serverComp))
             return;
 
-        _research.ChangePointsOnServer(client.Server.Owner, -component.PricePerDisk, client.Server);
+        if (serverComp.Points < component.PricePerDisk)
+            return;
+
+        _research.AddPointsToServer(server.Value, -component.PricePerDisk, serverComp);
         _audio.PlayPvs(component.PrintSound, uid);
 
         var printing = EnsureComp<DiskConsolePrintingComponent>(uid);
         printing.FinishTime = _timing.CurTime + component.PrintDuration;
+        UpdateUserInterface(uid, component);
     }
 
     private void OnPointsChanged(EntityUid uid, DiskConsoleComponent component, ref ResearchServerPointsChangedEvent args)
+    {
+        UpdateUserInterface(uid, component);
+    }
+
+    private void OnRegistrationChanged(EntityUid uid, DiskConsoleComponent component, ref ResearchRegistrationChangedEvent args)
     {
         UpdateUserInterface(uid, component);
     }
@@ -70,9 +80,9 @@ public sealed class DiskConsoleSystem : EntitySystem
             return;
 
         var totalPoints = 0;
-        if (TryComp<ResearchClientComponent>(uid, out var client) && client.Server != null)
+        if (_research.TryGetClientServer(uid, out _, out var server))
         {
-            totalPoints = client.Server.Points;
+            totalPoints = server.Points;
         }
         var canPrint = !HasComp<DiskConsolePrintingComponent>(uid) && totalPoints >= component.PricePerDisk;
 

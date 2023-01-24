@@ -1,5 +1,5 @@
-using Content.Shared.Lathe;
 using Content.Shared.Research;
+using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Research.UI
@@ -24,7 +24,7 @@ namespace Content.Client.Research.UI
 
             _menu.OnServerButtonPressed += () =>
             {
-                SendMessage(new LatheServerSelectionMessage());
+                SendMessage(new ConsoleServerSelectionMessage());
             };
             _menu.OnPrintButtonPressed += () =>
             {
