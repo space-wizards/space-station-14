@@ -67,7 +67,7 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, Destructive = true});
             var server = pairTracker.Pair.Server;
-
+            var map = await PoolManager.CreateTestMap(pairTracker);
             IEntityManager entityMan = null;
 
             await server.WaitPost(() =>
@@ -81,12 +81,9 @@ namespace Content.IntegrationTests.Tests
                     .Where(p=>!p.Abstract)
                     .Select(p => p.ID)
                     .ToList();
-                var mapId = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(mapId);
-                var coord = new EntityCoordinates(grid.Owner, 0, 0);
                 foreach (var protoId in protoIds)
                 {
-                    entityMan.SpawnEntity(protoId, coord);
+                    entityMan.SpawnEntity(protoId, map.GridCoords);
                 }
             });
             await server.WaitRunTicks(15);
@@ -113,13 +110,12 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = false, Destructive = true });
             var server = pairTracker.Pair.Server;
-
+            var map = await PoolManager.CreateTestMap(pairTracker);
             IEntityManager entityMan = null;
 
             await server.WaitPost(() =>
             {
                 entityMan = IoCManager.Resolve<IEntityManager>();
-                var mapManager = IoCManager.Resolve<IMapManager>();
 
                 var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                 var protoIds = prototypeMan
@@ -127,12 +123,9 @@ namespace Content.IntegrationTests.Tests
                     .Where(p => !p.Abstract)
                     .Select(p => p.ID)
                     .ToList();
-                var mapId = mapManager.CreateMap();
-                var grid = mapManager.CreateGrid(mapId);
-                var coord = new EntityCoordinates(grid.Owner, 0, 0);
                 foreach (var protoId in protoIds)
                 {
-                    var ent = entityMan.SpawnEntity(protoId, coord);
+                    var ent = entityMan.SpawnEntity(protoId, map.GridCoords);
                     foreach (var (netId, component) in entityMan.GetNetComponents(ent))
                     {
                         entityMan.Dirty(component);
