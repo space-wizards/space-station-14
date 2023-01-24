@@ -18,6 +18,10 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
+using System.Linq;
+using Content.Shared.Random.Helpers;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -28,6 +32,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -128,6 +133,18 @@ namespace Content.Server.Kitchen.EntitySystems
 
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
 
+            if (TryComp(victimUid, out ContainerManagerComponent? container))
+            {
+                foreach (var cont in container.GetAllContainers().ToArray())
+                {
+                    foreach (var ent in cont.ContainedEntities.ToArray())
+                    {
+                        cont.Remove(ent, EntityManager, force: true);
+                        _transform.SetCoordinates(ent, Transform(uid).Coordinates);
+                        ent.RandomOffset(0.25f);
+                    }
+                }
+            }
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
