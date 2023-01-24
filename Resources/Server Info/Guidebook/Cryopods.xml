@@ -1,0 +1,20 @@
+<Document>
+# Cryopods
+
+Cryopods are a type of medical machinery used to place patients inside of for periods of time. The machine consists of a gas chamber with specific protections given to protect patients from being damaged by cold gases. It is also possible to injects solutions to patients through the cryopod. Cryopods require a properly built atmospheric setup to work, but power is only required to do automatic injection of chemicals.
+
+## Setup
+<Box>
+<GuideEntityEmbed Entity="Gas port">
+<GuideEntityEmbed Entity="Pump">
+<GuideEntityEmbed Entity="Freezer">
+<GuideEntityEmbed Entity="Pipes">
+<GuideEntityEmbed Entity="Gas filter">
+<GuideEntityEmbed Entity="Waste gas collection">
+</Box>
+
+## Interaction
+
+By default, patients can be dragged to the cryopod. You can also drag yourself into the cryopod. Right click the pod to eject the patient.
+
+</Document>
