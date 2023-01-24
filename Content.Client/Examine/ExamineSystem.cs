@@ -34,6 +34,7 @@ namespace Content.Client.Examine
         private EntityUid _lastExaminedEntity;
         private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
+        private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
         private int _idCounter;
 
@@ -155,27 +156,26 @@ namespace Content.Client.Examine
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
             // openAtOldTooltip is true.
-            var oldTooltipPos = _examineTooltipOpen?.ScreenCoordinates;
+            ScreenCoordinates? oldTooltipPos = _examineTooltipOpen != null ? _popupPos : null;
             CloseTooltip();
 
             // cache entity for Update function
             _examinedEntity = target;
 
             const float minWidth = 300;
-            ScreenCoordinates popupPos;
 
             if (openAtOldTooltip && oldTooltipPos != null)
             {
-                popupPos = _userInterfaceManager.ScreenToUIPosition(oldTooltipPos.Value);
+                _popupPos = oldTooltipPos.Value;
             }
             else if (centeredOnCursor)
             {
-                popupPos = _userInterfaceManager.MousePositionScaled;
+                _popupPos = _userInterfaceManager.MousePositionScaled;
             }
             else
             {
-                popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
-                popupPos = _userInterfaceManager.ScreenToUIPosition(popupPos);
+                _popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
+                _popupPos = _userInterfaceManager.ScreenToUIPosition(_popupPos);
             }
 
             // Actually open the tooltip.
@@ -230,7 +230,7 @@ namespace Content.Client.Examine
             panel.Measure(Vector2.Infinity);
             var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(_popupPos.Position, size));
         }
 
         /// <summary>
