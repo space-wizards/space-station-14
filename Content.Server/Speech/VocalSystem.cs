@@ -32,11 +32,11 @@ public sealed class VocalSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnActionPerform);
-        SubscribeLocalEvent<VocalComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         if (component.ScreamAction == null
             && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
@@ -70,7 +70,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
+        var sex = CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex ?? Sex.Unsexed;
 
         if (_random.Prob(component.WilhelmProbability))
         {

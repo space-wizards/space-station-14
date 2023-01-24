@@ -1,5 +1,6 @@
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Humanoid.Prototypes;
 
