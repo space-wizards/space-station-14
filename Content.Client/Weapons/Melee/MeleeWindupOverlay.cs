@@ -1,13 +1,11 @@
-using Content.Client.DoAfter;
-using Content.Client.Resources;
 using Content.Shared.Weapons.Melee;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Weapons.Melee;
 
@@ -24,14 +22,15 @@ public sealed class MeleeWindupOverlay : Overlay
     private readonly Texture _texture;
     private readonly ShaderInstance _shader;
 
-    public MeleeWindupOverlay(IEntityManager entManager, IGameTiming timing, IPlayerManager playerManager, IPrototypeManager protoManager, IResourceCache cache)
+    public MeleeWindupOverlay(IEntityManager entManager, IGameTiming timing, IPlayerManager playerManager, IPrototypeManager protoManager)
     {
         _entManager = entManager;
         _timing = timing;
         _player = playerManager;
         _melee = _entManager.EntitySysManager.GetEntitySystem<SharedMeleeWeaponSystem>();
         _transform = _entManager.EntitySysManager.GetEntitySystem<SharedTransformSystem>();
-        _texture = cache.GetTexture("/Textures/Interface/Misc/progress_bar.rsi/icon.png");
+        var sprite = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/progress_bar.rsi"), "icon");
+        _texture = _entManager.EntitySysManager.GetEntitySystem<SpriteSystem>().Frame0(sprite);
         _shader = protoManager.Index<ShaderPrototype>("unshaded").Instance();
     }
 

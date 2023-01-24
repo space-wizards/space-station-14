@@ -108,7 +108,9 @@
 
 - type: alert
   id: Stun
-  icons: [ /Textures/Objects/Weapons/Melee/stunbaton.rsi/stunbaton_off.png ] #Should probably draw a proper icon
+  icons:
+  - sprite: /Textures/Objects/Weapons/Melee/stunbaton.rsi #Should probably draw a proper icon
+    state: stunbaton_off
   name: alerts-stunned-name
   description: alerts-stunned-desc
 
@@ -122,7 +124,9 @@
 - type: alert
   id: Ensnared
   onClick: !type:RemoveEnsnare  { }
-  icons: [ /Textures/Interface/Alerts/ensnared.rsi/ensnared.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/ensnared.rsi
+    state: ensnared
   name: alerts-ensnared-name
   description: alerts-ensnared-desc
 
@@ -138,8 +142,8 @@
   id: HumanCrit
   category: Health
   icons:
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
-    state: health6
+  - sprite: /Textures/Interface/Alerts/human_critical.rsi
+    state: critical
   name: alerts-crit-name
   description: alerts-crit-desc
 
@@ -147,8 +151,8 @@
   id: HumanDead
   category: Health
   icons:
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
-    state: health7
+  - sprite: /Textures/Interface/Alerts/human_dead.rsi
+    state: dead
   name: alerts-dead-name
   description: alerts-dead-desc
 
@@ -156,26 +160,20 @@
   id: HumanHealth
   category: Health
   icons:
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health0
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health1
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health2
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health3
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
     state: health4
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
-    state: health5
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
-    state: health6
-  - sprite: /Textures/Interface/Alerts/human_health.rsi
-    state: health7
   name: alerts-health-name
   description: alerts-health-desc
   minSeverity: 0
-  maxSeverity: 6
+  maxSeverity: 4
 
 - type: alert
   id: Internals
@@ -288,36 +286,48 @@
 
 - type: alert
   id: Debug1
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health1.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health0
   name: Debug1
   description: Debug
 
 - type: alert
   id: Debug2
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health2.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health1
   name: Debug2
   description: Debug
 
 - type: alert
   id: Debug3
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health3.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health2
   name: Debug3
   description: Debug
 
 - type: alert
   id: Debug4
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health4.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health3
   name: Debug4
   description: Debug
 
 - type: alert
   id: Debug5
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health5.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_alive.rsi
+    state: health4
   name: Debug5
   description: Debug
 
 - type: alert
   id: Debug6
-  icons: [ /Textures/Interface/Alerts/human_health.rsi/health6.png ]
+  icons:
+  - sprite: /Textures/Interface/Alerts/human_critical.rsi
+    state: critical
   name: Debug6
   description: Debug

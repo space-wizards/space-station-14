@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
-using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -62,7 +61,7 @@ public sealed class PlanetCommand : IConsoleCommand
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
         atmos.Space = false;
-        var moles = new float[Atmospherics.TotalNumberOfGases];
+        var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 

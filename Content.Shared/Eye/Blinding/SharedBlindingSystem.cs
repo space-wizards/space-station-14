@@ -14,6 +14,10 @@ namespace Content.Shared.Eye.Blinding
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<BlindableComponent, ComponentGetState>(OnGetBlindableState);
+            SubscribeLocalEvent<BlindableComponent, ComponentHandleState>(OnHandleBlindableState);
+
             SubscribeLocalEvent<BlindfoldComponent, GotEquippedEvent>(OnEquipped);
             SubscribeLocalEvent<BlindfoldComponent, GotUnequippedEvent>(OnUnequipped);
 
@@ -26,6 +30,19 @@ namespace Content.Shared.Eye.Blinding
             SubscribeLocalEvent<TemporaryBlindnessComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<BlindableComponent, RejuvenateEvent>(OnRejuvenate);
+        }
+
+        private void OnGetBlindableState(EntityUid uid, BlindableComponent component, ref ComponentGetState args)
+        {
+            args.State = new BlindableComponentState(component.Sources);
+        }
+
+        private void OnHandleBlindableState(EntityUid uid, BlindableComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not BlindableComponentState cast)
+                return;
+
+            component.Sources = cast.Sources;
         }
 
         private void OnEquipped(EntityUid uid, BlindfoldComponent component, GotEquippedEvent args)
@@ -65,7 +82,7 @@ namespace Content.Shared.Eye.Blinding
 
             component.IsActive = true;
             blur.Magnitude += component.VisionBonus;
-            blur.Dirty();
+            Dirty(blur);
         }
 
         private void OnGlassesUnequipped(EntityUid uid, VisionCorrectionComponent component, GotUnequippedEvent args)
@@ -74,7 +91,7 @@ namespace Content.Shared.Eye.Blinding
                 return;
             component.IsActive = false;
             blur.Magnitude -= component.VisionBonus;
-            blur.Dirty();
+            Dirty(blur);
         }
 
         private void OnGetState(EntityUid uid, BlurryVisionComponent component, ref ComponentGetState args)
@@ -112,7 +129,8 @@ namespace Content.Shared.Eye.Blinding
             {
                 var ev = new BlindnessChangedEvent(true);
                 RaiseLocalEvent(uid, ev, false);
-            } else if (blindable.Sources == 0 && oldSources > 0)
+            }
+            else if (blindable.Sources == 0 && oldSources > 0)
             {
                 var ev = new BlindnessChangedEvent(false);
                 RaiseLocalEvent(uid, ev, false);
@@ -132,7 +150,7 @@ namespace Content.Shared.Eye.Blinding
             {
                 var blurry = EnsureComp<BlurryVisionComponent>(uid);
                 blurry.Magnitude = (9 - blindable.EyeDamage);
-                blurry.Dirty();
+                Dirty(blurry);
             }
             else
             {

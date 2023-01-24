@@ -24,6 +24,7 @@
     scale: 1, 0.8
   - type: Body
     prototype: Human
+    requiredLegs: 2
 
 - type: entity
   save: false

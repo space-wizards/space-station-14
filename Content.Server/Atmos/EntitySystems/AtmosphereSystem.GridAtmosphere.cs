@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Utility;
@@ -48,6 +49,8 @@ public sealed partial class AtmosphereSystem
         if (!TryComp(uid, out MapGridComponent? mapGrid))
             return;
 
+        EnsureComp<GasTileOverlayComponent>(uid);
+
         foreach (var (indices, tile) in gridAtmosphere.Tiles)
         {
             gridAtmosphere.InvalidatedCoords.Add(indices);
@@ -65,7 +68,7 @@ public sealed partial class AtmosphereSystem
             if (!_mapManager.TryGetGrid(newGrid, out var mapGrid))
                 continue;
 
-            var entity = mapGrid.GridEntityId;
+            var entity = mapGrid.Owner;
 
             // If the new split grid has an atmosphere already somehow, use that. Otherwise, add a new one.
             if (!TryComp(entity, out GridAtmosphereComponent? newGridAtmos))
@@ -550,12 +553,14 @@ public sealed partial class AtmosphereSystem
 
         var uid = gridAtmosphere.Owner;
 
+        TryComp(gridAtmosphere.Owner, out GasTileOverlayComponent? overlay);
+
         // Gotta do this afterwards so we can properly update adjacent tiles.
         foreach (var (position, _) in gridAtmosphere.Tiles.ToArray())
         {
             var ev = new UpdateAdjacentMethodEvent(uid, position);
             GridUpdateAdjacent(uid, gridAtmosphere, ref ev);
-            InvalidateVisuals(mapGrid.GridEntityId, position);
+            InvalidateVisuals(mapGrid.Owner, position, overlay);
         }
     }
 }

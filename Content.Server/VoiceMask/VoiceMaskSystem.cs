@@ -34,13 +34,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     {
         if (message.Name.Length > HumanoidCharacterProfile.MaxNameLength || message.Name.Length <= 0)
         {
-            _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-failure"), Filter.SinglePlayer(message.Session));
+            _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-failure"), message.Session);
             return;
         }
 
         component.VoiceName = message.Name;
 
-        _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), Filter.SinglePlayer(message.Session));
+        _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), message.Session);
 
         TrySetLastKnownName(uid, message.Name);
 

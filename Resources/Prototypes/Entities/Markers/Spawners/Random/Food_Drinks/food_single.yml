@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Food/burger.rsi/plain.png
+      - sprite: Objects/Consumable/Food/burger.rsi
+        state: plain
   - type: RandomSpawner
     prototypes:
       - FoodBurgerJelly

@@ -45,18 +45,25 @@ public sealed partial class PathfindingSystem
     {
         SubscribeLocalEvent<GridInitializeEvent>(OnGridInit);
         SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoved);
-        SubscribeLocalEvent<GridPathfindingComponent, EntityPausedEvent>(OnGridPathPause);
+        SubscribeLocalEvent<GridPathfindingComponent, EntityUnpausedEvent>(OnGridPathPause);
         SubscribeLocalEvent<GridPathfindingComponent, ComponentShutdown>(OnGridPathShutdown);
         SubscribeLocalEvent<CollisionChangeEvent>(OnCollisionChange);
         SubscribeLocalEvent<PhysicsBodyTypeChangedEvent>(OnBodyTypeChange);
+        SubscribeLocalEvent<TileChangedEvent>(OnTileChange);
         SubscribeLocalEvent<MoveEvent>(OnMoveEvent);
     }
 
-    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, EntityPausedEvent args)
+    private void OnTileChange(ref TileChangedEvent ev)
     {
-        // TODO: Need the offsets + time serializer. Mainly just need this here to ensure it gets update after load
-        if (!args.Paused && component.NextUpdate < _timing.CurTime)
-            component.NextUpdate = _timing.CurTime;
+        if (ev.OldTile.IsEmpty == ev.NewTile.Tile.IsEmpty)
+            return;
+
+        DirtyChunk(ev.Entity, Comp<MapGridComponent>(ev.Entity).GridTileToLocal(ev.NewTile.GridIndices));
+    }
+
+    private void OnGridPathPause(EntityUid uid, GridPathfindingComponent component, ref EntityUnpausedEvent args)
+    {
+        component.NextUpdate += args.PausedTime;
     }
 
     private void OnGridPathShutdown(EntityUid uid, GridPathfindingComponent component, ComponentShutdown args)
@@ -90,8 +97,10 @@ public sealed partial class PathfindingSystem
         };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
-        // If we're paused then NPCs can't run anyway.
-        foreach (var comp in EntityQuery<GridPathfindingComponent>())
+        // Still run even when paused.
+        var query = AllEntityQuery<GridPathfindingComponent>();
+
+        while (query.MoveNext(out var comp))
         {
             if (comp.DirtyChunks.Count == 0 ||
                 comp.NextUpdate < curTime ||
@@ -232,7 +241,7 @@ public sealed partial class PathfindingSystem
 
     private bool IsBodyRelevant(PhysicsComponent body)
     {
-        if (!body.Hard || !body.CanCollide || body.BodyType != BodyType.Static)
+        if (!body.Hard || body.BodyType != BodyType.Static)
         {
             return false;
         }
@@ -262,7 +271,8 @@ public sealed partial class PathfindingSystem
 
     private void OnBodyTypeChange(ref PhysicsBodyTypeChangedEvent ev)
     {
-        if (IsBodyRelevant(ev.Component) &&
+        if (ev.Component.CanCollide &&
+            IsBodyRelevant(ev.Component) &&
             TryComp<TransformComponent>(ev.Entity, out var xform) &&
             xform.GridUid != null)
         {
@@ -319,6 +329,17 @@ public sealed partial class PathfindingSystem
     private void OnGridInit(GridInitializeEvent ev)
     {
         EnsureComp<GridPathfindingComponent>(ev.EntityUid);
+
+        // Pathfinder refactor
+        var mapGrid = Comp<MapGridComponent>(ev.EntityUid);
+
+        for (var x = Math.Floor(mapGrid.LocalAABB.Left); x <= Math.Ceiling(mapGrid.LocalAABB.Right + ChunkSize); x += ChunkSize)
+        {
+            for (var y = Math.Floor(mapGrid.LocalAABB.Bottom); y <= Math.Ceiling(mapGrid.LocalAABB.Top + ChunkSize); y += ChunkSize)
+            {
+                DirtyChunk(ev.EntityUid, mapGrid.GridTileToLocal(new Vector2i((int) x, (int) y)));
+            }
+        }
     }
 
     private void OnGridRemoved(GridRemovalEvent ev)
@@ -457,10 +478,11 @@ public sealed partial class PathfindingSystem
                                 continue;
 
                             // TODO: Inefficient af
-                            foreach (var (_, fixture) in fixtures.Fixtures)
+                            foreach (var fixture in fixtures.Fixtures.Values)
                             {
                                 // Don't need to re-do it.
-                                if ((collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
+                                if (!fixture.Hard ||
+                                    (collisionMask & fixture.CollisionMask) == fixture.CollisionMask &&
                                     (collisionLayer & fixture.CollisionLayer) == fixture.CollisionLayer)
                                     continue;
 
@@ -544,8 +566,6 @@ public sealed partial class PathfindingSystem
                             start = new Vector2i(nextX, nextY);
                             data = points[x * SubStep + nextX, y * SubStep + nextY].Data;
                         }
-
-                        continue;
                     }
                 }
 
@@ -594,13 +614,13 @@ public sealed partial class PathfindingSystem
                     var polyData = points[x * SubStep + poly.Left, y * SubStep + poly.Bottom].Data;
 
                     var neighbors = new HashSet<PathPoly>();
-                    tilePoly.Add(new PathPoly(grid.GridEntityId, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
+                    tilePoly.Add(new PathPoly(grid.Owner, chunk.Origin, GetIndex(x, y), box, polyData, neighbors));
                 }
             }
         }
 
         // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
-        SendBreadcrumbs(chunk, grid.GridEntityId);
+        SendBreadcrumbs(chunk, grid.Owner);
     }
 
     /// <summary>

@@ -14,7 +14,7 @@
       sprite: Clothing/Shoes/Boots/magboots.rsi
     - type: Magboots
       toggleAction:
-        icon: Clothing/Shoes/Boots/magboots.rsi/icon.png
+        icon: { sprite: Clothing/Shoes/Boots/magboots.rsi, state: icon }
         iconOn: Clothing/Shoes/Boots/magboots.rsi/icon-on.png
         name: action-name-magboot-toggle
         description: action-decription-magboot-toggle
@@ -47,7 +47,7 @@
     sprite: Clothing/Shoes/Boots/magboots-advanced.rsi
   - type: Magboots
     toggleAction:
-      icon: Clothing/Shoes/Boots/magboots-advanced.rsi/icon.png
+      icon: { sprite: Clothing/Shoes/Boots/magboots-advanced.rsi, state: icon }
       iconOn: Clothing/Shoes/Boots/magboots-advanced.rsi/icon-on.png
       name: action-name-magboot-toggle
       description: action-decription-magboot-toggle
@@ -88,7 +88,7 @@
       sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
     - type: Magboots
       toggleAction:
-        icon: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon.png
+        icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
         iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
         name: action-name-magboot-toggle
         description: action-decription-magboot-toggle

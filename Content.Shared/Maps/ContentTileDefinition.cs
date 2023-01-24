@@ -23,17 +23,12 @@ namespace Content.Shared.Maps
         [AbstractDataFieldAttribute]
         public bool Abstract { get; private set; }
 
-        [IdDataFieldAttribute] public string ID { get; } = string.Empty;
+        [IdDataField] public string ID { get; } = string.Empty;
 
         public ushort TileId { get; private set; }
 
         [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
-
+        public string Name { get; private set; } = "";
         [DataField("sprite")] public ResourcePath? Sprite { get; }
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
@@ -73,6 +68,11 @@ namespace Content.Shared.Maps
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
+
+        /// <summary>
+        /// Can weather affect this tile.
+        /// </summary>
+        [DataField("weather")] public bool Weather = false;
 
         public void AssignTileId(ushort id)
         {

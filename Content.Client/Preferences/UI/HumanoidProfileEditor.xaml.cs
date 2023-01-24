@@ -470,7 +470,7 @@ namespace Content.Client.Preferences.UI
 
             _antagPreferences = new List<AntagPreferenceSelector>();
 
-            foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+            foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => Loc.GetString(a.Name)))
             {
                 if (!antag.SetPreference)
                 {
@@ -492,7 +492,7 @@ namespace Content.Client.Preferences.UI
 
             #region Traits
 
-            var traits = prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => t.Name).ToList();
+            var traits = prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(t => Loc.GetString(t.Name)).ToList();
             _traitPreferences = new List<TraitPreferenceSelector>();
             _tabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
@@ -553,7 +553,7 @@ namespace Content.Client.Preferences.UI
             #endregion FlavorText
 
             #region Dummy
-            var species = Profile?.Species ?? SharedHumanoidSystem.DefaultSpecies;
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
             if (_previewDummy != null)
@@ -693,7 +693,7 @@ namespace Content.Client.Preferences.UI
 
         private void RebuildSpriteView()
         {
-            var species = Profile?.Species ?? SharedHumanoidSystem.DefaultSpecies;
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
             if (_previewDummy != null)
@@ -1032,7 +1032,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
+            EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
@@ -1238,12 +1238,12 @@ namespace Content.Client.Preferences.UI
             {
                 Antag = antag;
 
-                _checkBox = new CheckBox {Text = $"{antag.Name}"};
+                _checkBox = new CheckBox {Text = Loc.GetString(antag.Name)};
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 if (antag.Description != null)
                 {
-                    _checkBox.ToolTip = antag.Description;
+                    _checkBox.ToolTip = Loc.GetString(antag.Description);
                     _checkBox.TooltipDelay = 0.2f;
                 }
 
@@ -1280,12 +1280,12 @@ namespace Content.Client.Preferences.UI
             {
                 Trait = trait;
 
-                _checkBox = new CheckBox {Text = $"{trait.Name}"};
+                _checkBox = new CheckBox {Text = Loc.GetString(trait.Name)};
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                if (trait.Description != null)
+                if (trait.Description is { } desc)
                 {
-                    _checkBox.ToolTip = trait.Description;
+                    _checkBox.ToolTip = Loc.GetString(desc);
                     _checkBox.TooltipDelay = 0.2f;
                 }
 

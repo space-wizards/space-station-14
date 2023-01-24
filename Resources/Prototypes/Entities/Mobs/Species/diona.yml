@@ -5,7 +5,7 @@
   id: BaseMobDiona
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Diona
   - type: Hunger
   - type: Thirst
@@ -15,6 +15,7 @@
     state: full
   - type: Body
     prototype: Diona
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona
@@ -60,5 +61,5 @@
   components:
   - type: Inventory
     templateId: diona
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Diona

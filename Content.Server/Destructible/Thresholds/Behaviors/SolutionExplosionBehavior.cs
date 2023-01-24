@@ -22,11 +22,11 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
             {
                 // Don't explode if there's no solution
-                if (explodingSolution.CurrentVolume == 0)
+                if (explodingSolution.Volume == 0)
                     return;
 
                 // Scale the explosion intensity based on the remaining volume of solution
-                var explosionScaleFactor = (explodingSolution.CurrentVolume.Float() / explodingSolution.MaxVolume.Float());
+                var explosionScaleFactor = explodingSolution.FillFraction;
 
                 // TODO: Perhaps some of the liquid should be discarded as if it's being consumed by the explosion
 

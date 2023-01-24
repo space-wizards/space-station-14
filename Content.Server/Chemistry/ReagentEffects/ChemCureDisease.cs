@@ -18,7 +18,11 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
-            var ev = new CureDiseaseAttemptEvent(CureChance);
+            var cureChance = CureChance;
+
+            cureChance *= args.Scale;
+
+            var ev = new CureDiseaseAttemptEvent(cureChance);
             args.EntityManager.EventBus.RaiseLocalEvent(args.SolutionEntity, ev, false);
         }
     }

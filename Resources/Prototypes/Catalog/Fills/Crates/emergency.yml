@@ -63,8 +63,8 @@
         amount: 2
       - id: ClothingHeadHatHoodRad
         amount: 2
-#     - id: GeigerCounter
-#        amount: 2
+      - id: GeigerCounter
+        amount: 2
       - id: DrinkVodkaBottleFull
         amount: 1
       - id: DrinkShotGlass

@@ -3,8 +3,17 @@ using System.Text.Json.Serialization;
 
 namespace Content.Server.Administration.Logs.Converters;
 
-public abstract class AdminLogConverter<T> : JsonConverter<T>
+public interface IAdminLogConverter
 {
+    void Init(IDependencyCollection dependencies);
+}
+
+public abstract class AdminLogConverter<T> : JsonConverter<T>, IAdminLogConverter
+{
+    public virtual void Init(IDependencyCollection dependencies)
+    {
+    }
+
     public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         throw new NotSupportedException();

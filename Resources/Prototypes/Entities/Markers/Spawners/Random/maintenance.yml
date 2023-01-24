@@ -7,7 +7,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Clothing/Eyes/Glasses/gar.rsi/icon-super.png
+        - sprite: Clothing/Eyes/Glasses/gar.rsi
+          state: icon-super
     - type: RandomSpawner
       rarePrototypes:
         - CigarGold
@@ -15,6 +16,7 @@
         - ClothingHeadHelmetTemplar
         - ClothingNeckCloakTrans
         - ClothingNeckCloakAdmin
+        - ClothingNeckCloakGoliathCloak
         - ToySkeleton
         - Basketball
         - Football
@@ -23,6 +25,15 @@
         - Skub
         - ClothingHeadHatCatEars
         - DrinkMugDog
+        - ClothingNeckLGBTPin
+        - ClothingNeckAromanticPin
+        - ClothingNeckAsexualPin
+        - ClothingNeckBisexualPin
+        - ClothingNeckIntersexPin
+        - ClothingNeckLesbianPin
+        - ClothingNeckNonBinaryPin
+        - ClothingNeckPansexualPin
+        - ClothingNeckTransPin
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -87,7 +98,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Weapons/Melee/machete.rsi/icon.png
+        - sprite: Objects/Weapons/Melee/machete.rsi
+          state: icon
     - type: RandomSpawner
       rarePrototypes:
         - Machete

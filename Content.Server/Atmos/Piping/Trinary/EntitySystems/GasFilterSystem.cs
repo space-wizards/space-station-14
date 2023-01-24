@@ -113,7 +113,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
             else
             {
-                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), Filter.Entities(args.User));
+                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), args.User);
             }
 
             args.Handled = true;

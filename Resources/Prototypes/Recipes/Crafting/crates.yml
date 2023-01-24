@@ -6,7 +6,7 @@
   targetNode: cratelivestock
   category: construction-category-storage
   description: A wooden crate for holding livestock.
-  icon: Structures/Storage/Crates/livestock.rsi/base.png
+  icon: { sprite: Structures/Storage/Crates/livestock.rsi, state: base }
   objectType: Structure
 
 - type: construction
@@ -17,7 +17,7 @@
   targetNode: crategenericsteel
   category: construction-category-storage
   description: A metal crate for storing things.
-  icon: Structures/Storage/Crates/generic.rsi/icon.png
+  icon: { sprite: Structures/Storage/Crates/generic.rsi, state: icon }
   objectType: Structure
 
 - type: construction
@@ -28,5 +28,5 @@
   targetNode: crateplastic
   category: construction-category-storage
   description: A plastic crate for storing things.
-  icon: Structures/Storage/Crates/plastic.rsi/icon.png
+  icon: { sprite: Structures/Storage/Crates/plastic.rsi, state: icon }
   objectType: Structure

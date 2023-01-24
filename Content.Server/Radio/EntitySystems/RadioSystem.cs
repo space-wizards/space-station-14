@@ -1,7 +1,9 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
@@ -18,6 +20,7 @@ public sealed class RadioSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -83,6 +86,8 @@ public sealed class RadioSystem : EntitySystem
 
             RaiseLocalEvent(radio.Owner, ev);
         }
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
 
         _replay.QueueReplayMessage(chat);
         _messages.Remove(message);

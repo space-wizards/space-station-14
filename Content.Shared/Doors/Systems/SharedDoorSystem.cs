@@ -29,6 +29,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -107,7 +108,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        if (!door.CurrentlyCrushing.Equals(state.CurrentlyCrushing))
+        {
+            door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        }
+
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -376,7 +381,10 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Collisions
-    protected virtual void SetCollidable(EntityUid uid, bool collidable,
+
+    protected virtual void SetCollidable(
+        EntityUid uid,
+        bool collidable,
         DoorComponent? door = null,
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
@@ -385,13 +393,13 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            PhysicsSystem.SetCanCollide(physics, collidable);
+            PhysicsSystem.SetCanCollide(uid, collidable, body: physics);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
 
-        if (door.Occludes && Resolve(uid, ref occluder, false))
-            occluder.Enabled = collidable;
+        if (door.Occludes)
+            _occluder.SetEnabled(uid, collidable, occluder);
     }
 
     /// <summary>

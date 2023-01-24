@@ -120,7 +120,7 @@ namespace Content.Client.Inventory
             }
 
             // snare-removal button. This is just the old button before the change to item slots. It is pretty out of place.
-            if (_entMan.TryGetComponent(Owner.Owner, out SharedEnsnareableComponent? snare) && snare.IsEnsnared)
+            if (_entMan.TryGetComponent(Owner.Owner, out EnsnareableComponent? snare) && snare.IsEnsnared)
             {
                 var button = new Button()
                 {

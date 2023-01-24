@@ -268,6 +268,14 @@
     price: 100
 
 - type: entity
+  id: RCDEmpty
+  parent: RCD
+  suffix: Empty
+  components:
+  - type: RCD
+    ammo: 0
+  
+- type: entity
   name: RCD Ammo
   parent: BaseItem
   id: RCDAmmo

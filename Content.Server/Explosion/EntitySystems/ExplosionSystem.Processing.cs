@@ -634,11 +634,11 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
-            _explosionData.Add(new()
+            _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
                 Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
-                MapGrid = grid.Grid
+                MapGrid = grid.Grid,
             });
         }
 
@@ -678,7 +678,7 @@ sealed class Explosion
                 _currentDataIndex++;
 
                 // sanity checks, in case something changed while the explosion was being processed over several ticks.
-                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.GridEntityId))
+                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Owner))
                     continue;
 
                 return true;
@@ -799,7 +799,7 @@ sealed class Explosion
 
         foreach (var (grid, list) in _tileUpdateDict)
         {
-            if (list.Count > 0 && _entMan.EntityExists(grid.GridEntityId))
+            if (list.Count > 0 && _entMan.EntityExists(grid.Owner))
             {
                 grid.SetTiles(list);
             }

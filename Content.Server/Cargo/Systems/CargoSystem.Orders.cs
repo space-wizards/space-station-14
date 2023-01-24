@@ -5,10 +5,12 @@ using Content.Server.MachineLinking.System;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Access.Systems;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
 using Content.Shared.Cargo.Prototypes;
+using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -35,6 +37,7 @@ namespace Content.Server.Cargo.Systems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
         private void InitializeConsole()
         {
@@ -112,7 +115,7 @@ namespace Content.Server.Cargo.Systems
             }
 
             // No order to approve?
-            if (!orderDatabase.Orders.TryGetValue(args.OrderNumber, out var order) ||
+            if (!orderDatabase.Orders.TryGetValue(args.OrderIndex, out var order) ||
                 order.Approved) return;
 
             // Invalid order
@@ -156,9 +159,11 @@ namespace Content.Server.Cargo.Systems
 
             _idCardSystem.TryFindIdCard(player, out var idCard);
             order.SetApproverData(idCard);
+            _audio.PlayPvs(_audio.GetSound(component.ConfirmSound), uid);
 
-
-            SoundSystem.Play(component.ConfirmSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            // Log order approval
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(player):user} approved order [orderIdx:{order.OrderIndex}, amount:{order.Amount}, product:{order.ProductId}, requester:{order.Requester}, reason:{order.Reason}] with balance at {bankAccount.Balance}");
 
             DeductFunds(bankAccount, cost);
             UpdateOrders(orderDatabase);
@@ -168,11 +173,14 @@ namespace Content.Server.Cargo.Systems
         {
             var orderDatabase = GetOrderDatabase(component);
             if (orderDatabase == null) return;
-            RemoveOrder(orderDatabase, args.OrderNumber);
+            RemoveOrder(orderDatabase, args.OrderIndex);
         }
 
         private void OnAddOrderMessage(EntityUid uid, CargoOrderConsoleComponent component, CargoConsoleAddOrderMessage args)
         {
+            if (args.Session.AttachedEntity is not {Valid: true} player)
+                return;
+
             if (args.Amount <= 0)
                 return;
 
@@ -188,6 +196,11 @@ namespace Content.Server.Cargo.Systems
                 PlayDenySound(uid, component);
                 return;
             }
+
+            // Log order addition
+            _adminLogger.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(player):user} added order [orderIdx:{data.OrderIndex}, amount:{data.Amount}, product:{data.ProductId}, requester:{data.Requester}, reason:{data.Reason}]");
+
         }
 
         private void OnOrderUIOpened(EntityUid uid, CargoOrderConsoleComponent component, BoundUIOpenedEvent args)
@@ -214,14 +227,11 @@ namespace Content.Server.Cargo.Systems
             _uiSystem.GetUiOrNull(component.Owner, CargoConsoleUiKey.Orders)?.SetState(state);
         }
 
-        private void ConsolePopup(ICommonSession session, string text)
-        {
-            _popup.PopupCursor(text, Filter.SinglePlayer(session));
-        }
+        private void ConsolePopup(ICommonSession session, string text) => _popup.PopupCursor(text, session);
 
         private void PlayDenySound(EntityUid uid, CargoOrderConsoleComponent component)
         {
-            SoundSystem.Play(component.ErrorSound.GetSound(), Filter.Pvs(uid, entityManager: EntityManager), uid);
+            _audio.PlayPvs(_audio.GetSound(component.ErrorSound), uid);
         }
 
         private CargoOrderData GetOrderData(CargoConsoleAddOrderMessage args, int index)
@@ -268,7 +278,7 @@ namespace Content.Server.Cargo.Systems
 
         public bool TryAddOrder(StationCargoOrderDatabaseComponent component, CargoOrderData data)
         {
-            component.Orders.Add(data.OrderNumber, data);
+            component.Orders.Add(data.OrderIndex, data);
             UpdateOrders(component);
             return true;
         }

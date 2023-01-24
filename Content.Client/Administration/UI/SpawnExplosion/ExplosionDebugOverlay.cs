@@ -66,7 +66,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
             var (_, _, matrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             DrawText(handle, gridBounds, matrix, tileSets, grid.TileSize);
@@ -104,12 +104,12 @@ public sealed class ExplosionDebugOverlay : Overlay
 
                 var screenCenter = _eyeManager.WorldToScreen(worldCenter);
 
-                if (Intensity![i] > 9)
+                if (Intensity[i] > 9)
                     screenCenter += (-12, -8);
                 else
                     screenCenter += (-8, -8);
 
-                handle.DrawString(_font, screenCenter, Intensity![i].ToString("F2"));
+                handle.DrawString(_font, screenCenter, Intensity[i].ToString("F2"));
             }
         }
 
@@ -118,7 +118,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             var epicenter = tileSets[0].First();
             var worldCenter = transform.Transform(((Vector2) epicenter + 0.5f) * tileSize);
             var screenCenter = _eyeManager.WorldToScreen(worldCenter) + (-24, -24);
-            var text = $"{Intensity![0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
+            var text = $"{Intensity[0]:F2}\nΣ={TotalIntensity:F1}\nΔ={Slope:F1}";
             handle.DrawString(_font, screenCenter, text);
         }
     }
@@ -134,7 +134,7 @@ public sealed class ExplosionDebugOverlay : Overlay
             if (!_mapManager.TryGetGrid(gridId, out var grid))
                 continue;
 
-            var gridXform = xformQuery.GetComponent(grid.GridEntityId);
+            var gridXform = xformQuery.GetComponent(grid.Owner);
             var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv(xformQuery);
             gridBounds = invWorldMatrix.TransformBox(args.WorldBounds).Enlarged(grid.TileSize * 2);
             handle.SetTransform(worldMatrix);
@@ -159,7 +159,7 @@ public sealed class ExplosionDebugOverlay : Overlay
     {
         for (var i = 0; i < Intensity.Count; i++)
         {
-            var color = ColorMap(Intensity![i]);
+            var color = ColorMap(Intensity[i]);
             var colorTransparent = color;
             colorTransparent.A = 0.2f;
 
@@ -183,7 +183,7 @@ public sealed class ExplosionDebugOverlay : Overlay
 
     private Color ColorMap(float intensity)
     {
-        var frac = 1 - intensity / Intensity![0];
+        var frac = 1 - intensity / Intensity[0];
         Color result;
         if (frac < 0.5f)
             result = Color.InterpolateBetween(Color.Red, Color.Orange, frac * 2);

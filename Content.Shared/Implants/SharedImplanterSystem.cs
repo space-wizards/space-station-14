@@ -96,7 +96,7 @@ public abstract class SharedImplanterSystem : EntitySystem
                     var implantName = Identity.Entity(implant, EntityManager);
                     var targetName = Identity.Entity(target, EntityManager);
                     var failedPermanentMessage = Loc.GetString("implanter-draw-failed-permanent", ("implant", implantName), ("target", targetName));
-                    _popup.PopupEntity(failedPermanentMessage, target, Filter.Entities(user));
+                    _popup.PopupEntity(failedPermanentMessage, target, user);
                     permanentFound = implantComp.Permanent;
                     continue;
                 }

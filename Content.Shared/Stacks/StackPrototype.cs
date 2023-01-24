@@ -8,7 +8,7 @@ namespace Content.Shared.Stacks
     public sealed class StackPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         ///     The maximum amount of things that can be in a stack.
-        ///     Can be overriden on <see cref="SharedStackComponent"/>
+        ///     Can be overriden on <see cref="StackComponent"/>
         ///     if null, simply has unlimited max count.
         /// </summary>
         [DataField("maxCount")]

@@ -1,4 +1,4 @@
-﻿# Cat accent
+# Cat accent
 accent-words-cat-1 = Meow!
 accent-words-cat-2 = Mow.
 accent-words-cat-3 = Mrrrow!
@@ -61,3 +61,9 @@ accent-words-chicken-1 = Cluck!
 accent-words-chicken-2 = Cluck.
 accent-words-chicken-3 = Cluck?
 accent-words-chicken-4 = Cluck cluck!
+
+# Pig
+accent-words-pig-1 = Oink.
+accent-words-pig-2 = Oink?
+accent-words-pig-3 = Oink!
+accent-words-pig-4 = Oink oink!

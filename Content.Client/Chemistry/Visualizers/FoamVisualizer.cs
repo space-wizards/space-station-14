@@ -53,7 +53,7 @@ namespace Content.Client.Chemistry.Visualizers
 
             if (component.TryGetData<Color>(FoamVisuals.Color, out var color))
             {
-                if (entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite))
+                if (entities.TryGetComponent(component.Owner, out SpriteComponent? sprite))
                 {
                     sprite.Color = color;
                 }

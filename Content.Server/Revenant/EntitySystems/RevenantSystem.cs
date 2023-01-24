@@ -10,7 +10,6 @@ using Content.Shared.Revenant;
 using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 using Content.Shared.StatusEffect;
-using Content.Server.MobState;
 using Content.Server.Visible;
 using Content.Shared.Examine;
 using Robust.Shared.Prototypes;
@@ -21,6 +20,7 @@ using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Player;
 using Content.Shared.Maps;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
 using Content.Shared.Revenant.Components;
 
@@ -146,7 +146,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (component.Essence <= abilityCost)
         {
-            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, Filter.Entities(uid));
+            _popup.PopupEntity(Loc.GetString("revenant-not-enough-essence"), uid, uid);
             return false;
         }
 
@@ -155,7 +155,7 @@ public sealed partial class RevenantSystem : EntitySystem
         {
             if(_physics.GetEntitiesIntersectingBody(uid, (int) CollisionGroup.Impassable).Count > 0)
             {
-                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, Filter.Entities(uid));
+                _popup.PopupEntity(Loc.GetString("revenant-in-solid"), uid, uid);
                 return false;
             }
         }

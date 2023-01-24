@@ -53,16 +53,22 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
 
     private void OnHandleState(EntityUid uid, ClothingSpeedModifierComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is ClothingSpeedModifierComponentState state)
-        {
-            component.WalkModifier = state.WalkModifier;
-            component.SprintModifier = state.SprintModifier;
-            component.Enabled = state.Enabled;
+        if (args.Current is not ClothingSpeedModifierComponentState state)
+            return;
 
-            if (_container.TryGetContainingContainer(uid, out var container))
-            {
-                _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
-            }
+        var diff = component.Enabled != state.Enabled ||
+                   !MathHelper.CloseTo(component.SprintModifier, state.SprintModifier) ||
+                   !MathHelper.CloseTo(component.WalkModifier, state.WalkModifier);
+
+        component.WalkModifier = state.WalkModifier;
+        component.SprintModifier = state.SprintModifier;
+        component.Enabled = state.Enabled;
+
+        // Avoid raising the event for the container if nothing changed.
+        // We'll still set the values in case they're slightly different but within tolerance.
+        if (diff && _container.TryGetContainingContainer(uid, out var container))
+        {
+            _movementSpeed.RefreshMovementSpeedModifiers(container.Owner);
         }
     }
 
@@ -118,18 +124,6 @@ public sealed class ClothingSpeedModifierSystem : EntitySystem
             }
         }
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                _examine.SendExamineTooltip(args.User, uid, msg, false, false);
-            },
-            Text = Loc.GetString("clothing-speed-examinable-verb-text"),
-            Message = Loc.GetString("clothing-speed-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png"
-        };
-
-        args.Verbs.Add(verb);
+        _examine.AddDetailedExamineVerb(args, component, msg, Loc.GetString("clothing-speed-examinable-verb-text"), "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png", Loc.GetString("clothing-speed-examinable-verb-message"));
     }
 }

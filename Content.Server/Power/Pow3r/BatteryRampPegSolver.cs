@@ -252,7 +252,14 @@ namespace Content.Server.Power.Pow3r
                 // available supply. IMO this is undesirable, but I can't think of an easy fix ATM.
 
                 battery.CurrentStorage -= frameTime * battery.CurrentSupply;
-                DebugTools.Assert(battery.CurrentStorage >= 0 || MathHelper.CloseTo(battery.CurrentStorage, 0, 1e-5));
+#if DEBUG
+                // Manual "MathHelper.CloseToPercent" using the subtracted value to define the relative error.
+                if (battery.CurrentStorage < 0)
+                {
+                    float epsilon = Math.Max(frameTime * battery.CurrentSupply, 1) * 1e-4f;
+                    DebugTools.Assert(battery.CurrentStorage > -epsilon);
+                }
+#endif
                 battery.CurrentStorage = MathF.Max(0, battery.CurrentStorage);
 
                 battery.SupplyRampTarget = battery.MaxEffectiveSupply * relativeTargetBatteryOutput - battery.CurrentReceiving * battery.Efficiency;

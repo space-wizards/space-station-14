@@ -580,3 +580,22 @@
     state: off
   conditions:
     - !type:TileNotBlocked {}
+
+# INTERCOM
+- type: construction
+  name: intercom
+  id: IntercomAssesmbly
+  graph: Intercom
+  startNode: start
+  targetNode: intercom
+  category: construction-category-structures
+  description: An intercom. For when the station just needs to know something.
+  icon:
+    sprite: Structures/Wallmounts/intercom.rsi
+    state: base
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}

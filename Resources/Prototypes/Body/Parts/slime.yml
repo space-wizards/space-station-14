@@ -135,6 +135,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Left
+    - type: MovementSpeedModifier
 
 - type: entity
   id: RightLegSlime
@@ -151,6 +152,7 @@
     - type: BodyPart
       partType: Leg
       symmetry: Right
+    - type: MovementSpeedModifier
 
 - type: entity
   id: LeftFootSlime

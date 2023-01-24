@@ -11,10 +11,10 @@ using Content.Shared.Hands;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.MobState.Components;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using System.Threading;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Content.Shared.Popups;
@@ -105,7 +105,7 @@ public sealed partial class ChemistrySystem
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-transfer-message",
-                    ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
+                    ("target", Identity.Entity(target, EntityManager))), component.Owner, user);
             }
         }
         else if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Draw)
@@ -125,7 +125,7 @@ public sealed partial class ChemistrySystem
             else
             {
                 _popup.PopupEntity(Loc.GetString("injector-component-cannot-draw-message",
-                    ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
+                    ("target", Identity.Entity(target, EntityManager))), component.Owner, user);
             }
         }
     }
@@ -145,7 +145,7 @@ public sealed partial class ChemistrySystem
     {
         _solutions.TryGetSolution(uid, InjectorComponent.SolutionName, out var solution);
 
-        var currentVolume = solution?.CurrentVolume ?? FixedPoint2.Zero;
+        var currentVolume = solution?.Volume ?? FixedPoint2.Zero;
         var maxVolume = solution?.MaxVolume ?? FixedPoint2.Zero;
 
         args.State = new SharedInjectorComponent.InjectorComponentState(currentVolume, maxVolume, component.ToggleState);
@@ -188,7 +188,7 @@ public sealed partial class ChemistrySystem
 
     private void OnInjectorStartup(EntityUid uid, InjectorComponent component, ComponentStartup args)
     {
-        /// ???? why ?????
+        // ???? why ?????
         Dirty(component);
     }
 
@@ -226,7 +226,7 @@ public sealed partial class ChemistrySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        _popup.PopupEntity(Loc.GetString(msg), component.Owner, Filter.Entities(user));
+        _popup.PopupEntity(Loc.GetString(msg), component.Owner, user);
     }
 
     /// <summary>
@@ -235,7 +235,7 @@ public sealed partial class ChemistrySystem
     private void InjectDoAfter(InjectorComponent component, EntityUid user, EntityUid target)
     {
         // Create a pop-up for the user
-        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, Filter.Entities(user));
+        _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
 
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution))
             return;
@@ -250,7 +250,7 @@ public sealed partial class ChemistrySystem
             // Create a pop-up for the target
             var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("injector-component-injecting-target",
-                ("user", userName)), user, Filter.Entities(target));
+                ("user", userName)), user, target);
 
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
             if (_mobState.IsIncapacitated(target))
@@ -311,7 +311,7 @@ public sealed partial class ChemistrySystem
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))),
-                component.Owner, Filter.Entities(user));
+                component.Owner, user);
             return;
         }
 
@@ -323,8 +323,8 @@ public sealed partial class ChemistrySystem
         removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
         _popup.PopupEntity(Loc.GetString("injector-component-inject-success-message",
-                ("amount", removedSolution.TotalVolume),
-                ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))), component.Owner, Filter.Entities(user));
+                ("amount", removedSolution.Volume),
+                ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))), component.Owner, user);
 
         Dirty(component);
         AfterInject(component);
@@ -333,7 +333,7 @@ public sealed partial class ChemistrySystem
     private void TryInject(InjectorComponent component, EntityUid targetEntity, Solution targetSolution, EntityUid user, bool asRefill)
     {
         if (!_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
-            || solution.CurrentVolume == 0)
+            || solution.Volume == 0)
         {
             return;
         }
@@ -344,7 +344,7 @@ public sealed partial class ChemistrySystem
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-target-already-full-message", ("target", Identity.Entity(targetEntity, EntityManager))),
-                component.Owner, Filter.Entities(user));
+                component.Owner, user);
             return;
         }
 
@@ -363,8 +363,8 @@ public sealed partial class ChemistrySystem
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-transfer-success-message",
-                ("amount", removedSolution.TotalVolume),
-                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
+                ("amount", removedSolution.Volume),
+                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, user);
 
         Dirty(component);
         AfterInject(component);
@@ -374,7 +374,7 @@ public sealed partial class ChemistrySystem
     {
         // Automatically set syringe to draw after completely draining it.
         if (_solutions.TryGetSolution(component.Owner, InjectorComponent.SolutionName, out var solution)
-            && solution.CurrentVolume == 0)
+            && solution.Volume == 0)
         {
             component.ToggleState = SharedInjectorComponent.InjectorToggleMode.Draw;
         }
@@ -399,12 +399,12 @@ public sealed partial class ChemistrySystem
         }
 
         // Get transfer amount. May be smaller than _transferAmount if not enough room, also make sure there's room in the injector
-        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.DrawAvailable, solution.AvailableVolume);
+        var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.Volume, solution.AvailableVolume);
 
         if (realTransferAmount <= 0)
         {
             _popup.PopupEntity(Loc.GetString("injector-component-target-is-empty-message", ("target", Identity.Entity(targetEntity, EntityManager))),
-                component.Owner, Filter.Entities(user));
+                component.Owner, user);
             return;
         }
 
@@ -424,8 +424,8 @@ public sealed partial class ChemistrySystem
         }
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
-                ("amount", removedSolution.TotalVolume),
-                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, Filter.Entities(user));
+                ("amount", removedSolution.Volume),
+                ("target", Identity.Entity(targetEntity, EntityManager))), component.Owner, user);
 
         Dirty(component);
         AfterDraw(component);
@@ -436,7 +436,7 @@ public sealed partial class ChemistrySystem
         var drawAmount = (float) transferAmount;
         var bloodAmount = drawAmount;
         var chemAmount = 0f;
-        if (stream.ChemicalSolution.CurrentVolume > 0f) // If they have stuff in their chem stream, we'll draw some of that
+        if (stream.ChemicalSolution.Volume > 0f) // If they have stuff in their chem stream, we'll draw some of that
         {
             bloodAmount = drawAmount * 0.85f;
             chemAmount = drawAmount * 0.15f;
@@ -450,7 +450,7 @@ public sealed partial class ChemistrySystem
 
         _popup.PopupEntity(Loc.GetString("injector-component-draw-success-message",
                 ("amount", transferAmount),
-                ("target", Identity.Entity(target, EntityManager))), component.Owner, Filter.Entities(user));
+                ("target", Identity.Entity(target, EntityManager))), component.Owner, user);
 
         Dirty(component);
         AfterDraw(component);

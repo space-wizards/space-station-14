@@ -91,10 +91,10 @@
 
 # Magnum
 - type: entity
-  name: box of .40 Lamia magazines
+  name: box of Lamia magazines
   parent: BoxCardboard
   id: BoxMagazineMagnum
-  description: A box full of .40 Lamia magazines.
+  description: A box full of Lamia magazines.
   components:
   - type: StorageFill
     contents:
@@ -102,10 +102,10 @@
         amount: 6
 
 - type: entity
-  name: box of .40 Lamia (high-velocity) magazines
+  name: box of Lamia (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumHighVelocity
-  description: A box full of .40 Lamia (high-velocity) magazines.
+  description: A box full of Lamia (high-velocity) magazines.
   components:
   - type: StorageFill
     contents:
@@ -113,10 +113,10 @@
         amount: 6
 
 - type: entity
-  name: box of .40 Lamia (practice) magazines
+  name: box of Lamia (practice) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumPractice
-  description: A box full of .40 Lamia (practice) magazines.
+  description: A box full of Lamia (practice) magazines.
   components:
   - type: StorageFill
     contents:
@@ -124,10 +124,10 @@
         amount: 6
 
 - type: entity
-  name: box of .40 Vector magazines
+  name: box of Vector magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGun
-  description: A box full of .40 Vector magazines.
+  description: A box full of Vector magazines.
   components:
   - type: StorageFill
     contents:
@@ -135,10 +135,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Vector (high-velocity) magazines
+  name: box of Vector (high-velocity) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunHighVelocity
-  description: A box full of .40 Vector (high-velocity) magazines.
+  description: A box full of Vector (high-velocity) magazines.
   components:
   - type: StorageFill
     contents:
@@ -146,10 +146,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Vector (practice) magazines
+  name: box of Vector (practice) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunPractice
-  description: A box full of .40 Vector (practice) magazines.
+  description: A box full of Vector (practice) magazines.
   components:
   - type: StorageFill
     contents:
@@ -157,10 +157,10 @@
         amount: 3
 
 - type: entity
-  name: box of .40 Vector (rubber) magazines
+  name: box of Vector (rubber) magazines
   parent: BoxCardboard
   id: BoxMagazineMagnumSubMachineGunRubber
-  description: A box full of .40 Vector (rubber) magazines.
+  description: A box full of Vector (rubber) magazines.
   components:
   - type: StorageFill
     contents:

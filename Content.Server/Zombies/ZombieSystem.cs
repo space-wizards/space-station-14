@@ -1,21 +1,26 @@
 using System.Linq;
-using Robust.Shared.Random;
 using Content.Server.Body.Systems;
+using Content.Server.Chat.Systems;
+using Content.Server.Cloning;
+using Content.Server.Disease;
 using Content.Server.Disease.Components;
 using Content.Server.Drone.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.MobState.Components;
-using Content.Server.Disease;
-using Content.Shared.Inventory;
-using Content.Shared.MobState;
+using Content.Server.Humanoid;
 using Content.Server.Inventory;
-using Robust.Shared.Prototypes;
 using Content.Server.Speech;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Chemistry.Components;
 using Content.Server.Chat.Systems;
-using Content.Shared.Movement.Systems;
+using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
+using Content.Shared.Disease.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Zombies
 {
@@ -29,6 +34,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
 
         public override void Initialize()
         {
@@ -36,13 +42,21 @@ namespace Content.Server.Zombies
 
             SubscribeLocalEvent<ZombieComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
+            SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ActiveZombieComponent, DamageChangedEvent>(OnDamage);
+            SubscribeLocalEvent<ActiveZombieComponent, AttemptSneezeCoughEvent>(OnSneeze);
+            SubscribeLocalEvent<ActiveZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
 
+        }
+
+        private void OnSleepAttempt(EntityUid uid, ActiveZombieComponent component, ref TryingToSleepEvent args)
+        {
+            args.Cancelled = true;
         }
 
         private void OnMobState(EntityUid uid, ZombieComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Alive)
+            if (args.NewMobState == MobState.Alive)
                 EnsureComp<ActiveZombieComponent>(uid);
             else
                 RemComp<ActiveZombieComponent>(uid);
@@ -52,6 +66,11 @@ namespace Content.Server.Zombies
         {
             if (args.DamageIncreased)
                 DoGroan(uid, component);
+        }
+
+        private void OnSneeze(EntityUid uid, ActiveZombieComponent component, ref AttemptSneezeCoughEvent args)
+        {
+            args.Cancelled = true;
         }
 
         private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
@@ -111,13 +130,13 @@ namespace Content.Server.Zombies
                 if (HasComp<ZombieComponent>(entity))
                     args.BonusDamage = -args.BaseDamage * zombieComp.OtherZombieDamageCoefficient;
 
-                if ((mobState.CurrentState == DamageState.Dead || mobState.CurrentState == DamageState.Critical)
+                if ((mobState.CurrentState == MobState.Dead || mobState.CurrentState == MobState.Critical)
                     && !HasComp<ZombieComponent>(entity))
                 {
                     _zombify.ZombifyEntity(entity);
                     args.BonusDamage = -args.BaseDamage;
                 }
-                else if (mobState.CurrentState == DamageState.Alive) //heals when zombies bite live entities
+                else if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
                     var healingSolution = new Solution();
                     healingSolution.AddReagent("Bicaridine", 1.00); //if OP, reduce/change chem
@@ -160,6 +179,37 @@ namespace Content.Server.Zombies
                 //either do a random accent line or scream
                 DoGroan(zombiecomp.Owner, zombiecomp);
             }
+        }
+
+        /// <summary>
+        ///     This is the function to call if you want to unzombify an entity.
+        /// </summary>
+        /// <param name="source">the entity having the ZombieComponent</param>
+        /// <param name="target">the entity you want to unzombify (different from source in case of cloning, for example)</param>
+        /// <remarks>
+        ///     this currently only restore the name and skin/eye color from before zombified
+        ///     TODO: reverse everything else done in ZombifyEntity
+        /// </remarks>
+        public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+        {
+            if (!Resolve(source, ref zombiecomp))
+                return false;
+
+            foreach (var (layer, info) in zombiecomp.BeforeZombifiedCustomBaseLayers)
+            {
+                _humanoidSystem.SetBaseLayerColor(target, layer, info.Color);
+                _humanoidSystem.SetBaseLayerId(target, layer, info.ID);
+            }
+            _humanoidSystem.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+
+            MetaData(target).EntityName = zombiecomp.BeforeZombifiedEntityName;
+            return true;
+        }
+
+        private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+        {
+            if (UnZombify(args.Source, args.Target, zombiecomp))
+                args.NameHandled = true;
         }
     }
 }

@@ -56,6 +56,11 @@
     program: 124
   - type: Item
     size: 10
+  - type: Prayable
+    sentMessage: prayer-popup-notify-centcom-sent
+    notifiactionPrefix: prayer-chat-notify-centcom
+    verb: prayer-verbs-call
+    verbImage: ""
 
 - type: entity
   parent: BaseHandheldInstrument
@@ -125,3 +130,42 @@
     sprite: Objects/Fun/Instruments/bike_horn.rsi
     slots: [Belt]
     quickEquip: false
+
+- type: entity
+  parent: PhoneInstrument
+  id: BananaPhoneInstrument
+  name: banana phone
+  description: A direct line to the Honkmother. Seems to always go to voicemail.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/otherinstruments.rsi
+    state: banana_phone
+  - type: EmitSoundOnLand
+    sound:
+       path: /Audio/Items/bikehorn.ogg
+  - type: Slippery
+    paralyzeTime: 4
+    launchForwardsMultiplier: 1.5
+  - type: StepTrigger
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.3,0.4,0.3"
+      id: "slips"
+      hard: false
+      layer:
+      - SlipLayer
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.4,-0.3,0.4,0.3"
+      density: 5
+      mask:
+      - ItemMask
+  - type: Prayable
+    sentMessage: prayer-popup-notify-honkmother-sent
+    notifiactionPrefix: prayer-chat-notify-honkmother
+    verb: prayer-verbs-call
+    verbImage: ""

@@ -34,15 +34,22 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentInit>(ApcPowerReceiverInit);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ComponentShutdown>(ApcPowerReceiverShutdown);
             SubscribeLocalEvent<ApcPowerReceiverComponent, EntityPausedEvent>(ApcPowerReceiverPaused);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, EntityUnpausedEvent>(ApcPowerReceiverUnpaused);
+
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentInit>(BatteryInit);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, ComponentShutdown>(BatteryShutdown);
             SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityPausedEvent>(BatteryPaused);
+            SubscribeLocalEvent<PowerNetworkBatteryComponent, EntityUnpausedEvent>(BatteryUnpaused);
+
             SubscribeLocalEvent<PowerConsumerComponent, ComponentInit>(PowerConsumerInit);
             SubscribeLocalEvent<PowerConsumerComponent, ComponentShutdown>(PowerConsumerShutdown);
             SubscribeLocalEvent<PowerConsumerComponent, EntityPausedEvent>(PowerConsumerPaused);
+            SubscribeLocalEvent<PowerConsumerComponent, EntityUnpausedEvent>(PowerConsumerUnpaused);
+
             SubscribeLocalEvent<PowerSupplierComponent, ComponentInit>(PowerSupplierInit);
             SubscribeLocalEvent<PowerSupplierComponent, ComponentShutdown>(PowerSupplierShutdown);
             SubscribeLocalEvent<PowerSupplierComponent, EntityPausedEvent>(PowerSupplierPaused);
+            SubscribeLocalEvent<PowerSupplierComponent, EntityUnpausedEvent>(PowerSupplierUnpaused);
         }
 
         private void ApcPowerReceiverInit(EntityUid uid, ApcPowerReceiverComponent component, ComponentInit args)
@@ -59,9 +66,17 @@ namespace Content.Server.Power.EntitySystems
         private static void ApcPowerReceiverPaused(
             EntityUid uid,
             ApcPowerReceiverComponent component,
-            EntityPausedEvent args)
+            ref EntityPausedEvent args)
         {
-            component.NetworkLoad.Paused = args.Paused;
+            component.NetworkLoad.Paused = true;
+        }
+
+        private static void ApcPowerReceiverUnpaused(
+            EntityUid uid,
+            ApcPowerReceiverComponent component,
+            ref EntityUnpausedEvent args)
+        {
+            component.NetworkLoad.Paused = false;
         }
 
         private void BatteryInit(EntityUid uid, PowerNetworkBatteryComponent component, ComponentInit args)
@@ -74,9 +89,14 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Batteries.Free(component.NetworkBattery.Id);
         }
 
-        private static void BatteryPaused(EntityUid uid, PowerNetworkBatteryComponent component, EntityPausedEvent args)
+        private static void BatteryPaused(EntityUid uid, PowerNetworkBatteryComponent component, ref EntityPausedEvent args)
         {
-            component.NetworkBattery.Paused = args.Paused;
+            component.NetworkBattery.Paused = true;
+        }
+
+        private static void BatteryUnpaused(EntityUid uid, PowerNetworkBatteryComponent component, ref EntityUnpausedEvent args)
+        {
+            component.NetworkBattery.Paused = false;
         }
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
@@ -89,9 +109,14 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Loads.Free(component.NetworkLoad.Id);
         }
 
-        private static void PowerConsumerPaused(EntityUid uid, PowerConsumerComponent component, EntityPausedEvent args)
+        private static void PowerConsumerPaused(EntityUid uid, PowerConsumerComponent component, ref EntityPausedEvent args)
         {
-            component.NetworkLoad.Paused = args.Paused;
+            component.NetworkLoad.Paused = true;
+        }
+
+        private static void PowerConsumerUnpaused(EntityUid uid, PowerConsumerComponent component, ref EntityUnpausedEvent args)
+        {
+            component.NetworkLoad.Paused = false;
         }
 
         private void PowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
@@ -104,9 +129,14 @@ namespace Content.Server.Power.EntitySystems
             _powerState.Supplies.Free(component.NetworkSupply.Id);
         }
 
-        private static void PowerSupplierPaused(EntityUid uid, PowerSupplierComponent component, EntityPausedEvent args)
+        private static void PowerSupplierPaused(EntityUid uid, PowerSupplierComponent component, ref EntityPausedEvent args)
         {
-            component.NetworkSupply.Paused = args.Paused;
+            component.NetworkSupply.Paused = true;
+        }
+
+        private static void PowerSupplierUnpaused(EntityUid uid, PowerSupplierComponent component, ref EntityUnpausedEvent args)
+        {
+            component.NetworkSupply.Paused = false;
         }
 
         public void InitPowerNet(PowerNet powerNet)

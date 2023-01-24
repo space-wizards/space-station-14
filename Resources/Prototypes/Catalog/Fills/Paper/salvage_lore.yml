@@ -23,7 +23,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Misc/bureaucracy.rsi/paper_words.png
+        - sprite: Objects/Misc/bureaucracy.rsi
+          state: paper_words
     - type: RandomSpawner
       prototypes:
         - PaperWrittenSalvageLoreGaming1

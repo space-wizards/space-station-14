@@ -270,6 +270,9 @@
   id: RandomHumanoidSpawnerCBURNUnit
   name: CBURN Agent
   components:
+    - type: Icon
+      sprite: Markers/jobs.rsi
+      state: cburn
     - type: RandomHumanoidSpawner
       settings: CBURNAgent
 

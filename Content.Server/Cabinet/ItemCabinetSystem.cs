@@ -12,6 +12,7 @@ namespace Content.Server.Cabinet
 {
     public sealed class ItemCabinetSystem : EntitySystem
     {
+        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         public override void Initialize()
@@ -27,11 +28,13 @@ namespace Content.Server.Cabinet
 
             SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+
+            SubscribeLocalEvent<ItemCabinetComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         }
 
         private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
+            _itemSlotsSystem.AddItemSlot(uid, _factory.GetComponentName(cabinet.GetType()), cabinet.CabinetSlot);
         }
         private void OnComponentRemove(EntityUid uid, ItemCabinetComponent cabinet, ComponentRemove args)
         {
@@ -61,6 +64,13 @@ namespace Content.Server.Cabinet
 
             if (args.Container.ID == cabinet.CabinetSlot.ID)
                 UpdateAppearance(uid, cabinet);
+        }
+
+        private void OnLockToggleAttempt(EntityUid uid, ItemCabinetComponent cabinet, ref LockToggleAttemptEvent args)
+        {
+            // Cannot lock or unlock while open.
+            if (cabinet.Opened)
+                args.Cancelled = true;
         }
 
         private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent cabinet, GetVerbsEvent<ActivationVerb> args)

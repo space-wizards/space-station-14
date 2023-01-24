@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
@@ -34,13 +35,13 @@ public sealed class DamageSpecifierDictionarySerializer : ITypeReader<Dictionary
     }
 
     public Dictionary<string, FixedPoint2> Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, ISerializationManager.InstantiationDelegate<Dictionary<string, FixedPoint2>>? instanceProvider = null)
+        SerializationHookContext hookCtx, ISerializationContext? context = null, ISerializationManager.InstantiationDelegate<Dictionary<string, FixedPoint2>>? instanceProvider = null)
     {
         var dict = instanceProvider != null ? instanceProvider() : new();
         // Add all the damage types by just copying the type dictionary (if it is not null).
         if (node.TryGet("types", out var typesNode))
         {
-            serializationManager.Read(typesNode, instanceProvider: () => dict);
+            serializationManager.Read(typesNode, instanceProvider: () => dict, notNullableOverride: true);
         }
 
         if (!node.TryGet("groups", out var groupsNode))
@@ -48,7 +49,7 @@ public sealed class DamageSpecifierDictionarySerializer : ITypeReader<Dictionary
 
         // Then resolve damage groups and add them
         var prototypeManager = dependencies.Resolve<IPrototypeManager>();
-        foreach (var entry in serializationManager.Read<Dictionary<string, FixedPoint2>>(groupsNode))
+        foreach (var entry in serializationManager.Read<Dictionary<string, FixedPoint2>>(groupsNode, notNullableOverride: true))
         {
             if (!prototypeManager.TryIndex<DamageGroupPrototype>(entry.Key, out var group))
             {

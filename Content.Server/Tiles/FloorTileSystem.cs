@@ -3,6 +3,7 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -76,9 +77,9 @@ namespace Content.Server.Tiles
                 else if (HasBaseTurf(currentTileDefinition, ContentTileDefinition.SpaceID))
                 {
                     mapGrid = _mapManager.CreateGrid(locationMap.MapId);
-                    var gridXform = Transform(mapGrid.GridEntityId);
+                    var gridXform = Transform(mapGrid.Owner);
                     gridXform.WorldPosition = locationMap.Position;
-                    location = new EntityCoordinates(mapGrid.GridEntityId, Vector2.Zero);
+                    location = new EntityCoordinates(mapGrid.Owner, Vector2.Zero);
                     PlaceAt(mapGrid, location, _tileDefinitionManager[component.OutputTiles[0]].TileId, component.PlaceTileSound, mapGrid.TileSize / 2f);
                 }
             }

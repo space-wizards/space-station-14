@@ -9,7 +9,8 @@
   - type: Sprite
     layers:
       - state: red
-      - texture: Objects/Consumable/Food/snacks.rsi/cheesiehonkers.png
+      - sprite: Objects/Consumable/Food/snacks.rsi
+        state: cheesiehonkers
   - type: RandomSpawner
   #small item
     prototypes:

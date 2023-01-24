@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Administration;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Server.Administration;
 
@@ -139,7 +141,10 @@ public sealed partial class QuickDialogSystem : EntitySystem
                     return false;
                 }
 
-                output = (T?) (object?) input;
+                //It's verrrry likely that this will be longstring
+                var longString = (LongString) input;
+
+                output = (T?) (object?) longString;
                 return output is not null;
             }
             default:
@@ -150,20 +155,16 @@ public sealed partial class QuickDialogSystem : EntitySystem
     private QuickDialogEntryType TypeToEntryType(Type T)
     {
         if (T == typeof(int) || T == typeof(uint) || T == typeof(long) || T == typeof(ulong))
-        {
             return QuickDialogEntryType.Integer;
-        }
-        else if (T == typeof(float) || T == typeof(double))
-        {
+
+        if (T == typeof(float) || T == typeof(double))
             return QuickDialogEntryType.Float;
-        }
-        else if (T == typeof(string)) // People are more likely to notice the input box is too short than they are to notice it's too long.
-        {
+
+        if (T == typeof(string)) // People are more likely to notice the input box is too short than they are to notice it's too long.
             return QuickDialogEntryType.ShortText;
-        } else if (T == typeof(LongString))
-        {
+
+        if (T == typeof(LongString))
             return QuickDialogEntryType.LongText;
-        }
 
         throw new ArgumentException($"Tried to open a dialog with unsupported type {T}.");
     }
@@ -173,4 +174,14 @@ public sealed partial class QuickDialogSystem : EntitySystem
 /// A type used with quick dialogs to indicate you want a large entry window for text and not a short one.
 /// </summary>
 /// <param name="String">The string retrieved.</param>
-public record struct LongString(string String);
+public record struct LongString(string String)
+{
+    public static implicit operator string(LongString longString)
+    {
+        return longString.String;
+    }
+    public static explicit operator LongString(string s)
+    {
+        return new(s);
+    }
+}

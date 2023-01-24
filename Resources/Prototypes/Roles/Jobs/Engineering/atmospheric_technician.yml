@@ -1,6 +1,7 @@
 - type: job
   id: AtmosphericTechnician
   name: job-name-atmostech
+  description: job-description-atmostech
   playTimeTracker: JobAtmosphericTechnician
   requirements:
     - !type:DepartmentTimeRequirement

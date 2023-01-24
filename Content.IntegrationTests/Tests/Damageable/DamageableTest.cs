@@ -124,7 +124,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
             await server.WaitAssertion(() =>
             {
-                var uid = (EntityUid) sDamageableEntity;
+                var uid = sDamageableEntity;
 
                 // Check that the correct types are supported.
                 Assert.That(sDamageableComponent.Damage.DamageDict.ContainsKey(type1.ID), Is.False);

@@ -8,7 +8,8 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -22,9 +23,11 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -73,7 +76,7 @@ namespace Content.Server.Polymorph.Systems
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(component.Parent, out var damageParent) &&
-                _damageable.GetScaledDamage(uid, component.Parent, out var damage) &&
+                _mobThresholdSystem.GetScaledDamage(uid, component.Parent, out var damage) &&
                 damage != null)
             {
                 _damageable.SetDamage(damageParent, damage);
@@ -107,8 +110,7 @@ namespace Content.Server.Polymorph.Systems
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),
                 ("child", Identity.Entity(component.Parent, EntityManager))),
-                component.Parent,
-                Filter.Pvs(component.Parent));
+                component.Parent);
             QueueDel(uid);
         }
 
@@ -158,8 +160,8 @@ namespace Content.Server.Polymorph.Systems
                 if (!TryComp<MobStateComponent>(comp.Owner, out var mob))
                     continue;
 
-                if ((proto.RevertOnDeath && mob.IsDead()) ||
-                    (proto.RevertOnCrit && mob.IsCritical()))
+                if ((proto.RevertOnDeath && _mobStateSystem.IsDead(comp.Owner, mob)) ||
+                    (proto.RevertOnCrit && _mobStateSystem.IsCritical(comp.Owner, mob)))
                     Revert(comp.Owner);
             }
         }

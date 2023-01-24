@@ -37,6 +37,7 @@
   description: Yep, it's a tree.
   abstract: true
   components:
+  - type: SpriteFade
   - type: Clickable
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_trees.rsi
@@ -334,6 +335,7 @@
 - type: entity
   parent: BaseTreeConifer
   id: FloraTreeChristmas02
+  suffix: PresentsGiver
   name: christmas tree
   components:
   - type: Sprite
@@ -346,6 +348,19 @@
       density: 4500
       layer:
       - WallLayer
+  - type: LimitedItemGiver
+    spawnEntries:
+      - id: PresentRandom
+        orGroup: present
+      - id: PresentRandomUnsafe
+        prob: 0.5
+        orGroup: present
+      - id: PresentRandomInsane
+        prob: 0.2
+        orGroup: present
+    receivedPopup: christmas-tree-got-gift
+    deniedPopup: christmas-tree-no-gift
+    requiredHoliday: FestiveSeason
 
 - type: entity
   parent: BaseTreeConifer

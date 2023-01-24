@@ -22,17 +22,17 @@ namespace Content.Shared.Coordinates
 
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid, Vector2 offset)
         {
-            return ToCoordinates(grid.GridEntityId, offset);
+            return ToCoordinates(grid.Owner, offset);
         }
 
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid, float x, float y)
         {
-            return ToCoordinates(grid.GridEntityId, x, y);
+            return ToCoordinates(grid.Owner, x, y);
         }
 
         public static EntityCoordinates ToCoordinates(this MapGridComponent grid)
         {
-            return ToCoordinates(grid.GridEntityId, Vector2.Zero);
+            return ToCoordinates(grid.Owner, Vector2.Zero);
         }
     }
 }

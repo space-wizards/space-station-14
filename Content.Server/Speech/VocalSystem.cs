@@ -1,9 +1,11 @@
 using Content.Server.Humanoid;
+using Content.Server.Popups;
 using Content.Server.Speech.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Humanoid;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -23,17 +25,18 @@ public sealed class VocalSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnActionPerform);
-        SubscribeLocalEvent<VocalComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
     }
 
-    private void OnStartup(EntityUid uid, VocalComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
         if (component.ScreamAction == null
             && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
@@ -67,7 +70,7 @@ public sealed class VocalSystem : EntitySystem
         if (!_blocker.CanSpeak(uid))
             return false;
 
-        var sex = CompOrNull<HumanoidComponent>(uid)?.Sex ?? Sex.Unsexed;
+        var sex = CompOrNull<HumanoidAppearanceComponent>(uid)?.Sex ?? Sex.Unsexed;
 
         if (_random.Prob(component.WilhelmProbability))
         {
@@ -90,6 +93,8 @@ public sealed class VocalSystem : EntitySystem
                 SoundSystem.Play(component.UnsexedScream.GetSound(), Filter.Pvs(uid), uid, pitchedParams);
                 break;
         }
+
+        _popupSystem.PopupEntity(Loc.GetString("scream-action-popup"), uid, PopupType.Medium);
 
         return true;
     }

@@ -21,3 +21,11 @@ machine_vend_hot_drink.ogg original from https://freesound.org/people/waxsocks/s
 scan_loop.ogg from https://freesound.org/people/steaq/sounds/509249/ CC-0 by steaq
 
 scan_finish.ogg from https://freesound.org/people/pan14/sounds/263133/ CC-0 by pan14
+
+printer.ogg from https://github.com/tgstation/tgstation/blob/31c5aaf4b885a50c9d5a0777e2647af64e7193bf/sound/machines/printer.ogg
+
+high_tech_confirm.ogg from https://github.com/tgstation/tgstation/blob/14aa5d2d8efca6370778d730e36ffcf258b9352e/sound/machines/high_tech_confirm.ogg
+
+tray_eject.ogg from https://github.com/tgstation/tgstation/blob/3eeba3899f22638595333c63b7b7433001f91bb2/sound/machines/eject.ogg
+
+scanning.ogg from https://freesound.org/people/SamuelGremaud/sounds/455375/ and edited

@@ -119,6 +119,11 @@ namespace Content.Server.Tools
             if (!Resolve(tool, ref toolComponent, false))
                 return false;
 
+            var ev = new ToolUserAttemptUseEvent(user, target);
+            RaiseLocalEvent(user, ref ev);
+            if (ev.Cancelled)
+                return false;
+
             if (!ToolStartUse(tool, user, fuel, toolQualitiesNeeded, toolComponent))
                 return false;
 
@@ -171,6 +176,11 @@ namespace Content.Server.Tools
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
             if (!Resolve(tool, ref toolComponent, false))
+                return false;
+
+            var ev = new ToolUserAttemptUseEvent(user, target);
+            RaiseLocalEvent(user, ref ev);
+            if (ev.Cancelled)
                 return false;
 
             if (!ToolStartUse(tool, user, fuel, toolQualitiesNeeded, toolComponent))
@@ -303,6 +313,23 @@ namespace Content.Server.Tools
         {
             Fuel = fuel;
             User = user;
+        }
+    }
+
+    /// <summary>
+    /// Event raised on the user of a tool to see if they can actually use it.
+    /// </summary>
+    [ByRefEvent]
+    public struct ToolUserAttemptUseEvent
+    {
+        public EntityUid User;
+        public EntityUid? Target;
+        public bool Cancelled = false;
+
+        public ToolUserAttemptUseEvent(EntityUid user, EntityUid? target)
+        {
+            User = user;
+            Target = target;
         }
     }
 

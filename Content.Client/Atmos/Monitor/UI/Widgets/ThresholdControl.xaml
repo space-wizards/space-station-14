@@ -3,15 +3,15 @@
          Orientation="Vertical" Margin="0 0 0 4">
     <Collapsible Orientation="Vertical">
         <CollapsibleHeading Name="CName" />
-        <CollapsibleBody>
+        <CollapsibleBody Margin="20 0 0 0">
             <BoxContainer Orientation="Vertical">
                 <BoxContainer Orientation="Horizontal">
-                    <CheckBox Name="CIgnore" Text="{Loc 'Ignore'}" />
+                    <CheckBox Name="CEnabled" Text="{Loc 'Enabled'}" />
                 </BoxContainer>
                 <!-- Upper row: Danger bounds -->
                 <BoxContainer Name="CDangerBounds" Orientation="Horizontal" Margin="0 0 0 2"/>
                 <!-- Lower row: Warning bounds -->
-                <BoxContainer Name="CWarningBounds" Orientation="Horizontal" Margin="0 0 0 2"/>
+                <BoxContainer Name="CWarningBounds" Orientation="Horizontal" Margin="0 6 0 2"/>
             </BoxContainer>
         </CollapsibleBody>
     </Collapsible>

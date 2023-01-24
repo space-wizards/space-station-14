@@ -57,7 +57,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!args.CanReach)
             {
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-component-player-cannot-reach-message"), args.User, args.User);
                 return;
             }
             ActivateAnalyzer(uid, component, args.User, args.Target);
@@ -99,7 +99,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnDropped(EntityUid uid, GasAnalyzerComponent component, DroppedEvent args)
         {
             if(args.User is { } userId && component.Enabled)
-                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
+                _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
             DisableAnalyzer(uid, component, args.User);
         }
 
@@ -160,7 +160,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!component.LastPosition.Value.InRange(EntityManager, userPos, SharedInteractionSystem.InteractionRange))
                 {
                     if(component.User is { } userId && component.Enabled)
-                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, Filter.Entities(userId));
+                        _popup.PopupEntity(Loc.GetString("gas-analyzer-shutoff"), userId, userId);
                     DisableAnalyzer(uid, component, component.User);
                     return false;
                 }
@@ -254,7 +254,10 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 if (mixture != null)
-                    gases.Add(new GasEntry(gas.Name, mixture.Moles[i], gas.Color));
+                {
+                    var gasName = Loc.GetString(gas.Name);
+                    gases.Add(new GasEntry(gasName, mixture.Moles[i], gas.Color));
+                }
             }
 
             return gases.ToArray();
