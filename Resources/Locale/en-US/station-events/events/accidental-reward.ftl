@@ -1,0 +1,1 @@
+accidental-reward-event-announcement = It appears the Nanotrasen Station Budget department has accidentally rewarded cargo with {$balance}$ amount of spacebucks. This has been deducted from your cargo balance.
