@@ -31,9 +31,11 @@ namespace Content.Client.Examine
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private EntityUid _examinedEntity;
+        private EntityUid _lastExaminedEntity;
         private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
         private CancellationTokenSource? _requestCancelTokenSource;
+        private int _idCounter;
 
         public override void Initialize()
         {
@@ -46,6 +48,8 @@ namespace Content.Client.Examine
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
+            
+            _idCounter = 0;
         }
 
         public override void Update(float frameTime)
@@ -124,6 +128,10 @@ namespace Content.Client.Examine
             if (player == null)
                 return;
 
+            // Prevent updating a new tooltip.
+            if (ev.Id != 0 && ev.Id != _idCounter)
+                return;
+            
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
@@ -334,8 +342,13 @@ namespace Content.Client.Examine
             else
             {
                 // Ask server for extra examine info.
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, true));
+                if (entity != _lastExaminedEntity)
+                    _idCounter += 1;
+                if (_idCounter == int.MaxValue)
+                    _idCounter = 0;
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, _idCounter, true));
             }
+            _lastExaminedEntity = entity;
         }
 
         private void CloseTooltip()
