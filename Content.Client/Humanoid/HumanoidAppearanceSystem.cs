@@ -276,9 +276,14 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             sprite.LayerSetVisible(layerId, visible);
             
+            if (!visible || setting == null) // this is kinda implied
+            {
+                continue;
+            }
+
             // Marking coloring
             var skinColor = humanoid.SkinColor;
-            if (visible && setting != null) skinColor.A = setting.LayerAlpha;
+            skinColor.A = setting.LayerAlpha;
             var markingColors = MarkingColoring.GetMarkingLayerColors(
                     markingPrototype,
                     skinColor,
@@ -286,11 +291,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                     humanoid.CachedHairColor,
                     humanoid.CachedFacialHairColor
                 );
-            
-            if (!visible || setting == null) // this is kinda implied
-            {
-                continue;
-            }
+
             if (setting.MarkingsMatchSkin) // Slimes use this for hair
             {
                 sprite.LayerSetColor(layerId, skinColor);

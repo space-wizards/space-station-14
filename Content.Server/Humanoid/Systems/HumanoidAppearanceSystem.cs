@@ -115,6 +115,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
         }
         else humanoid.CachedFacialHairColor = profile.Appearance.SkinColor;
+        Dirty(humanoid);
     }
 
     // this was done enough times that it only made sense to do it here
