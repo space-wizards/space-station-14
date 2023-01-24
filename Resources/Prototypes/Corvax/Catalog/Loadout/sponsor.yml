@@ -84,3 +84,34 @@
   id: DivineWatchLoadout
   entity: ClothingHandsWatchDivine
   sponsorOnly: true
+
+# jesuisunfou
+- type: loadout
+  id: OldUSSPGlovesLoadout
+  entity: ClothingHandsGlovesLeatherUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: loadout
+  id: OldUSSPCapLoadout
+  entity: ClothingHeadHatCapUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: loadout
+  id: OldUSSPOvercoatLoadout
+  entity: ClothingOuterCoatUSSPOvercoatBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: loadout
+  id: OldUSSPJumpsuitLoadout
+  entity: ClothingUniformJumpsuitUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]
+
+- type: loadout
+  id: OldUSSPShoesLoadout
+  entity: ClothingShoesUSSPBlack
+  sponsorOnly: true
+  whitelistJobs: [HeadOfSecurity, IAA]

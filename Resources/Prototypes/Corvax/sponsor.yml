@@ -204,3 +204,64 @@
   sprites:
     - sprite: Corvax/Mobs/Customization/augments.rsi
       state: robotic_r_hand
+
+# jesuisunfou
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesLeatherUSSPBlack
+  name: old ussp leather gloves
+  description: Black leather gloves from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Hands/Gloves/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Hands/Gloves/ussp.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatCapUSSPBlack
+  name: old ussp leather cap
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Head/Hats/ussp.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatUSSPOvercoatBlack
+  name: old ussp armored overcoat
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitUSSPBlack
+  name: old ussp jumpsuit
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Uniforms/Jumpsuit/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Uniforms/Jumpsuit/ussp.rsi
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesUSSPBlack
+  name: old ussp boots
+  description: Pretty old stuff from USSP
+  suffix: Sponsor
+  components:
+    - type: Sprite
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Shoes/ussp.rsi
+    - type: Clothing
+      sprite: Corvax/Sponsor/jesuisunfou/Clothing/Shoes/ussp.rsi
