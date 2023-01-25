@@ -1,6 +1,7 @@
 ﻿using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Prototypes;
+using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;

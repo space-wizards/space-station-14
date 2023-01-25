@@ -89,6 +89,16 @@
   event: !type:VendingMachineSelfDispenseEvent
 
 - type: instantAction
+  id: ArtifactActivate
+  name: activate-artifact-action-name
+  description: activate-artifact-action-desc
+  icon:
+    sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+    state: ano01
+  useDelay: 60
+  event: !type:ArtifactSelfActivateEvent
+
+- type: instantAction
   id: ToggleBlock
   name: action-name-blocking
   description: action-description-blocking

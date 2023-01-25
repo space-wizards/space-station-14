@@ -14,9 +14,9 @@ using Content.Server.Singularity.Events;
 namespace Content.Server.Singularity.EntitySystems;
 
 /// <summary>
-/// The server-side version of <seed cref="SharedSingularitySystem">.
+/// The server-side version of <see cref="SharedSingularitySystem"/>.
 /// Primarily responsible for managing <see cref="SingularityComponent"/>s.
-/// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent">) and gradual dissipation.
+/// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent"/>) and gradual dissipation.
 /// Also handles synchronizing server-side components with the singuarities level.
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
@@ -41,7 +41,6 @@ public sealed class SingularitySystem : SharedSingularitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<SingularityDistortionComponent, ComponentStartup>(OnDistortionStartup);
-        SubscribeLocalEvent<SingularityComponent, ComponentStartup>(OnSingularityStartup);
         SubscribeLocalEvent<SingularityComponent, ComponentShutdown>(OnSingularityShutdown);
         SubscribeLocalEvent<SingularityComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
         SubscribeLocalEvent<SinguloFoodComponent, EventHorizonConsumedEntityEvent>(OnConsumed);
@@ -148,8 +147,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
     /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
-    /// <param name="hardMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
-    /// <param name="hardMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
+    /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
+    /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
     /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
     public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
@@ -198,7 +197,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is forming.</param>
     /// <param name="comp">The component of the singularity that is forming.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
+    protected override void OnSingularityStartup(EntityUid uid, SingularityComponent comp, ComponentStartup args)
     {
         comp.LastUpdateTime = _timing.CurTime;
         comp.NextUpdateTime = comp.LastUpdateTime + comp.TargetUpdatePeriod;
@@ -309,7 +308,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="args">The event arguments.</param>
     public void UpdateEnergyDrain(EntityUid uid, SingularityComponent comp, SingularityLevelChangedEvent args)
     {
-        comp.EnergyDrain = args.NewValue switch {
+        comp.EnergyDrain = args.NewValue switch
+        {
             6 => 20,
             5 => 15,
             4 => 10,

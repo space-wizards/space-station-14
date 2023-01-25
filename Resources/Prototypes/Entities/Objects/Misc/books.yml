@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   name: book
   parent: BaseItem
   id: BookBase
@@ -11,6 +11,7 @@
     - state: book0
       map: [ "enum.DamageStateVisualLayers.Base" ]
   - type: Paper
+    contentSize: 3000
   - type: ActivatableUI
     key: enum.PaperUiKey.Key
     closeOnHandDeselect: false
@@ -21,6 +22,10 @@
   - type: Tag
     tags:
       - Book
+  - type: PaperVisuals
+    backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
+    backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
+    contentMargin: 20.0, 20.0, 20.0, 20.0
 
 - type: entity
   parent: BookBase

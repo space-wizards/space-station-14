@@ -11,12 +11,12 @@ public abstract partial class SharedBuckleSystem
 
     private void InitializeStrap()
     {
-        SubscribeLocalEvent<SharedStrapComponent, MoveEvent>(OnStrapRotate);
-        SubscribeLocalEvent<SharedStrapComponent, ComponentHandleState>(OnStrapHandleState);
-        SubscribeLocalEvent<SharedStrapComponent, CanDragDropOnEvent>(OnStrapCanDragDropOn);
+        SubscribeLocalEvent<StrapComponent, MoveEvent>(OnStrapRotate);
+        SubscribeLocalEvent<StrapComponent, ComponentHandleState>(OnStrapHandleState);
+        SubscribeLocalEvent<StrapComponent, CanDragDropOnEvent>(OnStrapCanDragDropOn);
     }
 
-    private void OnStrapHandleState(EntityUid uid, SharedStrapComponent component, ref ComponentHandleState args)
+    private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StrapComponentState state)
             return;
@@ -28,7 +28,7 @@ public abstract partial class SharedBuckleSystem
         component.MaxBuckleDistance = state.MaxBuckleDistance;
     }
 
-    private void OnStrapRotate(EntityUid uid, SharedStrapComponent component, ref MoveEvent args)
+    private void OnStrapRotate(EntityUid uid, StrapComponent component, ref MoveEvent args)
     {
         // TODO: This looks dirty af.
         // On rotation of a strap, reattach all buckled entities.
@@ -50,7 +50,7 @@ public abstract partial class SharedBuckleSystem
 
         foreach (var buckledEntity in component.BuckledEntities)
         {
-            if (!EntityManager.TryGetComponent(buckledEntity, out SharedBuckleComponent? buckled))
+            if (!EntityManager.TryGetComponent(buckledEntity, out BuckleComponent? buckled))
             {
                 continue;
             }
@@ -71,8 +71,8 @@ public abstract partial class SharedBuckleSystem
         EntityUid user,
         EntityUid target,
         EntityUid buckleId,
-        SharedStrapComponent? strap = null,
-        SharedBuckleComponent? buckle = null)
+        StrapComponent? strap = null,
+        BuckleComponent? buckle = null)
     {
         if (!Resolve(strapId, ref strap, false) ||
             !Resolve(buckleId, ref buckle, false))
@@ -85,7 +85,7 @@ public abstract partial class SharedBuckleSystem
         return _interactions.InRangeUnobstructed(target, buckleId, buckle.Range, predicate: Ignored);
     }
 
-    private void OnStrapCanDragDropOn(EntityUid uid, SharedStrapComponent strap, CanDragDropOnEvent args)
+    private void OnStrapCanDragDropOn(EntityUid uid, StrapComponent strap, CanDragDropOnEvent args)
     {
         args.CanDrop = StrapCanDragDropOn(args.Target, args.User, args.Target, args.Dragged, strap);
         args.Handled = true;

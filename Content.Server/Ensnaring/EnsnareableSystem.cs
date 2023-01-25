@@ -1,11 +1,9 @@
-using Content.Server.Ensnaring.Components;
 using Content.Server.Popups;
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 

@@ -26,7 +26,7 @@ public class InfoSystem : EntitySystem
         {
             rules = _res.ContentFileReadAllText($"/Server Info/{path}");
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             Logger.ErrorS("info", "Could not read server rules file.");
         }

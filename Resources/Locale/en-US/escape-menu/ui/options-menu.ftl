@@ -134,6 +134,7 @@ ui-options-function-open-sandbox-window = Open sandbox menu
 ui-options-function-open-tile-spawn-window = Open tile spawn menu
 ui-options-function-open-decal-spawn-window = Open decal spawn menu
 ui-options-function-open-admin-menu = Open admin menu
+ui-options-function-open-guidebook = Open guidebook
 
 ui-options-function-take-screenshot = Take screenshot
 ui-options-function-take-screenshot-no-ui = Take screenshot (without UI)
@@ -210,3 +211,7 @@ ui-options-net-pvs-leave-tooltip = This limits the rate at which the client will
                                        out-of-view entities. Lowering this can help reduce
                                        stuttering when walking around, but could occasionally
                                        lead to mispredicts and other issues.
+
+## Toggle window console command
+cmd-options-desc = Opens options menu, optionally with a specific tab selected.
+cmd-options-help = Usage: options [tab]

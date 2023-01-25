@@ -1,8 +1,5 @@
 - type: latheRecipe
   id: Beaker
-  icon:
-    sprite: Objects/Specific/Chemistry/beaker.rsi
-    state: beaker
   result: Beaker
   completetime: 2
   materials:
@@ -10,9 +7,6 @@
 
 - type: latheRecipe
   id: LargeBeaker
-  icon:
-    sprite: Objects/Specific/Chemistry/beaker_large.rsi
-    state: beakerlarge
   result: LargeBeaker
   completetime: 2
   materials:
@@ -20,9 +14,6 @@
 
 - type: latheRecipe
   id: CryostasisBeaker
-  icon:
-    sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
-    state: beakernoreact
   result: CryostasisBeaker
   completetime: 2
   materials:
@@ -31,9 +22,6 @@
 
 - type: latheRecipe
   id: Dropper
-  icon:
-    sprite: Objects/Specific/Chemistry/dropper.rsi
-    state: dropper
   result: Dropper
   completetime: 2
   materials:
@@ -42,9 +30,6 @@
 
 - type: latheRecipe
   id: Syringe
-  icon:
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
   result: Syringe
   completetime: 2
   materials:
@@ -53,7 +38,6 @@
 
 - type: latheRecipe
   id: PillCanister
-  icon: { sprite: Objects/Specific/Chemistry/pills_canister.rsi, state: pill_canister }
   result: PillCanister
   completetime: 2
   materials:
@@ -61,9 +45,6 @@
 
 - type: latheRecipe
   id: ChemistryEmptyBottle01
-  icon:
-    sprite: Objects/Specific/Chemistry/bottle.rsi
-    state: bottle-1
   result: ChemistryEmptyBottle01
   completetime: 2
   materials:

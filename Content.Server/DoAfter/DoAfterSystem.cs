@@ -2,7 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
-using Content.Shared.MobState;
+using Content.Shared.Mobs;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 
@@ -90,7 +90,7 @@ namespace Content.Server.DoAfter
 
         private void OnStateChanged(EntityUid uid, DoAfterComponent component, MobStateChangedEvent args)
         {
-            if (!args.CurrentMobState.IsIncapacitated())
+            if (args.NewMobState == MobState.Alive)
                 return;
 
             foreach (var (doAfter, _) in component.DoAfters)

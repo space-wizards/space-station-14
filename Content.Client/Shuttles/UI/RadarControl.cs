@@ -23,9 +23,6 @@ public sealed class RadarControl : Control
     [Dependency] private readonly IMapManager _mapManager = default!;
 
     private const float ScrollSensitivity = 8f;
-
-    public const int MinimapRadius = 320;
-    private const int MinimapMargin = 4;
     private const float GridLinesDistance = 32f;
 
     /// <summary>
@@ -49,8 +46,9 @@ public sealed class RadarControl : Control
     /// </summary>
     public float MaxRadarRange { get; private set; } = 256f * 10f;
 
-    private int MidPoint => SizeFull / 2;
-    private int SizeFull => (int) ((MinimapRadius + MinimapMargin) * 2 * UIScale);
+    private int MinimapRadius => (int) Math.Min(Size.X, Size.Y) / 2;
+    private Vector2 MidPoint => (Size / 2) * UIScale;
+    private int SizeFull => (int) (MinimapRadius * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => RadarRange != 0 ? ScaledMinimapRadius / RadarRange : 0f;
 
@@ -130,8 +128,8 @@ public sealed class RadarControl : Control
 
         var fakeAA = new Color(0.08f, 0.08f, 0.08f);
 
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius + 1, fakeAA);
-        handle.DrawCircle((MidPoint, MidPoint), ScaledMinimapRadius, Color.Black);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius + 1, fakeAA);
+        handle.DrawCircle((MidPoint.X, MidPoint.Y), ScaledMinimapRadius, Color.Black);
 
         // No data
         if (_coordinates == null || _rotation == null)
@@ -146,14 +144,14 @@ public sealed class RadarControl : Control
 
         for (var i = 1; i < gridLinesEquatorial + 1; i++)
         {
-            handle.DrawCircle((MidPoint, MidPoint), GridLinesDistance * MinimapScale * i, gridLines, false);
+            handle.DrawCircle((MidPoint.X, MidPoint.Y), GridLinesDistance * MinimapScale * i, gridLines, false);
         }
 
         for (var i = 0; i < gridLinesRadial; i++)
         {
             Angle angle = (Math.PI / gridLinesRadial) * i;
             var aExtent = angle.ToVec() * ScaledMinimapRadius;
-            handle.DrawLine((MidPoint, MidPoint) - aExtent, (MidPoint, MidPoint) + aExtent, gridLines);
+            handle.DrawLine((MidPoint.X, MidPoint.Y) - aExtent, (MidPoint.X, MidPoint.Y) + aExtent, gridLines);
         }
 
         var metaQuery = _entManager.GetEntityQuery<MetaDataComponent>();

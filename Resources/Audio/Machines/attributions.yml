@@ -1,3 +1,13 @@
+- files: ["vending_restock_start.ogg"]
+  license: "CC0-1.0"
+  copyright: "https://freesound.org/people/Defaultv/"
+  source: "https://freesound.org/people/Defaultv/sounds/534362/"
+
+- files: ["vending_restock_done.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "https://freesound.org/people/felipelnv/"
+  source: "https://freesound.org/people/felipelnv/sounds/153298/"
+
 - files: ["short_print_and_rip.ogg"]
   license: "CC0-1.0"
   copyright: "receipt printing.wav by 13F_Panska_Tlolkova_Matilda. This version is cleaned up, shortened, and converted to OGG."

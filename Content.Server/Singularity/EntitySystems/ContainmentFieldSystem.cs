@@ -1,13 +1,11 @@
 ﻿using Content.Server.Popups;
 using Content.Server.Shuttles.Components;
-using Content.Server.Singularity.Components;
-using Content.Server.Singularity.EntitySystems;
 using Content.Server.Singularity.Events;
 using Content.Shared.Popups;
+using Content.Shared.Singularity.Components;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
-using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems;
 

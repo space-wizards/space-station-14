@@ -3,6 +3,7 @@ on: [pull_request, push]
 
 jobs:
   yaml-schema-validation:
+    if: github.actor != 'PJBot'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

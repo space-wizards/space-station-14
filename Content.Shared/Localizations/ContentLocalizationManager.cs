@@ -5,7 +5,6 @@ namespace Content.Shared.Localizations
     public sealed class ContentLocalizationManager
     {
         [Dependency] private readonly ILocalizationManager _loc = default!;
-        [Dependency] private readonly IEntityManager _ent = default!;
 
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";
@@ -101,7 +100,7 @@ namespace Content.Shared.Localizations
                 iargs[i - 2] = n;
             }
 
-            if (!ut!.TryGetUnit(max, out var mu))
+            if (!ut.TryGetUnit(max, out var mu))
                 throw new ArgumentException("Unit out of range for type");
 
             var fargs = new object[iargs.Length];
