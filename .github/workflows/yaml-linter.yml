@@ -4,7 +4,7 @@ on: [pull_request, push]
 
 jobs:
   build:
-    if: github.actor != 'PJBot'
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
