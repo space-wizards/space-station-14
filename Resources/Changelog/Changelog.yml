@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Stripping UI has been updated. You can now visually see and examine
-      items., type: Tweak}
-  - {message: Handcuffs now show up in the hands UI. You still need to use the alert
-      to uncuff yourself., type: Add}
-  id: 2451
-  time: '2022-10-15T17:00:04.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
@@ -2937,3 +2929,8 @@ Entries:
     type: Fix}
   id: 2950
   time: '2023-01-24T13:42:58.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
+  id: 2951
+  time: '2023-01-25T06:28:43.0000000+00:00'
