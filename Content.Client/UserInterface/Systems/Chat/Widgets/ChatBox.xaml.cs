@@ -1,4 +1,4 @@
-﻿using Content.Client.Chat;
+using Content.Client.Chat;
 using Content.Client.Chat.TypingIndicator;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
@@ -63,7 +63,11 @@ public partial class ChatBox : UIWidget
             ? msg.MessageColorOverride.Value
             : msg.Channel.TextColor();
 
-        AddLine(msg.WrappedMessage, color);
+        var entityColor = msg.EntityColor != null
+            ? msg.EntityColor.Value
+            : msg.Channel.TextColor();
+
+        AddLine(msg.WrappedMessage, color, entityColor, msg.EntityName);
     }
 
     private void OnChannelSelect(ChatSelectChannel channel)
@@ -96,9 +100,15 @@ public partial class ChatBox : UIWidget
         }
     }
 
-    public void AddLine(string message, Color color)
+    public void AddLine(string message, Color color, Color entityColor = default, string? entityName = null)
     {
         var formatted = new FormattedMessage(3);
+
+        if (entityName != null) {
+            formatted.PushColor(entityColor);
+            formatted.AddMarkup(entityName + ": ");
+        }
+
         formatted.PushColor(color);
         formatted.AddMarkup(message);
         formatted.Pop();

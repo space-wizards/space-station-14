@@ -56,6 +56,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const int VoiceRange = 10; // how far voice goes in world units
     public const int WhisperRange = 2; // how far whisper goes in world units
     public const string DefaultAnnouncementSound = "/Audio/Announcements/announce.ogg";
+    public Color DefaultEntityColor = new Color(145, 241, 50);
 
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled = false;
@@ -303,10 +304,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         name = FormattedMessage.EscapeText(name);
-        var wrappedMessage = Loc.GetString("chat-manager-entity-say-wrap-message",
-            ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
+        var wrappedMessage = FormattedMessage.EscapeText(message);
 
-        SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, hideChat, hideGlobalGhostChat);
+        SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, hideChat, hideGlobalGhostChat, name);
 
         var ev = new EntitySpokeEvent(source, message, null, null);
         RaiseLocalEvent(source, ev, true);
@@ -449,12 +449,12 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <summary>
     ///     Sends a chat message to the given players in range of the source entity.
     /// </summary>
-    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool hideGlobalGhostChat)
+    private void SendInVoiceRange(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool hideGlobalGhostChat, string? entityName = null)
     {
         foreach (var (session, data) in GetRecipients(source, VoiceRange))
         {
             var entHideChat = data.HideChatOverride ?? (hideChat || hideGlobalGhostChat && data.Observer && data.Range < 0);
-            _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.ConnectedClient);
+            _chatManager.ChatMessageToOne(channel, message, wrappedMessage, source, entHideChat, session.ConnectedClient, entityName: entityName, entityColor: DefaultEntityColor);
         }
 
         _replay.QueueReplayMessage(new ChatMessage(channel, message, wrappedMessage, source, hideChat));

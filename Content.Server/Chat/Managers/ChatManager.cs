@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.MoMMI;
@@ -259,9 +260,9 @@ namespace Content.Server.Chat.Managers
             LastSaysTable[player] = time;
         }
 
-        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0)
+        public void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0, string? entityName = null, Color? entityColor = null)
         {
-            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume);
+            var msg = new ChatMessage(channel, message, wrappedMessage, source, hideChat, colorOverride, audioPath, audioVolume, entityName, entityColor);
             _netManager.ServerSendMessage(new MsgChatMessage() { Message = msg }, client);
 
             if (recordReplay)

@@ -11,6 +11,8 @@ namespace Content.Shared.Chat
     public sealed class ChatMessage
     {
         public ChatChannel Channel;
+        public Color? EntityColor;
+        public string? EntityName;
         public string Message;
         public string WrappedMessage;
         public EntityUid SenderEntity;
@@ -22,9 +24,11 @@ namespace Content.Shared.Chat
         [NonSerialized]
         public bool Read;
 
-        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0)
+        public ChatMessage(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat = false, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0, string? entityName = null, Color? entityColor = null)
         {
             Channel = channel;
+            EntityName = entityName;
+            EntityColor = entityColor;
             Message = message;
             WrappedMessage = wrappedMessage;
             SenderEntity = source;
