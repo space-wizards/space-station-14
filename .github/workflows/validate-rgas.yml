@@ -2,7 +2,7 @@ name: YAML schema validator
 on:
   push:
   pull_request:
-    types: [ opened, reopened, edited, ready_for_review ]
+    types: [ opened, reopened, synchronize, ready_for_review ]
 
 jobs:
   yaml-schema-validation:
