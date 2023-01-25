@@ -734,7 +734,7 @@
         visualType: Medium
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
-        probability: 0.05
+        probability: 0.1
 
 - type: reagent
   id: Diphenylmethylamine
@@ -755,4 +755,4 @@
         visualType: Medium
         messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
         type: Local
-        probability: 0.05
+        probability: 0.1
