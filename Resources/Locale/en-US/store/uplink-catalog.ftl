@@ -22,13 +22,13 @@ uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmo
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
-uplink-explosive-grenade-desc = Grenade that creates a small but devastating explosion.
+uplink-explosive-grenade-desc = A basic grenade that that does minimal damage to walls and floors, but has a large blast radius.
 
 uplink-flash-grenade-name = Flashbang
-uplink-flash-grenade-desc = Eeeeeeeeeeeeeeeeeeeeee
+uplink-flash-grenade-desc = A specalized grenade that will temporarily blind & slow anyone without protection.
 
 uplink-mini-bomb-name = Minibomb
-uplink-mini-bomb-desc = A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+uplink-mini-bomb-desc = A powerful explosive that is designed to breach & deal heavy damage to small rooms.
 
 uplink-penguin-grenade-name = Grenade Penguin
 uplink-penguin-grenade-desc = A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.

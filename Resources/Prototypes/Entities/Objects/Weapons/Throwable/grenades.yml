@@ -2,7 +2,7 @@
 
 - type: entity
   name: explosive grenade
-  description: Grenade that creates a small but devastating explosion.
+  description: A simple grenade that creates a small but devastating explosion.
   parent: BaseItem
   id: ExGrenade
   components:
@@ -40,10 +40,11 @@
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
+    
 
 - type: entity
   name: flashbang
-  description: Eeeeeeeeeeeeeeeeeeeeee
+  description: Eeeeeeeeeee
   parent: BaseItem
   id: GrenadeFlashBang
   components:
@@ -85,7 +86,7 @@
 
 - type: entity
   name: Syndicate minibomb
-  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  description: A compact bomb that is designed to breach & deal heavy damage to small rooms.
   parent: BaseItem
   id: SyndieMiniBomb
   components:
@@ -100,9 +101,9 @@
     delay: 10
   - type: Explosive
     explosionType: Default
-    totalIntensity: 200
-    intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
-    maxIntensity: 60
+    totalIntensity: 700
+    intensitySlope: 16 #If it's any lower then it feels really weak. If you're nerfing the minibomb, probably don't change just this value!
+    maxIntensity: 295 
   - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
