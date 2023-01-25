@@ -61,7 +61,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnClimbableDragDrop);
 
-        SubscribeLocalEvent<ClimbingComponent, ClimbFinishedEvent>(OnClimbFinished);
+        SubscribeLocalEvent<ClimbingComponent, DoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
@@ -121,13 +121,12 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (TryBonk(component, user))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
+        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, target:climbable, used:entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true,
-            UsedFinishedEvent = new ClimbFinishedEvent(user, climbable, entityToMove)
+            BreakOnStun = true
         });
     }
 
@@ -154,9 +153,12 @@ public sealed class ClimbSystem : SharedClimbSystem
         return true;
     }
 
-    private void OnClimbFinished(EntityUid uid, ClimbingComponent climbing, ClimbFinishedEvent args)
+    private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent args)
     {
-        Climb(uid, args.User, args.Instigator, args.Climbable, climbing: climbing);
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+            return;
+
+        Climb(uid, args.Args.User, args.Args.Target.Value, args.Args.Used.Value, climbing: component);
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
@@ -455,20 +457,6 @@ public sealed class ClimbSystem : SharedClimbSystem
     {
         _fixtureRemoveQueue.Clear();
     }
-}
-
-internal sealed class ClimbFinishedEvent : EntityEventArgs
-{
-    public ClimbFinishedEvent(EntityUid user, EntityUid climbable, EntityUid instigator)
-    {
-        User = user;
-        Climbable = climbable;
-        Instigator = instigator;
-    }
-
-    public EntityUid User { get; }
-    public EntityUid Climbable { get; }
-    public EntityUid Instigator { get; }
 }
 
 /// <summary>
