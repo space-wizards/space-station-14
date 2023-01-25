@@ -158,7 +158,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
-        Climb(uid, args.Args.User, args.Args.Target.Value, args.Args.Used.Value, climbing: component);
+        Climb(uid, args.Args.User, args.Args.Used.Value, args.Args.Target.Value, climbing: component);
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,

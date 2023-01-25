@@ -83,7 +83,7 @@ namespace Content.Server.Dragon
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
 
             //Humanoid devours allow dragon to get eggs, corpses included
-            if (HasComp<HumanoidComponent>(args.Args.Target))
+            if (HasComp<HumanoidAppearanceComponent>(args.Args.Target))
             {
                 ichorInjection.ScaleSolution(0.5f);
                 component.DragonStomach.Insert(args.Args.Target.Value);
