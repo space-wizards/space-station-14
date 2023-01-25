@@ -1,6 +1,9 @@
 name: YAML Linter
 
-on: [pull_request, push]
+on:
+  push:
+  pull_request:
+    types: [ opened, reopened, ready_for_review ]
 
 jobs:
   build:
