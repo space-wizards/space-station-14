@@ -192,7 +192,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref humanoid))
             return;
 
-        humanoid.CustomBaseLayers[layer] = humanoid.CustomBaseLayers[layer] with { Color = color };
+        if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
+            humanoid.CustomBaseLayers[layer] = info with { Color = color };
+        else
+            humanoid.CustomBaseLayers[layer] = new(null, color);
 
         if (sync)
             Dirty(humanoid);
