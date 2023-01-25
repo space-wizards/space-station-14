@@ -70,6 +70,7 @@ namespace Content.Shared.Access.Systems
             if (!reader.Enabled)
                 return;
             reader.Enabled = false;
+            Dirty(reader);
             args.Handled = true;
         }
 
