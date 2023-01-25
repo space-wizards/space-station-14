@@ -5,12 +5,13 @@
   name: encryption key
   description: A small cypher chip for headsets.
   components:
+  - type: EncryptionKey
   - type: Item
     sprite: Objects/Devices/encryption_keys.rsi
-  - type: EncryptionKey
   - type: Sprite
     sprite: Objects/Devices/encryption_keys.rsi
     state: cypherkey
+    netsync: false
 
 - type: entity
   parent: EncryptionKey
