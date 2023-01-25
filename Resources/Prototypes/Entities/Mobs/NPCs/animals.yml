@@ -1316,6 +1316,21 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      150: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 12
+        Poison: 4
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -1323,6 +1338,10 @@
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
   - type: Puller
+    needsHands: false
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
 
 - type: entity
   name: tarantula
@@ -1341,7 +1360,7 @@
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
-
+      
 - type: entity
   name: possum
   parent: SimpleMobBase
