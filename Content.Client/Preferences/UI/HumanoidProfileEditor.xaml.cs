@@ -563,7 +563,7 @@ namespace Content.Client.Preferences.UI
             #endregion FlavorText
 
             #region Dummy
-            var species = Profile?.Species ?? SharedHumanoidSystem.DefaultSpecies;
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
             if (_previewDummy != null)
@@ -703,7 +703,7 @@ namespace Content.Client.Preferences.UI
 
         private void RebuildSpriteView()
         {
-            var species = Profile?.Species ?? SharedHumanoidSystem.DefaultSpecies;
+            var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
             if (_previewDummy != null)
@@ -1051,7 +1051,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy!.Value, Profile);
+            EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 

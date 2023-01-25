@@ -98,9 +98,10 @@
     precision: 3
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SuitSensor
+    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 500
+  - type: StationLimitedNetwork
   - type: Thieving
     stripTimeReduction: 9999
     stealthy: true

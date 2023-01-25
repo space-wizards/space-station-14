@@ -311,9 +311,9 @@
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SuitSensor
+    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
-    range: 500
+    range: 1200
 
 - type: entity
   parent: BaseComputer
