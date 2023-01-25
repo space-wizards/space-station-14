@@ -278,7 +278,13 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: Grammar
     attributes:
       proper: true

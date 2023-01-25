@@ -1,9 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
-  id: 2452
-  time: '2022-10-15T20:15:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed gloves slot being used for melee., type: Fix}
@@ -2934,3 +2929,9 @@ Entries:
   - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
   id: 2951
   time: '2023-01-25T06:28:43.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
+      clap or snap.', type: Add}
+  id: 2952
+  time: '2023-01-25T16:29:42.0000000+00:00'
