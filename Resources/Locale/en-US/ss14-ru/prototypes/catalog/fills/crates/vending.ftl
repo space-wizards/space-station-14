@@ -46,3 +46,6 @@ ent-CrateVendingMachineRestockSnacksFilled = { ent-CratePlastic }
 ent-CrateVendingMachineRestockTankDispenserFilled = { ent-CratePlastic }
     .desc = { ent-CratePlastic.desc }
     .suffix = { "" }
+ent-CrateVendingMachineRestockHappyHonkFilled = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
+    .suffix = { "" }
