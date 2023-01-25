@@ -31,21 +31,24 @@ public sealed class BreakerFlip : StationEventSystem
         var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
         var allApcs = EntityQuery<ApcComponent, TransformComponent>().ToList();
-        allApcs = allApcs.FindAll((ent) => 
+        var stationApcs = new List<ApcComponent>();
+        foreach (var (apc, transform) in allApcs) 
         {
-            var (apc, transform) = ent;
-            return apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation;
-        });
-        var toDisable = Math.Min(RobustRandom.Next(3, 7), allApcs.Count);
+            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
+            {
+                stationApcs.Add(apc);
+            }
+        }
+        
+        var toDisable = Math.Min(RobustRandom.Next(3, 7), stationApcs.Count);
         if (toDisable == 0)
             return;
 
-        RobustRandom.Shuffle(allApcs);
+        RobustRandom.Shuffle(stationApcs);
 
         for (var i = 0; i < toDisable; i++)
         {
-            var (apc, _) = allApcs[i];
-            _apcSystem.ApcToggleBreaker(apc.Owner, apc);
+            _apcSystem.ApcToggleBreaker(stationApcs[i].Owner, stationApcs[i]);
         }
     }
 }
