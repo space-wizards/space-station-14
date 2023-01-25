@@ -178,7 +178,7 @@ public sealed class MarkingSet
         IoCManager.Resolve(ref prototypeManager);
 
         var toRemove = new List<(MarkingCategories category, string id)>();
-        foreach (var (category, list) in _markings)
+        foreach (var (category, list) in Markings)
         {
             foreach (var marking in list)
             {
