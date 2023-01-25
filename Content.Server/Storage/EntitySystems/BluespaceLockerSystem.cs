@@ -2,7 +2,6 @@
 using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
-using Content.Server.Lock;
 using Content.Server.Mind.Components;
 using Content.Server.Resist;
 using Content.Server.Station.Components;
@@ -10,6 +9,8 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Coordinates;
+using Content.Shared.Lock;
+using Content.Shared.Storage.Components;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 

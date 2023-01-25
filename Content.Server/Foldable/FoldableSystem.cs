@@ -3,6 +3,7 @@ using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -12,8 +13,8 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private BuckleSystem _buckle = default!;
-        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {

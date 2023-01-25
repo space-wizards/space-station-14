@@ -10,8 +10,10 @@ using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Lock;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
@@ -20,7 +22,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 
 namespace Content.Server.Storage.EntitySystems;
 

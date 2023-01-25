@@ -1,5 +1,4 @@
-using Content.Server.Lock;
-using Content.Server.Storage.Components;
+using Content.Shared.Lock;
 using Content.Shared.Security;
 using Robust.Server.GameObjects;
 
@@ -22,7 +21,7 @@ namespace Content.Server.Security.Systems
             ToggleBarrierDeploy(component, lockComponent.Locked);
         }
 
-        private void OnLockToggled(EntityUid uid, DeployableBarrierComponent component, LockToggledEvent args)
+        private void OnLockToggled(EntityUid uid, DeployableBarrierComponent component, ref LockToggledEvent args)
         {
             ToggleBarrierDeploy(component, args.Locked);
         }

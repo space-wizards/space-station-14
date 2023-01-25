@@ -31,6 +31,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Implants.Components;
+using Content.Shared.Lock;
 using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems

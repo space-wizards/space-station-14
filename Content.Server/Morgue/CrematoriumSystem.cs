@@ -14,6 +14,7 @@ using Content.Shared.Examine;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Morgue;
 
