@@ -80,6 +80,9 @@ public abstract partial class InventorySystem
         if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
             return;
 
+        if (!_gameTiming.ApplyingState)
+            return;
+
         var unequippedEvent = new DidUnequipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, unequippedEvent, true);
 
@@ -90,7 +93,10 @@ public abstract partial class InventorySystem
     private void OnEntInserted(EntityUid uid, InventoryComponent component, EntInsertedIntoContainerMessage args)
     {
         if(!TryGetSlot(uid, args.Container.ID, out var slotDef, inventory: component))
-           return;
+            return;
+
+        if (!_gameTiming.ApplyingState)
+            return;
 
         var equippedEvent = new DidEquipEvent(uid, args.Entity, slotDef);
         RaiseLocalEvent(uid, equippedEvent, true);
