@@ -173,7 +173,7 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Human
   - type: Body
     prototype: Human
@@ -364,7 +364,7 @@
         - MobMask
         layer:
         - MobLayer
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Human
     - type: Body
       prototype: Human
