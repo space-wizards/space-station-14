@@ -178,7 +178,7 @@ namespace Content.Server.Database
             // Corvax-TTS-Start
             var voice = profile.Voice;
             if (voice == String.Empty)
-                voice = SharedHumanoidSystem.DefaultSexVoice[sex];
+                voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
             // Corvax-TTS-End
 
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
