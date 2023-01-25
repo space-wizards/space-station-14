@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 
@@ -25,7 +26,16 @@ public sealed class BreakerFlip : StationEventSystem
     {
         base.Started();
 
-        var allApcs = EntityQuery<ApcComponent>().ToList();
+        if (StationSystem.Stations.Count == 0)
+            return;
+        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
+
+        var allApcs = EntityQuery<ApcComponent, TransformComponent>().ToList();
+        allApcs = allApcs.FindAll((ent) => 
+        {
+            var (apc, transform) = ent;
+            return apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation;
+        });
         var toDisable = Math.Min(RobustRandom.Next(3, 7), allApcs.Count);
         if (toDisable == 0)
             return;
@@ -34,7 +44,8 @@ public sealed class BreakerFlip : StationEventSystem
 
         for (var i = 0; i < toDisable; i++)
         {
-            _apcSystem.ApcToggleBreaker(allApcs[i].Owner, allApcs[i]);
+            var (apc, _) = allApcs[i];
+            _apcSystem.ApcToggleBreaker(apc.Owner, apc);
         }
     }
 }
