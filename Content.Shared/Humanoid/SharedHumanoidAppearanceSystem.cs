@@ -197,4 +197,26 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (sync)
             Dirty(humanoid);
     }
+
+    /// <summary>
+    ///     Set a humanoid mob's sex. This will not change their gender.
+    /// </summary>
+    /// <param name="uid">The humanoid mob's UID.</param>
+    /// <param name="sex">The sex to set the mob to.</param>
+    /// <param name="sync">Whether to immediately synchronize this to the humanoid mob, or not.</param>
+    /// <param name="humanoid">Humanoid component of the entity</param>
+    public void SetSex(EntityUid uid, Sex sex, bool sync = true, HumanoidAppearanceComponent? humanoid = null)
+    {
+        if (!Resolve(uid, ref humanoid) || humanoid.Sex == sex)
+            return;
+
+        var oldSex = humanoid.Sex;
+        humanoid.Sex = sex;
+        RaiseLocalEvent(uid, new SexChangedEvent(oldSex, sex));
+
+        if (sync)
+        {
+            Dirty(humanoid);
+        }
+    }
 }
