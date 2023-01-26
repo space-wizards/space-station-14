@@ -5,7 +5,7 @@ namespace Content.Client.Bed;
 
 public sealed class StasisBedSystem : VisualizerSystem<StasisBedVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, StasisBedVisualsComponent component, ref AppearanceChangeEvent args)
     {

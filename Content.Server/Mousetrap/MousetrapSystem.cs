@@ -15,7 +15,7 @@ namespace Content.Server.Mousetrap;
 public sealed class MousetrapSystem : EntitySystem
 {
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

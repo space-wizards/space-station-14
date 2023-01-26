@@ -28,7 +28,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateTimer = 3f;
 

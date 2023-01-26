@@ -5,7 +5,7 @@ namespace Content.Client.Toilet;
 
 public sealed class ToiletVisualsSystem : VisualizerSystem<ToiletComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ToiletComponent component, ref AppearanceChangeEvent args)
     {

@@ -6,8 +6,6 @@ namespace Content.Client.AME;
 
 public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControllerVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -29,7 +27,7 @@ public sealed class AMEControllerVisualizerSystem : VisualizerSystem<AMEControll
         base.OnAppearanceChange(uid, component, ref args);
 
         if (args.Sprite == null
-            || !_appearance.TryGetData<string>(uid, AMEControllerVisuals.DisplayState, out var state, args.Component))
+            || !AppearanceSystem.TryGetData<string>(uid, AMEControllerVisuals.DisplayState, out var state, args.Component))
         {
             return;
         }

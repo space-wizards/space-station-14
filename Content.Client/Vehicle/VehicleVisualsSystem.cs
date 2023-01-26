@@ -9,7 +9,7 @@ namespace Content.Client.Vehicle
     /// </summary>
     public sealed class VehicleVisualsSystem : VisualizerSystem<VehicleVisualsComponent>
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         protected override void OnAppearanceChange(EntityUid uid, VehicleVisualsComponent component, ref AppearanceChangeEvent args)
         {

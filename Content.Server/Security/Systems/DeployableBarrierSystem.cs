@@ -7,7 +7,7 @@ namespace Content.Server.Security.Systems
 {
     public sealed class DeployableBarrierSystem : EntitySystem
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

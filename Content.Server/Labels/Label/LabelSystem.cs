@@ -17,7 +17,7 @@ namespace Content.Server.Labels
     public sealed class LabelSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const string ContainerName = "paper_label";
 

@@ -6,7 +6,7 @@ namespace Content.Client.Botany;
 
 public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, PotencyVisualsComponent component, ref AppearanceChangeEvent args)
     {

@@ -6,7 +6,7 @@ namespace Content.Client.Revenant;
 
 public sealed class RevenantSystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

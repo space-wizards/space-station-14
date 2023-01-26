@@ -7,7 +7,7 @@ namespace Content.Server.AlertLevel;
 public sealed class AlertLevelDisplaySystem : EntitySystem
 {
     [Dependency] private readonly StationSystem _stationSystem = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

@@ -28,7 +28,7 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
         // This is done for each direction available.

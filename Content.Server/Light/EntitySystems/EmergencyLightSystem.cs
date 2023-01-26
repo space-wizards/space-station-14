@@ -19,7 +19,7 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

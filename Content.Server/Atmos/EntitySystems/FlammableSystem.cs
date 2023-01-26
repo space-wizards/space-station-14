@@ -35,7 +35,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly FixtureSystem _fixture = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const float MinimumFireStacks = -10f;
         public const float MaximumFireStacks = 20f;

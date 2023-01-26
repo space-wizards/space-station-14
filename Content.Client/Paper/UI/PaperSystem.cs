@@ -6,7 +6,7 @@ namespace Content.Client.Paper;
 
 public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualsComponent component, ref AppearanceChangeEvent args)
     {

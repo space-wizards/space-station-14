@@ -9,14 +9,12 @@ namespace Content.Client.Mech;
 /// </summary>
 public sealed class MechAssemblyVisualizerSystem : VisualizerSystem<MechAssemblyVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, MechAssemblyVisualsComponent component,
         ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
 
-        if (!_appearance.TryGetData(uid, MechAssemblyVisuals.State, out int stage, args.Component))
+        if (!AppearanceSystem.TryGetData(uid, MechAssemblyVisuals.State, out int stage, args.Component))
             return;
 
         var state = component.StatePrefix + stage;

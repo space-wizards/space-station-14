@@ -5,8 +5,6 @@ namespace Content.Client.Sticky.Visualizers;
 
 public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -26,7 +24,7 @@ public sealed class StickyVisualizerSystem : VisualizerSystem<StickyVisualizerCo
         if (args.Sprite == null)
             return;
 
-        if (!_appearance.TryGetData(uid, StickyVisuals.IsStuck, out bool isStuck, args.Component))
+        if (!AppearanceSystem.TryGetData(uid, StickyVisuals.IsStuck, out bool isStuck, args.Component))
             return;
 
         var drawDepth = isStuck ? component.StuckDrawDepth : component.DefaultDrawDepth;

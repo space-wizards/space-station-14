@@ -8,7 +8,7 @@ namespace Content.Server.Atmos.EntitySystems;
 public sealed class AtmosPlaqueSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

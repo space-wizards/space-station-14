@@ -9,7 +9,7 @@ namespace Content.Client.BarSign;
 public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

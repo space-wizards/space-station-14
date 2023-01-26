@@ -12,7 +12,6 @@ namespace Content.Client.Fluids;
 public sealed class PuddleVisualizerSystem : VisualizerSystem<PuddleVisualizerComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -46,10 +45,10 @@ public sealed class PuddleVisualizerSystem : VisualizerSystem<PuddleVisualizerCo
             return;
         }
 
-        if (!_appearance.TryGetData(uid, PuddleVisuals.VolumeScale, out float volumeScale, args.Component)
-            || !_appearance.TryGetData(uid, PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume, args.Component)
-            || !_appearance.TryGetData(uid, PuddleVisuals.SolutionColor, out Color solutionColor, args.Component)
-            || !_appearance.TryGetData(uid, PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating, args.Component))
+        if (!AppearanceSystem.TryGetData(uid, PuddleVisuals.VolumeScale, out float volumeScale, args.Component)
+            || !AppearanceSystem.TryGetData(uid, PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume, args.Component)
+            || !AppearanceSystem.TryGetData(uid, PuddleVisuals.SolutionColor, out Color solutionColor, args.Component)
+            || !AppearanceSystem.TryGetData(uid, PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating, args.Component))
         {
             return;
         }

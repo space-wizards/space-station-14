@@ -16,7 +16,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasValveSystem : EntitySystem
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

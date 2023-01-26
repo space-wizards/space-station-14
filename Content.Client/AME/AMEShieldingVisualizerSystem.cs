@@ -6,8 +6,6 @@ namespace Content.Client.AME;
 
 public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShieldingVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
     public override void Initialize()
     {
         base.Initialize();
@@ -31,7 +29,7 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData<string>(uid, AMEShieldVisuals.Core, out var core, args.Component))
+        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.Core, out var core, args.Component))
         {
             if (core == "isCore")
             {
@@ -45,7 +43,7 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
             }
         }
 
-        if (_appearance.TryGetData<string>(uid, AMEShieldVisuals.CoreState, out var coreState, args.Component))
+        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.CoreState, out var coreState, args.Component))
         {
             switch (coreState)
             {

@@ -15,7 +15,7 @@ namespace Content.Server.Cabinet
     {
         [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

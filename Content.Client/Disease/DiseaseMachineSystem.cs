@@ -9,7 +9,7 @@ namespace Content.Client.Disease
     /// </summary>
     public sealed class DiseaseMachineSystem : VisualizerSystem<DiseaseMachineVisualsComponent>
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         protected override void OnAppearanceChange(EntityUid uid, DiseaseMachineVisualsComponent component, ref AppearanceChangeEvent args)
         {

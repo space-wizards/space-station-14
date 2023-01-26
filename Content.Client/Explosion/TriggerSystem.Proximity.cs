@@ -9,7 +9,7 @@ namespace Content.Client.Explosion;
 public sealed partial class TriggerSystem
 {
     [Dependency] private readonly AnimationPlayerSystem _player = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /*
      * Currently all of the appearance stuff is hardcoded for portable flashers

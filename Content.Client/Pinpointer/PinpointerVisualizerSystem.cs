@@ -7,8 +7,6 @@ namespace Content.Client.Pinpointer
     [UsedImplicitly]
     public sealed class PinpointerVisualizerSystem : VisualizerSystem<PinpointerComponent>
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-
         protected override void OnAppearanceChange(EntityUid uid, PinpointerComponent component, ref AppearanceChangeEvent args)
         {
             base.OnAppearanceChange(uid, component, ref args);
@@ -17,7 +15,7 @@ namespace Content.Client.Pinpointer
                 return;
 
             // check if pinpointer screen is active
-            if (!_appearance.TryGetData(uid, PinpointerVisuals.IsActive, out bool isActive, args.Component) || !isActive)
+            if (!AppearanceSystem.TryGetData(uid, PinpointerVisuals.IsActive, out bool isActive, args.Component) || !isActive)
             {
                 sprite.LayerSetVisible(PinpointerLayers.Screen, false);
                 return;
@@ -26,8 +24,8 @@ namespace Content.Client.Pinpointer
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
 
             // check distance and direction to target
-            if (!_appearance.TryGetData(uid, PinpointerVisuals.TargetDistance, out Distance dis, args.Component) ||
-                !_appearance.TryGetData(uid, PinpointerVisuals.ArrowAngle, out Angle angle, args.Component))
+            if (!AppearanceSystem.TryGetData(uid, PinpointerVisuals.TargetDistance, out Distance dis, args.Component) ||
+                !AppearanceSystem.TryGetData(uid, PinpointerVisuals.ArrowAngle, out Angle angle, args.Component))
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                 sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);

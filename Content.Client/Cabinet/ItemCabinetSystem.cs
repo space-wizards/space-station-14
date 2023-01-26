@@ -5,7 +5,7 @@ namespace Content.Client.Cabinet;
 
 public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, ref AppearanceChangeEvent args)
     {

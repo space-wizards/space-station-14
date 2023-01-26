@@ -10,7 +10,7 @@ namespace Content.Client.Visualizer
     [UsedImplicitly]
     public sealed class RollerbedVisualizer : AppearanceVisualizer
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         [DataField("key")]
         private string _key = default!;

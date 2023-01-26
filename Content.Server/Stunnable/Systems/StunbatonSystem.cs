@@ -18,7 +18,7 @@ namespace Content.Server.Stunnable.Systems
     public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

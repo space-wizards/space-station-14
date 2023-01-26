@@ -8,7 +8,7 @@ namespace Content.Client.Mech;
 /// <inheritdoc/>
 public sealed class MechSystem : SharedMechSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

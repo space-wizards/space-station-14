@@ -10,7 +10,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class VisualizerDataInt : IGraphAction, ISerializationHooks
     {
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         [DataField("key")] public string Key { get; private set; } = string.Empty;
         [DataField("data")] public int Data { get; private set; } = 0;

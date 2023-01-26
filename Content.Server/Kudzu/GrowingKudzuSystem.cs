@@ -7,7 +7,7 @@ namespace Content.Server.Kudzu;
 public sealed class GrowingKudzuSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private float _accumulatedFrameTime = 0.0f;
 

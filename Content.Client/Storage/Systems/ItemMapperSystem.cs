@@ -8,7 +8,7 @@ namespace Content.Client.Storage.Systems;
 
 public sealed class ItemMapperSystem : SharedItemMapperSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
