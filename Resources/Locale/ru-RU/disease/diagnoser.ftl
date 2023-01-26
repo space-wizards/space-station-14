@@ -10,7 +10,7 @@ diagnoser-disease-report-cureresist-none = Устойчивость к лека�
 diagnoser-disease-report-cureresist-low = Устойчивость к лекарствам: [color=yellow]Низкая[/color]
 diagnoser-disease-report-cureresist-medium = Устойчивость к лекарствам: [color=orange]Средняя[/color]
 diagnoser-disease-report-cureresist-high = Устойчивость к лекарствам: [color=red]Высокая[/color]
-diagnoser-cure-none = Эта болезнь не имеет определённых методов лечения.
+diagnoser-no-cures = Эта болезнь не имеет определённых методов лечения.
 diagnoser-cure-has = Эта болезнь лечится следующим образом:
 diagnoser-cure-bedrest = Отдых в постели в течение { $time } секунд, или { $sleep } секунд сна..
 diagnoser-cure-reagent = Употребление не менее { $units }ед. { $reagent }.
