@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -41,6 +42,24 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         component.PermanentlyHidden = new(state.PermanentlyHidden);
 
         component.CustomBaseLayers = state.CustomBaseLayers.ShallowClone();
+
+        // Caching hair and facial hair colors from their markings
+        if(!_markingManager.MustMatchSkin(state.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+        {
+            if (state.Markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+                hairMarkings.Count > 0)
+            component.CachedHairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else component.CachedHairColor = state.SkinColor;
+        
+        if(!_markingManager.MustMatchSkin(state.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
+        {
+            if (state.Markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+                facialHairMarkings.Count > 0)
+            component.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else component.CachedFacialHairColor = state.SkinColor;
+
         UpdateLayers(component, sprite);
 
         ApplyMarkingSet(uid, state.Markings, component, sprite);
@@ -132,12 +151,6 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var markings = new MarkingSet(profile.Appearance.Markings, speciesPrototype.MarkingPoints, _markingManager,
             _prototypeManager);
-        markings.EnsureDefault(
-            profile.Appearance.SkinColor, 
-            profile.Appearance.EyeColor, 
-            profile.Appearance.HairColor, 
-            profile.Appearance.FacialHairColor, 
-            _markingManager);
 
         // legacy: remove in the future?
         markings.RemoveCategory(MarkingCategories.Hair);
@@ -151,6 +164,41 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         markings.AddBack(MarkingCategories.FacialHair, facialHair);
 
         markings.FilterSpecies(profile.Species, _markingManager, _prototypeManager);
+
+        // Caching hair and facial hair colors from their markings
+        Color? hairColor = null;
+        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
+        {
+            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+                hairMarkings.Count > 0)
+            hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else hairColor = profile.Appearance.SkinColor;
+        
+        Color? facialHairColor = null;
+        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
+        {
+            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+                facialHairMarkings.Count > 0)
+            facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+        }
+        else facialHairColor = profile.Appearance.SkinColor;
+        
+        markings.EnsureDefault(
+            profile.Appearance.SkinColor, 
+            profile.Appearance.EyeColor, 
+            hairColor, 
+            facialHairColor, 
+            _markingManager);
+        
+        /*
+        markings.EnsureDefault(
+            profile.Appearance.SkinColor, 
+            profile.Appearance.EyeColor, 
+            profile.Appearance.HairColor, 
+            profile.Appearance.FacialHairColor, 
+            _markingManager);
+        */
 
         DebugTools.Assert(uid.IsClientSide());
 

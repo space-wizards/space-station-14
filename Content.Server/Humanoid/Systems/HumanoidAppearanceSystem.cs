@@ -89,8 +89,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
         }
 
-        EnsureDefaultMarkings(uid, humanoid);
-
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
         {
@@ -115,6 +113,9 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
             humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
         }
         else humanoid.CachedFacialHairColor = profile.Appearance.SkinColor;
+
+        EnsureDefaultMarkings(uid, humanoid);
+
         Dirty(humanoid);
     }
 

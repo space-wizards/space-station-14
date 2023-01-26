@@ -73,9 +73,11 @@ public sealed class MagicMirrorSystem : EntitySystem
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;
+                humanoid.CachedHairColor = message.Colors.FirstOrDefault();
                 break;
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
+                humanoid.CachedFacialHairColor = message.Colors.FirstOrDefault();
                 break;
             default:
                 return;
@@ -100,9 +102,11 @@ public sealed class MagicMirrorSystem : EntitySystem
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;
+                humanoid.CachedHairColor = null;
                 break;
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
+                humanoid.CachedFacialHairColor = null;
                 break;
             default:
                 return;
@@ -126,9 +130,11 @@ public sealed class MagicMirrorSystem : EntitySystem
         {
             case MagicMirrorCategory.Hair:
                 category = MarkingCategories.Hair;
+                humanoid.CachedHairColor = Color.Black;
                 break;
             case MagicMirrorCategory.FacialHair:
                 category = MarkingCategories.FacialHair;
+                humanoid.CachedFacialHairColor = Color.Black;
                 break;
             default:
                 return;

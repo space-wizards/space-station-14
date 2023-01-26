@@ -347,8 +347,8 @@ namespace Content.Client.Preferences.UI
                     return;
                 Profile = Profile.WithCharacterAppearance(
                     Profile.Appearance.WithEyeColor(newColor));
+                CMarkings.CurrentEyeColor = Profile.Appearance.EyeColor;
                 IsDirty = true;
-                UpdateEyePickers();
             };
 
             #endregion Eyes
@@ -753,8 +753,8 @@ namespace Content.Client.Preferences.UI
             Profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
             CharacterSlot = _preferencesManager.Preferences.SelectedCharacterIndex;
 
-            _needUpdatePreview = true;
             UpdateControls();
+            _needUpdatePreview = true;
         }
 
         private void SetAge(int newAge)
@@ -1110,13 +1110,13 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
+            Logger.DebugS("prof_edit", "Update preview");
             EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
 
         public void UpdateControls()
         {
-            Logger.DebugS("prf_edit", "Updated controls");
             if (Profile is null) return;
             UpdateNameEdit();
             UpdateFlavorTextEdit();
