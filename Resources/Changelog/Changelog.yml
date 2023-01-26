@@ -1,10 +1,4 @@
 Entries:
-- author: corentt
-  changes:
-  - {message: 'Selling prices of SMES, substations and power-cells now depends on
-      their filling level', type: Add}
-  id: 2455
-  time: '2022-10-15T21:10:48.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
@@ -2935,3 +2929,8 @@ Entries:
       bullets easily between each other and actually work, type: Tweak}
   id: 2954
   time: '2023-01-26T00:49:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Two new turret types added for misc use., type: Add}
+  id: 2955
+  time: '2023-01-26T04:03:31.0000000+00:00'
