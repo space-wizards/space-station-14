@@ -119,7 +119,7 @@ entities:
         tiles: WQAAAFkAAAAdAAADFgAAAxYAAANZAAAAPwAAAz8AAAM/AAAAPwAAAw8AAABZAAAAVgAAA1YAAANWAAADWQAAAFkAAABZAAAAHQAAAiQAAAAWAAADFgAAAT8AAAI/AAACPwAAAz8AAAEPAAAAWQAAAFYAAAFWAAADVgAAAFkAAABZAAAAWQAAAB0AAAIWAAACFgAAAVkAAAA/AAADPwAAAz8AAAE/AAADPwAAAVkAAABWAAAAVgAAAlYAAABZAAAAPwAAA1kAAABZAAAAFgAAA1kAAABZAAAAWQAAAFkAAAA/AAACWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAA/AAABPwAAAD8AAAE/AAACPwAAAj8AAAA/AAAAPwAAAj8AAAI/AAABPwAAAT8AAAA/AAACPwAAAj8AAAM/AAADPwAAAD8AAAE/AAADPwAAAj8AAAM/AAABPwAAAD8AAAI/AAADPwAAAj8AAAE/AAADPwAAAz8AAAE/AAABPwAAAD8AAAA/AAAAPwAAAj8AAAI/AAACPwAAAj8AAAI/AAAAPwAAAT8AAAI/AAABPwAAAz8AAAA/AAABPwAAA1kAAABZAAAAPwAAAD8AAAE/AAADWQAAAFkAAABZAAAAWQAAAFkAAAA/AAABPwAAAFkAAABZAAAAWQAAAD8AAAE/AAADWQAAAFkAAAA/AAADPwAAAT8AAANZAAAAPwAAA1kAAABZAAAAWQAAAFkAAABZAAAAPwAAAz8AAAA/AAABWQAAAD8AAAM/AAADPwAAAT8AAANZAAAAPwAAAT8AAAJZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAM/AAACPwAAA1kAAAA/AAABPwAAAD8AAAA/AAABWQAAAFkAAABZAAAAWQAAAFkAAABJAAAASQAAAFkAAAA/AAABPwAAAj8AAAJZAAAAWQAAAD8AAAE/AAAAWQAAAD8AAAM/AAABWQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAJZAAAAPwAAAT8AAABZAAAAWQAAAD8AAAA/AAACWQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAD8AAAFZAAAAPwAAAj8AAAI/AAADWQAAAFkAAABZAAAAWQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAAA/AAACPwAAAj8AAAA/AAADWQAAAFkAAAA/AAACWQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAABYAAAMWAAADWQAAAFkAAAA/AAACPwAAAD8AAAJZAAAAWQAAAFkAAAA/AAADWQAAAFkAAABJAAAAWQAAAFkAAAAWAAABFgAAAw==
       0,-1:
         ind: 0,-1
-        tiles: NQAAAFkAAABZAAAABAAAAAQAAAIEAAAABAAAATYAAAA2AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAAFkAAAAEAAACBAAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAABZAAAANQAAADUAAABZAAAABAAAAQQAAAI2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAWQAAADUAAABZAAAAWQAAAAQAAABZAAAABAAAAjYAAAA2AAAANgAAADYAAAA2AAAAWQAAAFkAAABZAAAAWQAAAAsAAABZAAAACwAAAFkAAAALAAAACwAAAFkAAAAEAAABNgAAADYAAAA2AAAANgAAAFkAAABZAAAAPwAAAVkAAAALAAAACwAAAFkAAABZAAAACwAAAAsAAABZAAAABAAAAgQAAAAEAAACBAAAAAQAAAJZAAAAPwAAA1kAAAA/AAADCwAAAFkAAAALAAAACwAAAAsAAABZAAAAWQAAAAQAAAAEAAAABAAAAgQAAAIEAAABWQAAAFkAAAA/AAABPwAAAwsAAAALAAAACwAAAFkAAAALAAAACwAAAFkAAAAEAAAABAAAAQQAAAJZAAAAWQAAAFkAAAA/AAABPwAAA1kAAABZAAAAWQAAAFkAAABZAAAABAAAAVkAAABZAAAABAAAAgQAAAAEAAAAWQAAAFkAAABZAAAAPwAAA1kAAAA/AAADWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAAAEAAACWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAANZAAAASQAAAFkAAABZAAAAWQAAAAQAAAAEAAAABAAAAQQAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAEkAAABJAAAAWQAAAFkAAABZAAAAWQAAAAQAAAFZAAAAWQAAAFkAAABZAAAASQAAAEkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAA/AAABWQAAAFkAAABZAAAAWQAAAFkAAAAWAAABFgAAAFkAAABZAAAAWQAAAFYAAANWAAACVgAAA1YAAAI/AAAAPwAAAj8AAAAvAAAALwAAAC8AAAAWAAACFgAAAhYAAAFZAAAAWQAAAFkAAABWAAADVgAAAVYAAABZAAAAPwAAAz8AAAE/AAADLwAAAC8AAAAvAAAAWQAAABYAAAAWAAABWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAI/AAACPwAAAi8AAAAvAAAALwAAAA==
+        tiles: NQAAAFkAAABZAAAABAAAAAQAAAIEAAAABAAAATYAAAA2AAAANgAAADYAAAA2AAAAAAAAAAAAAAAAAAAAAAAAADUAAAA1AAAANQAAAFkAAAAEAAACBAAAADYAAAA2AAAANgAAADYAAAA2AAAANgAAADYAAAAAAAAAAAAAAAAAAABZAAAANQAAADUAAABZAAAABAAAAQQAAAI2AAAANgAAADYAAAA2AAAANgAAADYAAAA2AAAABAAAAAAAAAAAAAAAWQAAADUAAABZAAAAWQAAAFkAAABZAAAAWQAAADYAAAA2AAAANgAAADYAAAA2AAAABAAAAFkAAABZAAAAWQAAAAsAAABZAAAACwAAAFkAAAALAAAACwAAAFkAAAAEAAABNgAAADYAAAA2AAAANgAAAFkAAABZAAAAPwAAAVkAAAALAAAACwAAAFkAAABZAAAACwAAAAsAAABZAAAABAAAAgQAAAAEAAACBAAAAAQAAAJZAAAAPwAAA1kAAAA/AAADCwAAAFkAAAALAAAACwAAAAsAAABZAAAAWQAAAAQAAAAEAAAABAAAAgQAAAIEAAABWQAAAFkAAAA/AAABPwAAAwsAAAALAAAACwAAAFkAAAALAAAACwAAAFkAAAAEAAAABAAAAQQAAAJZAAAAWQAAAFkAAAA/AAABPwAAA1kAAABZAAAAWQAAAFkAAABZAAAABAAAAVkAAABZAAAABAAAAgQAAAAEAAAAWQAAAFkAAABZAAAAPwAAA1kAAAA/AAADWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAAAEAAACWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAANZAAAASQAAAFkAAABZAAAAWQAAAAQAAAAEAAAABAAAAQQAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAEkAAABJAAAAWQAAAFkAAABZAAAAWQAAAAQAAAFZAAAAWQAAAFkAAABZAAAASQAAAEkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAA/AAABWQAAAFkAAABZAAAAWQAAAFkAAAAWAAABFgAAAFkAAABZAAAAWQAAAFYAAANWAAACVgAAA1YAAAI/AAAAPwAAAj8AAAAvAAAALwAAAC8AAAAWAAACFgAAAhYAAAFZAAAAWQAAAFkAAABWAAADVgAAAVYAAABZAAAAPwAAAz8AAAE/AAADLwAAAC8AAAAvAAAAWQAAABYAAAAWAAABWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAAI/AAACPwAAAi8AAAAvAAAALwAAAA==
       0,0:
         ind: 0,0
         tiles: DwAAADgAAAA4AAAAWQAAAFkAAABZAAAAWQAAAFYAAAFWAAADVgAAAj8AAAE/AAADWQAAAC8AAAAvAAAALwAAAA8AAAA4AAAAOAAAAFkAAABZAAAAWQAAAFkAAABWAAACVgAAAFkAAAA/AAAAPwAAAFkAAAAvAAAALwAAAC8AAAAPAAAAOAAAADgAAABZAAAAWQAAAFkAAABZAAAAVgAAAVYAAANZAAAAPwAAAz8AAAFZAAAALwAAAC8AAAAvAAAAPwAAAD8AAAM/AAADWQAAAD8AAAE/AAACWQAAAFkAAABZAAAAWQAAAD8AAAE/AAADWQAAAC8AAAAvAAAALwAAAD8AAAE/AAABPwAAAD8AAAA/AAAAPwAAAT8AAAE/AAACPwAAAz8AAAM/AAACPwAAAFkAAABZAAAAWQAAAFkAAAA/AAACPwAAAD8AAAI/AAABPwAAAT8AAAA/AAACPwAAAlkAAABZAAAAPwAAAj8AAAM/AAADPwAAAj8AAAI/AAAAPwAAAj8AAAI/AAABPwAAAj8AAAE/AAABPwAAAlkAAABZAAAAWQAAAFkAAAA/AAABPwAAAj8AAAM/AAAAPwAAAT8AAAM/AAABWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAAA/AAABPwAAAVkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAASQAAAEkAAABZAAAASQAAAEkAAABZAAAAPwAAAj8AAAFZAAAAWQAAAEkAAABJAAAASQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABJAAAAWQAAAD8AAAE/AAACWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABJAAAASQAAAFkAAABZAAAAWQAAAFkAAABJAAAAWQAAAFkAAAAWAAACFgAAAxYAAAAWAAADFgAAABYAAANZAAAAWQAAAFkAAABZAAAASQAAAEkAAABZAAAASQAAAEkAAABZAAAAFgAAAxYAAAIWAAABFgAAARYAAAEWAAADWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAABYAAAAWAAAAFgAAARYAAAMWAAACFgAAA1kAAABZAAAASQAAAFkAAAAWAAACFgAAAhYAAAEWAAADFgAAAVkAAABMAAADTAAAAUwAAANMAAAATAAAAkwAAAFZAAAAWQAAAFkAAABZAAAAFgAAABYAAAAWAAACFgAAAhYAAAJZAAAATAAAAEwAAAMkAAAAJAAAAEwAAAJMAAABWQAAAFkAAABJAAAAWQAAAA==
@@ -128,7 +128,7 @@ entities:
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAABAAAAAQAAAEEAAACBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAAWQAAAAQAAAIEAAAAAAAAAAQAAAIEAAACWAAAAFgAAABYAAAAWAAAAAQAAAIEAAAABAAAAAQAAAEEAAACWQAAAFkAAAAEAAACBAAAAAQAAAAEAAABBAAAAg==
       0,-2:
         ind: 0,-2
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAgQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAAQAAAIEAAABBAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAlkAAABZAAAABAAAAAQAAAIEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAgQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAAQAAAIEAAABBAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAlkAAABZAAAABAAAAAQAAAIEAAACBAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       -2,-1:
         ind: -2,-1
         tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAAAAAAAAAAAAAAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAIQAAACEAAABZAAAAWQAAAAsAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAAA/AAADPwAAAVkAAABZAAAAIQAAAFkAAAAhAAAAWQAAAAsAAABZAAAAWQAAAFkAAAAfAAADHwAAAx8AAAJZAAAAWQAAAD8AAAA/AAABWQAAAFkAAAAhAAAAWQAAAFkAAAALAAAACwAAAFkAAABZAAAAHwAAAx8AAAIfAAADWQAAAD8AAAE/AAAAPwAAAlkAAAACAAAAWQAAAAIAAABZAAAACwAAAFkAAAA/AAABWQAAAB8AAAIfAAADHwAAAVkAAABZAAAAPwAAA1kAAABZAAAAAgAAAAIAAABZAAAAWQAAAFkAAAALAAAAPwAAAlkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAABZAAAAWQAAAFkAAAACAAAAWQAAAFkAAABZAAAAWQAAAD8AAAJZAAAAWQAAAEkAAABJAAAAWQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABJAAAASQAAAFkAAAA/AAADWQAAAEkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAASQAAAEkAAABJAAAAWQAAAFkAAABJAAAAPwAAAlkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAD8AAANZAAAASQAAAFkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABWAAACVgAAAlYAAAJZAAAAWQAAAEkAAABZAAAASQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAVgAAAFYAAAFWAAAAVgAAAFkAAABZAAAAWQAAAFkAAABJAAAAWQAAAFkAAABZAAAAWQAAAFkAAABJAAAAWQAAAFYAAABWAAAAVgAAAFYAAAFZAAAAWQAAAEkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABWAAADVgAAAlYAAANWAAADWQAAAFkAAABZAAAAWQAAADcAAAA3AAAANwAAADcAAABZAAAASQAAAFkAAABZAAAAVgAAAlYAAABWAAADWQAAAFkAAABZAAAAWQAAAFkAAAA3AAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAFkAAABZAAAAWQAAAA==
@@ -45186,6 +45186,10 @@ entities:
       -26,57: 2
       -26,58: 2
       -25,58: 2
+      13,-14: 2
+      7,-17: 2
+      8,-17: 2
+      9,-17: 2
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -45205,8 +45209,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 18.405577
-      - 69.24003
+      - 14.664915
+      - 55.168015
       - 0
       - 0
       - 0
@@ -46186,7 +46190,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 149
-  type: AsteroidRockMining
+  type: WallReinforced
   components:
   - pos: 4.5,-12.5
     parent: 1
@@ -46301,9 +46305,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 168
-  type: AsteroidRockMining
+  type: WallReinforced
   components:
-  - pos: 6.5,-12.5
+  - pos: 6.5,-11.5
     parent: 1
     type: Transform
 - uid: 169
@@ -46471,7 +46475,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 196
-  type: WallSolidRust
+  type: WallReinforced
   components:
   - pos: 6.5,-9.5
     parent: 1
@@ -46495,15 +46499,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 200
-  type: WallSolid
+  type: AsteroidRock
   components:
-  - pos: 5.5,-12.5
+  - pos: 7.5,-9.5
     parent: 1
     type: Transform
 - uid: 201
-  type: ReinforcedGirder
+  type: WallReinforced
   components:
-  - pos: 6.5,-11.5
+  - pos: 6.5,-12.5
     parent: 1
     type: Transform
 - uid: 202
@@ -46537,13 +46541,13 @@ entities:
     parent: 1
     type: Transform
 - uid: 207
-  type: AsteroidRock
+  type: WallReinforced
   components:
-  - pos: 7.5,-9.5
+  - pos: 5.5,-12.5
     parent: 1
     type: Transform
 - uid: 208
-  type: WallSolid
+  type: ReinforcedGirder
   components:
   - pos: 6.5,-7.5
     parent: 1
@@ -48407,10 +48411,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 493
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 9.5,-12.5
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-14.5
     parent: 1
     type: Transform
 - uid: 494
@@ -48452,10 +48456,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 500
-  type: AsteroidRockMining
+  type: PlasmaDoor
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 10.5,-12.5
+  - pos: 8.5,-15.5
     parent: 1
     type: Transform
 - uid: 501
@@ -48597,7 +48600,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 524
-  type: WallReinforced
+  type: WallVaultRock
   components:
   - pos: 12.5,-12.5
     parent: 1
@@ -55344,16 +55347,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 1595
-  type: DisposalTrunk
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 13.5,-11.5
+  - pos: 13.5,-11.5
     parent: 1
     type: Transform
 - uid: 1596
-  type: DisposalUnit
+  type: SignSecureMedRed
   components:
-  - pos: 13.5,-11.5
+  - pos: 12.5,-12.5
     parent: 1
     type: Transform
 - uid: 1597
@@ -57204,14 +57206,11 @@ entities:
     parent: 1
     type: Transform
 - uid: 1868
-  type: PoweredSmallLight
+  type: LandMineExplosive
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -11.5,-13.5
+  - pos: 9.512065,-14.502192
     parent: 1
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 1869
   type: Grille
   components:
@@ -57470,10 +57469,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 1911
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 7.5,-13.5
+  - pos: 10.5,-14.5
     parent: 1
     type: Transform
 - uid: 1912
@@ -57489,17 +57487,16 @@ entities:
     parent: 1
     type: Transform
 - uid: 1914
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 8.5,-13.5
+  - pos: 9.5,-14.5
     parent: 1
     type: Transform
 - uid: 1915
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 11.5,-12.5
+  - rot: 3.141592653589793 rad
+    pos: 10.5,-12.5
     parent: 1
     type: Transform
 - uid: 1916
@@ -87745,15 +87742,6 @@ entities:
   - pos: -14.534092,66.507454
     parent: 1
     type: Transform
-  - action:
-      checkCanInteract: False
-      icon: Interface/Actions/scream.png
-      name: action-name-scream
-      description: AAAAAAAAAAAAAAAAAAAAAAAAA
-      keywords: []
-      useDelay: 10
-      event: !type:ScreamActionEvent {}
-    type: Vocal
   - rules: >-
       You don't remember any of your previous life unless an administrator tells you otherwise.
 
@@ -87766,6 +87754,11 @@ entities:
   - type: Mind
   - type: InputMover
   - type: MobMover
+  - type: MovementAlwaysTouching
+  - type: MovementIgnoreGravity
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
 - uid: 6646
   type: TableWood
   components:
@@ -87869,10 +87862,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 6662
-  type: WallSolid
+  type: WallReinforced
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -25.5,56.5
+  - pos: -25.5,56.5
     parent: 1
     type: Transform
 - uid: 6663
@@ -105466,15 +105458,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 9308
-  type: WallReinforced
+  type: CableHV
   components:
-  - pos: -69.5,24.5
+  - pos: -69.5,26.5
     parent: 1
     type: Transform
 - uid: 9309
-  type: ReinforcedWindow
+  type: CableHV
   components:
-  - pos: -70.5,24.5
+  - pos: -69.5,28.5
     parent: 1
     type: Transform
 - uid: 9310
@@ -105646,10 +105638,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 9336
-  type: ChairFolding
+  type: SubstationBasic
   components:
-  - rot: 3.141592653589793 rad
-    pos: -71.5,25.5
+  - pos: -71.5,25.5
     parent: 1
     type: Transform
 - uid: 9337
@@ -107403,9 +107394,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 9613
-  type: CableHV
+  type: WallReinforced
   components:
-  - pos: -70.5,24.5
+  - pos: -70.5,27.5
     parent: 1
     type: Transform
 - uid: 9614
@@ -108913,7 +108904,7 @@ entities:
 - uid: 9854
   type: CableHV
   components:
-  - pos: -70.5,23.5
+  - pos: -69.5,23.5
     parent: 1
     type: Transform
 - uid: 9855
@@ -108941,10 +108932,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 9859
-  type: Grille
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -70.5,24.5
+  - pos: -69.5,27.5
     parent: 1
     type: Transform
 - uid: 9860
@@ -109433,10 +109423,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 9940
-  type: MaintenanceFluffSpawner
+  type: ChairFolding
   components:
-  - rot: 3.141592653589793 rad
-    pos: -71.5,25.5
+  - rot: -1.5707963267948966 rad
+    pos: -69.5,26.5
     parent: 1
     type: Transform
 - uid: 9941
@@ -110830,9 +110820,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 10160
-  type: CableHV
+  type: Grille
   components:
-  - pos: -70.5,25.5
+  - pos: -69.5,27.5
     parent: 1
     type: Transform
 - uid: 10161
@@ -110854,9 +110844,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 10164
-  type: CableHV
+  type: Grille
   components:
-  - pos: -70.5,27.5
+  - pos: -69.5,24.5
     parent: 1
     type: Transform
 - uid: 10165
@@ -110905,10 +110895,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 10172
-  type: WallReinforced
+  type: ReinforcedWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -69.5,27.5
+  - pos: -69.5,24.5
     parent: 1
     type: Transform
 - uid: 10173
@@ -110921,7 +110910,7 @@ entities:
 - uid: 10174
   type: CableHV
   components:
-  - pos: -70.5,22.5
+  - pos: -69.5,22.5
     parent: 1
     type: Transform
 - uid: 10175
@@ -110958,7 +110947,7 @@ entities:
 - uid: 10180
   type: CableHV
   components:
-  - pos: -70.5,26.5
+  - pos: -69.5,24.5
     parent: 1
     type: Transform
 - uid: 10181
@@ -111343,16 +111332,15 @@ entities:
   - color: '#0055CCFF'
     type: AtmosPipeColor
 - uid: 10242
-  type: Grille
+  type: ReinforcedWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -70.5,27.5
+  - pos: -69.5,27.5
     parent: 1
     type: Transform
 - uid: 10243
-  type: SubstationBasic
+  type: WallReinforced
   components:
-  - pos: -69.5,26.5
+  - pos: -70.5,24.5
     parent: 1
     type: Transform
 - uid: 10244
@@ -111412,10 +111400,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 10252
-  type: ReinforcedWindow
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -70.5,27.5
+  - pos: -69.5,25.5
     parent: 1
     type: Transform
 - uid: 10253
@@ -143655,7 +143642,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 14409
-  type: RandomSpawner
+  type: MaintenanceFluffSpawner
   components:
   - pos: -69.5,26.5
     parent: 1
@@ -146408,43 +146395,41 @@ entities:
     parent: 1
     type: Transform
 - uid: 14821
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 11.5,-13.5
+  - rot: 3.141592653589793 rad
+    pos: 11.5,-12.5
     parent: 1
     type: Transform
 - uid: 14822
-  type: ReinforcedGirder
+  type: WallVaultRock
   components:
   - pos: 12.5,-14.5
     parent: 1
     type: Transform
 - uid: 14823
-  type: AsteroidRockMining
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 12.5,-13.5
+  - rot: 3.141592653589793 rad
+    pos: 9.5,-12.5
     parent: 1
     type: Transform
 - uid: 14824
   type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 8.5,-12.5
+  - pos: 10.5,-13.5
     parent: 1
     type: Transform
 - uid: 14825
   type: PlasmaReinforcedWindowDirectional
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,-12.5
+  - pos: 11.5,-14.5
     parent: 1
     type: Transform
 - uid: 14826
-  type: PlasmaReinforcedWindowDirectional
+  type: LandMineExplosive
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 8.5,-12.5
+  - pos: 10.432268,-12.50893
     parent: 1
     type: Transform
 - uid: 14827
@@ -146471,7 +146456,8 @@ entities:
 - uid: 14830
   type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 8.5,-12.5
+  - rot: 3.141592653589793 rad
+    pos: 8.5,-12.5
     parent: 1
     type: Transform
 - uid: 14831
@@ -146499,9 +146485,12 @@ entities:
     parent: 1
     type: Transform
 - uid: 14835
-  type: LandMineExplosive
+  type: WeaponTurretHostile
   components:
-  - pos: 9.51108,-13.540281
+  - flags: SessionSpecific
+    type: MetaData
+  - rot: 1.5707963267948966 rad
+    pos: 8.5,-12.5
     parent: 1
     type: Transform
 - uid: 14836
@@ -146517,35 +146506,25 @@ entities:
     parent: 1
     type: Transform
 - uid: 14838
-  type: PlasmaDoor
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 8.5,-15.5
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,-14.5
     parent: 1
     type: Transform
 - uid: 14839
-  type: DisposalUnit
+  type: Barricade
   components:
-  - desc: A "secure" vault container. What could be inside?
-    name: vault container
-    type: MetaData
-  - pos: 8.5,-12.5
+  - pos: 8.5,-14.5
     parent: 1
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents:
-        - 14840
-    type: ContainerContainer
-  - type: Timer
 - uid: 14840
-  type: ClothingOuterHardsuitCBURN
+  type: SignDanger
   components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 14839
+  - rot: 1.5707963267948966 rad
+    pos: 7.5,-12.5
+    parent: 1
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 14841
   type: SignSecureMedRed
   components:
@@ -146553,9 +146532,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 14842
-  type: SignSecureMedRed
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 7.5,-12.5
+  - rot: -1.5707963267948966 rad
+    pos: 10.5,-13.5
     parent: 1
     type: Transform
 - uid: 14843
@@ -146566,57 +146546,63 @@ entities:
     parent: 1
     type: Transform
 - uid: 14844
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 8.41733,-14.555906
+  - rot: 1.5707963267948966 rad
+    pos: 10.5,-13.5
     parent: 1
     type: Transform
 - uid: 14845
-  type: HarpInstrument
+  type: AsteroidRockMining
+  components:
+  - pos: 6.5,-15.5
+    parent: 1
+    type: Transform
+- uid: 14846
+  type: PlasmaReinforcedWindowDirectional
   components:
   - pos: 7.5,-14.5
     parent: 1
     type: Transform
-- uid: 14846
-  type: LandMineExplosive
-  components:
-  - pos: 9.026705,-14.196531
-    parent: 1
-    type: Transform
 - uid: 14847
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 9.69858,-14.712156
+  - rot: -1.5707963267948966 rad
+    pos: 7.5,-13.5
     parent: 1
     type: Transform
 - uid: 14848
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 10.089205,-14.040281
+  - rot: 3.141592653589793 rad
+    pos: 7.5,-13.5
     parent: 1
     type: Transform
 - uid: 14849
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 10.245455,-13.368406
+  - rot: 3.141592653589793 rad
+    pos: 10.5,-13.5
     parent: 1
     type: Transform
 - uid: 14850
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 10.91733,-14.196531
+  - rot: -1.5707963267948966 rad
+    pos: 8.5,-12.5
     parent: 1
     type: Transform
 - uid: 14851
-  type: LandMineExplosive
+  type: PlasmaReinforcedWindowDirectional
   components:
-  - pos: 11.589205,-14.665281
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-12.5
     parent: 1
     type: Transform
 - uid: 14852
   type: LandMineExplosive
   components:
-  - pos: 10.714205,-14.759031
+  - pos: 11.463518,-13.555805
     parent: 1
     type: Transform
 - uid: 14853
@@ -147327,13 +147313,13 @@ entities:
 - uid: 14949
   type: CableMV
   components:
-  - pos: -70.5,26.5
+  - pos: -71.5,25.5
     parent: 1
     type: Transform
 - uid: 14950
-  type: CableMV
+  type: RandomSpawner
   components:
-  - pos: -69.5,26.5
+  - pos: -70.5,25.5
     parent: 1
     type: Transform
 - uid: 14951
@@ -147726,6 +147712,216 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: -31.5,44.5
+    parent: 1
+    type: Transform
+- uid: 15009
+  type: ReinforcedPlasmaWindow
+  components:
+  - pos: 12.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15010
+  type: SignSecureMedRed
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 6.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15011
+  type: Grille
+  components:
+  - pos: 12.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15012
+  type: HarpInstrument
+  components:
+  - pos: 4.5,54.5
+    parent: 1
+    type: Transform
+- uid: 15013
+  type: CableHV
+  components:
+  - pos: -71.5,27.5
+    parent: 1
+    type: Transform
+- uid: 15014
+  type: CableHV
+  components:
+  - pos: -71.5,26.5
+    parent: 1
+    type: Transform
+- uid: 15015
+  type: CableHV
+  components:
+  - pos: -71.5,25.5
+    parent: 1
+    type: Transform
+- uid: 15016
+  type: LandMineExplosive
+  components:
+  - pos: 11.432268,-14.524555
+    parent: 1
+    type: Transform
+- uid: 15017
+  type: LandMineExplosive
+  components:
+  - pos: 10.447893,-14.493305
+    parent: 1
+    type: Transform
+- uid: 15018
+  type: PlasmaReinforcedWindowDirectional
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15019
+  type: LandMineExplosive
+  components:
+  - pos: 11.463518,-12.524555
+    parent: 1
+    type: Transform
+- uid: 15020
+  type: SignSecureMedRed
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 12.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15021
+  type: LandMineExplosive
+  components:
+  - pos: 8.494596,-13.493305
+    parent: 1
+    type: Transform
+- uid: 15022
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 7.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15023
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 8.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15024
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 9.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15025
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 10.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15026
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 11.5,-14.5
+    parent: 1
+    type: Transform
+- uid: 15027
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 11.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15028
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 11.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 15029
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 10.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 15030
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 9.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 15031
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 8.5,-12.5
+    parent: 1
+    type: Transform
+- uid: 15032
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 7.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15033
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 8.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15034
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 9.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15035
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 10.5,-13.5
+    parent: 1
+    type: Transform
+- uid: 15036
+  type: DisposalUnit
+  components:
+  - desc: A "secure" vault container. What could be inside?
+    name: vault container
+    type: MetaData
+  - pos: 10.5,-13.5
+    parent: 1
+    type: Transform
+  - containers:
+      DisposalUnit: !type:Container
+        ents:
+        - 15037
+    type: ContainerContainer
+  - type: Timer
+- uid: 15037
+  type: ClothingOuterHardsuitCBURN
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15036
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 15038
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -11.5,-14.5
+    parent: 1
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 15039
+  type: DisposalTrunk
+  components:
+  - pos: 14.5,-10.5
+    parent: 1
+    type: Transform
+- uid: 15040
+  type: DisposalUnit
+  components:
+  - pos: 14.5,-10.5
     parent: 1
     type: Transform
 ...
