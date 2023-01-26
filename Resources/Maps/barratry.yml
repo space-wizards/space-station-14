@@ -45209,8 +45209,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 14.664915
-      - 55.168015
+      - 14.254297
+      - 53.62331
       - 0
       - 0
       - 0
@@ -147922,6 +147922,54 @@ entities:
   type: DisposalUnit
   components:
   - pos: 14.5,-10.5
+    parent: 1
+    type: Transform
+- uid: 15041
+  type: SpawnMobMouse
+  components:
+  - pos: 7.5,-5.5
+    parent: 1
+    type: Transform
+- uid: 15042
+  type: SpawnMobMouse
+  components:
+  - pos: 22.5,1.5
+    parent: 1
+    type: Transform
+- uid: 15043
+  type: SpawnMobMouse
+  components:
+  - pos: 14.5,17.5
+    parent: 1
+    type: Transform
+- uid: 15044
+  type: SpawnMobMouse
+  components:
+  - pos: 13.5,39.5
+    parent: 1
+    type: Transform
+- uid: 15045
+  type: SpawnMobMouse
+  components:
+  - pos: -7.5,46.5
+    parent: 1
+    type: Transform
+- uid: 15046
+  type: SpawnMobMouse
+  components:
+  - pos: -44.5,53.5
+    parent: 1
+    type: Transform
+- uid: 15047
+  type: SpawnMobMouse
+  components:
+  - pos: -66.5,48.5
+    parent: 1
+    type: Transform
+- uid: 15048
+  type: MouseTimedSpawner
+  components:
+  - pos: -66.5,8.5
     parent: 1
     type: Transform
 ...
