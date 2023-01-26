@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed gloves slot being used for melee., type: Fix}
-  id: 2453
-  time: '2022-10-15T20:20:05.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: 'Nanotrasen has finally invested into better drills for their miners,
-      rock and stone!', type: Tweak}
-  id: 2454
-  time: '2022-10-15T20:40:40.0000000+00:00'
 - author: corentt
   changes:
   - {message: 'Selling prices of SMES, substations and power-cells now depends on
@@ -2935,3 +2924,14 @@ Entries:
       clap or snap.', type: Add}
   id: 2952
   time: '2023-01-25T16:29:42.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: diagnoser now properly displays no-cure text, type: Fix}
+  id: 2953
+  time: '2023-01-26T00:31:20.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Adjusted the speed loaders of light rifles so they can both transfer
+      bullets easily between each other and actually work, type: Tweak}
+  id: 2954
+  time: '2023-01-26T00:49:07.0000000+00:00'
