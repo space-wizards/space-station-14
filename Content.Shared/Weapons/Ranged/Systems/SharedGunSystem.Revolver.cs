@@ -182,7 +182,7 @@ public partial class SharedGunSystem
         {
             Text = Loc.GetString("gun-revolver-spin"),
             // Category = VerbCategory.G,
-            Act = () => SpinRevolver(component, args.User),
+            Act = () => SpinRevolver(component, args.User)
         });
     }
 
