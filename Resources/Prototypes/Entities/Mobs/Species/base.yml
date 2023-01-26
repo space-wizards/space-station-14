@@ -173,7 +173,7 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Human
   - type: Body
     prototype: Human
@@ -278,7 +278,13 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: Grammar
     attributes:
       proper: true
@@ -365,7 +371,7 @@
         - MobMask
         layer:
         - MobLayer
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Human
     - type: Body
       prototype: Human

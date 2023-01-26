@@ -68518,12 +68518,6 @@ entities:
     type: Transform
   - color: '#FF0000FF'
     type: AtmosPipeColor
-- uid: 5814
-  type: PosterContrabandGotWood
-  components:
-  - pos: -52.5,11.5
-    parent: 0
-    type: Transform
 - uid: 5815
   type: ComfyChair
   components:
@@ -129400,12 +129394,6 @@ entities:
   type: MaterialWoodPlank
   components:
   - pos: 8.49539,-21.442284
-    parent: 0
-    type: Transform
-- uid: 14728
-  type: PosterContrabandGotWood
-  components:
-  - pos: 9.5,-21.5
     parent: 0
     type: Transform
 - uid: 14729

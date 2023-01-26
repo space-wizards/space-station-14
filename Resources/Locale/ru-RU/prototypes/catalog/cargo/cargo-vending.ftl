@@ -30,3 +30,5 @@ ent-CrateVendingMachineRestockSnacks = { ent-CrateVendingMachineRestockSnacksFil
     .desc = { ent-CrateVendingMachineRestockSnacksFilled.desc }
 ent-CrateVendingMachineRestockTankDispenser = { ent-CrateVendingMachineRestockTankDispenserFilled }
     .desc = { ent-CrateVendingMachineRestockTankDispenserFilled.desc }
+ent-CrateVendingMachineRestockHappyHonk = { ent-CrateVendingMachineRestockHappyHonkFilled }
+    .desc = { ent-CrateVendingMachineRestockHappyHonkFilled.desc }

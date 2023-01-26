@@ -1,73 +1,4 @@
 Entries:
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed some actions such as PDA and helmet lights having the same icon.,
-    type: Fix}
-  - {message: Fixed showing nothing when dragging some actions such as the helmet
-      light., type: Fix}
-  id: 2442
-  time: '2022-10-13T17:14:53.0000000+00:00'
-- author: DrSmugleaf
-  changes:
-  - {message: Fixed new actions not appearing on the action bar and window automatically.,
-    type: Fix}
-  - {message: Fixed old actions not being removed from the action bar and window automatically.,
-    type: Fix}
-  id: 2443
-  time: '2022-10-13T18:10:47.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Fixed reinforced walls being easier to break than normal steel walls.,
-    type: Fix}
-  id: 2444
-  time: '2022-10-14T02:17:08.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Filing cabinets are now movable., type: Tweak}
-  id: 2445
-  time: '2022-10-14T20:10:05.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: You can no longer call a vote for gamemode if only one is available.,
-    type: Remove}
-  id: 2446
-  time: '2022-10-15T04:10:10.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: The Syndicate has tweaked nocturine to force people into a deep sleep.,
-    type: Tweak}
-  id: 2447
-  time: '2022-10-15T04:10:46.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: 'Added a over-ear command headset type to CE, RD and QM''s lockers.',
-    type: Add}
-  id: 2448
-  time: '2022-10-15T04:11:59.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: Adds a cooldown of 1 second when attempting to wake up someone else.,
-    type: Fix}
-  id: 2449
-  time: '2022-10-15T04:13:24.0000000+00:00'
-- author: checkraze
-  changes:
-  - {message: fixes some device links, type: Fix}
-  id: 2450
-  time: '2022-10-15T14:17:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Stripping UI has been updated. You can now visually see and examine
-      items., type: Tweak}
-  - {message: Handcuffs now show up in the hands UI. You still need to use the alert
-      to uncuff yourself., type: Add}
-  id: 2451
-  time: '2022-10-15T17:00:04.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
-  id: 2452
-  time: '2022-10-15T20:15:39.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fixed gloves slot being used for melee., type: Fix}
@@ -2942,3 +2873,65 @@ Entries:
   - {message: Correct bolts light state display, type: Fix}
   id: 2941
   time: '2023-01-21T16:33:12.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Over 50 new fortunes can be found in fortune cookie, type: Add}
+  id: 2942
+  time: '2023-01-22T13:20:17.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed most hardsuit light colors to be unique., type: Tweak}
+  id: 2943
+  time: '2023-01-22T18:57:10.0000000+00:00'
+- author: Jack Rost
+  changes:
+  - {message: 'Spiders have more damage and hp, cant slip and can pull stuff around
+      now', type: Tweak}
+  - {message: Critters spawn now doesn't depend on the chaos level, type: Tweak}
+  - {message: Spiders can make web that slows down everyone but them now, type: Add}
+  id: 2944
+  time: '2023-01-22T22:50:05.0000000+00:00'
+- author: corentt
+  changes:
+  - {message: The cloning machine now handles better cloning zombies., type: Fix}
+  id: 2945
+  time: '2023-01-22T23:36:03.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: The crew monitoring server. It relays the status of suit sensors to
+      crew monitors., type: Add}
+  id: 2946
+  time: '2023-01-23T01:07:57.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix flipflopping between buckle and crit rotations., type: Fix}
+  id: 2947
+  time: '2023-01-23T20:50:35.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Fixed a bug where the happy honk meal could not spawn with the foamblade,
+    type: Fix}
+  id: 2948
+  time: '2023-01-24T00:35:55.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
+  id: 2949
+  time: '2023-01-24T00:36:50.0000000+00:00'
+- author: sephtasm
+  changes:
+  - {message: Client-side placement mode crash while placing random humanoid mobs,
+    type: Fix}
+  id: 2950
+  time: '2023-01-24T13:42:58.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
+  id: 2951
+  time: '2023-01-25T06:28:43.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
+      clap or snap.', type: Add}
+  id: 2952
+  time: '2023-01-25T16:29:42.0000000+00:00'

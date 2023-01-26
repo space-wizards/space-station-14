@@ -26,6 +26,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Configuration;
 using Robust.Server.Player;
 using Robust.Shared.Physics.Components;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -256,7 +257,7 @@ namespace Content.Server.Medical.BiomassReclaimer
 
             // Reject souled bodies in easy mode.
             if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
-                HasComp<HumanoidComponent>(dragged) &&
+                HasComp<HumanoidAppearanceComponent>(dragged) &&
                 TryComp<MindComponent>(dragged, out var mindComp))
             {
                 if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))

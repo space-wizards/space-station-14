@@ -46,3 +46,6 @@ ent-CrateVendingMachineRestockSnacksFilled = ящик пополнения за�
 ent-CrateVendingMachineRestockTankDispenserFilled = ящик пополнения газовых баллонов
     .desc = Содержит набор пополнения атмосферного или инженерного раздатчика газовых баллонов.
     .suffix = { "" }
+ent-CrateVendingMachineRestockHappyHonkFilled = { ent-CratePlastic }
+    .desc = { ent-CratePlastic.desc }
+    .suffix = { "" }

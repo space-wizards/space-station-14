@@ -51,6 +51,8 @@
     tags:
       - Plastic
       - Trash
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   parent: UtensilBase
@@ -110,3 +112,5 @@
     types:
     - Knife
     breakChance: 0.20
+  - type: StaticPrice
+    price: 0
