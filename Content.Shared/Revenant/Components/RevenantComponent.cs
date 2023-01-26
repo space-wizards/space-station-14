@@ -21,6 +21,12 @@ public sealed class RevenantComponent : Component
     public string StolenEssenceCurrencyPrototype = "StolenEssence";
 
     /// <summary>
+    /// Prototype to spawn when the entity dies.
+    /// </summary>
+    [DataField("spawnOnDeathPrototype")]
+    public string SpawnOnDeathPrototype = "Ectoplasm";
+
+    /// <summary>
     /// The entity's current max amount of essence. Can be increased
     /// through harvesting player souls.
     /// </summary>
