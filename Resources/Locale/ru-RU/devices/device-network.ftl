@@ -1,6 +1,7 @@
 # named frequencies
 device-frequency-prototype-name-atmos = Атмосферные приборы
 device-frequency-prototype-name-suit-sensors = Сенсоры костюмов
+device-frequency-prototype-name-crew-monitor = Монитор экипажа
 device-frequency-prototype-name-lights = Умное освещение
 device-frequency-prototype-name-mailing-units = Почтовый блок
 device-frequency-prototype-name-pdas = КПК
@@ -12,8 +13,8 @@ device-frequency-prototype-name-surveillance-camera-test = Тест подсет
 device-frequency-prototype-name-surveillance-camera-engineering = Камеры (Инж)
 device-frequency-prototype-name-surveillance-camera-security = Камеры (СБ)
 device-frequency-prototype-name-surveillance-camera-science = Камеры (РнД)
-device-frequency-prototype-name-surveillance-camera-supply = Камеры (Карго)
-device-frequency-prototype-name-surveillance-camera-command = Камеры (Команд)
+device-frequency-prototype-name-surveillance-camera-supply = Камеры (Снаб)
+device-frequency-prototype-name-surveillance-camera-command = Камеры (Кмнд)
 device-frequency-prototype-name-surveillance-camera-service = Камеры (Сервис)
 device-frequency-prototype-name-surveillance-camera-medical = Камеры (Мед)
 device-frequency-prototype-name-surveillance-camera-general = Камеры (Общие)

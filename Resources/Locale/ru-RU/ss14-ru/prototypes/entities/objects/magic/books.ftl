@@ -19,3 +19,6 @@ ent-KnockSpellbook = книга заклинания стук
 ent-FireballSpellbook = книга заклинания огненный шар
     .desc = { ent-BaseSpellbook.desc }
     .suffix = { "" }
+ent-ScrollRunes = свиток рун
+    .desc = { ent-BaseSpellbook.desc }
+    .suffix = { "" }
