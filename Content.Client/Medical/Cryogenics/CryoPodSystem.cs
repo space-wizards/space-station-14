@@ -9,6 +9,8 @@ namespace Content.Client.Medical.Cryogenics;
 
 public sealed class CryoPodSystem: SharedCryoPodSystem
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -54,8 +56,8 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
             return;
         }
 
-        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen)
-            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
+        if (!_appearance.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen, args.Component)
+            || !_appearance.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn, args.Component))
         {
             return;
         }

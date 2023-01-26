@@ -6,12 +6,14 @@ namespace Content.Client.Botany;
 
 public sealed class PotencyVisualsSystem : VisualizerSystem<PotencyVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, PotencyVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(ProduceVisuals.Potency, out float potency))
+        if (_appearance.TryGetData(uid, ProduceVisuals.Potency, out float potency, args.Component))
         {
             var scale = MathHelper.Lerp(component.MinimumScale, component.MaximumScale, potency / 100);
             args.Sprite.Scale = new Vector2(scale, scale);

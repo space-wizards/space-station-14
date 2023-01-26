@@ -6,10 +6,12 @@ namespace Content.Client.Atmos.EntitySystems;
 
 public sealed class PipeColorVisualizerSystem : VisualizerSystem<PipeColorVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, PipeColorVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if(TryComp<SpriteComponent>(uid, out var sprite)
-            && args.Component.TryGetData<Color>(PipeColorVisuals.Color, out var color))
+        if (TryComp<SpriteComponent>(uid, out var sprite)
+            && _appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var color, args.Component))
         {
             // T-ray scanner / sub floor runs after this visualizer. Lets not bulldoze transparency.
             var layer = sprite[PipeVisualLayers.Pipe];

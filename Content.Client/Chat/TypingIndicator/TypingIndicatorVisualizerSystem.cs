@@ -8,23 +8,24 @@ namespace Content.Client.Chat.TypingIndicator;
 public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingIndicatorComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     protected override void OnAppearanceChange(EntityUid uid, TypingIndicatorComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        
+
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
         {
             Logger.Error($"Unknown typing indicator id: {component.Prototype}");
             return;
         }
 
-        args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping);
+        _appearance.TryGetData(uid, TypingIndicatorVisuals.IsTyping, out bool isTyping, args.Component);
         var layerExists = args.Sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
         if (!layerExists)
             layer = args.Sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        
+
         args.Sprite.LayerSetRSI(layer, proto.SpritePath);
         args.Sprite.LayerSetState(layer, proto.TypingState);
         args.Sprite.LayerSetShader(layer, proto.Shader);

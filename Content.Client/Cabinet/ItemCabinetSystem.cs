@@ -5,13 +5,15 @@ namespace Content.Client.Cabinet;
 
 public sealed class ItemCabinetSystem : VisualizerSystem<ItemCabinetVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, ItemCabinetVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
-            && args.Component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
+        if (_appearance.TryGetData(uid, ItemCabinetVisuals.IsOpen, out bool isOpen, args.Component)
+            && _appearance.TryGetData(uid, ItemCabinetVisuals.ContainsItem, out bool contains, args.Component))
         {
             var state = isOpen ? component.OpenState : component.ClosedState;
             args.Sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);

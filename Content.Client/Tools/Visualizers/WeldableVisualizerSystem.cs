@@ -6,12 +6,14 @@ namespace Content.Client.Tools.Visualizers;
 
 public sealed class WeldableVisualizerSystem : VisualizerSystem<WeldableComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, WeldableComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        args.Component.TryGetData(WeldableVisuals.IsWelded, out bool isWelded);
+        _appearance.TryGetData(uid, WeldableVisuals.IsWelded, out bool isWelded, args.Component);
         if (args.Sprite.LayerMapTryGet(WeldableLayers.BaseWelded, out var layer))
         {
             args.Sprite.LayerSetVisible(layer, isWelded);

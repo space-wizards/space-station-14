@@ -141,7 +141,7 @@ namespace Content.Server.PDA
                 case PDAToggleFlashlightMessage _:
                     {
                         if (EntityManager.TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
-                            _unpoweredFlashlight.ToggleLight(flashlight);
+                            _unpoweredFlashlight.ToggleLight(flashlight.Owner, flashlight);
                         break;
                     }
 

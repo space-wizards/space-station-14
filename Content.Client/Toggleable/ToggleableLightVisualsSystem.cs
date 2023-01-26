@@ -13,6 +13,7 @@ namespace Content.Client.Toggleable;
 public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -23,10 +24,10 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
 
     protected override void OnAppearanceChange(EntityUid uid, ToggleableLightVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!args.Component.TryGetData(ToggleableLightVisuals.Enabled, out bool enabled))
+        if (!_appearance.TryGetData(uid, ToggleableLightVisuals.Enabled, out bool enabled, args.Component))
             return;
 
-        var modulate = args.Component.TryGetData(ToggleableLightVisuals.Color, out Color color);
+        var modulate = _appearance.TryGetData(uid, ToggleableLightVisuals.Color, out Color color, args.Component);
 
         // Update the item's sprite
         if (args.Sprite != null && args.Sprite.LayerMapTryGet(component.SpriteLayer, out var layer))
@@ -55,14 +56,14 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
     private void OnGetEquipmentVisuals(EntityUid uid, ToggleableLightVisualsComponent component, GetEquipmentVisualsEvent args)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance)
-            || !appearance.TryGetData(ToggleableLightVisuals.Enabled, out bool enabled)
+            || !_appearance.TryGetData(uid, ToggleableLightVisuals.Enabled, out bool enabled, appearance)
             || !enabled)
             return;
 
         if (!component.ClothingVisuals.TryGetValue(args.Slot, out var layers))
             return;
 
-        var modulate = appearance.TryGetData(ToggleableLightVisuals.Color, out Color color);
+        var modulate = _appearance.TryGetData(uid, ToggleableLightVisuals.Color, out Color color, appearance);
 
         var i = 0;
         foreach (var layer in layers)
@@ -84,14 +85,14 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
     private void OnGetHeldVisuals(EntityUid uid, ToggleableLightVisualsComponent component, GetInhandVisualsEvent args)
     {
         if (!TryComp(uid, out AppearanceComponent? appearance)
-            || !appearance.TryGetData(ToggleableLightVisuals.Enabled, out bool enabled)
+            || !_appearance.TryGetData(uid, ToggleableLightVisuals.Enabled, out bool enabled, appearance)
             || !enabled)
             return;
 
         if (!component.InhandVisuals.TryGetValue(args.Location, out var layers))
             return;
 
-        var modulate = appearance.TryGetData(ToggleableLightVisuals.Color, out Color color);
+        var modulate = _appearance.TryGetData(uid, ToggleableLightVisuals.Color, out Color color, appearance);
 
         var i = 0;
         var defaultKey = $"inhand-{args.Location.ToString().ToLowerInvariant()}-toggle";

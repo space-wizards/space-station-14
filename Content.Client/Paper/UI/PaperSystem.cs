@@ -6,15 +6,17 @@ namespace Content.Client.Paper;
 
 public sealed class PaperSystem : VisualizerSystem<PaperVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, PaperVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData(PaperVisuals.Status , out PaperStatus writingStatus))
+        if (_appearance.TryGetData(uid, PaperVisuals.Status , out PaperStatus writingStatus, args.Component))
             args.Sprite.LayerSetVisible(PaperVisualLayers.Writing, writingStatus == PaperStatus.Written);
 
-        if (args.Component.TryGetData(PaperVisuals.Stamp, out string stampState))
+        if (_appearance.TryGetData(uid, PaperVisuals.Stamp, out string stampState, args.Component))
         {
             args.Sprite.LayerSetState(PaperVisualLayers.Stamp, stampState);
             args.Sprite.LayerSetVisible(PaperVisualLayers.Stamp, true);

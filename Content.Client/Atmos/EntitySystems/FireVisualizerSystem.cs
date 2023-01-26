@@ -11,6 +11,8 @@ namespace Content.Client.Atmos.EntitySystems;
 /// </summary>
 public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -56,8 +58,8 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         if (!sprite.LayerMapTryGet(FireVisualLayers.Fire, out var index))
             return;
 
-        appearance.TryGetData(FireVisuals.OnFire, out bool onFire);
-        appearance.TryGetData(FireVisuals.FireStacks, out float fireStacks);
+        _appearance.TryGetData(uid, FireVisuals.OnFire, out bool onFire, appearance);
+        _appearance.TryGetData(uid, FireVisuals.FireStacks, out float fireStacks, appearance);
         sprite.LayerSetVisible(index, onFire);
 
         if (!onFire)

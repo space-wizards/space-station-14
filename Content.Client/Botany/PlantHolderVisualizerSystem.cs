@@ -6,6 +6,8 @@ namespace Content.Client.Botany;
 
 public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -26,8 +28,8 @@ public sealed class PlantHolderVisualizerSystem : VisualizerSystem<PlantHolderVi
         if (args.Sprite == null)
             return;
 
-        if (args.Component.TryGetData<string>(PlantHolderVisuals.PlantRsi, out var rsi)
-            && args.Component.TryGetData<string>(PlantHolderVisuals.PlantState, out var state))
+        if (_appearance.TryGetData<string>(uid, PlantHolderVisuals.PlantRsi, out var rsi, args.Component)
+            && _appearance.TryGetData<string>(uid, PlantHolderVisuals.PlantState, out var state, args.Component))
         {
             var valid = !string.IsNullOrWhiteSpace(state);
 

@@ -6,105 +6,105 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Random;
 
-namespace Content.Client.Fluids
+namespace Content.Client.Fluids;
+
+[UsedImplicitly]
+public sealed class PuddleVisualizerSystem : VisualizerSystem<PuddleVisualizerComponent>
 {
-    [UsedImplicitly]
-    public sealed class PuddleVisualizerSystem : VisualizerSystem<PuddleVisualizerComponent>
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        base.Initialize();
 
-        public override void Initialize()
+        SubscribeLocalEvent<PuddleVisualizerComponent, ComponentInit>(OnComponentInit);
+    }
+
+    private void OnComponentInit(EntityUid uid, PuddleVisualizerComponent puddleVisuals, ComponentInit args)
+    {
+        if (!TryComp(uid, out AppearanceComponent? appearance))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<PuddleVisualizerComponent, ComponentInit>(OnComponentInit);
+            return;
         }
 
-        private void OnComponentInit(EntityUid uid, PuddleVisualizerComponent puddleVisuals, ComponentInit args)
+        if (!TryComp(uid, out SpriteComponent? sprite))
         {
-            if (!TryComp(uid, out AppearanceComponent? appearance))
-            {
-                return;
-            }
-
-            if (!TryComp(uid, out SpriteComponent? sprite))
-            {
-                return;
-            }
-
-            puddleVisuals.OriginalRsi = sprite.BaseRSI; //Back up the original RSI upon initialization
-            RandomizeState(sprite, puddleVisuals.OriginalRsi);
-            RandomizeRotation(sprite);
+            return;
         }
 
-        protected override void OnAppearanceChange(EntityUid uid, PuddleVisualizerComponent component, ref AppearanceChangeEvent args)
+        puddleVisuals.OriginalRsi = sprite.BaseRSI; //Back up the original RSI upon initialization
+        RandomizeState(sprite, puddleVisuals.OriginalRsi);
+        RandomizeRotation(sprite);
+    }
+
+    protected override void OnAppearanceChange(EntityUid uid, PuddleVisualizerComponent component, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite == null)
         {
-            if (args.Sprite == null)
-            {
-                Logger.Warning($"Missing SpriteComponent for PuddleVisualizerSystem on entityUid = {uid}");
-                return;
-            }
-
-            if (!args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                || !args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                || !args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
-            {
-                return;
-            }
-
-            // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
-            var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
-
-            var newColor = component.Recolor ? solutionColor.WithAlpha(cappedScale) : args.Sprite.Color.WithAlpha(cappedScale);
-
-            args.Sprite.LayerSetColor(0, newColor);
-
-            // Don't consider wet floor effects if we're using a custom sprite.
-            if (component.CustomPuddleSprite)
-                return;
-
-            if (isEvaporating && currentVolume <= component.WetFloorEffectThreshold)
-            {
-                // If we need the effect but don't already have it - start it
-                if (args.Sprite.LayerGetState(0) != "sparkles")
-                    StartWetFloorEffect(args.Sprite, component.WetFloorEffectAlpha);
-            }
-            else
-            {
-                // If we have the effect but don't need it - end it
-                if (args.Sprite.LayerGetState(0) == "sparkles")
-                    EndWetFloorEffect(args.Sprite, component.OriginalRsi);
-            }
+            Logger.Warning($"Missing SpriteComponent for PuddleVisualizerSystem on entityUid = {uid}");
+            return;
         }
 
-        private void StartWetFloorEffect(SpriteComponent sprite, float alpha)
+        if (!_appearance.TryGetData(uid, PuddleVisuals.VolumeScale, out float volumeScale, args.Component)
+            || !_appearance.TryGetData(uid, PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume, args.Component)
+            || !_appearance.TryGetData(uid, PuddleVisuals.SolutionColor, out Color solutionColor, args.Component)
+            || !_appearance.TryGetData(uid, PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating, args.Component))
         {
-            sprite.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
-            sprite.Color = sprite.Color.WithAlpha(alpha);
-            sprite.LayerSetAutoAnimated(0, false);
-            sprite.LayerSetAutoAnimated(0, true); //fixes a bug where the sparkle effect would sometimes freeze on a single frame.
+            return;
         }
 
-        private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)
-        {
-            RandomizeState(sprite, originalRSI);
-            sprite.LayerSetAutoAnimated(0, false);
-        }
+        // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
+        var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
 
-        private void RandomizeState(SpriteComponent sprite, RSI? rsi)
-        {
-            var maxStates = rsi?.ToArray();
-            if (maxStates is not { Length: > 0 }) return;
+        var newColor = component.Recolor ? solutionColor.WithAlpha(cappedScale) : args.Sprite.Color.WithAlpha(cappedScale);
 
-            var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
-            sprite.LayerSetState(0, maxStates[selectedState].StateId, rsi); // sets the sprite's state via our randomly selected index.
-        }
+        args.Sprite.LayerSetColor(0, newColor);
 
-        private void RandomizeRotation(SpriteComponent sprite)
+        // Don't consider wet floor effects if we're using a custom sprite.
+        if (component.CustomPuddleSprite)
+            return;
+
+        if (isEvaporating && currentVolume <= component.WetFloorEffectThreshold)
         {
-            float rotationDegrees = _random.Next(0, 359); // randomly select a rotation for our puddle sprite.
-            sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
+            // If we need the effect but don't already have it - start it
+            if (args.Sprite.LayerGetState(0) != "sparkles")
+                StartWetFloorEffect(args.Sprite, component.WetFloorEffectAlpha);
         }
+        else
+        {
+            // If we have the effect but don't need it - end it
+            if (args.Sprite.LayerGetState(0) == "sparkles")
+                EndWetFloorEffect(args.Sprite, component.OriginalRsi);
+        }
+    }
+
+    private void StartWetFloorEffect(SpriteComponent sprite, float alpha)
+    {
+        sprite.LayerSetState(0, "sparkles", "Fluids/wet_floor_sparkles.rsi");
+        sprite.Color = sprite.Color.WithAlpha(alpha);
+        sprite.LayerSetAutoAnimated(0, false);
+        sprite.LayerSetAutoAnimated(0, true); //fixes a bug where the sparkle effect would sometimes freeze on a single frame.
+    }
+
+    private void EndWetFloorEffect(SpriteComponent sprite, RSI? originalRSI)
+    {
+        RandomizeState(sprite, originalRSI);
+        sprite.LayerSetAutoAnimated(0, false);
+    }
+
+    private void RandomizeState(SpriteComponent sprite, RSI? rsi)
+    {
+        var maxStates = rsi?.ToArray();
+        if (maxStates is not { Length: > 0 }) return;
+
+        var selectedState = _random.Next(0, maxStates.Length - 1); //randomly select an index for which RSI state to use.
+        sprite.LayerSetState(0, maxStates[selectedState].StateId, rsi); // sets the sprite's state via our randomly selected index.
+    }
+
+    private void RandomizeRotation(SpriteComponent sprite)
+    {
+        float rotationDegrees = _random.Next(0, 359); // randomly select a rotation for our puddle sprite.
+        sprite.Rotation = Angle.FromDegrees(rotationDegrees); // sets the sprite's rotation to the one we randomly selected.
     }
 }

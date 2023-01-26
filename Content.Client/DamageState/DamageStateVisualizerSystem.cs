@@ -6,11 +6,13 @@ namespace Content.Client.DamageState;
 
 public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVisualsComponent>
 {
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, DamageStateVisualsComponent component, ref AppearanceChangeEvent args)
     {
         var sprite = args.Sprite;
 
-        if (sprite == null || !args.Component.TryGetData(MobStateVisuals.State, out MobState data))
+        if (sprite == null || !_appearance.TryGetData(uid, MobStateVisuals.State, out MobState data, args.Component))
         {
             return;
         }

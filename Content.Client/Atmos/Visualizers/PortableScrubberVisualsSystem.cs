@@ -9,13 +9,15 @@ namespace Content.Client.Atmos.Visualizers
     /// </summary>
     public sealed class PortableScrubberSystem : VisualizerSystem<PortableScrubberVisualsComponent>
     {
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
+
         protected override void OnAppearanceChange(EntityUid uid, PortableScrubberVisualsComponent component, ref AppearanceChangeEvent args)
         {
             if (args.Sprite == null)
                 return;
 
-            if (args.Component.TryGetData(PortableScrubberVisuals.IsFull, out bool isFull)
-                && args.Component.TryGetData(PortableScrubberVisuals.IsRunning, out bool isRunning))
+            if (_appearance.TryGetData(uid, PortableScrubberVisuals.IsFull, out bool isFull, args.Component)
+                && _appearance.TryGetData(uid, PortableScrubberVisuals.IsRunning, out bool isRunning, args.Component))
             {
                 var runningState = isRunning ? component.RunningState : component.IdleState;
                 args.Sprite.LayerSetState(PortableScrubberVisualLayers.IsRunning, runningState);
@@ -24,7 +26,7 @@ namespace Content.Client.Atmos.Visualizers
                 args.Sprite.LayerSetState(PowerDeviceVisualLayers.Powered, fullState);
             }
 
-            if (args.Component.TryGetData(PortableScrubberVisuals.IsDraining, out bool isDraining))
+            if (_appearance.TryGetData(uid, PortableScrubberVisuals.IsDraining, out bool isDraining, args.Component))
             {
                 args.Sprite.LayerSetVisible(PortableScrubberVisualLayers.IsDraining, isDraining);
             }

@@ -9,6 +9,7 @@ namespace Content.Client.BarSign;
 public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -35,7 +36,7 @@ public sealed class BarSignSystem : VisualizerSystem<BarSignComponent>
         if (!Resolve(sign.Owner, ref appearance, ref sprite))
             return;
 
-        appearance.TryGetData(PowerDeviceVisuals.Powered, out bool powered);
+        _appearance.TryGetData(sign.Owner, PowerDeviceVisuals.Powered, out bool powered, appearance);
 
         if (powered
             && sign.CurrentSign != null
