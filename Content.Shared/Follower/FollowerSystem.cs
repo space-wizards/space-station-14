@@ -19,6 +19,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
 
     public override void Initialize()
     {
@@ -113,6 +114,8 @@ public sealed class FollowerSystem : EntitySystem
 
         if (TryComp<JointComponent>(follower, out var joints))
             _jointSystem.ClearJoints(follower, joints);
+
+        _physicsSystem.SetLinearVelocity(follower, Vector2.Zero);
 
         var xform = Transform(follower);
         _containerSystem.AttachParentToContainerOrGrid(xform);  // In case it is an item in an inventory
