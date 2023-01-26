@@ -68,6 +68,7 @@
   parent: PlushieGhost
   id: PlushieGhostRevenant
   name: revenant soft toy
+  suffix: DO NOT MAP
   description: So soft it almost makes you want to take a nap...
   components:
     - type: Sprite
