@@ -1,3 +1,3 @@
-ent-SpiderWeb = spider web
-    .desc = It's stringy and sticky.
+ent-SpiderWeb = паутина
+    .desc = Она вязкая и липкая.
     .suffix = { "" }

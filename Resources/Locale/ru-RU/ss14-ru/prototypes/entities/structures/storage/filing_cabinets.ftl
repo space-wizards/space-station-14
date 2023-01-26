@@ -1,24 +1,21 @@
 ent-filingCabinet = картотечный шкаф
     .desc = Шкаф для хранения документов.
-    .suffix = { "" }
+    .suffix = Пустой
 ent-filingCabinetTall = высокий шкаф
     .desc = { ent-filingCabinet.desc }
-    .suffix = { "" }
+    .suffix = Пустой
 ent-filingCabinetDrawer = комод
     .desc = Маленький шкафчик для хранения предметов. Теперь на колёсиках!
-    .suffix = { "" }
+    .suffix = Пустой
 ent-BaseBureaucraticStorageFill = { "" }
     .desc = { "" }
     .suffix = { "" }
-ent-filingCabinetRandom = { ent-['filingCabinet', 'BaseBureaucraticStorageFill'] }
-
-  .suffix = Random
-  .desc = { ent-['filingCabinet', 'BaseBureaucraticStorageFill'].desc }
-ent-filingCabinetTallRandom = { ent-['filingCabinetTall', 'BaseBureaucraticStorageFill'] }
-
-  .suffix = Random
-  .desc = { ent-['filingCabinetTall', 'BaseBureaucraticStorageFill'].desc }
-ent-filingCabinetDrawerRandom = { ent-['filingCabinetDrawer', 'BaseBureaucraticStorageFill'] }
-
-  .suffix = Random
-  .desc = { ent-['filingCabinetDrawer', 'BaseBureaucraticStorageFill'].desc }
+ent-filingCabinetRandom = { ent-filingCabinet }
+  .suffix = Случайный
+  .desc = { ent-filingCabinet.desc }
+ent-filingCabinetTallRandom = { ent-filingCabinetTall }
+  .suffix = Случайный
+  .desc = { ent-filingCabinetTall.desc }
+ent-filingCabinetDrawerRandom = { ent-filingCabinetDrawer }
+  .suffix = Случайный
+  .desc = { ent-filingCabinetDrawer.desc }
