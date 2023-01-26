@@ -44,7 +44,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
-            foreach (var (apc, transform) in EntityManager.EntityQuery<ApcComponent, TransformComponent>(true))
+            foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>(true))
             {
                 if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
                     _powered.Add(apc.Owner);
