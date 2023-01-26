@@ -56,7 +56,9 @@ public sealed class FollowerSystem : EntitySystem
 
         if (_tagSystem.HasTag(ev.Target, "ForceableFollow"))
         {
-            //TODO check if ev.User is a ghost
+            if (!ev.CanAccess || !ev.CanInteract)
+                return;
+
             var verb = new AlternativeVerb
             {
                 Priority = 10,
