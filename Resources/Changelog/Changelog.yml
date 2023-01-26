@@ -1,12 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
-  - {message: Humanoids will no longer default to an inanimate pronoun when their
-      gender is unknown., type: Fix}
-  - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
-  id: 2459
-  time: '2022-10-15T21:45:47.0000000+00:00'
 - author: Mervill
   changes:
   - {message: The PDA light and the Hardsuit light have been nerfed, type: Tweak}
@@ -2937,3 +2929,9 @@ Entries:
   - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
   id: 2958
   time: '2023-01-26T22:04:58.0000000+00:00'
+- author: jamessimo
+  changes:
+  - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
+  - {message: Character job preferences pages UX improvements, type: Tweak}
+  id: 2959
+  time: '2023-01-26T22:32:15.0000000+00:00'
