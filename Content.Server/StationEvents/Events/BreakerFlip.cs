@@ -30,9 +30,8 @@ public sealed class BreakerFlip : StationEventSystem
             return;
         var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
 
-        var allApcs = EntityQuery<ApcComponent, TransformComponent>().ToList();
         var stationApcs = new List<ApcComponent>();
-        foreach (var (apc, transform) in allApcs) 
+        foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>()) 
         {
             if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
             {
