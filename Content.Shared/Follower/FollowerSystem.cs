@@ -8,6 +8,8 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Follower;
 
@@ -16,6 +18,7 @@ public sealed class FollowerSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedJointSystem _jointSystem = default!;
 
     public override void Initialize()
     {
@@ -107,6 +110,9 @@ public sealed class FollowerSystem : EntitySystem
 
         var followedComp = EnsureComp<FollowedComponent>(entity);
         followedComp.Following.Add(follower);
+
+        if (TryComp<JointComponent>(follower, out var joints))
+            _jointSystem.ClearJoints(follower, joints);
 
         var xform = Transform(follower);
         _containerSystem.AttachParentToContainerOrGrid(xform);  // In case it is an item in an inventory
