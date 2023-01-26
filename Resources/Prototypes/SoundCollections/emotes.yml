@@ -1,0 +1,25 @@
+- type: soundCollection
+  id: MaleLaugh
+  files:
+    - /Audio/Voice/Human/manlaugh1.ogg
+    - /Audio/Voice/Human/manlaugh2.ogg
+
+- type: soundCollection
+  id: FemaleLaugh
+  files:
+    - /Audio/Voice/Human/womanlaugh.ogg
+
+- type: soundCollection
+  id: Claps
+  files:
+    - /Audio/Effects/Emotes/clap1.ogg
+    - /Audio/Effects/Emotes/clap2.ogg
+    - /Audio/Effects/Emotes/clap3.ogg
+    - /Audio/Effects/Emotes/clap4.ogg
+
+- type: soundCollection
+  id: Snaps
+  files:
+    - /Audio/Effects/Emotes/snap1.ogg
+    - /Audio/Effects/Emotes/snap2.ogg
+    - /Audio/Effects/Emotes/snap3.ogg

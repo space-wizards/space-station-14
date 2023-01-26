@@ -73,7 +73,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         SetSpecies(uid, profile.Species, false, humanoid);
-        humanoid.Sex = profile.Sex;
+        SetSex(uid, profile.Sex, false, humanoid);
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
         SetSkinColor(uid, profile.Appearance.SkinColor, false);
@@ -141,7 +141,7 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         targetHumanoid.CachedHairColor = sourceHumanoid.CachedHairColor;
         targetHumanoid.CachedFacialHairColor = sourceHumanoid.CachedFacialHairColor;
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
-        targetHumanoid.Sex = sourceHumanoid.Sex;
+        SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
         targetHumanoid.MarkingSet = new(sourceHumanoid.MarkingSet);
 

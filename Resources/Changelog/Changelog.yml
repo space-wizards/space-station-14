@@ -1,39 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: fixes some device links, type: Fix}
-  id: 2450
-  time: '2022-10-15T14:17:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Stripping UI has been updated. You can now visually see and examine
-      items., type: Tweak}
-  - {message: Handcuffs now show up in the hands UI. You still need to use the alert
-      to uncuff yourself., type: Add}
-  id: 2451
-  time: '2022-10-15T17:00:04.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Fire Helmets and Atmos Fire Helmets require batteries again., type: Fix}
-  id: 2452
-  time: '2022-10-15T20:15:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fixed gloves slot being used for melee., type: Fix}
-  id: 2453
-  time: '2022-10-15T20:20:05.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: 'Nanotrasen has finally invested into better drills for their miners,
-      rock and stone!', type: Tweak}
-  id: 2454
-  time: '2022-10-15T20:40:40.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: 'Selling prices of SMES, substations and power-cells now depends on
-      their filling level', type: Add}
-  id: 2455
-  time: '2022-10-15T21:10:48.0000000+00:00'
 - author: Morb0
   changes:
   - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
@@ -2936,3 +2901,36 @@ Entries:
   - {message: Emergency pizza delivery now costs 450 spacebucks instead of 550, type: Tweak}
   id: 2949
   time: '2023-01-24T00:36:50.0000000+00:00'
+- author: sephtasm
+  changes:
+  - {message: Client-side placement mode crash while placing random humanoid mobs,
+    type: Fix}
+  id: 2950
+  time: '2023-01-24T13:42:58.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: 'Added Barratry back into the game, with a remastered new look.', type: Add}
+  id: 2951
+  time: '2023-01-25T06:28:43.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Added new emotes with sound! Simply type into emote chat: scream, laugh,
+      clap or snap.', type: Add}
+  id: 2952
+  time: '2023-01-25T16:29:42.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: diagnoser now properly displays no-cure text, type: Fix}
+  id: 2953
+  time: '2023-01-26T00:31:20.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Adjusted the speed loaders of light rifles so they can both transfer
+      bullets easily between each other and actually work, type: Tweak}
+  id: 2954
+  time: '2023-01-26T00:49:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Two new turret types added for misc use., type: Add}
+  id: 2955
+  time: '2023-01-26T04:03:31.0000000+00:00'
