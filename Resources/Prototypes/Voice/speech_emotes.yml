@@ -4,6 +4,9 @@
   category: Vocal
   chatMessages: [screams, yells]
   chatTriggers:
+    - крик
+    - кричит
+    - вопит
     - scream
     - screams
     - screaming
@@ -26,6 +29,7 @@
   category: Vocal
   chatMessages: [laughs]
   chatTriggers:
+    - смеётся
     - laugh
     - laughs
     - laughing
@@ -45,6 +49,9 @@
   category: Hands
   chatMessages: [claps]
   chatTriggers:
+    - похлопал
+    - хлопает руками
+    - аплодирует
     - clap
     - claps
     - clapping
@@ -55,6 +62,8 @@
   category: Hands
   chatMessages: [snaps fingers]
   chatTriggers:
+    - щелкнул пальцами
+    - щёлкает пальцами
     - snap
     - snaps
     - snapping
