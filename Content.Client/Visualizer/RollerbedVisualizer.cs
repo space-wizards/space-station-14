@@ -10,8 +10,6 @@ namespace Content.Client.Visualizer
     [UsedImplicitly]
     public sealed class RollerbedVisualizer : AppearanceVisualizer
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
         [DataField("key")]
         private string _key = default!;
 
@@ -24,7 +22,7 @@ namespace Content.Client.Visualizer
 
             if (!entManager.TryGetComponent(appearance.Owner, out SpriteComponent? sprite)) return;
 
-            if (_appearance.TryGetData(appearance.Owner, StrapVisuals.State, out bool strapped, appearance) && strapped)
+            if (appearance.TryGetData(StrapVisuals.State, out bool strapped) && strapped)
             {
                 sprite.LayerSetState(0, $"{_key}_buckled");
             }
