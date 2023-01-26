@@ -59,7 +59,6 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
-      - id: MagazineBoxMagnum
 
 - type: entity
   id: ClosetBombFilled
