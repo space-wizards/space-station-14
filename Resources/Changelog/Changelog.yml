@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Stasis beds can now be upgraded with manipulators., type: Add}
-  id: 2458
-  time: '2022-10-15T21:39:30.0000000+00:00'
 - author: Rane
   changes:
   - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
@@ -2937,3 +2932,8 @@ Entries:
   - {message: Revolvers can now be alt-clicked to be emptied., type: Tweak}
   id: 2957
   time: '2023-01-26T18:15:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
+  id: 2958
+  time: '2023-01-26T22:04:58.0000000+00:00'
