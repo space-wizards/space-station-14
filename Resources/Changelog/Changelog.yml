@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed gloves slot being used for melee., type: Fix}
-  id: 2453
-  time: '2022-10-15T20:20:05.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: 'Nanotrasen has finally invested into better drills for their miners,
@@ -2935,3 +2930,8 @@ Entries:
       clap or snap.', type: Add}
   id: 2952
   time: '2023-01-25T16:29:42.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: diagnoser now properly displays no-cure text, type: Fix}
+  id: 2953
+  time: '2023-01-26T00:31:20.0000000+00:00'
