@@ -1,0 +1,12 @@
+﻿- type: construction
+  name: revenant plushie
+  id: PlushieGhostRevenant
+  graph: PlushieGhostRevenant
+  startNode: start
+  targetNode: plushie
+  category: construction-category-misc
+  objectType: Item
+  description: A toy to scare the medbay with.
+  icon:
+    sprite: Mobs/Ghosts/revenant.rsi
+    state: icon

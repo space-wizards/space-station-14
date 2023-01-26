@@ -65,6 +65,21 @@
       minSpeed: 0.25
 
 - type: entity
+  parent: PlushieGhost
+  id: PlushieGhostRevenant
+  name: revenant soft toy
+  description: So soft it almost makes you want to take a nap...
+  components:
+    - type: Sprite
+      sprite: Mobs/Ghosts/revenant.rsi
+      state: icon
+      netsync: false
+      noRot: true
+    - type: Construction
+      graph: PlushieGhostRevenant
+      node: plushie
+
+- type: entity
   parent: BasePlushie
   id: PlushieBee
   name: bee plushie
