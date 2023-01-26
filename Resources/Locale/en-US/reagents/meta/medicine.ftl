@@ -92,7 +92,7 @@ reagent-name-cognizine = cognizine
 reagent-desc-cognizine = A mysterious chemical which is able to make any non-sentient creature sentient.
 
 reagent-name-ethyloxyephedrine = ethyloxyephedrine
-reagent-desc-ethyloxyephedrine = An unstable medicine deriving from desoxyephedrine. With the main effects of desoxyephedrine neutralised, it may be useful for something else.
+reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedrine. With the main effects of desoxyephedrine neutralized, it may be useful for something else.
 
 reagent-name-diphenylmethylamine = diphenylmethylamine
 reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.
