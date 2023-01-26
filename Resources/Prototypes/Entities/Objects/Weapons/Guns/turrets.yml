@@ -14,16 +14,21 @@
         - state: syndie_broken
 
 - type: entity
-  id: WeaponTurretSyndicate
+  id: BaseWeaponTurret
   name: ballistic turret
-  suffix: Syndicate
-  parent: WeaponTurretSyndicateBroken
+  parent: BaseStructure
+  abstract: true
   components:
+    - type: Clickable
+    - type: InteractionOutline
     - type: Actions
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
     - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/turrets.rsi
+      drawdepth: WallMountedItems
       layers:
         - state: syndie_lethal
     - type: InteractionPopup
@@ -72,6 +77,13 @@
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
+
+- type: entity
+  id: WeaponTurretSyndicate
+  name: ballistic turret
+  suffix: Syndicate
+  parent: BaseWeaponTurret
+  components:
     - type: Faction
       factions:
         - Syndicate
@@ -80,7 +92,7 @@
   id: WeaponTurretNanoTrasen
   name: ballistic turret
   suffix: NanoTrasen
-  parent: WeaponTurretSyndicate
+  parent: BaseWeaponTurret
   components:
   - type: Faction
     factions:
@@ -90,7 +102,7 @@
   id: WeaponTurretHostile
   name: ballistic turret
   suffix: Hostile
-  parent: WeaponTurretSyndicate
+  parent: BaseWeaponTurret
   components:
   - type: Faction
     factions:
