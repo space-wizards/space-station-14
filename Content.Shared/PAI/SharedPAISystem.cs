@@ -40,6 +40,8 @@ namespace Content.Shared.PAI
         private void OnStartup(EntityUid uid, PAIComponent component, ComponentStartup args)
         {
             _blocker.UpdateCanMove(uid);
+            if (component.ViewManifestAction != null)
+                 _actionsSystem.AddAction(uid, component.ViewManifestAction, null);
             if (component.MidiAction != null)
                 _actionsSystem.AddAction(uid, component.MidiAction, null);
         }
@@ -47,6 +49,8 @@ namespace Content.Shared.PAI
         private void OnShutdown(EntityUid uid, PAIComponent component, ComponentShutdown args)
         {
             _blocker.UpdateCanMove(uid);
+            if (component.ViewManifestAction != null)
+                _actionsSystem.RemoveAction(uid, component.ViewManifestAction);
             if (component.MidiAction != null)
                 _actionsSystem.RemoveAction(uid, component.MidiAction);
         }

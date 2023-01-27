@@ -1,3 +1,5 @@
+using Content.Shared.Actions;
+
 namespace Content.Server.CrewManifest;
 
 [RegisterComponent]
@@ -10,3 +12,5 @@ public sealed class CrewManifestViewerComponent : Component
     /// </summary>
     [DataField("unsecure")] public bool Unsecure;
 }
+
+public sealed class ViewManifestActionEvent : InstantActionEvent { }

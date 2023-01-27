@@ -18,6 +18,9 @@ namespace Content.Shared.PAI
     {
         [DataField("midiAction", required: true, serverOnly: true)] // server only, as it uses a server-BUI event !type
         public InstantAction? MidiAction;
+
+        [DataField("viewManifestAction", required: true, serverOnly: true)]
+        public InstantAction? ViewManifestAction;
     }
 }
 

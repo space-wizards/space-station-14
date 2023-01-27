@@ -32,11 +32,19 @@
       description: action-description-pai-play-midi
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
+    viewManifestAction:
+      name: action-name-pai-view-manifest
+      checkCanInteract: false
+      icon: Interface/Actions/crew-manifest.png
+      description: action-description-pai-view-manifest
+      event: !type:ViewManifestActionEvent
   - type: Examiner
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
     channels:
     - Common
+  - type: CrewManifestViewer
+    unsecure: true
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator

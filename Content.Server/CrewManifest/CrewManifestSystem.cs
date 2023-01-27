@@ -26,6 +26,7 @@ public sealed class CrewManifestSystem : EntitySystem
     [Dependency] private readonly StationRecordsSystem _recordsSystem = default!;
     [Dependency] private readonly EuiManager _euiManager = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     /// <summary>
     ///     Cached crew manifest entries. The alternative is to outright
@@ -44,6 +45,7 @@ public sealed class CrewManifestSystem : EntitySystem
         SubscribeLocalEvent<CrewManifestViewerComponent, CrewManifestOpenUiMessage>(OpenEuiFromBui);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeNetworkEvent<RequestCrewManifestMessage>(OnRequestCrewManifest);
+        SubscribeLocalEvent<CrewManifestViewerComponent, ViewManifestActionEvent>(OnViewManifestAction);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -123,6 +125,23 @@ public sealed class CrewManifestSystem : EntitySystem
     {
         var owningStation = _stationSystem.GetOwningStation(uid);
         if (owningStation == null || msg.Session is not IPlayerSession sessionCast)
+        {
+            return;
+        }
+
+        if (!_configManager.GetCVar(CCVars.CrewManifestUnsecure) && component.Unsecure)
+        {
+            return;
+        }
+
+        OpenEui(owningStation.Value, sessionCast, uid);
+    }
+
+    private void OnViewManifestAction(EntityUid uid, CrewManifestViewerComponent component, ViewManifestActionEvent msg)
+    {
+        _entityManager.TryGetComponent(uid, out ActorComponent? actor);
+        var owningStation = _stationSystem.GetOwningStation(uid);
+        if (owningStation == null || actor == null || actor.PlayerSession is not IPlayerSession sessionCast)
         {
             return;
         }
