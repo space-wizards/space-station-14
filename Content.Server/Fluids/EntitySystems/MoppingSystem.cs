@@ -41,16 +41,8 @@ public sealed class MoppingSystem : SharedMoppingSystem
 
     private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
     {
-        if (!_solutionSystem.TryGetSolution(uid, AbsorbentComponent.SolutionName, out var solution))
-            return;
-
         // TODO: I know dirty on init but no prediction moment.
-        var oldProgress = component.Progress;
-
-        component.Progress = (float) (solution.Volume / solution.MaxVolume);
-        if (component.Progress.Equals(oldProgress))
-            return;
-        Dirty(component);
+        UpdateAbsorbent(uid, component);
     }
 
     private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, SolutionChangedEvent args)
