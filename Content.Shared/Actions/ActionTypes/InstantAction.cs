@@ -7,7 +7,7 @@ namespace Content.Shared.Actions.ActionTypes;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual]
-public class InstantAction : ActionType
+public partial class InstantAction : ActionType
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.

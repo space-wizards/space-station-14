@@ -17,7 +17,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual, DataDefinition]
-public class ListingData : IEquatable<ListingData>, ICloneable
+public partial class ListingData : IEquatable<ListingData>, ICloneable
 {
     /// <summary>
     /// The name of the listing. If empty, uses the entity's name (if present)
@@ -148,7 +148,7 @@ public class ListingData : IEquatable<ListingData>, ICloneable
 [Prototype("listing")]
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class ListingPrototype : ListingData, IPrototype
+public sealed partial class ListingPrototype : ListingData, IPrototype
 {
     [ViewVariables]
     [IdDataField]

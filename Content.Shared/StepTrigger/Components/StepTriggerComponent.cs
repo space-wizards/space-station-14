@@ -7,7 +7,7 @@ namespace Content.Shared.StepTrigger.Components;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerComponent : Component
+public sealed partial class StepTriggerComponent : Component
 {
     /// <summary>
     ///     List of entities that are currently colliding with the entity.
@@ -43,13 +43,13 @@ public sealed class StepTriggerComponent : Component
 
 [RegisterComponent]
 [Access(typeof(StepTriggerSystem))]
-public sealed class StepTriggerActiveComponent : Component
+public sealed partial class StepTriggerActiveComponent : Component
 {
 
 }
 
 [Serializable, NetSerializable]
-public sealed class StepTriggerComponentState : ComponentState
+public sealed partial class StepTriggerComponentState : ComponentState
 {
     public float IntersectRatio { get; }
     public float RequiredTriggerSpeed { get; }

@@ -7,7 +7,7 @@ namespace Content.Server.Disease.Components
     /// For disease vaccines
     /// </summary>
     [RegisterComponent]
-    public sealed class DiseaseVaccineComponent : Component
+    public sealed partial class DiseaseVaccineComponent : Component
     {
         /// <summary>
         /// How long it takes to inject someone

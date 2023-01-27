@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class GasTileOverlayComponent : Component
+public sealed partial class GasTileOverlayComponent : Component
 {
     /// <summary>
     ///     The tiles that have had their atmos data updated since last tick
@@ -26,7 +26,7 @@ public sealed class GasTileOverlayComponent : Component
 
 
 [Serializable, NetSerializable]
-public sealed class GasTileOverlayState : ComponentState, IComponentDeltaState
+public sealed partial class GasTileOverlayState : ComponentState, IComponentDeltaState
 {
     public readonly Dictionary<Vector2i, GasOverlayChunk> Chunks;
     public bool FullState => AllChunks == null;

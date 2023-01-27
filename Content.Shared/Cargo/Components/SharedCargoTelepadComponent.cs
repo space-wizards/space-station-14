@@ -1,6 +1,6 @@
 namespace Content.Shared.Cargo.Components;
 
-public abstract class SharedCargoTelepadComponent : Component
+public abstract partial class SharedCargoTelepadComponent : Component
 {
 
 }

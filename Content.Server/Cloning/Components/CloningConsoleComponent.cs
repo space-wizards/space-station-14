@@ -1,7 +1,7 @@
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public sealed class CloningConsoleComponent : Component
+    public sealed partial class CloningConsoleComponent : Component
     {
         public const string ScannerPort = "MedicalScannerSender";
 

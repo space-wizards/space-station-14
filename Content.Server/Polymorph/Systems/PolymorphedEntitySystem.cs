@@ -167,5 +167,5 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    public sealed class RevertPolymorphActionEvent : InstantActionEvent { };
+    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent { };
 }

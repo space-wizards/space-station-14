@@ -1,6 +1,6 @@
 ﻿namespace Content.Client.Paper;
 
 [RegisterComponent]
-public sealed class PaperVisualsComponent : Component
+public sealed partial class PaperVisualsComponent : Component
 {
 }

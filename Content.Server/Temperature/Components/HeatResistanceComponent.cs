@@ -4,7 +4,7 @@ using Content.Shared.Inventory;
 namespace Content.Server.Temperature.Components
 {
     [RegisterComponent]
-    public sealed class HeatResistanceComponent : Component
+    public sealed partial class HeatResistanceComponent : Component
     {
         public int GetHeatResistance()
         {

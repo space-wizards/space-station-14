@@ -14,7 +14,7 @@ namespace Content.Server.Salvage;
 ///     whatever it's currently parented to.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageMobRestrictionsComponent : Component
+public sealed partial class SalvageMobRestrictionsComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("linkedGridEntity")]

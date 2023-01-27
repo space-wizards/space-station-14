@@ -5,7 +5,7 @@ namespace Content.Shared.Eye.Blinding
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class BlindableComponent : Component
+    public sealed partial class BlindableComponent : Component
     {
         /// <description>
         /// How many sources of blindness are affecting us?
@@ -44,7 +44,7 @@ namespace Content.Shared.Eye.Blinding
     }
 
     [Serializable, NetSerializable]
-    public sealed class BlindableComponentState : ComponentState
+    public sealed partial class BlindableComponentState : ComponentState
     {
         public readonly int Sources;
 

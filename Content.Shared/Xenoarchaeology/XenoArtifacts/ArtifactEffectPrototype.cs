@@ -10,7 +10,7 @@ namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 /// </summary>
 [Prototype("artifactEffect")]
 [DataDefinition]
-public sealed class ArtifactEffectPrototype : IPrototype
+public sealed partial class ArtifactEffectPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

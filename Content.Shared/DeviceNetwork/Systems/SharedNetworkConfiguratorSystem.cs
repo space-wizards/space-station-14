@@ -32,6 +32,6 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
     }
 }
 
-public sealed class ClearAllOverlaysEvent : InstantActionEvent
+public sealed partial class ClearAllOverlaysEvent : InstantActionEvent
 {
 }

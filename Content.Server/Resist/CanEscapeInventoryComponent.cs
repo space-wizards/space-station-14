@@ -3,7 +3,7 @@ using System.Threading;
 namespace Content.Server.Resist;
 
 [RegisterComponent]
-public sealed class CanEscapeInventoryComponent : Component
+public sealed partial class CanEscapeInventoryComponent : Component
 {
     /// <summary>
     /// Base doafter length for uncontested breakouts.

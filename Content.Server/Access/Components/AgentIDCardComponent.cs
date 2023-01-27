@@ -1,6 +1,6 @@
 namespace Content.Server.Access.Components
 {
     [RegisterComponent]
-    public sealed class AgentIDCardComponent : Component
+    public sealed partial class AgentIDCardComponent : Component
     {}
 }

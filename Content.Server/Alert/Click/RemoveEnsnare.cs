@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Alert.Click;
 [UsedImplicitly]
 [DataDefinition]
-public sealed class RemoveEnsnare : IAlertClick
+public sealed partial class RemoveEnsnare : IAlertClick
 {
     public void AlertClicked(EntityUid player)
     {

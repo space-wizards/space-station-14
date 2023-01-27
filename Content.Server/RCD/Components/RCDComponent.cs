@@ -12,7 +12,7 @@ namespace Content.Server.RCD.Components
     }
 
     [RegisterComponent]
-    public sealed class RCDComponent : Component
+    public sealed partial class RCDComponent : Component
     {
         private const int DefaultAmmoCount = 5;
 

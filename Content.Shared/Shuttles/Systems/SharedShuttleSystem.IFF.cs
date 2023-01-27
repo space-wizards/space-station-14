@@ -81,7 +81,7 @@ public abstract partial class SharedShuttleSystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class IFFComponentState : ComponentState
+    private sealed partial class IFFComponentState : ComponentState
     {
         public IFFFlags Flags;
         public Color Color;

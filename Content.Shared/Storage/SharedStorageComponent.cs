@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage
 {
     [NetworkedComponent()]
-    public abstract class SharedStorageComponent : Component
+    public abstract partial class SharedStorageComponent : Component
     {
         [Serializable, NetSerializable]
         public sealed class StorageBoundUserInterfaceState : BoundUserInterfaceState

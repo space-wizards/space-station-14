@@ -6,7 +6,7 @@ namespace Content.Server.Physics.Components;
 /// A component which makes its entity move around at random.
 /// </summary>
 [RegisterComponent]
-public sealed class RandomWalkComponent : Component
+public sealed partial class RandomWalkComponent : Component
 {
     /// <summary>
     /// The minimum speed at which this entity will move.

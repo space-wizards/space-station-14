@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Advertise
 {
     [RegisterComponent, Access(typeof(AdvertiseSystem))]
-    public sealed class AdvertiseComponent : Component
+    public sealed partial class AdvertiseComponent : Component
     {
         /// <summary>
         ///     Minimum time in seconds to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.

@@ -12,7 +12,7 @@ namespace Content.Server.Power.Components
         public string? NodeId { get; }
     }
 
-    public abstract class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
+    public abstract partial class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

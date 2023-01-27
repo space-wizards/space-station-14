@@ -9,7 +9,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Chemistry.TileReactions
 {
     [DataDefinition]
-    public sealed class CleanTileReaction : ITileReaction
+    public sealed partial class CleanTileReaction : ITileReaction
     {
         /// <summary>
         ///     Multiplier used in CleanTileReaction.

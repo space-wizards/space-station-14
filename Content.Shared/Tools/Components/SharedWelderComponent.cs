@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Tools.Components
 {
     [NetworkedComponent]
-    public abstract class SharedWelderComponent : Component
+    public abstract partial class SharedWelderComponent : Component
     {
         public bool Lit { get; set; }
     }
 
     [NetSerializable, Serializable]
-    public sealed class WelderComponentState : ComponentState
+    public sealed partial class WelderComponentState : ComponentState
     {
         public float FuelCapacity { get; }
         public float Fuel { get; }

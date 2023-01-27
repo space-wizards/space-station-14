@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EscapeShuttleCondition : IObjectiveCondition
+    public sealed partial class EscapeShuttleCondition : IObjectiveCondition
     {
         private Mind.Mind? _mind;
 

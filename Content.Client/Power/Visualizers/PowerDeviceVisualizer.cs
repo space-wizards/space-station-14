@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Power
 {
     [UsedImplicitly]
-    public sealed class PowerDeviceVisualizer : AppearanceVisualizer
+    public sealed partial class PowerDeviceVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

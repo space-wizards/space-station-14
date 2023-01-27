@@ -7,7 +7,7 @@ namespace Content.Server.SurveillanceCamera;
 ///     environment. All surveillance camera monitors have speakers for this.
 /// </summary>
 [RegisterComponent]
-public sealed class SurveillanceCameraMicrophoneComponent : Component
+public sealed partial class SurveillanceCameraMicrophoneComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled { get; set; } = true;

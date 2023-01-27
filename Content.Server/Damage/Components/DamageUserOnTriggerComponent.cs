@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Damage.Components;
 
 [RegisterComponent]
-public sealed class DamageUserOnTriggerComponent : Component
+public sealed partial class DamageUserOnTriggerComponent : Component
 {
     [DataField("ignoreResistances")] public bool IgnoreResistances;
 

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Engineering.Components
 {
     [RegisterComponent]
-    public sealed class SpawnAfterInteractComponent : Component
+    public sealed partial class SpawnAfterInteractComponent : Component
     {
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? Prototype { get; }

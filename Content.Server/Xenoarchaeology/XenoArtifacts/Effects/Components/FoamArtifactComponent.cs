@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// Generates foam from the artifact when activated
 /// </summary>
 [RegisterComponent]
-public sealed class FoamArtifactComponent : Component
+public sealed partial class FoamArtifactComponent : Component
 {
     /// <summary>
     /// The list of reagents that will randomly be picked from

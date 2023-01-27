@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Clothing;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(ClothingSpeedModifierSystem))]
-public sealed class ClothingSpeedModifierComponent : Component
+public sealed partial class ClothingSpeedModifierComponent : Component
 {
     [DataField("walkModifier", required: true)] [ViewVariables(VVAccess.ReadWrite)]
     public float WalkModifier = 1.0f;
@@ -20,7 +20,7 @@ public sealed class ClothingSpeedModifierComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ClothingSpeedModifierComponentState : ComponentState
+public sealed partial class ClothingSpeedModifierComponentState : ComponentState
 {
     public float WalkModifier;
     public float SprintModifier;

@@ -12,7 +12,7 @@ namespace Content.Shared.Clothing.Components;
 [NetworkedComponent]
 [RegisterComponent]
 [Access(typeof(ClothingSystem), typeof(InventorySystem))]
-public sealed class ClothingComponent : Component
+public sealed partial class ClothingComponent : Component
 {
     [DataField("clothingVisuals")]
     [Access(typeof(ClothingSystem), typeof(InventorySystem), Other = AccessPermissions.ReadExecute)] // TODO remove execute permissions.
@@ -52,7 +52,7 @@ public sealed class ClothingComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ClothingComponentState : ComponentState
+public sealed partial class ClothingComponentState : ComponentState
 {
     public string? EquippedPrefix;
 

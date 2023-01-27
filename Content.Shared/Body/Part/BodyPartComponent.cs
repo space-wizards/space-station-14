@@ -7,7 +7,7 @@ namespace Content.Shared.Body.Part;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedBodySystem))]
-public sealed class BodyPartComponent : Component
+public sealed partial class BodyPartComponent : Component
 {
     [DataField("body")]
     public EntityUid? Body;

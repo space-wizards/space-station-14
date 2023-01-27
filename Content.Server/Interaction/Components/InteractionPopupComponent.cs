@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Interaction.Components;
 
 [RegisterComponent, Access(typeof(InteractionPopupSystem))]
-public sealed class InteractionPopupComponent : Component
+public sealed partial class InteractionPopupComponent : Component
 {
     /// <summary>
     /// Time delay between interactions to avoid spam.

@@ -5,7 +5,7 @@ namespace Content.Shared.Follower.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class OrbitVisualsComponent : Component
+public sealed partial class OrbitVisualsComponent : Component
 {
     /// <summary>
     ///     How long should the orbit animation last in seconds, before being randomized?

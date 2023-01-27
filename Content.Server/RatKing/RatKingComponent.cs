@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.RatKing
 {
     [RegisterComponent]
-    public sealed class RatKingComponent : Component
+    public sealed partial class RatKingComponent : Component
     {
         /// <summary>
         ///     The action for the Raise Army ability

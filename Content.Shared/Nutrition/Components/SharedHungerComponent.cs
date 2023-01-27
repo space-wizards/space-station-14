@@ -4,13 +4,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Nutrition.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedHungerComponent : Component
+    public abstract partial class SharedHungerComponent : Component
     {
         [ViewVariables]
         public abstract HungerThreshold CurrentHungerThreshold { get; }
 
         [Serializable, NetSerializable]
-        protected sealed class HungerComponentState : ComponentState
+        protected sealed partial class HungerComponentState : ComponentState
         {
             public HungerThreshold CurrentThreshold { get; }
 

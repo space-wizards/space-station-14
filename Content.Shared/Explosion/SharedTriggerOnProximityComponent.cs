@@ -1,6 +1,6 @@
 namespace Content.Shared.Explosion;
 
-public abstract class SharedTriggerOnProximityComponent : Component
+public abstract partial class SharedTriggerOnProximityComponent : Component
 {
 
 }

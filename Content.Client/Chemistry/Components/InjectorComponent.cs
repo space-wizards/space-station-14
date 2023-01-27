@@ -17,7 +17,7 @@ namespace Content.Client.Chemistry.Components
     /// Client behavior for injectors & syringes. Used for item status on injectors
     /// </summary>
     [RegisterComponent]
-    public sealed class InjectorComponent : SharedInjectorComponent
+    public sealed partial class InjectorComponent : SharedInjectorComponent
     {
         [ViewVariables]
         public FixedPoint2 CurrentVolume;

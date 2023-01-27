@@ -7,7 +7,7 @@ using Content.Server.GameTicking.Rules;
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed class RandomTraitorAliveCondition : IObjectiveCondition
+    public sealed partial class RandomTraitorAliveCondition : IObjectiveCondition
     {
         private Mind.Mind? _target;
 

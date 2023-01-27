@@ -9,7 +9,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Animations
 {
     [RegisterComponent]
-    public sealed class AnimationsTestComponent : Component
+    public sealed partial class AnimationsTestComponent : Component
     {
         protected override void Initialize()
         {

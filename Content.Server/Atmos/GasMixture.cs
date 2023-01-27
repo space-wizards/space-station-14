@@ -12,7 +12,7 @@ namespace Content.Server.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class GasMixture : IEquatable<GasMixture>, ISerializationHooks
+    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 

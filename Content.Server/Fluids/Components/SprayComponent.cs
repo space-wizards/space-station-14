@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
 [Access(typeof(SpraySystem))]
-public sealed class SprayComponent : Component
+public sealed partial class SprayComponent : Component
 {
     public const string SolutionName = "spray";
 

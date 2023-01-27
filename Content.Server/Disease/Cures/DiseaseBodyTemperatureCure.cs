@@ -6,7 +6,7 @@ namespace Content.Server.Disease.Cures
     /// <summary>
     ///     Cures the disease if temperature is within certain bounds.
     /// </summary>
-    public sealed class DiseaseBodyTemperatureCure : DiseaseCure
+    public sealed partial class DiseaseBodyTemperatureCure : DiseaseCure
     {
         [DataField("min")]
         public float Min = 0;

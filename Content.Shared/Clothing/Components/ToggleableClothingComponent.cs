@@ -13,7 +13,7 @@ namespace Content.Shared.Clothing.Components;
 /// </summary>
 [Access(typeof(ToggleableClothingSystem))]
 [RegisterComponent]
-public sealed class ToggleableClothingComponent : Component
+public sealed partial class ToggleableClothingComponent : Component
 {
     public const string DefaultClothingContainerId = "toggleable-clothing";
 

@@ -7,7 +7,7 @@ namespace Content.Server.NodeContainer.Nodes
     ///     A <see cref="Node"/> that can reach other <see cref="AdjacentNode"/>s that are directly adjacent to it.
     /// </summary>
     [DataDefinition]
-    public sealed class AdjacentNode : Node
+    public sealed partial class AdjacentNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

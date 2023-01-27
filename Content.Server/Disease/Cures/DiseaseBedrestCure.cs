@@ -9,7 +9,7 @@ namespace Content.Server.Disease.Cures
     /// Cures the disease after a certain amount of time
     /// strapped.
     /// </summary>
-    public sealed class DiseaseBedrestCure : DiseaseCure
+    public sealed partial class DiseaseBedrestCure : DiseaseCure
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public int Ticker = 0;

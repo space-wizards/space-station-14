@@ -9,7 +9,7 @@ namespace Content.Server.Disease.Components
     /// Please use only on mobs.
     /// </summary>
     [RegisterComponent]
-    public sealed class DiseaseCarrierComponent : Component
+    public sealed partial class DiseaseCarrierComponent : Component
     {
         /// <summary>
         /// Shows the CURRENT diseases on the carrier

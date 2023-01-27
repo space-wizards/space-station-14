@@ -13,7 +13,7 @@ namespace Content.Shared.Damage
     [DataDefinition]
     [Serializable, NetSerializable]
     [Virtual]
-    public class DamageModifierSet
+    public partial class DamageModifierSet
     {
         [DataField("coefficients", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, DamageTypePrototype>))]
         public Dictionary<string, float> Coefficients = new();

@@ -10,7 +10,7 @@ namespace Content.Server.Tools.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(WeldableSystem))]
-public sealed class WeldableComponent : SharedWeldableComponent
+public sealed partial class WeldableComponent : SharedWeldableComponent
 {
     /// <summary>
     ///     Tool quality for welding.

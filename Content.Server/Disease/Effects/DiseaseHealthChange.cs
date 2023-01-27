@@ -8,7 +8,7 @@ namespace Content.Server.Disease.Effects
     /// Deals or heals damage to the host
     /// </summary>
     [UsedImplicitly]
-    public sealed class DiseaseHealthChange : DiseaseEffect
+    public sealed partial class DiseaseHealthChange : DiseaseEffect
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

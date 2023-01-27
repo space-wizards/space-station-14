@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Tools.Components
 {
     [RegisterComponent, NetworkedComponent] // TODO move tool system to shared, and make it a friend.
-    public sealed class ToolComponent : Component
+    public sealed partial class ToolComponent : Component
     {
         [DataField("qualities")]
         public PrototypeFlags<ToolQualityPrototype> Qualities { get; set; } = new();

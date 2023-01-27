@@ -7,7 +7,7 @@ namespace Content.Shared.Shuttles.Components;
 /// Handles what a grid should look like on radar.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedShuttleSystem))]
-public sealed class IFFComponent : Component
+public sealed partial class IFFComponent : Component
 {
     /// <summary>
     /// Should we show IFF by default?

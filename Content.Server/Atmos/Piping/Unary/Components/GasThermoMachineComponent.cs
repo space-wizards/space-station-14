@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed class GasThermoMachineComponent : Component
+    public sealed partial class GasThermoMachineComponent : Component
     {
         [DataField("inlet")]
         public string InletName = "pipe";

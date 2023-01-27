@@ -5,7 +5,7 @@
     ///     Think pouring this or draining from a water tank.
     /// </summary>
     [RegisterComponent]
-    public sealed class DrainableSolutionComponent : Component
+    public sealed partial class DrainableSolutionComponent : Component
     {
         /// <summary>
         /// Solution name that can be drained.

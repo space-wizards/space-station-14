@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
-public sealed class MechGrabberUi : UIFragment
+public sealed partial class MechGrabberUi : UIFragment
 {
     private MechGrabberUiFragment? _fragment;
 

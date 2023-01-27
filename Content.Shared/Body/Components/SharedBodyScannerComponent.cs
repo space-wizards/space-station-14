@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Body.Components
 {
-    public abstract class SharedBodyScannerComponent : Component
+    public abstract partial class SharedBodyScannerComponent : Component
     {
     }
 

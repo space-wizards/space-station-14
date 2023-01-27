@@ -6,10 +6,10 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Tools.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class MultipleToolComponent : Component
+    public sealed partial class MultipleToolComponent : Component
     {
         [DataDefinition]
-        public sealed class ToolEntry
+        public sealed partial class ToolEntry
         {
             [DataField("behavior", required: true)]
             public PrototypeFlags<ToolQualityPrototype> Behavior = new();
@@ -41,7 +41,7 @@ namespace Content.Shared.Tools.Components
     }
 
     [NetSerializable, Serializable]
-    public sealed class MultipleToolComponentState : ComponentState
+    public sealed partial class MultipleToolComponentState : ComponentState
     {
         public readonly uint Selected;
 

@@ -47,7 +47,7 @@ namespace Content.Shared.Speech
         }
 
         [Serializable, NetSerializable]
-        private sealed class SpeechComponentState : ComponentState
+        private sealed partial class SpeechComponentState : ComponentState
         {
             public readonly bool Enabled;
 

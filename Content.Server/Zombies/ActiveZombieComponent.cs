@@ -1,7 +1,7 @@
 namespace Content.Server.Zombies;
 
 [RegisterComponent]
-public sealed class ActiveZombieComponent : Component
+public sealed partial class ActiveZombieComponent : Component
 {
     /// <summary>
     /// The chance that on a random attempt

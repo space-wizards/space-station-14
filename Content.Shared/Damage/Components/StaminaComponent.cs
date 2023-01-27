@@ -7,7 +7,7 @@ namespace Content.Shared.Damage.Components;
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class StaminaComponent : Component
+public sealed partial class StaminaComponent : Component
 {
     /// <summary>
     /// Have we reached peak stamina damage and been paralyzed?

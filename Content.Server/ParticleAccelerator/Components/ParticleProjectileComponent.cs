@@ -8,7 +8,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
-    public sealed class ParticleProjectileComponent : Component
+    public sealed partial class ParticleProjectileComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

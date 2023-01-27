@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
-    public sealed class ForensicScannerComponent : Component
+    public sealed partial class ForensicScannerComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 

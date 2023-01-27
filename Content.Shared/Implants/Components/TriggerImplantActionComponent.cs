@@ -3,7 +3,7 @@
 /// Triggers implants when the action is pressed
 /// </summary>
 [RegisterComponent]
-public sealed class TriggerImplantActionComponent : Component
+public sealed partial class TriggerImplantActionComponent : Component
 {
 
 }

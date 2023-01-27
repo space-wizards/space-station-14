@@ -4,7 +4,7 @@ using Content.Server.Power.Pow3r;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed class PowerSupplierComponent : BasePowerNetComponent
+    public sealed partial class PowerSupplierComponent : BasePowerNetComponent
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("supplyRate")]

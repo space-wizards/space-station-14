@@ -7,7 +7,7 @@ namespace Content.Shared.Vehicle;
 public abstract partial class SharedVehicleSystem
 {
     [Serializable, NetSerializable]
-    protected sealed class RiderComponentState : ComponentState
+    protected sealed partial class RiderComponentState : ComponentState
     {
         public EntityUid? Entity;
     }

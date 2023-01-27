@@ -7,7 +7,7 @@ namespace Content.Server.Storage.Components
     ///     Spawns items when used in hand.
     /// </summary>
     [RegisterComponent]
-    public sealed class SpawnItemsOnUseComponent : Component
+    public sealed partial class SpawnItemsOnUseComponent : Component
     {
         /// <summary>
         ///     The list of entities to spawn, with amounts and orGroups.

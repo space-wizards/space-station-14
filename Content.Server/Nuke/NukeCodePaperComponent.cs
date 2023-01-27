@@ -5,7 +5,7 @@ namespace Content.Server.Nuke
     ///     Can be used in mapping or admins spawn.
     /// </summary>
     [RegisterComponent]
-    public sealed class NukeCodePaperComponent : Component
+    public sealed partial class NukeCodePaperComponent : Component
     {
     }
 }

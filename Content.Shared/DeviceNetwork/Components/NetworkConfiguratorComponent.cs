@@ -7,7 +7,7 @@ namespace Content.Shared.DeviceNetwork;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedNetworkConfiguratorSystem))]
-public sealed class NetworkConfiguratorComponent : Component
+public sealed partial class NetworkConfiguratorComponent : Component
 {
     /// <summary>
     /// The entity containing a <see cref="DeviceListComponent"/> this configurator is currently interacting with
@@ -26,7 +26,7 @@ public sealed class NetworkConfiguratorComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class NetworkConfiguratorComponentState : ComponentState
+public sealed partial class NetworkConfiguratorComponentState : ComponentState
 {
     public readonly EntityUid? ActiveDeviceList;
 

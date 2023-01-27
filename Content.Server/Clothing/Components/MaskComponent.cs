@@ -5,7 +5,7 @@ namespace Content.Server.Clothing.Components
 {
     [Access(typeof(MaskSystem))]
     [RegisterComponent]
-    public sealed class MaskComponent : Component
+    public sealed partial class MaskComponent : Component
     {
         /// <summary>
         /// This mask can be toggled (pulled up/down)
@@ -16,5 +16,5 @@ namespace Content.Server.Clothing.Components
         public bool IsToggled = false;
     }
 
-    public sealed class ToggleMaskEvent : InstantActionEvent { }
+    public sealed partial class ToggleMaskEvent : InstantActionEvent { }
 }

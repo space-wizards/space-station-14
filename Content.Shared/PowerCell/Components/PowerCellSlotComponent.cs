@@ -3,7 +3,7 @@ using Content.Shared.Containers.ItemSlots;
 namespace Content.Shared.PowerCell.Components;
 
 [RegisterComponent]
-public sealed class PowerCellSlotComponent : Component
+public sealed partial class PowerCellSlotComponent : Component
 {
     /// <summary>
     /// The actual item-slot that contains the cell. Allows all the interaction logic to be handled by <see cref="ItemSlotsSystem"/>.

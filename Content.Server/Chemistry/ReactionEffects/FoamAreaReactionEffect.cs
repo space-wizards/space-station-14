@@ -12,7 +12,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class FoamAreaReactionEffect : AreaReactionEffect
+    public sealed partial class FoamAreaReactionEffect : AreaReactionEffect
     {
         protected override SolutionAreaEffectComponent? GetAreaEffectComponent(EntityUid entity)
         {

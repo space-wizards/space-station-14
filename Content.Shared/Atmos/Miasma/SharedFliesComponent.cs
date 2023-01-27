@@ -1,5 +1,5 @@
 namespace Content.Shared.Atmos.Miasma;
-public abstract class SharedFliesComponent : Component
+public abstract partial class SharedFliesComponent : Component
 {
 
 }

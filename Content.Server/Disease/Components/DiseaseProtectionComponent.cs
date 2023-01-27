@@ -5,7 +5,7 @@ namespace Content.Server.Disease.Components
     /// protection against infection from diseases
     /// </summary>
     [RegisterComponent]
-    public sealed class DiseaseProtectionComponent : Component
+    public sealed partial class DiseaseProtectionComponent : Component
     {
         /// <summary>
         /// Float value between 0 and 1, will be subtracted

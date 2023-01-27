@@ -5,7 +5,7 @@ namespace Content.Shared.Beam.Components;
 /// <summary>
 /// Use this as a generic beam. Not for something like a laser gun, more for something continuous like lightning.
 /// </summary>
-public abstract class SharedBeamComponent : Component
+public abstract partial class SharedBeamComponent : Component
 {
     /// <summary>
     /// A unique list of targets that this beam collided with.

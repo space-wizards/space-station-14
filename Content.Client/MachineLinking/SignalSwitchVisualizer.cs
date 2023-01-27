@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.MachineLinking
 {
     [UsedImplicitly]
-    public sealed class SignalSwitchVisualizer : AppearanceVisualizer
+    public sealed partial class SignalSwitchVisualizer : AppearanceVisualizer
     {
         [DataField("layer")]
         private int Layer { get; }

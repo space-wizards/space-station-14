@@ -5,14 +5,14 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.BarSign
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class BarSignComponent : Component
+    public sealed partial class BarSignComponent : Component
     {
         [DataField("current", customTypeSerializer:typeof(PrototypeIdSerializer<BarSignPrototype>))]
         public string? CurrentSign;
     }
 
     [Serializable, NetSerializable]
-    public sealed class BarSignComponentState : ComponentState
+    public sealed partial class BarSignComponentState : ComponentState
     {
         public string? CurrentSign;
 

@@ -10,7 +10,7 @@ namespace Content.Client.Parallax.Data;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class ImageParallaxTextureSource : IParallaxTextureSource
+public sealed partial class ImageParallaxTextureSource : IParallaxTextureSource
 {
     /// <summary>
     /// Texture path.

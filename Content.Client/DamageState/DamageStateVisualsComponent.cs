@@ -3,7 +3,7 @@ using Content.Shared.Mobs;
 namespace Content.Client.DamageState;
 
 [RegisterComponent]
-public sealed class DamageStateVisualsComponent : Component
+public sealed partial class DamageStateVisualsComponent : Component
 {
     public int? OriginalDrawDepth;
 

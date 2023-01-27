@@ -7,7 +7,7 @@ namespace Content.Shared.Examine
     ///     This component groups examine messages together
     /// </summary>
     [RegisterComponent]
-    public sealed class GroupExamineComponent : Component
+    public sealed partial class GroupExamineComponent : Component
     {
         /// <summary>
         ///     A list of ExamineGroups.
@@ -27,7 +27,7 @@ namespace Content.Shared.Examine
     }
 
     [DataDefinition]
-    public sealed class ExamineGroup
+    public sealed partial class ExamineGroup
     {
         /// <summary>
         ///     The title of the Examine Group, the .

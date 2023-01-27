@@ -10,7 +10,7 @@ namespace Content.Server.Store.Conditions;
 /// Allows a store entry to be filtered out based on the user's job.
 /// Supports both blacklists and whitelists
 /// </summary>
-public sealed class BuyerJobCondition : ListingCondition
+public sealed partial class BuyerJobCondition : ListingCondition
 {
     /// <summary>
     /// A whitelist of jobs prototypes that can purchase this listing. Only one needs to be found.

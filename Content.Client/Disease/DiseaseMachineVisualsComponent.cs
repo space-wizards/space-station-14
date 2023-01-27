@@ -5,7 +5,7 @@ namespace Content.Client.Disease;
 /// playing animtions on the client.
 /// </summary>
 [RegisterComponent]
-public sealed class DiseaseMachineVisualsComponent : Component
+public sealed partial class DiseaseMachineVisualsComponent : Component
 {
     [DataField("idleState", required: true)]
     public string IdleState = default!;

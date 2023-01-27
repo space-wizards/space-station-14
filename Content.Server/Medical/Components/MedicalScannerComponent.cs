@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
-    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
+    public sealed partial class MedicalScannerComponent : SharedMedicalScannerComponent
     {
         public const string ScannerPort = "MedicalScannerReceiver";
         public ContainerSlot BodyContainer = default!;

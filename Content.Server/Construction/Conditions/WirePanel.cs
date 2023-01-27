@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class WirePanel : IGraphCondition
+    public sealed partial class WirePanel : IGraphCondition
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 

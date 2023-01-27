@@ -4,7 +4,7 @@
 /// This is used for the narcolepsy trait.
 /// </summary>
 [RegisterComponent, Access(typeof(NarcolepsySystem))]
-public sealed class NarcolepsyComponent : Component
+public sealed partial class NarcolepsyComponent : Component
 {
     /// <summary>
     /// The random time between incidents, (min, max).

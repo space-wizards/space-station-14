@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Disposal.Components
 {
     [NetworkedComponent]
-    public abstract class SharedDisposalUnitComponent : Component
+    public abstract partial class SharedDisposalUnitComponent : Component
     {
         public const string ContainerId = "DisposalUnit";
 
@@ -73,7 +73,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        protected sealed class DisposalUnitComponentState : ComponentState
+        protected sealed partial class DisposalUnitComponentState : ComponentState
         {
             public List<EntityUid> RecentlyEjected;
 

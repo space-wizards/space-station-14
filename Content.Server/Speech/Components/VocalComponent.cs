@@ -9,7 +9,7 @@ namespace Content.Server.Speech.Components;
 ///     Component required for entities to be able to scream.
 /// </summary>
 [RegisterComponent]
-public sealed class VocalComponent : Component
+public sealed partial class VocalComponent : Component
 {
     [DataField("maleScream")]
     public SoundSpecifier MaleScream = new SoundCollectionSpecifier("MaleScreams");
@@ -38,4 +38,4 @@ public sealed class VocalComponent : Component
     public InstantAction? ScreamAction = null;
 }
 
-public sealed class ScreamActionEvent : InstantActionEvent { };
+public sealed partial class ScreamActionEvent : InstantActionEvent { };

@@ -7,7 +7,7 @@ namespace Content.Server.Botany.Components;
 
 [RegisterComponent]
 [Access(typeof(SeedExtractorSystem))]
-public sealed class SeedExtractorComponent : Component
+public sealed partial class SeedExtractorComponent : Component
 {
     /// <summary>
     /// The minimum amount of seed packets dropped with no machine upgrades.

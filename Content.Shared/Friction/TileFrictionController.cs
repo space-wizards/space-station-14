@@ -215,7 +215,7 @@ namespace Content.Shared.Friction
         }
 
         [NetSerializable, Serializable]
-        private sealed class TileFrictionComponentState : ComponentState
+        private sealed partial class TileFrictionComponentState : ComponentState
         {
             public float Modifier;
 

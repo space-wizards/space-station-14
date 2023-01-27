@@ -8,7 +8,7 @@ namespace Content.Server.Medical.Components
     /// Adds an innate verb when equipped to use a stethoscope.
     /// </summary>
     [RegisterComponent]
-    public sealed class StethoscopeComponent : Component
+    public sealed partial class StethoscopeComponent : Component
     {
         public bool IsActive = false;
 

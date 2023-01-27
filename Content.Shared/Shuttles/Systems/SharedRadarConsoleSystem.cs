@@ -38,7 +38,7 @@ public abstract class SharedRadarConsoleSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class RadarConsoleComponentState : ComponentState
+    protected sealed partial class RadarConsoleComponentState : ComponentState
     {
         public float Range;
     }

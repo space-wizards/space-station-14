@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Instruments;
 
 [NetworkedComponent, Access(typeof(SharedInstrumentSystem))]
-public abstract class SharedInstrumentComponent : Component
+public abstract partial class SharedInstrumentComponent : Component
 {
     [ViewVariables]
     public bool Playing { get; set; }
@@ -76,7 +76,7 @@ public sealed class InstrumentMidiEventEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class InstrumentState : ComponentState
+public sealed partial class InstrumentState : ComponentState
 {
     public bool Playing { get; }
     public byte InstrumentProgram { get; }

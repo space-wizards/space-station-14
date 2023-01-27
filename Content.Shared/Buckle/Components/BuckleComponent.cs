@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Buckle.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class BuckleComponent : Component
+public sealed partial class BuckleComponent : Component
 {
     /// <summary>
     ///     The range from which this entity can buckle to a <see cref="StrapComponent"/>.
@@ -54,7 +54,7 @@ public sealed class BuckleComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class BuckleComponentState : ComponentState
+public sealed partial class BuckleComponentState : ComponentState
 {
     public BuckleComponentState(bool buckled, EntityUid? lastEntityBuckledTo, bool dontCollide)
     {

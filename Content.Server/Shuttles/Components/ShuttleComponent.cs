@@ -3,7 +3,7 @@ using Content.Shared.Shuttles.Components;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleComponent : Component
+    public sealed partial class ShuttleComponent : Component
     {
         [ViewVariables]
         public bool Enabled = true;

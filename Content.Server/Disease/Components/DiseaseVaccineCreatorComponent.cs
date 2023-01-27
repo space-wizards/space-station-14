@@ -5,6 +5,6 @@ namespace Content.Server.Disease.Components
     /// vaccine creating machine
     /// </summary>
     [RegisterComponent]
-    public sealed class DiseaseVaccineCreatorComponent : Component
+    public sealed partial class DiseaseVaccineCreatorComponent : Component
     {}
 }

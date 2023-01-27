@@ -9,7 +9,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    public sealed class BlockGameArcadeComponent : Component
+    public sealed partial class BlockGameArcadeComponent : Component
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;

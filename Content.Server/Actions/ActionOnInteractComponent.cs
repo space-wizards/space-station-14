@@ -17,7 +17,7 @@ namespace Content.Server.Actions;
 ///     This component mainly exists as a lazy way to add utility entities that can do things like cast "spells".
 /// </remarks>
 [RegisterComponent]
-public sealed class ActionOnInteractComponent : Component
+public sealed partial class ActionOnInteractComponent : Component
 {
     [DataField("activateActions")]
     public List<InstantAction>? ActivateActions;

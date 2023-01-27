@@ -8,7 +8,7 @@
 /// </remarks>
 /// <seealso cref="UIFragment"/>
 [RegisterComponent]
-public sealed class UIFragmentComponent : Component
+public sealed partial class UIFragmentComponent : Component
 {
     [DataField("ui", true)]
     public UIFragment? Ui;

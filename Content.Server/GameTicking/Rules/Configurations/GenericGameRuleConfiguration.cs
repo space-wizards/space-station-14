@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Configurations;
 /// A generic configuration, for game rules that don't have special config data.
 /// </summary>
 [UsedImplicitly]
-public sealed class GenericGameRuleConfiguration : GameRuleConfiguration
+public sealed partial class GenericGameRuleConfiguration : GameRuleConfiguration
 {
     [DataField("id", required: true)]
     private string _id = default!;

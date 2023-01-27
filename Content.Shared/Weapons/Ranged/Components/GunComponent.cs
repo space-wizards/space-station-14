@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent, Virtual]
-public class GunComponent : Component
+public partial class GunComponent : Component
 {
     #region Sound
 

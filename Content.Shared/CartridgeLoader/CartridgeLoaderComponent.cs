@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 namespace Content.Shared.CartridgeLoader;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class CartridgeLoaderComponent : Component
+public sealed partial class CartridgeLoaderComponent : Component
 {
     public const string CartridgeSlotId = "Cartridge-Slot";
 

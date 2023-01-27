@@ -11,7 +11,7 @@ namespace Content.Server.Disease.Effects
     /// last the length of the disease.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DiseaseGenericStatusEffect : DiseaseEffect
+    public sealed partial class DiseaseGenericStatusEffect : DiseaseEffect
     {
         /// <summary>
         /// The status effect key

@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
-    public sealed class DamageOnToolInteractComponent : Component
+    public sealed partial class DamageOnToolInteractComponent : Component
     {
         [DataField("tools")]
         public PrototypeFlags<ToolQualityPrototype> Tools { get; } = new ();

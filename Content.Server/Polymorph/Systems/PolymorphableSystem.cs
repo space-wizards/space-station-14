@@ -216,7 +216,7 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    public sealed class PolymorphActionEvent : InstantActionEvent
+    public sealed partial class PolymorphActionEvent : InstantActionEvent
     {
         /// <summary>
         /// The polymorph prototype containing all the information about

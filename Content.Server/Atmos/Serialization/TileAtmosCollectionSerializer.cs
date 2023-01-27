@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Interfaces;
 
 namespace Content.Server.Atmos.Serialization;
 
-public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
+public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<Vector2i, TileAtmosphere>, MappingDataNode>, ITypeCopier<Dictionary<Vector2i, TileAtmosphere>>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -76,7 +76,7 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
     }
 
     [DataDefinition]
-    private struct TileAtmosData
+    private partial struct TileAtmosData
     {
         [DataField("uniqueMixes")] public List<GasMixture>? UniqueMixes;
 

@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.CombatMode
 {
     [NetworkedComponent()]
-    public abstract class SharedCombatModeComponent : Component
+    public abstract partial class SharedCombatModeComponent : Component
     {
         #region Disarm
 

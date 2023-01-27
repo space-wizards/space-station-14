@@ -11,7 +11,7 @@ namespace Content.Shared.Radiation.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedGeigerSystem))]
-public sealed class GeigerComponent : Component
+public sealed partial class GeigerComponent : Component
 {
     /// <summary>
     ///     If true it will be active only when player equipped it.
@@ -86,7 +86,7 @@ public sealed class GeigerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class GeigerComponentState : ComponentState
+public sealed partial class GeigerComponentState : ComponentState
 {
     public float CurrentRadiation;
     public GeigerDangerLevel DangerLevel;

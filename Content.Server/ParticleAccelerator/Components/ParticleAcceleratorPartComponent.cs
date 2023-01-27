@@ -1,6 +1,6 @@
 namespace Content.Server.ParticleAccelerator.Components
 {
-    public abstract class ParticleAcceleratorPartComponent : Component
+    public abstract partial class ParticleAcceleratorPartComponent : Component
     {
         [ViewVariables] public ParticleAcceleratorControlBoxComponent? Master;
 

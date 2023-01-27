@@ -7,7 +7,7 @@ namespace Content.Server.Disease.Effects
     /// Adds a component to the diseased entity
     /// </summary>
     [UsedImplicitly]
-    public sealed class DiseaseAddComponent : DiseaseEffect
+    public sealed partial class DiseaseAddComponent : DiseaseEffect
     {
         /// <summary>
         /// The component that is added at the end of build up

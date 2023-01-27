@@ -5,7 +5,7 @@ namespace Content.Shared.Pointing;
 public abstract class SharedPointingSystem : EntitySystem
 {
     [Serializable, NetSerializable]
-    protected sealed class PointingArrowComponentState : ComponentState
+    protected sealed partial class PointingArrowComponentState : ComponentState
     {
         public TimeSpan EndTime;
 

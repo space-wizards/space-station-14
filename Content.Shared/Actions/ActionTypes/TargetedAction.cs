@@ -71,7 +71,7 @@ public abstract class TargetedAction : ActionType
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual]
-public class EntityTargetAction : TargetedAction
+public partial class EntityTargetAction : TargetedAction
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.
@@ -119,7 +119,7 @@ public class EntityTargetAction : TargetedAction
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual]
-public class WorldTargetAction : TargetedAction
+public partial class WorldTargetAction : TargetedAction
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.

@@ -1,7 +1,7 @@
 namespace Content.Server.Nutrition.Components;
 
 [RegisterComponent]
-public sealed class FlavorProfileComponent : Component
+public sealed partial class FlavorProfileComponent : Component
 {
     /// <summary>
     ///     Localized string containing the base flavor of this entity.

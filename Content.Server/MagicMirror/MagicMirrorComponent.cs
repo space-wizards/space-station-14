@@ -1,6 +1,6 @@
 namespace Content.Server.MagicMirror;
 
 [RegisterComponent]
-public sealed class MagicMirrorComponent : Component
+public sealed partial class MagicMirrorComponent : Component
 {
 }

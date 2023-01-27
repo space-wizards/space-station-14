@@ -27,7 +27,7 @@ public abstract partial class SharedGunSystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class CartridgeAmmoComponentState : ComponentState
+    private sealed partial class CartridgeAmmoComponentState : ComponentState
     {
         public bool Spent;
     }

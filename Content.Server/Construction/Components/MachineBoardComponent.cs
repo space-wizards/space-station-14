@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
@@ -6,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public sealed class MachineBoardComponent : Component
+    public sealed partial class MachineBoardComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -41,7 +42,7 @@ namespace Content.Server.Construction.Components
 
     [Serializable]
     [DataDefinition]
-    public struct GenericPartInfo
+    public partial struct GenericPartInfo
     {
         [DataField("Amount")]
         public int Amount;

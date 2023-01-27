@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Sprite;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class RandomSpriteComponent : Component
+public sealed partial class RandomSpriteComponent : Component
 {
     /// <summary>
     /// Available colors based on group, parsed layer enum, state, and color.

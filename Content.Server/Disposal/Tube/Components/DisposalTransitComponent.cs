@@ -7,7 +7,7 @@ namespace Content.Server.Disposal.Tube.Components
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [Virtual]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public class DisposalTransitComponent : DisposalTubeComponent
+    public partial class DisposalTransitComponent : DisposalTubeComponent
     {
         public override string ContainerId => "DisposalTransit";
 

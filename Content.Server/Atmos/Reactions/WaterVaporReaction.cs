@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class WaterVaporReaction : IGasReactionEffect
+    public sealed partial class WaterVaporReaction : IGasReactionEffect
     {
         [DataField("reagent")] public string? Reagent { get; } = null;
 

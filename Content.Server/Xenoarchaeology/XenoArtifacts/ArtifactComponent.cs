@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 [RegisterComponent]
-public sealed class ArtifactComponent : Component
+public sealed partial class ArtifactComponent : Component
 {
     /// <summary>
     /// The artifact's node tree.
@@ -57,7 +57,7 @@ public sealed class ArtifactComponent : Component
 /// A tree of nodes.
 /// </summary>
 [DataDefinition]
-public sealed class ArtifactTree
+public sealed partial class ArtifactTree
 {
     /// <summary>
     /// The first node of the tree
@@ -76,7 +76,7 @@ public sealed class ArtifactTree
 /// A single "node" of an artifact that contains various data about it.
 /// </summary>
 [DataDefinition]
-public sealed class ArtifactNode : ICloneable
+public sealed partial class ArtifactNode : ICloneable
 {
     /// <summary>
     /// A numeric id corresponding to each node. used for display purposes

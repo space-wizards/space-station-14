@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Completions
 
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DeleteEntity : IGraphAction
+    public sealed partial class DeleteEntity : IGraphAction
     {
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

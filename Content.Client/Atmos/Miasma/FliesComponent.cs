@@ -4,5 +4,5 @@ using Robust.Shared.GameStates;
 namespace Content.Client.Atmos.Miasma;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class FliesComponent : SharedFliesComponent
+public sealed partial class FliesComponent : SharedFliesComponent
 { }

@@ -11,7 +11,7 @@ namespace Content.Shared.Item;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedItemSystem))]
-public sealed class ItemComponent : Component
+public sealed partial class ItemComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
@@ -37,7 +37,7 @@ public sealed class ItemComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class ItemComponentState : ComponentState
+public sealed partial class ItemComponentState : ComponentState
 {
     public int Size { get; }
     public string? HeldPrefix { get; }

@@ -7,7 +7,7 @@ namespace Content.Client.ParticleAccelerator
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
+    public sealed partial class ParticleAcceleratorPartVisualizer : AppearanceVisualizer
     {
         [DataField("baseState", required: true)]
         private string _baseState = default!;

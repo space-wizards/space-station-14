@@ -4,7 +4,7 @@ namespace Content.Server.Disposal.Mailing;
 
 [Access(typeof(MailingUnitSystem))]
 [RegisterComponent]
-public sealed class MailingUnitComponent : Component
+public sealed partial class MailingUnitComponent : Component
 {
     /// <summary>
     /// List of targets the mailing unit can send to.

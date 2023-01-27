@@ -1,7 +1,7 @@
 namespace Content.Server.Kudzu;
 
 [RegisterComponent]
-public sealed class GrowingKudzuComponent : Component
+public sealed partial class GrowingKudzuComponent : Component
 {
     [DataField("growthLevel")]
     public int GrowthLevel = 1;

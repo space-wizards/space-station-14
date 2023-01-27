@@ -8,7 +8,7 @@ namespace Content.Client.Inventory
     [RegisterComponent]
     [ComponentReference(typeof(InventoryComponent))]
     [Access(typeof(ClientInventorySystem))]
-    public sealed class ClientInventoryComponent : InventoryComponent
+    public sealed partial class ClientInventoryComponent : InventoryComponent
     {
         [DataField("speciesId")] public string? SpeciesId { get; set; }
         [ViewVariables]

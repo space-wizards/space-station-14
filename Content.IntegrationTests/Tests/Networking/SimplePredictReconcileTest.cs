@@ -364,13 +364,13 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
-            
+
             cfg.SetCVar(CVars.NetLogging, log);
             await pairTracker.CleanReturnAsync();
         }
 
         [NetworkedComponent()]
-        public sealed class PredictionTestComponent : Component
+        public sealed partial class PredictionTestComponent : Component
         {
             private bool _foo;
 
@@ -400,7 +400,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
 
             [Serializable, NetSerializable]
-            private sealed class PredictionComponentState : ComponentState
+            private sealed partial class PredictionComponentState : ComponentState
             {
                 public bool Foo { get; }
 

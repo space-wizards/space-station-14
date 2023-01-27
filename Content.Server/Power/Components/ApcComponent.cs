@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed class ApcComponent : BaseApcNetComponent
+public sealed partial class ApcComponent : BaseApcNetComponent
 {
     [DataField("onReceiveMessageSound")]
     public SoundSpecifier OnReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");

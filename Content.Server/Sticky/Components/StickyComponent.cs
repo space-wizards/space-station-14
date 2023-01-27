@@ -7,7 +7,7 @@ namespace Content.Server.Sticky.Components;
 ///     For example paper stickers or C4 charges.
 /// </summary>
 [RegisterComponent]
-public sealed class StickyComponent : Component
+public sealed partial class StickyComponent : Component
 {
     /// <summary>
     ///     What target entities are valid to be surface for sticky entity.

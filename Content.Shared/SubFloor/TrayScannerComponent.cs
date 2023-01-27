@@ -5,7 +5,7 @@ namespace Content.Shared.SubFloor;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class TrayScannerComponent : Component
+public sealed partial class TrayScannerComponent : Component
 {
     /// <summary>
     ///     Whether the scanner is currently on.
@@ -33,7 +33,7 @@ public sealed class TrayScannerComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class TrayScannerState : ComponentState
+public sealed partial class TrayScannerState : ComponentState
 {
     public bool Enabled;
 

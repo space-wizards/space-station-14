@@ -8,7 +8,7 @@ namespace Content.Shared.Cuffs.Components
     public readonly struct CuffedStateChangeEvent { }
 
     [NetworkedComponent()]
-    public abstract class SharedCuffableComponent : Component
+    public abstract partial class SharedCuffableComponent : Component
     {
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -30,7 +30,7 @@ namespace Content.Shared.Cuffs.Components
         public bool CanStillInteract { get; set; } = true;
 
         [Serializable, NetSerializable]
-        protected sealed class CuffableComponentState : ComponentState
+        protected sealed partial class CuffableComponentState : ComponentState
         {
             public bool CanStillInteract { get; }
             public int NumHandsCuffed { get; }

@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent
+    public sealed partial class HyposprayComponent : SharedHyposprayComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

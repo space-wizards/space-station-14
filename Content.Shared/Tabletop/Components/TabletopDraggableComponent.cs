@@ -8,7 +8,7 @@ namespace Content.Shared.Tabletop.Components;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-public sealed class TabletopDraggableComponent : Component
+public sealed partial class TabletopDraggableComponent : Component
 {
     // The player dragging the piece
     [ViewVariables]

@@ -4,7 +4,7 @@ namespace Content.Shared.Eye.Blinding
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class VisionCorrectionComponent : Component
+    public sealed partial class VisionCorrectionComponent : Component
     {
         [ViewVariables]
         public bool IsActive = false;

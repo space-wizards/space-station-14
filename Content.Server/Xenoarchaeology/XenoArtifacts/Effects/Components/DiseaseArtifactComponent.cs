@@ -6,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 ///     Spawn a random disease at regular intervals when artifact activated.
 /// </summary>
 [RegisterComponent]
-public sealed class DiseaseArtifactComponent : Component
+public sealed partial class DiseaseArtifactComponent : Component
 {
     /// <summary>
     /// The diseases that the artifact can use.

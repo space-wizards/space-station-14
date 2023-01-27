@@ -27,7 +27,7 @@ public sealed class AlertLevelPrototype : IPrototype
 /// the Levels field in AlertLevelPrototype.
 /// </summary>
 [DataDefinition]
-public sealed class AlertLevelDetail
+public sealed partial class AlertLevelDetail
 {
     /// <summary>
     /// What is announced upon this alert level change. Can be a localized string.

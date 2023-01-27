@@ -3,7 +3,7 @@ using System.Threading;
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
-public sealed class SpillableComponent : Component
+public sealed partial class SpillableComponent : Component
 {
     [DataField("solution")]
     public string SolutionName = "puddle";

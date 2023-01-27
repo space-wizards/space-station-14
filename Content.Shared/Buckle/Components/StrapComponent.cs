@@ -24,7 +24,7 @@ public enum StrapPosition
 }
 
 [RegisterComponent, NetworkedComponent]
-public sealed class StrapComponent : Component
+public sealed partial class StrapComponent : Component
 {
     /// <summary>
     /// The change in position to the strapped mob
@@ -108,7 +108,7 @@ public sealed class StrapComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class StrapComponentState : ComponentState
+public sealed partial class StrapComponentState : ComponentState
 {
     /// <summary>
     /// The change in position that this strap makes to the strapped mob

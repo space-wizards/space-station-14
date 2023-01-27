@@ -8,7 +8,7 @@ using static Robust.Client.UserInterface.Controls.LayoutContainer;
 namespace Content.Client.Suspicion
 {
     [RegisterComponent]
-    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
+    public sealed partial class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;

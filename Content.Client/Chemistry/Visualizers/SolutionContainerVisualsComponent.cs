@@ -10,7 +10,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Chemistry.Visualizers
 {
     [RegisterComponent]
-    public sealed class SolutionContainerVisualsComponent : Component
+    public sealed partial class SolutionContainerVisualsComponent : Component
     {
         [DataField("maxFillLevels")]
         public int MaxFillLevels = 0;

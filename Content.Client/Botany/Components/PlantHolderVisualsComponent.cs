@@ -1,6 +1,6 @@
 namespace Content.Client.Botany.Components;
 
 [RegisterComponent]
-public sealed class PlantHolderVisualsComponent : Component
+public sealed partial class PlantHolderVisualsComponent : Component
 {
 }

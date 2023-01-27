@@ -5,7 +5,7 @@ using Content.Shared.Database;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class CreateGas : ReagentEffect
+public sealed partial class CreateGas : ReagentEffect
 {
     [DataField("gas", required: true)]
     public Gas Gas = default!;

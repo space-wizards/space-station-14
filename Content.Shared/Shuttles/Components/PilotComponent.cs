@@ -10,7 +10,7 @@ namespace Content.Shared.Shuttles.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class PilotComponent : Component
+    public sealed partial class PilotComponent : Component
     {
         [ViewVariables] public SharedShuttleConsoleComponent? Console { get; set; }
 

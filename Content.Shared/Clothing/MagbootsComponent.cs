@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Clothing;
 
 [RegisterComponent, NetworkedComponent()]
-public sealed class MagbootsComponent : Component
+public sealed partial class MagbootsComponent : Component
 {
     [DataField("toggleAction", required: true)]
     public InstantAction ToggleAction = new();
@@ -14,7 +14,7 @@ public sealed class MagbootsComponent : Component
     public bool On;
 
     [Serializable, NetSerializable]
-    public sealed class MagbootsComponentState : ComponentState
+    public sealed partial class MagbootsComponentState : ComponentState
     {
         public bool On { get; }
 

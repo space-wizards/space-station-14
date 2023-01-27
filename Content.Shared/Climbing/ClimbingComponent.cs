@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Climbing;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ClimbingComponent : Component
+public sealed partial class ClimbingComponent : Component
 {
     /// <summary>
     /// Whether the owner is climbing on a climbable entity.
@@ -27,7 +27,7 @@ public sealed class ClimbingComponent : Component
     public Dictionary<string, int> DisabledFixtureMasks { get; } = new();
 
     [Serializable, NetSerializable]
-    public sealed class ClimbModeComponentState : ComponentState
+    public sealed partial class ClimbModeComponentState : ComponentState
     {
         public ClimbModeComponentState(bool climbing, bool isTransitioning)
         {
