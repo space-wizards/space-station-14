@@ -331,14 +331,19 @@ public abstract class SharedDoAfterSystem : EntitySystem
         {
             var ev = new DoAfterEvent(cancelled, args);
 
-            if (EntityManager.EntityExists(args.User))
-                RaiseLocalEvent(args.User, ev, args.Broadcast);
+            //TODO: Sends three times which wokrs but doesn't in cases where you need it to run only once
 
+            //Add a handled return that breaks?
+            //Issue here is that it could return early when not needed
             if (args.Target is {} target && EntityManager.EntityExists(target))
                 RaiseLocalEvent(target, ev, args.Broadcast);
 
             if (args.Used is {} used && EntityManager.EntityExists(used))
                 RaiseLocalEvent(used, ev, args.Broadcast);
+
+            //Maybe set to bottom since there's no return?
+            if (EntityManager.EntityExists(args.User))
+                RaiseLocalEvent(args.User, ev, args.Broadcast);
         }
 
         /// <summary>

@@ -128,6 +128,12 @@ public sealed class DoAfterEventArgs
     /// </summary>
     public object? BroadcastFinishedEvent { get; set; }
 
+    /// <summary>
+    ///     Does this DoAfter need to be marked as handled so it doesn't run more DoAfter events?
+    ///     Useful where you need a DoAfter to end before it raises an event on the User.
+    /// </summary>
+    public bool Handled { get; set; } = false;
+
     public DoAfterEventArgs(
         EntityUid user,
         float delay,

@@ -196,11 +196,13 @@ namespace Content.Server.Medical.BiomassReclaimer
 
         private void OnDoAfter(EntityUid uid, BiomassReclaimerComponent component, DoAfterEvent args)
         {
-            if (args.Handled || args.Cancelled || args.Args.Target == null)
+            if (args.Handled || args.Cancelled || args.Args.Target == null || HasComp<BiomassReclaimerComponent>(args.Args.Target.Value))
                 return;
 
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(args.Args.User):player} used a biomass reclaimer to gib {ToPrettyString(args.Args.Target.Value):target} in {ToPrettyString(uid):reclaimer}");
             StartProcessing(args.Args.Target.Value, component);
+
+            args.Handled = true;
         }
 
         private void StartProcessing(EntityUid toProcess, BiomassReclaimerComponent component, PhysicsComponent? physics = null)
