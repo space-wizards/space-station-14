@@ -9,25 +9,25 @@ stages:          # List of stages for jobs, and their order of execution
 build-debug:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - apt update && apt upgrade
+    - apt update && apt upgrade -y
     - apt install -y python3 libfreetype6
     - git submodule update --init --recursive
     - mkdir .git/hooks -p
     - dotnet restore
     - dotnet build --configuration Debug --no-restore /p:WarningsAsErrors=nullable /m
-    - dotnet test --no-build Content.Tests/Content.Tests.csproj
+    - pwsh -Command "dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
     - export DOTNET_gcServer=1
-    - dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj
+    - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
 
 build-release:
   stage: build
   script:
-    - apt update && apt upgrade
+    - apt update && apt upgrade -y
     - apt install -y python3 libfreetype6
     - git submodule update --init --recursive
     - mkdir .git/hooks -p
     - dotnet restore
     - dotnet build --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
-    - dotnet test --no-build Content.Tests/Content.Tests.csproj
+    - pwsh -Command "dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
     - export DOTNET_gcServer=1
-    - dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj
+    - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
