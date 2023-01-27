@@ -1,0 +1,15 @@
+- files:
+    - clap1.ogg
+    - clap2.ogg
+    - clap3.ogg
+    - clap4.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432"
+  source: "https://github.com/tgstation/tgstation"
+- files:
+    - snap1.ogg
+    - snap2.ogg
+    - snap3.ogg
+  license: "CC-BY-4.0"
+  copyright: "Finger Snaps Pack by Snapper4298. Converted from WAV to OGG and downmixed to 1 channel."
+  source: "https://freesound.org/people/Snapper4298/packs/11176/"

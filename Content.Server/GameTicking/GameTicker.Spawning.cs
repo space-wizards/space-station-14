@@ -361,7 +361,8 @@ namespace Content.Server.GameTicking
             }
 
             // AAAAAAAAAAAAA
-            _sawmill.Error("Found no observer spawn points!");
+            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+            _sawmill.Warning("Found no observer spawn points!");
             return EntityCoordinates.Invalid;
         }
         #endregion
