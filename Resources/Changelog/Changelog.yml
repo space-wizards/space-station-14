@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed a bug that was preventing the inventory UI from properly updating
-      in some situations., type: Fix}
-  id: 2464
-  time: '2022-10-16T04:16:28.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
       respectively.', type: Tweak}
   id: 2465
@@ -2933,3 +2927,8 @@ Entries:
       item., type: Fix}
   id: 2963
   time: '2023-01-27T16:25:08.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
+  id: 2964
+  time: '2023-01-27T19:39:23.0000000+00:00'
