@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
-      respectively.', type: Tweak}
-  id: 2465
-  time: '2022-10-16T05:26:28.0000000+00:00'
 - author: Stealthbomber16
   changes:
   - {message: OOOOK!, type: Add}
@@ -2932,3 +2926,10 @@ Entries:
   - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
   id: 2964
   time: '2023-01-27T19:39:23.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Added two new narcolepsy medications., type: Add}
+  - {message: Previous narcolepsy medication has been nerfed in viability. You now
+      need more of the same medicine for it to be as effective., type: Tweak}
+  id: 2965
+  time: '2023-01-27T21:11:06.0000000+00:00'
