@@ -4,6 +4,7 @@
   id: BaseMagazineBoxMagnum
   components:
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgeMagnum

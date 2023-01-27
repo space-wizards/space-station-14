@@ -139,7 +139,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 foreach (var entity in dumpQueue)
                 {
-                    _disposalUnitSystem.DoInsertDisposalUnit(args.Target.Value, entity);
+                    _disposalUnitSystem.DoInsertDisposalUnit(args.Target.Value, entity, args.User);
                 }
                 return;
             }

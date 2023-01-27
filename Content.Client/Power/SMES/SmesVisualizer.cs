@@ -15,7 +15,7 @@ namespace Content.Client.Power.SMES
         {
             base.InitializeEntity(entity);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(entity);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(entity);
 
             sprite.LayerMapSet(Layers.Input, sprite.AddLayerState("smes-oc0"));
             sprite.LayerSetShader(Layers.Input, "unshaded");
@@ -31,7 +31,7 @@ namespace Content.Client.Power.SMES
         {
             base.OnChangeData(component);
 
-            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
             if (!component.TryGetData<int>(SmesVisuals.LastChargeLevel, out var level) || level == 0)
             {
                 sprite.LayerSetVisible(Layers.Charge, false);

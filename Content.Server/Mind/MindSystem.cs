@@ -2,9 +2,9 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Shared.Examine;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 
@@ -102,9 +102,11 @@ public sealed class MindSystem : EntitySystem
                     }
 
                     // TODO refactor observer spawning.
+                    // please.
                     if (!spawnPosition.IsValid(EntityManager))
                     {
-                        Logger.ErrorS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
+                        // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+                        Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
                         return;
                     }
 

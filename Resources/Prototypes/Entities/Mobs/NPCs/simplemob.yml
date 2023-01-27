@@ -90,6 +90,7 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       50: Critical
@@ -221,4 +222,6 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
+  - type: Appearance
+  - type: FloatingVisuals
 

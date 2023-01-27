@@ -7,6 +7,8 @@ using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -48,6 +50,12 @@ namespace Content.Server.Cuffs.Components
         public bool BreakOnRemove { get; set; }
 
         /// <summary>
+        ///     Will the cuffs break when removed?
+        /// </summary>
+        [DataField("brokenPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? BrokenPrototype { get; set; }
+
+        /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
         [DataField("cuffedRSI")]
@@ -58,42 +66,6 @@ namespace Content.Server.Cuffs.Components
         /// </summary>
         [DataField("bodyIconState")]
         public string? OverlayIconState { get; set; } = "body-overlay";
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [DataField("brokenIconState")]
-        public string? BrokenState { get; set; }
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [DataField("brokenName", readOnly: true)]
-        public string BrokenName { get; private set; } = "";
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [DataField("brokenDesc", readOnly: true)]
-        public string BrokenDesc { get; private set; } = "";
-
-        [ViewVariables]
-        public bool Broken
-        {
-            get
-            {
-                return _isBroken;
-            }
-            set
-            {
-                if (_isBroken != value)
-                {
-                    _isBroken = value;
-
-                    Dirty();
-                }
-            }
-        }
 
         [DataField("startCuffSound")]
         public SoundSpecifier StartCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
@@ -112,18 +84,10 @@ namespace Content.Server.Cuffs.Components
         [DataField("color")]
         public Color Color { get; set; } = Color.White;
 
-        // Non-exposed data fields
-        private bool _isBroken = false;
-
         /// <summary>
         ///     Used to prevent DoAfter getting spammed.
         /// </summary>
         public bool Cuffing;
-
-        public override ComponentState GetComponentState()
-        {
-            return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
-        }
 
         /// <summary>
         /// Update the cuffed state of an entity

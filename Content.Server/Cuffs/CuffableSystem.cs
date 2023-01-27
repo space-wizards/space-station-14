@@ -13,7 +13,7 @@ using Content.Shared.Interaction;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Content.Server.Hands.Systems;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Cuffs
 {
@@ -23,7 +23,7 @@ namespace Content.Server.Cuffs
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
@@ -85,12 +85,6 @@ namespace Content.Server.Cuffs
         {
             if (component.Cuffing || !EntityManager.TryGetComponent<CuffableComponent>(target, out var cuffed))
                 return;
-
-            if (component.Broken)
-            {
-                _popup.PopupEntity(Loc.GetString("handcuff-component-cuffs-broken-error"), user, user);
-                return;
-            }
 
             if (!EntityManager.TryGetComponent<HandsComponent?>(target, out var hands))
             {
@@ -199,10 +193,7 @@ namespace Content.Server.Cuffs
 
             if (dirty)
             {
-                cuffable.CanStillInteract = handCount > cuffable.CuffedHandCount;
-                _actionBlockerSystem.UpdateCanMove(cuffable.Owner);
-                cuffable.CuffedStateChanged();
-                Dirty(cuffable);
+                UpdateCuffState(owner, cuffable);
             }
         }
     }

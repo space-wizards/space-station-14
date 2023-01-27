@@ -81,7 +81,7 @@ namespace Content.IntegrationTests.Tests
                 var pos = clientEntManager.GetComponent<TransformComponent>(entity).WorldPosition;
                 var clickable = clientEntManager.GetComponent<ClickableComponent>(entity);
 
-                hit = clickable.CheckClick(sprite, xformQuery, (clickPosX, clickPosY) + pos, eye, out _, out _, out _);
+                hit = clickable.CheckClick(sprite, xformQuery.GetComponent(entity), xformQuery, (clickPosX, clickPosY) + pos, eye, out _, out _, out _);
             });
 
             await server.WaitPost(() =>

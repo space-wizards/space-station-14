@@ -248,9 +248,11 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="eventHorizon">The event horizon which is consuming the tiles on the grid.</param>
     public void ConsumeTiles(List<(Vector2i, Tile)> tiles, MapGridComponent grid, EventHorizonComponent eventHorizon)
     {
-        if (tiles.Count > 0)
-            RaiseLocalEvent(eventHorizon.Owner, new TilesConsumedByEventHorizonEvent(tiles, grid, eventHorizon));
-            grid.SetTiles(tiles);
+        if (tiles.Count <= 0)
+            return;
+
+        RaiseLocalEvent(eventHorizon.Owner, new TilesConsumedByEventHorizonEvent(tiles, grid, eventHorizon));
+        grid.SetTiles(tiles);
     }
 
     /// <summary>
@@ -369,12 +371,12 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     /// <param name="uid">The event horizon entity that is trying to collide with something.</param>
     /// <param name="comp">The event horizon that is trying to collide with something.</param>
     /// <param name="args">The event arguments.</param>
-    protected override sealed bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
+    protected override bool PreventCollide(EntityUid uid, EventHorizonComponent comp, ref PreventCollideEvent args)
     {
         if (base.PreventCollide(uid, comp, ref args) || args.Cancelled)
             return true;
 
-        args.Cancelled = !CanConsumeEntity(args.BodyB.Owner, (EventHorizonComponent)comp);
+        args.Cancelled = !CanConsumeEntity(args.BodyB.Owner, comp);
         return false;
     }
 
@@ -450,10 +452,10 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
 
     /// <summary>
     /// Handles event horizons deciding to escape containers they are inserted into.
-    /// Delegates the actual escape to <see cref="EventHorizonSystem.OnEventHorizonContained(EventHorizonContainedEvent)"> on a delay.
+    /// Delegates the actual escape to <see cref="EventHorizonSystem.OnEventHorizonContained(EventHorizonContainedEvent)" /> on a delay.
     /// This ensures that the escape is handled after all other handlers for the insertion event and satisfies the assertion that
     ///     the inserted entity SHALL be inside of the specified container after all handles to the entity event
-    ///     <see cref="EntGotInsertedIntoContainerMessage"> are processed.
+    ///     <see cref="EntGotInsertedIntoContainerMessage" /> are processed.
     /// </summary>
     /// <param name="uid">The uid of the event horizon.</param>]
     /// <param name="comp">The state of the event horizon.</param>]

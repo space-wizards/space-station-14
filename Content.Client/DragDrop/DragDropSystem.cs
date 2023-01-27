@@ -20,6 +20,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using System.Linq;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.DragDrop
@@ -306,7 +307,7 @@ namespace Content.Client.DragDrop
 
             if (_stateManager.CurrentState is GameplayState screen)
             {
-                entities = screen.GetEntitiesUnderPosition(args.Coordinates);
+                entities = screen.GetClickableEntities(args.Coordinates).ToList();
             }
             else
             {

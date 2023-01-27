@@ -61,7 +61,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalPosition(gridId, uid, gridId, new Vector2(x, y)))
+                if (!decalSystem.SetDecalPosition(gridId, uid, new(gridId, (x, y))))
                 {
                     shell.WriteError("Failed changing decalposition.");
                 }

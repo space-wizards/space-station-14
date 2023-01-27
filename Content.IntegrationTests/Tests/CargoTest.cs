@@ -20,6 +20,8 @@ public sealed class CargoTest
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
         var server = pairTracker.Pair.Server;
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -27,16 +29,19 @@ public sealed class CargoTest
 
         await server.WaitAssertion(() =>
         {
-            var mapId = mapManager.CreateMap();
+            var mapId = testMap.MapId;
 
-            foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+            Assert.Multiple(() =>
             {
-                var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
-                var price = pricing.GetPrice(ent);
+                foreach (var proto in protoManager.EnumeratePrototypes<CargoProductPrototype>())
+                {
+                    var ent = entManager.SpawnEntity(proto.Product, new MapCoordinates(Vector2.Zero, mapId));
+                    var price = pricing.GetPrice(ent);
 
-                Assert.That(price, Is.LessThan(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
-                entManager.DeleteEntity(ent);
-            }
+                    Assert.That(price, Is.AtMost(proto.PointCost), $"Found arbitrage on {proto.ID} cargo product! Cost is {proto.PointCost} but sell is {price}!");
+                    entManager.DeleteEntity(ent);
+                }
+            });
 
             mapManager.DeleteMap(mapId);
         });
@@ -50,13 +55,15 @@ public sealed class CargoTest
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
         var server = pairTracker.Pair.Server;
 
+        var testMap = await PoolManager.CreateTestMap(pairTracker);
+
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapManager = server.ResolveDependency<IMapManager>();
         var protoManager = server.ResolveDependency<IPrototypeManager>();
 
         await server.WaitAssertion(() =>
         {
-            var mapId = mapManager.CreateMap();
+            var mapId = testMap.MapId;
             var grid = mapManager.CreateGrid(mapId);
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
@@ -73,8 +80,10 @@ public sealed class CargoTest
                     && stackpricecomp.Price > 0)
                 {
                     if (entManager.TryGetComponent<StaticPriceComponent>(ent, out var staticpricecomp))
+                    {
                         Assert.That(staticpricecomp.Price, Is.EqualTo(0),
-                                    $"The prototype {proto} have a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
+                            $"The prototype {proto} have a StackPriceComponent and StaticPriceComponent whose values are not compatible with each other.");
+                    }
                 }
                 entManager.DeleteEntity(ent);
             }

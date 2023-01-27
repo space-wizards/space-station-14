@@ -25,7 +25,7 @@ namespace Content.Client.ParticleAccelerator
         public override void InitializeEntity(EntityUid entity)
         {
             base.InitializeEntity(entity);
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<ISpriteComponent?>(entity, out var sprite))
+            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent<SpriteComponent?>(entity, out var sprite))
             {
                 throw new EntityCreationException("No sprite component found in entity that has ParticleAcceleratorPartVisualizer");
             }
@@ -42,7 +42,7 @@ namespace Content.Client.ParticleAccelerator
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite)) return;
             if (!component.TryGetData(ParticleAcceleratorVisuals.VisualState, out ParticleAcceleratorVisualState state))
             {
                 state = ParticleAcceleratorVisualState.Unpowered;

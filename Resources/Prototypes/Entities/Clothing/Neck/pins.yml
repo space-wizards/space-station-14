@@ -1,0 +1,143 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLGBTPin
+  name: LGBT pin
+  description: be gay do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: lgbt
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: lgbt-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAromanticPin
+  name: aromantic pin
+  description: be aro do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: aro
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: aro-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckAsexualPin
+  name: asexual pin
+  description: be ace do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: asex
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: asex-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBisexualPin
+  name: bisexual pin
+  description: be bi do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: bi
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: bi-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckIntersexPin
+  name: intersex pin
+  description: be intersex do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: inter
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: inter-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckLesbianPin
+  name: lesbian pin
+  description: be lesbian do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: les
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: les-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckNonBinaryPin
+  name: non-binary pin
+  description: "01100010 01100101 00100000 01100101 01101110 01100010 01111001 00100000 01100100 01101111 00100000 01100011 01110010 01101001 01101101 01100101"
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: non
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: non-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPansexualPin
+  name: pansexual pin
+  description: be pan do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: pan
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: pan-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTransPin
+  name: transgender pin
+  description: be trans do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: trans
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: trans-equipped

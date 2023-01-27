@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
+using Content.Server.Maps;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
@@ -105,6 +106,6 @@ public partial class AtmosphereSystem
         if (!mapGrid.TryGetTileRef(tile, out var tileRef))
             return;
 
-        tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
+        _tile.PryTile(tileRef);
     }
 }

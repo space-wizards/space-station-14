@@ -420,7 +420,7 @@
 
 - type: artifactEffect
   id: EffectMitosis
-  targetDepth: 4
+  targetDepth: 3
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
