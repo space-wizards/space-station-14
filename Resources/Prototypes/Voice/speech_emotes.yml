@@ -2,7 +2,7 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [screams, yells]
+  chatMessages: [кричит, орёт]
   chatTriggers:
     - scream
     - screams
@@ -20,11 +20,17 @@
     - yells
     - yelled
     - yelling
+    - крик
+    - кричит
+    - ор
+    - орёт
+    - визг
+    - визжит
 
 - type: emote
   id: Laugh
   category: Vocal
-  chatMessages: [laughs]
+  chatMessages: [смеётся]
   chatTriggers:
     - laugh
     - laughs
@@ -38,6 +44,13 @@
     - giggles
     - giggling
     - giggled
+    - смех
+    - смеётся
+    - хохот
+    - хохочет
+    - хихикает
+    - хихикнул
+    - ржёт
 
 # hand emotes
 - type: emote
@@ -49,11 +62,16 @@
     - claps
     - clapping
     - clapped
+    - хлопает
+    - хлопнул
+    - хлопает в ладоши
+    - хлопнул в ладоши
+    - апплодирует
 
 - type: emote
   id: Snap
   category: Hands
-  chatMessages: [snaps fingers]
+  chatMessages: [щёлкает пальцами]
   chatTriggers:
     - snap
     - snaps
@@ -63,4 +81,11 @@
     - snaps fingers
     - snapping fingers
     - snapped fingers
-
+    - щелкает
+    - щелкнул
+    - щёлкает
+    - щёлкнул
+    - щелкает пальцами
+    - щелкнул пальцами
+    - щёлкает пальцами
+    - щёлкнул пальцами
