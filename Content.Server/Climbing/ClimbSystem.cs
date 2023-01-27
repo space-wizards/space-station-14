@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
-using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
@@ -46,7 +45,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly BonkSystem _bonkSystem = default!;
+    [Dependency] private readonly SharedBonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -106,25 +105,18 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbableDragDrop(EntityUid uid, ClimbableComponent component, DragDropEvent args)
     {
-        TryMoveEntity(component, args.User, args.Dragged, args.Target, true);
+        TryMoveEntity(component, args.User, args.Dragged, args.Target);
     }
 
     private void TryMoveEntity(ClimbableComponent component, EntityUid user, EntityUid entityToMove,
-        EntityUid climbable, bool dragDrop = false)
+        EntityUid climbable)
     {
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
-        if (!dragDrop)
-        {
-            BonkableComponent? bonkableComponent = null;
-            if (Resolve(climbable, ref bonkableComponent))
-            {
-                if (_bonkSystem.TryBonk(entityToMove, bonkableComponent))
-                    return;
-            }
-        }
-    
+        if (_bonkSystem.TryBonk(entityToMove, climbable))
+            return;
+
         _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, default, climbable, entityToMove)
         {
             BreakOnTargetMove = true,
@@ -271,7 +263,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <summary>
     ///     Checks if the user can vault the target
     /// </summary>
-    /// <param name="component">The bonkComponent of the entity that is being vaulted</param>
+    /// <param name="component">The component of the entity that is being vaulted</param>
     /// <param name="user">The entity that wants to vault</param>
     /// <param name="target">The object that is being vaulted</param>
     /// <param name="reason">The reason why it cant be dropped</param>
@@ -306,7 +298,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     /// <summary>
     ///     Checks if the user can vault the dragged entity onto the the target
     /// </summary>
-    /// <param name="component">The climbable bonkComponent of the object being vaulted onto</param>
+    /// <param name="component">The climbable component of the object being vaulted onto</param>
     /// <param name="user">The user that wants to vault the entity</param>
     /// <param name="dragged">The entity that is being vaulted</param>
     /// <param name="target">The object that is being vaulted onto</param>
