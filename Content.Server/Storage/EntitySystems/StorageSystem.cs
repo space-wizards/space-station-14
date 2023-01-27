@@ -316,8 +316,8 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     if (entity == args.User
                         || !itemQuery.HasComponent(entity)
-                        || !_interactionSystem.InRangeUnobstructed(args.User, entity)
-                        || !CanInsert(uid, entity, out _, storageComp))
+                        || !CanInsert(uid, entity, out _, storageComp)
+                        || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                         continue;
 
                     validStorables.Add(entity);
