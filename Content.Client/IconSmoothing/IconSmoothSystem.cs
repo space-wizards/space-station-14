@@ -222,11 +222,11 @@ namespace Content.Client.IconSmoothing
                 return;
             }
 
-            Span<Vector2> neighbors = stackalloc Vector2[]
+            var neighbors = new Vector2[]
             {
-                new Vector2(1, 0),
-                new Vector2(1, -1),
-                new Vector2(0, -1),
+                new(1, 0),
+                new(1, -1),
+                new(0, -1),
             };
 
             var pos = grid.TileIndicesFor(xform.Coordinates);
