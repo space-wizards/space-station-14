@@ -1,5 +1,6 @@
 using Content.Server.Speech.Components;
 using Robust.Shared.Audio;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -16,6 +17,12 @@ public sealed class CluwneComponent : Component
     public float GiggleChance = 0.2f;
 
     [ViewVariables(VVAccess.ReadWrite)]
+    public float KnockChance = 0.2f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float GiggleRandomChance = 0.3f;
+
+    [ViewVariables(VVAccess.ReadWrite)]
     public float GiggleCooldown = 5;
 
     [ViewVariables(VVAccess.ReadWrite)]
@@ -25,19 +32,30 @@ public sealed class CluwneComponent : Component
     public float LastGiggleCooldown = 0f;
 
     /// <summary>
-    ///gigle emote timespan.
+    /// Cluwne Emotes
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string GiggleEmoteId = "Scream";
+	
+    [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
+    public string? EmoteSoundsId = "Cluwne";
+
+    public EmoteSoundsPrototype? EmoteSounds;
+
+    /// <summary>
+    ///Giggle emote timespan.
     /// </summary>
     [DataField("giggleGoChance", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan GiggleGoChance = TimeSpan.Zero;
 
     /// <summary>
-    /// amount of time cluwne is paralyzed for when falling over.
+    /// Amount of time cluwne is paralyzed for when falling over.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float ParalyzeTime = 2f;
 
     /// <summary>
-    /// sound specifiers for giggles and noises.
+    /// Sound specifiers for giggles and noises.
     /// </summary>
     [DataField("giggle")]
     public SoundSpecifier Giggle = new SoundCollectionSpecifier("CluwneScreams");

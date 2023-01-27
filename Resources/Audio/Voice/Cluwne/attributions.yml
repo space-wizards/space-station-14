@@ -1,14 +1,7 @@
-- files: ["cluwnelaugh1.ogg"]
+- files:
+    - cluwnelaugh1.ogg
+    - cluwnelaugh2.ogg
+    - cluwnelaugh3.ogg
   license: "CC-BY-4.0"
-  copyright: "Made by Nanakisan (freesound.org), modified by brainfood1183 (github) for ss14"
-  source: "https://freesound.org/people/Nanakisan/sounds/253525/"
-
-- files: ["cluwnelaugh2.ogg"]
-  license: "CC-BY-4.0"
-  copyright: "Made by Nanakisan (freesound.org), modified by brainfood1183 (github) for ss14"
-  source: "https://freesound.org/people/Nanakisan/sounds/253529/"
-
-- files: ["cluwnelaugh3.ogg"]
-  license: "CC-BY-4.0"
-  copyright: "Made by Nanakisan (freesound.org), modified by brainfood1183 (github) for ss14"
-  source: "https://freesound.org/people/Nanakisan/sounds/253524/"
+  copyright: "Evil Laughs 3 Pack by Nanakisan. Modified by brainfood1183 (Github), shortened, converted from WAV to OGG and downmixed to 1 channel."
+  source: "https://freesound.org/people/Nanakisan/packs/15544/"

@@ -43,7 +43,6 @@
   parent: MobHuman
   id: MobCluwne
   name: person
-  noSpawn: true
   description: A polymorphed unfortunate.
   components:
   - type: Cluwne
