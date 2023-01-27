@@ -1,8 +1,10 @@
 using Content.Server.Chat.Systems;
+using Content.Server.Popups;
 using Content.Server.Radio.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -14,6 +16,7 @@ public sealed class HeadsetSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -29,9 +32,13 @@ public sealed class HeadsetSystem : EntitySystem
     {
         if (args.Channel != null
             && TryComp(component.Headset, out HeadsetComponent? headset)
-            && headset.Channels.Contains(args.Channel.ID)
-            && !headset.JammedChannels.Contains(args.Channel.ID))
+            && headset.Channels.Contains(args.Channel.ID))
         {
+            if (headset.JammedChannels.Contains(args.Channel.ID))
+            {
+                _popupSystem.PopupEntity(Loc.GetString("radio-channel-jammed"), uid, PopupType.SmallCaution);
+                return;
+            }
             _radio.SendRadioMessage(uid, args.Message, args.Channel);
             args.Channel = null; // prevent duplicate messages from other listeners.
         }
