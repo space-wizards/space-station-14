@@ -1,0 +1,23 @@
+name: Mirror and run GitLab CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Mirror + trigger CI
+      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+      with:
+        args: "https://git.arumoon.ru/Workbench-Team/space-station-14"
+      env:
+        FOLLOW_TAGS: "true"
+        FORCE_PUSH: "false"
+        GITLAB_HOSTNAME: "git.arumoon.ru"
+        GITLAB_USERNAME: "AruMoon"
+        GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
+        GITLAB_PROJECT_ID: "4"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
