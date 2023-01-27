@@ -1,69 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fixed gloves slot being used for melee., type: Fix}
-  id: 2453
-  time: '2022-10-15T20:20:05.0000000+00:00'
-- author: BurninDreamer
-  changes:
-  - {message: 'Nanotrasen has finally invested into better drills for their miners,
-      rock and stone!', type: Tweak}
-  id: 2454
-  time: '2022-10-15T20:40:40.0000000+00:00'
-- author: corentt
-  changes:
-  - {message: 'Selling prices of SMES, substations and power-cells now depends on
-      their filling level', type: Add}
-  id: 2455
-  time: '2022-10-15T21:10:48.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
-  id: 2456
-  time: '2022-10-15T21:22:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Certain machines can now have their power load reduced via machine part
-      upgrading. Experiment and find out., type: Add}
-  - {message: Fixed not being able to deconstruct stasis beds., type: Fix}
-  id: 2457
-  time: '2022-10-15T21:28:12.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Stasis beds can now be upgraded with manipulators., type: Add}
-  id: 2458
-  time: '2022-10-15T21:39:30.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
-  - {message: Humanoids will no longer default to an inanimate pronoun when their
-      gender is unknown., type: Fix}
-  - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
-  id: 2459
-  time: '2022-10-15T21:45:47.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: The PDA light and the Hardsuit light have been nerfed, type: Tweak}
-  - {message: The Blue Flashlight and the Seclite have been buffed, type: Tweak}
-  id: 2460
-  time: '2022-10-15T21:58:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Dying as a skeleton now makes you a skull again., type: Fix}
-  id: 2461
-  time: '2022-10-15T22:06:01.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
-      direction., type: Fix}
-  id: 2462
-  time: '2022-10-16T00:07:43.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Added Cluster, a new low-pop station!', type: Add}
-  - {message: Removed Packed, type: Remove}
-  id: 2463
-  time: '2022-10-16T00:28:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that was preventing the inventory UI from properly updating
@@ -2935,3 +2870,66 @@ Entries:
       clap or snap.', type: Add}
   id: 2952
   time: '2023-01-25T16:29:42.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: diagnoser now properly displays no-cure text, type: Fix}
+  id: 2953
+  time: '2023-01-26T00:31:20.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Adjusted the speed loaders of light rifles so they can both transfer
+      bullets easily between each other and actually work, type: Tweak}
+  id: 2954
+  time: '2023-01-26T00:49:07.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Two new turret types added for misc use., type: Add}
+  id: 2955
+  time: '2023-01-26T04:03:31.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Leather satchels have been added, with sprites from various parts of
+      /TG/Station''s history! Every clothesmate comes with two of them.', type: Add}
+  - {message: 'To make room for the leather satchels, clothesmates now only carry
+      three normal satchels.', type: Tweak}
+  id: 2956
+  time: '2023-01-26T18:14:31.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Detectives get a speedloader for their revolver. It can be found in
+      their cabinet., type: Add}
+  - {message: Revolvers can now be alt-clicked to be emptied., type: Tweak}
+  id: 2957
+  time: '2023-01-26T18:15:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
+  id: 2958
+  time: '2023-01-26T22:04:58.0000000+00:00'
+- author: jamessimo
+  changes:
+  - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
+  - {message: Character job preferences pages UX improvements, type: Tweak}
+  id: 2959
+  time: '2023-01-26T22:32:15.0000000+00:00'
+- author: jicksaw
+  changes:
+  - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
+  id: 2960
+  time: '2023-01-27T01:04:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mass scanner on planet maps., type: Fix}
+  id: 2961
+  time: '2023-01-27T01:13:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Diagonal walls now partially support smoothing., type: Add}
+  id: 2962
+  time: '2023-01-27T04:03:42.0000000+00:00'
+- author: joelhed
+  changes:
+  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
+      item., type: Fix}
+  id: 2963
+  time: '2023-01-27T16:25:08.0000000+00:00'
