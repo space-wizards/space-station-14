@@ -10,7 +10,7 @@
     sprite: Clothing/Shoes/Specific/chef.rsi
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesStorageBase
   id: ClothingShoesClown
   name: clown shoes
   description: "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -19,6 +19,10 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/clown.rsi
+  - type: Item
+    size: 30
+  - type: Storage
+    capacity: 20 #now the meta footwear is clown shoes, checkmate powergamers
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
