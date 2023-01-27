@@ -1,7 +1,6 @@
 # TODO probably needs a base grenade
 - type: entity
-  name: basic grenade
-  description: How did you get it???
+  abstract: true
   parent: BaseItem
   id: BaseGrenade
   components:
