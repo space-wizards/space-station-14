@@ -43,6 +43,9 @@ public enum MarkingColoringType : byte
 }
 
 
+/// <summary>
+///     Default colors for marking 
+/// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed class MarkingColors
@@ -60,9 +63,6 @@ public sealed class MarkingColors
     public Dictionary<string, ColoringProperties>? Layers;
 }
 
-/// <summary>
-///     Properties for coloring. 
-/// </summary>
 [DataDefinition]
 [Serializable, NetSerializable]
 public sealed class ColoringProperties
@@ -103,7 +103,7 @@ public static class MarkingColoring
         var colors = new List<Color>();
 
         // Coloring from default properties
-        Color defaultColor = MarkingColoring.GetMarkingColor(
+        var defaultColor = MarkingColoring.GetMarkingColor(
             prototype.Coloring.Default,
             skinColor,
             eyeColor,
@@ -140,7 +140,7 @@ public static class MarkingColoring
                 // All specified layers must be colored separately, all unspecified must depend on default coloring
                 if (prototype.Coloring.Layers.TryGetValue(name, out var properties))
                 {
-                    Color marking_color = MarkingColoring.GetMarkingColor(
+                    var marking_color = MarkingColoring.GetMarkingColor(
                         properties,
                         skinColor,
                         eyeColor,
@@ -176,7 +176,7 @@ public static class MarkingColoring
             MarkingColoringType.EyeColor => EyeColor(eyeColor),
             MarkingColoringType.Tattoo => Tattoo(skinColor),
             _ => SkinColor(skinColor)
-        };
+        } ?? properties.Color;
 
         // Negative color
         if (properties.Negative)
@@ -189,41 +189,42 @@ public static class MarkingColoring
         return outColor;
     }
 
-    public static Color AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)
+    public static Color? AnyHairColor(Color? skinColor, Color? hairColor, Color? facialHairColor)
     {
-        return hairColor ?? facialHairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
+        return hairColor ?? facialHairColor ?? skinColor;
     }
 
-    public static Color HairColor(Color? skinColor, Color? hairColor)
+    public static Color? HairColor(Color? skinColor, Color? hairColor)
     {
-        return hairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
+        return hairColor ?? skinColor;
     }
 
-    public static Color FacialHairColor(Color? skinColor, Color? facialHairColor)
+    public static Color? FacialHairColor(Color? skinColor, Color? facialHairColor)
     {
-        return facialHairColor ?? skinColor ?? new (1f, 1f, 1f, 1f);
+        return facialHairColor ?? skinColor;
     }
 
-    public static Color SkinColor(Color? skinColor)
+    public static Color? SkinColor(Color? skinColor)
     {
-        return skinColor ?? new (1f, 1f, 1f, 1f);
+        return skinColor;
     }
     
-    public static Color Tattoo(Color? skinColor)
+    public static Color? Tattoo(Color? skinColor)
     {
-        var newColor = Color.ToHsv(skinColor ?? new (1f, 1f, 1f, 1f));
-        newColor.Y = .15f;
+        if (skinColor == null) return null;
+
+        var newColor = Color.ToHsv(skinColor.Value);
         newColor.Z = .20f;
 
         return Color.FromHsv(newColor);
     }
 
-    public static Color EyeColor(Color? eyeColor)
+    public static Color? EyeColor(Color? eyeColor)
     {
-        return eyeColor ?? new (1f, 1f, 1f, 1f);
+        return eyeColor;
     }
 
-    public static Color SimpleColor(Color? color)
+    public static Color? SimpleColor(Color? color)
     {
         return color ?? new Color(1f, 1f, 1f, 1f);
     }
