@@ -2,7 +2,7 @@
 - type: entity
   abstract: true
   parent: BaseItem
-  id: BaseGrenade
+  id: GrenadeBase
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
@@ -35,7 +35,7 @@
 - type: entity
   name: explosive grenade
   description: Grenade that creates a small but devastating explosion.
-  parent: BaseGrenade
+  parent: GrenadeBase
   id: ExGrenade
   components:
   - type: ExplodeOnTrigger
@@ -49,7 +49,7 @@
 - type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee
-  parent: BaseGrenade
+  parent: GrenadeBase
   id: GrenadeFlashBang
   components:
   - type: Sprite
@@ -69,7 +69,7 @@
 - type: entity
   name: Syndicate minibomb
   description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
-  parent: BaseGrenade
+  parent: GrenadeBase
   id: SyndieMiniBomb
   components:
   - type: Sprite
@@ -91,7 +91,7 @@
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
-  parent: BaseGrenade
+  parent: GrenadeBase
   id: NuclearGrenade
   components:
   - type: Sprite
