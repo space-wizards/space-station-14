@@ -78,7 +78,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
     
-    - type: entity
+- type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterChef
   name: chef's freezer coat
