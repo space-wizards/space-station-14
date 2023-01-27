@@ -1,2 +1,11 @@
 - type: vendingMachineInventory
   id: VendomatInventory
+  startingInventory:
+    RemoteSignaller: 1
+    Wirecutter: 1
+    FlashlightLantern: 2
+    PowerCellSmallPrinted: 3
+    MicroLaserStockPart: 3
+    MatterBinStockPart: 3
+    CapacitorStockPart: 3
+    MicroManipulatorStockPart: 3
