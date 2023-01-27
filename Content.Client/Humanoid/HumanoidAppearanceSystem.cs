@@ -173,7 +173,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         Color? hairColor = null;
         if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
         {
-            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            if (markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
                 hairMarkings.Count > 0)
             hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
         }
@@ -182,7 +182,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         Color? facialHairColor = null;
         if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
         {
-            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
+            if (markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
                 facialHairMarkings.Count > 0)
             facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
         }
@@ -194,15 +194,6 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             hairColor, 
             facialHairColor, 
             _markingManager);
-        
-        /*
-        markings.EnsureDefault(
-            profile.Appearance.SkinColor, 
-            profile.Appearance.EyeColor, 
-            profile.Appearance.HairColor, 
-            profile.Appearance.FacialHairColor, 
-            _markingManager);
-        */
 
         DebugTools.Assert(uid.IsClientSide());
 

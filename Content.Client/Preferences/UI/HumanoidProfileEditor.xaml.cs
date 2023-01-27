@@ -1111,7 +1111,6 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            Logger.DebugS("prof_edit", "Update preview");
             EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy!.Value, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
         }
