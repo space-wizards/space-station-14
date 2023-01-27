@@ -43,15 +43,10 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         var newEntity = Spawn(conditionName, receiverEntity.ToCoordinates());
         var condition = EnsureComp<MedicalConditionComponent>(newEntity);
 
-        if (receiver.PreventedConditionGroups != null)
+        if (receiver.PreventedConditionGroups != null && receiver.PreventedConditionGroups.Contains(condition.Group))
         {
-            foreach (var condGroup in condition.Groups)
-            {
-                if (!receiver.PreventedConditionGroups.Contains(condGroup))
-                    continue;
-                EntityManager.DeleteEntity(newEntity);
+            EntityManager.DeleteEntity(newEntity);
                 return;
-            }
         }
 
         container.Insert(newEntity);
@@ -177,7 +172,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         if (args.Current is not MedicalConditionComponentState state)
             return;
         component.Alert = state.Alert;
-        component.Groups = state.Groups;
+        component.Group = state.Group;
         component.Description = state.Description;
         component.Severity = state.Severity;
     }
@@ -186,7 +181,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
     {
         args.State = new MedicalConditionComponentState(
             component.Description,
-            component.Groups,
+            component.Group,
             component.Alert,
             component.Severity);
     }

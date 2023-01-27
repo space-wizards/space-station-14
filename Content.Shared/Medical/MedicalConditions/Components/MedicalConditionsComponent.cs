@@ -14,9 +14,9 @@ public sealed class MedicalConditionComponent : Component
     [DataField("description", required: true)]
     public string Description = string.Empty;
 
-    [DataField("groups", required: true,
-        customTypeSerializer: typeof(PrototypeIdHashSetSerializer<MedicalConditionGroupPrototype>))]
-    public HashSet<string> Groups = new();
+    [DataField("group", required: true,
+        customTypeSerializer: typeof(PrototypeIdSerializer<MedicalConditionGroupPrototype>))]
+    public string Group = string.Empty;
 
     [DataField("alert", customTypeSerializer: typeof(PrototypeIdSerializer<AlertPrototype>))]
     public string? Alert;
@@ -28,14 +28,14 @@ public sealed class MedicalConditionComponent : Component
 public sealed class MedicalConditionComponentState : ComponentState
 {
     public string Description;
-    public HashSet<string> Groups;
+    public string Group;
     public string? Alert;
     public FixedPoint2 Severity;
 
-    public MedicalConditionComponentState(string description, HashSet<string> group, string? alert, FixedPoint2 severity)
+    public MedicalConditionComponentState(string description, string group, string? alert, FixedPoint2 severity)
     {
         Description = description;
-        Groups = new HashSet<string>(group);
+        Group = group;
         Alert = alert;
         Severity = severity;
     }
