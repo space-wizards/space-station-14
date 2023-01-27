@@ -19,6 +19,9 @@
     sprite: Clothing/Eyes/Hud/med.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Hud/med.rsi
+    component:
+    - type: ShowHealthBars
+      damageContainer: Biological
 
 - type: entity
   parent: ClothingEyesBase

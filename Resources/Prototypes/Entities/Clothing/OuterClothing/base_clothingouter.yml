@@ -75,6 +75,7 @@
   - type: Tag
     tags:
     - Hardsuit
+  - type: ClothingGrantTag
 
 - type: entity
   abstract: true

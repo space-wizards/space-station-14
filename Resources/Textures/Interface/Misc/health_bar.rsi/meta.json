@@ -1,11 +1,11 @@
 {
     "version": 1,
     "size": {
-        "y": 7,
-        "x": 24
+        "x": 24,
+        "y": 7
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "https://github.com/tgstation/tgstation/blob/886ca0f8dddf83ecaf10c92ff106172722352192/icons/effects/progessbar.dmi",
+    "copyright": "https://github.com/tgstation/tgstation/blob/886ca0f8dddf83ecaf10c92ff106172722352192/icons/effects/progessbar.dmi and modified by Rane",
     "states": [
         {
             "name": "icon"
