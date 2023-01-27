@@ -1,0 +1,8 @@
+﻿- type: medicalConditionGroup
+  id: Organic
+- type: medicalConditionGroup
+  id: Silicon
+- type: medicalConditionGroup
+  id: Mental
+- type: medicalConditionGroup
+  id: Physical
