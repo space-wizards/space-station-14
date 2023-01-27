@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Added Cluster, a new low-pop station!', type: Add}
-  - {message: Removed Packed, type: Remove}
-  id: 2463
-  time: '2022-10-16T00:28:22.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that was preventing the inventory UI from properly updating
@@ -2933,3 +2927,9 @@ Entries:
   - {message: Diagonal walls now partially support smoothing., type: Add}
   id: 2962
   time: '2023-01-27T04:03:42.0000000+00:00'
+- author: joelhed
+  changes:
+  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
+      item., type: Fix}
+  id: 2963
+  time: '2023-01-27T16:25:08.0000000+00:00'
