@@ -163,6 +163,17 @@
       path: /Audio/Announcements/attention.ogg
 
 - type: gameRule
+  id: SolarFlare
+  config:
+    !type:StationEventRuleConfiguration
+    id: SolarFlare
+    weight: 10
+    startAnnouncement: station-event-solar-flare-start-announcement
+    endAnnouncement: station-event-solar-flare-end-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+
+- type: gameRule
   id: VentClog
   config:
     !type:StationEventRuleConfiguration

@@ -32,4 +32,7 @@ public sealed class HeadsetComponent : Component
 
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public HashSet<string> JammedChannels = new();
 }
