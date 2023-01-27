@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Dying as a skeleton now makes you a skull again., type: Fix}
-  id: 2461
-  time: '2022-10-15T22:06:01.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
@@ -2934,3 +2929,8 @@ Entries:
   - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
   id: 2960
   time: '2023-01-27T01:04:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mass scanner on planet maps., type: Fix}
+  id: 2961
+  time: '2023-01-27T01:13:49.0000000+00:00'
