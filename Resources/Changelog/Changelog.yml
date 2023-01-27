@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
-      direction., type: Fix}
-  id: 2462
-  time: '2022-10-16T00:07:43.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Added Cluster, a new low-pop station!', type: Add}
@@ -2934,3 +2928,8 @@ Entries:
   - {message: Fix mass scanner on planet maps., type: Fix}
   id: 2961
   time: '2023-01-27T01:13:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Diagonal walls now partially support smoothing., type: Add}
+  id: 2962
+  time: '2023-01-27T04:03:42.0000000+00:00'
