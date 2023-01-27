@@ -1,8 +1,11 @@
-ent-DrinkBaseCup = base cup
+ent-DrinkBaseCup = обычная чашка
     .desc = { ent-BaseItem.desc }
     .suffix = { "" }
 ent-DrinkGoldenCup = золотая чаша
     .desc = Золотая чаша, золотая.
+    .suffix = { "" }
+ent-DrinkBaseMug = обычная кружка
+    .desc = Кружка.
     .suffix = { "" }
 ent-DrinkMug = кружка
     .desc = Обычная белая кружка.

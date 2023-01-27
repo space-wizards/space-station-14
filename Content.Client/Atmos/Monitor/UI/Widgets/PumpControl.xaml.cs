@@ -43,7 +43,7 @@ public sealed partial class PumpControl : BoxContainer
             PumpDataChanged?.Invoke(_address, _data);
         };
 
-        _internalBound.Value = (float) _data.InternalPressureBound;
+        _internalBound.Value = _data.InternalPressureBound;
         _internalBound.OnValueChanged += _ =>
         {
             _data.InternalPressureBound = _internalBound.Value;
@@ -51,7 +51,7 @@ public sealed partial class PumpControl : BoxContainer
         };
         _internalBound.IsValid += value => value >= 0;
 
-        _externalBound.Value = (float) _data.ExternalPressureBound;
+        _externalBound.Value = _data.ExternalPressureBound;
         _externalBound.OnValueChanged += _ =>
         {
             _data.ExternalPressureBound = _externalBound.Value;

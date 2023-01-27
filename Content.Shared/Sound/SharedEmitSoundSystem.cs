@@ -29,7 +29,7 @@ namespace Content.Shared.Sound
         {
             base.Initialize();
             SubscribeLocalEvent<EmitSoundOnSpawnComponent, ComponentInit>(HandleEmitSpawnOnInit);
-            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(HandleEmitSoundOnLand);
+            SubscribeLocalEvent<EmitSoundOnLandComponent, LandEvent>(OnEmitSoundOnLand);
             SubscribeLocalEvent<EmitSoundOnUseComponent, UseInHandEvent>(HandleEmitSoundOnUseInHand);
             SubscribeLocalEvent<EmitSoundOnThrowComponent, ThrownEvent>(HandleEmitSoundOnThrown);
             SubscribeLocalEvent<EmitSoundOnActivateComponent, ActivateInWorldEvent>(HandleEmitSoundOnActivateInWorld);
@@ -42,7 +42,7 @@ namespace Content.Shared.Sound
             TryEmitSound(component, predict: false);
         }
 
-        private void HandleEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, LandEvent args)
+        private void OnEmitSoundOnLand(EntityUid uid, BaseEmitSoundComponent component, ref LandEvent args)
         {
             if (!TryComp<TransformComponent>(uid, out var xform) ||
                 !_mapManager.TryGetGrid(xform.GridUid, out var grid))

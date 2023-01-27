@@ -169,6 +169,7 @@
       - MiningDrill
       - ConveyorBeltAssembly
       - AppraisalTool
+      - AnomalyScanner
       - RCD
       - RCDAmmo
       - HydroponicsToolScythe
@@ -314,6 +315,8 @@
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
       - ExosuitFabricatorMachineCircuitboard
+      - AnomalyVesselCircuitboard
+      - APECircuitboard
       - ArtifactAnalyzerMachineCircuitboard
       - TraversalDistorterMachineCircuitboard
       - BoozeDispenserMachineCircuitboard
@@ -464,6 +467,14 @@
       - PillCanister
       - BodyBag
       - ChemistryEmptyBottle01
+      - Medkit
+      - MedkitBurn
+      - MedkitToxin
+      - MedkitO2
+      - MedkitBrute
+      - MedkitAdvanced
+      - MedkitRadiation
+      - MedkitCombat
   - type: Machine
     board: MedicalTechFabCircuitboard
 

@@ -4,6 +4,7 @@ using Content.Server.Interaction;
 using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
+using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
@@ -11,6 +12,8 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
 
@@ -119,9 +122,12 @@ public sealed class MechGrabberSystem : EntitySystem
         if (args.Handled || args.Target is not {} target)
             return;
 
-        var xform = Transform(target);
-        if (xform.Anchored || HasComp<WallMountComponent>(target) || HasComp<MobStateComponent>(target))
+        if (TryComp<PhysicsComponent>(uid, out var physics) && physics.BodyType == BodyType.Static && !HasComp<AnchorableComponent>(uid) ||
+            HasComp<WallMountComponent>(target) ||
+            HasComp<MobStateComponent>(target))
+        {
             return;
+        }
 
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;

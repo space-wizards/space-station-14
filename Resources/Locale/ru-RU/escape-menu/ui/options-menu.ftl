@@ -127,6 +127,7 @@ ui-options-function-open-sandbox-window = Открыть меню песочни
 ui-options-function-open-tile-spawn-window = Открыть меню спавна тайлов
 ui-options-function-open-decal-spawn-window = Открыть меню спавна декалей
 ui-options-function-open-admin-menu = Открыть админ меню
+ui-options-function-open-guidebook = Открыть руководство
 ui-options-function-take-screenshot = Сделать скриншот
 ui-options-function-take-screenshot-no-ui = Сделать скриншот (без интерфейса)
 ui-options-function-editor-place-object = Разместить объект
@@ -195,3 +196,5 @@ ui-options-net-pvs-leave-tooltip =
     сущности вне поля зрения. Снижение этого параметра может помочь
     уменьшить "захлебывания" при ходьбе, но иногда может 
     привести к неправильным предугадываниям и другим проблемам.
+cmd-options-desc = Открывает меню опций, опционально с конкретно выбранной вкладкой.
+cmd-options-help = Использование: options [tab]

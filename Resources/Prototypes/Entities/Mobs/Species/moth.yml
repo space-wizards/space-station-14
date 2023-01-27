@@ -5,7 +5,7 @@
   id: BaseMobMoth
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Moth
   - type: Hunger
   - type: Thirst
@@ -110,7 +110,7 @@
   noSpawn: true
   description: A dummy moth meant to be used in character setup.
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Moth
 
 #Weh

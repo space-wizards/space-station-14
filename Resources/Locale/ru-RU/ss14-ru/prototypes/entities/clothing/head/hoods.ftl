@@ -28,3 +28,6 @@ ent-ClothingHeadHatHoodNunHood = капюшон монахини
 ent-ClothingHeadHatHoodRad = капюшон радиозащитного костюма
     .desc = Капюшон ОЗК, предназначенного для защиты от высокой радиоактивности.
     .suffix = { "" }
+ent-ClothingHeadHatHoodGoliathCloak = капюшон плаща голиафа
+    .desc = Капюшон плаща голиафа, сделанный из шкуры выносливой фауны с далекой планеты.
+    .suffix = { "" }

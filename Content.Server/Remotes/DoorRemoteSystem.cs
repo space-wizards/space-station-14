@@ -18,10 +18,11 @@ namespace Content.Server.Remotes
     public sealed class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
+        // I'm so sorry [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
         {
@@ -90,12 +91,12 @@ namespace Content.Server.Remotes
                 case OperatingMode.ToggleBolts:
                     if (!airlockComp.BoltWireCut)
                     {
-                        airlockComp.SetBoltsWithAudio(!airlockComp.IsBolted());
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(airlockComp.IsBolted() ? "" : "un")}bolt it");
+                        _airlock.SetBoltsWithAudio(uid, airlockComp, !airlockComp.BoltsDown);
+                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(airlockComp.BoltsDown ? "" : "un")}bolt it");
                     }
                     break;
                 case OperatingMode.ToggleEmergencyAccess:
-                    _sharedAirlockSystem.ToggleEmergencyAccess(airlockComp);
+                    _airlock.ToggleEmergencyAccess(uid, airlockComp);
                     _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to set emergency access {(airlockComp.EmergencyAccess ? "on" : "off")}");
                     break;
                 default:

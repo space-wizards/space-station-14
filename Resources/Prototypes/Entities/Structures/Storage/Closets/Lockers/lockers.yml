@@ -364,14 +364,18 @@
   components:
     - type: BluespaceLocker
       minBluespaceLinks: 1
-      bluespaceEffectOnInit: true
       behaviorProperties:
-        delay: 0.5
+        delay: 1
+        actOnOpen: false
+        bluespaceEffectOnInit: true
         bluespaceEffectOnTeleportSource: true
         bluespaceEffectOnTeleportTarget: true
-        destroyAfterUses: 2
+        destroyAfterUses: 1
+        destroyAfterUsesMinItemsToCountUse: 1
         destroyType: Delete
       autoLinksUseProperties: true
       autoLinkProperties:
+        actOnOpen: false
+        actOnClose: false
         destroyAfterUses: 2
         destroyType: DeleteComponent

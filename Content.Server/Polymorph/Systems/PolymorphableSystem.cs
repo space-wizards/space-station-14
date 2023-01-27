@@ -32,7 +32,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly HumanoidSystem _humanoid = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -85,9 +85,9 @@ namespace Content.Server.Polymorph.Systems
         /// <param name="proto">The polymorph prototype</param>
         public EntityUid? PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
-            /// This is the big papa function. This handles the transformation, moving the old entity
-            /// logic and conditions specified in the prototype, and everything else that may be needed.
-            /// I am clinically insane - emo
+            // This is the big papa function. This handles the transformation, moving the old entity
+            // logic and conditions specified in the prototype, and everything else that may be needed.
+            // I am clinically insane - emo
 
             // if it's already morphed, don't allow it again with this condition active.
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))

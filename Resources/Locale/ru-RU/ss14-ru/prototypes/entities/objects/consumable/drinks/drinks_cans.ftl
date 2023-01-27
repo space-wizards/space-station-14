@@ -43,6 +43,6 @@ ent-DrinkDrGibbCan = банка доктора Гибба
 ent-DrinkEnergyDrinkCan = банка энергетика Ред Булеан
     .desc = Банка Ред Булеан, как известно, убивает лошадь.
     .suffix = { "" }
-ent-DrinkCanPack = 6штук
+ent-DrinkCanPack = держатель для напитков
     .desc = Служит для удобного хранения сразу нескольких банок напитков.
     .suffix = { "" }

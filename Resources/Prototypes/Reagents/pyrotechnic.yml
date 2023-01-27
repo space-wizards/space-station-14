@@ -116,7 +116,8 @@
       - !type:FlammableReaction
         multiplier: 0.3
       - !type:Ignite
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
       - !type:PopupMessage
         messages: [ "clf3-it-burns", "clf3-get-away" ]
