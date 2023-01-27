@@ -176,7 +176,7 @@
         ScanningModule: 1
         Capacitor: 2
       materialRequirements:
-        Steel: 5 
+        Steel: 5
         Cable: 1
 
 - type: entity
@@ -301,6 +301,21 @@
       materialRequirements:
         Glass: 5
         Cable: 1
+
+- type: entity
+  id: CrewMonitoringServerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: crew monitoring server machine board
+  description: A machine printed circuit board for a crew monitoring server
+  components:
+    - type: MachineBoard
+      prototype: CrewMonitoringServer
+      requirements:
+        Capacitor: 1
+        ScanningModule: 2
+      materialRequirements:
+        Steel: 1
+        Cable: 2
 
 - type: entity
   id: CryoPodMachineCircuitboard
