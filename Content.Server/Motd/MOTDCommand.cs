@@ -15,52 +15,22 @@ using Robust.Shared.Console;
 namespace Content.Server.Motd;
 
 /// <summary>
-/// A console command which either prints the current message of the day or sets the current message of the day.
-/// Setting the message of the day is a privileged action that can only be performed by the server host or admins with the <see cref="AdminFlag.Admin"/> flag.
-/// Printing the message of the day, on the other hand, is an unprivileged action any player may perform.
+/// A console command which acts as an alias for <see cref="GetMotdCommand"/> or <see cref="SetMotdCommand"/> depending on the number of arguments given.
 /// </summary>
 [AnyCommand]
 internal sealed class MOTDCommand : IConsoleCommand
 {
-    #region Dependencies
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
-    private MOTDSystem? _motdSystem = null; // Can't be a normal dependency because only entity systems can resolve entity systems as dependencies.
-    #endregion Dependencies
+    [Dependency] private readonly IConsoleHost _consoleHost = default!;
 
     public string Command => "motd";
     public string Description => "Print or set the Message Of The Day.";
-    public string Help => "motd [ <text> ]";
+    public string Help => "motd [ <text> ... ]";
     
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var player = (IPlayerSession?) shell.Player;
         if (args.Length < 1)
-        {   // Get MOTD
-            _motdSystem ??= _entitySystemManager.GetEntitySystem<MOTDSystem>();
-            _motdSystem.TrySendMOTD(shell);
-            return;
-        }
-
-        // Set MOTD
-        if (player != null && !_adminManager.HasAdminFlag(player, AdminFlags.Admin))
-        {
-            shell.WriteError("You do not have the permissions necessary to set the message of the day for this server.");
-            return;
-        }
-
-        var motd = string.Join(" ", args).Trim();
-        if (player != null && _chatManager.MessageCharacterLimit(player, motd))
-            return;
-        
-        _configurationManager.SetCVar(CCVars.MOTD, motd); // A hook in MOTDSystem broadcasts changes to the MOTD to everyone so we don't need to do it here.
-        shell.WriteLine(Loc.GetString("motd-wrap-message", ("motd", motd)));
-        if (string.IsNullOrEmpty(motd))
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} cleared the MOTD for the server.");
+            shell.ConsoleHost.ExecuteCommand(shell.Player, "get-motd");
         else
-            _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
+            shell.ConsoleHost.ExecuteCommand(shell.Player, $"set-motd {string.Join(" ", args)}");
     }
 }

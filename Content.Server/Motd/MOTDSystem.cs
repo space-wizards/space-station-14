@@ -8,32 +8,35 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Motd;
 
+/// <summary>
+/// The system that handles broadcasting the Message Of The Day to players when they join the lobby/the MOTD changes/they ask for it to be printed.
+/// </summary>
 public sealed class MOTDSystem : EntitySystem
 {
-    #region Dependencies
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    #endregion Dependencies
 
+    /// <summary>
+    /// The cached value of the Message of the Day. Used for fast access.
+    /// </summary>
     private string _messageOfTheDay = "";
 
     public override void Initialize()
     {
         base.Initialize();
         _messageOfTheDay = _configurationManager.GetCVar(CCVars.MOTD);
-        _configurationManager.OnValueChanged(CCVars.MOTD, _onMOTDChanged);
-        SubscribeLocalEvent<GameRunLevelChangedEvent>(_onGameRunLevelChanged);
-        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(_onPlayerJoinedLobby);
+        _configurationManager.OnValueChanged(CCVars.MOTD, OnMOTDChanged);
+        SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
     }
 
     public override void Shutdown()
     {
-        _configurationManager.UnsubValueChanged(CCVars.MOTD, _onMOTDChanged);
+        _configurationManager.UnsubValueChanged(CCVars.MOTD, OnMOTDChanged);
         base.Shutdown();
     }
 
     /// <summary>
-    /// Sends the message of the day, if any, to all connected players.
+    /// Sends the Message Of The Day, if any, to all connected players.
     /// </summary>
     public void TrySendMOTD()
     {
@@ -45,7 +48,7 @@ public sealed class MOTDSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sends the message of the day, if any, to a specific player.
+    /// Sends the Message Of The Day, if any, to a specific player.
     /// </summary>
     public void TrySendMOTD(IPlayerSession player)
     {
@@ -57,7 +60,7 @@ public sealed class MOTDSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sends the message of the day, if any, to a specific players console and chat.
+    /// Sends the Message Of The Day, if any, to a specific player's console and chat.
     /// </summary>
     /// <remarks>
     /// This is used by the MOTD console command because we can't tell whether the player is using `console or /console so we send the message to both.
@@ -73,22 +76,20 @@ public sealed class MOTDSystem : EntitySystem
             _chatManager.ChatMessageToOne(ChatChannel.Server, _messageOfTheDay, wrappedMessage, source: EntityUid.Invalid, hideChat: false, client: player.ConnectedClient);
     }
 
-    private void _onPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
+    #region Event Handlers
+
+    /// <summary>
+    /// Posts the Message Of The Day to any players who join the lobby.
+    /// </summary>
+    private void OnPlayerJoinedLobby(PlayerJoinedLobbyEvent ev)
     {
         TrySendMOTD(ev.PlayerSession);
     }
 
-    private void _onGameRunLevelChanged(GameRunLevelChangedEvent ev)
-    {
-        switch(ev.New)
-        {
-            case GameRunLevel.PreRoundLobby:
-                TrySendMOTD();
-                break;
-        }
-    }
-
-    private void _onMOTDChanged(string val)
+    /// <summary>
+    /// Broadcasts changes to the Message Of The Day to all players.
+    /// </summary>
+    private void OnMOTDChanged(string val)
     {
         if (val == _messageOfTheDay)
             return;
@@ -96,4 +97,6 @@ public sealed class MOTDSystem : EntitySystem
         _messageOfTheDay = val;
         TrySendMOTD();
     }
+
+    #endregion Event Handlers
 }
