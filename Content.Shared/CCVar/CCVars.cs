@@ -1209,7 +1209,7 @@ namespace Content.Shared.CCVar
         /// May be requested by any player through use of the "get-motd" command.
         /// </summary>
         public static readonly CVarDef<string> MOTD =
-            CVarDef.Create("chat.motd", "[color=#ff00ff]This is the default Message Of The Day.[/color]", CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE, "A message broadcast to each player that joins the lobby.");
+            CVarDef.Create("chat.motd", "", CVar.SERVER | CVar.SERVERONLY | CVar.ARCHIVE, "A message broadcast to each player that joins the lobby.");
 
         /*
          * AFK
