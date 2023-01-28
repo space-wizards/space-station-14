@@ -1,5 +1,4 @@
 using Content.Server.Chat.Systems;
-using Content.Server.Popups;
 using Content.Server.Radio.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
