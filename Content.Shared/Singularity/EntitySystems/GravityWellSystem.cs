@@ -10,9 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Singularity.EntitySystems;
 
 /// <summary>
-/// The server side version of <see cref="SharedGravityWellSystem"/>.
-/// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
-/// Handles the gravitational scans they can emit.
+/// Handles <see cref="GravityWellComponent"/>s capturing nearby physics-enabled entities and attracting/repulsing them.
 /// </summary>
 public sealed partial class SharedGravityWellSystem : VirtualController
 {
@@ -49,7 +47,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the set of captured entities for all gravity wells.
     /// </summary>
-    /// <param name="frameTime">The time elapsed since the last set of updates.</param>
     public override void Update(float frameTime)
     {
         if(!_timing.IsFirstTimePredicted)
@@ -66,9 +63,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the set of captured entities for a gravity well.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to make scan.</param>
-    /// <param name="gravWell">The state of the gravity well to make scan.</param>
-    /// <param name="xform">The transform of the gravity well to make scan.</param>
     private void Update(EntityUid uid, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if (Resolve(uid, ref gravWell))
@@ -78,10 +72,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the set of captured entities for a gravity well.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to make scan.</param>
-    /// <param name="gravWell">The state of the gravity well to make scan.</param>
-    /// <param name="frameTime">The amount to consider as having passed since the last gravitational scan by the gravity well. Scan force scales with this.</param>
-    /// <param name="xform">The transform of the gravity well to make scan.</param>
     private void Update(EntityUid uid, TimeSpan curTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -105,10 +95,9 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// Checks whether an entity can be affected by gravity pulses.
     /// TODO: Make this an event or such.
     /// </summary>
-    /// <param name="entity">The entity to check.</param>
     private bool CanGravPulseAffect(EntityUid entity)
     {
-        return !(
+        return !( // TODO: Make this an event/tag check/specific immunity component so as to rid ourselves of this code smell.
             EntityManager.HasComponent<SharedGhostComponent>(entity) ||
             EntityManager.HasComponent<MapGridComponent>(entity) ||
             EntityManager.HasComponent<MapComponent>(entity) ||
@@ -121,8 +110,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the gravitational force applied to all objects captured by all gravity wells.
     /// </summary>
-    /// <param name="prediction">Whether we are on the client and the client is running prediction.</param>
-    /// <param name="frameTime">The amount of time that has passed since the previous physics frame.</param>
     public override void UpdateBeforeSolve(bool prediction, float frameTime)
     {
         base.UpdateBeforeSolve(prediction, frameTime);
@@ -138,9 +125,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the gravitational force applied to all objects captured by all gravity wells.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to update.</param>
-    /// <param name="gravWell">The state of the gravity well to update.</param>
-    /// <param name="xform">The position state of the gravity well.</param>
     public void UpdateBeforeSolve(EntityUid uid, float frameTime, GravityWellComponent? gravWell = null, TransformComponent? xform = null)
     {
         if(!Resolve(uid, ref gravWell, ref xform))
@@ -154,11 +138,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the gravitational force applied to all objects captured by all gravity wells.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to update.</param>
-    /// <param name="physicsQuery">A query for the physics body states of affected entities.</param>
-    /// <param name="xformQuery">A query for the position states of affected entities.</param>
-    /// <param name="gravWell">The state of the gravity well to update.</param>
-    /// <param name="xform">The position state of the gravity well.</param>
     public void UpdateBeforeSolve(
         EntityUid uid,
         float frameTime,
@@ -199,9 +178,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// Sets the scan period for a gravity well.
     /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
-    /// <param name="value">The new scan period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
     public void SetRadialAcceleration(EntityUid uid, float value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -218,9 +194,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// Sets the scan period for a gravity well.
     /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
-    /// <param name="value">The new scan period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
     public void SetTangentialAcceleration(EntityUid uid, float value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -237,9 +210,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// Sets the scan period for a gravity well.
     /// If the new scan period implies that the gravity well was intended to scan already it does so immediately.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to set the scan period for.</param>
-    /// <param name="value">The new scan period for the gravity well.</param>
-    /// <param name="gravWell">The state of the gravity well to set the scan period for.</param>
     public void SetScanPeriod(EntityUid uid, TimeSpan value, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -259,8 +229,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Updates the matrix acceleration of the gravity well to match the set radial and tangential accelerations.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to update the matrix for.</param>
-    /// <param name="gravWell">The state of the gravity well to update the matrix for.</param>
     public void UpdateMatrix(EntityUid uid, GravityWellComponent? gravWell = null)
     {
         if(!Resolve(uid, ref gravWell))
@@ -280,9 +248,6 @@ public sealed partial class SharedGravityWellSystem : VirtualController
     /// <summary>
     /// Resets the scan timings of the gravity well when the components starts up.
     /// </summary>
-    /// <param name="uid">The uid of the gravity well to start up.</param>
-    /// <param name="comp">The state of the gravity well to start up.</param>
-    /// <param name="args">The startup prompt arguments.</param>
     public void OnGravityWellStartup(EntityUid uid, GravityWellComponent comp, ComponentStartup args)
     {
         comp.LastScanTime = _timing.CurTime;
