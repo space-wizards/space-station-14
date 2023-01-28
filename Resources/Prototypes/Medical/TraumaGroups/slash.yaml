@@ -1,0 +1,4 @@
+﻿- type: trauma
+  id: Slash
+  wounds:
+    10 : Cut

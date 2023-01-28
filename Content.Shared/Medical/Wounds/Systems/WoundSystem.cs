@@ -2,7 +2,9 @@
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
+using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
@@ -21,6 +23,8 @@ public sealed partial class WoundSystem : EntitySystem
 
     [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
+
+    private readonly Dictionary<string, WoundTable> _cachedWounds = new();
 
     public override void Initialize()
     {
@@ -74,9 +78,7 @@ public sealed partial class WoundSystem : EntitySystem
     private void OnWoundGetState(EntityUid uid, WoundComponent wound, ref ComponentGetState args)
     {
         args.State = new WoundComponentState(
-            wound.Parent,
             wound.ScarWound,
-            wound.prototypeId,
             wound.HealthCapDamage,
             wound.IntegrityDamage,
             wound.Severity,
@@ -91,7 +93,6 @@ public sealed partial class WoundSystem : EntitySystem
         if (args.Current is not WoundComponentState state)
             return;
 
-        wound.Parent = state.Parent;
         wound.ScarWound = state.ScarWound;
         wound.HealthCapDamage = state.HealthCapDamage;
         wound.IntegrityDamage = state.IntegrityDamage;
@@ -99,6 +100,16 @@ public sealed partial class WoundSystem : EntitySystem
         wound.BaseHealingRate = state.BaseHealingRate;
         wound.HealingModifier = state.HealingModifier;
         wound.HealingMultiplier = state.HealingMultiplier;
+    }
+
+    private void CacheWoundData()
+    {
+        _cachedWounds.Clear();
+
+        foreach (var traumaType in _prototypeManager.EnumeratePrototypes<TraumaPrototype>())
+        {
+            _cachedWounds.Add(traumaType.ID, new WoundTable(traumaType));
+        }
     }
 
     public override void Update(float frameTime)
@@ -110,9 +121,24 @@ public sealed partial class WoundSystem : EntitySystem
     {
         if (!args.DamageIncreased || args.DamageDelta == null)
             return;
-
+        //TODO targeting
         var parts = _body.GetBodyChildren(uid, component).ToList();
         var part = _random.Pick(parts);
         TryApplyTrauma(args.Origin, part.Id, args.DamageDelta);
+    }
+
+    private readonly struct WoundTable
+    {
+        private readonly SortedDictionary<FixedPoint2, string> _wounds;
+
+        public WoundTable(TraumaPrototype trauma)
+        {
+            _wounds = trauma.Wounds;
+        }
+
+        public IEnumerable<KeyValuePair<FixedPoint2, string>> HighestToLowest()
+        {
+            return _wounds.Reverse();
+        }
     }
 }

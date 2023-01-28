@@ -1,11 +1,9 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Coordinates;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Wounds.Components;
-using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 
@@ -14,18 +12,6 @@ namespace Content.Shared.Medical.Wounds.Systems;
 //TODO: Convert to use entity hierarchies instead of containers to store wounds
 public sealed partial class WoundSystem
 {
-    private readonly Dictionary<string, WoundTable> _cachedWounds = new();
-
-    private void CacheWoundData()
-    {
-        _cachedWounds.Clear();
-
-        foreach (var traumaType in _prototypeManager.EnumeratePrototypes<TraumaPrototype>())
-        {
-            _cachedWounds.Add(traumaType.ID, new WoundTable(traumaType));
-        }
-    }
-
     public bool TryApplyTrauma(EntityUid? origin, EntityUid target, DamageSpecifier damage)
     {
         var success = false;
@@ -110,7 +96,7 @@ public sealed partial class WoundSystem
 
     private bool AddWound(EntityUid woundableId, string woundPrototypeId, WoundableComponent? woundable = null)
     {
-        if (!Resolve(woundableId, ref woundable, false) || _net.IsClient)
+        if (_net.IsClient || !Resolve(woundableId, ref woundable, false))
             return false;
 
         var woundId = Spawn(woundPrototypeId, woundableId.ToCoordinates());
@@ -119,11 +105,9 @@ public sealed partial class WoundSystem
         var wounds = _containers.EnsureContainer<Container>(woundableId, WoundContainerId);
         if (!wounds.Insert(woundId))
             return false;
-        wound.Parent = woundableId;
-        wound.prototypeId = woundPrototypeId;
-        Dirty(wound);
         woundable.HealthCapDamage += wound.Severity * wound.HealthCapDamage;
         ApplyRawIntegrityDamage(woundableId, wound.IntegrityDamage, woundable);
+        Dirty(wound);
         return true;
     }
 
@@ -158,7 +142,7 @@ public sealed partial class WoundSystem
             return false;
         if (!Resolve(woundId, ref wound, false))
             return false;
-        UpdateWoundSeverity(woundable, wound, wound.Severity + severityIncrease);
+        UpdateWoundSeverity(woundableId, woundId, woundable, wound, wound.Severity + severityIncrease);
         return true;
     }
 
@@ -170,11 +154,12 @@ public sealed partial class WoundSystem
             return false;
         if (!Resolve(woundId, ref wound, false))
             return false;
-        UpdateWoundSeverity(woundable, wound, severityAmount);
+        UpdateWoundSeverity(woundableId, woundId, woundable, wound, severityAmount);
         return true;
     }
 
-    private void UpdateWoundSeverity(WoundableComponent woundable, WoundComponent wound, FixedPoint2 newSeverity)
+    private void UpdateWoundSeverity(EntityUid woundableId, EntityUid woundId, WoundableComponent woundable,
+        WoundComponent wound, FixedPoint2 newSeverity)
     {
         newSeverity = FixedPoint2.Clamp(newSeverity, FixedPoint2.Zero, 100);
         var severityDelta = newSeverity - wound.Severity;
@@ -183,6 +168,8 @@ public sealed partial class WoundSystem
         var healthCapDamageDelta = severityDelta * wound.HealthCapDamage;
         woundable.HealthCapDamage += healthCapDamageDelta;
         wound.Severity = newSeverity;
+        var ev = new WoundSeverityChangedEvent(woundableId, woundId, wound);
+        RaiseLocalEvent(woundableId, ev, true);
     }
 
     public bool RemoveWound(EntityUid woundableId, EntityUid woundId, bool makeScar = false,
@@ -194,16 +181,16 @@ public sealed partial class WoundSystem
             return false;
 
         _containers.RemoveEntity(woundableId, woundId);
-        wound.Parent = EntityUid.Invalid;
         Dirty(wound);
-        UpdateWoundSeverity(woundable, wound, FixedPoint2.Zero);
+        UpdateWoundSeverity(woundableId, woundId, woundable, wound, FixedPoint2.Zero);
 
         if (makeScar && wound.ScarWound != null)
             AddWound(woundableId, wound.ScarWound, woundable);
 
+        var ev = new WoundRemovedEvent(woundableId, woundable, woundId, wound);
+        RaiseLocalEvent(woundableId, ref ev, true);
         if (_net.IsServer)
             EntityManager.DeleteEntity(woundId);
-
         return true;
     }
 
@@ -289,20 +276,5 @@ public sealed partial class WoundSystem
         }
 
         return null;
-    }
-
-    private readonly struct WoundTable
-    {
-        private readonly SortedDictionary<FixedPoint2, string> _wounds;
-
-        public WoundTable(TraumaPrototype trauma)
-        {
-            _wounds = trauma.Wounds;
-        }
-
-        public IEnumerable<KeyValuePair<FixedPoint2, string>> HighestToLowest()
-        {
-            return _wounds.Reverse();
-        }
     }
 }

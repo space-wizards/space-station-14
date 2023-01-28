@@ -1,0 +1,4 @@
+﻿- type: trauma
+  id: Blunt
+  wounds:
+    10 : Abrasion
