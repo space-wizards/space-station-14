@@ -202,13 +202,6 @@
     - sprite: Mobs/Customization/human_facial_hair.rsi
       state: selleck
 - type: marking
-  id: HumanFacialHairChaplin
-  bodyPart: FacialHair
-  markingCategory: FacialHair
-  sprites:
-    - sprite: Mobs/Customization/human_facial_hair.rsi
-      state: chaplin
-- type: marking
   id: HumanFacialHairVandyke
   bodyPart: FacialHair
   markingCategory: FacialHair
