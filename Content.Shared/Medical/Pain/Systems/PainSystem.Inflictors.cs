@@ -20,4 +20,20 @@ public sealed partial class PainSystem
         ApplyPain(targetEntity, receiver, painToInflict);
         return true;
     }
+
+    public bool RemovePain(EntityUid targetEntity, EntityUid inflicterEntity, PainReceiverComponent? receiver = null,
+        PainInflicterComponent? inflicter = null, PainLocalModifierComponent? localModifier = null)
+    {
+        if (!Resolve(targetEntity, ref receiver) || !Resolve(inflicterEntity, ref inflicter))
+            return false;
+        var painToInflict = inflicter.Pain;
+        if (localModifier != null)
+        {
+            painToInflict *= localModifier.Modifier;
+        }
+        if (painToInflict == 0)
+            return false;
+        ApplyPain(targetEntity, receiver, -painToInflict);
+        return true;
+    }
 }

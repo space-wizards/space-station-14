@@ -8,6 +8,55 @@ public sealed partial class WoundSystem
     private const float HealingTickRate = 1f;
     private float _healingTimer;
 
+    #region Public_API
+
+    public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
+        WoundComponent? wound = null)
+    {
+        if (!Resolve(woundableId, ref woundable, false))
+            return false;
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        Logger.Log(LogLevel.Info, "Wound " + woundId + " Fully Healed!");
+        return RemoveWound(woundableId, woundId, true, woundable, wound);
+    }
+
+    public bool AddHealingModifier(EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        wound.HealingModifier += additionalHealing;
+        return true;
+    }
+
+    public bool SetHealingModifier(EntityUid woundId, FixedPoint2 newHealingModifier, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        wound.HealingModifier = newHealingModifier;
+        return true;
+    }
+
+    public bool AddHealingMultipler(EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        wound.HealingMultiplier += multiplier;
+        return true;
+    }
+
+    public bool SetHealingMultiplier(EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
+    {
+        if (!Resolve(woundId, ref wound, false))
+            return false;
+        wound.HealingMultiplier = multiplier;
+        return true;
+    }
+
+    #endregion
+
+    #region Private_Implementation
+
     private void UpdateHealing(float frameTime)
     {
         _healingTimer += frameTime;
@@ -20,7 +69,7 @@ public sealed partial class WoundSystem
             // TODO wounds before merge iterate wounds separately
             foreach (var wound in GetAllWoundComponents(woundable.Owner))
             {
-                HealWound(woundable,wound);
+                HealWound(woundable, wound);
             }
 
             HealWoundable(woundable);
@@ -35,7 +84,7 @@ public sealed partial class WoundSystem
 
         var healing = (woundable.BaseHealingRate + woundable.HealingModifier) * woundable.HealingMultiplier;
         if (woundable.Health < healthCap)
-            woundable.Health = FixedPoint2.Clamp(woundable.Health+healing, FixedPoint2.Zero, healthCap);
+            woundable.Health = FixedPoint2.Clamp(woundable.Health + healing, FixedPoint2.Zero, healthCap);
     }
 
     private void HealWound(WoundableComponent woundable, WoundComponent wound)
@@ -43,51 +92,11 @@ public sealed partial class WoundSystem
         if (wound.BaseHealingRate + wound.HealingModifier == 0)
             return; //if the wound doesn't heal, do nothing
         //we want to decrease severity so we need to invert the healing rate to become the severity delta.
-        var severityDecrease =  -((wound.BaseHealingRate + wound.HealingModifier) * wound.HealingMultiplier);
-        AddWoundSeverity(woundable.Owner, wound.Owner, severityDecrease,woundable , wound);
+        var severityDecrease = -((wound.BaseHealingRate + wound.HealingModifier) * wound.HealingMultiplier);
+        AddWoundSeverity(woundable.Owner, wound.Owner, severityDecrease, woundable, wound);
         if (wound.Severity <= 0.0f)
             FullyHealWound(woundable.Owner, wound.Owner, woundable, wound);
     }
-    public bool FullyHealWound(EntityUid woundableId, EntityUid woundId, WoundableComponent? woundable = null,
-        WoundComponent? wound = null)
-    {
-        if (!Resolve(woundableId, ref woundable, false))
-            return false;
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        Logger.Log(LogLevel.Info,"Wound "+ woundId + " Fully Healed!");
-        return RemoveWound(woundableId, woundId, true, woundable, wound);
-    }
 
-    public bool AddHealingModifier (EntityUid woundId, FixedPoint2 additionalHealing, WoundComponent? wound = null)
-    {
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        wound.HealingModifier += additionalHealing;
-        return true;
-    }
-
-    public bool SetHealingModifier (EntityUid woundId, FixedPoint2 newHealingModifier, WoundComponent? wound = null)
-    {
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        wound.HealingModifier = newHealingModifier;
-        return true;
-    }
-
-    public bool AddHealingMultipler (EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
-    {
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        wound.HealingMultiplier += multiplier;
-        return true;
-    }
-
-    public bool SetHealingMultiplier (EntityUid woundId, FixedPoint2 multiplier, WoundComponent? wound = null)
-    {
-        if (!Resolve(woundId, ref wound, false))
-            return false;
-        wound.HealingMultiplier = multiplier;
-        return true;
-    }
+    #endregion
 }

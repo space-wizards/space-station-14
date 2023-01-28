@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Body.Components;
+using Content.Shared.Body.Part;
 using Content.Shared.FixedPoint;
 using Content.Shared.Medical.Pain.Components;
 using Content.Shared.Medical.Wounds.Components;
@@ -10,8 +11,8 @@ public sealed partial class PainSystem : EntitySystem
 {
     public override void Initialize()
     {
-        SubscribeLocalEvent<WoundableComponent,WoundAddedEvent>(OnWoundAdded);
-        SubscribeLocalEvent<WoundableComponent,WoundRemovedEvent>(OnWoundRemoved);
+        SubscribeLocalEvent<BodyComponent,WoundAddedEvent>(OnWoundAdded);
+        SubscribeLocalEvent<BodyComponent,WoundRemovedEvent>(OnWoundRemoved);
     }
 
     public void ApplyPain(EntityUid target, PainReceiverComponent receiver, FixedPoint2 pain)
