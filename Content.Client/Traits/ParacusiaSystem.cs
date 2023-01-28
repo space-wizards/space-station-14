@@ -1,16 +1,17 @@
 using Content.Shared.Audio;
-using Content.Shared.Camera;
+using Content.Shared.Traits.Assorted;
+using Content.Client.Camera;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Map;
 
-namespace Content.Shared.Traits.Assorted;
+namespace Content.Client.Traits;
 
 public sealed class ParacusiaSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedCameraRecoilSystem _camera = default!;
+    [Dependency] private readonly CameraRecoilSystem _camera = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
