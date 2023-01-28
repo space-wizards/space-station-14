@@ -43,13 +43,14 @@
     sprite: Objects/Decoration/Flora/flora_trees.rsi
     netsync: false
     drawdepth: Overdoors
+    offset: 0,0.9
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.35,-1.3,0.35,-0.5"
+        bounds: "-0.35,-0.4,0.35,0.4"
       density: 1000
       layer:
       - WallLayer
@@ -83,11 +84,12 @@
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treessnow.rsi
+    offset: 0,0.7
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.1,-1.0,0.1,-0.4"
+        bounds: "-0.1,-0.3,0.1,0.3"
       density: 4000
       layer:
       - WallLayer
@@ -99,11 +101,12 @@
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treeslarge.rsi
+    offset: 0,1.55
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.18,-1.9,0.18,-1.2"
+        bounds: "-0.18,-0.35,0.18,0.35"
       density: 2000
       layer:
       - WallLayer
@@ -115,11 +118,12 @@
   components:
   - type: Sprite
     sprite: Objects/Decoration/Flora/flora_treesconifer.rsi
+    offset: 0,1.15
   - type: Fixtures
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.1,-1.5,0.1,-0.8"
+        bounds: "-0.1,-0.35,0.1,0.35"
       density: 3500
       layer:
       - WallLayer

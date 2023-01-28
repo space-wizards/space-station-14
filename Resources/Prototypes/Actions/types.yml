@@ -3,7 +3,7 @@
   useDelay: 10
   icon: Interface/Actions/scream.png
   name: action-name-scream
-  description: AAAAAAAAAAAAAAAAAAAAAAAAA
+  description: action-description-scream
   serverEvent: !type:ScreamActionEvent
   checkCanInteract: false
 

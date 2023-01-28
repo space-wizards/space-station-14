@@ -85,7 +85,7 @@ namespace Content.Server.Power.EntitySystems
             SoundSystem.Play(apc.OnReceiveMessageSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
         {
             if(!comp.Emagged)
             {
