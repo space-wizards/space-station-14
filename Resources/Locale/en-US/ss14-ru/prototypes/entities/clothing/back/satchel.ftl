@@ -1,6 +1,9 @@
 ent-ClothingBackpackSatchel = satchel
     .desc = A trendy looking satchel.
     .suffix = { "" }
+ent-ClothingBackpackSatchelLeather = leather satchel
+    .desc = A trend-setting satchel from a bygone era.
+    .suffix = { "" }
 ent-ClothingBackpackSatchelEngineering = engineering satchel
     .desc = A tough satchel with extra pockets.
     .suffix = { "" }
