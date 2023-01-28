@@ -1,10 +1,4 @@
 Entries:
-- author: notafet
-  changes:
-  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
-    type: Add}
-  id: 2467
-  time: '2022-10-16T06:25:42.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Buckle teleporting should be fixed for now., type: Fix}
@@ -2935,3 +2929,8 @@ Entries:
   - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
   id: 2966
   time: '2023-01-27T23:15:39.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
+  id: 2967
+  time: '2023-01-28T13:27:28.0000000+00:00'
