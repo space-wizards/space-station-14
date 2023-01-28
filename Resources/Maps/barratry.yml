@@ -87759,6 +87759,12 @@ entities:
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.5
     baseSprintSpeed: 4.5
+  - type: Fixtures
+    fixtures:
+      mask:
+      - SmallMobMask
+      layer:
+      - SmallMobLayer
 - uid: 6646
   type: TableWood
   components:
