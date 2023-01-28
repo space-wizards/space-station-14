@@ -1,35 +1,34 @@
-using Content.Server.Radio.EntitySystems;
+using Content.Shared.Chat;
 using Content.Shared.Inventory;
-using Content.Shared.Radio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Radio.Components;
+namespace Content.Shared.Radio.Components;
 
 /// <summary>
 ///     This component relays radio messages to the parent entity's chat when equipped.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(HeadsetSystem))]
 public sealed class HeadsetComponent : Component
 {
+    /// <summary>
+    ///     Set of accessible radio channels that can be addressed by using a channel specific prefix (e.g., ":e")
+    /// </summary>
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public readonly HashSet<string> Channels = new() { "Common" };
+    public readonly HashSet<string> Channels = new() { SharedChatSystem.CommonChannel };
 
-    // Maybe make the defaultChannel an actual channel type some day, and use that for parsing messages
-    // [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    // public readonly HashSet<string> defaultChannel = new();
-
-
-
+    /// <summary>
+    ///     Some specific radio channel that can be addressed via the <see cref="SharedChatSystem.DefaultChannelKey"/> prefix.
+    /// </summary>
     [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-    public readonly string? defaultChannel;
+    public readonly string? DefaultChannel;
 
     [DataField("enabled")]
     public bool Enabled = true;
 
     public bool IsEquipped = false;
 
+    // currently non-functional due to how TryProccessRadioMessage() works.
     [DataField("requiredSlot")]
     public SlotFlags RequiredSlot = SlotFlags.EARS;
 }

@@ -1,8 +1,10 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
+using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -91,7 +93,8 @@ public sealed class HeadsetSystem : EntitySystem
 
         foreach (var id in component.Channels)
         {
-            if (id == "Common") continue;
+            if (id == SharedChatSystem.CommonChannel)
+                continue;
 
             var proto = _protoManager.Index<RadioChannelPrototype>(id);
             args.PushMarkup(Loc.GetString("examine-headset-channel",
@@ -101,6 +104,7 @@ public sealed class HeadsetSystem : EntitySystem
                 ("freq", proto.Frequency)));
         }
 
-        args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
+        if (component.Channels.Contains(SharedChatSystem.CommonChannel))
+            args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
     }
 }
