@@ -25,16 +25,12 @@ public sealed class ElectricityAnomalySystem : EntitySystem
 
     private void OnPulse(EntityUid uid, ElectricityAnomalyComponent component, ref AnomalyPulseEvent args)
     {
-        var range = component.MaxElectrocuteRange * args.Stabiltiy;
-        var damage = (int) (component.MaxElectrocuteDamage * args.Severity);
-        var duration = component.MaxElectrocuteDuration * args.Severity;
-
+        var range = component.MaxElectrocuteRange * args.Stability;
         var xform = Transform(uid);
-        foreach (var comp in _lookup.GetComponentsInRange<StatusEffectsComponent>(xform.MapPosition, range))
+        foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.MapPosition, range))
         {
             var ent = comp.Owner;
-
-            _electrocution.TryDoElectrocution(ent, uid, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
+            _lightning.ShootLightning(uid, ent);
         }
     }
 
@@ -56,6 +52,30 @@ public sealed class ElectricityAnomalySystem : EntitySystem
         foreach (var ent in validEnts)
         {
             _lightning.ShootLightning(uid, ent);
+        }
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        foreach (var (elec, anom, xform) in EntityQuery<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>())
+        {
+            var owner = xform.Owner;
+
+            if (!_random.Prob(elec.PassiveElectrocutionChance * anom.Stability * frameTime))
+                break;
+
+            var range = elec.MaxElectrocuteRange * anom.Stability;
+            var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);
+            var duration = elec.MaxElectrocuteDuration * anom.Severity;
+
+            foreach (var comp in _lookup.GetComponentsInRange<StatusEffectsComponent>(xform.MapPosition, range))
+            {
+                var ent = comp.Owner;
+
+                _electrocution.TryDoElectrocution(ent, owner, damage, duration, true, statusEffects: comp, ignoreInsulation: true);
+            }
         }
     }
 }

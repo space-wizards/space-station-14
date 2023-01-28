@@ -217,6 +217,9 @@
   id: FireAxe
 
 - type: Tag
+  id: Flesh
+
+- type: Tag
   id: WhitelistChameleon
 
 - type: Tag

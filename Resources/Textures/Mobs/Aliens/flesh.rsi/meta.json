@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Created by Aleksh#7552 in the discord",
+  "states": [
+    {
+      "name": "clamp"
+    },
+    {
+      "name": "dead"
+    },
+    {
+      "name": "golem",
+	  "directions": 4
+    },
+    {
+      "name": "jared"
+    },
+    {
+      "name": "lover"
+    }
+  ]
+}
