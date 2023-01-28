@@ -8,6 +8,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
@@ -25,13 +26,11 @@ using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
-using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -50,6 +49,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         public override void Initialize()
         {
@@ -223,13 +223,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit flush button on {ToPrettyString(uid)}, it's now {(component.Engaged ? "on" : "off")}");
                     break;
                 case SharedDisposalUnitComponent.UiButton.Power:
-                    TogglePower(component);
-                    _audio.PlayPvs(new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg"), component.Owner,
-                        AudioParams.Default.WithVolume(-2f));
-                    if (EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
-                    {
-                        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(player):player} hit power button on {ToPrettyString(uid)}, it's now {(!receiver.PowerDisabled ? "on" : "off")}");
-                    }
+                    _power.TogglePower(uid, user: args.Session.AttachedEntity);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -248,17 +242,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 Disengage(component);
             }
-        }
-
-        public void TogglePower(DisposalUnitComponent component)
-        {
-            if (!EntityManager.TryGetComponent(component.Owner, out ApcPowerReceiverComponent? receiver))
-            {
-                return;
-            }
-
-            receiver.PowerDisabled = !receiver.PowerDisabled;
-            UpdateInterface(component, receiver.Powered);
         }
         #endregion
 

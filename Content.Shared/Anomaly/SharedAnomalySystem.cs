@@ -1,6 +1,10 @@
 ﻿using Content.Shared.Administration.Logs;
 using Content.Shared.Anomaly.Components;
+using Content.Shared.Damage;
 using Content.Shared.Database;
+using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Random;
@@ -15,8 +19,10 @@ public abstract class SharedAnomalySystem : EntitySystem
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] protected readonly ISharedAdminLogManager Log = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
     {
@@ -26,6 +32,8 @@ public abstract class SharedAnomalySystem : EntitySystem
         SubscribeLocalEvent<AnomalyComponent, ComponentHandleState>(OnAnomalyHandleState);
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentGetState>(OnSupercriticalGetState);
         SubscribeLocalEvent<AnomalySupercriticalComponent, ComponentHandleState>(OnSupercriticalHandleState);
+        SubscribeLocalEvent<AnomalyComponent, InteractHandEvent>(OnInteractHand);
+        SubscribeLocalEvent<AnomalyComponent, AttackedEvent>(OnAttacked);
 
         SubscribeLocalEvent<AnomalyComponent, EntityUnpausedEvent>(OnAnomalyUnpause);
         SubscribeLocalEvent<AnomalyPulsingComponent, EntityUnpausedEvent>(OnPulsingUnpause);
@@ -69,6 +77,26 @@ public abstract class SharedAnomalySystem : EntitySystem
         component.SupercriticalDuration = state.Duration;
     }
 
+    private void OnInteractHand(EntityUid uid, AnomalyComponent component, InteractHandEvent args)
+    {
+        DoAnomalyBurnDamage(uid, args.User, component);
+        args.Handled = true;
+    }
+
+    private void OnAttacked(EntityUid uid, AnomalyComponent component, AttackedEvent args)
+    {
+        DoAnomalyBurnDamage(uid, args.User, component);
+    }
+
+    public void DoAnomalyBurnDamage(EntityUid source, EntityUid target, AnomalyComponent component)
+    {
+        _damageable.TryChangeDamage(target, component.AnomalyContactDamage, true);
+        if (!Timing.IsFirstTimePredicted || _net.IsServer)
+            return;
+        Audio.PlayPvs(component.AnomalyContactDamageSound, source);
+        Popup.PopupEntity(Loc.GetString("anomaly-component-contact-damage"), target, target);
+    }
+
     private void OnAnomalyUnpause(EntityUid uid, AnomalyComponent component, ref EntityUnpausedEvent args)
     {
         component.NextPulseTime += args.PausedTime;
@@ -100,12 +128,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         {
             ChangeAnomalySeverity(uid, GetSeverityIncreaseFromGrowth(component), component);
         }
-        else
-        {
-            // just doing this to update the scanner ui
-            // as they hook into these events
-            ChangeAnomalySeverity(uid, 0);
-        }
+
+        var stability = Random.NextFloat(-component.PulseStabilityVariation, component.PulseStabilityVariation);
+        ChangeAnomalyStability(uid, stability, component);
 
         Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
         if (_net.IsServer)

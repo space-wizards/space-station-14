@@ -9,6 +9,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+      canCollide: false
     - type: Fixtures
     - type: Transform
       anchored: true

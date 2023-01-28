@@ -34,13 +34,16 @@ public sealed class BluespaceArtifact : StationEventSystem
     public override void Started()
     {
         base.Started();
+        var amountToSpawn = Math.Max(1, (int) MathF.Round(GetSeverityModifier() / 1.5f));
+        for (var i = 0; i < amountToSpawn; i++)
+        {
+            if (!TryFindRandomTile(out _, out _, out _, out var coords))
+                return;
 
-        if (!TryFindRandomTile(out _, out _, out _, out var coords))
-            return;
+            EntityManager.SpawnEntity(ArtifactSpawnerPrototype, coords);
+            EntityManager.SpawnEntity(ArtifactFlashPrototype, coords);
 
-        EntityManager.SpawnEntity(ArtifactSpawnerPrototype, coords);
-        EntityManager.SpawnEntity(ArtifactFlashPrototype, coords);
-
-        Sawmill.Info($"Spawning random artifact at {coords}");
+            Sawmill.Info($"Spawning random artifact at {coords}");
+        }
     }
 }

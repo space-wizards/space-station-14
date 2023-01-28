@@ -21,7 +21,7 @@ namespace Content.Server.Storage.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: new[]{ typeof(StorageSystem) });
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
             SubscribeLocalEvent<DumpCompletedEvent>(OnDumpCompleted);
@@ -36,7 +36,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!TryComp<ServerStorageComponent>(args.Used, out var storage))
                 return;
 
-            if (storage.StoredEntities == null || storage.StoredEntities.Count == 0)
+            if (storage.StoredEntities == null || storage.StoredEntities.Count == 0 || storage.CancelToken != null)
                 return;
 
             if (HasComp<DisposalUnitComponent>(args.Target) || HasComp<PlaceableSurfaceComponent>(args.Target))

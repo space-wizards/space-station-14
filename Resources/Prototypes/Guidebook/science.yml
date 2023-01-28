@@ -4,6 +4,7 @@
   text: "/Server Info/Guidebook/Science/Science.xml"
   children:
   - AnomalousResearch
+  - Xenoarchaeology
   - MachineUpgrading
 
 - type: guideEntry
@@ -23,6 +24,24 @@
   id: APE
   name: guide-entry-ape
   text: "/Server Info/Guidebook/Science/APE.xml"
+
+- type: guideEntry
+  id: Xenoarchaeology
+  name: guide-entry-xenoarchaeology
+  text: "/Server Info/Guidebook/Science/Xenoarchaeology.xml"
+  children:
+  - ArtifactReports
+  - TraversalDistorter
+
+- type: guideEntry
+  id: ArtifactReports
+  name: guide-entry-artifact-reports
+  text: "/Server Info/Guidebook/Science/ArtifactReports.xml"
+
+- type: guideEntry
+  id: TraversalDistorter
+  name: guide-entry-traversal-distorter
+  text: "/Server Info/Guidebook/Science/TraversalDistorter.xml"
 
 - type: guideEntry
   id: MachineUpgrading

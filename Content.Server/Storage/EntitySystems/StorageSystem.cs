@@ -316,6 +316,7 @@ namespace Content.Server.Storage.EntitySystems
                 {
                     if (entity == args.User
                         || !itemQuery.HasComponent(entity)
+                        || !CanInsert(uid, entity, out _, storageComp)
                         || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                         continue;
 
