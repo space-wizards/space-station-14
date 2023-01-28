@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
+using Content.Server.Database;
 
 namespace Content.Server.Cluwne;
 
@@ -120,18 +121,20 @@ public sealed class CluwneSystem : EntitySystem
 
         if (_robustRandom.Prob(component.KnockChance))
         { 
-            _audio.PlayPvs(component.KnockSound, uid);
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+                _audio.PlayPvs(component.KnockSound, uid);
+                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+                _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, false, false);
         }
 
-        if (_robustRandom.Prob(component.GiggleRandomChance))
+        else if (_robustRandom.Prob(component.GiggleRandomChance))
 
-            _chat.TryEmoteWithoutChat(uid, component.GiggleEmoteId);
+            _chat.TrySendInGameICMessage(uid, "giggles", InGameICChatType.Emote, false, false);
 
         else
         {
-            _popupSystem.PopupEntity(Loc.GetString("cluwne-twitch", ("target", Identity.Entity(uid, EntityManager))), uid);
+            _chat.TryEmoteWithChat(uid, component.TwitchEmoteId);
             _audio.PlayPvs(component.SpawnSound, uid);
+            _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, false, false);
         }
 
         component.LastGiggleCooldown = component.GiggleCooldown;         

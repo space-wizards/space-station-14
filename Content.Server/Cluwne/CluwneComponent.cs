@@ -36,7 +36,10 @@ public sealed class CluwneComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public string GiggleEmoteId = "Scream";
-	
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string TwitchEmoteId = "Twitch";
+
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Cluwne";
 
