@@ -30,7 +30,7 @@
   components:
     - type: Paracusia
       minTimeBetweenIncidents: 0.1
-      maxTimeBetweenIncidents: 3
+      maxTimeBetweenIncidents: 300
       maxSoundDistance: 7
       sounds:
         #- /Audio/Effects/adminhelp.ogg
