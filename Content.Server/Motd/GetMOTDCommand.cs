@@ -1,5 +1,4 @@
 using Content.Shared.Administration;
-using Robust.Server.Console;
 using Robust.Shared.Console;
 
 namespace Content.Server.Motd;

@@ -4,7 +4,6 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
-using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -49,6 +48,8 @@ public sealed class SetMotdCommand : LocalizedCommands
 
     public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        return CompletionResult.FromHint(Loc.GetString("cmd-set-motd-hint"));
+        if (args.Length == 1)
+            return CompletionResult.FromHint(Loc.GetString("cmd-set-motd-hint-head"));
+        return CompletionResult.FromHint(Loc.GetString("cmd-set-motd-hint-cont"));
     }
 }

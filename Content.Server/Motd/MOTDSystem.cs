@@ -24,8 +24,7 @@ public sealed class MOTDSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        _messageOfTheDay = _configurationManager.GetCVar(CCVars.MOTD);
-        _configurationManager.OnValueChanged(CCVars.MOTD, OnMOTDChanged);
+        _configurationManager.OnValueChanged(CCVars.MOTD, OnMOTDChanged, invokeImmediately: true);
         SubscribeLocalEvent<PlayerJoinedLobbyEvent>(OnPlayerJoinedLobby);
     }
 
