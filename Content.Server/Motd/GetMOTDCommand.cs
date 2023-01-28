@@ -1,4 +1,5 @@
 using Content.Shared.Administration;
+using Robust.Server.Console;
 using Robust.Shared.Console;
 
 namespace Content.Server.Motd;
@@ -7,15 +8,13 @@ namespace Content.Server.Motd;
 /// A command that can be used by any player to print the Message of the Day.
 /// </summary>
 [AnyCommand]
-public sealed class GetMotdCommand : IConsoleCommand
+public sealed class GetMotdCommand : LocalizedCommands
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    public string Command => "get-motd";
-    public string Description => "Prints the Message Of The Day.";
-    public string Help => "get-motd";
+    public override string Command => "get-motd";
     
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         _entityManager.EntitySysManager.GetEntitySystem<MOTDSystem>().TrySendMOTD(shell);
     }

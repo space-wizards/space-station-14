@@ -4,6 +4,7 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.CCVar;
 using Content.Server.Chat.Managers;
+using Robust.Server.Console;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -14,17 +15,15 @@ namespace Content.Server.Motd;
 /// A console command usable by any user which prints or sets the Message of the Day.
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
-public sealed class SetMotdCommand : IConsoleCommand
+public sealed class SetMotdCommand : LocalizedCommands
 {
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
-    public string Command => "set-motd";
-    public string Description => "Sets or clears the Message Of The Day.";
-    public string Help => "motd [ <text> ... ]";
+    public override string Command => "set-motd";
     
-    public void Execute(IConsoleShell shell, string argStr, string[] args)
+    public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string motd = "";
         var player = (IPlayerSession?)shell.Player;
@@ -38,13 +37,18 @@ public sealed class SetMotdCommand : IConsoleCommand
         _configurationManager.SetCVar(CCVars.MOTD, motd); // A hook in MOTDSystem broadcasts changes to the MOTD to everyone so we don't need to do it here.
         if (string.IsNullOrEmpty(motd))
         {
-            shell.WriteLine(Loc.GetString("motd-command-cleared-message"));
+            shell.WriteLine(Loc.GetString("cmd-set-motd-cleared-motd-message"));
             _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} cleared the MOTD for the server.");
         }
         else
         {
-            shell.WriteLine(Loc.GetString("motd-command-set-message", ("motd", motd)));
+            shell.WriteLine(Loc.GetString("cmd-set-motd-set-motd-message", ("motd", motd)));
             _adminLogManager.Add(LogType.Chat, LogImpact.Low, $"{(player == null ? "LOCALHOST" : player.ConnectedClient.UserName):Player} set the MOTD for the server to \"{motd:motd}\"");
         }
+    }
+
+    public override CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        return CompletionResult.FromHint(Loc.GetString("cmd-set-motd-hint"));
     }
 }
