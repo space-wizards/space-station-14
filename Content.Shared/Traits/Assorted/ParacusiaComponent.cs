@@ -1,5 +1,8 @@
 namespace Content.Server.Traits.Assorted;
 
+/// <summary>
+/// This component is used for paracusia, which causes auditory hallucinations.
+/// </summary>
 [RegisterComponent]
 public sealed class ParacusiaComponent : Component
 {
