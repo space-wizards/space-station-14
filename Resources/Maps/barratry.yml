@@ -87761,10 +87761,14 @@ entities:
     baseSprintSpeed: 4.5
   - type: Fixtures
     fixtures:
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      - shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 185
+        mask:
+         - SmallMobMask
+        layer:
+         - SmallMobLayer
 - uid: 6646
   type: TableWood
   components:
