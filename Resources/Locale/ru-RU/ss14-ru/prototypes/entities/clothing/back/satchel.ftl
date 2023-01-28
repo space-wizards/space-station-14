@@ -1,6 +1,9 @@
 ent-ClothingBackpackSatchel = сумка
     .desc = Модная сумка.
     .suffix = { "" }
+ent-ClothingBackpackSatchelLeather = кожаная сумка
+    .desc = Модная сумка из ушедшей эпохи.
+    .suffix = { "" }
 ent-ClothingBackpackSatchelEngineering = инженерная сумка
     .desc = Прочная сумка с дополнительными карманами.
     .suffix = { "" }
