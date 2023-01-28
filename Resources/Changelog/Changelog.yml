@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Buckle teleporting should be fixed for now., type: Fix}
-  id: 2468
-  time: '2022-10-16T06:38:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: If you try to swing melee out of range it doesn't waste the swing.,
     type: Tweak}
   id: 2469
@@ -2934,3 +2929,10 @@ Entries:
   - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
   id: 2967
   time: '2023-01-28T13:27:28.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
+  - {message: .25 rubber rifle rounds have been swapped for .20 rifle rounds in the
+      security techlathe., type: Tweak}
+  id: 2968
+  time: '2023-01-28T13:59:40.0000000+00:00'
