@@ -1,9 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Added voice trigger for modular grenades, type: Add}
-  id: 2472
-  time: '2022-10-16T17:44:51.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
@@ -2936,3 +2931,8 @@ Entries:
       analyzer after teleporting., type: Fix}
   id: 2971
   time: '2023-01-28T17:39:52.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cleaned up some of the syndicate names., type: Fix}
+  id: 2972
+  time: '2023-01-28T19:09:23.0000000+00:00'
