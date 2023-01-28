@@ -52,7 +52,7 @@ namespace Content.Server.StationEvents.Events
 
         private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
         {
-            if (_running && args.Channel.ID == affectedChannel)
+            if (_running && args.Channel.ID == affectedChannel && (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancel();
         }
 
