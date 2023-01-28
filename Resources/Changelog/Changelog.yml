@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has given some of your television cameras microphones. Now
-      you can actually hear the news, instead of having to either lip read the newscasters,
-      or have them ring in your headset all the events of the station!', type: Add}
-  id: 2471
-  time: '2022-10-16T17:44:14.0000000+00:00'
 - author: themias
   changes:
   - {message: Added voice trigger for modular grenades, type: Add}
@@ -2937,3 +2930,9 @@ Entries:
       shuttles), type: Fix}
   id: 2970
   time: '2023-01-28T14:07:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug where artifacts would stop functioning properly with the
+      analyzer after teleporting., type: Fix}
+  id: 2971
+  time: '2023-01-28T17:39:52.0000000+00:00'
