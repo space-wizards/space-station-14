@@ -1,15 +1,22 @@
-using JetBrains.Annotations;
-using Content.Server.Radio.EntitySystems;
+using Content.Server.Radio.Components;
+using Content.Server.Radio;
 
 namespace Content.Server.StationEvents.Events
 {
-    public sealed class SolarFlare : StationEventSystem 
+    public sealed class SolarFlare : StationEventSystem
     {
-        [Dependency] private readonly HeadsetSystem _headsetSystem = default!; 
-
         public override string Prototype => "SolarFlare";
-        private float _endAfter = 0.0f;
+
         private const string affectedChannel = "Common";
+
+        private float _endAfter = 0.0f;
+        private bool _running = false;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<ActiveRadioComponent, RadioReceiveAttemptEvent>(OnRadioSendAttempt);
+        }
 
         public override void Added()
         {
@@ -20,7 +27,7 @@ namespace Content.Server.StationEvents.Events
         public override void Started()
         {
             base.Started();
-            _headsetSystem.JamChannel(affectedChannel);
+            _running = true;
         }
 
         public override void Update(float frameTime)
@@ -37,9 +44,17 @@ namespace Content.Server.StationEvents.Events
             }
         }
 
-        public override void Ended() {
+        public override void Ended()
+        {
             base.Ended();
-            _headsetSystem.UnJamChannel(affectedChannel);
+            _running = false;
         }
+
+        private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
+        {
+            if (_running && args.Channel.ID == affectedChannel)
+                args.Cancel();
+        }
+
     }
 }

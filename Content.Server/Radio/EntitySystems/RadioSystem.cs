@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
+using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -10,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Popups;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -21,6 +23,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -69,6 +72,7 @@ public sealed class RadioSystem : EntitySystem
 
         var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
         var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);
+        bool sentAtLeastOnce = false;
 
         foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
@@ -83,9 +87,11 @@ public sealed class RadioSystem : EntitySystem
                 attemptEv.Uncancel();
                 continue;
             }
-
+            sentAtLeastOnce = true;
             RaiseLocalEvent(radio.Owner, ev);
         }
+        if (!sentAtLeastOnce)
+            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, PopupType.SmallCaution);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
 

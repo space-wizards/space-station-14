@@ -4,7 +4,6 @@ using Content.Server.Radio.Components;
 using Content.Shared.Examine;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -16,7 +15,6 @@ public sealed class HeadsetSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
@@ -34,11 +32,6 @@ public sealed class HeadsetSystem : EntitySystem
             && TryComp(component.Headset, out HeadsetComponent? headset)
             && headset.Channels.Contains(args.Channel.ID))
         {
-            if (headset.JammedChannels.Contains(args.Channel.ID))
-            {
-                _popupSystem.PopupEntity(Loc.GetString("radio-channel-jammed"), uid, PopupType.SmallCaution);
-                return;
-            }
             _radio.SendRadioMessage(uid, args.Message, args.Channel);
             args.Channel = null; // prevent duplicate messages from other listeners.
         }
@@ -86,7 +79,7 @@ public sealed class HeadsetSystem : EntitySystem
 
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, RadioReceiveEvent args)
     {
-        if (!component.JammedChannels.Contains(args.Channel.ID) && TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
@@ -110,17 +103,5 @@ public sealed class HeadsetSystem : EntitySystem
         }
 
         args.PushMarkup(Loc.GetString("examine-headset-chat-prefix", ("prefix", ";")));
-    }
-
-    public void JamChannel(string channel) {
-        foreach (var transmitter in EntityQuery<HeadsetComponent>(true)) {
-            transmitter.JammedChannels.Add(channel);
-        }
-    }
-
-    public void UnJamChannel(string channel) {
-        foreach (var transmitter in EntityQuery<HeadsetComponent>(true)) {
-            transmitter.JammedChannels.Remove(channel);
-        }
     }
 }
