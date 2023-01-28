@@ -5,6 +5,7 @@ using Content.Client.PDA;
 using Content.Client.Resources;
 using Content.Client.Targeting.UI;
 using Content.Client.UserInterface.Controls;
+using Content.Client.UserInterface.Controls.FancyTree;
 using Content.Client.Verbs.UI;
 using Content.Shared.Verbs;
 using Robust.Client.Graphics;
@@ -21,15 +22,15 @@ namespace Content.Client.Stylesheets
         public static Font NotoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
         {
             var ds = display ? "Display" : "";
-            var sv = variation.StartsWith("Bold") ? "Bold" : "Regular";
+            var sv = variation.StartsWith("Bold", StringComparison.Ordinal) ? "Bold" : "Regular";
             return resCache.GetFont
             (
                 // Ew, but ok
-                new []
+                new[]
                 {
                     $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
                     $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
-                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
                 },
                 size
             );
@@ -112,6 +113,11 @@ namespace Content.Client.Stylesheets
         public static readonly Color ExamineButtonColorContextHover = Color.DarkSlateGray;
         public static readonly Color ExamineButtonColorContextPressed = Color.LightSlateGray;
         public static readonly Color ExamineButtonColorContextDisabled = Color.FromHex("#5A5A5A");
+
+        // Fancy Tree elements
+        public static readonly Color FancyTreeEvenRowColor = Color.FromHex("#25252A");
+        public static readonly Color FancyTreeOddRowColor = FancyTreeEvenRowColor * new Color(0.8f, 0.8f, 0.8f);
+        public static readonly Color FancyTreeSelectedRowColor = new Color(55, 55, 68);
 
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
@@ -478,6 +484,14 @@ namespace Content.Client.Stylesheets
                 Modulate = Color.FromHex("#202023"),
             };
             insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
+
+            // Default paper background:
+            var paperBackground = new StyleBoxTexture
+            {
+                Texture = resCache.GetTexture("/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"),
+                Modulate = Color.FromHex("#eaedde"), // A light cream
+            };
+            paperBackground.SetPatchMargin(StyleBox.Margin.All, 16.0f);
 
             var contextMenuExpansionTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
             var verbMenuConfirmationTexture = resCache.GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png");
@@ -1317,6 +1331,16 @@ namespace Content.Client.Stylesheets
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#753131")),
                 // ---
 
+                // The default look of paper in UIs. Pages can have components which override this
+                Element<PanelContainer>().Class("PaperDefaultBorder")
+                    .Prop(PanelContainer.StylePropertyPanel, paperBackground),
+                Element<RichTextLabel>().Class("PaperWrittenText")
+                    .Prop(Label.StylePropertyFont, notoSans12)
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#111111")),
+
+                Element<LineEdit>().Class("PaperLineEdit")
+                    .Prop(LineEdit.StylePropertyStyleBox, new StyleBoxEmpty()),
+
                 // Red Button ---
                 Element<Button>().Class("ButtonColorRed")
                     .Prop(Control.StylePropertyModulateSelf, ButtonColorDefaultRed),
@@ -1407,6 +1431,35 @@ namespace Content.Client.Stylesheets
                 Element<Label>().Class("PDAWindowFooterText")
                     .Prop(Label.StylePropertyFont, notoSans10)
                     .Prop(Label.StylePropertyFontColor, Color.FromHex("#333d3b")),
+
+                // Fancy Tree
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassEvenRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeEvenRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassOddRow)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeOddRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Class(TreeItem.StyleClassSelected)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeSelectedRowColor,
+                    }),
+
+                Element<ContainerButton>().Identifier(TreeItem.StyleIdentifierTreeButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(ContainerButton.StylePropertyStyleBox, new StyleBoxFlat
+                    {
+                        BackgroundColor = FancyTreeSelectedRowColor,
+                    }),
 
             }).ToList());
         }

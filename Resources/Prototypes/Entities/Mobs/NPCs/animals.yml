@@ -55,6 +55,8 @@
     accent: mouse
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -94,6 +96,7 @@
       layer:
       - FlyingMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       5: Critical
@@ -324,6 +327,7 @@
       layer:
       - FlyingMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       5: Critical
@@ -734,6 +738,15 @@
   - type: CanHostGuardian
 
 - type: entity
+  name: guidebook monkey
+  parent: MobMonkey
+  noSpawn: true
+  id: MobGuidebookMonkey
+  description: A hopefully helpful monkey whose only purpose in life is for you to click on. Does this count as having a monkey give you a tutorial?
+  components:
+    - type: GuidebookControlsTest
+
+- type: entity
   name: mouse
   parent: SimpleMobBase
   id: MobMouse
@@ -773,6 +786,7 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       10: Critical
@@ -825,10 +839,10 @@
       types:
         Blunt: 0.1
   - type: Vocal
-    # mice are gender neutral who cares
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
-    unsexedScream: /Audio/Animals/mouse_squeak.ogg
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
@@ -1146,8 +1160,8 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 5
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -1205,6 +1219,13 @@
     intensitySlope: 20
     totalIntensity: 225
   - type: ExplodeOnTrigger
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:ExplodeBehavior
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1295,6 +1316,21 @@
       enabled: false
       autoPopulate: false
       name: action-name-disarm
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      90: Critical
+      150: Dead
+  - type: MeleeWeapon
+    hidden: true
+    angle: 0
+    animation: WeaponArcBite
+    soundHit:
+      path: /Audio/Effects/bite.ogg
+    damage:
+      types:
+        Piercing: 12
+        Poison: 4
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -1302,6 +1338,10 @@
     interactSuccessString: petting-success-tarantula
     interactFailureString: petting-failure-generic
   - type: Puller
+    needsHands: false
+  - type: NoSlip
+  - type: Spider
+  - type: IgnoreSpiderWeb
 
 - type: entity
   name: tarantula
@@ -1320,7 +1360,7 @@
       makeSentient: true
       name: ghost-role-information-giant-spider-name
       description: ghost-role-information-giant-spider-description
-
+      
 - type: entity
   name: possum
   parent: SimpleMobBase
@@ -1568,6 +1608,8 @@
         Base: narsian_dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
@@ -1926,6 +1968,7 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       40: Critical
@@ -1989,6 +2032,8 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:

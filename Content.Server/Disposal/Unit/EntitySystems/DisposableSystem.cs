@@ -67,7 +67,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
                 if (EntityManager.TryGetComponent(entity, out PhysicsComponent? physics))
                 {
-                    _physicsSystem.WakeBody(entity, physics);
+                    _physicsSystem.WakeBody(entity, body: physics);
                 }
             }
 

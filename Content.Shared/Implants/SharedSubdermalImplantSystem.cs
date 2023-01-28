@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions;
+﻿using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Tag;
@@ -67,8 +68,15 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
         var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
-        // TODO add variant of empty container that dumpes entities into parent containers OR grid OR Map
-        _container.EmptyContainer(storageImplant, true, entCoords, true, EntityManager);
+        var containedEntites = storageImplant.ContainedEntities.ToArray();
+
+        foreach (var entity in containedEntites)
+        {
+            if (Terminating(entity))
+                continue;
+
+            _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
+        }
     }
 
     /// <summary>

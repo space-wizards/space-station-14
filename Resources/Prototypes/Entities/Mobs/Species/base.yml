@@ -39,7 +39,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 0.35 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -173,7 +173,7 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Human
   - type: Body
     prototype: Human
@@ -191,6 +191,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -228,6 +229,7 @@
       - type: CreamPiedVisualizer
         state: creampie_human
   - type: RotationVisuals
+  - type: FloatingVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -276,7 +278,13 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: Grammar
     attributes:
       proper: true
@@ -362,7 +370,7 @@
         - MobMask
         layer:
         - MobLayer
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Human
     - type: Body
       prototype: Human
@@ -371,6 +379,7 @@
     - type: Damageable
       damageContainer: Biological
     - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical

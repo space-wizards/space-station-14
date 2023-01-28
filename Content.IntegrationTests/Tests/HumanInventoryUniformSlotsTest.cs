@@ -123,15 +123,16 @@ namespace Content.IntegrationTests.Tests
 
         private static bool IsDescendant(EntityUid descendant, EntityUid parent)
         {
-            var tmpParent = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(descendant).Parent;
-            while (tmpParent != null)
+            var xforms = IoCManager.Resolve<IEntityManager>().GetEntityQuery<TransformComponent>();
+            var tmpParent = xforms.GetComponent(descendant).ParentUid;
+            while (tmpParent.IsValid())
             {
-                if (tmpParent.Owner == parent)
+                if (tmpParent == parent)
                 {
                     return true;
                 }
 
-                tmpParent = tmpParent.Parent;
+                tmpParent = xforms.GetComponent(tmpParent).ParentUid;
             }
 
             return false;

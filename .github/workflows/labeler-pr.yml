@@ -5,6 +5,7 @@ on:
 
 jobs:
   labeler:
+    if: github.actor != 'PJBot'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/labeler@v3

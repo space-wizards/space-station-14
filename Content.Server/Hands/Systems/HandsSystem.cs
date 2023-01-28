@@ -15,6 +15,7 @@ using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Stacks;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.Player;

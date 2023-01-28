@@ -1,9 +1,9 @@
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Configurations;
-using Content.Server.MobState;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;

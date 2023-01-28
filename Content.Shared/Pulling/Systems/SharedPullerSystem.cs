@@ -12,6 +12,7 @@ namespace Content.Shared.Pulling.Systems
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingStateManagementSystem _why = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
@@ -25,6 +26,12 @@ namespace Content.Shared.Pulling.Systems
             SubscribeLocalEvent<SharedPullerComponent, PullStoppedMessage>(PullerHandlePullStopped);
             SubscribeLocalEvent<SharedPullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
             SubscribeLocalEvent<SharedPullerComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
+            SubscribeLocalEvent<SharedPullerComponent, ComponentShutdown>(OnPullerShutdown);
+        }
+
+        private void OnPullerShutdown(EntityUid uid, SharedPullerComponent component, ComponentShutdown args)
+        {
+            _why.ForceDisconnectPuller(component);
         }
 
         private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)

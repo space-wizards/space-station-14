@@ -4,12 +4,16 @@ using Content.Server.Interaction;
 using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
+using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
 
@@ -115,17 +119,20 @@ public sealed class MechGrabberSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)
     {
-        if (args.Handled || args.Target == null)
+        if (args.Handled || args.Target is not {} target)
             return;
 
-        var xform = Transform(args.Target.Value);
-        if (xform.Anchored || HasComp<WallMountComponent>(args.Target.Value))
+        if (TryComp<PhysicsComponent>(uid, out var physics) && physics.BodyType == BodyType.Static && !HasComp<AnchorableComponent>(uid) ||
+            HasComp<WallMountComponent>(target) ||
+            HasComp<MobStateComponent>(target))
+        {
             return;
+        }
 
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
 
-        if (!TryComp<MechComponent>(args.User, out var mech))
+        if (!TryComp<MechComponent>(args.User, out var mech) || mech.PilotSlot.ContainedEntity == target)
             return;
 
         if (mech.Energy + component.GrabEnergyDelta < 0)
@@ -134,17 +141,17 @@ public sealed class MechGrabberSystem : EntitySystem
         if (component.Token != null)
             return;
 
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target.Value))
+        if (!_interaction.InRangeUnobstructed(args.User, target))
             return;
 
         args.Handled = true;
         component.Token = new();
         component.AudioStream = _audio.PlayPvs(component.GrabSound, uid);
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.GrabDelay, component.Token.Token, args.Target, uid)
+        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.GrabDelay, component.Token.Token, target, uid)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
-            UsedFinishedEvent = new MechGrabberGrabFinishedEvent(args.Target.Value),
+            UsedFinishedEvent = new MechGrabberGrabFinishedEvent(target),
             UsedCancelledEvent = new MechGrabberGrabCancelledEvent()
         });
     }

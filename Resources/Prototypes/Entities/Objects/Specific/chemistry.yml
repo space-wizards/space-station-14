@@ -231,6 +231,9 @@
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: "syringe_base0"
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
@@ -295,7 +298,7 @@
   name: pill canister
   id: PillCanister
   parent: BaseStorageItem
-  description: Holds up to 12 pills.
+  description: Holds up to 9 pills.
   components:
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills_canister.rsi
@@ -306,7 +309,7 @@
     tags:
       - PillCanister
   - type: Storage
-    capacity: 12
+    capacity: 9
     quickInsert: true
     areaInsert: true
     areaInsertRadius: 1
@@ -315,3 +318,4 @@
     whitelist:
       tags:
         - Pill
+  - type: Dumpable

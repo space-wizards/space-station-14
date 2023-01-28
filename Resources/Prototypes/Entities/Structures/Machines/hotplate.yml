@@ -1,0 +1,57 @@
+- type: entity
+  id: ChemistryHotplate
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: hotplate
+  description: "The descendent of the microwaves, our newest invention in beaker heating technology: the hotplate!"
+  components:
+  - type: Transform
+    anchored: true
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.08,-0.35,0.15,0.25"
+      mask:
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
+  - type: Sprite
+    netsync: false
+    sprite: Structures/Machines/hotplate.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    layers:
+    - state: icon
+    - state: on
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      shader: unshaded
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: ItemMapper
+    sprite: Structures/Machines/hotplate.rsi
+    mapLayers:
+      beaker:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: SolutionHeater
+  - type: Machine
+    board: HotplateMachineCircuitboard
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      machine_board: !type:Container
+      machine_parts: !type:Container
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }

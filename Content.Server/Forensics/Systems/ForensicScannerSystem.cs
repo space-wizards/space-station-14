@@ -56,7 +56,6 @@ namespace Content.Server.Forensics
             if (!_uiSystem.TrySetUiState(uid, ForensicScannerUiKey.Key, state))
             {
                 _sawmill.Warning($"{ToPrettyString(uid)} was unable to set UI state.");
-                return;
             }
         }
 
@@ -99,7 +98,7 @@ namespace Content.Server.Forensics
             component.CancelToken = new CancellationTokenSource();
             _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ScanDelay, component.CancelToken.Token, target: target)
             {
-                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(user, (EntityUid) target, component.Owner),
+                BroadcastFinishedEvent = new TargetScanSuccessfulEvent(user, target, component.Owner),
                 BroadcastCancelledEvent = new ScanCancelledEvent(component.Owner),
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

@@ -1,5 +1,5 @@
 mech-verb-enter = Enter
-mech-verb-exit = Exit
+mech-verb-exit = Remove pilot
 
 mech-equipment-begin-install = Installing the {THE($item)}...
 mech-equipment-finish-install = Finished installing the {THE($item)}

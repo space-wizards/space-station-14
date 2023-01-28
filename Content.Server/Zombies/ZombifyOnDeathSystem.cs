@@ -17,7 +17,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Temperature.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.MobState;
 using Robust.Shared.Prototypes;
 using Content.Shared.Roles;
 using Content.Server.Traitor;
@@ -27,6 +26,7 @@ using Content.Server.Atmos.Miasma;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
@@ -46,7 +46,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly HumanoidSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
@@ -64,8 +64,8 @@ namespace Content.Server.Zombies
         /// </summary>
         private void OnDamageChanged(EntityUid uid, ZombifyOnDeathComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead ||
-                args.CurrentMobState == DamageState.Critical)
+            if (args.NewMobState == MobState.Dead ||
+                args.NewMobState == MobState.Critical)
             {
                 ZombifyEntity(uid);
             }
@@ -111,11 +111,6 @@ namespace Content.Server.Zombies
             var combat = AddComp<CombatModeComponent>(target);
             combat.IsInCombatMode = true;
 
-            var vocal = EnsureComp<VocalComponent>(target);
-            var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            vocal.FemaleScream = scream;
-            vocal.MaleScream = scream;
-
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
@@ -125,8 +120,12 @@ namespace Content.Server.Zombies
             Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
-            if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
+                //store some values before changing them in case the humanoid get cloned later
+                zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
+
                 _sharedHuApp.SetSkinColor(target, zombiecomp.SkinColor, humanoid: huApComp);
                 _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
 
@@ -172,6 +171,7 @@ namespace Content.Server.Zombies
 
             //gives it the funny "Zombie ___" name.
             var meta = MetaData(target);
+            zombiecomp.BeforeZombifiedEntityName = meta.EntityName;
             meta.EntityName = Loc.GetString("zombie-name-prefix", ("target", meta.EntityName));
 
             _identity.QueueIdentityUpdate(target);

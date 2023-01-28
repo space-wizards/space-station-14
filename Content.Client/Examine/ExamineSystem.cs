@@ -31,9 +31,12 @@ namespace Content.Client.Examine
         public const string StyleClassEntityTooltip = "entity-tooltip";
 
         private EntityUid _examinedEntity;
+        private EntityUid _lastExaminedEntity;
         private EntityUid _playerEntity;
         private Popup? _examineTooltipOpen;
+        private ScreenCoordinates _popupPos;
         private CancellationTokenSource? _requestCancelTokenSource;
+        private int _idCounter;
 
         public override void Initialize()
         {
@@ -46,6 +49,8 @@ namespace Content.Client.Examine
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
+            
+            _idCounter = 0;
         }
 
         public override void Update(float frameTime)
@@ -124,6 +129,10 @@ namespace Content.Client.Examine
             if (player == null)
                 return;
 
+            // Prevent updating a new tooltip.
+            if (ev.Id != 0 && ev.Id != _idCounter)
+                return;
+            
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
@@ -147,27 +156,26 @@ namespace Content.Client.Examine
             // Close any examine tooltip that might already be opened
             // Before we do that, save its position. We'll prioritize opening any new popups there if
             // openAtOldTooltip is true.
-            var oldTooltipPos = _examineTooltipOpen?.ScreenCoordinates;
+            ScreenCoordinates? oldTooltipPos = _examineTooltipOpen != null ? _popupPos : null;
             CloseTooltip();
 
             // cache entity for Update function
             _examinedEntity = target;
 
             const float minWidth = 300;
-            ScreenCoordinates popupPos;
 
             if (openAtOldTooltip && oldTooltipPos != null)
             {
-                popupPos = _userInterfaceManager.ScreenToUIPosition(oldTooltipPos.Value);
+                _popupPos = oldTooltipPos.Value;
             }
             else if (centeredOnCursor)
             {
-                popupPos = _userInterfaceManager.MousePositionScaled;
+                _popupPos = _userInterfaceManager.MousePositionScaled;
             }
             else
             {
-                popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
-                popupPos = _userInterfaceManager.ScreenToUIPosition(popupPos);
+                _popupPos = _eyeManager.CoordinatesToScreen(Transform(target).Coordinates);
+                _popupPos = _userInterfaceManager.ScreenToUIPosition(_popupPos);
             }
 
             // Actually open the tooltip.
@@ -193,7 +201,7 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(target, out ISpriteComponent? sprite))
+            if (EntityManager.TryGetComponent(target, out SpriteComponent? sprite))
             {
                 hBox.AddChild(new SpriteView
                 {
@@ -222,7 +230,7 @@ namespace Content.Client.Examine
             panel.Measure(Vector2.Infinity);
             var size = Vector2.ComponentMax((minWidth, 0), panel.DesiredSize);
 
-            _examineTooltipOpen.Open(UIBox2.FromDimensions(popupPos.Position, size));
+            _examineTooltipOpen.Open(UIBox2.FromDimensions(_popupPos.Position, size));
         }
 
         /// <summary>
@@ -306,6 +314,8 @@ namespace Content.Client.Examine
             if (obj.Button is ExamineButton button)
             {
                 _verbSystem.ExecuteVerb(_examinedEntity, button.Verb);
+                if (button.Verb.CloseMenu ?? button.Verb.CloseMenuDefault)
+                    CloseTooltip();
             }
         }
 
@@ -332,8 +342,13 @@ namespace Content.Client.Examine
             else
             {
                 // Ask server for extra examine info.
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, true));
+                if (entity != _lastExaminedEntity)
+                    _idCounter += 1;
+                if (_idCounter == int.MaxValue)
+                    _idCounter = 0;
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, _idCounter, true));
             }
+            _lastExaminedEntity = entity;
         }
 
         private void CloseTooltip()

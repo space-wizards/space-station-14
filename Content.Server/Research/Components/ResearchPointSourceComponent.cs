@@ -1,12 +1,11 @@
-namespace Content.Server.Research.Components
-{
-    [RegisterComponent]
-    public sealed class ResearchPointSourceComponent : Component
-    {
-        [DataField("pointspersecond"), ViewVariables(VVAccess.ReadWrite)]
-        public int PointsPerSecond;
+namespace Content.Server.Research.Components;
 
-        [DataField("active"), ViewVariables(VVAccess.ReadWrite)]
-        public bool Active;
-    }
+[RegisterComponent]
+public sealed class ResearchPointSourceComponent : Component
+{
+    [DataField("pointspersecond"), ViewVariables(VVAccess.ReadWrite)]
+    public int PointsPerSecond;
+
+    [DataField("active"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Active;
 }

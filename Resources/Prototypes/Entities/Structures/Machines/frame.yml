@@ -104,9 +104,13 @@
       sprite: Structures/Machines/parts.rsi
       state: box_1
     - type: Appearance
-      visuals:
-      - type: MachineFrameVisualizer
-
+    - type: ItemMapper
+      mapLayers:
+        box_2:
+          minCount: 1
+          whitelist: 
+            components:
+            - MachineBoard
 
 - type: entity
   id: MachineFrameDestroyed
