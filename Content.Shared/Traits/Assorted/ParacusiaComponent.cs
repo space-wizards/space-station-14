@@ -1,4 +1,4 @@
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 /// <summary>
 /// This component is used for paracusia, which causes auditory hallucinations.
