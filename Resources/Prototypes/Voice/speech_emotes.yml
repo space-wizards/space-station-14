@@ -44,6 +44,18 @@
     - giggling
     - giggled
 
+- type: emote
+  id: Whistle
+  category: Hands
+  chatMessages: [свистнул]
+  chatTriggers:
+    - свист
+    - свистит
+    - свистнул
+    - whistle
+    - whistles
+    - whistling
+
 # hand emotes
 - type: emote
   id: Clap

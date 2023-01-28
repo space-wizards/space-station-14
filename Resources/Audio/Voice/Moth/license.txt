@@ -1,3 +1,4 @@
 Sounds taken from https://github.com/tgstation/tgstation/commit/3d049e69fe71a0be2133005e65ea469135d648c8
 
 scream_moth.ogg
+laugh_moth.ogg

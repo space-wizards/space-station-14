@@ -23,3 +23,8 @@
     - /Audio/Effects/Emotes/snap1.ogg
     - /Audio/Effects/Emotes/snap2.ogg
     - /Audio/Effects/Emotes/snap3.ogg
+
+- type: soundCollection
+  id: Whistles
+  files:
+    - /Audio/Effects/Emotes/whistle1.ogg

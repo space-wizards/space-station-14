@@ -30,6 +30,16 @@
       path: /Audio/Animals/lizard_happy.ogg
 
 - type: emoteSounds
+  id: FemaleMoth
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Moth/scream_moth.ogg
+    Laugh:
+      path: /Audio/Voice/Moth/laugh_moth.ogg
+
+- type: emoteSounds
   id: UnisexVox
   sound:
     path: /Audio/Voice/Vox/shriek1.ogg
@@ -44,6 +54,8 @@
       collection: Claps
     Snap:
       collection: Snaps
+    Whistle:
+      collection: Whistles
       params:
         volume: -6
 
