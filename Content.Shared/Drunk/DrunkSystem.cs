@@ -1,5 +1,6 @@
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Shared.Drunk;
 
@@ -18,6 +19,9 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (applySlur)
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
+
+        if (EntityManager.HasComponent<LightweightComponent>(uid))
+            boozePower = 4f;
 
         if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
