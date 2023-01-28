@@ -215,7 +215,7 @@ public sealed class StationJobsTest
                 {
                     foreach (var job in station.AvailableJobs.Keys)
                     {
-                        Assert.That(invalidJobs.Contains(job), Is.False, $"Staion {stationId} contains job prototype {job} which cannot be present roundstart.");
+                        Assert.That(invalidJobs.Contains(job), Is.False, $"Station {stationId} contains job prototype {job} which cannot be present roundstart.");
                     }
                 }
             }
