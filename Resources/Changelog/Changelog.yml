@@ -1,15 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: If you try to swing melee out of range it doesn't waste the swing.,
-    type: Tweak}
-  id: 2469
-  time: '2022-10-16T15:54:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
-  id: 2470
-  time: '2022-10-16T16:42:19.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen has given some of your television cameras microphones. Now
@@ -2936,3 +2925,15 @@ Entries:
       security techlathe., type: Tweak}
   id: 2968
   time: '2023-01-28T13:59:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: vent clog event now only affects single station vents (no more foam
+      in nukie ship), type: Tweak}
+  id: 2969
+  time: '2023-01-28T14:06:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: apc events now only affect single station APCs (no power shut offs on
+      shuttles), type: Fix}
+  id: 2970
+  time: '2023-01-28T14:07:18.0000000+00:00'
