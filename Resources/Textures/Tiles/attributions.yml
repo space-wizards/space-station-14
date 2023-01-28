@@ -59,3 +59,4 @@
 - files: ["meat.png"]
   license: "CC0-1.0"
   copyright: "Created by EmoGarbage."
+  source: "https://github.com/space-wizards/space-station-14/pull/13766"
