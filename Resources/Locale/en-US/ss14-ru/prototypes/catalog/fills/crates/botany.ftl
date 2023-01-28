@@ -1,0 +1,12 @@
+ent-CrateHydroponicsSeedsExotic = { ent-CrateHydroSecure }
+    .desc = { ent-CrateHydroSecure.desc }
+    .suffix = { "" }
+ent-CrateHydroponicsSeedsMedicinal = { ent-CrateHydroSecure }
+    .desc = { ent-CrateHydroSecure.desc }
+    .suffix = { "" }
+ent-CrateHydroponicsTools = { ent-CrateHydroponics }
+    .desc = { ent-CrateHydroponics.desc }
+    .suffix = { "" }
+ent-CrateHydroponicsSeeds = { ent-CrateHydroponics }
+    .desc = { ent-CrateHydroponics.desc }
+    .suffix = { "" }

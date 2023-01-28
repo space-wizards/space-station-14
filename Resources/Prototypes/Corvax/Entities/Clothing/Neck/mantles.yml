@@ -1,0 +1,21 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleQM
+  name: quartermaster's mantle
+  description: A snug and comfortable looking shoulder covering garment, it has an air of rebellion and independence. Or annoyance and delusions, your call.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Mantles/qm.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Neck/Mantles/qm.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleERTLeader
+  name: ERT leader's mantle
+  description: Extraordinary decorative drape over the shoulders.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Mantles/ERTmantle.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/Neck/Mantles/ERTmantle.rsi

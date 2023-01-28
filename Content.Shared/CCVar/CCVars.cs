@@ -1438,7 +1438,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> InfoLinksBugReport =
             CVarDef.Create("infolinks.bug_report", "", CVar.SERVER | CVar.REPLICATED);
-
         /*
          * CONFIG
          */

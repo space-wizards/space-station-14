@@ -1,0 +1,17 @@
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatHoSGreatcoat
+  name: armored greatcoat
+  description: A greatcoat enhanced with a special alloy for some extra protection and style for those with a commanding presence.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Coats/hos_greatcoat.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Coats/hos_greatcoat.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.4
+          Heat: 0.7

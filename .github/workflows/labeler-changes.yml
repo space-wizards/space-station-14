@@ -1,0 +1,19 @@
+﻿name: "Labels: Changes"
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  update_label:
+    permissions:
+      pull-requests: write
+    if: github.event.review.state == 'changes_requested'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "Status: Awaiting Changes"
+    - uses: actions-ecosystem/action-remove-labels@v1
+      with:
+        labels: "Status: Needs Review"

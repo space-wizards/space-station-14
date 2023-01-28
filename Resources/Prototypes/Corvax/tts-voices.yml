@@ -1,0 +1,940 @@
+﻿- type: ttsVoice
+  id: Aidar
+  name: tts-voice-name-aidar
+  sex: Male
+  speaker: aidar
+  roundStart: false
+
+- type: ttsVoice
+  id: Baya
+  name: tts-voice-name-baya
+  sex: Unsexed
+  speaker: baya
+  roundStart: false
+
+- type: ttsVoice
+  id: Kseniya
+  name: tts-voice-name-kseniya
+  sex: Female
+  speaker: kseniya
+  roundStart: false
+
+- type: ttsVoice
+  id: Xenia
+  name: tts-voice-name-xenia
+  sex: Female
+  speaker: xenia
+
+- type: ttsVoice
+  id: Eugene
+  name: tts-voice-name-eugene
+  sex: Male
+  speaker: eugene
+  roundStart: false
+
+- type: ttsVoice
+  id: Arthas
+  name: tts-voice-name-arthas
+  sex: Male
+  speaker: arthas
+
+- type: ttsVoice
+  id: Thrall
+  name: tts-voice-name-thrall
+  sex: Male
+  speaker: thrall
+
+- type: ttsVoice
+  id: Kael
+  name: tts-voice-name-kael
+  sex: Male
+  speaker: kael
+
+- type: ttsVoice
+  id: Maiev
+  name: tts-voice-name-maiev
+  sex: Female
+  speaker: maiev
+
+- type: ttsVoice
+  id: Rexxar
+  name: tts-voice-name-rexxar
+  sex: Male
+  speaker: rexxar
+
+- type: ttsVoice
+  id: Tyrande
+  name: tts-voice-name-tyrande
+  sex: Female
+  speaker: tyrande
+
+- type: ttsVoice
+  id: Furion
+  name: tts-voice-name-furion
+  sex: Male
+  speaker: furion
+
+- type: ttsVoice
+  id: Illidan
+  name: tts-voice-name-illidan
+  sex: Male
+  speaker: illidan
+
+- type: ttsVoice
+  id: Kelthuzad
+  name: tts-voice-name-kelthuzad
+  sex: Male
+  speaker: kelthuzad
+
+- type: ttsVoice
+  id: Jaina
+  name: tts-voice-name-jaina
+  sex: Female
+  speaker: jaina
+
+- type: ttsVoice
+  id: Ladyvashj
+  name: tts-voice-name-ladyvashj
+  sex: Female
+  speaker: ladyvashj
+
+- type: ttsVoice
+  id: Narrator
+  name: tts-voice-name-narrator
+  sex: Male
+  speaker: narrator
+
+- type: ttsVoice
+  id: Cairne
+  name: tts-voice-name-cairne
+  sex: Male
+  speaker: cairne
+
+- type: ttsVoice
+  id: Garithos
+  name: tts-voice-name-garithos
+  sex: Male
+  speaker: garithos
+
+- type: ttsVoice
+  id: Anubarak
+  name: tts-voice-name-anubarak
+  sex: Male
+  speaker: anubarak
+
+- type: ttsVoice
+  id: Uther
+  name: tts-voice-name-uther
+  sex: Male
+  speaker: uther
+
+- type: ttsVoice
+  id: Grunt
+  name: tts-voice-name-grunt
+  sex: Male
+  speaker: grunt
+
+- type: ttsVoice
+  id: Medivh
+  name: tts-voice-name-medivh
+  sex: Male
+  speaker: medivh
+
+- type: ttsVoice
+  id: Villagerm
+  name: tts-voice-name-villagerm
+  sex: Male
+  speaker: villagerm
+
+- type: ttsVoice
+  id: Naisha
+  name: tts-voice-name-naisha
+  sex: Female
+  speaker: naisha
+
+- type: ttsVoice
+  id: IllidanF
+  name: tts-voice-name-illidanf
+  sex: Male
+  speaker: illidan_f
+
+- type: ttsVoice
+  id: Peon
+  name: tts-voice-name-peon
+  sex: Male
+  speaker: peon
+
+- type: ttsVoice
+  id: Chen
+  name: tts-voice-name-chen
+  sex: Male
+  speaker: chen
+
+- type: ttsVoice
+  id: DreadBm
+  name: tts-voice-name-dreadbm
+  sex: Male
+  speaker: dread_bm
+
+- type: ttsVoice
+  id: Sylvanas
+  name: tts-voice-name-sylvanas
+  sex: Female
+  speaker: sylvanas
+
+- type: ttsVoice
+  id: Priest
+  name: tts-voice-name-priest
+  sex: Male
+  speaker: priest
+
+- type: ttsVoice
+  id: Acolyte
+  name: tts-voice-name-acolyte
+  sex: Male
+  speaker: acolyte
+
+- type: ttsVoice
+  id: Muradin
+  name: tts-voice-name-muradin
+  sex: Male
+  speaker: muradin
+
+- type: ttsVoice
+  id: DreadT
+  name: tts-voice-name-dreadt
+  sex: Male
+  speaker: dread_t
+
+- type: ttsVoice
+  id: Mannoroth
+  name: tts-voice-name-mannoroth
+  sex: Male
+  speaker: mannoroth
+
+- type: ttsVoice
+  id: Sorceress
+  name: tts-voice-name-sorceress
+  sex: Female
+  speaker: sorceress
+
+- type: ttsVoice
+  id: Peasant
+  name: tts-voice-name-peasant
+  sex: Male
+  speaker: peasant
+
+- type: ttsVoice
+  id: Alyx
+  name: tts-voice-name-alyx
+  sex: Female
+  speaker: alyx
+
+- type: ttsVoice
+  id: Glados
+  name: tts-voice-name-glados
+  sex: Female
+  speaker: glados
+  roundStart: false
+
+- type: ttsVoice
+  id: Announcer
+  name: tts-voice-name-announcer
+  sex: Female
+  speaker: announcer
+
+- type: ttsVoice
+  id: Wheatley
+  name: tts-voice-name-wheatley
+  sex: Male
+  speaker: wheatley
+
+- type: ttsVoice
+  id: Barney
+  name: tts-voice-name-barney
+  sex: Male
+  speaker: barney
+
+- type: ttsVoice
+  id: Raynor
+  name: tts-voice-name-raynor
+  sex: Male
+  speaker: raynor
+
+- type: ttsVoice
+  id: Kerrigan
+  name: tts-voice-name-kerrigan
+  sex: Female
+  speaker: kerrigan
+
+- type: ttsVoice
+  id: Tusk
+  name: tts-voice-name-tusk
+  sex: Male
+  speaker: tusk
+
+- type: ttsVoice
+  id: Earth
+  name: tts-voice-name-earth
+  sex: Male
+  speaker: earth
+
+- type: ttsVoice
+  id: Wraith
+  name: tts-voice-name-wraith
+  sex: Male
+  speaker: wraith
+
+- type: ttsVoice
+  id: Meepo
+  name: tts-voice-name-meepo
+  sex: Unsexed
+  speaker: meepo
+
+- type: ttsVoice
+  id: Lina
+  name: tts-voice-name-lina
+  sex: Female
+  speaker: lina
+
+- type: ttsVoice
+  id: Bristle
+  name: tts-voice-name-bristle
+  sex: Male
+  speaker: bristle
+
+- type: ttsVoice
+  id: Gyro
+  name: tts-voice-name-gyro
+  sex: Male
+  speaker: gyro
+
+- type: ttsVoice
+  id: Treant
+  name: tts-voice-name-treant
+  sex: Male
+  speaker: treant
+
+- type: ttsVoice
+  id: Lancer
+  name: tts-voice-name-lancer
+  sex: Male
+  speaker: lancer
+
+- type: ttsVoice
+  id: Clockwerk
+  name: tts-voice-name-clockwerk
+  sex: Male
+  speaker: clockwerk
+
+- type: ttsVoice
+  id: Batrider
+  name: tts-voice-name-batrider
+  sex: Male
+  speaker: batrider
+
+- type: ttsVoice
+  id: Kotl
+  name: tts-voice-name-kotl
+  sex: Male
+  speaker: kotl
+
+- type: ttsVoice
+  id: Kunkka
+  name: tts-voice-name-kunkka
+  sex: Male
+  speaker: kunkka
+
+- type: ttsVoice
+  id: Pudge
+  name: tts-voice-name-pudge
+  sex: Male
+  speaker: pudge
+
+- type: ttsVoice
+  id: Juggernaut
+  name: tts-voice-name-juggernaut
+  sex: Male
+  speaker: juggernaut
+
+- type: ttsVoice
+  id: VortE2
+  name: tts-voice-name-vorte2
+  sex: Male
+  speaker: vort_e2
+
+- type: ttsVoice
+  id: Luna
+  name: tts-voice-name-luna
+  sex: Female
+  speaker: luna
+
+- type: ttsVoice
+  id: Omni
+  name: tts-voice-name-omni
+  sex: Male
+  speaker: omni
+
+- type: ttsVoice
+  id: Sniper
+  name: tts-voice-name-sniper
+  sex: Male
+  speaker: sniper
+
+- type: ttsVoice
+  id: Skywrath
+  name: tts-voice-name-skywrath
+  sex: Male
+  speaker: skywrath
+
+- type: ttsVoice
+  id: Bounty
+  name: tts-voice-name-bounty
+  sex: Unsexed
+  speaker: bounty
+
+- type: ttsVoice
+  id: Huskar
+  name: tts-voice-name-huskar
+  sex: Male
+  speaker: huskar
+
+- type: ttsVoice
+  id: Windranger
+  name: tts-voice-name-windranger
+  sex: Female
+  speaker: windranger
+
+- type: ttsVoice
+  id: Bloodseeker
+  name: tts-voice-name-bloodseeker
+  sex: Male
+  speaker: bloodseeker
+
+- type: ttsVoice
+  id: Templar
+  name: tts-voice-name-templar
+  sex: Female
+  speaker: templar
+
+- type: ttsVoice
+  id: Ranger
+  name: tts-voice-name-ranger
+  sex: Female
+  speaker: ranger
+
+- type: ttsVoice
+  id: Shaker
+  name: tts-voice-name-shaker
+  sex: Male
+  speaker: shaker
+
+- type: ttsVoice
+  id: Mortred
+  name: tts-voice-name-mortred
+  sex: Female
+  speaker: mortred
+
+- type: ttsVoice
+  id: Queen
+  name: tts-voice-name-queen
+  sex: Female
+  speaker: queen
+
+- type: ttsVoice
+  id: Storm
+  name: tts-voice-name-storm
+  sex: Male
+  speaker: storm
+
+- type: ttsVoice
+  id: Tide
+  name: tts-voice-name-tide
+  sex: Male
+  speaker: tide
+
+- type: ttsVoice
+  id: Evelynn
+  name: tts-voice-name-evelynn
+  sex: Female
+  speaker: evelynn
+
+- type: ttsVoice
+  id: Riki
+  name: tts-voice-name-riki
+  sex: Male
+  speaker: riki
+
+- type: ttsVoice
+  id: Antimage
+  name: tts-voice-name-antimage
+  sex: Unsexed
+  speaker: antimage
+
+- type: ttsVoice
+  id: Witchdoctor
+  name: tts-voice-name-witchdoctor
+  sex: Male
+  speaker: witchdoctor
+
+- type: ttsVoice
+  id: Doom
+  name: tts-voice-name-doom
+  sex: Male
+  speaker: doom
+
+- type: ttsVoice
+  id: Yuumi
+  name: tts-voice-name-yuumi
+  sex: Unsexed
+  speaker: yuumi
+
+- type: ttsVoice
+  id: Bandit
+  name: tts-voice-name-bandit
+  sex: Male
+  speaker: bandit
+
+- type: ttsVoice
+  id: Pantheon
+  name: tts-voice-name-pantheon
+  sex: Male
+  speaker: pantheon
+
+- type: ttsVoice
+  id: Tychus
+  name: tts-voice-name-tychus
+  sex: Male
+  speaker: tychus
+
+- type: ttsVoice
+  id: Breen
+  name: tts-voice-name-breen
+  sex: Male
+  speaker: breen
+
+- type: ttsVoice
+  id: Kleiner
+  name: tts-voice-name-kleiner
+  sex: Male
+  speaker: kleiner
+
+- type: ttsVoice
+  id: Father
+  name: tts-voice-name-father
+  sex: Male
+  speaker: father
+
+- type: ttsVoice
+  id: Tosh
+  name: tts-voice-name-tosh
+  sex: Male
+  speaker: tosh
+
+- type: ttsVoice
+  id: Stetmann
+  name: tts-voice-name-stetmann
+  sex: Male
+  speaker: stetmann
+
+- type: ttsVoice
+  id: Hanson
+  name: tts-voice-name-hanson
+  sex: Male
+  speaker: hanson
+
+- type: ttsVoice
+  id: Swann
+  name: tts-voice-name-swann
+  sex: Male
+  speaker: swann
+
+- type: ttsVoice
+  id: Hill
+  name: tts-voice-name-hill
+  sex: Male
+  speaker: hill
+
+- type: ttsVoice
+  id: GmanE2
+  name: tts-voice-name-gmane2
+  sex: Male
+  speaker: gman_e2
+
+- type: ttsVoice
+  id: Valerian
+  name: tts-voice-name-valerian
+  sex: Male
+  speaker: valerian
+
+- type: ttsVoice
+  id: Gman
+  name: tts-voice-name-gman
+  sex: Male
+  speaker: gman
+
+- type: ttsVoice
+  id: Vort
+  name: tts-voice-name-vort
+  sex: Male
+  speaker: vort
+
+- type: ttsVoice
+  id: Aradesh
+  name: tts-voice-name-aradesh
+  sex: Male
+  speaker: aradesh
+
+- type: ttsVoice
+  id: Dornan
+  name: tts-voice-name-dornan
+  sex: Male
+  speaker: dornan
+
+- type: ttsVoice
+  id: Elder
+  name: tts-voice-name-elder
+  sex: Female
+  speaker: elder
+
+- type: ttsVoice
+  id: Harris
+  name: tts-voice-name-harris
+  sex: Male
+  speaker: harris
+
+- type: ttsVoice
+  id: Cabbot
+  name: tts-voice-name-cabbot
+  sex: Male
+  speaker: cabbot
+
+- type: ttsVoice
+  id: Decker
+  name: tts-voice-name-decker
+  sex: Male
+  speaker: decker
+
+- type: ttsVoice
+  id: Dick
+  name: tts-voice-name-dick
+  sex: Male
+  speaker: dick
+
+- type: ttsVoice
+  id: Officer
+  name: tts-voice-name-officer
+  sex: Male
+  speaker: officer
+
+- type: ttsVoice
+  id: Frank
+  name: tts-voice-name-frank
+  sex: Male
+  speaker: frank
+
+- type: ttsVoice
+  id: Gizmo
+  name: tts-voice-name-gizmo
+  sex: Male
+  speaker: gizmo
+
+- type: ttsVoice
+  id: Hakunin
+  name: tts-voice-name-hakunin
+  sex: Male
+  speaker: hakunin
+
+- type: ttsVoice
+  id: Harold
+  name: tts-voice-name-harold
+  sex: Male
+  speaker: harold
+
+- type: ttsVoice
+  id: Harry
+  name: tts-voice-name-harry
+  sex: Male
+  speaker: harry
+
+- type: ttsVoice
+  id: Jain
+  name: tts-voice-name-jain
+  sex: Female
+  speaker: jain
+
+- type: ttsVoice
+  id: Maxson
+  name: tts-voice-name-maxson
+  sex: Male
+  speaker: maxson
+
+- type: ttsVoice
+  id: Killian
+  name: tts-voice-name-killian
+  sex: Male
+  speaker: killian
+
+- type: ttsVoice
+  id: Laura
+  name: tts-voice-name-laura
+  sex: Female
+  speaker: laura
+
+- type: ttsVoice
+  id: Lieutenant
+  name: tts-voice-name-lieutenant
+  sex: Male
+  speaker: lieutenant
+
+- type: ttsVoice
+  id: Loxley
+  name: tts-voice-name-loxley
+  sex: Male
+  speaker: loxley
+
+- type: ttsVoice
+  id: Lynette
+  name: tts-voice-name-lynette
+  sex: Male
+  speaker: lynette
+
+- type: ttsVoice
+  id: Marcus
+  name: tts-voice-name-marcus
+  sex: Male
+  speaker: marcus
+
+- type: ttsVoice
+  id: Master
+  name: tts-voice-name-master
+  sex: Male
+  speaker: master
+
+- type: ttsVoice
+  id: Morpheus
+  name: tts-voice-name-morpheus
+  sex: Male
+  speaker: morpheus
+
+- type: ttsVoice
+  id: Myron
+  name: tts-voice-name-myron
+  sex: Unsexed
+  speaker: myron
+
+- type: ttsVoice
+  id: Nicole
+  name: tts-voice-name-nicole
+  sex: Female
+  speaker: nicole
+
+- type: ttsVoice
+  id: Overseer
+  name: tts-voice-name-overseer
+  sex: Male
+  speaker: overseer
+
+- type: ttsVoice
+  id: Rhombus
+  name: tts-voice-name-rhombus
+  sex: Male
+  speaker: rhombus
+
+- type: ttsVoice
+  id: Set
+  name: tts-voice-name-set
+  sex: Male
+  speaker: set
+
+- type: ttsVoice
+  id: Sulik
+  name: tts-voice-name-sulik
+  sex: Male
+  speaker: sulik
+
+- type: ttsVoice
+  id: Tandi
+  name: tts-voice-name-tandi
+  sex: Female
+  speaker: tandi
+
+- type: ttsVoice
+  id: Vree
+  name: tts-voice-name-vree
+  sex: Female
+  speaker: vree
+
+- type: ttsVoice
+  id: Dude
+  name: tts-voice-name-dude
+  sex: Male
+  speaker: dude
+
+- type: ttsVoice
+  id: Archmage
+  name: tts-voice-name-archmage
+  sex: Male
+  speaker: archmage
+
+- type: ttsVoice
+  id: Demoman
+  name: tts-voice-name-demoman
+  sex: Male
+  speaker: demoman
+
+- type: ttsVoice
+  id: Engineer
+  name: tts-voice-name-engineer
+  sex: Male
+  speaker: engineer
+
+- type: ttsVoice
+  id: Heavy
+  name: tts-voice-name-heavy
+  sex: Male
+  speaker: heavy
+
+- type: ttsVoice
+  id: Medic
+  name: tts-voice-name-medic
+  sex: Male
+  speaker: medic
+
+- type: ttsVoice
+  id: Scout
+  name: tts-voice-name-scout
+  sex: Male
+  speaker: scout
+
+- type: ttsVoice
+  id: Soldier
+  name: tts-voice-name-soldier
+  sex: Male
+  speaker: soldier
+
+- type: ttsVoice
+  id: Spy
+  name: tts-voice-name-spy
+  sex: Male
+  speaker: spy
+
+- type: ttsVoice
+  id: Admiral
+  name: tts-voice-name-admiral
+  sex: Male
+  speaker: admiral
+
+- type: ttsVoice
+  id: Alchemist
+  name: tts-voice-name-alchemist
+  sex: Male
+  speaker: alchemist
+
+- type: ttsVoice
+  id: Archimonde
+  name: tts-voice-name-archimonde
+  sex: Male
+  speaker: archimonde
+
+- type: ttsVoice
+  id: Breaker
+  name: tts-voice-name-breaker
+  sex: Male
+  speaker: breaker
+
+- type: ttsVoice
+  id: Captain
+  name: tts-voice-name-captain
+  sex: Male
+  speaker: captain
+
+- type: ttsVoice
+  id: Dryad
+  name: tts-voice-name-dryad
+  sex: Unsexed
+  speaker: dryad
+
+- type: ttsVoice
+  id: ElfEng
+  name: tts-voice-name-elfeng
+  sex: Unsexed
+  speaker: elf_eng
+
+- type: ttsVoice
+  id: Footman
+  name: tts-voice-name-footman
+  sex: Male
+  speaker: footman
+
+- type: ttsVoice
+  id: Grom
+  name: tts-voice-name-grom
+  sex: Male
+  speaker: grom
+
+- type: ttsVoice
+  id: Hh
+  name: tts-voice-name-hh
+  sex: Male
+  speaker: hh
+
+- type: ttsVoice
+  id: Huntress
+  name: tts-voice-name-huntress
+  sex: Female
+  speaker: huntress
+
+- type: ttsVoice
+  id: Keeper
+  name: tts-voice-name-keeper
+  sex: Male
+  speaker: keeper
+
+- type: ttsVoice
+  id: NagaM
+  name: tts-voice-name-nagam
+  sex: Male
+  speaker: naga_m
+
+- type: ttsVoice
+  id: NagaRG
+  name: tts-voice-name-nagarg
+  sex: Male
+  speaker: naga_rg
+
+- type: ttsVoice
+  id: PeasantW
+  name: tts-voice-name-peasantw
+  sex: Female
+  speaker: peasant_w
+
+- type: ttsVoice
+  id: Rifleman
+  name: tts-voice-name-rifleman
+  sex: Male
+  speaker: rifleman
+
+- type: ttsVoice
+  id: Satyr
+  name: tts-voice-name-satyr
+  sex: Male
+  speaker: satyr
+
+- type: ttsVoice
+  id: SylvanasW
+  name: tts-voice-name-sylvanasw
+  sex: Female
+  speaker: sylvanas_w
+
+- type: ttsVoice
+  id: Voljin
+  name: tts-voice-name-voljin
+  sex: Male
+  speaker: voljin
+
+- type: ttsVoice
+  id: Sidorovich
+  name: tts-voice-name-sidorovich
+  sex: Male
+  speaker: sidorovich

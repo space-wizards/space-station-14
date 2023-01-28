@@ -1,0 +1,32 @@
+- type: job
+  id: IAA
+  name: job-name-iaa
+  playTimeTracker: JobIAA
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Command
+      time: 72000
+    - !type:DepartmentTimeRequirement
+      department: Security
+      time: 36000
+  startingGear: IAAGear
+  icon: "IAA"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  access:
+    - Service
+    - Brig
+    - Maintenance
+    - Command
+    - External
+
+- type: startingGear
+  id: IAAGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
+    back: ClothingBackpackIAAFilled
+    shoes: ClothingShoesColorBlack
+    id: IAAPDA
+    eyes: ClothingEyesGlassesSunglasses
+    ears: ClothingHeadsetIAA
+    neck: ClothingNeckLawyerbadge

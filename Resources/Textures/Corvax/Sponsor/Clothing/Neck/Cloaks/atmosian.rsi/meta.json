@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by discord:OopsieDoopsie#0412",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+	{
+      "name": "equipped-NECK",
+      "directions": 4
+    }
+  ]
+}

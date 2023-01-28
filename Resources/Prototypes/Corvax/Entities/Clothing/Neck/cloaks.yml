@@ -1,0 +1,17 @@
+﻿- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcomBlack
+  name: special operations officer cloak
+  description: The NanoTrasen logo embroidered in gold speaks for itself.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Cloaks/centcom_officer_black.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentcomAdmiral
+  name: admiral's cape
+  description: A vibrant green cape with gold stitching, worn by Nanotrasen Navy Admirals.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/Neck/Cloaks/admiral.rsi

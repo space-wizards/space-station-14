@@ -1,0 +1,15 @@
+ent-BaseCartridgeLightRifle = cartridge (.30 rifle)
+    .desc = { ent-BaseCartridge.desc }
+    .suffix = { "" }
+ent-CartridgeLightRifle = cartridge (.30 rifle)
+    .desc = { ent-BaseCartridgeLightRifle.desc }
+    .suffix = { "" }
+ent-CartridgeLightRifleHighVelocity = cartridge (.30 rifle high-velocity)
+    .desc = { ent-BaseCartridgeLightRifle.desc }
+    .suffix = { "" }
+ent-CartridgeLightRiflePractice = cartridge (.30 rifle practice)
+    .desc = { ent-BaseCartridgeLightRifle.desc }
+    .suffix = { "" }
+ent-CartridgeLightRifleRubber = cartridge (.30 rifle rubber)
+    .desc = { ent-BaseCartridgeLightRifle.desc }
+    .suffix = { "" }

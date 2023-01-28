@@ -1,0 +1,21 @@
+﻿- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterAerostaticBomberJacket
+  name: aerostatic bomber jacket
+  description: A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Coats/kim.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Coats/kim.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterDiscoAssBlazer
+  name: disco ass blazer
+  description: Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Coats/disco.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Coats/disco.rsi

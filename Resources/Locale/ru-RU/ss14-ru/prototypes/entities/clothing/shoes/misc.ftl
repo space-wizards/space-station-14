@@ -1,0 +1,15 @@
+ent-ClothingShoesFlippers = ласты
+    .desc = Пара резиновых ласт, улучшающих способность плавать при ношении.
+    .suffix = { "" }
+ent-ClothingShoesLeather = кожаные ботинки
+    .desc = Очень стильная пара сапог, изготовленных из натуральной кожи.
+    .suffix = { "" }
+ent-ClothingShoesSlippers = тапочки
+    .desc = Пушистые!
+    .suffix = { "" }
+ent-ClothingShoeSlippersDuck = тапки-уточки
+    .desc = Удобные, но преследуемые призраками уток, которых вы кормили хлебом в детстве.
+    .suffix = { "" }
+ent-ClothingShoesTourist = туристическая обувь
+    .desc = Эти дешевые сандалии не выглядят очень удобными.
+    .suffix = { "" }

@@ -1,0 +1,12 @@
+ent-FoodEggBase = { ent-FoodInjectableBase }
+    .desc = An egg!
+    .suffix = { "" }
+ent-PuddleEgg = egg
+    .desc = If the floor was a little hotter this would fry.
+    .suffix = { "" }
+ent-Eggshells = eggshells
+    .desc = You're walkin' on 'em bud.
+    .suffix = { "" }
+ent-FoodEgg = egg
+    .desc = { ent-FoodEggBase.desc }
+    .suffix = { "" }

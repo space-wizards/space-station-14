@@ -23,6 +23,6 @@
     pocket2: HandLabeler # for making named bestsellers
   inhand:
     right hand: BriefcaseBrownFilled
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
+  innerclothingskirt: ClothingUniformJumpskirtLibrarian # Corvax-Resprite
   satchel: ClothingBackpackSatchelLibrarianFilled
   duffelbag: ClothingBackpackDuffelLibrarianFilled

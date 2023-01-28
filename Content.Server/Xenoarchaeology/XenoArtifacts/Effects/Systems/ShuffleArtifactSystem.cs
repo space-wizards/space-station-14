@@ -10,7 +10,6 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -38,7 +37,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 
         foreach (var xform in toShuffle)
         {
-            _xform.SetCoordinates(xform, _random.PickAndTake(allCoords));
+            xform.Coordinates = _random.PickAndTake(allCoords);
         }
     }
 }

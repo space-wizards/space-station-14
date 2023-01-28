@@ -7,6 +7,7 @@ namespace Content.Server.VoiceMask;
 public sealed class VoiceMaskerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)] public string LastSetName = "Unknown";
+    [ViewVariables(VVAccess.ReadWrite)] public string? LastSetVoice; // Corvax-TTS
 
     [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string Action = "ChangeVoiceMask";

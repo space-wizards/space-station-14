@@ -189,7 +189,7 @@ namespace Content.Shared.Humanoid
             return new(color.RByte, color.GByte, color.BByte);
         }
 
-        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species)
+        public static HumanoidCharacterAppearance EnsureValid(HumanoidCharacterAppearance appearance, string species, string[] sponsorMarkings)
         {
             var hairStyleId = appearance.HairStyleId;
             var facialHairStyleId = appearance.FacialHairStyleId;
@@ -205,11 +205,29 @@ namespace Content.Shared.Humanoid
             {
                 hairStyleId = HairStyles.DefaultHairStyle;
             }
+            
+            // Corvax-Sponsors-Start
+            if (proto.TryIndex(hairStyleId, out MarkingPrototype? hairProto) &&
+                hairProto.SponsorOnly &&
+                !sponsorMarkings.Contains(hairStyleId))
+            {
+                hairStyleId = HairStyles.DefaultHairStyle;
+            }
+            // Corvax-Sponsors-End
 
             if (!markingManager.MarkingsByCategory(MarkingCategories.FacialHair).ContainsKey(facialHairStyleId))
             {
                 facialHairStyleId = HairStyles.DefaultFacialHairStyle;
             }
+            
+            // Corvax-Sponsors-Start
+            if (proto.TryIndex(facialHairStyleId, out MarkingPrototype? facialHairProto) &&
+                facialHairProto.SponsorOnly &&
+                !sponsorMarkings.Contains(facialHairStyleId))
+            {
+                facialHairStyleId = HairStyles.DefaultFacialHairStyle;
+            }
+            // Corvax-Sponsors-End
 
             var markingSet = new MarkingSet();
             var skinColor = appearance.SkinColor;
@@ -218,6 +236,7 @@ namespace Content.Shared.Humanoid
                 markingSet = new MarkingSet(appearance.Markings, speciesProto.MarkingPoints, markingManager, proto);
                 markingSet.EnsureValid(markingManager);
                 markingSet.FilterSpecies(species, markingManager);
+                markingSet.FilterSponsor(sponsorMarkings, markingManager); // Corvax-Sponsors
 
                 switch (speciesProto.SkinColoration)
                 {

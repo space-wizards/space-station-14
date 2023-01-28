@@ -71,11 +71,26 @@ namespace Content.Client.Changelog
             NewChangelogEntriesChanged?.Invoke();
         }
 
-        public Task<List<ChangelogEntry>> LoadChangelog()
+        public async Task<List<ChangelogEntry>> LoadChangelog()
+        {
+            var paths = _resource.ContentFindFiles("/Changelog/")
+                .Where(filePath => filePath.Extension == "yml")
+                .ToArray();
+
+            var result = new List<ChangelogEntry>();
+            foreach (var path in paths)
+            {
+                var changelog = await LoadChangelogFile(path);
+                result = result.Union(changelog).ToList();
+            }
+            return result.OrderBy(x => x.Time).ToList();
+        }
+
+        private Task<List<ChangelogEntry>> LoadChangelogFile(ResourcePath path)
         {
             return Task.Run(() =>
             {
-                var yamlData = _resource.ContentFileReadYaml(new ResourcePath("/Changelog/Changelog.yml"));
+                var yamlData = _resource.ContentFileReadYaml(path);
 
                 if (yamlData.Documents.Count == 0)
                     return new List<ChangelogEntry>();

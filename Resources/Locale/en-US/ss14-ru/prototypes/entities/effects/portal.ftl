@@ -1,0 +1,9 @@
+ent-BasePortal = bluespace portal
+    .desc = Transports you to a linked destination!
+    .suffix = { "" }
+ent-PortalRed = { ent-BasePortal }
+    .desc = This one looks more like a redspace portal.
+    .suffix = { "" }
+ent-PortalBlue = { ent-BasePortal }
+    .desc = { ent-BasePortal.desc }
+    .suffix = { "" }

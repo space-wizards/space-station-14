@@ -8,5 +8,8 @@
 "Changes: UI":
 - '**/*.xaml*'
 
+"Changes: Localization":
+- 'Resources/Locale/**/*.ftl'
+
 "No C#":
 - all: ["!**/*.cs"]

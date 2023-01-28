@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/da354ba4e28fcaf73002d25cab0da4815808be60",
+  "copyright": "Taken from Skyrat-tg at https://github.com/Skyrat-SS13/Skyrat-tg/commit/f9e3b58ecd64fa061f83420689bd90bfa3a4c185 & modified by github:Morb0",
   "size": {
     "x": 32,
     "y": 32
@@ -13,40 +13,18 @@
     },
     {
       "name": "underpowered",
-      "directions": 4,
-      "delays": [
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ],
-        [
-          0.1,
-          0.1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "lock",
       "directions": 4
     },
     {
-      "name": "emitter0",
+      "name": "unlock",
       "directions": 4
     },
     {
-      "name": "emitter1",
-      "directions": 4
-    },
-    {
-      "name": "emitter2",
+      "name": "emitter",
       "directions": 4
     },
     {

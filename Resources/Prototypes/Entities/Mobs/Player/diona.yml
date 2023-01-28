@@ -4,8 +4,6 @@
   parent: BaseMobDiona
   id: MobDiona
   components:
-    - type: CombatMode
-      canDisarm: true
     - type: InteractionPopup
       successChance: 1
       interactSuccessString: hugging-success-generic
@@ -35,3 +33,4 @@
     - type: Faction
       factions:
         - NanoTrasen
+    - type: Pacifist # Corvax-DionaPacifist

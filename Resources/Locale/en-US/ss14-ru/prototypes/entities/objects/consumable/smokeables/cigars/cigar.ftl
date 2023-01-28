@@ -1,0 +1,12 @@
+ent-Cigar = cigar
+    .desc = A brown roll of tobacco and... well, you're not quite sure.
+    .suffix = { "" }
+ent-CigarSpent = { ent-Cigar }
+    .suffix = spent
+    .desc = { ent-Cigar.desc }
+ent-CigarGold = premium Havanian cigar
+    .desc = A cigar fit for only the best of the best.
+    .suffix = { "" }
+ent-CigarGoldSpent = { ent-CigarGold }
+    .suffix = spent
+    .desc = { ent-CigarGold.desc }

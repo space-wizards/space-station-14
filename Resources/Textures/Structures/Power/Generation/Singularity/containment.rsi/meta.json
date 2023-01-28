@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/da354ba4e28fcaf73002d25cab0da4815808be60",
+  "copyright": "Taken from TauCetiStation at https://github.com/TauCetiStation/TauCetiClassic/commit/ed880fc5f1c41623906f39bf8b74e3db9911cc56",
   "size": {
     "x": 32,
     "y": 32
@@ -17,7 +17,19 @@
       "name": "a3"
     },
     {
-      "name": "on"
+      "name": "on",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
     },
     {
       "name": "p1"

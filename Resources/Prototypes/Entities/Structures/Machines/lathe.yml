@@ -408,20 +408,12 @@
       - ShellShotgunFlare
       - ShellTranquilizer
       - CartridgeLightRifle
-      - CartridgeRifle
+      - CartridgeCaselessRifleRubber
       - CartridgeLightRifleRubber
       - CartridgeRifleRubber
       - TargetHuman
       - TargetSyndicate
       - TargetClown
-      - MagazineBoxPistol
-      - MagazineBoxPistolRubber
-      - MagazineBoxMagnum
-      - MagazineBoxMagnumRubber
-      - MagazineBoxRifle
-      - MagazineBoxRifleRubber
-      - MagazineBoxLightRifle
-      - MagazineBoxLightRifleRubber
   - type: MaterialStorage
     whitelist:
       tags:
@@ -574,6 +566,7 @@
       - ClothingNeckMantleCMO
       - ClothingNeckMantleHOP
       - ClothingNeckMantleHOS
+      - ClothingNeckMantleHOSShoulder # Corvax-Resprite: Old mantle
       - ClothingNeckMantleRD
       - ClothingOuterWinterMusician
       - ClothingOuterWinterClown

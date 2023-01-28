@@ -6,9 +6,6 @@ using Robust.Shared.Utility;
 using System.Threading;
 using Content.Server.Power.EntitySystems;
 using Timer = Robust.Shared.Timing.Timer;
-using System.Linq;
-using Robust.Shared.Random;
-using Content.Server.Station.Components;
 
 namespace Content.Server.StationEvents.Events
 {
@@ -40,14 +37,10 @@ namespace Content.Server.StationEvents.Events
 
         public override void Started()
         {
-            if (StationSystem.Stations.Count == 0)
-                return;
-            var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
-
-            foreach (var (apc, transform) in EntityQuery<ApcComponent, TransformComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ApcComponent>(true))
             {
-                if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
-                    _powered.Add(apc.Owner);
+                if (component.MainBreakerEnabled)
+                    _powered.Add(component.Owner);
             }
 
             RobustRandom.Shuffle(_powered);

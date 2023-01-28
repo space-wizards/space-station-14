@@ -1,0 +1,48 @@
+﻿- type: gameMap
+  id: CorvaxDelta
+  mapName: 'Delta Station'
+  mapPath: /Maps/corvax_delta.yml
+  minPlayers: 40
+  stations:
+    Delta:
+      mapNameTemplate: '{0} Дельта {1}'
+      emergencyShuttlePath: /Maps/Shuttles/delta_shuttle.yml
+      nameGenerator:
+        !type:NanotrasenNameGenerator
+        prefixCreator: 'TG'
+      overflowJobs:
+        - Passenger
+      availableJobs:
+        CargoTechnician: [ 5, 5 ]
+        Passenger: [ -1, -1 ]
+        Bartender: [ 1, 1 ]
+        Botanist: [ 3, 4 ]
+        Chef: [ 1, 2 ]
+        Clown: [ 1, 1 ]
+        Janitor: [ 1, 2 ]
+        Mime: [ 1, 1 ]
+        Captain: [ 1, 1 ]
+        IAA: [ 1, 1 ]
+        HeadOfPersonnel: [ 1, 1 ]
+        ChiefEngineer: [ 1, 1 ]
+        StationEngineer: [ 7, 7 ]
+        ChiefMedicalOfficer: [ 1, 1 ]
+        MedicalDoctor: [ 5, 5 ]
+        Chemist: [ 2, 2 ]
+        ResearchDirector: [ 1, 1 ]
+        Scientist: [ 7, 7 ]
+        HeadOfSecurity: [ 1, 1 ]
+        SecurityOfficer: [ 5, 5 ]
+        Chaplain: [ 1, 1 ]
+        Warden: [ 1, 1 ]
+        Librarian: [ 1, 1 ]
+        Quartermaster: [ 1, 1 ]
+        SalvageSpecialist: [ 3, 3 ]
+        Musician: [ 2, 2 ]
+        AtmosphericTechnician: [ 2, 3 ]
+        TechnicalAssistant: [ 3, 3 ]
+        MedicalIntern: [ 3, 3 ]
+        ServiceWorker: [ 3, 3 ]
+        SecurityCadet: [ 3, 3 ]
+        Psychologist: [ 1, 1 ]
+        Detective: [ 1, 1 ]

@@ -45,7 +45,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
-          min: 20
+          min: 5
 
 - type: reagent
   id: Ephedrine
@@ -90,7 +90,7 @@
       - !type:ResetNarcolepsy
         conditions:
         - !type:ReagentThreshold
-          min: 30
+          min: 10
 
 - type: reagent
   id: THC
