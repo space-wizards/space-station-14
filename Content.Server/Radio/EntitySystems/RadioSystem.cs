@@ -50,7 +50,7 @@ public sealed class RadioSystem : EntitySystem
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
-    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel)
+    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel, EntityUid? radioSource = null)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -70,8 +70,8 @@ public sealed class RadioSystem : EntitySystem
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
 
-        var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
-        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);
+        var ev = new RadioReceiveEvent(message, source, channel, chatMsg, radioSource);
+        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel, radioSource);
         bool sentAtLeastOnce = false;
 
         foreach (var radio in EntityQuery<ActiveRadioComponent>())
