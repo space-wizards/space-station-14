@@ -28,7 +28,7 @@ public sealed class EmoteRandomSystem : EntitySystem
         foreach (var emoterandomcomp in EntityQuery<EmoteRandomComponent>())
         {
             emoterandomcomp.LastEmoteRandomCooldown -= frameTime;
-
+            emoterandomcomp.LastDamageEmoteRandomCooldown -= frameTime;
 
             if (_timing.CurTime <= emoterandomcomp.EmoteOnRandomChance)
                 continue;

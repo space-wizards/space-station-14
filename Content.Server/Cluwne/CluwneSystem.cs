@@ -15,6 +15,7 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Database;
 using Content.Shared.Cluwne;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.Cluwne;
 
@@ -52,15 +53,7 @@ public sealed class CluwneSystem : EntitySystem
         {
             cluwnecomp.LastGiggleCooldown -= frameTime;
 
-
-            if (_timing.CurTime <= cluwnecomp.GiggleGoChance)
-                continue;
-
-            cluwnecomp.GiggleGoChance += TimeSpan.FromSeconds(cluwnecomp.RandomGiggleAttempt);
-            if (!_robustRandom.Prob(cluwnecomp.GiggleChance))
-                continue;
-
-            DoGiggle(cluwnecomp.Owner, cluwnecomp);
+            RandomEmote(cluwnecomp.Owner, cluwnecomp);
         }
 
     }
@@ -115,30 +108,31 @@ public sealed class CluwneSystem : EntitySystem
     /// <summary>
     /// Makes cluwne do a random emote. Falldown and horn, twitch and honk, giggle.
     /// </summary>
-    private void DoGiggle(EntityUid uid, CluwneComponent component)
+    private void RandomEmote(EntityUid uid, CluwneComponent component)
     {
         if (component.LastGiggleCooldown > 0)
             return;
 
         if (_robustRandom.Prob(component.KnockChance))
-        { 
-                _audio.PlayPvs(component.KnockSound, uid);
-                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
-                _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, false, false);
+        {
+            _audio.PlayPvs(component.KnockSound, uid);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
+            _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, false, false);
         }
 
         else if (_robustRandom.Prob(component.GiggleRandomChance))
 
             _chat.TrySendInGameICMessage(uid, "giggles", InGameICChatType.Emote, false, false);
 
-        else
+        else if (_robustRandom.Prob(component.GiggleRandomChance))
         {
-            _chat.TryEmoteWithChat(uid, component.TwitchEmoteId);
             _audio.PlayPvs(component.SpawnSound, uid);
             _chat.TrySendInGameICMessage(uid, "honks", InGameICChatType.Emote, false, false);
         }
 
-        component.LastGiggleCooldown = component.GiggleCooldown;         
+        else
+
+            component.LastGiggleCooldown = component.GiggleCooldown;
 
     }
 

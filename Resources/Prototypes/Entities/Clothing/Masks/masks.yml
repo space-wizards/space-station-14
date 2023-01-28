@@ -247,4 +247,4 @@
     sprite: Clothing/Mask/cluwne.rsi
   - type: Unremoveable 
   - type: AddAccentClothing
-    accent: BackwardsAccent
+    accent: ScrambledAccent

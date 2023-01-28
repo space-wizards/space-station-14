@@ -21,6 +21,9 @@ public sealed class EmoteRandomComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public float LastEmoteRandomCooldown = 0f;
 
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float LastDamageEmoteRandomCooldown = 0f;
+
     [DataField("giggleGoChance", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan EmoteOnRandomChance = TimeSpan.Zero;
 }

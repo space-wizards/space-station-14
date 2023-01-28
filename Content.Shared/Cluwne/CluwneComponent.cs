@@ -16,10 +16,10 @@ public sealed class CluwneComponent : Component
     public float GiggleChance = 0.2f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float KnockChance = 0.2f;
+    public float KnockChance = 0.05f;
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float GiggleRandomChance = 0.3f;
+    public float GiggleRandomChance = 0.08f;
 
     [ViewVariables(VVAccess.ReadWrite)]
     public float GiggleCooldown = 5;
