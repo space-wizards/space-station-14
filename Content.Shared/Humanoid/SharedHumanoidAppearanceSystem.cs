@@ -165,7 +165,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     /// <param name="id">The ID of the sprite to use. See <see cref="HumanoidSpeciesSpriteLayer"/>.</param>
     /// <param name="sync">Whether to synchronize this to the humanoid mob, or not.</param>
     /// <param name="humanoid">Humanoid component of the entity</param>
-    public void SetBaseLayerId(EntityUid uid, HumanoidVisualLayers layer, string id, bool sync = true,
+    public void SetBaseLayerId(EntityUid uid, HumanoidVisualLayers layer, string? id, bool sync = true,
         HumanoidAppearanceComponent? humanoid = null)
     {
         if (!Resolve(uid, ref humanoid))
@@ -192,7 +192,10 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (!Resolve(uid, ref humanoid))
             return;
 
-        humanoid.CustomBaseLayers[layer] = humanoid.CustomBaseLayers[layer] with { Color = color };
+        if (humanoid.CustomBaseLayers.TryGetValue(layer, out var info))
+            humanoid.CustomBaseLayers[layer] = info with { Color = color };
+        else
+            humanoid.CustomBaseLayers[layer] = new(null, color);
 
         if (sync)
             Dirty(humanoid);

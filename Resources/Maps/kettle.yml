@@ -12885,6 +12885,11 @@ entities:
           color: '#FFFFFFFF'
           id: BrickTileWhiteLineW
           coordinates: 7,-41
+        4981:
+          cleanable: True
+          color: '#800080FF'
+          id: prolizard
+          coordinates: 27.413673,-33.665314
       -2,-2:
         257:
           color: '#52B4E996'
@@ -40268,8 +40273,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -40358,8 +40363,8 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.619795
-      - 77.56971
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -40373,8 +40378,8 @@ entities:
     - volume: 2500
       temperature: 235
       moles:
-      - 21.213781
-      - 79.80423
+      - 20.619795
+      - 77.56971
       - 0
       - 0
       - 0
@@ -40401,7 +40406,7 @@ entities:
   - pos: 34.5,12.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456709.4
+  - SecondsUntilStateChange: -459255.34
     state: Opening
     type: Door
   - inputs:
@@ -40415,7 +40420,7 @@ entities:
   components:
   - type: MetaData
   - type: Transform
-  - index: 15
+  - index: 11
     type: Map
   - type: PhysicsMap
   - type: Broadphase
@@ -40540,7 +40545,7 @@ entities:
   - pos: 34.5,14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456709.4
+  - SecondsUntilStateChange: -459255.34
     state: Opening
     type: Door
   - inputs:
@@ -46256,7 +46261,7 @@ entities:
   - pos: 23.5,14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456770.66
+  - SecondsUntilStateChange: -459316.6
     state: Closing
     type: Door
   - inputs:
@@ -46272,7 +46277,7 @@ entities:
   - pos: 23.5,13.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456770.66
+  - SecondsUntilStateChange: -459316.6
     state: Closing
     type: Door
   - inputs:
@@ -46288,7 +46293,7 @@ entities:
   - pos: 23.5,12.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456770.66
+  - SecondsUntilStateChange: -459316.6
     state: Closing
     type: Door
   - inputs:
@@ -46724,7 +46729,7 @@ entities:
   - pos: 34.5,13.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -456709.4
+  - SecondsUntilStateChange: -459255.34
     state: Opening
     type: Door
   - inputs:
@@ -53665,9 +53670,11 @@ entities:
     parent: 82
     type: Transform
 - uid: 2079
-  type: ReagentContainerRice
+  type: VendingMachineHappyHonk
   components:
-  - pos: -33.797104,-10.277666
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -34.5,-10.5
     parent: 82
     type: Transform
 - uid: 2080
@@ -53886,7 +53893,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 2115
-  type: KitchenReagentGrinder
+  type: DonkpocketBoxSpawner
   components:
   - pos: -38.5,-10.5
     parent: 82
@@ -58369,7 +58376,7 @@ entities:
   - pos: -41.5,-42.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -343738.1
+  - SecondsUntilStateChange: -346284.03
     state: Opening
     type: Door
 - uid: 2822
@@ -58378,7 +58385,7 @@ entities:
   - pos: -41.5,-44.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -343735.88
+  - SecondsUntilStateChange: -346281.8
     state: Opening
     type: Door
 - uid: 2823
@@ -58626,13 +58633,11 @@ entities:
     parent: 82
     type: Transform
 - uid: 2860
-  type: RollerBed
+  type: EmergencyRollerBed
   components:
-  - pos: -27.439402,-27.295948
+  - pos: -34.5,-32.5
     parent: 82
     type: Transform
-  - folded: True
-    type: Foldable
 - uid: 2861
   type: CheapRollerBed
   components:
@@ -60753,8 +60758,6 @@ entities:
     pos: 59.5,-12.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -61242,7 +61245,7 @@ entities:
   - pos: 58.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -61253,9 +61256,9 @@ entities:
         uid: 3190
     type: SignalReceiver
 - uid: 3263
-  type: RollerBed
+  type: HospitalCurtainsOpen
   components:
-  - pos: 51.540783,-12.289728
+  - pos: 44.5,-43.5
     parent: 82
     type: Transform
 - uid: 3264
@@ -61321,9 +61324,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 3274
-  type: BoxLatexGloves
+  type: EmergencyRollerBed
   components:
-  - pos: -27.360468,-28.272118
+  - pos: -35.5,-32.5
     parent: 82
     type: Transform
 - uid: 3275
@@ -64328,7 +64331,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 3733
-  type: WindowReinforcedDirectional
+  type: WindoorSecurityLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: 53.5,-12.5
@@ -64712,7 +64715,7 @@ entities:
   - pos: 53.5,-25.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64728,7 +64731,7 @@ entities:
   - pos: 53.5,-26.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64744,7 +64747,7 @@ entities:
   - pos: 53.5,-27.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64760,7 +64763,7 @@ entities:
   - pos: 53.5,-28.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64776,7 +64779,7 @@ entities:
   - pos: 53.5,-29.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64792,7 +64795,7 @@ entities:
   - pos: 53.5,-30.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64808,7 +64811,7 @@ entities:
   - pos: 56.5,-25.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64824,7 +64827,7 @@ entities:
   - pos: 56.5,-26.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64840,7 +64843,7 @@ entities:
   - pos: 56.5,-27.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64856,7 +64859,7 @@ entities:
   - pos: 56.5,-28.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64872,7 +64875,7 @@ entities:
   - pos: 56.5,-29.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -64888,7 +64891,7 @@ entities:
   - pos: 56.5,-30.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -454974.34
+  - SecondsUntilStateChange: -457520.28
     state: Opening
     type: Door
   - inputs:
@@ -67160,8 +67163,6 @@ entities:
   - pos: 22.5,21.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 4153
   type: Catwalk
   components:
@@ -67739,7 +67740,7 @@ entities:
   - pos: -11.5,17.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -520749.97
+  - SecondsUntilStateChange: -523295.9
     state: Opening
     type: Door
 - uid: 4246
@@ -67748,7 +67749,7 @@ entities:
   - pos: -11.5,19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -520748.22
+  - SecondsUntilStateChange: -523294.16
     state: Opening
     type: Door
 - uid: 4247
@@ -80347,7 +80348,7 @@ entities:
   - pos: -21.5,50.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395629.28
+  - SecondsUntilStateChange: -398175.22
     state: Opening
     type: Door
   - inputs:
@@ -80363,7 +80364,7 @@ entities:
   - pos: -21.5,48.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395629.28
+  - SecondsUntilStateChange: -398175.22
     state: Opening
     type: Door
   - inputs:
@@ -80569,7 +80570,7 @@ entities:
   - pos: 59.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -83534,7 +83535,7 @@ entities:
   - pos: -21.5,49.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395629.28
+  - SecondsUntilStateChange: -398175.22
     state: Opening
     type: Door
   - inputs:
@@ -83557,7 +83558,7 @@ entities:
   - pos: -21.5,47.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395629.28
+  - SecondsUntilStateChange: -398175.22
     state: Opening
     type: Door
   - inputs:
@@ -84563,7 +84564,7 @@ entities:
     pos: 3.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84580,7 +84581,7 @@ entities:
     pos: 2.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84644,7 +84645,7 @@ entities:
   - pos: 1.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84660,7 +84661,7 @@ entities:
   - pos: 2.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84676,7 +84677,7 @@ entities:
   - pos: 3.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84692,7 +84693,7 @@ entities:
   - pos: 5.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84708,7 +84709,7 @@ entities:
   - pos: 6.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84724,7 +84725,7 @@ entities:
   - pos: 7.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84740,7 +84741,7 @@ entities:
   - pos: 8.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84756,7 +84757,7 @@ entities:
   - pos: 9.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84772,7 +84773,7 @@ entities:
   - pos: 11.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84788,7 +84789,7 @@ entities:
   - pos: 12.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84804,7 +84805,7 @@ entities:
   - pos: 13.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84820,7 +84821,7 @@ entities:
   - pos: 14.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -84837,7 +84838,7 @@ entities:
     pos: 16.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
 - uid: 6963
@@ -85695,7 +85696,7 @@ entities:
     pos: 16.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -85712,7 +85713,7 @@ entities:
     pos: -1.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -88385,7 +88386,7 @@ entities:
     pos: -1.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -89712,7 +89713,7 @@ entities:
     pos: 25.5,64.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -90746,8 +90747,6 @@ entities:
   - pos: 77.5,-9.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 7866
   type: APCBasic
   components:
@@ -94530,8 +94529,6 @@ entities:
     pos: 11.5,-91.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8424
   type: Grille
   components:
@@ -94588,8 +94585,6 @@ entities:
     pos: 29.5,-91.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 8432
   type: WeaponCapacitorRecharger
   components:
@@ -95855,15 +95850,6 @@ entities:
   - pos: 48.439938,56.562828
     parent: 82
     type: Transform
-  - action:
-      checkCanInteract: False
-      icon: Interface/Actions/scream.png
-      name: action-name-scream
-      description: AAAAAAAAAAAAAAAAAAAAAAAAA
-      keywords: []
-      useDelay: 10
-      event: !type:ScreamActionEvent {}
-    type: Vocal
   - tags: []
     type: Tag
 - uid: 8614
@@ -97319,8 +97305,6 @@ entities:
     pos: 53.5,-23.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -97621,7 +97605,7 @@ entities:
     pos: -39.5,-42.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -343910.12
+  - SecondsUntilStateChange: -346456.06
     state: Opening
     type: Door
 - uid: 8897
@@ -102026,8 +102010,6 @@ entities:
     pos: 9.5,-104.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9582
   type: Grille
   components:
@@ -102047,8 +102029,6 @@ entities:
     pos: 10.5,-104.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9585
   type: Grille
   components:
@@ -102062,8 +102042,6 @@ entities:
     pos: 3.5,-88.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9587
   type: GrilleBroken
   components:
@@ -102071,8 +102049,6 @@ entities:
     pos: 6.5,-83.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9588
   type: Grille
   components:
@@ -102110,8 +102086,6 @@ entities:
     pos: 36.5,-108.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9594
   type: Grille
   components:
@@ -102149,8 +102123,6 @@ entities:
     pos: 33.5,-110.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9600
   type: GrilleBroken
   components:
@@ -102158,8 +102130,6 @@ entities:
     pos: 36.5,-103.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9601
   type: Grille
   components:
@@ -102215,8 +102185,6 @@ entities:
     pos: 37.5,-91.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9610
   type: Grille
   components:
@@ -102236,8 +102204,6 @@ entities:
     pos: 33.5,-83.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9613
   type: GrilleBroken
   components:
@@ -102245,8 +102211,6 @@ entities:
     pos: 9.5,-82.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9614
   type: Grille
   components:
@@ -102272,8 +102236,6 @@ entities:
     pos: 15.5,-80.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9618
   type: Grille
   components:
@@ -102299,8 +102261,6 @@ entities:
     pos: 3.5,-95.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9622
   type: Grille
   components:
@@ -102314,8 +102274,6 @@ entities:
     pos: 21.5,-113.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9624
   type: GrilleBroken
   components:
@@ -102323,8 +102281,6 @@ entities:
     pos: 7.5,-110.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9625
   type: GrilleBroken
   components:
@@ -102332,8 +102288,6 @@ entities:
     pos: 14.5,-110.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9626
   type: Grille
   components:
@@ -102358,16 +102312,12 @@ entities:
   - pos: 28.5,-107.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9630
   type: GrilleBroken
   components:
   - pos: 31.5,-104.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9631
   type: Grille
   components:
@@ -102404,8 +102354,6 @@ entities:
   - pos: 37.5,-97.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9637
   type: Grille
   components:
@@ -102430,16 +102378,12 @@ entities:
   - pos: 37.5,-86.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9641
   type: GrilleBroken
   components:
   - pos: 29.5,-81.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9642
   type: Grille
   components:
@@ -102494,8 +102438,6 @@ entities:
   - pos: 4.5,-108.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9651
   type: Grille
   components:
@@ -102514,8 +102456,6 @@ entities:
   - pos: 13.5,-81.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9654
   type: Grille
   components:
@@ -102534,16 +102474,12 @@ entities:
   - pos: 3.5,-84.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9657
   type: GrilleBroken
   components:
   - pos: 3.5,-100.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 9658
   type: Grille
   components:
@@ -102773,9 +102709,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 9695
-  type: Paper
+  type: PaperCaptainsThoughts
   components:
-  - pos: 20.000788,-91.58733
+  - pos: 20.07479,-91.26229
     parent: 82
     type: Transform
 - uid: 9696
@@ -105131,8 +105067,6 @@ entities:
     pos: 21.5,37.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 10052
   type: ClosetToolFilled
   components:
@@ -107783,7 +107717,7 @@ entities:
   - pos: 62.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -109556,9 +109490,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 10692
-  type: DonkpocketBoxSpawner
+  type: ReagentContainerRice
   components:
-  - pos: -34.5,-10.5
+  - pos: -33.601192,-10.245844
     parent: 82
     type: Transform
 - uid: 10693
@@ -109818,8 +109752,6 @@ entities:
     pos: 4.5,-46.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 10734
   type: AirlockMaint
   components:
@@ -111664,8 +111596,6 @@ entities:
     pos: -72.5,0.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11028
   type: Grille
   components:
@@ -111687,8 +111617,6 @@ entities:
     pos: -65.5,0.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11031
   type: Grille
   components:
@@ -111703,8 +111631,6 @@ entities:
     pos: -67.5,0.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11033
   type: Grille
   components:
@@ -111740,8 +111666,6 @@ entities:
     pos: -62.5,0.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11038
   type: Grille
   components:
@@ -111791,8 +111715,6 @@ entities:
     pos: -78.5,8.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11045
   type: Grille
   components:
@@ -111834,8 +111756,6 @@ entities:
   - pos: -79.5,12.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11051
   type: GrilleBroken
   components:
@@ -111843,8 +111763,6 @@ entities:
     pos: -79.5,13.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11052
   type: Grille
   components:
@@ -111880,8 +111798,6 @@ entities:
     pos: -77.5,19.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11057
   type: GrilleBroken
   components:
@@ -111889,8 +111805,6 @@ entities:
     pos: -77.5,16.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11058
   type: Grille
   components:
@@ -111926,8 +111840,6 @@ entities:
     pos: -73.5,22.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11063
   type: Grille
   components:
@@ -111949,8 +111861,6 @@ entities:
     pos: -74.5,22.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11066
   type: Grille
   components:
@@ -111993,8 +111903,6 @@ entities:
     pos: -64.5,22.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11072
   type: Catwalk
   components:
@@ -112725,24 +112633,21 @@ entities:
     parent: 82
     type: Transform
 - uid: 11176
-  type: Paper
+  type: PaperOffice
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.597235,-28.133465
+  - pos: -23.372032,-28.192993
     parent: 82
     type: Transform
 - uid: 11177
-  type: Paper
+  type: PaperOffice
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.472235,-28.258465
+  - pos: -23.563612,-28.178257
     parent: 82
     type: Transform
 - uid: 11178
-  type: Paper
+  type: PaperOffice
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.416681,-28.119576
+  - pos: -23.475191,-28.487686
     parent: 82
     type: Transform
 - uid: 11179
@@ -113522,9 +113427,9 @@ entities:
     parent: 82
     type: Transform
 - uid: 11306
-  type: Table
+  type: PaperCaptainsThoughts
   components:
-  - pos: -34.5,-10.5
+  - pos: 10.71187,-18.56514
     parent: 82
     type: Transform
 - uid: 11307
@@ -113862,8 +113767,6 @@ entities:
   - pos: -17.5,-11.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -114515,7 +114418,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 11450
-  type: WindoorSecurityLocked
+  type: WindowReinforcedDirectional
   components:
   - rot: 1.5707963267948966 rad
     pos: 53.5,-13.5
@@ -114658,8 +114561,6 @@ entities:
     pos: -64.5,-37.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -115411,8 +115312,6 @@ entities:
   - pos: 39.5,17.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -115566,8 +115465,6 @@ entities:
   - pos: -41.5,80.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11609
   type: GrilleBroken
   components:
@@ -115575,8 +115472,6 @@ entities:
     pos: -41.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11610
   type: GrilleBroken
   components:
@@ -115584,16 +115479,12 @@ entities:
     pos: -9.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11611
   type: GrilleBroken
   components:
   - pos: -9.5,83.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 11612
   type: DisposalUnit
   components:
@@ -121083,7 +120974,7 @@ entities:
   - pos: -8.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -121099,7 +120990,7 @@ entities:
   - pos: -9.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -121115,7 +121006,7 @@ entities:
   - pos: -7.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -121139,7 +121030,7 @@ entities:
     pos: -6.5,34.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -121156,7 +121047,7 @@ entities:
     pos: -6.5,35.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -133763,7 +133654,7 @@ entities:
   - pos: 60.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -133954,7 +133845,7 @@ entities:
     pos: 44.5,12.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -39147.945
+  - SecondsUntilStateChange: -41693.883
     state: Opening
     type: Door
   - inputs:
@@ -133971,7 +133862,7 @@ entities:
     pos: 44.5,13.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -39147.945
+  - SecondsUntilStateChange: -41693.883
     state: Opening
     type: Door
   - inputs:
@@ -134000,8 +133891,6 @@ entities:
     pos: 45.5,15.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -147000,7 +146889,7 @@ entities:
     pos: -39.5,-44.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -343735.16
+  - SecondsUntilStateChange: -346281.1
     state: Opening
     type: Door
 - uid: 15912
@@ -153226,6 +153115,174 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 16945
+  type: PaperOffice
+  components:
+  - pos: 31.397202,-28.299168
+    parent: 82
+    type: Transform
+- uid: 16946
+  type: CheapRollerBed
+  components:
+  - pos: -47.5,-32.5
+    parent: 82
+    type: Transform
+- uid: 16947
+  type: CheapRollerBed
+  components:
+  - pos: -51.5,-32.5
+    parent: 82
+    type: Transform
+- uid: 16948
+  type: SheetPlasma1
+  components:
+  - pos: 17.613049,74.53184
+    parent: 82
+    type: Transform
+  - count: 10
+    type: Stack
+- uid: 16949
+  type: PaperOffice
+  components:
+  - pos: 31.470886,-28.063412
+    parent: 82
+    type: Transform
+- uid: 16950
+  type: RollerBed
+  components:
+  - pos: 53.5,-13.5
+    parent: 82
+    type: Transform
+- uid: 16951
+  type: CrewMonitoringServer
+  components:
+  - pos: -1.5,42.5
+    parent: 82
+    type: Transform
+- uid: 16952
+  type: PaperOffice
+  components:
+  - pos: 27.68942,-33.28319
+    parent: 82
+    type: Transform
+- uid: 16953
+  type: EmergencyRollerBed
+  components:
+  - pos: -33.5,-32.5
+    parent: 82
+    type: Transform
+- uid: 16954
+  type: PaperOffice
+  components:
+  - pos: 27.64521,-33.194782
+    parent: 82
+    type: Transform
+- uid: 16955
+  type: PowerCellRecharger
+  components:
+  - pos: 38.5,34.5
+    parent: 82
+    type: Transform
+- uid: 16956
+  type: PoweredSmallLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 31.5,65.5
+    parent: 82
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+- uid: 16957
+  type: BoxLatexGloves
+  components:
+  - pos: -27.616243,-27.485722
+    parent: 82
+    type: Transform
+- uid: 16958
+  type: WeaponLaserCarbinePractice
+  components:
+  - pos: -35.20183,47.552357
+    parent: 82
+    type: Transform
+- uid: 16959
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 10.8445015,-18.270445
+    parent: 82
+    type: Transform
+- uid: 16960
+  type: PaperOffice
+  components:
+  - pos: 5.8087387,-13.301848
+    parent: 82
+    type: Transform
+- uid: 16961
+  type: PaperOffice
+  components:
+  - pos: 5.3813705,-13.581809
+    parent: 82
+    type: Transform
+- uid: 16962
+  type: PaperOffice
+  components:
+  - pos: 5.6024237,-13.346053
+    parent: 82
+    type: Transform
+- uid: 16963
+  type: HospitalCurtains
+  components:
+  - pos: 53.5,-49.5
+    parent: 82
+    type: Transform
+- uid: 16964
+  type: HospitalCurtains
+  components:
+  - pos: 49.5,-49.5
+    parent: 82
+    type: Transform
+- uid: 16965
+  type: HospitalCurtains
+  components:
+  - pos: 45.5,-49.5
+    parent: 82
+    type: Transform
+- uid: 16966
+  type: PaperOffice
+  components:
+  - pos: 25.380877,-26.228504
+    parent: 82
+    type: Transform
+- uid: 16967
+  type: PaperOffice
+  components:
+  - pos: 25.454561,-26.434792
+    parent: 82
+    type: Transform
+- uid: 16968
+  type: PaperOffice
+  components:
+  - pos: 25.572456,-26.287445
+    parent: 82
+    type: Transform
+- uid: 16969
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 20.281105,-91.394905
+    parent: 82
+    type: Transform
+- uid: 16970
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 20.060053,-91.52752
+    parent: 82
+    type: Transform
+- uid: 16971
+  type: Sink
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -27.5,-12.5
+    parent: 82
+    type: Transform
 - uid: 16972
   type: CableApcExtension
   components:
@@ -163894,6 +163951,12 @@ entities:
     pos: -48.5,-34.5
     parent: 82
     type: Transform
+- uid: 18741
+  type: Sink
+  components:
+  - pos: -37.5,-9.5
+    parent: 82
+    type: Transform
 - uid: 18742
   type: Catwalk
   components:
@@ -165648,8 +165711,6 @@ entities:
   - pos: 42.5,47.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 19022
   type: ClothingShoesFlippers
   components:
@@ -168496,7 +168557,7 @@ entities:
     pos: -46.5,-34.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -173353,8 +173414,6 @@ entities:
   - pos: 7.5,23.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20124
   type: GasMinerNitrogen
   components:
@@ -173363,8 +173422,6 @@ entities:
     type: Transform
   - maxExternalPressure: 4000
     type: GasMiner
-  - canCollide: False
-    type: Physics
 - uid: 20125
   type: GasMinerOxygen
   components:
@@ -173373,24 +173430,18 @@ entities:
     type: Transform
   - maxExternalPressure: 4000
     type: GasMiner
-  - canCollide: False
-    type: Physics
 - uid: 20126
   type: GasMinerPlasma
   components:
   - pos: -0.5,23.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20127
   type: GasMinerWaterVapor
   components:
   - pos: 1.5,23.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20128
   type: Rack
   components:
@@ -175979,6 +176030,18 @@ entities:
   - pos: -15.5,41.5
     parent: 82
     type: Transform
+- uid: 20532
+  type: LargeBeaker
+  components:
+  - pos: -30.52902,-12.800433
+    parent: 82
+    type: Transform
+- uid: 20533
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 10.770817,-18.432528
+    parent: 82
+    type: Transform
 - uid: 20534
   type: AirlockChiefEngineerGlassLocked
   components:
@@ -177494,8 +177557,6 @@ entities:
     pos: -75.5,-36.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20768
   type: GrilleBroken
   components:
@@ -177503,8 +177564,6 @@ entities:
     pos: -80.5,-36.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20769
   type: Grille
   components:
@@ -177536,8 +177595,6 @@ entities:
     pos: -74.5,-36.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20774
   type: Grille
   components:
@@ -177586,8 +177643,6 @@ entities:
   - pos: -85.5,-33.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20782
   type: GrilleBroken
   components:
@@ -177595,8 +177650,6 @@ entities:
     pos: -85.5,-32.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20783
   type: Grille
   components:
@@ -177645,8 +177698,6 @@ entities:
   - pos: -87.5,-26.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20791
   type: GrilleBroken
   components:
@@ -177654,8 +177705,6 @@ entities:
     pos: -87.5,-23.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20792
   type: GrilleBroken
   components:
@@ -177663,8 +177712,6 @@ entities:
     pos: -85.5,-20.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20793
   type: GrilleBroken
   components:
@@ -177672,8 +177719,6 @@ entities:
     pos: -85.5,-15.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20794
   type: Grille
   components:
@@ -177699,8 +177744,6 @@ entities:
     pos: -80.5,-14.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20798
   type: GrilleBroken
   components:
@@ -177708,8 +177751,6 @@ entities:
     pos: -79.5,-14.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20799
   type: Grille
   components:
@@ -177741,8 +177782,6 @@ entities:
     pos: -75.5,-14.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20804
   type: Grille
   components:
@@ -177780,16 +177819,12 @@ entities:
     pos: -70.5,-14.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20810
   type: GrilleBroken
   components:
   - pos: -30.5,-58.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 20811
   type: Grille
   components:
@@ -179101,8 +179136,6 @@ entities:
   - pos: -52.5,-58.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21029
   type: Grille
   components:
@@ -179144,8 +179177,6 @@ entities:
   - pos: -52.5,-62.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21035
   type: GrilleBroken
   components:
@@ -179153,8 +179184,6 @@ entities:
     pos: -52.5,-68.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21036
   type: Grille
   components:
@@ -179225,8 +179254,6 @@ entities:
     pos: -46.5,-73.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21046
   type: Grille
   components:
@@ -179268,8 +179295,6 @@ entities:
   - pos: -52.5,-69.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21052
   type: Grille
   components:
@@ -179326,8 +179351,6 @@ entities:
     pos: -42.5,-75.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21060
   type: GrilleBroken
   components:
@@ -179335,8 +179358,6 @@ entities:
     pos: -36.5,-73.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21061
   type: Grille
   components:
@@ -179365,8 +179386,6 @@ entities:
     pos: -35.5,-73.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21065
   type: Grille
   components:
@@ -179416,16 +179435,12 @@ entities:
     pos: -31.5,-73.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21072
   type: GrilleBroken
   components:
   - pos: -30.5,-67.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21073
   type: Grille
   components:
@@ -179482,8 +179497,6 @@ entities:
     pos: -30.5,-66.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 21081
   type: Catwalk
   components:
@@ -181183,14 +181196,13 @@ entities:
     parent: 82
     type: Transform
 - uid: 21364
-  type: PoweredSmallLight
+  type: VendingMachineCondiments
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -5.5,24.5
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -26.5,-13.5
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 21365
   type: AirlockMaintLocked
   components:
@@ -181231,14 +181243,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 21370
-  type: PoweredSmallLight
+  type: HappyHonkNukie
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -10.5,8.5
+  - pos: 51.475567,52.507065
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 21371
   type: PoweredSmallLight
   components:
@@ -181249,14 +181258,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 21372
-  type: PoweredSmallLight
+  type: RollerBed
   components:
-  - rot: 3.141592653589793 rad
-    pos: -7.5,19.5
+  - pos: 52.5,-13.5
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 21373
   type: MinimoogInstrument
   components:
@@ -181735,6 +181741,12 @@ entities:
   - pos: 11.5,38.5
     parent: 82
     type: Transform
+- uid: 21451
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 45.447807,-49.560356
+    parent: 82
+    type: Transform
 - uid: 21452
   type: Catwalk
   components:
@@ -182070,6 +182082,12 @@ entities:
   type: FoodPieBananaCream
   components:
   - pos: -9.738726,-47.531902
+    parent: 82
+    type: Transform
+- uid: 21508
+  type: PaperCaptainsThoughts
+  components:
+  - pos: 45.565704,-49.63403
     parent: 82
     type: Transform
 - uid: 21509
@@ -182806,7 +182824,7 @@ entities:
     pos: 12.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -183443,7 +183461,7 @@ entities:
     pos: 11.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -184023,7 +184041,7 @@ entities:
     pos: 10.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -184040,7 +184058,7 @@ entities:
     pos: 4.5,-19.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -184056,7 +184074,7 @@ entities:
   - pos: 0.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -450842.03
+  - SecondsUntilStateChange: -453387.97
     state: Opening
     type: Door
   - inputs:
@@ -185710,14 +185728,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 21990
-  type: PoweredSmallLight
+  type: PaperOffice
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -48.5,9.5
+  - pos: 52.197975,-39.02014
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 21991
   type: PoweredSmallLight
   components:
@@ -185737,13 +185752,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 21993
-  type: PoweredSmallLight
+  type: PaperOffice
   components:
-  - pos: -41.5,8.5
+  - pos: 52.43376,-38.843327
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 21994
   type: PoweredSmallLight
   components:
@@ -186144,14 +186157,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 22045
-  type: PoweredSmallLight
+  type: PaperOffice
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 11.5,-46.5
+  - pos: 52.1685,-38.651775
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 22046
   type: PoweredSmallLight
   components:
@@ -186966,6 +186976,24 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
+- uid: 22147
+  type: SpawnVendingMachineRestockFood
+  components:
+  - pos: -9.5,15.5
+    parent: 82
+    type: Transform
+- uid: 22148
+  type: SpawnVendingMachineRestockDrink
+  components:
+  - pos: -48.5,16.5
+    parent: 82
+    type: Transform
+- uid: 22149
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: -45.5,50.5
+    parent: 82
+    type: Transform
 - uid: 22150
   type: PoweredSmallLight
   components:
@@ -188112,6 +188140,12 @@ entities:
   - pos: 14.645449,58.52902
     parent: 82
     type: Transform
+- uid: 22330
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: 29.5,35.5
+    parent: 82
+    type: Transform
 - uid: 22331
   type: HandLabeler
   components:
@@ -188212,13 +188246,11 @@ entities:
   - powerLoad: 0
     type: ApcPowerReceiver
 - uid: 22347
-  type: PoweredSmallLight
+  type: SpawnVendingMachineRestockFoodDrink
   components:
-  - pos: 28.5,-11.5
+  - pos: 37.5,16.5
     parent: 82
     type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 22348
   type: PoweredSmallLight
   components:
@@ -188254,6 +188286,12 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 32.5,-32.5
+    parent: 82
+    type: Transform
+- uid: 22353
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: 37.5,15.5
     parent: 82
     type: Transform
 - uid: 22354
@@ -188519,8 +188557,6 @@ entities:
     pos: 29.5,14.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -190416,8 +190452,6 @@ entities:
     pos: 17.5,54.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -190682,7 +190716,7 @@ entities:
     pos: 44.5,14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -39147.945
+  - SecondsUntilStateChange: -41693.883
     state: Opening
     type: Door
   - inputs:
@@ -190772,7 +190806,7 @@ entities:
     pos: -6.5,33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -192533,6 +192567,12 @@ entities:
   - pos: 29.5,73.5
     parent: 82
     type: Transform
+- uid: 22999
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: 39.5,16.5
+    parent: 82
+    type: Transform
 - uid: 23000
   type: SurveillanceCameraScience
   components:
@@ -192718,8 +192758,6 @@ entities:
     pos: -17.5,48.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -192845,6 +192883,24 @@ entities:
   type: CableApcExtension
   components:
   - pos: 26.5,79.5
+    parent: 82
+    type: Transform
+- uid: 23035
+  type: SpawnVendingMachineRestockFoodDrink
+  components:
+  - pos: 39.5,15.5
+    parent: 82
+    type: Transform
+- uid: 23036
+  type: CrowbarRed
+  components:
+  - pos: 77.53257,-4.851335
+    parent: 82
+    type: Transform
+- uid: 23037
+  type: CrowbarRed
+  components:
+  - pos: 81.570465,-6.265873
     parent: 82
     type: Transform
 - uid: 23038
@@ -200364,8 +200420,6 @@ entities:
     pos: 87.5,-13.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 24136
   type: Poweredlight
   components:
@@ -202411,6 +202465,12 @@ entities:
   - pos: 22.5,69.5
     parent: 82
     type: Transform
+- uid: 24432
+  type: CrowbarRed
+  components:
+  - pos: 77.58378,-5.570384
+    parent: 82
+    type: Transform
 - uid: 24433
   type: FireAlarm
   components:
@@ -202437,6 +202497,12 @@ entities:
   type: PosterLegitBuild
   components:
   - pos: 23.5,62.5
+    parent: 82
+    type: Transform
+- uid: 24436
+  type: PaperOffice
+  components:
+  - pos: 40.34305,29.681519
     parent: 82
     type: Transform
 - uid: 24437
@@ -203670,8 +203736,6 @@ entities:
   - pos: 29.5,11.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -203720,8 +203784,6 @@ entities:
     pos: -28.5,57.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -203741,7 +203803,7 @@ entities:
   - pos: -26.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395642.62
+  - SecondsUntilStateChange: -398188.56
     state: Closing
     type: Door
   - inputs:
@@ -203757,7 +203819,7 @@ entities:
   - pos: -24.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395642.62
+  - SecondsUntilStateChange: -398188.56
     state: Closing
     type: Door
   - inputs:
@@ -203794,7 +203856,7 @@ entities:
   - pos: -25.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395642.62
+  - SecondsUntilStateChange: -398188.56
     state: Closing
     type: Door
   - inputs:
@@ -203975,7 +204037,7 @@ entities:
   - pos: -23.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395642.62
+  - SecondsUntilStateChange: -398188.56
     state: Closing
     type: Door
   - inputs:
@@ -204559,7 +204621,7 @@ entities:
   - pos: -27.5,60.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -395642.62
+  - SecondsUntilStateChange: -398188.56
     state: Closing
     type: Door
   - inputs:
@@ -204754,15 +204816,15 @@ entities:
     parent: 82
     type: Transform
 - uid: 24628
-  type: Paper
+  type: PaperOffice
   components:
-  - pos: 27.71762,-33.110016
+  - pos: 40.446205,29.607845
     parent: 82
     type: Transform
 - uid: 24629
-  type: CrayonPurple
+  type: OreBag
   components:
-  - pos: 27.689842,-32.67946
+  - pos: 47.505318,32.619854
     parent: 82
     type: Transform
 - uid: 24630
@@ -204776,12 +204838,6 @@ entities:
   type: DiceBag
   components:
   - pos: 27.398176,-33.221127
-    parent: 82
-    type: Transform
-- uid: 24632
-  type: Paper
-  components:
-  - pos: 27.773176,-33.332237
     parent: 82
     type: Transform
 - uid: 24633
@@ -207526,12 +207582,6 @@ entities:
   - pos: 16.5,47.5
     parent: 82
     type: Transform
-- uid: 25069
-  type: OreBag
-  components:
-  - pos: 38.57175,34.606785
-    parent: 82
-    type: Transform
 - uid: 25070
   type: HandheldGPSBasic
   components:
@@ -208168,15 +208218,13 @@ entities:
   - pos: 32.5,59.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25165
   type: ShuttersNormal
   components:
   - pos: -10.5,32.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -208229,7 +208277,7 @@ entities:
     pos: 25.5,65.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208245,7 +208293,7 @@ entities:
   - pos: 28.5,67.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208261,7 +208309,7 @@ entities:
   - pos: 27.5,67.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208277,7 +208325,7 @@ entities:
   - pos: 28.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208293,7 +208341,7 @@ entities:
   - pos: 26.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208309,7 +208357,7 @@ entities:
   - pos: 27.5,62.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -350958.84
+  - SecondsUntilStateChange: -353504.78
     state: Opening
     type: Door
   - inputs:
@@ -208326,8 +208374,6 @@ entities:
     pos: 25.707867,66.51041
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -208347,15 +208393,6 @@ entities:
       - port: Toggle
         uid: 25175
     type: SignalTransmitter
-- uid: 25179
-  type: PoweredSmallLight
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: 31.5,64.5
-    parent: 82
-    type: Transform
-  - powerLoad: 0
-    type: ApcPowerReceiver
 - uid: 25180
   type: ShuttersNormal
   components:
@@ -208363,7 +208400,7 @@ entities:
     pos: -6.5,36.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -349650.75
+  - SecondsUntilStateChange: -352196.7
     state: Opening
     type: Door
   - inputs:
@@ -208380,8 +208417,6 @@ entities:
     pos: -11.5,33.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -208465,8 +208500,6 @@ entities:
     pos: -0.5,6.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -208479,8 +208512,6 @@ entities:
     pos: 5.5,6.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -208493,8 +208524,6 @@ entities:
     pos: 11.5,6.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -208696,7 +208725,7 @@ entities:
   - pos: -41.5,-40.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -343737.06
+  - SecondsUntilStateChange: -346283
     state: Opening
     type: Door
 - uid: 25220
@@ -208736,7 +208765,7 @@ entities:
     pos: -46.5,-35.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -208752,7 +208781,7 @@ entities:
   - pos: -45.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -208768,7 +208797,7 @@ entities:
   - pos: -44.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -208784,7 +208813,7 @@ entities:
   - pos: -42.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -208800,7 +208829,7 @@ entities:
   - pos: -41.5,-33.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -342591.9
+  - SecondsUntilStateChange: -345137.84
     state: Opening
     type: Door
   - inputs:
@@ -208817,8 +208846,6 @@ entities:
     pos: -44.5,-36.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - state: True
     type: SignalSwitch
   - outputs:
@@ -209094,7 +209121,7 @@ entities:
   - pos: 61.5,-6.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209104,14 +209131,6 @@ entities:
       - port: Pressed
         uid: 3190
     type: SignalReceiver
-- uid: 25269
-  type: RollerBed
-  components:
-  - pos: -27.393993,-27.63572
-    parent: 82
-    type: Transform
-  - folded: True
-    type: Foldable
 - uid: 25270
   type: TableReinforcedGlass
   components:
@@ -209125,7 +209144,7 @@ entities:
     pos: 57.5,-7.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209142,7 +209161,7 @@ entities:
     pos: 57.5,-8.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209159,7 +209178,7 @@ entities:
     pos: 57.5,-10.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209176,7 +209195,7 @@ entities:
     pos: 57.5,-11.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209193,7 +209212,7 @@ entities:
     pos: 57.5,-9.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209210,7 +209229,7 @@ entities:
     pos: 59.5,-14.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209227,7 +209246,7 @@ entities:
     pos: 59.5,-15.5
     parent: 82
     type: Transform
-  - SecondsUntilStateChange: -339806.6
+  - SecondsUntilStateChange: -342352.53
     state: Opening
     type: Door
   - inputs:
@@ -209539,8 +209558,6 @@ entities:
     pos: 47.5,19.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -209553,8 +209570,6 @@ entities:
     pos: 48.5,19.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -209566,8 +209581,6 @@ entities:
   - pos: 47.5,25.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -209579,8 +209592,6 @@ entities:
   - pos: 48.5,25.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -211116,8 +211127,6 @@ entities:
     pos: -34.5,45.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25542
   type: GrilleBroken
   components:
@@ -211125,8 +211134,6 @@ entities:
     pos: -37.5,48.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25543
   type: GrilleBroken
   components:
@@ -211134,8 +211141,6 @@ entities:
     pos: -34.5,49.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25544
   type: CableApcExtension
   components:
@@ -211316,8 +211321,6 @@ entities:
     pos: -33.5,45.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25573
   type: GrilleBroken
   components:
@@ -211325,8 +211328,6 @@ entities:
     pos: -33.5,49.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25574
   type: GrilleBroken
   components:
@@ -211334,16 +211335,12 @@ entities:
     pos: -37.5,45.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25575
   type: GrilleBroken
   components:
   - pos: -37.5,47.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25576
   type: CrateServiceReplacementLights
   components:
@@ -211418,8 +211415,6 @@ entities:
     pos: -53.5,57.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25588
   type: PlushieSharkBlue
   components:
@@ -211698,8 +211693,6 @@ entities:
     pos: -65.5,55.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25631
   type: Grille
   components:
@@ -211714,8 +211707,6 @@ entities:
     pos: -62.5,58.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25633
   type: Grille
   components:
@@ -211877,8 +211868,6 @@ entities:
     pos: -47.5,57.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25654
   type: PlushieSharkGrey
   components:
@@ -211980,8 +211969,6 @@ entities:
     pos: -64.5,58.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 25671
   type: BoxPillCanister
   components:
@@ -212205,12 +212192,6 @@ entities:
   components:
   - rot: -1.5707963267948966 rad
     pos: 23.5,-32.5
-    parent: 82
-    type: Transform
-- uid: 25706
-  type: FoodCakeChristmas
-  components:
-  - pos: -13.487585,-7.650959
     parent: 82
     type: Transform
 - uid: 25707
@@ -212923,8 +212904,6 @@ entities:
   - pos: 28.5,76.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -213257,12 +213236,6 @@ entities:
   - pos: -71.51004,11.717871
     parent: 82
     type: Transform
-- uid: 25866
-  type: Paper
-  components:
-  - pos: 11.007074,-18.514828
-    parent: 82
-    type: Transform
 - uid: 25867
   type: Table
   components:
@@ -213278,24 +213251,6 @@ entities:
   - destinationAddress: Bridge
     name: Bridge
     type: FaxMachine
-- uid: 25869
-  type: Paper
-  components:
-  - pos: 5.4686685,-13.576539
-    parent: 82
-    type: Transform
-- uid: 25870
-  type: Paper
-  components:
-  - pos: 5.6770024,-13.326539
-    parent: 82
-    type: Transform
-- uid: 25871
-  type: Paper
-  components:
-  - pos: 5.8228354,-13.514039
-    parent: 82
-    type: Transform
 - uid: 25872
   type: Paper
   components:
@@ -213418,24 +213373,6 @@ entities:
     type: Transform
   - name: Brig
     type: FaxMachine
-- uid: 25890
-  type: Paper
-  components:
-  - pos: 52.447124,-38.41141
-    parent: 82
-    type: Transform
-- uid: 25891
-  type: Paper
-  components:
-  - pos: 52.333534,-38.567513
-    parent: 82
-    type: Transform
-- uid: 25892
-  type: Paper
-  components:
-  - pos: 52.645905,-38.567513
-    parent: 82
-    type: Transform
 - uid: 25893
   type: FaxMachineBase
   components:
@@ -213444,24 +213381,6 @@ entities:
     type: Transform
   - name: Lawyers Office
     type: FaxMachine
-- uid: 25894
-  type: Paper
-  components:
-  - pos: 25.309105,-26.451221
-    parent: 82
-    type: Transform
-- uid: 25895
-  type: Paper
-  components:
-  - pos: 25.507889,-26.394455
-    parent: 82
-    type: Transform
-- uid: 25896
-  type: Paper
-  components:
-  - pos: 25.664076,-26.295116
-    parent: 82
-    type: Transform
 - uid: 25897
   type: SpawnPointDetective
   components:
@@ -213859,8 +213778,6 @@ entities:
     pos: 13.5,-12.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -213982,18 +213899,6 @@ entities:
     type: Transform
   - name: AI Core
     type: FaxMachine
-- uid: 25970
-  type: Paper
-  components:
-  - pos: 20.128576,-91.331894
-    parent: 82
-    type: Transform
-- uid: 25971
-  type: Paper
-  components:
-  - pos: 20.242167,-91.544754
-    parent: 82
-    type: Transform
 - uid: 25972
   type: Intercom
   components:
@@ -214501,8 +214406,6 @@ entities:
   - pos: 89.5,9.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26051
   type: GrilleBroken
   components:
@@ -214510,8 +214413,6 @@ entities:
     pos: 89.5,4.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26052
   type: GrilleBroken
   components:
@@ -214519,16 +214420,12 @@ entities:
     pos: 89.5,-1.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26053
   type: GrilleBroken
   components:
   - pos: 89.5,-7.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26054
   type: GrilleBroken
   components:
@@ -214536,8 +214433,6 @@ entities:
     pos: 84.5,-13.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26055
   type: Grille
   components:
@@ -214587,8 +214482,6 @@ entities:
     pos: 57.5,12.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26062
   type: GrilleBroken
   components:
@@ -214596,8 +214489,6 @@ entities:
     pos: 61.5,12.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26063
   type: Grille
   components:
@@ -214660,8 +214551,6 @@ entities:
   - pos: 37.5,80.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26072
   type: Grille
   components:
@@ -214795,8 +214684,6 @@ entities:
     pos: 15.5,82.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26091
   type: GrilleBroken
   components:
@@ -214804,16 +214691,12 @@ entities:
     pos: 9.5,82.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26092
   type: GrilleBroken
   components:
   - pos: 2.5,82.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26093
   type: GrilleBroken
   components:
@@ -214821,8 +214704,6 @@ entities:
     pos: 2.5,79.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26094
   type: GrilleBroken
   components:
@@ -214830,8 +214711,6 @@ entities:
     pos: 2.5,75.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26095
   type: Grille
   components:
@@ -215014,8 +214893,6 @@ entities:
     pos: 37.5,74.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26121
   type: GrilleBroken
   components:
@@ -215023,8 +214900,6 @@ entities:
     pos: 37.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26122
   type: GrilleBroken
   components:
@@ -215032,8 +214907,6 @@ entities:
     pos: 31.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26123
   type: GrilleBroken
   components:
@@ -215041,8 +214914,6 @@ entities:
     pos: 23.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26124
   type: GrilleBroken
   components:
@@ -215050,8 +214921,6 @@ entities:
     pos: 18.5,85.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26125
   type: Paper
   components:
@@ -215106,8 +214975,6 @@ entities:
   - pos: 69.5,-1.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26133
   type: PoweredSmallLight
   components:
@@ -215132,8 +214999,6 @@ entities:
     pos: -28.5,-15.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
   - outputs:
       Pressed:
       - port: Toggle
@@ -215170,8 +215035,6 @@ entities:
     pos: 66.5,-0.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26139
   type: Grille
   components:
@@ -215193,8 +215056,6 @@ entities:
     pos: 65.5,-1.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26142
   type: Grille
   components:
@@ -215251,8 +215112,6 @@ entities:
     pos: 65.5,-15.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26150
   type: Grille
   components:
@@ -215343,8 +215202,6 @@ entities:
   - pos: 69.5,-9.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26163
   type: Grille
   components:
@@ -215387,8 +215244,6 @@ entities:
     pos: 65.5,-9.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26169
   type: Grille
   components:
@@ -215402,8 +215257,6 @@ entities:
   - pos: 65.5,-9.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26171
   type: Grille
   components:
@@ -215481,8 +215334,6 @@ entities:
     pos: 71.5,-13.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26182
   type: GrilleBroken
   components:
@@ -215490,16 +215341,12 @@ entities:
     pos: 73.5,-13.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26183
   type: GrilleBroken
   components:
   - pos: 71.5,-15.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 26184
   type: GrilleBroken
   components:
@@ -215507,6 +215354,4 @@ entities:
     pos: 71.5,-25.5
     parent: 82
     type: Transform
-  - canCollide: False
-    type: Physics
 ...

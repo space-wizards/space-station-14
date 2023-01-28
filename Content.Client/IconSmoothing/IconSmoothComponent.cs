@@ -18,19 +18,19 @@ namespace Content.Client.IconSmoothing
         /// <summary>
         ///     We will smooth with other objects with the same key.
         /// </summary>
-        [DataField("key")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("key")]
         public string? SmoothKey { get; }
 
         /// <summary>
         ///     Prepended to the RSI state.
         /// </summary>
-        [DataField("base")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("base")]
         public string StateBase { get; } = string.Empty;
 
         /// <summary>
         ///     Mode that controls how the icon should be selected.
         /// </summary>
-        [DataField("mode")]
+        [ViewVariables(VVAccess.ReadWrite), DataField("mode")]
         public IconSmoothingMode Mode = IconSmoothingMode.Corners;
 
         /// <summary>
@@ -56,6 +56,11 @@ namespace Content.Client.IconSmoothing
         ///     The icon selected is a bit field made up of the cardinal direction flags that have adjacent entities.
         /// </summary>
         CardinalFlags,
+
+        /// <summary>
+        ///     The icon represents a triangular sprite with only 2 states, representing South / East being occupied or not.
+        /// </summary>
+        Diagonal,
 
         /// <summary>
         ///     Where this component contributes to our neighbors being calculated but we do not update our own sprite.
