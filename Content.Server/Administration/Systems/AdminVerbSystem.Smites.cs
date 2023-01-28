@@ -54,7 +54,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.Audio;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Server.Cluwne;
+using Content.Shared.Cluwne;
 
 namespace Content.Server.Administration.Systems;
 

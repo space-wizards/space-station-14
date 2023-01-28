@@ -1,11 +1,10 @@
-using Content.Server.Speech.Components;
 using Robust.Shared.Audio;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Cluwne;
+namespace Content.Shared.Cluwne;
 
 [RegisterComponent]
 public sealed class CluwneComponent : Component
