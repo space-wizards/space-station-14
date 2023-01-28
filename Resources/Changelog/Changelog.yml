@@ -1,91 +1,4 @@
 Entries:
-- author: Morb0
-  changes:
-  - {message: Librarian & Lawyer now spawn with briefcase in hand, type: Tweak}
-  id: 2456
-  time: '2022-10-15T21:22:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Certain machines can now have their power load reduced via machine part
-      upgrading. Experiment and find out., type: Add}
-  - {message: Fixed not being able to deconstruct stasis beds., type: Fix}
-  id: 2457
-  time: '2022-10-15T21:28:12.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Stasis beds can now be upgraded with manipulators., type: Add}
-  id: 2458
-  time: '2022-10-15T21:39:30.0000000+00:00'
-- author: Rane
-  changes:
-  - {message: 'Random names now select based on gender, rather than sex.', type: Fix}
-  - {message: Humanoids will no longer default to an inanimate pronoun when their
-      gender is unknown., type: Fix}
-  - {message: 'Slimes have no physical sex, only gender.', type: Tweak}
-  id: 2459
-  time: '2022-10-15T21:45:47.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: The PDA light and the Hardsuit light have been nerfed, type: Tweak}
-  - {message: The Blue Flashlight and the Seclite have been buffed, type: Tweak}
-  id: 2460
-  time: '2022-10-15T21:58:33.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Dying as a skeleton now makes you a skull again., type: Fix}
-  id: 2461
-  time: '2022-10-15T22:06:01.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed crew monitor directional icons sometimes pointing in the wrong
-      direction., type: Fix}
-  id: 2462
-  time: '2022-10-16T00:07:43.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Added Cluster, a new low-pop station!', type: Add}
-  - {message: Removed Packed, type: Remove}
-  id: 2463
-  time: '2022-10-16T00:28:22.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that was preventing the inventory UI from properly updating
-      in some situations., type: Fix}
-  id: 2464
-  time: '2022-10-16T04:16:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
-      respectively.', type: Tweak}
-  id: 2465
-  time: '2022-10-16T05:26:28.0000000+00:00'
-- author: Stealthbomber16
-  changes:
-  - {message: OOOOK!, type: Add}
-  id: 2466
-  time: '2022-10-16T06:13:15.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
-    type: Add}
-  id: 2467
-  time: '2022-10-16T06:25:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Buckle teleporting should be fixed for now., type: Fix}
-  id: 2468
-  time: '2022-10-16T06:38:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: If you try to swing melee out of range it doesn't waste the swing.,
-    type: Tweak}
-  id: 2469
-  time: '2022-10-16T15:54:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
-  id: 2470
-  time: '2022-10-16T16:42:19.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'NanoTrasen has given some of your television cameras microphones. Now
@@ -2934,3 +2847,93 @@ Entries:
   - {message: Two new turret types added for misc use., type: Add}
   id: 2955
   time: '2023-01-26T04:03:31.0000000+00:00'
+- author: Bhijn and Myr
+  changes:
+  - {message: 'Leather satchels have been added, with sprites from various parts of
+      /TG/Station''s history! Every clothesmate comes with two of them.', type: Add}
+  - {message: 'To make room for the leather satchels, clothesmates now only carry
+      three normal satchels.', type: Tweak}
+  id: 2956
+  time: '2023-01-26T18:14:31.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Detectives get a speedloader for their revolver. It can be found in
+      their cabinet., type: Add}
+  - {message: Revolvers can now be alt-clicked to be emptied., type: Tweak}
+  id: 2957
+  time: '2023-01-26T18:15:20.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing issues when cloning zombies., type: Fix}
+  id: 2958
+  time: '2023-01-26T22:04:58.0000000+00:00'
+- author: jamessimo
+  changes:
+  - {message: Updated Jobs and Departments to be case-correct, type: Tweak}
+  - {message: Character job preferences pages UX improvements, type: Tweak}
+  id: 2959
+  time: '2023-01-26T22:32:15.0000000+00:00'
+- author: jicksaw
+  changes:
+  - {message: Handcuffing in combat mode should feel more responsive, type: Fix}
+  id: 2960
+  time: '2023-01-27T01:04:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix mass scanner on planet maps., type: Fix}
+  id: 2961
+  time: '2023-01-27T01:13:49.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Diagonal walls now partially support smoothing., type: Add}
+  id: 2962
+  time: '2023-01-27T04:03:42.0000000+00:00'
+- author: joelhed
+  changes:
+  - {message: Fixed weird behaviour when clicking on a table using a dumpable storage
+      item., type: Fix}
+  id: 2963
+  time: '2023-01-27T16:25:08.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
+  id: 2964
+  time: '2023-01-27T19:39:23.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Added two new narcolepsy medications., type: Add}
+  - {message: Previous narcolepsy medication has been nerfed in viability. You now
+      need more of the same medicine for it to be as effective., type: Tweak}
+  id: 2965
+  time: '2023-01-27T21:11:06.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed previous examine showing up briefly when rapidly examining multiple
+      things., type: Fix}
+  - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
+  id: 2966
+  time: '2023-01-27T23:15:39.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
+  id: 2967
+  time: '2023-01-28T13:27:28.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
+  - {message: .25 rubber rifle rounds have been swapped for .20 rifle rounds in the
+      security techlathe., type: Tweak}
+  id: 2968
+  time: '2023-01-28T13:59:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: vent clog event now only affects single station vents (no more foam
+      in nukie ship), type: Tweak}
+  id: 2969
+  time: '2023-01-28T14:06:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: apc events now only affect single station APCs (no power shut offs on
+      shuttles), type: Fix}
+  id: 2970
+  time: '2023-01-28T14:07:18.0000000+00:00'
