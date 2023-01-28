@@ -15,6 +15,11 @@
   - type: Body
   #  template: HumanoidTemplate
   #  preset: MothPreset
+  - type: Vocal
+    sounds:
+      Male: FemaleMoth
+      Female: FemaleMoth
+      Unsexed: FemaleMoth
   - type: DiseaseCarrier
     diseaseResist: 0.1
   - type: Flammable

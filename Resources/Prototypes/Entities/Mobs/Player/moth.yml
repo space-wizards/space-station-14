@@ -24,10 +24,6 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Vocal # these are all the same
-    maleScream: "/Audio/Voice/Moth/scream_moth.ogg"
-    femaleScream: "/Audio/Voice/Moth/scream_moth.ogg"
-    wilhelm: "/Audio/Voice/Moth/scream_moth.ogg"
   - type: Alerts
   - type: Actions
   - type: Eye
