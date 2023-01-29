@@ -293,7 +293,7 @@ namespace Content.Shared.CCVar
         /// URL of the Discord webhook which will relay all ahelp messages.
         /// </summary>
         public static readonly CVarDef<string> DiscordAHelpWebhook =
-            CVarDef.Create("discord.ahelp_webhook", string."https://discord.com/api/webhooks/1068828642249019432/yw6GnP3qWoabJKBCdMIugIbUZEwnMoNbELZANV2DXmWnAcbFNuDCWEo_vHUeXsksry4R", CVar.SERVERONLY);
+            CVarDef.Create("discord.ahelp_webhook","https://discord.com/api/webhooks/1068828642249019432/yw6GnP3qWoabJKBCdMIugIbUZEwnMoNbELZANV2DXmWnAcbFNuDCWEo_vHUeXsksry4R", CVar.SERVERONLY);
 
         /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
