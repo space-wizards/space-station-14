@@ -141,3 +141,19 @@
     clothingVisuals:
       neck:
       - state: trans-equipped
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckGodoPin
+  name: godo pin
+  description: be godo do crime
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Misc/pins.rsi
+    layers:
+    - state: godo
+  - type: Clothing
+    sprite: Clothing/Neck/Misc/pins.rsi
+    clothingVisuals:
+      neck:
+      - state: godo-equipped

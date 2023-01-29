@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "PixelTK leaves his mark on upstream",
+  "copyright": "PixelTK leaves his mark on upstream, godo pin by Alekshhh",
   "size": {
     "x": 32,
     "y": 32
@@ -68,6 +68,13 @@
     },
     {
       "name": "trans-equipped",
+      "directions": 4
+    },
+	{
+      "name": "godo"
+    },
+    {
+      "name": "godo-equipped",
       "directions": 4
     }
   ]
