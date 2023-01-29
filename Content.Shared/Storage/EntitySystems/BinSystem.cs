@@ -145,11 +145,8 @@ public sealed class BinSystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return false;
-
-        if (toRemove == null)
-            return false;
-
-        if (component.Items.Last() != toRemove)
+        
+        if (toRemove != component.Items.Last())
             return false;
 
         if (!component.ItemContainer.Remove(toRemove.Value))
