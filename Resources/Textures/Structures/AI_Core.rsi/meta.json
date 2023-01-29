@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprited by 𝘽𝙚𝙡𝙖𝙮#7441",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "disabled"
+    },
+    {
+      "name": "idle",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

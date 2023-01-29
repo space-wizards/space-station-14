@@ -1,4 +1,4 @@
-﻿job-supervisors-centcom = CentCom official
+job-supervisors-centcom = CentCom official
 job-supervisors-captain = the captain
 job-supervisors-hop = the head of personnel
 job-supervisors-hop-qm = the quartermaster and head of personnel
@@ -12,3 +12,5 @@ job-supervisors-medicine = medical doctors, chemists, and the chief medical offi
 job-supervisors-security = security officers, the warden, and the head of security
 job-supervisors-hire = whoever hires you
 job-supervisors-everyone = absolutely everyone
+job-supervisors-ai-laws = AI and current laws
+job-supervisord-laws = current laws

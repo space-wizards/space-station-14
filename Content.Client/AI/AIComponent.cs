@@ -1,6 +1,6 @@
 using Content.Shared.AI;
 
-namespace Content.Server.AI
+namespace Content.Client.AI
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedAIComponent))]

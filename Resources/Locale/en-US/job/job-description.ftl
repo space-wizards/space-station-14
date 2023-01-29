@@ -1,6 +1,8 @@
 job-description-technical-assistant = Learn the basics of managing the station's engine, as well as repairing the station's hull & power.
+job-description-ai = Follow the laws, do not let the station be destroyed.
 job-description-atmostech = Optimize the station's atmospherics setup, and synthesize rare gases to use or sell.
 job-description-bartender = Manage the bar and keep it lively, give out drinks, and listen to the crew's stories.
+job-description-borg = Obey AI directives, do the work of a regular station employee.
 job-description-botanist = Grow food for the chef, drugs for medbay, and other plants to keep yourself entertained.
 job-description-boxer = Fight your way to the top! Challenge the head of personnel and get brigged when you win. Not available on all maps!
 job-description-cadet = Learn the basics of arresting criminals and managing the brig.

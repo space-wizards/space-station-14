@@ -96,6 +96,18 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+
+            var AI = contexts.New("AI", "common");
+            AI.AddFunction(EngineKeyFunctions.MoveUp);
+            AI.AddFunction(EngineKeyFunctions.MoveDown);
+            AI.AddFunction(EngineKeyFunctions.MoveLeft);
+            AI.AddFunction(EngineKeyFunctions.MoveRight);
+            AI.AddFunction(EngineKeyFunctions.Walk);
+
+            AI.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
+            AI.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
+
+            common.AddFunction(ContentKeyFunctions.OpenActionsMenu);
         }
     }
 }

@@ -223,3 +223,135 @@
       Dead:
         Base: onestar_boss_wrecked
   - type: CombatMode
+
+- type: entity
+  id: AIEntity
+  name: AI
+  components:
+    - type: AI
+    - type: Mind
+    - type: Clickable
+    - type: Sprite
+      drawdepth: SmallMobs
+      netsync: false
+      layers:
+        - state: shell
+          sprite: Mobs/Silicon/drone.rsi
+    - type: Input
+      context: "AI"
+    - type: Physics
+      ignorePaused: true
+      bodyType: KinematicController
+      fixedRotation: true
+    - type: Access
+      groups:
+        - AllAccess
+    - type: Fixtures
+      fixtures:
+        - shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 15
+          mask:
+            - GhostImpassable
+    - type: InputMover
+    - type: Appearance
+    - type: Eye
+    - type: MovementSpeedModifier
+      baseSprintSpeed: 8
+      baseWalkSpeed: 6
+    - type: MovementIgnoreGravity
+    - type: IntrinsicRadioReceiver
+    - type: ActiveRadio
+      channels:
+        - Common
+        - Command
+        - Engineering
+        - Medical
+        - Science
+        - Security
+        - Service
+        - Supply
+    - type: DoAfter
+    - type: Examiner
+    - type: Body
+      prototype: Aghost
+    - type: UserInterface
+      interfaces:
+        - key: enum.SolarControlConsoleUiKey.Key
+          type: SolarControlConsoleBoundUserInterface
+        - key: enum.CommunicationsConsoleUiKey.Key
+          type: CommunicationsConsoleBoundUserInterface
+        - key: enum.RadarConsoleUiKey.Key
+          type: RadarConsoleBoundUserInterface
+        - key: enum.CargoConsoleUiKey.Orders
+          type: CargoOrderConsoleBoundUserInterface
+        - key: enum.CrewMonitoringUIKey.Key
+          type: CrewMonitoringBoundUserInterface
+    - type: IntrinsicUI
+      uis:
+        - key: enum.SolarControlConsoleUiKey.Key
+          toggleAction:
+            name: action-name-show-solar-console
+            description: action-description-show-solar-console
+            icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+            iconOn: Structures/Machines/parts.rsi/box_2.png
+            keywords: [ "AI", "console", "interface" ]
+            priority: -10
+            event: !type:ToggleIntrinsicUIEvent
+        - key: enum.CommunicationsConsoleUiKey.Key
+          toggleAction:
+            name: action-name-show-communications-console
+            description: action-description-show-communications-console
+            icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+            iconOn: Structures/Machines/parts.rsi/box_2.png
+            keywords: [ "AI", "console", "interface" ]
+            priority: -10
+            event: !type:ToggleIntrinsicUIEvent
+        - key: enum.RadarConsoleUiKey.Key
+          toggleAction:
+            name: action-name-show-radar-console
+            description: action-description-show-radar-console
+            icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+            iconOn: Structures/Machines/parts.rsi/box_2.png
+            keywords: [ "AI", "console", "interface" ]
+            priority: -10
+            event: !type:ToggleIntrinsicUIEvent
+        - key: enum.CargoConsoleUiKey.Orders
+          toggleAction:
+            name: action-name-show-cargo-console
+            description: action-description-show-cargo-console
+            icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+            iconOn: Structures/Machines/parts.rsi/box_2.png
+            keywords: [ "AI", "console", "interface" ]
+            priority: -10
+            event: !type:ToggleIntrinsicUIEvent
+        - key: enum.CrewMonitoringUIKey.Key
+          toggleAction:
+            name: action-name-show-crew-monitoring-console
+            description: action-description-crew-monitoring-console
+            icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+            iconOn: Structures/Machines/parts.rsi/box_2.png
+            keywords: [ "AI", "console", "interface" ]
+            priority: -10
+            event: !type:ToggleIntrinsicUIEvent
+    - type: SolarControlConsole
+    - type: CommunicationsConsole
+      title: communicationsconsole-announcement-title-AI
+      color: "#228b22"
+    - type: RadarConsole
+    - type: CargoOrderConsole
+    - type: CrewMonitoringConsole
+      snap: false
+      precision: 3
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: SuitSensor
+    - type: WirelessNetworkConnection
+      range: 500
+    - type: Tag
+      tags:
+        - ShoesRequiredStepTriggerImmune
+        - CannotSuicide
+        - CanPilot
+
