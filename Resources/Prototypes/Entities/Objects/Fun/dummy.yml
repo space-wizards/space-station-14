@@ -1,0 +1,35 @@
+- type: entity
+  name: mr chips
+  description: Its a dummy, dummy!
+  parent: BaseItem
+  id: DummyMrChips
+  components:
+  - type: RadioMicrophone
+  - type: RadioSpeaker
+  - type: Speech
+  - type: Sprite
+    sprite: Objects/Fun/Dummies/mrchips.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Dummies/mrchips.rsi
+  - type: Tag
+    tags:
+    - DummyRadio
+
+- type: entity
+  name: mr dips
+  description: Its a dummy, dummy!
+  parent: BaseItem
+  id: DummyMrDips
+  components:
+  - type: RadioMicrophone
+  - type: RadioSpeaker
+  - type: Speech
+  - type: Sprite
+    sprite: Objects/Fun/Dummies/mrdips.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Fun/Dummies/mrdips.rsi
+  - type: Tag
+    tags:
+    - Radio

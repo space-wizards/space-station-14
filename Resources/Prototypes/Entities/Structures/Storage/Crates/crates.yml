@@ -117,6 +117,28 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/surgery.rsi
 
+- type: entity
+  parent: CrateBaseWeldable
+  id: CoffinBlack
+  name: black coffin
+  description: A black coffin for mr chips.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/dummy_coffin_black.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/dummy_coffin_black.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CoffinWhite
+  name: white coffin
+  description: A white coffin for mr dips.
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/dummy_coffin_white.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/dummy_coffin_white.rsi
+
 # Secure Crates
 
 - type: entity
