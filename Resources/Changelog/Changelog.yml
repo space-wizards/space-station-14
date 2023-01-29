@@ -1,9 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
-  id: 2473
-  time: '2022-10-16T18:20:22.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Added spare passenger headsets for the HoP in their locker and vendor,
@@ -2936,3 +2931,10 @@ Entries:
   - {message: Cleaned up some of the syndicate names., type: Fix}
   id: 2972
   time: '2023-01-28T19:09:23.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Added encryption keys for headsets. These chips provide access to radio
+      channels. You can eject them with a screwdriver and then install in other headsets.,
+    type: Add}
+  id: 2973
+  time: '2023-01-29T00:53:08.0000000+00:00'
