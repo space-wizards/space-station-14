@@ -1368,7 +1368,7 @@
   heatCapacity: 10000
 
 - type: tile
-  id: FloorFleshFloor
+  id: FloorFlesh
   name: tiles-flesh-floor
   sprite: /Textures/Tiles/meat.png
   variants: 4
@@ -1376,7 +1376,7 @@
   baseTurfs:
   - Plating
   isSubfloor: false
-  canCrowbar: false
+  canCrowbar: true
   footstepSounds:
     collection: BarestepCarpet
   friction: 0.20 #slippy

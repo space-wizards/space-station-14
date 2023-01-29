@@ -1,6 +1,5 @@
 ﻿using System.Linq;
-using Content.Server.Coordinates.Helpers;
-using Content.Server.Decals;
+using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Maps;
@@ -16,9 +15,9 @@ public sealed class FleshAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ITileDefinitionManager _tile = default!;
-    [Dependency] private readonly DecalSystem _decal = default!;
+    [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -41,7 +40,7 @@ public sealed class FleshAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         SpawnMonstersOnOpenTiles(component, xform, component.MaxSpawnAmount, component.SpawnRange);
-        EntityManager.SpawnEntity(component.SupercriticalSpawn, xform.Coordinates);
+        Spawn(component.SupercriticalSpawn, xform.Coordinates);
     }
 
     private void OnSeverityChanged(EntityUid uid, FleshAnomalyComponent component, ref AnomalyStabilityChangedEvent args)
@@ -51,31 +50,24 @@ public sealed class FleshAnomalySystem : EntitySystem
             return;
 
         var range = component.SpawnRange * args.Stability;
-        var fleshTile = _tile[component.FleshTileId].TileId;
+        var fleshTile = (ContentTileDefinition) _tiledef[component.FleshTileId];
         var worldPos = _xform.GetWorldPosition(xform);
-        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range)).ToArray();
+        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range));
         foreach (var tileref in tilerefs)
         {
             if (!_random.Prob(0.33f))
                 continue;
-            var variant = _random.Pick(((ContentTileDefinition) _tile[fleshTile]).PlacementVariants);
-            grid.SetTile(tileref.GridIndices, new Tile(fleshTile, 0, variant));
-
-            var decals = _decal.GetDecalsInRange(tileref.GridUid, tileref.GridPosition().SnapToGrid(EntityManager, _map).Position, 0.5f);
-            foreach (var (id, _) in decals)
-            {
-                _decal.RemoveDecal(tileref.GridUid, id);
-            }
+            _tile.ReplaceTile(tileref, fleshTile);
         }
     }
 
-    private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int toSpawn, float range)
+    private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int amount, float range)
     {
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
             return;
 
         var worldPos = _xform.GetWorldPosition(xform);
-        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range)).ToArray();
+        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range));
         var validSpawnLocations = new List<Vector2i>();
         var physQuery = GetEntityQuery<PhysicsComponent>();
         foreach (var tileref in tilerefs)
@@ -100,10 +92,10 @@ public sealed class FleshAnomalySystem : EntitySystem
         if (!validSpawnLocations.Any())
             return;
 
-        for (var i = 0; i < toSpawn; i++)
+        for (var i = 0; i < amount; i++)
         {
             var pos = _random.Pick(validSpawnLocations);
-            EntityManager.SpawnEntity(_random.Pick(component.Spawns), pos.ToEntityCoordinates(xform.GridUid.Value, _map));
+            Spawn(_random.Pick(component.Spawns), pos.ToEntityCoordinates(xform.GridUid.Value, _map));
         }
     }
 }

@@ -1,12 +1,10 @@
 ﻿- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
-  name: flesh construct
-  description: Looks messy.
+  name: aberrant flesh
+  description: A shambling mass of flesh, animated through anomalous energy.
   abstract: true
   components:
-  - type: InputMover
-  - type: MobMover
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction

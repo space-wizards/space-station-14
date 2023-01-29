@@ -32,7 +32,7 @@ public sealed class FleshAnomalyComponent : Component
     /// The tile that is spawned by the anomaly's effect
     /// </summary>
     [DataField("fleshTileId")]
-    public string FleshTileId = "FloorFleshFloor";
+    public string FleshTileId = "FloorFlesh";
 
     /// <summary>
     /// The entity spawned when the anomaly goes supercritical

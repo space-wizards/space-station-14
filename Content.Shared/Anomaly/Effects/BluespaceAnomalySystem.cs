@@ -3,6 +3,7 @@ using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
+using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 namespace Content.Shared.Anomaly.Effects;
@@ -10,6 +11,7 @@ namespace Content.Shared.Anomaly.Effects;
 public sealed class BluespaceAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedTransformSystem _xform = default!;
 
@@ -27,32 +29,23 @@ public sealed class BluespaceAnomalySystem : EntitySystem
         var range = component.MaxShuffleRadius * args.Severity;
         var allEnts = _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, range)
             .Select(x => x.Owner).ToList();
-        if (allEnts.Count % 2 == 0) //ensure even number
-            allEnts.RemoveAt(0);
         allEnts.Add(uid);
 
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var transforms = new List<TransformComponent>();
+        var coords = new List<EntityCoordinates>();
         foreach (var ent in allEnts)
         {
             if (xformQuery.TryGetComponent(ent, out var xf))
-                transforms.Add(xf);
+                coords.Add(xf.Coordinates);
         }
 
-        var variation = component.MaxShuffleVariation * args.Severity;
-
-        // make sure we didn't pick up a transformless mob somehow
-        while (transforms.Any())
+        while (allEnts.Any())
         {
-            var t1 = _random.PickAndTake(transforms);
-            var t2 = _random.PickAndTake(transforms);
-            var c1 = t1.Coordinates.Offset(
-                new Vector2(_random.NextFloat(-variation, variation), _random.NextFloat(-variation, variation)));
-            var c2 = t2.Coordinates.Offset(
-                new Vector2(_random.NextFloat(-variation, variation), _random.NextFloat(-variation, variation)));
+            var ent = _random.PickAndTake(allEnts);
+            var coord = _random.PickAndTake(coords);
 
-            _xform.SetCoordinates(t1, c2);
-            _xform.SetCoordinates(t2, c1);
+            _xform.SetCoordinates(ent, coord);
+            _audio.PlayPvs(component.TeleportSound, ent);
         }
     }
 
@@ -66,15 +59,15 @@ public sealed class BluespaceAnomalySystem : EntitySystem
             return;
         var gridBounds = gridComp.LocalAABB;
 
-        var xformQuery = GetEntityQuery<TransformComponent>();
         foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, component.MaxShuffleRadius))
         {
             var ent = comp.Owner;
             var randomX = _random.NextFloat(gridBounds.Left, gridBounds.Right);
             var randomY = _random.NextFloat(gridBounds.Bottom, gridBounds.Top);
 
-            var pos = new Vector2(randomX, randomY);
-            _xform.SetWorldPosition(ent, pos);
+            var pos = new EntityCoordinates(grid, new Vector2(randomX, randomY));
+            _xform.SetCoordinates(ent, pos);
+            _audio.PlayPvs(component.TeleportSound, ent);
         }
     }
 
