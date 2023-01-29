@@ -4,7 +4,6 @@ using Content.Shared.Emoting;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Speech;
@@ -78,9 +77,6 @@ namespace Content.Shared.ActionBlocker
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);
             RaiseLocalEvent(target.Value, targetEv);
 
-            if (!targetEv.Cancelled)
-                InteractWithItem(user, target.Value);
-
             return !targetEv.Cancelled;
         }
 
@@ -136,11 +132,7 @@ namespace Content.Shared.ActionBlocker
             var itemEv = new GettingPickedUpAttemptEvent(user, item);
             RaiseLocalEvent(item, itemEv);
 
-            if (!itemEv.Cancelled)
-                InteractWithItem(user, item);
-
             return !itemEv.Cancelled;
-
         }
 
         public bool CanEmote(EntityUid uid)
@@ -154,13 +146,28 @@ namespace Content.Shared.ActionBlocker
 
         public bool CanAttack(EntityUid uid, EntityUid? target = null)
         {
-            if (_container.IsEntityInContainer(uid))
-                return false;
+            _container.TryGetOuterContainer(uid, Transform(uid), out var outerContainer);
+            if (target != null &&  target != outerContainer?.Owner && _container.IsEntityInContainer(uid))
+            {
+                var containerEv = new CanAttackFromContainerEvent(uid, target);
+                RaiseLocalEvent(uid, containerEv);
+                return containerEv.CanAttack;
+            }
 
             var ev = new AttackAttemptEvent(uid, target);
             RaiseLocalEvent(uid, ev);
 
-            return !ev.Cancelled;
+            if (ev.Cancelled)
+                return false;
+
+            if (target != null)
+            {
+                var tev = new GettingAttackedAttemptEvent();
+                RaiseLocalEvent(target.Value, ref tev);
+                return !tev.Cancelled;
+            }
+
+            return true;
         }
 
         public bool CanChangeDirection(EntityUid uid)
@@ -185,14 +192,6 @@ namespace Content.Shared.ActionBlocker
             RaiseLocalEvent(uid, ev);
 
             return !ev.Cancelled;
-        }
-
-        private void InteractWithItem(EntityUid user, EntityUid item)
-        {
-            var userEvent = new UserInteractedWithItemEvent(user, item);
-            RaiseLocalEvent(user, userEvent);
-            var itemEvent = new ItemInteractedWithEvent(user, item);
-            RaiseLocalEvent(item, itemEvent);
         }
     }
 }

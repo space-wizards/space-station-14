@@ -1,3 +1,4 @@
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -8,8 +9,13 @@ namespace Content.Server.Kitchen.Components
     [RegisterComponent]
     public sealed class MicrowaveComponent : Component
     {
-        [DataField("cookTimeMultiplier")]
-        public int CookTimeMultiplier = 1; //For upgrades and stuff I guess? don't ask me.
+        [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
+        public float CookTimeMultiplier = 1;
+        [DataField("machinePartCookTimeMultiplier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartCookTimeMultiplier = "Laser";
+        [DataField("cookTimeScalingConstant")]
+        public float CookTimeScalingConstant = 0.5f;
+
         [DataField("failureResult", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string BadRecipeEntityId = "FoodBadRecipe";
 

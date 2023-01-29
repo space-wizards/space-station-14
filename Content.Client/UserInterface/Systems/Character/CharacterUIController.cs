@@ -155,7 +155,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
     private void CloseWindow()
     {
-        _window!.Close();
+        _window?.Close();
     }
 
     private void ToggleWindow()

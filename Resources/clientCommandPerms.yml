@@ -27,6 +27,9 @@
     - gc_mode
     - resetent
     - resetallents
+    - cvar
+    - fuckrules
+    - midipanic
 
 - Flags: DEBUG
   Commands:

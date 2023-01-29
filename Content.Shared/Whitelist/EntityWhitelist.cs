@@ -1,4 +1,4 @@
-﻿using Content.Shared.Tag;
+using Content.Shared.Tag;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -26,6 +26,7 @@ namespace Content.Shared.Whitelist
         ///     Component names that are allowed in the whitelist.
         /// </summary>
         [DataField("components")] public string[]? Components = null;
+        // TODO yaml validation
 
         [NonSerialized]
         private List<ComponentRegistration>? _registrations = null;

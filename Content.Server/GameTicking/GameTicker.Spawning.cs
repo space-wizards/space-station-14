@@ -65,9 +65,17 @@ namespace Content.Server.GameTicking
 
             // Calculate extended access for stations.
             var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
-            foreach (var (_, (_, station)) in assignedJobs)
+            foreach (var (netUser, (job, station)) in assignedJobs)
             {
-                stationJobCounts[station] += 1;
+                if (job == null)
+                {
+                    var playerSession = _playerManager.GetSessionByUserId(netUser);
+                    _chatManager.DispatchServerMessage(playerSession, Loc.GetString("job-not-available-wait-in-lobby"));
+                }
+                else
+                {
+                    stationJobCounts[station] += 1;
+                }
             }
 
             _stationJobs.CalcExtendedAccess(stationJobCounts);
@@ -75,6 +83,9 @@ namespace Content.Server.GameTicking
             // Spawn everybody in!
             foreach (var (player, (job, station)) in assignedJobs)
             {
+                if (job == null)
+                    continue;
+
                 SpawnPlayer(_playerManager.GetSessionByUserId(player), profiles[player], station, job, false);
             }
 
@@ -172,22 +183,23 @@ namespace Content.Server.GameTicking
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
-            if (lateJoin)
-            {
-                _chatSystem.DispatchStationAnnouncement(station,
-                    Loc.GetString(
-                        "latejoin-arrival-announcement",
-                    ("character", character.Name),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
-                    ), Loc.GetString("latejoin-arrival-sender"),
-                    playDefaultSound: false);
-            }
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
             newMind.TransferTo(mob);
+
+            if (lateJoin)
+            {
+                _chatSystem.DispatchStationAnnouncement(station,
+                    Loc.GetString(
+                        "latejoin-arrival-announcement",
+                    ("character", MetaData(mob).EntityName),
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ), Loc.GetString("latejoin-arrival-sender"),
+                    playDefaultSound: false);
+            }
 
             if (player.UserId == new Guid("{e887eb93-f503-4b65-95b6-2f282c014192}"))
             {
@@ -300,13 +312,13 @@ namespace Content.Server.GameTicking
             {
                 foreach (var grid in _mapManager.GetAllGrids())
                 {
-                    if (!metaQuery.TryGetComponent(grid.GridEntityId, out var meta) ||
+                    if (!metaQuery.TryGetComponent(grid.Owner, out var meta) ||
                         meta.EntityPaused)
                     {
                         continue;
                     }
 
-                    _possiblePositions.Add(new EntityCoordinates(grid.GridEntityId, Vector2.Zero));
+                    _possiblePositions.Add(new EntityCoordinates(grid.Owner, Vector2.Zero));
                 }
             }
 
@@ -320,8 +332,10 @@ namespace Content.Server.GameTicking
 
                 if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
                 {
-                    return new EntityCoordinates(foundGrid.GridEntityId,
-                        foundGrid.InvWorldMatrix.Transform(toMap.Position));
+                    var gridXform = Transform(foundGrid.Owner);
+
+                    return new EntityCoordinates(foundGrid.Owner,
+                        gridXform.InvWorldMatrix.Transform(toMap.Position));
                 }
 
                 return spawn;
@@ -347,7 +361,8 @@ namespace Content.Server.GameTicking
             }
 
             // AAAAAAAAAAAAA
-            _sawmill.Error("Found no observer spawn points!");
+            // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+            _sawmill.Warning("Found no observer spawn points!");
             return EntityCoordinates.Invalid;
         }
         #endregion

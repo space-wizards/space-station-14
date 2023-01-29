@@ -3,21 +3,24 @@ using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Storage.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
+using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -34,6 +37,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -46,6 +50,7 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
+            SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
             SubscribeLocalEvent<GhostOnMoveComponent, MoveInputEvent>(OnRelayMoveInput);
 
@@ -58,6 +63,7 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
         }
+
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
         {
             if (args.Handled)
@@ -112,8 +118,12 @@ namespace Content.Server.Ghost
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
 
-            component.TimeOfDeath = _gameTiming.RealTime;
+            var time = _gameTiming.CurTime;
+            component.TimeOfDeath = time;
 
+            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
+            if (component.Action.UseDelay != null)
+                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
             _actions.AddAction(uid, component.Action, null);
         }
 
@@ -158,6 +168,11 @@ namespace Content.Server.Ghost
         private void OnMindUnvisitedMessage(EntityUid uid, GhostComponent component, MindUnvisitedMessage args)
         {
             DeleteEntity(uid);
+        }
+
+        private void OnPlayerDetached(EntityUid uid, GhostComponent component, PlayerDetachedEvent args)
+        {
+            QueueDel(uid);
         }
 
         private void OnGhostWarpsRequest(GhostWarpsRequestEvent msg, EntitySessionEventArgs args)
@@ -213,7 +228,7 @@ namespace Content.Server.Ghost
             xform.Coordinates = Transform(msg.Target).Coordinates;
             xform.AttachToGridOrMap();
             if (TryComp(attached, out PhysicsComponent? physics))
-                physics.LinearVelocity = Vector2.Zero;
+                _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
 
         private void DeleteEntity(EntityUid uid)
@@ -287,6 +302,29 @@ namespace Content.Server.Ghost
             RaiseLocalEvent(target, ghostBoo, true);
 
             return ghostBoo.Handled;
+        }
+    }
+
+    [AnyCommand]
+    public sealed class ToggleGhostVisibility : IConsoleCommand
+    {
+        public string Command => "toggleghosts";
+        public string Description => "Toggles ghost visibility";
+        public string Help => $"{Command}";
+        public void Execute(IConsoleShell shell, string argStr, string[] args)
+        {
+            if (shell.Player == null)
+                shell.WriteLine("You can only toggle ghost visibility on a client.");
+
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            var uid = shell.Player?.AttachedEntity;
+            if (uid == null
+                || !entityManager.HasComponent<GhostComponent>(uid)
+                || !entityManager.TryGetComponent<EyeComponent>(uid, out var eyeComponent))
+                return;
+
+            eyeComponent.VisibilityMask ^= (uint) VisibilityFlags.Ghost;
         }
     }
 }

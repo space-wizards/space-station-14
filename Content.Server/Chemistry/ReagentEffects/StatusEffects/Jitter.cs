@@ -27,8 +27,11 @@ namespace Content.Server.Chemistry.ReagentEffects.StatusEffects
 
         public override void Effect(ReagentEffectArgs args)
         {
+            var time = Time;
+            time *= args.Scale;
+
             args.EntityManager.EntitySysManager.GetEntitySystem<SharedJitteringSystem>()
-                .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(Time), Refresh, Amplitude, Frequency);
+                .DoJitter(args.SolutionEntity, TimeSpan.FromSeconds(time), Refresh, Amplitude, Frequency);
         }
     }
 }

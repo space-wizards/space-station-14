@@ -82,7 +82,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             volumeLabel.HorizontalExpand = true;
             volumeLabel.Margin = new Thickness(0, 4);
             volumeLabel.Text = Loc.GetString("admin-solutions-window-volume-label",
-                ("currentVolume", solution.CurrentVolume),
+                ("currentVolume", solution.Volume),
                 ("maxVolume", solution.MaxVolume));
 
             var capacityBox = new BoxContainer();
@@ -116,16 +116,16 @@ namespace Content.Client.Administration.UI.ManageSolutions
         private void UpdateThermalBox(Solution solution)
         {
             ThermalBox.DisposeAllChildren();
-
+            var heatCap = solution.GetHeatCapacity(null);
             var specificHeatLabel = new Label();
             specificHeatLabel.HorizontalExpand = true;
             specificHeatLabel.Margin = new Thickness(0, 1);
-            specificHeatLabel.Text = Loc.GetString("admin-solutions-window-specific-heat-label", ("specificHeat", solution.SpecificHeat.ToString("G3")));
+            specificHeatLabel.Text = Loc.GetString("admin-solutions-window-specific-heat-label", ("specificHeat", heatCap.ToString("G3")));
 
             var heatCapacityLabel = new Label();
             heatCapacityLabel.HorizontalExpand = true;
             heatCapacityLabel.Margin = new Thickness(0, 1);
-            heatCapacityLabel.Text = Loc.GetString("admin-solutions-window-heat-capacity-label", ("heatCapacity", solution.HeatCapacity.ToString("G3")));
+            heatCapacityLabel.Text = Loc.GetString("admin-solutions-window-heat-capacity-label", ("heatCapacity", (heatCap/solution.Volume.Float()).ToString("G3")));
 
             // Temperature entry:
             var temperatureBox = new BoxContainer();
@@ -161,7 +161,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             var thermalEnergySpin = new FloatSpinBox(1, 2);
             thermalEnergySpin.HorizontalExpand = true;
             thermalEnergySpin.Margin = new Thickness(0, 1);
-            thermalEnergySpin.Value = solution.ThermalEnergy;
+            thermalEnergySpin.Value = solution.Temperature * heatCap;
             thermalEnergySpin.OnValueChanged += SetThermalEnergy;
 
             thermalEnergyBox.AddChild(thermalEnergyLabel);

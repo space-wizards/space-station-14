@@ -10,9 +10,7 @@ using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
 using Content.Server.Stack;
-using Content.Shared.Prototypes;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Store.Systems;
 
@@ -133,7 +131,9 @@ public sealed partial class StoreSystem : EntitySystem
         }
         //subtract the cash
         foreach (var currency in listing.Cost)
+        {
             component.Balance[currency.Key] -= currency.Value;
+        }
 
         //spawn entity
         if (listing.ProductEntity != null)
@@ -159,11 +159,11 @@ public sealed partial class StoreSystem : EntitySystem
         if (TryComp<MindComponent>(buyer, out var mind))
         {
             _admin.Add(LogType.StorePurchase, LogImpact.Low,
-                $"{ToPrettyString(mind.Owner):player} purchased listing \"{listing.Name}\" from {ToPrettyString(uid)}");
+                $"{ToPrettyString(mind.Owner):player} purchased listing \"{Loc.GetString(listing.Name)}\" from {ToPrettyString(uid)}");
         }
 
         listing.PurchaseAmount++; //track how many times something has been purchased
-        _audio.Play(component.BuySuccessSound, Filter.SinglePlayer(msg.Session), uid); //cha-ching!
+        _audio.PlayEntity(component.BuySuccessSound, msg.Session, uid); //cha-ching!
 
         UpdateUserInterface(buyer, component);
     }
@@ -191,7 +191,7 @@ public sealed partial class StoreSystem : EntitySystem
 
         if (msg.Session.AttachedEntity is not { Valid: true} buyer)
             return;
-        
+
         FixedPoint2 amountRemaining = msg.Amount;
         var coordinates = Transform(buyer).Coordinates;
 
@@ -199,35 +199,9 @@ public sealed partial class StoreSystem : EntitySystem
         foreach (var value in sortedCashValues)
         {
             var cashId = proto.Cash[value];
-
-            if (!_proto.TryIndex<EntityPrototype>(cashId, out var cashProto))
-                continue;
-
-            //how many times this subdivision fits in the amount remaining
-            var amountToSpawn = (int) Math.Floor((double) (amountRemaining / value));
-            if (cashProto.HasComponent<StackComponent>())
-            {
-                var amountToRemove = amountToSpawn; //we don't want to modify amountToSpawn, as we use it for calculations
-                while (amountToRemove > 0)
-                {
-                    var ent = Spawn(cashId, coordinates);
-                    if (!TryComp<StackComponent>(ent, out var stack))
-                        return; //you really fucked up if you got here
-
-                    var maxAmount = Math.Min(amountToRemove, stack.MaxCount); //limit it based on max stack amount
-                    _stack.SetCount(ent, maxAmount, stack);
-                    _hands.PickupOrDrop(buyer, ent);
-                    amountToRemove -= maxAmount;
-                }
-            }
-            else //please for the love of christ give your currency stack component
-            {
-                for (var i = 0; i < amountToSpawn; i++)
-                {
-                    var ent = Spawn(cashId, coordinates);
-                    _hands.PickupOrDrop(buyer, ent);
-                }
-            }
+            var amountToSpawn = (int) MathF.Floor((float) (amountRemaining / value));
+            var ents = _stack.SpawnMultiple(cashId, amountToSpawn, coordinates);
+            _hands.PickupOrDrop(buyer, ents.First());
             amountRemaining -= value * amountToSpawn;
         }
 

@@ -1,6 +1,7 @@
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Content.Server.Doors.Components;
+using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
 
 namespace Content.Server.Construction.Conditions
@@ -30,7 +31,7 @@ namespace Content.Server.Construction.Conditions
 
             if (airlock.BoltsDown != Value)
             {
-                if (Value == true)
+                if (Value)
                     args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");
                 else
                     args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entMan.GetComponent<MetaDataComponent>(entity).EntityName)) + "\n");

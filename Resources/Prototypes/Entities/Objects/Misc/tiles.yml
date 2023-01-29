@@ -713,3 +713,52 @@
       - FloorSnow
   - type: Stack
     stackType: FloorTileSnow
+
+- type: entity
+  name: wood pattern floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodPattern
+  components:
+  - type: Sprite
+    state: woodpatternfloor
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorWoodTile
+  - type: Stack
+    stackType: FloorTileWoodPattern
+
+- type: entity
+  name: steel maint floor
+  parent: FloorTileItemBase
+  id: FloorTileItemSteelMaint
+  components:
+  - type: Sprite
+    state: steelmaintfloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTechMaint2
+  - type: Stack
+    stackType: FloorTileSteelMaint
+
+- type: entity
+  name: grating maint floor
+  parent: FloorTileItemBase
+  id: FloorTileItemGratingMaint
+  components:
+  - type: Sprite
+    state: gratingmaintfloor
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorTechMaint3
+  - type: Stack
+    stackType: FloorTileGratingMaint
+

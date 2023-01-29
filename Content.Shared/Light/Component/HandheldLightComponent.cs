@@ -48,14 +48,12 @@ namespace Content.Shared.Light
         /// <summary>
         /// Specify the ID of the light behaviour to use when the state of the light is Dying
         /// </summary>
-        [ViewVariables]
         [DataField("blinkingBehaviourId")]
         public string BlinkingBehaviourId { get; set; } = string.Empty;
 
         /// <summary>
         /// Specify the ID of the light behaviour to use when the state of the light is LowPower
         /// </summary>
-        [ViewVariables]
         [DataField("radiatingBehaviourId")]
         public string RadiatingBehaviourId { get; set; } = string.Empty;
 

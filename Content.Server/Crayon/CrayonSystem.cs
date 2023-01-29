@@ -51,7 +51,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
             if (component.DeleteEmpty)
                 UseUpCrayon(uid, args.User);
             else
-                _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, Filter.Entities(args.User));
+                _popup.PopupEntity(Loc.GetString("crayon-interact-not-enough-left-text"), uid, args.User);
 
             args.Handled = true;
             return;
@@ -59,7 +59,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
         if (!args.ClickLocation.IsValid(EntityManager))
         {
-            _popup.PopupEntity(Loc.GetString("crayon-interact-invalid-location"), uid, Filter.Entities(args.User));
+            _popup.PopupEntity(Loc.GetString("crayon-interact-invalid-location"), uid, args.User);
             args.Handled = true;
             return;
         }
@@ -139,7 +139,7 @@ public sealed class CrayonSystem : SharedCrayonSystem
 
     private void UseUpCrayon(EntityUid uid, EntityUid user)
     {
-        _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, Filter.Entities(user));
+        _popup.PopupEntity(Loc.GetString("crayon-interact-used-up-text", ("owner", uid)), user, user);
         EntityManager.QueueDeleteEntity(uid);
     }
 }

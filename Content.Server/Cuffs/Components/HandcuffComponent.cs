@@ -1,15 +1,14 @@
-using System.Threading.Tasks;
 using Content.Server.Administration.Components;
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -20,104 +19,53 @@ namespace Content.Server.Cuffs.Components
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
-        private string _brokenName = string.Empty;
-        private string _brokenDesc = string.Empty;
-
         /// <summary>
         ///     The time it takes to apply a <see cref="CuffedComponent"/> to an entity.
         /// </summary>
-        [ViewVariables]
         [DataField("cuffTime")]
         public float CuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes to remove a <see cref="CuffedComponent"/> from an entity.
         /// </summary>
-        [ViewVariables]
         [DataField("uncuffTime")]
         public float UncuffTime { get; set; } = 3.5f;
 
         /// <summary>
         ///     The time it takes for a cuffed entity to remove <see cref="CuffedComponent"/> from itself.
         /// </summary>
-        [ViewVariables]
         [DataField("breakoutTime")]
         public float BreakoutTime { get; set; } = 30f;
 
         /// <summary>
         ///     If an entity being cuffed is stunned, this amount of time is subtracted from the time it takes to add/remove their cuffs.
         /// </summary>
-        [ViewVariables]
         [DataField("stunBonus")]
         public float StunBonus { get; set; } = 2f;
 
         /// <summary>
         ///     Will the cuffs break when removed?
         /// </summary>
-        [ViewVariables]
         [DataField("breakOnRemove")]
         public bool BreakOnRemove { get; set; }
 
         /// <summary>
+        ///     Will the cuffs break when removed?
+        /// </summary>
+        [DataField("brokenPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? BrokenPrototype { get; set; }
+
+        /// <summary>
         ///     The path of the RSI file used for the player cuffed overlay.
         /// </summary>
-        [ViewVariables]
         [DataField("cuffedRSI")]
         public string? CuffedRSI { get; set; } = "Objects/Misc/handcuffs.rsi";
 
         /// <summary>
         ///     The iconstate used with the RSI file for the player cuffed overlay.
         /// </summary>
-        [ViewVariables]
         [DataField("bodyIconState")]
         public string? OverlayIconState { get; set; } = "body-overlay";
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [ViewVariables]
-        [DataField("brokenIconState")]
-        public string? BrokenState { get; set; }
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [ViewVariables]
-        [DataField("brokenName", readOnly: true)]
-        public string BrokenName
-        {
-            get => _brokenName;
-            private set => _brokenName = Loc.GetString(value);
-        }
-
-        /// <summary>
-        ///     The iconstate used for broken handcuffs
-        /// </summary>
-        [ViewVariables]
-        [DataField("brokenDesc", readOnly: true)]
-        public string BrokenDesc
-        {
-            get => _brokenDesc;
-            private set => _brokenDesc = Loc.GetString(value);
-        }
-
-        [ViewVariables]
-        public bool Broken
-        {
-            get
-            {
-                return _isBroken;
-            }
-            set
-            {
-                if (_isBroken != value)
-                {
-                    _isBroken = value;
-
-                    Dirty();
-                }
-            }
-        }
 
         [DataField("startCuffSound")]
         public SoundSpecifier StartCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
@@ -136,18 +84,10 @@ namespace Content.Server.Cuffs.Components
         [DataField("color")]
         public Color Color { get; set; } = Color.White;
 
-        // Non-exposed data fields
-        private bool _isBroken = false;
-
         /// <summary>
         ///     Used to prevent DoAfter getting spammed.
         /// </summary>
         public bool Cuffing;
-
-        public override ComponentState GetComponentState()
-        {
-            return new HandcuffedComponentState(Broken ? BrokenState : string.Empty);
-        }
 
         /// <summary>
         /// Update the cuffed state of an entity

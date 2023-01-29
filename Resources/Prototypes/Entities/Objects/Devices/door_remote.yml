@@ -45,6 +45,22 @@
 
 - type: entity
   parent: DoorRemoteDefault
+  id: DoorRemoteArmory
+  name: armory door remote
+  components:
+  - type: Sprite
+    layers:
+    - state: door_remotebase
+    - state: door_remotelightscolour
+      color: "#e80000"
+    - state: door_remotescreencolour
+      color: "#a80000"
+  - type: Access
+    groups:
+    - Armory
+
+- type: entity
+  parent: DoorRemoteDefault
   id: DoorRemoteService
   name: service door remote
   components:

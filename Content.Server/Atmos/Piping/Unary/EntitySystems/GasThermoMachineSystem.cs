@@ -26,6 +26,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceUpdateEvent>(OnThermoMachineUpdated);
             SubscribeLocalEvent<GasThermoMachineComponent, AtmosDeviceDisabledEvent>(OnThermoMachineLeaveAtmosphere);
             SubscribeLocalEvent<GasThermoMachineComponent, RefreshPartsEvent>(OnGasThermoRefreshParts);
+            SubscribeLocalEvent<GasThermoMachineComponent, UpgradeExamineEvent>(OnGasThermoUpgradeExamine);
 
             // UI events
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
@@ -68,7 +69,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var matterBinRating = args.PartRatings[component.MachinePartHeatCapacity];
             var laserRating = args.PartRatings[component.MachinePartTemperature];
 
-            component.HeatCapacity = 5000 * MathF.Pow(matterBinRating, 2);
+            component.HeatCapacity = component.BaseHeatCapacity * MathF.Pow(matterBinRating, 2);
 
             switch (component.Mode)
             {
@@ -86,6 +87,20 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             DirtyUI(uid, component);
+        }
+
+        private void OnGasThermoUpgradeExamine(EntityUid uid, GasThermoMachineComponent component, UpgradeExamineEvent args)
+        {
+            switch (component.Mode)
+            {
+                case ThermoMachineMode.Heater:
+                    args.AddPercentageUpgrade("gas-thermo-component-upgrade-heating", component.MaxTemperature / (component.BaseMaxTemperature + component.MaxTemperatureDelta));
+                    break;
+                case ThermoMachineMode.Freezer:
+                    args.AddPercentageUpgrade("gas-thermo-component-upgrade-cooling", component.MinTemperature / (component.BaseMinTemperature - component.MinTemperatureDelta));
+                    break;
+            }
+            args.AddPercentageUpgrade("gas-thermo-component-upgrade-heat-capacity", component.HeatCapacity / component.BaseHeatCapacity);
         }
 
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent component, GasThermomachineToggleMessage args)

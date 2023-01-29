@@ -30,6 +30,12 @@ public sealed partial class PathfindingSystem
         // Re-validate nodes
         else
         {
+            // Theoretically this shouldn't be happening, but practically...
+            if (request.Frontier.Count == 0)
+            {
+                return PathResult.NoPath;
+            }
+
             (_, currentNode) = request.Frontier.Peek();
 
             if (!currentNode.IsValid())
@@ -76,10 +82,11 @@ public sealed partial class PathfindingSystem
             // Actual pathfinding here
             (_, currentNode) = request.Frontier.Take();
 
-            // TODO: Need this at some stage but need to fix some steering bugs first before it's useable.
-            if (currentNode.Equals(endNode))// ||
-                //(endNode.GraphUid == currentNode.GraphUid &&
-                 //(endNode.Box.Center - currentNode.Box.Center).Length < request.Range))
+            // If we're inside the required distance OR we're at the end node.
+            if ((request.Distance > 0f &&
+                currentNode.Coordinates.TryDistance(EntityManager, request.End, out var distance) &&
+                distance <= request.Distance) ||
+                currentNode.Equals(endNode))
             {
                 arrived = true;
                 break;

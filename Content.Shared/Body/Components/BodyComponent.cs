@@ -12,17 +12,21 @@ namespace Content.Shared.Body.Components;
 [Access(typeof(SharedBodySystem))]
 public sealed class BodyComponent : Component, IDraggable
 {
-    [ViewVariables]
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
     public readonly string? Prototype;
 
-    [ViewVariables]
     [DataField("root")]
-    public BodyPartSlot Root = default!;
+    public BodyPartSlot? Root;
 
-    [ViewVariables]
     [DataField("gibSound")]
     public SoundSpecifier GibSound = new SoundCollectionSpecifier("gib");
+
+    /// <summary>
+    /// The amount of legs required to move at full speed.
+    /// If 0, then legs do not impact speed.
+    /// </summary>
+    [DataField("requiredLegs")]
+    public int RequiredLegs;
 
     bool IDraggable.CanStartDrag(StartDragDropEvent args)
     {

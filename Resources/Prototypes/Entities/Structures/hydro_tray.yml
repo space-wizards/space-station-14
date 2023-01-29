@@ -4,8 +4,6 @@
   id: hydroponicsTray
   description: An interstellar-grade space farmplot allowing for rapid growth and selective breeding of crops. Just... keep in mind the space weeds.
   components:
-  - type: Transform
-    noRot: true
   - type: Fixtures
     fixtures:
     - shape:

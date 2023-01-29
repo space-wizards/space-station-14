@@ -33,7 +33,6 @@ public abstract class SharedLightningComponent : Component
     /// <summary>
     /// The target that the lightning will Arc to.
     /// </summary>
-    [ViewVariables]
     [DataField("arcTarget")]
     public EntityUid ArcTarget;
 
@@ -47,14 +46,12 @@ public abstract class SharedLightningComponent : Component
     /// <summary>
     /// List of targets that this collided with already
     /// </summary>
-    [ViewVariables]
     [DataField("arcTargets")]
     public HashSet<EntityUid> ArcTargets = new();
 
     /// <summary>
     /// What should this arc to?
     /// </summary>
-    [ViewVariables]
     [DataField("collisionMask")]
     public int CollisionMask = (int) (CollisionGroup.MobMask | CollisionGroup.MachineMask);
 }

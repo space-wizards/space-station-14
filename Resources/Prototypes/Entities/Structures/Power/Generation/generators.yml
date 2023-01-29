@@ -96,6 +96,9 @@
   - type: Fixtures
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
     netsync: false
@@ -117,6 +120,7 @@
     supplyRate: 3000
     supplyRampRate: 500
     supplyRampTolerance: 500
+  - type: WallMount
 
 # Construction Frames
 
@@ -131,6 +135,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -143,6 +148,7 @@
   - type: Construction
     graph: WallmountGenerator
     node: frame
+  - type: WallMount
 
 # Generators in use
 
@@ -234,6 +240,23 @@
     range: 5
     sound:
       path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorRTGDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
 # TODO: need radioactive fallout when destroyed
 
 - type: entity
@@ -253,3 +276,22 @@
       - state: rtg_glow
   - type: RadiationSource # ideally only when opened.
     intensity: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+          SheetUranium1:
+            min: 1
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

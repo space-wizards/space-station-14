@@ -8,8 +8,10 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -34,100 +36,6 @@ public sealed class PrototypeSaveTest
     {
         "Singularity", // physics collision uses "AllMask" (-1). The flag serializer currently fails to save this because this features un-named bits.
         "constructionghost",
-
-        // TODO fix more prototypes
-        // The rest of these prototypes (probably) shouldn't be getting ignored.
-        // There should be an issue up tracking all of these prototypes, indicating that still need to get fixed.
-        "WeaponProtoKineticAccelerator",
-        "WeaponStaffHealing",
-        "WeaponStaffPolymorphDoor",
-        "WeaponWandPolymorphCarp",
-        "WeaponWandPolymorphMonkey",
-        "WeaponWandFireball",
-        "WeaponWandDeath",
-        "WeaponWandPolymorphDoor",
-        "GlowstickBase",
-        "GlowstickRed",
-        "GlowstickPurple",
-        "GlowstickYellow",
-        "GlowstickBlue",
-        "Thruster",
-        "Gyroscope",
-        "RemoteSignaller",
-        "filingCabinet",
-        "filingCabinetTall",
-        "filingCabinetDrawer",
-        "WeaponLauncherChinaLake",
-        "WeaponLauncherRocket",
-        "WeaponLauncherMultipleRocket",
-        "JawsOfLife",
-        "SyndicateJawsOfLife",
-        "LightReplacer",
-        "PowerDrill",
-        "Omnitool",
-        "GasPressurePump",
-        "GasVolumePump",
-        "PortableScrubber",
-        "ParticleAcceleratorControlBox",
-        "GasFilter",
-        "GasFilterFlipped",
-        "GasMixer",
-        "GasMixerFlipped",
-        "HospitalCurtainsOpen",
-        "CargoPallet",
-        "DisposalHolder",
-        "ParticlesProjectile",
-        "AMEController",
-        "AMEControllerUnanchored",
-        "MopBucket",
-        "JanitorialTrolley",
-        "FloorDrain",
-        "OrganHumanLungs",
-        "SprayBottle",
-        "OrganRatLungs",
-        "SentientSlimeCore",
-        "OrganSlimeLungs",
-        "OrganVoxLungs",
-        "OrganAnimalLungs",
-        "Floodlight",
-        "EmergencyMedipen",
-        "AntiPoisonMedipen",
-        "SpaceMedipen",
-        "HolosignWetFloor",
-        "HeadSkeleton",
-        "PoweredSmallLightEmpty",
-        "PoweredSmallLight",
-        "PoweredLightPostSmallEmpty",
-        "PoweredLightPostSmall",
-        "DeployableBarrier",
-        "CrateArtifactContainer",
-        "CloningPod",
-        "DrinkColaCan",
-        "MachineFrame",
-        "WeaponImprovisedPneumaticCannon",
-        "LauncherCreamPie",
-        "GravityGenerator",
-        "GravityGeneratorMini",
-        "MagazinePistolSubMachineGunTopMounted",
-        "EpinephrineChemistryBottle",
-        "RobustHarvestChemistryBottle",
-        "NocturineChemistryBottle",
-        "EphedrineChemistryBottle",
-        "OmnizineChemistryBottle",
-        "Beaker",
-        "LargeBeaker",
-        "CryostasisBeaker",
-        "BluespaceBeaker",
-        "ClusterBang",
-        "ClusterBangFull",
-        "Vaccinator",
-        "AirlockExternalShuttleLocked",
-        "AirlockExternalGlassShuttleLocked",
-        "AirlockExternalGlassShuttleEmergencyLocked",
-        "ClothingHeadHatChef",
-        "Bucket",
-        "AirlockShuttle",
-        "AirlockGlassShuttle"
     };
 
     [Test]
@@ -145,7 +53,7 @@ public sealed class PrototypeSaveTest
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         var prototypes = new List<EntityPrototype>();
-        IMapGrid grid = default!;
+        MapGridComponent grid = default!;
         EntityUid uid;
         MapId mapId = default;
 
@@ -270,18 +178,14 @@ public sealed class PrototypeSaveTest
     }
 
     private sealed class TestEntityUidContext : ISerializationContext,
-        ITypeSerializer<EntityUid, ValueDataNode>,
-        ITypeReaderWriter<EntityUid, ValueDataNode>
+        ITypeSerializer<EntityUid, ValueDataNode>
     {
-        public Dictionary<(Type, Type), object> TypeReaders { get; }
-        public Dictionary<Type, object> TypeWriters { get; }
-        public Dictionary<Type, object> TypeCopiers => TypeWriters;
-        public Dictionary<(Type, Type), object> TypeValidators => TypeReaders;
+        public SerializationManager.SerializerProvider SerializerProvider { get; }
 
         public TestEntityUidContext()
         {
-            TypeReaders = new() { { (typeof(EntityUid), typeof(ValueDataNode)), this } };
-            TypeWriters = new() { { typeof(EntityUid), this } };
+            SerializerProvider = new();
+            SerializerProvider.RegisterSerializer(this);
         }
 
         ValidationNode ITypeValidator<EntityUid, ValueDataNode>.Validate(ISerializationManager serializationManager,
@@ -301,17 +205,10 @@ public sealed class PrototypeSaveTest
         EntityUid ITypeReader<EntityUid, ValueDataNode>.Read(ISerializationManager serializationManager,
             ValueDataNode node,
             IDependencyCollection dependencies,
-            bool skipHook,
-            ISerializationContext? context, EntityUid _)
+            SerializationHookContext hookCtx,
+            ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider = null)
         {
             return EntityUid.Invalid;
-        }
-
-        public EntityUid Copy(ISerializationManager serializationManager, EntityUid source, EntityUid target,
-            bool skipHook,
-            ISerializationContext? context = null)
-        {
-            return new((int) source);
         }
     }
 }

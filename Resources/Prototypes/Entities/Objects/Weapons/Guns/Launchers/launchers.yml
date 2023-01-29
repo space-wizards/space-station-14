@@ -16,6 +16,10 @@
     size: 60
   - type: StaticPrice
     price: 500
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+        ents: []
 
 - type: entity
   name: china lake
@@ -69,15 +73,15 @@
   - type: BallisticAmmoProvider
     whitelist:
       tags:
-        - Cartridge
+        - CartridgeRocket
     proto: CartridgeRocket
     capacity: 1
     soundInsert:
       path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
   - type: MagazineVisuals
     magState: mag
-    steps: 1
-    zeroVisible: true
+    steps: 2
+    zeroVisible: false
   - type: Appearance
 
 - type: entity
@@ -128,9 +132,6 @@
       tags:
         - CartridgeRocket
     proto: MeteorLarge
-  - type: ContainerContainer
-    containers:
-      ballistic-ammo: !type:Container
 
 - type: entity
   name: immovable rod launcher

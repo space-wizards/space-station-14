@@ -64,7 +64,7 @@
   - type: DisposalHolder
   - type: ContainerContainer
     containers:
-      DisposalHolder: !type:Container
+      DisposalHolderComponent: !type:Container
 
 # Pipes
 

@@ -36,7 +36,7 @@ namespace Content.Server.Voting.Managers
                 default:
                     throw new ArgumentOutOfRangeException(nameof(voteType), voteType, null);
             }
-            var ticker = EntitySystem.Get<GameTicker>();
+            var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
             ticker.UpdateInfoText();
             TimeoutStandardVote(voteType);
         }
@@ -76,7 +76,8 @@ namespace Content.Server.Voting.Managers
                 if (total > 0 && votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    EntitySystem.Get<RoundEndSystem>().EndRound();
+                    var roundEnd = _entityManager.EntitySysManager.GetEntitySystem<RoundEndSystem>();
+                    roundEnd.EndRound();
                 }
                 else
                 {
@@ -141,8 +142,8 @@ namespace Content.Server.Voting.Managers
                     _chatManager.DispatchServerAnnouncement(
                         Loc.GetString("ui-vote-gamemode-win", ("winner", Loc.GetString(presets[picked]))));
                 }
-
-                EntitySystem.Get<GameTicker>().SetGamePreset(picked);
+                var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+                ticker.SetGamePreset(picked);
             };
         }
 
@@ -187,7 +188,18 @@ namespace Content.Server.Voting.Managers
                         Loc.GetString("ui-vote-map-win", ("winner", maps[picked])));
                 }
 
-                _gameMapManager.TrySelectMap(picked.ID);
+                var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
+                if (ticker.RunLevel == GameRunLevel.PreRoundLobby)
+                {
+                    if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
+                    {
+                        ticker.UpdateInfoText();
+                    }
+                }
+                else
+                {
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-map-notlobby"));
+                }
             };
         }
 

@@ -39,7 +39,6 @@ namespace Content.Shared.Access.Components
 
         // Put this on shared so we just send the state once in PVS range rather than every time the UI updates.
 
-        [ViewVariables]
         [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
         public List<string> AccessLevels = new()
         {

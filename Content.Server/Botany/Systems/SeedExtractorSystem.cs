@@ -21,6 +21,7 @@ public sealed class SeedExtractorSystem : EntitySystem
 
         SubscribeLocalEvent<SeedExtractorComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<SeedExtractorComponent, RefreshPartsEvent>(OnRefreshParts);
+        SubscribeLocalEvent<SeedExtractorComponent, UpgradeExamineEvent>(OnUpgradeExamine);
     }
 
     private void OnInteractUsing(EntityUid uid, SeedExtractorComponent seedExtractor, InteractUsingEvent args)
@@ -32,12 +33,12 @@ public sealed class SeedExtractorSystem : EntitySystem
         if (!_botanySystem.TryGetSeed(produce, out var seed) || seed.Seedless)
         {
             _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-no-seeds",("name", args.Used)),
-                Filter.Entities(args.User), PopupType.MediumCaution);
+                args.User, PopupType.MediumCaution);
             return;
         }
 
         _popupSystem.PopupCursor(Loc.GetString("seed-extractor-component-interact-message",("name", args.Used)),
-            Filter.Entities(args.User), PopupType.Medium);
+            args.User, PopupType.Medium);
 
         QueueDel(args.Used);
 
@@ -57,5 +58,10 @@ public sealed class SeedExtractorSystem : EntitySystem
     {
         var manipulatorQuality = args.PartRatings[seedExtractor.MachinePartSeedAmount];
         seedExtractor.SeedAmountMultiplier = MathF.Pow(seedExtractor.PartRatingSeedAmountMultiplier, manipulatorQuality - 1);
+    }
+
+    private void OnUpgradeExamine(EntityUid uid, SeedExtractorComponent seedExtractor, UpgradeExamineEvent args)
+    {
+        args.AddPercentageUpgrade("seed-extractor-component-upgrade-seed-yield", seedExtractor.SeedAmountMultiplier);
     }
 }

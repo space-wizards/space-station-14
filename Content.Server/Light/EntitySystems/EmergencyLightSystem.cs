@@ -1,4 +1,3 @@
-using System.Drawing;
 using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;
@@ -21,12 +20,10 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Dependency] private readonly StationSystem _station = default!;
 
-        private readonly HashSet<EmergencyLightComponent> _activeLights = new();
-
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<EmergencyLightEvent>(HandleEmergencyLightMessage);
+            SubscribeLocalEvent<EmergencyLightComponent, EmergencyLightEvent>(OnEmergencyLightEvent);
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
             SubscribeLocalEvent<EmergencyLightComponent, ComponentGetState>(GetCompState);
             SubscribeLocalEvent<EmergencyLightComponent, PointLightToggleEvent>(HandleLightToggle);
@@ -36,6 +33,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEmergencyPower(EntityUid uid, EmergencyLightComponent component, ref PowerChangedEvent args)
         {
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             UpdateState(component);
         }
 
@@ -67,7 +67,9 @@ namespace Content.Server.Light.EntitySystems
 
         private void HandleLightToggle(EntityUid uid, EmergencyLightComponent component, PointLightToggleEvent args)
         {
-            if (component.Enabled == args.Enabled) return;
+            if (component.Enabled == args.Enabled)
+                return;
+
             component.Enabled = args.Enabled;
             Dirty(component);
         }
@@ -77,17 +79,17 @@ namespace Content.Server.Light.EntitySystems
             args.State = new EmergencyLightComponentState(component.Enabled);
         }
 
-        private void HandleEmergencyLightMessage(EmergencyLightEvent @event)
+        private void OnEmergencyLightEvent(EntityUid uid, EmergencyLightComponent component, EmergencyLightEvent args)
         {
-            switch (@event.State)
+            switch (args.State)
             {
                 case EmergencyLightState.On:
                 case EmergencyLightState.Charging:
-                    _activeLights.Add(@event.Component);
+                    EnsureComp<ActiveEmergencyLightComponent>(uid);
                     break;
                 case EmergencyLightState.Full:
                 case EmergencyLightState.Empty:
-                    _activeLights.Remove(@event.Component);
+                    RemComp<ActiveEmergencyLightComponent>(uid);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -129,24 +131,19 @@ namespace Content.Server.Light.EntitySystems
             if (component.State == state) return;
 
             component.State = state;
-            RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state), true);
+            RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state));
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var activeLight in _activeLights)
+            foreach (var (_, activeLight, battery) in EntityQuery<ActiveEmergencyLightComponent, EmergencyLightComponent, BatteryComponent>())
             {
-                Update(activeLight, frameTime);
+                Update(activeLight, battery, frameTime);
             }
         }
 
-        private void Update(EmergencyLightComponent component, float frameTime)
+        private void Update(EmergencyLightComponent component, BatteryComponent battery, float frameTime)
         {
-            if (!EntityManager.EntityExists(component.Owner) || !TryComp(component.Owner, out BatteryComponent? battery) || MetaData(component.Owner).EntityPaused)
-            {
-                return;
-            }
-
             if (component.State == EmergencyLightState.On)
             {
                 if (!battery.TryUseCharge(component.Wattage * frameTime))

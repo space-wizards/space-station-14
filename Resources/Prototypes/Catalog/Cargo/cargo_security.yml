@@ -4,7 +4,7 @@
     sprite: Clothing/OuterClothing/Vests/oldarmor.rsi
     state: icon
   product: CrateSecurityArmor
-  cost: 500
+  cost: 700
   category: Security
   group: market
 
@@ -14,7 +14,7 @@
     sprite: Clothing/Head/Helmets/security.rsi
     state: icon
   product: CrateSecurityHelmet
-  cost: 500
+  cost: 550
   category: Security
   group: market
 
@@ -29,22 +29,12 @@
   group: market
 
 - type: cargoProduct
-  id: SecurityLaser
-  icon:
-    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
-    state: icon
-  product: CrateSecurityLaser
-  cost: 1600
-  category: Security
-  group: market
-
-- type: cargoProduct
   id: SecurityRiot
   icon:
     sprite: Clothing/OuterClothing/Armor/riot.rsi
     state: icon
   product: CrateSecurityRiot
-  cost: 2000
+  cost: 2800
   category: Security
   group: market
 

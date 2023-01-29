@@ -3,6 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Dragon;
 using Robust.Server.GameObjects;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Dragon;
@@ -29,7 +30,7 @@ public sealed partial class DragonSystem
 
     public override void Started()
     {
-        var spawnLocations = EntityManager.EntityQuery<IMapGridComponent, TransformComponent>().ToList();
+        var spawnLocations = EntityManager.EntityQuery<MapGridComponent, TransformComponent>().ToList();
 
         if (spawnLocations.Count == 0)
             return;

@@ -9,6 +9,6 @@ public sealed class CameraRecoilSystem : SharedCameraRecoilSystem
     {
         if (!Resolve(euid, ref component, false)) return;
 
-        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), Filter.Entities(euid));
+        RaiseNetworkEvent(new CameraKickEvent(euid, kickback), euid);
     }
 }

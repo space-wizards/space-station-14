@@ -17,3 +17,63 @@
   cost: 750
   category: Medical
   group: market
+
+- type: cargoProduct
+  id: EmergencyBurnKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: burnkit
+  product: CrateEmergencyBurnKit
+  cost: 2100
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: EmergencyToxinKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: toxinkit
+  product: CrateEmergencyToxinKit
+  cost: 700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: EmergencyO2Kit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: o2kit
+  product: CrateEmergencyO2Kit
+  cost: 1100
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: EmergencyBruteKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: brutekit
+  product: CrateEmergencyBruteKit
+  cost: 3600
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: EmergencyAdvancedKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: advkit
+  product: CrateEmergencyAdvancedKit
+  cost: 3700
+  category: Medical
+  group: market
+
+- type: cargoProduct
+  id: EmergencyRadiationKit
+  icon:
+    sprite: Objects/Specific/Medical/firstaidkits.rsi
+    state: radkit
+  product: CrateEmergencyRadiationKit
+  cost: 2500
+  category: Medical
+  group: market

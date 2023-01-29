@@ -24,7 +24,6 @@ namespace Content.Shared.Access.Components
         ///     there has to be an access list that is a subset of the access in the checking list.
         /// </summary>
         [DataField("access")]
-        [ViewVariables]
         public List<HashSet<string>> AccessLists = new();
     }
 }

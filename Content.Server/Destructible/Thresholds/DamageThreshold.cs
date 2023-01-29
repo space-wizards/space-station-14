@@ -19,7 +19,6 @@ namespace Content.Server.Destructible.Thresholds
         /// <summary>
         ///     Whether or not this threshold has already been triggered.
         /// </summary>
-        [ViewVariables]
         [DataField("triggered")]
         public bool Triggered { get; private set; }
 
@@ -29,14 +28,12 @@ namespace Content.Server.Destructible.Thresholds
         ///     and then damaged to reach this threshold once again.
         ///     It will not repeatedly trigger as damage rises beyond that.
         /// </summary>
-        [ViewVariables]
         [DataField("triggersOnce")]
         public bool TriggersOnce { get; set; }
 
         /// <summary>
         ///     The trigger that decides if this threshold has been reached.
         /// </summary>
-        [ViewVariables]
         [DataField("trigger")]
         public IThresholdTrigger? Trigger { get; set; }
 

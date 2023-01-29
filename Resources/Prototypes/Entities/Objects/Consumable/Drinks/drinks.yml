@@ -668,7 +668,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: ErikaSuprise
+        - ReagentId: ErikaSurprise
           Quantity: 50
   - type: Drink
   - type: Sprite
@@ -1026,8 +1026,8 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkKahluaGlass
-  name: kahlua glass
+  id: DrinkCoffeeLiqueurGlass
+  name: Coffee Liqueur glass
   description: DAMN, THIS THING LOOKS ROBUST
   components:
   - type: SolutionContainerManager
@@ -1035,10 +1035,10 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: Kahlua
+        - ReagentId: CoffeeLiqueur
           Quantity: 50
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluaglass.rsi
+    sprite: Objects/Consumable/Drinks/coffeeliqueurglass.rsi
 
 - type: entity
   parent: DrinkGlassBase
@@ -1408,6 +1408,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkPoscaGlass
+  name: posca glass
+  description: Poor warriors' drink from a forgotten era.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Posca
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: A true Viking's beverage, though its color is strange.
@@ -1666,7 +1683,7 @@
   parent: DrinkGlassBase
   id: DrinkSoyLatte
   name: soy latte
-  description: A nice and refrshing beverage while you are reading.
+  description: A nice and refreshing beverage while you are reading.
   components:
   - type: SolutionContainerManager
     solutions:

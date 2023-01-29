@@ -1,7 +1,9 @@
+using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Player;
 using Robust.Shared.GameStates;
 
@@ -12,6 +14,9 @@ namespace Content.Client.Ghost
     {
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly SharedActionsSystem _actions = default!;
+        [Dependency] private readonly ILightManager _lightManager = default!;
+        [Dependency] private readonly IEyeManager _eye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 
@@ -61,6 +66,10 @@ namespace Content.Client.Ghost
 
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
+
+            SubscribeLocalEvent<GhostComponent, ToggleLightingActionEvent>(OnToggleLighting);
+            SubscribeLocalEvent<GhostComponent, ToggleFoVActionEvent>(OnToggleFoV);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
@@ -69,10 +78,46 @@ namespace Content.Client.Ghost
             {
                 sprite.Visible = GhostVisibility;
             }
+
+            _actions.AddAction(uid, component.ToggleLightingAction, null);
+            _actions.AddAction(uid, component.ToggleFoVAction, null);
+            _actions.AddAction(uid, component.ToggleGhostsAction, null);
+        }
+
+        private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            _lightManager.Enabled = !_lightManager.Enabled;
+            args.Handled = true;
+        }
+
+        private void OnToggleFoV(EntityUid uid, GhostComponent component, ToggleFoVActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            _eye.CurrentEye.DrawFov = !_eye.CurrentEye.DrawFov;
+            args.Handled = true;
+        }
+
+        private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            ToggleGhostVisibility();
+            args.Handled = true;
         }
 
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
+            _actions.RemoveAction(uid, component.ToggleLightingAction);
+            _actions.RemoveAction(uid, component.ToggleFoVAction);
+            _actions.RemoveAction(uid, component.ToggleGhostsAction);
+            _lightManager.Enabled = true;
+
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
@@ -154,6 +199,11 @@ namespace Content.Client.Ghost
         public void OpenGhostRoles()
         {
             _console.RemoteExecuteCommand(null, "ghostroles");
+        }
+
+        public void ToggleGhostVisibility()
+        {
+            _console.RemoteExecuteCommand(null, "toggleghosts");
         }
     }
 }

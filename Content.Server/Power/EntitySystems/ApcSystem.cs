@@ -69,7 +69,7 @@ namespace Content.Server.Power.EntitySystems
             else
             {
                 _popupSystem.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                    Filter.Entities(args.Session.AttachedEntity.Value), PopupType.Medium);
+                    args.Session, PopupType.Medium);
             }
         }
 
@@ -85,7 +85,7 @@ namespace Content.Server.Power.EntitySystems
             SoundSystem.Play(apc.OnReceiveMessageSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-2f));
         }
 
-        private void OnEmagged(EntityUid uid, ApcComponent comp, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
         {
             if(!comp.Emagged)
             {
@@ -178,7 +178,7 @@ namespace Content.Server.Power.EntitySystems
                 return ApcExternalPowerState.None;
             }
 
-            var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
+            var delta = netBat.CurrentReceiving - netBat.CurrentSupply;
             if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
@@ -199,7 +199,7 @@ namespace Content.Server.Power.EntitySystems
         {
             if (!EntityManager.TryGetComponent(args.Used, out ToolComponent? tool))
                 return;
-            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new string[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
+            if (_toolSystem.UseTool(args.Used, args.User, uid, 0f, ScrewTime, new[] { "Screwing" }, doAfterCompleteEvent: new ApcToolFinishedEvent(uid), toolComponent: tool))
             {
                 args.Handled = true;
             }

@@ -1,0 +1,13 @@
+- type: gameMapPool
+  id: DefaultMapPool
+  maps:
+  - Bagel
+  - Box
+  - Cluster
+  - Kettle
+  - Marathon
+  - Omega
+  - Moose
+  - Origin
+  - Meta
+  - Barratry

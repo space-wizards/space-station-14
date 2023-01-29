@@ -21,6 +21,8 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
             var server = pairTracker.Pair.Server;
+            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var coordinates = testMap.GridCoords;
 
             await server.WaitAssertion(() =>
             {
@@ -28,14 +30,12 @@ namespace Content.IntegrationTests.Tests
                 var mapMan = IoCManager.Resolve<IMapManager>();
                 var invSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InventorySystem>();
 
-                mapMan.CreateNewMapEntity(MapId.Nullspace);
-
                 var entMgr = IoCManager.Resolve<IEntityManager>();
-                var container = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+                var container = entMgr.SpawnEntity(null, coordinates);
                 entMgr.EnsureComponent<ServerInventoryComponent>(container);
                 entMgr.EnsureComponent<ContainerManagerComponent>(container);
 
-                var child = entMgr.SpawnEntity(null, MapCoordinates.Nullspace);
+                var child = entMgr.SpawnEntity(null, coordinates);
                 var item = entMgr.EnsureComponent<ClothingComponent>(child);
 
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ClothingSystem>().SetSlots(item.Owner, SlotFlags.HEAD, item);

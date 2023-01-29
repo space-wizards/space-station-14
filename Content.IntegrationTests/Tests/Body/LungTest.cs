@@ -4,6 +4,7 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.Body.Components;
 using NUnit.Framework;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -24,8 +25,9 @@ namespace Content.IntegrationTests.Tests.Body
   - type: Body
     prototype: Human
   - type: MobState
-    thresholds:
-      0: Alive
+    allowedStates:
+      - Alive
+  - type: Damageable
   - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -53,9 +55,9 @@ namespace Content.IntegrationTests.Tests.Body
 
             await server.WaitIdleAsync();
 
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
             RespiratorSystem respSys = default;
             MetabolizerSystem metaSys = default;
 
@@ -71,7 +73,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadGrid(mapId, testMapName).gridId;
+                grid = mapLoader.LoadGrid(mapId, testMapName);
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");
@@ -130,9 +132,9 @@ namespace Content.IntegrationTests.Tests.Body
                 {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
-            var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var mapLoader = entityManager.System<MapLoaderSystem>();
 
             MapId mapId;
             EntityUid? grid = null;
@@ -144,7 +146,7 @@ namespace Content.IntegrationTests.Tests.Body
             await server.WaitPost(() =>
             {
                 mapId = mapManager.CreateMap();
-                grid = mapLoader.LoadGrid(mapId, testMapName).gridId;
+                grid = mapLoader.LoadGrid(mapId, testMapName);
             });
 
             Assert.NotNull(grid, $"Test blueprint {testMapName} not found.");

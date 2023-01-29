@@ -79,6 +79,9 @@ namespace Content.Client.Chemistry.UI
             PillNumber.InitDefaultButtons();
             BottleDosage.InitDefaultButtons();
 
+            // Ensure label length is within the character limit.
+            LabelLineEdit.IsValid = s => s.Length <= SharedChemMaster.LabelMaxLength;
+
             Tabs.SetTabTitle(0, Loc.GetString("chem-master-window-input-tab"));
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
         }
@@ -150,8 +153,8 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data for the dispenser.</param>
         private void UpdatePanelInfo(ChemMasterBoundUserInterfaceState state)
         {
-            BufferTransferButton.Pressed = state.Mode == Shared.Chemistry.ChemMasterMode.Transfer;
-            BufferDiscardButton.Pressed = state.Mode == Shared.Chemistry.ChemMasterMode.Discard;
+            BufferTransferButton.Pressed = state.Mode == ChemMasterMode.Transfer;
+            BufferDiscardButton.Pressed = state.Mode == ChemMasterMode.Discard;
 
             BuildContainerUI(InputContainerInfo, state.InputContainerInfo, true);
             BuildContainerUI(OutputContainerInfo, state.OutputContainerInfo, false);

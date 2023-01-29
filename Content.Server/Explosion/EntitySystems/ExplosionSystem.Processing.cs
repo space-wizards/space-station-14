@@ -1,11 +1,15 @@
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Explosion;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
+using Content.Shared.Spawners.Components;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -13,16 +17,6 @@ namespace Content.Server.Explosion.EntitySystems;
 
 public sealed partial class ExplosionSystem : EntitySystem
 {
-    /// <summary>
-    ///     Used to identify explosions when communicating with the client. Might be needed if more than one explosion is spawned in a single tick.
-    /// </summary>
-    /// <remarks>
-    ///     Overflowing back to 0 should cause no issue, as long as you don't have more than 256 explosions happening in a single tick.
-    /// </remarks>
-    private int _explosionCounter = 0;
-    // maybe should just use a UID/explosion-entity and a state to convey information?
-    // but then need to ignore PVS? Eeehh this works well enough for now.
-
     /// <summary>
     ///     Used to limit explosion processing time. See <see cref="MaxProcessingTime"/>.
     /// </summary>
@@ -61,8 +55,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         if (_activeExplosion?.Epicenter.MapId != ev.Map)
             return;
 
+        QueueDel(_activeExplosion.VisualEnt);
         _activeExplosion = null;
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     /// <summary>
@@ -100,13 +96,13 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (_activeExplosion == null)
                     continue;
 
-                _explosionCounter++;
                 _previousTileIteration = 0;
 
                 // just a lil nap
                 if (SleepNodeSys)
                 {
-                    _nodeGroupSystem.Snoozing = true;
+                    _nodeGroupSystem.PauseUpdating = true;
+                    _pathfindingSystem.PauseUpdating = true;
                     // snooze grid-chunk regeneration?
                     // snooze power network (recipients look for new suppliers as wires get destroyed).
                 }
@@ -127,15 +123,22 @@ public sealed partial class ExplosionSystem : EntitySystem
 
                 // has the explosion finished processing?
                 if (_activeExplosion.FinishedProcessing)
-                    _activeExplosion = null;
+            {
+                var comp = EnsureComp<TimedDespawnComponent>(_activeExplosion.VisualEnt);
+                comp.Lifetime = _cfg.GetCVar(CCVars.ExplosionPersistence);
+                _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, int.MaxValue);
+                _activeExplosion = null;
+            }
 #if EXCEPTION_TOLERANCE
             }
             catch (Exception e)
             {
                 // Ensure the system does not get stuck in an error-loop.
+                if (_activeExplosion != null)
+                    QueueDel(_activeExplosion.VisualEnt);
                 _activeExplosion = null;
-                RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
-                _nodeGroupSystem.Snoozing = false;
+                _nodeGroupSystem.PauseUpdating = false;
+                _pathfindingSystem.PauseUpdating = false;
                 throw;
             }
 #endif
@@ -146,23 +149,16 @@ public sealed partial class ExplosionSystem : EntitySystem
         // we have finished processing our tiles. Is there still an ongoing explosion?
         if (_activeExplosion != null)
         {
-            // update the client explosion overlays. This ensures that the fire-effects sync up with the entities currently being damaged.
-            if (_previousTileIteration == _activeExplosion.CurrentIteration)
-                return;
-
-            _previousTileIteration = _activeExplosion.CurrentIteration;
-            RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, _previousTileIteration + 1));
+            _appearance.SetData(_activeExplosion.VisualEnt, ExplosionAppearanceData.Progress, _activeExplosion.CurrentIteration + 1);
             return;
         }
 
         if (_explosionQueue.Count > 0)
             return;
 
-        // We have finished processing all explosions. Clear client explosion overlays
-        RaiseNetworkEvent(new ExplosionOverlayUpdateEvent(_explosionCounter, int.MaxValue));
-
         //wakey wakey
-        _nodeGroupSystem.Snoozing = false;
+        _nodeGroupSystem.PauseUpdating = false;
+        _pathfindingSystem.PauseUpdating = false;
     }
 
     /// <summary>
@@ -188,8 +184,8 @@ public sealed partial class ExplosionSystem : EntitySystem
     ///     Find entities on a grid tile using the EntityLookupComponent and apply explosion effects.
     /// </summary>
     /// <returns>True if the underlying tile can be uprooted, false if the tile is blocked by a dense entity</returns>
-    internal bool ExplodeTile(EntityLookupComponent lookup,
-        IMapGrid grid,
+    internal bool ExplodeTile(BroadphaseComponent lookup,
+        MapGridComponent grid,
         Vector2i tile,
         float throwForce,
         DamageSpecifier damage,
@@ -209,7 +205,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         var state = (list, processed, xformQuery);
 
         // get entities:
-        lookup.Tree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.StaticTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.StaticSundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         // process those entities
         foreach (var xform in list)
@@ -250,7 +249,8 @@ public sealed partial class ExplosionSystem : EntitySystem
             return !tileBlocked;
 
         list.Clear();
-        lookup.Tree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.DynamicTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, GridQueryCallback, gridBox, true);
 
         foreach (var xform in list)
         {
@@ -272,10 +272,18 @@ public sealed partial class ExplosionSystem : EntitySystem
         return true;
     }
 
+    private bool GridQueryCallback(
+        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, EntityQuery<TransformComponent> XformQuery) state,
+        in FixtureProxy proxy)
+    {
+        var owner = proxy.Fixture.Body.Owner;
+        return GridQueryCallback(ref state, in owner);
+    }
+
     /// <summary>
     ///     Same as <see cref="ExplodeTile"/>, but for SPAAAAAAACE.
     /// </summary>
-    internal void ExplodeSpace(EntityLookupComponent lookup,
+    internal void ExplodeSpace(BroadphaseComponent lookup,
         Matrix3 spaceMatrix,
         Matrix3 invSpaceMatrix,
         Vector2i tile,
@@ -295,7 +303,10 @@ public sealed partial class ExplosionSystem : EntitySystem
         var state = (list, processed, invSpaceMatrix, lookup.Owner, xformQuery, gridBox);
 
         // get entities:
-        lookup.Tree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.StaticTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.StaticSundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var xform in state.Item1)
         {
@@ -309,7 +320,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         // Also, throw any entities that were spawned as shrapnel. Compared to entity spawning & destruction, this extra
         // lookup is relatively minor computational cost, and throwing is disabled for nukes anyways.
         list.Clear();
-        lookup.Tree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.DynamicTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
+        lookup.SundriesTree.QueryAabb(ref state, SpaceQueryCallback, worldBox, true);
 
         foreach (var xform in list)
         {
@@ -340,6 +352,14 @@ public sealed partial class ExplosionSystem : EntitySystem
             state.List.Add(xform);
 
         return true;
+    }
+
+    private bool SpaceQueryCallback(
+        ref (List<TransformComponent> List, HashSet<EntityUid> Processed, Matrix3 InvSpaceMatrix, EntityUid LookupOwner, EntityQuery<TransformComponent> XformQuery, Box2 GridBox) state,
+        in FixtureProxy proxy)
+    {
+        var owner = proxy.Fixture.Body.Owner;
+        return SpaceQueryCallback(ref state, in owner);
     }
 
     /// <summary>
@@ -460,12 +480,12 @@ sealed class Explosion
         /// <summary>
         ///     Lookup component for this grid (or space/map).
         /// </summary>
-        public EntityLookupComponent Lookup;
+        public BroadphaseComponent Lookup;
 
         /// <summary>
         ///     The actual grid that this corresponds to. If null, this implies space.
         /// </summary>
-        public IMapGrid? MapGrid;
+        public MapGridComponent? MapGrid;
     }
 
     private readonly List<ExplosionData> _explosionData = new();
@@ -513,8 +533,8 @@ sealed class Explosion
 
     // Variables used for enumerating over tiles, grids, etc
     private DamageSpecifier _currentDamage = default!;
-    private EntityLookupComponent _currentLookup = default!;
-    private IMapGrid? _currentGrid;
+    private BroadphaseComponent _currentLookup = default!;
+    private MapGridComponent? _currentGrid;
     private float _currentIntensity;
     private float _currentThrowForce;
     private List<Vector2i>.Enumerator _currentEnumerator;
@@ -524,7 +544,7 @@ sealed class Explosion
     ///     The set of tiles that need to be updated when the explosion has finished processing. Used to avoid having
     ///     the explosion trigger chunk regeneration & shuttle-system processing every tick.
     /// </summary>
-    private readonly Dictionary<IMapGrid, List<(Vector2i, Tile)>> _tileUpdateDict = new();
+    private readonly Dictionary<MapGridComponent, List<(Vector2i, Tile)>> _tileUpdateDict = new();
 
     // Entity Queries
     private readonly EntityQuery<TransformComponent> _xformQuery;
@@ -556,6 +576,8 @@ sealed class Explosion
     private readonly IEntityManager _entMan;
     private readonly ExplosionSystem _system;
 
+    public readonly EntityUid VisualEnt;
+
     /// <summary>
     ///     Initialize a new instance for processing
     /// </summary>
@@ -571,8 +593,10 @@ sealed class Explosion
         int maxTileBreak,
         bool canCreateVacuum,
         IEntityManager entMan,
-        IMapManager mapMan)
+        IMapManager mapMan,
+        EntityUid visualEnt)
     {
+        VisualEnt = visualEnt;
         _system = system;
         ExplosionType = explosionType;
         _tileSetIntensity = tileSetIntensity;
@@ -600,7 +624,7 @@ sealed class Explosion
             _explosionData.Add(new()
             {
                 TileLists = spaceData.TileLists,
-                Lookup = entMan.GetComponent<EntityLookupComponent>(mapUid),
+                Lookup = entMan.GetComponent<BroadphaseComponent>(mapUid),
                 MapGrid = null
             });
 
@@ -610,11 +634,11 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
-            _explosionData.Add(new()
+            _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
-                Lookup = entMan.GetComponent<EntityLookupComponent>(grid.Grid.GridEntityId),
-                MapGrid = grid.Grid
+                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
+                MapGrid = grid.Grid,
             });
         }
 
@@ -654,7 +678,7 @@ sealed class Explosion
                 _currentDataIndex++;
 
                 // sanity checks, in case something changed while the explosion was being processed over several ticks.
-                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.GridEntityId))
+                if (_currentLookup.Deleted || _currentGrid != null && !_entMan.EntityExists(_currentGrid.Owner))
                     continue;
 
                 return true;
@@ -775,7 +799,7 @@ sealed class Explosion
 
         foreach (var (grid, list) in _tileUpdateDict)
         {
-            if (list.Count > 0 && _entMan.EntityExists(grid.GridEntityId))
+            if (list.Count > 0 && _entMan.EntityExists(grid.Owner))
             {
                 grid.SetTiles(list);
             }

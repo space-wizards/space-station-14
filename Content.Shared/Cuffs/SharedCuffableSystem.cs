@@ -1,24 +1,33 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Events;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Rejuvenate;
+using Robust.Shared.Containers;
 
 namespace Content.Shared.Cuffs
 {
     public abstract class SharedCuffableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private readonly AlertsSystem _alerts = default!;
 
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<SharedCuffableComponent, EntRemovedFromContainerMessage>(OnCuffCountChanged);
+            SubscribeLocalEvent<SharedCuffableComponent, EntInsertedIntoContainerMessage>(OnCuffCountChanged);
+            SubscribeLocalEvent<SharedCuffableComponent, RejuvenateEvent>(OnRejuvenate);
+
             SubscribeLocalEvent<SharedCuffableComponent, StopPullingEvent>(HandleStopPull);
             SubscribeLocalEvent<SharedCuffableComponent, UpdateCanMoveEvent>(HandleMoveAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, AttackAttemptEvent>(CheckAct);
@@ -33,6 +42,36 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, PullStoppedMessage>(OnPull);
         }
 
+        private void OnRejuvenate(EntityUid uid, SharedCuffableComponent component, RejuvenateEvent args)
+        {
+            _container.EmptyContainer(component.Container, true, attachToGridOrMap: true);
+        }
+
+        private void OnCuffCountChanged(EntityUid uid, SharedCuffableComponent component, ContainerModifiedMessage args)
+        {
+            if (args.Container == component.Container)
+                UpdateCuffState(uid, component);
+        }
+
+        public void UpdateCuffState(EntityUid uid, SharedCuffableComponent component)
+        {
+            var canInteract = TryComp(uid, out SharedHandsComponent? hands) && hands.Hands.Count > component.CuffedHandCount;
+
+            if (canInteract == component.CanStillInteract)
+                return;
+
+            component.CanStillInteract = canInteract;
+            Dirty(component);
+            _blocker.UpdateCanMove(uid);
+
+            if (component.CanStillInteract)
+                _alerts.ClearAlert(uid, AlertType.Handcuffed);
+            else
+                _alerts.ShowAlert(uid, AlertType.Handcuffed);
+
+            var ev = new CuffedStateChangeEvent();
+            RaiseLocalEvent(uid, ref ev);
+        }
 
         private void OnBeingPulledAttempt(EntityUid uid, SharedCuffableComponent component, BeingPulledAttemptEvent args)
         {

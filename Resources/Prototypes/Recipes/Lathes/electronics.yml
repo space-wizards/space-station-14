@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: FirelockElectronics
-  icon: Objects/Misc/module.rsi/mainboard.png
   result: FirelockElectronics
   completetime: 2
   materials:
@@ -9,7 +8,6 @@
 
 - type: latheRecipe
   id: MailingUnitElectronics
-  icon: Objects/Misc/module.rsi/net_wired.png
   result: MailingUnitElectronics
   completetime: 4
   materials:
@@ -18,7 +16,6 @@
 
 - type: latheRecipe
   id: DoorElectronics
-  icon: Objects/Misc/module.rsi/door_electronics.png
   result: DoorElectronics
   completetime: 2
   materials:
@@ -27,7 +24,6 @@
 
 - type: latheRecipe
   id: AirAlarmElectronics
-  icon: Objects/Misc/module.rsi/airalarm_electronics.png
   result: AirAlarmElectronics
   completetime: 2
   materials:
@@ -35,8 +31,15 @@
      Plastic: 50
 
 - type: latheRecipe
+  id: IntercomElectronics
+  result: IntercomElectronics
+  completetime: 2
+  materials:
+     Steel: 50
+     Plastic: 50
+
+- type: latheRecipe
   id: FireAlarmElectronics
-  icon: Objects/Misc/module.rsi/door_electronics.png
   result: FireAlarmElectronics
   completetime: 2
   materials:
@@ -45,7 +48,6 @@
 
 - type: latheRecipe
   id: CloningPodMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard
   completetime: 4
   materials:
@@ -55,7 +57,6 @@
 
 - type: latheRecipe
   id: ThermomachineFreezerMachineCircuitBoard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ThermomachineFreezerMachineCircuitBoard
   completetime: 4
   materials:
@@ -65,7 +66,6 @@
 
 - type: latheRecipe
   id: PortableScrubberMachineCircuitBoard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: PortableScrubberMachineCircuitBoard
   completetime: 4
   materials:
@@ -75,7 +75,6 @@
 
 - type: latheRecipe
   id: MedicalScannerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: MedicalScannerMachineCircuitboard
   completetime: 4
   materials:
@@ -83,8 +82,16 @@
      Glass: 900
 
 - type: latheRecipe
+  id: CryoPodMachineCircuitboard
+  result: CryoPodMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
   id: ChemMasterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ChemMasterMachineCircuitboard
   completetime: 4
   materials:
@@ -93,7 +100,6 @@
 
 - type: latheRecipe
   id: ChemDispenserMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ChemDispenserMachineCircuitboard
   completetime: 4
   materials:
@@ -103,7 +109,6 @@
 
 - type: latheRecipe
   id: BiomassReclaimerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: BiomassReclaimerMachineCircuitboard
   completetime: 4
   materials:
@@ -113,7 +118,6 @@
 
 - type: latheRecipe
   id: HydroponicsTrayMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: HydroponicsTrayMachineCircuitboard
   completetime: 4
   materials:
@@ -122,7 +126,6 @@
 
 - type: latheRecipe
   id: AutolatheMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: AutolatheMachineCircuitboard
   completetime: 4
   materials:
@@ -131,7 +134,6 @@
 
 - type: latheRecipe
   id: ProtolatheMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ProtolatheMachineCircuitboard
   completetime: 4
   materials:
@@ -140,7 +142,6 @@
 
 - type: latheRecipe
   id: CircuitImprinterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: CircuitImprinterMachineCircuitboard
   completetime: 4
   materials:
@@ -148,8 +149,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: ExosuitFabricatorMachineCircuitboard
+  result: ExosuitFabricatorMachineCircuitboard
+  completetime: 5
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: UniformPrinterMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: UniformPrinterMachineCircuitboard
   completetime: 4
   materials:
@@ -158,7 +166,6 @@
 
 - type: latheRecipe
   id: VaccinatorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: VaccinatorMachineCircuitboard
   completetime: 4
   materials:
@@ -168,7 +175,6 @@
 
 - type: latheRecipe
   id: DiagnoserMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: DiagnoserMachineCircuitboard
   completetime: 4
   materials:
@@ -176,10 +182,42 @@
      Glass: 900
      Gold: 100
 
+- type: latheRecipe
+  id: ArtifactAnalyzerMachineCircuitboard
+  result: ArtifactAnalyzerMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: TraversalDistorterMachineCircuitboard
+  result: TraversalDistorterMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: AnomalyVesselCircuitboard
+  result: AnomalyVesselCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: APECircuitboard
+  result: APECircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
 
 - type: latheRecipe
   id: ReagentGrinderMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ReagentGrinderMachineCircuitboard
   completetime: 4
   materials:
@@ -187,8 +225,33 @@
      Glass: 900
 
 - type: latheRecipe
+  id: HotplateMachineCircuitboard
+  result: HotplateMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: AnalysisComputerCircuitboard
+  result: AnalysisComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
+  id: TechDiskComputerCircuitboard
+  result: TechDiskComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
   id: CrewMonitoringComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: CrewMonitoringComputerCircuitboard
   completetime: 4
   materials:
@@ -197,7 +260,6 @@
 
 - type: latheRecipe
   id: ShuttleConsoleCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ShuttleConsoleCircuitboard
   completetime: 4
   materials:
@@ -206,8 +268,15 @@
      Gold: 100
 
 - type: latheRecipe
+  id: RadarConsoleCircuitboard
+  result: RadarConsoleCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: DawInstrumentMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: DawInstrumentMachineCircuitboard
   completetime: 4
   materials:
@@ -216,7 +285,6 @@
 
 - type: latheRecipe
   id: StasisBedMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: StasisBedMachineCircuitboard
   completetime: 4
   materials:
@@ -226,17 +294,34 @@
 
 - type: latheRecipe
   id: OreProcessorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: OreProcessorMachineCircuitboard
   completetime: 4
   materials:
     Steel: 100
     Glass: 900
     Gold: 100
+
+- type: latheRecipe
+  id: RipleyCentralElectronics
+  result: RipleyCentralElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
+- type: latheRecipe
+  id: RipleyPeripheralsElectronics
+  result: RipleyPeripheralsElectronics
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+    Gold: 100
+
 # Power
 - type: latheRecipe
   id: APCElectronics
-  icon: Objects/Misc/module.rsi/charger_APC.png
   result: APCElectronics
   completetime: 2
   materials:
@@ -245,7 +330,6 @@
 
 - type: latheRecipe
   id: SubstationMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SubstationMachineCircuitboard
   completetime: 4
   materials:
@@ -254,7 +338,6 @@
 
 - type: latheRecipe
   id: WallmountSubstationElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountSubstationElectronics
   completetime: 4
   materials:
@@ -263,7 +346,6 @@
 
 - type: latheRecipe
   id: SMESMachineCircuitboard
-  icon: Objects/Misc/module.rsi/power_mod.png
   result: SMESMachineCircuitboard
   completetime: 4
   materials:
@@ -272,7 +354,6 @@
 
 - type: latheRecipe
   id: GeneratorPlasmaMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: GeneratorPlasmaMachineCircuitboard
   completetime: 4
   materials:
@@ -281,7 +362,6 @@
 
 - type: latheRecipe
   id: GeneratorUraniumMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: GeneratorUraniumMachineCircuitboard
   completetime: 4
   materials:
@@ -290,7 +370,6 @@
 
 - type: latheRecipe
   id: WallmountGeneratorElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountGeneratorElectronics
   completetime: 4
   materials:
@@ -299,7 +378,6 @@
 
 - type: latheRecipe
   id: WallmountGeneratorAPUElectronics
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: WallmountGeneratorAPUElectronics
   completetime: 4
   materials:
@@ -308,7 +386,6 @@
 
 - type: latheRecipe
   id: SolarControlComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SolarControlComputerCircuitboard
   completetime: 4
   materials:
@@ -316,8 +393,15 @@
      Glass: 900
 
 - type: latheRecipe
+  id: PowerComputerCircuitboard
+  result: PowerComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
   id: CloningConsoleComputerCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningConsoleComputerCircuitboard
   completetime: 4
   materials:
@@ -326,7 +410,6 @@
 
 - type: latheRecipe
   id: MicrowaveMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: MicrowaveMachineCircuitboard
   completetime: 4
   materials:
@@ -335,7 +418,6 @@
 
 - type: latheRecipe
   id: SurveillanceCameraRouterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceCameraRouterCircuitboard
   completetime: 4
   materials:
@@ -344,7 +426,6 @@
 
 - type: latheRecipe
   id: SurveillanceCameraWirelessRouterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceCameraWirelessRouterCircuitboard
   completetime: 4
   materials:
@@ -353,7 +434,6 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraAnchoredCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceWirelessCameraAnchoredCircuitboard
   completetime: 4
   materials:
@@ -362,7 +442,6 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraMovableCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceWirelessCameraMovableCircuitboard
   completetime: 4
   materials:
@@ -371,7 +450,6 @@
 
 - type: latheRecipe
   id: SurveillanceCameraMonitorCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceCameraMonitorCircuitboard
   completetime: 4
   materials:
@@ -380,7 +458,6 @@
 
 - type: latheRecipe
   id: SurveillanceWirelessCameraMonitorCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SurveillanceWirelessCameraMonitorCircuitboard
   completetime: 4
   materials:
@@ -389,7 +466,6 @@
 
 - type: latheRecipe
   id: ComputerTelevisionCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: ComputerTelevisionCircuitboard
   completetime: 4
   materials:
@@ -398,7 +474,6 @@
 
 - type: latheRecipe
   id: EmitterCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: EmitterCircuitboard
   completetime: 4
   materials:
@@ -406,8 +481,23 @@
     Glass: 900
 
 - type: latheRecipe
+  id: ThrusterMachineCircuitboard
+  result: ThrusterMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
+  id: GyroscopeMachineCircuitboard
+  result: GyroscopeMachineCircuitboard
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 900
+
+- type: latheRecipe
   id: GasRecyclerMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: GasRecyclerMachineCircuitboard
   completetime: 4
   materials:
@@ -416,9 +506,24 @@
 
 - type: latheRecipe
   id: SeedExtractorMachineCircuitboard
-  icon: Objects/Misc/module.rsi/id_mod.png
   result: SeedExtractorMachineCircuitboard
   completetime: 4
   materials:
     Steel: 100
     Glass: 900
+
+- type: latheRecipe
+  id: BoozeDispenserMachineCircuitboard
+  result: BoozeDispenserMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+
+- type: latheRecipe
+  id: SodaDispenserMachineCircuitboard
+  result: SodaDispenserMachineCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900

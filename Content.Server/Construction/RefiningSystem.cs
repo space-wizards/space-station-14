@@ -2,6 +2,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Tools;
 using Content.Server.Stack;
 using Content.Shared.Interaction;
+using Content.Shared.Stacks;
 using Content.Shared.Tools.Components;
 
 namespace Content.Server.Construction
@@ -19,7 +20,7 @@ namespace Content.Server.Construction
         private async void OnInteractUsing(EntityUid uid, WelderRefinableComponent component, InteractUsingEvent args)
         {
             // check if object is welder
-            if (!TryComp(args.Used, out ToolComponent? tool))
+            if (!HasComp<ToolComponent>(args.Used))
                 return;
 
             // check if someone is already welding object

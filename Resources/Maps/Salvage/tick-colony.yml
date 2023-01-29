@@ -1,82 +1,121 @@
 meta:
-  format: 2
+  format: 3
   name: DemoStation
   author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
   1: FloorArcadeBlue
-  2: FloorArcadeRed
-  3: FloorAsteroidIronsand1
-  4: FloorAsteroidIronsand2
-  5: FloorAsteroidIronsand3
-  6: FloorAsteroidIronsand4
-  7: FloorEighties
-  8: FloorGrassJungle
-  9: FloorShuttleBlue
-  10: FloorShuttleOrange
-  11: FloorShuttlePurple
-  12: FloorShuttleRed
-  13: FloorShuttleWhite
-  14: FloorAsteroidCoarseSand0
-  15: FloorAsteroidCoarseSand1
-  16: FloorAsteroidCoarseSand2
-  17: FloorAsteroidCoarseSandDug
-  18: FloorAsteroidSand
-  19: FloorAsteroidTile
-  20: FloorBar
-  21: FloorBlue
-  22: FloorBlueCircuit
-  23: FloorClown
-  24: FloorDark
-  25: FloorElevatorShaft
-  26: FloorFreezer
-  27: FloorGlass
-  28: FloorGold
-  29: FloorGrass
-  30: FloorGreenCircuit
-  31: FloorHydro
-  32: FloorKitchen
-  33: FloorLaundry
-  34: FloorLino
-  35: FloorMime
-  36: FloorMono
-  37: FloorReinforced
-  38: FloorRGlass
-  39: FloorRockVault
-  40: FloorShowroom
-  41: FloorSilver
-  42: FloorSnow
-  43: FloorSteel
-  44: FloorSteelDirty
-  45: FloorTechMaint
-  46: FloorWhite
-  47: FloorWood
-  48: Lattice
-  49: Plating
-  50: Plating
-grids:
-- settings:
-    chunksize: 16
-    tilesize: 1
-  chunks:
-  - ind: "-1,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAA==
-  - ind: "-1,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: "0,0"
-    tiles: EgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: "0,-1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAASAAAAEgAAABIAAAASAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAEgAAABIAAAASAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEgAAABIAAAASAAAAEgAAABIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+  2: FloorArcadeBlue2
+  3: FloorArcadeRed
+  4: FloorAsteroidCoarseSand0
+  5: FloorAsteroidCoarseSandDug
+  6: FloorAsteroidIronsand1
+  7: FloorAsteroidIronsand2
+  8: FloorAsteroidIronsand3
+  9: FloorAsteroidIronsand4
+  10: FloorAsteroidSand
+  11: FloorAsteroidTile
+  12: FloorBar
+  13: FloorBlue
+  14: FloorBlueCircuit
+  15: FloorBoxing
+  16: FloorCarpetClown
+  17: FloorCarpetOffice
+  18: FloorCave
+  19: FloorCaveDrought
+  20: FloorClown
+  21: FloorDark
+  22: FloorDarkDiagonal
+  23: FloorDarkDiagonalMini
+  24: FloorDarkHerringbone
+  25: FloorDarkMini
+  26: FloorDarkMono
+  27: FloorDarkOffset
+  28: FloorDarkPavement
+  29: FloorDarkPavementVertical
+  30: FloorDarkPlastic
+  31: FloorDirt
+  32: FloorEighties
+  33: FloorElevatorShaft
+  34: FloorFreezer
+  35: FloorGlass
+  36: FloorGold
+  37: FloorGrass
+  38: FloorGrassDark
+  39: FloorGrassJungle
+  40: FloorGrassLight
+  41: FloorGreenCircuit
+  42: FloorGym
+  43: FloorHydro
+  44: FloorKitchen
+  45: FloorLaundry
+  46: FloorLino
+  47: FloorMetalDiamond
+  48: FloorMime
+  49: FloorMono
+  50: FloorPlastic
+  51: FloorRGlass
+  52: FloorReinforced
+  53: FloorRockVault
+  54: FloorShowroom
+  55: FloorShuttleBlue
+  56: FloorShuttleOrange
+  57: FloorShuttlePurple
+  58: FloorShuttleRed
+  59: FloorShuttleWhite
+  60: FloorSilver
+  61: FloorSnow
+  62: FloorSteel
+  63: FloorSteelDiagonal
+  64: FloorSteelDiagonalMini
+  65: FloorSteelDirty
+  66: FloorSteelHerringbone
+  67: FloorSteelMini
+  68: FloorSteelMono
+  69: FloorSteelOffset
+  70: FloorSteelPavement
+  71: FloorSteelPavementVertical
+  72: FloorTechMaint
+  73: FloorTechMaint2
+  74: FloorTechMaint3
+  75: FloorWhite
+  76: FloorWhiteDiagonal
+  77: FloorWhiteDiagonalMini
+  78: FloorWhiteHerringbone
+  79: FloorWhiteMini
+  80: FloorWhiteMono
+  81: FloorWhiteOffset
+  82: FloorWhitePavement
+  83: FloorWhitePavementVertical
+  84: FloorWhitePlastic
+  85: FloorWood
+  86: FloorWoodTile
+  87: Lattice
+  88: Plating
 entities:
 - uid: 0
   components:
+  - type: MetaData
   - parent: null
     type: Transform
-  - index: 0
+  - chunks:
+      -1,-1:
+        ind: -1,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAA==
+      -1,0:
+        ind: -1,0
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      0,0:
+        ind: 0,0
+        tiles: CgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+      0,-1:
+        ind: 0,-1
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     type: MapGrid
-  - angularDamping: 100
-    linearDamping: 50
+  - type: Broadphase
+  - angularDamping: 0.05
+    linearDamping: 0.05
     fixedRotation: False
     bodyType: Dynamic
     type: Physics
@@ -112,10 +151,131 @@ entities:
       0,0: 0
       0,-2: 0
       0,-1: 0
+      -6,-4: 0
+      -6,-3: 0
+      -6,-2: 0
+      -6,-1: 0
+      -5,-5: 0
+      -5,-4: 0
+      -5,-3: 0
+      -5,-2: 0
+      -5,-1: 0
+      -4,-6: 0
+      -4,-5: 0
+      -4,-4: 0
+      -4,-3: 0
+      -4,-2: 0
+      -4,-1: 0
+      -3,-7: 0
+      -3,-6: 0
+      -3,-5: 0
+      -3,-4: 0
+      -3,-3: 0
+      -3,-2: 0
+      -3,-1: 0
+      -2,-7: 0
+      -2,-6: 0
+      -2,-5: 0
+      -2,-4: 0
+      -2,-3: 0
+      -1,-7: 0
+      -1,-6: 0
+      -1,-5: 0
+      -1,-4: 0
+      -1,-3: 0
+      -6,0: 0
+      -6,1: 0
+      -6,2: 0
+      -5,0: 0
+      -5,1: 0
+      -5,2: 0
+      -5,3: 0
+      -4,0: 0
+      -4,1: 0
+      -4,2: 0
+      -4,3: 0
+      -4,4: 0
+      -4,5: 0
+      -3,0: 0
+      -3,1: 0
+      -3,2: 0
+      -3,3: 0
+      -3,4: 0
+      -3,5: 0
+      -3,6: 0
+      -2,1: 0
+      -2,2: 0
+      -2,3: 0
+      -2,4: 0
+      -2,5: 0
+      -2,6: 0
+      -1,1: 0
+      -1,2: 0
+      -1,3: 0
+      -1,4: 0
+      -1,5: 0
+      -1,6: 0
+      0,1: 0
+      0,2: 0
+      0,3: 0
+      0,4: 0
+      0,5: 0
+      0,6: 0
+      1,0: 0
+      1,1: 0
+      1,2: 0
+      1,3: 0
+      1,4: 0
+      1,5: 0
+      1,6: 0
+      2,0: 0
+      2,1: 0
+      2,2: 0
+      2,3: 0
+      2,4: 0
+      2,5: 0
+      3,0: 0
+      3,1: 0
+      3,2: 0
+      3,3: 0
+      4,0: 0
+      4,1: 0
+      4,2: 0
+      0,-7: 0
+      0,-6: 0
+      0,-5: 0
+      0,-4: 0
+      0,-3: 0
+      1,-7: 0
+      1,-6: 0
+      1,-5: 0
+      1,-4: 0
+      1,-3: 0
+      1,-2: 0
+      1,-1: 0
+      2,-6: 0
+      2,-5: 0
+      2,-4: 0
+      2,-3: 0
+      2,-2: 0
+      2,-1: 0
+      3,-5: 0
+      3,-4: 0
+      3,-3: 0
+      3,-2: 0
+      3,-1: 0
+      4,-4: 0
+      4,-3: 0
+      4,-2: 0
+      4,-1: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
+      - 0
+      - 0
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -135,6 +295,10 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     - volume: 2500
       temperature: 184.23125
       moles:
@@ -146,7 +310,14 @@ entities:
       - 0
       - 0
       - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
+  - type: OccluderTree
+  - type: Shuttle
+  - type: GridPathfinding
 - uid: 1
   type: AsteroidRockMining
   components:
@@ -657,787 +828,22 @@ entities:
   - pos: 1.5,-0.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-
 - uid: 86
   type: ClosetMaintenance
   components:
   - pos: -3.5,1.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
-
 - uid: 87
   type: CratePlasma
   components:
   - pos: -2.5,-2.5
     parent: 0
     type: Transform
-  - isPlaceable: False
-    type: PlaceableSurface
   - containers:
     - EntityStorageComponent
+    - entity_storage
     type: Construction
-  - containers:
-      entity_storage: !type:Container
-        ents: []
-      paper_label: !type:ContainerSlot {}
-    type: ContainerContainer
-- uid: 88
-  type: SalvageHumanCorpse
-  components:
-  - pos: -1.506144,4.5847845
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        radius: 0.35
-      mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      layer:
-      - Opaque
-    type: Fixtures
-  - standing: False
-    type: StandingState
-  - solutions:
-      chemicals:
-        reagents: []
-      bloodstream:
-        reagents:
-        - Quantity: 300
-          ReagentId: Blood
-      bloodstreamTemporary:
-        reagents: []
-    type: SolutionContainerManager
-  - containers:
-      Body-BodyComponent: !type:Container
-        ents:
-        - 89
-        - 92
-        - 98
-        - 99
-        - 100
-        - 101
-        - 102
-        - 103
-        - 104
-        - 105
-      left hand: !type:ContainerSlot
-        occludes: False
-      right hand: !type:ContainerSlot
-        occludes: False
-      Cuffable: !type:Container
-        ents: []
-      shoes: !type:ContainerSlot
-        occludes: False
-      jumpsuit: !type:ContainerSlot
-        occludes: False
-      outerClothing: !type:ContainerSlot
-        occludes: False
-      gloves: !type:ContainerSlot
-        occludes: False
-      neck: !type:ContainerSlot
-        occludes: False
-      mask: !type:ContainerSlot
-        occludes: False
-      eyes: !type:ContainerSlot
-        occludes: False
-      ears: !type:ContainerSlot
-        occludes: False
-      head: !type:ContainerSlot
-        occludes: False
-      pocket1: !type:ContainerSlot
-        occludes: False
-      pocket2: !type:ContainerSlot
-        occludes: False
-      id: !type:ContainerSlot
-        occludes: False
-      belt: !type:ContainerSlot
-        occludes: False
-      back: !type:ContainerSlot
-        occludes: False
-    type: ContainerContainer
-  - mustBeDead: True
-    type: GhostOnMove
-- uid: 89
-  type: HeadHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 90
-        - 91
-    type: ContainerContainer
-- uid: 90
-  type: OrganHumanBrain
-  components:
-  - parent: 89
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 91
-  type: OrganHumanEyes
-  components:
-  - parent: 89
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 92
-  type: TorsoHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 93
-        - 94
-        - 95
-        - 96
-        - 97
-    type: ContainerContainer
-- uid: 93
-  type: OrganHumanHeart
-  components:
-  - parent: 92
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 94
-  type: OrganHumanLungs
-  components:
-  - parent: 92
-    type: Transform
-  - solutions:
-      Lung:
-        canReact: False
-        reagents: []
-    type: SolutionContainerManager
-  - canCollide: False
-    type: Physics
-- uid: 95
-  type: OrganHumanStomach
-  components:
-  - parent: 92
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 96
-  type: OrganHumanLiver
-  components:
-  - parent: 92
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 97
-  type: OrganHumanKidneys
-  components:
-  - parent: 92
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 98
-  type: LeftArmHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 99
-  type: LeftHandHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 100
-  type: RightArmHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 101
-  type: RightHandHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 102
-  type: LeftLegHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 103
-  type: LeftFootHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 104
-  type: RightLegHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 105
-  type: RightFootHuman
-  components:
-  - parent: 88
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 106
-  type: SalvageHumanCorpse
-  components:
-  - pos: -0.70098996,4.334125
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        radius: 0.35
-      mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      layer:
-      - Opaque
-    type: Fixtures
-  - standing: False
-    type: StandingState
-  - solutions:
-      chemicals:
-        reagents: []
-      bloodstream:
-        reagents:
-        - Quantity: 300
-          ReagentId: Blood
-      bloodstreamTemporary:
-        reagents: []
-    type: SolutionContainerManager
-  - containers:
-      Body-BodyComponent: !type:Container
-        ents:
-        - 107
-        - 110
-        - 116
-        - 117
-        - 118
-        - 119
-        - 120
-        - 121
-        - 122
-        - 123
-      left hand: !type:ContainerSlot
-        occludes: False
-      right hand: !type:ContainerSlot
-        occludes: False
-      Cuffable: !type:Container
-        ents: []
-      shoes: !type:ContainerSlot
-        occludes: False
-      jumpsuit: !type:ContainerSlot
-        occludes: False
-      outerClothing: !type:ContainerSlot
-        occludes: False
-      gloves: !type:ContainerSlot
-        occludes: False
-      neck: !type:ContainerSlot
-        occludes: False
-      mask: !type:ContainerSlot
-        occludes: False
-      eyes: !type:ContainerSlot
-        occludes: False
-      ears: !type:ContainerSlot
-        occludes: False
-      head: !type:ContainerSlot
-        occludes: False
-      pocket1: !type:ContainerSlot
-        occludes: False
-      pocket2: !type:ContainerSlot
-        occludes: False
-      id: !type:ContainerSlot
-        occludes: False
-      belt: !type:ContainerSlot
-        occludes: False
-      back: !type:ContainerSlot
-        occludes: False
-    type: ContainerContainer
-  - mustBeDead: True
-    type: GhostOnMove
-- uid: 107
-  type: HeadHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 108
-        - 109
-    type: ContainerContainer
-- uid: 108
-  type: OrganHumanBrain
-  components:
-  - parent: 107
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 109
-  type: OrganHumanEyes
-  components:
-  - parent: 107
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 110
-  type: TorsoHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 111
-        - 112
-        - 113
-        - 114
-        - 115
-    type: ContainerContainer
-- uid: 111
-  type: OrganHumanHeart
-  components:
-  - parent: 110
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 112
-  type: OrganHumanLungs
-  components:
-  - parent: 110
-    type: Transform
-  - solutions:
-      Lung:
-        canReact: False
-        reagents: []
-    type: SolutionContainerManager
-  - canCollide: False
-    type: Physics
-- uid: 113
-  type: OrganHumanStomach
-  components:
-  - parent: 110
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 114
-  type: OrganHumanLiver
-  components:
-  - parent: 110
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 115
-  type: OrganHumanKidneys
-  components:
-  - parent: 110
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 116
-  type: LeftArmHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 117
-  type: LeftHandHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 118
-  type: RightArmHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 119
-  type: RightHandHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 120
-  type: LeftLegHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 121
-  type: LeftFootHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 122
-  type: RightLegHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 123
-  type: RightFootHuman
-  components:
-  - parent: 106
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 124
-  type: SalvageHumanCorpse
-  components:
-  - pos: -1.3081551,4.030695
-    parent: 0
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        radius: 0.35
-      mask:
-      - Impassable
-      - MidImpassable
-      - LowImpassable
-      layer:
-      - Opaque
-    type: Fixtures
-  - standing: False
-    type: StandingState
-  - solutions:
-      chemicals:
-        reagents: []
-      bloodstream:
-        reagents:
-        - Quantity: 300
-          ReagentId: Blood
-      bloodstreamTemporary:
-        reagents: []
-    type: SolutionContainerManager
-  - containers:
-      Body-BodyComponent: !type:Container
-        ents:
-        - 125
-        - 128
-        - 134
-        - 135
-        - 136
-        - 137
-        - 138
-        - 139
-        - 140
-        - 141
-      left hand: !type:ContainerSlot
-        occludes: False
-      right hand: !type:ContainerSlot
-        occludes: False
-      Cuffable: !type:Container
-        ents: []
-      shoes: !type:ContainerSlot
-        occludes: False
-      jumpsuit: !type:ContainerSlot
-        occludes: False
-      outerClothing: !type:ContainerSlot
-        occludes: False
-      gloves: !type:ContainerSlot
-        occludes: False
-      neck: !type:ContainerSlot
-        occludes: False
-      mask: !type:ContainerSlot
-        occludes: False
-      eyes: !type:ContainerSlot
-        occludes: False
-      ears: !type:ContainerSlot
-        occludes: False
-      head: !type:ContainerSlot
-        occludes: False
-      pocket1: !type:ContainerSlot
-        occludes: False
-      pocket2: !type:ContainerSlot
-        occludes: False
-      id: !type:ContainerSlot
-        occludes: False
-      belt: !type:ContainerSlot
-        occludes: False
-      back: !type:ContainerSlot
-        occludes: False
-    type: ContainerContainer
-  - mustBeDead: True
-    type: GhostOnMove
-- uid: 125
-  type: HeadHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 126
-        - 127
-    type: ContainerContainer
-- uid: 126
-  type: OrganHumanBrain
-  components:
-  - parent: 125
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 127
-  type: OrganHumanEyes
-  components:
-  - parent: 125
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 128
-  type: TorsoHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents:
-        - 129
-        - 130
-        - 131
-        - 132
-        - 133
-    type: ContainerContainer
-- uid: 129
-  type: OrganHumanHeart
-  components:
-  - parent: 128
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 130
-  type: OrganHumanLungs
-  components:
-  - parent: 128
-    type: Transform
-  - solutions:
-      Lung:
-        canReact: False
-        reagents: []
-    type: SolutionContainerManager
-  - canCollide: False
-    type: Physics
-- uid: 131
-  type: OrganHumanStomach
-  components:
-  - parent: 128
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 132
-  type: OrganHumanLiver
-  components:
-  - parent: 128
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 133
-  type: OrganHumanKidneys
-  components:
-  - parent: 128
-    type: Transform
-  - canCollide: False
-    type: Physics
-- uid: 134
-  type: LeftArmHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 135
-  type: LeftHandHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 136
-  type: RightArmHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 137
-  type: RightHandHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 138
-  type: LeftLegHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 139
-  type: LeftFootHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 140
-  type: RightLegHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 141
-  type: RightFootHuman
-  components:
-  - parent: 124
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - containers:
-      BodyPart-BodyPartComponent: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 142
   type: AsteroidRockMining
   components:

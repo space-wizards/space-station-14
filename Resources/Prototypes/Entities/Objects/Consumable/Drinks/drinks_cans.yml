@@ -65,7 +65,6 @@
     tags:
     - Cola
     - Recyclable
-    - Trash
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
   - type: Item

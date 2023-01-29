@@ -29,6 +29,8 @@ using Content.Shared.Destructible;
 using static Content.Shared.Storage.SharedStorageComponent;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CombatMode;
+using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Implants.Components;
 using Content.Shared.Movement.Events;
 
 namespace Content.Server.Storage.EntitySystems
@@ -60,8 +62,9 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
             SubscribeLocalEvent<ServerStorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
-            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ServerStorageComponent, InteractUsingEvent>(OnInteractUsing, after: new []{ typeof(ItemSlotsSystem)} );
             SubscribeLocalEvent<ServerStorageComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<ServerStorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
             SubscribeLocalEvent<ServerStorageComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<ServerStorageComponent, DestructionEventArgs>(OnDestroy);
             SubscribeLocalEvent<ServerStorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
@@ -278,6 +281,17 @@ namespace Content.Server.Storage.EntitySystems
         }
 
         /// <summary>
+        /// Specifically for storage implants.
+        /// </summary>
+        private void OnImplantActivate(EntityUid uid, ServerStorageComponent storageComp, OpenStorageImplantEvent args)
+        {
+            if (args.Handled || !TryComp<TransformComponent>(uid, out var xform))
+                return;
+
+            OpenStorageUI(uid, xform.ParentUid, storageComp);
+        }
+
+        /// <summary>
         /// Allows a user to pick up entities by clicking them, or pick up all entities in a certain radius
         /// around a click.
         /// </summary>
@@ -298,10 +312,11 @@ namespace Content.Server.Storage.EntitySystems
                 var validStorables = new List<EntityUid>();
                 var itemQuery = GetEntityQuery<ItemComponent>();
 
-                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.None))
+                foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
                 {
                     if (entity == args.User
                         || !itemQuery.HasComponent(entity)
+                        || !CanInsert(uid, entity, out _, storageComp)
                         || !_interactionSystem.InRangeUnobstructed(args.User, entity))
                         continue;
 
@@ -708,7 +723,7 @@ namespace Content.Server.Storage.EntitySystems
         {
             if (!storageComp.ShowPopup) return;
 
-            _popupSystem.PopupEntity(Loc.GetString(message), player, Filter.Entities(player));
+            _popupSystem.PopupEntity(Loc.GetString(message), player, player);
         }
 
         /// <summary>

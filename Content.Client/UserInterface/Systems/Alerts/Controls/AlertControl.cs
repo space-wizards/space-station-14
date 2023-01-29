@@ -4,6 +4,7 @@ using Content.Shared.Alert;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Alerts.Controls
 {
@@ -65,7 +66,9 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
 
         private Control SupplyTooltip(Control? sender)
         {
-            return new ActionAlertTooltip(Alert.Name, Alert.Description) {Cooldown = Cooldown};
+            var msg = FormattedMessage.FromMarkup(Loc.GetString(Alert.Name));
+            var desc = FormattedMessage.FromMarkup(Loc.GetString(Alert.Description));
+            return new ActionAlertTooltip(msg, desc) {Cooldown = Cooldown};
         }
 
         /// <summary>

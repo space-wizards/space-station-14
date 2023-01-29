@@ -2,7 +2,6 @@
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Temperature;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.GameObjects;
 
@@ -25,8 +24,8 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        var query = EntityManager.EntityQuery<ArtifactHeatTriggerComponent, TransformComponent, ArtifactComponent>();
-        foreach (var (trigger, transform, artifact) in query)
+        List<ArtifactComponent> toUpdate = new();
+        foreach (var (trigger, transform, artifact) in EntityQuery<ArtifactHeatTriggerComponent, TransformComponent, ArtifactComponent>())
         {
             var uid = trigger.Owner;
             var environment = _atmosphereSystem.GetTileMixture(transform.GridUid, transform.MapUid,
@@ -37,7 +36,12 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
             if (environment.Temperature < trigger.ActivationTemperature)
                 continue;
 
-            _artifactSystem.TryActivateArtifact(trigger.Owner, component: artifact);
+            toUpdate.Add(artifact);
+        }
+
+        foreach (var a in toUpdate)
+        {
+            _artifactSystem.TryActivateArtifact(a.Owner, null, a);
         }
     }
 
@@ -61,7 +65,7 @@ public sealed class ArtifactHeatTriggerSystem : EntitySystem
     private bool CheckHot(EntityUid usedUid)
     {
         var hotEvent = new IsHotEvent();
-        RaiseLocalEvent(usedUid, hotEvent, false);
+        RaiseLocalEvent(usedUid, hotEvent);
         return hotEvent.IsHot;
     }
 }

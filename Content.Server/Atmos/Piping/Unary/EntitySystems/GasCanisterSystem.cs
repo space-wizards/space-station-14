@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
@@ -206,19 +207,19 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (canister.Air.Pressure < 10)
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 0);
+                _appearanceSystem.SetData(uid, GasCanisterVisuals.PressureState, 0, appearance);
             }
             else if (canister.Air.Pressure < Atmospherics.OneAtmosphere)
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 1);
+                _appearanceSystem.SetData(uid, GasCanisterVisuals.PressureState, 1, appearance);
             }
             else if (canister.Air.Pressure < (15 * Atmospherics.OneAtmosphere))
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 2);
+                _appearanceSystem.SetData(uid, GasCanisterVisuals.PressureState, 2, appearance);
             }
             else
             {
-                appearance.SetData(GasCanisterVisuals.PressureState, 3);
+                _appearanceSystem.SetData(uid, GasCanisterVisuals.PressureState, 3, appearance);
             }
         }
 
@@ -228,13 +229,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
             {
-                _popupSystem.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("gas-canister-popup-denied"), uid, args.User);
                 if (component.AccessDeniedSound != null)
                     _audioSys.PlayPvs(component.AccessDeniedSound, uid);
                 return;
             }
 
-            _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
+            _userInterfaceSystem.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
             args.Handled = true;
         }
 
@@ -246,13 +247,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
                 return;
 
-            _userInterfaceSystem.GetUiOrNull(uid, GasCanisterUiKey.Key)?.Open(actor.PlayerSession);
+            _userInterfaceSystem.TryOpen(uid, GasCanisterUiKey.Key, actor.PlayerSession);
             args.Handled = true;
         }
 
         private void OnCanisterInteractUsing(EntityUid canister, GasCanisterComponent component, InteractUsingEvent args)
         {
-            var container = canister.EnsureContainer<ContainerSlot>(component.ContainerName);
+            var container = _containerSystem.EnsureContainer<ContainerSlot>(canister, component.ContainerName);
 
             // Container full.
             if (container.ContainedEntity != null)
@@ -277,10 +278,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             DirtyUI(uid, component);
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
-
-            appearance.SetData(GasCanisterVisuals.TankInserted, true);
+            _appearanceSystem.SetData(uid, GasCanisterVisuals.TankInserted, true);
         }
 
         private void OnCanisterContainerRemoved(EntityUid uid, GasCanisterComponent component, EntRemovedFromContainerMessage args)
@@ -290,10 +288,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             DirtyUI(uid, component);
 
-            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-                return;
-
-            appearance.SetData(GasCanisterVisuals.TankInserted, false);
+            _appearanceSystem.SetData(uid, GasCanisterVisuals.TankInserted, false);
         }
 
         /// <summary>

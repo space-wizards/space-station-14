@@ -31,9 +31,15 @@
       layer:
       - SmallMobLayer
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       15: Dead
+  - type: Stamina
+    excess: 15
   - type: MovementAlwaysTouching
   - type: Appearance
   - type: DamageStateVisuals
@@ -55,24 +61,21 @@
       name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Effects/bite.ogg
     angle: 0
     animation: WeaponArcBite
     damage:
       groups:
         Brute: 2
-  - type: MeleeChemicalInjector
   - type: SolutionContainerManager
     solutions:
       melee:
         reagents:
         - ReagentId: Toxin
           Quantity: 5
-  - type: RefillableSolution
+  - type: MeleeChemicalInjector
     solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
   - type: GhostTakeoverAvailable
     prob: 0.33
     makeSentient: true

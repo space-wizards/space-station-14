@@ -1,4 +1,4 @@
-﻿using Content.Server.DoAfter;
+using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
@@ -53,6 +53,7 @@ public sealed class StickySystem : EntitySystem
 
         args.Verbs.Add(new Verb
         {
+            DoContactInteraction = true,
             Text = Loc.GetString("comp-sticky-unstick-verb-text"),
             IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png",
             Act = () => StartUnsticking(uid, args.User, component)
@@ -78,7 +79,7 @@ public sealed class StickySystem : EntitySystem
             if (component.StickPopupStart != null)
             {
                 var msg = Loc.GetString(component.StickPopupStart);
-                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+                _popupSystem.PopupEntity(msg, user, user);
             }
 
             // start sticking object to target
@@ -121,7 +122,7 @@ public sealed class StickySystem : EntitySystem
             if (component.UnstickPopupStart != null)
             {
                 var msg = Loc.GetString(component.UnstickPopupStart);
-                _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+                _popupSystem.PopupEntity(msg, user, user);
             }
 
             // start unsticking object
@@ -165,7 +166,7 @@ public sealed class StickySystem : EntitySystem
         if (component.StickPopupSuccess != null)
         {
             var msg = Loc.GetString(component.StickPopupSuccess);
-            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(msg, user, user);
         }
 
         // send information to appearance that entity is stuck
@@ -206,7 +207,7 @@ public sealed class StickySystem : EntitySystem
         if (component.UnstickPopupSuccess != null)
         {
             var msg = Loc.GetString(component.UnstickPopupSuccess);
-            _popupSystem.PopupEntity(msg, user, Filter.Entities(user));
+            _popupSystem.PopupEntity(msg, user, user);
         }
 
         component.StuckTo = null;

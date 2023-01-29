@@ -25,7 +25,7 @@ namespace Content.Server.Light.EntitySystems
             SetState(uid, bulb.State, bulb);
         }
 
-        private void HandleLand(EntityUid uid, LightBulbComponent bulb, LandEvent args)
+        private void HandleLand(EntityUid uid, LightBulbComponent bulb, ref LandEvent args)
         {
             PlayBreakSound(uid, bulb);
             SetState(uid, LightBulbState.Broken, bulb);

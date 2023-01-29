@@ -3,6 +3,7 @@ using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -11,8 +12,6 @@ namespace Content.Server.Construction
 {
     public sealed partial class ConstructionSystem
     {
-        [Dependency] private readonly ContainerSystem _containerSystem = default!;
-
         private void InitializeGraphs()
         {
         }
@@ -231,7 +230,12 @@ namespace Content.Server.Construction
             ||  GetNodeFromGraph(graph, id) is not {} node)
                 return false;
 
+            var oldNode = construction.Node;
             construction.Node = id;
+
+            if (userUid != null)
+                _adminLogger.Add(LogType.Construction, LogImpact.Low,
+                    $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
             if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
@@ -329,11 +333,11 @@ namespace Content.Server.Construction
                 // Transfer all construction-owned containers from the old entity to the new one.
                 foreach (var container in construction.Containers)
                 {
-                    if (!_containerSystem.TryGetContainer(uid, container, out var ourContainer, containerManager))
+                    if (!_container.TryGetContainer(uid, container, out var ourContainer, containerManager))
                         continue;
 
                     // NOTE: Only Container is supported by Construction!
-                    var otherContainer = _containerSystem.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    var otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
 
                     for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {

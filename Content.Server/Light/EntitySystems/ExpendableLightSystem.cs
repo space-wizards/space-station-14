@@ -5,6 +5,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Light.Component;
 using Content.Shared.Tag;
+using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -19,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -64,7 +66,7 @@ namespace Content.Server.Light.EntitySystems
 
                         _tagSystem.AddTag(component.Owner, "Trash");
 
-                        UpdateSpriteAndSounds(component);
+                        UpdateSounds(component);
                         UpdateVisualizer(component);
 
                         if (TryComp<ItemComponent>(component.Owner, out var item))
@@ -92,7 +94,7 @@ namespace Content.Server.Light.EntitySystems
                 component.CurrentState = ExpendableLightState.Lit;
                 component.StateExpiryTime = component.GlowDuration;
 
-                UpdateSpriteAndSounds(component);
+                UpdateSounds(component);
                 UpdateVisualizer(component);
 
                 return true;
@@ -119,50 +121,31 @@ namespace Content.Server.Light.EntitySystems
 
                 case ExpendableLightState.Dead:
                     appearance.SetData(ExpendableLightVisuals.Behavior, string.Empty);
+                    var isHotEvent = new IsHotEvent() {IsHot = true};
+                    RaiseLocalEvent(component.Owner, isHotEvent);
                     break;
             }
         }
 
-        private void UpdateSpriteAndSounds(ExpendableLightComponent component)
+        private void UpdateSounds(ExpendableLightComponent component)
         {
-            if (TryComp<SpriteComponent>(component.Owner, out var sprite))
+            var uid = component.Owner;
+
+            switch (component.CurrentState)
             {
-                switch (component.CurrentState)
-                {
-                    case ExpendableLightState.Lit:
-                    {
-                        SoundSystem.Play(component.LitSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
-
-                        if (component.IconStateLit != string.Empty)
-                        {
-                            sprite.LayerSetState(2, component.IconStateLit);
-                            sprite.LayerSetShader(2, "shaded");
-                        }
-
-                        sprite.LayerSetVisible(1, true);
-                        break;
-                    }
-                    case ExpendableLightState.Fading:
-                    {
-                        break;
-                    }
-                    default:
-                    case ExpendableLightState.Dead:
-                    {
-                        if (component.DieSound != null)
-                            SoundSystem.Play(component.DieSound.GetSound(), Filter.Pvs(component.Owner), component.Owner);
-
-                        sprite.LayerSetState(0, component.IconStateSpent);
-                        sprite.LayerSetShader(0, "shaded");
-                        sprite.LayerSetVisible(1, false);
-                        break;
-                    }
-                }
+                case ExpendableLightState.Lit:
+                    _audio.PlayPvs(component.LitSound, uid);
+                    break;
+                case ExpendableLightState.Fading:
+                    break;
+                default:
+                    _audio.PlayPvs(component.DieSound, uid);
+                    break;
             }
 
-            if (TryComp<ClothingComponent>(component.Owner, out var clothing))
+            if (TryComp<ClothingComponent>(uid, out var clothing))
             {
-                _clothing.SetEquippedPrefix(component.Owner, component.Activated ? "Activated" : string.Empty, clothing);
+                _clothing.SetEquippedPrefix(uid, component.Activated ? "Activated" : string.Empty, clothing);
             }
         }
 
@@ -180,7 +163,8 @@ namespace Content.Server.Light.EntitySystems
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)
         {
             if (args.Handled) return;
-
+            var isHotEvent = new IsHotEvent() {IsHot = true};
+            RaiseLocalEvent(uid, isHotEvent);
             if (TryActivate(component))
                 args.Handled = true;
         }

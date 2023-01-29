@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.Doors.Components;
 
 namespace Content.Server.Doors.Components
@@ -24,6 +25,14 @@ namespace Content.Server.Doors.Components
         /// </summary>
         [DataField("pressureThreshold"), ViewVariables(VVAccess.ReadWrite)]
         public float PressureThreshold = 20;
+
+        /// <summary>
+        /// Maximum temperature difference before the firelock will refuse to open, in k.
+        /// </summary>
+        [DataField("temperatureThreshold"), ViewVariables(VVAccess.ReadWrite)]
+        public float TemperatureThreshold = 330;
+        // this used to check for hot-spots, but because accessing that data is a a mess this now just checks
+        // temperature. This does mean a cold room will trigger hot-air pop-ups
 
         /// <summary>
         /// If true, and if this door has an <see cref="AtmosAlarmableComponent"/>, then it will only auto-close if the

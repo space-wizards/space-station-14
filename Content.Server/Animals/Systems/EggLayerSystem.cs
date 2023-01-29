@@ -1,4 +1,4 @@
-﻿using Content.Server.Actions;
+using Content.Server.Actions;
 using Content.Server.Animals.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
@@ -73,7 +73,7 @@ public sealed class EggLayerSystem : EntitySystem
         {
             if (hunger.CurrentHunger < component.HungerUsage)
             {
-                _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, Filter.Entities(uid));
+                _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-too-hungry"), uid, uid);
                 return false;
             }
 
@@ -87,8 +87,8 @@ public sealed class EggLayerSystem : EntitySystem
 
         // Sound + popups
         SoundSystem.Play(component.EggLaySound.GetSound(), Filter.Pvs(uid), uid, component.EggLaySound.Params);
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, Filter.Entities(uid));
-        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid));
+        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-user"), uid, uid);
+        _popup.PopupEntity(Loc.GetString("action-popup-lay-egg-others", ("entity", uid)), uid, Filter.PvsExcept(uid), true);
 
         return true;
     }

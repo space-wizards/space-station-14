@@ -1,11 +1,9 @@
-using Content.Server.Ensnaring.Components;
 using Content.Server.Popups;
 using Content.Shared.Ensnaring;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 
 namespace Content.Server.Ensnaring;
 
@@ -41,7 +39,7 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         ensnaring.Ensnared = null;
 
         _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-complete", ("ensnare", args.EnsnaringEntity)),
-            uid, Filter.Entities(uid), PopupType.Large);
+            uid, uid, PopupType.Large);
 
         UpdateAlert(component);
         var ev = new EnsnareRemoveEvent();
@@ -58,6 +56,6 @@ public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
         ensnaring.CancelToken = null;
 
         _popup.PopupEntity(Loc.GetString("ensnare-component-try-free-fail", ("ensnare", args.EnsnaringEntity)),
-            uid, Filter.Entities(uid), PopupType.Large);
+            uid, uid, PopupType.Large);
     }
 }

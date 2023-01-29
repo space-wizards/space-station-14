@@ -1,28 +1,23 @@
-
-using System.Linq;
-using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Strip;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Body.Part;
+using Content.Shared.CombatMode;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Input;
 using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
-using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Stunnable;
+using Content.Shared.Stacks;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -41,7 +36,6 @@ namespace Content.Server.Hands.Systems
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly StrippableSystem _strippableSystem = default!;
         [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -59,6 +53,9 @@ namespace Content.Server.Hands.Systems
             SubscribeLocalEvent<HandsComponent, PullStoppedMessage>(HandlePullStopped);
 
             SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+
+            SubscribeLocalEvent<HandsComponent, BodyPartAddedEvent>(HandleBodyPartAdded);
+            SubscribeLocalEvent<HandsComponent, BodyPartRemovedEvent>(HandleBodyPartRemoved);
 
             SubscribeLocalEvent<HandsComponent, ComponentGetState>(GetComponentState);
 
@@ -93,19 +90,9 @@ namespace Content.Server.Hands.Systems
             if (!_handsSystem.TryDrop(uid, component.ActiveHand!, null, checkActionBlocker: false))
                 return;
 
-            var targEnt = Identity.Entity(args.Target, EntityManager);
-            var msgOther = Loc.GetString("hands-component-disarm-success-others-message",
-                ("disarmer", Identity.Entity(args.Source, EntityManager)), ("disarmed", targEnt));
-            var msgUser = Loc.GetString("hands-component-disarm-success-message", ("disarmed", targEnt));
-
-            var filter = Filter.Pvs(args.Source).RemoveWhereAttachedEntity(e => e == args.Source);
-            _popupSystem.PopupEntity(msgOther, args.Source, filter);
-            _popupSystem.PopupEntity(msgUser, args.Source, Filter.Entities(args.Source));
-
             args.Handled = true; // no shove/stun.
         }
 
-        #region EntityInsertRemove
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
             EntityUid? exclude)
         {
@@ -125,7 +112,32 @@ namespace Content.Server.Hands.Systems
             if (!Deleted(args.Entity) && TryComp(args.Entity, out HandVirtualItemComponent? @virtual))
                 _virtualSystem.Delete(@virtual, uid);
         }
-        #endregion
+
+        private void HandleBodyPartAdded(EntityUid uid, HandsComponent component, ref BodyPartAddedEvent args)
+        {
+            if (args.Part.PartType != BodyPartType.Hand)
+                return;
+
+            // If this annoys you, which it should.
+            // Ping Smugleaf.
+            var location = args.Part.Symmetry switch
+            {
+                BodyPartSymmetry.None => HandLocation.Middle,
+                BodyPartSymmetry.Left => HandLocation.Left,
+                BodyPartSymmetry.Right => HandLocation.Right,
+                _ => throw new ArgumentOutOfRangeException(nameof(args.Part.Symmetry))
+            };
+
+            AddHand(uid, args.Slot, location);
+        }
+
+        private void HandleBodyPartRemoved(EntityUid uid, HandsComponent component, ref BodyPartRemovedEvent args)
+        {
+            if (args.Part.PartType != BodyPartType.Hand)
+                return;
+
+            RemoveHand(uid, args.Slot);
+        }
 
         #region pulling
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
@@ -239,7 +251,7 @@ namespace Content.Server.Hands.Systems
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
                 !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
             {
-                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
+                _popupSystem.PopupEntity(Loc.GetString("hands-system-missing-equipment-slot", ("slotName", equipmentSlot)), plyEnt, session);
                 return;
             }
 
@@ -251,7 +263,7 @@ namespace Content.Server.Hands.Systems
             {
                 if (storageComponent.StoredEntities.Count == 0)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt, Filter.SinglePlayer(session));
+                    _popupSystem.PopupEntity(Loc.GetString("hands-system-empty-equipment-slot", ("slotName", equipmentSlot)), plyEnt,  session);
                 }
                 else
                 {

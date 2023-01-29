@@ -246,11 +246,20 @@
 - type: entity
   parent: BaseSign
   id: SignAnomaly
-  name: anomaly lab sign
-  description: A sign indicating the anomaly lab.
+  name: xenoarchaeology lab sign
+  description: A sign indicating the xenoarchaeology lab.
   components:
   - type: Sprite
     state: anomaly
+
+- type: entity
+  parent: BaseSign
+  id: SignAnomaly2
+  name: anomaly lab sign
+  description: A sign indicating the anomalous research lab.
+  components:
+  - type: Sprite
+    state: anomaly2
 
 - type: entity
   parent: BaseSign
@@ -806,7 +815,7 @@
   parent: BaseSign
   id: SignShock
   name: shock sign
-  description: A sign indicating an electical hazard.
+  description: A sign indicating an electrical hazard.
   components:
   - type: Sprite
     state: shock
@@ -815,7 +824,7 @@
   parent: BaseSign
   id: SignOptical
   name: optical warning sign
-  description: A sign indicating against optical radiation.
+  description: A sign indicating an optical radiation hazard.
   components:
   - type: Sprite
     state: optical
@@ -824,7 +833,7 @@
   parent: BaseSign
   id: SignOxidants
   name: oxidants warning sign
-  description: A sign indicating against oxidzing agents.
+  description: A sign indicating an oxidizing agent hazard.
   components:
   - type: Sprite
     state: oxidants
@@ -833,7 +842,7 @@
   parent: BaseSign
   id: SignRadiation
   name: radiation warning sign
-  description: A sign indicating against ionizing radiation.
+  description: A sign indicating an ionizing radiation hazard.
   components:
   - type: Sprite
     state: radiation
@@ -968,7 +977,7 @@
   parent: BaseSign
   id: SignRadiationMed
   name: radiation sign
-  description: A sign warning against ionizing radiation.
+  description: A sign indicating an ionizing radiation hazard.
   components:
   - type: Sprite
     state: medium_radiation
@@ -1174,3 +1183,93 @@
   components:
   - type: Sprite
     state: nanotrasen_sign5
+
+- type: entity
+  parent: BaseSign
+  id: SignRedOne
+  name: one sign
+  description: A sign with a digit, one is written on it.
+  components:
+  - type: Sprite
+    state: one
+
+- type: entity
+  parent: BaseSign
+  id: SignRedTwo
+  name: two sign
+  description: A sign with a digit, two is written on it.
+  components:
+  - type: Sprite
+    state: two
+
+- type: entity
+  parent: BaseSign
+  id: SignRedThree
+  name: three sign
+  description: A sign with a digit, three is written on it.
+  components:
+  - type: Sprite
+    state: three
+
+- type: entity
+  parent: BaseSign
+  id: SignRedFour
+  name: four sign
+  description: A sign with a digit, four is written on it.
+  components:
+  - type: Sprite
+    state: four
+
+- type: entity
+  parent: BaseSign
+  id: SignRedFive
+  name: five sign
+  description: A sign with a digit, five is written on it.
+  components:
+  - type: Sprite
+    state: five
+
+- type: entity
+  parent: BaseSign
+  id: SignRedSix
+  name: six sign
+  description: A sign with a digit, six is written on it.
+  components:
+  - type: Sprite
+    state: six
+
+- type: entity
+  parent: BaseSign
+  id: SignRedSeven
+  name: seven sign
+  description: A sign with a digit, seven is written on it.
+  components:
+  - type: Sprite
+    state: seven
+
+- type: entity
+  parent: BaseSign
+  id: SignRedEight
+  name: eight sign
+  description: A sign with a digit, eight is written on it.
+  components:
+  - type: Sprite
+    state: eight
+
+- type: entity
+  parent: BaseSign
+  id: SignRedNine
+  name: nine sign
+  description: A sign with a digit, nine is written on it.
+  components:
+  - type: Sprite
+    state: nine
+
+- type: entity
+  parent: BaseSign
+  id: SignRedZero
+  name: zero sign
+  description: A sign with a digit, zero is written on it.
+  components:
+  - type: Sprite
+    state: zero

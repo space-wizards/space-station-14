@@ -4,7 +4,6 @@
   mapPath: /Maps/cluster.yml
   minPlayers: 0
   maxPlayers: 35
-  votable: true
   stations:
     Cluster:
       mapNameTemplate: '{0} Cluster Station {1}'

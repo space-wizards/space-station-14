@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Implant icons taken from Citadel Station at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/a2f6a7c20763da3d2f3cfb982e9ccd7922df6162",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "freedom"
+    },
+    {
+      "name": "explosive"
+    }
+  ]
+}

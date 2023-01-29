@@ -15,7 +15,6 @@ namespace Content.Shared.Standing
 {
     public sealed class StandingStateSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
@@ -97,11 +96,13 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(fixture, fixture.CollisionMask & ~StandingCollisionLayer);
+                    _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
 
-            if (!_gameTiming.IsFirstTimePredicted)
+            // check if component was just added or streamed to client
+            // if true, no need to play sound - mob was down before player could seen that
+            if (standingState.LifeStage <= ComponentLifeStage.Starting)
                 return true;
 
             if (playSound)
@@ -114,7 +115,8 @@ namespace Content.Shared.Standing
 
         public bool Stand(EntityUid uid,
             StandingStateComponent? standingState = null,
-            AppearanceComponent? appearance = null)
+            AppearanceComponent? appearance = null,
+            bool force = false)
         {
             // TODO: This should actually log missing comps...
             if (!Resolve(uid, ref standingState, false))
@@ -126,11 +128,14 @@ namespace Content.Shared.Standing
             if (standingState.Standing)
                 return true;
 
-            var msg = new StandAttemptEvent();
-            RaiseLocalEvent(uid, msg, false);
+            if (!force)
+            {
+                var msg = new StandAttemptEvent();
+                RaiseLocalEvent(uid, msg, false);
 
-            if (msg.Cancelled)
-                return false;
+                if (msg.Cancelled)
+                    return false;
+            }
 
             standingState.Standing = true;
             Dirty(standingState);
@@ -143,7 +148,7 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(fixture, fixture.CollisionMask | StandingCollisionLayer);
+                        _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
                 }
             }
             standingState.ChangedFixtures.Clear();

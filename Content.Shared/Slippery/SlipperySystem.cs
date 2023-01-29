@@ -85,7 +85,7 @@ namespace Content.Shared.Slippery
                 return;
 
             if (TryComp(other, out PhysicsComponent? physics))
-                _physics.SetLinearVelocity(physics, physics.LinearVelocity * component.LaunchForwardsMultiplier);
+                _physics.SetLinearVelocity(other, physics.LinearVelocity * component.LaunchForwardsMultiplier, body: physics);
 
             var playSound = !_statusEffectsSystem.HasStatusEffect(other, "KnockedDown");
 
@@ -99,6 +99,14 @@ namespace Content.Shared.Slippery
 
             _adminLogger.Add(LogType.Slip, LogImpact.Low,
                 $"{ToPrettyString(other):mob} slipped on collision with {ToPrettyString(component.Owner):entity}");
+        }
+
+        public void CopyConstruct(EntityUid destUid, SlipperyComponent srcSlip)
+        {
+            var destEvaporation = EntityManager.EnsureComponent<SlipperyComponent>(destUid);
+            destEvaporation.SlipSound = srcSlip.SlipSound;
+            destEvaporation.ParalyzeTime = srcSlip.ParalyzeTime;
+            destEvaporation.LaunchForwardsMultiplier = srcSlip.LaunchForwardsMultiplier;
         }
     }
 

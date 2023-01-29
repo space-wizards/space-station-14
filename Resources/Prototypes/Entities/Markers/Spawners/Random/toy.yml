@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Fun/toys.rsi/plushie_h.png
+        - sprite: Objects/Fun/toys.rsi
+          state: plushie_h
     - type: RandomSpawner
       rarePrototypes:
         - FoamBlade
@@ -40,7 +41,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Fun/toys.rsi/ripleytoy.png
+        - sprite: Objects/Fun/toys.rsi
+          state: ripleytoy
     - type: RandomSpawner
       prototypes:
         - ToyAi

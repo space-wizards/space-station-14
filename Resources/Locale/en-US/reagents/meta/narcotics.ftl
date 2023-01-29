@@ -24,3 +24,6 @@ reagent-desc-nocturine = Makes you feel very tired and unable to stand up. Basic
 
 reagent-name-mute-toxin = mute toxin
 reagent-desc-mute-toxin = Makes you unable to talk while metabolizing.
+
+reagent-name-norepinephric-acid = norepinephric acid
+reagent-desc-norepinephric-acid = Makes you unable to see while metabolizing.

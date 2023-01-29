@@ -46,10 +46,11 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         foreach (var comp in EntityQuery<ActiveJetpackComponent>())
         {
-            comp.Accumulator += frameTime;
+            if (_timing.CurTime < comp.TargetTime)
+                continue;
 
-            if (comp.Accumulator < comp.EffectCooldown) continue;
-            comp.Accumulator -= comp.EffectCooldown;
+            comp.TargetTime = _timing.CurTime + TimeSpan.FromSeconds(comp.EffectCooldown);
+
             CreateParticles(comp.Owner);
         }
     }
@@ -68,7 +69,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
         if (_mapManager.TryGetGrid(gridUid, out var grid))
         {
-            coordinates = new EntityCoordinates(grid.GridEntityId, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
+            coordinates = new EntityCoordinates(grid.Owner, grid.WorldToLocal(coordinates.ToMapPos(EntityManager)));
         }
         else if (uidXform.MapUid != null)
         {

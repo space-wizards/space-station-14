@@ -33,17 +33,15 @@ public abstract class PathRequest
     #region Data
 
     public readonly PathFlags Flags;
-    public readonly float Range;
     public readonly int CollisionLayer;
     public readonly int CollisionMask;
 
     #endregion
 
-    public PathRequest(EntityCoordinates start, PathFlags flags, float range, int layer, int mask, CancellationToken cancelToken)
+    public PathRequest(EntityCoordinates start, PathFlags flags, int layer, int mask, CancellationToken cancelToken)
     {
         Start = start;
         Flags = flags;
-        Range = range;
         CollisionLayer = layer;
         CollisionMask = mask;
         Tcs = new TaskCompletionSource<PathResult>(cancelToken);
@@ -54,15 +52,21 @@ public sealed class AStarPathRequest : PathRequest
 {
     public EntityCoordinates End;
 
+    /// <summary>
+    /// How close we need to be to the end node to be considered as arrived.
+    /// </summary>
+    public float Distance;
+
     public AStarPathRequest(
         EntityCoordinates start,
         EntityCoordinates end,
         PathFlags flags,
-        float range,
+        float distance,
         int layer,
         int mask,
-        CancellationToken cancelToken) : base(start, flags, range, layer, mask, cancelToken)
+        CancellationToken cancelToken) : base(start, flags, layer, mask, cancelToken)
     {
+        Distance = distance;
         End = end;
     }
 }
@@ -84,10 +88,9 @@ public sealed class BFSPathRequest : PathRequest
         int expansionLimit,
         EntityCoordinates start,
         PathFlags flags,
-        float range,
         int layer,
         int mask,
-        CancellationToken cancelToken) : base(start, flags, range, layer, mask, cancelToken)
+        CancellationToken cancelToken) : base(start, flags, layer, mask, cancelToken)
         {
             ExpansionRange = expansionRange;
             ExpansionLimit = expansionLimit;

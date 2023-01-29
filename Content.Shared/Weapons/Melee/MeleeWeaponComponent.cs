@@ -5,6 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Weapons.Melee;
@@ -25,8 +26,14 @@ public sealed class MeleeWeaponComponent : Component
     /// <summary>
     /// Next time this component is allowed to light attack. Heavy attacks are wound up and never have a cooldown.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextAttack;
+
+    /// <summary>
+    /// Starts attack cooldown when equipped if true.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
+    public bool ResetOnHandSelected = true;
 
     /*
      * Melee combat works based around 2 types of attacks:
@@ -97,7 +104,10 @@ public sealed class MeleeWeaponComponent : Component
     public Angle Angle = Angle.FromDegrees(60);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("animation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Animation = "WeaponArcSlash";
+    public string ClickAnimation = "WeaponArcPunch";
+
+    [ViewVariables(VVAccess.ReadWrite), DataField("wideAnimation", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WideAnimation = "WeaponArcSlash";
 
     // Sounds
 
@@ -127,6 +137,15 @@ public sealed class MeleeWeaponComponent : Component
     public SoundSpecifier NoDamageSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/tap.ogg");
 }
 
+/// <summary>
+/// Event raised on entity in GetWeapon function to allow systems to manually
+/// specify what the weapon should be.
+/// </summary>
+public sealed class GetMeleeWeaponEvent : HandledEntityEventArgs
+{
+    public EntityUid? Weapon;
+}
+
 [Serializable, NetSerializable]
 public sealed class MeleeWeaponComponentState : ComponentState
 {
@@ -137,11 +156,18 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public TimeSpan NextAttack;
     public TimeSpan? WindUpStart;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart)
+    public string ClickAnimation;
+    public string WideAnimation;
+    public float Range;
+
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
     {
         AttackRate = attackRate;
         Attacking = attacking;
         NextAttack = nextAttack;
         WindUpStart = windupStart;
+        ClickAnimation = clickAnimation;
+        WideAnimation = wideAnimation;
+        Range = range;
     }
 }

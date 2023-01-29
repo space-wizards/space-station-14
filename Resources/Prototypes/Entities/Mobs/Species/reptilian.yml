@@ -5,7 +5,7 @@
   id: BaseMobReptilian
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
   - type: Thirst
@@ -14,9 +14,15 @@
     state: full
   - type: Body
     prototype: Reptilian
+    requiredLegs: 2
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
+  - type: Vocal
+    sounds:
+      Male: UnisexReptilian
+      Female: UnisexReptilian
+      Unsexed: UnisexReptilian
   - type: DiseaseCarrier
     diseaseResist: 0.1
   - type: Damageable
@@ -27,7 +33,7 @@
     soundHit:
       path: /Audio/Weapons/pierce.ogg
     angle: 30
-    animation: WeaponArcFist
+    animation: WeaponArcPunch
     damage:
       types:
         Piercing: 5
@@ -55,7 +61,7 @@
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Reptilian
 
 #Weh

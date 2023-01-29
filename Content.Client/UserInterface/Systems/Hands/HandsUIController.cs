@@ -69,17 +69,25 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
             return;
         }
 
-        if (args.Function == ContentKeyFunctions.ExamineEntity)
+        if (args.Function == EngineKeyFunctions.UIClick)
         {
-            _handsSystem.UIInventoryExamine(hand.SlotName);
+            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
             _handsSystem.UIHandOpenContextMenu(hand.SlotName);
         }
-        else if (args.Function == EngineKeyFunctions.UIClick)
+        else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _handsSystem.UIHandClick(_playerHandsComponent, hand.SlotName);
+            _handsSystem.UIHandActivate(hand.SlotName);
+        }
+        else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+        {
+            _handsSystem.UIHandAltActivateItem(hand.SlotName);
+        }
+        else if (args.Function == ContentKeyFunctions.ExamineEntity)
+        {
+            _handsSystem.UIInventoryExamine(hand.SlotName);
         }
     }
 

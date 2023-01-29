@@ -40,7 +40,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public abstract class SharedInteractionSystem : EntitySystem
+    public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
@@ -81,6 +81,8 @@ namespace Content.Shared.Interaction
                 .Bind(ContentKeyFunctions.TryPullObject,
                     new PointerInputCmdHandler(HandleTryPullObject))
                 .Register<SharedInteractionSystem>();
+
+            InitializeRelay();
         }
 
         public override void Shutdown()
@@ -224,10 +226,15 @@ namespace Content.Shared.Interaction
             bool checkAccess = true,
             bool checkCanUse = true)
         {
+            if (TryComp<InteractionRelayComponent>(user, out var relay) && relay.RelayEntity is not null)
+            {
+                UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+            }
+
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -255,20 +262,24 @@ namespace Content.Shared.Interaction
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
-            // Does the user have hands?
-            if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
-            {
-                if (target != null)
-                {
-                    var ev = new InteractNoHandEvent(user, target.Value);
-                    RaiseLocalEvent(user, ev, true);
-                }
-                return;
-            }
-
             var inRangeUnobstructed = target == null
                 ? !checkAccess || InRangeUnobstructed(user, coordinates)
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+
+            // Does the user have hands?
+            if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            {
+                var ev = new InteractNoHandEvent(user, target, coordinates);
+                RaiseLocalEvent(user, ev);
+
+                if (target != null)
+                {
+                    var interactedEv = new InteractedNoHandEvent(target.Value, user, coordinates);
+                    RaiseLocalEvent(target.Value, interactedEv);
+                    DoContactInteraction(user, target.Value, ev);
+                }
+                return;
+            }
 
             // empty-hand interactions
             if (hands.ActiveHandEntity is not { } held)
@@ -316,6 +327,7 @@ namespace Content.Shared.Interaction
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
             _adminLogger.Add(LogType.InteractHand, LogImpact.Low, $"{ToPrettyString(user):user} interacted with {ToPrettyString(target):target}");
+            DoContactInteraction(user, target, message);
             if (message.Handled)
                 return;
 
@@ -336,6 +348,9 @@ namespace Content.Shared.Interaction
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target.Value, clickLocation);
                 RaiseLocalEvent(target.Value, rangedMsg, true);
+
+                // We contact the USED entity, but not the target.
+                DoContactInteraction(user, used, rangedMsg);
 
                 if (rangedMsg.Handled)
                     return;
@@ -517,9 +532,9 @@ namespace Content.Shared.Interaction
                 TryComp<TransformComponent>(origin, out var xformA))
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
-                var xfA = new Robust.Shared.Physics.Transform(worldPosA, worldRotA);
+                var xfA = new Transform(worldPosA, worldRotA);
                 var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
-                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, parentRotB + otherAngle);
+                var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
                 if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
@@ -549,7 +564,8 @@ namespace Content.Shared.Interaction
             else
             {
                 originPos = Transform(origin).MapPosition;
-                targetRot = Transform(Transform(other).ParentUid).LocalRotation + otherAngle;
+                var otherParent = Transform(other).ParentUid;
+                targetRot = otherParent.IsValid() ? Transform(otherParent).LocalRotation + otherAngle : otherAngle;
             }
 
             // Do a raycast to check if relevant
@@ -562,7 +578,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -707,7 +723,7 @@ namespace Content.Shared.Interaction
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
                 var message = Loc.GetString("interaction-system-user-interaction-cannot-reach");
-                _popupSystem.PopupEntity(message, origin, Filter.Entities(origin));
+                _popupSystem.PopupEntity(message, origin, origin);
             }
 
             return inRange;
@@ -722,6 +738,9 @@ namespace Content.Shared.Interaction
         {
             var ev = new BeforeRangedInteractEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(used, ev);
+
+            // We contact the USED entity, but not the target.
+            DoContactInteraction(user, used, ev);
             return ev.Handled;
         }
 
@@ -750,6 +769,9 @@ namespace Content.Shared.Interaction
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var interactUsingEvent = new InteractUsingEvent(user, used, target, clickLocation);
             RaiseLocalEvent(target, interactUsingEvent, true);
+            DoContactInteraction(user, used, interactUsingEvent);
+            DoContactInteraction(user, target, interactUsingEvent);
+            DoContactInteraction(used, target, interactUsingEvent);
             if (interactUsingEvent.Handled)
                 return;
 
@@ -765,7 +787,14 @@ namespace Content.Shared.Interaction
                 target = null;
 
             var afterInteractEvent = new AfterInteractEvent(user, used, target, clickLocation, canReach);
-            RaiseLocalEvent(used, afterInteractEvent, false);
+            RaiseLocalEvent(used, afterInteractEvent);
+            DoContactInteraction(user, used, afterInteractEvent);
+            if (canReach)
+            {
+                DoContactInteraction(user, target, afterInteractEvent);
+                DoContactInteraction(used, target, afterInteractEvent);
+            }
+
             if (afterInteractEvent.Handled)
                 return;
 
@@ -774,6 +803,13 @@ namespace Content.Shared.Interaction
 
             var afterInteractUsingEvent = new AfterInteractUsingEvent(user, used, target, clickLocation, canReach);
             RaiseLocalEvent(target.Value, afterInteractUsingEvent);
+
+            DoContactInteraction(user, used, afterInteractUsingEvent);
+            if (canReach)
+            {
+                DoContactInteraction(user, target, afterInteractUsingEvent);
+                DoContactInteraction(used, target, afterInteractUsingEvent);
+            }
         }
 
         #region ActivateItemInWorld
@@ -832,8 +868,10 @@ namespace Content.Shared.Interaction
             if (!activateMsg.Handled)
                 return false;
 
+            DoContactInteraction(user, used, activateMsg);
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            if (!activateMsg.WasLogged)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion
@@ -869,6 +907,7 @@ namespace Content.Shared.Interaction
             RaiseLocalEvent(used, useMsg, true);
             if (useMsg.Handled)
             {
+                DoContactInteraction(user, used, useMsg);
                 _useDelay.BeginDelay(used, delayComponent);
                 return true;
             }
@@ -976,6 +1015,22 @@ namespace Content.Shared.Interaction
             }
 
             return true;
+        }
+
+        /// <summary>
+        ///     Simple convenience function to raise contact events (disease, forensics, etc).
+        /// </summary>
+        public void DoContactInteraction(EntityUid uidA, EntityUid? uidB, HandledEntityEventArgs? args = null)
+        {
+            if (uidB == null || args?.Handled == false)
+                return;
+
+            // Entities may no longer exist (banana was eaten, or human was exploded)?
+            if (!Exists(uidA) || !Exists(uidB))
+                return;
+
+            RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));
+            RaiseLocalEvent(uidB.Value, new ContactInteractionEvent(uidA));
         }
     }
 

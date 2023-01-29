@@ -8,10 +8,10 @@ namespace Content.Shared.Flash
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedFlashableComponent, ComponentGetState>(OnFlashableGetState);
+            SubscribeLocalEvent<FlashableComponent, ComponentGetState>(OnFlashableGetState);
         }
 
-        private static void OnFlashableGetState(EntityUid uid, SharedFlashableComponent component, ref ComponentGetState args)
+        private static void OnFlashableGetState(EntityUid uid, FlashableComponent component, ref ComponentGetState args)
         {
             args.State = new FlashableComponentState(component.Duration, component.LastFlash);
         }

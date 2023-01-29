@@ -17,7 +17,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
 
-    [Dependency] private readonly HumanoidSystem _humanoid = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -56,7 +56,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
 
         foreach (var entry in prototype.Components.Values)
         {
-            var comp = (Component) _serialization.Copy(entry.Component);
+            var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
             comp.Owner = humanoid;
             EntityManager.AddComponent(humanoid, comp, true);
         }

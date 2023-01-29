@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Completions
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
             entityManager.EntitySysManager.GetEntitySystem<PopupSystem>()
-                .PopupEntity(Loc.GetString(Text), uid, Filter.Pvs(uid, entityManager:entityManager));
+                .PopupEntity(Loc.GetString(Text), uid);
         }
     }
 }

@@ -5,29 +5,37 @@ using Content.Shared.Bed.Sleep;
 
 namespace Content.Server.Bed.Sleep
 {
-    public sealed class SharedSleepingSystem : EntitySystem
+    public abstract class SharedSleepingSystem : EntitySystem
     {
         [Dependency] private readonly SharedBlindingSystem _blindingSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<SleepingComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<SleepingComponent, ComponentShutdown>(OnShutdown);
             SubscribeLocalEvent<SleepingComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<SleepingComponent, EntityUnpausedEvent>(OnSleepUnpaused);
+        }
+
+        private void OnSleepUnpaused(EntityUid uid, SleepingComponent component, ref EntityUnpausedEvent args)
+        {
+            component.CoolDownEnd += args.PausedTime;
+            Dirty(component);
         }
 
         private void OnInit(EntityUid uid, SleepingComponent component, ComponentInit args)
         {
             var ev = new SleepStateChangedEvent(true);
-            RaiseLocalEvent(uid, ev, false);
-            _blindingSystem.AdjustBlindSources(uid, true);
+            RaiseLocalEvent(uid, ev);
+            _blindingSystem.AdjustBlindSources(uid, 1);
         }
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)
         {
             var ev = new SleepStateChangedEvent(false);
-            RaiseLocalEvent(uid, ev, false);
-            _blindingSystem.AdjustBlindSources(uid, false);
+            RaiseLocalEvent(uid, ev);
+            _blindingSystem.AdjustBlindSources(uid, -1);
         }
 
         private void OnSpeakAttempt(EntityUid uid, SleepingComponent component, SpeakAttemptEvent args)

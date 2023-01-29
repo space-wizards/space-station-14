@@ -1,5 +1,5 @@
 using Content.Server.Actions;
-using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Systems;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind.Commands;
@@ -9,6 +9,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -23,13 +24,15 @@ namespace Content.Server.Polymorph.Systems
         private readonly ISawmill _saw = default!;
 
         [Dependency] private readonly ActionsSystem _actions = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
         [Dependency] private readonly IComponentFactory _compFact = default!;
         [Dependency] private readonly ServerInventorySystem _inventory = default!;
         [Dependency] private readonly SharedHandsSystem _sharedHands = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly HumanoidSystem _humanoid = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
         [Dependency] private readonly ContainerSystem _container = default!;
 
         public override void Initialize()
@@ -82,17 +85,16 @@ namespace Content.Server.Polymorph.Systems
         /// <param name="proto">The polymorph prototype</param>
         public EntityUid? PolymorphEntity(EntityUid target, PolymorphPrototype proto)
         {
-            /// This is the big papa function. This handles the transformation, moving the old entity
-            /// logic and conditions specified in the prototype, and everything else that may be needed.
-            /// I am clinically insane - emo
+            // This is the big papa function. This handles the transformation, moving the old entity
+            // logic and conditions specified in the prototype, and everything else that may be needed.
+            // I am clinically insane - emo
 
             // if it's already morphed, don't allow it again with this condition active.
             if (!proto.AllowRepeatedMorphs && HasComp<PolymorphedEntityComponent>(target))
                 return null;
 
             // mostly just for vehicles
-            if (TryComp<BuckleComponent>(target, out var buckle))
-                buckle.TryUnbuckle(target, true);
+            _buckle.TryUnbuckle(target, target, true);
 
             var targetTransformComp = Transform(target);
 
@@ -114,7 +116,7 @@ namespace Content.Server.Polymorph.Systems
             //Transfers all damage from the original to the new one
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(child, out var damageParent) &&
-                _damageable.GetScaledDamage(target, child, out var damage) &&
+                _mobThresholdSystem.GetScaledDamage(target, child, out var damage) &&
                 damage != null)
             {
                 _damageable.SetDamage(damageParent, damage);

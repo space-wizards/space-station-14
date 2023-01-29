@@ -37,6 +37,6 @@ public sealed class SeedExtractorComponent : Component
     /// How much the machine part quality affects the amount of seeds outputted.
     /// Going up a tier will multiply the seed output by this amount.
     /// </summary>
-    [DataField("partRatingSeedAmountMultiplier"), ViewVariables]
+    [DataField("partRatingSeedAmountMultiplier")]
     public float PartRatingSeedAmountMultiplier = 1.5f;
 }

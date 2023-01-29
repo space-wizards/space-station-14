@@ -1,6 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
+using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.Construction;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Construction.Steps;
@@ -39,6 +41,7 @@ namespace Content.Server.Construction
 
             // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent, new []{typeof(AnchorableSystem)});
+            SubscribeLocalEvent<ConstructionComponent, OnTemperatureChangeEvent>(EnqueueEvent);
         }
 
         /// <summary>
@@ -48,7 +51,7 @@ namespace Content.Server.Construction
         /// <remarks>When <see cref="validation"/> is true, this method will simply return whether the interaction
         ///          would be handled by the entity or not. It essentially becomes a pure method that modifies nothing.</remarks>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null, InteractUsingEvent? args = null)
+        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -170,9 +173,6 @@ namespace Content.Server.Construction
 
                 // We change the node now.
                 ChangeNode(uid, user, edge.Target, true, construction);
-
-                if (ev is ConstructionDoAfterComplete event1 && event1.WrappedEvent is InteractUsingEvent event2)
-                    _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(event2.User):player} changed {ToPrettyString(uid):entity}'s node to {edge.Target}");
             }
 
             return HandleResult.True;
@@ -280,6 +280,8 @@ namespace Content.Server.Construction
 
                     // TODO: Sanity checks.
 
+                    user = interactUsing.User;
+
                     // If this step's DoAfter was cancelled, we just fail the interaction.
                     if (doAfterState == DoAfterState.Cancelled)
                         return HandleResult.False;
@@ -288,7 +290,7 @@ namespace Content.Server.Construction
 
                     // Since many things inherit this step, we delegate the "is this entity valid?" logic to them.
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
-                    if(!insertStep.EntityValid(insert, EntityManager))
+                    if(!insertStep.EntityValid(insert, EntityManager, _factory))
                         return HandleResult.False;
 
                     // If we're only testing whether this step would be handled by the given event, then we're done.
@@ -340,7 +342,7 @@ namespace Content.Server.Construction
                         construction.Containers.Add(store);
 
                         // The container doesn't necessarily need to exist, so we ensure it.
-                        _containerSystem.EnsureContainer<Container>(uid, store).Insert(insert);
+                        _container.EnsureContainer<Container>(uid, store).Insert(insert);
                     }
                     else
                     {
@@ -384,6 +386,24 @@ namespace Content.Server.Construction
 
                     construction.WaitingDoAfter = true;
                     return HandleResult.DoAfter;
+                }
+
+                case TemperatureConstructionGraphStep temperatureChangeStep:
+                {
+                    if (ev is not OnTemperatureChangeEvent) {
+                        break;
+                    }
+
+                    if (TryComp<TemperatureComponent>(uid, out var tempComp))
+                    {
+                        if ((!temperatureChangeStep.MinTemperature.HasValue || tempComp.CurrentTemperature >= temperatureChangeStep.MinTemperature.Value) &&
+                            (!temperatureChangeStep.MaxTemperature.HasValue || tempComp.CurrentTemperature <= temperatureChangeStep.MaxTemperature.Value))
+                        {
+                            return HandleResult.True;
+                        }
+                    }
+                    return HandleResult.False;
+
                 }
 
                 #endregion

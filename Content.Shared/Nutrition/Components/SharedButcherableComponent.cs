@@ -9,7 +9,6 @@ namespace Content.Shared.Nutrition.Components
     [RegisterComponent]
     public sealed class SharedButcherableComponent : Component, IDraggable
     {
-        [ViewVariables]
         [DataField("spawned", required: true)]
         public List<EntitySpawnEntry> SpawnedEntities = new();
 
