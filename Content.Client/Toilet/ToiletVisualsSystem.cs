@@ -5,14 +5,12 @@ namespace Content.Client.Toilet;
 
 public sealed class ToiletVisualsSystem : VisualizerSystem<ToiletComponent>
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, ToiletComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null) return;
 
-        _appearance.TryGetData(uid, ToiletVisuals.LidOpen, out bool lidOpen, args.Component);
-        _appearance.TryGetData(uid, ToiletVisuals.SeatUp, out bool seatUp, args.Component);
+        AppearanceSystem.TryGetData(uid, ToiletVisuals.LidOpen, out bool lidOpen, args.Component);
+        AppearanceSystem.TryGetData(uid, ToiletVisuals.SeatUp, out bool seatUp, args.Component);
 
         var state = (lidOpen, seatUp) switch
         {

@@ -27,7 +27,6 @@ namespace Content.Client.Damage;
 public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private const string SawmillName = "DamageVisuals";
 
@@ -346,7 +345,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         // If this was passed into the component, we update
         // the data to ensure that the current disabled
         // bool matches.
-        if (_appearance.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus, args.Component))
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus, args.Component))
             damageVisComp.Disabled = disabledStatus;
 
         if (damageVisComp.Disabled)
@@ -367,7 +366,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (damageVisComp.Overlay && damageVisComp.DamageOverlayGroups != null && damageVisComp.TargetLayers == null)
             CheckOverlayOrdering(spriteComponent, damageVisComp);
 
-        if (_appearance.TryGetData<bool>(component.Owner, DamageVisualizerKeys.ForceUpdate, out var update, component)
+        if (AppearanceSystem.TryGetData<bool>(component.Owner, DamageVisualizerKeys.ForceUpdate, out var update, component)
             && update)
         {
             ForceUpdateLayers(damageComponent, spriteComponent, damageVisComp);
@@ -378,7 +377,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         {
             UpdateDamageVisuals(damageComponent, spriteComponent, damageVisComp);
         }
-        else if (_appearance.TryGetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data, component))
+        else if (AppearanceSystem.TryGetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data, component))
         {
             UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
         }
@@ -395,7 +394,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         foreach (var layer in damageVisComp.TargetLayerMapKeys)
         {
             bool? layerStatus = null;
-            if (_appearance.TryGetData<bool>(component.Owner, layer, out var layerStateEnum, component))
+            if (AppearanceSystem.TryGetData<bool>(component.Owner, layer, out var layerStateEnum, component))
                 layerStatus = layerStateEnum;
 
             if (layerStatus == null)
