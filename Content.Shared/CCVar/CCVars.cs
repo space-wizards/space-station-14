@@ -295,10 +295,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordAHelpWebhook =
 <<<<<<< Updated upstream
             CVarDef.Create("discord.ahelp_webhook","https://discord.com/api/webhooks/1068828642249019432/yw6GnP3qWoabJKBCdMIugIbUZEwnMoNbELZANV2DXmWnAcbFNuDCWEo_vHUeXsksry4R", CVar.SERVERONLY);
-=======
-            CVarDef.Create("discord.ahelp_webhook", string."https://discord.com/api/webhooks/1068828642249019432/yw6GnP3qWoabJKBCdMIugIbUZEwnMoNbELZANV2DXmWnAcbFNuDCWEo_vHUeXsksry4R", CVar.SERVERONLY);
->>>>>>> Stashed changes
-
         /// <summary>
         /// The server icon to use in the Discord ahelp embed footer.
         /// Valid values are specified at https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure.
