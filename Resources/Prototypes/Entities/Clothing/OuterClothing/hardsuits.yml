@@ -670,7 +670,7 @@
 - type: entity
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitPirateCap
-  name: ancient armored spacesuit
+  name: ancient armored hardsuit
   suffix: pirate captain
   description: An ancient armored hardsuit.
   components:
@@ -721,3 +721,5 @@
         Radiation: 0.2
   - type: ExplosionResistance
     damageCoefficient: 0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA

@@ -510,3 +510,18 @@
     highPressureMultiplier: 0.3
     lowPressureMultiplier: 1000
 
+- type: entity
+  parent: ClothingHeadHardsuitBase
+  id: ClothingHeadHelmetHardsuitPirateEVA
+  noSpawn: true
+  name: deep space EVA helmet
+  suffix: pirate
+  description: A deep space eva helmet, very heavy but provides good protection.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/pirateeva.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.3
+    lowPressureMultiplier: 1000
