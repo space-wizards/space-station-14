@@ -10,7 +10,6 @@ namespace Content.Server.StationEvents.Events
         private const string affectedChannel = "Common";
 
         private float _endAfter = 0.0f;
-        private bool _running = false;
 
         public override void Initialize()
         {
@@ -22,12 +21,6 @@ namespace Content.Server.StationEvents.Events
         {
             base.Added();
             _endAfter = RobustRandom.Next(120, 240);
-        }
-
-        public override void Started()
-        {
-            base.Started();
-            _running = true;
         }
 
         public override void Update(float frameTime)
@@ -47,12 +40,12 @@ namespace Content.Server.StationEvents.Events
         public override void Ended()
         {
             base.Ended();
-            _running = false;
+            Elapsed = 0;
         }
 
         private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
         {
-            if (_running && args.Channel.ID == affectedChannel && (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
+            if (Elapsed > 0 && args.Channel.ID == affectedChannel && (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancel();
         }
 
