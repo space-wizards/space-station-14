@@ -1,3 +1,4 @@
+using Content.Server.Radio.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
@@ -9,9 +10,6 @@ namespace Content.Shared.Chat;
 
 public abstract class SharedChatSystem : EntitySystem
 {
-    public const string CommonChannel = "Common";
-    public const char DefaultChannelKey = 'h';
-
     public const char RadioCommonPrefix = ';';
     public const char RadioChannelPrefix = ':';
     public const char LocalPrefix = '.';
@@ -23,9 +21,12 @@ public abstract class SharedChatSystem : EntitySystem
     public const char AdminPrefix = ']';
     public const char WhisperPrefix = ',';
 
+    public const char DefaultChannelKey = 'h';
+    public const string CommonChannel = "Common";
+    public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
+
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
 
     /// <summary>
     /// Cache of the keycodes for faster lookup.
@@ -105,13 +106,13 @@ public abstract class SharedChatSystem : EntitySystem
         var channelKey = input[1];
         output = SanitizeMessageCapital(input[2..].TrimStart());
 
-        // TODO don't hardcode ears, raise a relayed event.
-        if (channelKey == DefaultChannelKey
-            && _inventory.TryGetSlotEntity(source, "ears", out var entityUid)
-            && TryComp(entityUid, out HeadsetComponent? headset)
-            && headset?.DefaultChannel != null
-            && _prototypeManager.TryIndex(headset.DefaultChannel, out channel))
+        if (channelKey == DefaultChannelKey)
         {
+            var ev = new GetDefaultChannelEvent();
+            RaiseLocalEvent(source, ev);
+
+            if (ev.Channel != null)
+                _prototypeManager.TryIndex(ev.Channel, out channel);
             return true;
         }
 
