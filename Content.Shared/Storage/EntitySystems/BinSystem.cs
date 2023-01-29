@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Storage.Components;
@@ -82,36 +82,22 @@ public sealed class BinSystem : EntitySystem
 
     private void OnInteractHand(EntityUid uid, BinComponent component, InteractHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !_timing.IsFirstTimePredicted)
             return;
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
-
-        if (!TryComp<SharedHandsComponent>(args.User, out var hands) || hands.ActiveHand == null)
-            return;
-
-        if (!component.Items.Any())
-            return;
-
-        var toGrab = component.Items.Last();
-        if (!_hands.CanPickupToHand(args.User, toGrab, hands.ActiveHand, false, hands))
-            return;
-
+        EntityUid? toGrab = component.Items.LastOrDefault();
         if (!TryRemoveFromBin(uid, toGrab, component))
             return;
 
-        _hands.TryPickup(args.User, toGrab, hands.ActiveHand, handsComp: hands);
-        _admin.Add(LogType.Pickup, LogImpact.Low, $"{ToPrettyString(uid):player} removed {ToPrettyString(toGrab)} from bin {ToPrettyString(uid)}.");
+        _hands.TryPickupAnyHand(args.User, toGrab.Value);
+        _admin.Add(LogType.Pickup, LogImpact.Low,
+            $"{ToPrettyString(uid):player} removed {ToPrettyString(toGrab.Value)} from bin {ToPrettyString(uid)}.");
         args.Handled = true;
     }
 
     private void OnAfterInteractUsing(EntityUid uid, BinComponent component, AfterInteractUsingEvent args)
     {
-        if (args.Handled)
-            return;
-
-        if (!args.CanReach)
+        if (args.Handled || !args.CanReach)
             return;
 
         if (!_timing.IsFirstTimePredicted)
@@ -155,18 +141,21 @@ public sealed class BinSystem : EntitySystem
     /// <param name="toRemove"></param>
     /// <param name="component"></param>
     /// <returns></returns>
-    public bool TryRemoveFromBin(EntityUid uid, EntityUid toRemove, BinComponent? component = null)
+    public bool TryRemoveFromBin(EntityUid uid, [NotNullWhen(true)] EntityUid? toRemove, BinComponent? component = null)
     {
         if (!Resolve(uid, ref component))
+            return false;
+
+        if (toRemove == null)
             return false;
 
         if (component.Items.Last() != toRemove)
             return false;
 
-        if (!component.ItemContainer.Remove(toRemove))
+        if (!component.ItemContainer.Remove(toRemove.Value))
             return false;
 
-        component.Items.Remove(toRemove);
+        component.Items.Remove(toRemove.Value);
         Dirty(component);
         return true;
     }
