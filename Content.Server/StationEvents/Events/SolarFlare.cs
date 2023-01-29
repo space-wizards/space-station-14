@@ -11,6 +11,7 @@ namespace Content.Server.StationEvents.Events
         private bool _onlyJamHeadsets = true;
         private HashSet<string> _affectedChannels = new() {};
         private float _endAfter = 0.0f;
+        private bool _running = false;
 
         public override void Initialize()
         {
@@ -26,6 +27,12 @@ namespace Content.Server.StationEvents.Events
             _onlyJamHeadsets = ev.OnlyJamHeadsets;
             _endAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
             _affectedChannels = ev.AffectedChannels;
+        }
+
+        public override void Started()
+        {
+            base.Started();
+            _running = true;
         }
 
         public override void Update(float frameTime)
@@ -45,12 +52,12 @@ namespace Content.Server.StationEvents.Events
         public override void Ended()
         {
             base.Ended();
-            Elapsed = 0;
+            _running = false;
         }
 
         private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
         {
-            if (Elapsed > 0 && _affectedChannels.Contains(args.Channel.ID))
+            if (_running && _affectedChannels.Contains(args.Channel.ID))
                 if (!_onlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                     args.Cancel();
         }
