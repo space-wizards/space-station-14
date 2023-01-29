@@ -1,3 +1,4 @@
+using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Radio.Components;
 using Content.Server.Radio;
 
@@ -7,8 +8,8 @@ namespace Content.Server.StationEvents.Events
     {
         public override string Prototype => "SolarFlare";
 
-        private const string affectedChannel = "Common";
-
+        private bool _onlyJamHeadsets = true;
+        private HashSet<string> _affectedChannels = new() {};
         private float _endAfter = 0.0f;
 
         public override void Initialize()
@@ -19,8 +20,12 @@ namespace Content.Server.StationEvents.Events
 
         public override void Added()
         {
+            if (Configuration is not SolarFlareEventRuleConfiguration ev)
+                return;
             base.Added();
-            _endAfter = RobustRandom.Next(120, 240);
+            _onlyJamHeadsets = ev.OnlyJamHeadsets;
+            _endAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
+            _affectedChannels = ev.AffectedChannels;
         }
 
         public override void Update(float frameTime)
@@ -45,8 +50,9 @@ namespace Content.Server.StationEvents.Events
 
         private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
         {
-            if (Elapsed > 0 && args.Channel.ID == affectedChannel && (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
-                args.Cancel();
+            if (Elapsed > 0 && _affectedChannels.Contains(args.Channel.ID))
+                if (!_onlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
+                    args.Cancel();
         }
 
     }

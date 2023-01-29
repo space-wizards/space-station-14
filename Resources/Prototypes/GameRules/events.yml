@@ -165,7 +165,7 @@
 - type: gameRule
   id: SolarFlare
   config:
-    !type:StationEventRuleConfiguration
+    !type:SolarFlareEventRuleConfiguration
     id: SolarFlare
     weight: 10
     startAnnouncement: station-event-solar-flare-start-announcement
