@@ -14,7 +14,7 @@
     sprite: Objects/Fun/Dummies/mrchips.rsi
   - type: Tag
     tags:
-    - DummyRadio
+    - Radio
 
 - type: entity
   name: mr dips
