@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Radio.Components;
+namespace Content.Shared.Radio.Components;
 
 /// <summary>
 ///     This component is by entities that can contain encryption keys

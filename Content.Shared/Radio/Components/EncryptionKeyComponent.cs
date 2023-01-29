@@ -1,9 +1,8 @@
 using Content.Shared.Chat;
-using Content.Shared.Radio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Server.Radio.Components;
+namespace Content.Shared.Radio.Components;
 
 /// <summary>
 ///     This component is currently used for providing access to channels for "HeadsetComponent"s.

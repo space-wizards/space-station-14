@@ -1,6 +1,6 @@
-using Content.Server.Radio.Components;
+using Content.Shared.Radio.Components;
 
-namespace Content.Server.Radio.EntitySystems;
+namespace Content.Shared.Radio;
 
 public sealed class EncryptionChannelsChangedEvent : EntityEventArgs
 {

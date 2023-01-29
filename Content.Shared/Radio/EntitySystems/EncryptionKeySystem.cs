@@ -1,25 +1,26 @@
 using System.Linq;
-using Content.Server.Radio.Components;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Radio;
+using Content.Shared.Radio.Components;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Radio.EntitySystems;
+namespace Content.Shared.Radio.EntitySystems;
 
 /// <summary>
-///     This system manages encryption keys & key holders.
+///     This system manages encryption keys & key holders for use with radio channels.
 /// </summary>
 public sealed class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
@@ -75,19 +76,22 @@ public sealed class EncryptionKeySystem : EntitySystem
 
             if (!component.KeysUnlocked)
             {
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
+                if (_timing.IsFirstTimePredicted)
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-are-locked"), uid, Filter.Local(), false);
                 return;
             }
 
             if (component.KeySlots <= component.KeyContainer.ContainedEntities.Count)
             {
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Local(), false);
+                if (_timing.IsFirstTimePredicted)
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-slots-already-full"), uid, Filter.Local(), false);
                 return;
             }
 
             if (component.KeyContainer.Insert(args.Used))
             {
-                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Local(), false);
+                if (_timing.IsFirstTimePredicted)
+                    _popupSystem.PopupEntity(Loc.GetString("headset-encryption-key-successfully-installed"), uid, Filter.Local(), false);
                 _audio.PlayPredicted(component.KeyInsertionSound, args.Target, args.User);
                 return;
             }
@@ -100,7 +104,8 @@ public sealed class EncryptionKeySystem : EntitySystem
 
         if (component.KeyContainer.ContainedEntities.Count == 0)
         {
-            _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Local(), false);
+            if (_timing.IsFirstTimePredicted)
+                _popupSystem.PopupEntity(Loc.GetString("headset-encryption-keys-no-keys"), uid, Filter.Local(), false);
             return;
         }
 

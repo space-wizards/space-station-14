@@ -1,8 +1,5 @@
-using Content.Server.Radio.Components;
-using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Radio;
-using Content.Shared.Radio.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -108,7 +105,7 @@ public abstract class SharedChatSystem : EntitySystem
 
         if (channelKey == DefaultChannelKey)
         {
-            var ev = new GetDefaultChannelEvent();
+            var ev = new GetDefaultRadioChannelEvent();
             RaiseLocalEvent(source, ev);
 
             if (ev.Channel != null)
