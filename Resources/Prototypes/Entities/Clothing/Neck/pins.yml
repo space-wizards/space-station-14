@@ -148,6 +148,8 @@
   name: godo pin
   description: be godo do crime
   components:
+  - type: Item
+    size: 2
   - type: Sprite
     sprite: Clothing/Neck/Misc/pins.rsi
     layers:
