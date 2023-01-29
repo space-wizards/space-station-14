@@ -251,12 +251,10 @@ namespace Content.Server.Communications
             title ??= comp.AnnouncementDisplayName;
 
             msg += "\n" + Loc.GetString("comms-console-announcement-sent-by") + " " + author;
-            // Corvax-Announcements-Start
             _chatSystem.DispatchGlobalAnnouncement(msg, title, announcementSound: comp.AnnouncementSound, colorOverride: comp.AnnouncementColor);
 
             if (message.Session.AttachedEntity != null)
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following {(comp.AnnounceGlobal ? "global" : "station")} announcement: {msg}");
-            // Corvax-Announcements-End
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)
