@@ -16,6 +16,7 @@ using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Ensnaring.Components;
+using Content.Shared.Interaction;
 
 namespace Content.Server.Strip
 {
@@ -37,6 +38,7 @@ namespace Content.Server.Strip
 
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<Verb>>(AddStripVerb);
             SubscribeLocalEvent<StrippableComponent, GetVerbsEvent<ExamineVerb>>(AddStripExamineVerb);
+            SubscribeLocalEvent<StrippableComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
             // BUI
             SubscribeLocalEvent<StrippableComponent, StrippingSlotButtonPressed>(OnStripButtonPressed);
@@ -149,6 +151,17 @@ namespace Content.Server.Strip
             };
 
             args.Verbs.Add(verb);
+        }
+
+        private void OnActivateInWorld(EntityUid uid, StrippableComponent component, ActivateInWorldEvent args)
+        {
+            if (args.Target == args.User)
+                return;
+
+            if (!TryComp<ActorComponent>(args.User, out var actor))
+                return;
+
+            StartOpeningStripper(args.User, component);
         }
 
         /// <summary>
