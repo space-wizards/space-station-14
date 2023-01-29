@@ -75,6 +75,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (component.AttackRate.Equals(0f))
             return;
 
+        if (!component.ResetOnHandSelected)
+            return;
+
         // If someone swaps to this weapon then reset its cd.
         var curTime = Timing.CurTime;
         var minimum = curTime + TimeSpan.FromSeconds(1 / component.AttackRate);

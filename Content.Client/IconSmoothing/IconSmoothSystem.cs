@@ -129,12 +129,12 @@ namespace Content.Client.IconSmoothing
             }
 
             // Yes, we updates ALL smoothing entities surrounding us even if they would never smooth with us.
-
             DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 0)));
             DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, 0)));
             DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, 1)));
             DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(0, -1)));
-            if (comp.Mode == IconSmoothingMode.Corners)
+
+            if (comp.Mode is IconSmoothingMode.Corners or IconSmoothingMode.NoSprite or IconSmoothingMode.Diagonal)
             {
                 DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(1, 1)));
                 DirtyEntities(grid.GetAnchoredEntities(pos + new Vector2i(-1, -1)));
@@ -205,9 +205,47 @@ namespace Content.Client.IconSmoothing
                 case IconSmoothingMode.CardinalFlags:
                     CalculateNewSpriteCardinal(grid, smooth, sprite, xform, smoothQuery);
                     break;
+                case IconSmoothingMode.Diagonal:
+                    CalculateNewSpriteDiagonal(grid, smooth, sprite, xform, smoothQuery);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void CalculateNewSpriteDiagonal(MapGridComponent? grid, IconSmoothComponent smooth,
+            SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
+        {
+            if (grid == null)
+            {
+                sprite.LayerSetState(0, $"{smooth.StateBase}0");
+                return;
+            }
+
+            var neighbors = new Vector2[]
+            {
+                new(1, 0),
+                new(1, -1),
+                new(0, -1),
+            };
+
+            var pos = grid.TileIndicesFor(xform.Coordinates);
+            var rotation = xform.LocalRotation;
+            var matching = true;
+
+            for (var i = 0; i < neighbors.Length; i++)
+            {
+                var neighbor = (Vector2i) rotation.RotateVec(neighbors[i]);
+                matching = matching && MatchingEntity(smooth, grid.GetAnchoredEntities(pos + neighbor), smoothQuery);
+            }
+
+            if (matching)
+            {
+                sprite.LayerSetState(0, $"{smooth.StateBase}1");
+                return;
+            }
+
+            sprite.LayerSetState(0, $"{smooth.StateBase}0");
         }
 
         private void CalculateNewSpriteCardinal(MapGridComponent? grid, IconSmoothComponent smooth, SpriteComponent sprite, TransformComponent xform, EntityQuery<IconSmoothComponent> smoothQuery)
