@@ -103,6 +103,8 @@
         orGroup: LGBTQIAPlusPins
       - id: ClothingNeckTransPin
         orGroup: LGBTQIAPlusPins
+      - id: ClothingNeckGodoPin
+        orGroup: LGBTQIAPlusPins
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001
