@@ -969,6 +969,6 @@
   description: Baka mitai...
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/damedanesuit.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/damedanesuit.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/damedaneoutfit.rsi
