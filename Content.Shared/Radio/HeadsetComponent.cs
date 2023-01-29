@@ -1,7 +1,9 @@
 using Content.Shared.Chat;
 using Content.Shared.Inventory;
+using Content.Shared.Tools;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Radio.Components;
 
@@ -12,16 +14,46 @@ namespace Content.Shared.Radio.Components;
 public sealed class HeadsetComponent : Component
 {
     /// <summary>
-    ///     Set of accessible radio channels that can be addressed by using a channel specific prefix (e.g., ":e")
+    ///     Whether or not encryption keys can be removed from the headset.
     /// </summary>
-    [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public readonly HashSet<string> Channels = new() { SharedChatSystem.CommonChannel };
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("canRemoveKeys")]
+    public bool CanRemoveKeys = true;
 
     /// <summary>
-    ///     Some specific radio channel that can be addressed via the <see cref="SharedChatSystem.DefaultChannelKey"/> prefix.
+    ///     The tool required to extract the encryption keys from the headset.
     /// </summary>
-    [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-    public readonly string? DefaultChannel;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keysExtractionMethod", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+    public string KeysExtractionMethod = "Screwing";
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keySlots")]
+    public int KeySlots = 2;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keyExtractionSound")]
+    public SoundSpecifier KeyExtractionSound = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("keyInsertionSound")]
+    public SoundSpecifier KeyInsertionSound = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
+
+    [ViewVariables]
+    public Container KeyContainer = default!;
+    public const string KeyContainerName = "key_slots";
+
+    /// <summary>
+    ///     Set of radio channels that can be addressed by using a channel specific prefix (e.g., ":e")
+    /// </summary>
+    [ViewVariables]
+    public HashSet<string> Channels = new();
+
+    /// <summary>
+    ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    public string? DefaultChannel;
 
     [DataField("enabled")]
     public bool Enabled = true;
