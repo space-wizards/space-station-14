@@ -145,7 +145,7 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
-  id: ClothingOuterCoatPirate
+  id: ClothingOuterDameDane
   name: dame dane coat
   description: Friday...
   components:

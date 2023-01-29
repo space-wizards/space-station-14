@@ -964,7 +964,7 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitDameDaneOutfit
+  id: ClothingUniformJumpsuitDameDane
   name: dame dane outfit
   description: Baka mitai...
   components:
