@@ -179,5 +179,3 @@
     anomalyContactDamage:
       types:
         Radiation: 10
-    minPulseLength: 120
-    maxPulseLength: 180
