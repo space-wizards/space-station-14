@@ -39,7 +39,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // *This ejection also makes the target not collide with the unit.*
             // *This is on purpose.*
 
-            EntityUid disposalId = EntityUid.Invalid;
+            EntityUid? disposalId = null;
             DisposalUnitComponent? duc = null;
             if (_mapManager.TryGetGrid(holderTransform.GridUid, out var grid))
             {
@@ -75,9 +75,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-            if (duc != null)
+            if (disposalId != null && duc != null)
             {
-                _disposalUnitSystem.TryEjectContents(disposalId, duc);
+                _disposalUnitSystem.TryEjectContents(disposalId.Value, duc);
             }
 
             if (_atmosphereSystem.GetContainingMixture(uid, false, true) is {} environment)
