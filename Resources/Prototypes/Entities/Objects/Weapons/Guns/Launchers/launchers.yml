@@ -167,9 +167,6 @@
     sprite: Objects/Weapons/Guns/Launchers/pirate_cannon.rsi
   - type: Gun
     fireRate: 1
-    selectedMode: FullAuto
-    availableModes:
-      - FullAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
   - type: BallisticAmmoProvider

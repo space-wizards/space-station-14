@@ -104,7 +104,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 18
+        Slash: 16
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi

@@ -196,7 +196,7 @@
 - type: startingGear
   id: PirateCaptainGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitPirateCaptain
+    jumpsuit: ClothingUniformJumpsuitPirate
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirate
     shoes: ClothingShoesBootsLaceup

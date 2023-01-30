@@ -127,8 +127,8 @@
     secret: true
     litDamageBonus:
         types:
-            Slash: 10.5
-            Heat: 10.5
+            Slash: 7.5
+            Heat: 7.5
             Blunt: -1
     litDisarmMalus: 0.6
   - type: Sprite
