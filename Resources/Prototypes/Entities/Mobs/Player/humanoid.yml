@@ -12,8 +12,8 @@
       state: ertleader
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - names_last
+      - NamesFirstMilitaryLeaderCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTLeader
 
@@ -28,8 +28,8 @@
       prototypes: [ ERTLeaderGear ]
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitaryLeader
-      - names_last
+      - NamesFirstMilitaryLeaderCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
 
 - type: entity
   id: RandomHumanoidSpawnerERTLeaderEVA
@@ -67,8 +67,8 @@
       state: ertjanitor
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTJanitor
 
@@ -81,8 +81,8 @@
       description: Assist with custodial efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTJanitorGear ]
 
@@ -122,8 +122,8 @@
       state: ertengineer
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTEngineer
 
@@ -136,8 +136,8 @@
       description: Assist with engineering efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTEngineerGear ]
 
@@ -177,8 +177,8 @@
       state: ertsecurity
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTSecurity
 
@@ -191,8 +191,8 @@
       description: Assist with security efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTSecurityGear ]
 
@@ -232,8 +232,8 @@
       state: ertmedical
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: RandomHumanoidSpawner
       settings: ERTMedical
 
@@ -246,8 +246,8 @@
       description: Assist with medicaling efforts to resolve the stations issues.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
     - type: Loadout
       prototypes: [ ERTMedicalGear ]
 
@@ -297,8 +297,8 @@
       description: A highly trained CentCom agent, capable of dealing with various threats.
     - type: RandomMetadata
       nameSegments:
-      - NamesFirstMilitary
-      - names_last
+      - NamesFirstMilitaryCorvax # Corvax-Localization
+      - NamesLastERTCallsign # Corvax-Localization
 ## Central Command
 
 - type: entity
