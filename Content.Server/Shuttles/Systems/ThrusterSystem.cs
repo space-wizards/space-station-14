@@ -504,7 +504,6 @@ namespace Content.Server.Shuttles.Systems
 
         #endregion
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         private int GetFlagIndex(DirectionFlag flag)
         {
             return (int) Math.Log2((int) flag);
