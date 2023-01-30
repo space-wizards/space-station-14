@@ -116,7 +116,7 @@ public partial class InventorySystem : EntitySystem
             : null;
     }
 
-    private IEnumerable<string> ListViewVariablesSlots(EntityUid uid, InventoryComponent comp)
+    private IEnumerable<string> ListViewVariablesSlots(EntityUid uid, InventoryComponent comp, VVListPathOptions options)
     {
         foreach (var slotDef in GetSlots(uid, comp))
         {

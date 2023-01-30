@@ -57,7 +57,7 @@ namespace Content.Client.Gameplay
             return (uid != null ? new ViewVariablesInstancePath(uid) : null, segments);
         }
 
-        private IEnumerable<string>? ListVVHoverPaths(string[] segments)
+        private IEnumerable<string>? ListVVHoverPaths(string[] segments, VVListPathOptions options)
         {
             return null;
         }
