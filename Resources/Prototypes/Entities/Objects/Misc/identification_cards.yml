@@ -82,7 +82,6 @@
     - state: default
     - state: idintern-cadet
 
-
 - type: entity
   parent: PassengerIDCard
   id: ServiceWorkerIDCard
