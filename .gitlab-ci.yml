@@ -8,6 +8,7 @@ stages:          # List of stages for jobs, and their order of execution
 
 build-debug:       # This job runs in the build stage, which runs first.
   stage: build
+  retry: 2
   script:
     - apt update && apt upgrade -y
     - apt install -y python3 libfreetype6
@@ -21,6 +22,7 @@ build-debug:       # This job runs in the build stage, which runs first.
 
 build-release:
   stage: build
+  retry: 2
   script:
     - apt update && apt upgrade -y
     - apt install -y python3 libfreetype6
