@@ -130,7 +130,10 @@ namespace Content.Server.Administration.Commands
                 {
                     new("0", "Permanent"),
                     new("1440", "1 day"),
+                    new("4320", "3 days"),
                     new("10080", "1 week"),
+                    new("20160", "2 weeks"),
+                    new("43800", "1 month"),
                 };
 
                 return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));
