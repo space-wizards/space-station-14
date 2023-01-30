@@ -38,6 +38,11 @@ public sealed partial class DungeonSystem
 
     public Dungeon GetBSPDungeon(BSPDunGen gen)
     {
+        if (gen.Bounds.IsEmpty())
+        {
+            throw new InvalidOperationException();
+        }
+
         var random = new Random();
         var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random);
         List<DungeonRoom> rooms;
@@ -83,13 +88,24 @@ public sealed partial class DungeonSystem
         {
             var room = new DungeonRoom();
             rooms.Add(room);
+            var floors = new HashSet<Vector2i>();
 
             var roomBounds = roomsList[i];
             var center = roomBounds.Center;
             var roomCenter = new Vector2i((int) Math.Round(center.X), (int) Math.Round(center.Y));
-            var roomFloor = RandomWalk(roomCenter, gen.Length, random);
+            var currentPosition = roomCenter;
 
-            foreach (var position in roomFloor)
+            for (var j = 0; j < 10; j++)
+            {
+                var path = RandomWalk(currentPosition, gen.Length, random);
+                floors.UnionWith(path);
+
+                // TODO:
+                if (true)
+                    currentPosition = floors.ElementAt(random.Next(floors.Count));
+            }
+
+            foreach (var position in floors)
             {
                 if (position.X >= roomBounds.Left + gen.Offset &&
                    position.X <= roomBounds.Right - gen.Offset &&

@@ -6,7 +6,7 @@ public sealed class BSPDunGen : IDungeonGenerator
     [DataField("bounds")] public Box2i Bounds;
 
     [DataField("min")]
-    public Vector2i MinimumRoomDimensions;
+    public Vector2i MinimumRoomDimensions = new(4, 4);
 
     // TODO: Move this to the simple one
     /// <summary>
@@ -18,5 +18,5 @@ public sealed class BSPDunGen : IDungeonGenerator
     /// <summary>
     /// Random walk length
     /// </summary>
-    [DataField("length")] public int Length;
+    [DataField("length")] public int Length = 10;
 }

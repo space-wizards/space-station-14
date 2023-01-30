@@ -36,10 +36,13 @@ public sealed partial class DungeonSystem
 
         var bsp = new BSPDunGen()
         {
-            Bounds = new Box2i(Vector2i.Zero, new Vector2i(100, 100))
+            Bounds = new Box2i(Vector2i.Zero, new Vector2i(70, 70)),
+            MinimumRoomDimensions = new Vector2i(10, 10),
         };
+
         var gen = GetBSPDungeon(bsp);
-        var grid = EnsureComp<MapGridComponent>(_mapManager.GetMapEntityId(mapId));
+        var mapUid = _mapManager.GetMapEntityId(mapId);
+        var grid = EnsureComp<MapGridComponent>(mapUid);
         var tiles = new List<(Vector2i, Tile)>();
         var bottomText = (ContentTileDefinition) _tileDef["FloorSteel"];
 
@@ -51,6 +54,21 @@ public sealed partial class DungeonSystem
             }
         }
 
+        foreach (var tile in gen.Corridors)
+        {
+            tiles.Add((tile, new Tile(bottomText.TileId)));
+        }
+
+        foreach (var tile in gen.Walls)
+        {
+            tiles.Add((tile, new Tile(bottomText.TileId)));
+        }
+
         grid.SetTiles(tiles);
+
+        foreach (var tile in gen.Walls)
+        {
+            Spawn("WallSolid", grid.GridTileToLocal(tile));
+        }
     }
 }

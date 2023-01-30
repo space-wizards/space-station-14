@@ -23,7 +23,8 @@ public sealed partial class DungeonSystem : EntitySystem
 
         for (var i = 0; i < length; i++)
         {
-            var randomDirection = (Direction) random.Next(8);
+            // Only want cardinals
+            var randomDirection = (Direction) (random.Next(4) * 2);
             var position = previous + randomDirection.ToIntVec();
             path.Add(position);
             previous = position;
@@ -40,41 +41,39 @@ public sealed partial class DungeonSystem : EntitySystem
         var minWidth = minSize.X;
         var minHeight = minSize.Y;
 
-        while (roomsQueue.Count > 0)
+        while (roomsQueue.TryDequeue(out var room))
         {
-            var room = roomsQueue.Dequeue();
+            if (room.Height < minHeight || room.Width < minWidth)
+                continue;
 
-            if (room.Height >= minSize.Y && room.Width >= minSize.X)
+            if (random.NextDouble() < 0.5)
             {
-                if (random.NextDouble() < 0.5)
+                if (room.Height >= minHeight * 2)
                 {
-                    if (room.Height >= minSize.Y * 2)
-                    {
-                        SplitHorizontally(minHeight, roomsQueue, room, random);
-                    }
-                    else if (room.Width >= minWidth * 2)
-                    {
-                        SplitVertically(minWidth, roomsQueue, room, random);
-                    }
-                    else if (room.Width >= minWidth && room.Height >= minHeight)
-                    {
-                        rooms.Add(room);
-                    }
+                    SplitHorizontally(minHeight, roomsQueue, room, random);
                 }
-                else
+                else if (room.Width >= minWidth * 2)
                 {
-                    if (room.Width >= minSize.X * 2)
-                    {
-                        SplitVertically(minWidth, roomsQueue, room, random);
-                    }
-                    else if (room.Height >= minHeight * 2)
-                    {
-                        SplitHorizontally(minHeight, roomsQueue, room, random);
-                    }
-                    else if (room.Width >= minWidth && room.Height >= minHeight)
-                    {
-                        rooms.Add(room);
-                    }
+                    SplitVertically(minWidth, roomsQueue, room, random);
+                }
+                else if (room.Width >= minWidth && room.Height >= minHeight)
+                {
+                    rooms.Add(room);
+                }
+            }
+            else
+            {
+                if (room.Width >= minWidth * 2)
+                {
+                    SplitVertically(minWidth, roomsQueue, room, random);
+                }
+                else if (room.Height >= minHeight * 2)
+                {
+                    SplitHorizontally(minHeight, roomsQueue, room, random);
+                }
+                else if (room.Width >= minWidth && room.Height >= minHeight)
+                {
+                    rooms.Add(room);
                 }
             }
         }
@@ -85,8 +84,8 @@ public sealed partial class DungeonSystem : EntitySystem
     private void SplitVertically(int minWidth, Queue<Box2i> roomsQueue, Box2i room, Random random)
     {
         var xSplit = random.Next(1, room.Width);
-        var room1 = new Box2i(room.Left, room.Bottom, xSplit, room.Height);
-        var room2 = new Box2i(room.Left + xSplit, room.Bottom, room.Width - xSplit, room.Height);
+        var room1 = new Box2i(room.Left, room.Bottom, room.Left + xSplit, room.Top);
+        var room2 = new Box2i(room.Left + xSplit, room.Bottom, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
     }
@@ -94,8 +93,8 @@ public sealed partial class DungeonSystem : EntitySystem
     private void SplitHorizontally(int minHeight, Queue<Box2i> roomsQueue, Box2i room, Random random)
     {
         var ySplit = random.Next(1, room.Height);
-        var room1 = new Box2i(room.Left, room.Bottom, room.Width, ySplit);
-        var room2 = new Box2i(room.Left, room.Bottom + ySplit, room.Width, room.Height - ySplit);
+        var room1 = new Box2i(room.Left, room.Bottom, room.Right, room.Bottom + ySplit);
+        var room2 = new Box2i(room.Left, room.Bottom + ySplit, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
     }
