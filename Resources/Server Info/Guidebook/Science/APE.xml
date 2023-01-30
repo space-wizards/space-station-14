@@ -1,20 +1,20 @@
 <Document>
-# A.P.E.
+# И.А.Ч.
 
-The Anomalous Particle Emitter is a machine used to interface with anomalies. It is the primary way of manipulating the stats of an anomaly.
+Излучатель Аномальных Частиц - это прибор для взаимодействия с аномалиями. Это простейший способ для контроля аномалии.
 
 <Box>
 <GuideEntityEmbed Entity="MachineAPE"/>
 </Box>
 
-The A.P.E. can shoot three different kinds of anomalous particles: Delta, Epsilon, and Zeta. Each particle types has certain effects:
+И.А.Ч. может излучать 3 типа частиц: Дельта, Эпсилон и Зетта. Вот их свойства:
 
-- [color=#a4885c]Danger:[/color] Increases the severity of an anomaly.
-- [color=#a4885c]Unstable:[/color] Increases the instability of an anomaly.
-- [color=#a4885c]Containment:[/color] Increases the stability at the cost of health.
+- [color=#a4885c]Опасный:[/color] Повышает силу аномалии.
+- [color=#a4885c]Нестабильный:[/color] Повышает неустойчивость аномалии.
+- [color=#a4885c]Сдерживающий:[/color] Повышает стабильность, отнимая здоровье аномалии.
 
-Which particle type corresponds to each effect is unique and can be learned by scanning the anomaly.
+Каждый тип частиц имеет свой уникальный эффект, который можно изучить, сканируя аномалию.
 
-The A.P.E. can also be locked by anyone with science access, which prevents it from being deconstructed, turned on or off, or having the particle type switched.
+И.А.Ч можно заблокировать с доступом учёного, что спасёт его от разборки, включения или выключения, а также смены типа частиц.
 
 </Document>
