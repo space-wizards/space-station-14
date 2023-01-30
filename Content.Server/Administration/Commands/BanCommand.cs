@@ -11,7 +11,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Ban)]
-    public sealed class BanCommand : IConsoleCommand
+    public sealed class BanCommand : EntitySystem, IConsoleCommand
     {
         public string Command => "ban";
         public string Description => Loc.GetString("cmd-ban-desc");
