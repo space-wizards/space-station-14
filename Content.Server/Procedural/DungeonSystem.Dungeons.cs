@@ -1,18 +1,37 @@
+using System.Linq;
+
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
     public Dungeon GetRandomWalkDungeon(RandomWalkDunGen gen)
     {
-        // TODO: Random
+        var random = new Random();
         var start = gen.StartPosition;
-        var length = gen.Length;
 
-        var floors = RandomWalk(start, length);
+        var currentPosition = start;
+        var floors = new HashSet<Vector2i>();
+
+        for (var i = 0; i < gen.Iterations; i++)
+        {
+            var path = RandomWalk(currentPosition, gen.Length, random);
+            floors.UnionWith(path);
+
+            if (gen.StartRandomlyEachIteration)
+                currentPosition = floors.ElementAt(random.Next(floors.Count));
+        }
+
         var walls = GetWalls(floors);
+
         return new Dungeon()
         {
-            Tiles = floors,
+            Rooms = new List<DungeonRoom>(1)
+            {
+                new()
+                {
+                    Tiles = floors
+                }
+            },
             Walls = walls,
         };
     }
@@ -20,45 +39,55 @@ public sealed partial class DungeonSystem
     public Dungeon GetBSPDungeon(BSPDunGen gen)
     {
         var random = new Random();
-        var rooms = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, _robust.Next());
-        var floor = new HashSet<Vector2i>();
+        var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random);
+        List<DungeonRoom> rooms;
 
         if (true)
         {
-            floor = CreateRoomsRandomly(gen, rooms);
+            rooms = CreateRoomsRandomly(gen, roomSpaces, random);
         }
         else
         {
-            floor = CreateSimpleRooms(gen, rooms);
+            rooms = CreateSimpleRooms(gen, roomSpaces, random);
         }
 
         var roomCenters = new List<Vector2i>();
 
-        foreach (var room in rooms)
+        foreach (var room in roomSpaces)
         {
             roomCenters.Add((Vector2i) room.Center.Rounded());
         }
 
-        var corridors = ConnectRooms(roomCenters);
-        floor.UnionWith(corridors);
+        var corridors = ConnectRooms(roomCenters, random);
+
+        var allTiles = new HashSet<Vector2i>(corridors);
+
+        foreach (var room in rooms)
+        {
+            allTiles.UnionWith(room.Tiles);
+        }
 
         return new Dungeon
         {
-            Tiles = floor,
-            Walls = GetWalls(floor)
+            Corridors = corridors,
+            Rooms = rooms,
+            Walls = GetWalls(allTiles)
         };
     }
 
-    private HashSet<Vector2i> CreateRoomsRandomly(BSPDunGen gen, List<Box2i> roomsList)
+    private List<DungeonRoom> CreateRoomsRandomly(BSPDunGen gen, List<Box2i> roomsList, Random random)
     {
-        var floor = new HashSet<Vector2i>();
+        var rooms = new List<DungeonRoom>();
 
         for (var i = 0; i < roomsList.Count; i++)
         {
+            var room = new DungeonRoom();
+            rooms.Add(room);
+
             var roomBounds = roomsList[i];
             var center = roomBounds.Center;
             var roomCenter = new Vector2i((int) Math.Round(center.X), (int) Math.Round(center.Y));
-            var roomFloor = RandomWalk(randomWalkParameters, roomCenter);
+            var roomFloor = RandomWalk(roomCenter, gen.Length, random);
 
             foreach (var position in roomFloor)
             {
@@ -67,12 +96,12 @@ public sealed partial class DungeonSystem
                    position.Y >= roomBounds.Bottom - gen.Offset &&
                    position.Y <= roomBounds.Top - gen.Offset)
                 {
-                    floor.Add(position);
+                    room.Tiles.Add(position);
                 }
             }
         }
 
-        return floor;
+        return rooms;
     }
 
     private HashSet<Vector2i> ConnectRooms(List<Vector2i> roomCenters, Random random)
@@ -146,22 +175,25 @@ public sealed partial class DungeonSystem
         return closest;
     }
 
-    private HashSet<Vector2i> CreateSimpleRooms(BSPDunGen gen, List<Box2i> roomsList)
+    private List<DungeonRoom> CreateSimpleRooms(BSPDunGen gen, List<Box2i> roomsList, Random random)
     {
-        var floor = new HashSet<Vector2i>(roomsList.Count * 4);
+        var rooms = new List<DungeonRoom>(roomsList.Count);
 
-        foreach (var room in roomsList)
+        foreach (var roomSpace in roomsList)
         {
-            for (var col = gen.Offset; col < room.Width - gen.Offset; col++)
+            var room = new DungeonRoom();
+            rooms.Add(room);
+
+            for (var col = gen.Offset; col < roomSpace.Width - gen.Offset; col++)
             {
-                for (var row = gen.Offset; row < room.Height - gen.Offset; row++)
+                for (var row = gen.Offset; row < roomSpace.Height - gen.Offset; row++)
                 {
-                    var position = room.BottomLeft + new Vector2i(col, row);
-                    floor.Add(position);
+                    var position = roomSpace.BottomLeft + new Vector2i(col, row);
+                    room.Tiles.Add(position);
                 }
             }
         }
 
-        return floor;
+        return rooms;
     }
 }

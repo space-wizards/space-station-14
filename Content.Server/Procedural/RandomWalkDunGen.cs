@@ -7,11 +7,23 @@ public sealed class RandomWalkDunGen : IDungeonGenerator
     public Vector2i StartPosition;
 
     [DataField("length")]
-    public int Length;
+    public int Length = 10;
+
+    [DataField("iterations")]
+    public int Iterations = 10;
+
+    [DataField("randomEachIteration")]
+    public bool StartRandomlyEachIteration = true;
 }
 
 public sealed record Dungeon
 {
+    public HashSet<Vector2i> Corridors = new();
+    public List<DungeonRoom> Rooms = new();
     public HashSet<Vector2i> Walls = new();
+}
+
+public sealed record DungeonRoom
+{
     public HashSet<Vector2i> Tiles = new();
 }

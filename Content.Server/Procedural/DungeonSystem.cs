@@ -1,22 +1,25 @@
-using Robust.Shared.Random;
+using Robust.Shared.Console;
+using Robust.Shared.Map;
 
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robust = default!;
+    [Dependency] private readonly IConsoleHost _console = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
 
-    public HashSet<Vector2i> RandomWalk(Vector2i start, int length)
+    public override void Initialize()
     {
-        return RandomWalk(start, length, _robust.Next());
+        base.Initialize();
+        InitializeCommand();
     }
 
-    public HashSet<Vector2i> RandomWalk(Vector2i start, int length, int seed)
+    public HashSet<Vector2i> RandomWalk(Vector2i start, int length, Random random)
     {
         // Don't pre-allocate length as it may be shorter than that due to backtracking.
         var path = new HashSet<Vector2i> { start };
         var previous = start;
-        var random = new Random(seed);
 
         for (var i = 0; i < length; i++)
         {
@@ -29,12 +32,11 @@ public sealed partial class DungeonSystem : EntitySystem
         return path;
     }
 
-    public List<Box2i> BinarySpacePartition(Box2i bounds, Vector2i minSize, int seed)
+    public List<Box2i> BinarySpacePartition(Box2i bounds, Vector2i minSize, Random random)
     {
         var roomsQueue = new Queue<Box2i>();
         var rooms = new List<Box2i>();
         roomsQueue.Enqueue(bounds);
-        var random = new Random(seed);
         var minWidth = minSize.X;
         var minHeight = minSize.Y;
 
