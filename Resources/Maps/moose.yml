@@ -1,7 +1,7 @@
 meta:
   format: 3
-  name: DemoStation
-  author: Space-Wizards
+  name: Moose
+  author: Checkraze
   postmapinit: false
 tilemap:
   0: Space

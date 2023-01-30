@@ -279,7 +279,6 @@
   components:
   - type: EncryptionKey
     channels:
-    - Common
     - Syndicate
     defaultChannel: Syndicate
   - type: Sprite
