@@ -27,7 +27,19 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             fraction = 1f;
         }
 
-        var closestFillSprite = (int) Math.Round(fraction * component.MaxFillLevels);
+        // Full and empty sprites are reserved for completely full or completely empty
+        // Remaining sprites fill the gap
+        // If there are only full and empty sprites, partially filled will show full.
+        int closestFillSprite;
+        if (fraction == 0f) {
+            closestFillSprite = 0;
+        } else if (fraction == 1f) {
+            closestFillSprite = component.MaxFillLevels;
+        } else if (component.MaxFillLevels < 3) {
+            closestFillSprite = 1;
+        } else {
+            closestFillSprite = (int) Math.Round(fraction * (component.MaxFillLevels - 2)) + 1;
+        }
 
         if (closestFillSprite > 0)
         {
