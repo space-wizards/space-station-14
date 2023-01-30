@@ -223,7 +223,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackPirate
+  parent: ClothingBackpackSatchelLeather
   id: ClothingBackpackPirateFilled
   components:
     - type: StorageFill

@@ -27,9 +27,9 @@
     id: PassengerPDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
-  innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
-  satchel: ClothingBackpackSatchelEngineering
-  duffelbag: ClothingBackpackSatchelEngineering
+  innerclothingskirt: ClothingUniformJumpsuitPirate
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
 
 #Skeleton Biker
 - type: startingGear
@@ -206,5 +206,20 @@
     pocket2: EnergyCutlass
     outerClothing: ClothingOuterCoatPirate
   innerclothingskirt: ClothingUniformJumpskirtColorLightBrown
-  satchel: ClothingBackpackSatchelEngineering
-  duffelbag: ClothingBackpackSatchelEngineering
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
+
+- type: startingGear
+  id: PirateFirstmateGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPirate
+    back: ClothingBackpackPirateFilled
+    head: ClothingHeadHatPirateTricord
+    shoes: ClothingShoesBootsLaceup
+    id: PassengerPDA
+    belt: ClothingBeltUtility
+    pocket1: AppraisalTool
+    outerClothing: ClothingOuterCoatGentle
+  innerclothingskirt: ClothingUniformJumpsuitPirate
+  satchel: ClothingBackpackPirateFilled
+  duffelbag: ClothingBackpackPirateFilled
