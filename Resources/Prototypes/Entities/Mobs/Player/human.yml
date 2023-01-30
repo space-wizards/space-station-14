@@ -44,7 +44,7 @@
       prototype: SyndicateOperativeGearExtremelyBasic
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
-      nameSegments: [names_death_commando]
+      nameSegments: [corvax_names_death_commando] # Corvax-Localization
     - type: Faction
       factions:
       - Syndicate
