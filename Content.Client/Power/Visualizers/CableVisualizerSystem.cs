@@ -1,3 +1,4 @@
+using Content.Client.SubFloor;
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
 
@@ -5,7 +6,14 @@ namespace Content.Client.Power.Visualizers;
 
 public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<CableVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: new[] { typeof(SubFloorHideSystem) });
+    }
+
+    private void OnAppearanceChanged(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
@@ -22,5 +30,4 @@ public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComp
 
         args.Sprite.LayerSetState(0, $"{component.StatePrefix}{(int) mask}");
     }
-
 }
