@@ -15,3 +15,24 @@
           Slash: 0.7
           Piercing: 0.4
           Heat: 0.7
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatDetectiveDark
+  name: noir trenchcoat
+  description: A hard-boiled private investigator's dark trenchcoat.
+  components:
+    - type: Sprite
+      sprite: Corvax/Clothing/OuterClothing/Coats/noirdet.rsi
+    - type: Clothing
+      sprite: Corvax/Clothing/OuterClothing/Coats/noirdet.rsi
+    - type: StorageFill
+      contents:
+        - id: SmokingPipeFilledTobacco
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.8
+          Slash: 0.8
+          Piercing: 0.6
+          Heat: 0.9
