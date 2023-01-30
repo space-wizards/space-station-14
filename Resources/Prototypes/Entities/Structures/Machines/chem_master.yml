@@ -82,6 +82,9 @@
           tags:
           - Bottle
           - PillCanister
+  - type: MaterialStorage
+    materialWhiteList:
+    - Biomass
   - type: SolutionContainerManager
     solutions:
       buffer: {}
