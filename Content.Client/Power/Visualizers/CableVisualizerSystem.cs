@@ -8,12 +8,10 @@ public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComp
 {
     public override void Initialize()
     {
-        base.Initialize();
-
-        SubscribeLocalEvent<CableVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChanged, after: new[] { typeof(SubFloorHideSystem) });
+        SubscribeLocalEvent<CableVisualizerComponent, AppearanceChangeEvent>(OnAppearanceChange, after: new[] { typeof(SubFloorHideSystem) });
     }
 
-    private void OnAppearanceChanged(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, CableVisualizerComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
