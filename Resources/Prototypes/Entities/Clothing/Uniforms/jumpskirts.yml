@@ -607,14 +607,3 @@
       sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpskirt/lawyergood.rsi
-
-- type: entity
-  parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitDameDane
-  name: dame dane outfit
-  description: Baka mitai...
-  components:
-  - type: Sprite
-    sprite: Clothing/Uniforms/Jumpskirt/damedaneoutfit.rsi
-  - type: Clothing
-    sprite: Clothing/Uniforms/Jumpskirt/damedaneoutfit.rsi
