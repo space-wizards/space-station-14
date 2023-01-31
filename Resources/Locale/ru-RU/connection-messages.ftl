@@ -1,4 +1,14 @@
 whitelist-not-whitelisted = Вас нет в вайтлисте.
+# proper handling for having a min/max or not
+whitelist-playercount-invalid =
+    { $min ->
+        [0] Белый список для этого сервера применяется только при количестве игроков меньше { $max }.
+       *[other]
+            Белый список для этого сервера применяется только при количестве игроков больше { $min } { $max ->
+                [2147483647] -> так что возможно вы сможете присоединиться позже.
+               *[other] -> и меньше { $max }, так что возможно вы сможете присоединиться позже.
+            }
+    }
 whitelist-not-whitelisted-rp = Вас нет в вайтлисте. Чтобы попасть в вайтлист, посетите наш Discord.
 command-whitelistadd-description = Добавить игрока с указанным юзернеймом в вайтлист.
 command-whitelistadd-help = whitelistadd <username>
