@@ -1,5 +1,7 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using System;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -31,4 +33,13 @@ public sealed class ParacusiaComponent : Component
     public SoundSpecifier Sounds { get; } = default!;
 
     public float NextIncidentTime;
+}
+
+[Serializable, NetSerializable]
+public sealed class ParacusiaComponentState : ComponentState
+{
+    public float MaxTimeBetweenIncidents { get; init; }
+    public float MinTimeBetweenIncidents { get; init; }
+    public float MaxSoundDistance { get; init; }
+    public SoundSpecifier Sounds { get; init; } = default!;
 }
