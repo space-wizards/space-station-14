@@ -77,7 +77,8 @@ namespace Content.Server.Guardian
         {
             var host = component.Host;
 
-            if (!HasComp<GuardianHostComponent>(host)) return;
+            if (!HasComp<GuardianHostComponent>(host))
+                return;
 
             _popupSystem.PopupEntity(Loc.GetString("guardian-available"), host, host);
         }
@@ -90,7 +91,9 @@ namespace Content.Server.Guardian
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)
         {
-            if (component.HostedGuardian == null) return;
+            if (component.HostedGuardian == null)
+                return;
+
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
             _actionSystem.RemoveAction(uid, component.Action);
         }
@@ -124,8 +127,8 @@ namespace Content.Server.Guardian
             if (args.Handled)
                 return;
 
-            args.Handled = true;
-            UseCreator(args.User, args.User, component);
+            //args.Handled = true;
+            UseCreator(args.User, args.User, uid, component);
         }
 
         private void OnCreatorInteract(EntityUid uid, GuardianCreatorComponent component, AfterInteractEvent args)
@@ -133,10 +136,10 @@ namespace Content.Server.Guardian
             if (args.Handled || args.Target == null || !args.CanReach)
                 return;
 
-            args.Handled = true;
-            UseCreator(args.User, args.Target.Value, component);
+            //args.Handled = true;
+            UseCreator(args.User, args.Target.Value, uid, component);
         }
-        private void UseCreator(EntityUid user, EntityUid target, GuardianCreatorComponent component)
+        private void UseCreator(EntityUid user, EntityUid target, EntityUid injector, GuardianCreatorComponent component)
         {
             if (component.Used)
             {
@@ -163,7 +166,7 @@ namespace Content.Server.Guardian
 
             component.Injecting = true;
 
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.InjectionDelay, target: target)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.InjectionDelay, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -211,7 +214,8 @@ namespace Content.Server.Guardian
         /// </summary>
         private void OnHostStateChange(EntityUid uid, GuardianHostComponent component, MobStateChangedEvent args)
         {
-            if (component.HostedGuardian == null) return;
+            if (component.HostedGuardian == null)
+                return;
 
             if (args.NewMobState == MobState.Critical)
             {
