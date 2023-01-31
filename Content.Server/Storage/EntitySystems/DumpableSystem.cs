@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<DumpableComponent, AfterInteractEvent>(OnAfterInteract, after: new[]{ typeof(StorageSystem) });
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<AlternativeVerb>>(AddDumpVerb);
             SubscribeLocalEvent<DumpableComponent, GetVerbsEvent<UtilityVerb>>(AddUtilityVerbs);
             SubscribeLocalEvent<DumpableComponent, DoAfterEvent>(OnDoAfter);

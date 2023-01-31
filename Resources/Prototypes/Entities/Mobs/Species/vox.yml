@@ -101,6 +101,11 @@
     spawned:
     - id: FoodMeatChicken
       amount: 5
+  - type: Vocal
+    sounds:
+      Male: UnisexVox
+      Female: UnisexVox
+      Unsexed: UnisexVox
 
 - type: entity
   id: MobVoxDummy

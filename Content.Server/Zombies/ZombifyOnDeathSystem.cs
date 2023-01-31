@@ -111,11 +111,6 @@ namespace Content.Server.Zombies
             var combat = AddComp<CombatModeComponent>(target);
             combat.IsInCombatMode = true;
 
-            var vocal = EnsureComp<VocalComponent>(target);
-            var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            vocal.FemaleScream = scream;
-            vocal.MaleScream = scream;
-
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
