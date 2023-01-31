@@ -608,7 +608,7 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 220.53748
+      temperature: 202.38435
       moles:
       - 0
       - 0
@@ -623,7 +623,7 @@ entities:
       - 0
       - 0
     - volume: 2500
-      temperature: 202.38435
+      temperature: 197.84607
       moles:
       - 0
       - 0
@@ -1535,291 +1535,242 @@ entities:
   - pos: -1.5,-3.5
     parent: 0
     type: Transform
-  - containers:
-      entity_storage: !type:Container
-        ents:
-        - 150
-        - 151
-        - 152
-        - 153
-        - 154
-        - 155
-    type: ContainerContainer
+  - locked: False
+    type: Lock
+  - fixtures:
+    - shape: !type:PolygonShape
+        vertices:
+        - 0.25,-0.48
+        - 0.25,0.48
+        - -0.25,0.48
+        - -0.25,-0.48
+      mask:
+      - Impassable
+      - MidImpassable
+      - LowImpassable
+      layer:
+      - BulletImpassable
+      - Opaque
+      density: 145
+    type: Fixtures
+  - open: True
+    removedMasks: 20
+    type: EntityStorage
 - uid: 150
-  type: ClothingUniformJumpsuitOperative
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 151
-  type: ClothingUniformJumpskirtOperative
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 152
-  type: ClothingMaskGasSyndicate
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 153
-  type: ClothingMaskGasSyndicate
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 154
-  type: ClothingShoesBootsCombatFilled
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 155
-  type: ClothingShoesBootsCombatFilled
-  components:
-  - flags: InContainer
-    type: MetaData
-  - parent: 149
-    type: Transform
-  - canCollide: False
-    type: Physics
-  - type: InsideEntityStorage
-- uid: 156
   type: Rack
   components:
   - pos: -1.5,-2.5
     parent: 0
     type: Transform
-- uid: 157
+- uid: 151
   type: Rack
   components:
   - pos: 0.5,-2.5
     parent: 0
     type: Transform
-- uid: 158
+- uid: 152
   type: Rack
   components:
   - pos: 0.5,-3.5
     parent: 0
     type: Transform
-- uid: 159
+- uid: 153
   type: Rack
   components:
   - pos: 0.5,-4.5
     parent: 0
     type: Transform
-- uid: 160
+- uid: 154
   type: WindowReinforcedDirectional
   components:
   - rot: 3.141592653589793 rad
     pos: -1.5,-4.5
     parent: 0
     type: Transform
-- uid: 161
+- uid: 155
   type: WindowReinforcedDirectional
   components:
   - pos: -1.5,-2.5
     parent: 0
     type: Transform
-- uid: 162
+- uid: 156
   type: WindowReinforcedDirectional
   components:
   - rot: 3.141592653589793 rad
     pos: 0.5,-4.5
     parent: 0
     type: Transform
-- uid: 163
+- uid: 157
   type: WindowReinforcedDirectional
   components:
   - pos: 0.5,-2.5
     parent: 0
     type: Transform
-- uid: 164
+- uid: 158
   type: WindoorArmoryLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-4.5
     parent: 0
     type: Transform
-- uid: 165
+- uid: 159
   type: WindoorArmoryLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-3.5
     parent: 0
     type: Transform
-- uid: 166
+- uid: 160
   type: WindoorArmoryLocked
   components:
   - rot: -1.5707963267948966 rad
     pos: 0.5,-2.5
     parent: 0
     type: Transform
-- uid: 167
+- uid: 161
   type: WindoorArmoryLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-2.5
     parent: 0
     type: Transform
-- uid: 168
+- uid: 162
   type: WindoorArmoryLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-3.5
     parent: 0
     type: Transform
-- uid: 169
+- uid: 163
   type: WindoorArmoryLocked
   components:
   - rot: 1.5707963267948966 rad
     pos: -1.5,-4.5
     parent: 0
     type: Transform
-- uid: 170
-  type: JetpackBlueFilled
+- uid: 164
+  type: JetpackBlackFilled
   components:
-  - pos: 0.5551295,-3.4069328
+  - pos: 0.5798898,-3.4711018
     parent: 0
     type: Transform
-- uid: 171
+- uid: 165
   type: WeaponTurretSyndicateBroken
   components:
   - pos: -7.5,-0.5
     parent: 0
     type: Transform
-- uid: 172
+- uid: 166
   type: WeaponTurretSyndicateBroken
   components:
   - pos: 3.5,4.5
     parent: 0
     type: Transform
-- uid: 173
+- uid: 167
   type: PosterContrabandFreeSyndicateEncryptionKey
   components:
   - pos: -3.5,-3.5
     parent: 0
     type: Transform
-- uid: 174
+- uid: 168
   type: PosterContrabandSyndicateRecruitment
   components:
   - pos: 2.5,-1.5
     parent: 0
     type: Transform
-- uid: 175
+- uid: 169
   type: PosterContrabandSyndicatePistol
   components:
   - pos: -0.5,2.5
     parent: 0
     type: Transform
-- uid: 176
+- uid: 170
   type: SalvageMobSpawner75
   components:
   - pos: -4.5,0.5
     parent: 0
     type: Transform
-- uid: 177
+- uid: 171
   type: SalvageMobSpawner75
   components:
   - pos: -4.5,1.5
     parent: 0
     type: Transform
-- uid: 178
+- uid: 172
   type: ClothingBackpackDuffelSyndicateAmmo
   components:
   - pos: -1.6170431,-2.424334
     parent: 0
     type: Transform
-- uid: 179
+- uid: 173
   type: LockerElectricalSuppliesFilled
   components:
   - pos: -1.5,4.5
     parent: 0
     type: Transform
-- uid: 180
+- uid: 174
   type: SignElectricalMed
   components:
   - pos: -2.5,4.5
     parent: 0
     type: Transform
-- uid: 181
+- uid: 175
   type: WeaponLaserCarbine
   components:
   - pos: 0.5539136,-4.5161285
     parent: 0
     type: Transform
-- uid: 182
+- uid: 176
   type: SalvageMobSpawner75
   components:
   - pos: -4.5,2.5
     parent: 0
     type: Transform
-- uid: 183
+- uid: 177
   type: SalvageMobSpawner75
   components:
   - pos: 3.5,-3.5
     parent: 0
     type: Transform
-- uid: 184
+- uid: 178
   type: SalvageMobSpawner75
   components:
   - pos: 3.5,-2.5
     parent: 0
     type: Transform
-- uid: 185
+- uid: 179
   type: SalvageMobSpawner75
   components:
   - pos: 3.5,-1.5
     parent: 0
     type: Transform
-- uid: 186
+- uid: 180
   type: SalvageMaterialCrateSpawner
   components:
   - pos: 0.5,4.5
     parent: 0
     type: Transform
-- uid: 187
+- uid: 181
   type: PottedPlantBioluminscent
   components:
   - pos: -5.5,1.5
     parent: 0
     type: Transform
-- uid: 188
+- uid: 182
   type: Chair
   components:
   - rot: -1.5707963267948966 rad
     pos: -5.5,0.5
     parent: 0
     type: Transform
-- uid: 189
+- uid: 183
   type: Chair
   components:
   - rot: -1.5707963267948966 rad
     pos: -5.5,2.5
     parent: 0
     type: Transform
-- uid: 190
+- uid: 184
   type: Poweredlight
   components:
   - rot: -1.5707963267948966 rad
@@ -1828,70 +1779,70 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-- uid: 191
+- uid: 185
   type: ReinforcedGirder
   components:
   - pos: -6.5,-2.5
     parent: 0
     type: Transform
-- uid: 192
+- uid: 186
   type: ReinforcedGirder
   components:
   - pos: 4.5,-6.5
     parent: 0
     type: Transform
-- uid: 193
+- uid: 187
   type: Grille
   components:
   - pos: 2.5,-6.5
     parent: 0
     type: Transform
-- uid: 194
+- uid: 188
   type: ChairPilotSeat
   components:
   - rot: 1.5707963267948966 rad
     pos: -5.5,-6.5
     parent: 0
     type: Transform
-- uid: 195
+- uid: 189
   type: Grille
   components:
   - pos: -6.5,-4.5
     parent: 0
     type: Transform
-- uid: 196
+- uid: 190
   type: GrilleBroken
   components:
   - pos: -6.5,-3.5
     parent: 0
     type: Transform
-- uid: 197
+- uid: 191
   type: GrilleBroken
   components:
   - rot: 3.141592653589793 rad
     pos: -6.5,-3.5
     parent: 0
     type: Transform
-- uid: 198
+- uid: 192
   type: GrilleBroken
   components:
   - rot: 3.141592653589793 rad
     pos: 2.5,-7.5
     parent: 0
     type: Transform
-- uid: 199
+- uid: 193
   type: ClothingBackpackDuffelSalvage
   components:
   - pos: -4.5344324,-7.329025
     parent: 0
     type: Transform
-- uid: 200
+- uid: 194
   type: SuperCapacitorStockPart
   components:
   - pos: -1.5984681,-4.634368
     parent: 0
     type: Transform
-- uid: 201
+- uid: 195
   type: PoweredSmallLight
   components:
   - rot: 3.141592653589793 rad
@@ -1900,43 +1851,43 @@ entities:
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
-- uid: 202
+- uid: 196
   type: ClothingBeltUtility
   components:
   - pos: -6.516491,-5.5462
     parent: 0
     type: Transform
-- uid: 203
+- uid: 197
   type: MachineFrameDestroyed
   components:
   - pos: -3.5,-6.5
     parent: 0
     type: Transform
-- uid: 204
+- uid: 198
   type: PartRodMetal1
   components:
   - pos: -5.440689,-7.3624687
     parent: 0
     type: Transform
-- uid: 205
+- uid: 199
   type: PartRodMetal1
   components:
   - pos: -5.362564,-7.5187187
     parent: 0
     type: Transform
-- uid: 206
+- uid: 200
   type: PartRodMetal1
   components:
   - pos: -4.534439,-4.3155937
     parent: 0
     type: Transform
-- uid: 207
+- uid: 201
   type: SheetSteel
   components:
   - pos: -5.565689,-1.4874685
     parent: 0
     type: Transform
-- uid: 208
+- uid: 202
   type: CrateGenericSteel
   components:
   - desc: Contains 50 telecrystals worth of completely random Syndicate items. It can be useless junk or really good.
@@ -1948,54 +1899,54 @@ entities:
   - containers:
       entity_storage: !type:Container
         ents:
-        - 209
-        - 210
-        - 211
+        - 205
+        - 204
+        - 203
       paper_label: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 209
+- uid: 203
   type: ClothingShoesBootsMagSyndie
   components:
   - flags: InContainer
     type: MetaData
-  - parent: 208
+  - parent: 202
     type: Transform
   - canCollide: False
     type: Physics
   - type: InsideEntityStorage
-- uid: 210
+- uid: 204
   type: FoodSnackSyndi
   components:
   - flags: InContainer
     type: MetaData
-  - parent: 208
+  - parent: 202
     type: Transform
   - canCollide: False
     type: Physics
   - type: InsideEntityStorage
-- uid: 211
+- uid: 205
   type: CyberPen
   components:
   - flags: InContainer
     type: MetaData
-  - parent: 208
+  - parent: 202
     type: Transform
   - canCollide: False
     type: Physics
   - type: InsideEntityStorage
-- uid: 212
+- uid: 206
   type: PlasmaReinforcedWindowDirectional
   components:
   - pos: 4.5,-5.5
     parent: 0
     type: Transform
-- uid: 213
+- uid: 207
   type: LandMineExplosive
   components:
   - pos: -0.49763215,1.2476995
     parent: 0
     type: Transform
-- uid: 214
+- uid: 208
   type: VendingMachineSnack
   components:
   - flags: SessionSpecific
@@ -2003,46 +1954,82 @@ entities:
   - pos: 2.5,-0.5
     parent: 0
     type: Transform
-- uid: 215
+- uid: 209
   type: SalvageCanisterSpawner
   components:
   - pos: 4.5,0.5
     parent: 0
     type: Transform
-- uid: 216
+- uid: 210
   type: SalvageCanisterSpawner
   components:
   - pos: 4.5,-0.5
     parent: 0
     type: Transform
-- uid: 217
+- uid: 211
   type: SalvageMaterialCrateSpawner
   components:
   - pos: -5.5,4.5
     parent: 0
     type: Transform
-- uid: 218
+- uid: 212
   type: SalvageMobSpawner75
   components:
   - pos: -4.5,3.5
     parent: 0
     type: Transform
-- uid: 219
+- uid: 213
   type: SalvageMobSpawner75
   components:
   - pos: 3.5,-4.5
     parent: 0
     type: Transform
-- uid: 220
+- uid: 214
   type: SheetSteel
   components:
   - pos: 2.4696617,3.5103054
     parent: 0
     type: Transform
-- uid: 221
+- uid: 215
   type: trayScanner
   components:
   - pos: -0.48346323,3.4946802
+    parent: 0
+    type: Transform
+- uid: 216
+  type: ClothingUniformJumpsuitOperative
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 217
+  type: ClothingUniformJumpskirtOperative
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 218
+  type: ClothingMaskGasSyndicate
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 219
+  type: ClothingMaskGasSyndicate
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 220
+  type: ClothingShoesBootsCombatFilled
+  components:
+  - pos: -1.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 221
+  type: ClothingShoesBootsCombatFilled
+  components:
+  - pos: -1.5,-3.5
     parent: 0
     type: Transform
 ...
