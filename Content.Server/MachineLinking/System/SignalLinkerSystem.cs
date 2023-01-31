@@ -227,7 +227,6 @@ namespace Content.Server.MachineLinking.System
             {
                 TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
-                return;
             }
         }
 
@@ -253,7 +252,6 @@ namespace Content.Server.MachineLinking.System
             {
                 TryUpdateUI(linker, transmitter, receiver, bui);
                 args.Handled = true;
-                return;
             }
         }
 
@@ -349,7 +347,7 @@ namespace Content.Server.MachineLinking.System
                 !receiver.Inputs.TryGetValue(args.ReceiverPort, out var transmitters))
                 return;
 
-            if (args.Session.AttachedEntity is not EntityUid { Valid: true} attached)
+            if (args.Session.AttachedEntity is not { Valid: true} attached)
                 return;
 
             if (receivers.Contains(new(receiver.Owner, args.ReceiverPort)) ||
@@ -414,7 +412,7 @@ namespace Content.Server.MachineLinking.System
                 !TryComp(linker.SavedReceiver, out SignalReceiverComponent? receiver))
                 return;
 
-            if (args.Session.AttachedEntity is not EntityUid { Valid: true } user)
+            if (args.Session.AttachedEntity is not { Valid: true } user)
                 return;
 
             TryLinkDefaults(linker.SavedReceiver!.Value, linker.SavedTransmitter!.Value, user, receiver, transmitter);

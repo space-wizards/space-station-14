@@ -108,7 +108,11 @@ public abstract class SharedDoorSystem : EntitySystem
         if (args.Current is not DoorComponentState state)
             return;
 
-        door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        if (!door.CurrentlyCrushing.Equals(state.CurrentlyCrushing))
+        {
+            door.CurrentlyCrushing = new(state.CurrentlyCrushing);
+        }
+
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;
         door.Partial = state.Partial;
@@ -377,7 +381,10 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     #region Collisions
-    protected virtual void SetCollidable(EntityUid uid, bool collidable,
+
+    protected virtual void SetCollidable(
+        EntityUid uid,
+        bool collidable,
         DoorComponent? door = null,
         PhysicsComponent? physics = null,
         OccluderComponent? occluder = null)
@@ -386,13 +393,13 @@ public abstract class SharedDoorSystem : EntitySystem
             return;
 
         if (Resolve(uid, ref physics, false))
-            PhysicsSystem.SetCanCollide(physics, collidable);
+            PhysicsSystem.SetCanCollide(uid, collidable, body: physics);
 
         if (!collidable)
             door.CurrentlyCrushing.Clear();
 
         if (door.Occludes)
-            _occluder.SetEnabled(uid, collidable);
+            _occluder.SetEnabled(uid, collidable, occluder);
     }
 
     /// <summary>

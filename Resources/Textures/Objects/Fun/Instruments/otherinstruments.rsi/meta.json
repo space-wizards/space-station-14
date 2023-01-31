@@ -5,7 +5,7 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/vgstation-coders/vgstation13 at 8d9c91e19cb52713c7f7f1804c2b6f7203f8d331, red_phone from /tg/station at commit https://github.com/tgstation/tgstation/commit/6681c3b347b8ec5c845f980c4c309c61223d9942",
+  "copyright": "https://github.com/vgstation-coders/vgstation13 at 8d9c91e19cb52713c7f7f1804c2b6f7203f8d331, /tg/station at commit https://github.com/tgstation/tgstation/commit/6681c3b347b8ec5c845f980c4c309c61223d9942. banana_phone is a modification of red_phone made by noudoit (github) for ss14",
   "states": [
     {
       "name": "bike_horn"
@@ -33,6 +33,9 @@
     },
     {
       "name": "seashell"
+    },
+    {
+      "name": "banana_phone"
     }
   ]
 }

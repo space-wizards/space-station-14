@@ -120,7 +120,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
     {
         component.IsRigged = _solutionsSystem.TryGetSolution(uid, PowerCellComponent.SolutionName, out var solution)
-                               && solution.ContainsReagent("Plasma", out var plasma)
+                               && solution.TryGetReagent("Plasma", out var plasma)
                                && plasma >= 5;
 
         if (component.IsRigged)

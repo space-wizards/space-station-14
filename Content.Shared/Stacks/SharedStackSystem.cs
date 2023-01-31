@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -14,13 +15,15 @@ namespace Content.Shared.Stacks
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IViewVariablesManager _vvm = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
         [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IViewVariablesManager _vvm = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
         public override void Initialize()
         {
@@ -96,6 +99,9 @@ namespace Content.Shared.Stacks
             StackComponent? recipientStack = null)
         {
             transfered = 0;
+            if (donor == recipient)
+                return false;
+
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
@@ -188,6 +194,35 @@ namespace Content.Shared.Stacks
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Tries to merge a stack into any of the stacks it is touching.
+        /// </summary>
+        /// <returns>Whether or not it was successfully merged into another stack</returns>
+        public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
+        {
+            if (!Resolve(uid, ref stack, ref xform, false))
+                return false;
+
+            var map = xform.MapID;
+            var bounds = _physics.GetWorldAABB(uid);
+            var intersecting = _entityLookup.GetComponentsIntersecting<StackComponent>(map, bounds,
+                LookupFlags.Dynamic | LookupFlags.Sundries);
+
+            var merged = false;
+            foreach (var otherStack in intersecting)
+            {
+                var otherEnt = otherStack.Owner;
+
+                if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
+                    continue;
+                merged = true;
+
+                if (stack.Count <= 0)
+                    break;
+            }
+            return merged;
         }
 
         /// <summary>

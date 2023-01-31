@@ -7,6 +7,18 @@ namespace Content.Client.Rotation;
 
 public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsComponent>
 {
+    public void SetHorizontalAngle(EntityUid uid, Angle angle, RotationVisualsComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.HorizontalRotation.Equals(angle))
+            return;
+
+        component.HorizontalRotation = angle;
+        Dirty(component);
+    }
+
     protected override void OnAppearanceChange(EntityUid uid, RotationVisualsComponent component, ref AppearanceChangeEvent args)
     {
         base.OnAppearanceChange(uid, component, ref args);
@@ -20,10 +32,10 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
         switch (state)
         {
             case RotationState.Vertical:
-                AnimateSpriteRotation(args.Sprite, component.VerticalRotation, component.AnimationTime);
+                AnimateSpriteRotation(uid, args.Sprite, component.VerticalRotation, component.AnimationTime);
                 break;
             case RotationState.Horizontal:
-                AnimateSpriteRotation(args.Sprite, component.HorizontalRotation, component.AnimationTime);
+                AnimateSpriteRotation(uid, args.Sprite, component.HorizontalRotation, component.AnimationTime);
                 break;
         }
     }
@@ -31,21 +43,20 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
     /// <summary>
     ///     Rotates a sprite between two animated keyframes given a certain time.
     /// </summary>
-    public void AnimateSpriteRotation(SpriteComponent spriteComp, Angle rotation, float animationTime)
+    public void AnimateSpriteRotation(EntityUid uid, SpriteComponent spriteComp, Angle rotation, float animationTime)
     {
         if (spriteComp.Rotation.Equals(rotation))
         {
             return;
         }
 
-        var animationComp = EnsureComp<AnimationPlayerComponent>(spriteComp.Owner);
+        var animationComp = EnsureComp<AnimationPlayerComponent>(uid);
         const string animationKey = "rotate";
         // Stop the current rotate animation and then start a new one
         if (AnimationSystem.HasRunningAnimation(animationComp, animationKey))
         {
             AnimationSystem.Stop(animationComp, animationKey);
         }
-        spriteComp.Rotation = rotation;
 
         var animation = new Animation
         {
@@ -54,8 +65,8 @@ public sealed class RotationVisualizerSystem : VisualizerSystem<RotationVisualsC
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(ISpriteComponent),
-                    Property = nameof(ISpriteComponent.Rotation),
+                    ComponentType = typeof(SpriteComponent),
+                    Property = nameof(SpriteComponent.Rotation),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

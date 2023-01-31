@@ -1,0 +1,66 @@
+# vocal emotes
+- type: emote
+  id: Scream
+  category: Vocal
+  chatMessages: [screams, yells]
+  chatTriggers:
+    - scream
+    - screams
+    - screaming
+    - screamed
+    - shriek
+    - shrieks
+    - shrieking
+    - shrieked
+    - screech
+    - screechs
+    - screeching
+    - screeched
+    - yell
+    - yells
+    - yelled
+    - yelling
+
+- type: emote
+  id: Laugh
+  category: Vocal
+  chatMessages: [laughs]
+  chatTriggers:
+    - laugh
+    - laughs
+    - laughing
+    - laughed
+    - chuckle
+    - chuckles
+    - chuckled
+    - chuckling
+    - giggle
+    - giggles
+    - giggling
+    - giggled
+
+# hand emotes
+- type: emote
+  id: Clap
+  category: Hands
+  chatMessages: [claps]
+  chatTriggers:
+    - clap
+    - claps
+    - clapping
+    - clapped
+
+- type: emote
+  id: Snap
+  category: Hands
+  chatMessages: [snaps fingers]
+  chatTriggers:
+    - snap
+    - snaps
+    - snapping
+    - snapped
+    - snap fingers
+    - snaps fingers
+    - snapping fingers
+    - snapped fingers
+

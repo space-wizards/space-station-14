@@ -323,6 +323,16 @@
           factor: 1
 
 - type: reagent
+  id: Posca
+  name: reagent-name-posca
+  parent: BaseDrink
+  desc: reagent-desc-posca
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
+  color: "#B3B599"
+  spritePath: glass_light_yellow.rsi
+
+- type: reagent
   id: KiraSpecial
   name: reagent-name-kira-special
   parent: BaseDrink
