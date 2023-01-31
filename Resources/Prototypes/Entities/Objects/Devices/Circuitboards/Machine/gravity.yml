@@ -6,7 +6,7 @@
   description: A machine printed circuit board for a mini gravity generator
   components:
     - type: MachineBoard
-      prototype: GravityGeneratorMini
+      prototype: EmptyGravityGeneratorMini
       materialRequirements:
         Cable: 10
         Uranium: 3
