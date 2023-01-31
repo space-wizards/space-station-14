@@ -61,7 +61,7 @@
     - !type:DiseaseSnough
       probability: 0.025
       snoughSound:
-        collection: Sneezes
+        : Sneezes
     - !type:DiseaseHealthChange
       probability: 0.015
       damage:

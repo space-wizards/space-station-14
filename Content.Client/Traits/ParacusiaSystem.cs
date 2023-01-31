@@ -4,6 +4,7 @@ using Content.Client.Camera;
 using Robust.Shared.Random;
 using Robust.Shared.Player;
 using Robust.Shared.Map;
+using Content.Client.UserInterface.Controls;
 
 namespace Content.Client.Traits;
 
@@ -22,7 +23,7 @@ public sealed class ParacusiaSystem : EntitySystem
     private void SetupParacusia(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
     {
         component.NextIncidentTime =
-            _random.NextFloat(component.minTimeBetweenIncidents, component.maxTimeBetweenIncidents);
+            _random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents);
     }
 
     public override void Update(float frameTime)
@@ -38,11 +39,7 @@ public sealed class ParacusiaSystem : EntitySystem
 
             // Set the new time.
             paracusia.NextIncidentTime +=
-                _random.NextFloat(paracusia.minTimeBetweenIncidents, paracusia.maxTimeBetweenIncidents);
-
-            List<string> sounds = paracusia.Sounds ?? new List<string> { };
-            if (paracusia.Sounds == null || paracusia.Sounds.Count == 0)
-                return;
+                _random.NextFloat(paracusia.MinTimeBetweenIncidents, paracusia.MaxTimeBetweenIncidents);
 
             // Offset position where the sound is played
             Vector2 randomOffset =
@@ -52,15 +49,14 @@ public sealed class ParacusiaSystem : EntitySystem
                 _random.NextFloat(-paracusia.MaxSoundDistance, paracusia.MaxSoundDistance)
             );
 
-            EntityCoordinates newCoords = Transform(paracusia.Owner).Coordinates
+            var newCoords = Transform(paracusia.Owner).Coordinates
                 .Offset(randomOffset);
 
             // funy camera shake
             _camera.KickCamera(paracusia.Owner, randomOffset);
 
             // Play the sound
-            int randomIndex = _random.Next(0, paracusia.Sounds.Count);
-            _audio.PlayStatic(paracusia.Sounds[randomIndex], paracusia.Owner, newCoords);
+            _audio.PlayStatic(paracusia.Sounds, paracusia.Owner, newCoords);
         }
     }
 }
