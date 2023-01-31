@@ -173,6 +173,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _solutionContainerSystem.TryAddSolution(uid, args.AdditionalData.FoodSolution, split);
                 _popupSystem.PopupEntity(forceFeed ? Loc.GetString("food-system-you-cannot-eat-any-more-other") : Loc.GetString("food-system-you-cannot-eat-any-more"), args.Args.Target.Value, args.Args.User);
+                args.Handled = true;
                 return;
             }
 
@@ -211,13 +212,19 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (component.UsesRemaining > 0)
+            {
+                args.Handled = true;
                 return;
+            }
+
 
             if (string.IsNullOrEmpty(component.TrashPrototype))
                 EntityManager.QueueDeleteEntity(uid);
 
             else
                 DeleteAndSpawnTrash(component, uid, args.Args.User);
+
+            args.Handled = true;
         }
 
         private void DeleteAndSpawnTrash(FoodComponent component, EntityUid food, EntityUid? user = null)
