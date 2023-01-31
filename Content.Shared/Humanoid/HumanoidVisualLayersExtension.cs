@@ -15,6 +15,14 @@ namespace Content.Shared.Humanoid
             };
         }
 
+        public static string GetSexMorph(HumanoidVisualLayers layer, Sex sex, string id)
+        {
+            if (!HasSexMorph(layer) || sex == Sex.Unsexed)
+                return id;
+
+            return $"{id}{sex}";
+        }
+
         /// <summary>
         ///     Sublayers. Any other layers that may visually depend on this layer existing.
         ///     For example, the head has layers such as eyes, hair, etc. depending on it.

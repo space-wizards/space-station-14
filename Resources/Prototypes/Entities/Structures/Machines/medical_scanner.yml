@@ -44,6 +44,9 @@
       scanner-bodyContainer: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:

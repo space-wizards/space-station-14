@@ -6,13 +6,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-/// <summary>
-/// This handles...
-/// </summary>
 public sealed class RandomTeleportArtifactSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -25,6 +23,6 @@ public sealed class RandomTeleportArtifactSystem : EntitySystem
         var xform = Transform(uid);
         _popup.PopupCoordinates(Loc.GetString("blink-artifact-popup"), xform.Coordinates, PopupType.Medium);
 
-        xform.Coordinates = xform.Coordinates.Offset(_random.NextVector2(component.Range));
+        _xform.SetCoordinates(xform, xform.Coordinates.Offset(_random.NextVector2(component.Range)));
     }
 }

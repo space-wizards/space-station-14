@@ -165,3 +165,13 @@
   cost: 1000
   category: Atmospherics
   group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockHappyHonk
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockHappyHonkFilled
+  cost: 2100
+  category: Service
+  group: market

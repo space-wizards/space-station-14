@@ -53,11 +53,18 @@
   name: device-frequency-prototype-name-atmos
   frequency: 1621
 
-# Only listen to this frequency if you are a health or GPS monitor. Otherwise you will just slow down the server by constantly receiving periodic broadcasts from every player-entity.
+# Only listen to this frequency if you are a crew monitor server. Otherwise you will just slow down the server by constantly receiving periodic broadcasts from every player-entity.
 - type: deviceFrequency
   id: SuitSensor
   name: device-frequency-prototype-name-suit-sensors
   frequency: 1262
+
+# Crew monitors listen to this for a list of suit sensor statuses
+- type: deviceFrequency
+  id: CrewMonitor
+  name: device-frequency-prototype-name-crew-monitor
+  frequency: 1261
+
 
 # This frequency will likely have a LARGE number of listening entities. Please don't broadcast on this frequency.
 - type: deviceFrequency

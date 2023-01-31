@@ -148,7 +148,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void CheckRoundEnd(EntityUid target)
     {
         //we only care about players, not monkeys and such.
-        if (!HasComp<HumanoidComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
 
         var percent = GetInfectedPercentage(out var num);
@@ -196,7 +196,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
-        var allPlayers = EntityQuery<HumanoidComponent, MobStateComponent>(true);
+        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
         var allZombers = GetEntityQuery<ZombieComponent>();
 
         var totalPlayers = new List<EntityUid>();

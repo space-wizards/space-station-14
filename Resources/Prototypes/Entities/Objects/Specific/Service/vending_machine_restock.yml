@@ -363,3 +363,19 @@
     - state: green_bit
       shader: unshaded
     - state: refill_tanks
+
+- type: entity
+  parent: BaseVendingMachineRestock
+  id: VendingMachineRestockHappyHonk
+  name: happy honk restock box
+  description: place this box full of fun into the restock slot on the Happy Honk Dispenser to begin.
+  components:
+  - type: VendingMachineRestock
+    canRestock:
+    - HappyHonkDispenserInventory
+  - type: Sprite
+    layers:
+    - state: base
+    - state: green_bit
+      shader: unshaded
+    - state: refill_honk

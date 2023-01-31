@@ -40,6 +40,9 @@
   - type: EmptyOnMachineDeconstruct
     containers:
       - clonepod-bodyContainer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
