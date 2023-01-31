@@ -60,3 +60,7 @@ reagent-name-ethylredoxrazine = этилредоксразин
 reagent-desc-ethylredoxrazine = Нейтрализует действие алкоголя в кровеносной системе. Несмотря на то, что он часто нужен, заказывают его редко.
 reagent-name-cognizine = когнизин
 reagent-desc-cognizine = Таинственное химическое вещество, способное сделать любое неразумное существо разумным.
+reagent-name-ethyloxyephedrine = ethyloxyephedrine
+reagent-desc-ethyloxyephedrine = An unstable medicine derived from desoxyephedrine. With the main effects of desoxyephedrine neutralized, it may be useful for something else.
+reagent-name-diphenylmethylamine = diphenylmethylamine
+reagent-desc-diphenylmethylamine = A more stable medicine than ethyloxyephedrine. Useful for keeping someone awake.

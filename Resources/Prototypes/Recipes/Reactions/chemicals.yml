@@ -362,3 +362,29 @@
       amount: 1
   products:
     NorepinephricAcid: 2
+
+- type: reaction
+  id: Ethyloxyephedrine
+  impact: Medium
+  reactants:
+    Desoxyephedrine:
+      amount: 1
+    Stellibinin:
+      amount: 1
+  products:
+    Ethyloxyephedrine: 2
+
+- type: reaction
+  id: Diphenylmethylamine
+  impact: Medium
+  reactants:
+    Ethyloxyephedrine: 
+      amount: 1
+    Charcoal:
+      amount: 1
+    Pax:
+      amount: 1
+    Coffee: 
+      amount: 1
+  products:
+    Diphenylmethylamine: 2

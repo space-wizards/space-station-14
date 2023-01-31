@@ -1,86 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed a bug that was preventing the inventory UI from properly updating
-      in some situations., type: Fix}
-  id: 2464
-  time: '2022-10-16T04:16:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Stripping dead or incapacitated entities is now 3 or 2 times as fast,
-      respectively.', type: Tweak}
-  id: 2465
-  time: '2022-10-16T05:26:28.0000000+00:00'
-- author: Stealthbomber16
-  changes:
-  - {message: OOOOK!, type: Add}
-  id: 2466
-  time: '2022-10-16T06:13:15.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Plants can now be mutated using unstable mutagen and cross-pollinated.,
-    type: Add}
-  id: 2467
-  time: '2022-10-16T06:25:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Buckle teleporting should be fixed for now., type: Fix}
-  id: 2468
-  time: '2022-10-16T06:38:05.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: If you try to swing melee out of range it doesn't waste the swing.,
-    type: Tweak}
-  id: 2469
-  time: '2022-10-16T15:54:43.0000000+00:00'
-- author: moony
-  changes:
-  - {message: The action bar no longer shows the keybind for empty slots., type: Tweak}
-  id: 2470
-  time: '2022-10-16T16:42:19.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'NanoTrasen has given some of your television cameras microphones. Now
-      you can actually hear the news, instead of having to either lip read the newscasters,
-      or have them ring in your headset all the events of the station!', type: Add}
-  id: 2471
-  time: '2022-10-16T17:44:14.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Added voice trigger for modular grenades, type: Add}
-  id: 2472
-  time: '2022-10-16T17:44:51.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
-  id: 2473
-  time: '2022-10-16T18:20:22.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added spare passenger headsets for the HoP in their locker and vendor,
-    type: Add}
-  id: 2474
-  time: '2022-10-16T18:21:02.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed seed extractor and chem master having lit screens when unpowered.,
-    type: Fix}
-  id: 2475
-  time: '2022-10-16T21:00:18.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Door remotes can no longer unbolt airlocks if the bolt wire is cut.,
-    type: Fix}
-  - {message: Airlocks will no longer bolt if the bolt wire is cut while it has no
-      power., type: Tweak}
-  - {message: 'All wires, including the bolt wire, now have to be cut to remove the
-      door electronics from an airlock.', type: Tweak}
-  - {message: Fix a bug where airlock deconstruction examine text wouldn't update
-      after cutting the wires., type: Fix}
-  id: 2476
-  time: '2022-10-17T00:44:05.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
   id: 2477
   time: '2022-10-17T04:33:29.0000000+00:00'
@@ -2933,3 +2853,84 @@ Entries:
       item., type: Fix}
   id: 2963
   time: '2023-01-27T16:25:08.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Circuit imprinters now show the correct icons for the boards, type: Fix}
+  id: 2964
+  time: '2023-01-27T19:39:23.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Added two new narcolepsy medications., type: Add}
+  - {message: Previous narcolepsy medication has been nerfed in viability. You now
+      need more of the same medicine for it to be as effective., type: Tweak}
+  id: 2965
+  time: '2023-01-27T21:11:06.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed previous examine showing up briefly when rapidly examining multiple
+      things., type: Fix}
+  - {message: Fixed examine sometimes showing up in the top left corner., type: Fix}
+  id: 2966
+  time: '2023-01-27T23:15:39.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Fixed a typo for the Medical Intern role timer, type: Fix}
+  id: 2967
+  time: '2023-01-28T13:27:28.0000000+00:00'
+- author: Scribbles0
+  changes:
+  - {message: Ammo boxes can now be printed in the security techlathe., type: Add}
+  - {message: .25 rubber rifle rounds have been swapped for .20 rifle rounds in the
+      security techlathe., type: Tweak}
+  id: 2968
+  time: '2023-01-28T13:59:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: vent clog event now only affects single station vents (no more foam
+      in nukie ship), type: Tweak}
+  id: 2969
+  time: '2023-01-28T14:06:40.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: apc events now only affect single station APCs (no power shut offs on
+      shuttles), type: Fix}
+  id: 2970
+  time: '2023-01-28T14:07:18.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed a bug where artifacts would stop functioning properly with the
+      analyzer after teleporting., type: Fix}
+  id: 2971
+  time: '2023-01-28T17:39:52.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cleaned up some of the syndicate names., type: Fix}
+  id: 2972
+  time: '2023-01-28T19:09:23.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Added encryption keys for headsets. These chips provide access to radio
+      channels. You can eject them with a screwdriver and then install in other headsets.,
+    type: Add}
+  id: 2973
+  time: '2023-01-29T00:53:08.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Fixed bug causing radio channels to be available even after encryption
+      keys get removed., type: Fix}
+  id: 2974
+  time: '2023-01-29T18:32:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
+      more resilient to damage.', type: Tweak}
+  id: 2975
+  time: '2023-01-31T01:43:28.0000000+00:00'
+- author: crazybrain23
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 2976
+  time: '2023-01-31T01:44:10.0000000+00:00'
