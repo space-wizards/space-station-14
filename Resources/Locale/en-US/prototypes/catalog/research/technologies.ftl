@@ -19,6 +19,9 @@ technologies-virology-description = The secrets of the immune system.
 technologies-advanced-surgery = Advanced surgery
 technologies-advanced-surgery-description = Research new surgical procedures.
 
+technologies-artificial-gravity = Artificial Gravity
+technologies-artificial-gravity-description = Keeping the floor down since 2125.
+
 technologies-chemistry-technology = Chemistry technology
 technologies-chemistry-technology-description = A crash course in chemistry.
 

@@ -311,6 +311,20 @@
   - RipleyLLeg
   - RipleyRLeg
 
+- type: technology
+  name: technologies-artificial-gravity
+  id: ArtificialGravity
+  description: technologies-artificial-gravity-description
+  icon:
+    sprite: Structures/Machines/gravity_generator_mini.rsi
+    state: on
+  requiredPoints: 15000
+  requiredTechnologies:
+  - SpacefaringTechnology
+  - ElectromagneticTheory
+  unlockedRecipes:
+  - GravityGeneratorMiniMachineCircuitboard
+
 # Industrial Engineering Technology Tree
 
 - type: technology

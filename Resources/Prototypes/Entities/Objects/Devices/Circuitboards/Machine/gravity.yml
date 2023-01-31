@@ -1,0 +1,17 @@
+# Mini Gravity Generator
+- type: entity
+  id: GravityGeneratorMiniMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: mini gravity generator machine board
+  description: A machine printed circuit board for a mini gravity generator
+  components:
+    - type: MachineBoard
+      prototype: GravityGeneratorMini
+      requirements:
+        Capacitor: 3
+        Laser: 4
+      materialRequirements:
+        Cable: 10
+        Steel: 5
+      sprite: Structures/Machines/gravity_generator_mini.rsi
+      state: on

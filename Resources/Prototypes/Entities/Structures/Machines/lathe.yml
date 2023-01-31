@@ -227,7 +227,7 @@
       - VoiceTrigger
       - PowerCellSmall
       - PowerCellMedium
-      - PowerCellHigh  
+      - PowerCellHigh
       - SynthesizerInstrument
       - RPED
       - NodeScanner
@@ -269,6 +269,7 @@
       - ThermomachineFreezerMachineCircuitBoard
       - PortableScrubberMachineCircuitBoard
       - CloningPodMachineCircuitboard
+      - GravityGeneratorMiniMachineCircuitboard
       - MedicalScannerMachineCircuitboard
       - CryoPodMachineCircuitboard
       - CrewMonitoringComputerCircuitboard

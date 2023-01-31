@@ -1,6 +1,6 @@
 ﻿- type: entity
   id: GravityGenerator
-  parent: BaseMachinePowered
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
   name: gravity generator
   description: It's what keeps you to the floor.
   placement:
@@ -96,6 +96,8 @@
         map: ["enum.GravityGeneratorVisualLayers.Core"]
         scale: "0.4,0.4"
         offset: "0,0.2"
+  - type: Machine
+    board: GravityGeneratorMiniMachineCircuitboard
   - type: Fixtures
     fixtures:
     - shape:
