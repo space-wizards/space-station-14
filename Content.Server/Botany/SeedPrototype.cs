@@ -226,7 +226,7 @@ public class SeedData
     public float BioluminescentRadius = 2f;
 
 
-    [DataField("turnintokudzu")] public bool TurnIntoKudzu;
+    [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
     #endregion
