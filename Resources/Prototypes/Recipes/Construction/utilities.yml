@@ -23,9 +23,10 @@
   description: "A surveillance camera monitor for the wall."
   icon:
     sprite: Structures/Machines/computers.rsi
-    state: telescreen
+    state: telescreen_frame
   objectType: Structure
   placementMode: SnapgridCenter
+  canBuildInImpassable: true
 
 # POWER
 - type: construction

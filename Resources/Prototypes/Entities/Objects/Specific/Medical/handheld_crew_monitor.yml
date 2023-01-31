@@ -17,8 +17,9 @@
   - type: CrewMonitoringConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
-    receiveFrequencyId: SuitSensor
+    receiveFrequencyId: CrewMonitor
   - type: WirelessNetworkConnection
     range: 500
+  - type: StationLimitedNetwork
   - type: StaticPrice
     price: 500

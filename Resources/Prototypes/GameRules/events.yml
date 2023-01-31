@@ -187,6 +187,16 @@
     endAfter: 60
 
 - type: gameRule
+  id: SpiderSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: SpiderSpawn
+    earliestStart: 20
+    minimumPlayers: 15
+    weight: 5
+    endAfter: 60    
+
+- type: gameRule
   id: ZombieOutbreak
   config:
     !type:StationEventRuleConfiguration
