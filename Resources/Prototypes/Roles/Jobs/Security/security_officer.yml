@@ -23,10 +23,10 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSec
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsJack
+    shoes: ClothingShoesBootsJackSec # Corvax-Resprite
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHelmetHelmet # Corvax-Resprite
-    outerClothing: ClothingOuterVestKevlar
+    outerClothing: ClothingOuterVestArmorSec # Corvax-Resprite
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
