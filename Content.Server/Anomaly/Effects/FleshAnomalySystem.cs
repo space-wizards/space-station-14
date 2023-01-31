@@ -16,7 +16,6 @@ public sealed class FleshAnomalySystem : EntitySystem
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
@@ -49,10 +48,11 @@ public sealed class FleshAnomalySystem : EntitySystem
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
             return;
 
-        var range = component.SpawnRange * args.Stability;
+        var radius = component.SpawnRange * args.Stability;
         var fleshTile = (ContentTileDefinition) _tiledef[component.FleshTileId];
-        var worldPos = _xform.GetWorldPosition(xform);
-        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range));
+        var localpos = xform.Coordinates.Position;
+        var tilerefs = grid.GetLocalTilesIntersecting(
+            new Box2(localpos + (-radius, -radius), localpos + (radius, radius)));
         foreach (var tileref in tilerefs)
         {
             if (!_random.Prob(0.33f))
@@ -61,13 +61,14 @@ public sealed class FleshAnomalySystem : EntitySystem
         }
     }
 
-    private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int amount, float range)
+    private void SpawnMonstersOnOpenTiles(FleshAnomalyComponent component, TransformComponent xform, int amount, float radius)
     {
         if (!_map.TryGetGrid(xform.GridUid, out var grid))
             return;
 
-        var worldPos = _xform.GetWorldPosition(xform);
-        var tilerefs = grid.GetTilesIntersecting(new Circle(worldPos, range));
+        var localpos = xform.Coordinates.Position;
+        var tilerefs = grid.GetLocalTilesIntersecting(
+            new Box2(localpos + (-radius, -radius), localpos + (radius, radius)));
         var validSpawnLocations = new List<Vector2i>();
         var physQuery = GetEntityQuery<PhysicsComponent>();
         foreach (var tileref in tilerefs)

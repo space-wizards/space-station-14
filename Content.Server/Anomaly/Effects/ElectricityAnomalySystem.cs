@@ -6,11 +6,13 @@ using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
 
 public sealed class ElectricityAnomalySystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly LightningSystem _lightning = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
@@ -44,7 +46,7 @@ public sealed class ElectricityAnomalySystem : EntitySystem
             if (mobQuery.HasComponent(ent))
                 validEnts.Add(ent);
 
-            if (_random.Prob(0.1f) && poweredQuery.HasComponent(ent))
+            if (_random.Prob(0.2f) && poweredQuery.HasComponent(ent))
                 validEnts.Add(ent);
         }
 
@@ -61,10 +63,14 @@ public sealed class ElectricityAnomalySystem : EntitySystem
 
         foreach (var (elec, anom, xform) in EntityQuery<ElectricityAnomalyComponent, AnomalyComponent, TransformComponent>())
         {
+            if (_timing.CurTime < elec.NextSecond)
+                continue;
+            elec.NextSecond = _timing.CurTime + TimeSpan.FromSeconds(1);
+
             var owner = xform.Owner;
 
-            if (!_random.Prob(elec.PassiveElectrocutionChance * anom.Stability * frameTime))
-                break;
+            if (!_random.Prob(elec.PassiveElectrocutionChance * anom.Stability))
+                continue;
 
             var range = elec.MaxElectrocuteRange * anom.Stability;
             var damage = (int) (elec.MaxElectrocuteDamage * anom.Severity);

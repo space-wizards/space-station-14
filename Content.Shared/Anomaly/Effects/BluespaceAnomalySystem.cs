@@ -4,8 +4,8 @@ using Content.Shared.Anomaly.Effects.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Teleportation.Components;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
+
 namespace Content.Shared.Anomaly.Effects;
 
 public sealed class BluespaceAnomalySystem : EntitySystem
@@ -39,34 +39,27 @@ public sealed class BluespaceAnomalySystem : EntitySystem
                 coords.Add(xf.Coordinates);
         }
 
-        while (allEnts.Any())
+        _random.Shuffle(coords);
+        for (var i = 0; i < allEnts.Count; i++)
         {
-            var ent = _random.PickAndTake(allEnts);
-            var coord = _random.PickAndTake(coords);
-
-            _xform.SetCoordinates(ent, coord);
-            _audio.PlayPvs(component.TeleportSound, ent);
+            _xform.SetCoordinates(allEnts[i], coords[i]);
         }
     }
 
     private void OnSupercritical(EntityUid uid, BluespaceAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        var g = xform.GridUid;
-        if (g is not { } grid)
-            return;
-        if (!TryComp<MapGridComponent>(grid, out var gridComp))
-            return;
-        var gridBounds = gridComp.LocalAABB;
-
+        var mapPos = _xform.GetWorldPosition(xform);
+        var radius = component.SupercriticalTeleportRadius;
+        var gridBounds = new Box2(mapPos - (radius, radius), mapPos + (radius, radius));
         foreach (var comp in _lookup.GetComponentsInRange<MobStateComponent>(xform.Coordinates, component.MaxShuffleRadius))
         {
             var ent = comp.Owner;
             var randomX = _random.NextFloat(gridBounds.Left, gridBounds.Right);
             var randomY = _random.NextFloat(gridBounds.Bottom, gridBounds.Top);
 
-            var pos = new EntityCoordinates(grid, new Vector2(randomX, randomY));
-            _xform.SetCoordinates(ent, pos);
+            var pos = new Vector2(randomX, randomY);
+            _xform.SetWorldPosition(ent, pos);
             _audio.PlayPvs(component.TeleportSound, ent);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Prototypes;
+﻿using Content.Shared.Maps;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -21,9 +22,9 @@ public sealed class FleshAnomalyComponent : Component
     public int MaxSpawnAmount = 8;
 
     /// <summary>
-    /// The maximum range the entities will spawn in.
+    /// The maximum radius the entities will spawn in.
     /// Also governs the maximum reach of flesh tiles
-    /// sacles with stability
+    /// scales with stability
     /// </summary>
     [DataField("spawnRange")]
     public float SpawnRange = 4f;
@@ -31,7 +32,7 @@ public sealed class FleshAnomalyComponent : Component
     /// <summary>
     /// The tile that is spawned by the anomaly's effect
     /// </summary>
-    [DataField("fleshTileId")]
+    [DataField("fleshTileId", customTypeSerializer: typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string FleshTileId = "FloorFlesh";
 
     /// <summary>

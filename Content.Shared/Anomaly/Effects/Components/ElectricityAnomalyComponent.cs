@@ -1,4 +1,6 @@
-﻿namespace Content.Shared.Anomaly.Effects.Components;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
+namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
 public sealed class ElectricityAnomalyComponent : Component
@@ -30,4 +32,10 @@ public sealed class ElectricityAnomalyComponent : Component
     /// </summary>
     [DataField("passiveElectrocutionChance"), ViewVariables(VVAccess.ReadWrite)]
     public float PassiveElectrocutionChance = 0.05f;
+
+    /// <summary>
+    /// Used for tracking seconds, so that we can shock people in a non-tick-dependent way.
+    /// </summary>
+    [DataField("nextSecond", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan NextSecond = TimeSpan.Zero;
 }

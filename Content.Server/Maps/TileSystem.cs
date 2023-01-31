@@ -57,17 +57,23 @@ public sealed class TileSystem : EntitySystem
 
     public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile)
     {
-        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
-
         if (!TryComp<MapGridComponent>(tileref.GridUid, out var grid))
             return false;
+        return ReplaceTile(tileref, replacementTile, tileref.GridUid, grid);
+    }
 
+    public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile, EntityUid grid, MapGridComponent? component = null)
+    {
+        if (!Resolve(grid, ref component))
+            return false;
+
+        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
         var decals = _decal.GetDecalsInRange(tileref.GridUid, tileref.GridPosition().SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
             _decal.RemoveDecal(tileref.GridUid, id);
         }
-        grid.SetTile(tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
+        component.SetTile(tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
         return true;
     }
 

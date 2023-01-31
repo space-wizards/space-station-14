@@ -27,6 +27,12 @@ public sealed class BluespaceAnomalyComponent : Component
     public float MinPortalRadius = 10;
 
     /// <summary>
+    /// How far the supercritical event can teleport you
+    /// </summary>
+    [DataField("superCriticalTeleportRadius")]
+    public float SupercriticalTeleportRadius = 50f;
+
+    /// <summary>
     /// The sound played after players are shuffled/teleported around
     /// </summary>
     [DataField("teleportSound")]
