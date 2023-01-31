@@ -1,11 +1,11 @@
 image: mcr.microsoft.com/dotnet/sdk:7.0
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
+stages:
+  - test
   - publish
 
-build-debug:       # This job runs in the build stage, which runs first.
-  stage: build
+test-debug:
+  stage: test
   retry: 2
   script:
     - apt update && apt upgrade -y
@@ -18,8 +18,8 @@ build-debug:       # This job runs in the build stage, which runs first.
     - export DOTNET_gcServer=1
     - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
 
-build-release:
-  stage: build
+test-release:
+  stage: test
   retry: 2
   script:
     - apt update && apt upgrade -y
