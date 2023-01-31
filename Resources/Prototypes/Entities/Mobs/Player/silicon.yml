@@ -98,7 +98,7 @@
   #     3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
   - type: Laws
     canState: false
-    laws:
+    initialLaws:
     - You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.
     - You may not harm any being, regardless of intent or circumstance.
     - Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.

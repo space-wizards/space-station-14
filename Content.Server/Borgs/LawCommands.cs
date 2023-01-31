@@ -47,7 +47,7 @@ public sealed class ListLawsCommand : IConsoleCommand
         shell.WriteLine($"Laws for {entityManager.ToPrettyString(entity.Value)}:");
         foreach (var law in laws.Laws)
         {
-            shell.WriteLine(law);
+            shell.WriteLine(law.Key + ": " + law.Value.Text);
         }
     }
 }
@@ -89,7 +89,7 @@ public sealed class ClearLawsCommand : IConsoleCommand
             return;
         }
 
-        entityManager.EntitySysManager.GetEntitySystem<LawsSystem>().ClearLaws(entity.Value, laws);
+        entityManager.EntitySysManager.GetEntitySystem<SharedLawsSystem>().ClearLaws(entity.Value, laws);
     }
 }
 
@@ -129,9 +129,9 @@ public sealed class AddLawCommand : IConsoleCommand
         var laws = entityManager.EnsureComponent<LawsComponent>(entity.Value);
 
         if (args.Length == 2)
-            entityManager.EntitySysManager.GetEntitySystem<LawsSystem>().AddLaw(entity.Value, args[1], component: laws);
+            entityManager.EntitySysManager.GetEntitySystem<SharedLawsSystem>().TryAddLaw(entity.Value, args[1], component: laws);
         else if (args.Length == 3 && int.TryParse(args[2], out var index))
-            entityManager.EntitySysManager.GetEntitySystem<LawsSystem>().AddLaw(entity.Value, args[1], index, laws);
+            entityManager.EntitySysManager.GetEntitySystem<SharedLawsSystem>().TryAddLaw(entity.Value, args[1], index, component: laws);
         else
             shell.WriteLine("Third argument must be an integer.");
     }
@@ -177,8 +177,8 @@ public sealed class RemoveLawCommand : IConsoleCommand
         }
 
         if (args[1] == null || !int.TryParse(args[1], out var index))
-            entityManager.EntitySysManager.GetEntitySystem<LawsSystem>().RemoveLaw(entity.Value);
+            entityManager.EntitySysManager.GetEntitySystem<SharedLawsSystem>().TryRemoveLaw(entity.Value);
         else
-            entityManager.EntitySysManager.GetEntitySystem<LawsSystem>().RemoveLaw(entity.Value, index);
+            entityManager.EntitySysManager.GetEntitySystem<SharedLawsSystem>().TryRemoveLaw(entity.Value, index);
     }
 }

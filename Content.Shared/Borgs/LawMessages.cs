@@ -11,9 +11,9 @@ namespace Content.Shared.Borgs
     [Serializable, NetSerializable]
     public sealed class LawsUpdateState : BoundUserInterfaceState
     {
-        public HashSet<string> Laws;
+        public SortedDictionary<int, (string, LawProperties)> Laws;
 
-        public LawsUpdateState(HashSet<string> laws)
+        public LawsUpdateState(SortedDictionary<int, (string, LawProperties)> laws)
         {
             Laws = laws;
         }

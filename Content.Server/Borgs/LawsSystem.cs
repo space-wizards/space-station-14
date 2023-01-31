@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared.Borgs;
 using Content.Server.Chat.Systems;
 using Robust.Shared.Timing;
@@ -6,7 +7,7 @@ using JetBrains.Annotations;
 
 namespace Content.Server.Borgs
 {
-    public sealed class LawsSystem : EntitySystem
+    public sealed class LawsSystem : SharedLawsSystem
     {
         [Dependency] private readonly ChatSystem _chat = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
@@ -14,14 +15,34 @@ namespace Content.Server.Borgs
 
         public override void Initialize()
         {
-            base.Initialize();
             SubscribeLocalEvent<LawsComponent, StateLawsMessage>(OnStateLaws);
             SubscribeLocalEvent<LawsComponent, PlayerAttachedEvent>(OnPlayerAttached);
         }
 
+        [PublicAPI]
+        public bool TryStateLaws(EntityUid uid, LawsComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return false;
+
+            if (!component.CanState)
+                return false;
+
+            if (component.StateTime != null && _timing.CurTime < component.StateTime)
+                return false;
+
+            component.StateTime = _timing.CurTime + component.StateCD;
+
+            foreach (var law in component.Laws)
+            {
+                _chat.TrySendInGameICMessage(uid, law.Value.Text, InGameICChatType.Speak, false);
+            }
+
+            return true;
+        }
         private void OnStateLaws(EntityUid uid, LawsComponent component, StateLawsMessage args)
         {
-            StateLaws(uid, component);
+            TryStateLaws(uid, component);
         }
 
         private void OnPlayerAttached(EntityUid uid, LawsComponent component, PlayerAttachedEvent args)
@@ -30,69 +51,6 @@ namespace Content.Server.Borgs
                 return;
 
             _uiSystem.TryOpen(uid, LawsUiKey.Key, args.Player);
-        }
-
-        public void StateLaws(EntityUid uid, LawsComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            if (!component.CanState)
-                return;
-
-            if (component.StateTime != null && _timing.CurTime < component.StateTime)
-                return;
-
-            component.StateTime = _timing.CurTime + component.StateCD;
-
-            foreach (var law in component.Laws)
-            {
-                _chat.TrySendInGameICMessage(uid, law, InGameICChatType.Speak, false);
-            }
-        }
-
-        [PublicAPI]
-        public void ClearLaws(EntityUid uid, LawsComponent? component = null)
-        {
-            if (!Resolve(uid, ref component, false))
-                return;
-
-            component.Laws.Clear();
-            Dirty(component);
-        }
-
-        public void AddLaw(EntityUid uid, string law, int? index = null, LawsComponent? component = null)
-        {
-            if (!Resolve(uid, ref component, false))
-                return;
-
-            if (index == null)
-                index = component.Laws.Count;
-
-            index = Math.Clamp((int) index, 0, component.Laws.Count);
-
-            component.Laws.Insert((int) index, law);
-            Dirty(component);
-        }
-
-        public void RemoveLaw(EntityUid uid, int? index = null, LawsComponent? component = null)
-        {
-            if (!Resolve(uid, ref component, false))
-                return;
-
-            if (index == null)
-                index = component.Laws.Count;
-
-            if (component.Laws.Count == 0)
-                return;
-
-            index = Math.Clamp((int) index, 0, component.Laws.Count - 1);
-
-            if (index < 0)
-                return;
-
-            component.Laws.RemoveAt((int) index);
-            Dirty(component);
         }
     }
 }

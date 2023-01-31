@@ -41,9 +41,9 @@ namespace Content.Client.Borgs
             {
                 var newLabel = new LawUIContainer();
                 var heading = Loc.GetString("silicon-laws-law-heading",
-                        ("lawDisplayNumber", Laws.ChildCount + 1));
+                        ("lawDisplayNumber", law.Key));
                 newLabel.SetHeading(heading);
-                newLabel.SetDescription(law);
+                newLabel.SetDescription(law.Value.Text);
                 Laws.AddChild(newLabel);
             }
         }

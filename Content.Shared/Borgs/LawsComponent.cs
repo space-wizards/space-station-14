@@ -4,10 +4,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Borgs
 {
     [RegisterComponent, NetworkedComponent]
+    [Access(typeof(SharedLawsSystem))]
     public sealed class LawsComponent : Component
     {
+        [DataField("initialLaws")]
+        public List<string> InitialLaws = new List<string>();
+
         [DataField("laws")]
-        public List<string> Laws = new List<string>();
+        public SortedDictionary<int, (string Text, LawProperties Properties)> Laws = new SortedDictionary<int, (string, LawProperties)>();
 
         [DataField("canState")]
         public bool CanState = true;
@@ -24,11 +28,27 @@ namespace Content.Shared.Borgs
     [Serializable, NetSerializable]
     public sealed class LawsComponentState : ComponentState
     {
-        public readonly List<string> Laws;
+        public readonly SortedDictionary<int, (string, LawProperties)> Laws;
 
-        public LawsComponentState(List<string> laws)
+        public LawsComponentState(SortedDictionary<int, (string, LawProperties)> laws)
         {
             Laws = laws;
         }
+    }
+    [Flags]
+    public enum LawProperties
+    {
+        Default = 0,
+
+        /// <summary>
+        /// Whether this law should be skipped when stating laws
+        /// and other law inspection methods.
+        /// </summary>
+        Hidden = 1 << 0,
+
+        /// <summary>
+        /// Whether this law can be removed by normal means.
+        /// </summary>
+        Removable = 1 << 1,
     }
 }
