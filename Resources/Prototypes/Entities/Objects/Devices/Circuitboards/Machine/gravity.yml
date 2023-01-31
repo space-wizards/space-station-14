@@ -7,11 +7,7 @@
   components:
     - type: MachineBoard
       prototype: GravityGeneratorMini
-      requirements:
-        Capacitor: 3
-        Laser: 4
       materialRequirements:
         Cable: 10
+        Uranium: 3
         Steel: 5
-      sprite: Structures/Machines/gravity_generator_mini.rsi
-      state: on
