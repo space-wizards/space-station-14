@@ -1,3 +1,6 @@
+using Content.Server.Procedural.Corridors;
+using Content.Server.Procedural.Rooms;
+
 namespace Content.Server.Procedural;
 
 [DataDefinition]
@@ -8,15 +11,9 @@ public sealed class BSPDunGen : IDungeonGenerator
     [DataField("min")]
     public Vector2i MinimumRoomDimensions = new(4, 4);
 
-    // TODO: Move this to the simple one
-    /// <summary>
-    /// Boundary to the BSP border.
-    /// </summary>
-    [DataField("offset")]
-    public int Offset = 1;
+    [DataField("rooms")]
+    public IRoomGen Rooms = new RandomWalkRoomGen();
 
-    /// <summary>
-    /// Random walk length
-    /// </summary>
-    [DataField("length")] public int Length = 10;
+    [DataField("corridors")]
+    public ICorridorGen Corridors = new SimpleCorridorGen();
 }

@@ -45,17 +45,7 @@ public sealed partial class DungeonSystem
 
         var random = new Random();
         var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random);
-        List<DungeonRoom> rooms;
-
-        if (true)
-        {
-            rooms = CreateRoomsRandomly(gen, roomSpaces, random);
-        }
-        else
-        {
-            rooms = CreateSimpleRooms(gen, roomSpaces, random);
-        }
-
+        var rooms = gen.Rooms.GetRooms(roomSpaces, random);
         var roomCenters = new List<Vector2i>();
 
         foreach (var room in roomSpaces)
@@ -63,7 +53,7 @@ public sealed partial class DungeonSystem
             roomCenters.Add((Vector2i) room.Center.Rounded());
         }
 
-        var corridors = ConnectRooms(roomCenters, random);
+        var corridors = ConnectRooms(gen, roomCenters, random);
 
         var allTiles = new HashSet<Vector2i>(corridors);
 
@@ -80,47 +70,7 @@ public sealed partial class DungeonSystem
         };
     }
 
-    private List<DungeonRoom> CreateRoomsRandomly(BSPDunGen gen, List<Box2i> roomsList, Random random)
-    {
-        var rooms = new List<DungeonRoom>();
-
-        for (var i = 0; i < roomsList.Count; i++)
-        {
-            var room = new DungeonRoom();
-            rooms.Add(room);
-            var floors = new HashSet<Vector2i>();
-
-            var roomBounds = roomsList[i];
-            var center = roomBounds.Center;
-            var roomCenter = new Vector2i((int) Math.Round(center.X), (int) Math.Round(center.Y));
-            var currentPosition = roomCenter;
-
-            for (var j = 0; j < 10; j++)
-            {
-                var path = RandomWalk(currentPosition, gen.Length, random);
-                floors.UnionWith(path);
-
-                // TODO:
-                if (true)
-                    currentPosition = floors.ElementAt(random.Next(floors.Count));
-            }
-
-            foreach (var position in floors)
-            {
-                if (position.X >= roomBounds.Left + gen.Offset &&
-                   position.X <= roomBounds.Right - gen.Offset &&
-                   position.Y >= roomBounds.Bottom - gen.Offset &&
-                   position.Y <= roomBounds.Top - gen.Offset)
-                {
-                    room.Tiles.Add(position);
-                }
-            }
-        }
-
-        return rooms;
-    }
-
-    private HashSet<Vector2i> ConnectRooms(List<Vector2i> roomCenters, Random random)
+    private HashSet<Vector2i> ConnectRooms(BSPDunGen gen, List<Vector2i> roomCenters, Random random)
     {
         var corridors = new HashSet<Vector2i>();
         var currentRoomCenter = roomCenters[random.Next(roomCenters.Count)];
@@ -130,45 +80,11 @@ public sealed partial class DungeonSystem
         {
             var closest = FindClosestPointTo(currentRoomCenter, roomCenters);
             roomCenters.Remove(closest);
-            var newCorridor = CreateCorridor(currentRoomCenter, closest);
+            var newCorridor = gen.Corridors.CreateCorridor(currentRoomCenter, closest);
             currentRoomCenter = closest;
             corridors.UnionWith(newCorridor);
         }
         return corridors;
-    }
-
-    private HashSet<Vector2i> CreateCorridor(Vector2i currentRoomCenter, Vector2i destination)
-    {
-        var corridor = new HashSet<Vector2i>();
-        var position = currentRoomCenter;
-        corridor.Add(position);
-
-        while (position.Y != destination.Y)
-        {
-            if (destination.Y > position.Y)
-            {
-                position += Vector2i.Up;
-            }
-            else if (destination.Y < position.Y)
-            {
-                position += Vector2i.Down;
-            }
-            corridor.Add(position);
-        }
-
-        while (position.X != destination.X)
-        {
-            if (destination.X > position.X)
-            {
-                position += Vector2i.Right;
-            }
-            else if(destination.X < position.X)
-            {
-                position += Vector2i.Left;
-            }
-            corridor.Add(position);
-        }
-        return corridor;
     }
 
     private Vector2i FindClosestPointTo(Vector2i currentRoomCenter, List<Vector2i> roomCenters)
@@ -189,27 +105,5 @@ public sealed partial class DungeonSystem
         }
 
         return closest;
-    }
-
-    private List<DungeonRoom> CreateSimpleRooms(BSPDunGen gen, List<Box2i> roomsList, Random random)
-    {
-        var rooms = new List<DungeonRoom>(roomsList.Count);
-
-        foreach (var roomSpace in roomsList)
-        {
-            var room = new DungeonRoom();
-            rooms.Add(room);
-
-            for (var col = gen.Offset; col < roomSpace.Width - gen.Offset; col++)
-            {
-                for (var row = gen.Offset; row < roomSpace.Height - gen.Offset; row++)
-                {
-                    var position = roomSpace.BottomLeft + new Vector2i(col, row);
-                    room.Tiles.Add(position);
-                }
-            }
-        }
-
-        return rooms;
     }
 }

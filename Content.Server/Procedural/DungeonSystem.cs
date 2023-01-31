@@ -83,7 +83,8 @@ public sealed partial class DungeonSystem : EntitySystem
 
     private void SplitVertically(int minWidth, Queue<Box2i> roomsQueue, Box2i room, Random random)
     {
-        var xSplit = random.Next(1, room.Width);
+        // TODO: Config for 1, thing
+        var xSplit = random.Next(minWidth, room.Width - minWidth);
         var room1 = new Box2i(room.Left, room.Bottom, room.Left + xSplit, room.Top);
         var room2 = new Box2i(room.Left + xSplit, room.Bottom, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
@@ -92,7 +93,7 @@ public sealed partial class DungeonSystem : EntitySystem
 
     private void SplitHorizontally(int minHeight, Queue<Box2i> roomsQueue, Box2i room, Random random)
     {
-        var ySplit = random.Next(1, room.Height);
+        var ySplit = random.Next(minHeight, room.Height - minHeight);
         var room1 = new Box2i(room.Left, room.Bottom, room.Right, room.Bottom + ySplit);
         var room2 = new Box2i(room.Left, room.Bottom + ySplit, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
