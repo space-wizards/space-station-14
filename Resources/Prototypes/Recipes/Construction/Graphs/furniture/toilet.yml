@@ -9,7 +9,7 @@
             - !type:SnapToGrid { }
           steps:
             - material: Steel
-              amount: 5
+              amount: 20
               doAfter: 1
     - node: toilet
       entity: ToiletEmpty
@@ -18,7 +18,7 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetSteel1
-              amount: 5
+              amount: 20
             - !type:EmptyAllContainers {}
             - !type:DestroyEntity {}
           conditions:
