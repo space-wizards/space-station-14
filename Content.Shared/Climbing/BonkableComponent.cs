@@ -4,7 +4,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Climbing;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedBonkSystem))]
+/// <summary>
+///     Makes entity do damage and stun entities with ClumsyComponent
+///     upon DragDrop or Climb interactions.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(BonkSystem))]
 public sealed class BonkableComponent : Component
 {
     /// <summary>

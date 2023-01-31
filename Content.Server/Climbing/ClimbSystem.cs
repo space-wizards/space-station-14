@@ -45,7 +45,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedBonkSystem _bonkSystem = default!;
+    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);

@@ -5,13 +5,13 @@ using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Robust.Shared.Configuration;
 using Content.Shared.Popups;
+using Content.Shared.IdentityManagement;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Climbing;
 
-public sealed class SharedBonkSystem : EntitySystem
+public sealed class BonkSystem : EntitySystem
 {
-    private const string BonkMessage = "Bonk!";
-
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
@@ -25,10 +25,9 @@ public sealed class SharedBonkSystem : EntitySystem
         SubscribeLocalEvent<BonkableComponent, DragDropEvent>(OnDragDrop);
     }
 
-    public bool TryBonk(EntityUid user, EntityUid climbable)
+    public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
     {
-        BonkableComponent? bonkableComponent = null;
-        if (Resolve(climbable, ref bonkableComponent))
+        if (Resolve(bonkableUid, ref bonkableComponent))
         {
             if (!_cfg.GetCVar(CCVars.GameTableBonk))
             {
@@ -38,8 +37,13 @@ public sealed class SharedBonkSystem : EntitySystem
             }
 
             // BONK!
+            var userName = Identity.Entity(user, EntityManager);
+            var bonkableName = Identity.Entity(bonkableUid, EntityManager);
 
-            _popupSystem.PopupEntity(BonkMessage, user, PopupType.Medium);
+            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-others", ("user", userName), ("bonkable", bonkableName)), user, Filter.PvsExcept(user), true);
+
+            _popupSystem.PopupEntity(Loc.GetString("bonkable-success-message-user", ("user", userName), ("bonkable", bonkableName)), user, user);
+
             _audioSystem.PlayPvs(bonkableComponent.BonkSound, bonkableComponent.Owner);
             _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(bonkableComponent.BonkTime), true);
 
