@@ -36,14 +36,24 @@ publish:
   stage: publish
   script:
     - apt update && apt upgrade -y
-    - apt install -y python3 libfreetype6
+    - apt install -y python3 libfreetype6 openssh-client rsync
     - mkdir .git/hooks -p
     - python3 RUN_THIS.py
     - Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64 > server_build.log
     - Tools/package_client_build.py > client_build.log
+    - mkdir release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
+    - mv release/*.zip release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
+    - eval $(ssh-agent -s)
+    - ssh-add - <<< "${SSH_PRIVATE_KEY}"
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $SSH_REMOTE_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - rsync -avz release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA $SSH_USER@$SSH_REMOTE_IP:~/builds/builds/
+    - ssh $SSH_USER@$SSH_REMOTE_IP "~/push.ps1 $CI_COMMIT_REF_NAME-$CI_COMMIT_SHA $CI_COMMIT_REF_NAME"
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
-      - release/
+      - release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
       - server_build.log
       - client_build.log
