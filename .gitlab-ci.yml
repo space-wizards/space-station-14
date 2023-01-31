@@ -41,6 +41,7 @@ publish:
     - python3 RUN_THIS.py
     - Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64 > server_build.log
     - Tools/package_client_build.py > client_build.log
+    - Tools/gen_build_info.py
     - mkdir release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
     - mv release/*.zip release/$CI_COMMIT_REF_NAME-$CI_COMMIT_SHA
     - eval $(ssh-agent -s)
