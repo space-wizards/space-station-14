@@ -39,9 +39,11 @@ publish:
     - apt install -y python3 libfreetype6
     - mkdir .git/hooks -p
     - python3 RUN_THIS.py
-    - Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
-    - Tools/package_client_build.py
+    - Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64 > server_build.log
+    - Tools/package_client_build.py > client_build.log
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
       - release/
+      - server_build.log
+      - client_build.log
