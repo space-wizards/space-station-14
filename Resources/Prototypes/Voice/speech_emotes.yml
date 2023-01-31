@@ -2,7 +2,7 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [screams, yells]
+  chatMessages: [кричит, орёт] # Corvax-Localization
   chatTriggers:
     - scream
     - screams
@@ -20,11 +20,19 @@
     - yells
     - yelled
     - yelling
+    # Corvax-Localization-Start
+    - крик
+    - кричит
+    - ор
+    - орёт
+    - визг
+    - визжит
+    # Corvax-Localization-End
 
 - type: emote
   id: Laugh
   category: Vocal
-  chatMessages: [laughs]
+  chatMessages: [смеётся] # Corvax-Localization
   chatTriggers:
     - laugh
     - laughs
@@ -38,22 +46,42 @@
     - giggles
     - giggling
     - giggled
+    # Corvax-Localization-Start
+    - смех
+    - смеется
+    - смеётся
+    - хохот
+    - хохочет
+    - хихикает
+    - хихикнул
+    - хихикнула
+    - ржёт
+    # Corvax-Localization-End
 
 # hand emotes
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [claps]
+  chatMessages: [хлопает в ладоши] # Corvax-Localization
   chatTriggers:
     - clap
     - claps
     - clapping
     - clapped
+    # Corvax-Localization-Start
+    - хлопает
+    - хлопнул
+    - хлопнула
+    - хлопает в ладоши
+    - хлопнул в ладоши
+    - хлопнула в ладоши
+    - апплодирует
+    # Corvax-Localization-End
 
 - type: emote
   id: Snap
   category: Hands
-  chatMessages: [snaps fingers]
+  chatMessages: [щёлкает пальцами] # Corvax-Localization
   chatTriggers:
     - snap
     - snaps
@@ -63,4 +91,17 @@
     - snaps fingers
     - snapping fingers
     - snapped fingers
-
+    # Corvax-Localization-Start
+    - щелкает
+    - щелкнул
+    - щелкнула
+    - щёлкает
+    - щёлкнул
+    - щёлкнула
+    - щелкает пальцами
+    - щелкнул пальцами
+    - щелкнула пальцами
+    - щёлкает пальцами
+    - щёлкнул пальцами
+    - щёлкнула пальцами
+    # Corvax-Localization-End    
