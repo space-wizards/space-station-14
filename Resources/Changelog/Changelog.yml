@@ -1,22 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed seed extractor and chem master having lit screens when unpowered.,
-    type: Fix}
-  id: 2475
-  time: '2022-10-16T21:00:18.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Door remotes can no longer unbolt airlocks if the bolt wire is cut.,
-    type: Fix}
-  - {message: Airlocks will no longer bolt if the bolt wire is cut while it has no
-      power., type: Tweak}
-  - {message: 'All wires, including the bolt wire, now have to be cut to remove the
-      door electronics from an airlock.', type: Tweak}
-  - {message: Fix a bug where airlock deconstruction examine text wouldn't update
-      after cutting the wires., type: Fix}
-  id: 2476
-  time: '2022-10-17T00:44:05.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
@@ -2938,3 +2920,17 @@ Entries:
       keys get removed., type: Fix}
   id: 2974
   time: '2023-01-29T18:32:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
+      more resilient to damage.', type: Tweak}
+  id: 2975
+  time: '2023-01-31T01:43:28.0000000+00:00'
+- author: crazybrain23
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 2976
+  time: '2023-01-31T01:44:10.0000000+00:00'
