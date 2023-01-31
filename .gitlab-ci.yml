@@ -2,6 +2,7 @@ image: mcr.microsoft.com/dotnet/sdk:7.0
 
 stages:          # List of stages for jobs, and their order of execution
   - build
+  - publish
 
 build-debug:       # This job runs in the build stage, which runs first.
   stage: build
@@ -30,3 +31,17 @@ build-release:
     - pwsh -Command "dotnet test --no-build Content.Tests/Content.Tests.csproj -- NUnit.ConsoleOut=0"
     - export DOTNET_gcServer=1
     - pwsh -Command "dotnet test --no-build Content.IntegrationTests/Content.IntegrationTests.csproj -- NUnit.ConsoleOut=0"
+
+publish:
+  stage: publish
+  script:
+    - apt update && apt upgrade -y
+    - apt install -y python3 libfreetype6
+    - mkdir .git/hooks -p
+    - python3 RUN_THIS.py
+    - Tools/package_server_build.py -p win-x64 linux-x64 osx-x64 linux-arm64
+    - Tools/package_client_build.py
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - release/
