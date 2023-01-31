@@ -1,17 +1,20 @@
 ### Localization for role ban command
 
 cmd-roleban-desc = Запрещает пользователю играть на роли
-cmd-roleban-help = Использование: roleban <name or user ID> <job> <reason> [продолжительность в минутах, не указывать или 0 для навсегда]
+cmd-roleban-help = Использование: roleban <name или user ID> <роль> <причина> [продолжительность в минутах, не указывать или 0 для навсегда]
 
 ## Completion result hints
 
-cmd-roleban-hint-1 = <name or user ID>
-cmd-roleban-hint-2 = <job>
-cmd-roleban-hint-3 = <reason>
+cmd-roleban-hint-1 = <name или user ID>
+cmd-roleban-hint-2 = <роль>
+cmd-roleban-hint-3 = <причина>
 cmd-roleban-hint-4 = [продолжительность в минутах, не указывать или 0 для навсегда]
 cmd-roleban-hint-duration-1 = Навсегда
 cmd-roleban-hint-duration-2 = 1 день
-cmd-roleban-hint-duration-3 = 1 неделя
+cmd-roleban-hint-duration-3 = 3 дня
+cmd-roleban-hint-duration-4 = 1 неделя
+cmd-roleban-hint-duration-5 = 2 недели
+cmd-roleban-hint-duration-6 = 1 месяц
 
 ### Localization for role unban command
 
@@ -29,7 +32,7 @@ cmd-rolebanlist-help = Использование: <name or user ID> [include un
 
 ## Completion result hints
 
-cmd-rolebanlist-hint-1 = <name or user ID>
+cmd-rolebanlist-hint-1 = <name или user ID>
 cmd-rolebanlist-hint-2 = [include unbanned]
 cmd-roleban-minutes-parse = { $time } - недопустимое количество минут.\n{ $help }
 cmd-roleban-arg-count = Недопустимое количество аргументов.
