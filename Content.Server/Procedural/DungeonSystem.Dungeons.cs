@@ -1,5 +1,3 @@
-using System.Linq;
-
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
@@ -124,30 +122,5 @@ public sealed partial class DungeonSystem
         var room2 = new Box2i(room.Left, room.Bottom + ySplit, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
-    }
-
-    /// <summary>
-    /// Gets the wall boundaries for the specified tiles. Doesn't return any floor tiles.
-    /// </summary>
-    /// <param name="floors"></param>
-    /// <returns></returns>
-    public HashSet<Vector2i> GetWalls(HashSet<Vector2i> floors)
-    {
-        var walls = new HashSet<Vector2i>(floors.Count);
-
-        foreach (var tile in floors)
-        {
-            for (var i = 0; i < 8; i++)
-            {
-                var direction = (Direction) i;
-                var neighborTile = tile + direction.ToIntVec();
-                if (floors.Contains(neighborTile))
-                    continue;
-
-                walls.Add(neighborTile);
-            }
-        }
-
-        return walls;
     }
 }

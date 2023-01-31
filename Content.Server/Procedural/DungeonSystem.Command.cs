@@ -1,4 +1,5 @@
 using Content.Server.Administration;
+using Content.Server.Procedural.Walls;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;

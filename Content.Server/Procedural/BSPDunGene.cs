@@ -1,5 +1,6 @@
 using Content.Server.Procedural.Corridors;
 using Content.Server.Procedural.Rooms;
+using Content.Server.Procedural.Walls;
 
 namespace Content.Server.Procedural;
 
@@ -16,4 +17,7 @@ public sealed class BSPDunGen : IDungeonGenerator
 
     [DataField("corridors")]
     public ICorridorGen Corridors = new SimpleCorridorGen();
+
+    [DataField("walls")]
+    public IWallGen Walls = new BoundaryWallGen();
 }

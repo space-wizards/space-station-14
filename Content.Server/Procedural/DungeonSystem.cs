@@ -33,7 +33,7 @@ public sealed partial class DungeonSystem : EntitySystem
                 currentPosition = floors.ElementAt(random.Next(floors.Count));
         }
 
-        var walls = GetWalls(floors);
+        var walls = GetWalls(gen.Walls, new Box2i(), floors);
 
         return new Dungeon()
         {
@@ -78,7 +78,7 @@ public sealed partial class DungeonSystem : EntitySystem
         {
             Corridors = corridors,
             Rooms = rooms,
-            Walls = GetWalls(allTiles)
+            Walls = GetWalls(gen.Walls, gen.Bounds, allTiles)
         };
     }
 }

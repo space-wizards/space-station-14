@@ -1,3 +1,5 @@
+using Content.Server.Procedural.Walls;
+
 namespace Content.Server.Procedural;
 
 [DataDefinition]
@@ -14,6 +16,9 @@ public sealed class RandomWalkDunGen : IDungeonGenerator
 
     [DataField("randomEachIteration")]
     public bool StartRandomlyEachIteration = true;
+
+    [DataField("walls")]
+    public IWallGen Walls = new BoundaryWallGen();
 }
 
 public sealed record Dungeon
