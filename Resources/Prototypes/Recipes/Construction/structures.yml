@@ -422,6 +422,7 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice
