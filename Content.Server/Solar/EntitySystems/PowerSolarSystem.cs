@@ -71,7 +71,14 @@ namespace Content.Server.Solar.EntitySystems
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolarPanelComponent, ComponentGetState>(GetSolarPanelState);
+            SubscribeLocalEvent<SolarPanelComponent, EntityUnpausedEvent>(OnUnpause);
             RandomizeSun();
+        }
+
+        private void OnUnpause(EntityUid uid, SolarPanelComponent component, ref EntityUnpausedEvent args)
+        {
+            component.LastUpdate += args.PausedTime;
+            Dirty(component);
         }
 
         private void RefreshPanel(SolarPanelComponent panel)
@@ -84,7 +91,7 @@ namespace Content.Server.Solar.EntitySystems
 
         public void RefreshAllPanels()
         {
-            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
+            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>(true))
             {
                 RefreshPanel(panel);
             }
