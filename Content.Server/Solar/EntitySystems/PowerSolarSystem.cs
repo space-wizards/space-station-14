@@ -61,11 +61,6 @@ namespace Content.Server.Solar.EntitySystems
         /// </summary>
         public float TotalPanelPower = 0;
 
-        /// <summary>
-        /// Timer used to avoid updating the panels every frame (which would be overkill)
-        /// </summary>
-        private float _updateTimer = 0f;
-
         public override void Initialize()
         {
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
@@ -136,21 +131,16 @@ namespace Content.Server.Solar.EntitySystems
             TargetPanelRotation += TargetPanelVelocity * frameTime;
             TargetPanelRotation = TargetPanelRotation.Reduced();
 
-            _updateTimer += frameTime;
-            if (_updateTimer > 1)
+            TotalPanelPower = 0;
+            foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
             {
-                _updateTimer -= 1;
-                TotalPanelPower = 0;
-                foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
+                if (panel.Running)
                 {
-                    if (panel.Running)
-                    {
-                        Angle a = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
-                        panel.Angle = a.Reduced();
-                        UpdatePanelCoverage(panel, xform);
-                    }
-                    TotalPanelPower += panel.MaxSupply * panel.Coverage;
+                    Angle a = panel.StartAngle + panel.AngularVelocity * (_gameTiming.CurTime - panel.LastUpdate).TotalSeconds;
+                    panel.Angle = a.Reduced();
+                    UpdatePanelCoverage(panel, xform);
                 }
+                TotalPanelPower += panel.MaxSupply * panel.Coverage;
             }
         }
 
