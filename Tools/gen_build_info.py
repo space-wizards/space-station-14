@@ -22,8 +22,8 @@ SERVER_FILES = [
 VERSION = os.environ['CI_COMMIT_REF_NAME'] + "-" + os.environ['CI_COMMIT_SHA']
 FORK_ID = "workbench"
 BUILD_URL = f"https://ss14.arumoon.ru/builds/builds/{{FORK_VERSION}}/{FILE}"
-#MANIFEST_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/manifest"
-#MANIFEST_DOWNLOAD_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/download"
+MANIFEST_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"https://ss14.arumoon.ru/cdn/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
     client_file = os.path.join("release", FILE)
@@ -51,9 +51,9 @@ def generate_build_json(file: str) -> str:
         "version": VERSION,
         "fork_id": FORK_ID,
         "engine_version": engine_version,
-#        "manifest_url": MANIFEST_URL,
-#        "manifest_download_url": MANIFEST_DOWNLOAD_URL,
-#        "manifest_hash": manifest_hash
+        "manifest_url": MANIFEST_URL,
+        "manifest_download_url": MANIFEST_DOWNLOAD_URL,
+        "manifest_hash": manifest_hash
     })
 
 def generate_manifest_hash(file: str) -> str:
