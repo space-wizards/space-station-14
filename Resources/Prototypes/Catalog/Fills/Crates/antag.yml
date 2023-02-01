@@ -1,15 +1,47 @@
 - type: entity
-  id: CratePirateChest
+  id: CratePirateChestCaptain
+  name: captains pirate chest
   suffix: antag
   parent: CratePirate
   components:
   - type: StorageFill
     contents:
-      - id: HatBandRed
+      - id: ClothingOuterHardsuitPirateCap
+        amount: 1
+      - id: ClothingNeckCloakPirateCap
+        amount: 1
+      - id: EnergyCutlass
+        amount: 1
+      - id: MicroBombImplanter
+        amount: 1
+      - id: SadTromboneImplanter
+        amount: 1
+      - id: C4
+        amount: 2
+
+- type: entity
+  id: CratePirateChest
+  name: crews pirate chest
+  suffix: antag
+  parent: CratePirate
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponLauncherPirateCannon
+        amount: 1
+      - id: ClothingOuterCoatGentle
         amount: 1
       - id: Cutlass
-        amount: 1
-      - id: IngotGold
         amount: 2
       - id: CannonBall
+        amount: 4
+      - id: ClothingHeadHatJesterAlt
+        amount: 1
+      - id: ClothingUniformJumpsuitJesterAlt
+        amount: 1
+      - id: WeaponPistolFlintlock
+        amount: 4
+      - id: ClothingShoesJester
+        amount: 1
+      - id: WeaponShotgunBlunderbuss
         amount: 2

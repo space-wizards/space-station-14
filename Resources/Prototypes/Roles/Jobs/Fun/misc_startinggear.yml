@@ -216,7 +216,7 @@
     back: ClothingBackpackPirateFilled
     head: ClothingHeadHatPirateTricord
     shoes: ClothingShoesBootsLaceup
-    id: PassengerPDA
+    id: HoSPDA
     belt: ClothingBeltUtility
     pocket1: AppraisalTool
     outerClothing: ClothingOuterCoatGentle
