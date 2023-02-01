@@ -162,9 +162,7 @@ namespace Content.Server.Access.Systems
             if (!Resolve(uid, ref id))
                 return;
 
-            var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle)
-                ? string.Empty
-                : $" ({id.JobTitle.ToLowerInvariant()})";
+            var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
 
             var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
