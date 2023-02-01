@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Stacks;
+using Content.Shared.Wall;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -49,8 +50,15 @@ namespace Content.Server.Tiles
                 if (physics.TryGetComponent(ent, out var phys) &&
                     phys.BodyType == BodyType.Static &&
                     phys.Hard &&
-                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                    return;
+                    (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
+                    {
+                        // e.g. you can place tile under directional windows
+                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || 
+                            fixtures.GetAABB(new Transform(new Vector2(0, 0), 0)).Contains(Box2.UnitCentered)) 
+                        {
+                            return;
+                        }
+                    }
             }
             var locationMap = location.ToMap(EntityManager);
             if (locationMap.MapId == MapId.Nullspace)
