@@ -1,9 +1,4 @@
 Entries:
-- author: Sheppard
-  changes:
-  - {message: Ambience no longer plays in the lobby., type: Fix}
-  id: 2480
-  time: '2022-10-17T04:56:10.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: 'You can now continue to read books, the handheld crew monitor, health
@@ -2931,3 +2926,8 @@ Entries:
   - {message: Uranium now visually stacks like other materials, type: Tweak}
   id: 2979
   time: '2023-02-01T14:21:34.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Fixed dice being unable to roll their max value., type: Fix}
+  id: 2980
+  time: '2023-02-01T17:27:05.0000000+00:00'
