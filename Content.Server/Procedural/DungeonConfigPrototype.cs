@@ -4,10 +4,11 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Procedural;
 
-[DataDefinition]
-public sealed class DungeonConfig
+[Prototype("dungeonConfig")]
+public sealed class DungeonConfigPrototype : IPrototype
 {
-    // TODO: Will likely need something more robust at some point.
+    [IdDataField]
+    public string ID { get; } = default!;
 
     [DataField("tile", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
     public string Tile = string.Empty;

@@ -21,9 +21,6 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 
     [DataField("expedition", required: true)] public ISalvageMission Expedition = default!;
 
-    [DataField("environment", required: true)]
-    public ISalvageProcgen Environment = default!;
-
     [DataField("minDuration")]
     public TimeSpan MinDuration = TimeSpan.FromSeconds(9 * 60);
 
@@ -38,4 +35,7 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 
     [DataField("dungeon", required: true)]
     public IDungeonGenerator Dungeon = default!;
+
+    [DataField("dungeonConfig", required: true)]
+    public string DungeonConfigPrototype = string.Empty;
 }

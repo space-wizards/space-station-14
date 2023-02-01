@@ -183,7 +183,10 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 // Just track loaded chunks for now.
                 var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
                 var xform = xformQuery.GetComponent(ent);
-                _transform.AnchorEntity(xform);
+
+                if (!xform.Anchored)
+                    _transform.AnchorEntity(xform);
+
                 loadedEntities.Add(ent);
             }
         }

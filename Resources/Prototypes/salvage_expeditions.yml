@@ -1,16 +1,21 @@
+- type: dungeonConfig
+  id: LowDesertDungeon
+  tile: FloorLowDesert
+  wall: WallSolid
+
 # Expedition configs
 - type: salvageExpedition
   id: CaveStructures
   biome: LowDesert
   light: "#E6CB8B"
   expedition: !type:SalvageStructure
-  environment: !type:SalvageCaveGen
   minDuration: 540
   maxDuration: 720
   factions:
     - Xenos
   dungeon: !type:BSPDunGen
     bounds: 0,0,48,48
+  dungeonConfig: LowDesertDungeon
 
 
 # Factions

@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
+using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Extraction;
 using Content.Server.Salvage.Expeditions.Structure;
@@ -205,6 +206,9 @@ public sealed partial class SalvageSystem
         }
 
         // Per-mission settings
-        SetupMission(config.Expedition, config.Dungeon, random);
+        var dungeon = _dungeon.GetDungeon(config.Dungeon);
+        _dungeon.SpawnDungeon(dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
+
+        SetupMission(config.Expedition, dungeon, grid, random);
     }
 }

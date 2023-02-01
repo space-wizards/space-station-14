@@ -17,10 +17,10 @@ public sealed partial class DungeonSystem : EntitySystem
         InitializeCommand();
     }
 
-    public void SpawnDungeon(Dungeon dungeon, DungeonConfig config, MapGridComponent grid)
+    public void SpawnDungeon(Dungeon dungeon, DungeonConfigPrototype configPrototype, MapGridComponent grid)
     {
         var tiles = new List<(Vector2i, Tile)>();
-        var tileId = _tileDef[config.Tile].TileId;
+        var tileId = _tileDef[configPrototype.Tile].TileId;
 
         foreach (var room in dungeon.Rooms)
         {
@@ -44,7 +44,7 @@ public sealed partial class DungeonSystem : EntitySystem
 
         foreach (var tile in dungeon.Walls)
         {
-            Spawn(config.Wall, grid.GridTileToLocal(tile));
+            Spawn(configPrototype.Wall, grid.GridTileToLocal(tile));
         }
     }
 
