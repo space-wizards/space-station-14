@@ -75,6 +75,29 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: ClothingHandsGlovesBoxingRed
+  id: ClothingHandsGlovesBoxingRigged
+  name: blue boxing gloves
+  description: Blue gloves for competitive boxing. Feels like they're heavier than usual...
+  components:
+    - type: Sprite
+      sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
+      state: icon
+    - type: Clothing
+      sprite: Clothing/Hands/Gloves/Boxing/boxingblue.rsi
+    - type: Fiber
+      fiberMaterial: fibers-leather
+      fiberColor: fibers-blue
+    - type: FingerprintMask
+    - type: StaminaDamageOnHit
+      damage: 30
+    - type: MeleeWeapon
+      attackRate: 1
+      damage:
+        types:
+          Blunt: 8
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesCaptain
   name: captain gloves
