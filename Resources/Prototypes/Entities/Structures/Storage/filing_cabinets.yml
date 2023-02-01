@@ -109,7 +109,7 @@
       - id: Pen
         prob: 0.5
       - id: PaperOffice
-        amount: 0
+        amount: 1
         maxAmount: 3
       - id: BoxFolderBlue
         orGroup: Folder
