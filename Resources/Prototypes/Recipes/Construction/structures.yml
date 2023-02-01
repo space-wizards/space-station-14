@@ -193,6 +193,7 @@
       targets:
         - Lattice
         - Plating
+        - Floor
         - UnderPlating
   icon:
     sprite: Structures/Walls/grille.rsi

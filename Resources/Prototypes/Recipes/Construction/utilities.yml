@@ -65,6 +65,7 @@
       targets:
         - Lattice
         - Plating
+        - Floor
         - UnderPlating
 
 - type: construction

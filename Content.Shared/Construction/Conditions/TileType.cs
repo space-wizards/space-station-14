@@ -28,7 +28,7 @@ namespace Content.Shared.Construction.Conditions
             var tile = tileFound.Value.Tile.GetContentTileDefinition();
             foreach (var targetTile in TargetTiles)
             {
-                if (tile.ID == targetTile)
+                if (tile.ID.StartsWith(targetTile))
                     return true;
             }
             return false;
