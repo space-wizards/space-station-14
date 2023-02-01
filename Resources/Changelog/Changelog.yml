@@ -1,9 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
-  id: 2479
-  time: '2022-10-17T04:54:52.0000000+00:00'
 - author: Sheppard
   changes:
   - {message: Ambience no longer plays in the lobby., type: Fix}
@@ -2931,3 +2926,8 @@ Entries:
   - {message: grille now can be built on lattice, type: Fix}
   id: 2978
   time: '2023-02-01T02:34:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Uranium now visually stacks like other materials, type: Tweak}
+  id: 2979
+  time: '2023-02-01T14:21:34.0000000+00:00'
