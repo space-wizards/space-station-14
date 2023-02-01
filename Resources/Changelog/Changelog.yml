@@ -2921,16 +2921,8 @@ Entries:
       more resilient to damage.', type: Tweak}
   id: 2975
   time: '2023-01-31T01:43:28.0000000+00:00'
-- author: crazybrain23
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
-  id: 2976
-  time: '2023-01-31T01:44:10.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added paper bins., type: Add}
-  id: 2977
+  id: 2976
   time: '2023-01-31T22:03:27.0000000+00:00'
