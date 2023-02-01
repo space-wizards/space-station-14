@@ -1,59 +1,4 @@
 Entries:
-- author: themias
-  changes:
-  - {message: Added voice trigger for modular grenades, type: Add}
-  id: 2472
-  time: '2022-10-16T17:44:51.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: 'Fixed, removed, and changed some of Cluster''s lights around.', type: Tweak}
-  id: 2473
-  time: '2022-10-16T18:20:22.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added spare passenger headsets for the HoP in their locker and vendor,
-    type: Add}
-  id: 2474
-  time: '2022-10-16T18:21:02.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed seed extractor and chem master having lit screens when unpowered.,
-    type: Fix}
-  id: 2475
-  time: '2022-10-16T21:00:18.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Door remotes can no longer unbolt airlocks if the bolt wire is cut.,
-    type: Fix}
-  - {message: Airlocks will no longer bolt if the bolt wire is cut while it has no
-      power., type: Tweak}
-  - {message: 'All wires, including the bolt wire, now have to be cut to remove the
-      door electronics from an airlock.', type: Tweak}
-  - {message: Fix a bug where airlock deconstruction examine text wouldn't update
-      after cutting the wires., type: Fix}
-  id: 2476
-  time: '2022-10-17T00:44:05.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
-  id: 2477
-  time: '2022-10-17T04:33:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee now has lag compensation so the server considers your target's
-      position from when you attacked., type: Add}
-  id: 2478
-  time: '2022-10-17T04:54:32.0000000+00:00'
-- author: router
-  changes:
-  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
-  id: 2479
-  time: '2022-10-17T04:54:52.0000000+00:00'
-- author: Sheppard
-  changes:
-  - {message: Ambience no longer plays in the lobby., type: Fix}
-  id: 2480
-  time: '2022-10-17T04:56:10.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: 'You can now continue to read books, the handheld crew monitor, health
@@ -2936,3 +2881,53 @@ Entries:
       analyzer after teleporting., type: Fix}
   id: 2971
   time: '2023-01-28T17:39:52.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Cleaned up some of the syndicate names., type: Fix}
+  id: 2972
+  time: '2023-01-28T19:09:23.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Added encryption keys for headsets. These chips provide access to radio
+      channels. You can eject them with a screwdriver and then install in other headsets.,
+    type: Add}
+  id: 2973
+  time: '2023-01-29T00:53:08.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Fixed bug causing radio channels to be available even after encryption
+      keys get removed., type: Fix}
+  id: 2974
+  time: '2023-01-29T18:32:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Some high-risk targets (SMESes, emitterse, substations) are now slightly
+      more resilient to damage.', type: Tweak}
+  id: 2975
+  time: '2023-01-31T01:43:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added paper bins., type: Add}
+  id: 2976
+  time: '2023-01-31T22:03:27.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: catwalks now can be built on lattice, type: Fix}
+  id: 2977
+  time: '2023-02-01T02:33:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: solar panels now can be built on lattice, type: Fix}
+  - {message: grille now can be built on lattice, type: Fix}
+  id: 2978
+  time: '2023-02-01T02:34:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Uranium now visually stacks like other materials, type: Tweak}
+  id: 2979
+  time: '2023-02-01T14:21:34.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Fixed dice being unable to roll their max value., type: Fix}
+  id: 2980
+  time: '2023-02-01T17:27:05.0000000+00:00'
