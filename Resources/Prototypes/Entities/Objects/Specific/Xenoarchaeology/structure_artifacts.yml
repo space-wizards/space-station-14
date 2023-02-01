@@ -45,6 +45,9 @@
     - type: StaticPrice
       price: 500
     - type: Actions
+    - type: GuideHelp
+      guides:
+      - Xenoarchaeology
 
 - type: entity
   parent: BaseXenoArtifact

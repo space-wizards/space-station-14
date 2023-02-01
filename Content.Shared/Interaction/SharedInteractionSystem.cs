@@ -29,6 +29,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -54,6 +55,7 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -870,7 +872,8 @@ namespace Content.Shared.Interaction
 
             DoContactInteraction(user, used, activateMsg);
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            if (!activateMsg.WasLogged)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion

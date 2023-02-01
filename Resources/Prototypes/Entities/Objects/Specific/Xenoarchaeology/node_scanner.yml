@@ -13,3 +13,6 @@
     - type: NodeScanner
     - type: UseDelay
       delay: 3
+    - type: GuideHelp
+      guides:
+      - ArtifactReports

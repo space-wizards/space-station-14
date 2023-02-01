@@ -46,6 +46,9 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -102,6 +105,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -202,6 +206,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true

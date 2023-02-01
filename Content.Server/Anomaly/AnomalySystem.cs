@@ -4,7 +4,6 @@ using Content.Server.Audio;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
-using Content.Server.Popups;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Server.GameObjects;
@@ -24,7 +23,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -101,9 +99,9 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
 
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
-            multiplier = 1.25f; //more points for unstable
+            multiplier = component.GrowingPointMultiplier; //more points for unstable
         else if (component.Stability < component.DecayThreshold)
-            multiplier = 0.75f; //less points if it's dying
+            multiplier = component.DecayingPointMultiplier; //less points if it's dying
 
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;

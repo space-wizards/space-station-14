@@ -1607,6 +1607,10 @@
       "directions": 4
     },
     {
+      "name": "telescreen_frame",
+      "directions": 4
+    },
+    {
       "name": "telescreen_broken",
       "directions": 4
     },
