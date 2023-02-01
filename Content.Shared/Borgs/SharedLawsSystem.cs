@@ -14,7 +14,7 @@ namespace Content.Shared.Borgs
         }
         private void OnGetState(EntityUid uid, LawsComponent component, ref ComponentGetState args)
         {
-            args.State = new LawsComponentState(component.Laws);
+            args.State = new LawsComponentState((new Dictionary<int, (string Text, LawProperties Properties)>(component.Laws)));
         }
 
         private void OnHandleState(EntityUid uid, LawsComponent component, ref ComponentHandleState args)
@@ -22,7 +22,7 @@ namespace Content.Shared.Borgs
             if (args.Current is not LawsComponentState cast)
                 return;
 
-            component.Laws = cast.Laws;
+            component.Laws = new SortedDictionary<int, (string Text, LawProperties Properties)>(cast.Laws);
         }
 
         private void OnInit(EntityUid uid, LawsComponent component, ComponentInit args)

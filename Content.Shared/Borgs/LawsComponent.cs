@@ -28,9 +28,9 @@ namespace Content.Shared.Borgs
     [Serializable, NetSerializable]
     public sealed class LawsComponentState : ComponentState
     {
-        public readonly SortedDictionary<int, (string, LawProperties)> Laws;
+        public Dictionary<int, (string, LawProperties)> Laws;
 
-        public LawsComponentState(SortedDictionary<int, (string, LawProperties)> laws)
+        public LawsComponentState(Dictionary<int, (string, LawProperties)> laws)
         {
             Laws = laws;
         }
