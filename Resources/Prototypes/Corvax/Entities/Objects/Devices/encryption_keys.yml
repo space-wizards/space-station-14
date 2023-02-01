@@ -1,0 +1,15 @@
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyIAA
+  name: iaa encryption key
+  description: An encryption key used by the most meticulous person.
+  components:
+    - type: EncryptionKey
+      channels:
+      - Common
+      - Command
+      - Security
+      defaultChannel: Command
+    - type: Sprite
+      sprite: Objects/Devices/encryption_keys.rsi
+      state: nt_cypherkey
