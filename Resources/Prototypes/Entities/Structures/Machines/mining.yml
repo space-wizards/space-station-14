@@ -5,10 +5,10 @@
   description: "Generates a magnetic field when powered."
   components:
   - type: Sprite
+    netSync: false
     layers:
       - sprite: Structures/Machines/electromagnet.rsi
         state: icon
-        netsync: false
   - type: Rotatable
   - type: Transform
     noRot: false
