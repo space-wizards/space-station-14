@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Melee now has lag compensation so the server considers your target's
-      position from when you attacked., type: Add}
-  id: 2478
-  time: '2022-10-17T04:54:32.0000000+00:00'
 - author: router
   changes:
   - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
@@ -2926,3 +2920,14 @@ Entries:
   - {message: Added paper bins., type: Add}
   id: 2976
   time: '2023-01-31T22:03:27.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: catwalks now can be built on lattice, type: Fix}
+  id: 2977
+  time: '2023-02-01T02:33:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: solar panels now can be built on lattice, type: Fix}
+  - {message: grille now can be built on lattice, type: Fix}
+  id: 2978
+  time: '2023-02-01T02:34:04.0000000+00:00'
