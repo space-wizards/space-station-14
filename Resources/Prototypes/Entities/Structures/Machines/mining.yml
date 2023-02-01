@@ -8,6 +8,7 @@
     layers:
       - sprite: Structures/Machines/electromagnet.rsi
         state: icon
+        netsync: false
   - type: Rotatable
   - type: Transform
     noRot: false

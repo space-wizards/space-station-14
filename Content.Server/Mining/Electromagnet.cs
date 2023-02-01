@@ -6,7 +6,7 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Server.Mining;
 
 [RegisterComponent]
-public class ElectromagnetComponent : Component
+public sealed class ElectromagnetComponent : Component
 {
     [DataField("range")]
     [ViewVariables(VVAccess.ReadWrite)]
@@ -26,11 +26,6 @@ public class ElectromagnetSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     public override void Update(float frameTime)
     {
