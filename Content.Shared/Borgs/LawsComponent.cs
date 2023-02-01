@@ -9,8 +9,6 @@ namespace Content.Shared.Borgs
     {
         [DataField("initialLaws")]
         public List<string> InitialLaws = new List<string>();
-
-        [DataField("laws")]
         public SortedDictionary<int, (string Text, LawProperties Properties)> Laws = new SortedDictionary<int, (string, LawProperties)>();
 
         [DataField("canState")]
