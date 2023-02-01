@@ -1,46 +1,46 @@
 ﻿<Document>
-# Controls
+# Управление
 
-<Box Orientation="Vertical">You can change the keybinds at any time here:</Box>
+<Box Orientation="Vertical">Вы можете в любое время изменить привязку клавиш здесь:</Box>
 <Box Orientation="Vertical"><CommandButton Text="ui-options-tab-controls" Command="options 1"/></Box>
 
-## Basic controls
-We shall politely assume you already know how WASD to walk works.
-Beyond that, there's a handful primary interactions in SS14, ordered by importance:
+## Основы управления
+Подозреваем вы уже догадались, что клавиши WASD служат для перемещения.
+Помимо этого, в SS14 есть еще несколько основных видов взаимодействия, расположенных в порядке важности:
 
-- [color=#a4885c]Left click[/color] to pick up items and activate objects like buttons or computers, and [color=#a4885c]E[/color] to activate items. You can also press [color=#a4885c]alt[/color] while doing this to trigger alternate interactions for some objects.
-- You can also quickly activate items you're holding by pressing [color=#a4885c]Z[/color] and [color=#a4885c]alt-Z[/color] respectively.
-- [color=#a4885c]Right click[/color] to open the context menu. You can then either left click an entry just like you would in the world, or right click it again to open the verb menu, which gives you more complex ways to interact with an object.
-- You can [color=#a4885c]shift-left click[/color] objects to examine them, and get their name and a detailed (though often humorous) description.
+- Используйте [color=#a4885c]левую кнопку мыши (ЛКМ)[/color] чтобы поднимать предметы и активировать объекты, например переключатели или консоли, и [color=#a4885c]E[/color] для активации предметов. Используйте эти клавиши в сочетании с [color=#a4885c]Alt[/color] для альтерантивного взаимодействия с некоторыми объектами.
+- Вы также можете быстро активировать предмет, который находится в вашей руке, воспользовавшись клавишами [color=#a4885c]Z[/color] и [color=#a4885c]Alt-Z[/color] соответственно.
+- Нажатие [color=#a4885c]правой кнопкой мыши (ПКМ)[/color] на предмет откроет контекстное меню. Теперь вы можете либо кликнуть по строчке с объектом левой кнопкой мыши, как описано выше, либо кликнуть правой кнопкой мыши чтобы открыть дополнительное меню, открывающее более продвинутые способы взаимодействия с объектом.
+- Вы можете выполнить [color=#a4885c]Shift-ЛКМ[/color] по объекту, чтобы осмотреть его, узнать его название, и подробное (иногда с юморком) описание.
 
-You can quickly try out these controls with the monkey below (note: clicking it only works in-game and not in the lobby), and at any point in this guidebook if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
+Вы можете опробовать эти элементы управления на обезьяне ниже (примечание: нажатие на неё работает только в игре, но не в лобби), а также на любом другом объекте, который вы увидите в этом руководстве, [color=#a4885c]Shift-ЛКМ всегда даст осмотреть объект[/color]:
 
 
 <GuideEntityEmbed Entity="MobGuidebookMonkey" Interactive="True" Caption=""/>
 
-## Inventory
-In order to move items around in your inventory and between containers, you can click the item (or item name) to move it to your active hand, and then click the spot you want it to go (either a slot in your HUD, or the container).
+## Инвентарь
+Для перемещения предметов в инвентаре и между контейнерами кликните по предмету (или его названию) чтобы взять его в активную руку, а затем кликните по месту, куда вы хотите его поместить (либо по слоту в инвентаре, либо по самому контейнеру).
 
-The items in your hands are only active one at a time, in order to swap between what you're currently using, you can press [color=#a4885c]X[/color] on your keyboard to change active hands.
+Вы можете активировать только предмет в вашей активной руку. Чтобы изменить активную руку нажмите [color=#a4885c]X[/color] на клавиатуре.
 
-Opening containers in your inventory is easy as well, either hover over the item and activate it with [color=#a4885c]E[/color] or [color=#a4885c]Z[/color], or click on the bag icon in the bottom right corner of the slot it is in.
+Открывать контейнеры внутри инвентаря также просто: либо наведите курсор на предмет и активируйте его с помощью [color=#a4885c]E[/color] или [color=#a4885c]Z[/color], либо кликните на иконку сумки в правом нижнем углу слота, в котором предмет находится.
 
-When you open a container a window will pop up showing the contents of the container and how much space it has available to hold things.
-All items have an assigned size, some too large to fit into most or all containers.
+Когда вы открываете контейнер появляется окно, показывающее содержимое контейнера и количество свободного места.
+У всех предметов есть свой размер, и некоторые из них могут оказаться слишком большими, чтобы поместиться в контейнер.
 
-To drop items, you can press [color=#a4885c]Q[/color], and to drop them more violently (also known as throwing), you can press [color=#a4885c]ctrl-Q[/color].
+Чтобы бросить предмет нажмите [color=#a4885c]Q[/color], а чтобы бросить его сильнее (проще говоря, кинуть), вы можете нажать [color=#a4885c]Ctrl-Q[/color].
 
-## Actions
-To the left in your HUD there's a bar showing various actions you can take.
-You can hover over each one to see a name and description for the action that tells you what it is and how it works.
-You can click on an action to invoke it, or press a number key at any time to invoke the action without clicking on it.
+## Действия
+В левой части вашего экрана находится панель, на которой представлены различные действия, которые вы можете совершить.
+Наведя курсор на любое из них, вы увидите название и описание действия, рассказывающие что это такое и как оно работает.
+Вы можете совершить действие либо кликнув по нему [color=#a4885c]ЛКМ[/color], либо нажав на соответствующую цифровую клавишу.
 
-In order to rearrange your actions, simply drag and drop them to other slots, right click to remove them, and press the gear icon at the top of the bar to open a menu to (re)add them.
-You have 10 pages of actions total that you can switch between by pressing [color=#a4885c]shift-(number)[/color].
-Additionally, you can press the lock icon to prevent the action bar from being modified.
+Вы можете изменить порядок, в котором расположены действия просто перетаскивая их между слотами, а клик [color=#a4885c]ПКМ[/color] очистит ячейку. Нажатие на иконку шестеренки в верхней части панели откроет меню для (повторного) добавления действий.
+На всё про всё у вас есть 10 страниц панелей, между которыми можно переключаться, нажимая [color=#a4885c]Shift-(цифра)[/color].
+Кроме того, нажав на иконку замка вы можете запретить изменение панели действий.
 
-## Movement
-There's a good few things that can modify your movement, most notably slipping (which requires you to walk with [color=#a4885c]shift[/color] to avoid, usually.) and a lack of gravity.
-Slipping simply stuns you for a bit, but no gravity can be deadly if you're off station and wander more than about 1.5m away from the nearest wall or solid structure, as you'll lose your grip and no longer be able to move without throwing something.
+## Передвижение
+Несколько вещей могут повлиять на вашу возможность передвигаться. В первую очередь это подскальзывание (для избегания которого, как правило, нужно идти с зажатым [color=#a4885c]Shift[/color]), и отсутствие гравитации.
+Поскользнувшись, вы просто будете ненадолго оглушены, а вот отсутствие гравитации может быть смертельно опасным. Если вы находитесь вне станции или удалились на расстоянии более 1,5 м от ближайшей стены или другой твердой структуры, то вы потеряете сцепление и больше не сможете двигаться, не бросив что-нибудь в противоположное от требуемого направление.
 
 </Document>
