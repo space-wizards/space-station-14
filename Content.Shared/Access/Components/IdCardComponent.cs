@@ -6,7 +6,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Access.Components
 {
     [RegisterComponent, NetworkedComponent]
-    [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
+    [Access(typeof(SharedIdCardSystem),
+        typeof(SharedPDASystem),
+        typeof(SharedAgentIdCardSystem),
+        typeof(SharedIdExaminableSystem))]
     public sealed class IdCardComponent : Component
     {
         [DataField("fullName")]

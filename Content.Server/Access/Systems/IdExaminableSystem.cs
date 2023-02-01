@@ -1,5 +1,6 @@
 using Content.Server.Access.Components;
 using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Access.Systems;
 
-public sealed class IdExaminableSystem : EntitySystem
+public sealed class IdExaminableSystem : SharedIdExaminableSystem
 {
     [Dependency] private readonly ExamineSystemShared _examineSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
@@ -62,7 +63,9 @@ public sealed class IdExaminableSystem : EntitySystem
 
     private string GetNameAndJob(IdCardComponent id)
     {
-        var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
+        var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle)
+            ? string.Empty
+            : $" ({id.JobTitle.ToLowerInvariant()})";
 
         var val = string.IsNullOrWhiteSpace(id.FullName)
             ? Loc.GetString("access-id-card-component-owner-name-job-title-text",

@@ -162,7 +162,9 @@ namespace Content.Server.Access.Systems
             if (!Resolve(uid, ref id))
                 return;
 
-            var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle) ? string.Empty : $" ({id.JobTitle})";
+            var jobSuffix = string.IsNullOrWhiteSpace(id.JobTitle)
+                ? string.Empty
+                : $" ({id.JobTitle.ToLowerInvariant()})";
 
             var val = string.IsNullOrWhiteSpace(id.FullName)
                 ? Loc.GetString("access-id-card-component-owner-name-job-title-text",
@@ -170,7 +172,8 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
-            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
+
+            EntityManager.GetComponent<MetaDataComponent>(uid).EntityName = val;
         }
     }
 }
