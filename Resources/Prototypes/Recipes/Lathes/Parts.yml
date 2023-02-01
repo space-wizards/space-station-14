@@ -97,6 +97,7 @@
   materials:
     Steel: 250
     Plastic: 250
+    Plasma: 100
     Gold: 125
 
 - type: latheRecipe
@@ -106,6 +107,7 @@
   materials:
     Steel: 250
     Plastic: 250
+    Plasma: 100
     Gold: 125
 
 - type: latheRecipe
@@ -116,6 +118,7 @@
     Steel: 250
     Glass: 250
     Plastic: 250
+    Plasma: 100
     Gold: 100
 
 - type: latheRecipe
@@ -125,6 +128,7 @@
   materials:
     Steel: 250
     Plastic: 250
+    Plasma: 100
     Gold: 125
 
 - type: latheRecipe
@@ -135,4 +139,5 @@
     Steel: 250
     Glass: 250
     Plastic: 250
+    Plasma: 100
     Gold: 100
