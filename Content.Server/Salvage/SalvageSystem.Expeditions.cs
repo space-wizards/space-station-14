@@ -191,6 +191,7 @@ public sealed partial class SalvageSystem
 
         grid.SetTiles(tiles);
         var ftlUid = Spawn("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
+        MetaData(ftlUid).EntityName = "Unga bunga";
 
         switch (config.Expedition)
         {
@@ -203,6 +204,7 @@ public sealed partial class SalvageSystem
                 return;
         }
 
-        // _salvageQueue.EnqueueJob(job);
+        // Per-mission settings
+        SetupMission(config.Expedition, config.Dungeon, random);
     }
 }

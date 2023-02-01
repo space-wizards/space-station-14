@@ -1,6 +1,7 @@
 using System.Linq;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 
 namespace Content.Server.Procedural;
 
@@ -14,6 +15,50 @@ public sealed partial class DungeonSystem : EntitySystem
     {
         base.Initialize();
         InitializeCommand();
+    }
+
+    public void SpawnDungeon(Dungeon dungeon, DungeonConfig config, MapGridComponent grid)
+    {
+        var tiles = new List<(Vector2i, Tile)>();
+        var tileId = _tileDef[config.Tile].TileId;
+
+        foreach (var room in dungeon.Rooms)
+        {
+            foreach (var tile in room.Tiles)
+            {
+                tiles.Add((tile, new Tile(tileId)));
+            }
+        }
+
+        foreach (var tile in dungeon.Corridors)
+        {
+            tiles.Add((tile, new Tile(tileId)));
+        }
+
+        foreach (var tile in dungeon.Walls)
+        {
+            tiles.Add((tile, new Tile(tileId)));
+        }
+
+        grid.SetTiles(tiles);
+
+        foreach (var tile in dungeon.Walls)
+        {
+            Spawn(config.Wall, grid.GridTileToLocal(tile));
+        }
+    }
+
+    public Dungeon GetDungeon(IDungeonGenerator gen)
+    {
+        switch (gen)
+        {
+            case BSPDunGen bsp:
+                return GetBSPDungeon(bsp);
+            case RandomWalkDunGen walkies:
+                return GetRandomWalkDungeon(walkies);
+            default:
+                throw new NotImplementedException();
+        }
     }
 
     public Dungeon GetRandomWalkDungeon(RandomWalkDunGen gen)

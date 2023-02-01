@@ -9,6 +9,9 @@
   maxDuration: 720
   factions:
     - Xenos
+  dungeon: !type:BSPDunGen
+    bounds: 0,0,48,48
+
 
 # Factions
 - type: salvageFaction

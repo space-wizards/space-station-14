@@ -17,6 +17,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Parallax;
+using Content.Server.Procedural;
 using Content.Server.Station.Systems;
 using Robust.Shared.Timing;
 
@@ -30,6 +31,7 @@ namespace Content.Server.Salvage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly BiomeSystem _biome = default!;
+        [Dependency] private readonly DungeonSystem _dungeon = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;

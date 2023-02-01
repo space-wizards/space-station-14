@@ -1,3 +1,4 @@
+using Content.Server.Procedural;
 using Content.Shared.Parallax.Biomes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -34,4 +35,7 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     /// </summary>
     [DataField("factions")]
     public List<string> Factions = new();
+
+    [DataField("dungeon", required: true)]
+    public IDungeonGenerator Dungeon = default!;
 }

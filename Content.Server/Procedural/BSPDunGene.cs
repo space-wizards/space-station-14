@@ -7,7 +7,7 @@ namespace Content.Server.Procedural;
 [DataDefinition]
 public sealed class BSPDunGen : IDungeonGenerator
 {
-    [DataField("bounds")] public Box2i Bounds;
+    [DataField("bounds", required: true)] public Box2i Bounds;
 
     [DataField("min")]
     public Vector2i MinimumRoomDimensions = new(4, 4);
