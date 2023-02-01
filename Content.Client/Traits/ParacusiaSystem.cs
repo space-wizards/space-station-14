@@ -6,6 +6,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Map;
 using Content.Client.UserInterface.Controls;
 using Robust.Shared.GameStates;
+using Serilog.Debugging;
 
 namespace Content.Client.Traits;
 
@@ -52,7 +53,6 @@ public sealed class ParacusiaSystem : EntitySystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-
         foreach (var paracusia in EntityQuery<ParacusiaComponent>())
         {
             paracusia.NextIncidentTime -= frameTime;
