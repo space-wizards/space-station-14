@@ -268,16 +268,15 @@
   categories:
     - UplinkUtility
 
-#TODO: Increase the price to 4 when flashbang prof.
-- type: listing
-  id: UplinkHeadset
-  name: uplink-headset-name
-  description: uplink-headset-desc
-  productEntity: ClothingHeadsetAltSyndicate
-  cost:
-    Telecrystal: 4
-  categories:
-  - UplinkUtility
+# made irrelevant by encryption keys
+#  id: UplinkHeadset
+#  name: uplink-headset-name
+#  description: uplink-headset-desc
+#  productEntity: ClothingHeadsetAltSyndicate
+#  cost:
+#    Telecrystal: 4
+#  categories:
+#  - UplinkUtility
 
 - type: listing
   id: UplinkHeadsetEncryptionKey
