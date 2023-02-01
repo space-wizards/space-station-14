@@ -1,7 +1,7 @@
 meta:
   format: 3
-  name: DemoStation
-  author: Space-Wizards
+  name: Barratry
+  author: emogarbage,Scribbles_0
   postmapinit: false
 tilemap:
   0: Space
