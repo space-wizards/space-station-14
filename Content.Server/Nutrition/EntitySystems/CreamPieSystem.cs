@@ -21,10 +21,10 @@ namespace Content.Server.Nutrition.EntitySystems
     [UsedImplicitly]
     public sealed class CreamPieSystem : SharedCreamPieSystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly SpillableSystem _spillableSystem = default!;
-        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-        [Dependency] private readonly TriggerSystem _triggerSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+        [Dependency] private readonly SpillableSystem _spillable = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+        [Dependency] private readonly TriggerSystem _trigger = default!;
 
         public override void Initialize()
         {
@@ -38,9 +38,9 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SoundSystem.Play(creamPie.Sound.GetSound(), Filter.Pvs(creamPie.Owner), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
+            if (EntityManager.TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutions.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
             {
-                _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
+                _spillable.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
             }
             ActivatePayload(uid);
 
@@ -53,13 +53,13 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         private void ActivatePayload(EntityUid uid) {
-            if (_itemSlotsSystem.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot)) 
+            if (_itemSlots.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot)) 
             {
-                if (_itemSlotsSystem.TryEject(uid, itemSlot, user: null, out var item)) 
+                if (_itemSlots.TryEject(uid, itemSlot, user: null, out var item)) 
                 {
                     if (TryComp<OnUseTimerTriggerComponent>(item.Value, out var timerTrigger))
                     {
-                        _triggerSystem.HandleTimerTrigger(
+                        _trigger.HandleTimerTrigger(
                             item.Value,
                             null,
                             timerTrigger.Delay,
