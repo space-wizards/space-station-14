@@ -171,26 +171,6 @@ public sealed partial class SalvageSystem
         expedition.Faction = config.Factions[random.Next(config.Factions.Count)];
         expedition.Config = config.ID;
 
-        // Setup the landing pad
-        var landingPadExtents = new Vector2i(32, 32);
-
-        var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-        var noise = new FastNoise(mission.Seed);
-
-        for (var x = -landingPadExtents.X; x < landingPadExtents.X; x++)
-        {
-            for (var y = -landingPadExtents.Y; y < landingPadExtents.Y; y++)
-            {
-                var indices = new Vector2i(x, y);
-
-                if (!_biome.TryGetBiomeTile(indices, biomeProto, noise, grid, out var tile))
-                    continue;
-
-                tiles.Add((new Vector2i(x, y), tile.Value));
-            }
-        }
-
-        grid.SetTiles(tiles);
         var ftlUid = Spawn("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
         MetaData(ftlUid).EntityName = "Unga bunga";
 
@@ -205,9 +185,47 @@ public sealed partial class SalvageSystem
                 return;
         }
 
+        var landingPadRadius = 16;
+        var radiusThickness = 2;
+
         // Per-mission settings
         var dungeon = _dungeon.GetDungeon(config.Dungeon);
-        _dungeon.SpawnDungeon(dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
+        _dungeon.SpawnDungeon(new Vector2i(landingPadRadius + radiusThickness + 1, 0), dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
+
+        // Setup the landing pad
+        var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
+
+        var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
+        var noise = new FastNoise(mission.Seed);
+
+        // Set the tiles themselves
+        var landingPadTile = _tileDefManager["FloorSteel"];
+
+        foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius)))
+        {
+            if (!_biome.TryGetBiomeTile(tile.GridIndices, biomeProto, noise, grid, out _))
+                continue;
+
+            tiles.Add((tile.GridIndices, new Tile(landingPadTile.TileId, variant: (byte) _random.Next(landingPadTile.Variants))));
+        }
+
+        grid.SetTiles(tiles);
+
+        // Set the outline as enclosed for the landing pad.
+
+        for (var i = 0; i < radiusThickness; i++)
+        {
+            foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + 0.5f + i), false))
+            {
+                var anchored = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+
+                // Don't overlap for whatever reason.
+                if (anchored.MoveNext(out _))
+                    continue;
+
+                Spawn("WallSolid", grid.GridTileToLocal(tile.GridIndices));
+            }
+        }
 
         SetupMission(config.Expedition, dungeon, grid, random);
     }
