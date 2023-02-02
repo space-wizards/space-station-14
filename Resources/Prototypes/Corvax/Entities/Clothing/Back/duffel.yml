@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelMilitary
+  name: army duffel bag
+  description: A large duffel bag for holding any army goods.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Duffels/military.rsi
+  - type: Storage
+    capacity: 200

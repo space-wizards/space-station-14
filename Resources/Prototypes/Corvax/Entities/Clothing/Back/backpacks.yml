@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingMilitaryBackpack
+  name: army backpack
+  description: A spacious backpack with lots of pockets, worn by military structures.
+  components:
+  - type: Sprite
+    sprite: Corvax/Back/Backpacks/military.rsi
+  - type: Storage
+    capacity: 131
