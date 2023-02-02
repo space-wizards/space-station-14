@@ -32,6 +32,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -131,7 +132,7 @@ namespace Content.Server.Kitchen.EntitySystems
             UpdateAppearance(uid, null, component);
 
             _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
-            
+
             _transform.SetCoordinates(victimUid, Transform(uid).Coordinates);
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
@@ -179,7 +180,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
 
-            appearance.SetData(KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
+            _appearance.SetData(uid, KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance));
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,

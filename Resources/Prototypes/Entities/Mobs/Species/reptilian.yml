@@ -18,6 +18,11 @@
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
+  - type: Vocal
+    sounds:
+      Male: UnisexReptilian
+      Female: UnisexReptilian
+      Unsexed: UnisexReptilian
   - type: DiseaseCarrier
     diseaseResist: 0.1
   - type: Damageable

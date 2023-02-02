@@ -1,3 +1,4 @@
+using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -86,28 +87,31 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         HumanoidAppearanceComponent component,
         SpriteComponent sprite,
         HumanoidVisualLayers key,
-        string protoId,
+        string? protoId,
         bool sexMorph = false,
         Color? color = null)
     {
+        var layerIndex = sprite.LayerMapReserveBlank(key);
+        var layer = sprite[layerIndex];
+        layer.Visible = !IsHidden(component, key);
+
+        if (color != null)
+            layer.Color = color.Value;
+
+        if (protoId == null)
+            return;
+
         if (sexMorph)
             protoId = HumanoidVisualLayersExtension.GetSexMorph(key, component.Sex, protoId);
 
         var proto = _prototypeManager.Index<HumanoidSpeciesSpriteLayer>(protoId);
         component.BaseLayers[key] = proto;
 
-        var layerIndex = sprite.LayerMapReserveBlank(key);
-        var layer = sprite[layerIndex];
-
-        if (color != null)
-            layer.Color = color.Value;
-        else if (proto.MatchSkin)
-            layer.Color = proto.MatchSkin ? component.SkinColor.WithAlpha(proto.LayerAlpha) : Color.White;
+        if (proto.MatchSkin)
+            layer.Color = component.SkinColor.WithAlpha(proto.LayerAlpha);
 
         if (proto.BaseSprite != null)
             sprite.LayerSetSprite(layerIndex, proto.BaseSprite);
-
-        layer.Visible = !IsHidden(component, key);
     }
 
     /// <summary>

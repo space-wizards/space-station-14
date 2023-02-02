@@ -839,10 +839,10 @@
       types:
         Blunt: 0.1
   - type: Vocal
-    # mice are gender neutral who cares
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
-    unsexedScream: /Audio/Animals/mouse_squeak.ogg
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode

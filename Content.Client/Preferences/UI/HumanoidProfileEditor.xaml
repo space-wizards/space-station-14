@@ -15,7 +15,7 @@
                                 <BoxContainer Orientation="Vertical">
                                     <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                                         <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
-                                        <LineEdit Name="CNameEdit" MinSize="270 0" VerticalAlignment="Center" />
+                                        <LineEdit Name="CNameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
                                         <Button Name="CNameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
                                     </BoxContainer>
                                     <Button Name="CRandomizeEverything" HorizontalAlignment="Center"
