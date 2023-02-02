@@ -15,7 +15,7 @@ examine-headset-channels-prefix = A small screen on the headset displays the fol
 examine-headset-channel = [color={$color}]{$key} for {$id} ({$freq})[/color]
 examine-headset-no-keys = It seems broken. There are no encryption keys in it.
 examine-headset-chat-prefix = Use this {$prefix} for your department's frequency.
-examine-headset-default-channel = It indicates that default channel of this headset is [color={$color}]{$channel}[/color].
+examine-headset-default-channel = It indicates that the default channel of this headset is [color={$color}]{$channel}[/color].
 examine-encryption-key-default-channel = The default channel is [color={$color}]{$channel}[/color].
 
 chat-radio-common = Common
