@@ -87760,17 +87760,6 @@ entities:
   - pos: -14.534092,66.507454
     parent: 1
     type: Transform
-  - fixtures:
-    - shape: !type:PhysShapeCircle
-        radius: 0.35
-      mask:
-      - Impassable
-      - LowImpassable
-      layer:
-      - BulletImpassable
-      - Opaque
-      density: 185
-    type: Fixtures
   - rules: >-
       You don't remember any of your previous life unless an administrator tells you otherwise.
 
