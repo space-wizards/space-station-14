@@ -44,12 +44,12 @@ Radiation collectors connect to HV cable, and generate power from radiation when
 <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
 </Box>
 
-The Particle accelerator is a multi-tile structure that spawns and controls the singularity. The 3 PA emitters should face the Gravitational singularity generator, and be followed by PA fuel chamber,PA power box and PA end cap. 
+The Particle accelerator is a multi-tile structure that spawns and controls the singularity. The 3 PA emitters should face the Gravitational singularity generator, and be followed by PA fuel chamber, PA power box and PA end cap. 
 To make it operational, anchor all parts down, add LV cables to every part.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
-Then use a scrwdriver to screw back the panels.
+Then use a screwdriver to screw back the panels.
 Scan parts using the PA control computer
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
@@ -70,9 +70,9 @@ A singularity will soon appear.
 </Box>
 
 ##Safety
-Singularity emitts radiation around it, always keep a distance from it.
+Singularity emits radiation around it, always keep a distance from it.
 
-If a singularity escapes its containment field, it's called a "singuloose". It will attract and then consume everything in its way.
+If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
 
 In such circumstances, there is little to be done other than running in the opposite direction.
 </Document>
