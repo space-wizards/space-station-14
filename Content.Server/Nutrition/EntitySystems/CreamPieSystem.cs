@@ -1,8 +1,11 @@
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Explosion.Components;
+using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -19,6 +22,8 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         [Dependency] private readonly SpillableSystem _spillableSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly TriggerSystem _triggerSystem = default!;
 
         public override void Initialize()
         {
@@ -34,6 +39,16 @@ namespace Content.Server.Nutrition.EntitySystems
             if (EntityManager.TryGetComponent<FoodComponent?>(creamPie.Owner, out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner, foodComp.SolutionName, out var solution))
             {
                 _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
+            }
+            if (_itemSlotsSystem.TryGetSlot(uid, CreamPieComponent.InsideSlotName, out var itemSlot)) 
+            {
+                if (_itemSlotsSystem.TryEject(uid, itemSlot, user: null, out var item)) 
+                {
+                    if (TryComp<ExplodeOnTriggerComponent>(item, out var expl)) 
+                    {
+                        _triggerSystem.Trigger(item.Value);
+                    }
+                }
             }
 
             EntityManager.QueueDeleteEntity(uid);

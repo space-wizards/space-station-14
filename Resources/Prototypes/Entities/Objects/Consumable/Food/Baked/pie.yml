@@ -141,6 +141,19 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ContainerContainer
+    containers:
+      insideSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      insideSlot:
+        whitelist:
+          components:
+          - ExplodeOnTrigger
+        insertSound: 
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound: 
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
 # Tastes like pie, cream, banana.
 
 - type: entity
