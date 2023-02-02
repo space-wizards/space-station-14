@@ -23,6 +23,7 @@ namespace Content.Server.Power.EntitySystems
     internal sealed class ApcSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -88,11 +89,8 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnEmagged(EntityUid uid, ApcComponent comp, ref GotEmaggedEvent args)
         {
-            if(!comp.Emagged)
-            {
-                comp.Emagged = true;
-                args.Handled = true;
-            }
+            // no fancy conditions
+            args.Handled = true;
         }
 
         public void UpdateApcState(EntityUid uid,
@@ -147,7 +145,7 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
-            if (apc != null && apc.Emagged)
+            if (apc != null && _emagSystem.IsEmagged(uid))
                 return ApcChargeState.Emag;
 
             if (!Resolve(uid, ref apc, ref battery))
