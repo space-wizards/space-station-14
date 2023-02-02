@@ -11,7 +11,7 @@ examine-headset-channels-prefix = На небольшом экране гарн�
 examine-headset-no-keys = Она кажется сломанной. В ней нет ключей шифрования.
 examine-headset-channel = [color={ $color }]{ $key } для { $id } ({ $freq })[/color]
 examine-headset-default-channel = Индикатор показывает, что канал по умолчанию этой гарнитуры - [color={ $color }]{ $channel }[/color].
-examine-encryption-key-default-channel = Похоже, что [color={ $color }]{ $channel }[/color] - это канал по умолчанию.
+examine-encryption-key-default-channel = [color={ $color }]{ $channel }[/color] - канал по умолчанию.
 examine-headset-chat-prefix = Используйте { $prefix } для текущей настроенной частоты.
 chat-radio-common = Общий
 chat-radio-centcom = ЦентКом
