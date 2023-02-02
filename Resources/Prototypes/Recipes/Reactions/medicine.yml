@@ -58,13 +58,13 @@
   id: Barozine
   reactants:
     Leporazine:
-      amount: 1
-    Inaprovaline:
-      amount: 1
+      amount: 5
+    CarpoToxin:
+      amount: 5
     Siderlac:
-      amount: 1
+      amount: 5
   products:
-    Barozine: 3
+    Barozine: 1
 
 - type: reaction
   id: Cryoxadone
