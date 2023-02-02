@@ -1,4 +1,4 @@
-ent-VehicleKeyPussyWagon = ключ от уборочной машины
+ent-VehicleKeyJanicart = ключ от уборочной машины
     .desc = Интересный дизайн.
     .suffix = { "" }
 ent-VehicleKeySecway = ключ от секвея
