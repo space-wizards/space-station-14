@@ -277,6 +277,11 @@
     Telecrystal: 2
   categories:
   - UplinkUtility
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
 
 - type: listing
   id: UplinkHypopen
