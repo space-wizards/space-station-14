@@ -1,19 +1,4 @@
 Entries:
-- author: ashtronaut
-  changes:
-  - {message: 'You can now continue to read books, the handheld crew monitor, health
-      analyzer readouts, papers, and your PDA screen after swapping your active hand
-      as long as they remain in your one of your hands. Remember, multitasking is
-      an efficient use of company time.', type: Tweak}
-  id: 2481
-  time: '2022-10-17T20:55:24.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: The classic Space Station 13 style HUD layout has been ported to Space
-      Station 14! Enjoy having your chat in its own separate section of game HUD!,
-    type: Add}
-  id: 2482
-  time: '2022-10-17T22:13:41.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Cluster's security layout has changed. New south-eastern maintenance
@@ -2931,3 +2916,14 @@ Entries:
   - {message: Fixed dice being unable to roll their max value., type: Fix}
   id: 2980
   time: '2023-02-01T17:27:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the research assistant role, for all the new people wanting to
+      get into the science department.', type: Add}
+  id: 2981
+  time: '2023-02-02T17:23:55.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
+  id: 2982
+  time: '2023-02-02T17:31:38.0000000+00:00'

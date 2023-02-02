@@ -1,5 +1,6 @@
 using Content.Shared.Construction;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
 
@@ -9,6 +10,8 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed class VisualizerDataInt : IGraphAction, ISerializationHooks
     {
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
         [DataField("key")] public string Key { get; private set; } = string.Empty;
         [DataField("data")] public int Data { get; private set; } = 0;
 
@@ -18,9 +21,9 @@ namespace Content.Server.Construction.Completions
 
             if (entityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                if(IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum))
+                if (IoCManager.Resolve<IReflectionManager>().TryParseEnumReference(Key, out var @enum))
                 {
-                    appearance.SetData(@enum, Data);
+                    _appearance.SetData(uid, @enum, Data, appearance);
                 }
             }
         }
