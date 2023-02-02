@@ -188,6 +188,8 @@ public sealed partial class SalvageSystem
         var landingPadRadius = 16;
         var radiusThickness = 2;
 
+        // TODO: Need to workout bottomleft room, then reserve a path from center of landing pad to there
+
         // Per-mission settings
         var dungeon = _dungeon.GetDungeon(config.Dungeon);
         _dungeon.SpawnDungeon(new Vector2i(landingPadRadius + radiusThickness + 1, 0), dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
@@ -196,16 +198,12 @@ public sealed partial class SalvageSystem
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
 
         var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
-        var noise = new FastNoise(mission.Seed);
 
         // Set the tiles themselves
         var landingPadTile = _tileDefManager["FloorSteel"];
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius)))
+        foreach (var tile in grid.GetTilesIntersecting(new Circle(new Vector2(0f + grid.TileSize / 2f, 0f + grid.TileSize), landingPadRadius + radiusThickness / 2f - 0.5f), false))
         {
-            if (!_biome.TryGetBiomeTile(tile.GridIndices, biomeProto, noise, grid, out _))
-                continue;
-
             tiles.Add((tile.GridIndices, new Tile(landingPadTile.TileId, variant: (byte) _random.Next(landingPadTile.Variants))));
         }
 
@@ -215,7 +213,7 @@ public sealed partial class SalvageSystem
 
         for (var i = 0; i < radiusThickness; i++)
         {
-            foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + 0.5f + i), false))
+            foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + 0.5f + i / 2f), false))
             {
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
 
