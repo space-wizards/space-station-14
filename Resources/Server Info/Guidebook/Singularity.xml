@@ -1,3 +1,19 @@
+<html>
+<head>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+.grid-item {
+  padding: 1px;
+  font-size: 30px;
+  text-align: center;
+}
+</style>
+</head>
+
 <Document>
 # Gravitational Singularity Engine
 
@@ -18,16 +34,13 @@ The generator should be anchored at the center of the containment area since thi
 <Box>
 <GuideEntityEmbed Entity="Emitter"/>
 <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
-</Box>
-The emitters connect to MV cables and fire lasers as long as they have power and are turned on. Fire emitters at containment field generators to activate them.
-If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
-The containment fields will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
-Emitter lasers and containment fields can cause damage, avoid touching them when active.
-
-<Box>
 <GuideEntityEmbed Entity="ContainmentField"/>
 </Box>
-
+The emitters connect to MV cables and fire lasers as long as they have power and are turned on.
+Fire emitters at containment field generators to activate them.
+If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
+The containment field will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
+Emitter lasers and containment fields can cause damage, avoid touching them when active.
 
 ### Radition collectors
 <Box>
@@ -36,23 +49,31 @@ Emitter lasers and containment fields can cause damage, avoid touching them when
 They connect to HV cables and generate power from nearby radiation sources when turned on.
 
 ### Particle accelerator
-<Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
-</Box>
 
-The Particle Accelerator (PA) is a multi-tile structure that activates a gravitational singularity generator with the particles it generates. The PA should be built as showcased above, its emitters should always face the gravitational singularity generator
-You can start building it by search "PA" in the construction menu (binded by default to G) and following the steps indicated. Some stations already have an unfinished PA that you can complete by anchoring, adding LV.
+<div class="grid-container">
+  <div class="grid-item"></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/></div>
+  <div class="grid-item"></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/></div>
+  <div class="grid-item"><GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/></div>
+</div>
+
+
+
+The Particle Accelerator (PA) is a multi-tile structure that activates a gravitational singularity generator with the particles it generates. The PA should be built as showcased above, its emitters should always face the gravitational singularity generator.
+Some stations already have an unfinished PA. To complete, first anchor all parts, then add LV cable to each part.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
 Then use a screwdriver to screw back the panels.
-Scan parts using the PA control computer to check if it's operational. 
+Scan parts using the PA control computer to check if it's operational. If it shows up as incomplete, examine for what's missing.
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
 </Box>
@@ -72,6 +93,10 @@ A singularity will soon appear.
 
 ##Safety
 Singularity emits radiation around it, always keep a distance from it. Consider getting gear that provides shielding against radiation beforehand. Seek medical attention if experiencing health issues.
+
+<Box>
+<GuideEntityEmbed Entity="ClothingOuterSuitRad"/>
+</Box>
 
 If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
 
