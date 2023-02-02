@@ -32223,7 +32223,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 728
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -3.5,-26.5
     parent: 60
@@ -33568,7 +33568,7 @@ entities:
   - color: '#FF1212FF'
     type: AtmosPipeColor
 - uid: 918
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: -4.5299664,-28.410858
     parent: 60

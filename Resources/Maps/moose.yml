@@ -25698,7 +25698,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 541
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: 26.5,3.5
     parent: 6
@@ -26747,7 +26747,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 700
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: 26.799675,3.7001503
     parent: 6
@@ -58114,7 +58114,7 @@ entities:
     parent: 6
     type: Transform
 - uid: 5541
-  type: VehiclePussyWagonDestroyed
+  type: VehicleJanicartDestroyed
   components:
   - pos: -56.5,-32.5
     parent: 6

@@ -90490,7 +90490,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 7067
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -51.5,36.5
     parent: 1
@@ -147998,7 +147998,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 15049
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - flags: InContainer
     type: MetaData
