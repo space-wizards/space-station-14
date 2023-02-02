@@ -8,6 +8,8 @@ namespace Content.Client.AirlockPainter.UI
         private AirlockPainterWindow? _window;
         public List<string> Styles = new();
 
+        [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
+
         public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -21,7 +23,7 @@ namespace Content.Client.AirlockPainter.UI
                 UpdateState(State);
 
             // Add styles
-            var painterSystem = EntitySystem.Get<AirlockPainterSystem>();
+            var painterSystem = _entitySystems.GetEntitySystem<AirlockPainterSystem>();
             _window.Populate(painterSystem.Entries);
 
             _window.OpenCentered();
