@@ -46,7 +46,9 @@
         bounds: "-0.10,-0.10,0.10,0.10"
       density: 500
       mask:
-        - TabletopMachineMask
+      - TabletopMachineMask
+      layer:
+      - TabletopMachineLayer
   - type: ItemSlots
     slots:
       charger_slot:
