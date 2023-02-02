@@ -26,6 +26,15 @@
 
 - type: entity
   parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelLeather
+  name: leather satchel
+  description: A trend-setting satchel from a bygone era.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/leather.rsi
+
+- type: entity
+  parent: ClothingBackpackSatchel
   id: ClothingBackpackSatchelEngineering
   name: engineering satchel
   description: A tough satchel with extra pockets.

@@ -13,8 +13,8 @@ public sealed class WeldableSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
 
     public override void Initialize()
     {
@@ -129,7 +129,7 @@ public sealed class WeldableSystem : EntitySystem
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
-        appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
+        _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded, appearance);
     }
 
     public void ForceWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)

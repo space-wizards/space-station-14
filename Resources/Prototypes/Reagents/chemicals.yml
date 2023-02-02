@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Acetone
   name: reagent-name-acetone
   desc: reagent-desc-acetone
@@ -40,5 +40,5 @@
   id: Ash
   name: reagent-name-ash
   desc: reagent-desc-ash
-  physicalDesc: reagent-physical-desc-powder
+  physicalDesc: reagent-physical-desc-powdery
   color: white

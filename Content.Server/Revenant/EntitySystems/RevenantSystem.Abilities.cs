@@ -5,7 +5,6 @@ using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
 using Content.Shared.Tag;
-using Content.Shared.Maps;
 using Content.Server.Storage.Components;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
@@ -18,12 +17,10 @@ using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
-using Content.Server.Beam;
-using Content.Server.Emag;
-using Content.Server.Humanoid;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
 using Content.Server.Store.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -32,6 +29,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Revenant.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Utility;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Revenant.EntitySystems;
 
@@ -73,7 +71,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         args.Handled = true;
@@ -339,7 +337,7 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            _emag.DoEmag(ent, ent); //it emags itself. spooky.
+            _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
         }
     }
 }
