@@ -22,10 +22,10 @@ public sealed class AnomalySystem : SharedAnomalySystem
         if (args.Sprite is not { } sprite)
             return;
 
-        if (!Appearance.TryGetData(uid, AnomalyVisuals.IsPulsing, out bool pulsing, args.Component))
+        if (!Appearance.TryGetData<bool>(uid, AnomalyVisuals.IsPulsing, out var pulsing, args.Component))
             pulsing = false;
 
-        if (Appearance.TryGetData(uid, AnomalyVisuals.Supercritical, out bool super, args.Component) && super)
+        if (Appearance.TryGetData<bool>(uid, AnomalyVisuals.Supercritical, out var super, args.Component) && super)
             pulsing = super;
 
         if (HasComp<AnomalySupercriticalComponent>(uid))
