@@ -27,6 +27,7 @@ namespace Content.Server.Recycling
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly AmbientSoundSystem _ambience = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly TagSystem _tags = default!;
@@ -131,7 +132,7 @@ namespace Content.Server.Recycling
 
             // Can only recycle things that are tagged trash or recyclable... And also check the safety of the thing to recycle.
             if (!_tags.HasAnyTag(entity, "Trash", "Recyclable") &&
-                (!TryComp(entity, out recyclable) || !recyclable.Safe && component.Safe))
+                (!TryComp(entity, out recyclable) || !recyclable.Safe && !_emagSystem.IsEmagged(component.Owner)))
             {
                 return;
             }
@@ -162,7 +163,7 @@ namespace Content.Server.Recycling
 
         private bool CanGib(RecyclerComponent component, EntityUid entity)
         {
-            return HasComp<BodyComponent>(entity) && !component.Safe &&
+            return HasComp<BodyComponent>(entity) && _emagSystem.IsEmagged(component.Owner) &&
                    this.IsPowered(component.Owner, EntityManager);
         }
 
@@ -191,8 +192,7 @@ namespace Content.Server.Recycling
 
         private void OnEmagged(EntityUid uid, RecyclerComponent component, ref GotEmaggedEvent args)
         {
-            if (!component.Safe) return;
-            component.Safe = false;
+            // no fancy conditions
             args.Handled = true;
         }
     }

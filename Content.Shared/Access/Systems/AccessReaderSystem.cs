@@ -12,6 +12,7 @@ namespace Content.Shared.Access.Systems
 {
     public sealed class AccessReaderSystem : EntitySystem
     {
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
@@ -28,7 +29,7 @@ namespace Content.Shared.Access.Systems
         {
             if (args.User == null) // AutoLink (and presumably future external linkers) have no user.
                 return;
-            if (component.Enabled && !IsAllowed(args.User.Value, component))
+            if (!_emagSystem.IsEmagged(uid) && !IsAllowed(args.User.Value, component))
                 args.Cancel();
         }
 
@@ -46,12 +47,10 @@ namespace Content.Shared.Access.Systems
 
         private void OnEmagged(EntityUid uid, AccessReaderComponent reader, ref GotEmaggedEvent args)
         {
-            if (reader.Enabled)
-            {
-                reader.Enabled = false;
-                args.Handled = true;
-            }
+            // no fancy conditions
+            args.Handled = true;
         }
+
         /// <summary>
         /// Searches the source for access tags
         /// then compares it with the targets readers access list to see if it is allowed.
@@ -86,7 +85,7 @@ namespace Content.Shared.Access.Systems
         /// <param name="reader">An access reader to check against</param>
         public bool IsAllowed(ICollection<string> accessTags, AccessReaderComponent reader)
         {
-            if (!reader.Enabled)
+            if (_emagSystem.IsEmagged(reader.Owner))
             {
                 // Access reader is totally disabled, so access is always allowed.
                 return true;

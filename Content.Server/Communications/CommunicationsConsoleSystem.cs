@@ -15,6 +15,7 @@ using Content.Shared.Access.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Communications;
 using Content.Shared.Database;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Robust.Server.GameObjects;
@@ -29,6 +30,7 @@ namespace Content.Server.Communications
         [Dependency] private readonly InteractionSystem _interaction = default!;
         [Dependency] private readonly AlertLevelSystem _alertLevelSystem = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly IdCardSystem _idCardSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
@@ -175,7 +177,7 @@ namespace Content.Server.Communications
             if (!_interaction.InRangeUnobstructed(console, user))
                 return false;
 
-            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && accessReaderComponent.Enabled)
+            if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !_emagSystem.IsEmagged(console))
             {
                 return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
             }
