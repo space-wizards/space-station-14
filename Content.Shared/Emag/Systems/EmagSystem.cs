@@ -156,12 +156,28 @@ namespace Content.Shared.Emag.Systems
         /// </summary>
         public bool DoEmagEffect(EntityUid user, EntityUid target)
         {
+            // prevent emagging twice
+            if (IsEmagged(target))
+                return false;
+
             var emaggedEvent = new GotEmaggedEvent(user);
             RaiseLocalEvent(target, ref emaggedEvent);
+
+            // add marker component unless the handler wants repeatable emagging
+            if (emaggedEvent.Emag)
+                EntityManager.AddComponent<EmaggedComponent>(target);
             return emaggedEvent.Handled;
+        }
+
+        /// <summary>
+        /// Returns whether an entity has the emagged marker component
+        /// </summary>
+        public bool IsEmagged(EntityUid uid)
+        {
+            return EntityManager.HasComponent<EmaggedComponent>(uid);
         }
     }
 
     [ByRefEvent]
-    public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false);
+    public record struct GotEmaggedEvent(EntityUid UserUid, bool Handled = false, bool Emag = true);
 }
