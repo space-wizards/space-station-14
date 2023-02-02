@@ -1,10 +1,10 @@
 <Document>
 # Gravitational Singularity Engine
 
-Gravitational Singularity Engine can yield infinite power, no fueling required. It can also destroy the whole station with equal ease. It uses a particle accelerator to fire high energy particles at a singularity generator to form a singularity. The singularity then pulses radiation which is absorbed by radiation collectors.
+The Gravitational Singularity Engine can yield infinite power, with no fueling required. It can also destroy the whole station with equal ease. It uses a Particle Accelerator to fire high energy particles at a Singularity Generator to form a singularity. The singularity then pulses radiation which is absorbed by Radiation Collectors.
 
 
-## Setting up the Gravitational Singularity Engine
+## Setting it up
 
 The Gravitational Singularity Engine requires 4 subsystems to work properly:
 
@@ -12,15 +12,17 @@ The Gravitational Singularity Engine requires 4 subsystems to work properly:
 <Box>
 <GuideEntityEmbed Entity="SingularityGenerator"/>
 </Box>
-Gravitational singularity generator should be anchored at the center of the containment area. This is where the singularity will spawn at.
+The generator should be anchored at the center of the containment area since this is where the singularity will appear at.
 
 ### Containment field generators and emitters
 <Box>
 <GuideEntityEmbed Entity="Emitter"/>
 <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
 </Box>
-The emitters connect to MV cable and fire lasers indefintely when turned on. Aim emitters at containment field generators, then activate the emitters. If all containment field generators are active, a containment field will appear.
-The containment field will repell the singularity, keeping it from escaping. Emitter laser and containment field can cause damage, avoid touching them when active.
+The emitters connect to MV cables and fire lasers as long as they have power and are turned on. Fire emitters at containment field generators to activate them.
+If two containment field generators are active, in range and in the same cardinal axis, a containment field will appear.
+The containment fields will repell the singularity, keeping it from escaping, and yield a little bit of power every time anything bounces off of them. 
+Emitter lasers and containment fields can cause damage, avoid touching them when active.
 
 <Box>
 <GuideEntityEmbed Entity="ContainmentField"/>
@@ -31,7 +33,7 @@ The containment field will repell the singularity, keeping it from escaping. Emi
 <Box>
 <GuideEntityEmbed Entity="RadiationCollector"/>
 </Box>
-Radiation collectors connect to HV cable, and generate power from radiation when turned on.
+They connect to HV cables and generate power from nearby radiation sources when turned on.
 
 ### Particle accelerator
 <Box>
@@ -44,8 +46,8 @@ Radiation collectors connect to HV cable, and generate power from radiation when
 <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
 </Box>
 
-The Particle accelerator is a multi-tile structure that spawns and controls the singularity. The 3 PA emitters should face the Gravitational singularity generator, and be followed by PA fuel chamber, PA power box and PA end cap. 
-To make it operational, anchor all parts down, add LV cables to every part.
+The Particle Accelerator (PA) is a multi-tile structure that activates a gravitational singularity generator with the particles it generates. The PA should be built as showcased above, its emitters should always face the gravitational singularity generator
+You can start building it by search "PA" in the construction menu (binded by default to G) and following the steps indicated. Some stations already have an unfinished PA that you can complete by anchoring, adding LV.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
