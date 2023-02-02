@@ -8,8 +8,8 @@ namespace Content.Client.Disposal.Components
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
     {
-        [DataField("flushSound", required: true)]
-        public readonly SoundSpecifier FlushSound = default!;
+        [DataField("flushSound")]
+        public readonly SoundSpecifier? FlushSound;
 
         public Animation FlushAnimation = default!;
 

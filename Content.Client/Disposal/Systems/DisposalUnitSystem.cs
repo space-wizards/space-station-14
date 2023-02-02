@@ -103,14 +103,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
                         new AnimationTrackSpriteFlick.KeyFrame(originalBaseState, disposalUnit.FlushTime)
                     }
                 },
-                new AnimationTrackPlaySound {
-                    KeyFrames = {
-                        new AnimationTrackPlaySound.KeyFrame(
-                                SoundSystem.GetSound(disposalUnit.FlushSound), 0)
-                    }
-                }
             }
         };
+
+        if (disposalUnit.FlushSound != null)
+        {
+            disposalUnit.FlushAnimation.AnimationTracks.Add(
+                new AnimationTrackPlaySound {
+                    KeyFrames = {
+                        new AnimationTrackPlaySound.KeyFrame(SoundSystem.GetSound(disposalUnit.FlushSound), 0)
+                    }
+                });
+        }
 
         EnsureComp<AnimationPlayerComponent>(uid);
 
