@@ -28,3 +28,13 @@
   components:
   - type: Pinpointer
     component: NukeDisk
+
+- type: entity
+  name: universal pinpointer
+  description: A handheld tracking device that locks onto any physical entity while off.
+  id: PinpointerUniversal
+  parent: PinpointerBase
+  components:
+  - type: Pinpointer
+    emgagged: true
+    updateTargetName: true

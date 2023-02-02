@@ -1,13 +1,23 @@
+using Content.Shared.Administration.Logs;
+using Content.Shared.Database;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Pinpointer
 {
     public abstract class SharedPinpointerSystem : EntitySystem
     {
+        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ComponentGetState>(GetCompState);
+            SubscribeLocalEvent<PinpointerComponent, GotEmaggedEvent>(OnEmagged);
+            SubscribeLocalEvent<PinpointerComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<PinpointerComponent, ExaminedEvent>(OnExamined);
         }
 
         private void GetCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentGetState args)
@@ -18,6 +28,33 @@ namespace Content.Shared.Pinpointer
                 ArrowAngle = pinpointer.ArrowAngle,
                 DistanceToTarget = pinpointer.DistanceToTarget
             };
+        }
+
+        /// <summary>
+        ///     Set the target if emagged and off
+        /// </summary>
+        private void OnAfterInteract(EntityUid uid, PinpointerComponent component, AfterInteractEvent args)
+        {
+            if (!args.CanReach || args.Target is not { } target)
+                return;
+
+            if (!component.Emagged || component.IsActive)
+                return;
+
+            // TODO add doafter once the freeze is lifted
+            args.Handled = true;
+            component.Target = args.Target;
+            _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):player} set target of {ToPrettyString(uid):pinpointer} to {ToPrettyString(component.Target.Value):target}");
+            if (component.UpdateTargetName)
+                component.TargetName = component.Target == null ? null : CompOrNull<MetaDataComponent>(component.Target.Value)?.EntityName;
+        }
+
+        private void OnExamined(EntityUid uid, PinpointerComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange || component.TargetName == null)
+                return;
+
+            args.PushMarkup(Loc.GetString("examine-pinpointer-linked", ("target", component.TargetName)));
         }
 
         /// <summary>
@@ -63,7 +100,7 @@ namespace Content.Shared.Pinpointer
                 return;
             if (isActive == pinpointer.IsActive)
                 return;
-            
+
             pinpointer.IsActive = isActive;
             Dirty(pinpointer);
         }
@@ -81,6 +118,12 @@ namespace Content.Shared.Pinpointer
             var isActive = !pinpointer.IsActive;
             SetActive(uid, isActive, pinpointer);
             return isActive;
+        }
+
+        private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
+        {
+            if (!component.Emagged)
+                component.Emagged = true;
         }
     }
 }

@@ -12,25 +12,46 @@ namespace Content.Shared.Pinpointer
     public sealed class PinpointerComponent : Component
     {
         // TODO: Type serializer oh god
-        [DataField("component")]
+        [DataField("component"), ViewVariables(VVAccess.ReadWrite)]
         public string? Component;
 
-        [DataField("mediumDistance")]
+        [DataField("mediumDistance"), ViewVariables(VVAccess.ReadWrite)]
         public float MediumDistance = 16f;
 
-        [DataField("closeDistance")]
+        [DataField("closeDistance"), ViewVariables(VVAccess.ReadWrite)]
         public float CloseDistance = 8f;
 
-        [DataField("reachedDistance")]
+        [DataField("reachedDistance"), ViewVariables(VVAccess.ReadWrite)]
         public float ReachedDistance = 1f;
 
         /// <summary>
         ///     Pinpointer arrow precision in radians.
         /// </summary>
-        [DataField("precision")]
+        [DataField("precision"), ViewVariables(VVAccess.ReadWrite)]
         public double Precision = 0.09;
 
+        /// <summary>
+        ///     When true, ignores <see cref="Component"/> and allows <see cref="Target"/> to be
+        ///     set by using the entity on the desired target.
+        /// </summary>
+        [DataField("emgagged"), ViewVariables(VVAccess.ReadWrite)]
+        public bool Emagged;
+
+        /// <summary>
+        ///     Name to display of the target being tracked.
+        /// </summary>
+        [DataField("targetName"), ViewVariables(VVAccess.ReadWrite)]
+        public string? TargetName;
+
+        /// <summary>
+        ///     Whether or not the target name should be updated when the target is updated.
+        /// </summary>
+        [DataField("updateTargetName"), ViewVariables(VVAccess.ReadWrite)]
+        public bool UpdateTargetName;
+
+        [ViewVariables(VVAccess.ReadOnly)]
         public EntityUid? Target = null;
+
         public bool IsActive = false;
         public Angle ArrowAngle;
         public Distance DistanceToTarget = Distance.Unknown;

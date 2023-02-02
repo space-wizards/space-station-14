@@ -20,7 +20,8 @@ namespace Content.Server.Pinpointer
         private void OnActivate(EntityUid uid, PinpointerComponent component, ActivateInWorldEvent args)
         {
             TogglePinpointer(uid, component);
-            LocateTarget(uid, component);
+            if (!component.Emagged)
+                LocateTarget(uid, component);
         }
 
         private void OnLocateTarget(HyperspaceJumpCompletedEvent ev)
@@ -31,6 +32,9 @@ namespace Content.Server.Pinpointer
             // this code update ALL pinpointers in game
             foreach (var pinpointer in EntityQuery<PinpointerComponent>())
             {
+                if (pinpointer.Emagged)
+                    continue;
+
                 LocateTarget(pinpointer.Owner, pinpointer);
             }
         }
@@ -108,6 +112,8 @@ namespace Content.Server.Pinpointer
                 return;
 
             pinpointer.Target = target;
+            if (pinpointer.UpdateTargetName)
+                pinpointer.TargetName = target == null ? null : CompOrNull<MetaDataComponent>(target.Value)?.EntityName;
             if (pinpointer.IsActive)
                 UpdateDirectionToTarget(uid, pinpointer);
         }
