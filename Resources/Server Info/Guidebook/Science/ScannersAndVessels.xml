@@ -1,0 +1,24 @@
+<Document>
+## Anomaly Scanner
+
+The Anomaly Scanner is used to gather various information on anomalies. They can be found inside of the lockers in the science department.
+
+<Box>
+<GuideEntityEmbed Entity="AnomalyScanner"/>
+</Box>
+
+Scanning an anomaly shows the severity, general stability, approximate point output, reactions with particle types, and time until the next pulse. The reaction types, specifically, can be used in conjunction with the A.P.E. to manipulate anomalies.
+
+## Anomaly Vessel
+
+The anomaly vessel is a machine that generates points from anomalies. Use the anomaly scanner on an empty vessel, and the anomaly that was last scanned will be synced with the vessel.
+
+<Box>
+<GuideEntityEmbed Entity="MachineAnomalyVessel"/>
+</Box>
+
+The amount of points a vessel generates per second is based on the severity, stability, and health of an anomaly. The higher each of these values, the higher the point output will be.
+
+Be careful: if an anomaly goes [color=#a4885c]supercritical[/color], the vessel it is linked to will explode. This may damage the station and nearby equipment.
+
+</Document>

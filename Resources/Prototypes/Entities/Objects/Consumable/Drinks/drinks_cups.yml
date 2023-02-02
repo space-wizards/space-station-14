@@ -44,46 +44,60 @@
 
 - type: entity
   parent: DrinkBaseCup
+  id: DrinkBaseMug
+  abstract: true
+  name: base mug
+  description: A mug.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/mug.rsi
+    layers:
+      - state: icon-0
+      - map: ["enum.SolutionContainerLayers.Fill"]
+        state: icon-3
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: icon-
+
+- type: entity
+  parent: DrinkBaseMug
   id: DrinkMug
   name: mug
   description: A plain white mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugBlack
   name: mug black
   description: A sleek black mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_black.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugBlue
   name: mug blue
   description: A blue and black mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_blue.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugGreen
   name: mug green
   description: A pale green and pink mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_green.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseCup #this one doesn't have the proper layers in the rsi
   id: DrinkMugDog
   name: funny dog mug
   description: It looks like a cartoon beagle.
@@ -93,64 +107,58 @@
     state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugHeart
   name: mug heart
   description: A white mug, it prominently features a red heart.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_heart.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugMetal
   name: mug metal
   description: A metal mug. You're not sure which metal.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_metal.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugMoebius
   name: mug moebius
   description: A mug with a Moebius Laboratories logo on it. Not even your morning coffee is safe from corporate advertising.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_moebius.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugOne
   name: "#1 mug"
   description: "A white mug, it prominently features a #1."
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_one.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugRainbow
   name: mug rainbow
   description: A rainbow mug. The colors are almost as blinding as a welder.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_rainbow.rsi
-    state: icon-3
 
 - type: entity
-  parent: DrinkBaseCup
+  parent: DrinkBaseMug
   id: DrinkMugRed
   name: mug red
   description: A red and black mug.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mug_red.rsi
-    state: icon-3
 
 - type: entity
   parent: DrinkBaseCup
@@ -158,7 +166,6 @@
   name: Hot chocolate
   description: A heated drink consisting melted chocolate and heated milk.
   components:
-  - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coco.rsi
 

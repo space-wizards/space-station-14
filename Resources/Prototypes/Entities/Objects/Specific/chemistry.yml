@@ -231,6 +231,9 @@
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
+  - type: Icon
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: "syringe_base0"
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
     heldPrefix: 0
@@ -315,3 +318,4 @@
     whitelist:
       tags:
         - Pill
+  - type: Dumpable

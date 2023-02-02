@@ -131,7 +131,7 @@ namespace Content.Server.VendingMachines
             TryUpdateVisualState(uid, vendComponent);
         }
 
-        private void OnEmagged(EntityUid uid, VendingMachineComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
         {
             if (component.Emagged || component.EmaggedInventory.Count == 0 )
                 return;

@@ -10,7 +10,7 @@ namespace Content.Shared.Alert
     public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("order")]

@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Random;
 

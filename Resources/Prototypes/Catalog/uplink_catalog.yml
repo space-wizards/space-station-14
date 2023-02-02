@@ -49,7 +49,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_sword.rsi, state: icon }
   productEntity: EnergySword
   cost:
-    Telecrystal: 8
+    Telecrystal: 6
   categories:
   - UplinkWeapons
 
@@ -60,7 +60,7 @@
   icon: { sprite: /Textures/Objects/Weapons/Melee/e_dagger.rsi, state: icon }
   productEntity: EnergyDagger
   cost:
-    Telecrystal: 2
+    Telecrystal: 3
   categories:
   - UplinkWeapons
 
@@ -248,10 +248,10 @@
   - UplinkUtility
 
 - type: listing
-  id: UplinkReinforcementTeleporterSyndicate
-  name: uplink-reinforcement-teleporter-name
-  description: uplink-reinforcement-teleporter-desc
-  productEntity: ReinforcementTeleporterSyndicate
+  id: UplinkReinforcementRadioSyndicate
+  name: uplink-reinforcement-radio-name
+  description: uplink-reinforcement-radio-desc
+  productEntity: ReinforcementRadioSyndicate
   icon: { sprite: Objects/Devices/communication.rsi, state: old-radio }
   cost:
     Telecrystal: 20
@@ -268,12 +268,22 @@
   categories:
     - UplinkUtility
 
-#TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
+#TODO: Increase the price to 4 when flashbang prof.
 - type: listing
   id: UplinkHeadset
   name: uplink-headset-name
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
+  cost:
+    Telecrystal: 4
+  categories:
+  - UplinkUtility
+
+- type: listing
+  id: UplinkHeadsetEncryptionKey
+  name: uplink-encryption-key-name
+  description: uplink-encryption-key-desc
+  productEntity: EncryptionKeySyndie
   cost:
     Telecrystal: 2
   categories:

@@ -22,7 +22,7 @@ public class DockingControl : Control
 
     private int MinimapRadius => (int) Math.Min(Size.X, Size.Y) / 2;
 
-    private Vector2 MidPoint => Size / 2;
+    private Vector2 MidPoint => (Size / 2) * UIScale;
     private int SizeFull => (int) (MinimapRadius * 2 * UIScale);
     private int ScaledMinimapRadius => (int) (MinimapRadius * UIScale);
     private float MinimapScale => _range != 0 ? ScaledMinimapRadius / _range : 0f;
