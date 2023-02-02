@@ -1,25 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
-  id: 2477
-  time: '2022-10-17T04:33:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee now has lag compensation so the server considers your target's
-      position from when you attacked., type: Add}
-  id: 2478
-  time: '2022-10-17T04:54:32.0000000+00:00'
-- author: router
-  changes:
-  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
-  id: 2479
-  time: '2022-10-17T04:54:52.0000000+00:00'
-- author: Sheppard
-  changes:
-  - {message: Ambience no longer plays in the lobby., type: Fix}
-  id: 2480
-  time: '2022-10-17T04:56:10.0000000+00:00'
 - author: ashtronaut
   changes:
   - {message: 'You can now continue to read books, the handheld crew monitor, health
@@ -2926,11 +2905,29 @@ Entries:
       more resilient to damage.', type: Tweak}
   id: 2975
   time: '2023-01-31T01:43:28.0000000+00:00'
-- author: crazybrain23
+- author: EmoGarbage404
   changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
+  - {message: Added paper bins., type: Add}
   id: 2976
-  time: '2023-01-31T01:44:10.0000000+00:00'
+  time: '2023-01-31T22:03:27.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: catwalks now can be built on lattice, type: Fix}
+  id: 2977
+  time: '2023-02-01T02:33:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: solar panels now can be built on lattice, type: Fix}
+  - {message: grille now can be built on lattice, type: Fix}
+  id: 2978
+  time: '2023-02-01T02:34:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Uranium now visually stacks like other materials, type: Tweak}
+  id: 2979
+  time: '2023-02-01T14:21:34.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Fixed dice being unable to roll their max value., type: Fix}
+  id: 2980
+  time: '2023-02-01T17:27:05.0000000+00:00'
