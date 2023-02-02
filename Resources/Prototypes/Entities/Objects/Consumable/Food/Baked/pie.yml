@@ -143,10 +143,10 @@
   - type: CreamPie
   - type: ContainerContainer
     containers:
-      insideSlot: !type:ContainerSlot
+      payloadSlot: !type:ContainerSlot
   - type: ItemSlots
     slots:
-      insideSlot:
+      payloadSlot:
         whitelist:
           components:
           - OnUseTimerTrigger

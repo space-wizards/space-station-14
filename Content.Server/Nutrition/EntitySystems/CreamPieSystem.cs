@@ -6,6 +6,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -29,6 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<CreamPieComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<CreamPiedComponent, RejuvenateEvent>(OnRejuvenate);
         }
 
@@ -40,7 +42,18 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 _spillableSystem.SpillAt(creamPie.Owner, solution, "PuddleSmear", false);
             }
-            if (_itemSlotsSystem.TryGetSlot(uid, CreamPieComponent.InsideSlotName, out var itemSlot)) 
+            ActivatePayload(uid);
+
+            EntityManager.QueueDeleteEntity(uid);
+        }
+
+        private void OnInteractUsing(EntityUid uid, CreamPieComponent component, InteractUsingEvent args)
+        {
+            ActivatePayload(uid);
+        }
+
+        private void ActivatePayload(EntityUid uid) {
+            if (_itemSlotsSystem.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot)) 
             {
                 if (_itemSlotsSystem.TryEject(uid, itemSlot, user: null, out var item)) 
                 {
@@ -57,8 +70,6 @@ namespace Content.Server.Nutrition.EntitySystems
                     }
                 }
             }
-
-            EntityManager.QueueDeleteEntity(uid);
         }
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
