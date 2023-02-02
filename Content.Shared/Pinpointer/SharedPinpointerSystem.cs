@@ -122,8 +122,11 @@ namespace Content.Shared.Pinpointer
 
         private void OnEmagged(EntityUid uid, PinpointerComponent component, ref GotEmaggedEvent args)
         {
-            if (!component.Emagged)
-                component.Emagged = true;
+            if (component.Emagged)
+                return;
+
+            component.Emagged = true;
+            args.Handled = true;
         }
     }
 }
