@@ -5,6 +5,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
@@ -23,6 +24,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed class ReagentDispenserSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -79,7 +81,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 inventory.AddRange(packPrototype.Inventory);
             }
 
-            if (reagentDispenser.IsEmagged
+            if (_emagSystem.IsEmagged(reagentDispenser.Owner)
                 && reagentDispenser.EmagPackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {
@@ -91,12 +93,11 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnEmagged(EntityUid uid, ReagentDispenserComponent reagentDispenser, ref GotEmaggedEvent args)
         {
-            if (!reagentDispenser.IsEmagged)
-            {
-                reagentDispenser.IsEmagged = true;
-                args.Handled = true;
-                UpdateUiState(reagentDispenser);
-            }
+            // adding component manually to have correct state
+            args.Emag = false;
+            EntityManager.AddComponent<EmaggedComponent>(uid);
+            UpdateUiState(reagentDispenser);
+            args.Handled = true;
         }
 
         private void OnSetDispenseAmountMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserSetDispenseAmountMessage message)
