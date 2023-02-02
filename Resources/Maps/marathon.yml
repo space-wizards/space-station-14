@@ -162815,7 +162815,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 20440
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: -30.815971,6.7175894
     parent: 30
@@ -163016,7 +163016,7 @@ entities:
     parent: 30
     type: Transform
 - uid: 20464
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -32.5,9.5
     parent: 30
