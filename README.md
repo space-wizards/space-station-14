@@ -18,7 +18,13 @@ Space Station 14 это ремейк SS13, который работает на 
 
 Если вы хотите предложить перевод или редактирование уже переведённого контента, мы с радостью ждём ваши изменения на нашем [основном репозитории GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14) (рекомендуется) или [зеркале GitHub](https://github.com/Workbench-Team/space-station-14). Если вам нужна помощь, посмотрите текущие [обсуждения в GitLab](https://git.arumoon.ru/Workbench-Team/space-station-14/-/issues) или лучше перейдите на Discord или Revolt сервер Workbench Team для более удобной коммуникации.
 
-## Сборка
+## Готовая сборка
+
+Статус сборки: [![pipeline status](https://git.arumoon.ru/Workbench-Team/space-station-14/badges/master-ru/pipeline.svg)](https://git.arumoon.ru/Workbench-Team/space-station-14/-/commits/master-ru)
+
+Готовые билды сборки вы можете скачать из [CDN хостинга (быстро)](https://ss14.arumoon.ru/builds/master-ru-builds.html) или [артефактов CI/CD (медленно)](https://git.arumoon.ru/Workbench-Team/space-station-14/-/pipelines?page=1&scope=all&ref=master-ru&status=success)
+
+## Самостоятельная сборка
 
 1. Склонируйте этот репозиторий.
 2. Запустите скрипт `RUN_THIS.py` для инициализации субмодулей и скачивания движка.
