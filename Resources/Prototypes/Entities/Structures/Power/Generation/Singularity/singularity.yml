@@ -47,3 +47,6 @@
   - type: Appearance
     visuals:
     - type: SingularityVisualizer
+  - type: WarpPoint
+    follow: true
+    location: singularity
