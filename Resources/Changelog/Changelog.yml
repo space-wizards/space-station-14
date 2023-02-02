@@ -1,11 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: The classic Space Station 13 style HUD layout has been ported to Space
-      Station 14! Enjoy having your chat in its own separate section of game HUD!,
-    type: Add}
-  id: 2482
-  time: '2022-10-17T22:13:41.0000000+00:00'
 - author: Scribbles0
   changes:
   - {message: Cluster's security layout has changed. New south-eastern maintenance
@@ -2929,3 +2922,8 @@ Entries:
       get into the science department.', type: Add}
   id: 2981
   time: '2023-02-02T17:23:55.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
+  id: 2982
+  time: '2023-02-02T17:31:38.0000000+00:00'
