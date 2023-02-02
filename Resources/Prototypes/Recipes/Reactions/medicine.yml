@@ -58,11 +58,11 @@
   id: Barozine
   reactants:
     Leporazine:
-      amount: 5
+      amount: 1
     CarpoToxin:
-      amount: 5
+      amount: 1
     Siderlac:
-      amount: 5
+      amount: 1
   products:
     Barozine: 1
 
