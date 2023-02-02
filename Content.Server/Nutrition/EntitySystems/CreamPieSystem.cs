@@ -44,9 +44,16 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 if (_itemSlotsSystem.TryEject(uid, itemSlot, user: null, out var item)) 
                 {
-                    if (TryComp<ExplodeOnTriggerComponent>(item, out var expl)) 
+                    if (TryComp<OnUseTimerTriggerComponent>(item.Value, out var timerTrigger))
                     {
-                        _triggerSystem.Trigger(item.Value);
+                        _triggerSystem.HandleTimerTrigger(
+                            item.Value,
+                            null,
+                            timerTrigger.Delay,
+                            timerTrigger.BeepInterval,
+                            timerTrigger.InitialBeepDelay,
+                            timerTrigger.BeepSound,
+                            timerTrigger.BeepParams);
                     }
                 }
             }

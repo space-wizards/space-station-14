@@ -149,7 +149,7 @@
       insideSlot:
         whitelist:
           components:
-          - ExplodeOnTrigger
+          - OnUseTimerTrigger
         insertSound: 
           path: /Audio/Weapons/Guns/Empty/empty.ogg
         ejectSound: 
