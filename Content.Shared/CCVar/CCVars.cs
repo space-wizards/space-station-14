@@ -207,7 +207,7 @@ namespace Content.Shared.CCVar
         /// Is map rotation enabled?
         /// </summary>
         public static readonly CVarDef<bool>
-            GameMapRotation = CVarDef.Create<bool>("game.map_rotation", true, CVar.SERVERONLY);
+            GameMapRotation = CVarDef.Create("game.map_rotation", true, CVar.SERVERONLY);
 
         /// <summary>
         /// If roles should be restricted based on time.
@@ -250,7 +250,7 @@ namespace Content.Shared.CCVar
         /// Whether or not panic bunker is currently enabled.
         /// </summary>
         public static readonly CVarDef<bool> PanicBunkerEnabled =
-            CVarDef.Create("game.panic_bunker.enabled", false, CVar.SERVERONLY);
+            CVarDef.Create("game.panic_bunker.enabled", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /// <summary>
         /// Show reason of disconnect for user or not.
@@ -352,6 +352,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> TraitorMaxPicks =
             CVarDef.Create("traitor.max_picks", 20);
 
+        public static readonly CVarDef<float> TraitorStartDelay =
+            CVarDef.Create("traitor.start_delay", 4f * 60f);
+
+        public static readonly CVarDef<float> TraitorStartDelayVariance =
+            CVarDef.Create("traitor.start_delay_variance", 3f * 60f);
+
         /*
          * TraitorDeathMatch
          */
@@ -384,6 +390,35 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> PiratesPlayersPerOp =
             CVarDef.Create("pirates.players_per_pirate", 5);
+
+        /*
+         * Tips
+         */
+
+        /// <summary>
+        ///     Whether tips being shown is enabled at all.
+        /// </summary>
+        public static readonly CVarDef<bool> TipsEnabled =
+            CVarDef.Create("tips.enabled", true);
+
+        /// <summary>
+        ///     The dataset prototype to use when selecting a random tip.
+        /// </summary>
+        public static readonly CVarDef<string> TipsDataset =
+            CVarDef.Create("tips.dataset", "Tips");
+
+        /// <summary>
+        ///     The number of seconds between each tip being displayed when the round is not actively going
+        ///     (i.e. postround or lobby)
+        /// </summary>
+        public static readonly CVarDef<float> TipFrequencyOutOfRound =
+            CVarDef.Create("tips.out_of_game_frequency", 60f * 1.5f);
+
+        /// <summary>
+        ///     The number of seconds between each tip being displayed when the round is actively going
+        /// </summary>
+        public static readonly CVarDef<float> TipFrequencyInRound =
+            CVarDef.Create("tips.in_game_frequency", 60f * 60);
 
         /*
          * Console
@@ -771,14 +806,14 @@ namespace Content.Shared.CCVar
         ///     Needs <see cref="MonstermosEqualization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosDepressurization =
-            CVarDef.Create<bool>("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether monstermos explosive depressurization will rip tiles..
         ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosRipTiles =
-            CVarDef.Create<bool>("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+            CVarDef.Create("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether explosive depressurization will cause the grid to gain an impulse.
@@ -904,6 +939,18 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<string> WhitelistReason =
             CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If the playercount is below this number, the whitelist will not apply.
+        /// </summary>
+        public static readonly CVarDef<int> WhitelistMinPlayers =
+            CVarDef.Create("whitelist.min_players", 0, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If the playercount is above this number, the whitelist will not apply.
+        /// </summary>
+        public static readonly CVarDef<int> WhitelistMaxPlayers =
+            CVarDef.Create("whitelist.max_players", int.MaxValue, CVar.SERVERONLY);
 
         /*
          * VOTE
@@ -1105,6 +1152,16 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> BiomassEasyMode =
             CVarDef.Create("biomass.easy_mode", true, CVar.SERVERONLY);
+
+        /*
+         * Anomaly
+         */
+
+        /// <summary>
+        ///     A scale factor applied to a grid's bounds when trying to find a spot to randomly generate an anomaly.
+        /// </summary>
+        public static readonly CVarDef<float> AnomalyGenerationGridBoundsScale =
+            CVarDef.Create("anomaly.generation_grid_bounds_scale", 0.6f, CVar.SERVERONLY);
 
         /*
          * VIEWPORT

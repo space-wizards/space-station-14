@@ -90,7 +90,7 @@ public class GunComponent : Component
     /// How fast the projectile moves.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("projectileSpeed")]
-    public float ProjectileSpeed = 20f;
+    public float ProjectileSpeed = 25f;
 
     /// <summary>
     /// When the gun is next available to be shot.
@@ -113,6 +113,13 @@ public class GunComponent : Component
 
     [DataField("selectModeAction")]
     public InstantAction? SelectModeAction;
+
+    /// <summary>
+    /// Whether or not information about
+    /// the gun will be shown on examine.
+    /// </summary>
+    [DataField("showExamineText")]
+    public bool ShowExamineText = true;
 }
 
 [Flags]

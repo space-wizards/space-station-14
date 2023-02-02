@@ -398,11 +398,11 @@ public sealed class StationSystem : EntitySystem
 
         var stationMember = AddComp<StationMemberComponent>(mapGrid);
         stationMember.Station = station;
-        stationData.Grids.Add(((Component) gridComponent).Owner);
+        stationData.Grids.Add(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridAddedEvent(((Component) gridComponent).Owner, false), true);
+        RaiseLocalEvent(station, new StationGridAddedEvent(gridComponent.Owner, false), true);
 
-        _sawmill.Info($"Adding grid {mapGrid}:{((Component) gridComponent).Owner} to station {Name(station)} ({station})");
+        _sawmill.Info($"Adding grid {mapGrid}:{gridComponent.Owner} to station {Name(station)} ({station})");
     }
 
     /// <summary>
@@ -421,10 +421,10 @@ public sealed class StationSystem : EntitySystem
             throw new ArgumentException("Tried to use a non-station entity as a station!", nameof(station));
 
         RemComp<StationMemberComponent>(mapGrid);
-        stationData.Grids.Remove(((Component) gridComponent).Owner);
+        stationData.Grids.Remove(gridComponent.Owner);
 
-        RaiseLocalEvent(station, new StationGridRemovedEvent(((Component) gridComponent).Owner), true);
-        _sawmill.Info($"Removing grid {mapGrid}:{((Component) gridComponent).Owner} from station {Name(station)} ({station})");
+        RaiseLocalEvent(station, new StationGridRemovedEvent(gridComponent.Owner), true);
+        _sawmill.Info($"Removing grid {mapGrid}:{gridComponent.Owner} from station {Name(station)} ({station})");
     }
 
     /// <summary>

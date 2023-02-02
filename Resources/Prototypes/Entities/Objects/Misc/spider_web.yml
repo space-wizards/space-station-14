@@ -1,0 +1,75 @@
+- type: entity
+  id: SpiderWeb
+  name: spider web
+  description: It's stringy and sticky.
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: MeleeSound
+      soundGroups:
+        Brute:
+          path:
+            "/Audio/Weapons/slash.ogg"
+    - type: Sprite
+      sprite: Objects/Misc/spiderweb.rsi
+      layers:
+        - state: spider_web_1
+          map: ["spiderWebLayer"]
+      drawdepth: WallMountedItems
+      netsync: false
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.SpiderWebVisuals.Variant:
+            spiderWebLayer:
+                1:  {state: spider_web_1}
+                2:  {state: spider_web_2}
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+      - hard: false
+        density: 7
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer:
+        - MidImpassable
+    - type: Damageable
+      damageModifierSet: Wood
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
+        behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: SpiderWebObject
+    - type: SlowContacts
+      walkSpeedModifier: 0.5
+      sprintSpeedModifier: 0.5
+      ignoreWhitelist:
+        components:
+            - IgnoreSpiderWeb

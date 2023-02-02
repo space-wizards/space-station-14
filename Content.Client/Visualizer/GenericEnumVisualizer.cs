@@ -57,7 +57,7 @@ namespace Content.Client.Visualizer
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite)) return;
             if (!component.TryGetData(Key, out object status)) return;
             if (!States.TryGetValue(status, out var val)) return;
             sprite.LayerSetState(Layer, val);

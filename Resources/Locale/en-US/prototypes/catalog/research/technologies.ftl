@@ -4,6 +4,9 @@ technologies-basic-research-technology-description = Nanotrasen basic research t
 technologies-cleaning-technology = Cleaning technology
 technologies-cleaning-technology-description = Start to a shiny clean station.
 
+technologies-foodbev-technology = Food and beverage technology
+technologies-food-and-beverage-technology-description = Robust service from better technology.
+
 technologies-biological-technology = Biological technology
 technologies-biological-technology-description = Investigations into the natural world.
 
@@ -69,6 +72,9 @@ technologies-super-powercell-printing-description = Print super powercells.
 
 technologies-scientific-technology = Scientific technology
 technologies-scientific-technology-description = The basics of a research team's supplies.
+
+technologies-anomaly-technology = Anomaly technology
+technologies-anomaly-technology-description = Machines for advanced anomaly containment.
 
 technologies-robotics-technology = Robotics technology
 technologies-robotics-technology-description = Parts needed for constructing mechanized friends.

@@ -20,7 +20,7 @@ namespace Content.Client.Explosion
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent<ISpriteComponent>(component.Owner, out var sprite))
+            if (!entities.TryGetComponent<SpriteComponent>(component.Owner, out var sprite))
             {
                 return;
             }

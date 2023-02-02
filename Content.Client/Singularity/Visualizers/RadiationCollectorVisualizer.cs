@@ -56,7 +56,7 @@ namespace Content.Client.Singularity.Visualizers
             base.OnChangeData(component);
 
             var entities = IoCManager.Resolve<IEntityManager>();
-            if (!entities.TryGetComponent(component.Owner, out ISpriteComponent? sprite)) return;
+            if (!entities.TryGetComponent(component.Owner, out SpriteComponent? sprite)) return;
             if (!entities.TryGetComponent(component.Owner, out AnimationPlayerComponent? animPlayer)) return;
             if (!component.TryGetData(RadiationCollectorVisuals.VisualState, out RadiationCollectorVisualState state))
             {

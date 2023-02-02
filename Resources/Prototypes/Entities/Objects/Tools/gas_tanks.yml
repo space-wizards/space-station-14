@@ -26,7 +26,7 @@
         sprite: Interface/Alerts/internals.rsi
         state: internal1
       event: !type:ToggleActionEvent
-      useDelay: 1.0
+      useDelay: 1
   - type: Explosive
     explosionType: Default
     maxIntensity: 20

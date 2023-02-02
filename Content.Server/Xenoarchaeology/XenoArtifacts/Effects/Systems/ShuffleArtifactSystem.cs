@@ -1,6 +1,6 @@
 ﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -10,6 +10,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 {
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -37,7 +38,7 @@ public sealed class ShuffleArtifactSystem : EntitySystem
 
         foreach (var xform in toShuffle)
         {
-            xform.Coordinates = _random.PickAndTake(allCoords);
+            _xform.SetCoordinates(xform, _random.PickAndTake(allCoords));
         }
     }
 }
