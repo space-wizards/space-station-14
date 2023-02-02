@@ -177,8 +177,3 @@
     proto: CannonBall
     soundInsert:
       path: /Audio/Weapons/Guns/Gunshots/grenade_launcher.ogg
-  - type: MagazineVisuals
-    magState: mag
-    steps: 1
-    zeroVisible: true
-  - type: Appearance
