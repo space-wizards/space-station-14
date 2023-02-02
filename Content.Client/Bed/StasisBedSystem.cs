@@ -8,7 +8,7 @@ public sealed class StasisBedSystem : VisualizerSystem<StasisBedVisualsComponent
     protected override void OnAppearanceChange(EntityUid uid, StasisBedVisualsComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite != null
-            && AppearanceSystem.TryGetData(uid, StasisBedVisuals.IsOn, out bool isOn, args.Component))
+            && AppearanceSystem.TryGetData<bool>(uid, StasisBedVisuals.IsOn, out var isOn, args.Component))
         {
             args.Sprite.LayerSetVisible(StasisBedVisualLayers.IsOn, isOn);
         }

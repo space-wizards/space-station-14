@@ -10,8 +10,8 @@ public sealed class KudzuVisualsSystem : VisualizerSystem<KudzuVisualsComponent>
 
         if (args.Sprite == null)
             return;
-        if (AppearanceSystem.TryGetData(uid, KudzuVisuals.Variant, out int var, args.Component)
-            && AppearanceSystem.TryGetData(uid, KudzuVisuals.GrowthLevel, out int level, args.Component))
+        if (AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.Variant, out var var, args.Component)
+            && AppearanceSystem.TryGetData<int>(uid, KudzuVisuals.GrowthLevel, out var level, args.Component))
         {
             var index = args.Sprite.LayerMapReserveBlank(component.Layer);
             args.Sprite.LayerSetState(index, $"kudzu_{level}{var}");

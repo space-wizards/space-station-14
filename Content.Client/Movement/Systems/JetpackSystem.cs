@@ -30,7 +30,7 @@ public sealed class JetpackSystem : SharedJetpackSystem
 
     private void OnJetpackAppearance(EntityUid uid, JetpackComponent component, ref AppearanceChangeEvent args)
     {
-        _appearance.TryGetData(uid, JetpackVisuals.Enabled, out bool enabled, args.Component);
+        _appearance.TryGetData<bool>(uid, JetpackVisuals.Enabled, out var enabled, args.Component);
 
         var state = "icon" + (enabled ? "-on" : "");
         args.Sprite?.LayerSetState(0, state);

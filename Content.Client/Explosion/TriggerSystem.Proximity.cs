@@ -74,7 +74,7 @@ public sealed partial class TriggerSystem
             return;
 
         TryComp<AnimationPlayerComponent>(component.Owner, out var player);
-        _appearance.TryGetData(appearance.Owner, ProximityTriggerVisualState.State, out ProximityTriggerVisuals state, appearance);
+        _appearance.TryGetData<ProximityTriggerVisuals>(appearance.Owner, ProximityTriggerVisualState.State, out var state, appearance);
 
         switch (state)
         {

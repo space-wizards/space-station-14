@@ -20,15 +20,15 @@ public sealed class RevenantSystem : EntitySystem
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData(uid, RevenantVisuals.Harvesting, out bool harvesting, args.Component) && harvesting)
+        if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Harvesting, out var harvesting, args.Component) && harvesting)
         {
             args.Sprite.LayerSetState(0, component.HarvestingState);
         }
-        else if (_appearance.TryGetData(uid, RevenantVisuals.Stunned, out bool stunned, args.Component) && stunned)
+        else if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Stunned, out var stunned, args.Component) && stunned)
         {
             args.Sprite.LayerSetState(0, component.StunnedState);
         }
-        else if (_appearance.TryGetData(uid, RevenantVisuals.Corporeal, out bool corporeal, args.Component))
+        else if (_appearance.TryGetData<bool>(uid, RevenantVisuals.Corporeal, out var corporeal, args.Component))
         {
             if (corporeal)
                 args.Sprite.LayerSetState(0, component.CorporealState);

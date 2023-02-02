@@ -56,8 +56,8 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
             return;
         }
 
-        if (!_appearance.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen, args.Component)
-            || !_appearance.TryGetData(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn, args.Component))
+        if (!_appearance.TryGetData<bool>(uid, SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out var isOpen, args.Component)
+            || !_appearance.TryGetData<bool>(uid, SharedCryoPodComponent.CryoPodVisuals.IsOn, out var isOn, args.Component))
         {
             return;
         }

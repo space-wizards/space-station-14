@@ -14,8 +14,8 @@ namespace Content.Client.Atmos.Visualizers
             if (args.Sprite == null)
                 return;
 
-            if (AppearanceSystem.TryGetData(uid, PortableScrubberVisuals.IsFull, out bool isFull, args.Component)
-                && AppearanceSystem.TryGetData(uid, PortableScrubberVisuals.IsRunning, out bool isRunning, args.Component))
+            if (AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsFull, out var isFull, args.Component)
+                && AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsRunning, out var isRunning, args.Component))
             {
                 var runningState = isRunning ? component.RunningState : component.IdleState;
                 args.Sprite.LayerSetState(PortableScrubberVisualLayers.IsRunning, runningState);
@@ -24,7 +24,7 @@ namespace Content.Client.Atmos.Visualizers
                 args.Sprite.LayerSetState(PowerDeviceVisualLayers.Powered, fullState);
             }
 
-            if (AppearanceSystem.TryGetData(uid, PortableScrubberVisuals.IsDraining, out bool isDraining, args.Component))
+            if (AppearanceSystem.TryGetData<bool>(uid, PortableScrubberVisuals.IsDraining, out var isDraining, args.Component))
             {
                 args.Sprite.LayerSetVisible(PortableScrubberVisualLayers.IsDraining, isDraining);
             }

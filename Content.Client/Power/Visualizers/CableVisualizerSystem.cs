@@ -23,7 +23,7 @@ public sealed class CableVisualizerSystem : VisualizerSystem<CableVisualizerComp
             return;
         }
 
-        if (!AppearanceSystem.TryGetData(uid, WireVisVisuals.ConnectedMask, out WireVisDirFlags mask, args.Component))
+        if (!AppearanceSystem.TryGetData<WireVisDirFlags>(uid, WireVisVisuals.ConnectedMask, out var mask, args.Component))
             mask = WireVisDirFlags.None;
 
         args.Sprite.LayerSetState(0, $"{component.StatePrefix}{(int) mask}");

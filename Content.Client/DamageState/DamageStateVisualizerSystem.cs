@@ -10,7 +10,7 @@ public sealed class DamageStateVisualizerSystem : VisualizerSystem<DamageStateVi
     {
         var sprite = args.Sprite;
 
-        if (sprite == null || !AppearanceSystem.TryGetData(uid, MobStateVisuals.State, out MobState data, args.Component))
+        if (sprite == null || !AppearanceSystem.TryGetData<MobState>(uid, MobStateVisuals.State, out var data, args.Component))
         {
             return;
         }

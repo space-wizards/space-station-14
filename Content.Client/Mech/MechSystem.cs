@@ -28,12 +28,12 @@ public sealed class MechSystem : SharedMechSystem
 
         var state = component.BaseState;
         var drawDepth = DrawDepth.Mobs;
-        if (component.BrokenState != null && _appearance.TryGetData(uid, MechVisuals.Broken, out bool broken, args.Component) && broken)
+        if (component.BrokenState != null && _appearance.TryGetData<bool>(uid, MechVisuals.Broken, out var broken, args.Component) && broken)
         {
             state = component.BrokenState;
             drawDepth = DrawDepth.SmallMobs;
         }
-        else if (component.OpenState != null && _appearance.TryGetData(uid, MechVisuals.Open, out bool open, args.Component) && open)
+        else if (component.OpenState != null && _appearance.TryGetData<bool>(uid, MechVisuals.Open, out var open, args.Component) && open)
         {
             state = component.OpenState;
             drawDepth = DrawDepth.SmallMobs;

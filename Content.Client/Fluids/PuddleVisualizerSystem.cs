@@ -40,10 +40,10 @@ namespace Content.Client.Fluids
                 return;
             }
 
-            if (!AppearanceSystem.TryGetData(uid, PuddleVisuals.VolumeScale, out float volumeScale)
-                || !AppearanceSystem.TryGetData(uid, PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                || !AppearanceSystem.TryGetData(uid, PuddleVisuals.SolutionColor, out Color solutionColor)
-                || !AppearanceSystem.TryGetData(uid, PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            if (!AppearanceSystem.TryGetData<float>(uid, PuddleVisuals.VolumeScale, out var volumeScale)
+                || !AppearanceSystem.TryGetData<FixedPoint2>(uid, PuddleVisuals.CurrentVolume, out var currentVolume)
+                || !AppearanceSystem.TryGetData<Color>(uid, PuddleVisuals.SolutionColor, out var solutionColor)
+                || !AppearanceSystem.TryGetData<bool>(uid, PuddleVisuals.IsEvaporatingVisual, out var isEvaporating))
             {
                 return;
             }

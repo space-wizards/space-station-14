@@ -56,10 +56,10 @@ public sealed class AtmosPipeAppearanceSystem : EntitySystem
             return;
         }
 
-        if (!_appearance.TryGetData(uid, PipeColorVisuals.Color, out Color color, args.Component))
+        if (!_appearance.TryGetData<Color>(uid, PipeColorVisuals.Color, out var color, args.Component))
             color = Color.White;
 
-        if (!_appearance.TryGetData(uid, PipeVisuals.VisualState, out PipeDirection worldConnectedDirections, args.Component))
+        if (!_appearance.TryGetData<PipeDirection>(uid, PipeVisuals.VisualState, out var worldConnectedDirections, args.Component))
             return;
 
         // transform connected directions to local-coordinates

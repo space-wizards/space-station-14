@@ -27,7 +27,7 @@ public sealed class MorgueSystem : EntitySystem
         if (!args.IsInDetailsRange)
             return;
 
-        _appearance.TryGetData(uid, MorgueVisuals.Contents, out MorgueContents contents);
+        _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents);
 
         var text = contents switch
         {
@@ -89,7 +89,7 @@ public sealed class MorgueSystem : EntitySystem
 
             comp.AccumulatedFrameTime -= comp.BeepTime;
 
-            if (comp.DoSoulBeep && _appearance.TryGetData(appearance.Owner, MorgueVisuals.Contents, out MorgueContents contents, appearance) && contents == MorgueContents.HasSoul)
+            if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(appearance.Owner, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {
                 _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, comp.Owner);
             }

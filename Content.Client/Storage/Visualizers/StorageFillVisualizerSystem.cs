@@ -14,7 +14,7 @@ public sealed class StorageFillVisualizerSystem : VisualizerSystem<StorageFillVi
         if (!TryComp(uid, out SpriteComponent? sprite))
             return;
 
-        if (!AppearanceSystem.TryGetData(uid, StorageFillVisuals.FillLevel, out int level, args.Component))
+        if (!AppearanceSystem.TryGetData<int>(uid, StorageFillVisuals.FillLevel, out var level, args.Component))
             return;
 
         var state = $"{component.FillBaseName}-{level}";
