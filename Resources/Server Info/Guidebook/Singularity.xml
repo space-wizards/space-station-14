@@ -19,8 +19,8 @@ Gravitational singularity generator should be anchored at the center of the cont
 <GuideEntityEmbed Entity="Emitter"/>
 <GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
 </Box>
-The emitters connects to MV cable and shoot lasers indefintely when turned on. Aim emitters at containment field generators, and turn them on. If all containment field generators are active, a containment field will appear.
-The containment field will repell the singularity, keeping it from escaping. The emitter lasers and containment field can cause damage, avoid touching them when active.
+The emitters connect to MV cable and fire lasers indefintely when turned on. Aim emitters at containment field generators, then activate the emitters. If all containment field generators are active, a containment field will appear.
+The containment field will repell the singularity, keeping it from escaping. Emitter laser and containment field can cause damage, avoid touching them when active.
 
 <Box>
 <GuideEntityEmbed Entity="ContainmentField"/>
@@ -50,15 +50,14 @@ To make it operational, anchor all parts down, add LV cables to every part.
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
 Then use a screwdriver to screw back the panels.
-Scan parts using the PA control computer
+Scan parts using the PA control computer to check if it's operational. 
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
 </Box>
-to check if it's operational. 
 
 ## Turing on the Gravitational Singularity Engine
 
-[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are all working properly.
+[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are working properly.
 
 Turn power on using the PA control computer. Set strength to an appropiate level.
 
@@ -70,7 +69,7 @@ A singularity will soon appear.
 </Box>
 
 ##Safety
-Singularity emits radiation around it, always keep a distance from it.
+Singularity emits radiation around it, always keep a distance from it. Consider getting gear that provides shielding against radiation beforehand. Seek medical attention if experiencing health issues.
 
 If a singularity escapes its containment field, often referred to as a "singuloose," it will attract and then consume everything in its way.
 
