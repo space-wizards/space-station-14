@@ -10,8 +10,8 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Command => "addtag";
-        public override string Description => "Adds a tag to a given entity";
-        public override string Help => "Usage: addtag <entity uid> <tag>";
+        public override string Description => Loc.GetString("addtag-command-description");
+        public override string Help => Loc.GetString("addtag-command-help");
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -33,11 +33,11 @@ namespace Content.Server.Administration.Commands
 
             if (tagSystem.TryAddTag(entityUid, args[1]))
             {
-                shell.WriteLine($@"Added {args[1]} to {entityUid}.");
+                shell.WriteLine(Loc.GetString("addtag-command-success", ("tag", args[1]), ("target", entityUid)));
             }
             else
             {
-                shell.WriteError($@"Could not add {args[1]} to {entityUid}.");
+                shell.WriteError(Loc.GetString("addtag-command-fail", ("tag", args[1]), ("target", entityUid)));
             }
         }
 
@@ -64,8 +64,8 @@ namespace Content.Server.Administration.Commands
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override string Command => "removetag";
-        public override string Description => "Removes a tag from a given entity";
-        public override string Help => "Usage: removetag <entity uid> <tag>";
+        public override string Description => Loc.GetString("removetag-command-description");
+        public override string Help => Loc.GetString("removetag-command-help");
 
         public override void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -86,11 +86,11 @@ namespace Content.Server.Administration.Commands
 
             if (tagSystem.RemoveTag(entityUid, args[1]))
             {
-                shell.WriteLine($@"Removed {args[1]} from {entityUid}.");
+                shell.WriteLine(Loc.GetString("removetag-command-success", ("tag", args[1]), ("target", entityUid)));
             }
             else
             {
-                shell.WriteError($@"Could not remove {args[1]} from {entityUid}.");
+                shell.WriteError(Loc.GetString("removetag-command-fail", ("tag", args[1]), ("target", entityUid)));
             }
         }
 
