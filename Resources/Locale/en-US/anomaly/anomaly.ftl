@@ -35,4 +35,4 @@ anomaly-generator-charges = {$charges ->
     [one] {$charges} charge
     *[other] {$charges} charges
 }
-anomaly-generator-announcement = An anomaly has been generated on the station!
+anomaly-generator-announcement = An anomaly has been generated!
