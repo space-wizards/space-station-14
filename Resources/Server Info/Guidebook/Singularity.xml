@@ -1,0 +1,78 @@
+<Document>
+# Gravitational Singularity Engine
+
+Gravitational Singularity Engine can yield infinite power, no fueling required. It can also destroy whole station with equal ease. It uses a particle accelerator to fire high energy particles at a singularity generator to spawn a singularity. The singularity then pulses radiation which is absorbed by radiation collectors.
+
+
+## Setting up the Gravitational Singularity Engine
+
+The Gravitational Singularity Engine requires 4 subsystems to work properly:
+
+### Gravitational singularity generator
+<Box>
+<GuideEntityEmbed Entity="SingularityGenerator"/>
+</Box>
+Gravitational singularity generator should be anchored at the center of the containment area. This is where the singularity will spawn at.
+
+### Containment field generators and emitters
+<Box>
+<GuideEntityEmbed Entity="Emitter"/>
+<GuideEntityEmbed Entity="ContainmentFieldGenerator"/>
+</Box>
+The emitters connects to MV cable and shoot lasers indefintely when turned on. Aim emitters at containment field generators, and turn them on. If all containment field generators are active, a containment field will appear.
+The containment field will repell the singularity, keeping it from escaping. The emitter lasers and containment field can cause damage, avoid touching them when active.
+
+<Box>
+<GuideEntityEmbed Entity="ContainmentField"/>
+</Box>
+
+
+### Radition collectors
+<Box>
+<GuideEntityEmbed Entity="RadiationCollector"/>
+</Box>
+Radiation collectors connect to HV cable, and generate power from radiation when turned on.
+
+### Particle accelerator
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
+</Box>
+
+The Particle accelerator is a multi-tile structure that spawns and controls the singularity. The 3 PA emitters should face the Gravitational singularity generator, and be followed by PA fuel chamber,PA power box and PA end cap. 
+To make it operational, anchor all parts down, add LV cables to every part.
+<Box>
+<GuideEntityEmbed Entity="CableApcStack"/>
+</Box>
+Then use a scrwdriver to screw back the panels.
+Scan parts using the PA control computer
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+</Box>
+to check if it's operational. 
+
+## Turing on the Gravitational Singularity Engine
+
+[color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are all working properly.
+
+Turn power on using the PA control computer. Set strength to an appropiate level.
+
+The PA will start firing particles towards the Gravitational singularity generator. 
+
+A singularity will soon appear.
+<Box>
+<GuideEntityEmbed Entity="Singularity"/>
+</Box>
+
+##Safety
+Singularity emitts radiation around it, always keep a distance from it.
+
+If a singularity escapes its containment field, it's called a "singuloose". It will attract and then consume everything in its way.
+
+In such circumstances, there is little to be done other than running in the opposite direction.
+</Document>

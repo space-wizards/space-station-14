@@ -41,3 +41,8 @@
   id: AME
   name: guide-entry-ame
   text: "/Server Info/Guidebook/AME.xml"
+  
+- type: guideEntry
+  id: Singularity
+  name: guide-entry-singularity
+  text: "/Server Info/Guidebook/Singularity.xml"
