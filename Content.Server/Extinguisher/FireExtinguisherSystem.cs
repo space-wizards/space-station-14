@@ -8,6 +8,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -17,6 +18,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 {
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -123,7 +125,7 @@ public sealed class FireExtinguisherSystem : EntitySystem
 
         if (comp.HasSafety)
         {
-            appearance.SetData(FireExtinguisherVisuals.Safety, comp.Safety);
+            _appearance.SetData(uid, FireExtinguisherVisuals.Safety, comp.Safety, appearance);
         }
     }
 
