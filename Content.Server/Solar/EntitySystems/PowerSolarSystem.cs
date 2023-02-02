@@ -2,13 +2,12 @@ using System.Linq;
 using Content.Server.Power.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Physics;
+using Content.Shared.Solar;
 using Content.Shared.Solar.Components;
 using JetBrains.Annotations;
-using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Solar.EntitySystems
 {
@@ -16,11 +15,10 @@ namespace Content.Server.Solar.EntitySystems
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
     /// </summary>
     [UsedImplicitly]
-    internal sealed class PowerSolarSystem : EntitySystem
+    internal sealed class PowerSolarSystem : SharedPowerSolarSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /// <summary>
         /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
@@ -63,17 +61,10 @@ namespace Content.Server.Solar.EntitySystems
 
         public override void Initialize()
         {
+            base.Initialize();
             SubscribeLocalEvent<SolarPanelComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<SolarPanelComponent, ComponentGetState>(GetSolarPanelState);
-            SubscribeLocalEvent<SolarPanelComponent, EntityUnpausedEvent>(OnUnpause);
             RandomizeSun();
-        }
-
-        private void OnUnpause(EntityUid uid, SolarPanelComponent component, ref EntityUnpausedEvent args)
-        {
-            component.LastUpdate += args.PausedTime;
-            Dirty(component);
         }
 
         private void RefreshPanel(SolarPanelComponent panel)
@@ -90,16 +81,6 @@ namespace Content.Server.Solar.EntitySystems
             {
                 RefreshPanel(panel);
             }
-        }
-
-        private void GetSolarPanelState(EntityUid uid, SolarPanelComponent component, ref ComponentGetState args)
-        {
-            args.State = new SolarPanelComponentState
-            {
-                Angle = component.StartAngle,
-                AngularVelocity = component.AngularVelocity,
-                LastUpdate = component.LastUpdate
-            };
         }
 
         public void Reset(RoundRestartCleanupEvent ev)

@@ -1,6 +1,6 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
-using Robust.Shared.Utility;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Solar.Components
 {
@@ -30,25 +30,25 @@ namespace Content.Shared.Solar.Components
         /// <summary>
         /// Current solar panel angle (updated by <see cref="PowerSolarSystem"/>)
         /// </summary>
-        [ViewVariables]
+        [DataField("angle")]
         public Angle Angle = Angle.Zero;
 
         /// <summary>
         /// Current solar panel angular velocity
         /// </summary>
-        [ViewVariables]
+        [DataField("angularVelocity")]
         public Angle AngularVelocity = Angle.Zero;
 
         /// <summary>
         /// Solar panel angle at <see cref="LastUpdate"/> time
         /// </summary>
-        [ViewVariables]
+        [DataField("startAngle")]
         public Angle StartAngle = Angle.Zero;
 
         /// <summary>
         /// Timestamp of the last update. (used for <see cref="Angle"/> calculation)
         /// </summary>
-        [ViewVariables]
+        [DataField("lastUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
         public TimeSpan LastUpdate = TimeSpan.Zero;
     }
 
