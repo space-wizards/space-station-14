@@ -35,6 +35,8 @@ test-release:
 publish:
   stage: publish
   retry: 2
+  rules:
+    - if: '$SSH_PRIVATE_KEY != null'
   script:
     - apt update && apt upgrade -y
     - apt install -y python3 libfreetype6 openssh-client rsync
