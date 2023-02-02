@@ -48,6 +48,18 @@ public enum AnomalyVesselVisualLayers : byte
 }
 
 [Serializable, NetSerializable]
+public enum AnomalyGeneratorVisuals : byte
+{
+    Generating
+}
+
+[Serializable, NetSerializable]
+public enum AnomalyGeneratorVisualLayers : byte
+{
+    Base
+}
+
+[Serializable, NetSerializable]
 public enum AnomalyScannerUiKey : byte
 {
     Key
