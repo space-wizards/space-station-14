@@ -53,6 +53,18 @@
       amount: 1
   products:
     Bicaridine: 2
+    
+- type: reaction
+  id: Barozine
+  reactants:
+    Leporazine:
+      amount: 1
+    Inaprovaline:
+      amount: 1
+    Siderlac:
+      amount: 1
+  products:
+    Barozine: 3
 
 - type: reaction
   id: Cryoxadone
