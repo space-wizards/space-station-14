@@ -54,7 +54,7 @@ public sealed class RadioSystem : EntitySystem
             return;
 
         var name = TryComp(source, out VoiceMaskComponent? mask) && mask.Enabled
-            ? Identity.Name(source, EntityManager)
+            ? mask.VoiceName
             : MetaData(source).EntityName;
 
         name = FormattedMessage.EscapeText(name);
