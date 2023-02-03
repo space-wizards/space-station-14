@@ -36,10 +36,9 @@
   - type: DrainableSolution
     solution: drink
   - type: Appearance
-    visuals:
-    - type: DrinkCanVisualizer
-      stateClosed: icon
-      stateOpen: icon_open
+  - type: DrinkCanVisualizer
+    stateClosed: icon
+    stateOpen: icon_open
   - type: Spillable
     solution: drink
   - type: ItemCooldown
