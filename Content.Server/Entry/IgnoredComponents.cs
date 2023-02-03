@@ -41,6 +41,7 @@ namespace Content.Server.Entry
             "ApcVisualizer",
             "SmesVisualizer",
             "PowerDeviceVisualizer",
+            "PowerChargerVisualizer",
         };
     }
 }
