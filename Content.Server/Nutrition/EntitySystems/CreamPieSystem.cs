@@ -39,9 +39,16 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent<FoodComponent?>(uid, out var foodComp) && _solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
+            if (EntityManager.TryGetComponent<FoodComponent?>(uid, out var foodComp))
             {
-                _spillable.SpillAt(uid, solution, "PuddleSmear", false);
+                if (_solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
+                {
+                    _spillable.SpillAt(uid, solution, "PuddleSmear", false);
+                }
+                if (!string.IsNullOrEmpty(foodComp.TrashPrototype))
+                {
+                    EntityManager.SpawnEntity(foodComp.TrashPrototype, Transform(uid).Coordinates);
+                }
             }
             ActivatePayload(uid);
 
