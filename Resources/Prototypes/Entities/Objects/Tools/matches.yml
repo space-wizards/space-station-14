@@ -85,12 +85,12 @@
     visuals:
       - type: BagOpenCloseVisualizer
         openIcon: matchbox-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - matchbox1
-          - matchbox2
-          - matchbox3
+  - type: StackVisualizer
+    composite: true
+    stackLayers:
+    - matchbox1
+    - matchbox2
+    - matchbox3
   - type: Tag
     tags:
     - Trash

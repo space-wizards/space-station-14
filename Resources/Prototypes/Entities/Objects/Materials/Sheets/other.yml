@@ -38,12 +38,11 @@
   - type: Item
     heldPrefix: paper
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - paper
-      - paper_2
-      - paper_3
+  - type: StackVisualizer
+    stackLayers:
+    - paper
+    - paper_2
+    - paper_3
 
 - type: entity
   parent: SheetPaper
@@ -72,12 +71,11 @@
   - type: Item
     heldPrefix: plasma
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasma
-      - plasma_2
-      - plasma_3
+  - type: StackVisualizer
+    stackLayers:
+    - plasma
+    - plasma_2
+    - plasma_3
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager
@@ -122,12 +120,11 @@
   - type: Item
     heldPrefix: plastic
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plastic
-      - plastic_2
-      - plastic_3
+  - type: StackVisualizer
+    stackLayers:
+    - plastic
+    - plastic_2
+    - plastic_3
 
 - type: entity
   parent: SheetPlastic
@@ -154,12 +151,11 @@
   - type: Sprite
     state: uranium_3
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - uranium
-      - uranium_2
-      - uranium_3
+  - type: StackVisualizer
+    stackLayers:
+    - uranium
+    - uranium_2
+    - uranium_3
   - type: Item
     heldPrefix: uranium
   - type: Extractable
