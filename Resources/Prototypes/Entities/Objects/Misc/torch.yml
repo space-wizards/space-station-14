@@ -34,8 +34,7 @@
       graph: LightTorch
       node: torch
     - type: Appearance
-      visuals:
-        - type: ExpendableLightVisualizer
+    - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#E25822"

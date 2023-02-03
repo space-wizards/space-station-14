@@ -29,10 +29,9 @@
       sprite: Objects/Misc/glowstick.rsi
       heldPrefix: unlit
     - type: Appearance
-      visuals:
-        - type: ExpendableLightVisualizer
-          iconStateOn: glowstick_lit
-          iconStateSpent: glowstick_unlit
+    - type: ExpendableLightVisualizer
+      iconStateOn: glowstick_lit
+      iconStateSpent: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#00FF00"
