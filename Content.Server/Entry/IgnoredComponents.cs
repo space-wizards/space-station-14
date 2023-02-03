@@ -32,6 +32,7 @@ namespace Content.Server.Entry
             "ExpendableLightVisualizer",
             "LightBulbVisualizer",
             "PoweredLightVisualizer",
+            "SignalSwitchVisualizer",
         };
     }
 }
