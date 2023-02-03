@@ -225,9 +225,8 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
-    visuals:
-      - type: CreamPiedVisualizer
-        state: creampie_human
+  - type: CreamPiedVisualizer
+    state: creampie_human
   - type: RotationVisuals
   - type: FloatingVisuals
   - type: FireVisuals
