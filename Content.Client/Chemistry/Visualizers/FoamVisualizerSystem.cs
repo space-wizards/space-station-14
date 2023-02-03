@@ -4,39 +4,45 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.Visualizers;
 
-public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualizerComponent>
+/// <summary>
+/// The system responsible for ensuring <see cref="FoamVisualsComponent"/> plays the animation it's meant to when the foam dissolves.
+/// </summary>
+public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FoamVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<FoamVisualsComponent, ComponentInit>(OnComponentInit);
     }
 
-    private void OnInit(EntityUid uid, FoamVisualizerComponent comp, ComponentInit args)
+    /// <summary>
+    /// Generates the animation used by foam visuals when the foam dissolves.
+    /// </summary>
+    private void OnComponentInit(EntityUid uid, FoamVisualsComponent comp, ComponentInit args)
     {
         var flick = new AnimationTrackSpriteFlick();
         flick.LayerKey = FoamVisualLayers.Base;
         flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f));
-        comp.Animation = new Animation {Length = TimeSpan.FromSeconds(comp.Delay)};
+        comp.Animation = new Animation {Length = TimeSpan.FromSeconds(comp.AnimationTime)};
         comp.Animation.AnimationTracks.Add(flick);
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, FoamVisualizerComponent comp, ref AppearanceChangeEvent args)
+    /// <summary>
+    /// Plays the animation used by foam visuals when the foam dissolves.
+    /// </summary>
+    protected override void OnAppearanceChange(EntityUid uid, FoamVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if(!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        if (AppearanceSystem.TryGetData<bool>(uid, FoamVisuals.State, out var state, appearance) && state)
+        if (AppearanceSystem.TryGetData<bool>(uid, FoamVisuals.State, out var state, args.Component) && state)
         {
             if (TryComp(uid, out AnimationPlayerComponent? animPlayer)
-            && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualizerComponent.AnimationKey))
-                AnimationSystem.Play(uid, animPlayer, comp.Animation, FoamVisualizerComponent.AnimationKey);
+            && !AnimationSystem.HasRunningAnimation(uid, animPlayer, FoamVisualsComponent.AnimationKey))
+                AnimationSystem.Play(uid, animPlayer, comp.Animation, FoamVisualsComponent.AnimationKey);
         }
 
-        if (AppearanceSystem.TryGetData<Color>(uid, FoamVisuals.Color, out var color, appearance))
+        if (AppearanceSystem.TryGetData<Color>(uid, FoamVisuals.Color, out var color, args.Component))
         {
-            if (TryComp(uid, out SpriteComponent? sprite))
-                sprite.Color = color;
+            if (args.Sprite != null)
+                args.Sprite.Color = color;
         }
     }
 }

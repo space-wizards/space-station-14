@@ -36,7 +36,7 @@
         map: ["enum.FoamVisualLayers.Base"]
   - type: AnimationPlayer
   - type: Appearance
-  - type: FoamVisualizer
+  - type: FoamVisuals
     animationTime: 0.6
     animationState: foam-dissolve
   - type: Transform
@@ -73,7 +73,7 @@
     - state: mfoam
       map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
-  - type: FoamVisualizer
+  - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve
   - type: FoamSolutionAreaEffect
@@ -91,7 +91,7 @@
       - state: mfoam
         map: ["enum.FoamVisualLayers.Base"]
   - type: Appearance
-  - type: FoamVisualizer
+  - type: FoamVisuals
     animationTime: 0.6
     animationState: mfoam-dissolve
   - type: FoamSolutionAreaEffect
