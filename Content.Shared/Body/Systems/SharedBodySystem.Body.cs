@@ -190,14 +190,6 @@ public partial class SharedBodySystem
         }
     }
 
-    public EntityUid GetBodyOrInvalid(EntityUid bodyPartId)
-    {
-        if (TryComp<BodyPartComponent>(bodyPartId, out var bodyPart) && bodyPart.Body.HasValue)
-            return bodyPart.Body.Value;
-        return EntityUid.Invalid;
-    }
-
-
     public virtual HashSet<EntityUid> GibBody(EntityUid? partId, bool gibOrgans = false,
         BodyComponent? body = null, bool deleteItems = false)
     {

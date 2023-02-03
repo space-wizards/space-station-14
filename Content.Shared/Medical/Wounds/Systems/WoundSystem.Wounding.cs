@@ -51,7 +51,7 @@ public sealed partial class WoundSystem
             !Resolve(woundId, ref wound, false))
             return false;
         _containers.RemoveEntity(woundableId, woundId);
-        var bodyId = _body.GetBodyOrInvalid(woundableId);
+        var bodyId = CompOrNull<BodyPartComponent>(woundableId)?.Body;
         UpdateWoundSeverity(woundableId, woundId, woundable, wound, FixedPoint2.Zero, bodyId);
         Dirty(wound);
 
@@ -63,10 +63,10 @@ public sealed partial class WoundSystem
         RaiseLocalEvent(woundableId, ref ev, true);
 
         //propagate this event to bodyEntity if we are a bodyPart
-        if (bodyId.Valid)
+        if (bodyId.HasValue)
         {
             var ev2 = new WoundRemovedEvent(woundableId, woundable, woundId, wound);
-            RaiseLocalEvent(bodyId, ev2, true);
+            RaiseLocalEvent(bodyId.Value, ev2, true);
         }
 
         //clients cannot delete entities, that causes mispredicts!
@@ -84,7 +84,7 @@ public sealed partial class WoundSystem
         if (!Resolve(woundId, ref wound, false))
             return false;
         UpdateWoundSeverity(woundableId, woundId, woundable, wound, wound.Severity + severityIncrease,
-            _body.GetBodyOrInvalid(woundableId));
+            CompOrNull<BodyPartComponent>(woundableId)?.Body);
         return true;
     }
 
@@ -97,7 +97,7 @@ public sealed partial class WoundSystem
         if (!Resolve(woundId, ref wound, false))
             return false;
         UpdateWoundSeverity(woundableId, woundId, woundable, wound, severityAmount,
-            _body.GetBodyOrInvalid(woundableId));
+            CompOrNull<BodyPartComponent>(woundableId)?.Body);
         return true;
     }
 

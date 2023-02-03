@@ -10,7 +10,6 @@ public sealed class OrganComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
-    //is this organ exposed?
     [DataField("exposed")]
     public bool Exposed = true;
 

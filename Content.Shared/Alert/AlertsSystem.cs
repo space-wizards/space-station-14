@@ -19,14 +19,14 @@ public abstract class AlertsSystem : EntitySystem
 
     public short GetSeverityFromPercentage(AlertType alertType, FixedPoint2 percentage)
     {
-        FixedPoint2.Clamp(percentage, 0, 1.0f);
-        return (short) MathF.Floor((_typeToAlert[alertType].MinSeverity+GetSeverityRange(alertType)* percentage).Float());
+        percentage = FixedPoint2.Clamp(percentage, 0, 1.0f);
+        return (short) MathF.Floor((_typeToAlert[alertType].MinSeverity + GetSeverityRange(alertType) * percentage).Float());
     }
 
     public short GetSeverityRange(AlertType alertType)
     {
         var minSeverity = _typeToAlert[alertType].MinSeverity;
-        return (short)MathF.Max(minSeverity,_typeToAlert[alertType].MaxSeverity - minSeverity);
+        return (short) MathF.Max(minSeverity, _typeToAlert[alertType].MaxSeverity - minSeverity);
     }
 
     public short GetMaxSeverity(AlertType alertType)
@@ -67,7 +67,6 @@ public abstract class AlertsSystem : EntitySystem
 
         alertState = default;
         return false;
-
     }
 
     /// <summary>
@@ -79,7 +78,8 @@ public abstract class AlertsSystem : EntitySystem
     /// <param name="severity">severity, if supported by the alert</param>
     /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
     ///     be erased if there is currently a cooldown for the alert)</param>
-    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
+    public void ShowAlert(EntityUid euid, AlertType alertType, short? severity = null,
+        (TimeSpan, TimeSpan)? cooldown = null)
     {
         if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
@@ -100,7 +100,7 @@ public abstract class AlertsSystem : EntitySystem
             alertsComponent.Alerts.Remove(alert.AlertKey);
 
             alertsComponent.Alerts[alert.AlertKey] = new AlertState
-                { Cooldown = cooldown, Severity = severity, Type = alertType };
+                {Cooldown = cooldown, Severity = severity, Type = alertType};
 
             AfterShowAlert(alertsComponent);
 
@@ -119,7 +119,7 @@ public abstract class AlertsSystem : EntitySystem
     /// </summary>
     public void ClearAlertCategory(EntityUid euid, AlertCategory category)
     {
-        if(!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
+        if (!EntityManager.TryGetComponent(euid, out AlertsComponent? alertsComponent))
             return;
 
         var key = AlertKey.ForCategory(category);

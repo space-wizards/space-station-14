@@ -10,6 +10,7 @@ namespace Content.Shared.Medical.Consciousness.Systems;
 public sealed class ConsciousnessSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+
     public override void Initialize()
     {
         SubscribeLocalEvent<ConsciousnessComponent, ComponentStartup>(OnComponentStartup);
@@ -22,12 +23,14 @@ public sealed class ConsciousnessSystem : EntitySystem
     {
         if (!IsConscious(uid, out _, component))
         {
-            if (args.Component.CurrentState == MobState.Alive && args.Component.CurrentState != MobState.Dead)
+            if (args.Component.CurrentState == MobState.Alive)
             {
                 args.State = MobState.Critical;
             }
+
             return;
         }
+
         args.State = MobState.Alive;
     }
 
@@ -82,7 +85,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         if (!Resolve(entity, ref consciousness))
             return;
 
-        var ev = new UpdateConsciousnessValuesEvent{Component = consciousness};
+        var ev = new UpdateConsciousnessEvent {Component = consciousness};
         RaiseLocalEvent(entity, ref ev);
         consciousness.Base = ev.Base;
         consciousness.Modifier = ev.Modifier;
@@ -91,10 +94,11 @@ public sealed class ConsciousnessSystem : EntitySystem
         consciousness.Cap = ev.Cap;
         CheckConsciousness(entity, consciousness);
     }
+
     private void CheckConsciousness(EntityUid entity, ConsciousnessComponent consciousness)
     {
         var isConscious = IsConscious(entity, out var consciousnessValue, consciousness);
-        var ev = new ConsciousnessUpdateEvent(
+        var ev = new ConsciousnessUpdatedEvent(
             isConscious,
             consciousnessValue);
         RaiseLocalEvent(entity, ev, true);
