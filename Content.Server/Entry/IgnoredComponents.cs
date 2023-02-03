@@ -31,6 +31,7 @@ namespace Content.Server.Entry
             "EmergencyLightVisualizer",
             "ExpendableLightVisualizer",
             "LightBulbVisualizer",
+            "PoweredLightVisualizer",
         };
     }
 }

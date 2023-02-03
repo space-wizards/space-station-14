@@ -90,10 +90,9 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
-      blinkingSound:
-        path: "/Audio/Machines/light_tube_on.ogg"
+  - type: PoweredLightVisualizer
+    blinkingSound:
+      path: "/Audio/Machines/light_tube_on.ogg"
   - type: SignalReceiver
     inputs:
       On: []
@@ -263,8 +262,7 @@
     receiveFrequencyId: SmartLight
   - type: ApcNetworkConnection
   - type: Appearance
-    visuals:
-    - type: PoweredLightVisualizer
+  - type: PoweredLightVisualizer
   - type: SignalReceiver
     inputs:
       On: []
