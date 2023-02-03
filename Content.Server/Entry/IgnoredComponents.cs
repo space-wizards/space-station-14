@@ -39,6 +39,7 @@ namespace Content.Server.Entry
             "PDAVisualizer",
             "ParticleAccleratorPartVisualizer",
             "ApcVisualizer",
+            "SmesVisualizer",
         };
     }
 }
