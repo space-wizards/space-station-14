@@ -1,4 +1,6 @@
+using Content.Shared.Medical.Wounds.Prototypes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Damage.Prototypes
 {
@@ -22,5 +24,12 @@ namespace Content.Shared.Damage.Prototypes
         /// </summary>
         [DataField("armorFlatPrice")]
         public double ArmorPriceFlat { get; set; }
+
+        /// <summary>
+        /// The trauma to apply for wounds when this damage is applied
+        /// </summary>
+        /// <returns></returns>
+        [DataField("trauma", customTypeSerializer: typeof(PrototypeIdSerializer<TraumaPrototype>))]
+        public string? Trauma;
     }
 }

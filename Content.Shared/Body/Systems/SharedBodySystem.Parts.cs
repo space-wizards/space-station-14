@@ -21,6 +21,9 @@ public partial class SharedBodySystem
         SubscribeLocalEvent<BodyPartComponent, ComponentRemove>(OnPartRemoved);
         SubscribeLocalEvent<BodyPartComponent, ComponentGetState>(OnPartGetState);
         SubscribeLocalEvent<BodyPartComponent, ComponentHandleState>(OnPartHandleState);
+        //SKIIIIIIIINNNNN
+        SubscribeLocalEvent<BodySkinComponent, ComponentGetState>(OnCoveringGetState);
+        SubscribeLocalEvent<BodySkinComponent, ComponentHandleState>(OnCoveringHandleState);
     }
 
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
@@ -35,7 +38,6 @@ public partial class SharedBodySystem
             part.Symmetry
         );
     }
-
     private void OnPartHandleState(EntityUid uid, BodyPartComponent part, ref ComponentHandleState args)
     {
         if (args.Current is not BodyPartComponentState state)
@@ -62,6 +64,19 @@ public partial class SharedBodySystem
         {
             DropPart(childSlot.Child);
         }
+    }
+
+    private void OnCoveringGetState(EntityUid uid, BodySkinComponent part, ref ComponentGetState args)
+    {
+        args.State = new BodySkinComponentState(part);
+    }
+
+    private void OnCoveringHandleState(EntityUid uid, BodySkinComponent part, ref ComponentHandleState args)
+    {
+        if (args.Current is not BodySkinComponentState state)
+            return;
+        part.SkinLayers.Clear();
+        part.SkinLayers.AddRange(state.SkinLayers);
     }
 
     private BodyPartSlot? CreatePartSlot(
@@ -109,6 +124,20 @@ public partial class SharedBodySystem
         BodyPartComponent? child = null)
     {
         return TryCreatePartSlot(parentId, id, out var slot, parent) && AttachPart(childId, slot, child);
+    }
+
+    public EntityUid? GetPartParent(EntityUid? id, BodyPartComponent? part = null)
+    {
+        if (id == null || !Resolve(id.Value, ref part, false))
+            return null;
+
+        var parent = part.ParentSlot?.Parent;
+        return parent == part.Body ? null : parent;
+    }
+
+    public bool TryGetPartParentPart(EntityUid? id, out EntityUid parent, BodyPartComponent? part = null)
+    {
+        return (parent = GetPartParent(id, part).GetValueOrDefault()) != default;
     }
 
     public IEnumerable<(EntityUid Id, BodyPartComponent Component)> GetPartChildren(EntityUid? id, BodyPartComponent? part = null)
@@ -399,7 +428,7 @@ public partial class SharedBodySystem
         if (!Resolve(partId, ref part, false))
             yield break;
 
-        if (part.ParentSlot != null)
+        if (part.ParentSlot != null && HasComp<BodyPartComponent>(partId))
             yield return part.ParentSlot.Parent;
 
         foreach (var slot in part.Children.Values)

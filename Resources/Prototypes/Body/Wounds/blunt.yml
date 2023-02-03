@@ -1,0 +1,7 @@
+﻿- type: entity # TODO wounds before merge
+  id: Bruise
+  name: Bruise
+  description: Bruise # TODO
+  components:
+  - type: Wound
+    healthDamage: 1

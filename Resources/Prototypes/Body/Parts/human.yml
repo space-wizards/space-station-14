@@ -15,6 +15,11 @@
         ents: []
   - type: StaticPrice
     price: 100
+  - type: Woundable # TODO wounds before merge
+    allowedTraumaTypes:
+    - Slash
+    health: 100
+    integrity: 100
 
 - type: entity
   id: TorsoHuman

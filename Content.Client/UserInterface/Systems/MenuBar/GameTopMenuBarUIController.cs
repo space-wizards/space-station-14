@@ -1,4 +1,3 @@
-using Content.Client.Gameplay;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Admin;
 using Content.Client.UserInterface.Systems.Bwoink;
@@ -6,6 +5,7 @@ using Content.Client.UserInterface.Systems.Character;
 using Content.Client.UserInterface.Systems.Crafting;
 using Content.Client.UserInterface.Systems.EscapeMenu;
 using Content.Client.UserInterface.Systems.Inventory;
+using Content.Client.UserInterface.Systems.Medical;
 using Content.Client.UserInterface.Systems.MenuBar.Widgets;
 using Content.Client.UserInterface.Systems.Sandbox;
 using Robust.Client.UserInterface.Controllers;
@@ -22,6 +22,7 @@ public sealed class GameTopMenuBarUIController : UIController
     [Dependency] private readonly AHelpUIController _ahelp = default!;
     [Dependency] private readonly ActionUIController _action = default!;
     [Dependency] private readonly SandboxUIController _sandbox = default!;
+    [Dependency] private readonly MedicalUIController _medical = default!;
 
     private GameTopMenuBar? GameTopMenuBar => UIManager.GetActiveUIWidgetOrNull<GameTopMenuBar>();
 
@@ -32,6 +33,7 @@ public sealed class GameTopMenuBarUIController : UIController
         _admin.UnloadButton();
         _character.UnloadButton();
         _crafting.UnloadButton();
+        _medical.UnloadButton();
         _ahelp.UnloadButton();
         _action.UnloadButton();
         _sandbox.UnloadButton();
@@ -44,6 +46,7 @@ public sealed class GameTopMenuBarUIController : UIController
         _admin.LoadButton();
         _character.LoadButton();
         _crafting.LoadButton();
+        _medical.LoadButton();
         _ahelp.LoadButton();
         _action.LoadButton();
         _sandbox.LoadButton();

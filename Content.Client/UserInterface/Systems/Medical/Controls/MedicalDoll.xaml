@@ -1,0 +1,12 @@
+﻿<controls:MedicalDoll
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
+    Orientation="Vertical"
+    >
+    <BoxContainer
+        Orientation="Horizontal"
+        >
+        <SpriteView Name = "FrontDummy" Access="Internal" MinHeight="100" MinWidth="100"/>
+        <SpriteView Name = "BackDummy" Access="Internal" MinHeight="100" MinWidth="100"/>
+    </BoxContainer>
+</controls:MedicalDoll>

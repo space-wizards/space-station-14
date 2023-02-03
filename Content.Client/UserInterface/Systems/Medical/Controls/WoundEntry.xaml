@@ -1,0 +1,12 @@
+﻿<controls:WoundEntry
+    xmlns="https://spacestation14.io"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Medical.Controls"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Center"
+    Orientation="Horizontal"
+    MinSize="150 0">
+    <Label Name="WoundName" ClipText="True" Access="Public"/>
+    <Label Name="WoundNameSpacer" Text=" | " />
+    <Label Name="WoundSeverityLabel" Text="Severity: " ClipText="True"/>
+    <Label Name="WoundSeverity" ClipText="True" Access="Public"/>
+</controls:WoundEntry>

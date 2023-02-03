@@ -10,6 +10,9 @@ public sealed class OrganComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
+    [DataField("exposed")]
+    public bool Exposed = true;
+
     [DataField("parent")]
     public OrganSlot? ParentSlot;
 }

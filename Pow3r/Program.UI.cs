@@ -237,7 +237,7 @@ namespace Pow3r
                 Begin($"Battery {battery.Id}##Bat{battery.Id}");
 
                 Checkbox("Enabled", ref battery.Enabled);
-                SliderFloat("Capacity", ref battery.Capacity, 0, 100000, "%.0f J");
+                SliderFloat("TotalCapacity", ref battery.Capacity, 0, 100000, "%.0f J");
                 SliderFloat("Max charge rate", ref battery.MaxChargeRate, 0, 1000, "%.0f W");
                 SliderFloat("Max supply", ref battery.MaxSupply, 0, 1000, "%.0f W");
                 SliderFloat("Ramp", ref battery.SupplyRampRate, 0, 100, "%.0f W/s");
