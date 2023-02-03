@@ -55,8 +55,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
-    visuals:
-    - type: LightBulbVisualizer
+  - type: LightBulbVisualizer
   - type: Tag
     tags:
     - Trash

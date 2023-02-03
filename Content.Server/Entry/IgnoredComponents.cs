@@ -30,6 +30,7 @@ namespace Content.Server.Entry
             "ReagentGrinderVisualizer",
             "EmergencyLightVisualizer",
             "ExpendableLightVisualizer",
+            "LightBulbVisualizer",
         };
     }
 }
