@@ -37,6 +37,7 @@ namespace Content.Server.Entry
             "CreamPiedVisualizer",
             "DrinkCanVisualizer",
             "PDAVisualizer",
+            "ParticleAccleratorPartVisualizer",
         };
     }
 }

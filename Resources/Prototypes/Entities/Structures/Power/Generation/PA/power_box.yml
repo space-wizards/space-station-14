@@ -14,9 +14,8 @@
           shader: unshaded
           visible: false
     - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
+    - type: ParticleAcceleratorPartVisualizer
+      baseState: unlit
     - type: ParticleAcceleratorPowerBox
     - type: PowerConsumer
       voltage: High
