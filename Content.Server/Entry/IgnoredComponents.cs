@@ -40,6 +40,7 @@ namespace Content.Server.Entry
             "ParticleAccleratorPartVisualizer",
             "ApcVisualizer",
             "SmesVisualizer",
+            "PowerDeviceVisualizer",
         };
     }
 }
