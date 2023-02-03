@@ -51,10 +51,10 @@
     - type: Foldable
     - type: Appearance
       visuals:
-      - type: FoldableVisualizer
-        key: rollerbed
       - type: RollerbedVisualizer
         key: rollerbed
+    - type: FoldableVisualizer
+      key: rollerbed
     - type: StaticPrice
       price: 200
 
@@ -78,10 +78,10 @@
       map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
     visuals:
-    - type: FoldableVisualizer
-      key: cheap_rollerbed
     - type: RollerbedVisualizer
       key: cheap_rollerbed
+  - type: FoldableVisualizer
+    key: cheap_rollerbed
 
 - type: entity
   parent: CheapRollerBed
@@ -103,10 +103,10 @@
       map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
     visuals:
-    - type: FoldableVisualizer
-      key: emergency_rollerbed
     - type: RollerbedVisualizer
       key: emergency_rollerbed
+  - type: FoldableVisualizer
+    key: emergency_rollerbed
 
 - type: entity
   parent: EmergencyRollerBed
