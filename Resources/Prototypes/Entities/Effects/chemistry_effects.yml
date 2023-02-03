@@ -8,8 +8,7 @@
     sprite: Effects/chemsmoke.rsi
     state: chemsmoke
   - type: Appearance
-    visuals:
-      - type: SmokeVisualizer
+  - type: SmokeVisuals
   - type: Occluder
   - type: Transform
     anchored: true
