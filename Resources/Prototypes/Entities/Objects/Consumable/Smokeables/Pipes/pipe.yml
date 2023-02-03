@@ -16,9 +16,8 @@
     size: 3
     sprite: Objects/Consumable/Smokeables/Pipes/pipe.rsi
   - type: Appearance
-    visuals:
-      - type: BurnStateVisualizer
-        unlitIcon: unlit-icon
+  - type: BurnStateVisualizer
+    unlitIcon: unlit-icon
 
 - type: entity
   id: SmokingPipeFilledTobacco
