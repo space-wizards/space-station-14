@@ -22,6 +22,7 @@ namespace Content.Server.Entry
             "PDABorderColor",
             "FoamVisualizer",
             "SmokeVisualizer",
+            "VaporVisualizer",
         };
     }
 }
