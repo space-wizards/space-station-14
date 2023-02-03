@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
@@ -15,6 +16,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
+using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Server.Salvage;
 
@@ -188,10 +191,67 @@ public sealed partial class SalvageSystem
         var landingPadRadius = 16;
         var radiusThickness = 2;
 
-        // TODO: Need to workout bottomleft room, then reserve a path from center of landing pad to there
-
-        // Per-mission settings
         var dungeon = _dungeon.GetDungeon(config.Dungeon);
+
+        // Aborty
+        if (dungeon.Rooms.Count == 0)
+        {
+            return;
+        }
+
+        // To ensure they can get from the landing area to the dungeon we'll mark out reserved tiles
+        // and ensure no blockers spawn on them.
+        // We'll pick the bottom-left room as our target.
+        var closestDistance = float.MaxValue;
+        DungeonRoom? closestRoom = null;
+
+        foreach (var room in dungeon.Rooms)
+        {
+            var length = room.Center.Length;
+
+            if (length > closestDistance)
+                continue;
+
+            closestDistance = length;
+            closestRoom = room;
+        }
+
+        if (closestRoom == null)
+        {
+            return;
+        }
+
+        var reservedTiles = new HashSet<Vector2i>();
+
+        var start = Vector2i.Zero;
+        var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count));
+        var frontier = new PriorityQueue<Vector2i> { start };
+        var cameFrom = new Dictionary<Vector2i, Vector2i>();
+        // TODO: Helper for pathfind or some shit idk lol
+        var node = start;
+
+        while (frontier.Count > 0)
+        {
+            node = frontier.Take();
+
+            if (node == end)
+            {
+                frontier.Clear();
+                break;
+            }
+
+            // TODO: Neighbors etc etc
+        }
+
+        if (node == end)
+        {
+
+        }
+
+        // TODO: Path from 0,0 to bottomleft room
+        // Spawn dungeon with reserved tiles
+        // TODO: Spawn boundaries
+
         _dungeon.SpawnDungeon(new Vector2i(landingPadRadius + radiusThickness + 1, 0), dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
 
         // Setup the landing pad
@@ -200,21 +260,28 @@ public sealed partial class SalvageSystem
         var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
 
         // Set the tiles themselves
-        var landingPadTile = _tileDefManager["FloorSteel"];
+        var seed = new FastNoise(mission.Seed);
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(new Vector2(0f + grid.TileSize / 2f, 0f + grid.TileSize), landingPadRadius + radiusThickness / 2f - 0.5f), false))
+        foreach (var tile in grid.GetTilesIntersecting(new Box2(-landingPadRadius - radiusThickness, -landingPadRadius - radiusThickness, landingPadRadius + radiusThickness, landingPadRadius + radiusThickness), false))
         {
-            tiles.Add((tile.GridIndices, new Tile(landingPadTile.TileId, variant: (byte) _random.Next(landingPadTile.Variants))));
+            if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out var tileRef))
+                continue;
+
+            // TODO: Force load API or smth
+            tiles.Add((tile.GridIndices, tileRef.Value));
         }
 
         grid.SetTiles(tiles);
 
         // Set the outline as enclosed for the landing pad.
 
-        for (var i = 0; i < radiusThickness; i++)
+        for (var i = 0f; i < radiusThickness; i += 0.5f)
         {
-            foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + 0.5f + i / 2f), false))
+            foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + i), false))
             {
+                if (reservedTiles.Contains(tile.GridIndices))
+                    continue;
+
                 var anchored = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
 
                 // Don't overlap for whatever reason.

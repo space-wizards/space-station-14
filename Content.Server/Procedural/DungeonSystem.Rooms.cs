@@ -32,6 +32,7 @@ public sealed partial class DungeonSystem
 
             var roomBounds = roomsList[i];
             var center = roomBounds.Center;
+            room.Center = center;
             var roomCenter = new Vector2i((int) Math.Round(center.X), (int) Math.Round(center.Y));
             var currentPosition = roomCenter;
 
@@ -67,6 +68,7 @@ public sealed partial class DungeonSystem
         {
             var room = new DungeonRoom();
             rooms.Add(room);
+            room.Center = roomSpace.Center;
 
             for (var col = gen.Offset; col < roomSpace.Width - gen.Offset; col++)
             {

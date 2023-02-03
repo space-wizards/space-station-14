@@ -84,9 +84,9 @@ public abstract class SharedBiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
-    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, FastNoise noise, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
-        if (grid.TryGetTileRef(indices, out var tileRef))
+        if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
             tile = tileRef.Tile;
             return true;
@@ -99,7 +99,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         }
 
         return TryGetBiomeTile(indices, ProtoManager.Index<BiomePrototype>(biome.BiomePrototype),
-            new FastNoise(biome.Seed), grid, out tile);
+            noise, grid, out tile);
     }
 
     /// <summary>

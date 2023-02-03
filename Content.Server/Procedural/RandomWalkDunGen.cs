@@ -30,5 +30,6 @@ public sealed record Dungeon
 
 public sealed record DungeonRoom
 {
+    public Vector2 Center;
     public HashSet<Vector2i> Tiles = new();
 }
