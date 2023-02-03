@@ -53,8 +53,8 @@
       visuals:
       - type: FoldableVisualizer
         key: rollerbed
-      - type: RollerbedVisualizer
-        key: rollerbed
+    - type: RollerbedVisualizer
+      key: rollerbed
     - type: StaticPrice
       price: 200
 
@@ -80,8 +80,8 @@
     visuals:
     - type: FoldableVisualizer
       key: cheap_rollerbed
-    - type: RollerbedVisualizer
-      key: cheap_rollerbed
+  - type: RollerbedVisualizer
+    key: cheap_rollerbed
 
 - type: entity
   parent: CheapRollerBed
@@ -105,8 +105,8 @@
     visuals:
     - type: FoldableVisualizer
       key: emergency_rollerbed
-    - type: RollerbedVisualizer
-      key: emergency_rollerbed
+  - type: RollerbedVisualizer
+    key: emergency_rollerbed
 
 - type: entity
   parent: EmergencyRollerBed
