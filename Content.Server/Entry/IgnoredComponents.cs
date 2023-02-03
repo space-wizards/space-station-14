@@ -29,6 +29,7 @@ namespace Content.Server.Entry
             "GravityGeneratorVisualizer",
             "ReagentGrinderVisualizer",
             "EmergencyLightVisualizer",
+            "ExpendableLightVisualizer",
         };
     }
 }

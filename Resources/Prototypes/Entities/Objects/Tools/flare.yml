@@ -39,8 +39,7 @@
     sprite: Objects/Misc/flare.rsi
     heldPrefix: unlit
   - type: Appearance
-    visuals:
-      - type: ExpendableLightVisualizer
+  - type: ExpendableLightVisualizer
   - type: PointLight
     enabled: false
     color: "#FF8080"
