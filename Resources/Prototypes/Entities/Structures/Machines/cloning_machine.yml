@@ -63,15 +63,14 @@
   - type: ApcPowerReceiver
     powerLoad: 200 #Receives most of its power from the console
   - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.CloningPodVisuals.Status
-        layer: 0
-        states:
-          enum.CloningPodStatus.Cloning: pod_1
-          enum.CloningPodStatus.NoMind: pod_e
-          enum.CloningPodStatus.Gore: pod_g
-          enum.CloningPodStatus.Idle: pod_0
+  - type: GenericEnumVisualizer
+    key: enum.CloningPodVisuals.Status
+    layer: 0
+    states:
+      enum.CloningPodStatus.Cloning: pod_1
+      enum.CloningPodStatus.NoMind: pod_e
+      enum.CloningPodStatus.Gore: pod_g
+      enum.CloningPodStatus.Idle: pod_0
   - type: Climbable
   - type: StaticPrice
     price: 1000

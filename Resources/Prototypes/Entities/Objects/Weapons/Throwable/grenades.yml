@@ -186,11 +186,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Appearance
-    visuals:
-    - type: GenericEnumVisualizer
-      key: enum.Trigger.TriggerVisuals.VisualState
-      states:
-        enum.Trigger.TriggerVisualState.Primed: primed
-        enum.Trigger.TriggerVisualState.Unprimed: complete
+  - type: GenericEnumVisualizer
+    key: enum.Trigger.TriggerVisuals.VisualState
+    states:
+      enum.Trigger.TriggerVisualState.Primed: primed
+      enum.Trigger.TriggerVisualState.Unprimed: complete
   - type: StaticPrice
     price: 25
