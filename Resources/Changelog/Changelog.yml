@@ -1,10 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: Cluster's security layout has changed. New south-eastern maintenance
-      halls have been added as well., type: Tweak}
-  id: 2483
-  time: '2022-10-17T22:23:41.0000000+00:00'
 - author: vulppine
   changes:
   - {message: 'The lobby''s character setup screen now sits in the lobby, instead
@@ -2927,3 +2921,9 @@ Entries:
   - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
   id: 2982
   time: '2023-02-02T17:31:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed not being able to select a research server on certain machines.,
+    type: Fix}
+  id: 2983
+  time: '2023-02-03T03:46:51.0000000+00:00'
