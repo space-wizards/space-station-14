@@ -9,8 +9,6 @@ namespace Content.Client.AirlockPainter.UI
         private AirlockPainterWindow? _window;
         private AirlockPainterSystem? _painter;
 
-        public List<string> Styles = new();
-
         [Dependency] private readonly IEntitySystemManager _entitySystems = default!;
 
         public AirlockPainterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
