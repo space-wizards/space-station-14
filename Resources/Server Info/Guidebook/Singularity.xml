@@ -35,39 +35,15 @@ They connect to HV cables and generate power from nearby radiation sources when 
 ### Particle accelerator
 
 
-<Grid>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="Auto"/>
-		<ColumnDefinition Width="Auto"/>
-    </Grid.ColumnDefinitions>
-	<Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-		<RowDefinition Height="Auto" />
-		<RowDefinition Height="Auto" />
-		<RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-    	<Box Grid.Column="1" Grid.Row="0">
-		<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
-		</Box>
-		<Box Grid.Column="0" Grid.Row="1">
-		<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
-		</Box>
-		<Box Grid.Column="1" Grid.Row="1">
-		<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
-		</Box>
-		<Box Grid.Column="1" Grid.Row="2">
-		<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
-		</Box>
-		<Box Grid.Column="0" Grid.Row="3">
-		<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
-		</Box>
-		<Box Grid.Column="1" Grid.Row="3">
-		<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
-		</Box>
-		<Box Grid.Column="2" Grid.Row="3">
-		<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
-</Grid>
+<Box>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
+</Box>
 
 
 
