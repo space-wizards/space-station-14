@@ -44,8 +44,6 @@ public sealed class CluwneComponent : Component
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Cluwne";
 
-    public EmoteSoundsPrototype? EmoteSounds;
-
     /// <summary>
     ///Giggle emote timespan.
     /// </summary>

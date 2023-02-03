@@ -4,7 +4,9 @@ using Content.Shared.Popups;
 using Content.Server.Interaction.Components;
 using Content.Shared.Mobs;
 using Content.Server.Chat.Systems;
+using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Emoting;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Stunnable;
 using Content.Shared.Damage.Prototypes;
@@ -30,6 +32,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EmoteSystem _emote = default!;
 
     public override void Initialize()
     {
@@ -59,6 +62,7 @@ public sealed class CluwneSystem : EntitySystem
 
     }
 
+    public EmoteSoundsPrototype? EmoteSounds;
     /// <summary>
     /// Cluwne will cluwne laugh when emoting.
     /// </summary>
@@ -66,7 +70,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (component.EmoteSoundsId == null)
             return;
-        _prototypeManager.TryIndex(component.EmoteSoundsId, out component.EmoteSounds);
+        _prototypeManager.TryIndex(component.EmoteSoundsId, out EmoteSounds);
 
         var meta = MetaData(uid);
         var name = meta.EntityName;
@@ -89,7 +93,7 @@ public sealed class CluwneSystem : EntitySystem
     {
         if (args.Handled)
             return;
-        args.Handled = _chat.TryPlayEmoteSound(uid, component.EmoteSounds, args.Emote);
+        args.Handled = _chat.TryPlayEmoteSound(uid, EmoteSounds, args.Emote);
     }
 
     /// <summary>
