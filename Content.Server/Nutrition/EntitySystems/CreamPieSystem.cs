@@ -60,7 +60,8 @@ namespace Content.Server.Nutrition.EntitySystems
             ActivatePayload(uid);
         }
 
-        private void ActivatePayload(EntityUid uid) {
+        private void ActivatePayload(EntityUid uid)
+        {
             if (_itemSlots.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot)) 
             {
                 if (_itemSlots.TryEject(uid, itemSlot, user: null, out var item)) 
