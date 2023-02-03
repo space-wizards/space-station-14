@@ -34,15 +34,15 @@ They connect to HV cables and generate power from nearby radiation sources when 
 
 ### Particle accelerator
 
-<Grid Columns="3">
-  <GuideEntityEmbed Entity="ParticleAcceleratorEndCap" Grid.Column="1" Grid.Row="0"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Grid.Column="0" Grid.Row="1"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox" Grid.Column="1" Grid.Row="1"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber" Grid.Column="1" Grid.Row="2"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft" Grid.Column="0" Grid.Row="3"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter" Grid.Column="1" Grid.Row="3"/>
-  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight" Grid.Column="2" Grid.Row="3"/>
-</Grid>
+<GridContainer Columns="3">
+  <GuideEntityEmbed Entity="ParticleAcceleratorEndCap"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
+  <GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
+</GridContainer>
 
 
 
