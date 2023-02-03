@@ -35,10 +35,10 @@ public sealed class CluwneComponent : Component
     /// <summary>
     /// Cluwne Emotes
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("scream", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string GiggleEmoteId = "Scream";
 
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("twitch", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string TwitchEmoteId = "Twitch";
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
