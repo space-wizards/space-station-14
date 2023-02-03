@@ -8,8 +8,7 @@
   - type: Sprite
     netsync: false
   - type: Appearance
-    visuals:
-      - type: BurnStateVisualizer
+  - type: BurnStateVisualizer
   - type: Tag
     tags:
     - Trash
