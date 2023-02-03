@@ -30,8 +30,7 @@
     sprite: Structures/Power/apc.rsi
     state: apc0
   - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+  - type: ApcVisualizer
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
