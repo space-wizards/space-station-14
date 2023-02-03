@@ -35,8 +35,6 @@
       tags: [Donut]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -46,6 +44,8 @@
       - pink-box4
       - box5
       - pink-box6
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
 
 # Egg
 
@@ -76,8 +76,6 @@
       tags: [Egg]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -93,6 +91,8 @@
       - box10
       - box11
       - box12
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   # Someday...
   # - type: DamageOnLand
   # - type: DamageOtherOnHit
@@ -235,8 +235,6 @@
       tags: [Nugget]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -246,6 +244,8 @@
       - box4
       - box5
       - box6
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
 
 # Donkpocket
 
@@ -386,9 +386,8 @@
     sprite: Objects/Storage/happyhonk/clown.rsi
     heldPrefix: box
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   - type: Storage
     capacity: 30
   - type: Tag

@@ -23,8 +23,6 @@
       tags: [Cigarette]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
     - type: StackVisualizer
       sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
       composite: true
@@ -35,6 +33,8 @@
       - cig4
       - cig5
       - cig6
+  - type: BagOpenCloseVisualizer
+    openIcon: open
 
 - type: entity
   id: CigPackGreen

@@ -83,14 +83,14 @@
       tags: [Matchstick]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: matchbox-open
       - type: StackVisualizer
         composite: true
         stackLayers:
           - matchbox1
           - matchbox2
           - matchbox3
+  - type: BagOpenCloseVisualizer
+    openIcon: matchbox-open
   - type: Tag
     tags:
     - Trash

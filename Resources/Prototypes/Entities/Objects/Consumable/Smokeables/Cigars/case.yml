@@ -23,8 +23,6 @@
       tags: [Cigar]
   - type: Appearance
     visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
     - type: StackVisualizer
       composite: true
       stackLayers:
@@ -36,6 +34,8 @@
       - cigar6
       - cigar7
       - cigar8
+  - type: BagOpenCloseVisualizer
+    openIcon: open
 
 - type: entity
   id: CigarGoldCase
