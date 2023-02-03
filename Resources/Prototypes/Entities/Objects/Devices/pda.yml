@@ -6,9 +6,8 @@
   description: Personal Data Assistant.
   components:
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda
+  - type: PDAVisualizer
+    state: pda
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
     netsync: false
@@ -118,9 +117,8 @@
   - type: PDA
     id: TechnicalAssistantIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-interntech
+  - type: PDAVisualizer
+    state: pda-interntech
   - type: Icon
     state: pda-interntech
 
@@ -133,9 +131,8 @@
   - type: PDA
     id: MedicalInternIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-internmed
+  - type: PDAVisualizer
+    state: pda-internmed
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
@@ -152,9 +149,8 @@
   - type: PDA
     id: SecurityCadetIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-interncadet
+  - type: PDAVisualizer
+    state: pda-interncadet
   - type: Icon
     state: pda-interncadet
 
@@ -167,9 +163,8 @@
   - type: PDA
     id: ResearchAssistantIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-internsci
+  - type: PDAVisualizer
+    state: pda-internsci
   - type: Icon
     state: pda-internsci
 
@@ -182,9 +177,8 @@
   - type: PDA
     id: ServiceWorkerIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-internservice
+  - type: PDAVisualizer
+    state: pda-internservice
   - type: Icon
     state: pda-internservice
 
@@ -197,9 +191,8 @@
   - type: PDA
     id: ChefIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-cook
+  - type: PDAVisualizer
+    state: pda-cook
   - type: PDABorderColor
     borderColor: "#d7d7d0"
   - type: Icon
@@ -214,9 +207,8 @@
   - type: PDA
     id: BotanistIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hydro
+  - type: PDAVisualizer
+    state: pda-hydro
   - type: Icon
     state: pda-hydro
 
@@ -237,9 +229,8 @@
         tags:
         - Write
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-clown
+  - type: PDAVisualizer
+    state: pda-clown
   - type: PDABorderColor
     borderColor: "#C18199"
   - type: Icon
@@ -282,9 +273,8 @@
         components:
         - IdCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-mime
+  - type: PDAVisualizer
+    state: pda-mime
   - type: Icon
     state: pda-mime
 
@@ -297,9 +287,8 @@
   - type: PDA
     id: ChaplainIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-chaplain
+  - type: PDAVisualizer
+    state: pda-chaplain
   - type: PDABorderColor
     borderColor: "#333333"
   - type: Icon
@@ -314,9 +303,8 @@
   - type: PDA
     id: QuartermasterIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-qm
+  - type: PDAVisualizer
+    state: pda-qm
   - type: Icon
     state: pda-qm
 
@@ -329,9 +317,8 @@
   - type: PDA
     id: CargoIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-cargo
+  - type: PDAVisualizer
+    state: pda-cargo
   - type: Icon
     state: pda-cargo
 
@@ -344,9 +331,8 @@
   - type: PDA
     id: SalvageIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-miner
+  - type: PDAVisualizer
+    state: pda-miner
   - type: Icon
     state: pda-miner
 
@@ -359,9 +345,8 @@
   - type: PDA
     id: BartenderIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-bartender
+  - type: PDAVisualizer
+    state: pda-bartender
   - type: Icon
     state: pda-bartender
 
@@ -374,9 +359,8 @@
   - type: PDA
     id: LibrarianIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-library
+  - type: PDAVisualizer
+    state: pda-library
   - type: Icon
     state: pda-library
 
@@ -389,9 +373,8 @@
   - type: PDA
     id: LawyerIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-lawyer
+  - type: PDAVisualizer
+    state: pda-lawyer
   - type: Icon
     state: pda-lawyer
 
@@ -404,9 +387,8 @@
   - type: PDA
     id: JanitorIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-janitor
+  - type: PDAVisualizer
+    state: pda-janitor
   - type: PDABorderColor
     borderColor: "#5D2D56"
   - type: Icon
@@ -427,9 +409,8 @@
         tags:
         - Write
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-captain
+  - type: PDAVisualizer
+    state: pda-captain
   - type: PDABorderColor
     borderColor: "#7C5D00"
   - type: Icon
@@ -450,9 +431,8 @@
         tags:
         - Write
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hop
+  - type: PDAVisualizer
+    state: pda-hop
   - type: Icon
     state: pda-hop
 
@@ -468,9 +448,8 @@
     borderColor: "#949137"
     accentHColor: "#447987"
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-ce
+  - type: PDAVisualizer
+    state: pda-ce
   - type: Icon
     state: pda-ce
 
@@ -483,9 +462,8 @@
   - type: PDA
     id: EngineeringIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-engineer
+  - type: PDAVisualizer
+    state: pda-engineer
   - type: Icon
     state: pda-engineer
 
@@ -498,9 +476,8 @@
   - type: PDA
     id: CMOIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-cmo
+  - type: PDAVisualizer
+    state: pda-cmo
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -521,9 +498,8 @@
   - type: PDA
     id: MedicalIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-medical
+  - type: PDAVisualizer
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -543,9 +519,8 @@
   - type: PDA
     id: ChemistIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-chemistry
+  - type: PDAVisualizer
+    state: pda-chemistry
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#B34200"
@@ -561,9 +536,8 @@
   - type: PDA
     id: RDIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-rd
+  - type: PDAVisualizer
+    state: pda-rd
   - type: Icon
     state: pda-rd
 
@@ -576,9 +550,8 @@
   - type: PDA
     id: ResearchIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-science
+  - type: PDAVisualizer
+    state: pda-science
   - type: Icon
     state: pda-science
 
@@ -591,9 +564,8 @@
   - type: PDA
     id: HoSIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-hos
+  - type: PDAVisualizer
+    state: pda-hos
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -609,9 +581,8 @@
   - type: PDA
     id: WardenIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-warden
+  - type: PDAVisualizer
+    state: pda-warden
   - type: Icon
     state: pda-warden
 
@@ -624,9 +595,8 @@
   - type: PDA
     id: SecurityIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-security
+  - type: PDAVisualizer
+    state: pda-security
   - type: Icon
     state: pda-security
 
@@ -648,9 +618,8 @@
   - type: PDA
     id: MusicianIDCard
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-musician
+  - type: PDAVisualizer
+    state: pda-musician
   - type: Instrument
     allowPercussion: false
     handheld: true
@@ -666,9 +635,8 @@
   - type: PDA
     id: AtmosIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-atmos
+  - type: PDAVisualizer
+    state: pda-atmos
   - type: Icon
     state: pda-atmos
 
@@ -681,9 +649,8 @@
   - type: PDA
     id: PassengerIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-clear
+  - type: PDAVisualizer
+    state: pda-clear
   - type: Icon
     state: pda-clear
 
@@ -696,9 +663,8 @@
   - type: PDA
     id: SyndicateIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-syndi
+  - type: PDAVisualizer
+    state: pda-syndi
   - type: Icon
     state: pda-syndi
 
@@ -714,9 +680,8 @@
     borderColor: "#A32D26"
     accentHColor: "#447987"
   - type: Appearance
-    visuals:
-    - type: PDAVisualizer
-      state: pda-ert
+  - type: PDAVisualizer
+    state: pda-ert
   - type: Icon
     state: pda-ert
 
@@ -741,9 +706,8 @@
   - type: PDA
     id: PsychologistIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-medical
+  - type: PDAVisualizer
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -759,9 +723,8 @@
   - type: PDA
     id: ReporterIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-reporter
+  - type: PDAVisualizer
+    state: pda-reporter
   - type: Icon
     state: pda-reporter
 
@@ -774,9 +737,8 @@
   - type: PDA
     id: ZookeeperIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-zookeeper
+  - type: PDAVisualizer
+    state: pda-zookeeper
   - type: Icon
     state: pda-zookeeper
 
@@ -789,9 +751,8 @@
   - type: PDA
     id: BoxerIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-boxer
+  - type: PDAVisualizer
+    state: pda-boxer
   - type: PDABorderColor
     borderColor: "#333333"
     borderVColor: "#390504"
@@ -807,9 +768,8 @@
   - type: PDA
     id: DetectiveIDCard
   - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-detective
+  - type: PDAVisualizer
+    state: pda-detective
   - type: PDABorderColor
     borderColor: "#774705"
   - type: Icon
