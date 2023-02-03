@@ -9,6 +9,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Vapor;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -25,6 +26,7 @@ public sealed class SpraySystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly VaporSystem _vaporSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -108,8 +110,8 @@ public sealed class SpraySystem : EntitySystem
 
             if (TryComp(vapor, out AppearanceComponent? appearance))
             {
-                appearance.SetData(VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f));
-                appearance.SetData(VaporVisuals.State, true);
+                _appearance.SetData(uid, VaporVisuals.Color, solution.GetColor(_proto).WithAlpha(1f), appearance);
+                _appearance.SetData(uid, VaporVisuals.State, true, appearance);
             }
 
             // Add the solution to the vapor and actually send the thing

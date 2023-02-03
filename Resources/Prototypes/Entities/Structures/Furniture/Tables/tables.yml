@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: TableFrame
   # BaseStructure and not BaseTable, since these shouldn't be climbable/placeable.
   parent: BaseStructure
@@ -219,6 +219,7 @@
     node: TableReinforced
   - type: Climbable
     # Reinforced tables are extra tough
+  - type: Bonkable
     bonkDamage:
       types:
         Blunt: 8
