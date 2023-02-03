@@ -36,10 +36,9 @@
     closeSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.2
+  - type: AirlockVisualizer
+    simpleVisuals: true
+    animationTime: 1.2
   - type: Airtight
     fixVacuum: true
   - type: Damageable

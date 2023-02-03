@@ -107,12 +107,11 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        animationTime: 0.9
-        denyAnimationTime: 0.4
-        animatedPanel: false
-        openUnlitVisible: true
+  - type: AirlockVisualizer
+    animationTime: 0.9
+    denyAnimationTime: 0.4
+    animatedPanel: false
+    openUnlitVisible: true
   - type: WiresVisuals
   - type: Airtight
     fixVacuum: true
