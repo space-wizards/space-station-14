@@ -1,10 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
-      of it being its own screen.', type: Tweak}
-  id: 2484
-  time: '2022-10-18T06:45:32.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed some chat sanitization issues that allowed some invalid entity
@@ -2927,3 +2921,8 @@ Entries:
     type: Fix}
   id: 2983
   time: '2023-02-03T03:46:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix construction errors., type: Fix}
+  id: 2984
+  time: '2023-02-03T12:46:47.0000000+00:00'
