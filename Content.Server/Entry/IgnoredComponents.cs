@@ -50,6 +50,7 @@ namespace Content.Server.Entry
             "BurnStateVisualizer",
             "StackVisualizer",
             "BagOpenCloseVisualizer",
+            "StorageVisualizer",
         };
     }
 }

@@ -125,11 +125,10 @@
     containers:
       entity_storage: !type:Container
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: crema_closed
-      state_alt: crema_open
-      state_open: crema_tray
+  - type: StorageVisualizer
+    state: crema_closed
+    state_alt: crema_open
+    state_open: crema_tray
   - type: GenericVisualizer
     visuals:
       enum.CrematoriumVisuals.Burning:

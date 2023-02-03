@@ -49,10 +49,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: open
-      state_closed: closed
+  - type: StorageVisualizer
+    state_open: open
+    state_closed: closed
   - type: PaperLabel
     labelSlot:
       insertVerbText: Attach Label
