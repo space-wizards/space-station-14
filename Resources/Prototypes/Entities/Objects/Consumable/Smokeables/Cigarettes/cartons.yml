@@ -18,9 +18,8 @@
       - id: CigPackGreen
         amount: 6
   - type: Appearance
-    visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: open
+  - type: BagOpenCloseVisualizer
+    openIcon: open
   - type: Tag
     tags:
     - Trash

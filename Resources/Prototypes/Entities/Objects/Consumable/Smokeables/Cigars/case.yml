@@ -22,9 +22,8 @@
     count:
       tags: [Cigar]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
+  - type: BagOpenCloseVisualizer
+    openIcon: open
   - type: StackVisualizer
     composite: true
     stackLayers:

@@ -34,9 +34,8 @@
     count:
       tags: [Donut]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   - type: StackVisualizer
     composite: true
     stackLayers:
@@ -75,9 +74,8 @@
     count:
       tags: [Egg]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   - type: StackVisualizer
     composite: true
     stackLayers:
@@ -234,9 +232,8 @@
     count:
       tags: [Nugget]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   - type: StackVisualizer
     composite: true
     stackLayers:
@@ -386,9 +383,8 @@
     sprite: Objects/Storage/happyhonk/clown.rsi
     heldPrefix: box
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: box-open
+  - type: BagOpenCloseVisualizer
+    openIcon: box-open
   - type: Storage
     capacity: 30
   - type: Tag

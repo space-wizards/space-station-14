@@ -81,9 +81,8 @@
     count:
       tags: [Matchstick]
   - type: Appearance
-    visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: matchbox-open
+  - type: BagOpenCloseVisualizer
+    openIcon: matchbox-open
   - type: StackVisualizer
     composite: true
     stackLayers:

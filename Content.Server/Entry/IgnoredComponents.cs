@@ -49,6 +49,7 @@ namespace Content.Server.Entry
             "SingularityVisualizer",
             "BurnStateVisualizer",
             "StackVisualizer",
+            "BagOpenCloseVisualizer",
         };
     }
 }

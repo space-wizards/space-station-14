@@ -18,9 +18,8 @@
     state: filingcabinet
     noRot: true
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: filingcabinet-open
+  - type: BagOpenCloseVisualizer
+    openIcon: filingcabinet-open
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key
@@ -52,9 +51,8 @@
     sprite: Structures/Storage/cabinets.rsi
     state: tallcabinet
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: tallcabinet-open
+  - type: BagOpenCloseVisualizer
+    openIcon: tallcabinet-open
 
 - type: entity
   name: chest drawer
@@ -76,9 +74,8 @@
     state: chestdrawer
     noRot: true
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: chestdrawer-open
+  - type: BagOpenCloseVisualizer
+    openIcon: chestdrawer-open
   - type: UserInterface
     interfaces:
     - key: enum.StorageUiKey.Key

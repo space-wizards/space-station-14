@@ -22,9 +22,8 @@
     count:
       tags: [Cigarette]
   - type: Appearance
-    visuals:
-    - type: BagOpenCloseVisualizer
-      openIcon: open
+  - type: BagOpenCloseVisualizer
+    openIcon: open
   - type: StackVisualizer
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
     composite: true
