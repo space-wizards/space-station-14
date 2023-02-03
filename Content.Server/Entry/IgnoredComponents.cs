@@ -33,6 +33,7 @@ namespace Content.Server.Entry
             "LightBulbVisualizer",
             "PoweredLightVisualizer",
             "SignalSwitchVisualizer",
+            "MedicalScannerVisualizer",
         };
     }
 }
