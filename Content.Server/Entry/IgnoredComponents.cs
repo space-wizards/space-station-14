@@ -35,6 +35,7 @@ namespace Content.Server.Entry
             "SignalSwitchVisualizer",
             "MedicalScannerVisualizer",
             "CreamPiedVisualizer",
+            "DrinkCanVisualizer",
         };
     }
 }
