@@ -42,6 +42,7 @@ namespace Content.Server.Entry
             "SmesVisualizer",
             "PowerDeviceVisualizer",
             "PowerChargerVisualizer",
+            "RecyclerVisualizer",
         };
     }
 }
