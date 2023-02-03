@@ -61,8 +61,7 @@
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: GravityGeneratorVisualizer
+  - type: GravityGeneratorVisualizer
       spritemap:
         broken: "broken"
         unpowered: "off"
