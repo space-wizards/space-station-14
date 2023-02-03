@@ -50,9 +50,8 @@
       unbuckleOffset: "0,0.15"
     - type: Foldable
     - type: Appearance
-      visuals:
-      - type: RollerbedVisualizer
-        key: rollerbed
+    - type: RollerbedVisualizer
+      key: rollerbed
     - type: FoldableVisualizer
       key: rollerbed
     - type: StaticPrice
@@ -77,9 +76,8 @@
     - state: cheap_rollerbed
       map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
-    visuals:
-    - type: RollerbedVisualizer
-      key: cheap_rollerbed
+  - type: RollerbedVisualizer
+    key: cheap_rollerbed
   - type: FoldableVisualizer
     key: cheap_rollerbed
 
@@ -102,9 +100,8 @@
     - state: emergency_rollerbed
       map: [ "enum.FoldableVisualLayers.Base" ]
   - type: Appearance
-    visuals:
-    - type: RollerbedVisualizer
-      key: emergency_rollerbed
+  - type: RollerbedVisualizer
+    key: emergency_rollerbed
   - type: FoldableVisualizer
     key: emergency_rollerbed
 
