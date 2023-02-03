@@ -3,43 +3,55 @@ using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Chemistry.Visualizers;
-public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualizerComponent>
+
+/// <summary>
+/// Handles vapor playing the 'being sprayed' animation if necessary.
+/// </summary>
+public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsComponent>
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VaporVisualizerComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<VaporVisualsComponent, ComponentInit>(OnInit);
     }
 
-    private void OnInit(EntityUid uid, VaporVisualizerComponent comp, ComponentInit args)
+    /// <summary>
+    /// Constructs the 'being sprayed' animation for the vapor entity.
+    /// </summary>
+    private void OnInit(EntityUid uid, VaporVisualsComponent comp, ComponentInit args)
     {
-        comp.VaporFlick = new Animation {Length = TimeSpan.FromSeconds(comp.Delay)};
-        {
-            var flick = new AnimationTrackSpriteFlick();
-            comp.VaporFlick.AnimationTracks.Add(flick);
-            flick.LayerKey = VaporVisualLayers.Base;
-            flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f));
-        }
+        comp.VaporFlick = new Animation()
+        {    
+            Length = TimeSpan.FromSeconds(comp.Delay),
+            AnimationTracks =
+            {
+                new AnimationTrackSpriteFlick()
+                {
+                    LayerKey = VaporVisualLayers.Base,
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f)
+                    }
+                }
+            }
+        };
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, VaporVisualizerComponent comp, ref AppearanceChangeEvent args)
+    /// <summary>
+    /// Ensures that the vapor entity plays its 'being sprayed' animation if necessary.
+    /// </summary>
+    protected override void OnAppearanceChange(EntityUid uid, VaporVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if(!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
-        if(AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, appearance))
+        if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
-            if (TryComp<SpriteComponent>(uid, out var sprite))
-                sprite.Color = color;
+            args.Sprite.Color = color;
         }
         
-        if(AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, appearance) && state)
+        if((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state)
+        &&  TryComp<AnimationPlayerComponent>(uid, out var animPlayer)
+        && !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
         {
-            if (TryComp<AnimationPlayerComponent>(uid, out var animPlayer))
-            {
-                if(!AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualizerComponent.AnimationKey))
-                    AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualizerComponent.AnimationKey);
-            }
+            AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualsComponent.AnimationKey);
         }
     }
 }
