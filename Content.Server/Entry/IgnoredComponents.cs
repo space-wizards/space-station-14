@@ -27,6 +27,7 @@ namespace Content.Server.Entry
             "AirlockVisualizer",
             "ClusterGrenadeVisualizer",
             "GravityGeneratorVisualizer",
+            "ReagentGrinderVisualizer",
         };
     }
 }
