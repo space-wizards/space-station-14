@@ -31,19 +31,12 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<SharedIdCardConsoleComponent, WriteToTargetIdMessage>(OnWriteToTargetIdMessage);
 
         // one day, maybe bound user interfaces can be shared too.
         SubscribeLocalEvent<SharedIdCardConsoleComponent, ComponentStartup>(UpdateUserInterface);
         SubscribeLocalEvent<SharedIdCardConsoleComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<SharedIdCardConsoleComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
-    }
-
-    private void OnComponentInit(EntityUid uid, SharedIdCardConsoleComponent component, ComponentInit args)
-    {
-        EnsureComp<AccessReaderComponent>(uid);
-        EnsureComp<ServerUserInterfaceComponent>(uid);
     }
 
     private void OnWriteToTargetIdMessage(EntityUid uid, SharedIdCardConsoleComponent component, WriteToTargetIdMessage args)
