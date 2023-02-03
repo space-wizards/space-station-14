@@ -52,6 +52,7 @@ namespace Content.Server.Entry
             "BagOpenCloseVisualizer",
             "StorageVisualizer",
             "TabletopItemVisualizer",
+            "TimerTriggerVisualizer",
         };
     }
 }
