@@ -43,6 +43,7 @@ namespace Content.Server.Entry
             "PowerDeviceVisualizer",
             "PowerChargerVisualizer",
             "RecyclerVisualizer",
+            "DeployableBarrierVisualizer",
         };
     }
 }

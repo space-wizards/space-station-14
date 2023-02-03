@@ -54,7 +54,6 @@
     radius: 3
     color: red
   - type: Appearance
-    visuals:
-    - type: DeployableBarrierVisualizer
+  - type: DeployableBarrierVisualizer
   - type: StaticPrice
     price: 200
