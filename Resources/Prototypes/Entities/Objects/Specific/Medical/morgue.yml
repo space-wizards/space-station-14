@@ -55,10 +55,10 @@
         - Paper
   - type: Appearance
     visuals:
-    - type: StorageVisualizer
-      state_open: open_overlay
     - type: FoldableVisualizer
       key: bag
+  - type: StorageVisualizer
+    state_open: open_overlay
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:

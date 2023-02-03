@@ -42,10 +42,9 @@
       - state: cardboard_open
         map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
-      visuals:
-      - type: StorageVisualizer
-        state: cardboard
-        state_open: cardboard_open
+    - type: StorageVisualizer
+      state: cardboard
+      state_open: cardboard_open
     - type: Tag
       tags:
         - DoorBumpOpener
@@ -72,10 +71,9 @@
         - state: cardboard_open
           map: ["enum.StorageVisualLayers.Door"]
     - type: Appearance
-      visuals:
-        - type: StorageVisualizer
-          state: agentbox
-          state_open: cardboard_open
+    - type: StorageVisualizer
+      state: agentbox
+      state_open: cardboard_open
     - type: Stealth
     - type: StealthOnMove
       passiveVisibilityRate: -0.37

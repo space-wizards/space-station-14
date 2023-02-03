@@ -160,10 +160,9 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     heldPrefix: box
   - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state_open: box-open
-      state_closed: box
+  - type: StorageVisualizer
+    state_open: box-open
+    state_closed: box
   - type: StaticPrice
     price: 0
 
