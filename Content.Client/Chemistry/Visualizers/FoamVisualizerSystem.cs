@@ -20,11 +20,21 @@ public sealed class FoamVisualizerSystem : VisualizerSystem<FoamVisualsComponent
     /// </summary>
     private void OnComponentInit(EntityUid uid, FoamVisualsComponent comp, ComponentInit args)
     {
-        var flick = new AnimationTrackSpriteFlick();
-        flick.LayerKey = FoamVisualLayers.Base;
-        flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f));
-        comp.Animation = new Animation {Length = TimeSpan.FromSeconds(comp.AnimationTime)};
-        comp.Animation.AnimationTracks.Add(flick);
+        comp.Animation = new Animation()
+        {
+            Length = TimeSpan.FromSeconds(comp.AnimationTime),
+            AnimationTracks =
+            {
+                new AnimationTrackSpriteFlick()
+                {
+                    LayerKey = FoamVisualLayers.Base,
+                    KeyFrames =
+                    {
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f)
+                    }
+                }
+            }
+        };
     }
 
     /// <summary>
