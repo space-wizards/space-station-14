@@ -34,6 +34,7 @@ namespace Content.Server.Entry
             "PoweredLightVisualizer",
             "SignalSwitchVisualizer",
             "MedicalScannerVisualizer",
+            "CreamPiedVisualizer",
         };
     }
 }
