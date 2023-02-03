@@ -51,8 +51,7 @@
     powerLoad: 2000
   - type: ExtensionCableReceiver
   - type: Appearance
-    visuals:
-    - type: PowerDeviceVisualizer
+  - type: PowerDeviceVisualizer
   - type: PortableScrubberVisuals
     idleState: icon
     runningState: icon-running

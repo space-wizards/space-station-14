@@ -66,8 +66,7 @@
     - key: enum.ResearchClientUiKey.Key
       type: ResearchClientBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: PowerDeviceVisualizer
+  - type: PowerDeviceVisualizer
   - type: Destructible
     thresholds:
     - trigger:
