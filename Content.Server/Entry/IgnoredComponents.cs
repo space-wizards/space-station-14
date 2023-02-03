@@ -51,6 +51,7 @@ namespace Content.Server.Entry
             "StackVisualizer",
             "BagOpenCloseVisualizer",
             "StorageVisualizer",
+            "TabletopItemVisualizer",
         };
     }
 }
