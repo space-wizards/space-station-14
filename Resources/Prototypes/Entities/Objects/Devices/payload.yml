@@ -68,14 +68,13 @@
       swap: false
     beakerSlotB: *slotDef
   - type: Appearance
-    visuals:
-    - type: GenericEnumVisualizer
-      key: enum.ChemicalPayloadVisuals.Slots
-      states:
-        enum.ChemicalPayloadFilledSlots.None: payload-empty
-        enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
-        enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
-        enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
+  - type: GenericEnumVisualizer
+    key: enum.ChemicalPayloadVisuals.Slots
+    states:
+      enum.ChemicalPayloadFilledSlots.None: payload-empty
+      enum.ChemicalPayloadFilledSlots.Left: payload-chemical-left
+      enum.ChemicalPayloadFilledSlots.Right: payload-chemical-right
+      enum.ChemicalPayloadFilledSlots.Both: payload-chemical-armed
   - type: ItemSlots
   - type: ContainerContainer
     containers:

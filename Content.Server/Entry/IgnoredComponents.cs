@@ -54,6 +54,7 @@ namespace Content.Server.Entry
             "TabletopItemVisualizer",
             "TimerTriggerVisualizer",
             "FoldableVisualizer",
+            "GenericEnumVisualizer",
         };
     }
 }

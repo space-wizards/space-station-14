@@ -50,12 +50,11 @@
     allowedStates:
       - Alive
   - type: Appearance
-    visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PAIVisuals.Status
-        layer: 1
-        states:
-          enum.PAIStatus.Off: pai-off-overlay
-          enum.PAIStatus.Searching: pai-searching-overlay
-          enum.PAIStatus.On: pai-on-overlay
+  - type: GenericEnumVisualizer
+    key: enum.PAIVisuals.Status
+    layer: 1
+    states:
+      enum.PAIStatus.Off: pai-off-overlay
+      enum.PAIStatus.Searching: pai-searching-overlay
+      enum.PAIStatus.On: pai-on-overlay
 

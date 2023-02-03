@@ -27,13 +27,12 @@
     - type: Item
       sprite: Objects/Devices/mousetrap.rsi
     - type: Appearance
-      visuals:
-        - type: GenericEnumVisualizer
-          key: enum.MousetrapVisuals.Visual
-          layer: 0
-          states:
-            enum.MousetrapVisuals.Armed: mousetraparmed
-            enum.MousetrapVisuals.Unarmed: mousetrap
+    - type: GenericEnumVisualizer
+      key: enum.MousetrapVisuals.Visual
+      layer: 0
+      states:
+        enum.MousetrapVisuals.Armed: mousetraparmed
+        enum.MousetrapVisuals.Unarmed: mousetrap
     - type: Physics
       bodyType: Dynamic
     - type: CollisionWake

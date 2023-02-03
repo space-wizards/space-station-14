@@ -12,13 +12,12 @@
   - type: Item
     sprite: Objects/Tools/t-ray.rsi
   - type: Appearance
-    visuals:
-    - type: GenericEnumVisualizer
-      key: enum.TrayScannerVisual.Visual
-      layer: 0
-      states:
-        enum.TrayScannerVisual.On: tray-on
-        enum.TrayScannerVisual.Off: tray-off
+  - type: GenericEnumVisualizer
+    key: enum.TrayScannerVisual.Visual
+    layer: 0
+    states:
+      enum.TrayScannerVisual.On: tray-on
+      enum.TrayScannerVisual.Off: tray-off
   - type: Tag
     tags:
       - DroneUsable
