@@ -24,8 +24,7 @@
       maxChargeMultiplier: 2
       baseMaxCharge: 8000000
     - type: Appearance
-      visuals:
-        - type: SmesVisualizer
+    - type: SmesVisualizer
     - type: Battery
       startingCharge: 0
     - type: ExaminableBattery
