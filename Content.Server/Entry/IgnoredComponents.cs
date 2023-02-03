@@ -45,6 +45,7 @@ namespace Content.Server.Entry
             "RecyclerVisualizer",
             "DeployableBarrierVisualizer",
             "ThrusterVisualizer",
+            "RadiationCollectorVisualizer",
         };
     }
 }
