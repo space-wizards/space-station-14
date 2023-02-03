@@ -15,6 +15,7 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Database;
 using Content.Shared.Cluwne;
+using Content.Shared.Interaction.Components;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Content.Server.Cluwne;
@@ -59,7 +60,7 @@ public sealed class CluwneSystem : EntitySystem
     }
 
     /// <summary>
-    /// .
+    /// Cluwne will cluwne laugh when emoting.
     /// </summary>
     private void OnComponentStartup(EntityUid uid, CluwneComponent component, ComponentStartup args)
     {
