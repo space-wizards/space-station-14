@@ -38,8 +38,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
+  - type: TimerTriggerVisualizer
 
 - type: entity
   name: flashbang
@@ -78,10 +77,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisualizer
+    countdown_sound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: Syndicate minibomb
@@ -116,10 +114,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/minibombcountdown.ogg
+  - type: TimerTriggerVisualizer
+    countdown_sound:
+      path: /Audio/Effects/minibombcountdown.ogg
 
 - type: entity
   name: the nuclear option
@@ -154,10 +151,9 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Appearance
-    visuals:
-    - type: TimerTriggerVisualizer
-      countdown_sound:
-        path: /Audio/Effects/countdown.ogg
+  - type: TimerTriggerVisualizer
+    countdown_sound:
+      path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: modular grenade
