@@ -48,6 +48,7 @@ namespace Content.Server.Entry
             "RadiationCollectorVisualizer",
             "SingularityVisualizer",
             "BurnStateVisualizer",
+            "StackVisualizer",
         };
     }
 }
