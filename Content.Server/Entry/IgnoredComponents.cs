@@ -23,6 +23,7 @@ namespace Content.Server.Entry
             "FoamVisualizer",
             "SmokeVisualizer",
             "VaporVisualizer",
+            "DisposalUnitVisualizer",
         };
     }
 }
