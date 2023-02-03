@@ -28,6 +28,7 @@ namespace Content.Server.Entry
             "ClusterGrenadeVisualizer",
             "GravityGeneratorVisualizer",
             "ReagentGrinderVisualizer",
+            "EmergencyLightVisualizer",
         };
     }
 }

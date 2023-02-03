@@ -314,8 +314,7 @@
       map: ["enum.EmergencyLightVisualLayers.Light"]
       color: "#FF4020"
   - type: Appearance
-    visuals:
-    - type: EmergencyLightVisualizer
+  - type: EmergencyLightVisualizer
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/alarm.ogg
