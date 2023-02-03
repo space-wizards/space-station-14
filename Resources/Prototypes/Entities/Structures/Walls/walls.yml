@@ -458,8 +458,7 @@
     key: walls
     base: reinf_over
   - type: Appearance
-    visuals:
-      - type: ReinforcedWallVisualizer
+  - type: ReinforcedWallVisualizer
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker

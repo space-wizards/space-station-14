@@ -56,6 +56,7 @@ namespace Content.Server.Entry
             "FoldableVisualizer",
             "GenericEnumVisualizer",
             "RollerbedVisualizer",
+            "ReinforcedWallVisualizer",
         };
     }
 }
