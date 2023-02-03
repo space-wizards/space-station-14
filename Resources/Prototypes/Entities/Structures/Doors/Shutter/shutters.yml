@@ -49,10 +49,9 @@
     fuel: 3
     time: 3
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
-        animationTime: 1.4
+  - type: AirlockVisualizer
+    simpleVisuals: true
+    animationTime: 1.4
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key

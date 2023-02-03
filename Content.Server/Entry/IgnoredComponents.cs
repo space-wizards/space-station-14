@@ -24,6 +24,7 @@ namespace Content.Server.Entry
             "SmokeVisualizer",
             "VaporVisualizer",
             "DisposalUnitVisualizer",
+            "AirlockVisualizer",
         };
     }
 }
