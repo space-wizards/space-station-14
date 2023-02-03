@@ -26,6 +26,7 @@ namespace Content.Server.Entry
             "DisposalUnitVisualizer",
             "AirlockVisualizer",
             "ClusterGrenadeVisualizer",
+            "GravityGeneratorVisualizer",
         };
     }
 }
