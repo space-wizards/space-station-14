@@ -53,6 +53,7 @@ namespace Content.Server.Entry
             "StorageVisualizer",
             "TabletopItemVisualizer",
             "TimerTriggerVisualizer",
+            "FoldableVisualizer",
         };
     }
 }

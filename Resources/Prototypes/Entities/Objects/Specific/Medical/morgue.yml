@@ -54,9 +54,8 @@
         components:
         - Paper
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: bag
+  - type: FoldableVisualizer
+    key: bag
   - type: StorageVisualizer
     state_open: open_overlay
   - type: GenericVisualizer

@@ -235,9 +235,8 @@
     size: 50
   - type: Foldable
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: folding
+  - type: FoldableVisualizer
+    key: folding
   - type: MeleeWeapon
     damage:
       types:
