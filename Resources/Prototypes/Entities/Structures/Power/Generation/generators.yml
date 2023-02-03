@@ -108,8 +108,7 @@
     - state: on
       shader: unshaded
 #  - type: Appearance
-#    visuals:
-#    - type: ApcVisualizer
+#  - type: ApcVisualizer
   - type: NodeContainer
     examinable: true
     nodes:

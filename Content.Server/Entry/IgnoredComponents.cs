@@ -38,6 +38,7 @@ namespace Content.Server.Entry
             "DrinkCanVisualizer",
             "PDAVisualizer",
             "ParticleAccleratorPartVisualizer",
+            "ApcVisualizer",
         };
     }
 }
