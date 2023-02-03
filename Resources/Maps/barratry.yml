@@ -87797,7 +87797,7 @@ entities:
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 185
+        density: 100
         mask:
          - SmallMobMask
         layer:
