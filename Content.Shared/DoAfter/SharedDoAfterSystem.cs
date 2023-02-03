@@ -331,7 +331,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         {
             var ev = new DoAfterEvent(cancelled, args);
 
-            //TODO: Sends three times which wokrs but doesn't in cases where you need it to run only once
+            //TODO: Sends three times which works but doesn't in cases where you need it to run only once
 
             //Add a handled return that breaks?
             //Issue here is that it could return early when not needed
