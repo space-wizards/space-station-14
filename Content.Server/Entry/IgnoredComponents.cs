@@ -44,6 +44,7 @@ namespace Content.Server.Entry
             "PowerChargerVisualizer",
             "RecyclerVisualizer",
             "DeployableBarrierVisualizer",
+            "ThrusterVisualizer",
         };
     }
 }
