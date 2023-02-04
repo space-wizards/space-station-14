@@ -12,7 +12,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using Robust.Shared.Profiling;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -58,12 +57,13 @@ public sealed class HeadsetSystem : EntitySystem
         if (component.IsEquipped && component.Enabled)
         {
             EnsureComp<WearingHeadsetComponent>(args.Equipee).Headset = uid;
-            PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
+            UpdateRadioChannelsInActiveRadio(uid, component, EnsureComp<ActiveRadioComponent>(uid));
         }
     }
 
-    private void PushRadioChannelsToOwner(EntityUid uid, HeadsetComponent component, ActiveRadioComponent activeRadio)
+    private void UpdateRadioChannelsInActiveRadio(EntityUid uid, HeadsetComponent component, ActiveRadioComponent activeRadio)
     {
+        activeRadio.Channels.Clear();
         activeRadio.Channels.UnionWith(component.Channels);
     }
 
@@ -131,12 +131,7 @@ public sealed class HeadsetSystem : EntitySystem
 
     private bool InstallKey(HeadsetComponent component, EntityUid key, EncryptionKeyComponent keyComponent)
     {
-        if (component.KeyContainer.Insert(key))
-        {
-            UploadChannelsFromKey(component, keyComponent);
-            return true;
-        }
-        return false;
+        return component.KeyContainer.Insert(key);
     }
 
     private void UploadChannelsFromKey(HeadsetComponent component, EncryptionKeyComponent key)
@@ -225,7 +220,7 @@ public sealed class HeadsetSystem : EntitySystem
         {
             UpdateDefaultChannel(component);
             UploadChannelsFromKey(component, added);
-            PushRadioChannelsToOwner(uid, component, EnsureComp<ActiveRadioComponent>(uid));
+            UpdateRadioChannelsInActiveRadio(uid, component, EnsureComp<ActiveRadioComponent>(uid));
         }
         return;
     }

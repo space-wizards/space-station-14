@@ -15,7 +15,7 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
 
     private void OnComponentInit(EntityUid uid, AMEShieldingVisualsComponent component, ComponentInit args)
     {
-        if(TryComp<SpriteComponent>(uid, out var sprite))
+        if (TryComp<SpriteComponent>(uid, out var sprite))
         {
             sprite.LayerMapSet(AMEShieldingVisualsLayer.Core, sprite.AddLayerState("core"));
             sprite.LayerSetVisible(AMEShieldingVisualsLayer.Core, false);
@@ -26,10 +26,10 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
 
     protected override void OnAppearanceChange(EntityUid uid, AMEShieldingVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if(args.Sprite == null)
+        if (args.Sprite == null)
             return;
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.Core, out var core))
+        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.Core, out var core, args.Component))
         {
             if (core == "isCore")
             {
@@ -43,9 +43,9 @@ public sealed class AMEShieldingVisualizerSystem : VisualizerSystem<AMEShielding
             }
         }
 
-        if(args.Component.TryGetData<string>(AMEShieldVisuals.CoreState, out var coreState))
+        if (AppearanceSystem.TryGetData<string>(uid, AMEShieldVisuals.CoreState, out var coreState, args.Component))
         {
-            switch(coreState)
+            switch (coreState)
             {
                 case "weak":
                     args.Sprite.LayerSetState(AMEShieldingVisualsLayer.CoreState, "core_weak");
