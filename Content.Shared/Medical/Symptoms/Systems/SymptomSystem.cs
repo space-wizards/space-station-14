@@ -157,19 +157,15 @@ public sealed partial class SymptomSystem : EntitySystem
 
         return false;
     }
-
     #endregion
 
     #region Private Implementation
-
-    private void OnGetReceiverState(EntityUid uid, SymptomReceiverComponent component,
-        ref ComponentGetState args)
+    private void OnGetReceiverState(EntityUid uid, SymptomReceiverComponent component, ref ComponentGetState args)
     {
         args.State = new SymptomReceiverComponentState(component.SymptomGroup);
     }
 
-    private void OnHandleReceiverState(EntityUid uid, SymptomReceiverComponent component,
-        ref ComponentHandleState args)
+    private void OnHandleReceiverState(EntityUid uid, SymptomReceiverComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not SymptomReceiverComponentState state)
             return;
@@ -184,19 +180,12 @@ public sealed partial class SymptomSystem : EntitySystem
             return;
 
         component.Alert = state.Alert;
-        component.Group = state.Group;
-        component.Description = state.Description;
         component.Severity = state.Severity;
     }
 
     private void OnGetSymptomState(EntityUid uid, SymptomComponent component, ref ComponentGetState args)
     {
-        args.State = new SymptomComponentState(
-            component.Description,
-            component.Group,
-            component.Alert,
-            component.Severity
-        );
+        args.State = new SymptomComponentState(component.Alert, component.Severity);
     }
 
     private void SymptomsUpdated(EntityUid receiverEntity, EntityUid symptomEntity,
