@@ -1,8 +1,11 @@
 ﻿- type: symptomGroup
   id: Organic
+
 - type: symptomGroup
   id: Silicon
+
 - type: symptomGroup
   id: Mental
+
 - type: symptomGroup
   id: Physical

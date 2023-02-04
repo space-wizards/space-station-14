@@ -61,8 +61,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         CheckConsciousness(uid, component);
     }
 
-    public FixedPoint2 GetConsciousness(EntityUid entity,
-        ConsciousnessComponent? consciousness = null)
+    public FixedPoint2 GetConsciousness(EntityUid entity, ConsciousnessComponent? consciousness = null)
     {
         return !Resolve(entity, ref consciousness)
             ? FixedPoint2.Zero
@@ -79,8 +78,7 @@ public sealed class ConsciousnessSystem : EntitySystem
         return consciousnessValue > consciousness.PassOutThreshold;
     }
 
-    public void UpdateConsciousness(EntityUid entity,
-        ConsciousnessComponent? consciousness = null)
+    public void UpdateConsciousness(EntityUid entity, ConsciousnessComponent? consciousness = null)
     {
         if (!Resolve(entity, ref consciousness))
             return;
@@ -98,9 +96,7 @@ public sealed class ConsciousnessSystem : EntitySystem
     private void CheckConsciousness(EntityUid entity, ConsciousnessComponent consciousness)
     {
         var isConscious = IsConscious(entity, out var consciousnessValue, consciousness);
-        var ev = new ConsciousnessUpdatedEvent(
-            isConscious,
-            consciousnessValue);
+        var ev = new ConsciousnessUpdatedEvent(isConscious, consciousnessValue);
         RaiseLocalEvent(entity, ev, true);
         _mobStateSystem.UpdateMobState(entity);
     }

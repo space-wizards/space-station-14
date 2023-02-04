@@ -1,32 +1,24 @@
 ﻿using Content.Shared.Medical.Symptoms.Prototypes;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Medical.Symptoms.Components;
 
 [RegisterComponent, NetworkedComponent]
 public sealed class SymptomReceiverComponent : Component
 {
-    [DataField("preventedConditions", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<EntityPrototype>))]
-    public HashSet<string>? PreventedConditions;
-
-    [DataField("preventedConditionGroups",
-        customTypeSerializer: typeof(PrototypeIdHashSetSerializer<SymptomGroupPrototype>))]
-    public HashSet<string>? PreventedConditionGroups;
+    [DataField("symptomGroup", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<SymptomGroupPrototype>))]
+    public string? SymptomGroup;
 }
 
 [Serializable, NetSerializable]
 public sealed class SymptomReceiverComponentState : ComponentState
 {
-    public HashSet<string>? PreventedConditions;
-    public HashSet<string>? PreventedConditionGroups;
+    public string? SymptomGroup;
 
-    public SymptomReceiverComponentState(HashSet<string>? preventedConditions,
-        HashSet<string>? preventedConditionGroups)
+    public SymptomReceiverComponentState(string? symptomGroup)
     {
-        PreventedConditions = preventedConditions;
-        PreventedConditionGroups = preventedConditionGroups;
+        SymptomGroup = symptomGroup;
     }
 }

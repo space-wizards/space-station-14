@@ -28,7 +28,6 @@ public sealed class ConsciousnessComponentState : ComponentState
         FixedPoint2 modifier,
         FixedPoint2 offset,
         FixedPoint2 cap)
-
     {
         PassOutThreshold = passOutThreshold;
         Base = baseValue;

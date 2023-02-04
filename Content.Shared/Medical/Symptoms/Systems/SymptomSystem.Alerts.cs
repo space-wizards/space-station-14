@@ -5,17 +5,28 @@ namespace Content.Shared.Medical.Symptoms.Systems;
 
 public sealed partial class SymptomSystem
 {
-    private void UpdateAlerts(EntityUid receiverEntity, EntityUid conditionEntity,
-        SymptomComponent? condition = null, SymptomReceiverComponent? receiver = null)
+    private void UpdateAlerts(EntityUid receiverId, EntityUid symptomId, SymptomComponent? symptom = null)
     {
-        if (!Resolve(receiverEntity, ref receiver) || !Resolve(conditionEntity, ref condition))
+        if (!Resolve(symptomId, ref symptom))
             return;
 
-        if (condition.Alert == null || !_prototypeManager.TryIndex<AlertPrototype>(condition.Alert, out var alert))
+        if (symptom.Alert == null || !_prototypeManager.TryIndex<AlertPrototype>(symptom.Alert, out var alert))
             return;
-        //TODO: remove this when alerts get refactored to not be hardcoded.
+
         var alertType = alert.AlertType;
-        var severity = _alerts.GetSeverityFromPercentage(alertType, condition.Severity);
-        _alerts.ShowAlert(receiverEntity, alertType, severity);
+        var severity = _alerts.GetSeverityFromPercentage(alertType, symptom.Severity);
+        _alerts.ShowAlert(receiverId, alertType, severity);
+    }
+
+    private void HideAlert(EntityUid receiverId, EntityUid symptomId, SymptomComponent? symptom = null)
+    {
+        if (!Resolve(symptomId, ref symptom))
+            return;
+
+        if (symptom.Alert == null || !_prototypeManager.TryIndex<AlertPrototype>(symptom.Alert, out var alert))
+            return;
+
+        var alertType = alert.AlertType;
+        _alerts.ClearAlert(receiverId, alertType);
     }
 }
