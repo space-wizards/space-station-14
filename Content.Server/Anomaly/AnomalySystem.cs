@@ -124,4 +124,11 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
             _ => throw new ArgumentOutOfRangeException()
         };
     }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        UpdateVessels();
+    }
 }
