@@ -42,7 +42,7 @@
     sprite: Structures/Machines/computers.rsi
     layers:
       - map: ["computerLayerBody"]
-        state: television
+        state: telescreen_frame
       - map: ["computerLayerScreen"]
         state: telescreen
   - type: Fixtures

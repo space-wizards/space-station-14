@@ -1,7 +1,7 @@
 meta:
   format: 3
-  name: DemoStation
-  author: Space-Wizards
+  name: OmegaStation
+  author: Emisse
   postmapinit: false
 tilemap:
   0: Space
@@ -23172,13 +23172,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 1481
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -22.5,-6.5
     parent: 0
     type: Transform
 - uid: 1482
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: -22.528929,-6.6977267
     parent: 0
