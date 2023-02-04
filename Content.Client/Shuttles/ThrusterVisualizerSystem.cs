@@ -3,13 +3,13 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Shuttles;
 
-public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualizerComponent>
+public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualsComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, ThrusterVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, ThrusterVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        if(!AppearanceSystem.TryGetData(uid, ThrusterVisualState.State, out bool state, args.Component))
+        if(!AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.State, out var state, args.Component))
             return;
 
         switch (state)
@@ -17,16 +17,16 @@ public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualiz
             case true:
                 args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustOn, true);
 
-                if (AppearanceSystem.TryGetData(uid, ThrusterVisualState.Thrusting, out bool thrusting, args.Component) && thrusting)
+                if (AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting)
                 {
-                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out _))
+                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out var thrustingLayer))
                     {
-                        args.Sprite.LayerSetVisible(ThrusterVisualLayers.Thrusting, true);
+                        args.Sprite.LayerSetVisible(thrustingLayer, true);
                     }
 
-                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out _))
+                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer))
                     {
-                        args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustingUnshaded, true);
+                        args.Sprite.LayerSetVisible(unshadedLayer, true);
                     }
                 }
                 else
@@ -44,14 +44,14 @@ public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualiz
 
     private void DisableThrusting(EntityUid uid, AppearanceComponent appearance, SpriteComponent sprite)
     {
-        if (sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out _))
+        if (sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out var thrustingLayer))
         {
-            sprite.LayerSetVisible(ThrusterVisualLayers.Thrusting, false);
+            sprite.LayerSetVisible(thrustingLayer, false);
         }
 
-        if (sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out _))
+        if (sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer))
         {
-            sprite.LayerSetVisible(ThrusterVisualLayers.ThrustingUnshaded, false);
+            sprite.LayerSetVisible(unshadedLayer, false);
         }
     }
 }
