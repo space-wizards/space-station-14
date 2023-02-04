@@ -74163,4 +74163,13 @@ entities:
     type: Transform
   - location: anomaly Lab
     type: WarpPoint
+- uid: 9244
+  type: SurveillanceCameraScience
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -21.5,3.5
+    parent: 127
+    type: Transform
+  - id: Anomaly Lab
+    type: SurveillanceCamera
 ...
