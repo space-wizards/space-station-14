@@ -64,7 +64,7 @@
           True: {visible: true}
           False: {visible: false}
       enum.FoldedVisuals.State:
-        FoldableVisualLayers.Base:
+        enum.FoldableVisualLayers.Base:
           True: {state: "bag_folded"}
           False: {state: "bag"}
   - type: Pullable

@@ -238,7 +238,7 @@
   - type: GenericVisualizer
     visuals:
     enum.FoldedVisuals.State:
-      FoldableVisualLayers.Base:
+      enum.FoldableVisualLayers.Base:
         True: {state: "folding_folded"}
         False: {state: "folding"}
   - type: MeleeWeapon

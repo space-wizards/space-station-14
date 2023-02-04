@@ -83,12 +83,12 @@
     visuals:
     - type: RollerbedVisualizer
       key: cheap_rollerbed
-    - type: GenericVisualizer
-      visuals:
-      enum.FoldedVisuals.State:
-        FoldableVisualLayers.Base:
-          True: {state: "cheap_rollerbed_folded"}
-          False: {state: "cheap_rollerbed"}
+  - type: GenericVisualizer
+    visuals:
+    enum.FoldedVisuals.State:
+      enum.FoldableVisualLayers.Base:
+        True: {state: "cheap_rollerbed_folded"}
+        False: {state: "cheap_rollerbed"}
 
 - type: entity
   parent: CheapRollerBed
@@ -112,12 +112,12 @@
     visuals:
     - type: RollerbedVisualizer
       key: emergency_rollerbed
-    - type: GenericVisualizer
-      visuals:
-      enum.FoldedVisuals.State:
-        FoldableVisualLayers.Base:
-          True: {state: "emergency_rollerbed_folded"}
-          False: {state: "emergency_rollerbed"}
+  - type: GenericVisualizer
+    visuals:
+    enum.FoldedVisuals.State:
+      enum.FoldableVisualLayers.Base:
+        True: {state: "emergency_rollerbed_folded"}
+        False: {state: "emergency_rollerbed"}
 
 - type: entity
   parent: EmergencyRollerBed
