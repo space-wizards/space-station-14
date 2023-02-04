@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parents: BaseItem
+  parent: BaseItem
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -55,7 +55,7 @@
     - type: GenericVisualizer
       visuals:
       enum.FoldedVisuals.State:
-        FoldableVisualLayers.Base:
+        enum.FoldableVisualLayers.Base:
           True: {state: "rollerbed_folded"}
           False: {state: "rollerbed"}
     - type: StaticPrice
