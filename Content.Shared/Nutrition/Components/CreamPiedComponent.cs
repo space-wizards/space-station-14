@@ -16,4 +16,10 @@ namespace Content.Shared.Nutrition.Components
     {
         Creamed,
     }
+
+    [Serializable, NetSerializable]
+    public enum CreamPiedVisualLayers : byte
+    {
+        Pie,
+    }
 }
