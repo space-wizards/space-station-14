@@ -191349,7 +191349,7 @@ entities:
     parent: 60
     type: Transform
 - uid: 24122
-  type: VehiclePussyWagonDestroyed
+  type: VehicleJanicartDestroyed
   components:
   - pos: -19.5,-44.5
     parent: 60
