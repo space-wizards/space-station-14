@@ -235,8 +235,12 @@
     size: 50
   - type: Foldable
   - type: Appearance
-  - type: FoldableVisualizer
-    key: folding
+  - type: GenericVisualizer
+    visuals:
+    enum.FoldedVisuals.State:
+      FoldableVisualLayers.Base:
+        True: {state: "folding_folded"}
+        False: {state: "folding"}
   - type: MeleeWeapon
     damage:
       types:

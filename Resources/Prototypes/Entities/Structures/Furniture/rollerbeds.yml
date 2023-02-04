@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: BaseItem
+  parents: BaseItem
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -48,13 +48,16 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.15"
-    - type: Foldable
     - type: Appearance
       visuals:
       - type: RollerbedVisualizer
         key: rollerbed
-    - type: FoldableVisualizer
-      key: rollerbed
+    - type: GenericVisualizer
+      visuals:
+      enum.FoldedVisuals.State:
+        FoldableVisualLayers.Base:
+          True: {state: "rollerbed_folded"}
+          False: {state: "rollerbed"}
     - type: StaticPrice
       price: 200
 
@@ -80,8 +83,12 @@
     visuals:
     - type: RollerbedVisualizer
       key: cheap_rollerbed
-  - type: FoldableVisualizer
-    key: cheap_rollerbed
+    - type: GenericVisualizer
+      visuals:
+      enum.FoldedVisuals.State:
+        FoldableVisualLayers.Base:
+          True: {state: "cheap_rollerbed_folded"}
+          False: {state: "cheap_rollerbed"}
 
 - type: entity
   parent: CheapRollerBed
@@ -105,8 +112,12 @@
     visuals:
     - type: RollerbedVisualizer
       key: emergency_rollerbed
-  - type: FoldableVisualizer
-    key: emergency_rollerbed
+    - type: GenericVisualizer
+      visuals:
+      enum.FoldedVisuals.State:
+        FoldableVisualLayers.Base:
+          True: {state: "emergency_rollerbed_folded"}
+          False: {state: "emergency_rollerbed"}
 
 - type: entity
   parent: EmergencyRollerBed

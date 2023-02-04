@@ -57,14 +57,16 @@
     visuals:
     - type: StorageVisualizer
       state_open: open_overlay
-  - type: FoldableVisualizer
-    key: bag
   - type: GenericVisualizer
     visuals:
       enum.PaperLabelVisuals.HasLabel:
         enum.BodyBagVisualLayers.Label:
           True: {visible: true}
           False: {visible: false}
+      enum.FoldedVisuals.State:
+        FoldableVisualLayers.Base:
+          True: {state: "bag_folded"}
+          False: {state: "bag"}
   - type: Pullable
   - type: AntiRottingContainer
   - type: ItemSlots
