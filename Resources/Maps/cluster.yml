@@ -74149,4 +74149,10 @@ entities:
   - pos: 40.28816,-0.42427582
     parent: 127
     type: Transform
+- uid: 9242
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: 3.5,-2.5
+    parent: 127
+    type: Transform
 ...
