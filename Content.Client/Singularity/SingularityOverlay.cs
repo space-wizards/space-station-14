@@ -1,3 +1,4 @@
+using Content.Client.Viewport;
 using Content.Shared.Singularity.Components;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
@@ -5,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Singularity
 {
-    public sealed class SingularityOverlay : Overlay
+    public sealed class SingularityOverlay : Overlay, IEntityEventSubscriber
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -28,6 +29,7 @@ namespace Content.Client.Singularity
             IoCManager.InjectDependencies(this);
             _shader = _prototypeManager.Index<ShaderPrototype>("Singularity").Instance().Duplicate();
             _shader.SetParameter("maxDistance", MaxDistance * EyeManager.PixelsPerMeter);
+            _entMan.EventBus.SubscribeEvent<ProjectScreenToMapEvent>(EventSource.Local, this, OnProjectFromScreenToMap);
         }
 
         private Vector2[] _positions = new Vector2[MaxCount];
@@ -85,6 +87,39 @@ namespace Content.Client.Singularity
             worldHandle.UseShader(_shader);
             worldHandle.DrawRect(args.WorldAABB, Color.White);
             worldHandle.UseShader(null);
+        }
+
+        private void OnProjectFromScreenToMap(ref ProjectScreenToMapEvent args)
+        {
+            // Mostly copypasta from the singularity shader.
+            Vector2 finalCoords = args.ScreenPosition;
+            Vector2 delta;
+            float distance = 0.0f;
+            float deformation = 0.0f;
+    
+            for (int i = 0; i < MaxCount && i < _count; i++)
+            {
+                delta = args.ScreenPosition - _positions[i];
+                distance = (delta / args.ClydeViewport.RenderScale).Length;
+
+                deformation = _intensities[i] / MathF.Pow(distance, _falloffPowers[i]);
+                
+                // ensure deformation goes to zero at max distance
+                // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
+                
+                if (distance >= MaxDistance) {
+                    deformation = 0.0f;
+                } else {
+                    deformation *= (1.0f - MathF.Pow(distance/MaxDistance, 4.0f));
+                }
+                
+                if(deformation > 0.8)
+                    deformation = MathF.Pow(deformation, 0.3f);
+
+                finalCoords -= delta * deformation;
+            }
+            
+            args.ScreenPosition = finalCoords;
         }
     }
 }
