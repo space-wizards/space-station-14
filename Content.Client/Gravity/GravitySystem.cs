@@ -14,6 +14,9 @@ public sealed partial class GravitySystem : SharedGravitySystem
         InitializeShake();
     }
 
+    /// <summary>
+    /// Ensures that gravity generators have the sprite layers necessary to be rendered correctly.
+    /// </summary>
     private void OnComponentStartup(EntityUid uid, SharedGravityGeneratorComponent comp, ComponentStartup args)
     {
         if(!TryComp<SpriteComponent>(uid, out var sprite))
@@ -23,6 +26,9 @@ public sealed partial class GravitySystem : SharedGravitySystem
         sprite.LayerMapReserveBlank(GravityGeneratorVisualLayers.Core);
     }
 
+    /// <summary>
+    /// Ensures that the visible state of gravity generators are synced with their sprites.
+    /// </summary>
     private void OnAppearanceChange(EntityUid uid, SharedGravityGeneratorComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
