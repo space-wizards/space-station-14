@@ -8,7 +8,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
-using Content.Shared.CCVar;
 using Content.Shared.Climbing;
 using Content.Shared.Climbing.Events;
 using Content.Shared.Damage;
@@ -47,6 +46,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly StunSystem _stunSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
@@ -93,9 +93,6 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
             return;
 
-        if (component.Bonk && _cfg.GetCVar(CCVars.GameTableBonk))
-            return;
-
         if (!TryComp(args.User, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
@@ -118,7 +115,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (!TryComp(entityToMove, out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
             return;
 
-        if (TryBonk(component, user))
+        if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
         _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, target:climbable, used:entityToMove)

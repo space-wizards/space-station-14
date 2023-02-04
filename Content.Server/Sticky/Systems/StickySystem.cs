@@ -7,6 +7,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Sticky.Components;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -19,6 +20,7 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private const string StickerSlotId = "stickers_container";
 
@@ -170,7 +172,7 @@ public sealed class StickySystem : EntitySystem
         // send information to appearance that entity is stuck
         if (TryComp(uid, out AppearanceComponent? appearance))
         {
-            appearance.SetData(StickyVisuals.IsStuck, true);
+            _appearance.SetData(uid, StickyVisuals.IsStuck, true, appearance);
         }
 
         component.StuckTo = target;
@@ -198,7 +200,7 @@ public sealed class StickySystem : EntitySystem
         // send information to appearance that entity isn't stuck
         if (TryComp(uid, out AppearanceComponent? appearance))
         {
-            appearance.SetData(StickyVisuals.IsStuck, false);
+            _appearance.SetData(uid, StickyVisuals.IsStuck, false, appearance);
         }
 
         // show message to user
