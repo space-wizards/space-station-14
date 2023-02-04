@@ -12,17 +12,17 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<VaporVisualsComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<VaporVisualsComponent, ComponentInit>(OnComponentInit);
     }
 
     /// <summary>
     /// Constructs the 'being sprayed' animation for the vapor entity.
     /// </summary>
-    private void OnInit(EntityUid uid, VaporVisualsComponent comp, ComponentInit args)
+    private void OnComponentInit(EntityUid uid, VaporVisualsComponent comp, ComponentInit args)
     {
         comp.VaporFlick = new Animation()
         {    
-            Length = TimeSpan.FromSeconds(comp.Delay),
+            Length = TimeSpan.FromSeconds(comp.AnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
@@ -30,7 +30,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
                     LayerKey = VaporVisualLayers.Base,
                     KeyFrames =
                     {
-                        new AnimationTrackSpriteFlick.KeyFrame(comp.State, 0f)
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.AnimationState, 0f)
                     }
                 }
             }
@@ -42,14 +42,14 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, VaporVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
+        if( AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
             args.Sprite.Color = color;
         }
         
-        if((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state)
-        &&  TryComp<AnimationPlayerComponent>(uid, out var animPlayer)
-        && !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
+        if((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state) &&
+            TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
+           !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
         {
             AnimationSystem.Play(uid, animPlayer, comp.VaporFlick, VaporVisualsComponent.AnimationKey);
         }

@@ -3,7 +3,7 @@ using Robust.Client.Animations;
 namespace Content.Client.Chemistry.Visualizers;
 
 /// <summary>
-/// 
+/// A component that plays an animation when it is sprayed.
 /// </summary>
 [RegisterComponent]
 [Access(typeof(VaporVisualizerSystem))]
@@ -15,19 +15,20 @@ public sealed class VaporVisualsComponent : Component
     public const string AnimationKey = "flick_animation";
 
     /// <summary>
-    /// 
+    /// The amount of time over which the spray animation is played.
     /// </summary>
-    [DataField("animation_time")]
-    public float Delay = 0.25f;
+    [DataField("animationTime")]
+    public float AnimationTime = 0.25f;
 
     /// <summary>
-    /// 
+    /// The RSI state that is flicked when the vapor is sprayed.
     /// </summary>
-    [DataField("animation_state")]
-    public string State = "chempuff";
+    [DataField("animationState")]
+    public string AnimationState = "chempuff";
 
     /// <summary>
-    /// 
+    /// The animation that plays when the vapor is sprayed.
+    /// Generated in <see cref="VaporVisualizerSystem.OnComponentInit"/>
     /// </summary>
     [ViewVariables(VVAccess.ReadOnly)]
     public Animation VaporFlick = default!;
