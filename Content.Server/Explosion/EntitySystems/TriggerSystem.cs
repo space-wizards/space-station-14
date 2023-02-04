@@ -178,7 +178,7 @@ namespace Content.Server.Explosion.EntitySystems
             active.TimeUntilBeep = initialBeepDelay == null ? active.BeepInterval : initialBeepDelay.Value;
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
-                appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Primed);
+                _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Primed, appearance);
         }
 
         public override void Update(float frameTime)
@@ -219,7 +219,7 @@ namespace Content.Server.Explosion.EntitySystems
 
                 // In case this is a re-usable grenade, un-prime it.
                 if (TryComp<AppearanceComponent>(uid, out var appearance))
-                    appearance.SetData(TriggerVisuals.VisualState, TriggerVisualState.Unprimed);
+                    _appearance.SetData(uid, TriggerVisuals.VisualState, TriggerVisualState.Unprimed, appearance);
             }
         }
     }
