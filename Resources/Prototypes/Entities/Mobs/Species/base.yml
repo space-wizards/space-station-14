@@ -142,7 +142,7 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
-      - map: [ "enum.CreamPiedVisualLayers.Pie" ]
+      - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
         visible: false
   - type: Physics
@@ -231,7 +231,7 @@
   - type: GenericVisualizer
     visuals:
       enum.CreamPiedVisuals.Creamed:
-        enum.CreamPiedVisualLayers.Pie:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
           True: {visible: true, state: "creampie_human"}
           False: {visible: false}
   - type: RotationVisuals
