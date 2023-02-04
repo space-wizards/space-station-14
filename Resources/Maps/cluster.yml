@@ -74155,4 +74155,12 @@ entities:
   - pos: 3.5,-2.5
     parent: 127
     type: Transform
+- uid: 9243
+  type: WarpPoint
+  components:
+  - pos: -25.5,-0.5
+    parent: 127
+    type: Transform
+  - location: anomaly Lab
+    type: WarpPoint
 ...
