@@ -11,7 +11,10 @@
     sprite: Objects/Specific/Medical/Morgue/bodybags.rsi
     layers:
     - state: bag
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer"]
+    - state: bag_folded
+      map: ["foldedLayer"]
+      visible: false
     - state: open_overlay
       map: ["enum.StorageVisualLayers.Door"]
     - state: label_overlay
@@ -64,9 +67,12 @@
           True: {visible: true}
           False: {visible: false}
       enum.FoldedVisuals.State:
-        enum.FoldableVisualLayers.Base:
-          True: {state: "bag_folded"}
-          False: {state: "bag"}
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
   - type: Pullable
   - type: AntiRottingContainer
   - type: ItemSlots

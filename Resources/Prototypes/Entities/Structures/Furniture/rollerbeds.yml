@@ -14,7 +14,10 @@
       noRot: true
       layers:
       - state: rollerbed
-        map: ["enum.FoldableVisualLayers.Base"]
+        map: ["unfoldedLayer"]
+      - state: rollerbed_folded
+        map: ["foldedLayer"]
+        visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -54,10 +57,13 @@
         key: rollerbed
     - type: GenericVisualizer
       visuals:
-      enum.FoldedVisuals.State:
-        enum.FoldableVisualLayers.Base:
-          True: {state: "rollerbed_folded"}
-          False: {state: "rollerbed"}
+        enum.FoldedVisuals.State:
+          foldedLayer:
+            True: {visible: true}
+            False: {visible: false}
+          unfoldedLayer:
+            True: {visible: false}
+            False: {visible: true}
     - type: StaticPrice
       price: 200
 
@@ -78,7 +84,10 @@
   - type: Sprite
     layers:
     - state: cheap_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: cheap_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Appearance
     visuals:
     - type: RollerbedVisualizer
@@ -86,9 +95,13 @@
   - type: GenericVisualizer
     visuals:
     enum.FoldedVisuals.State:
-      enum.FoldableVisualLayers.Base:
-        True: {state: "cheap_rollerbed_folded"}
-        False: {state: "cheap_rollerbed"}
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
 
 - type: entity
   parent: CheapRollerBed
@@ -107,7 +120,10 @@
   - type: Sprite
     layers:
     - state: emergency_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: emergency_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Appearance
     visuals:
     - type: RollerbedVisualizer
@@ -115,9 +131,13 @@
   - type: GenericVisualizer
     visuals:
     enum.FoldedVisuals.State:
-      enum.FoldableVisualLayers.Base:
-        True: {state: "emergency_rollerbed_folded"}
-        False: {state: "emergency_rollerbed"}
+      enum.FoldedVisuals.State:
+        foldedLayer:
+          True: {visible: true}
+          False: {visible: false}
+        unfoldedLayer:
+          True: {visible: false}
+          False: {visible: true}
 
 - type: entity
   parent: EmergencyRollerBed

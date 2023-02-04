@@ -230,7 +230,10 @@
     sprite: Structures/Furniture/folding_chair.rsi
     layers:
     - state: folding
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer"]
+    - state: folding_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Item
     size: 50
   - type: Foldable
@@ -238,9 +241,12 @@
   - type: GenericVisualizer
     visuals:
     enum.FoldedVisuals.State:
-      enum.FoldableVisualLayers.Base:
-        True: {state: "folding_folded"}
-        False: {state: "folding"}
+      foldedLayer:
+        True: {visible: true}
+        False: {visible: false}
+      unfoldedLayer:
+        True: {visible: false}
+        False: {visible: true}
   - type: MeleeWeapon
     damage:
       types:
