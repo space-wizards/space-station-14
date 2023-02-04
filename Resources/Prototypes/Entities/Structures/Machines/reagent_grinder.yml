@@ -16,8 +16,8 @@
       type: ReagentGrinderBoundUserInterface
   - type: Appearance
   - type: GenericVisualizer
-    enum.ReagentGrinderVisualState.BeakerAttached:
-      visuals:
+    visuals:
+      enum.ReagentGrinderVisualState.BeakerAttached:
         grinder:
           True: {state: "juicer1"}
           False: {state: "juicer0"}
