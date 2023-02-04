@@ -16,8 +16,6 @@
         amount: 1
       - id: SadTromboneImplanter
         amount: 1
-      - id: C4
-        amount: 2
 
 - type: entity
   id: CratePirateChest
