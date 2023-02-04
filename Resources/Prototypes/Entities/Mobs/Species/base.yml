@@ -142,6 +142,9 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
+      - map: [ "enum.CreamPiedVisualLayers.Pie" ]
+        sprite: "Effects/creampie.rsi"
+        visible: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -225,8 +228,12 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
-  - type: CreamPiedVisualizer
-    state: creampie_human
+  - type: GenericVisualizer
+    visuals:
+      enum.CreamPiedVisuals.Creamed:
+        enum.CreamPiedVisualLayers.Pie:
+          True: {visible: true, state: "creampie_human"}
+          False: {visible: false}
   - type: RotationVisuals
   - type: FloatingVisuals
   - type: FireVisuals
