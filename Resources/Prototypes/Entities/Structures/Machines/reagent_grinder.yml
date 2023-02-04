@@ -17,9 +17,10 @@
   - type: Appearance
   - type: GenericVisualizer
     enum.ReagentGrinderVisualState.BeakerAttached:
-      "grinder":
-        True: {state: "juicer1"}
-        False: {state: "juicer0"}
+      visuals:
+        grinder:
+          True: {state: "juicer1"}
+          False: {state: "juicer0"}
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -38,6 +39,7 @@
     snapCardinals: true
     layers:
     - map: [ "grinder" ]
+      state: "juicer0"
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: UpgradePowerDraw
