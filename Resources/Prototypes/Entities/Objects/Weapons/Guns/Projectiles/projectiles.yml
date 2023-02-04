@@ -462,10 +462,10 @@
       - state: ball
   - type: ExplodeOnTrigger
   - type: Explosive
-    explosionType: Default
+    explosionType: DemolitionCharge
     maxIntensity: 9
     intensitySlope: 7
-    totalIntensity: 145
+    totalIntensity: 120
     maxTileBreak: 1
   - type: PointLight
     radius: 2
