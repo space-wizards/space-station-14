@@ -144,6 +144,7 @@
       - map: [ "pocket2" ]
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
         visible: false
   - type: Physics
     bodyType: KinematicController
@@ -232,7 +233,7 @@
     visuals:
       enum.CreamPiedVisuals.Creamed:
         clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
-          True: {visible: true, state: "creampie_human"}
+          True: {visible: true}
           False: {visible: false}
   - type: RotationVisuals
   - type: FloatingVisuals
