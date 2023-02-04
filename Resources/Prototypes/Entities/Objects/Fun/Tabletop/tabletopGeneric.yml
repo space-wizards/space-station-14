@@ -9,8 +9,7 @@
     noRot: true
     sprite: Objects/Fun/Tabletop/generic_pieces.rsi
   - type: Appearance
-    visuals:
-      - type: TabletopItemVisualizer
+  - type: TabletopItemVisualizer
 
 - type: entity
   id: RedTabletopPiece
