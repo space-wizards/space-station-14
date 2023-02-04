@@ -345,16 +345,18 @@ namespace Content.Client.Viewport
         CeilInt
     }
 
+    [ByRefEvent]
     public record struct ProjectScreenToMapEvent
-    (ScalingViewport viewport, IClydeViewport? clydeViewport, Vector2 screenPosition)
+    (ScalingViewport viewport, IClydeViewport clydeViewport, Vector2 screenPosition)
     {
         public readonly ScalingViewport Viewport = viewport;
         public readonly IClydeViewport ClydeViewport = clydeViewport;
         public Vector2 ScreenPosition = screenPosition;
     }
 
+    [ByRefEvent]
     public record struct ProjectMapToScreenEvent
-    (ScalingViewport viewport, IClydeViewport? clydeViewport, Vector2 screenPosition)
+    (ScalingViewport viewport, IClydeViewport clydeViewport, Vector2 screenPosition)
     {
         public readonly ScalingViewport Viewport = viewport;
         public readonly IClydeViewport ClydeViewport = clydeViewport;

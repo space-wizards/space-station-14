@@ -90,12 +90,12 @@ namespace Content.Client.Singularity
         }
 
         private void OnProjectFromScreenToMap(ref ProjectScreenToMapEvent args)
-        {
-            // Mostly copypasta from the singularity shader.
+        {   // Mostly copypasta from the singularity shader.
             Vector2 finalCoords = args.ScreenPosition;
             Vector2 delta;
             float distance = 0.0f;
             float deformation = 0.0f;
+            float maxDistance = MaxDistance * EyeManager.PixelsPerMeter;
     
             for (int i = 0; i < MaxCount && i < _count; i++)
             {
@@ -107,20 +107,20 @@ namespace Content.Client.Singularity
                 // ensure deformation goes to zero at max distance
                 // avoids long-range single-pixel shifts that are noticeable when leaving PVS.
                 
-                if (distance >= MaxDistance) {
+                if (distance >= maxDistance) {
                     deformation = 0.0f;
                 } else {
-                    deformation *= (1.0f - MathF.Pow(distance/MaxDistance, 4.0f));
+                    deformation *= (1.0f - MathF.Pow(distance/maxDistance, 4.0f));
                 }
                 
                 if(deformation > 0.8)
                     deformation = MathF.Pow(deformation, 0.3f);
 
-                finalCoords -= delta * deformation;
+                Vector2 displacement = delta * deformation;
+                finalCoords -= displacement;
             }
-            
+
             args.ScreenPosition = finalCoords;
         }
     }
 }
-
