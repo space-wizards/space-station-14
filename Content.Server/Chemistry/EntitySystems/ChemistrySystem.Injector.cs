@@ -34,6 +34,7 @@ public sealed partial class ChemistrySystem
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
         SubscribeLocalEvent<InjectorComponent, HandDeselectedEvent>(OnInjectorDeselected);
+        SubscribeLocalEvent<InjectorComponent, DoAfterEvent>(OnInjectDoAfter);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
@@ -73,17 +74,6 @@ public sealed partial class ChemistrySystem
 
             args.Verbs.Add(verb);
         }
-    }
-
-    private static void OnInjectionCancelled(InjectionCancelledEvent ev)
-    {
-        ev.Component.CancelToken = null;
-    }
-
-    private void OnInjectionComplete(InjectionCompleteEvent ev)
-    {
-        ev.Component.CancelToken = null;
-        UseInjector(ev.Target, ev.User, ev.Component);
     }
 
     private void UseInjector(EntityUid target, EntityUid user, InjectorComponent component)
@@ -131,12 +121,6 @@ public sealed partial class ChemistrySystem
         }
     }
 
-    private static void OnInjectorDeselected(EntityUid uid, InjectorComponent component, HandDeselectedEvent args)
-    {
-        component.CancelToken?.Cancel();
-        component.CancelToken = null;
-    }
-
     private void OnSolutionChange(EntityUid uid, InjectorComponent component, SolutionChangedEvent args)
     {
         Dirty(component);
@@ -152,33 +136,32 @@ public sealed partial class ChemistrySystem
         args.State = new SharedInjectorComponent.InjectorComponentState(currentVolume, maxVolume, component.ToggleState);
     }
 
+    private void OnInjectDoAfter(EntityUid uid, InjectorComponent component, DoAfterEvent args)
+    {
+        if (args.Handled || args.Cancelled || args.Args.Target == null)
+            return;
+
+        UseInjector(args.Args.Target.Value, args.Args.User, component);
+
+    }
+
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
     {
         if (args.Handled || !args.CanReach)
             return;
 
-        if (component.CancelToken != null)
-        {
-            args.Handled = true;
-            return;
-        }
-
         //Make sure we have the attacking entity
-        if (args.Target is not { Valid: true } target ||
-            !HasComp<SolutionContainerManagerComponent>(uid))
-        {
+        if (args.Target is not { Valid: true } target || !HasComp<SolutionContainerManagerComponent>(uid))
             return;
-        }
 
         // Is the target a mob? If yes, use a do-after to give them time to respond.
-        if (HasComp<MobStateComponent>(target) ||
-            HasComp<BloodstreamComponent>(target))
+        if (HasComp<MobStateComponent>(target) || HasComp<BloodstreamComponent>(target))
         {
             // Are use using an injector capible of targeting a mob?
             if (component.IgnoreMobs)
                 return;
 
-            InjectDoAfter(component, args.User, target);
+            InjectDoAfter(component, args.User, target, uid);
             args.Handled = true;
             return;
         }
@@ -233,7 +216,7 @@ public sealed partial class ChemistrySystem
     /// <summary>
     /// Send informative pop-up messages and wait for a do-after to complete.
     /// </summary>
-    private void InjectDoAfter(InjectorComponent component, EntityUid user, EntityUid target)
+    private void InjectDoAfter(InjectorComponent component, EntityUid user, EntityUid target, EntityUid injector)
     {
         // Create a pop-up for the user
         _popup.PopupEntity(Loc.GetString("injector-component-injecting-user"), target, user);
@@ -278,29 +261,16 @@ public sealed partial class ChemistrySystem
             actualDelay /= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
-                _adminLogger.Add(LogType.Ingestion,
-                    $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
+                _adminLogger.Add(LogType.Ingestion, $"{EntityManager.ToPrettyString(user):user} is attempting to inject themselves with a solution {SolutionContainerSystem.ToPrettyString(solution):solution}.");
         }
 
-        component.CancelToken = new CancellationTokenSource();
-
-        _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, component.CancelToken.Token, target)
+        _doAfter.DoAfter(new DoAfterEventArgs(user, actualDelay, target:target, used:injector)
         {
             BreakOnUserMove = true,
             BreakOnDamage = true,
             BreakOnStun = true,
             BreakOnTargetMove = true,
-            MovementThreshold = 0.1f,
-            BroadcastFinishedEvent = new InjectionCompleteEvent()
-            {
-                Component = component,
-                User = user,
-                Target = target,
-            },
-            BroadcastCancelledEvent = new InjectionCancelledEvent()
-            {
-                Component = component,
-            }
+            MovementThreshold = 0.1f
         });
     }
 
@@ -311,8 +281,7 @@ public sealed partial class ChemistrySystem
 
         if (realTransferAmount <= 0)
         {
-            _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))),
-                component.Owner, user);
+            _popup.PopupEntity(Loc.GetString("injector-component-cannot-inject-message", ("target", Identity.Entity(targetBloodstream.Owner, EntityManager))), component.Owner, user);
             return;
         }
 
