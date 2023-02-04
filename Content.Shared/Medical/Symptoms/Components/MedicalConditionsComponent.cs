@@ -1,21 +1,20 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.MedicalConditions.Prototypes;
+using Content.Shared.Medical.Symptoms.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Shared.Medical.MedicalConditions.Components;
+namespace Content.Shared.Medical.Symptoms.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class MedicalConditionComponent : Component
+public sealed class SymptomComponent : Component
 {
     [DataField("description", required: true)]
     public string Description = string.Empty;
 
     [DataField("group", required: true,
-        customTypeSerializer: typeof(PrototypeIdSerializer<MedicalConditionGroupPrototype>))]
+        customTypeSerializer: typeof(PrototypeIdSerializer<SymptomGroupPrototype>))]
     public string Group = string.Empty;
 
     [DataField("alert", customTypeSerializer: typeof(PrototypeIdSerializer<AlertPrototype>))]
@@ -25,14 +24,14 @@ public sealed class MedicalConditionComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class MedicalConditionComponentState : ComponentState
+public sealed class SymptomComponentState : ComponentState
 {
     public string Description;
     public string Group;
     public string? Alert;
     public FixedPoint2 Severity;
 
-    public MedicalConditionComponentState(string description, string group, string? alert, FixedPoint2 severity)
+    public SymptomComponentState(string description, string group, string? alert, FixedPoint2 severity)
     {
         Description = description;
         Group = group;

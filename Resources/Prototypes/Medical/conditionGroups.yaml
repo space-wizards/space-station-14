@@ -1,8 +1,8 @@
-﻿- type: medicalConditionGroup
+﻿- type: symptomGroup
   id: Organic
-- type: medicalConditionGroup
+- type: symptomGroup
   id: Silicon
-- type: medicalConditionGroup
+- type: symptomGroup
   id: Mental
-- type: medicalConditionGroup
+- type: symptomGroup
   id: Physical

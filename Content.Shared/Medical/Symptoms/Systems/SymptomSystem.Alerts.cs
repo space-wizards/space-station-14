@@ -1,12 +1,12 @@
 ﻿using Content.Shared.Alert;
-using Content.Shared.Medical.MedicalConditions.Components;
+using Content.Shared.Medical.Symptoms.Components;
 
-namespace Content.Shared.Medical.MedicalConditions.Systems;
+namespace Content.Shared.Medical.Symptoms.Systems;
 
-public sealed partial class MedicalConditionSystem
+public sealed partial class SymptomSystem
 {
     private void UpdateAlerts(EntityUid receiverEntity, EntityUid conditionEntity,
-        MedicalConditionComponent? condition = null, MedicalConditionReceiverComponent? receiver = null)
+        SymptomComponent? condition = null, SymptomReceiverComponent? receiver = null)
     {
         if (!Resolve(receiverEntity, ref receiver) || !Resolve(conditionEntity, ref condition))
             return;

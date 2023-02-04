@@ -7,7 +7,7 @@ namespace Content.Shared.Medical.Consciousness.Components;
 public sealed class ConsciousnessComponent : Component
 {
     [DataField("passoutThreshold")] public FixedPoint2 PassOutThreshold = 30;
-    [DataField("base")]  public FixedPoint2 Base = 100;
+    [DataField("base")] public FixedPoint2 Base = 100;
     public FixedPoint2 Modifier;
     public FixedPoint2 Offset;
     public FixedPoint2 Cap;

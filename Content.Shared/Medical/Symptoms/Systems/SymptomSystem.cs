@@ -1,35 +1,33 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Alert;
-using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates;
-using Content.Shared.Medical.MedicalConditions.Components;
+using Content.Shared.Medical.Symptoms.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.Medical.MedicalConditions.Systems;
+namespace Content.Shared.Medical.Symptoms.Systems;
 
-public sealed partial class MedicalConditionSystem : EntitySystem
+public sealed partial class SymptomSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly SharedBodySystem _body = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly SharedContainerSystem _containers = default!;
 
-    private const string ConditionContainerId = "MedicalConditionsContainer";
+    private const string ConditionContainerId = "SymptomsContainer";
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<MedicalConditionComponent, ComponentGetState>(OnGetConditionState);
-        SubscribeLocalEvent<MedicalConditionComponent, ComponentHandleState>(OnHandleConditionState);
-        SubscribeLocalEvent<MedicalConditionReceiverComponent, ComponentGetState>(OnGetReceiverState);
-        SubscribeLocalEvent<MedicalConditionReceiverComponent, ComponentHandleState>(OnHandleReceiverState);
+        SubscribeLocalEvent<SymptomComponent, ComponentGetState>(OnGetConditionState);
+        SubscribeLocalEvent<SymptomComponent, ComponentHandleState>(OnHandleConditionState);
+        SubscribeLocalEvent<SymptomReceiverComponent, ComponentGetState>(OnGetReceiverState);
+        SubscribeLocalEvent<SymptomReceiverComponent, ComponentHandleState>(OnHandleReceiverState);
     }
 
     # region Public API
 
     public void AddCondition(EntityUid receiverEntity, string conditionName,
-        MedicalConditionReceiverComponent? receiver = null)
+        SymptomReceiverComponent? receiver = null)
     {
         if (!Resolve(receiverEntity, ref receiver))
             return;
@@ -41,7 +39,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         }
 
         var newEntity = Spawn(conditionName, receiverEntity.ToCoordinates());
-        var condition = EnsureComp<MedicalConditionComponent>(newEntity);
+        var condition = EnsureComp<SymptomComponent>(newEntity);
 
         if (receiver.PreventedConditionGroups != null && receiver.PreventedConditionGroups.Contains(condition.Group))
         {
@@ -50,18 +48,18 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         }
 
         container.Insert(newEntity);
-        var ev = new MedicalConditionAdded(receiverEntity, newEntity, condition, receiver);
+        var ev = new SymptomAdded(receiverEntity, newEntity, condition, receiver);
         ConditionsUpdated(receiverEntity, newEntity, condition, receiver);
         RaiseLocalEvent(receiverEntity, ref ev);
     }
 
     public bool RemoveCondition(EntityUid receiverEntity, string conditionName,
-        MedicalConditionReceiverComponent? receiver = null)
+        SymptomReceiverComponent? receiver = null)
     {
         if (!Resolve(receiverEntity, ref receiver))
             return false;
         EntityUid? conditionEntity = null;
-        MedicalConditionComponent? condition = null;
+        SymptomComponent? condition = null;
         foreach (var (foundConditionId, foundCondition) in GetAllConditions(receiverEntity))
         {
             if (Name(foundConditionId) != conditionName)
@@ -75,7 +73,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
             return false;
         _containers.RemoveEntity(receiverEntity, conditionEntity.Value);
 
-        var ev = new MedicalConditionRemoved(receiverEntity, conditionEntity.Value, condition, receiver);
+        var ev = new SymptomRemoved(receiverEntity, conditionEntity.Value, condition, receiver);
         ConditionsUpdated(receiverEntity, conditionEntity.Value, condition, receiver);
         RaiseLocalEvent(receiverEntity, ref ev);
         return true;
@@ -85,7 +83,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         [NotNullWhen(true)] out IReadOnlyList<EntityUid>? conditions)
     {
         conditions = null;
-        if (!HasComp<MedicalConditionReceiverComponent>(receiverEntity))
+        if (!HasComp<SymptomReceiverComponent>(receiverEntity))
             return false;
 
         if (!_containers.TryGetContainer(receiverEntity, ConditionContainerId, out var container) ||
@@ -100,7 +98,7 @@ public sealed partial class MedicalConditionSystem : EntitySystem
 
     public IEnumerable<EntityUid> GetAllConditionEntities(EntityUid receiverEntity)
     {
-        if (!HasComp<MedicalConditionReceiverComponent>(receiverEntity))
+        if (!HasComp<SymptomReceiverComponent>(receiverEntity))
             yield break;
         if (!_containers.TryGetContainer(receiverEntity, ConditionContainerId, out var container) ||
             container.ContainedEntities.Count == 0)
@@ -111,23 +109,23 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         }
     }
 
-    public IEnumerable<(EntityUid, MedicalConditionComponent)> GetAllConditions(EntityUid receiverEntity)
+    public IEnumerable<(EntityUid, SymptomComponent)> GetAllConditions(EntityUid receiverEntity)
     {
-        if (!HasComp<MedicalConditionReceiverComponent>(receiverEntity))
+        if (!HasComp<SymptomReceiverComponent>(receiverEntity))
             yield break;
         if (!TryGetAllConditionEntities(receiverEntity, out var conditions))
             yield break;
 
         foreach (var conditionId in conditions)
         {
-            if (TryComp<MedicalConditionComponent>(conditionId, out var condition))
+            if (TryComp<SymptomComponent>(conditionId, out var condition))
                 yield return (conditionId, condition);
         }
     }
 
     public bool TryGetCondition(EntityUid receiverEntity, string conditionName,
-        [NotNullWhen(true)] out (EntityUid, MedicalConditionComponent)? conditionData,
-        MedicalConditionReceiverComponent? receiver = null)
+        [NotNullWhen(true)] out (EntityUid, SymptomComponent)? conditionData,
+        SymptomReceiverComponent? receiver = null)
     {
         conditionData = null;
         if (!Resolve(receiverEntity, ref receiver) || !TryGetAllConditionEntities(receiverEntity, out var conditions))
@@ -148,28 +146,28 @@ public sealed partial class MedicalConditionSystem : EntitySystem
 
     #region Private Implementation
 
-    private void OnGetReceiverState(EntityUid uid, MedicalConditionReceiverComponent component,
+    private void OnGetReceiverState(EntityUid uid, SymptomReceiverComponent component,
         ref ComponentGetState args)
     {
         args.State =
-            new MedicalConditionReceiverComponentState(
+            new SymptomReceiverComponentState(
                 component.PreventedConditions,
                 component.PreventedConditionGroups);
     }
 
-    private void OnHandleReceiverState(EntityUid uid, MedicalConditionReceiverComponent component,
+    private void OnHandleReceiverState(EntityUid uid, SymptomReceiverComponent component,
         ref ComponentHandleState args)
     {
-        if (args.Current is not MedicalConditionReceiverComponentState state)
+        if (args.Current is not SymptomReceiverComponentState state)
             return;
         component.PreventedConditions = state.PreventedConditions;
         component.PreventedConditionGroups = state.PreventedConditionGroups;
     }
 
-    private void OnHandleConditionState(EntityUid uid, MedicalConditionComponent component,
+    private void OnHandleConditionState(EntityUid uid, SymptomComponent component,
         ref ComponentHandleState args)
     {
-        if (args.Current is not MedicalConditionComponentState state)
+        if (args.Current is not SymptomComponentState state)
             return;
         component.Alert = state.Alert;
         component.Group = state.Group;
@@ -177,9 +175,9 @@ public sealed partial class MedicalConditionSystem : EntitySystem
         component.Severity = state.Severity;
     }
 
-    private void OnGetConditionState(EntityUid uid, MedicalConditionComponent component, ref ComponentGetState args)
+    private void OnGetConditionState(EntityUid uid, SymptomComponent component, ref ComponentGetState args)
     {
-        args.State = new MedicalConditionComponentState(
+        args.State = new SymptomComponentState(
             component.Description,
             component.Group,
             component.Alert,
@@ -187,9 +185,9 @@ public sealed partial class MedicalConditionSystem : EntitySystem
     }
 
     private void ConditionsUpdated(EntityUid receiverEntity, EntityUid conditionEntity,
-        MedicalConditionComponent condition, MedicalConditionReceiverComponent receiver)
+        SymptomComponent condition, SymptomReceiverComponent receiver)
     {
-        var ev2 = new MedicalConditionUpdated(receiverEntity, conditionEntity, condition, receiver);
+        var ev2 = new SymptomUpdated(receiverEntity, conditionEntity, condition, receiver);
         RaiseLocalEvent(receiverEntity, ref ev2, true);
         UpdateAlerts(receiverEntity, conditionEntity, condition, receiver);
     }
