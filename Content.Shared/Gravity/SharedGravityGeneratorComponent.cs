@@ -8,6 +8,37 @@ namespace Content.Shared.Gravity
     public class SharedGravityGeneratorComponent : Component
     {
         /// <summary>
+        /// A map of the sprites used by the gravity generator given its status.
+        /// </summary>
+        [DataField("spriteMap")]
+        [Access(typeof(SharedGravitySystem))]
+        public Dictionary<GravityGeneratorStatus, string> SpriteMap = new();
+        
+        /// <summary>
+        /// The sprite used by the core of the gravity generator when the gravity generator is starting up.
+        /// </summary>
+        [DataField("coreStartupState")]
+        public string CoreStartupState = "startup";
+        
+        /// <summary>
+        /// The sprite used by the core of the gravity generator when the gravity generator is idle.
+        /// </summary>
+        [DataField("coreIdleState")]
+        public string CoreIdleState = "idle";
+        
+        /// <summary>
+        /// The sprite used by the core of the gravity generator when the gravity generator is activating.
+        /// </summary>
+        [DataField("coreActivatingState")]
+        public string CoreActivatingState = "activating";
+        
+        /// <summary>
+        /// The sprite used by the core of the gravity generator when the gravity generator is active.
+        /// </summary>
+        [DataField("coreActivatedState")]
+        public string CoreActivatedState = "activated";
+
+        /// <summary>
         ///     Sent to the server to set whether the generator should be on or off
         /// </summary>
         [Serializable, NetSerializable]
