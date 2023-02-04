@@ -49,12 +49,12 @@ ui-options-hud-theme-modernized = Модернизированный
 ui-options-hud-theme-classic = Классический
 ui-options-vp-stretch = Растянуть изображение для соответствия окну игры
 ui-options-vp-scale = Фиксированный масштаб окна игры: x{ $scale }
-ui-options-vp-integer-scaling = Prefer integer scaling (might cause black bars/clipping)
+ui-options-vp-integer-scaling = Предпочитать масштабирование (может вызвать появление чёрных полос/обрезание)
 ui-options-vp-integer-scaling-tooltip =
-    If this option is enabled, the viewport will be scaled using an integer value
-    at specific resolutions. While this results in crisp textures, it also often
-    means that black bars appear at the top/bottom of the screen or that part
-    of the viewport is not visible.
+    Когда эта опция включена, окно игры будет масштабировано используя значение ширины
+    при специальных разрешениях экрана. Это приводит к чёткости видимости текстур, а также это
+    обычно значит что сверху/снизу экрана появятся чёрные полосы или эта часть
+    окна игры будет не видима.
 ui-options-vp-low-res = Изображение низкого разрешения
 ui-options-parallax-low-quality = Низкокачественный параллакс (фон)
 ui-options-fps-counter = Показать счетчик FPS
