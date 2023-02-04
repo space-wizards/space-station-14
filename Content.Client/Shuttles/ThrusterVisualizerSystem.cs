@@ -3,8 +3,14 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Shuttles;
 
+/// <summary>
+/// Handles making a thruster visibly turn on/emit an exhaust plume according to its state. 
+/// </summary>
 public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualsComponent>
 {
+    /// <summary>
+    /// Updates whether or not the thruster is visibly active/thrusting.
+    /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, ThrusterVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -19,39 +25,34 @@ public sealed class ThrusterVisualizerSystem : VisualizerSystem<ThrusterVisualsC
 
                 if (AppearanceSystem.TryGetData<bool>(uid, ThrusterVisualState.Thrusting, out var thrusting, args.Component) && thrusting)
                 {
-                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out var thrustingLayer))
-                    {
-                        args.Sprite.LayerSetVisible(thrustingLayer, true);
-                    }
-
-                    if (args.Sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer))
-                    {
-                        args.Sprite.LayerSetVisible(unshadedLayer, true);
-                    }
+                    SetThrusting(uid, true, args.Component, args.Sprite);
                 }
                 else
                 {
-                    DisableThrusting(uid, args.Component, args.Sprite);
+                    SetThrusting(uid, false, args.Component, args.Sprite);
                 }
 
                 break;
             case false:
                 args.Sprite.LayerSetVisible(ThrusterVisualLayers.ThrustOn, false);
-                DisableThrusting(uid, args.Component, args.Sprite);
+                SetThrusting(uid, true, args.Component, args.Sprite);
                 break;
         }
     }
 
-    private void DisableThrusting(EntityUid uid, AppearanceComponent appearance, SpriteComponent sprite)
+    /// <summary>
+    /// Sets whether or not the exhaust plume of the thruster is visible or not.
+    /// </summary>
+    private void SetThrusting(EntityUid uid, bool value, AppearanceComponent appearance, SpriteComponent sprite)
     {
         if (sprite.LayerMapTryGet(ThrusterVisualLayers.Thrusting, out var thrustingLayer))
         {
-            sprite.LayerSetVisible(thrustingLayer, false);
+            sprite.LayerSetVisible(thrustingLayer, value);
         }
 
         if (sprite.LayerMapTryGet(ThrusterVisualLayers.ThrustingUnshaded, out var unshadedLayer))
         {
-            sprite.LayerSetVisible(unshadedLayer, false);
+            sprite.LayerSetVisible(unshadedLayer, value);
         }
     }
 }
