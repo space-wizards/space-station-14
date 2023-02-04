@@ -1,21 +1,4 @@
 Entries:
-- author: vulppine
-  changes:
-  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
-      of it being its own screen.', type: Tweak}
-  id: 2484
-  time: '2022-10-18T06:45:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some chat sanitization issues that allowed some invalid entity
-      names to mess with the chat window., type: Fix}
-  id: 2485
-  time: '2022-10-18T06:59:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Stealth boxes no longer cause you to suffocate., type: Fix}
-  id: 2486
-  time: '2022-10-18T23:04:48.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: NPCs will now always sleep when a player attaches and wake when they
@@ -2927,3 +2910,18 @@ Entries:
     type: Fix}
   id: 2983
   time: '2023-02-03T03:46:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix construction errors., type: Fix}
+  id: 2984
+  time: '2023-02-03T12:46:47.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Broken light bulbs on disposal units have been replaced., type: Fix}
+  id: 2985
+  time: '2023-02-03T22:26:50.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Space Tick AI is no longer friendly and will attack players., type: Fix}
+  id: 2986
+  time: '2023-02-04T02:02:52.0000000+00:00'
