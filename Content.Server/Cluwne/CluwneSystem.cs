@@ -38,13 +38,10 @@ public sealed class CluwneSystem : EntitySystem
     {
         base.Initialize();
 
-
-
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
             new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
-
     }
 
     public override void
@@ -56,16 +53,15 @@ public sealed class CluwneSystem : EntitySystem
         foreach (var cluwnecomp in EntityQuery<CluwneComponent>())
         {
             cluwnecomp.LastGiggleCooldown -= frameTime;
-
             RandomEmote(cluwnecomp.Owner, cluwnecomp);
         }
-
     }
 
-    public EmoteSoundsPrototype? EmoteSounds;
     /// <summary>
     /// Cluwne will cluwne laugh when emoting.
     /// </summary>
+    public EmoteSoundsPrototype? EmoteSounds;
+
     private void OnComponentStartup(EntityUid uid, CluwneComponent component, ComponentStartup args)
     {
         if (component.EmoteSoundsId == null)
@@ -83,11 +79,10 @@ public sealed class CluwneSystem : EntitySystem
         meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
 
         SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
-
     }
 
     /// <summary>
-    /// Makes sure the cluwne emits a giggle on an emote.
+    /// Makes sure the cluwne emits a cluwnelaugh on an emote that has a sound such as lol.
     /// </summary>
     private void OnEmote(EntityUid uid, CluwneComponent component, ref EmoteEvent args)
     {
@@ -102,12 +97,10 @@ public sealed class CluwneSystem : EntitySystem
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
         if (args.NewMobState == MobState.Dead)
-        {
+    
             RemComp<CluwneComponent>(uid);
             var damageSpec = new DamageSpecifier(_prototypeManager.Index<DamageGroupPrototype>("Genetic"), 300);
             _damageableSystem.TryChangeDamage(uid, damageSpec);
-        }
-
     }
 
     /// <summary>
@@ -126,8 +119,7 @@ public sealed class CluwneSystem : EntitySystem
         }
 
         else if (_robustRandom.Prob(component.GiggleRandomChance))
-
-            _chat.TrySendInGameICMessage(uid, "giggles", InGameICChatType.Emote, false, false);
+             _chat.TrySendInGameICMessage(uid, "giggles", InGameICChatType.Emote, false, false);
 
         else if (_robustRandom.Prob(component.GiggleRandomChance))
         {
@@ -136,10 +128,7 @@ public sealed class CluwneSystem : EntitySystem
         }
 
         else
-
             component.LastGiggleCooldown = component.GiggleCooldown;
-
     }
-
 }
 
