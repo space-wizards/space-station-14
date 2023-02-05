@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will now always sleep when a player attaches and wake when they
-      leave., type: Tweak}
-  id: 2487
-  time: '2022-10-18T23:07:44.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Extended has been reworked into ''Survival'' mode. No explicit antagonists
@@ -2925,3 +2919,9 @@ Entries:
   - {message: Space Tick AI is no longer friendly and will attack players., type: Fix}
   id: 2986
   time: '2023-02-04T02:02:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed tile name not displaying correctly when another player would point
+      at tiles., type: Fix}
+  id: 2987
+  time: '2023-02-05T02:02:25.0000000+00:00'
