@@ -109,7 +109,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("metabolizerType");
             _prototypeManager.RegisterIgnore("metabolismGroup");
             _prototypeManager.RegisterIgnore("salvageMap");
-            _prototypeManager.RegisterIgnore("salvageExpedition");
             _prototypeManager.RegisterIgnore("salvageFaction");
             _prototypeManager.RegisterIgnore("gamePreset");
             _prototypeManager.RegisterIgnore("gameRule");

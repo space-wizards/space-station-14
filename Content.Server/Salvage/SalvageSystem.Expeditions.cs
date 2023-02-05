@@ -4,13 +4,15 @@ using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
-using Content.Server.Salvage.Expeditions.Extraction;
 using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Procedural;
 using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions.Extraction;
+using Content.Shared.Salvage.Expeditions.Structure;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
@@ -93,6 +95,7 @@ public sealed partial class SalvageSystem
         component.ActiveMission = 0;
         component.NextOffer = _timing.CurTime + MissionCooldown;
         component.MissionCompleted = false;
+        UpdateConsoles(component);
     }
 
     private void GenerateMissions(SalvageExpeditionDataComponent component)
@@ -107,12 +110,16 @@ public sealed partial class SalvageSystem
         // TODO: sealed record
         for (var i = 0; i < MissionLimit; i++)
         {
+            var config = _random.Pick(configs);
+            var minTime = config.MinDuration.TotalSeconds;
+            var maxTime = config.MaxDuration.TotalSeconds;
+
             var mission = new SalvageMission()
             {
                 Index = component.NextIndex,
-                Config = _random.Pick(configs).ID,
+                Config = config.ID,
                 Seed = _random.Next(),
-                Duration = TimeSpan.FromSeconds(_random.Next(9 * 60 / timeBlock, 12 * 60 / timeBlock) * timeBlock),
+                Duration = TimeSpan.FromSeconds(Math.Round((_random.NextDouble() * (maxTime - minTime) + minTime) / timeBlock) * timeBlock),
             };
 
             component.Missions[component.NextIndex++] = mission;

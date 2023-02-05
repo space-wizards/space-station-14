@@ -1,8 +1,8 @@
-using Content.Server.Procedural.Corridors;
-using Content.Server.Procedural.Rooms;
-using Content.Server.Procedural.Walls;
+using Content.Shared.Procedural.Corridors;
+using Content.Shared.Procedural.Rooms;
+using Content.Shared.Procedural.Walls;
 
-namespace Content.Server.Procedural;
+namespace Content.Shared.Procedural;
 
 [DataDefinition]
 public sealed class BSPDunGen : IDungeonGenerator

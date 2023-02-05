@@ -2,7 +2,7 @@ using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Procedural;
+namespace Content.Shared.Procedural;
 
 [Prototype("dungeonConfig")]
 public sealed class DungeonConfigPrototype : IPrototype

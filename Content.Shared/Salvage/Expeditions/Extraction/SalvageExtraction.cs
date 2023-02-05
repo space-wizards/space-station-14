@@ -1,6 +1,4 @@
-using Content.Shared.Random;
-
-namespace Content.Server.Salvage.Expeditions.Extraction;
+namespace Content.Shared.Salvage.Expeditions.Extraction;
 
 public sealed class SalvageExtraction : ISalvageMission
 {

@@ -1,6 +1,6 @@
-using Content.Server.Procedural.Walls;
+using Content.Shared.Procedural.Walls;
 
-namespace Content.Server.Procedural;
+namespace Content.Shared.Procedural;
 
 [DataDefinition]
 public sealed class RandomWalkDunGen : IDungeonGenerator

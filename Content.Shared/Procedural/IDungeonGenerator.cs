@@ -1,4 +1,4 @@
-namespace Content.Server.Procedural;
+namespace Content.Shared.Procedural;
 
 public interface IDungeonGenerator
 {

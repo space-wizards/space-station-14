@@ -1,9 +1,9 @@
-using Content.Server.Procedural;
 using Content.Shared.Parallax.Biomes;
+using Content.Shared.Procedural;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Salvage.Expeditions;
+namespace Content.Shared.Salvage;
 
 [Prototype("salvageExpedition")]
 public sealed class SalvageExpeditionPrototype : IPrototype

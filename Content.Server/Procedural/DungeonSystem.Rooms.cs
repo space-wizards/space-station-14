@@ -1,5 +1,6 @@
 using System.Linq;
-using Content.Server.Procedural.Rooms;
+using Content.Shared.Procedural;
+using Content.Shared.Procedural.Rooms;
 
 namespace Content.Server.Procedural;
 

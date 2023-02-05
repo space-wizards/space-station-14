@@ -1,4 +1,4 @@
-namespace Content.Server.Salvage.Expeditions.Structure;
+namespace Content.Shared.Salvage.Expeditions.Structure;
 
 /// <summary>
 /// Destroy the specified number of structures to finish the expedition.

@@ -1,4 +1,4 @@
-using Content.Server.Procedural.Corridors;
+using Content.Shared.Procedural.Corridors;
 
 namespace Content.Server.Procedural;
 

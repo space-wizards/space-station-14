@@ -1,4 +1,4 @@
-namespace Content.Server.Procedural.Corridors;
+namespace Content.Shared.Procedural.Corridors;
 
 public sealed class SimpleCorridorGen : ICorridorGen
 {

@@ -4,7 +4,9 @@
                       MinSize="400 600">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="NextOfferLabel" Text="Next offer: "></Label>
+            <Label Name="NextOfferLabel"
+                   Text="Next offer:"
+                   Margin="5"></Label>
             <ProgressBar Name="NextOfferBar"
                          HorizontalExpand="True"
                          MinValue="0"
@@ -13,10 +15,12 @@
             <Label Name="NextOfferText" Text="0.00"
                    Margin="5"/>
         </BoxContainer>
+        <controls:HLine Color="#404040" Thickness="2" Margin="5"/>
         <ScrollContainer VerticalExpand="True"
                          Margin="5">
             <BoxContainer Name="Container"
-                          Orientation="Vertical"/>
+                          Orientation="Vertical"
+                          Margin="0 0 5 0"/>
         </ScrollContainer>
     </BoxContainer>
 </controls:FancyWindow>

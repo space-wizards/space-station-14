@@ -1,6 +1,9 @@
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Shared.Procedural;
+using Content.Shared.Salvage;
+using Content.Shared.Salvage.Expeditions.Structure;
 using Robust.Shared.Map.Components;
 
 namespace Content.Server.Salvage;

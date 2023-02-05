@@ -1,3 +1,5 @@
+using Content.Shared.Procedural;
+
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem

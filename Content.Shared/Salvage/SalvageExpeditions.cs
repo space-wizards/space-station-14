@@ -74,15 +74,12 @@ public sealed class SalvageMission
     [ViewVariables]
     public ushort Index;
 
-    // TODO: Typeserializer
-    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true)]
+    [ViewVariables(VVAccess.ReadWrite), DataField("config", required: true, customTypeSerializer:typeof(SalvageExpeditionPrototype))]
     public string Config = default!;
 
     [ViewVariables] public TimeSpan Duration;
 
     [ViewVariables] public int Seed;
-
-    // TODO: Environment mods
 
     // TODO: Hazard pay
 }

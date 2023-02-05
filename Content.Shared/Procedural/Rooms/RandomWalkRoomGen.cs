@@ -1,4 +1,4 @@
-namespace Content.Server.Procedural.Rooms;
+namespace Content.Shared.Procedural.Rooms;
 
 public sealed class RandomWalkRoomGen : IRoomGen
 {

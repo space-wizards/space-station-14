@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.Salvage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 

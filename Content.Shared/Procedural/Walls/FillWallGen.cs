@@ -1,4 +1,4 @@
-namespace Content.Server.Procedural.Walls;
+namespace Content.Shared.Procedural.Walls;
 
 /// <summary>
 /// Fills every non-floor tile with a wall.

@@ -1,4 +1,4 @@
-namespace Content.Server.Procedural.Walls;
+namespace Content.Shared.Procedural.Walls;
 
 /// <summary>
 /// Places walls along the floor boundaries, outside of the floors.

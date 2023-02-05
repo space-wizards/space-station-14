@@ -1,4 +1,4 @@
-using Content.Server.Procedural.Walls;
+using Content.Shared.Procedural.Walls;
 
 namespace Content.Server.Procedural;
 
