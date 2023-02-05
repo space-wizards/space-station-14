@@ -1,11 +1,13 @@
-using Content.Shared.Damage;
 
 namespace Content.Server.Abilities.Boxer
 {
-    /// <summary>
-    /// Boxer gets a bonus for these, and their fists, but not other unarmed weapons.
-    /// </summary>
     [RegisterComponent]
     public sealed class BoxingGlovesComponent : Component
-    {}
+    {
+        [DataField("rangeModifier")]
+        public float RangeModifier = 1.5f;
+
+        [DataField("stamDamageModifier")]
+        public float StamDamageModifier = 1.75f;
+    }
 }
