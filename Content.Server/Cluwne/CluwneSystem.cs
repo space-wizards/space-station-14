@@ -88,7 +88,7 @@ public sealed class CluwneSystem : EntitySystem
     }
 
     /// <summary>
-    /// If cluwne is dead then the cluwne mechanic gets removed.
+    /// If mob is dead then the cluwne mechanic gets removed from mob.
     /// </summary>
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
