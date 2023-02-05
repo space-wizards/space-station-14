@@ -1,43 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
-  - {message: Pickaxes now mine faster., type: Tweak}
-  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
-      rarity.', type: Tweak}
-  id: 2492
-  time: '2022-10-20T13:16:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix wallmount interactions., type: Fix}
-  id: 2493
-  time: '2022-10-20T13:20:53.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
-  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
-      will have the ultimate sleepover.', type: Tweak}
-  id: 2494
-  time: '2022-10-21T18:47:09.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The floor tiles have been resprited. They should look pretty similar,
-      but are a lot easier to edit for the developers considering they weren''t jpeg
-      compressed at some point in their life.', type: Tweak}
-  - {message: Removed sovl!, type: Remove}
-  id: 2495
-  time: '2022-10-22T01:53:25.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added scarfs to the Clothesmate., type: Add}
-  id: 2496
-  time: '2022-10-22T05:06:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix hands GUI showing icons for items held by other players., type: Fix}
-  - {message: Fix weapon chargers no longer ejecting on left-click., type: Fix}
-  id: 2497
-  time: '2022-10-22T16:13:25.0000000+00:00'
 - author: moony
   changes:
   - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
@@ -2923,3 +2884,38 @@ Entries:
     type: Tweak}
   id: 2991
   time: '2023-02-05T15:38:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
+  id: 2992
+  time: '2023-02-05T19:44:36.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added virology lab coats to the virodrobe, type: Add}
+  id: 2993
+  time: '2023-02-05T19:47:52.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
+  id: 2994
+  time: '2023-02-05T19:49:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Anomaly vessels now visually change depending on the stability of their
+      linked anomaly., type: Add}
+  - {message: Anomaly vessels have a beep that speeds up as the anomaly destabilizes.
+      Almost sounds like a bomb..., type: Add}
+  id: 2995
+  time: '2023-02-05T19:52:30.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can now put explosives with timer in cream pie. Prank your friend!
+      (just imagine their face), type: Add}
+  - {message: cream pie now leaves pie tin after throw, type: Fix}
+  id: 2996
+  time: '2023-02-05T20:07:52.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Unrandomized airlock painter styles, type: Fix}
+  id: 2997
+  time: '2023-02-05T20:22:37.0000000+00:00'
