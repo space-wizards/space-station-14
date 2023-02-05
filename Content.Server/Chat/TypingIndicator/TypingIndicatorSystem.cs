@@ -56,9 +56,9 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
     private void SetTypingIndicatorState(EntityUid uid, TypingIndicatorState state, AppearanceComponent? appearance = null) // Corvax-TypingIndicator
     {
-        if (!Resolve(uid, ref appearance, false))
-            return;
+        // if (!Resolve(uid, ref appearance, false)) // Corvax-TypingIndicator
+        //     return;
 
-        _appearance.SetData(uid, TypingIndicatorVisuals.State, appearance); // Corvax-TypingIndicator
+        _appearance.SetData(uid, TypingIndicatorVisuals.State, state); // Corvax-TypingIndicator
     }
 }
