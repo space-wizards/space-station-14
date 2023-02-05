@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Added scarfs to the Clothesmate., type: Add}
-  id: 2496
-  time: '2022-10-22T05:06:46.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fix hands GUI showing icons for items held by other players., type: Fix}
@@ -2918,3 +2913,10 @@ Entries:
       Almost sounds like a bomb..., type: Add}
   id: 2995
   time: '2023-02-05T19:52:30.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can now put explosives with timer in cream pie. Prank your friend!
+      (just imagine their face), type: Add}
+  - {message: cream pie now leaves pie tin after throw, type: Fix}
+  id: 2996
+  time: '2023-02-05T20:07:52.0000000+00:00'
