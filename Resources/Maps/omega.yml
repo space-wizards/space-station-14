@@ -97889,4 +97889,10 @@ entities:
     type: Transform
   - location: anomaly Lab
     type: WarpPoint
+- uid: 12518
+  type: BoxMouthSwab
+  components:
+  - pos: -40.434937,-35.118546
+    parent: 0
+    type: Transform
 ...
