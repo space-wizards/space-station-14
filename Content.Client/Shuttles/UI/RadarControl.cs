@@ -200,7 +200,7 @@ public sealed class RadarControl : Control
         foreach (var grid in _mapManager.FindGridsIntersecting(mapPosition.MapId,
                      new Box2(mapPosition.Position - MaxRadarRange, mapPosition.Position + MaxRadarRange)))
         {
-            if (grid.Owner == ourGridId)
+            if (grid.Owner == ourGridId || !fixturesQuery.TryGetComponent(grid.Owner, out var gridFixtures))
                 continue;
 
             var gridBody = bodyQuery.GetComponent(grid.Owner);
@@ -226,7 +226,6 @@ public sealed class RadarControl : Control
                 name = Loc.GetString("shuttle-console-unknown");
 
             var gridXform = xformQuery.GetComponent(grid.Owner);
-            var gridFixtures = fixturesQuery.GetComponent(grid.Owner);
             var gridMatrix = gridXform.WorldMatrix;
             Matrix3.Multiply(in gridMatrix, in offsetMatrix, out var matty);
             var color = iff?.Color ?? IFFComponent.IFFColor;
@@ -350,7 +349,7 @@ public sealed class RadarControl : Control
 
     private void DrawGrid(DrawingHandleScreen handle, Matrix3 matrix, FixturesComponent component, Color color)
     {
-        foreach (var (_, fixture) in component.Fixtures)
+        foreach (var fixture in component.Fixtures.Values)
         {
             // If the fixture has any points out of range we won't draw any of it.
             var invalid = false;

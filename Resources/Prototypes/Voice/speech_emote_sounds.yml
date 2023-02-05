@@ -1,0 +1,70 @@
+# species
+- type: emoteSounds
+  id: MaleHuman
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: MaleScreams
+    Laugh:
+      collection: MaleLaugh
+
+- type: emoteSounds
+  id: FemaleHuman
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      collection: FemaleScreams
+    Laugh:
+      collection: FemaleLaugh
+
+- type: emoteSounds
+  id: UnisexReptilian
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Reptilian/reptilian_scream.ogg
+    Laugh:
+      path: /Audio/Animals/lizard_happy.ogg
+
+- type: emoteSounds
+  id: UnisexVox
+  sound:
+    path: /Audio/Voice/Vox/shriek1.ogg
+    params:
+      variation: 0.125
+
+# body emotes
+- type: emoteSounds
+  id: GeneralBodyEmotes
+  sounds:
+    Clap:
+      collection: Claps
+    Snap:
+      collection: Snaps
+      params:
+        volume: -6
+
+# mobs
+- type: emoteSounds
+  id: Zombie
+  sound:
+    collection: ZombieScreams
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Skeleton
+  sound:
+    path: /Audio/Voice/Skeleton/skeleton_scream.ogg
+    params:
+      variation: 0.125
+
+- type: emoteSounds
+  id: Mouse
+  sound:
+    path: /Audio/Animals/mouse_squeak.ogg
+    params:
+      variation: 0.125

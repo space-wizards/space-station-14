@@ -45,7 +45,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                target, message, verbs?.ToList(), centerAtCursor
+                target, 0, message, verbs?.ToList(), centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
@@ -61,14 +61,14 @@ namespace Content.Server.Examine
                 || !EntityManager.EntityExists(request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityNotFoundMessage), channel);
+                    request.EntityUid, request.Id, _entityNotFoundMessage), channel);
                 return;
             }
 
             if (!CanExamine(playerEnt, request.EntityUid))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, _entityOutOfRangeMessage, knowTarget: false), channel);
+                    request.EntityUid, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
                 return;
             }
 
@@ -77,7 +77,8 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(request.EntityUid, playerEnt, typeof(ExamineVerb));
 
             var text = GetExamineText(request.EntityUid, player.AttachedEntity);
-            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(request.EntityUid, text, verbs?.ToList()), channel);
+            RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
+                request.EntityUid, request.Id, text, verbs?.ToList()), channel);
         }
     }
 }

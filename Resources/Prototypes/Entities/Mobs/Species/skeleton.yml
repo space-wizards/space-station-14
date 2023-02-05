@@ -49,6 +49,11 @@
       60: 0.9
       80: 0.7
   - type: Speech
+  - type: Vocal
+    sounds:
+      Male: Skeleton
+      Female: Skeleton
+      Unsexed: Skeleton
   - type: SkeletonAccent
   - type: Fixtures
     fixtures:

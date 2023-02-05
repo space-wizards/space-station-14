@@ -71,9 +71,6 @@
 
 - type: latheRecipe
   id: NodeScanner
-  icon:
-    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
-    state: icon
   result: NodeScanner
   completetime: 2
   materials:
