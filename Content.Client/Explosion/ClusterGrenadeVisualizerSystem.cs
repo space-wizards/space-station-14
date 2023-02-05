@@ -10,7 +10,7 @@ public sealed class ClusterGrenadeVisualizerSystem : VisualizerSystem<ClusterGre
         if (args.Sprite == null)
             return;
 
-        if (AppearanceSystem.TryGetData(uid, ClusterGrenadeVisuals.GrenadesCounter, out int grenadesCounter, args.Component))
+        if (AppearanceSystem.TryGetData<int>(uid, ClusterGrenadeVisuals.GrenadesCounter, out var grenadesCounter, args.Component))
             args.Sprite.LayerSetState(0, $"{comp.State}-{grenadesCounter}");
     }
 }
