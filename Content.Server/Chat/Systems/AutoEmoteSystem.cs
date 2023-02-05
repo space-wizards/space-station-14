@@ -86,7 +86,6 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (autoEmote.Emotes.Contains(autoEmotePrototypeId))
             return false;
 
-
         autoEmote.Emotes.Add(autoEmotePrototypeId);
         ResetTimer(uid, autoEmotePrototypeId, autoEmote);
 
