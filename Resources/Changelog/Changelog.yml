@@ -1,11 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
-  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
-      will have the ultimate sleepover.', type: Tweak}
-  id: 2494
-  time: '2022-10-21T18:47:09.0000000+00:00'
 - author: moony
   changes:
   - {message: 'The floor tiles have been resprited. They should look pretty similar,
@@ -2920,3 +2913,8 @@ Entries:
   - {message: Added virology lab coats to the virodrobe, type: Add}
   id: 2993
   time: '2023-02-05T19:47:52.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
+  id: 2994
+  time: '2023-02-05T19:49:03.0000000+00:00'
