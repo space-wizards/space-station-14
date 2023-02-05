@@ -34,37 +34,32 @@ public sealed class UploadFolder : IConsoleCommand
 
         var dialog = IoCManager.Resolve<IFileDialogManager>();
 
-        var filters = new FileDialogFilters(new FileDialogFilters.Group(uploadPath.Extension));
-        var streams = await dialog.OpenFolder();
+        await foreach (var file in dialog.OpenFolder())
+        {
+            if (file == null)
+            {
+                break;
+            }
 
+            var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
 
+            if (sizeLimit > 0f && file.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
+            {
+                shell.WriteError($"File above the current size limit! It must be smaller than {sizeLimit} MB.");
+                return;
+            }
 
-        var uploadPath1 = new ResourcePath(args[0]).ToRelativePath();
+            var data = file.CopyToArray();
 
+            var netManager = IoCManager.Resolve<INetManager>();
+            var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
+            msg.RelativePath = uploadPath;
+            msg.Data = data;
 
-        // if (streams == null)
-        // {
-        //     shell.WriteError("Error picking file!");
-        //     return;
-        // }
-        //
-        // var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
-        //
-        // if (sizeLimit > 0f && streams.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
-        // {
-        //     shell.WriteError($"File above the current size limit! It must be smaller than {sizeLimit} MB.");
-        //     return;
-        // }
-        //
-        // var data = streams.CopyToArray();
-        //
-        // var netManager = IoCManager.Resolve<INetManager>();
-        // var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
-        //
-        // msg.RelativePath = uploadPath;
-        // msg.Data = data;
-        //
-        // netManager.ClientSendMessage(msg);
+            netManager.ClientSendMessage(msg);
+
+        }
+
     }
 }
