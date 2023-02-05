@@ -1,11 +1,4 @@
 Entries:
-- author: Carbonhell
-  changes:
-  - {message: 'Low power lighting radius animations for lanterns, floodlights and
-      flashlights now properly restore the original light radius when going back to
-      full power.', type: Fix}
-  id: 2491
-  time: '2022-10-19T18:34:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
@@ -2924,3 +2917,9 @@ Entries:
   - {message: Added various encryption keys to the PTech., type: Tweak}
   id: 2990
   time: '2023-02-05T10:29:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Voice Masks now use their set names on radio, instead of your ID.',
+    type: Tweak}
+  id: 2991
+  time: '2023-02-05T15:38:14.0000000+00:00'
