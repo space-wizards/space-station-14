@@ -3,9 +3,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Explosion;
 
-public sealed class ClusterGrenadeVisualizerSystem : VisualizerSystem<ClusterGrenadeVisualizerComponent>
+public sealed class ClusterGrenadeVisualizerSystem : VisualizerSystem<ClusterGrenadeVisualsComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, ClusterGrenadeVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, ClusterGrenadeVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
