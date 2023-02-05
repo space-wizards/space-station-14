@@ -200,6 +200,13 @@ public sealed partial class SalvageSystem
             return;
         }
 
+        var adjustedDungeonAllTiles = new HashSet<Vector2i>(dungeon.AllTiles.Count);
+
+        foreach (var tile in dungeon.AllTiles)
+        {
+            adjustedDungeonAllTiles.Add(tile + dungeonOffset);
+        }
+
         // To ensure they can get from the landing area to the dungeon we'll mark out reserved tiles
         // and ensure no blockers spawn on them.
         // We'll pick the bottom-left room as our target.
@@ -231,19 +238,20 @@ public sealed partial class SalvageSystem
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
-
         var tiles = new List<(Vector2i Indices, Tile Tile)>(landingPadExtents.X * landingPadExtents.Y * 2);
+        var landingFloor = new HashSet<Vector2i>();
 
         // Set the tiles themselves
         var seed = new FastNoise(mission.Seed);
 
-        foreach (var tile in grid.GetTilesIntersecting(new Box2(-landingPadRadius - radiusThickness, -landingPadRadius - radiusThickness, landingPadRadius + radiusThickness, landingPadRadius + radiusThickness), false))
+        foreach (var tile in grid.GetTilesIntersecting(new Box2(-landingPadRadius - radiusThickness + 0.5f, -landingPadRadius - radiusThickness + 0.5f, landingPadRadius + radiusThickness - 0.5f, landingPadRadius + radiusThickness - 0.5f), false))
         {
             if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out var tileRef))
                 continue;
 
             // TODO: Force load API or smth
             tiles.Add((tile.GridIndices, tileRef.Value));
+            landingFloor.Add(tile.GridIndices);
         }
 
         grid.SetTiles(tiles);
@@ -263,10 +271,33 @@ public sealed partial class SalvageSystem
                     continue;
 
                 Spawn("WallSolid", grid.GridTileToLocal(tile.GridIndices));
+                landingFloor.Add(tile.GridIndices);
             }
         }
 
         // Alright now we'll enclose the reserved tiles
+        foreach (var tile in reservedTiles)
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                var direction = (DirectionFlag) Math.Pow(2, i);
+                var neighbor = tile + direction.AsDir().ToIntVec();
+
+                if (reservedTiles.Contains(neighbor) ||
+                    adjustedDungeonAllTiles.Contains(neighbor) ||
+                    landingFloor.Contains(neighbor))
+                {
+                    continue;
+                }
+
+                if (!_biome.TryGetBiomeTile(mapUid, grid, seed, neighbor, out var tileRef))
+                    continue;
+
+                // There shouldn't be many of these so we won't bulk them.
+                grid.SetTile(neighbor, tileRef.Value);
+                Spawn("WallSolid", grid.GridTileToLocal(neighbor));
+            }
+        }
 
         SetupMission(config.Expedition, dungeon, grid, random);
     }

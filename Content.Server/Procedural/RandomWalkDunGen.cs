@@ -23,6 +23,7 @@ public sealed class RandomWalkDunGen : IDungeonGenerator
 
 public sealed record Dungeon
 {
+    public HashSet<Vector2i> AllTiles = new();
     public HashSet<Vector2i> Corridors = new();
     public List<DungeonRoom> Rooms = new();
     public HashSet<Vector2i> Walls = new();

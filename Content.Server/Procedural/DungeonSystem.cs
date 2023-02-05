@@ -105,9 +105,11 @@ public sealed partial class DungeonSystem : EntitySystem
         }
 
         var walls = GetWalls(gen.Walls, new Box2i(), floors);
+        floors.UnionWith(walls);
 
         return new Dungeon()
         {
+            AllTiles = floors,
             Rooms = new List<DungeonRoom>(1)
             {
                 new()
@@ -145,11 +147,15 @@ public sealed partial class DungeonSystem : EntitySystem
             allTiles.UnionWith(room.Tiles);
         }
 
+        var walls = GetWalls(gen.Walls, gen.Bounds, allTiles);
+        allTiles.UnionWith(walls);
+
         return new Dungeon
         {
+            AllTiles = allTiles,
             Corridors = corridors,
             Rooms = rooms,
-            Walls = GetWalls(gen.Walls, gen.Bounds, allTiles)
+            Walls = walls,
         };
     }
 }
