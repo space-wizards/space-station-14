@@ -26,13 +26,14 @@ public sealed class AutoEmoteSystem : EntitySystem
         foreach (var autoEmote in EntityQuery<AutoEmoteComponent>())
         {
             var uid = autoEmote.Owner;
+            var curTime = _gameTiming.CurTime;
 
-            if (autoEmote.NextEmoteTime > _gameTiming.CurTime)
+            if (autoEmote.NextEmoteTime > curTime)
                 continue;
 
             foreach ((var key, var time) in autoEmote.EmoteTimers)
             {
-                if (time > _gameTiming.CurTime)
+                if (time > curTime)
                     continue;
 
                 ResetTimer(uid, key, autoEmote);
@@ -67,7 +68,7 @@ public sealed class AutoEmoteSystem : EntitySystem
     /// </summary>
     public bool AddEmote(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null)
     {
-        if (!Resolve(uid, ref autoEmote))
+        if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
 
         if (autoEmote.Emotes.Contains(autoEmotePrototypeId))
@@ -81,11 +82,11 @@ public sealed class AutoEmoteSystem : EntitySystem
     }
 
     /// <summary>
-    /// Stop performing an emote.
+    /// Stop preforming an emote.
     /// </summary>
     public bool RemoveEmote(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null)
     {
-        if (!Resolve(uid, ref autoEmote))
+        if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
 
         autoEmote.EmoteTimers.Remove(autoEmotePrototypeId);
