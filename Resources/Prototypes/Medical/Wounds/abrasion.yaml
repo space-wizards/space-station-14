@@ -1,13 +1,10 @@
 ﻿- type: entity
   id: Abrasion
-  parent: BaseWound
   components:
-      - type: Wound
-        healthDamage: 2
-        integrityDamage: 0
-        severityPercentage: 100
-        baseHealingRate: 0.05
-        healingModifier: 0
-        healingMultiplier: 1.0
-      - type: PainInflicter
-        pain: 2
+  - type: Wound
+    healthDamage: 2
+    integrityDamage: 0
+    severityPercentage: 100
+    baseHealingRate: 0.05
+    healingModifier: 0
+    healingMultiplier: 1.0

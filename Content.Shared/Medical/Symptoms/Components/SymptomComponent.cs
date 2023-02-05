@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.FixedPoint;
-using Content.Shared.Medical.Symptoms.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
