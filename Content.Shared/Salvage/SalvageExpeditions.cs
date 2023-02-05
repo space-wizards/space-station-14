@@ -69,7 +69,7 @@ public sealed class SalvageExpeditionDataComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class SalvageMission
+public sealed record SalvageMission
 {
     [ViewVariables]
     public ushort Index;
@@ -80,8 +80,6 @@ public sealed class SalvageMission
     [ViewVariables] public TimeSpan Duration;
 
     [ViewVariables] public int Seed;
-
-    // TODO: Hazard pay
 }
 
 [Serializable, NetSerializable]

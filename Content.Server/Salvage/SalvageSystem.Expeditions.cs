@@ -134,6 +134,7 @@ public sealed partial class SalvageSystem
 
     private void SpawnMission(SalvageMission mission, EntityUid station)
     {
+        Logger.DebugS("salvage", $"Spawning salvage mission with seed {mission.Seed}");
         var config = _prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config);
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
@@ -305,6 +306,6 @@ public sealed partial class SalvageSystem
             }
         }
 
-        SetupMission(config.Expedition, dungeon, grid, random);
+        SetupMission(config.Expedition, dungeonOffset, dungeon, grid, random);
     }
 }
