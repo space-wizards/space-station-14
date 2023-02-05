@@ -9,8 +9,6 @@
   - type: Perishable
   - type: HumanoidAppearance
     species: Arachnid
-  - type: Body
-    prototype: Arachnid
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Arachnid # spooder
@@ -28,14 +26,14 @@
     specificHeat: 42
     coldDamage:
       types:
-        Cold: 0.2 #Spiders do not like the cold, being cold blooded + all
+        Cold: 0.125 #Spiders do not like the cold, being cold blooded + all
     heatDamage:
       types:
         Heat: 0.1
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.05 #per second, should be lower than humans.
+        Blunt: 0.2 #per second, should be lower than humans.
   # Misc
   - type: Inventory
     templateId: arachnid
