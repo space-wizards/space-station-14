@@ -241,6 +241,10 @@
       - ClothingShoesBootsMag
       - NodeScanner
       - HolofanProjector
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
 
 - type: entity
   parent: Protolathe
@@ -408,9 +412,17 @@
       - Handcuffs
       - Zipties
       - Stunbaton
+      - Disabler
+      - Bola
+      - Flashbang
+      - FoodBoxDonut
       - ForensicPad
+      - ForensicScanner
       - ClothingEyesGlassesSecurity
+      - FlashlightSeclite
       - RiotShield
+      - RiotLaserShield
+      - RiotBulletShield
       - CartridgePistol
       - CartridgeMagnum
       - CartridgePistolRubber
@@ -426,6 +438,16 @@
       - TargetHuman
       - TargetSyndicate
       - TargetClown
+      - ClothingOuterVestKevlar
+      - ClothingHeadHelmetHelmet
+      - ClothingHeadHelmetOld
+      - ClothingHeadHelmetRiot
+      - ClothingOuterArmorRiot
+      - ClothingHandsGlovesCombat
+      - ClothingOuterArmorReflective
+      - ClothingOuterArmorBulletproof
+      - ClothingOuterHardsuitSecurity
+      - JetpackSecurityFilled
       - MagazineBoxPistol
       - MagazineBoxPistolRubber
       - MagazineBoxMagnum
@@ -434,6 +456,25 @@
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifle
       - MagazineBoxLightRifleRubber
+      - SpeedLoaderMagnum
+      - SpeedLoaderMagnumRubber
+      - SpeedLoaderMagnumHighVelocity
+      - MagazineRifle
+      - MagazineRifleHighVelocity
+      - MagazineRifleRubber
+      - MagazinePistolSubMachineGunTopMounted
+      - MagazinePistol
+      - MagazinePistolHighVelocity
+      - MagazinePistolRubber
+      - WeaponRifleLecter
+      - WeaponSubMachineGunWt550
+      - WeaponShotgunEnforcer
+      - WeaponRevolverInspector
+      - WeaponPistolMk58
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
   - type: MaterialStorage
     whitelist:
       tags:

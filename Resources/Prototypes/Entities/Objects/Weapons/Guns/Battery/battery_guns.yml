@@ -60,7 +60,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -112,7 +112,7 @@
     availableModes:
     - SemiAuto
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 62.5
 
 - type: entity
@@ -380,7 +380,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
+    proto: RedAntiqueLaser
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
@@ -416,8 +416,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: RedMediumLaser
-    fireCost: 100
+    proto: RedLaser
+    fireCost: 120
   - type: BatterySelfRecharger
     autoRecharge: true
     autoRechargeRate: 40

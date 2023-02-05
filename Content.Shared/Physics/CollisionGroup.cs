@@ -14,14 +14,15 @@ namespace Content.Shared.Physics;
 public enum CollisionGroup
 {
     None               = 0,
-    Opaque             = 1 << 0, // 1 Blocks light, can be hit by lasers
-    Impassable         = 1 << 1, // 2 Walls, objects impassable by any means
-    MidImpassable      = 1 << 2, // 4 Mobs, players, crabs, etc
-    HighImpassable     = 1 << 3, // 8 Things on top of tables and things that block tall/large mobs.
-    LowImpassable      = 1 << 4, // 16 For things that can fit under a table or squeeze under an airlock
-    GhostImpassable    = 1 << 5, // 32 Things impassible by ghosts/observers, ie blessed tiles or forcefields
-    BulletImpassable   = 1 << 6, // 64 Can be hit by bullets
-    InteractImpassable = 1 << 7, // 128 Blocks interaction/InRangeUnobstructed
+    XrayImpassable     = 1 << 0, // 1 Ignores walls, can only hit mobs
+    Opaque             = 2 << 1, // 2 Blocks light, can be hit by lasers
+    Impassable         = 2 << 2, // 4 Walls, objects impassable by any means
+    MidImpassable      = 2 << 3, // 8 Mobs, players, crabs, etc
+    HighImpassable     = 2 << 4, // 16 Things on top of tables and things that block tall/large mobs.
+    LowImpassable      = 2 << 5, // 32 For things that can fit under a table or squeeze under an airlock
+    GhostImpassable    = 2 << 6, // 64 Things impassible by ghosts/observers, ie blessed tiles or forcefields
+    BulletImpassable   = 2 << 7, // 128 Can be hit by bullets
+    InteractImpassable = 2 << 8, // 256 Blocks interaction/InRangeUnobstructed
 
     MapGrid = MapGridHelpers.CollisionGroup, // Map grids, like shuttles. This is the actual grid itself, not the walls or other entities connected to the grid.
 
@@ -30,13 +31,13 @@ public enum CollisionGroup
 
     // Humanoids, etc.
     MobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,
-    MobLayer = Opaque | BulletImpassable,
+    MobLayer = Opaque | BulletImpassable | XrayImpassable,
     // Mice, drones
     SmallMobMask = Impassable | LowImpassable,
-    SmallMobLayer = Opaque | BulletImpassable,
+    SmallMobLayer = Opaque | BulletImpassable | XrayImpassable,
     // Birds/other small flyers
     FlyingMobMask = Impassable | HighImpassable,
-    FlyingMobLayer = Opaque | BulletImpassable,
+    FlyingMobLayer = Opaque | BulletImpassable | XrayImpassable,
 
     // Mechs
     LargeMobMask = Impassable | HighImpassable | MidImpassable | LowImpassable,

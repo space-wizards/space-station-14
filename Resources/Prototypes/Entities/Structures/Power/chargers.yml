@@ -73,6 +73,7 @@
   - type: Sprite
     sprite: Structures/Power/recharger.rsi
   - type: Charger
+    chargeRate: 50
     slotId: charger_slot
   - type: ItemSlots
     slots:
@@ -93,4 +94,4 @@
     sprite: Structures/Power/wall_recharger.rsi
   - type: WallMount
   - type: Charger
-    chargeRate: 25
+    chargeRate: 50

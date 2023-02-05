@@ -44,11 +44,36 @@
     Glass: 400
 
 - type: latheRecipe
+  id: RiotBulletShield
+  result: RiotBulletShield
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
+
+- type: latheRecipe
+  id: RiotLaserShield
+  result: RiotLaserShield
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
+
+- type: latheRecipe
   id: Flash
   result: Flash
   completetime: 2
   materials:
     Glass: 100
+    Plastic: 200
+    Steel: 100
+
+- type: latheRecipe
+  id: Flashbang
+  result: Flashbang
+  completetime: 3
+  materials:
+    Glass: 200
     Plastic: 200
     Steel: 100
 
@@ -169,6 +194,81 @@
     Steel: 500
 
 - type: latheRecipe
+  id: WeaponRifleLecter
+  result: WeaponRifleLecter
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 1000
+
+- type: latheRecipe
+  id: WeaponSubMachineGunWt550
+  result: WeaponSubMachineGunWt550
+  completetime: 10
+  materials:
+    Steel: 1500
+    Plastic: 500
+
+- type: latheRecipe
+  id: WeaponShotgunEnforcer
+  result: WeaponShotgunEnforcer
+  completetime: 10
+  materials:
+    Steel: 1500
+
+- type: latheRecipe
+  id: WeaponRevolverInspector
+  result: WeaponRevolverInspector
+  completetime: 10
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: WeaponPistolMk58
+  result: WeaponPistolMk58
+  completetime: 10
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: WeaponLaserCarbine
+  result: WeaponLaserCarbine
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 500
+    Gold: 100
+
+- type: latheRecipe
+  id: WeaponAdvancedLaser
+  result: WeaponAdvancedLaser
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 1000
+
+- type: latheRecipe
+  id: WeaponLaserCannon
+  result: WeaponLaserCannon
+  completetime: 10
+  materials:
+    Steel: 200
+    Glass: 1000
+    Gold: 500
+    Plasma: 300
+
+- type: latheRecipe
+  id: WeaponXrayCannon
+  result: WeaponXrayCannon
+  completetime: 10
+  materials:
+    Steel: 500
+    Glass: 500
+    Plasma: 500
+    Uranium: 500
+
+- type: latheRecipe
   id: MagazineBoxPistol
   result: MagazineBoxPistol
   completetime: 5
@@ -202,7 +302,7 @@
   id: MagazineBoxRifle
   result: MagazineBoxRifle
   completetime: 5
-  materials: 
+  materials:
     Steel: 950
 
 - type: latheRecipe
@@ -227,3 +327,198 @@
   materials:
     Steel: 350
     Plastic: 600
+
+
+- type: latheRecipe
+  id: SpeedLoaderMagnum
+  result: SpeedLoaderMagnum
+  completetime: 5
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: SpeedLoaderMagnumRubber
+  result: SpeedLoaderMagnumRubber
+  completetime: 5
+  materials:
+    Steel: 50
+    Plastic: 150
+
+- type: latheRecipe
+  id: SpeedLoaderMagnumHighVelocity
+  result: SpeedLoaderMagnumHighVelocity
+  completetime: 5
+  materials:
+    Steel: 50
+    Glass: 150
+
+- type: latheRecipe
+  id: MagazineRifle
+  result: MagazineRifle
+  completetime: 5
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: MagazineRifleRubber
+  result: MagazineRifleRubber
+  completetime: 5
+  materials:
+    Steel: 125
+    Plastic: 375
+
+- type: latheRecipe
+  id: MagazineRifleHighVelocity
+  result: MagazineRifleHighVelocity
+  completetime: 5
+  materials:
+    Steel: 125
+    Glass: 375
+
+- type: latheRecipe
+  id: MagazinePistolSMGTopMounted
+  result: MagazinePistolSMGTopMounted
+  completetime: 5
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  id: MagazinePistol
+  result: MagazinePistol
+  completetime: 5
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MagazinePistolRubber
+  result: MagazinePistolRubber
+  completetime: 5
+  materials:
+    Steel: 75
+    Plastic: 225
+
+- type: latheRecipe
+  id: MagazinePistolRubber
+  result: MagazinePistolHighVelocity
+  completetime: 5
+  materials:
+    Steel: 75
+    Glass: 225
+
+- type: latheRecipe
+  id: FoodBoxDonut
+  result: FoodBoxDonut
+  completetime: 5
+  materials:
+    Plastic: 200
+
+- type: latheRecipe
+  id: FlashlightSeclite
+  result: FlashlightSeclite
+  completetime: 5
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: ForensicScanner
+  result: ForensicScanner
+  completetime: 5
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: Disabler
+  result: Disabler
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 500
+
+- type: latheRecipe
+  id: Bola
+  result: Bola
+  completetime: 3
+  materials:
+    Plastic: 100
+    Cloth: 100
+
+- type: latheRecipe
+  id: ClothingOuterVestKevlar
+  result: ClothingOuterVestKevlar
+  completetime: 5
+  materials:
+    Steel: 500
+    Cloth: 500
+
+- type: latheRecipe
+  id: ClothingOuterHelmetHelmet
+  result: ClothingOuterHelmetHelmet
+  completetime: 5
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: ClothingOuterHelmetOld
+  result: ClothingOuterHelmetOld
+  completetime: 5
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: ClothingOuterHelmetRiot
+  result: ClothingOuterHelmetRiot
+  completetime: 5
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
+  id: ClothingOuterArmorRiot
+  result: ClothingOuterArmorRiot
+  completetime: 5
+  materials:
+    Steel: 600
+    Plastic: 600
+
+- type: latheRecipe
+  id: ClothingOuterArmorReflective
+  result: ClothingOuterArmorReflective
+  completetime: 5
+  materials:
+    Steel: 600
+    Glass: 600
+
+- type: latheRecipe
+  id: ClothingOuterArmorBulletproof
+  result: ClothingOuterArmorBulletproof
+  completetime: 5
+  materials:
+    Steel: 600
+    Durathread: 600
+
+- type: latheRecipe
+  id: ClothingHandsGlovesCombat
+  result: ClothingHandsGlovesCombat
+  completetime: 5
+  materials:
+    Cloth: 300
+    Durathread: 300
+
+- type: latheRecipe
+  id: ClothingOuterHardsuitSecurity
+  result: ClothingOuterHardsuitSecurity
+  completetime: 10
+  materials:
+    Steel: 1500
+    Plastic: 1500
+
+- type: latheRecipe
+  id: JetpackSecurityFilled
+  result: JetpackSecurityFilled
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 1000
+

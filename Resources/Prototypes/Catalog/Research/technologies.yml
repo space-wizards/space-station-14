@@ -213,27 +213,218 @@
   - SurveillanceWirelessCameraMonitorCircuitboard
   - ComputerTelevisionCircuitboard
 
-#- type: technology
-#   name: "ballistic technology"
-#   id: BallisticTechnology
-#   description: Just a fancy term for guns.
-#   icon:
-#     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
-#
-# - type: technology
-#   name: "direct energy technology"
-#   id: DirectEnergyTechnology
-#   description: Basically laser guns.
-#   icon:
-#     sprite: Objects/Weapons/Guns/Battery/taser.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
+- type: technology
+  name: technologies-security-basic
+  id: BasicSecurityTechnology
+  description: technologies-security-basic-description
+  icon:
+    sprite: Objects/Misc/handcuffs.rsi
+    state: handcuffs
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - Handcuffs
+    - Zipties
+    - StunBaton
+    - RiotShield
+    - RiotLaserShield
+    - RiotBulletShield
+    - Flash
+    - FlashPayload
+    - ForensicPad
+    - ForensicScanner
+    - ClothingGlassesEyesSecurity
+    - FlashlightSeclite
+
+- type: technology
+  name: technologies-ballistic-ammunition
+  id: BallisticAmmunitionTechnology
+  description: technologies-ballistic-ammunition-description
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    state: base-6
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicSecurityTechnology
+  unlockedRecipes:
+    - MagazineBoxPistol
+    - MagazineBoxPistolRubber
+    - MagazineBoxMagnum
+    - MagazineBoxMagnumRubber
+    - MagazineBoxRifle
+    - MagazineBoxRifleRubber
+    - MagazineBoxLightRifle
+    - MagazineBoxLightRifleRubber
+
+- type: technology
+  name: technologies-ballistic-magazines
+  id: BallisticMagazinesTechnology
+  description: technologies-ballistic-magazines-description
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
+    state: red-icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BallisticAmmunitionTechnology
+  unlockedRecipes:
+    - SpeedLoaderMagnum
+    - SpeedLoaderMagnumHighVelocity
+    - SpeedLoaderMagnumRubber
+    - MagazineRifle
+    - MagazineRifleHighVelocity
+    - MagazineRifleRubber
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistol
+    - MagazinePistolHighVelocity
+    - MagazinePistolRubber
+
+- type: technology
+  name: technologies-ballistic-weaponry
+  id: BallisticWeaponryTechnology
+  description: technologies-ballistic-weaponry-description
+  icon:
+    sprite: Objects/Weapons/Guns/SMGs/wt550.rsi
+    state: icon
+  requiredPoints: 20000
+  requiredTechnologies:
+    - BasicSecurityTechnology
+    - BallisticMagazinesTechnology
+  unlockedRecipes:
+    - WeaponRifleLecter
+    - WeaponSubMachineGunWt550
+    - WeaponShotgunEnforcer
+    - WeaponRevolverInspector
+    - WeaponPistolMk58
+
+- type: technology
+  name: technologies-non-lethal
+  id: NonLethalTechnology
+  description: technologies-non-lethal-description
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/disabler.rsi
+    state: base
+  requiredPoints: 5000
+  requiredTechnologies:
+    - BasicSecurityTechnology
+  unlockedRecipes:
+    - Disabler
+    - Flashbang
+    - Bola
+    - FoodBoxDonut
+
+- type: technology
+  name: technologies-energy-weaponry
+  id: EnergyWeaponryTechnology
+  description: technologies-energy-weaponry-description
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - NonLethalTechnology
+    - ElectromagneticTheory
+  unlockedRecipes:
+    - WeaponLaserCarbine
+
+- type: technology
+  name: technologies-advanced-energy-weaponry
+  id: AdvancedEnergyWeaponryTechnology
+  description: technologies-advanced-energy-weaponry-description
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
+    state: icon
+  requiredPoints: 15000
+  requiredTechnologies:
+    - EnergyWeaponryTechnology
+  unlockedRecipes:
+    - WeaponAdvancedLaser
+
+- type: technology
+  name: technologies-high-power-energy-weaponry
+  id: HighPowerEnergyWeaponryTechnology
+  description: technologies-high-power-energy-weaponry-description
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
+    state: icon
+  requiredPoints: 15000
+  requiredTechnologies:
+    - EnergyWeaponryTechnology
+  unlockedRecipes:
+    - WeaponLaserCannon
+
+- type: technology
+  name: technologies-experimental-energy-weaponry
+  id: ExperimentalEnergyWeaponryTechnology
+  description: technologies-experimental-energy-weaponry-description
+  icon:
+    sprite: Objects/Weapons/Guns/Battery/xray.rsi
+    state: icon
+  requiredPoints: 20000
+  requiredTechnologies:
+    - AdvancedEnergyWeaponryTechnology
+    - HighPowerEnergyWeaponryTechnology
+  unlockedRecipes:
+    - WeaponXrayCannon
+
+- type: technology
+  name: technologies-basic-armor
+  id: BasicArmorTechnology
+  description: technologies-basic-armor-description
+  icon:
+    sprite: Clothing/OuterClothing/Vests/kevlar.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - NonLethalTechnology
+  unlockedrecipes:
+    - ClothingOuterVestKevlar
+    - ClothingHeadHelmetHelmet
+    - ClothingHeadHelmetOld
+
+- type: technology
+  name: technologies-riot-armor
+  id: RiotArmorTechnology
+  description: technologies-riot-armor-description
+  icon:
+    sprite: Clothing/Head/Helmets/light_riot.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - NonLethalTechnology
+  unlockedrecipes:
+    - ClothingHeadHelmetRiot
+    - ClothingOuterArmorRiot
+    - ClothingHandsGlovesCombat
+
+- type: technology
+  name: technologies-specialized-armor
+  id: SpecializedArmorTechnology
+  description: technologies-specialized-armor-description
+  icon:
+    sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
+    state: icon
+  requiredPoints: 5000
+  requiredTechnologies:
+    - NonLethalTechnology
+  unlockedrecipes:
+    - ClothingOuterArmorReflective
+    - ClothingOuterArmorBulletproof
+
+- type: technology
+  name: technologies-spaceproof-armor
+  id: SpaceproofArmorTechnology
+  description: technologies-spaceproof-description
+  icon:
+    sprite: Clothing/OuterClothing/Hardsuits/security.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - RiotArmorTechnology
+  unlockedrecipes:
+    - ClothingOuterHardsuitSecurity
+    - JetpackSecurityFilled
+
 #
 # - type: technology
 #   name: "explosives technology"
@@ -246,16 +437,6 @@
 #   requiredTechnologies:
 #     - SecurityTechnology
 #
-# - type: technology
-#   name: "armor technology"
-#   id: ArmorTechnology
-#   description: Basic protective gear for security personnel.
-#   icon:
-#     sprite: Clothing/OuterClothing/Vests/kevlar.rsi
-#     state: icon
-#   requiredPoints: 15000
-#   requiredTechnologies:
-#     - SecurityTechnology
 
 # Salvage Technology Tree
 
