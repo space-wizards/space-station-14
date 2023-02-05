@@ -7,7 +7,7 @@
   components:
   # The important nessessities
   - type: Perishable
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Arachnid
   - type: Body
     prototype: Arachnid
@@ -63,7 +63,7 @@
   noSpawn: true
   description: A dummy arachnid meant to be used in character setup.
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Arachnid
 
 #88w88
