@@ -17,7 +17,13 @@ public sealed partial class DungeonSystem : EntitySystem
         InitializeCommand();
     }
 
-    public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype, MapGridComponent grid)
+    public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype,
+        MapGridComponent grid)
+    {
+        SpawnDungeon(position, dungeon, configPrototype, grid, new List<Vector2i>());
+    }
+
+    public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype, MapGridComponent grid, List<Vector2i> reservedTiles)
     {
         var tiles = new List<(Vector2i, Tile)>();
         var tileId = _tileDef[configPrototype.Tile].TileId;
@@ -26,17 +32,32 @@ public sealed partial class DungeonSystem : EntitySystem
         {
             foreach (var tile in room.Tiles)
             {
-                tiles.Add((tile + position, new Tile(tileId)));
+                var adjustedTilePos = tile + position;
+
+                if (reservedTiles.Contains(adjustedTilePos))
+                    continue;
+
+                tiles.Add((adjustedTilePos, new Tile(tileId)));
             }
         }
 
         foreach (var tile in dungeon.Corridors)
         {
+            var adjustedTilePos = tile + position;
+
+            if (reservedTiles.Contains(adjustedTilePos))
+                continue;
+
             tiles.Add((tile + position, new Tile(tileId)));
         }
 
         foreach (var tile in dungeon.Walls)
         {
+            var adjustedTilePos = tile + position;
+
+            if (reservedTiles.Contains(adjustedTilePos))
+                continue;
+
             tiles.Add((tile + position, new Tile(tileId)));
         }
 
@@ -44,6 +65,11 @@ public sealed partial class DungeonSystem : EntitySystem
 
         foreach (var tile in dungeon.Walls)
         {
+            var adjustedTilePos = tile + position;
+
+            if (reservedTiles.Contains(adjustedTilePos))
+                continue;
+
             Spawn(configPrototype.Wall, grid.GridTileToLocal(tile + position));
         }
     }

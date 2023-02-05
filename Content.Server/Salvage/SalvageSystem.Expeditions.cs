@@ -190,6 +190,7 @@ public sealed partial class SalvageSystem
 
         var landingPadRadius = 16;
         var radiusThickness = 2;
+        var dungeonOffset = new Vector2i(landingPadRadius + radiusThickness + 1, 0);
 
         var dungeon = _dungeon.GetDungeon(config.Dungeon);
 
@@ -221,38 +222,12 @@ public sealed partial class SalvageSystem
             return;
         }
 
-        var reservedTiles = new HashSet<Vector2i>();
-
         var start = Vector2i.Zero;
-        var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count));
-        var frontier = new PriorityQueue<Vector2i> { start };
-        var cameFrom = new Dictionary<Vector2i, Vector2i>();
-        // TODO: Helper for pathfind or some shit idk lol
-        var node = start;
+        var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count)) + dungeonOffset;
+        var reservedTiles = _pathfinding.GetPath(start, end);
 
-        while (frontier.Count > 0)
-        {
-            node = frontier.Take();
-
-            if (node == end)
-            {
-                frontier.Clear();
-                break;
-            }
-
-            // TODO: Neighbors etc etc
-        }
-
-        if (node == end)
-        {
-
-        }
-
-        // TODO: Path from 0,0 to bottomleft room
-        // Spawn dungeon with reserved tiles
         // TODO: Spawn boundaries
-
-        _dungeon.SpawnDungeon(new Vector2i(landingPadRadius + radiusThickness + 1, 0), dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid);
+        _dungeon.SpawnDungeon(dungeonOffset, dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid, reservedTiles);
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
@@ -274,7 +249,6 @@ public sealed partial class SalvageSystem
         grid.SetTiles(tiles);
 
         // Set the outline as enclosed for the landing pad.
-
         for (var i = 0f; i < radiusThickness; i += 0.5f)
         {
             foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + i), false))
@@ -291,6 +265,8 @@ public sealed partial class SalvageSystem
                 Spawn("WallSolid", grid.GridTileToLocal(tile.GridIndices));
             }
         }
+
+        // Alright now we'll enclose the reserved tiles
 
         SetupMission(config.Expedition, dungeon, grid, random);
     }
