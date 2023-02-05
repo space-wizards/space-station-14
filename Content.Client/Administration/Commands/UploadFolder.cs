@@ -39,14 +39,12 @@ public sealed class UploadFolder : IConsoleCommand
         {
             if (file.Stream == null)
             {
+                shell.WriteError($"One of the files was un accessable or missing! command exited.");
                 break;
             }
 
             var filepath = new ResourcePath(uploadPath +"/"+ file.filename);
-
-
             var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
-
             if (sizeLimit > 0f && file.Stream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
             {
                 shell.WriteError($"File above the current size limit! It must be smaller than {sizeLimit} MB.");
@@ -62,8 +60,6 @@ public sealed class UploadFolder : IConsoleCommand
             msg.Data = data;
 
             netManager.ClientSendMessage(msg);
-
         }
-
     }
 }
