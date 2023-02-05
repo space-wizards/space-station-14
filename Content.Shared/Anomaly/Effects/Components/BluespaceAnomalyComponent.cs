@@ -29,12 +29,12 @@ public sealed class BluespaceAnomalyComponent : Component
     /// <summary>
     /// How far the supercritical event can teleport you
     /// </summary>
-    [DataField("superCriticalTeleportRadius")]
+    [DataField("superCriticalTeleportRadius"), ViewVariables(VVAccess.ReadWrite)]
     public float SupercriticalTeleportRadius = 50f;
 
     /// <summary>
     /// The sound played after players are shuffled/teleported around
     /// </summary>
-    [DataField("teleportSound")]
+    [DataField("teleportSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier TeleportSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 }

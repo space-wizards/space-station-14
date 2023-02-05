@@ -36,6 +36,6 @@ public sealed class ElectricityAnomalyComponent : Component
     /// <summary>
     /// Used for tracking seconds, so that we can shock people in a non-tick-dependent way.
     /// </summary>
-    [DataField("nextSecond", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("nextSecond", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextSecond = TimeSpan.Zero;
 }

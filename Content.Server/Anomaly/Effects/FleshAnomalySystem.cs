@@ -68,9 +68,10 @@ public sealed class FleshAnomalySystem : EntitySystem
 
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + (-radius, -radius), localpos + (radius, radius)));
-        var validSpawnLocations = new List<Vector2i>();
+            new Box2(localpos + (-radius, -radius), localpos + (radius, radius))).ToArray();
+        _random.Shuffle(tilerefs);
         var physQuery = GetEntityQuery<PhysicsComponent>();
+        var amountCounter = 0;
         foreach (var tileref in tilerefs)
         {
             var valid = true;
@@ -78,25 +79,20 @@ public sealed class FleshAnomalySystem : EntitySystem
             {
                 if (!physQuery.TryGetComponent(ent, out var body))
                     continue;
-                if (body.BodyType == BodyType.Static &&
-                    body.Hard &&
-                    (body.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
-                {
-                    valid = false;
-                    break;
-                }
+                if (body.BodyType != BodyType.Static ||
+                    !body.Hard ||
+                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                    continue;
+                valid = false;
+                break;
             }
-            if (valid)
-                validSpawnLocations.Add(tileref.GridIndices);
-        }
 
-        if (!validSpawnLocations.Any())
-            return;
-
-        for (var i = 0; i < amount; i++)
-        {
-            var pos = _random.Pick(validSpawnLocations);
-            Spawn(_random.Pick(component.Spawns), pos.ToEntityCoordinates(xform.GridUid.Value, _map));
+            if (!valid)
+                continue;
+            amount++;
+            Spawn(_random.Pick(component.Spawns), tileref.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map));
+            if (amountCounter >= amount)
+                return;
         }
     }
 }
