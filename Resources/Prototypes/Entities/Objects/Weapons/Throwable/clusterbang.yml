@@ -9,7 +9,7 @@
     netsync: false
     state: base-0
   - type: Appearance
-  - type: ClusterGrenadeVisualizer
+  - type: ClusterGrenadeVisuals
     state: base
   - type: ClusterGrenade
   - type: ContainerContainer
