@@ -136,5 +136,5 @@
     deleteOnSpawn: true
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    sprite: Objects/Weapons/Guns/Ammunition/Explosives/explosives.rsi
     state: ball
