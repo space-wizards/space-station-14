@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix wallmount interactions., type: Fix}
-  id: 2493
-  time: '2022-10-20T13:20:53.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
@@ -2920,3 +2915,8 @@ Entries:
   - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
   id: 2992
   time: '2023-02-05T19:44:36.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added virology lab coats to the virodrobe, type: Add}
+  id: 2993
+  time: '2023-02-05T19:47:52.0000000+00:00'
