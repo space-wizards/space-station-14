@@ -30,31 +30,35 @@ public sealed class UploadFolder : IConsoleCommand
             return;
         }
 
-        var uploadPath = new ResourcePath(args[0]).ToRelativePath();
+
 
         var dialog = IoCManager.Resolve<IFileDialogManager>();
+        var uploadPath = new ResourcePath(args[0]).ToRelativePath();
 
         await foreach (var file in dialog.OpenFolder())
         {
-            if (file == null)
+            if (file.Stream == null)
             {
                 break;
             }
 
+            var filepath = new ResourcePath(uploadPath +"/"+ file.filename);
+
+
             var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
 
-            if (sizeLimit > 0f && file.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
+            if (sizeLimit > 0f && file.Stream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
             {
                 shell.WriteError($"File above the current size limit! It must be smaller than {sizeLimit} MB.");
                 return;
             }
 
-            var data = file.CopyToArray();
+            var data = file.Stream.CopyToArray();
 
             var netManager = IoCManager.Resolve<INetManager>();
             var msg = netManager.CreateNetMessage<NetworkResourceUploadMessage>();
 
-            msg.RelativePath = uploadPath;
+            msg.RelativePath = filepath ;
             msg.Data = data;
 
             netManager.ClientSendMessage(msg);
