@@ -1,0 +1,12 @@
+# Spikes
+- type: marking
+  id: ArachnidSpikesDefault # Probably not spikes, but I don't know what else to call them so they're spikes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: spikes
+
+
+# Other markings

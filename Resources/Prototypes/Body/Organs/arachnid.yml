@@ -1,0 +1,49 @@
+- type: entity
+  id: BaseArachnidOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Mobs/Species/Arachnid/organs.rsi
+  - type: Organ
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: organ
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
+- type: entity
+  id: OrganArachnidStomach
+  parent: OrganAnimalStomach
+  noSpawn: true
+  components:
+  - type: Stomach
+    maxVolume: 50
+
+- type: entity
+  id: OrganArachnidEyes
+  parent: BaseArachnidOrgan
+  name: eyes
+  description: "Eyes see you!"
+  components:
+  - type: Sprite
+    layers:
+      - state: eyeball-l
+      - state: eyeball-r
+  - type: Organ
+
+- type: entity
+  id: OrganArachnidTongue
+  parent: BaseArachnidOrgan
+  name: tongue
+  description: "A fleshy muscle mostly used for lying."
+  components:
+  - type: Sprite
+    state: tongue
+  - type: Organ

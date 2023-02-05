@@ -1,0 +1,69 @@
+- type: entity
+  save: false
+  name: Urist McWeb
+  parent: BaseMobOrganic
+  id: BaseMobArachnid
+  abstract: true
+  components:
+  # The important nessessities
+  - type: Perishable
+  - type: Humanoid
+    species: Arachnid
+  - type: Body
+    prototype: Arachnid
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Arachnid # spooder
+  - type: Icon
+    sprite: Mobs/Species/Arachnid/parts.rsi
+    state: full
+  - type: Hunger
+    baseDecayRate: 0.1 # Probably faster than humans?
+  - type: Thirst
+  # Damage and stuff
+  - type: Temperature
+    heatDamageThreshold: 337.15
+    coldDamageThreshold: 285.15
+    currentTemperature: 310.15
+    specificHeat: 42
+    coldDamage:
+      types:
+        Cold: 0.2 #Spiders do not like the cold, being cold blooded + all
+    heatDamage:
+      types:
+        Heat: 0.1
+  - type: Barotrauma
+    damage:
+      types:
+        Blunt: 0.05 #per second, should be lower than humans.
+  # Misc
+  - type: Inventory
+    templateId: arachnid
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Slash: 3
+        Poison: 1
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatSpider
+        amount: 5
+
+- type: entity
+  save: false
+  name: Urist McFluff
+  parent: MobHumanDummy
+  id: MobArachnidDummy
+  noSpawn: true
+  description: A dummy arachnid meant to be used in character setup.
+  components:
+  - type: Humanoid
+    species: Arachnid
+
+#88w88
