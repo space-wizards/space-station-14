@@ -1,32 +1,4 @@
 Entries:
-- author: mirrorcult
-  changes:
-  - {message: 'Extended has been reworked into ''Survival'' mode. No explicit antagonists
-      are spawned at roundstart, as usual, but event severity and frequency ramps
-      up over time. How long can the crew survive?', type: Add}
-  id: 2488
-  time: '2022-10-19T02:51:48.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed cooldown circle shown on hands getting stuck., type: Fix}
-  - {message: Fixed showing information about the wrong entity on the hand entity
-      panel., type: Fix}
-  - {message: Fixed the item slot preview not updating on switching hands., type: Fix}
-  id: 2489
-  time: '2022-10-19T11:49:07.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fix some actions not working (particularly target actions, which include
-      some spells and space-dragon abilities).', type: Fix}
-  id: 2490
-  time: '2022-10-19T12:02:38.0000000+00:00'
-- author: Carbonhell
-  changes:
-  - {message: 'Low power lighting radius animations for lanterns, floodlights and
-      flashlights now properly restore the original light radius when going back to
-      full power.', type: Fix}
-  id: 2491
-  time: '2022-10-19T18:34:36.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
@@ -2925,3 +2897,29 @@ Entries:
       at tiles., type: Fix}
   id: 2987
   time: '2023-02-05T02:02:25.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Added sterile swab box to Omega's virology!, type: Add}
+  - {message: Added warp point to Omega's anomaly lab!, type: Add}
+  - {message: Added spawn point of research assistant to Omega!, type: Add}
+  - {message: Added EngiDrobe to Omega!, type: Add}
+  id: 2988
+  time: '2023-02-05T10:21:59.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Added surveillance camera to Cluster's anomaly lab!, type: Add}
+  - {message: Added warp point to Cluster's anomaly lab!, type: Add}
+  - {message: Added spawn point of research assistant to Cluster!, type: Add}
+  id: 2989
+  time: '2023-02-05T10:22:14.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Added various encryption keys to the PTech., type: Tweak}
+  id: 2990
+  time: '2023-02-05T10:29:39.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Voice Masks now use their set names on radio, instead of your ID.',
+    type: Tweak}
+  id: 2991
+  time: '2023-02-05T15:38:14.0000000+00:00'
