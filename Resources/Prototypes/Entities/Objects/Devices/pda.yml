@@ -5,34 +5,36 @@
   name: PDA
   description: Personal Data Assistant.
   components:
+  - type: Appearance
   - type: Sprite
     sprite: Objects/Devices/pda.rsi
-    netsync: false
     layers:
-    - state: pda
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
+    - map: [ "enum.PDAVisualLayers.Base" ]
+    - map: [ "enum.PDAVisualLayers.Flashlight" ]
       shader: "unshaded"
       visible: false
     - state: "id_overlay"
-      map: [ "pdaIdLight" ]
+      map: [ "enum.PDAVisualLayers.IDLight" ]
       shader: "unshaded"
       visible: false
-  - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.UnpoweredFlashlightVisuals.LightOn:
-        pdaFlashlight:
-          True: {visible: true}
-          False: {visible: false}
-      enum.PDAVisuals.IDCardInserted:
-        pdaIdLight:
-          True: {visible: true}
-          False: {visible: false}
   - type: Icon
     sprite: Objects/Devices/pda.rsi
     state: pda
+  - type: PDA
+    state: pda
+    penSlot:
+      startingItem: Pen
+      priority: -1
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+        - IdCard
   - type: Item
     size: 10
   - type: ContainerContainer
@@ -94,20 +96,6 @@
       type: InstrumentBoundUserInterface
     - key: enum.HealthAnalyzerUiKey.Key
       type: HealthAnalyzerBoundUserInterface
-  - type: PDA
-    penSlot:
-      startingItem: Pen
-      priority: -1
-      whitelist:
-        tags:
-        - Write
-    idSlot:
-      name: ID Card
-      ejectSound: /Audio/Machines/id_swipe.ogg
-      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-      whitelist:
-        components:
-        - IdCard
   - type: CrewManifestViewer
     unsecure: true
   - type: Tag
@@ -124,6 +112,7 @@
   components:
   - type: PDA
     id: PassengerIDCard
+    state: pda
   - type: PDABorderColor
     borderColor: "#717059"
 
@@ -135,18 +124,7 @@
   components:
   - type: PDA
     id: TechnicalAssistantIDCard
-  - type: Sprite
-    layers:
-    - state: pda-interntech
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-interntech
   - type: Icon
     state: pda-interntech
 
@@ -158,18 +136,7 @@
   components:
   - type: PDA
     id: MedicalInternIDCard
-  - type: Sprite
-    layers:
-    - state: pda-internmed
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-internmed
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
@@ -185,18 +152,7 @@
   components:
   - type: PDA
     id: SecurityCadetIDCard
-  - type: Sprite
-    layers:
-    - state: pda-interncadet
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-interncadet
   - type: Icon
     state: pda-interncadet
 
@@ -208,18 +164,7 @@
   components:
   - type: PDA
     id: ResearchAssistantIDCard
-  - type: Sprite
-    layers:
-    - state: pda-internsci
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-internsci
   - type: Icon
     state: pda-internsci
 
@@ -231,18 +176,7 @@
   components:
   - type: PDA
     id: ServiceWorkerIDCard
-  - type: Sprite
-    layers:
-    - state: pda-internservice
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-internservice
   - type: Icon
     state: pda-internservice
 
@@ -254,18 +188,7 @@
   components:
   - type: PDA
     id: ChefIDCard
-  - type: Sprite
-    layers:
-    - state: pda-cook
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-cook
   - type: PDABorderColor
     borderColor: "#d7d7d0"
   - type: Icon
@@ -279,18 +202,7 @@
   components:
   - type: PDA
     id: BotanistIDCard
-  - type: Sprite
-    layers:
-    - state: pda-hydro
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-hydro
   - type: Icon
     state: pda-hydro
 
@@ -302,6 +214,7 @@
   components:
   - type: PDA
     id: ClownIDCard
+    state: pda-clown
     penSlot:
       startingItem: CrayonOrange # no pink crayon?!?
       # ^ Still unacceptable.
@@ -310,18 +223,6 @@
       whitelist:
         tags:
         - Write
-  - type: Sprite
-    layers:
-    - state: pda-clown
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
   - type: PDABorderColor
     borderColor: "#C18199"
   - type: Icon
@@ -358,23 +259,12 @@
   components:
   - type: PDA
     id: MimeIDCard
+    state: pda-mime
     idSlot:
       name: ID Card
       whitelist:
         components:
         - IdCard
-  - type: Sprite
-    layers:
-    - state: pda-mime
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
   - type: Icon
     state: pda-mime
 
@@ -386,18 +276,7 @@
   components:
   - type: PDA
     id: ChaplainIDCard
-  - type: Sprite
-    layers:
-    - state: pda-chaplain
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-chaplain
   - type: PDABorderColor
     borderColor: "#333333"
   - type: Icon
@@ -411,18 +290,7 @@
   components:
   - type: PDA
     id: QuartermasterIDCard
-  - type: Sprite
-    layers:
-    - state: pda-qm
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-qm
   - type: Icon
     state: pda-qm
 
@@ -434,18 +302,7 @@
   components:
   - type: PDA
     id: CargoIDCard
-  - type: Sprite
-    layers:
-    - state: pda-cargo
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-cargo
   - type: Icon
     state: pda-cargo
 
@@ -457,18 +314,7 @@
   components:
   - type: PDA
     id: SalvageIDCard
-  - type: Sprite
-    layers:
-    - state: pda-miner
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-miner
   - type: Icon
     state: pda-miner
 
@@ -480,18 +326,7 @@
   components:
   - type: PDA
     id: BartenderIDCard
-  - type: Sprite
-    layers:
-    - state: pda-bartender
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-bartender
   - type: Icon
     state: pda-bartender
 
@@ -503,18 +338,7 @@
   components:
   - type: PDA
     id: LibrarianIDCard
-  - type: Sprite
-    layers:
-    - state: pda-library
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-library
   - type: Icon
     state: pda-library
 
@@ -526,18 +350,7 @@
   components:
   - type: PDA
     id: LawyerIDCard
-  - type: Sprite
-    layers:
-    - state: pda-lawyer
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-lawyer
   - type: Icon
     state: pda-lawyer
 
@@ -549,18 +362,7 @@
   components:
   - type: PDA
     id: JanitorIDCard
-  - type: Sprite
-    layers:
-    - state: pda-janitor
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-janitor
   - type: PDABorderColor
     borderColor: "#5D2D56"
   - type: Icon
@@ -574,24 +376,13 @@
   components:
   - type: PDA
     id: CaptainIDCard
+    state: pda-captain
     penSlot:
       startingItem: PenCap
       priority: -1
       whitelist:
         tags:
         - Write
-  - type: Sprite
-    layers:
-    - state: pda-captain
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
   - type: PDABorderColor
     borderColor: "#7C5D00"
   - type: Icon
@@ -605,24 +396,13 @@
   components:
   - type: PDA
     id: HoPIDCard
+    state: pda-hop
     penSlot:
       startingItem: PenHop
       priority: -1
       whitelist:
         tags:
         - Write
-  - type: Sprite
-    layers:
-    - state: pda-hop
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
   - type: Icon
     state: pda-hop
 
@@ -634,20 +414,10 @@
   components:
   - type: PDA
     id: CEIDCard
-  - type: Sprite
-    layers:
-    - state: pda-ce
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-ce
   - type: PDABorderColor
     borderColor: "#949137"
+    state: pda-ce
     accentHColor: "#447987"
   - type: Icon
     state: pda-ce
@@ -660,18 +430,7 @@
   components:
   - type: PDA
     id: EngineeringIDCard
-  - type: Sprite
-    layers:
-    - state: pda-engineer
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-engineer
   - type: Icon
     state: pda-engineer
 
@@ -683,18 +442,7 @@
   components:
   - type: PDA
     id: CMOIDCard
-  - type: Sprite
-    layers:
-    - state: pda-cmo
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-cmo
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentHColor: "#447987"
@@ -714,18 +462,7 @@
   components:
   - type: PDA
     id: MedicalIDCard
-  - type: Sprite
-    layers:
-    - state: pda-medical
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -744,18 +481,7 @@
   components:
   - type: PDA
     id: ChemistIDCard
-  - type: Sprite
-    layers:
-    - state: pda-chemistry
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-chemistry
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#B34200"
@@ -770,18 +496,7 @@
   components:
   - type: PDA
     id: RDIDCard
-  - type: Sprite
-    layers:
-    - state: pda-rd
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-rd
   - type: Icon
     state: pda-rd
 
@@ -793,18 +508,7 @@
   components:
   - type: PDA
     id: ResearchIDCard
-  - type: Sprite
-    layers:
-    - state: pda-science
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-science
   - type: Icon
     state: pda-science
 
@@ -816,18 +520,7 @@
   components:
   - type: PDA
     id: HoSIDCard
-  - type: Sprite
-    layers:
-    - state: pda-hos
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-hos
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -842,18 +535,7 @@
   components:
   - type: PDA
     id: WardenIDCard
-  - type: Sprite
-    layers:
-    - state: pda-warden
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-warden
   - type: Icon
     state: pda-warden
 
@@ -865,18 +547,7 @@
   components:
   - type: PDA
     id: SecurityIDCard
-  - type: Sprite
-    layers:
-    - state: pda-security
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-security
   - type: Icon
     state: pda-security
 
@@ -888,6 +559,7 @@
   components:
   - type: PDA
     id: CentcomIDCardSyndie
+    state: pda
 
 - type: entity
   parent: BasePDA
@@ -897,18 +569,7 @@
   components:
   - type: PDA
     id: MusicianIDCard
-  - type: Sprite
-    layers:
-    - state: pda-musician
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-musician
   - type: Instrument
     allowPercussion: false
     handheld: true
@@ -923,18 +584,7 @@
   components:
   - type: PDA
     id: AtmosIDCard
-  - type: Sprite
-    layers:
-    - state: pda-atmos
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-atmos
   - type: Icon
     state: pda-atmos
 
@@ -946,18 +596,7 @@
   components:
   - type: PDA
     id: PassengerIDCard
-  - type: Sprite
-    layers:
-    - state: pda-clear
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-clear
   - type: Icon
     state: pda-clear
 
@@ -969,18 +608,7 @@
   components:
   - type: PDA
     id: SyndicateIDCard
-  - type: Sprite
-    layers:
-    - state: pda-syndi
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-syndi
   - type: Icon
     state: pda-syndi
 
@@ -992,20 +620,10 @@
   components:
   - type: PDA
     id: ERTLeaderIDCard
-  - type: Sprite
-    layers:
-    - state: pda-ert
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-ert
   - type: PDABorderColor
     borderColor: "#A32D26"
+    state: pda-ert
     accentHColor: "#447987"
   - type: Icon
     state: pda-ert
@@ -1018,6 +636,7 @@
   components:
   - type: PDA
     id: CBURNIDcard
+    state: pda-ert
   - type: PDABorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
@@ -1030,18 +649,7 @@
   components:
   - type: PDA
     id: PsychologistIDCard
-  - type: Sprite
-    layers:
-    - state: pda-medical
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-medical
   - type: PDABorderColor
     borderColor: "#d7d7d0"
     accentVColor: "#447987"
@@ -1056,18 +664,7 @@
   components:
   - type: PDA
     id: ReporterIDCard
-  - type: Sprite
-    layers:
-    - state: pda-reporter
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-reporter
   - type: Icon
     state: pda-reporter
 
@@ -1079,18 +676,7 @@
   components:
   - type: PDA
     id: ZookeeperIDCard
-  - type: Sprite
-    layers:
-    - state: pda-zookeeper
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-zookeeper
   - type: Icon
     state: pda-zookeeper
 
@@ -1102,18 +688,7 @@
   components:
   - type: PDA
     id: BoxerIDCard
-  - type: Sprite
-    layers:
-    - state: pda-boxer
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-boxer
   - type: PDABorderColor
     borderColor: "#333333"
     borderVColor: "#390504"
@@ -1128,18 +703,7 @@
   components:
   - type: PDA
     id: DetectiveIDCard
-  - type: Sprite
-    layers:
-    - state: pda-detective
-      map: [ "pdaBase" ]
-    - state: "light_overlay"
-      map: [ "pdaFlashlight" ]
-      shader: "unshaded"
-      visible: false
-    - state: "id_overlay"
-      map: [ "pdaIdLight" ]
-      shader: "unshaded"
-      visible: false
+    state: pda-detective
   - type: PDABorderColor
     borderColor: "#774705"
   - type: Icon
