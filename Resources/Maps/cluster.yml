@@ -74172,4 +74172,18 @@ entities:
     type: Transform
   - id: Anomaly Lab
     type: SurveillanceCamera
+- uid: 9245
+  type: SignDirectionalSci
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 13.543732,-24.80487
+    parent: 127
+    type: Transform
+- uid: 9246
+  type: SignDirectionalSupply
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.465607,-24.77362
+    parent: 127
+    type: Transform
 ...
