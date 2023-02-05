@@ -240,7 +240,6 @@ public sealed partial class SalvageSystem
         var reservedTiles = _pathfinding.GetPath(start, end);
         var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-        // TODO: Spawn boundaries
         _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid, reservedTiles);
 
         // Setup the landing pad

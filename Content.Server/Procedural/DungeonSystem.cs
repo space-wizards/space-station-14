@@ -49,7 +49,7 @@ public sealed partial class DungeonSystem : EntitySystem
             if (reservedTiles.Contains(adjustedTilePos))
                 continue;
 
-            tiles.Add((tile + position, new Tile(tileId)));
+            tiles.Add((adjustedTilePos, new Tile(tileId)));
         }
 
         foreach (var tile in dungeon.Walls)
@@ -59,7 +59,7 @@ public sealed partial class DungeonSystem : EntitySystem
             if (reservedTiles.Contains(adjustedTilePos))
                 continue;
 
-            tiles.Add((tile + position, new Tile(tileId)));
+            tiles.Add((adjustedTilePos, new Tile(tileId)));
         }
 
         grid.SetTiles(tiles);

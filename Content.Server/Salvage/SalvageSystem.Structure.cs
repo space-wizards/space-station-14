@@ -39,7 +39,7 @@ public sealed partial class SalvageSystem
         for (var i = 0; i < structureCount; i++)
         {
             var structureRoom = _random.PickAndTake(availableRooms);
-            var spawnTile = (_random.Pick(structureRoom.Tiles) + dungeonOffset);
+            var spawnTile = _random.Pick(structureRoom.Tiles) + dungeonOffset;
             Spawn(shaggy.Spawn, grid.GridTileToLocal(spawnTile));
         }
     }
