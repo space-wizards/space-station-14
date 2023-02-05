@@ -57,7 +57,7 @@ public sealed partial class SalvageSystem
         }
         else
         {
-            state = new SalvageExpeditionConsoleState(false, 0, new List<SalvageMission>());
+            state = new SalvageExpeditionConsoleState(TimeSpan.Zero, false, 0, new List<SalvageMission>());
         }
 
         _ui.TrySetUiState(component.Owner, SalvageConsoleUiKey.Expedition, state);

@@ -1,7 +1,7 @@
 - type: dungeonConfig
   id: LowDesertDungeon
   tile: FloorLowDesert
-  wall: WallSolid
+  wall: AsteroidRock
 
 # Expedition configs
 - type: salvageExpedition

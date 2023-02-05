@@ -8,12 +8,14 @@ namespace Content.Shared.Salvage;
 [Serializable, NetSerializable]
 public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
 {
+    public TimeSpan NextOffer;
     public bool Claimed;
     public ushort ActiveMission;
     public List<SalvageMission> Missions;
 
-    public SalvageExpeditionConsoleState(bool claimed, ushort activeMission, List<SalvageMission> missions)
+    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, ushort activeMission, List<SalvageMission> missions)
     {
+        NextOffer = nextOffer;
         Claimed = claimed;
         ActiveMission = activeMission;
         Missions = missions;
@@ -41,9 +43,6 @@ public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 [RegisterComponent]
 public sealed class SalvageExpeditionDataComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan Cooldown = TimeSpan.FromMinutes(5);
-
     /// <summary>
     /// Is there an active salvage expedition.
     /// </summary>

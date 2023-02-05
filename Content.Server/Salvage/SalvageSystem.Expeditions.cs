@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Numerics;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.CPUJob.JobQueues.Queues;
@@ -16,7 +15,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Server.Salvage;
@@ -71,12 +69,12 @@ public sealed partial class SalvageSystem
         foreach (var comp in EntityQuery<SalvageExpeditionDataComponent>())
         {
             // Update offers
-            if (comp.NextOffer < currentTime)
-            {
-                comp.NextOffer += comp.Cooldown;
-                GenerateMissions(comp);
-                UpdateConsoles(comp);
-            }
+            if (comp.NextOffer >= currentTime)
+                continue;
+
+            comp.NextOffer += MissionCooldown;
+            GenerateMissions(comp);
+            UpdateConsoles(comp);
         }
 
         foreach (var comp in EntityQuery<SalvageExpeditionComponent>())
@@ -93,7 +91,7 @@ public sealed partial class SalvageSystem
     private void FinishExpedition(SalvageExpeditionDataComponent component)
     {
         component.ActiveMission = 0;
-        component.NextOffer = _timing.CurTime;
+        component.NextOffer = _timing.CurTime + MissionCooldown;
         component.MissionCompleted = false;
     }
 
@@ -124,7 +122,7 @@ public sealed partial class SalvageSystem
     private SalvageExpeditionConsoleState GetState(SalvageExpeditionDataComponent component)
     {
         var missions = component.Missions.Values.ToList();
-        return new SalvageExpeditionConsoleState(component.Claimed, component.ActiveMission, missions);
+        return new SalvageExpeditionConsoleState(component.NextOffer, component.Claimed, component.ActiveMission, missions);
     }
 
     private void SpawnMission(SalvageMission mission, EntityUid station)
@@ -232,9 +230,10 @@ public sealed partial class SalvageSystem
         var start = Vector2i.Zero;
         var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count)) + dungeonOffset;
         var reservedTiles = _pathfinding.GetPath(start, end);
+        var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
         // TODO: Spawn boundaries
-        _dungeon.SpawnDungeon(dungeonOffset, dungeon, _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype), grid, reservedTiles);
+        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid, reservedTiles);
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
@@ -270,7 +269,7 @@ public sealed partial class SalvageSystem
                 if (anchored.MoveNext(out _))
                     continue;
 
-                Spawn("WallSolid", grid.GridTileToLocal(tile.GridIndices));
+                Spawn(dungeonConfig.Wall, grid.GridTileToLocal(tile.GridIndices));
                 landingFloor.Add(tile.GridIndices);
             }
         }
@@ -295,7 +294,7 @@ public sealed partial class SalvageSystem
 
                 // There shouldn't be many of these so we won't bulk them.
                 grid.SetTile(neighbor, tileRef.Value);
-                Spawn("WallSolid", grid.GridTileToLocal(neighbor));
+                Spawn(dungeonConfig.Wall, grid.GridTileToLocal(neighbor));
             }
         }
 
