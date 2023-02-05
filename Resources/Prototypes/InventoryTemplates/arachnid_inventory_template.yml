@@ -15,14 +15,6 @@
       uiWindowPos: 0,2
       strippingWindowPos: 0,2
       displayName: Jumpsuit
-    - name: outerClothing
-      slotTexture: suit
-      slotFlags: OUTERCLOTHING
-      slotGroup: MainHotbar
-      stripTime: 6
-      uiWindowPos: 1,2
-      strippingWindowPos: 1,2
-      displayName: Suit
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
@@ -83,7 +75,7 @@
       stripHidden: true
     - name: limb1
       slotTexture: limb_l
-      slotFlags: POCKET
+      slotFlags: SUITSTORAGE
       slotGroup: SecondHotbar
       stripTime: 3
       uiWindowPos: 0,3
@@ -91,20 +83,12 @@
       displayName: Left Limbs
     - name: limb2
       slotTexture: limb_r
-      slotFlags: POCKET
+      slotFlags: SUITSTORAGE
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 6,3
       strippingWindowPos: 2,3
       displayName: Right Limbs
-    - name: suitstorage
-      slotTexture: suit_storage
-      slotFlags:   SUITSTORAGE
-      stripTime: 3
-      uiWindowPos: 2,0
-      strippingWindowPos: 2,5
-      dependsOn: outerClothing
-      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
