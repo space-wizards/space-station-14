@@ -94602,7 +94602,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 9518
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -37.5,7.5
     parent: 0
