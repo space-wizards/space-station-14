@@ -1,12 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: 'The floor tiles have been resprited. They should look pretty similar,
-      but are a lot easier to edit for the developers considering they weren''t jpeg
-      compressed at some point in their life.', type: Tweak}
-  - {message: Removed sovl!, type: Remove}
-  id: 2495
-  time: '2022-10-22T01:53:25.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Added scarfs to the Clothesmate., type: Add}
@@ -2918,3 +2910,11 @@ Entries:
   - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
   id: 2994
   time: '2023-02-05T19:49:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Anomaly vessels now visually change depending on the stability of their
+      linked anomaly., type: Add}
+  - {message: Anomaly vessels have a beep that speeds up as the anomaly destabilizes.
+      Almost sounds like a bomb..., type: Add}
+  id: 2995
+  time: '2023-02-05T19:52:30.0000000+00:00'
