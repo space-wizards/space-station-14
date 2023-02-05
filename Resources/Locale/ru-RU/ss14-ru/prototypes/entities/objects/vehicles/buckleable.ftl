@@ -1,10 +1,10 @@
 ent-BaseVehicle = Транспорт
     .desc = { "" }
     .suffix = { "" }
-ent-VehiclePussyWagon = уборочная машина
+ent-VehicleJanicart = уборочная машина
     .desc = Верный скакун уборщика.
     .suffix = { "" }
-ent-VehiclePussyWagonDestroyed = уничтоженная уборочная машина
+ent-VehicleJanicartDestroyed = уничтоженная уборочная машина
     .desc = Покойся с миром.
     .suffix = { "" }
 ent-VehicleSecway = секвей
