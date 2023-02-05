@@ -74149,4 +74149,41 @@ entities:
   - pos: 40.28816,-0.42427582
     parent: 127
     type: Transform
+- uid: 9242
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: 3.5,-2.5
+    parent: 127
+    type: Transform
+- uid: 9243
+  type: WarpPoint
+  components:
+  - pos: -25.5,-0.5
+    parent: 127
+    type: Transform
+  - location: anomaly Lab
+    type: WarpPoint
+- uid: 9244
+  type: SurveillanceCameraScience
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -21.5,3.5
+    parent: 127
+    type: Transform
+  - id: Anomaly Lab
+    type: SurveillanceCamera
+- uid: 9245
+  type: SignDirectionalSci
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 13.543732,-24.80487
+    parent: 127
+    type: Transform
+- uid: 9246
+  type: SignDirectionalSupply
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 17.465607,-24.77362
+    parent: 127
+    type: Transform
 ...
