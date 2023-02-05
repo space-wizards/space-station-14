@@ -134,5 +134,6 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         base.Update(frameTime);
 
         UpdateGenerator();
+        UpdateVessels();
     }
 }

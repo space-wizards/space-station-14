@@ -9,10 +9,11 @@
     sprite: Structures/Machines/Anomaly/anomaly_vessel.rsi
     layers:
     - state: base
-    - state: powered
+    - state: powered-1
       shader: unshaded
       map: ["enum.PowerDeviceVisualLayers.Powered"]
-    - state: anomaly
+    - state: anomaly-1
+      visible: false
       shader: unshaded
       map: ["enum.AnomalyVesselVisualLayers.Base"]
     - state: panel
@@ -54,6 +55,15 @@
         enum.AnomalyVesselVisualLayers.Base:
           True: { visible: true }
           False: { visible: false }
+      enum.AnomalyVesselVisuals.AnomalyState:
+        enum.PowerDeviceVisualLayers.Powered:
+          1: { state: powered-1 }
+          2: { state: powered-2 }
+          3: { state: powered-3 }
+        enum.AnomalyVesselVisualLayers.Base:
+          1: { state: anomaly-1 }
+          2: { state: anomaly-2 }
+          3: { state: anomaly-3 }
       enum.WiresVisuals.MaintenancePanelState:
         enum.WiresVisualLayers.MaintenancePanel:
           True: { visible: false }
