@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
-  - {message: Pickaxes now mine faster., type: Tweak}
-  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
-      rarity.', type: Tweak}
-  id: 2492
-  time: '2022-10-20T13:16:29.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix wallmount interactions., type: Fix}
@@ -2923,3 +2915,8 @@ Entries:
     type: Tweak}
   id: 2991
   time: '2023-02-05T15:38:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
+  id: 2992
+  time: '2023-02-05T19:44:36.0000000+00:00'
