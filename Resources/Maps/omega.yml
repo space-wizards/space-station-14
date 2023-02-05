@@ -97873,4 +97873,12 @@ entities:
   - pos: -14.357392,4.331708
     parent: 0
     type: Transform
+- uid: 12516
+  type: VendingMachineEngiDrobe
+  components:
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -38.5,-7.5wd
+    parent: 0
+    type: Transform
 ...
