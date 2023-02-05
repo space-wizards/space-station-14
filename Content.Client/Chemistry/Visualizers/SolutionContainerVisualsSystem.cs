@@ -5,11 +5,9 @@ namespace Content.Client.Chemistry.Visualizers;
 
 public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionContainerVisualsComponent>
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-
     protected override void OnAppearanceChange(EntityUid uid, SolutionContainerVisualsComponent component, ref AppearanceChangeEvent args)
     {
-        if (!_appearance.TryGetData(uid, SolutionContainerVisuals.FillFraction, out float fraction, args.Component))
+        if (!AppearanceSystem.TryGetData<float>(uid, SolutionContainerVisuals.FillFraction, out var fraction, args.Component))
             return;
 
         if (args.Sprite == null)
@@ -39,7 +37,7 @@ public sealed class SolutionContainerVisualsSystem : VisualizerSystem<SolutionCo
             var stateName = component.FillBaseName + closestFillSprite;
             args.Sprite.LayerSetState(fillLayer, stateName);
 
-            if (component.ChangeColor && _appearance.TryGetData(uid, SolutionContainerVisuals.Color, out Color color, args.Component))
+            if (component.ChangeColor && AppearanceSystem.TryGetData<Color>(uid, SolutionContainerVisuals.Color, out var color, args.Component))
                 args.Sprite.LayerSetColor(fillLayer, color);
         }
         else

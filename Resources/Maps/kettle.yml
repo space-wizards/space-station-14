@@ -86188,7 +86188,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 7174
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: 1.9728081,37.62823
     parent: 82
@@ -164953,7 +164953,7 @@ entities:
     parent: 82
     type: Transform
 - uid: 18902
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -0.5,39.5
     parent: 82
