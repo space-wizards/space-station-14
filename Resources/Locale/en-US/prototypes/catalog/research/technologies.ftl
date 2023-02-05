@@ -37,6 +37,45 @@ technologies-spacefaring-description = Able to bring you into the stars!
 technologies-surveillance = Surveillance technology
 technologies-surveillance-description = Retro-styled cameras straight from the year 1984!
 
+technologies-security-basic = Basic Security Technology
+technologies-security-basic-description = Basic equipment for security personnel.
+
+technologies-ballistic-ammunition = Ballistic ammunition
+technologies-ballistic-ammunition-description = Because a gun without any bullets is just a fancy paperweight.
+
+technologies-ballistic-magazines = Ballistic magazines
+technologies-ballistic-magazines-description = Discover the wonders of not having to find a recharger for your gun.
+
+technologies-ballistic-weaponry = Ballistic weaponry
+technologies-ballistic-weaponry-description = Energy weapons may be the future, but ballistics are what you need in the present.
+
+technologies-non-lethal = Non-Lethal Technology
+technologies-non-lethal-description = Because not every situation needs to be escalated.
+
+technologies-energy-weaponry = Energy Weaponry
+technologies-energy-weaponry-description = Learn how to weaponize stimulated light amplication through radiation.
+
+technologies-advanced-energy-weaponry = Advanced Energy Weaponry
+technologies-advanced-energy-weaponry-description = Utilize the properties of plasma to make a self-recharging gun.
+
+technologies-high-power-energy-weaponry = High Power Energy Weaponry
+technologies-high-power-energy-weaponry-description = It never hurts to have more power.
+
+technologies-experimental-energy-weaponry = Experimental Energy Weaponry
+technologies-experimental-energy-weaponry-description = What if lasers could go through walls?
+
+technologies-basic-armor = Basic Armor
+technologies-basic-armor-description = Stay safe out there!
+
+technologies-riot-armor = Riot Armor
+technologies-riot-armor-description = For when the greytide needs containing.
+
+technologies-specialized-armor = Specialized Armor
+technologies-specialized-armor-description = Types of armor specifically designed for certain threats.
+
+technologies-spaceproof-armor = Spaceproof Armor
+technologies-spaceproof-description = Let nothing stop you from your pursuit of justice.
+
 technologies-industrial-engineering = Industrial engineering
 technologies-industrial-engineering-description = A refresher course on modern engineering technology.
 

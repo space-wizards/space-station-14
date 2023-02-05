@@ -61,6 +61,21 @@
     state: impact_laser
 
 - type: hitscan
+  id: RedAntiqueLaser
+  damage:
+    types:
+      Heat: 20
+  muzzleFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: muzzle_laser
+  travelFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: beam
+  impactFlash:
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+    state: impact_laser
+
+- type: hitscan
   id: XrayLaser
   damage:
     types:
@@ -75,6 +90,7 @@
   impactFlash:
     sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
     state: impact_xray
+  collisionMask: CollisionGroup.XrayImpassable
 
 - type: hitscan
   id: RedHeavyLaser
