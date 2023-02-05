@@ -1,4 +1,5 @@
 using Content.Shared.Kudzu;
+using Robust.Server.GameObjects;
 using Robust.Shared.Random;
 
 namespace Content.Server.Kudzu;
@@ -6,6 +7,7 @@ namespace Content.Server.Kudzu;
 public sealed class GrowingKudzuSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private float _accumulatedFrameTime = 0.0f;
 
@@ -21,8 +23,8 @@ public sealed class GrowingKudzuSystem : EntitySystem
             return;
         }
 
-        appearance.SetData(KudzuVisuals.Variant, _robustRandom.Next(1, 3));
-        appearance.SetData(KudzuVisuals.GrowthLevel, 1);
+        _appearance.SetData(uid, KudzuVisuals.Variant, _robustRandom.Next(1, 3), appearance);
+        _appearance.SetData(uid, KudzuVisuals.GrowthLevel, 1, appearance);
     }
 
     public override void Update(float frameTime)
@@ -46,7 +48,7 @@ public sealed class GrowingKudzuSystem : EntitySystem
                 EntityManager.RemoveComponent<GrowingKudzuComponent>((kudzu).Owner);
             }
 
-            appearance.SetData(KudzuVisuals.GrowthLevel, kudzu.GrowthLevel);
+            _appearance.SetData(kudzu.Owner, KudzuVisuals.GrowthLevel, kudzu.GrowthLevel, appearance);
         }
     }
 }

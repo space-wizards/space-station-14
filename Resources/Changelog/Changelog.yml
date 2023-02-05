@@ -1,69 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fix chat/speech pop-ups not rendering properly, type: Fix}
-  id: 2477
-  time: '2022-10-17T04:33:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Melee now has lag compensation so the server considers your target's
-      position from when you attacked., type: Add}
-  id: 2478
-  time: '2022-10-17T04:54:32.0000000+00:00'
-- author: router
-  changes:
-  - {message: Saying "^^" or "^-^" will now make you smile instead., type: Add}
-  id: 2479
-  time: '2022-10-17T04:54:52.0000000+00:00'
-- author: Sheppard
-  changes:
-  - {message: Ambience no longer plays in the lobby., type: Fix}
-  id: 2480
-  time: '2022-10-17T04:56:10.0000000+00:00'
-- author: ashtronaut
-  changes:
-  - {message: 'You can now continue to read books, the handheld crew monitor, health
-      analyzer readouts, papers, and your PDA screen after swapping your active hand
-      as long as they remain in your one of your hands. Remember, multitasking is
-      an efficient use of company time.', type: Tweak}
-  id: 2481
-  time: '2022-10-17T20:55:24.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: The classic Space Station 13 style HUD layout has been ported to Space
-      Station 14! Enjoy having your chat in its own separate section of game HUD!,
-    type: Add}
-  id: 2482
-  time: '2022-10-17T22:13:41.0000000+00:00'
-- author: Scribbles0
-  changes:
-  - {message: Cluster's security layout has changed. New south-eastern maintenance
-      halls have been added as well., type: Tweak}
-  id: 2483
-  time: '2022-10-17T22:23:41.0000000+00:00'
-- author: vulppine
-  changes:
-  - {message: 'The lobby''s character setup screen now sits in the lobby, instead
-      of it being its own screen.', type: Tweak}
-  id: 2484
-  time: '2022-10-18T06:45:32.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some chat sanitization issues that allowed some invalid entity
-      names to mess with the chat window., type: Fix}
-  id: 2485
-  time: '2022-10-18T06:59:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Stealth boxes no longer cause you to suffocate., type: Fix}
-  id: 2486
-  time: '2022-10-18T23:04:48.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: NPCs will now always sleep when a player attaches and wake when they
-      leave., type: Tweak}
-  id: 2487
-  time: '2022-10-18T23:07:44.0000000+00:00'
 - author: mirrorcult
   changes:
   - {message: 'Extended has been reworked into ''Survival'' mode. No explicit antagonists
@@ -2926,11 +2861,67 @@ Entries:
       more resilient to damage.', type: Tweak}
   id: 2975
   time: '2023-01-31T01:43:28.0000000+00:00'
-- author: crazybrain23
+- author: EmoGarbage404
   changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
+  - {message: Added paper bins., type: Add}
   id: 2976
-  time: '2023-01-31T01:44:10.0000000+00:00'
+  time: '2023-01-31T22:03:27.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: catwalks now can be built on lattice, type: Fix}
+  id: 2977
+  time: '2023-02-01T02:33:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: solar panels now can be built on lattice, type: Fix}
+  - {message: grille now can be built on lattice, type: Fix}
+  id: 2978
+  time: '2023-02-01T02:34:04.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Uranium now visually stacks like other materials, type: Tweak}
+  id: 2979
+  time: '2023-02-01T14:21:34.0000000+00:00'
+- author: adamsogm
+  changes:
+  - {message: Fixed dice being unable to roll their max value., type: Fix}
+  id: 2980
+  time: '2023-02-01T17:27:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Added the research assistant role, for all the new people wanting to
+      get into the science department.', type: Add}
+  id: 2981
+  time: '2023-02-02T17:23:55.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Rat King AI is no longer friendly and will attack players., type: Fix}
+  id: 2982
+  time: '2023-02-02T17:31:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed not being able to select a research server on certain machines.,
+    type: Fix}
+  id: 2983
+  time: '2023-02-03T03:46:51.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix construction errors., type: Fix}
+  id: 2984
+  time: '2023-02-03T12:46:47.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: Broken light bulbs on disposal units have been replaced., type: Fix}
+  id: 2985
+  time: '2023-02-03T22:26:50.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Space Tick AI is no longer friendly and will attack players., type: Fix}
+  id: 2986
+  time: '2023-02-04T02:02:52.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed tile name not displaying correctly when another player would point
+      at tiles., type: Fix}
+  id: 2987
+  time: '2023-02-05T02:02:25.0000000+00:00'

@@ -13,25 +13,25 @@ public sealed class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingInd
     {
         if (args.Sprite == null)
             return;
-        
+
         if (!_prototypeManager.TryIndex<TypingIndicatorPrototype>(component.Prototype, out var proto))
         {
             Logger.Error($"Unknown typing indicator id: {component.Prototype}");
             return;
         }
 
-        // args.Component.TryGetData(TypingIndicatorVisuals.IsTyping, out bool isTyping); // Corvax-TypingIndicator
+        //AppearanceSystem.TryGetData<bool>(uid, TypingIndicatorVisuals.IsTyping, out var isTyping, args.Component); // Corvax-TypingIndicator
         var layerExists = args.Sprite.LayerMapTryGet(TypingIndicatorLayers.Base, out var layer);
         if (!layerExists)
             layer = args.Sprite.LayerMapReserveBlank(TypingIndicatorLayers.Base);
-        
+
         args.Sprite.LayerSetRSI(layer, proto.SpritePath);
         args.Sprite.LayerSetState(layer, proto.TypingState);
         args.Sprite.LayerSetShader(layer, proto.Shader);
         args.Sprite.LayerSetOffset(layer, proto.Offset);
         // args.Sprite.LayerSetVisible(layer, isTyping); // Corvax-TypingIndicator
         // Corvax-TypingIndicator-Start
-        args.Component.TryGetData(TypingIndicatorVisuals.State, out TypingIndicatorState state);
+        AppearanceSystem.TryGetData<TypingIndicatorState>(uid, TypingIndicatorVisuals.State, out var state);
         args.Sprite.LayerSetVisible(layer, state != TypingIndicatorState.None);
         switch (state)
         {

@@ -94602,13 +94602,13 @@ entities:
     parent: 0
     type: Transform
 - uid: 9518
-  type: SpawnVehiclePussywagon
+  type: SpawnVehicleJanicart
   components:
   - pos: -37.5,7.5
     parent: 0
     type: Transform
 - uid: 9519
-  type: VehicleKeyPussyWagon
+  type: VehicleKeyJanicart
   components:
   - pos: -35.51934,9.490755
     parent: 0
@@ -116281,7 +116281,7 @@ entities:
   - color: '#FF0000FF'
     type: AtmosPipeColor
 - uid: 12793
-  type: VehiclePussyWagonDestroyed
+  type: VehicleJanicartDestroyed
   components:
   - pos: -35.5,13.5
     parent: 0

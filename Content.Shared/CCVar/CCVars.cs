@@ -940,6 +940,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> WhitelistReason =
             CVarDef.Create("whitelist.reason", "whitelist-not-whitelisted", CVar.SERVERONLY);
 
+        /// <summary>
+        ///     If the playercount is below this number, the whitelist will not apply.
+        /// </summary>
+        public static readonly CVarDef<int> WhitelistMinPlayers =
+            CVarDef.Create("whitelist.min_players", 0, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     If the playercount is above this number, the whitelist will not apply.
+        /// </summary>
+        public static readonly CVarDef<int> WhitelistMaxPlayers =
+            CVarDef.Create("whitelist.max_players", int.MaxValue, CVar.SERVERONLY);
+
         /*
          * VOTE
          */
