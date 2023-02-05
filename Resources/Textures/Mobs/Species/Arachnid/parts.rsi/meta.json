@@ -61,6 +61,10 @@
 	{
       "name": "eyes",
       "directions": 4
-    }
+    },
+	{
+	  "name": "template",
+	  "directions": 4
+	}
   ]
 }
