@@ -97881,4 +97881,12 @@ entities:
   - pos: -38.5,-7.5wd
     parent: 0
     type: Transform
+- uid: 12517
+  type: WarpPoint
+  components:
+  - pos: 33.5,-25.5
+    parent: 127
+    type: Transform
+  - location: anomaly Lab
+    type: WarpPoint
 ...
