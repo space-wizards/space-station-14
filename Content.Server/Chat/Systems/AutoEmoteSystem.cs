@@ -17,6 +17,7 @@ public sealed class AutoEmoteSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<AutoEmoteComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AutoEmoteComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
     public override void Update(float frameTime)
@@ -60,6 +61,17 @@ public sealed class AutoEmoteSystem : EntitySystem
         foreach (var autoEmotePrototypeId in autoEmote.Emotes)
         {
             ResetTimer(uid, autoEmotePrototypeId, autoEmote);
+        }
+    }
+
+    private void OnUnpaused(EntityUid uid, AutoEmoteComponent autoEmote, ref EntityUnpausedEvent args)
+    {
+        autoEmote.NextEmoteTime = TimeSpan.MaxValue;
+        foreach (var key in autoEmote.EmoteTimers.Keys)
+        {
+            autoEmote.EmoteTimers[key] += args.PausedTime;
+            if (autoEmote.NextEmoteTime > autoEmote.EmoteTimers[key])
+                autoEmote.NextEmoteTime = autoEmote.EmoteTimers[key];
         }
     }
 

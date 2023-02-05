@@ -27,6 +27,6 @@ public sealed class AutoEmoteComponent : Component
     /// <summary>
     /// Time of the next emote. Redundant, but avoids having to iterate EmoteTimers each update.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [ViewVariables(VVAccess.ReadOnly)]
     public TimeSpan NextEmoteTime = TimeSpan.MaxValue;
 }
