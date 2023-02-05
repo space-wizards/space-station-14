@@ -6,6 +6,9 @@
   abstract: true
   components:
   # The important nessessities
+  - type: Body
+    prototype: Arachnid
+    requiredLegs: 2
   - type: Perishable
   - type: HumanoidAppearance
     species: Arachnid
