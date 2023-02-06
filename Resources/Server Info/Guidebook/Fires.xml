@@ -1,15 +1,15 @@
 ﻿<Document>
-# Fires & Space
+# Пожары и разгерметизации
 
-Fires and spacings are an inevitability due to the highly flammable plasma gas and endless vacuum of space present in and around the station, so it's important to know how to manage them.
+Пожары и разгерметизации неизбежны из-за легковоспламеняющейся газообразной плазмы и космического вакуума, присутствующих на станции и вокруг неё, поэтому важно знать, как с ними справиться.
 
-## Spacing
-Space is arguably the easier of the two to handle.
-While it does render an area uninhabitable, it can be trivially solved by simply sealing the hole that resulted in the vacuum and introducing a small amount of air.
-By default, station vents automatically seal themselves upon exposure to space, in order to avoid wasting air, and will only resume cycling after pressure has been brought up high enough to reopen them.
+## Разгерметизации
+С разгерметизацией, пожалуй, справиться проще чем с пожаром.
+Хотя она и делает отсек непригодным для обитания, достаточно просто заделать пробоину и подать небольшое количество воздуха.
+Чтобы избежать потери воздуха через разгерметизировавшийся отсек, вентиляция станции настроена на автоматическое отключение в случае попадания в космос, и сможет возобновить работу только после того, как давление в отсеке повысится.
 
-## Fires
-Fires can be delt with through a multitude of ways, but some of the most effective methods include:
-  - Spacing the enflamed area if possible. This will destroy all of the gasses in the room, which may be a problem if you're already straining life support.
-  - Dumping a Frezon canister into the enflamed area. This will ice over the flames and halt any ongoing reaction, provided you use enough Frezon. Additionally does not result in destruction of material, so you can simply scrub the rooms afterward.
+## Пожары
+Существует множество способов борьбы с пожарами, однако наиболее эффективными из них являются следующие:
+  - Разгерметизируйте зону пожара, если это возможно. Конечно, в помещении не останется вообще никаких газов, что может стать проблемой, если система жизнеобеспечения станции уже на пределе.
+  - Выпустите канистру фрезона в зоне пожара. Если фрезона хватит, то он охладит пламя, и остановит любую протекающую реакцию. К тому же это не приведет к материальным разрушениям, и после него будет достаточно просто очистить атмосферу при помощи скрубберов.
 </Document>
