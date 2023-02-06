@@ -5,8 +5,7 @@
     xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
 
     <PanelContainer Name="StampBorder">
-        <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
-            ClipText="true"
+        <paper:ScalingLabel Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
             FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}"
             Margin="12 6 12 6"/>
     </PanelContainer>
