@@ -1,0 +1,51 @@
+﻿- type: trauma
+  id: Pierce
+  wounds:
+    10: DeepBruise
+    30: MinorBreakage
+    50: OpenPuncture
+    100: RupturedCavity
+
+- type: entity
+  id: DeepBruise
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: MinorBreakage
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: OpenPuncture
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
+
+- type: entity
+  id: RupturedCavity
+  components:
+    - type: Wound
+      healthDamage: 2
+      integrityDamage: 0
+      severityPercentage: 100
+      baseHealingRate: 0.05
+      healingModifier: 0
+      healingMultiplier: 1.0
