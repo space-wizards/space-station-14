@@ -38,6 +38,9 @@ They connect to HV cables and generate power from nearby radiation sources when 
 </Box>
 
 <Box>
+<Document>
+Nothing goes here
+</Document>
 <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
 </Box>
@@ -47,9 +50,9 @@ They connect to HV cables and generate power from nearby radiation sources when 
 </Box>
 
 <Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterLeft" Caption="Emitter L"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterCenter" Caption="Emitter C"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorEmitterRight" Caption="Emitter R"/>
 </Box>
 
 The Particle Accelerator (PA) is a multi-tile structure that activates a gravitational singularity generator with the particles it generates. Its emitters should always face the gravitational singularity generator.
