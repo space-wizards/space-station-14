@@ -58,7 +58,7 @@
       {
         "name": "mask"
       },
-	    {
+	  {
         "name": "neck"
       },
       {
@@ -83,10 +83,7 @@
         "name": "pda"
       },
 	  {
-        "name": "limb_l"
-      },
-	  {
-        "name": "limb_r"
+        "name": "web"
       }
    ]
 }

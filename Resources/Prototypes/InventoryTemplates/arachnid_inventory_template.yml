@@ -73,22 +73,22 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
-    - name: limb1
-      slotTexture: limb_l
-      slotFlags: SUITSTORAGE
-      slotGroup: SecondHotbar
+    - name: web1
+      slotTexture: web
+      slotFlags: POCKET
+      slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 0,3
       strippingWindowPos: 0,3
-      displayName: Left Limbs
-    - name: limb2
-      slotTexture: limb_r
-      slotFlags: SUITSTORAGE
+      displayName: Left Web
+    - name: web2
+      slotTexture: web
+      slotFlags: POCKET
       slotGroup: MainHotbar
       stripTime: 3
       uiWindowPos: 6,3
       strippingWindowPos: 2,3
-      displayName: Right Limbs
+      displayName: Right Web
     - name: id
       slotTexture: id
       slotFlags: IDCARD
