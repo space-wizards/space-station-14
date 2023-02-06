@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,8 +27,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             var paths = sResourceManager.ContentFindFiles(prototypePath)
                 .ToList()
                 .AsParallel()
-                .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .Where(ResourcePath.IsYamlResourceFile)
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();

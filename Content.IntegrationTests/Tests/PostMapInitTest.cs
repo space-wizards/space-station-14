@@ -7,20 +7,18 @@ using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
+using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Roles;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
-using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Utility;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using ShuttleSystem = Content.Server.Shuttles.Systems.ShuttleSystem;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -92,7 +90,7 @@ namespace Content.IntegrationTests.Tests
             var mapFolder = new ResourcePath("/Maps");
             var maps = resourceManager
                 .ContentFindFiles(mapFolder)
-                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .Where(ResourcePath.IsYamlResourceFile)
                 .ToArray();
 
             foreach (var map in maps)
@@ -302,7 +300,7 @@ namespace Content.IntegrationTests.Tests
                     var mapFolder = new ResourcePath("/Maps");
                     var maps = resourceManager
                         .ContentFindFiles(mapFolder)
-                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                        .Where(ResourcePath.IsYamlResourceFile)
                         .ToArray();
                     var mapNames = new List<string>();
                     foreach (var map in maps)
