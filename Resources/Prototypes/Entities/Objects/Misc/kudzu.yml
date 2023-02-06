@@ -14,7 +14,6 @@
             "/Audio/Weapons/slash.ogg"
     - type: Sprite
       sprite: Objects/Misc/kudzu.rsi
-      color: "#ff0000"
       state: kudzu_11
       drawdepth: Overdoors
       netsync: false
