@@ -12,11 +12,13 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Player;
+using Content.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     public sealed partial class ChemistrySystem
     {
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
         private void InitializeHypospray()
         {
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
@@ -65,6 +67,15 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan))
                 return false;
 
+            // Not a good location
+            var hasCooldownComponent = EntityManager.HasComponent<UseDelayComponent>(uid);
+
+            // Medipens and such use this system and don't have a delay, requiring extra checks
+            // This makes my eyes water, please advise
+            if (hasCooldownComponent == true)
+                if (_useDelay.ActiveDelay(uid, EntityManager.GetComponent<UseDelayComponent>(uid)))
+                    return false;
+
             string? msgFormat = null;
 
             if (target == user)
@@ -101,6 +112,11 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             _audio.PlayPvs(component.InjectSound, user);
+
+            // Not the best place to put the delay
+            // Medipens and such use this system and don't have a delay, requiring extra checks
+            if (hasCooldownComponent == true)
+                _useDelay.BeginDelay(uid, EntityManager.GetComponent<UseDelayComponent>(uid));
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
