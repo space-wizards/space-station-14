@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
-  id: 2500
-  time: '2022-10-22T21:53:43.0000000+00:00'
 - author: Jackrost
   changes:
   - {message: biomass reclaimer is don't jitter if power off, type: Add}
@@ -2922,3 +2917,8 @@ Entries:
   - {message: 'Added two new types of anomalies: flesh and bluespace.', type: Add}
   id: 2999
   time: '2023-02-06T05:03:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed red kuzdu., type: Fix}
+  id: 3000
+  time: '2023-02-06T12:27:06.0000000+00:00'
