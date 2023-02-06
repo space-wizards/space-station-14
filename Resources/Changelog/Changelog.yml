@@ -1,9 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Matchbox sprite will now properly show its fill states., type: Fix}
-  id: 2505
-  time: '2022-10-22T21:59:53.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
@@ -2925,3 +2920,8 @@ Entries:
       alerting scientists that a new anomaly has been made., type: Add}
   id: 3004
   time: '2023-02-06T19:54:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bluespace anomalies no longer... crash everything., type: Fix}
+  id: 3005
+  time: '2023-02-06T21:11:20.0000000+00:00'
