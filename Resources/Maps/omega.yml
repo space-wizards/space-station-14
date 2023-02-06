@@ -97898,4 +97898,10 @@ entities:
   - pos: 6.5,-20.5
     parent: 0
     type: Transform
+- uid: 12520
+  type: PortableFlasher
+  components:
+  - pos: -36.5,20.5
+    parent: 0
+    type: Transform
 ...
