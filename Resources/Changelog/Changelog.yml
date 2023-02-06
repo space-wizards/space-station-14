@@ -1,15 +1,4 @@
 Entries:
-- author: Willhelm53
-  changes:
-  - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
-      blue, pink, and grey!', type: Add}
-  id: 2503
-  time: '2022-10-22T21:58:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
-  id: 2504
-  time: '2022-10-22T21:58:27.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Matchbox sprite will now properly show its fill states., type: Fix}
@@ -2923,3 +2912,16 @@ Entries:
   - {message: Added singularity guidebook entry, type: Add}
   id: 3002
   time: '2023-02-06T13:10:07.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: PDAs no longer disappear when inhand, type: Fix}
+  id: 3003
+  time: '2023-02-06T19:53:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The anomaly generator now has an animation while it creates anomalies.,
+    type: Add}
+  - {message: The anomaly generator now broadcasts a message on the science radio
+      alerting scientists that a new anomaly has been made., type: Add}
+  id: 3004
+  time: '2023-02-06T19:54:00.0000000+00:00'
