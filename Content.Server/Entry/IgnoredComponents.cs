@@ -21,7 +21,6 @@ namespace Content.Server.Entry
             "UIFragment",
             "PDABorderColor",
             "AirlockVisualizer",
-            "TabletopItemVisualizer",
         };
     }
 }
