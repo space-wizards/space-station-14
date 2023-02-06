@@ -2,11 +2,11 @@ whitelist-not-whitelisted = Вас нет в вайтлисте.
 # proper handling for having a min/max or not
 whitelist-playercount-invalid =
     { $min ->
-        [0] The whitelist for this server only applies below { $max } players.
+        [0] Вайтлист для этого сервера применяется только для числа игроков ниже { $max }.
        *[other]
-            The whitelist for this server only applies above { $min } { $max ->
-                [2147483647] -> players, so you may be able to join later.
-               *[other] -> players and below { $max } players, so you may be able to join later.
+            Вайтлист для этого сервера применяется только для числа игроков выше { $min } { $max ->
+                [2147483647] ->  так что, возможно, вы сможете присоединиться позже.
+               *[other] ->  и ниже { $max } игроков, так что, возможно, вы сможете присоединиться позже.
             }
     }
 whitelist-not-whitelisted-rp = Вас нет в вайтлисте. Чтобы попасть в вайтлист, посетите наш Discord (ссылку можно найти по адресу https://discord.station14.ru).
