@@ -718,6 +718,11 @@
   components:
   - type: PDA
     id: CluwneIDCard
+    state: pda-cluwne
+  - type: PDABorderColor
+    borderColor: "#1c8f4d"
+  - type: Icon
+    state: pda-cluwne
     penSlot:
       startingItem: CrayonGreen
       ejectSound: /Audio/Items/bikehorn.ogg
@@ -725,10 +730,5 @@
       whitelist:
         tags:
         - Write
-  - type: Appearance
-    visuals:
-      - type: PDAVisualizer
-        state: pda-cluwne
-  - type: Icon
-    state: pda-cluwne
   - type: Unremoveable
+
