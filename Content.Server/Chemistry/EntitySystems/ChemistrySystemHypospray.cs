@@ -11,8 +11,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
-using Robust.Shared.Player;
 using Content.Shared.Timing;
+using Robust.Shared.Player;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
