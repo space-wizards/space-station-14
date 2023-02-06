@@ -4118,3 +4118,14 @@ Entries:
     type: Add
   id: 484
   time: '2023-02-01T20:15:00.0000000+00:00'
+- author: no_mad
+  changes:
+  - message: "\u0414\u043E\u0431\u0430\u0432\u043B\u0435\u043D\u044B Research Assistant\
+      \ \u043D\u0430 \u0414\u0435\u043B\u044C\u0442\u0435"
+    type: Add
+  - message: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u044B \u043E\u0448\
+      \u0438\u0431\u043A\u0438 \u043F\u0440\u0438 \u043C\u0430\u043F\u043F\u0438\u043D\
+      \u0433\u0435 \u043D\u0430 \u0414\u0435\u043B\u044C\u0442\u0435"
+    type: Fix
+  id: 485
+  time: '2023-02-06T04:09:27.0000000+00:00'
