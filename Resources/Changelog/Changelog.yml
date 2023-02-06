@@ -1,9 +1,4 @@
 Entries:
-- author: Jackrost
-  changes:
-  - {message: biomass reclaimer is don't jitter if power off, type: Add}
-  id: 2501
-  time: '2022-10-22T21:54:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cargo orders not showing up on shuttle., type: Fix}
@@ -2922,3 +2917,9 @@ Entries:
   - {message: Fixed red kuzdu., type: Fix}
   id: 3000
   time: '2023-02-06T12:27:06.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Automatically called shuttles will take 10 minutes to get to the station
+      instead of 4., type: Tweak}
+  id: 3001
+  time: '2023-02-06T12:49:16.0000000+00:00'
