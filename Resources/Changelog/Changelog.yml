@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: You will now see a message at spawn telling you what station you're
-      on., type: Tweak}
-  id: 2499
-  time: '2022-10-22T21:51:51.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
@@ -2919,3 +2913,12 @@ Entries:
       cost., type: Tweak}
   id: 2998
   time: '2023-02-06T02:51:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Increased point generation from anomalies., type: Tweak}
+  - {message: Made the pyroclastic anomaly less dangerous and electricity anomaly
+      more dangerous., type: Tweak}
+  - {message: Anomalies should no longer spawn in walls as much., type: Fix}
+  - {message: 'Added two new types of anomalies: flesh and bluespace.', type: Add}
+  id: 2999
+  time: '2023-02-06T05:03:54.0000000+00:00'
