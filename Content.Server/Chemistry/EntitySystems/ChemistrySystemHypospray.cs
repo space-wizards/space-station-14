@@ -19,6 +19,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed partial class ChemistrySystem
     {
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
         private void InitializeHypospray()
         {
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
@@ -67,13 +68,8 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan))
                 return false;
 
-            // Not a good location
-            var hasCooldownComponent = EntityManager.HasComponent<UseDelayComponent>(uid);
-
-            // Medipens and such use this system and don't have a delay, requiring extra checks
-            // This makes my eyes water, please advise
-            if (hasCooldownComponent == true)
-                if (_useDelay.ActiveDelay(uid, EntityManager.GetComponent<UseDelayComponent>(uid)))
+            if (TryComp(uid, out UseDelayComponent? delayComp))
+                if (_useDelay.ActiveDelay(uid, delayComp))
                     return false;
 
             string? msgFormat = null;
@@ -115,8 +111,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
             // Not the best place to put the delay
             // Medipens and such use this system and don't have a delay, requiring extra checks
-            if (hasCooldownComponent == true)
-                _useDelay.BeginDelay(uid, EntityManager.GetComponent<UseDelayComponent>(uid));
+            if (delayComp is not null)
+                _useDelay.BeginDelay(uid, delayComp);
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);
