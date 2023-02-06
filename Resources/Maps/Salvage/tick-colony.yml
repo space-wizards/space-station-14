@@ -17,101 +17,102 @@ tilemap:
   10: FloorAsteroidSand
   11: FloorAsteroidTile
   12: FloorBar
-  13: FloorBlue
-  14: FloorBlueCircuit
-  15: FloorBoxing
-  16: FloorCarpetClown
-  17: FloorCarpetOffice
-  18: FloorCave
-  19: FloorCaveDrought
-  20: FloorClown
-  21: FloorDark
-  22: FloorDarkDiagonal
-  23: FloorDarkDiagonalMini
-  24: FloorDarkHerringbone
-  25: FloorDarkMini
-  26: FloorDarkMono
-  27: FloorDarkOffset
-  28: FloorDarkPavement
-  29: FloorDarkPavementVertical
-  30: FloorDarkPlastic
-  31: FloorDirt
-  32: FloorEighties
-  33: FloorElevatorShaft
-  34: FloorFreezer
-  35: FloorGlass
-  36: FloorGold
-  37: FloorGrass
-  38: FloorGrassDark
-  39: FloorGrassJungle
-  40: FloorGrassLight
-  41: FloorGreenCircuit
-  42: FloorGym
-  43: FloorHydro
-  44: FloorKitchen
-  45: FloorLaundry
-  46: FloorLino
-  47: FloorMetalDiamond
-  48: FloorMime
-  49: FloorMono
-  50: FloorPlastic
-  51: FloorRGlass
-  52: FloorReinforced
-  53: FloorRockVault
-  54: FloorShowroom
-  55: FloorShuttleBlue
-  56: FloorShuttleOrange
-  57: FloorShuttlePurple
-  58: FloorShuttleRed
-  59: FloorShuttleWhite
-  60: FloorSilver
-  61: FloorSnow
-  62: FloorSteel
-  63: FloorSteelDiagonal
-  64: FloorSteelDiagonalMini
-  65: FloorSteelDirty
-  66: FloorSteelHerringbone
-  67: FloorSteelMini
-  68: FloorSteelMono
-  69: FloorSteelOffset
-  70: FloorSteelPavement
-  71: FloorSteelPavementVertical
-  72: FloorTechMaint
-  73: FloorTechMaint2
-  74: FloorTechMaint3
-  75: FloorWhite
-  76: FloorWhiteDiagonal
-  77: FloorWhiteDiagonalMini
-  78: FloorWhiteHerringbone
-  79: FloorWhiteMini
-  80: FloorWhiteMono
-  81: FloorWhiteOffset
-  82: FloorWhitePavement
-  83: FloorWhitePavementVertical
-  84: FloorWhitePlastic
-  85: FloorWood
-  86: FloorWoodTile
-  87: Lattice
-  88: Plating
+  13: FloorBasaslt
+  14: FloorBlue
+  15: FloorBlueCircuit
+  16: FloorBoxing
+  17: FloorCarpetClown
+  18: FloorCarpetOffice
+  19: FloorCave
+  20: FloorCaveDrought
+  21: FloorClown
+  22: FloorDark
+  23: FloorDarkDiagonal
+  24: FloorDarkDiagonalMini
+  25: FloorDarkHerringbone
+  26: FloorDarkMini
+  27: FloorDarkMono
+  28: FloorDarkOffset
+  29: FloorDarkPavement
+  30: FloorDarkPavementVertical
+  31: FloorDarkPlastic
+  32: FloorDirt
+  33: FloorEighties
+  34: FloorElevatorShaft
+  35: FloorFreezer
+  36: FloorGlass
+  37: FloorGold
+  38: FloorGrass
+  39: FloorGrassDark
+  40: FloorGrassJungle
+  41: FloorGrassLight
+  42: FloorGreenCircuit
+  43: FloorGym
+  44: FloorHydro
+  45: FloorKitchen
+  46: FloorLaundry
+  47: FloorLino
+  48: FloorMetalDiamond
+  49: FloorMime
+  50: FloorMono
+  51: FloorPlastic
+  52: FloorRGlass
+  53: FloorReinforced
+  54: FloorRockVault
+  55: FloorShowroom
+  56: FloorShuttleBlue
+  57: FloorShuttleOrange
+  58: FloorShuttlePurple
+  59: FloorShuttleRed
+  60: FloorShuttleWhite
+  61: FloorSilver
+  62: FloorSnow
+  63: FloorSteel
+  64: FloorSteelDiagonal
+  65: FloorSteelDiagonalMini
+  66: FloorSteelDirty
+  67: FloorSteelHerringbone
+  68: FloorSteelMini
+  69: FloorSteelMono
+  70: FloorSteelOffset
+  71: FloorSteelPavement
+  72: FloorSteelPavementVertical
+  73: FloorTechMaint
+  74: FloorTechMaint2
+  75: FloorTechMaint3
+  76: FloorWhite
+  77: FloorWhiteDiagonal
+  78: FloorWhiteDiagonalMini
+  79: FloorWhiteHerringbone
+  80: FloorWhiteMini
+  81: FloorWhiteMono
+  82: FloorWhiteOffset
+  83: FloorWhitePavement
+  84: FloorWhitePavementVertical
+  85: FloorWhitePlastic
+  86: FloorWood
+  87: FloorWoodTile
+  88: Lattice
+  89: Plating
 entities:
 - uid: 0
   components:
   - type: MetaData
-  - parent: null
+  - parent: invalid
     type: Transform
   - chunks:
       -1,-1:
         ind: -1,-1
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAAEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAIEAAACBAAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAAEAAACBAAAAAQAAAIEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAABBAAAAAQAAAEEAAACBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAgQAAAEFAAAABAAAAgQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAAEAAAABAAAAgQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAFZAAAABAAAAAQAAAAEAAABBAAAAg==
       -1,0:
         ind: -1,0
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAAABAAAAgUAAAAEAAABBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAgQAAAIEAAABNQAAADUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAEEAAABBAAAAjUAAAAqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAIEAAAABAAAAAQAAAE1AAAANQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAABBAAAAgQAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAAEAAAABAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       0,0:
         ind: 0,0
-        tiles: CgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: BAAAAgQAAAAEAAACBAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUAAAAEAAAABAAAAQQAAAEEAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1AAAABAAAAAQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANQAAAAQAAAAEAAABBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAABBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAgQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       0,-1:
         ind: 0,-1
-        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAoAAAAKAAAACgAAAAoAAAAKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAACgAAAAoAAAAKAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAoAAAAKAAAACgAAAAoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+        tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAFZAAAABAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACBAAAAAQAAAAEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQUAAAAEAAACBAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAIEAAAABAAAAQQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAgQAAAAEAAABBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAIEAAACBQAAAAQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     type: MapGrid
   - type: Broadphase
   - angularDamping: 0.05
@@ -125,21 +126,405 @@ entities:
       path: /Audio/Effects/alert.ogg
     type: Gravity
   - chunkCollection:
-      -1,0:
-        0:
-          color: '#FFFFFFFF'
-          id: Remains
-          coordinates: -2.0630934,0.49848866
-      -1,-1:
-        1:
-          color: '#FFFFFFFF'
-          id: Remains
-          coordinates: -2.5358996,-4.3628607
       0,0:
-        2:
+        4:
+          color: '#9FED5896'
+          id: WarnCornerSE
+          coordinates: 0,1
+        6:
+          color: '#9FED5896'
+          id: WarnCornerNE
+          coordinates: 0,3
+        9:
+          color: '#9FED5896'
+          id: WarnLineE
+          coordinates: 0,2
+        11:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.6093248,1.4100605
+        12:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.5936998,1.1913105
+        13:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.4530748,1.3006855
+        14:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.3436998,1.6756856
+        15:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.21869981,2.0038106
+        16:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.21869981,2.0663106
+        17:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.6249498,1.8475606
+        18:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.6561998,1.7069356
+        19:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.6561998,1.6913106
+        20:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.7655748,1.3944355
+        21:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.8124498,1.4100605
+        22:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.6561998,1.5663106
+        23:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.3905748,1.6131856
+        24:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.3436998,1.5506856
+        25:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.4686998,1.5038106
+        26:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.24994981,1.6444356
+        27:
+          color: '#79150022'
+          id: splatter
+          coordinates: 0.3905748,1.8631856
+        28:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.2811998,1.2381855
+        29:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.6561999,0.8788105
+        30:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.3436998,1.0506855
+        31:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.5311999,1.0038105
+        32:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.9218249,0.9413105
+        33:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.3749498,0.9569355
+        34:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.0468248,1.3944355
+        35:
+          color: '#79150022'
+          id: splatter
+          coordinates: 1.1249498,0.9100605
+        94:
+          color: '#79150012'
+          id: splatter
+          coordinates: 0.9847424,0.873973
+        95:
+          color: '#79150012'
+          id: splatter
+          coordinates: 0.5941174,0.827098
+        96:
+          color: '#79150012'
+          id: splatter
+          coordinates: 0.8128674,0.811473
+        97:
+          color: '#79150012'
+          id: splatter
+          coordinates: 1.6722424,0.780223
+        98:
+          color: '#79150012'
+          id: splatter
+          coordinates: 2.4378674,0.827098
+        99:
           color: '#FFFFFFFF'
           id: Remains
-          coordinates: 1.5020566,0.94781697
+          coordinates: 1.9534924,1.0517962
+      -1,-1:
+        47:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -3.8162756,-0.24618945
+        53:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -1.1558826,-6.8087125
+        54:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -0.89025766,-6.2774625
+        55:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -1.1558826,-5.8243375
+        56:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -0.85900766,-5.4805875
+        57:
+          angle: 1.5707963267948966 rad
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -1.4215076,-5.2462125
+        58:
+          angle: 1.5707963267948966 rad
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -1.8590076,-4.8555875
+        59:
+          angle: 1.5707963267948966 rad
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -2.5152576,-5.0899625
+        60:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.7965076,-4.7305875
+        61:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-4.7305875
+        62:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-4.6055875
+        63:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.8902576,-4.3712125
+        64:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.6871326,-4.3243375
+        65:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.6715076,-3.9180875
+        66:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.8121326,-4.1368375
+        67:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.8121326,-4.3555875
+        68:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9058826,-4.4493375
+        69:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.0152576,-4.4649625
+        70:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.1715076,-4.3399625
+        71:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.2027576,-4.2149625
+        72:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.1715076,-4.1680875
+        73:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.0152576,-4.1212125
+        74:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.0152576,-4.1212125
+        75:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-4.2462125
+        76:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-3.7618375
+        77:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-3.7618375
+        78:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.9371326,-3.5274625
+        79:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.7652576,-3.7305875
+      -1,0:
+        3:
+          color: '#9FED5896'
+          id: WarnCornerSW
+          coordinates: -2,1
+        5:
+          color: '#9FED5896'
+          id: WarnCornerNW
+          coordinates: -2,3
+        7:
+          color: '#9FED5896'
+          id: WarnLineN
+          coordinates: -1,1
+        8:
+          color: '#9FED5896'
+          id: WarnLineS
+          coordinates: -2,2
+        10:
+          color: '#9FED5896'
+          id: WarnLineW
+          coordinates: -1,3
+        36:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.62505,2.9725606
+        37:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.56255,3.4413106
+        38:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.2188,3.1131856
+        39:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.734425,3.2225606
+        40:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.609425,2.7850606
+        41:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.484425,2.7694356
+        42:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.37505,2.3944356
+        43:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.3438,2.6444356
+        44:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.421925,2.9569356
+        45:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.671925,3.0194356
+        46:
+          color: '#79150022'
+          id: splatter
+          coordinates: -2.81255,3.0038106
+        48:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -4.0350256,0.20693552
+        49:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -3.8162756,0.7225605
+        50:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -4.0194006,1.1756855
+        51:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -3.7381506,1.6756856
+        52:
+          color: '#79150063'
+          id: exclamationmark
+          coordinates: -3.9100256,2.0506856
+        80:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.4996326,2.811473
+        81:
+          color: '#79150012'
+          id: splatter
+          coordinates: -4.015258,2.795848
+        82:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.8433826,2.795848
+        83:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.6558826,2.827098
+        84:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.3902576,2.842723
+        85:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.1715076,2.889598
+        86:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.8746326,3.092723
+        87:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.4215076,3.123973
+        88:
+          color: '#79150012'
+          id: splatter
+          coordinates: -3.6090076,3.092723
+        89:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.5465076,3.420848
+        90:
+          color: '#79150012'
+          id: splatter
+          coordinates: -1.9371326,3.670848
+        91:
+          color: '#79150012'
+          id: splatter
+          coordinates: -1.5933826,3.436473
+        92:
+          color: '#79150012'
+          id: splatter
+          coordinates: -2.0308826,3.639598
+        93:
+          color: '#79150012'
+          id: splatter
+          coordinates: -1.5152576,3.873973
+      0,-1:
+        100:
+          color: '#FFFFFFFF'
+          id: Remains
+          coordinates: 1.0472424,-4.948204
     type: DecalGrid
   - tiles:
       -2,-2: 0
@@ -159,7 +544,7 @@ entities:
       -5,-4: 0
       -5,-3: 0
       -5,-2: 0
-      -5,-1: 0
+      -5,-1: 3
       -4,-6: 0
       -4,-5: 0
       -4,-4: 0
@@ -314,10 +699,28 @@ entities:
       - 0
       - 0
       - 0
+    - volume: 2500
+      temperature: 220.53748
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
     type: GridAtmosphere
   - type: OccluderTree
   - type: Shuttle
-  - type: GridPathfinding
+  - nextUpdate: 739.7009161
+    type: GridPathfinding
+  - type: GasTileOverlay
+  - type: RadiationGridResistance
 - uid: 1
   type: AsteroidRockMining
   components:
@@ -403,9 +806,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 15
-  type: AsteroidRockMining
+  type: SpaceTickSpawner
   components:
-  - pos: -3.5,3.5
+  - pos: 0.5,2.5
     parent: 0
     type: Transform
 - uid: 16
@@ -423,7 +826,7 @@ entities:
 - uid: 18
   type: AsteroidRockMining
   components:
-  - pos: -3.5,2.5
+  - pos: -2.5,1.5
     parent: 0
     type: Transform
 - uid: 19
@@ -493,7 +896,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 30
-  type: AsteroidRockMining
+  type: WallSolid
   components:
   - pos: -4.5,-0.5
     parent: 0
@@ -517,9 +920,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 34
-  type: AsteroidRockMining
+  type: SalvageMaterialCrateSpawner
   components:
-  - pos: -3.5,-4.5
+  - pos: -2.5,-5.5
     parent: 0
     type: Transform
 - uid: 35
@@ -529,9 +932,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 36
-  type: AsteroidRockMining
+  type: CrateSalvageEquipment
   components:
-  - pos: -2.5,-5.5
+  - pos: -3.5,-1.5
     parent: 0
     type: Transform
 - uid: 37
@@ -553,15 +956,15 @@ entities:
     parent: 0
     type: Transform
 - uid: 40
-  type: AsteroidRockMining
+  type: SpaceTickSpawner
   components:
-  - pos: -0.5,-6.5
+  - pos: -1.5,2.5
     parent: 0
     type: Transform
 - uid: 41
-  type: AsteroidRockMining
+  type: SignSecureMed
   components:
-  - pos: -0.5,-5.5
+  - pos: -4.5,-0.5
     parent: 0
     type: Transform
 - uid: 42
@@ -571,9 +974,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 43
-  type: AsteroidRockMining
+  type: SalvagePartsT2Spawner
   components:
-  - pos: 0.5,-5.5
+  - pos: 0.5,4.5
     parent: 0
     type: Transform
 - uid: 44
@@ -583,7 +986,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 45
-  type: AsteroidRockMining
+  type: WallSolidRust
   components:
   - pos: 1.5,-5.5
     parent: 0
@@ -609,7 +1012,7 @@ entities:
 - uid: 49
   type: AsteroidRockMining
   components:
-  - pos: 3.5,-3.5
+  - pos: -3.5,-6.5
     parent: 0
     type: Transform
 - uid: 50
@@ -669,19 +1072,19 @@ entities:
 - uid: 59
   type: AsteroidRockMining
   components:
-  - pos: 3.5,-0.5
+  - pos: 4.5,-4.5
     parent: 0
     type: Transform
 - uid: 60
   type: AsteroidRockMining
   components:
-  - pos: 3.5,-1.5
+  - pos: -5.5,-4.5
     parent: 0
     type: Transform
 - uid: 61
   type: AsteroidRockMining
   components:
-  - pos: 3.5,-2.5
+  - pos: -4.5,-5.5
     parent: 0
     type: Transform
 - uid: 62
@@ -723,179 +1126,315 @@ entities:
 - uid: 68
   type: AsteroidRockMining
   components:
-  - pos: 0.5,4.5
+  - pos: 0.5,-4.5
     parent: 0
     type: Transform
 - uid: 69
   type: AsteroidRockMining
   components:
-  - pos: 1.5,0.5
+  - pos: -2.5,-1.5
     parent: 0
     type: Transform
 - uid: 70
   type: AsteroidRockMining
   components:
-  - pos: 0.5,1.5
+  - pos: -1.5,-3.5
     parent: 0
     type: Transform
 - uid: 71
   type: AsteroidRockMining
   components:
-  - pos: 0.5,0.5
+  - pos: -1.5,-1.5
     parent: 0
     type: Transform
 - uid: 72
   type: AsteroidRockMining
   components:
-  - pos: 0.5,2.5
+  - pos: -0.5,-3.5
     parent: 0
     type: Transform
 - uid: 73
   type: AsteroidRockMining
   components:
-  - pos: -2.5,-1.5
+  - pos: -3.5,6.5
     parent: 0
     type: Transform
 - uid: 74
-  type: AsteroidRockMining
+  type: SpaceTickSpawner
   components:
-  - pos: -1.5,-1.5
+  - pos: -1.5,1.5
     parent: 0
     type: Transform
 - uid: 75
   type: AsteroidRockMining
   components:
-  - pos: -1.5,-2.5
+  - pos: -2.5,2.5
     parent: 0
     type: Transform
 - uid: 76
-  type: AsteroidRockMining
+  type: SmallLight
   components:
-  - pos: -0.5,-2.5
+  - rot: 1.5707963267948966 rad
+    pos: -3.5,-0.5
     parent: 0
     type: Transform
 - uid: 77
-  type: RandomArtifactSpawner
+  type: AsteroidRockMining
   components:
-  - pos: -0.5,0.5
+  - pos: 0.5,-1.5
     parent: 0
     type: Transform
 - uid: 78
-  type: SpaceTickSpawner
+  type: AsteroidRockMining
   components:
-  - pos: 1.5,1.5
+  - pos: 0.5,0.5
     parent: 0
     type: Transform
 - uid: 79
-  type: SpaceTickSpawner
-  components:
-  - pos: -1.5,3.5
-    parent: 0
-    type: Transform
-- uid: 80
-  type: SpaceTickSpawner
-  components:
-  - pos: 2.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 81
-  type: SpaceTickSpawner
-  components:
-  - pos: -0.5,-4.5
-    parent: 0
-    type: Transform
-- uid: 82
-  type: SpaceTickSpawner
-  components:
-  - pos: -3.5,-1.5
-    parent: 0
-    type: Transform
-- uid: 83
-  type: SpaceTickSpawner
-  components:
-  - pos: -2.5,1.5
-    parent: 0
-    type: Transform
-- uid: 84
-  type: SpaceTickSpawner
-  components:
-  - pos: 0.5,-2.5
-    parent: 0
-    type: Transform
-- uid: 85
-  type: ClosetMaintenanceFilledRandom
-  components:
-  - pos: 1.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 86
-  type: ClosetMaintenance
-  components:
-  - pos: -3.5,1.5
-    parent: 0
-    type: Transform
-- uid: 87
-  type: CratePlasma
-  components:
-  - pos: -2.5,-2.5
-    parent: 0
-    type: Transform
-  - containers:
-    - EntityStorageComponent
-    - entity_storage
-    type: Construction
-- uid: 142
-  type: AsteroidRockMining
-  components:
-  - pos: -0.5,-0.5
-    parent: 0
-    type: Transform
-- uid: 143
   type: AsteroidRockMining
   components:
   - pos: 2.5,0.5
     parent: 0
     type: Transform
-- uid: 144
+- uid: 80
+  type: AsteroidRockMining
+  components:
+  - pos: -0.5,0.5
+    parent: 0
+    type: Transform
+- uid: 81
+  type: AsteroidRockMining
+  components:
+  - pos: -4.5,4.5
+    parent: 0
+    type: Transform
+- uid: 82
+  type: AsteroidRockMining
+  components:
+  - pos: 1.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 83
+  type: AsteroidRockMining
+  components:
+  - pos: 2.5,-6.5
+    parent: 0
+    type: Transform
+- uid: 84
+  type: AsteroidRockMining
+  components:
+  - pos: -5.5,3.5
+    parent: 0
+    type: Transform
+- uid: 85
+  type: AsteroidRockMining
+  components:
+  - pos: -1.5,0.5
+    parent: 0
+    type: Transform
+- uid: 86
+  type: MaintenanceToolSpawner
+  components:
+  - pos: -1.5,4.5
+    parent: 0
+    type: Transform
+- uid: 87
+  type: AsteroidRockMining
+  components:
+  - pos: -4.5,5.5
+    parent: 0
+    type: Transform
+- uid: 88
+  type: AsteroidRockMining
+  components:
+  - pos: -0.5,-1.5
+    parent: 0
+    type: Transform
+- uid: 89
+  type: AsteroidRockMining
+  components:
+  - pos: -3.5,-2.5
+    parent: 0
+    type: Transform
+- uid: 90
+  type: SpaceTickSpawner
+  components:
+  - pos: -1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 91
+  type: RandomArtifactSpawner
+  components:
+  - pos: -0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 92
+  type: ClothingShoesBootsSalvage
+  components:
+  - pos: 1.4983591,-3.8183098
+    parent: 0
+    type: Transform
+- uid: 93
   type: AsteroidRockMining
   components:
   - pos: 0.5,-3.5
     parent: 0
     type: Transform
-- uid: 145
+- uid: 94
   type: AsteroidRockMining
   components:
-  - pos: 1.5,-3.5
+  - pos: 1.5,0.5
     parent: 0
     type: Transform
-- uid: 146
+- uid: 95
   type: AsteroidRockMining
   components:
-  - pos: -3.5,-0.5
+  - pos: 3.5,-5.5
     parent: 0
     type: Transform
-- uid: 147
-  type: AsteroidRockMining
-  components:
-  - pos: 0.5,3.5
-    parent: 0
-    type: Transform
-- uid: 148
-  type: CrateFilledSpawner
+- uid: 96
+  type: MaintenanceWeaponSpawner
   components:
   - pos: 1.5,3.5
     parent: 0
     type: Transform
-- uid: 149
-  type: CrateFilledSpawner
+- uid: 97
+  type: SpaceTickSpawner
   components:
-  - pos: -2.5,3.5
+  - pos: -0.5,1.5
     parent: 0
     type: Transform
-- uid: 150
-  type: CrateFilledSpawner
+- uid: 98
+  type: SpaceTickSpawner
   components:
-  - pos: 1.5,-4.5
+  - pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 99
+  type: Railing
+  components:
+  - pos: -0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 100
+  type: Railing
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 101
+  type: Railing
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 102
+  type: Railing
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -1.5,2.5
+    parent: 0
+    type: Transform
+- uid: 103
+  type: RailingCornerSmall
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 104
+  type: RailingCornerSmall
+  components:
+  - pos: 0.5,1.5
+    parent: 0
+    type: Transform
+- uid: 105
+  type: RailingCornerSmall
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,1.5
+    parent: 0
+    type: Transform
+- uid: 106
+  type: SmallLight
+  components:
+  - pos: -0.5,2.5
+    parent: 0
+    type: Transform
+- uid: 107
+  type: RailingCornerSmall
+  components:
+  - rot: 3.141592653589793 rad
+    pos: -1.5,3.5
+    parent: 0
+    type: Transform
+- uid: 108
+  type: SpaceTickSpawner
+  components:
+  - pos: 0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 109
+  type: SpaceTickSpawner
+  components:
+  - pos: -0.5,3.5
+    parent: 0
+    type: Transform
+- uid: 110
+  type: SmallLight
+  components:
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 111
+  type: Rack
+  components:
+  - pos: -3.5,-4.5
+    parent: 0
+    type: Transform
+- uid: 112
+  type: FlashlightLantern
+  components:
+  - pos: -3.5694947,-4.3641663
+    parent: 0
+    type: Transform
+- uid: 113
+  type: FlashlightLantern
+  components:
+  - pos: -3.4288697,-4.5985413
+    parent: 0
+    type: Transform
+- uid: 114
+  type: Barricade
+  components:
+  - pos: 0.5,-5.5
+    parent: 0
+    type: Transform
+- uid: 115
+  type: AsteroidRockMining
+  components:
+  - pos: 3.5,-3.5
+    parent: 0
+    type: Transform
+- uid: 116
+  type: WeaponLaserGun
+  components:
+  - pos: 1.7952341,1.6504403
+    parent: 0
+    type: Transform
+- uid: 117
+  type: MaterialWoodPlank
+  components:
+  - pos: 2.4514842,-3.5058098
+    parent: 0
+    type: Transform
+- uid: 118
+  type: AsteroidRockMining
+  components:
+  - pos: 2.5,-1.5
     parent: 0
     type: Transform
 ...

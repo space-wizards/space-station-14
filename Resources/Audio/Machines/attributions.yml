@@ -12,3 +12,8 @@
   license: "CC0-1.0"
   copyright: "receipt printing.wav by 13F_Panska_Tlolkova_Matilda. This version is cleaned up, shortened, and converted to OGG."
   source: "https://freesound.org/people/13F_Panska_Tlolkova_Matilda/sounds/378331"
+
+- files: ["vessel_warning.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by AUDACITIER (freesound), converted to MONO and .ogg and edited by EmoGarbage404 (github)."
+  source: "https://freesound.org/people/AUDACITIER/sounds/629196/"
