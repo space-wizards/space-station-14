@@ -1,10 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
-    type: Fix}
-  id: 2498
-  time: '2022-10-22T18:16:32.0000000+00:00'
 - author: Mervill
   changes:
   - {message: You will now see a message at spawn telling you what station you're
@@ -2919,3 +2913,9 @@ Entries:
   - {message: Unrandomized airlock painter styles, type: Fix}
   id: 2997
   time: '2023-02-05T20:22:37.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Broken shooting targets no longer drop 100 times more steel than they
+      cost., type: Tweak}
+  id: 2998
+  time: '2023-02-06T02:51:58.0000000+00:00'
