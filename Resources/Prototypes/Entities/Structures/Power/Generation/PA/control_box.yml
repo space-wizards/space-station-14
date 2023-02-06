@@ -36,7 +36,6 @@
     - type: Wires
       BoardName: "Mk2 Particle Accelerator"
       LayoutId: ParticleAccelerator
-
 # Unfinished
 
 - type: entity

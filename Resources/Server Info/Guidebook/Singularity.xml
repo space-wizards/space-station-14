@@ -54,7 +54,7 @@ They connect to HV cables and generate power from nearby radiation sources when 
 </Box>
 
 The Particle Accelerator (PA) is a multi-tile structure that activates a gravitational singularity generator with the particles it generates. Its emitters should always face the gravitational singularity generator.
-Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA, anchor all parts, then add LV cable to each part.
+Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
 </Box>
