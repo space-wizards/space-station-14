@@ -1,6 +1,6 @@
 - type: entity
   id: BodyBag_Container
-  parents: [BaseFoldable]
+  parent: BaseFoldable
   name: body bag
   description: A plastic bag designed for the storage and transportation of cadavers.
   components:

@@ -1,5 +1,6 @@
 - type: entity
   id: BaseFoldable
+  name: "foldable"
   abstract: true
   components:
   - type: Foldable
@@ -10,5 +11,5 @@
           True: {visible: true}
           False: {visible: false}
         unfoldedLayer:
-          True: {visible: true}
-          False: {visible: false}
+          True: {visible: false}
+          False: {visible: true}
