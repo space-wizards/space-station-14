@@ -64,8 +64,6 @@
         connectedLight:
           True: { visible: true }
           False: { visible: false }
-    - type: GuideHelp
-    guides: [ Singularity, Power ]
 
 
 - type: entity
