@@ -36,7 +36,8 @@
   text: "/Server Info/Guidebook/Power.xml"
   children:
   - AME
-
+  - Singularity
+  
 - type: guideEntry
   id: AME
   name: guide-entry-ame
@@ -44,5 +45,5 @@
   
 - type: guideEntry
   id: Singularity
-  name: guide-entry-singularity
+  name: Singularity
   text: "/Server Info/Guidebook/Singularity.xml"
