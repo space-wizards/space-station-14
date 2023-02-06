@@ -6,10 +6,12 @@
   stations:
     Aspid:
       mapNameTemplate: '{0} NCS Aspid {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: '14'
-      overflowJobs: []
+      overflowJobs:
+        - Passenger
       availableJobs:
         CargoTechnician: [ 2, 3 ]
         Passenger: [ -1, -1 ]
