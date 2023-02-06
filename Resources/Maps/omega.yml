@@ -70102,7 +70102,7 @@ entities:
   - open: True
     removedMasks: 20
     type: EntityStorage
-    - containers:
+  - containers:
       entity_storage: !type:Container
         ents:
         - 8375
