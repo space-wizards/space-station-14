@@ -355,5 +355,6 @@
 
 - type: randomHumanoidSettings
   id: NukeOp
+  speciesBlacklist: [Reptilian, SlimePerson, Diona]
   components:
     - type: NukeOperative
