@@ -97904,4 +97904,52 @@ entities:
   - pos: -36.5,20.5
     parent: 0
     type: Transform
+- uid: 12521
+  type: SurveillanceCameraSecurity
+  components:
+  - pos: -17.5,14.5
+    parent: 0
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraSecurity
+    nameSet: True
+    id: Lawyer office
+    type: SurveillanceCamera
+- uid: 12522
+  type: SurveillanceCameraCommand
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -23.5,24.5
+    rot: 
+    parent: 0
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraCommand
+    nameSet: True
+    id: HoS office
+    type: SurveillanceCamera
+- uid: 12523
+  type: SurveillanceCameraCommand
+  components:
+  - pos: -12.5,15.5
+    rot: 
+    parent: 0
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraCommand
+    nameSet: True
+    id: Drone bay
+    type: SurveillanceCamera
+- uid: 12524
+  type: SurveillanceCameraCommand
+  components:
+  - pos: 7.5,14.5
+    rot: 
+    parent: 0
+    type: Transform
+  - setupAvailableNetworks:
+    - SurveillanceCameraCommand
+    nameSet: True
+    id: EvA Storage
+    type: SurveillanceCamera
 ...
