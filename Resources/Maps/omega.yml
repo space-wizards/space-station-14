@@ -70102,13 +70102,11 @@ entities:
   - open: True
     removedMasks: 20
     type: EntityStorage
-  - containers:
-      EntityStorageComponent: !type:Container
+    - containers:
+      entity_storage: !type:Container
         ents:
         - 8375
         - 8376
-      entity_storage: !type:Container
-        ents: []
     type: ContainerContainer
 - uid: 8374
   type: ClosetBombFilled
