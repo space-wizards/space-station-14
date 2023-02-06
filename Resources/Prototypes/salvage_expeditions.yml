@@ -13,10 +13,12 @@
   maxDuration: 720
   factions:
     - Xenos
-  dungeon: !type:WormDunGen
-    range: 30
-    length: 500
-    startPosition: 45
+  dungeon: !type:NoiseDunGen
+    bounds: 0,0,200,200
+    # !type:WormDunGen
+  #  range: 30
+  #  length: 500
+  #  startPosition: 45
   dungeonConfig: LowDesertDungeon
 
 

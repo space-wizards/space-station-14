@@ -241,7 +241,7 @@ public sealed partial class SalvageSystem
         var reservedTiles = _pathfinding.GetPath(start, end);
         var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid, reservedTiles);
+        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid);
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
@@ -285,6 +285,10 @@ public sealed partial class SalvageSystem
         // Alright now we'll enclose the reserved tiles
         foreach (var tile in reservedTiles)
         {
+            // We hit the dungeon so exit out.
+            if (adjustedDungeonAllTiles.Contains(tile))
+                break;
+
             for (var i = 0; i < 4; i++)
             {
                 var direction = (DirectionFlag) Math.Pow(2, i);

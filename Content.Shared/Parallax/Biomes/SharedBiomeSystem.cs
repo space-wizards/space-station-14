@@ -172,7 +172,8 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            var value = (noise.GetCellular(indices.X, indices.Y) + 1f) / 2f;
+            noise.SetNoiseType(FastNoise.NoiseType.Cellular);
+            var value = (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f;
 
             if (value < layer.Threshold)
             {
@@ -188,7 +189,8 @@ public abstract class SharedBiomeSystem : EntitySystem
                 return false;
             }
 
-            entity = Pick(biomeLayer.Entities, (noise.GetSimplex(indices.X, indices.Y) + 1f) / 2f);
+            noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+            entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f);
             noise.SetFrequency(oldFrequency);
             noise.SetSeed(seed);
             return true;
@@ -239,7 +241,9 @@ public abstract class SharedBiomeSystem : EntitySystem
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                if ((noise.GetCellular(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
+                noise.SetNoiseType(FastNoise.NoiseType.Cellular);
+
+                if ((noise.GetNoise(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
                     continue;
 
                 decals = null;
@@ -249,19 +253,20 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             decals = new List<(string ID, Vector2 Position)>();
+            noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
 
             for (var x = 0; x < decalLayer.Divisions; x++)
             {
                 for (var y = 0; y < decalLayer.Divisions; y++)
                 {
                     var index = new Vector2(indices.X + x * 1f / decalLayer.Divisions, indices.Y + y * 1f / decalLayer.Divisions);
-                    var decalValue = (noise.GetCellular(index.X, index.Y) + 1f) / 2f;
+                    var decalValue = (noise.GetNoise(index.X, index.Y) + 1f) / 2f;
 
                     if (decalValue < decalLayer.Threshold)
                         continue;
 
                     DebugTools.Assert(decalValue is <= 1f and >= 0f);
-                    decals.Add((Pick(decalLayer.Decals, (noise.GetSimplex(index.X, index.Y) + 1f) / 2f), index));
+                    decals.Add((Pick(decalLayer.Decals, (noise.GetNoise(index.X, index.Y) + 1f) / 2f), index));
                 }
             }
 
@@ -286,9 +291,13 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// </summary>
     public bool TryGetTile(Vector2i indices, FastNoise seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
+        seed.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+
         if (threshold > 0f)
         {
-            var found = (seed.GetSimplexFractal(indices.X, indices.Y) + 1f) / 2f;
+            seed.SetFractalType(FastNoise.FractalType.FBm);
+
+            var found = (seed.GetNoise(indices.X, indices.Y) + 1f) / 2f;
 
             if (found < threshold)
             {
@@ -303,7 +312,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         // Pick a variant tile if they're available as well
         if (variantCount > 1)
         {
-            var variantValue = (seed.GetSimplex(indices.X * 2f, indices.Y * 2f) + 1f) / 2f;
+            var variantValue = (seed.GetNoise(indices.X * 2f, indices.Y * 2f) + 1f) / 2f;
             variant = (byte) Pick(variantCount, variantValue);
 
             if (variants != null)

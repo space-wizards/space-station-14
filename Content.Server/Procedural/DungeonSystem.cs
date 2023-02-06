@@ -37,10 +37,6 @@ public sealed partial class DungeonSystem : EntitySystem
             foreach (var tile in room.Tiles)
             {
                 var adjustedTilePos = tile + position;
-
-                if (reservedTiles.Contains(adjustedTilePos))
-                    continue;
-
                 tiles.Add((adjustedTilePos, new Tile(tileId)));
             }
         }
@@ -48,10 +44,6 @@ public sealed partial class DungeonSystem : EntitySystem
         foreach (var tile in dungeon.Corridors)
         {
             var adjustedTilePos = tile + position;
-
-            if (reservedTiles.Contains(adjustedTilePos))
-                continue;
-
             tiles.Add((adjustedTilePos, new Tile(tileId)));
         }
 
@@ -84,6 +76,8 @@ public sealed partial class DungeonSystem : EntitySystem
         {
             case BSPDunGen bsp:
                 return GetBSPDungeon(bsp, random);
+            case NoiseDunGen noisey:
+                return GetNoiseDungeon(noisey, random);
             case RandomWalkDunGen walkies:
                 return GetRandomWalkDungeon(walkies, random);
             case WormDunGen worm:
@@ -93,10 +87,45 @@ public sealed partial class DungeonSystem : EntitySystem
         }
     }
 
+    public Dungeon GetNoiseDungeon(NoiseDunGen gen, Random random)
+    {
+        var noise = new FastNoise(random.Next());
+        noise.SetFractalType(FastNoise.FractalType.Ridged);
+        noise.SetFractalGain(0f);
+        noise.SetFrequency(0.04f);
+        var room = new DungeonRoom();
+        var walls = new HashSet<Vector2i>();
+
+        for (var x = gen.Bounds.Left; x < gen.Bounds.Right; x++)
+        {
+            for (var y = gen.Bounds.Bottom; y < gen.Bounds.Top; y++)
+            {
+                var value = noise.GetNoise(x, y);
+                if (value >= 0.1f)
+                {
+                    room.Tiles.Add(new Vector2i(x, y));
+                }
+                else
+                {
+                    walls.Add(new Vector2i(x, y));
+                }
+            }
+        }
+
+        return new Dungeon()
+        {
+            Rooms = new List<DungeonRoom>() { room },
+            AllTiles = new HashSet<Vector2i>(room.Tiles),
+            Walls = walls,
+            Corridors = new HashSet<Vector2i>(),
+        };
+    }
+
     public Dungeon GetWormDungeon(WormDunGen gen, Random random)
     {
         // TODO: Tunnel to thingo has 2 tile gap + also needs to force tiles
         var noise = new FastNoise(random.Next());
+        noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
         noise.SetFrequency(0.02f);
         var current = gen.StartPosition;
         var direction = gen.StartDirection;
@@ -108,7 +137,7 @@ public sealed partial class DungeonSystem : EntitySystem
         for (var i = 0; i < gen.Length; i++)
         {
             var node = current + direction.ToIntVec();
-            var rotation = noise.GetSimplex(node.X, node.Y);
+            var rotation = noise.GetNoise(node.X, node.Y);
             var randAngle = gen.Range * rotation;
             angle += randAngle;
             direction = angle.GetDir();
