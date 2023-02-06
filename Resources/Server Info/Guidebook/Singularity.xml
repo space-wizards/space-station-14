@@ -38,11 +38,9 @@ They connect to HV cables and generate power from nearby radiation sources when 
 </Box>
 
 <Box>
-<Document>
-Nothing goes here
-</Document>
+<GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="PA computer"/>
 <GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorControlBox"/>
+<GuideEntityEmbed Entity="CableHV"/>
 </Box>
 
 <Box>
