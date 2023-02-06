@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix cargo orders not showing up on shuttle., type: Fix}
-  id: 2502
-  time: '2022-10-22T21:55:13.0000000+00:00'
 - author: Willhelm53
   changes:
   - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
@@ -2923,3 +2918,8 @@ Entries:
       instead of 4., type: Tweak}
   id: 3001
   time: '2023-02-06T12:49:16.0000000+00:00'
+- author: Furontier
+  changes:
+  - {message: Added singularity guidebook entry, type: Add}
+  id: 3002
+  time: '2023-02-06T13:10:07.0000000+00:00'
