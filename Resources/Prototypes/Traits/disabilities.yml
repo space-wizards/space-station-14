@@ -30,7 +30,7 @@
   components:
     - type: Paracusia
       minTimeBetweenIncidents: 0.1
-      maxTimeBetweenIncidents: 300
+      maxTimeBetweenIncidents: 10
       maxSoundDistance: 7
       sounds:
         collection: Paracusia
