@@ -1,24 +1,19 @@
 using Content.Shared.Procedural.Walls;
 
-namespace Content.Shared.Procedural;
+namespace Content.Shared.Procedural.Dungeons;
 
 [DataDefinition]
 public sealed class RandomWalkDunGen : IDungeonGenerator
 {
-    [DataField("start")]
-    public Vector2i StartPosition;
+    [DataField("start")] public Vector2i StartPosition;
 
-    [DataField("length")]
-    public int Length = 10;
+    [DataField("length")] public int Length = 10;
 
-    [DataField("iterations")]
-    public int Iterations = 10;
+    [DataField("iterations")] public int Iterations = 10;
 
-    [DataField("randomEachIteration")]
-    public bool StartRandomlyEachIteration = true;
+    [DataField("randomEachIteration")] public bool StartRandomlyEachIteration = true;
 
-    [DataField("walls")]
-    public IWallGen Walls = new BoundaryWallGen();
+    [DataField("walls")] public WallGen Walls = new BoundaryWallGen();
 }
 
 public sealed record Dungeon

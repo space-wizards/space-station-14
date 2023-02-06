@@ -1,6 +1,6 @@
 namespace Content.Shared.Procedural.Walls;
 
-public interface IWallGen
+public interface IWallRuleGen
 {
-    
+
 }

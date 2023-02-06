@@ -2,7 +2,7 @@ namespace Content.Shared.Procedural.Rooms;
 
 public sealed class RandomWalkRoomGen : IRoomGen
 {
-    [DataField("offset")] public int Offset = 1;
+    [DataField("offset")] public int Offset = 2;
 
     [DataField("length")] public int Length = 10;
 

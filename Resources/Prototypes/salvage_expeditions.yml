@@ -1,6 +1,6 @@
 - type: dungeonConfig
   id: LowDesertDungeon
-  tile: FloorLowDesert
+  tile: FloorCaveDrought
   wall: AsteroidRock
 
 # Expedition configs
@@ -13,8 +13,10 @@
   maxDuration: 720
   factions:
     - Xenos
-  dungeon: !type:BSPDunGen
-    bounds: 0,0,48,48
+  dungeon: !type:WormDunGen
+    range: 30
+    length: 500
+    startPosition: 45
   dungeonConfig: LowDesertDungeon
 
 

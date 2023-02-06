@@ -10,6 +10,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Extraction;
 using Content.Shared.Salvage.Expeditions.Structure;
@@ -198,7 +199,7 @@ public sealed partial class SalvageSystem
         var radiusThickness = 2;
         var dungeonOffset = new Vector2i(landingPadRadius + radiusThickness + 1, 0);
 
-        var dungeon = _dungeon.GetDungeon(config.Dungeon);
+        var dungeon = _dungeon.GetDungeon(config.Dungeon, random);
 
         // Aborty
         if (dungeon.Rooms.Count == 0)

@@ -2,7 +2,7 @@ using Content.Shared.Procedural.Corridors;
 using Content.Shared.Procedural.Rooms;
 using Content.Shared.Procedural.Walls;
 
-namespace Content.Shared.Procedural;
+namespace Content.Shared.Procedural.Dungeons;
 
 [DataDefinition]
 public sealed class BSPDunGen : IDungeonGenerator
@@ -10,7 +10,7 @@ public sealed class BSPDunGen : IDungeonGenerator
     [DataField("bounds", required: true)] public Box2i Bounds;
 
     [DataField("min")]
-    public Vector2i MinimumRoomDimensions = new(4, 4);
+    public Vector2i MinimumRoomDimensions = new(10, 10);
 
     [DataField("rooms")]
     public IRoomGen Rooms = new RandomWalkRoomGen();
@@ -19,5 +19,5 @@ public sealed class BSPDunGen : IDungeonGenerator
     public ICorridorGen Corridors = new SimpleCorridorGen();
 
     [DataField("walls")]
-    public IWallGen Walls = new BoundaryWallGen();
+    public WallGen Walls = new BoundaryWallGen();
 }

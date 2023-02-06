@@ -1,8 +1,11 @@
 using System.Linq;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Noise;
+using Robust.Shared.Random;
 
 namespace Content.Server.Procedural;
 
@@ -75,22 +78,69 @@ public sealed partial class DungeonSystem : EntitySystem
         }
     }
 
-    public Dungeon GetDungeon(IDungeonGenerator gen)
+    public Dungeon GetDungeon(IDungeonGenerator gen, Random random)
     {
         switch (gen)
         {
             case BSPDunGen bsp:
-                return GetBSPDungeon(bsp);
+                return GetBSPDungeon(bsp, random);
             case RandomWalkDunGen walkies:
-                return GetRandomWalkDungeon(walkies);
+                return GetRandomWalkDungeon(walkies, random);
+            case WormDunGen worm:
+                return GetWormDungeon(worm, random);
             default:
                 throw new NotImplementedException();
         }
     }
 
-    public Dungeon GetRandomWalkDungeon(RandomWalkDunGen gen)
+    public Dungeon GetWormDungeon(WormDunGen gen, Random random)
     {
-        var random = new Random();
+        // TODO: Tunnel to thingo has 2 tile gap + also needs to force tiles
+        var noise = new FastNoise(random.Next());
+        noise.SetFrequency(0.02f);
+        var current = gen.StartPosition;
+        var direction = gen.StartDirection;
+        var angle = direction.ToAngle();
+        var room = new DungeonRoom();
+        var baseTiles = new HashSet<Vector2i>();
+        baseTiles.Add(current);
+
+        for (var i = 0; i < gen.Length; i++)
+        {
+            var node = current + direction.ToIntVec();
+            var rotation = noise.GetSimplex(node.X, node.Y);
+            var randAngle = gen.Range * rotation;
+            angle += randAngle;
+            direction = angle.GetDir();
+            baseTiles.Add(node);
+            current = node;
+        }
+
+        foreach (var tile in baseTiles)
+        {
+            room.Tiles.Add(tile);
+
+            for (var x = 0; x < gen.Width; x++)
+            {
+                for (var y = 0; y < gen.Width; y++)
+                {
+                    var neighbor = new Vector2i(tile.X + x, tile.Y + y);
+                    room.Tiles.Add(neighbor);
+                }
+            }
+        }
+
+        return new Dungeon
+        {
+            Rooms = new List<DungeonRoom>() { room },
+            Corridors = new HashSet<Vector2i>(),
+            AllTiles = new HashSet<Vector2i>(room.Tiles),
+            Walls = new HashSet<Vector2i>(),
+        };
+    }
+
+    public Dungeon GetRandomWalkDungeon(RandomWalkDunGen gen, Random random)
+    {
         var start = gen.StartPosition;
 
         var currentPosition = start;
@@ -122,15 +172,14 @@ public sealed partial class DungeonSystem : EntitySystem
         };
     }
 
-    public Dungeon GetBSPDungeon(BSPDunGen gen)
+    public Dungeon GetBSPDungeon(BSPDunGen gen, Random random)
     {
         if (gen.Bounds.IsEmpty())
         {
             throw new InvalidOperationException();
         }
 
-        var random = new Random();
-        var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random);
+        var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random, false);
         var rooms = GetRooms(gen.Rooms, roomSpaces, random);
         var roomCenters = new List<Vector2i>();
 

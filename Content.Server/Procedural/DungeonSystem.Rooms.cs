@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 using Content.Shared.Procedural.Rooms;
 
 namespace Content.Server.Procedural;
@@ -14,7 +15,6 @@ public sealed partial class DungeonSystem
         {
             case RandomWalkRoomGen walk:
                 return GetRooms(walk, roomsList, random);
-                break;
             case SimpleRoomGen simple:
                 return GetRooms(simple, roomsList, random);
             default:

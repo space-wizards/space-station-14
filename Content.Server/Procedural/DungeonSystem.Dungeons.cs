@@ -1,4 +1,5 @@
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 
 namespace Content.Server.Procedural;
 
@@ -59,7 +60,7 @@ public sealed partial class DungeonSystem
         return path;
     }
 
-    public List<Box2i> BinarySpacePartition(Box2i bounds, Vector2i minSize, Random random)
+    public List<Box2i> BinarySpacePartition(Box2i bounds, Vector2i minSize, Random random, bool split)
     {
         var roomsQueue = new Queue<Box2i>();
         var rooms = new List<Box2i>();
@@ -76,11 +77,11 @@ public sealed partial class DungeonSystem
             {
                 if (room.Height >= minHeight * 2)
                 {
-                    SplitHorizontally(minHeight, roomsQueue, room, random);
+                    SplitHorizontally(minHeight, roomsQueue, room, random, split);
                 }
                 else if (room.Width >= minWidth * 2)
                 {
-                    SplitVertically(minWidth, roomsQueue, room, random);
+                    SplitVertically(minWidth, roomsQueue, room, random, split);
                 }
                 else if (room.Width >= minWidth && room.Height >= minHeight)
                 {
@@ -91,11 +92,11 @@ public sealed partial class DungeonSystem
             {
                 if (room.Width >= minWidth * 2)
                 {
-                    SplitVertically(minWidth, roomsQueue, room, random);
+                    SplitVertically(minWidth, roomsQueue, room, random, split);
                 }
                 else if (room.Height >= minHeight * 2)
                 {
-                    SplitHorizontally(minHeight, roomsQueue, room, random);
+                    SplitHorizontally(minHeight, roomsQueue, room, random, split);
                 }
                 else if (room.Width >= minWidth && room.Height >= minHeight)
                 {
@@ -107,19 +108,20 @@ public sealed partial class DungeonSystem
         return rooms;
     }
 
-    private void SplitVertically(int minWidth, Queue<Box2i> roomsQueue, Box2i room, Random random)
+    private void SplitVertically(int minWidth, Queue<Box2i> roomsQueue, Box2i room, Random random, bool split)
     {
-        // TODO: Config for 1, thing
-        var xSplit = random.Next(minWidth, room.Width - minWidth);
+        var xSplit = split ? random.Next(minWidth, room.Width - minWidth) : random.Next(1, room.Width);
+
         var room1 = new Box2i(room.Left, room.Bottom, room.Left + xSplit, room.Top);
         var room2 = new Box2i(room.Left + xSplit, room.Bottom, room.Right, room.Top);
         roomsQueue.Enqueue(room1);
         roomsQueue.Enqueue(room2);
     }
 
-    private void SplitHorizontally(int minHeight, Queue<Box2i> roomsQueue, Box2i room, Random random)
+    private void SplitHorizontally(int minHeight, Queue<Box2i> roomsQueue, Box2i room, Random random, bool split)
     {
-        var ySplit = random.Next(minHeight, room.Height - minHeight);
+        var ySplit = split ? random.Next(minHeight, room.Height - minHeight) : random.Next(1, room.Height);
+
         var room1 = new Box2i(room.Left, room.Bottom, room.Right, room.Bottom + ySplit);
         var room2 = new Box2i(room.Left, room.Bottom + ySplit, room.Right, room.Top);
         roomsQueue.Enqueue(room1);

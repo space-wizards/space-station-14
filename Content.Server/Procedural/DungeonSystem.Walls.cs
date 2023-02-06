@@ -4,7 +4,7 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    public HashSet<Vector2i> GetWalls(IWallGen gen, Box2i boundaries, HashSet<Vector2i> floors)
+    public HashSet<Vector2i> GetWalls(WallGen gen, Box2i boundaries, HashSet<Vector2i> floors)
     {
         switch (gen)
         {

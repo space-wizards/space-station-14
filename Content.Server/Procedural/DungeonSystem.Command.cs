@@ -2,6 +2,7 @@ using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -41,7 +42,9 @@ public sealed partial class DungeonSystem
             MinimumRoomDimensions = new Vector2i(10, 10),
         };
 
-        var gen = GetBSPDungeon(bsp);
+        var random = new Random();
+
+        var gen = GetBSPDungeon(bsp, random);
         var mapUid = _mapManager.GetMapEntityId(mapId);
         var grid = EnsureComp<MapGridComponent>(mapUid);
         var tiles = new List<(Vector2i, Tile)>();

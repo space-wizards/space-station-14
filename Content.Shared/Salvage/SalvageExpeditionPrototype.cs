@@ -1,5 +1,6 @@
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Dungeons;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
