@@ -39,12 +39,12 @@ They connect to HV cables and generate power from nearby radiation sources when 
 
 <Box>
 <GuideEntityEmbed Entity="ParticleAcceleratorControlBox" Caption="PA computer"/>
-<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
 <GuideEntityEmbed Entity="CableHV"/>
 </Box>
 
 <Box>
-<GuideEntityEmbed Entity="ParticleAcceleratorFuelChamber"/>
+<GuideEntityEmbed Entity="ParticleAcceleratorPowerBox"/>
 </Box>
 
 <Box>
