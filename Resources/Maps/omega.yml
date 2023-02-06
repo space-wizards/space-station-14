@@ -37452,7 +37452,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 3578
-  type: TableReinforced
+  type: SurveillanceCameraRouterSupply
   components:
   - pos: 15.5,32.5
     parent: 0
@@ -84715,10 +84715,9 @@ entities:
     parent: 0
     type: Transform
 - uid: 10658
-  type: WindowReinforcedDirectional
+  type: SurveillanceCameraRouterService
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -52.5,-13.5
+  - pos: -52.5,-13.5
     parent: 0
     type: Transform
 - uid: 10659
@@ -84790,7 +84789,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 10668
-  type: ComputerPowerMonitoring
+  type: SurveillanceCameraRouterEngineering
   components:
   - pos: -48.5,-6.5
     parent: 0
@@ -93864,7 +93863,7 @@ entities:
     parent: 0
     type: Transform
 - uid: 12046
-  type: SurveillanceCameraRouterEngineering
+  type: SurveillanceCameraRouterGeneral
   components:
   - pos: -50.5,-13.5
     parent: 0
