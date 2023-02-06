@@ -41,6 +41,7 @@
         Musician: [ 2, 2 ]
         AtmosphericTechnician: [ 2, 3 ]
         TechnicalAssistant: [ 3, 3 ]
+        ResearchAssistant: [ 3, 3 ]
         MedicalIntern: [ 3, 3 ]
         ServiceWorker: [ 3, 3 ]
         SecurityCadet: [ 3, 3 ]
