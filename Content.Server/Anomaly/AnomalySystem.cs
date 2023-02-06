@@ -104,13 +104,13 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         var multiplier = 1f;
         if (component.Stability > component.GrowthThreshold)
             multiplier = component.GrowingPointMultiplier; //more points for unstable
-        else if (component.Stability < component.DecayThreshold)
-            multiplier = component.DecayingPointMultiplier; //less points if it's dying
 
         //penalty of up to 50% based on health
         multiplier *= MathF.Pow(1.5f, component.Health) - 0.5f;
 
-        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * component.Severity * multiplier);
+        var severityValue = 1 / (1 + MathF.Pow(MathF.E, -7 * (component.Severity - 0.5f)));
+
+        return (int) ((component.MaxPointsPerSecond - component.MinPointsPerSecond) * severityValue * multiplier) + component.MinPointsPerSecond;
     }
 
     /// <summary>
