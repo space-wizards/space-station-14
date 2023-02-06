@@ -142,6 +142,9 @@ uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
 
+uplink-banana-cream-pie-name = Banana Cream Pie
+uplink-banana-cream-pie-desc = Just like back home, on clown planet! HONK! Put explosive surprise inside!
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
