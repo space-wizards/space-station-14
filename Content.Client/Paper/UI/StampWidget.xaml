@@ -6,6 +6,7 @@
 
     <PanelContainer Name="StampBorder">
         <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger"
+            ClipText="true"
             FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}"
             Margin="12 6 12 6"/>
     </PanelContainer>
