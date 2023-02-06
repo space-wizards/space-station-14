@@ -3,6 +3,7 @@ using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
@@ -52,6 +53,28 @@ public sealed class TileSystem : EntitySystem
             return false;
 
         return DeconstructTile(tileRef);
+    }
+
+    public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile)
+    {
+        if (!TryComp<MapGridComponent>(tileref.GridUid, out var grid))
+            return false;
+        return ReplaceTile(tileref, replacementTile, tileref.GridUid, grid);
+    }
+
+    public bool ReplaceTile(TileRef tileref, ContentTileDefinition replacementTile, EntityUid grid, MapGridComponent? component = null)
+    {
+        if (!Resolve(grid, ref component))
+            return false;
+
+        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
+        var decals = _decal.GetDecalsInRange(tileref.GridUid, tileref.GridPosition().SnapToGrid(EntityManager, _mapManager).Position, 0.5f);
+        foreach (var (id, _) in decals)
+        {
+            _decal.RemoveDecal(tileref.GridUid, id);
+        }
+        component.SetTile(tileref.GridIndices, new Tile(replacementTile.TileId, 0, variant));
+        return true;
     }
 
     private bool DeconstructTile(TileRef tileRef)
