@@ -4,7 +4,10 @@ using Content.Server.Power.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.CCVar;
 using Content.Shared.Materials;
+using Content.Shared.Physics;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Anomaly;
 
@@ -91,11 +94,31 @@ public sealed partial class AnomalySystem
             var randomY = Random.Next((int) gridBounds.Bottom, (int)gridBounds.Top);
 
             var tile = new Vector2i(randomX, randomY);
-            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile,
-                    mapGridComp: gridComp) || _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
+
+            // no air-blocked areas.
+            if (_atmosphere.IsTileSpace(grid, xform.MapUid, tile, mapGridComp: gridComp) ||
+                _atmosphere.IsTileAirBlocked(grid, tile, mapGridComp: gridComp))
             {
                 continue;
             }
+
+            // don't spawn inside of solid objects
+            var physQuery = GetEntityQuery<PhysicsComponent>();
+            var valid = true;
+            foreach (var ent in gridComp.GetAnchoredEntities(tile))
+            {
+                if (!physQuery.TryGetComponent(ent, out var body))
+                    continue;
+                if (body.BodyType != BodyType.Static ||
+                    !body.Hard ||
+                    (body.CollisionLayer & (int) CollisionGroup.Impassable) == 0)
+                    continue;
+
+                valid = false;
+                break;
+            }
+            if (!valid)
+                continue;
 
             targetCoords = gridComp.GridTileToLocal(tile);
             break;
