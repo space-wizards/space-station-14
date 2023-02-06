@@ -30,6 +30,12 @@ uplink-flash-grenade-desc = Eeeeeeeeeeeeeeeeeeeeee
 uplink-mini-bomb-name = Minibomb
 uplink-mini-bomb-desc = A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
 
+uplink-supermatter-grenade-name = Supermatter Grenade
+uplink-supermatter-grenade-desc = Grenade that simulates delamination of suppermatter engine, generates powerfull gravity well. Explosion comparable with Minibomb.
+
+uplink-whitehole-grenade-name = Whitehole Grenade
+uplink-whitehole-grenade-desc = Grenade that are repulses everything around for estimated 10 seconds. Very useful in close rooms and for chasing someone.
+
 uplink-penguin-grenade-name = Grenade Penguin
 uplink-penguin-grenade-desc = A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
 
