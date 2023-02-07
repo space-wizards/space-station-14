@@ -9,7 +9,7 @@ namespace Content.Server.StationEvents.Events
         public override string Prototype => "SolarFlare";
 
         private bool _onlyJamHeadsets = true;
-        private HashSet<string> _affectedChannels = new() {};
+        private HashSet<string> _affectedChannels = new();
         private float _endAfter = 0.0f;
         private bool _running = false;
 
