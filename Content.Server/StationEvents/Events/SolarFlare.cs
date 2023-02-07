@@ -10,7 +10,6 @@ namespace Content.Server.StationEvents.Events
     public sealed class SolarFlare : StationEventSystem
     {
         [Dependency] private readonly PoweredLightSystem _poweredLight = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         public override string Prototype => "SolarFlare";
 
@@ -33,7 +32,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             base.Added();
             _onlyJamHeadsets = ev.OnlyJamHeadsets;
-            _endAfter = _random.Next(ev.MinEndAfter, ev.MaxEndAfter);
+            _endAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
             _affectedChannels = ev.AffectedChannels;
             _lightBurnChance = ev.LightBreakChance;
         }
@@ -49,7 +48,7 @@ namespace Content.Server.StationEvents.Events
         {
             foreach (var comp in EntityQuery<PoweredLightComponent>()) 
             {
-                if (_random.Prob(_lightBurnChance))
+                if (RobustRandom.Prob(_lightBurnChance))
                 {
                     _poweredLight.TryDestroyBulb(comp.Owner, comp);
                 }
