@@ -9,6 +9,7 @@ on:
       - '**.sln'
       - '**.git**'
       - '**.yml'
+      - '**.yaml'
       # no docs on which one of these is supposed to work, so
       # why not just do both
       - 'RobustToolbox'
@@ -22,6 +23,7 @@ on:
       - '**.sln'
       - '**.git**'
       - '**.yml'
+      - '**.yaml'
       - 'RobustToolbox'
       - 'RobustToolbox/**'
 

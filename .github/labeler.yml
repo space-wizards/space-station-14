@@ -3,7 +3,9 @@
 
 "Changes: Map":
 - 'Resources/Maps/*.yml'
+- 'Resources/Maps/*.yaml'
 - 'Resources/Prototypes/Maps/*.yml'
+- 'Resources/Prototypes/Maps/*.yaml'
 
 "Changes: UI":
 - '**/*.xaml*'
