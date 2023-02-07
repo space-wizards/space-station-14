@@ -30,6 +30,5 @@ public sealed class VaporVisualsComponent : Component
     /// The animation that plays when the vapor is sprayed.
     /// Generated in <see cref="VaporVisualizerSystem.OnComponentInit"/>
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     public Animation VaporFlick = default!;
 }

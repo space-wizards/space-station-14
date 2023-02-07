@@ -21,7 +21,7 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     private void OnComponentInit(EntityUid uid, VaporVisualsComponent comp, ComponentInit args)
     {
         comp.VaporFlick = new Animation()
-        {    
+        {
             Length = TimeSpan.FromSeconds(comp.AnimationTime),
             AnimationTracks =
             {
@@ -42,12 +42,12 @@ public sealed class VaporVisualizerSystem : VisualizerSystem<VaporVisualsCompone
     /// </summary>
     protected override void OnAppearanceChange(EntityUid uid, VaporVisualsComponent comp, ref AppearanceChangeEvent args)
     {
-        if( AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
+        if (AppearanceSystem.TryGetData<Color>(uid, VaporVisuals.Color, out var color, args.Component) && args.Sprite != null)
         {
             args.Sprite.Color = color;
         }
-        
-        if((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state) &&
+
+        if ((AppearanceSystem.TryGetData<bool>(uid, VaporVisuals.State, out var state, args.Component) && state) &&
             TryComp<AnimationPlayerComponent>(uid, out var animPlayer) &&
            !AnimationSystem.HasRunningAnimation(uid, animPlayer, VaporVisualsComponent.AnimationKey))
         {
