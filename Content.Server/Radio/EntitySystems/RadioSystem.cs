@@ -91,7 +91,7 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(radio.Owner, ev);
         }
         if (!sentAtLeastOnce)
-            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, PopupType.SmallCaution);
+            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, PopupType.MediumCaution);
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
 
