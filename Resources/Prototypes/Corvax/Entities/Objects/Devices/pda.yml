@@ -6,9 +6,8 @@
   components:
     - type: PDA
       id: IAAIDCard
-    - type: Appearance
-      visuals:
-        - type: PDAVisualizer
-          state: pda-lawyer
+      state: pda-lawyer
+    - type: PDABorderColor
+      borderColor: "#6f6192"
     - type: Icon
       state: pda-lawyer
