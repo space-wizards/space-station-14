@@ -142,6 +142,9 @@ uplink-gatfruit-seeds-desc = And who says guns don't grow on trees?
 uplink-necronomicon-name = Necronomicon
 uplink-necronomicon-desc = An unholy book capable of summoning a demonic familiar.
 
+uplink-silencer-name = Silencer
+uplink-silencer-desc = An invisible weapon identical to Cobra. Doesn't produce muzzle flash. Uses .25 caseless ammo.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!

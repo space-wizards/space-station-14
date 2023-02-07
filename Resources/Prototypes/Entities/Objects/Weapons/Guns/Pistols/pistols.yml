@@ -151,6 +151,18 @@
       gun_chamber: !type:ContainerSlot
 
 - type: entity
+  name: silencer
+  parent: WeaponPistolCobra
+  id: WeaponPistolSilencer
+  description: An invisible weapon identical to Cobra. Doesn't produce muzzle flash. Uses .25 caseless ammo.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Pistols/silencer.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Pistols/silencer.rsi
+  - type: NoMuzzleFlash
+
+- type: entity
   name: mk 58
   parent: BaseWeaponPistol
   id: WeaponPistolMk58

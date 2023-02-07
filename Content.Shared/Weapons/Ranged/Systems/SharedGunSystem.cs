@@ -376,6 +376,9 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)
     {
+        if (HasComp<NoMuzzleFlashComponent>(gun))
+            return;
+
         var sprite = component.MuzzleFlash;
 
         if (sprite == null)

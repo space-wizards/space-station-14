@@ -558,6 +558,20 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: uplinkSilencer
+  name: uplink-silencer-name 
+  description: uplink-silencer-desc
+  productEntity: WeaponPistolSilencer
+  cost:
+    Telecrystal: 16
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+
 # Armor
 
 - type: listing
