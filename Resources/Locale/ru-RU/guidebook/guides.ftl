@@ -5,6 +5,7 @@ guide-entry-fires = Пожары & Космос
 guide-entry-shuttle-craft = Шаттло-строй
 guide-entry-power = Электроснабжение
 guide-entry-ame = Двигатель антиматерии (ДАМ)
+guide-entry-singularity = Сингулярность
 guide-entry-science = Наука
 guide-entry-machine-upgrading = Улучшение Машин
 guide-entry-controls = Управление
