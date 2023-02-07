@@ -1,3 +1,6 @@
+ent-GrenadeBase = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
+    .suffix = { "" }
 ent-ExGrenade = explosive grenade
     .desc = Grenade that creates a small but devastating explosion.
     .suffix = { "" }
