@@ -249,10 +249,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: MilkOat
-          Quantity: 20
+          Quantity: 50
 
 # Misc
 
