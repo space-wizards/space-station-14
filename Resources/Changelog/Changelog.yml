@@ -1,9 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
-  id: 2506
-  time: '2022-10-22T22:05:06.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Slime corpses no longer rot or produce miasma, type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Bluespace anomalies no longer... crash everything., type: Fix}
   id: 3005
   time: '2023-02-06T21:11:20.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the NCS Aspid, type: Add}
+  id: 3006
+  time: '2023-02-07T14:22:45.0000000+00:00'
