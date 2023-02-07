@@ -3,17 +3,32 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
+/// <summary>
+///     Solar Flare event specific configuration
+/// </summary>
 public sealed class SolarFlareEventRuleConfiguration : StationEventRuleConfiguration
 {
+    /// <summary>
+    ///     In seconds, most early moment event can end
+    /// </summary>
     [DataField("minEndAfter")]
     public int MinEndAfter = 120;
 
+    /// <summary>
+    ///     In seconds, most late moment event can end
+    /// </summary>
     [DataField("maxEndAfter")]
     public int MaxEndAfter = 240;
 
+    /// <summary>
+    ///     If true, only headsets affected, but e.g. handheld radio will still work
+    /// </summary>
     [DataField("onlyJamHeadsets")]
     public bool OnlyJamHeadsets = true;
 
+    /// <summary>
+    ///     Channels that will be disabled for a duration of event
+    /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public readonly HashSet<string> AffectedChannels = new() { "Common", "Service" };
 }
