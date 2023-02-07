@@ -118761,4 +118761,10 @@ entities:
   - pos: 44.508797,11.452726
     parent: 6
     type: Transform
+- uid: 14301
+  type: BiomassReclaimer
+  components:
+  - pos: -30.5,-27.5
+    parent: 6
+    type: Transform
 ...
