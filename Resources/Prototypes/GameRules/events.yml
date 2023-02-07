@@ -164,14 +164,19 @@
 
 - type: gameRule
   id: SolarFlare
-  config:
-    !type:SolarFlareEventRuleConfiguration
+  config: !type:SolarFlareEventRuleConfiguration
     id: SolarFlare
     weight: 10
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
     startAudio:
       path: /Audio/Announcements/attention.ogg
+    minEndAfter: 120
+    maxEndAfter: 240
+    onlyJamHeadsets: true
+    affectedChannels:
+    - Common
+    - Service
 
 - type: gameRule
   id: VentClog
