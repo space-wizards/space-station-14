@@ -353,7 +353,7 @@
     Plastic: 225
 
 - type: latheRecipe
-  id: MagazinePistolRubber
+  id: MagazinePistolHighVelocity
   result: MagazinePistolHighVelocity
   completetime: 5
   materials:

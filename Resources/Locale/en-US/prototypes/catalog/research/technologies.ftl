@@ -43,8 +43,20 @@ technologies-surveillance-description = Retro-styled cameras straight from the y
 technologies-security-basic = Basic Security Technology
 technologies-security-basic-description = Basic equipment for security personnel.
 
-technologies-ballistic-magazines = Ballistic magazines
+technologies-forensics-equipment = Forensics Equipment
+technologies-forensics-equipment-description = Cause of death: blunt force trauma to the head. Murder weapon: Toolbox.
+
+technologies-speed-loader = Speed Loaders
+technologies-speed-loader-description = Always be the quickest on the draw in any fight.
+
+technologies-ballistic-magazines = Ballistic Magazines
 technologies-ballistic-magazines-description = Discover the wonders of not having to find a recharger for your gun.
+
+technologies-ballistic-weaponry = Ballistic Weaponry
+technologies-ballistic-weaponry-description = Energy weapons may be the future, but ballistics are what you need in the present.
+
+technologies-high-velocity-magazines = High Velocity Magazines
+technologies-high-velocity-magazines-description = It's been scientifically proven that painting bullets red makes them go faster.
 
 technologies-non-lethal = Non-Lethal Technology
 technologies-non-lethal-description = Because not every situation needs to be escalated.
@@ -56,7 +68,7 @@ technologies-advanced-energy-weaponry = Advanced Energy Weaponry
 technologies-advanced-energy-weaponry-description = Utilize the properties of plasma to make a self-recharging gun.
 
 technologies-high-power-energy-weaponry = High Power Energy Weaponry
-technologies-high-power-energy-weaponry-description = It never hurts to have more power.
+technologies-high-power-energy-weaponry-description = It never hurts to try more power.
 
 technologies-experimental-energy-weaponry = Experimental Energy Weaponry
 technologies-experimental-energy-weaponry-description = What if lasers could go through walls?
