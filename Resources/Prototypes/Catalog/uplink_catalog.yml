@@ -572,6 +572,20 @@
     whitelist:
     - Mime
 
+- type: listing
+  id: uplinkPhantomBang
+  name: uplink-phantom-bang-name 
+  description: uplink-phantom-bang-desc
+  productEntity: GrenadePhantomBang
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Mime
+
 # Armor
 
 - type: listing

@@ -47,6 +47,15 @@
     canCreateVacuum: false
 
 - type: entity
+  name: phantom bang
+  description: Invisible explosive grenade.
+  parent: ExGrenade
+  id: GrenadePhantomBang
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/phantombang.rsi
+
+- type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee
   parent: GrenadeBase

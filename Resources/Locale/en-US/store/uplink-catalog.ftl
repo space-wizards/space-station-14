@@ -145,6 +145,9 @@ uplink-necronomicon-desc = An unholy book capable of summoning a demonic familia
 uplink-silencer-name = Silencer
 uplink-silencer-desc = An invisible weapon identical to Cobra. Doesn't produce muzzle flash. Uses .25 caseless ammo.
 
+uplink-phantom-bang-name = Phantom Bang
+uplink-phantom-bang-desc = Invisible explosive grenade.
+
 # Armor
 uplink-chameleon-name = Chameleon Kit
 uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
