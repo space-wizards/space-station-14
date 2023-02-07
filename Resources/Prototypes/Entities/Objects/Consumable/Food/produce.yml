@@ -882,3 +882,43 @@
     seedId: gatfruit
   - type: Food
     trash: WeaponRevolverPython
+
+- type: entity
+  name: rice bushel
+  description: todo #todo
+  id: RiceBushel
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/rice.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Rice
+          Quantity: 10
+  - type: Produce
+    seedId: rice
+
+- type: entity
+  name: soybean
+  description: todo #todo
+  id: FoodSoybean
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/soybeans.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 9
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+  - type: Produce
+    seedId: soybeans
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: MilkSoy
+        Quantity: 10
