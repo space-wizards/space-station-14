@@ -45,5 +45,5 @@
   
 - type: guideEntry
   id: Singularity
-  name: Singularity
+  name: guide-entry-singularity
   text: "/Server Info/Guidebook/Singularity.xml"
