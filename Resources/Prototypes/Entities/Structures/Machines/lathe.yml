@@ -232,10 +232,6 @@
       - RPED
       - NodeScanner
       - HolofanProjector
-      - WeaponLaserCarbine
-      - WeaponAdvancedLaser
-      - WeaponLaserCannon
-      - WeaponXrayCannon
 
 - type: entity
   parent: Protolathe
@@ -394,7 +390,7 @@
   - type: Lathe
     idleState: icon
     runningState: icon
-    staticRecipes:
+    dynamicRecipes:
       - Flash
       - FlashPayload
       - Handcuffs

@@ -226,36 +226,41 @@
   unlockedRecipes:
     - Handcuffs
     - Zipties
-    - StunBaton
     - RiotShield
     - RiotLaserShield
     - RiotBulletShield
-    - Flash
-    - FlashPayload
-    - ForensicPad
-    - ForensicScanner
     - ClothingGlassesEyesSecurity
     - FlashlightSeclite
 
 - type: technology
-  name: technologies-ballistic-ammunition
-  id: BallisticAmmunitionTechnology
-  description: technologies-ballistic-ammunition-description
+  name: technologies-forensics-equipment
+  id: ForensicsEquipmentTechnology
+  description: technologies-forensics-equipment-description
   icon:
-    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
-    state: base-6
+    sprite: Objects/Devices/forensic_scanner.rsi
+    state: forensicnew
   requiredPoints: 5000
   requiredTechnologies:
     - BasicSecurityTechnology
   unlockedRecipes:
-    - MagazineBoxPistol
-    - MagazineBoxPistolRubber
-    - MagazineBoxMagnum
-    - MagazineBoxMagnumRubber
-    - MagazineBoxRifle
-    - MagazineBoxRifleRubber
-    - MagazineBoxLightRifle
-    - MagazineBoxLightRifleRubber
+    - ForensicScanner
+    - ForensicPad
+
+- type: technology
+  name: technologies-speed-loader
+  id: SpeedLoaderTechnology
+  description: technologies-speed-loader-description
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    state: base-6
+  requiredPoints: 10000
+  requiredTechnologies:
+    - ForensicsEquipmentTechnology
+    - BallisticMagazinesTechnology
+  unlockedRecipes:
+    - SpeedLoaderRubber
+    - SpeedLoaderMagnum
+    - SpeedLoaderHighVelocity
 
 - type: technology
   name: technologies-ballistic-magazines
@@ -263,21 +268,28 @@
   description: technologies-ballistic-magazines-description
   icon:
     sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
+    state: icon
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BasicSecurityTechnology
+  unlockedRecipes:
+    - MagazineRifle
+    - MagazinePistolSubMachineGunTopMounted
+    - MagazinePistol
+
+- type: technology
+  name: technologies-high-velocity-magazines
+  id: HighVelocityMagazinesTechnology
+  description: technologies-high-velocity-magazines-description
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Magazine/Pistol/pistol_mag.rsi
     state: red-icon
   requiredPoints: 10000
   requiredTechnologies:
-    - BallisticAmmunitionTechnology
+    - BallisticMagazinesTechnology
   unlockedRecipes:
-    - SpeedLoaderMagnum
-    - SpeedLoaderMagnumHighVelocity
-    - SpeedLoaderMagnumRubber
-    - MagazineRifle
     - MagazineRifleHighVelocity
-    - MagazineRifleRubber
-    - MagazinePistolSubMachineGunTopMounted
-    - MagazinePistol
     - MagazinePistolHighVelocity
-    - MagazinePistolRubber
 
 - type: technology
   name: technologies-ballistic-weaponry
@@ -288,7 +300,6 @@
     state: icon
   requiredPoints: 20000
   requiredTechnologies:
-    - BasicSecurityTechnology
     - BallisticMagazinesTechnology
   unlockedRecipes:
     - WeaponRifleLecter
@@ -304,14 +315,20 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/disabler.rsi
     state: base
-  requiredPoints: 5000
+  requiredPoints: 10000
   requiredTechnologies:
     - BasicSecurityTechnology
   unlockedRecipes:
     - Disabler
     - Flashbang
+    - Flash
+    - FlashPayload
+    - StunBaton
     - Bola
-    - FoodBoxDonut
+    - MagazineRifleRubber
+    - MagazinePistolRubber
+    - ShotgunShellBeanbag
+    - ShellTranquilizer
 
 - type: technology
   name: technologies-energy-weaponry
@@ -320,10 +337,10 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
     state: icon
-  requiredPoints: 10000
+  requiredPoints: 15000
   requiredTechnologies:
     - NonLethalTechnology
-    - ElectromagneticTheory
+    - CompactPowerTechnology
   unlockedRecipes:
     - WeaponLaserCarbine
 
@@ -334,7 +351,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     state: icon
-  requiredPoints: 15000
+  requiredPoints: 30000
   requiredTechnologies:
     - EnergyWeaponryTechnology
   unlockedRecipes:
@@ -347,7 +364,7 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/laser_cannon.rsi
     state: icon
-  requiredPoints: 15000
+  requiredPoints: 30000
   requiredTechnologies:
     - EnergyWeaponryTechnology
   unlockedRecipes:
@@ -360,10 +377,9 @@
   icon:
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
     state: icon
-  requiredPoints: 20000
+  requiredPoints: 30000
   requiredTechnologies:
-    - AdvancedEnergyWeaponryTechnology
-    - HighPowerEnergyWeaponryTechnology
+    - EnergyWeaponryTechnology
   unlockedRecipes:
     - WeaponXrayCannon
 
@@ -391,7 +407,7 @@
     state: icon
   requiredPoints: 10000
   requiredTechnologies:
-    - NonLethalTechnology
+    - BasicArmorTechnology
   unlockedrecipes:
     - ClothingHeadHelmetRiot
     - ClothingOuterArmorRiot
@@ -406,7 +422,7 @@
     state: icon
   requiredPoints: 5000
   requiredTechnologies:
-    - NonLethalTechnology
+    - BasicArmorTechnology
   unlockedrecipes:
     - ClothingOuterArmorReflective
     - ClothingOuterArmorBulletproof

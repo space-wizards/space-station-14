@@ -397,19 +397,12 @@
     Plastic: 225
 
 - type: latheRecipe
-  id: MagazinePistolRubber
+  id: MagazinePistolHighVelocity
   result: MagazinePistolHighVelocity
   completetime: 5
   materials:
     Steel: 75
     Glass: 225
-
-- type: latheRecipe
-  id: FoodBoxDonut
-  result: FoodBoxDonut
-  completetime: 5
-  materials:
-    Plastic: 200
 
 - type: latheRecipe
   id: FlashlightSeclite
