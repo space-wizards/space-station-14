@@ -46,7 +46,7 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleSelect(EntityUid uid, ResearchClientComponent component, ConsoleServerSelectionMessage args)
     {
-        if (!HasComp<TechnologyDatabaseComponent>(uid) || !this.IsPowered(uid, EntityManager))
+        if (!this.IsPowered(uid, EntityManager))
             return;
 
         _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
@@ -95,7 +95,7 @@ public sealed partial class ResearchSystem
         var state = new ResearchClientBoundInterfaceState(names.Length, names,
             GetServerIds(), component.ConnectedToServer ? serverComponent.Id : -1);
 
-        _uiSystem.TrySetUiState(component.Owner, ResearchClientUiKey.Key, state);
+        _uiSystem.TrySetUiState(uid, ResearchClientUiKey.Key, state);
     }
 
     /// <summary>

@@ -4,12 +4,12 @@ using Content.Server.Interaction;
 using Content.Server.Mech.Components;
 using Content.Server.Mech.Equipment.Components;
 using Content.Server.Mech.Systems;
-using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Wall;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
@@ -27,6 +27,7 @@ public sealed class MechGrabberSystem : EntitySystem
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly InteractionSystem _interaction = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -78,8 +79,10 @@ public sealed class MechGrabberSystem : EntitySystem
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
         xform.AttachToGridOrMap();
-        xform.WorldPosition = mechxform.WorldPosition + mechxform.WorldRotation.RotateVec(component.DepositOffset);
-        xform.WorldRotation = Angle.Zero;
+
+        var offset = _transform.GetWorldPosition(mechxform) + _transform.GetWorldRotation(mechxform).RotateVec(component.DepositOffset);
+        _transform.SetWorldPosition(xform, offset);
+        _transform.SetWorldRotation(xform, Angle.Zero);
         _mech.UpdateUserInterface(mech);
     }
 
@@ -122,12 +125,15 @@ public sealed class MechGrabberSystem : EntitySystem
         if (args.Handled || args.Target is not {} target)
             return;
 
-        if (TryComp<PhysicsComponent>(uid, out var physics) && physics.BodyType == BodyType.Static && !HasComp<AnchorableComponent>(uid) ||
+        if (TryComp<PhysicsComponent>(target, out var physics) && physics.BodyType == BodyType.Static ||
             HasComp<WallMountComponent>(target) ||
             HasComp<MobStateComponent>(target))
         {
             return;
         }
+
+        if (Transform(target).Anchored)
+            return;
 
         if (component.ItemContainer.ContainedEntities.Count >= component.MaxContents)
             return;
