@@ -90,6 +90,12 @@ public sealed class HTNSystem : EntitySystem
 
     private void OnPrototypeLoad(PrototypesReloadedEventArgs obj)
     {
+        if (!obj.ByType.ContainsKey(typeof(HTNCompoundTask)) &&
+            !obj.ByType.ContainsKey(typeof(HTNPrimitiveTask)))
+        {
+            return;
+        }
+
         OnLoad();
     }
 
