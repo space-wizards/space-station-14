@@ -52,8 +52,8 @@
   parent: ExGrenade
   id: GrenadePhantomBang
   components:
-  - type: Sprite
-    sprite: Objects/Weapons/Grenades/phantombang.rsi
+    - type: Stealth
+      lastVisibility: 0.4
 
 - type: entity
   name: flashbang

@@ -158,8 +158,8 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/silencer.rsi
-  - type: Clothing
-    sprite: Objects/Weapons/Guns/Pistols/silencer.rsi
+  - type: Stealth
+    lastVisibility: 0
   - type: NoMuzzleFlash
 
 - type: entity
