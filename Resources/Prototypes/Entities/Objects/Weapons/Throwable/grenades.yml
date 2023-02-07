@@ -48,12 +48,17 @@
 
 - type: entity
   name: phantom bang
-  description: Invisible explosive grenade.
+  description: Invisible explosive grenade with countdown sound.
   parent: ExGrenade
   id: GrenadePhantomBang
   components:
     - type: Stealth
       lastVisibility: 0.4
+    - type: Appearance
+      visuals:
+      - type: TimerTriggerVisualizer
+        countdown_sound:
+          path: /Audio/Effects/countdown.ogg
 
 - type: entity
   name: flashbang

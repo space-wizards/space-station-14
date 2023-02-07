@@ -146,7 +146,7 @@ uplink-silencer-name = Silencer
 uplink-silencer-desc = An invisible weapon identical to Cobra. Doesn't produce muzzle flash. Uses .25 caseless ammo.
 
 uplink-phantom-bang-name = Phantom Bang
-uplink-phantom-bang-desc = Invisible explosive grenade.
+uplink-phantom-bang-desc = Invisible explosive grenade with countdown sound.
 
 # Armor
 uplink-chameleon-name = Chameleon Kit
