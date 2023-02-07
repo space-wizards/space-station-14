@@ -885,7 +885,7 @@
 
 - type: entity
   name: rice bushel
-  description: todo #todo
+  description: Goes well with pudding and sake.	
   id: RiceBushel
   parent: ProduceBase
   components:
@@ -902,7 +902,7 @@
 
 - type: entity
   name: soybeans
-  description: todo #todo
+  description: For those who can't stand seeing good old meat.
   id: FoodSoybeans
   parent: ProduceBase
   components:
@@ -911,7 +911,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 9
+        maxVol: 4
         reagents:
         - ReagentId: Nutriment
           Quantity: 4
@@ -921,4 +921,4 @@
     juiceSolution:
       reagents:
       - ReagentId: MilkSoy
-        Quantity: 10
+        Quantity: 5
