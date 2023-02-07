@@ -31,4 +31,10 @@ public sealed class SolarFlareEventRuleConfiguration : StationEventRuleConfigura
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public readonly HashSet<string> AffectedChannels = new();
+
+    /// <summary>
+    ///     Chance any given light bulb breaks due to event
+    /// </summary>
+    [DataField("lightBreakChance")]
+    public float LightBreakChance;
 }
