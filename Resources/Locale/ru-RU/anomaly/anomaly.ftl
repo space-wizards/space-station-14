@@ -26,3 +26,9 @@ anomaly-generator-no-cooldown = Перезарядка: [color=gray]Заверш
 anomaly-generator-yes-fire = Статус: [color=forestgreen]Готов[/color]
 anomaly-generator-no-fire = Статус: [color=crimson]Не готов[/color]
 anomaly-generator-generate = Создать аномалию
+anomaly-generator-charges =
+    { $charges ->
+        [one] { $charges } charge
+       *[other] { $charges } charges
+    }
+anomaly-generator-announcement = An anomaly has been generated!
