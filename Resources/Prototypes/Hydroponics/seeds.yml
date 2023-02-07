@@ -730,6 +730,7 @@
   production: 1
   yield: 4
   potency: 5
+  growthStages: 4
   idealLight: 5
   nutrientConsumption: 0.15
   chemicals:
@@ -762,7 +763,3 @@
       Min: 1
       Max: 5
       PotencyDivisor: 20
-    Soybean:
-      Min: 1
-      Max: 4
-      PotencyDivisor: 25

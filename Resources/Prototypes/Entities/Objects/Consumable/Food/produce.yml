@@ -901,9 +901,9 @@
     seedId: rice
 
 - type: entity
-  name: soybean
+  name: soybeans
   description: todo #todo
-  id: FoodSoybean
+  id: FoodSoybeans
   parent: ProduceBase
   components:
   - type: Sprite
