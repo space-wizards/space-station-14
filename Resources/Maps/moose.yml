@@ -118767,4 +118767,16 @@ entities:
   - pos: -30.5,-27.5
     parent: 6
     type: Transform
+- uid: 14302
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: -11.5,-51.5
+    parent: 6
+    type: Transform
+- uid: 14303
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: -10.5,-51.5
+    parent: 6
+    type: Transform
 ...
