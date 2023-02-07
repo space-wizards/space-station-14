@@ -467,3 +467,36 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkMilkCarton
+  name: milk
+  description: An opaque white liquid produced by the mammary glands of mammals.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Milk
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/milk.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSoyMilkCarton
+  name: soy milk
+  description: White and nutritious soy goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
