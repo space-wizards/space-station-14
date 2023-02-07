@@ -87,6 +87,19 @@
     - !type:CreateEntityReactionEffect
       entity: FoodCakeBatter
 
+- type: reaction
+  id: CreateTofu
+  impact: Low
+  quantized: true
+  reactants:
+    MilkSoy:
+      amount: 10
+    Enzyme:
+      amount: 5
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodTofu
+
 # Condiments
 
 - type: reaction
@@ -166,6 +179,16 @@
       amount: 5
   products:
     Vinegar: 10
+
+- type: reaction
+  id: CookingSoysauce
+  reactants:
+    MilkSoy:
+      amount: 10
+    SulfuricAcid:
+      amount: 5
+  products:
+    Soysauce: 15
 
 - type: reaction
   id: CreateMeatball

@@ -464,6 +464,25 @@
           Quantity: 5
 
 - type: entity
+  name: tofu
+  parent: FoodBakingBase
+  id: FoodTofu
+  description: Solid white block with a subtle flavor.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - tofu
+  - type: Sprite
+    state: tofu
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+
+- type: entity
   name: burned mess
   parent: FoodBakingBase
   id: FoodBadRecipe
