@@ -29,9 +29,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
         foreach (var ent in lookup)
         {
             var tempXform = Transform(ent);
-
             var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
-            _throwing.TryThrow(ent, foo.Normalized * 10, strength, uid, 0);
+            _throwing.TryThrow(ent, foo * 10, strength, uid, 0);
         }
     }
 
@@ -54,7 +53,6 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
             var tempXform = Transform(ent);
 
             var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;
-            Logger.Debug($"{ToPrettyString(ent)}: {foo}: {foo.Normalized}: {foo.Normalized * 10}");
             _throwing.TryThrow(ent, foo * 5, strength, uid, 0);
         }
     }
