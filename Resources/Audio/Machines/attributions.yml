@@ -1,3 +1,13 @@
+- files: ["anomaly_generate.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by szegvari, converted to mono and .ogg by EmoGarbage404 (github)."
+  source: "https://freesound.org/people/szegvari/sounds/536794/"
+
+- files: ["beep.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by dotY21."
+  source: "https://freesound.org/people/dotY21/sounds/330726/"
+
 - files: ["vending_restock_start.ogg"]
   license: "CC0-1.0"
   copyright: "https://freesound.org/people/Defaultv/"

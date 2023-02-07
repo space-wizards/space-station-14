@@ -1,47 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
-    type: Fix}
-  id: 2498
-  time: '2022-10-22T18:16:32.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: You will now see a message at spawn telling you what station you're
-      on., type: Tweak}
-  id: 2499
-  time: '2022-10-22T21:51:51.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
-  id: 2500
-  time: '2022-10-22T21:53:43.0000000+00:00'
-- author: Jackrost
-  changes:
-  - {message: biomass reclaimer is don't jitter if power off, type: Add}
-  id: 2501
-  time: '2022-10-22T21:54:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix cargo orders not showing up on shuttle., type: Fix}
-  id: 2502
-  time: '2022-10-22T21:55:13.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
-      blue, pink, and grey!', type: Add}
-  id: 2503
-  time: '2022-10-22T21:58:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
-  id: 2504
-  time: '2022-10-22T21:58:27.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Matchbox sprite will now properly show its fill states., type: Fix}
-  id: 2505
-  time: '2022-10-22T21:59:53.0000000+00:00'
 - author: Interrobang01
   changes:
   - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
@@ -2919,3 +2876,52 @@ Entries:
   - {message: Unrandomized airlock painter styles, type: Fix}
   id: 2997
   time: '2023-02-05T20:22:37.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Broken shooting targets no longer drop 100 times more steel than they
+      cost., type: Tweak}
+  id: 2998
+  time: '2023-02-06T02:51:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Increased point generation from anomalies., type: Tweak}
+  - {message: Made the pyroclastic anomaly less dangerous and electricity anomaly
+      more dangerous., type: Tweak}
+  - {message: Anomalies should no longer spawn in walls as much., type: Fix}
+  - {message: 'Added two new types of anomalies: flesh and bluespace.', type: Add}
+  id: 2999
+  time: '2023-02-06T05:03:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed red kuzdu., type: Fix}
+  id: 3000
+  time: '2023-02-06T12:27:06.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Automatically called shuttles will take 10 minutes to get to the station
+      instead of 4., type: Tweak}
+  id: 3001
+  time: '2023-02-06T12:49:16.0000000+00:00'
+- author: Furontier
+  changes:
+  - {message: Added singularity guidebook entry, type: Add}
+  id: 3002
+  time: '2023-02-06T13:10:07.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: PDAs no longer disappear when inhand, type: Fix}
+  id: 3003
+  time: '2023-02-06T19:53:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The anomaly generator now has an animation while it creates anomalies.,
+    type: Add}
+  - {message: The anomaly generator now broadcasts a message on the science radio
+      alerting scientists that a new anomaly has been made., type: Add}
+  id: 3004
+  time: '2023-02-06T19:54:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bluespace anomalies no longer... crash everything., type: Fix}
+  id: 3005
+  time: '2023-02-06T21:11:20.0000000+00:00'
