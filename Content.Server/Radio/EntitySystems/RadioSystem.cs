@@ -4,7 +4,6 @@ using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
 using Content.Shared.Database;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Radio;
 using Robust.Server.GameObjects;
 using Robust.Shared.Network;
@@ -54,7 +53,7 @@ public sealed class RadioSystem : EntitySystem
             return;
 
         var name = TryComp(source, out VoiceMaskComponent? mask) && mask.Enabled
-            ? Identity.Name(source, EntityManager)
+            ? mask.VoiceName
             : MetaData(source).EntityName;
 
         name = FormattedMessage.EscapeText(name);

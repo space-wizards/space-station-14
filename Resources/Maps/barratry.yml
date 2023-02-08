@@ -35383,7 +35383,7 @@ entities:
       -14,-7: 0
       -14,-6: 0
       -14,-5: 0
-      -14,-4: 0
+      -14,-4: 2
       -14,-3: 0
       -14,-2: 0
       -14,-1: 0
@@ -35507,7 +35507,7 @@ entities:
       -6,-9: 0
       -6,-8: 0
       -6,-7: 0
-      -6,-6: 0
+      -6,-6: 3
       -6,-5: 0
       -6,-4: 0
       -6,-3: 0
@@ -35809,8 +35809,8 @@ entities:
       6,-2: 0
       6,-1: 0
       7,-16: 0
-      7,-15: 2
-      7,-14: 2
+      7,-15: 4
+      7,-14: 4
       7,-13: 0
       7,-12: 0
       7,-11: 0
@@ -35824,9 +35824,9 @@ entities:
       7,-3: 0
       7,-2: 0
       7,-1: 0
-      8,-15: 2
-      8,-14: 2
-      8,-13: 2
+      8,-15: 4
+      8,-14: 4
+      8,-13: 4
       8,-12: 0
       8,-11: 0
       8,-10: 0
@@ -35839,9 +35839,9 @@ entities:
       8,-3: 0
       8,-2: 1
       8,-1: 0
-      9,-15: 2
-      9,-14: 2
-      9,-13: 2
+      9,-15: 4
+      9,-14: 4
+      9,-13: 4
       9,-12: 0
       9,-11: 0
       9,-10: 0
@@ -35854,8 +35854,8 @@ entities:
       9,-3: 0
       9,-2: 0
       9,-1: 0
-      10,-14: 2
-      10,-13: 2
+      10,-14: 4
+      10,-13: 4
       10,-12: 0
       10,-11: 0
       10,-10: 0
@@ -38579,7 +38579,7 @@ entities:
       -29,17: 0
       -29,18: 0
       -29,19: 0
-      -29,20: 0
+      -29,20: 3
       -29,21: 0
       -29,22: 0
       -29,23: 0
@@ -38691,7 +38691,7 @@ entities:
       -22,17: 0
       -22,18: 0
       -22,19: 0
-      -22,20: 1
+      -22,20: 3
       -22,21: 0
       -22,22: 0
       -22,23: 0
@@ -43128,14 +43128,14 @@ entities:
       -85,54: 0
       -84,48: 0
       -84,49: 0
-      -84,50: 2
+      -84,50: 4
       -84,51: 0
       -84,52: 0
       -84,53: 0
       -84,54: 0
       -83,48: 0
       -83,49: 0
-      -83,50: 2
+      -83,50: 4
       -83,51: 0
       -83,52: 0
       -83,53: 0
@@ -43144,7 +43144,7 @@ entities:
       -83,56: 0
       -82,48: 0
       -82,49: 0
-      -82,50: 2
+      -82,50: 4
       -82,51: 0
       -82,52: 0
       -82,53: 0
@@ -43693,38 +43693,38 @@ entities:
       -91,32: 0
       -91,33: 0
       -91,34: 0
-      -91,35: 3
+      -91,35: 5
       -91,36: 0
-      -91,37: 4
+      -91,37: 6
       -90,32: 0
       -90,33: 0
       -90,34: 0
-      -90,35: 3
+      -90,35: 5
       -90,36: 0
-      -90,37: 4
+      -90,37: 6
       -90,38: 0
-      -90,39: 2
+      -90,39: 4
       -90,40: 0
-      -90,41: 2
+      -90,41: 4
       -90,42: 0
-      -90,43: 5
+      -90,43: 7
       -90,44: 0
-      -90,45: 2
+      -90,45: 4
       -90,46: 0
       -90,47: 0
       -89,32: 0
       -89,33: 0
       -89,34: 0
-      -89,35: 3
+      -89,35: 5
       -89,36: 0
-      -89,37: 4
+      -89,37: 6
       -89,38: 0
-      -89,39: 2
-      -89,41: 2
+      -89,39: 4
+      -89,41: 4
       -89,42: 0
-      -89,43: 5
+      -89,43: 7
       -89,44: 0
-      -89,45: 2
+      -89,45: 4
       -89,46: 0
       -89,47: 0
       -88,32: 0
@@ -44318,11 +44318,11 @@ entities:
       8,-16: 0
       9,-16: 0
       10,-16: 0
-      10,-15: 2
+      10,-15: 4
       11,-16: 0
-      11,-15: 2
-      11,-14: 2
-      11,-13: 2
+      11,-15: 4
+      11,-14: 4
+      11,-13: 4
       12,-14: 0
       -45,57: 0
       -45,58: 0
@@ -44843,13 +44843,13 @@ entities:
       -92,45: 0
       -92,46: 0
       -91,38: 0
-      -91,39: 2
+      -91,39: 4
       -91,40: 0
-      -91,41: 2
+      -91,41: 4
       -91,42: 0
-      -91,43: 5
+      -91,43: 7
       -91,44: 0
-      -91,45: 2
+      -91,45: 4
       -91,46: 0
       -112,18: 0
       -111,18: 0
@@ -45209,8 +45209,38 @@ entities:
     - volume: 2500
       temperature: 293.15
       moles:
-      - 20.04244
-      - 75.39776
+      - 17.89022
+      - 67.30131
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 21.213781
+      - 79.80423
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 19.481253
+      - 73.28662
       - 0
       - 0
       - 0
@@ -48510,9 +48540,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 509
-  type: AsteroidRock
+  type: ClothingOuterArmorScaf
   components:
-  - pos: 8.5,-8.5
+  - pos: 8.3675785,-8.507205
     parent: 1
     type: Transform
 - uid: 510
@@ -54391,7 +54421,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 1448
-  type: InflatableWall
+  type: WallSolidRust
   components:
   - pos: -6.5,9.5
     parent: 1
@@ -54418,10 +54448,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 1452
-  type: WallSolid
+  type: WallSolidRust
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -6.5,11.5
+  - pos: -6.5,11.5
     parent: 1
     type: Transform
 - uid: 1453
@@ -54495,7 +54524,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 1463
-  type: InflatableWall
+  type: WallSolidRust
   components:
   - pos: -6.5,15.5
     parent: 1
@@ -54712,9 +54741,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 1495
-  type: InflatableWall
+  type: WallSolidRust
   components:
-  - pos: -18.5,9.5
+  - pos: -18.5,12.5
     parent: 1
     type: Transform
 - uid: 1496
@@ -54773,16 +54802,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 1504
-  type: WallSolid
+  type: WallSolidRust
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -18.5,13.5
+  - pos: -18.5,13.5
     parent: 1
     type: Transform
 - uid: 1505
-  type: InflatableWall
+  type: WallSolidRust
   components:
-  - pos: -18.5,12.5
+  - pos: -18.5,9.5
     parent: 1
     type: Transform
 - uid: 1506
@@ -56524,31 +56552,27 @@ entities:
     parent: 1
     type: Transform
 - uid: 1769
-  type: FirelockEdge
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,8.5
+  - pos: -64.5,-14.5
     parent: 1
     type: Transform
 - uid: 1770
-  type: FirelockEdge
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,10.5
+  - pos: -66.5,-14.5
     parent: 1
     type: Transform
 - uid: 1771
-  type: FirelockEdge
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,16.5
+  - pos: -72.5,-14.5
     parent: 1
     type: Transform
 - uid: 1772
-  type: FirelockEdge
+  type: AtmosDeviceFanTiny
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,18.5
+  - pos: -74.5,-14.5
     parent: 1
     type: Transform
 - uid: 1773
@@ -57784,7 +57808,7 @@ entities:
 - uid: 1962
   type: CloningConsoleComputerCircuitboard
   components:
-  - pos: 4.5253367,36.670715
+  - pos: 4.518286,38.90027
     parent: 1
     type: Transform
 - uid: 1963
@@ -58287,7 +58311,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 2041
-  type: Table
+  type: MachineFrame
   components:
   - pos: 4.5,36.5
     parent: 1
@@ -59089,7 +59113,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 2169
-  type: SpawnPointScientist
+  type: SpawnPointResearchAssistant
   components:
   - pos: -7.5,-0.5
     parent: 1
@@ -60362,13 +60386,13 @@ entities:
 - uid: 2373
   type: CloningPodMachineCircuitboard
   components:
-  - pos: 4.5253367,37.31134
+  - pos: 4.487036,37.5167
     parent: 1
     type: Transform
 - uid: 2374
   type: MedicalScannerMachineCircuitboard
   components:
-  - pos: 4.4940867,37.87384
+  - pos: 4.487036,37.938576
     parent: 1
     type: Transform
 - uid: 2375
@@ -60380,13 +60404,15 @@ entities:
 - uid: 2376
   type: Crowbar
   components:
-  - pos: 4.5409617,39.014465
+  - pos: 4.494688,39.490654
     parent: 1
     type: Transform
+  - nextAttack: 395.9754995
+    type: MeleeWeapon
 - uid: 2377
   type: Multitool
   components:
-  - pos: 4.3222117,39.53009
+  - pos: 4.487036,39.554657
     parent: 1
     type: Transform
 - uid: 2378
@@ -62303,7 +62329,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 2650
-  type: Girder
+  type: WallSolidRust
   components:
   - pos: -12.5,34.5
     parent: 1
@@ -65702,7 +65728,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 3163
-  type: Girder
+  type: WallSolid
   components:
   - pos: -31.5,14.5
     parent: 1
@@ -80945,9 +80971,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 5559
-  type: MaintenanceFluffSpawner
+  type: ClothingUniformJumpsuitAncient
   components:
-  - pos: -45.5,17.5
+  - pos: -45.64481,17.603561
     parent: 1
     type: Transform
 - uid: 5560
@@ -81173,10 +81199,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 5596
-  type: ChairFolding
+  type: Firelock
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -20.5,15.5
+  - pos: -20.5,15.5
     parent: 1
     type: Transform
 - uid: 5597
@@ -81440,8 +81465,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 5640
-  type: Table
+  type: VendingMachineVendomat
   components:
+  - flags: SessionSpecific
+    type: MetaData
   - pos: -23.5,29.5
     parent: 1
     type: Transform
@@ -81478,27 +81505,33 @@ entities:
 - uid: 5646
   type: ToolboxElectricalFilled
   components:
-  - pos: -24.467052,29.657988
+  - pos: -25.110394,26.456669
     parent: 1
     type: Transform
+  - nextAttack: 216.4928841
+    type: MeleeWeapon
 - uid: 5647
   type: Multitool
   components:
-  - pos: -23.243784,29.675022
+  - pos: -24.502523,29.558752
     parent: 1
     type: Transform
 - uid: 5648
   type: Wrench
   components:
-  - pos: -23.696909,29.596897
+  - pos: -24.486898,29.543127
     parent: 1
     type: Transform
+  - nextAttack: 238.3761285
+    type: MeleeWeapon
 - uid: 5649
   type: Crowbar
   components:
-  - pos: -23.696909,29.503147
+  - pos: -24.42766,29.496252
     parent: 1
     type: Transform
+  - nextAttack: 222.5928597
+    type: MeleeWeapon
 - uid: 5650
   type: ClothingBeltUtility
   components:
@@ -82044,7 +82077,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 5736
-  type: ClosetMaintenanceFilledRandom
+  type: Firelock
   components:
   - pos: -21.5,20.5
     parent: 1
@@ -82145,9 +82178,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 5751
-  type: MaintenanceWeaponSpawner
+  type: Firelock
   components:
-  - pos: -20.5,15.5
+  - pos: -19.5,15.5
     parent: 1
     type: Transform
 - uid: 5752
@@ -87764,7 +87797,7 @@ entities:
       - shape:
           !type:PhysShapeCircle
           radius: 0.35
-        density: 185
+        density: 100
         mask:
          - SmallMobMask
         layer:
@@ -89617,15 +89650,15 @@ entities:
     parent: 1
     type: Transform
 - uid: 6926
-  type: AirlockFreezer
+  type: AirlockFreezerLocked
   components:
-  - pos: -30.5,46.5
+  - pos: -26.5,45.5
     parent: 1
     type: Transform
 - uid: 6927
-  type: AirlockFreezer
+  type: AirlockFreezerLocked
   components:
-  - pos: -26.5,45.5
+  - pos: -30.5,46.5
     parent: 1
     type: Transform
 - uid: 6928
@@ -97973,8 +98006,10 @@ entities:
     parent: 1
     type: Transform
 - uid: 8239
-  type: RandomSpawner
+  type: VendingMachineVendomat
   components:
+  - flags: SessionSpecific
+    type: MetaData
   - pos: -17.5,8.5
     parent: 1
     type: Transform
@@ -98207,9 +98242,9 @@ entities:
     parent: 1
     type: Transform
 - uid: 8278
-  type: RandomSpawner
+  type: Firelock
   components:
-  - pos: -44.5,22.5
+  - pos: -30.5,14.5
     parent: 1
     type: Transform
 - uid: 8279
@@ -115312,6 +115347,8 @@ entities:
     pos: -89.5,35.5
     parent: 1
     type: Transform
+  - maxExternalPressure: 4000
+    type: GasMiner
 - uid: 10840
   type: GasMinerNitrogen
   components:
@@ -115319,6 +115356,8 @@ entities:
     pos: -89.5,37.5
     parent: 1
     type: Transform
+  - maxExternalPressure: 4000
+    type: GasMiner
 - uid: 10841
   type: GasMinerCarbonDioxide
   components:
@@ -115329,12 +115368,9 @@ entities:
 - uid: 10842
   type: GasMinerPlasma
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -89.5,43.5
+  - pos: -89.5,43.5
     parent: 1
     type: Transform
-  - spawnAmount: 10
-    type: GasMiner
 - uid: 10843
   type: WallReinforced
   components:
@@ -133869,10 +133905,7 @@ entities:
   - devices:
     - 1755
     - 1754
-    - 1769
-    - 1770
-    - 1771
-    - 1772
+    - invalid
     type: DeviceList
 - uid: 13105
   type: AirAlarm
@@ -133892,10 +133925,7 @@ entities:
     - 12717
     - 1755
     - 1754
-    - 1769
-    - 1770
-    - 1771
-    - 1772
+    - invalid
     type: DeviceList
 - uid: 13106
   type: DisposalTrunk
@@ -135279,6 +135309,8 @@ entities:
     - 2489
     - 3022
     - 3021
+    - 15082
+    - 15083
     type: DeviceList
 - uid: 13300
   type: FireAlarm
@@ -135301,6 +135333,8 @@ entities:
     - 13307
     - 2053
     - 2054
+    - 15082
+    - 15083
     type: DeviceList
 - uid: 13301
   type: FirelockEdge
@@ -135335,6 +135369,9 @@ entities:
     - 13307
     - 13308
     - 13309
+    - 15079
+    - 15080
+    - 15081
     type: DeviceList
 - uid: 13304
   type: AirAlarm
@@ -135371,6 +135408,9 @@ entities:
     - 13307
     - 13308
     - 13309
+    - 15079
+    - 15080
+    - 15081
     type: DeviceList
 - uid: 13305
   type: FirelockEdge
@@ -147917,8 +147957,9 @@ entities:
         - 15037
     type: ContainerContainer
   - type: Timer
+  - type: ActiveDisposalUnit
 - uid: 15037
-  type: ClothingOuterHardsuitCBURN
+  type: PowerCellMicroreactor
   components:
   - flags: InContainer
     type: MetaData
@@ -148086,6 +148127,379 @@ entities:
   type: CableApcExtension
   components:
   - pos: -46.5,-2.5
+    parent: 1
+    type: Transform
+- uid: 15063
+  type: Firelock
+  components:
+  - pos: -44.5,12.5
+    parent: 1
+    type: Transform
+- uid: 15064
+  type: Firelock
+  components:
+  - pos: -50.5,16.5
+    parent: 1
+    type: Transform
+- uid: 15065
+  type: Firelock
+  components:
+  - pos: -45.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15066
+  type: Firelock
+  components:
+  - pos: -44.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15067
+  type: RandomSpawner
+  components:
+  - pos: -44.5,21.5
+    parent: 1
+    type: Transform
+- uid: 15068
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: -28.5,20.5
+    parent: 1
+    type: Transform
+- uid: 15069
+  type: Firelock
+  components:
+  - pos: -21.5,21.5
+    parent: 1
+    type: Transform
+- uid: 15070
+  type: Firelock
+  components:
+  - pos: -20.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15071
+  type: Firelock
+  components:
+  - pos: -19.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15072
+  type: ChairFolding
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -20.5,17.5
+    parent: 1
+    type: Transform
+- uid: 15073
+  type: MaintenanceWeaponSpawner
+  components:
+  - pos: -20.5,17.5
+    parent: 1
+    type: Transform
+- uid: 15074
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 32.5,8.5
+    parent: 1
+    type: Transform
+- uid: 15075
+  type: RandomSpawner
+  components:
+  - pos: -16.5,8.5
+    parent: 1
+    type: Transform
+- uid: 15076
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 32.5,10.5
+    parent: 1
+    type: Transform
+- uid: 15077
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 32.5,16.5
+    parent: 1
+    type: Transform
+- uid: 15078
+  type: AtmosDeviceFanTiny
+  components:
+  - pos: 32.5,18.5
+    parent: 1
+    type: Transform
+- uid: 15079
+  type: FirelockEdge
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: -1.5,16.5
+    parent: 1
+    type: Transform
+- uid: 15080
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 11.5,15.5
+    parent: 1
+    type: Transform
+- uid: 15081
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 10.5,22.5
+    parent: 1
+    type: Transform
+- uid: 15082
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 12.5,35.5
+    parent: 1
+    type: Transform
+- uid: 15083
+  type: FirelockEdge
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 4.5,40.5
+    parent: 1
+    type: Transform
+- uid: 15084
+  type: DrinkHotCoffee
+  components:
+  - pos: -15.376344,24.974894
+    parent: 1
+    type: Transform
+- uid: 15085
+  type: CrateGenericSteel
+  components:
+  - name: crate (For Med)
+    type: MetaData
+  - pos: -5.5,-5.5
+    parent: 1
+    type: Transform
+  - containers:
+      entity_storage: !type:Container
+        ents:
+        - 15098
+        - 15094
+        - 15086
+        - 15087
+        - 15088
+        - 15089
+        - 15090
+        - 15091
+        - 15092
+        - 15093
+        - 15095
+        - 15096
+        - 15097
+      paper_label: !type:ContainerSlot {}
+    type: ContainerContainer
+  - currentLabel: For Med
+    type: Label
+- uid: 15086
+  type: MicroManipulatorStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15087
+  type: MicroManipulatorStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15088
+  type: MicroLaserStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15089
+  type: ScanningModuleStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15090
+  type: ScanningModuleStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15091
+  type: ScanningModuleStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15092
+  type: RightArmBorg
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15093
+  type: RightArmBorg
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15094
+  type: MicroManipulatorStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15095
+  type: RightArmBorg
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15096
+  type: ScanningModuleStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15097
+  type: Paper
+  components:
+  - flags: InContainer
+    desc: ""
+    name: missing parts list
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - content: >
+      Still missing:
+
+      3 knives (ask kitchen) for biomass reclaimer
+
+      1 pipe (made of steel, constructible) for biomass reclaimer
+
+      Glass & wires (make sure to bring some!)
+
+      Other things to remember: One of their chem stations blew up. Getting parts for cloning's more important but keep it in mind.
+
+      - Research Director Samuel Mendez
+    type: Paper
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15098
+  type: CapacitorStockPart
+  components:
+  - flags: InContainer
+    type: MetaData
+  - parent: 15085
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - type: InsideEntityStorage
+- uid: 15099
+  type: PersonalAI
+  components:
+  - flags: SessionSpecific
+    type: MetaData
+  - pos: -18.48621,65.98919
+    parent: 1
+    type: Transform
+- uid: 15100
+  type: FoodBoxDonut
+  components:
+  - pos: -15.485719,25.584269
+    parent: 1
+    type: Transform
+- uid: 15101
+  type: DrinkHotCoffee
+  components:
+  - pos: -15.688844,24.678019
+    parent: 1
+    type: Transform
+- uid: 15102
+  type: DrinkMugRed
+  components:
+  - pos: -15.313844,24.521769
+    parent: 1
+    type: Transform
+- uid: 15103
+  type: ClothingUniformJumpsuitAncient
+  components:
+  - pos: -45.285435,17.619186
+    parent: 1
+    type: Transform
+- uid: 15104
+  type: Firelock
+  components:
+  - pos: -23.5,50.5
+    parent: 1
+    type: Transform
+- uid: 15105
+  type: Firelock
+  components:
+  - pos: -23.5,51.5
+    parent: 1
+    type: Transform
+- uid: 15106
+  type: ClothingHeadHelmetScaf
+  components:
+  - pos: 8.5707035,-8.39783
+    parent: 1
+    type: Transform
+- uid: 15107
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: -10.5,-3.5
+    parent: 1
+    type: Transform
+- uid: 15108
+  type: SpawnPointResearchAssistant
+  components:
+  - pos: -4.5,-3.5
     parent: 1
     type: Transform
 ...
