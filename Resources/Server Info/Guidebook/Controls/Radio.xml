@@ -1,0 +1,42 @@
+<Document>
+  # Radio
+
+  Your radio allows you to communicate across the entire station and to your specific [color=#a4885c]department[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="ClothingHeadsetGrey"/>
+  </Box>
+
+  To send a station-wide message over the radio preface your text with [color=#a4885c]semi-colon (;)[/color].
+
+  ## Departmental Radio
+
+  You are able to send messages over your departmental radio channels using [color=#a4885c]colon (:)[/color] followed by the
+  department letter as long as you're wearing a headset with your department's encryption key.
+
+  - c - [color=#fcdf03]Command[/color]
+
+  - e - [color=#f37746]Engineering[/color]
+
+  - m - [color=#57b8f0]Medical[/color]
+
+  - n - [color=#c68cfa]Science[/color]
+
+  - s - [color=#dd3535]Security[/color]
+
+  - v - [color=#6ca729]Service[/color]
+
+  - u - [color=#b88646]Supply[/color]
+
+  - t - [color=#8f4a4b]Syndicate[/color]
+
+  - y - [color=#32cd32]CentCom[/color]
+
+  The [color=#a4885c]:h[/color] prefix will send a message to whichever department radio your headset is set (i.e. if you are an engineer it will
+  default to the [color=#f37746]Engineering[/color] channel.
+
+<Box>
+  <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
+</Box>
+
+</Document>
