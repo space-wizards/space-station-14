@@ -205,6 +205,11 @@
       - HighPowerMicroLaserStockPart
       - NanoManipulatorStockPart
       - AdvancedScanningModuleStockPart
+      - SuperCapacitorStockPart
+      - SuperMatterBinStockPart
+      - UltraHighPowerMicroLaserStockPart
+      - PicoManipulatorStockPart
+      - PhasicScanningModuleStockPart
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics

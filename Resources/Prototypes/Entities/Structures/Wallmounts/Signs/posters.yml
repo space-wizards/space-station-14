@@ -885,7 +885,7 @@
   parent: PosterBase
   id: PosterLegitSecWatch
   name: "Sec is Watching You"
-  description: A poster reminding you that security is watching your every move.'
+  description: A poster reminding you that security is watching your every move.
   components:
   - type: Sprite
     state: poster39_legit

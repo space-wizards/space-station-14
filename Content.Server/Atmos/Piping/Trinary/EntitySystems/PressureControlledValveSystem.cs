@@ -6,6 +6,7 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
@@ -16,6 +17,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -90,7 +92,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!Resolve(uid, ref comp, ref appearance, false))
                 return;
 
-            appearance.SetData(FilterVisuals.Enabled, comp.Enabled);
+            _appearance.SetData(uid, FilterVisuals.Enabled, comp.Enabled, appearance);
         }
     }
 }
