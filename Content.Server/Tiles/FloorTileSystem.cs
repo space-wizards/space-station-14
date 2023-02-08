@@ -52,11 +52,12 @@ namespace Content.Server.Tiles
                     phys.Hard &&
                     (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
                     {
-                        var floorBox = Box2.UnitCentered;
-                        var wallPos = new Transform(new Vector2(0, 0), 0);
                         // e.g. you can place tile under directional windows
-                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || floorBox.IntersectPercentage(fixtures.GetAABB(wallPos)) > 0.8) 
+                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || 
+                            fixtures.GetAABB(new Transform(new Vector2(0, 0), 0)).Contains(Box2.UnitCentered)) 
+                        {
                             return;
+                        }
                     }
             }
             var locationMap = location.ToMap(EntityManager);
