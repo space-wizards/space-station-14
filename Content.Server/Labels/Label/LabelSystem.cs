@@ -4,6 +4,7 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
 using Content.Shared.Labels;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 
@@ -16,6 +17,7 @@ namespace Content.Server.Labels
     public sealed class LabelSystem : EntitySystem
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -71,7 +73,7 @@ namespace Content.Server.Labels
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(PaperLabelVisuals.HasLabel, false);
+            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, false, appearance);
         }
 
         private void OnComponentRemove(EntityUid uid, PaperLabelComponent component, ComponentRemove args)
@@ -128,7 +130,7 @@ namespace Content.Server.Labels
             if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
-            appearance.SetData(PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem);
+            _appearance.SetData(uid, PaperLabelVisuals.HasLabel, label.LabelSlot.HasItem, appearance);
         }
     }
 }

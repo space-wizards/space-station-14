@@ -74,7 +74,7 @@
     price: 750 # Grand Theft Auto.
 
 - type: entity
-  id: VehiclePussyWagon
+  id: VehicleJanicart
   parent: BaseVehicle
   name: janicart
   description: The janitor's trusty steed.
@@ -83,7 +83,7 @@
     northOverride: -0.15
     southOverride: 0.22
   - type: Sprite
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
     layers:
     - state: vehicle
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
@@ -116,7 +116,7 @@
       - !type:ExplodeBehavior
       - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
         spawn:
-          VehiclePussyWagonDestroyed:
+          VehicleJanicartDestroyed:
             min: 1
             max: 1
   - type: ItemSlots
@@ -127,7 +127,7 @@
           requireAll: true
           tags:
           - VehicleKey
-          - PussyWagonKeys
+          - JanicartKeys
         insertSound:
           path: /Audio/Effects/Vehicle/vehiclestartup.ogg
           params:
@@ -143,17 +143,16 @@
         whitelist:
           tags:
             - TrashBag
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
   - type: Appearance
 
 - type: entity
-  id: VehiclePussyWagonDestroyed
+  id: VehicleJanicartDestroyed
   parent: MachineFrameDestroyed
   name: destroyed janicart
-  description: R.I.P. (Rest In Pussy)
   components:
   - type: Sprite
-    sprite: Objects/Vehicles/pussywagon.rsi
+    sprite: Objects/Vehicles/janicart.rsi
     state: destroyed
     netsync: false
 

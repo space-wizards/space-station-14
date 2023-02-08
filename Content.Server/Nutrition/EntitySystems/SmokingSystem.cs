@@ -28,6 +28,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly InventorySystem _inventorySystem = default!;
         [Dependency] private readonly ClothingSystem _clothing = default!;
         [Dependency] private readonly SharedItemSystem _items = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateTimer = 3f;
 
@@ -54,7 +55,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             smokable.State = state;
-            appearance.SetData(SmokingVisuals.Smoking, state);
+            _appearance.SetData(uid, SmokingVisuals.Smoking, state, appearance);
 
             var newState = state switch
             {
