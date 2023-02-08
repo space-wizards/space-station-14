@@ -58,3 +58,5 @@
   - type: Appearance
     visuals:
     - type: SingularityVisualizer
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
