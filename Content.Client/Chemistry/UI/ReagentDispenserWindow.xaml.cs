@@ -73,7 +73,7 @@ namespace Content.Client.Chemistry.UI
 
                 var textureRect = new TextureRect();
                 textureRect.Texture = _resCache.GetTexture("/Textures/Interface/Nano/square.png");
-                textureRect.TextureScale = new Vector2(0.5f, 1f);
+                textureRect.TextureScale = new Vector2(0.4f / UIScale, 1f);
                 textureRect.Stretch = TextureRect.StretchMode.KeepAspect;
                 if (p != null) 
                     textureRect.Modulate = p.SubstanceColor;
