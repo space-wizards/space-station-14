@@ -98316,18 +98316,6 @@ entities:
   type: SurveillanceCameraService
   components:
   - rot: -1.5707963267948966 rad
-    pos: -27.5,-36.5
-    parent: 0
-    type: Transform
-  - setupAvailableNetworks:
-    - SurveillanceCameraService
-    nameSet: True
-    id: Chaplains room
-    type: SurveillanceCamera
-- uid: 12557
-  type: SurveillanceCameraService
-  components:
-  - rot: -1.5707963267948966 rad
     pos: -19.5,-33.5
     parent: 0
     type: Transform
@@ -98335,17 +98323,5 @@ entities:
     - SurveillanceCameraService
     nameSet: True
     id: Chapel 1
-    type: SurveillanceCamera
-- uid: 12558
-  type: SurveillanceCameraService
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -22.5,-35.5
-    parent: 0
-    type: Transform
-  - setupAvailableNetworks:
-    - SurveillanceCameraService
-    nameSet: True
-    id: Chapel 2
     type: SurveillanceCamera
 ...
