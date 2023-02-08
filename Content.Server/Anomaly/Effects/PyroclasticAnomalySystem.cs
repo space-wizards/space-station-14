@@ -29,7 +29,7 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
     private void OnPulse(EntityUid uid, PyroclasticAnomalyComponent component, ref AnomalyPulseEvent args)
     {
         var xform = Transform(uid);
-        var ignitionRadius = component.MaximumIgnitionRadius * args.Stabiltiy;
+        var ignitionRadius = component.MaximumIgnitionRadius * args.Stability;
         IgniteNearby(xform.Coordinates, args.Severity, ignitionRadius);
     }
 
