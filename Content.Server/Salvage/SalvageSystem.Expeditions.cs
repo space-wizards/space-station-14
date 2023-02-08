@@ -270,7 +270,7 @@ public sealed partial class SalvageSystem
                 if (anchored.MoveNext(out _))
                     continue;
 
-                Spawn(dungeonConfig.Wall, grid.GridTileToLocal(tile.GridIndices));
+                Spawn("WallSolid", grid.GridTileToLocal(tile.GridIndices));
                 landingFloor.Add(tile.GridIndices);
             }
         }
@@ -299,7 +299,7 @@ public sealed partial class SalvageSystem
 
                 // There shouldn't be many of these so we won't bulk them.
                 grid.SetTile(neighbor, tileRef.Value);
-                Spawn(dungeonConfig.Wall, grid.GridTileToLocal(neighbor));
+                Spawn("AsteroidRock", grid.GridTileToLocal(neighbor));
             }
         }
 

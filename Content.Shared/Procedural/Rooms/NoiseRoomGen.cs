@@ -3,7 +3,7 @@ namespace Content.Shared.Procedural.Rooms;
 /// <summary>
 /// Uses random noise to generate a room.
 /// </summary>
-public sealed class NoiseRoomGen : IRoomGen
+public sealed class NoiseRoomGen : RoomGen
 {
     /// <summary>
     /// Should we use a square shape or a circle.

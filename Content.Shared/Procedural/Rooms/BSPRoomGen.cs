@@ -4,7 +4,7 @@ using Content.Shared.Procedural.Walls;
 namespace Content.Shared.Procedural.Rooms;
 
 [DataDefinition]
-public sealed class BSPRoomGen : IRoomGen
+public sealed class BSPRoomGen : RoomGen
 {
     [DataField("min")]
     public Vector2i MinimumRoomDimensions = new(10, 10);

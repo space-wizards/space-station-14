@@ -1,30 +1,7 @@
-using System.Linq;
-
 namespace Content.Shared.Procedural;
 
-public sealed record DungeonRoom(HashSet<Vector2i> Tiles)
+public sealed record DungeonRoom(string Tile, string Wall, HashSet<Vector2i> Tiles, HashSet<Vector2i> Walls)
 {
-    public Vector2 Center
-    {
-        get
-        {
-            if (_center != null)
-                return _center.Value;
-
-            var center = Vector2.Zero;
-
-            foreach (var pos in Tiles)
-            {
-                center += pos;
-            }
-
-            if (Tiles.Count > 0)
-                center /= Tiles.Count;
-
-            _center = center;
-            return _center.Value;
-        }
-    }
-
-    private Vector2? _center;
+    public string Tile = Tile;
+    public string Wall = Wall;
 }

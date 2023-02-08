@@ -6,15 +6,7 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    private void GetPaths(DungeonConfigPrototype config, Dungeon dungeon, Random random)
-    {
-        foreach (var path in config.Paths)
-        {
-            dungeon.Paths.AddRange(GetPaths(dungeon, path, random));
-        }
-    }
-
-    private List<DungeonPath> GetPaths(Dungeon dungeon, IPathGen path, Random random)
+    private List<DungeonPath> GetPaths(Dungeon dungeon, PathGen path, Random random)
     {
         switch (path)
         {
@@ -25,14 +17,14 @@ public sealed partial class DungeonSystem
         }
     }
 
-    public List<DungeonPath> GetPaths(SimplePathGen gen, Dungeon dungeon, Random random)
+    private List<DungeonPath> GetPaths(SimplePathGen gen, Dungeon dungeon, Random random)
     {
         var paths = new List<DungeonPath>();
         var rooms = dungeon.Rooms.ToList();
-        var roomCenters = rooms.Select(o => (Vector2i) o.Center).ToList();
+        var roomCenters = rooms.Select(GetRoomCenter).ToList();
 
         var currentRoom = random.Next(rooms.Count);
-        var currentRoomCenter = (Vector2i) rooms[currentRoom].Center;
+        var currentRoomCenter = roomCenters[currentRoom];
 
         while (rooms.Count > 0)
         {
@@ -40,7 +32,7 @@ public sealed partial class DungeonSystem
             roomCenters.Remove(closest);
             var newCorridor = CreateCorridor(currentRoomCenter, closest);
             currentRoomCenter = closest;
-            paths.Add(new DungeonPath(newCorridor));
+            paths.Add(new DungeonPath(string.Empty, string.Empty, newCorridor));
         }
 
         return paths;

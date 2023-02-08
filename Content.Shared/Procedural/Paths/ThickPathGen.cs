@@ -1,6 +1,6 @@
 namespace Content.Shared.Procedural.Paths;
 
-public sealed class ThickPathGen : IPathGen
+public sealed class ThickPathGen : PathGen
 {
 
 }

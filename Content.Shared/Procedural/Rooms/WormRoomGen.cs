@@ -1,6 +1,6 @@
 namespace Content.Shared.Procedural.Rooms;
 
-public sealed class WormRoomGen : IRoomGen
+public sealed class WormRoomGen : RoomGen
 {
     [DataField("start")]
     public Vector2i StartPosition;

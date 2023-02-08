@@ -8,7 +8,7 @@ public sealed partial class DungeonSystem
 {
     // Why aren't these on the classes themselves? Coz dependencies.
 
-    public List<DungeonRoom> GetRooms(IRoomLayout layout, List<Box2i> roomsList, Random random)
+    private List<DungeonRoom> GetRooms(IRoomLayout layout, List<Box2i> roomsList, Random random)
     {
         switch (layout)
         {
@@ -21,12 +21,13 @@ public sealed partial class DungeonSystem
         }
     }
 
-    public List<DungeonRoom> GetRooms(RandomWalkRoomLayout layout, List<Box2i> roomsList, Random random)
+    private List<DungeonRoom> GetRooms(RandomWalkRoomLayout layout, List<Box2i> roomsList, Random random)
     {
         var rooms = new List<DungeonRoom>();
+
         for (var i = 0; i < roomsList.Count; i++)
         {
-            var room = new DungeonRoom(new HashSet<Vector2i>());
+            var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
             rooms.Add(room);
             var floors = new HashSet<Vector2i>();
 
@@ -54,18 +55,20 @@ public sealed partial class DungeonSystem
                     room.Tiles.Add(position);
                 }
             }
+
+            AddBoundaryWalls(room);
         }
 
         return rooms;
     }
 
-    public List<DungeonRoom> GetRooms(SimpleRoomLayout layout, List<Box2i> roomsList, Random random)
+    private List<DungeonRoom> GetRooms(SimpleRoomLayout layout, List<Box2i> roomsList, Random random)
     {
         var rooms = new List<DungeonRoom>(roomsList.Count);
 
         foreach (var roomSpace in roomsList)
         {
-            var room = new DungeonRoom(new HashSet<Vector2i>());
+            var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
             rooms.Add(room);
 
             for (var col = layout.Offset; col < roomSpace.Width - layout.Offset; col++)
@@ -76,6 +79,8 @@ public sealed partial class DungeonSystem
                     room.Tiles.Add(position);
                 }
             }
+
+            AddBoundaryWalls(room);
         }
 
         return rooms;

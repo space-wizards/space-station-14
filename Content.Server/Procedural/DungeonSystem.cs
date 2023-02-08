@@ -29,11 +29,18 @@ public sealed partial class DungeonSystem : EntitySystem
     public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype, MapGridComponent grid, List<Vector2i> reservedTiles)
     {
         var tiles = new List<(Vector2i, Tile)>();
-        var tileId = _tileDef[configPrototype.Tile].TileId;
 
         foreach (var room in dungeon.Rooms)
         {
+            var tileId = _tileDef[room.Tile].TileId;
+
             foreach (var tile in room.Tiles)
+            {
+                var adjustedTilePos = tile + position;
+                tiles.Add((adjustedTilePos, new Tile(tileId)));
+            }
+
+            foreach (var tile in room.Walls)
             {
                 var adjustedTilePos = tile + position;
                 tiles.Add((adjustedTilePos, new Tile(tileId)));
@@ -42,6 +49,8 @@ public sealed partial class DungeonSystem : EntitySystem
 
         foreach (var path in dungeon.Paths)
         {
+            var tileId = _tileDef[path.Tile].TileId;
+
             foreach (var tile in path.Tiles)
             {
                 var adjustedTilePos = tile + position;
@@ -49,26 +58,19 @@ public sealed partial class DungeonSystem : EntitySystem
             }
         }
 
-        foreach (var tile in dungeon.Walls)
-        {
-            var adjustedTilePos = tile + position;
-
-            if (reservedTiles.Contains(adjustedTilePos))
-                continue;
-
-            tiles.Add((adjustedTilePos, new Tile(tileId)));
-        }
-
         grid.SetTiles(tiles);
 
-        foreach (var tile in dungeon.Walls)
+        foreach (var room in dungeon.Rooms)
         {
-            var adjustedTilePos = tile + position;
+            foreach (var tile in room.Tiles)
+            {
+                var adjustedTilePos = tile + position;
 
-            if (reservedTiles.Contains(adjustedTilePos))
-                continue;
+                if (reservedTiles.Contains(adjustedTilePos))
+                    continue;
 
-            Spawn(configPrototype.Wall, grid.GridTileToLocal(tile + position));
+                Spawn(room.Wall, grid.GridTileToLocal(tile + position));
+            }
         }
     }
 
@@ -76,11 +78,11 @@ public sealed partial class DungeonSystem : EntitySystem
     {
         var dungeon = new Dungeon();
 
-        foreach (var room in config.Rooms)
+        foreach (var roomConfig in config.Rooms)
         {
             List<DungeonRoom> rooms;
 
-            switch (room)
+            switch (roomConfig)
             {
                 case BSPRoomGen bsp:
                     rooms = GetBSPRooms(bsp, radius, random);
@@ -98,19 +100,74 @@ public sealed partial class DungeonSystem : EntitySystem
                     throw new NotImplementedException();
             }
 
+            foreach (var room in rooms)
+            {
+                room.Tile = roomConfig.Tile;
+                room.Wall = roomConfig.Wall;
+            }
+
             dungeon.Rooms.AddRange(rooms);
+        }
+
+        foreach (var pathConfig in config.Paths)
+        {
+            var paths = GetPaths(dungeon, pathConfig, random);
+
+            foreach (var path in paths)
+            {
+                path.Tile = pathConfig.Tile;
+                path.Wall = pathConfig.Wall;
+            }
+
+            dungeon.Paths.AddRange(paths);
         }
 
         return dungeon;
     }
 
-    public List<DungeonRoom> GetNoiseRooms(NoiseRoomGen gen, float radius, Random random)
+    /// <summary>
+    /// Adds simple walls around the boundary of a room.
+    /// </summary>
+    /// <param name="room"></param>
+    private void AddBoundaryWalls(DungeonRoom room)
+    {
+        foreach (var tile in room.Tiles)
+        {
+            for (var j = 0; j < 8; j++)
+            {
+                var direction = (Direction) j;
+                var neighbor = tile + direction.ToIntVec();
+
+                if (room.Tiles.Contains(neighbor))
+                    continue;
+
+                room.Walls.Add(neighbor);
+            }
+        }
+    }
+
+    public Vector2i GetRoomCenter(DungeonRoom room)
+    {
+        var center = Vector2.Zero;
+
+        if (room.Tiles.Count == 0)
+            return (Vector2i) center;
+
+        foreach (var tile in room.Tiles)
+        {
+            center += tile;
+        }
+
+        return (Vector2i) (center / room.Tiles.Count);
+    }
+
+    private List<DungeonRoom> GetNoiseRooms(NoiseRoomGen gen, float radius, Random random)
     {
         var noise = new FastNoiseLite(random.Next());
         noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
         noise.SetFractalGain(0f);
         noise.SetFrequency(0.04f);
-        var room = new DungeonRoom(new HashSet<Vector2i>());
+        var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
 
         for (var x = (int) Math.Floor(-radius); x < Math.Ceiling(radius); x++)
         {
@@ -129,13 +186,17 @@ public sealed partial class DungeonSystem : EntitySystem
                 {
                     room.Tiles.Add(new Vector2i(x, y));
                 }
+                else
+                {
+                    room.Walls.Add(new Vector2i(x, y));
+                }
             }
         }
 
         return new List<DungeonRoom>() { room };
     }
 
-    public List<DungeonRoom> GetWormRooms(WormRoomGen gen, float radius, Random random)
+    private List<DungeonRoom> GetWormRooms(WormRoomGen gen, float radius, Random random)
     {
         // TODO: Tunnel to thingo has 2 tile gap + also needs to force tiles
         var noise = new FastNoiseLite(random.Next());
@@ -166,7 +227,7 @@ public sealed partial class DungeonSystem : EntitySystem
             current = node;
         }
 
-        var room = new DungeonRoom(new HashSet<Vector2i>());
+        var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
 
         foreach (var tile in baseTiles)
         {
@@ -182,16 +243,19 @@ public sealed partial class DungeonSystem : EntitySystem
             }
         }
 
+        AddBoundaryWalls(room);
+
         return new List<DungeonRoom>() { room };
     }
 
-    public List<DungeonRoom> GetRandomWalkDungeon(RandomWalkRoomGen gen, float radius, Random random)
+    private List<DungeonRoom> GetRandomWalkDungeon(RandomWalkRoomGen gen, float radius, Random random)
     {
         var start = gen.StartPosition;
 
         var currentPosition = start;
-        var room = new DungeonRoom(new HashSet<Vector2i>());
+        var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
 
+        // TODO: Actually use radius
         for (var i = 0; i < gen.Iterations; i++)
         {
             var path = RandomWalk(currentPosition, gen.Length, random);
@@ -201,10 +265,12 @@ public sealed partial class DungeonSystem : EntitySystem
                 currentPosition = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
         }
 
+        AddBoundaryWalls(room);
+
         return new List<DungeonRoom>() { room };
     }
 
-    public List<DungeonRoom> GetBSPRooms(BSPRoomGen gen, float radius, Random random)
+    private List<DungeonRoom> GetBSPRooms(BSPRoomGen gen, float radius, Random random)
     {
         var left = (int) Math.Floor(-radius);
         var bottom = (int) Math.Floor(-radius);

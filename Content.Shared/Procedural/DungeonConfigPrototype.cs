@@ -17,16 +17,10 @@ public sealed class DungeonConfigPrototype : IPrototype
     /// <summary>
     /// Room generators
     /// </summary>
-    [DataField("rooms", required: true)] public List<IRoomGen> Rooms = new();
+    [DataField("rooms", required: true)] public List<RoomGen> Rooms = new();
 
     /// <summary>
     /// Path generators between rooms.
     /// </summary>
-    [DataField("paths")] public List<IPathGen> Paths = new();
-
-    [DataField("tile", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<ContentTileDefinition>))]
-    public string Tile = string.Empty;
-
-    [DataField("wall", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Wall = string.Empty;
+    [DataField("paths")] public List<PathGen> Paths = new();
 }

@@ -2,10 +2,12 @@
   id: LowDesertDungeon
   rooms:
     - !type:NoiseRoomGen
+      tile: FloorCaveDrought
+      wall: AsteroidRock
   paths:
     - !type:SimplePathGen
-  tile: FloorCaveDrought
-  wall: AsteroidRock
+      tile: FloorCaveDrought
+      wall: AsteroidRock
 
 # Expedition configs
 - type: salvageExpedition
@@ -18,7 +20,7 @@
   factions:
     - Xenos
   dungeonConfig: LowDesertDungeon
-  dungeonPosition: 70,70
+  dungeonPosition: 60,60
 
 
 # Factions

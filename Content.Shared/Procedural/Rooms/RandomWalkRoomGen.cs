@@ -3,7 +3,7 @@ using Content.Shared.Procedural.Walls;
 namespace Content.Shared.Procedural.Rooms;
 
 [DataDefinition]
-public sealed class RandomWalkRoomGen : IRoomGen
+public sealed class RandomWalkRoomGen : RoomGen
 {
     [DataField("start")] public Vector2i StartPosition;
 
