@@ -1,24 +1,4 @@
 Entries:
-- author: Interrobang01
-  changes:
-  - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
-  id: 2506
-  time: '2022-10-22T22:05:06.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Slime corpses no longer rot or produce miasma, type: Tweak}
-  id: 2507
-  time: '2022-10-22T22:07:36.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Apron pockets were added, type: Add}
-  id: 2508
-  time: '2022-10-22T22:07:51.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
-  id: 2509
-  time: '2022-10-22T22:14:19.0000000+00:00'
 - author: 25203
   changes:
   - {message: Sci can now print seed extractor machine boards after unlocking advanced
@@ -2925,3 +2905,23 @@ Entries:
   - {message: Bluespace anomalies no longer... crash everything., type: Fix}
   id: 3005
   time: '2023-02-06T21:11:20.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the NCS Aspid, type: Add}
+  id: 3006
+  time: '2023-02-07T14:22:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs breaking on prototype reloads., type: Fix}
+  id: 3007
+  time: '2023-02-07T21:27:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now print tier 3 machine parts at lathes., type: Add}
+  id: 3008
+  time: '2023-02-08T00:39:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: APEs are now much lighter and easier to move around., type: Tweak}
+  id: 3009
+  time: '2023-02-08T02:10:27.0000000+00:00'
