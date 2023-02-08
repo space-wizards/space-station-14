@@ -578,6 +578,20 @@
       revolver-ammo: !type:Container
 
 - type: entity
+  parent: RevolverCapGun 
+  id: RevolverCapGunFake
+  name: cap gun
+  description: Looks almost like the real thing! Ages 8 and up.
+  components:
+    - type: RevolverAmmoProvider
+      whitelist:
+        tags:
+          - CartridgeMagnum
+          - CartridgeCap
+          - SpeedLoaderCap
+          - SpeedLoaderMagnum
+
+- type: entity
   parent: BaseItem
   id: FoamBlade
   name: foamblade
