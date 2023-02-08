@@ -33,15 +33,11 @@ public sealed partial class ChemistrySystem
     {
         SubscribeLocalEvent<InjectorComponent, GetVerbsEvent<AlternativeVerb>>(AddSetTransferVerbs);
         SubscribeLocalEvent<InjectorComponent, SolutionChangedEvent>(OnSolutionChange);
-        SubscribeLocalEvent<InjectorComponent, HandDeselectedEvent>(OnInjectorDeselected);
         SubscribeLocalEvent<InjectorComponent, DoAfterEvent>(OnInjectDoAfter);
         SubscribeLocalEvent<InjectorComponent, ComponentStartup>(OnInjectorStartup);
         SubscribeLocalEvent<InjectorComponent, UseInHandEvent>(OnInjectorUse);
         SubscribeLocalEvent<InjectorComponent, AfterInteractEvent>(OnInjectorAfterInteract);
         SubscribeLocalEvent<InjectorComponent, ComponentGetState>(OnInjectorGetState);
-
-        SubscribeLocalEvent<InjectionCompleteEvent>(OnInjectionComplete);
-        SubscribeLocalEvent<InjectionCancelledEvent>(OnInjectionCancelled);
     }
 
     private void AddSetTransferVerbs(EntityUid uid, InjectorComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -424,16 +420,5 @@ public sealed partial class ChemistrySystem
 
         Dirty(component);
         AfterDraw(component);
-    }
-    private sealed class InjectionCompleteEvent : EntityEventArgs
-    {
-        public InjectorComponent Component { get; init; } = default!;
-        public EntityUid User { get; init; }
-        public EntityUid Target { get; init; }
-    }
-
-    private sealed class InjectionCancelledEvent : EntityEventArgs
-    {
-        public InjectorComponent Component { get; init; } = default!;
     }
 }
