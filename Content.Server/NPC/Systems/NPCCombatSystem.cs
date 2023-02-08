@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Containers;
 
 namespace Content.Server.NPC.Systems;
 
@@ -23,6 +24,8 @@ public sealed partial class NPCCombatSystem : EntitySystem
     [Dependency] private readonly SharedMeleeWeaponSystem _melee = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedContainerSystem _containers = default!;
+
 
     /// <summary>
     /// If disabled we'll move into range but not attack.

@@ -122,6 +122,13 @@ public sealed partial class NPCCombatSystem
             return;
         }
 
+        // Players cannot attack entities inside containers since melee context menu was removed, so mirror this for NPCs.
+        if (_containers.IsEntityInContainer(component.Target))
+        {
+            component.Status = CombatStatus.TargetUnreachable;
+            return;
+        }
+
         if (!xform.Coordinates.TryDistance(EntityManager, targetXform.Coordinates, out var distance))
         {
             component.Status = CombatStatus.TargetUnreachable;
