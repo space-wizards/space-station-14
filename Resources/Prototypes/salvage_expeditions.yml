@@ -20,7 +20,8 @@
   factions:
     - Xenos
   dungeonConfig: LowDesertDungeon
-  dungeonPosition: 60,60
+  dungeonRadius: 40
+  dungeonPosition: 60,0
 
 
 # Factions

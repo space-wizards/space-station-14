@@ -11,14 +11,7 @@ namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem : EntitySystem
 {
-    [Dependency] private readonly IConsoleHost _console = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
 
     public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype,
         MapGridComponent grid)
@@ -62,7 +55,7 @@ public sealed partial class DungeonSystem : EntitySystem
 
         foreach (var room in dungeon.Rooms)
         {
-            foreach (var tile in room.Tiles)
+            foreach (var tile in room.Walls)
             {
                 var adjustedTilePos = tile + position;
 
@@ -109,17 +102,20 @@ public sealed partial class DungeonSystem : EntitySystem
             dungeon.Rooms.AddRange(rooms);
         }
 
-        foreach (var pathConfig in config.Paths)
+        if (dungeon.Rooms.Count > 1)
         {
-            var paths = GetPaths(dungeon, pathConfig, random);
-
-            foreach (var path in paths)
+            foreach (var pathConfig in config.Paths)
             {
-                path.Tile = pathConfig.Tile;
-                path.Wall = pathConfig.Wall;
-            }
+                var paths = GetPaths(dungeon, pathConfig, random);
 
-            dungeon.Paths.AddRange(paths);
+                foreach (var path in paths)
+                {
+                    path.Tile = pathConfig.Tile;
+                    path.Wall = pathConfig.Wall;
+                }
+
+                dungeon.Paths.AddRange(paths);
+            }
         }
 
         return dungeon;
@@ -166,7 +162,7 @@ public sealed partial class DungeonSystem : EntitySystem
         var noise = new FastNoiseLite(random.Next());
         noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
         noise.SetFractalGain(0f);
-        noise.SetFrequency(0.04f);
+        noise.SetFrequency(0.06f);
         var room = new DungeonRoom(string.Empty, string.Empty, new HashSet<Vector2i>(), new HashSet<Vector2i>());
 
         for (var x = (int) Math.Floor(-radius); x < Math.Ceiling(radius); x++)

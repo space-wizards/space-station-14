@@ -42,7 +42,7 @@ public sealed partial class DungeonSystem
     {
         var corridor = new HashSet<Vector2i>();
         var position = currentRoomCenter;
-        corridor.Add(position);
+        corridor.Add(currentRoomCenter);
 
         while (position.Y != destination.Y)
         {

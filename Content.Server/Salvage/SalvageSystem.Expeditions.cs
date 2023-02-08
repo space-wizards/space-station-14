@@ -171,7 +171,9 @@ public sealed partial class SalvageSystem
         _mapManager.DoMapInitialize(mapId);
 
         // No point raising an event for this when it's 1-1.
-        var random = new Random(mission.Seed);
+        // TODO: Fix the landingfloor radius shenanigans
+        var missionSeed = mission.Seed;
+        var random = new Random(missionSeed);
 
         // Setup expedition
         var expedition = AddComp<SalvageExpeditionComponent>(mapUid);
@@ -210,31 +212,33 @@ public sealed partial class SalvageSystem
 
         var adjustedDungeonAllTiles = new HashSet<Vector2i>(dungeon.AllTiles.Count);
 
-        foreach (var tile in dungeon.AllTiles)
+        foreach (var room in dungeon.Rooms)
         {
-            adjustedDungeonAllTiles.Add(tile + dungeonOffset);
+            foreach (var tile in room.Tiles)
+            {
+                adjustedDungeonAllTiles.Add(tile + dungeonOffset);
+            }
         }
 
         // To ensure they can get from the landing area to the dungeon we'll path to the closest tile.
         var closestTile = Vector2i.Zero;
         var closestDistance = float.MaxValue;
 
-        foreach (var tile in dungeon.AllTiles)
+        foreach (var tile in adjustedDungeonAllTiles)
         {
-            var adjustedPos = tile + dungeonOffset;
-            var length = adjustedPos.Length;
+            var length = tile.Length;
 
             if (length < closestDistance)
             {
                 closestDistance = length;
-                closestTile = adjustedPos;
+                closestTile = tile;
             }
         }
 
         var start = Vector2i.Zero;
         var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
-        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid);
+        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid, reservedTiles);
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
@@ -299,7 +303,7 @@ public sealed partial class SalvageSystem
 
                 // There shouldn't be many of these so we won't bulk them.
                 grid.SetTile(neighbor, tileRef.Value);
-                Spawn("AsteroidRock", grid.GridTileToLocal(neighbor));
+                Spawn("WallSolid", grid.GridTileToLocal(neighbor));
             }
         }
 

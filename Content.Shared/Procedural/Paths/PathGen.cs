@@ -4,6 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Procedural.Paths;
 
+[ImplicitDataDefinitionForInheritors]
 public abstract class PathGen
 {
     [DataField("wall", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
