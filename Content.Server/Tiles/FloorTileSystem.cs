@@ -57,13 +57,10 @@ namespace Content.Server.Tiles
                         var floorBox = Box2.UnitCentered.Translated(floorPos);
                         if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
                             return;
-                        else 
-                        {
-                            var wallPos = transform.Coordinates.ToMapPos(EntityManager);
-                            var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
-                            if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75)
-                                return;
-                        }
+                        var wallPos = transform.Coordinates.ToMapPos(EntityManager);
+                        var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
+                        if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75)
+                            return;
                     }
             }
             var locationMap = location.ToMap(EntityManager);
