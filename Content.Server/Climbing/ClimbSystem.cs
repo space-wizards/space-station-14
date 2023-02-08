@@ -19,8 +19,6 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -35,7 +33,6 @@ namespace Content.Server.Climbing;
 [UsedImplicitly]
 public sealed class ClimbSystem : SharedClimbSystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
@@ -44,7 +41,6 @@ public sealed class ClimbSystem : SharedClimbSystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly InteractionSystem _interactionSystem = default!;
     [Dependency] private readonly StunSystem _stunSystem = default!;
-    [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly BonkSystem _bonkSystem = default!;
 
@@ -125,29 +121,6 @@ public sealed class ClimbSystem : SharedClimbSystem
             BreakOnDamage = true,
             BreakOnStun = true
         });
-    }
-
-    private bool TryBonk(ClimbableComponent component, EntityUid user)
-    {
-        if (!component.Bonk)
-            return false;
-
-        if (!_cfg.GetCVar(CCVars.GameTableBonk))
-        {
-            // Not set to always bonk, try clumsy roll.
-            if (!_interactionSystem.TryRollClumsy(user, component.BonkClumsyChance))
-                return false;
-        }
-
-        // BONK!
-
-        _audioSystem.PlayPvs(component.BonkSound, component.Owner);
-        _stunSystem.TryParalyze(user, TimeSpan.FromSeconds(component.BonkTime), true);
-
-        if (component.BonkDamage is { } bonkDmg)
-            _damageableSystem.TryChangeDamage(user, bonkDmg, true, origin: user);
-
-        return true;
     }
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent args)
