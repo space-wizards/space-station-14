@@ -586,9 +586,9 @@
     - type: RevolverAmmoProvider
       whitelist:
         tags:
-          - CartridgeMagnum
           - CartridgeCap
           - SpeedLoaderCap
+          - CartridgeMagnum
           - SpeedLoaderMagnum
 
 - type: entity
