@@ -32,8 +32,8 @@
 
   - y - [color=#32cd32]CentCom[/color]
 
-  The [color=#a4885c]:h[/color] prefix will send a message to whichever department radio your headset is set (i.e. if you are an engineer it will
-  default to the [color=#f37746]Engineering[/color] channel.
+  The [color=#a4885c]:h[/color] prefix will send a message to whichever department radio your headset is set (e.g. if you are an engineer it will
+  default to the [color=#f37746]Engineering[/color] channel).
 
 <Box>
   <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
