@@ -7,14 +7,14 @@ public class MutationSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
     /// <summary>
-    // Main idea: Simulate genetic mutation using random binary flips.  Each
-    // seed attribute can be encoded with a variable number of bits, e.g.
-    // NutrientConsumption is represented by 5 bits randomly distributed in the
-    // plant's genome which thermometer code the floating value between 0.1 and
-    // 5. 1 unit of mutation flips one bit in the plant's genome, which changes
-    // NutrientConsumption if one of those 5 bits gets affected.
-    //
-    // You MUST clone() seed before mutating it!
+    /// Main idea: Simulate genetic mutation using random binary flips.  Each
+    /// seed attribute can be encoded with a variable number of bits, e.g.
+    /// NutrientConsumption is represented by 5 bits randomly distributed in the
+    /// plant's genome which thermometer code the floating value between 0.1 and
+    /// 5. 1 unit of mutation flips one bit in the plant's genome, which changes
+    /// NutrientConsumption if one of those 5 bits gets affected.
+    ///
+    /// You MUST clone() seed before mutating it!
     /// </summary>
     public void MutateSeed(SeedData seed, float severity)
     {

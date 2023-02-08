@@ -148,6 +148,8 @@ public class SeedData
 
     [DataField("weedTolerance")] public float WeedTolerance = 5f;
 
+    [DataField("weedHighLevelThreshold")] public float WeedHighLevelThreshold = 10f;
+
     #endregion
 
     #region General traits
@@ -214,8 +216,8 @@ public class SeedData
 
     [DataField("plantIconState")] public string PlantIconState { get; set; } = "produce";
 
-    [DataField("mandragoraSound")]
-    public SoundSpecifier MandragoraSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
+    [DataField("screamSound")]
+    public SoundSpecifier ScreamSound = new SoundPathSpecifier("/Audio/Voice/Human/malescream_1.ogg");
 
 
     [DataField("screaming")] public bool Screaming;
@@ -225,8 +227,8 @@ public class SeedData
 
     public float BioluminescentRadius = 2f;
 
-
-    [DataField("turnintokudzu")] public bool TurnIntoKudzu;
+    [DataField("kudzu")] public string kudzu = "Kudzu";
+    [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
     #endregion

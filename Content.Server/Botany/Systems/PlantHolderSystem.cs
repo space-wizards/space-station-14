@@ -1,19 +1,3 @@
-using System;
-using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Botany.Components;
-using Content.Server.Popups;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Fluids.Components;
-using Content.Server.Ghost.Roles.Components;
-using Content.Server.Hands.Components;
-using Content.Server.Kitchen.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Examine;
-using Content.Shared.Tag;
-using Content.Shared.FixedPoint;
-using Content.Shared.Botany;
-using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
@@ -37,27 +21,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Server.Placement;
-using Content.Shared.IdentityManagement;
-using Content.Shared.Popups;
-using Content.Shared.Random.Helpers;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Server.Placement;
+
 
 namespace Content.Server.Botany.Systems
 {
@@ -67,13 +33,16 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly MutationSystem _mutation = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] IEntityManager _entityManager = default!;
+
+
 
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
@@ -113,8 +82,8 @@ namespace Content.Server.Botany.Systems
             {
                 var displayName = Loc.GetString(component.Seed.DisplayName);
                 args.PushMarkup(Loc.GetString("plant-holder-component-something-already-growing-message",
-                    ("seedName", displayName),
-                    ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
+                        ("seedName", displayName),
+                        ("toBeForm", displayName.EndsWith('s') ? "are" : "is")));
 
                 if (component.Health <= component.Seed.Endurance / 2)
                 {
@@ -202,9 +171,7 @@ namespace Content.Server.Botany.Systems
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
-                            ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid,
-                        Filter.PvsExcept(args.User),
-                        true);
+                        ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     component.WeedLevel = 0;
                     UpdateSprite(uid, component);
                 }
@@ -223,8 +190,7 @@ namespace Content.Server.Botany.Systems
                     _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                     _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
-                            ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User),
-                        true);
+                        ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     RemovePlant(uid, component);
                 }
                 else
@@ -271,15 +237,13 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed == null)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"),
-                        args.User);
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
                     return;
                 }
 
                 if (component.Sampled)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"),
-                        args.User);
+                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
                     return;
                 }
 
@@ -298,8 +262,7 @@ namespace Content.Server.Botany.Systems
                 component.Health -= (_random.Next(3, 5) * 10);
                 if (component.Seed != null && component.Seed.Screaming)
                 {
-                    SoundSystem.Play(component.Seed.MandragoraSound.GetSound(),
-                        Filter.Pvs(uid), uid);
+                    _audio.PlayPvs(component.Seed.ScreamSound.GetSound(), uid,AudioParams.Default.WithVolume(-2));
                 }
                 if (_random.Prob(0.3f))
                     component.Sampled = true;
@@ -376,26 +339,21 @@ namespace Content.Server.Botany.Systems
             }
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
-            if (component.WaterLevel > 10 && component.NutritionLevel > 2 &&
-                _random.Prob(component.Seed == null ? 0.05f : 0.01f))
+            if (component.WaterLevel > 10 && component.NutritionLevel > 2)
             {
-                component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
-
-                if (component.DrawWarnings)
-                    component.UpdateSpriteAfterUpdate = true;
-            }
-            else if (component.WaterLevel > 10 && component.NutritionLevel > 2 && component.Seed != null &&
-                     component.Seed.TurnIntoKudzu)
-            {
-                component.WeedLevel += 8 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                if (component.Seed != null && component.Seed.TurnIntoKudzu)
+                    component.WeedLevel += 5 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
+                else if(_random.Prob(component.Seed == null ? 0.05f : 0.01f))
+                    component.WeedLevel += 1 * HydroponicsSpeedMultiplier * component.WeedCoefficient;
 
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
 
-            if (component.Seed != null && component.Seed.TurnIntoKudzu && component.WeedLevel >= 10)
+            if (component.Seed != null && component.Seed.TurnIntoKudzu && component.WeedLevel >= component.Seed.WeedHighLevelThreshold)
             {
-                EntityManager.SpawnEntity("Kudzu", Transform(uid).Coordinates);
+
+                _entityManager.SpawnEntity(component.Seed.kudzu, Transform(uid).Coordinates);
                 component.Seed.TurnIntoKudzu = false;
                 component.Health = 0;
             }
@@ -440,8 +398,7 @@ namespace Content.Server.Botany.Systems
             // Nutrient consumption.
             if (component.Seed.NutrientConsumption > 0 && component.NutritionLevel > 0 && _random.Prob(0.75f))
             {
-                component.NutritionLevel -=
-                    MathF.Max(0f, component.Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
+                component.NutritionLevel -= MathF.Max(0f, component.Seed.NutrientConsumption * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
@@ -648,8 +605,7 @@ namespace Content.Server.Botany.Systems
             {
                 var comp = EnsureComp<GhostTakeoverAvailableComponent>(uid);
                 comp.RoleName = MetaData(uid).EntityName;
-                comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description",
-                    ("name", comp.RoleName));
+                comp.RoleDescription = Loc.GetString("station-event-random-sentience-role-description", ("name", comp.RoleName));
             }
 
             if (component.UpdateSpriteAfterUpdate)
@@ -734,8 +690,7 @@ namespace Content.Server.Botany.Systems
             component.LastProduce = component.Age;
             if (component.Seed != null && component.Seed.Screaming)
             {
-                SoundSystem.Play(component.Seed.MandragoraSound.GetSound(),
-                    Filter.Pvs(uid), uid);
+                _audio.PlayPvs(component.Seed.ScreamSound.GetSound(), uid,AudioParams.Default.WithVolume(-2));
             }
             if (component.Seed?.HarvestRepeat == HarvestType.NoRepeat)
                 RemovePlant(uid, component);
@@ -899,8 +854,7 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.DrawWarnings)
                 {
-                    _appearance.SetData(uid, PlantHolderVisuals.HealthLight,
-                        component.Health <= component.Seed.Endurance / 2f);
+                    _appearance.SetData(uid, PlantHolderVisuals.HealthLight, component.Health <= component.Seed.Endurance / 2f);
                 }
 
                 if (component.Dead)
@@ -915,8 +869,7 @@ namespace Content.Server.Botany.Systems
                 }
                 else if (component.Age < component.Seed.Maturation)
                 {
-                    var growthStage = Math.Max(1,
-                        (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
+                    var growthStage = Math.Max(1, (int) (component.Age * component.Seed.GrowthStages / component.Seed.Maturation));
 
                     _appearance.SetData(uid, PlantHolderVisuals.PlantRsi, component.Seed.PlantRsi.ToString(), app);
                     _appearance.SetData(uid, PlantHolderVisuals.PlantState, $"stage-{growthStage}", app);
@@ -941,8 +894,7 @@ namespace Content.Server.Botany.Systems
             _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 10, app);
             _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 2, app);
             _appearance.SetData(uid, PlantHolderVisuals.AlertLight,
-                component.WeedLevel >= 5 || component.PestLevel >= 5 || component.Toxins >= 40 ||
-                component.ImproperHeat ||
+                component.WeedLevel >= 5 || component.PestLevel >= 5 || component.Toxins >= 40 || component.ImproperHeat ||
                 component.ImproperLight || component.ImproperPressure || component.MissingGas > 0, app);
             _appearance.SetData(uid, PlantHolderVisuals.HarvestLight, component.Harvest, app);
         }
