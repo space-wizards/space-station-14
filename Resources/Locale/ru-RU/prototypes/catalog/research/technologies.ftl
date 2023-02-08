@@ -58,3 +58,5 @@ technologies-archaeology = Археологическая экипировка
 technologies-archaeology-description = Продвинутая экипировка для раскрытия секретов артефактов.
 technologies-adv-parts-technology = Технология продвинутых деталей
 technologies-adv-parts-technology-description = Хорошо подходит для улучшения оборудования.
+technologies-super-parts-technology = Технология супер деталей
+technologies-super-parts-technology-description = Новые высоты производительности машины.
