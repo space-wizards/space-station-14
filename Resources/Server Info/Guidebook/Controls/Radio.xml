@@ -14,29 +14,13 @@
   You are able to send messages over your departmental radio channels using [color=#a4885c]colon (:)[/color] followed by the
   department letter as long as you're wearing a headset with your department's encryption key.
 
-  - c - [color=#fcdf03]Command[/color]
-
-  - e - [color=#f37746]Engineering[/color]
-
-  - m - [color=#57b8f0]Medical[/color]
-
-  - n - [color=#c68cfa]Science[/color]
-
-  - s - [color=#dd3535]Security[/color]
-
-  - v - [color=#6ca729]Service[/color]
-
-  - u - [color=#b88646]Supply[/color]
-
-  - t - [color=#8f4a4b]Syndicate[/color]
-
-  - y - [color=#32cd32]CentCom[/color]
-
-  The [color=#a4885c]:h[/color] prefix will send a message to whichever department radio your headset is set (i.e. if you are an engineer it will
-  default to the [color=#f37746]Engineering[/color] channel.
+  Examine your headset to see the department channels available to you.
 
 <Box>
   <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
 </Box>
+
+  Examining a default engineering headset would show you the prefixes for the [color=#32cd32]Common[/color] and [color=#f37746]Engineering[/color]
+  channels.
 
 </Document>
