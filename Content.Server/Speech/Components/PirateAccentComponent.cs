@@ -2,6 +2,3 @@
 
 [RegisterComponent]
 public sealed class PirateAccentComponent : Component
-{
-
-}
