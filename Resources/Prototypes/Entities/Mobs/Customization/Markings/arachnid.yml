@@ -7,6 +7,7 @@
   sprites:
   - sprite: Mobs/Customization/arachnid.rsi
     state: spikes
-
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: web
 
 # Other markings

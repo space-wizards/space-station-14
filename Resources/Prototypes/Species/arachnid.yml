@@ -8,6 +8,8 @@
   markingLimits: MobArachnidMarkingLimits
   dollPrototype: MobArachnidDummy
   skinColoration: Hues
+  sexes:
+  - Unsexed
 
 - type: speciesBaseSprites
   id: MobArachnidSprites

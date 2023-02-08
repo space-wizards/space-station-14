@@ -36,7 +36,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.1 #per second, should be lower than humans.
+        Blunt: 0.15 #per second, should be lower than humans.
   # Misc
   - type: Inventory
     templateId: arachnid
