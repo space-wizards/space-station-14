@@ -53,10 +53,16 @@ namespace Content.Server.Tiles
                     (phys.CollisionLayer & (int) CollisionGroup.Impassable) != 0) 
                     {
                         // e.g. you can place tile under directional windows
-                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || 
-                            fixtures.GetAABB(new Transform(new Vector2(0, 0), 0)).Contains(Box2.UnitCentered)) 
-                        {
+                        var floorPos = location.ToMapPos(EntityManager);
+                        var floorBox = Box2.UnitCentered.Translated(floorPos);
+                        if (!TryComp<FixturesComponent>(ent, out var fixtures) || !TryComp<TransformComponent>(ent, out var transform))
                             return;
+                        else 
+                        {
+                            var wallPos = transform.Coordinates.ToMapPos(EntityManager);
+                            var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
+                            if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75)
+                                return;
                         }
                     }
             }
