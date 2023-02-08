@@ -5,6 +5,7 @@ guide-entry-fires = Fires & Space
 guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-power = Power
 guide-entry-ame = Antimatter Engine (AME)
+guide-entry-singularity = Singularity
 guide-entry-controls = Controls
 guide-entry-jobs = Jobs
 guide-entry-survival = Survival

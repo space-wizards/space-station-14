@@ -105,6 +105,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatLabViro
+  name: lab coat (viro)
+  description: A suit that protects against bacteria and viruses. Has an green stripe on the shoulder.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/labcoat_viro.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabCmo
   name: chief medical officer's lab coat
   description: Bluer than the standard model.
