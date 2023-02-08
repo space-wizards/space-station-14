@@ -97988,17 +97988,6 @@ entities:
 - uid: 12528
   type: SurveillanceCameraGeneral
   components:
-  - pos: -23.5,7.5
-    parent: 0
-    type: Transform
-  - setupAvailableNetworks:
-    - SurveillanceCameraGeneral
-    nameSet: True
-    id: Security and instruments
-    type: SurveillanceCamera
-- uid: 12529
-  type: SurveillanceCameraGeneral
-  components:
   - rot: 1.5707963267948966 rad
     pos: -25.5,-1.5
     parent: 0
@@ -98008,7 +97997,7 @@ entities:
     nameSet: True
     id: Entrance of engineering 
     type: SurveillanceCamera
-- uid: 12530
+- uid: 12529
   type: SurveillanceCameraGeneral
   components:
   - pos: -17.5,-12.5
@@ -98019,7 +98008,7 @@ entities:
     nameSet: True
     id: Hydro and medbay
     type: SurveillanceCamera
-- uid: 12531
+- uid: 12530
   type: SurveillanceCameraGeneral
   components:
   - pos: 11.5,-12.5
@@ -98030,7 +98019,7 @@ entities:
     nameSet: True
     id: Science and detective
     type: SurveillanceCamera
-- uid: 12532
+- uid: 12531
   type: SurveillanceCameraGeneral
   components:
   - pos: -0.5,-13.5
@@ -98041,7 +98030,7 @@ entities:
     nameSet: True
     id: Entrance of service
     type: SurveillanceCamera
-- uid: 12533
+- uid: 12532
   type: SurveillanceCameraGeneral
   components:
   - rot: -1.5707963267948966 rad
@@ -98053,7 +98042,7 @@ entities:
     nameSet: True
     id: Entrance of medbay
     type: SurveillanceCamera
-- uid: 12534
+- uid: 12533
   type: SurveillanceCameraGeneral
   components:
   - rot: 1.5707963267948966 rad
@@ -98065,7 +98054,7 @@ entities:
     nameSet: True
     id: Entrance of science
     type: SurveillanceCamera
-- uid: 12535
+- uid: 12534
   type: SurveillanceCameraGeneral
   components:
   - rot: 3.141592653589793 rad
@@ -98077,7 +98066,7 @@ entities:
     nameSet: True
     id: Entrance 3
     type: SurveillanceCamera
-- uid: 12536
+- uid: 12535
   type: SurveillanceCameraGeneral
   components:
   - rot: -1.5707963267948966 rad
@@ -98089,7 +98078,7 @@ entities:
     nameSet: True
     id: Entrance 2
     type: SurveillanceCamera
-- uid: 12537
+- uid: 12536
   type: SurveillanceCameraGeneral
   components:
   - rot: -1.5707963267948966 rad
@@ -98101,7 +98090,7 @@ entities:
     nameSet: True
     id: Entrance 1
     type: SurveillanceCamera
-- uid: 12538
+- uid: 12537
   type: SurveillanceCameraGeneral
   components:
   - rot: -1.5707963267948966 rad
@@ -98113,7 +98102,7 @@ entities:
     nameSet: True
     id: Entrance of cargo
     type: SurveillanceCamera
-- uid: 12539
+- uid: 12538
   type: SurveillanceCameraGeneral
   components:
   - rot: -1.5707963267948966 rad
@@ -98125,7 +98114,7 @@ entities:
     nameSet: True
     id: Service and evac
     type: SurveillanceCamera
-- uid: 12540
+- uid: 12539
   type: SurveillanceCameraGeneral
   components:
   - pos: 20.5,-3.5
@@ -98136,7 +98125,7 @@ entities:
     nameSet: True
     id: Entrance of evac
     type: SurveillanceCamera
-- uid: 12541
+- uid: 12540
   type: SurveillanceCameraGeneral
   components:
   - pos: 30.5,-9.5
@@ -98147,7 +98136,7 @@ entities:
     nameSet: True
     id: Evacuation 1
     type: SurveillanceCamera
-- uid: 12542
+- uid: 12541
   type: SurveillanceCameraGeneral
   components:
   - rot: 3.141592653589793 rad
@@ -98159,7 +98148,7 @@ entities:
     nameSet: True
     id: Evacuation 2
     type: SurveillanceCamera
-- uid: 12543
+- uid: 12542
   type: SurveillanceCameraGeneral
   components:
   - pos: 1.5,19.5
@@ -98170,7 +98159,7 @@ entities:
     nameSet: True
     id: Entrance of bridge
     type: SurveillanceCamera
-- uid: 12544
+- uid: 12543
   type: SurveillanceCameraGeneral
   components:
   - pos: -16.5,19.5
@@ -98181,7 +98170,7 @@ entities:
     nameSet: True
     id: Security and drones
     type: SurveillanceCamera
-- uid: 12545
+- uid: 12544
   type: SurveillanceCameraGeneral
   components:
   - pos: -19.5,1.5
@@ -98192,7 +98181,7 @@ entities:
     nameSet: True
     id: Dormitory
     type: SurveillanceCamera
-- uid: 12546
+- uid: 12545
   type: SurveillanceCameraMedical
   components:
   - rot: 1.5707963267948966 rad
@@ -98204,7 +98193,7 @@ entities:
     nameSet: True
     id: Morgue
     type: SurveillanceCamera
-- uid: 12547
+- uid: 12546
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
@@ -98216,7 +98205,7 @@ entities:
     nameSet: True
     id: Botany
     type: SurveillanceCamera
-- uid: 12548
+- uid: 12547
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
@@ -98228,7 +98217,7 @@ entities:
     nameSet: True
     id: Library
     type: SurveillanceCamera
-- uid: 12549
+- uid: 12548
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
@@ -98240,7 +98229,7 @@ entities:
     nameSet: True
     id: Freezer
     type: SurveillanceCamera
-- uid: 12550
+- uid: 12549
   type: SurveillanceCameraService
   components:
   - rot: 1.5707963267948966 rad
@@ -98252,7 +98241,7 @@ entities:
     nameSet: True
     id: Kitchen
     type: SurveillanceCamera
-- uid: 12551
+- uid: 12550
   type: SurveillanceCameraService
   components:
   - pos: 6.5,6.5
@@ -98263,7 +98252,7 @@ entities:
     nameSet: True
     id: Bartenders room
     type: SurveillanceCamera
-- uid: 12552
+- uid: 12551
   type: SurveillanceCameraService
   components:
   - rot: 1.5707963267948966 rad
@@ -98275,7 +98264,7 @@ entities:
     nameSet: True
     id: Service 2
     type: SurveillanceCamera
-- uid: 12553
+- uid: 12552
   type: SurveillanceCameraService
   components:
   - rot: -1.5707963267948966 rad
@@ -98287,7 +98276,7 @@ entities:
     nameSet: True
     id: Service 1
     type: SurveillanceCamera
-- uid: 12554
+- uid: 12553
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
@@ -98299,7 +98288,7 @@ entities:
     nameSet: True
     id: Clowns room
     type: SurveillanceCamera
-- uid: 12555
+- uid: 12554
   type: SurveillanceCameraService
   components:
   - rot: -1.5707963267948966 rad
@@ -98311,7 +98300,7 @@ entities:
     nameSet: True
     id: Theater
     type: SurveillanceCamera
-- uid: 12556
+- uid: 12555
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
@@ -98323,19 +98312,7 @@ entities:
     nameSet: True
     id: Janitors room
     type: SurveillanceCamera
-- uid: 12557
-  type: SurveillanceCameraService
-  components:
-  - rot: 3.141592653589793 rad
-    pos: -30.5,-21.5
-    parent: 0
-    type: Transform
-  - setupAvailableNetworks:
-    - SurveillanceCameraService
-    nameSet: True
-    id: librarians room
-    type: SurveillanceCamera
-- uid: 12558
+- uid: 12556
   type: SurveillanceCameraService
   components:
   - rot: -1.5707963267948966 rad
@@ -98347,7 +98324,7 @@ entities:
     nameSet: True
     id: Chaplains room
     type: SurveillanceCamera
-- uid: 12559
+- uid: 12557
   type: SurveillanceCameraService
   components:
   - rot: -1.5707963267948966 rad
@@ -98359,7 +98336,7 @@ entities:
     nameSet: True
     id: Chapel 1
     type: SurveillanceCamera
-- uid: 12560
+- uid: 12558
   type: SurveillanceCameraService
   components:
   - rot: 3.141592653589793 rad
