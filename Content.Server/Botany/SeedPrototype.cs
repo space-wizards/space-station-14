@@ -228,6 +228,7 @@ public class SeedData
     public float BioluminescentRadius = 2f;
 
     [DataField("kudzu")] public string kudzu = "Kudzu";
+
     [DataField("turnIntoKudzu")] public bool TurnIntoKudzu;
     [DataField("splatPrototype")] public string? SplatPrototype { get; set; }
 
