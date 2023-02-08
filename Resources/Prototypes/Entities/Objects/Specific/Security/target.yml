@@ -29,7 +29,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 50
+        damage: 500
       behaviors:
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -51,22 +51,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_h
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: syndicate target
@@ -77,22 +61,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_s
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 - type: entity
   name: clown target
@@ -103,22 +71,6 @@
   - type: Sprite
     sprite: Objects/Specific/Security/target.rsi
     state: target_c
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 500
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel:
-            min: 10
-            max: 10
-      - !type:PlaySoundBehavior
-        sound:
-          path: /Audio/Effects/metalbreak.ogg
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
 
 # put it on a salvage or something
 - type: entity
