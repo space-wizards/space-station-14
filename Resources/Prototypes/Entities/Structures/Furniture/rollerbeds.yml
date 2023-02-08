@@ -55,11 +55,9 @@
     - type: GenericVisualizer
       visuals:
         enum.StrapVisuals.State:
-          0:
+          unfoldedLayer:
             True: {state: "rollerbed_buckled"}
             False: {state: "rollerbed"}
-    - type: RollerbedVisualizer
-      key: rollerbed
     - type: StaticPrice
       price: 200
 
@@ -88,11 +86,9 @@
   - type: GenericVisualizer
     visuals:
       enum.StrapVisuals.State:
-        0:
+        unfoldedLayer:
           True: {state: "cheap_rollerbed_buckled"}
           False: {state: "cheap_rollerbed"}
-  - type: RollerbedVisualizer
-    key: cheap_rollerbed
 
 - type: entity
   parent: CheapRollerBed
@@ -119,11 +115,9 @@
   - type: GenericVisualizer
     visuals:
       enum.StrapVisuals.State:
-        0:
+        unfoldedLayer:
           True: {state: "emergency_rollerbed_buckled"}
           False: {state: "emergency_rollerbed"}
-  - type: RollerbedVisualizer
-    key: emergency_rollerbed
 
 - type: entity
   parent: EmergencyRollerBed
