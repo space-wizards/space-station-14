@@ -1,9 +1,4 @@
 Entries:
-- author: lapatison
-  changes:
-  - {message: Apron pockets were added, type: Add}
-  id: 2508
-  time: '2022-10-22T22:07:51.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
@@ -2925,3 +2920,8 @@ Entries:
   - {message: Fix NPCs breaking on prototype reloads., type: Fix}
   id: 3007
   time: '2023-02-07T21:27:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now print tier 3 machine parts at lathes., type: Add}
+  id: 3008
+  time: '2023-02-08T00:39:08.0000000+00:00'
