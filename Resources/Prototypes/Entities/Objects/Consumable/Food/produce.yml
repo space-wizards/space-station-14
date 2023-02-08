@@ -885,7 +885,7 @@
 
 - type: entity
   name: rice bushel
-  description: Goes well with pudding and sake.	
+  description: Can be ground into rice, perfect for pudding or sake.
   id: RiceBushel
   parent: ProduceBase
   components:
