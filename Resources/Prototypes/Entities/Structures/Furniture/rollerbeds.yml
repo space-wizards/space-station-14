@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: BaseItem
+  parent: [BaseItem, BaseFoldable]
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -14,7 +14,10 @@
       noRot: true
       layers:
       - state: rollerbed
-        map: ["enum.FoldableVisualLayers.Base"]
+        map: ["unfoldedLayer"]
+      - state: rollerbed_folded
+        map: ["foldedLayer"]
+        visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -48,17 +51,15 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.15"
-    - type: Foldable
     - type: Appearance
-      visuals:
-      - type: FoldableVisualizer
-        key: rollerbed
     - type: GenericVisualizer
       visuals:
         enum.StrapVisuals.State:
           0:
             True: {state: "rollerbed_buckled"}
             False: {state: "rollerbed"}
+    - type: RollerbedVisualizer
+      key: rollerbed
     - type: StaticPrice
       price: 200
 
@@ -79,17 +80,19 @@
   - type: Sprite
     layers:
     - state: cheap_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: cheap_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: cheap_rollerbed
   - type: GenericVisualizer
     visuals:
       enum.StrapVisuals.State:
         0:
           True: {state: "cheap_rollerbed_buckled"}
           False: {state: "cheap_rollerbed"}
+  - type: RollerbedVisualizer
+    key: cheap_rollerbed
 
 - type: entity
   parent: CheapRollerBed
@@ -108,17 +111,19 @@
   - type: Sprite
     layers:
     - state: emergency_rollerbed
-      map: [ "enum.FoldableVisualLayers.Base" ]
+      map: ["unfoldedLayer"]
+    - state: emergency_rollerbed_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: emergency_rollerbed
   - type: GenericVisualizer
     visuals:
       enum.StrapVisuals.State:
         0:
           True: {state: "emergency_rollerbed_buckled"}
           False: {state: "emergency_rollerbed"}
+  - type: RollerbedVisualizer
+    key: emergency_rollerbed
 
 - type: entity
   parent: EmergencyRollerBed

@@ -173,7 +173,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
 
-            _appearance.SetData(uid, KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance));
+            _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
