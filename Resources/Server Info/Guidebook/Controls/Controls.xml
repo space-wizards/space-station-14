@@ -13,10 +13,7 @@ Beyond that, there's a handful primary interactions in SS14, ordered by importan
 - [color=#a4885c]Right click[/color] to open the context menu. You can then either left click an entry just like you would in the world, or right click it again to open the verb menu, which gives you more complex ways to interact with an object.
 - You can [color=#a4885c]shift-left click[/color] objects to examine them, and get their name and a detailed (though often humorous) description.
 
-You can quickly try out these controls with the monkey below (note: clicking it only works in-game and not in the lobby), and at any point in this
-
-
-  if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
+You can quickly try out these controls with the monkey below (note: clicking it only works in-game and not in the lobby), and at any point in this guidebook if you're shown an entity, [color=#a4885c]shift-left click to examine will always work[/color]:
 
 
 <GuideEntityEmbed Entity="MobGuidebookMonkey" Interactive="True" Caption=""/>
