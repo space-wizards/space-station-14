@@ -84,7 +84,7 @@ public abstract class SharedBiomeSystem : EntitySystem
         throw new ArgumentOutOfRangeException();
     }
 
-    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, FastNoise noise, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(EntityUid uid, MapGridComponent grid, FastNoiseLite noise, Vector2i indices, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid.TryGetTileRef(indices, out var tileRef) && !tileRef.Tile.IsEmpty)
         {
@@ -105,7 +105,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the tile, real or otherwise, for the specified indices.
     /// </summary>
-    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoise seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetBiomeTile(Vector2i indices, BiomePrototype prototype, FastNoiseLite seed, MapGridComponent? grid, [NotNullWhen(true)] out Tile? tile)
     {
         if (grid?.TryGetTileRef(indices, out var tileRef) == true && !tileRef.Tile.IsEmpty)
         {
@@ -139,7 +139,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant entity for this tile.
     /// </summary>
-    protected bool TryGetEntity(Vector2i indices, BiomePrototype prototype, FastNoise noise, MapGridComponent grid,
+    protected bool TryGetEntity(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out string? entity)
     {
         if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
@@ -172,7 +172,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                     continue;
             }
 
-            noise.SetNoiseType(FastNoise.NoiseType.Cellular);
+            noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
             var value = (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f;
 
             if (value < layer.Threshold)
@@ -189,7 +189,7 @@ public abstract class SharedBiomeSystem : EntitySystem
                 return false;
             }
 
-            noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+            noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
             entity = Pick(biomeLayer.Entities, (noise.GetNoise(indices.X, indices.Y) + 1f) / 2f);
             noise.SetFrequency(oldFrequency);
             noise.SetSeed(seed);
@@ -205,7 +205,7 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Tries to get the relevant decals for this tile.
     /// </summary>
-    public bool TryGetDecals(Vector2i indices, BiomePrototype prototype, FastNoise noise, MapGridComponent grid,
+    public bool TryGetDecals(Vector2i indices, BiomePrototype prototype, FastNoiseLite noise, MapGridComponent grid,
         [NotNullWhen(true)] out List<(string ID, Vector2 Position)>? decals)
     {
         if (!TryGetBiomeTile(indices, prototype, noise, grid, out var tileRef))
@@ -241,7 +241,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             // Check if the other layer should even render, if not then keep going.
             if (layer is not BiomeDecalLayer decalLayer)
             {
-                noise.SetNoiseType(FastNoise.NoiseType.Cellular);
+                noise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
 
                 if ((noise.GetNoise(indices.X, indices.Y) + 1f) / 2f < layer.Threshold)
                     continue;
@@ -253,7 +253,7 @@ public abstract class SharedBiomeSystem : EntitySystem
             }
 
             decals = new List<(string ID, Vector2 Position)>();
-            noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+            noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
 
             for (var x = 0; x < decalLayer.Divisions; x++)
             {
@@ -289,13 +289,13 @@ public abstract class SharedBiomeSystem : EntitySystem
     /// <summary>
     /// Gets the underlying biome tile, ignoring any existing tile that may be there.
     /// </summary>
-    public bool TryGetTile(Vector2i indices, FastNoise seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
+    public bool TryGetTile(Vector2i indices, FastNoiseLite seed, float threshold, ContentTileDefinition tileDef, List<byte>? variants, [NotNullWhen(true)] out Tile? tile)
     {
-        seed.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+        seed.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
 
         if (threshold > 0f)
         {
-            seed.SetFractalType(FastNoise.FractalType.FBm);
+            seed.SetFractalType(FastNoiseLite.FractalType.FBm);
 
             var found = (seed.GetNoise(indices.X, indices.Y) + 1f) / 2f;
 

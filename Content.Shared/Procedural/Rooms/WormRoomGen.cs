@@ -1,6 +1,6 @@
-namespace Content.Shared.Procedural.Dungeons;
+namespace Content.Shared.Procedural.Rooms;
 
-public sealed class WormDunGen : IDungeonGenerator
+public sealed class WormRoomGen : IRoomGen
 {
     [DataField("start")]
     public Vector2i StartPosition;

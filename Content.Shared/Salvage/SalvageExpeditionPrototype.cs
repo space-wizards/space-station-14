@@ -1,6 +1,6 @@
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Dungeons;
+using Content.Shared.Procedural.Rooms;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -35,7 +35,7 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     public List<string> Factions = new();
 
     [DataField("dungeon", required: true)]
-    public IDungeonGenerator Dungeon = default!;
+    public IRoomGen Room = default!;
 
     [DataField("dungeonConfig", required: true)]
     public string DungeonConfigPrototype = string.Empty;

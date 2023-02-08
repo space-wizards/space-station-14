@@ -91,7 +91,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         {
             biome.Generating = true;
 
-            var noise = new FastNoise(biome.Seed);
+            var noise = new FastNoiseLite(biome.Seed);
             LoadChunks(biome, grid, noise);
             UnloadChunks(biome, grid, noise);
 
@@ -112,7 +112,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void LoadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
+    private void LoadChunks(BiomeComponent component, MapGridComponent grid, FastNoiseLite noise)
     {
         var active = _activeChunks[component];
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
@@ -129,7 +129,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
+    private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoiseLite noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= new HashSet<Vector2i>();
@@ -230,7 +230,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void UnloadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
+    private void UnloadChunks(BiomeComponent component, MapGridComponent grid, FastNoiseLite noise)
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
@@ -246,7 +246,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, List<(Vector2i, Tile)> tiles)
+    private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoiseLite noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);

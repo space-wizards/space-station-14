@@ -10,7 +10,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Dungeons;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Extraction;
 using Content.Shared.Salvage.Expeditions.Structure;
@@ -198,8 +197,10 @@ public sealed partial class SalvageSystem
         var landingPadRadius = 16;
         var radiusThickness = 2;
         var dungeonOffset = new Vector2i(landingPadRadius + radiusThickness + 1, 0);
+        var dungeonRadius = 32f;
+        var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
-        var dungeon = _dungeon.GetDungeon(config.Dungeon, random);
+        var dungeon = _dungeon.GetDungeon(dungeonConfig, dungeonRadius, random);
 
         // Aborty
         if (dungeon.Rooms.Count == 0)
@@ -239,7 +240,6 @@ public sealed partial class SalvageSystem
         var start = Vector2i.Zero;
         var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count)) + dungeonOffset;
         var reservedTiles = _pathfinding.GetPath(start, end);
-        var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
         _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid);
 
@@ -249,7 +249,7 @@ public sealed partial class SalvageSystem
         var landingFloor = new HashSet<Vector2i>();
 
         // Set the tiles themselves
-        var seed = new FastNoise(mission.Seed);
+        var seed = new FastNoiseLite(mission.Seed);
 
         foreach (var tile in grid.GetTilesIntersecting(new Box2(-landingPadRadius - radiusThickness + 0.5f, -landingPadRadius - radiusThickness + 0.5f, landingPadRadius + radiusThickness - 0.5f, landingPadRadius + radiusThickness - 0.5f), false))
         {

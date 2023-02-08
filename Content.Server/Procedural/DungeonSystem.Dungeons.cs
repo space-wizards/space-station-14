@@ -1,47 +1,7 @@
-using Content.Shared.Procedural;
-using Content.Shared.Procedural.Dungeons;
-
 namespace Content.Server.Procedural;
 
 public sealed partial class DungeonSystem
 {
-    private HashSet<Vector2i> ConnectRooms(BSPDunGen gen, List<Vector2i> roomCenters, Random random)
-    {
-        var corridors = new HashSet<Vector2i>();
-        var currentRoomCenter = roomCenters[random.Next(roomCenters.Count)];
-        roomCenters.Remove(currentRoomCenter);
-
-        while (roomCenters.Count > 0)
-        {
-            var closest = FindClosestPointTo(currentRoomCenter, roomCenters);
-            roomCenters.Remove(closest);
-            var newCorridor = CreateCorridor(gen.Corridors, currentRoomCenter, closest);
-            currentRoomCenter = closest;
-            corridors.UnionWith(newCorridor);
-        }
-        return corridors;
-    }
-
-    private Vector2i FindClosestPointTo(Vector2i currentRoomCenter, List<Vector2i> roomCenters)
-    {
-        var closest = Vector2i.Zero;
-        var distance = float.MaxValue;
-        var roomCenter = (Vector2) currentRoomCenter;
-
-        foreach (var position in roomCenters)
-        {
-            var currentDistance = (position - roomCenter).Length;
-
-            if(currentDistance < distance)
-            {
-                distance = currentDistance;
-                closest = position;
-            }
-        }
-
-        return closest;
-    }
-
     public HashSet<Vector2i> RandomWalk(Vector2i start, int length, Random random)
     {
         // Don't pre-allocate length as it may be shorter than that due to backtracking.

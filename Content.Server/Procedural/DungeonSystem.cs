@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared.Procedural;
-using Content.Shared.Procedural.Dungeons;
+using Content.Shared.Procedural.Rooms;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -18,7 +18,6 @@ public sealed partial class DungeonSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        InitializeCommand();
     }
 
     public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype,
@@ -41,10 +40,13 @@ public sealed partial class DungeonSystem : EntitySystem
             }
         }
 
-        foreach (var tile in dungeon.Corridors)
+        foreach (var path in dungeon.Paths)
         {
-            var adjustedTilePos = tile + position;
-            tiles.Add((adjustedTilePos, new Tile(tileId)));
+            foreach (var tile in path.Tiles)
+            {
+                var adjustedTilePos = tile + position;
+                tiles.Add((adjustedTilePos, new Tile(tileId)));
+            }
         }
 
         foreach (var tile in dungeon.Walls)
@@ -70,73 +72,84 @@ public sealed partial class DungeonSystem : EntitySystem
         }
     }
 
-    public Dungeon GetDungeon(IDungeonGenerator gen, Random random)
+    public Dungeon GetDungeon(DungeonConfigPrototype config, float radius, Random random)
     {
-        switch (gen)
+        var dungeon = new Dungeon();
+
+        foreach (var room in config.Rooms)
         {
-            case BSPDunGen bsp:
-                return GetBSPDungeon(bsp, random);
-            case NoiseDunGen noisey:
-                return GetNoiseDungeon(noisey, random);
-            case RandomWalkDunGen walkies:
-                return GetRandomWalkDungeon(walkies, random);
-            case WormDunGen worm:
-                return GetWormDungeon(worm, random);
-            default:
-                throw new NotImplementedException();
+            List<DungeonRoom> rooms;
+
+            switch (room)
+            {
+                case BSPRoomGen bsp:
+                    rooms = GetBSPRooms(bsp, radius, random);
+                    break;
+                case NoiseRoomGen noisey:
+                    rooms = GetNoiseRooms(noisey, radius, random);
+                    break;
+                case RandomWalkRoomGen walkies:
+                    rooms = GetRandomWalkDungeon(walkies, radius, random);
+                    break;
+                case WormRoomGen worm:
+                    rooms = GetWormRooms(worm, radius, random);
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            dungeon.Rooms.AddRange(rooms);
         }
+
+        return dungeon;
     }
 
-    public Dungeon GetNoiseDungeon(NoiseDunGen gen, Random random)
+    public List<DungeonRoom> GetNoiseRooms(NoiseRoomGen gen, float radius, Random random)
     {
-        var noise = new FastNoise(random.Next());
-        noise.SetFractalType(FastNoise.FractalType.Ridged);
+        var noise = new FastNoiseLite(random.Next());
+        noise.SetFractalType(FastNoiseLite.FractalType.Ridged);
         noise.SetFractalGain(0f);
         noise.SetFrequency(0.04f);
-        var room = new DungeonRoom();
-        var walls = new HashSet<Vector2i>();
+        var room = new DungeonRoom(new HashSet<Vector2i>());
 
-        for (var x = gen.Bounds.Left; x < gen.Bounds.Right; x++)
+        for (var x = (int) Math.Floor(-radius); x < Math.Ceiling(radius); x++)
         {
-            for (var y = gen.Bounds.Bottom; y < gen.Bounds.Top; y++)
+            for (var y = (int) Math.Floor(-radius); y < Math.Ceiling(radius); y++)
             {
                 var value = noise.GetNoise(x, y);
                 if (value >= 0.1f)
                 {
                     room.Tiles.Add(new Vector2i(x, y));
                 }
-                else
-                {
-                    walls.Add(new Vector2i(x, y));
-                }
             }
         }
 
-        return new Dungeon()
-        {
-            Rooms = new List<DungeonRoom>() { room },
-            AllTiles = new HashSet<Vector2i>(room.Tiles),
-            Walls = walls,
-            Corridors = new HashSet<Vector2i>(),
-        };
+        return new List<DungeonRoom>() { room };
     }
 
-    public Dungeon GetWormDungeon(WormDunGen gen, Random random)
+    public List<DungeonRoom> GetWormRooms(WormRoomGen gen, float radius, Random random)
     {
         // TODO: Tunnel to thingo has 2 tile gap + also needs to force tiles
-        var noise = new FastNoise(random.Next());
-        noise.SetNoiseType(FastNoise.NoiseType.OpenSimplex2);
+        var noise = new FastNoiseLite(random.Next());
+        noise.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2);
         noise.SetFrequency(0.02f);
         var current = gen.StartPosition;
         var direction = gen.StartDirection;
         var angle = direction.ToAngle();
-        var room = new DungeonRoom();
-        var baseTiles = new HashSet<Vector2i>();
-        baseTiles.Add(current);
+        var baseTiles = new HashSet<Vector2i> { current };
+
+        // TODO: Steering strength based on distance
 
         for (var i = 0; i < gen.Length; i++)
         {
             var node = current + direction.ToIntVec();
+
+            if (((Vector2) (node - current)).Length >= radius)
+            {
+                direction = direction.GetOpposite();
+                continue;
+            }
+
             var rotation = noise.GetNoise(node.X, node.Y);
             var randAngle = gen.Range * rotation;
             angle += randAngle;
@@ -144,6 +157,8 @@ public sealed partial class DungeonSystem : EntitySystem
             baseTiles.Add(node);
             current = node;
         }
+
+        var room = new DungeonRoom(new HashSet<Vector2i>());
 
         foreach (var tile in baseTiles)
         {
@@ -159,82 +174,35 @@ public sealed partial class DungeonSystem : EntitySystem
             }
         }
 
-        return new Dungeon
-        {
-            Rooms = new List<DungeonRoom>() { room },
-            Corridors = new HashSet<Vector2i>(),
-            AllTiles = new HashSet<Vector2i>(room.Tiles),
-            Walls = new HashSet<Vector2i>(),
-        };
+        return new List<DungeonRoom>() { room };
     }
 
-    public Dungeon GetRandomWalkDungeon(RandomWalkDunGen gen, Random random)
+    public List<DungeonRoom> GetRandomWalkDungeon(RandomWalkRoomGen gen, float radius, Random random)
     {
         var start = gen.StartPosition;
 
         var currentPosition = start;
-        var floors = new HashSet<Vector2i>();
+        var room = new DungeonRoom(new HashSet<Vector2i>());
 
         for (var i = 0; i < gen.Iterations; i++)
         {
             var path = RandomWalk(currentPosition, gen.Length, random);
-            floors.UnionWith(path);
+            room.Tiles.UnionWith(path);
 
             if (gen.StartRandomlyEachIteration)
-                currentPosition = floors.ElementAt(random.Next(floors.Count));
+                currentPosition = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
         }
 
-        var walls = GetWalls(gen.Walls, new Box2i(), floors);
-        floors.UnionWith(walls);
-
-        return new Dungeon()
-        {
-            AllTiles = floors,
-            Rooms = new List<DungeonRoom>(1)
-            {
-                new()
-                {
-                    Tiles = floors
-                }
-            },
-            Walls = walls,
-        };
+        return new List<DungeonRoom>() { room };
     }
 
-    public Dungeon GetBSPDungeon(BSPDunGen gen, Random random)
+    public List<DungeonRoom> GetBSPRooms(BSPRoomGen gen, float radius, Random random)
     {
-        if (gen.Bounds.IsEmpty())
-        {
-            throw new InvalidOperationException();
-        }
+        var left = (int) Math.Floor(-radius);
+        var bottom = (int) Math.Floor(-radius);
 
-        var roomSpaces = BinarySpacePartition(gen.Bounds, gen.MinimumRoomDimensions, random, false);
+        var roomSpaces = BinarySpacePartition(new Box2i(left, bottom, left * -1, bottom * -1), gen.MinimumRoomDimensions, random, false);
         var rooms = GetRooms(gen.Rooms, roomSpaces, random);
-        var roomCenters = new List<Vector2i>();
-
-        foreach (var room in roomSpaces)
-        {
-            roomCenters.Add((Vector2i) room.Center.Rounded());
-        }
-
-        var corridors = ConnectRooms(gen, roomCenters, random);
-
-        var allTiles = new HashSet<Vector2i>(corridors);
-
-        foreach (var room in rooms)
-        {
-            allTiles.UnionWith(room.Tiles);
-        }
-
-        var walls = GetWalls(gen.Walls, gen.Bounds, allTiles);
-        allTiles.UnionWith(walls);
-
-        return new Dungeon
-        {
-            AllTiles = allTiles,
-            Corridors = corridors,
-            Rooms = rooms,
-            Walls = walls,
-        };
+        return rooms;
     }
 }
