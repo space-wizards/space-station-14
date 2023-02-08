@@ -196,8 +196,8 @@ public sealed partial class SalvageSystem
 
         var landingPadRadius = 16;
         var radiusThickness = 2;
-        var dungeonOffset = new Vector2i(landingPadRadius + radiusThickness + 1, 0);
-        var dungeonRadius = 32f;
+        var dungeonOffset = config.DungeonPosition;
+        var dungeonRadius = config.DungeonRadius;
         var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(config.DungeonConfigPrototype);
 
         var dungeon = _dungeon.GetDungeon(dungeonConfig, dungeonRadius, random);
@@ -215,31 +215,24 @@ public sealed partial class SalvageSystem
             adjustedDungeonAllTiles.Add(tile + dungeonOffset);
         }
 
-        // To ensure they can get from the landing area to the dungeon we'll mark out reserved tiles
-        // and ensure no blockers spawn on them.
-        // We'll pick the bottom-left room as our target.
+        // To ensure they can get from the landing area to the dungeon we'll path to the closest tile.
+        var closestTile = Vector2i.Zero;
         var closestDistance = float.MaxValue;
-        DungeonRoom? closestRoom = null;
 
-        foreach (var room in dungeon.Rooms)
+        foreach (var tile in dungeon.AllTiles)
         {
-            var length = room.Center.Length;
+            var adjustedPos = tile + dungeonOffset;
+            var length = adjustedPos.Length;
 
-            if (length > closestDistance)
-                continue;
-
-            closestDistance = length;
-            closestRoom = room;
-        }
-
-        if (closestRoom == null)
-        {
-            return;
+            if (length < closestDistance)
+            {
+                closestDistance = length;
+                closestTile = adjustedPos;
+            }
         }
 
         var start = Vector2i.Zero;
-        var end = closestRoom.Tiles.ElementAt(_random.Next(closestRoom.Tiles.Count)) + dungeonOffset;
-        var reservedTiles = _pathfinding.GetPath(start, end);
+        var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
         _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid);
 

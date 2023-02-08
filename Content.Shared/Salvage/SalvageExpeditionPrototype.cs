@@ -34,9 +34,12 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("factions")]
     public List<string> Factions = new();
 
-    [DataField("dungeon", required: true)]
-    public IRoomGen Room = default!;
-
     [DataField("dungeonConfig", required: true)]
     public string DungeonConfigPrototype = string.Empty;
+
+    [DataField("dungeonRadius")]
+    public float DungeonRadius = 50f;
+
+    [DataField("dungeonPosition")]
+    public Vector2i DungeonPosition = new Vector2i(50, 50);
 }

@@ -116,6 +116,14 @@ public sealed partial class DungeonSystem : EntitySystem
         {
             for (var y = (int) Math.Floor(-radius); y < Math.Ceiling(radius); y++)
             {
+                if (!gen.Box)
+                {
+                    var indices = new Vector2(x + 0.5f, y + 0.5f);
+
+                    if (indices.Length > radius)
+                        continue;
+                }
+
                 var value = noise.GetNoise(x, y);
                 if (value >= 0.1f)
                 {

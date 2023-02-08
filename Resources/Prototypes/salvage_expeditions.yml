@@ -1,5 +1,9 @@
 - type: dungeonConfig
   id: LowDesertDungeon
+  rooms:
+    - !type:NoiseRoomGen
+  paths:
+    - !type:SimplePathGen
   tile: FloorCaveDrought
   wall: AsteroidRock
 
@@ -13,13 +17,8 @@
   maxDuration: 720
   factions:
     - Xenos
-  dungeon: !type:NoiseDunGen
-    bounds: 0,0,200,200
-    # !type:WormDunGen
-  #  range: 30
-  #  length: 500
-  #  startPosition: 45
   dungeonConfig: LowDesertDungeon
+  dungeonPosition: 70,70
 
 
 # Factions
