@@ -141,6 +141,81 @@ public sealed class DoorComponent : Component, ISerializationHooks
     public HashSet<EntityUid> CurrentlyCrushing = new();
     #endregion
 
+    #region Graphics
+
+    /// <summary>
+    /// The key used when playing door opening/closing/emagging/deny animations.
+    /// </summary>
+    public const string AnimationKey = "door_animation";
+
+    /// <summary>
+    /// The sprite state used for the door when it's open.
+    /// </summary>
+    [DataField("openSpriteState")]
+    public string OpenSpriteState = "open";
+
+    /// <summary>
+    /// The sprite state used for the door when it's closed.
+    /// </summary>
+    [DataField("closedSpriteState")]
+    public string ClosedSpriteState = "closed";
+
+    /// <summary>
+    /// The sprite state used for the door when it's opening.
+    /// </summary>
+    [DataField("openingSpriteState")]
+    public string OpeningSpriteState = "opening";
+
+    /// <summary>
+    /// The sprite state used for the door when it's closing.
+    /// </summary>
+    [DataField("closingSpriteState")]
+    public string ClosingSpriteState = "closing";
+
+    /// <summary>
+    /// The sprite state used for the door when it's being emagged.
+    /// </summary>
+    [DataField("emaggingSpriteState")]
+    public string EmaggingSpriteState = "emagging";
+
+    /// <summary>
+    /// The sprite state used for the door when it's open.
+    /// </summary>
+    [DataField("openingAnimationTime")]
+    public float OpeningAnimationTime = 0.8f;
+
+    /// <summary>
+    /// The sprite state used for the door when it's open.
+    /// </summary>
+    [DataField("closingAnimationTime")]
+    public float ClosingAnimationTime = 0.8f;
+
+    /// <summary>
+    /// The sprite state used for the door when it's open.
+    /// </summary>
+    [DataField("emaggingAnimationTime")]
+    public float EmaggingAnimationTime = 1.5f;
+
+    /// <summary>
+    /// The animation used when the door opens.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>\
+    public object OpenAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door closes.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object CloseAnimation = default!;
+
+    /// <summary>
+    /// The animation used when the door is emagged.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object EmaggingAnimation = default!;
+
+    #endregion Graphics
+
     #region Serialization
     /// <summary>
     ///     Time until next state change. Because apparently <see cref="IGameTiming.CurTime"/> might not get saved/restored.

@@ -31,14 +31,13 @@
     closeTimeTwo: 0.6
     openTimeOne: 0.6
     openTimeTwo: 0.2
+    openingAnimationTime: 1.2
+    closingAnimationTime: 1.2
     openSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
     closeSound:
       path: /Audio/Effects/stonedoor_openclose.ogg
   - type: Appearance
-  - type: AirlockVisualizer
-    simpleVisuals: true
-    animationTime: 1.2
   - type: Airtight
     fixVacuum: true
   - type: Damageable

@@ -77,11 +77,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: AccessReader
-  - type: Airlock
-    keepOpenIfClicked: true
-    openPanelVisible: true
-    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
-    safety: false
   - type: ContainerFill
     containers:
       board: [ DoorElectronics ]
@@ -90,12 +85,24 @@
       board: !type:Container
   - type: Door
     canCrush: false
+    openingAnimationTime: 0.9
+    closingAnimationTime: 0.9
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
       path: /Audio/Machines/windoor_open.ogg
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
+  - type: Airlock
+    keepOpenIfClicked: true
+    openPanelVisible: true
+    openingAnimationTime: 0.9 # Should be synced with the equivalent on DoorComponent or things will break
+    closingAnimationTime: 0.9
+    denyAnimationTime: 0.4
+    animatePanel: false
+    openUnlitVisible: true
+    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
+    safety: false
   - type: Electrified
     enabled: false
     usesApcPower: true
@@ -107,11 +114,6 @@
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
   - type: Appearance
-  - type: AirlockVisualizer
-    animationTime: 0.9
-    denyAnimationTime: 0.4
-    animatedPanel: false
-    openUnlitVisible: true
   - type: WiresVisuals
   - type: Airtight
     fixVacuum: true

@@ -82,6 +82,114 @@ public sealed class AirlockComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public float AutoCloseDelayModifier = 1.0f;
+
+    #region Graphics
+
+    public const string AnimationKey = "airlock_animation";
+
+    /// <summary>
+    /// Whether the door lights should be visible.
+    /// </summary>
+    [DataField("openUnlitVisible")]
+    public bool OpenUnlitVisible = false;
+
+    /// <summary>
+    /// Whether the door should display emergency access lights.
+    /// </summary>
+    [DataField("emergencyAccessLayer")]
+    public bool EmergencyAccessLayer = true;
+
+    /// <summary>
+    /// Whether or not to animate the panel when the door opens or closes.
+    /// </summary>
+    [DataField("animatePanel")]
+    public bool AnimatePanel = true;
+
+    /// <summary>
+    /// The sprite state used to animate the airlock frame when the airlock opens.
+    /// </summary>
+    [DataField("openingSpriteState")]
+    public string OpeningSpriteState = "opening_unlit";
+    
+    /// <summary>
+    /// The sprite state used to animate the airlock panel when the airlock opens.
+    /// </summary>
+    [DataField("openingPanelSpriteState")]
+    public string OpeningPanelSpriteState = "panel_opening";
+    
+    /// <summary>
+    /// The sprite state used to animate the airlock frame when the airlock closes.
+    /// </summary>
+    [DataField("closingSpriteState")]
+    public string ClosingSpriteState = "closing_unlit";
+    
+    /// <summary>
+    /// The sprite state used to animate the airlock panel when the airlock closes.
+    /// </summary>
+    [DataField("closingPanelSpriteState")]
+    public string ClosingPanelSpriteState = "panel_closing";
+    
+    /// <summary>
+    /// The sprite state used for the open airlock lights.
+    /// </summary>
+    [DataField("openSpriteState")]
+    public string OpenSpriteState = "open_unlit";
+    
+    /// <summary>
+    /// The sprite state used for the closed airlock lights.
+    /// </summary>
+    [DataField("closedSpriteState")]
+    public string ClosedSpriteState = "closed_unlit";
+    
+    /// <summary>
+    /// The sprite state used for the airlock bolt lights.
+    /// </summary>
+    [DataField("boltedSpriteState")]
+    public string BoltedSpriteState = "bolted_unlit";
+    
+    /// <summary>
+    /// The sprite state used for the 'access denied' lights animation.
+    /// </summary>
+    [DataField("denySpriteState")]
+    public string DenySpriteState = "deny_unlit";
+    
+    /// <summary>
+    /// How long the animation played when the airlock opens or closes is in seconds.
+    /// </summary>
+    [DataField("openingAnimationTime")]
+    public float OpeningAnimationTime = 0.8f;
+    
+    /// <summary>
+    /// How long the animation played when the airlock opens or closes is in seconds.
+    /// </summary>
+    [DataField("openclosingAnimationTime")]
+    public float ClosingAnimationTime = 0.8f;
+    
+    /// <summary>
+    /// How long the animation played when the airlock denies access is in seconds.
+    /// </summary>
+    [DataField("denyAnimationTime")]
+    public float DenyAnimationTime = 0.3f;
+
+    /// <summary>
+    /// The animation to use for the airlock lights and panel when the airlock opens.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object OpenAnimation = default!;
+    
+    /// <summary>
+    /// The animation to use for the airlock lights and panel when the airlock closes.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object CloseAnimation = default!;
+    
+    /// <summary>
+    /// The animation to use for the airlock lights when the airlock denies access.
+    /// Not a <see cref="Robust.Client.Animations.Animation"/> because that's stuck in client, I'm not making an engine PR to move it, and we aren't supposed to split components between client and server anymore.
+    /// </summary>
+    public object DenyAnimation = default!;
+
+    #endregion Graphics
 }
 
 [Serializable, NetSerializable]

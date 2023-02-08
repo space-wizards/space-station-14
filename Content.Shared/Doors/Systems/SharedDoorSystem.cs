@@ -28,7 +28,7 @@ public abstract class SharedDoorSystem : EntitySystem
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
     [Dependency] private readonly OccluderSystem _occluder = default!;
 
     /// <summary>
@@ -50,7 +50,7 @@ public abstract class SharedDoorSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<DoorComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<DoorComponent, ComponentRemove>(OnRemove);
 
         SubscribeLocalEvent<DoorComponent, ComponentGetState>(OnGetState);
@@ -62,7 +62,7 @@ public abstract class SharedDoorSystem : EntitySystem
         SubscribeLocalEvent<DoorComponent, PreventCollideEvent>(PreventCollision);
     }
 
-    private void OnInit(EntityUid uid, DoorComponent door, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, DoorComponent door, ComponentInit args)
     {
         if (door.NextStateChange != null)
             _activeDoors.Add(door);
@@ -178,7 +178,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
 
-        _appearance.SetData(uid, DoorVisuals.State, door.State);
+        AppearanceSystem.SetData(uid, DoorVisuals.State, door.State);
     }
     #endregion
 
