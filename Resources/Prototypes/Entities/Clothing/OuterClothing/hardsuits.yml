@@ -698,7 +698,7 @@
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
 
 - type: entity
-  parent: ClothingOuterEVASuitBase
+  parent:  ClothingOuterHardsuitBase
   id:  ClothingOuterHardsuitPirateEVA
   name: deep space EVA suit
   suffix: pirate
