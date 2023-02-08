@@ -28,7 +28,8 @@ anomaly-generator-no-fire = Статус: [color=crimson]Не готов[/color]
 anomaly-generator-generate = Создать аномалию
 anomaly-generator-charges =
     { $charges ->
-        [one] { $charges } charge
-       *[other] { $charges } charges
+        [one] { $charges } заряд
+        [few] { $charges } заряда
+       *[other] { $charges } зарядов
     }
-anomaly-generator-announcement = An anomaly has been generated!
+anomaly-generator-announcement = Аномалия была создана!

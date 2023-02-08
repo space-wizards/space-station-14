@@ -1,5 +1,5 @@
-ent-BaseMobFlesh = aberrant flesh
-    .desc = A shambling mass of flesh, animated through anomalous energy.
+ent-BaseMobFlesh = искажённая плоть
+    .desc = Колышущаяся масса плоти, оживленная под действием аномальной энергии.
     .suffix = { "" }
 ent-MobFleshJared = { ent-BaseMobFlesh }
     .desc = { ent-BaseMobFlesh.desc }
