@@ -16,15 +16,6 @@
 
   Examine your headset to see the department channels available to you.
 
-  - u - [color=#b88646]Supply[/color]
-
-  - t - [color=#8f4a4b]Syndicate[/color]
-
-  - y - [color=#32cd32]CentCom[/color]
-
-  The [color=#a4885c]:h[/color] prefix will send a message to whichever department radio your headset is set (i.e. if you are an engineer it will
-  default to the [color=#f37746]Engineering[/color] channel.
-
 <Box>
   <GuideEntityEmbed Entity="ClothingHeadsetEngineering"/>
 </Box>
