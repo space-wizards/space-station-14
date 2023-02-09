@@ -1,39 +1,35 @@
-<!-- Please read these guidelines before opening your PR: https://docs.spacestation14.io/en/getting-started/pr-guideline -->
-<!-- The text between the arrows are comments - they will not be visible on your PR. -->
-
-## About the PR
-<!-- What does it change? What other things could this impact? -->
+## Об запросе слияния
+<!-- Что изменено? На какие вещи это может повлиять? -->
 
 
-**Media**
+**Медиа**
 <!-- 
-PRs which make ingame changes (adding clothing, items, new features, etc) are required to have media attached that showcase the changes.
-Small fixes/refactors are exempt.
-Any media may be used in SS14 progress reports, with clear credit given.
+Запросы слияния, которые вносят внутриигровые изменения (добавление одежды, предметов, новых возможностей и т.д.), должны содержать медиа, демонстрирующие изменения.
+Небольшие исправления/рефакторы не требуют медиа.
 
-If you're unsure whether your PR will require media, ask a maintainer.
+Если вы не уверены в том, что ваш запрос слияния требует медиа, спросите мейнтейнера.
 
-Check the box below to confirm that you have in fact seen this (put an X in the brackets, like [X]):
+Отметьте поле ниже, чтобы подтвердить, что вы действительно видели это (поставьте X в скобках, например [X]):
 -->
 
-- [ ] I have added screenshots/videos to this PR showcasing its changes ingame, **or** this PR does not require an ingame showcase
+- [ ] Я добавил скриншоты/видео к этому запросу слияния, демонстрирующие его изменения в игре, **или** этот запрос слияния не требует демонстрации в игре
 
-**Changelog**
+**Чейнджлог**
 <!--
-Here you can fill out a changelog that will automatically be added to the game when your PR is merged.
+Здесь вы можете заполнить журнал изменений, который будет автоматически добавлен в игру при слиянии вашего запроса на слияние.
 
-Only put changes that are visible and important to the player on the changelog.
+Вносите в журнал изменений только те изменения, которые заметны и важны для игрока.
 
-Don't consider the entry type suffix (e.g. add) to be "part" of the sentence:
-bad: - add: a new tool for engineers
-good: - add: added a new tool for engineers
+Не считайте суффикс типа записи (например, add) "частью" предложения:
+плохо: - add: новый инструмент для инженеров
+хорошо: - add: добавлен новый инструмент для инженеров
 
-Putting a name after the :cl: symbol will change the name that shows in the changelog (otherwise it takes your GitHub username)
-Like so: :cl: PJB
+Помещение имени после символа :cl: изменит имя, которое будет отображаться в журнале изменений (в противном случае будет использоваться ваше имя пользователя GitLab).
+Например: :cl: AruMoon
 -->
 
 :cl:
-- add: Added fun!
-- remove: Removed fun!
-- tweak: Changed fun!
-- fix: Fixed fun!
+- add: Добавлено веселье!
+- remove: Удалено веселье!
+- tweak: Изменено веселье!
+- fix: Исправлено веселье!
