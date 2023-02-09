@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Generators can now be upgraded using machine parts., type: Add}
-  id: 2511
-  time: '2022-10-22T22:38:57.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: Skeletons now spook a little speakier! Uhh... speak a little spookier!,
-    type: Add}
-  id: 2512
-  time: '2022-10-22T22:40:28.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Cap gun revolver uses proper revolver behavior instead of generic gun
@@ -2923,3 +2912,13 @@ Entries:
   - {message: Fix NPC prototype reloading for realsies., type: Fix}
   id: 3010
   time: '2023-02-08T14:01:27.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixed wallmounts working when boards are removed., type: Fix}
+  id: 3011
+  time: '2023-02-09T16:14:39.0000000+00:00'
+- author: BismarckShuffle
+  changes:
+  - {message: Added Radio Channel guidebook entry., type: Add}
+  id: 3012
+  time: '2023-02-09T16:15:01.0000000+00:00'
