@@ -45,4 +45,3 @@
     enabled: true
     radius: 10
   - type: Appearance
-  - type: SingularityVisualizer
