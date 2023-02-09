@@ -52,31 +52,17 @@
 # Factions
 - type: salvageFaction
   id: Xenos
-  mobWeights:
-    MobXeno:
-      weight: 200
-      cost: 1
-    MobXenoRunner:
-      weight: 10
-      cost: 2
-    MobXenoDrone:
-      weight: 5
-      cost: 2
-    MobXenoSpitter:
-      weight: 5
-      cost: 5
-    MobXenoPraetorian:
-      weight: 2
-      cost: 10
-    MobXenoRavager:
-      weight: 2
-      cost: 10
-    MobXenoQueen:
-      weight: 1
-      cost: 15
+  groups:
+    - entries:
+        - id: MobXeno
+          amount: 3
+          maxAmount: 6
+        - id: MobXenoDrone
+          amount: 1
   configs:
     CaveStructures: !type:SalvageStructureFaction
       spawn: XenoWardingTower
+
 
 # Markers
 - type: entity

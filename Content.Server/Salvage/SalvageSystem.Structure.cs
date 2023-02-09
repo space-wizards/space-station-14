@@ -4,6 +4,7 @@ using Content.Server.Salvage.Expeditions.Structure;
 using Content.Shared.Procedural;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Structure;
+using Content.Shared.Storage;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
 
@@ -14,8 +15,6 @@ public sealed partial class SalvageSystem
     private void SetupMission(ISalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random)
     {
         // TODO: Move this to the main method
-        // TODO: Pass in the pre-built rooms and shit and then spawn via that.
-        // TODO: Dungeon likely needs a start room or smth.
         switch (mission)
         {
             case SalvageStructure structure:
@@ -33,6 +32,26 @@ public sealed partial class SalvageSystem
         var structureCount = random.Next(structure.MinStructures, structure.MaxStructures);
         var availableRooms = dungeon.Rooms.ToList();
         var faction = _prototypeManager.Index<SalvageFactionPrototype>("Xenos");
+        // TODO: DETERMINE DEEZ NUTS
+
+        // TODO: More spawn config shit
+        for (var i = 0; i < 3; i++)
+        {
+            var mobGroupIndex = random.Next(faction.MobGroups.Count);
+            var mobGroup = faction.MobGroups[mobGroupIndex];
+
+            var spawnRoomIndex = random.Next(dungeon.Rooms.Count);
+            var spawnRoom = dungeon.Rooms[spawnRoomIndex];
+            var spawnTile = spawnRoom.Tiles.ElementAt(random.Next(spawnRoom.Tiles.Count));
+            spawnTile += dungeonOffset;
+            var spawnPosition = grid.GridTileToLocal(spawnTile);
+
+            foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, _random))
+            {
+                Spawn(entry, spawnPosition);
+            }
+        }
+
         var shaggy = (SalvageStructureFaction) faction.Configs["CaveStructures"];
 
         // Spawn the objectives

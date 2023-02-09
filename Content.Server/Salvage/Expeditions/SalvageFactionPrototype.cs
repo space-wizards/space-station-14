@@ -1,5 +1,5 @@
-using System.Linq;
 using Content.Shared.Salvage;
+using Content.Shared.Storage;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
@@ -10,11 +10,8 @@ public sealed class SalvageFactionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("mobWeights", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<SalvageMobWeight, EntityPrototype>))]
-    public Dictionary<string, SalvageMobWeight> MobWeights = default!;
-
-    [ViewVariables]
-    public float TotalWeight => MobWeights.Values.Sum(o => o.Weight);
+    [ViewVariables(VVAccess.ReadWrite), DataField("groups", required: true)]
+    public List<SalvageMobGroup> MobGroups = default!;
 
     /// <summary>
     /// Per expedition type data for this faction.
@@ -24,19 +21,16 @@ public sealed class SalvageFactionPrototype : IPrototype
 }
 
 [DataDefinition]
-public record struct SalvageMobWeight
+public record struct SalvageMobGroup()
 {
     // A mob may be cheap but rare or expensive but frequent.
 
     /// <summary>
-    /// How much it costs to spawn this mob.
+    /// Probability to spawn this group. Summed with everything else for the faction.
     /// </summary>
-    [DataField("cost")]
-    public float Cost;
+    [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
+    public float Prob = 1f;
 
-    /// <summary>
-    /// How frequent is this mob.
-    /// </summary>
-    [DataField("weight")]
-    public float Weight;
+    [ViewVariables(VVAccess.ReadWrite), DataField("entries", required: true)]
+    public List<EntitySpawnEntry> Entries = new();
 }
