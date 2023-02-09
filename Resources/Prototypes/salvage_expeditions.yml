@@ -9,6 +9,31 @@
       tile: FloorCaveDrought
       wall: AsteroidRock
 
+# Loot configs
+- type: weightedRandom
+  id: CaveLoot
+  weights:
+    OreSteel: 1.0
+    OreSteelRich: 0.1
+
+- type: loot
+  id: OreSteel
+  loots:
+    - !type:ClusterLoot
+      proto: SteelOre1
+      minCluster: 5
+      maxCluster: 8
+      points: 5
+
+- type: loot
+  id: OreSteelRich
+  loots:
+    - !type:ClusterLoot
+      proto: SteelOre1
+      minCluster: 10
+      maxCluster: 13
+      points: 5
+
 # Expedition configs
 - type: salvageExpedition
   id: CaveStructures
@@ -22,7 +47,7 @@
   dungeonConfig: LowDesertDungeon
   dungeonRadius: 40
   dungeonPosition: 60,0
-
+  loot: CaveLoot
 
 # Factions
 - type: salvageFaction

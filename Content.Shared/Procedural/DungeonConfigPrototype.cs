@@ -1,8 +1,7 @@
-using Content.Shared.Maps;
+using Content.Shared.Procedural.Loot;
 using Content.Shared.Procedural.Paths;
 using Content.Shared.Procedural.Rooms;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Procedural;
 
@@ -17,10 +16,12 @@ public sealed class DungeonConfigPrototype : IPrototype
     /// <summary>
     /// Room generators
     /// </summary>
-    [DataField("rooms", required: true)] public List<RoomGen> Rooms = new();
+    [ViewVariables(VVAccess.ReadWrite), DataField("rooms", required: true)]
+    public List<RoomGen> Rooms = new();
 
     /// <summary>
     /// Path generators between rooms.
     /// </summary>
-    [DataField("paths")] public List<PathGen> Paths = new();
+    [ViewVariables(VVAccess.ReadWrite), DataField("paths")]
+    public List<PathGen> Paths = new();
 }

@@ -1,6 +1,7 @@
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Rooms;
+using Content.Shared.Random;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -34,8 +35,14 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("factions")]
     public List<string> Factions = new();
 
-    [DataField("dungeonConfig", required: true)]
+    [DataField("dungeonConfig", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<DungeonConfigPrototype>))]
     public string DungeonConfigPrototype = string.Empty;
+
+    /// <summary>
+    /// Possible loot prototypes available for this expedition.
+    /// </summary>
+    [DataField("loot", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    public string Loot = string.Empty;
 
     [DataField("dungeonRadius")]
     public float DungeonRadius = 50f;

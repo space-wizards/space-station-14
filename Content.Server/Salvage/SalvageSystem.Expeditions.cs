@@ -10,6 +10,9 @@ using Content.Shared.Atmos;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
+using Content.Shared.Procedural.Loot;
+using Content.Shared.Random;
+using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Extraction;
 using Content.Shared.Salvage.Expeditions.Structure;
@@ -238,7 +241,14 @@ public sealed partial class SalvageSystem
         var start = Vector2i.Zero;
         var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
-        _dungeon.SpawnDungeon(dungeonOffset, dungeon, dungeonConfig, grid, reservedTiles);
+        _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, reservedTiles);
+
+        // Handle loot
+        var lootTable = _prototypeManager.Index<WeightedRandomPrototype>(config.Loot);
+
+        _dungeon.SpawnDungeonLoot(dungeonOffset, dungeon, _prototypeManager.Index<LootPrototype>(lootTable.Pick(random)), grid, random, reservedTiles);
+
+        _dungeon.SpawnDungeonWalls(dungeonOffset, dungeon, grid, reservedTiles);
 
         // Setup the landing pad
         var landingPadExtents = new Vector2i(landingPadRadius, landingPadRadius);
