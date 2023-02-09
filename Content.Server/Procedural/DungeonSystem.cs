@@ -12,20 +12,14 @@ public sealed partial class DungeonSystem : EntitySystem
 {
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
 
-    public void SpawnDungeon(Vector2i position, Dungeon dungeon, DungeonConfigPrototype configPrototype,
-        MapGridComponent grid)
-    {
-        SpawnDungeonTiles(position, dungeon, grid, new List<Vector2i>());
-        SpawnDungeonWalls(position, dungeon, grid, new List<Vector2i>());
-    }
-
-    public void SpawnDungeonTiles(Vector2i position, Dungeon dungeon, MapGridComponent grid, List<Vector2i> reservedTiles)
+    public void SpawnDungeonTiles(Vector2i position, Dungeon dungeon, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
         var tiles = new List<(Vector2i, Tile)>();
 
         foreach (var room in dungeon.Rooms)
         {
-            var tileId = _tileDef[room.Tile].TileId;
+            var tileDef = _tileDef[room.Tile];
+            var tileId = tileDef.TileId;
 
             foreach (var tile in room.Tiles)
             {
@@ -34,7 +28,7 @@ public sealed partial class DungeonSystem : EntitySystem
                 if (reservedTiles.Contains(adjustedTilePos))
                     continue;
 
-                tiles.Add((adjustedTilePos, new Tile(tileId)));
+                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
             }
 
             foreach (var tile in room.Walls)
@@ -44,13 +38,14 @@ public sealed partial class DungeonSystem : EntitySystem
                 if (reservedTiles.Contains(adjustedTilePos))
                     continue;
 
-                tiles.Add((adjustedTilePos, new Tile(tileId)));
+                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
             }
         }
 
         foreach (var path in dungeon.Paths)
         {
-            var tileId = _tileDef[path.Tile].TileId;
+            var tileDef = _tileDef[path.Tile];
+            var tileId = tileDef.TileId;
 
             foreach (var tile in path.Tiles)
             {
@@ -59,7 +54,7 @@ public sealed partial class DungeonSystem : EntitySystem
                 if (reservedTiles.Contains(adjustedTilePos))
                     continue;
 
-                tiles.Add((adjustedTilePos, new Tile(tileId)));
+                tiles.Add((adjustedTilePos, new Tile(tileId, variant: (byte) random.Next(tileDef.Variants))));
             }
         }
 

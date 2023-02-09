@@ -241,7 +241,7 @@ public sealed partial class SalvageSystem
         var start = Vector2i.Zero;
         var reservedTiles = _pathfinding.GetPath(start, closestTile);
 
-        _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, reservedTiles);
+        _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, random, reservedTiles);
 
         // Handle loot
         var lootTable = _prototypeManager.Index<WeightedRandomPrototype>(config.Loot);
