@@ -268,16 +268,26 @@
   categories:
     - UplinkUtility
 
-#TODO: Increase the price of this to 4-5/remove it when we get encrpytion keys
+#TODO: Increase the price to 4 when flashbang prof.
 - type: listing
   id: UplinkHeadset
   name: uplink-headset-name
   description: uplink-headset-desc
   productEntity: ClothingHeadsetAltSyndicate
   cost:
-    Telecrystal: 2 # next step is adding encryption keys
+    Telecrystal: 4
   categories:
-    - UplinkUtility
+  - UplinkUtility
+
+- type: listing
+  id: UplinkHeadsetEncryptionKey
+  name: uplink-encryption-key-name
+  description: uplink-encryption-key-desc
+  productEntity: EncryptionKeySyndie
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkUtility
 
 - type: listing
   id: UplinkHypopen

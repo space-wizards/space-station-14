@@ -13,6 +13,7 @@
   - type: Ghost
     canInteract: true
   - type: Hands
+  - type: Puller
   - type: DoAfter
   - type: CombatMode
   - type: Actions
