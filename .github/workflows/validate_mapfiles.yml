@@ -1,6 +1,7 @@
 name: YAML schema validator
 on:
   push:
+  merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
 
