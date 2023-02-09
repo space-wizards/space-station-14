@@ -147,7 +147,7 @@ namespace Content.Server.Salvage
             if (!args.IsInDetailsRange)
                 return;
 
-            if (EntityManager.GetComponent<TransformComponent>(component.Owner).GridUid is EntityUid gridId &&
+            if (Transform(uid).GridUid is EntityUid gridId &&
                 _salvageGridStates.TryGetValue(gridId, out var salvageGridState))
             {
                 remainingTime = component.MagnetState.Until - salvageGridState.CurrentTime;
