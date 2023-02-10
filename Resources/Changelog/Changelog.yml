@@ -1,9 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Added the head's mantles to the uniform printer., type: Add}
-  id: 2515
-  time: '2022-10-23T17:56:59.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Added the Zookeeper. Find them patrolling and caring for Kettle station's
@@ -2917,3 +2912,9 @@ Entries:
   - {message: 'Add Fland Installation, a high population map', type: Add}
   id: 3014
   time: '2023-02-10T11:54:17.0000000+00:00'
+- author: nikthechampiongr
+  changes:
+  - {message: Nanotrasen has delivered new Judge robes to the courtrooms of certain
+      stations., type: Tweak}
+  id: 3015
+  time: '2023-02-10T19:32:33.0000000+00:00'
