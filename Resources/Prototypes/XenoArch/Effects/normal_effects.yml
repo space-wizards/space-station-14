@@ -324,26 +324,26 @@
     - shuffle-artifact-popup
 
 - type: artifactEffect
-  id: EffectT3PartsSpawn
+  id: EffectT4PartsSpawn
   targetDepth: 3
   effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
     maxSpawns: 10
     spawns:
-    - id: SuperCapacitorStockPart
+    - id: QuadraticCapacitorStockPart
       prob: 0.3
       maxAmount: 2
-    - id: PhasicScanningModuleStockPart
+    - id: TriphasicScanningModuleStockPart
       prob: 0.3
       maxAmount: 2
-    - id: PicoManipulatorStockPart
+    - id: FemtoManipulatorStockPart
       prob: 0.3
       maxAmount: 2
-    - id: UltraHighPowerMicroLaserStockPart
+    - id: QuadUltraMicroLaserStockPart
       prob: 0.3
       maxAmount: 2
-    - id: SuperMatterBinStockPart
+    - id: BluespaceMatterBinStockPart
       prob: 0.3
       maxAmount: 2
 
