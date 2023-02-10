@@ -188,6 +188,12 @@
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+        - UnderPlating
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille
@@ -422,6 +428,7 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice

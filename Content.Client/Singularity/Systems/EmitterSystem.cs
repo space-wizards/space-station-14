@@ -8,7 +8,7 @@ namespace Content.Client.Singularity.Systems;
 
 public sealed class EmitterSystem : SharedEmitterSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -23,13 +23,13 @@ public sealed class EmitterSystem : SharedEmitterSystem
 
         if (args.Sprite.LayerMapTryGet(StorageVisualLayers.Lock, out var lockLayer))
         {
-            if (!_appearance.TryGetData(uid, StorageVisuals.Locked, out bool locked, args.Component))
+            if (!_appearance.TryGetData<bool>(uid, StorageVisuals.Locked, out var locked, args.Component))
                 locked = false;
 
             args.Sprite.LayerSetVisible(lockLayer, locked);
         }
 
-        if (!_appearance.TryGetData(uid, EmitterVisuals.VisualState, out EmitterVisualState state, args.Component))
+        if (!_appearance.TryGetData<EmitterVisualState>(uid, EmitterVisuals.VisualState, out var state, args.Component))
             state = EmitterVisualState.Off;
 
         if (!args.Sprite.LayerMapTryGet(EmitterVisualLayers.Lights, out var layer))
