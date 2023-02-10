@@ -175,6 +175,8 @@ public sealed partial class ShuttleSystem
         hyperspace.TargetUid = target;
         hyperspace.Dock = dock;
         _console.RefreshShuttleConsoles();
+
+        RaiseLocalEvent(new ShuttleFTLTravelEvent(component, target, hyperspace));
     }
 
     private bool TrySetupFTL(ShuttleComponent shuttle, [NotNullWhen(true)] out FTLComponent? component)
@@ -530,5 +532,17 @@ public sealed partial class ShuttleSystem
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
         xform.WorldRotation = _random.NextAngle();
         return true;
+    }
+}
+public sealed class ShuttleFTLTravelEvent : EntityEventArgs
+{
+    public ShuttleComponent Shuttle;
+    public EntityUid Destination;
+    public FTLComponent FTLComponent;
+    public ShuttleFTLTravelEvent(ShuttleComponent shuttle, EntityUid dest, FTLComponent ftl)
+    {
+        Shuttle = shuttle;
+        Destination = dest;
+        FTLComponent = ftl;
     }
 }

@@ -246,6 +246,8 @@ namespace Content.Server.Communications
             comp.AnnouncementCooldownRemaining = comp.DelayBetweenAnnouncements;
             UpdateCommsConsoleInterface(comp);
 
+            RaiseLocalEvent(new CommunicationConsoleAnnouncementEvent(uid, comp, msg, message.Session.AttachedEntity));
+
             // allow admemes with vv
             Loc.TryGetString(comp.AnnouncementDisplayName, out var title);
             title ??= comp.AnnouncementDisplayName;
@@ -291,6 +293,22 @@ namespace Content.Server.Communications
 
             _roundEndSystem.CancelRoundEndCountdown(uid);
             _adminLogger.Add(LogType.Action, LogImpact.Extreme, $"{ToPrettyString(mob):player} has recalled the shuttle.");
+        }
+    }
+
+    public sealed class CommunicationConsoleAnnouncementEvent : EntityEventArgs
+    {
+        public EntityUid Uid;
+        public CommunicationsConsoleComponent Component;
+        public EntityUid? Sender;
+        public string Text;
+
+        public CommunicationConsoleAnnouncementEvent(EntityUid uid, CommunicationsConsoleComponent comp, string text, EntityUid? sender)
+        {
+            Uid = uid;
+            Component = comp;
+            Text = text;
+            Sender = sender;
         }
     }
 }

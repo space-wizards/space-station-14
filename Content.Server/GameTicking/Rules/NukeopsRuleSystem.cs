@@ -1,7 +1,9 @@
 using System.Linq;
 using Content.Server.Administration.Commands;
+using Content.Server.Arumoon.NukeOps;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.Communications;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.GameTicking.Rules.Configurations;
 using Content.Server.Ghost.Roles.Components;
@@ -10,6 +12,7 @@ using Content.Server.Humanoid.Systems;
 using Content.Server.Mind.Components;
 using Content.Server.NPC.Systems;
 using Content.Server.Nuke;
+using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.RoundEnd;
 using Content.Server.Shuttles.Components;
@@ -17,13 +20,19 @@ using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Store.Components;
+using Content.Server.Store.Systems;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Traitor;
 using Content.Shared.Dataset;
+using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Nuke;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Server.Player;
@@ -31,6 +40,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
@@ -52,6 +62,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     [Dependency] private readonly GameTicker _ticker = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly RandomHumanoidSystem _randomHumanoid = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly StoreSystem _storeSystem = default!;
+    [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+
+    public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
 
     private enum WinType
@@ -121,6 +138,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private EntityUid? _nukieShuttle;
     private EntityUid? _targetStation;
 
+    private bool _announcementMade = false;
+    private bool _leftOutpost = false;
+    private bool _tcDistributed = false;
+
     public override string Prototype => "Nukeops";
 
     private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
@@ -158,10 +179,111 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeExplodedEvent>(OnNukeExploded);
         SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
         SubscribeLocalEvent<NukeDisarmSuccessEvent>(OnNukeDisarm);
+        SubscribeLocalEvent<CommunicationConsoleAnnouncementEvent>(OnCommsAnnouncement);
+        SubscribeLocalEvent<ShuttleFTLTravelEvent>(OnFTLTravel);
+        SubscribeLocalEvent<WarConditionOnExamineComponent, ExaminedEvent>(OnInfoItemExamined);
         SubscribeLocalEvent<NukeOperativeComponent, GhostRoleSpawnerUsedEvent>(OnPlayersGhostSpawning);
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
+    }
+
+    private void OnInfoItemExamined(EntityUid uid, WarConditionOnExamineComponent component, ExaminedEvent args)
+        {
+            // This component applied to comms console so we must check is it have power to work
+            if (!RuleAdded || !_powerReceiverSystem.IsPowered(uid))
+                return;
+            
+            if (_tcDistributed)
+                { args.PushMarkup(Loc.GetString("nukeops-war-boost-distributed"));
+                  return; }
+            
+            var roundTime = _gameTicker.RoundDuration();
+
+            var conditionString = "";
+            var metConditions = true;
+            
+            if (_leftOutpost)
+                { conditionString += $"- {Loc.GetString("nukeops-war-conditions-left-outpost")}\n";
+                  metConditions = false; }
+            if (_operativePlayers.Count < _nukeopsRuleConfig.WarMinCrewSize)
+                { conditionString += $"- {Loc.GetString("nukeops-war-conditions-small-crew", ("min_size", _nukeopsRuleConfig.WarMinCrewSize))}\n";
+                  metConditions = false; }
+            if (roundTime > _nukeopsRuleConfig.WarTimeLimit)
+                { conditionString += $"- {Loc.GetString("nukeops-war-conditions-time-out")}\n";
+                  metConditions = false; }
+            
+            if (metConditions)
+            {
+                var timeLeft = _nukeopsRuleConfig.WarTimeLimit.Subtract(roundTime);
+                args.PushMarkup(
+                    $"{Loc.GetString("nukeops-war-boost-possible")}\n{Loc.GetString("nukeops-war-boost-timer", ("minutes", timeLeft.Minutes), ("seconds", timeLeft.Seconds))}"
+                    );
+            }
+            else
+            {
+                args.PushMarkup($"{Loc.GetString("nukeops-war-boost-impossible")}\n{conditionString}");
+            }
+            
+        }
+    private void OnCommsAnnouncement(CommunicationConsoleAnnouncementEvent ev)
+    {
+    	if (!RuleAdded || !ev.Component.WarAnnouncement)
+            return;
+
+        _announcementMade = true;
+        Logger.DebugS("nukes", "War announcement");
+
+        var roundTime = _gameTicker.RoundDuration();
+
+        if (
+            !_leftOutpost && 
+            _operativePlayers.Count >= _nukeopsRuleConfig.WarMinCrewSize &&
+            roundTime < _nukeopsRuleConfig.WarTimeLimit
+        )
+        {
+            GiveExtraTC();
+        }
+    }
+
+    private void OnFTLTravel(ShuttleFTLTravelEvent ev)
+    {
+        var shuttle = ev.Shuttle.Owner;
+    	if (!RuleAdded || !TryComp<NukeOpsShuttleComponent>(shuttle, out var nukeShuttleComponent))
+            return;
+        
+        _leftOutpost = true;
+    }
+
+    private void GiveExtraTC()
+    {
+        var uplinkList = new List<StoreComponent>();
+
+        foreach (var uplink in EntityQuery<StoreComponent>())
+        {
+            if (_tag.HasTag(uplink.Owner, "NukeOpsUplink")) uplinkList.Add(uplink);
+        }
+
+        var tcPerUplink = _nukeopsRuleConfig.WarTCAmount / uplinkList.Count;
+
+        _tcDistributed = true;
+        foreach (var uplink in uplinkList)
+        {
+            // Uplink can't get more TC if it wasn't initialized
+            if (!uplink.Opened)
+            {
+                _storeSystem.RefreshAllListings(uplink);
+                _storeSystem.InitializeFromPreset(uplink.Preset, uplink);
+                uplink.Opened = true;
+            }
+
+            _storeSystem.TryAddCurrency(
+                new Dictionary<string, FixedPoint2>() { { TelecrystalCurrencyPrototype, tcPerUplink } }, uplink);
+
+            var owner = uplink.Owner;
+            var msg = Loc.GetString("store-currency-war-boost-given", ("target", owner));
+            _popupSystem.PopupEntity(msg, owner);
+        }
     }
 
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)
@@ -240,6 +362,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         // exist in the base game.
 
         _targetStation = _stationSystem.Stations.FirstOrNull();
+        _announcementMade = false;
+        _leftOutpost = false;
+        _tcDistributed = true;
 
         if (_targetStation == null)
         {
@@ -657,6 +782,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         {
             _shuttleSystem.TryFTLDock(shuttle, _nukieOutpost.Value);
         }
+        var component = AddComp<NukeOpsShuttleComponent>(shuttleId);
 
         _nukiePlanet = mapId;
         _nukieShuttle = shuttleId;
@@ -822,6 +948,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         _winConditions.Clear();
         _nukieOutpost = null;
         _nukiePlanet = null;
+        _leftOutpost = false;
+        _announcementMade = false;
+        _tcDistributed = false;
 
         _startingGearPrototypes.Clear();
         _operativeNames.Clear();

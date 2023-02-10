@@ -72,6 +72,7 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 0
+  - type: WarConditionOnExamine
 
 - type: entity
   parent: BaseUplinkRadio
