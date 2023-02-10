@@ -30,19 +30,19 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField("warTCAmount")]
-    public int WarTCAmountPerNukie = 50;
+    public int WarTCAmountPerNukie = 40;
 
     /// <summary>
     ///     Amount of time given to get extra TC for war declare. 
     /// </summary>
     [DataField("warTimeLimit")]
-    public TimeSpan WarTimeLimit = TimeSpan.FromMinutes(20);
+    public TimeSpan WarTimeLimit = TimeSpan.FromMinutes(6);
 
     /// <summary>
     ///     Minimal crew size for war extra TC
     /// </summary>
     [DataField("warMinCrewSize")]
-    public int WarMinCrewSize = 0;
+    public int WarMinCrewSize = 0; // 4
 
     [DataField("randomHumanoidSettings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string RandomHumanoidSettingsPrototype = "NukeOp";

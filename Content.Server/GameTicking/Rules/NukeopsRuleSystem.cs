@@ -191,7 +191,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     private void OnInfoItemExamined(EntityUid uid, WarConditionOnExamineComponent component, ExaminedEvent args)
         {
             // This component applied to comms console so we must check is it have power to work
-            if (!RuleAdded || !_powerReceiverSystem.IsPowered(uid))
+            if (!RuleAdded && _powerReceiverSystem.IsPowered(uid))
                 return;
             
             if (_tcDistributed)
