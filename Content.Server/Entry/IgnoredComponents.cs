@@ -13,7 +13,6 @@ namespace Content.Server.Entry
             "GuidebookControlsTest",
             "GuideHelp",
             "Clickable",
-            "SmoothEdge",
             "Icon",
             "ClientEntitySpawner",
             "HandheldGPS",

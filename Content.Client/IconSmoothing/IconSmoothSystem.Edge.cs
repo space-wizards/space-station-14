@@ -1,10 +1,12 @@
+using Content.Shared.IconSmoothing;
 using Robust.Client.GameObjects;
-using Robust.Shared.Utility;
 
 namespace Content.Client.IconSmoothing;
 
 public sealed partial class IconSmoothSystem
 {
+    // Handles drawing edge sprites on the non-smoothed edges.
+
     private void InitializeEdge()
     {
         SubscribeLocalEvent<SmoothEdgeComponent, ComponentStartup>(OnEdgeStartup);
