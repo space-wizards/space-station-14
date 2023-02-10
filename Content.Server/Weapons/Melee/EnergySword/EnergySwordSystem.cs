@@ -59,32 +59,32 @@ namespace Content.Server.Weapons.Melee.EnergySword
 
             if (comp.Activated)
             {
-                TurnOff(comp);
+                TurnOff(uid, comp);
             }
             else
             {
-                TurnOn(comp);
+                TurnOn(uid, comp);
             }
 
-            UpdateAppearance(comp);
+            UpdateAppearance(uid, comp);
         }
 
-        private void TurnOff(EnergySwordComponent comp)
+        private void TurnOff(EntityUid uid, EnergySwordComponent comp)
         {
             if (!comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out ItemComponent? item))
+            if (TryComp(uid, out ItemComponent? item))
             {
-                _item.SetSize(comp.Owner, 5, item);
+                _item.SetSize(uid, 5, item);
             }
 
-            if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
+            if (TryComp<DisarmMalusComponent>(uid, out var malus))
             {
-                malus.Malus -= comp.litDisarmMalus;
+                malus.Malus -= comp.LitDisarmMalus;
             }
 
-            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+            if(TryComp<MeleeWeaponComponent>(uid, out var weaponComp))
             {
                 weaponComp.HitSound = comp.OnHitOff;
                 if (comp.Secret)
@@ -92,49 +92,49 @@ namespace Content.Server.Weapons.Melee.EnergySword
             }
 
             if (comp.IsSharp)
-                RemComp<SharpComponent>(comp.Owner);
+                RemComp<SharpComponent>(uid);
 
-            _audio.Play(comp.DeActivateSound, Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner, true, comp.DeActivateSound.Params);
+            _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
             comp.Activated = false;
         }
 
-        private void TurnOn(EnergySwordComponent comp)
+        private void TurnOn(EntityUid uid, EnergySwordComponent comp)
         {
             if (comp.Activated)
                 return;
 
-            if (TryComp(comp.Owner, out ItemComponent? item))
+            if (TryComp(uid, out ItemComponent? item))
             {
-                _item.SetSize(comp.Owner, 9999, item);
+                _item.SetSize(uid, 9999, item);
             }
 
             if (comp.IsSharp)
-                EnsureComp<SharpComponent>(comp.Owner);
+                EnsureComp<SharpComponent>(uid);
 
-            if(TryComp<MeleeWeaponComponent>(comp.Owner, out var weaponComp))
+            if(TryComp<MeleeWeaponComponent>(uid, out var weaponComp))
             {
                 weaponComp.HitSound = comp.OnHitOn;
                 if (comp.Secret)
                     weaponComp.HideFromExamine = false;
             }
-            _audio.Play(comp.ActivateSound, Filter.Pvs(comp.Owner, entityManager: EntityManager), comp.Owner, true, comp.ActivateSound.Params);
+            _audio.Play(comp.ActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.ActivateSound.Params);
 
-            if (TryComp<DisarmMalusComponent>(comp.Owner, out var malus))
+            if (TryComp<DisarmMalusComponent>(uid, out var malus))
             {
-                malus.Malus += comp.litDisarmMalus;
+                malus.Malus += comp.LitDisarmMalus;
             }
 
             comp.Activated = true;
         }
 
-        private void UpdateAppearance(EnergySwordComponent component)
+        private void UpdateAppearance(EntityUid uid, EnergySwordComponent component)
         {
-            if (!TryComp(component.Owner, out AppearanceComponent? appearanceComponent))
+            if (!TryComp(uid, out AppearanceComponent? appearanceComponent))
                 return;
 
-            _appearance.SetData(component.Owner, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
-            _appearance.SetData(component.Owner, ToggleableLightVisuals.Color, component.BladeColor, appearanceComponent);
+            _appearance.SetData(uid, ToggleableLightVisuals.Enabled, component.Activated, appearanceComponent);
+            _appearance.SetData(uid, ToggleableLightVisuals.Color, component.BladeColor, appearanceComponent);
         }
 
         private void OnInteractUsing(EntityUid uid, EnergySwordComponent comp, InteractUsingEvent args)
