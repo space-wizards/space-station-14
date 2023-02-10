@@ -134,6 +134,7 @@ public sealed partial class ChemistrySystem
 
         UseInjector(args.Args.Target.Value, args.Args.User, uid, component);
 
+        args.Handled = true;
     }
 
     private void OnInjectorAfterInteract(EntityUid uid, InjectorComponent component, AfterInteractEvent args)
