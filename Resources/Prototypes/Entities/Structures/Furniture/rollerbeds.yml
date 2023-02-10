@@ -18,6 +18,9 @@
       - state: rollerbed_folded
         map: ["foldedLayer"]
         visible: false
+      - state: rollerbed_buckled
+        map: ["buckledLayer"]
+        visible: false
     - type: MovedByPressure
     - type: DamageOnHighSpeedImpact
       soundHit: /Audio/Effects/bang.ogg
@@ -55,9 +58,16 @@
     - type: GenericVisualizer
       visuals:
         enum.StrapVisuals.State:
+          buckledLayer:
+            True: {visible: true}
+            False: {visible: false}
+        enum.FoldedVisuals.State: # Copypasta from BaseFoldable b/c collections don't merge when overriding component prototypes.
+          foldedLayer:
+            True: {visible: true}
+            False: {visible: false}
           unfoldedLayer:
-            True: {state: "rollerbed_buckled"}
-            False: {state: "rollerbed"}
+            True: {visible: false}
+            False: {visible: true}
     - type: StaticPrice
       price: 200
 
@@ -82,13 +92,10 @@
     - state: cheap_rollerbed_folded
       map: ["foldedLayer"]
       visible: false
+    - state: cheap_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StrapVisuals.State:
-        unfoldedLayer:
-          True: {state: "cheap_rollerbed_buckled"}
-          False: {state: "cheap_rollerbed"}
 
 - type: entity
   parent: CheapRollerBed
@@ -111,13 +118,10 @@
     - state: emergency_rollerbed_folded
       map: ["foldedLayer"]
       visible: false
+    - state: emergency_rollerbed_buckled
+      map: ["buckledLayer"]
+      visible: false
   - type: Appearance
-  - type: GenericVisualizer
-    visuals:
-      enum.StrapVisuals.State:
-        unfoldedLayer:
-          True: {state: "emergency_rollerbed_buckled"}
-          False: {state: "emergency_rollerbed"}
 
 - type: entity
   parent: EmergencyRollerBed
