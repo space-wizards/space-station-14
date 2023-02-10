@@ -112,7 +112,8 @@
 - type: entity
   id: WallRockGold
   parent: WallRock
-  name: rock (gold)
+  desc: An ore vein rich with gold
+  suffix: Gold
   components:
     - type: OreVein
       oreChance: 1.0
@@ -133,7 +134,8 @@
 - type: entity
   id: WallRockPlasma
   parent: WallRock
-  name: rock (plasma)
+  desc: An ore vein rich with plasma
+  suffix: Plasma
   components:
     - type: OreVein
       oreChance: 1.0
@@ -154,7 +156,8 @@
 - type: entity
   id: WallRockQuartz
   parent: WallRock
-  name: rock (quartz)
+  desc: An ore vein rich with quartz
+  suffix: Quartz
   components:
     - type: OreVein
       oreChance: 1.0
@@ -175,7 +178,8 @@
 - type: entity
   id: WallRockSilver
   parent: WallRock
-  name: rock (silver)
+  desc: An ore vein rich with silver
+  suffix: Silver
   components:
     - type: OreVein
       oreChance: 1.0
@@ -193,10 +197,12 @@
           state: rock_west
         - state: rock_silver
 
+# Yes I know it drops steel but we may get smelting at some point
 - type: entity
   id: WallRockTin
   parent: WallRock
-  name: rock (steel)
+  desc: An ore vein rich with steel
+  suffix: Steel
   components:
     - type: OreVein
       oreChance: 1.0
@@ -217,7 +223,8 @@
 - type: entity
   id: WallRockUranium
   parent: WallRock
-  name: rock (uranium)
+  desc: An ore vein rich with uranium
+  suffix: Uranium
   components:
     - type: OreVein
       oreChance: 1.0
