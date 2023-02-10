@@ -44,6 +44,22 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
     }
 }
 
+public abstract class DoAfterE : HandledEntityEventArgs
+{
+    public bool Cancelled;
+    public DoAfterEventArgs? Args;
+
+}
+
+public sealed class DAE : DoAfterE
+{
+
+    public DAE(DoAfterEventArgs args)
+    {
+        Args = args;
+    }
+}
+
 /// <summary>
 /// Use this event to raise your DoAfter events now.
 /// Check for cancelled, and if it is, then null the token there.

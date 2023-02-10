@@ -329,6 +329,8 @@ public abstract class SharedDoAfterSystem : EntitySystem
         /// <param name="args"></param>
         public void Send(bool cancelled, DoAfterEventArgs args)
         {
+            //TODO: Raise event arg event here?
+            //Basically have other events inherit DAE and then raise from there?
             var ev = new DoAfterEvent(cancelled, args);
 
             //TODO: Sends three times which works but doesn't in cases where you need it to run only once

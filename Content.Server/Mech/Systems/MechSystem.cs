@@ -52,8 +52,7 @@ public sealed class MechSystem : SharedMechSystem
         SubscribeLocalEvent<MechComponent, MechEntryCanclledEvent>(OnEntryExitCancelled);
         SubscribeLocalEvent<MechComponent, MechExitFinishedEvent>(OnExitFinished);
         SubscribeLocalEvent<MechComponent, MechExitCanclledEvent>(OnEntryExitCancelled);
-        SubscribeLocalEvent<MechComponent, MechRemoveBatteryFinishedEvent>(OnRemoveBatteryFinished);
-        SubscribeLocalEvent<MechComponent, MechRemoveBatteryCancelledEvent>(OnRemoveBatteryCancelled);
+        SubscribeLocalEvent<MechComponent, DoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<MechComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<MechComponent, MechEquipmentRemoveMessage>(OnRemoveEquipmentMessage);
@@ -88,32 +87,25 @@ public sealed class MechSystem : SharedMechSystem
             return;
         }
 
-        if (component.EntryTokenSource == null &&
-            TryComp<ToolComponent>(args.Used, out var tool) &&
-            tool.Qualities.Contains("Prying") &&
-            component.BatterySlot.ContainedEntity != null)
+        if (TryComp<ToolComponent>(args.Used, out var tool) && tool.Qualities.Contains("Prying") && component.BatterySlot.ContainedEntity != null)
         {
-            component.EntryTokenSource = new();
-            _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, component.EntryTokenSource.Token, uid, args.Target)
+            _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.BatteryRemovalDelay, target:uid, used:args.Target)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
-                TargetFinishedEvent = new MechRemoveBatteryFinishedEvent(),
-                TargetCancelledEvent = new MechRemoveBatteryCancelledEvent()
             });
         }
     }
 
-    private void OnRemoveBatteryFinished(EntityUid uid, MechComponent component, MechRemoveBatteryFinishedEvent args)
+    private void OnDoAfter(EntityUid uid, MechComponent component, DoAfterEvent args)
     {
-        component.EntryTokenSource = null;
+        if (args.Cancelled || args.Handled)
+            return;
+
         RemoveBattery(uid, component);
         _actionBlocker.UpdateCanMove(uid);
-    }
 
-    private void OnRemoveBatteryCancelled(EntityUid uid, MechComponent component, MechRemoveBatteryCancelledEvent args)
-    {
-        component.EntryTokenSource = null;
+        args.Handled = true;
     }
 
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
@@ -172,10 +164,7 @@ public sealed class MechSystem : SharedMechSystem
                 Text = Loc.GetString("mech-verb-enter"),
                 Act = () =>
                 {
-                    if (component.EntryTokenSource != null)
-                        return;
-                    component.EntryTokenSource = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.EntryDelay, component.EntryTokenSource.Token, uid)
+                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.EntryDelay, target:uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnStun = true,
@@ -200,16 +189,13 @@ public sealed class MechSystem : SharedMechSystem
                 Priority = 1, // Promote to top to make ejecting the ALT-click action
                 Act = () =>
                 {
-                    if (component.EntryTokenSource != null)
-                        return;
                     if (args.User == component.PilotSlot.ContainedEntity)
                     {
                         TryEject(uid, component);
                         return;
                     }
 
-                    component.EntryTokenSource = new CancellationTokenSource();
-                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExitDelay, component.EntryTokenSource.Token, uid)
+                    _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExitDelay, target:uid)
                     {
                         BreakOnUserMove = true,
                         BreakOnTargetMove = true,

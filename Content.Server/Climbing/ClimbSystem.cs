@@ -126,12 +126,14 @@ public sealed class ClimbSystem : SharedClimbSystem
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent args)
     {
         //TODO: Maybe have an event trigger here that's only on this
+        //Currently will run and eat up a doafter if mobs have other comps on them that handle doafters
+        //Might want to do a unique check like seeing if the component matches?
+        //That might not prevent it from being run on the user though, assuming a user drags a target
         /*if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
         Climb(uid, args.Args.User, args.Args.Used.Value, args.Args.Target.Value, climbing: component);
 
-        args.Args.Handled = true;
         args.Handled = true;*/
     }
 
