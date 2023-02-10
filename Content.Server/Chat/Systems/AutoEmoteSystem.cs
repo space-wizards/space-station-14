@@ -1,5 +1,6 @@
 namespace Content.Server.Chat.Systems;
 
+using System.Linq;
 using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -66,13 +67,11 @@ public sealed class AutoEmoteSystem : EntitySystem
 
     private void OnUnpaused(EntityUid uid, AutoEmoteComponent autoEmote, ref EntityUnpausedEvent args)
     {
-        autoEmote.NextEmoteTime = TimeSpan.MaxValue;
         foreach (var key in autoEmote.EmoteTimers.Keys)
         {
             autoEmote.EmoteTimers[key] += args.PausedTime;
-            if (autoEmote.NextEmoteTime > autoEmote.EmoteTimers[key])
-                autoEmote.NextEmoteTime = autoEmote.EmoteTimers[key];
         }
+        autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
     }
 
     /// <summary>
@@ -100,8 +99,11 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
 
-        autoEmote.EmoteTimers.Remove(autoEmotePrototypeId);
-        return autoEmote.Emotes.Remove(autoEmotePrototypeId);
+        if (!autoEmote.EmoteTimers.Remove(autoEmotePrototypeId))
+            return false;
+
+        autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
+        return true;
     }
 
     /// <summary>

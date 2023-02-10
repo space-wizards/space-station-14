@@ -9,24 +9,24 @@ namespace Content.Server.Zombies;
 public sealed class ActiveZombieComponent : Component
 {
     /// <summary>
-    /// What emote to preform
+    /// What emote to preform.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public string GroanEmoteId = "Scream";
 
     /// <summary>
-    /// Minimum time between groans
+    /// Minimum time between groans.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan DamageGroanCooldown = TimeSpan.FromSeconds(2);
 
     /// <summary>
-    /// Chance to groan
+    /// Chance to groan.
     /// </summary>
     public float DamageGroanChance = 0.5f;
 
     /// <summary>
-    /// The last time the zombie groaned from taking damage
+    /// The last time the zombie groaned from taking damage.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan LastDamageGroan = TimeSpan.Zero;
