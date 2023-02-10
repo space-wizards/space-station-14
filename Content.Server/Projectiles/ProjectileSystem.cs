@@ -11,6 +11,11 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
+using Content.Server.Hands.Components;
+using Robust.Shared.Random;
+using Content.Server.Popups;
+using Content.Shared.Popups;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Projectiles
 {
@@ -21,6 +26,9 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly GunSystem _guns = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
         public override void Initialize()
         {
@@ -42,6 +50,25 @@ namespace Content.Server.Projectiles
 
             var otherEntity = args.OtherFixture.Body.Owner;
             var otherName = ToPrettyString(otherEntity);
+
+            if (TryComp<HandsComponent>(otherEntity, out var hands))
+            {
+                foreach (var (_, hand) in hands.Hands)
+                {
+                    if (TryComp<ReflectProjectileComponent>(hand.HeldEntity, out var reflect) && _random.Prob(reflect.ReflectChance))
+                    {
+                        var vel = _physics.GetMapLinearVelocity(uid);
+                        var force = args.OurFixture.Body.Force;
+                        _physics.ResetDynamics(args.OurFixture.Body);
+                        _physics.ApplyForce(uid, -force);
+                        _physics.SetLinearVelocity(uid, -vel);
+                        component.Shooter = otherEntity;
+                        _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
+                        return;
+                    }
+                }
+            }
+
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
             var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
             component.DamagedEntity = true;

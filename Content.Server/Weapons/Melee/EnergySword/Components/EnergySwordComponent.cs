@@ -54,5 +54,8 @@ namespace Content.Server.Weapons.Melee.EnergySword.Components
 
         [DataField("litDisarmMalus")]
         public float LitDisarmMalus = 0.6f;
+
+        [DataField("litProjReflectChance")]
+        public float LitProjReflectChance;
     }
 }

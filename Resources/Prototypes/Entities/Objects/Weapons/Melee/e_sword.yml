@@ -11,6 +11,7 @@
             Heat: 9.5
             Blunt: -4.5
     litDisarmMalus: 0.6
+    litProjReflectChance: 0.2
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:

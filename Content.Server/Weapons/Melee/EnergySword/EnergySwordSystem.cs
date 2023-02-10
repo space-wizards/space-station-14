@@ -1,5 +1,6 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
+using Content.Server.Projectiles;
 using Content.Server.Weapons.Melee.EnergySword.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -94,6 +95,8 @@ namespace Content.Server.Weapons.Melee.EnergySword
             if (comp.IsSharp)
                 RemComp<SharpComponent>(uid);
 
+            RemComp<ReflectProjectileComponent>(uid);
+
             _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
             comp.Activated = false;
@@ -124,6 +127,9 @@ namespace Content.Server.Weapons.Melee.EnergySword
             {
                 malus.Malus += comp.LitDisarmMalus;
             }
+
+            var reflectProj = EnsureComp<ReflectProjectileComponent>(uid);
+            reflectProj.ReflectChance = comp.LitProjReflectChance;
 
             comp.Activated = true;
         }
