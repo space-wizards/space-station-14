@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0 (Don't know what to put here)",
+  "copyright": "Obtained from rosysyntax#6514 on discord.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "pill-container"
+    }
+  ]
+}

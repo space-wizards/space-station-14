@@ -319,3 +319,29 @@
       tags:
         - Pill
   - type: Dumpable
+
+- type: entity
+  name: large pill canister
+  id: PillCanisterLarge
+  parent: PillCanister
+  description: An unwieldy canister that holds up to 30 pills.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/large_pill_canister.rsi
+    state: pill-container
+  - type: Item
+    sprite: Objects/Specific/Chemistry/large_pill_canister.rsi
+  - type: Tag
+    tags:
+      - PillCanister
+  - type: Storage
+    capacity: 30
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1
+    storageInsertSound: /Audio/Effects/pill_insert.ogg
+    storageRemoveSound: /Audio/Effects/pill_remove.ogg
+    whitelist:
+      tags:
+        - Pill
+  - type: Dumpable

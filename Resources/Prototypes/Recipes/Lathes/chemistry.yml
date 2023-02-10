@@ -42,6 +42,13 @@
   completetime: 2
   materials:
     Plastic: 100
+    
+- type: latheRecipe
+  id: PillCanisterLarge
+  result: PillCanisterLarge
+  completetime: 2
+  materials:
+    Plastic: 350
 
 - type: latheRecipe
   id: ChemistryEmptyBottle01

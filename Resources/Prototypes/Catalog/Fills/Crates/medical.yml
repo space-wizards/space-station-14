@@ -40,6 +40,9 @@
         amount: 2
       - id: BoxBottle
         amount: 2
+      - id: PillCanisterLarge
+        amount: 1
+      
 
 - type: entity
   id: CrateMedicalSurgery
