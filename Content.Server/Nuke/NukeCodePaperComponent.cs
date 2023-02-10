@@ -7,5 +7,11 @@ namespace Content.Server.Nuke
     [RegisterComponent]
     public sealed class NukeCodePaperComponent : Component
     {
+        /// <summary>
+        /// Whether or not the paper contains the codes for only
+        /// the local station nuke, or for all nukes that exist.
+        /// </summary>
+        [DataField("getAllCodes")]
+        public bool GetAllCodes;
     }
 }

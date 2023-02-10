@@ -154,8 +154,17 @@
   id: NukeCodePaper
   name: nuclear authentication codes
   components:
-    - type: NukeCodePaper
-    - type: Paper
+  - type: NukeCodePaper
+    getAllCodes: true
+  - type: Paper
+
+- type: entity
+  parent: NukeCodePaper
+  id: NukeCodePaperStation
+  suffix: Station Only
+  components:
+  - type: NukeCodePaper
+    getAllCodes: false
 
 - type: entity
   name: pen

@@ -4,6 +4,7 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
@@ -23,12 +24,15 @@ namespace Content.Server.Nuke
 
         private void OnMapInit(EntityUid uid, NukeCodePaperComponent component, MapInitEvent args)
         {
-            SetupPaper(uid);
+            SetupPaper(uid, component);
         }
 
-        private void SetupPaper(EntityUid uid, EntityUid? station = null)
+        private void SetupPaper(EntityUid uid, NukeCodePaperComponent? component = null, EntityUid? station = null)
         {
-            if (TryGetRelativeNukeCode(uid, out var paperContent, station))
+            if (!Resolve(uid, ref component))
+                return;
+
+            if (TryGetRelativeNukeCode(uid, out var paperContent, station, getAllCodes: component.GetAllCodes))
             {
                 _paper.SetContent(uid, paperContent);
             }
@@ -49,7 +53,8 @@ namespace Content.Server.Nuke
             var wasSent = false;
             foreach (var fax in faxes)
             {
-                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(fax.Owner, out var paperContent, station))
+                var faxEnt = fax.Owner;
+                if (!fax.ReceiveNukeCodes || !TryGetRelativeNukeCode(faxEnt, out var paperContent, station))
                 {
                     continue;
                 }
@@ -60,7 +65,7 @@ namespace Content.Server.Nuke
                     null,
                     "paper_stamp-cent",
                     new() { Loc.GetString("stamp-component-stamped-name-centcom") });
-                _faxSystem.Receive(fax.Owner, printout, null, fax);
+                _faxSystem.Receive(faxEnt, printout, null, fax);
 
                 wasSent = true;
             }
@@ -78,7 +83,8 @@ namespace Content.Server.Nuke
             EntityUid uid,
             [NotNullWhen(true)] out string? nukeCode,
             EntityUid? station = null,
-            TransformComponent? transform = null)
+            TransformComponent? transform = null,
+            bool getAllCodes = false)
         {
             nukeCode = null;
             if (!Resolve(uid, ref transform))
@@ -88,20 +94,25 @@ namespace Content.Server.Nuke
 
             var owningStation = station ?? _station.GetOwningStation(uid);
 
+            var codesMessage = new FormattedMessage();
             // Find the first nuke that matches the passed location.
             foreach (var nuke in EntityQuery<NukeComponent>())
             {
-                if (owningStation == null && nuke.OriginMapGrid != (transform.MapID, transform.GridUid)
-                    || nuke.OriginStation != owningStation)
+                if (!getAllCodes &&
+                    (owningStation == null &&
+                    nuke.OriginMapGrid != (transform.MapID, transform.GridUid) ||
+                    nuke.OriginStation != owningStation))
                 {
                     continue;
                 }
 
-                nukeCode = Loc.GetString("nuke-codes-message", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code));
-                return true;
+                codesMessage.PushNewline();
+                codesMessage.AddMarkup(Loc.GetString("nuke-codes-list", ("name", MetaData(nuke.Owner).EntityName), ("code", nuke.Code)));
             }
 
-            return false;
+            if (!codesMessage.IsEmpty)
+                nukeCode = Loc.GetString("nuke-codes-message")+codesMessage;
+            return !codesMessage.IsEmpty;
         }
     }
 }
