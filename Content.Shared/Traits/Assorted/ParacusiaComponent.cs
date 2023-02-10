@@ -33,6 +33,8 @@ public sealed class ParacusiaComponent : Component
     public SoundSpecifier Sounds { get; set; } = default!;
 
     public float NextIncidentTime;
+
+    public IPlayingAudioStream? Stream;
 }
 
 [Serializable, NetSerializable]

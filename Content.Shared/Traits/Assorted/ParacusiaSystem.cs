@@ -9,7 +9,6 @@ public sealed class ParacusiaSystem : EntitySystem
     {
         SubscribeLocalEvent<ParacusiaComponent, ComponentGetState>(GetCompState);
         SubscribeLocalEvent<ParacusiaComponent, ComponentHandleState>(HandleCompState);
-        SubscribeLocalEvent<ParacusiaComponent, RoundRestartCleanupEvent>(OnShutdown);
     }
     private void GetCompState(EntityUid uid, ParacusiaComponent component, ref ComponentGetState args)
     {
@@ -30,10 +29,5 @@ public sealed class ParacusiaSystem : EntitySystem
         component.MinTimeBetweenIncidents = state.MinTimeBetweenIncidents;
         component.MaxSoundDistance = state.MaxSoundDistance;
         component.Sounds = state.Sounds;
-    }
-
-    public void OnShutdown(EntityUid uid, ParacusiaComponent component, RoundRestartCleanupEvent ev)
-    {
-        RemComp(component.Owner, component);
     }
 }

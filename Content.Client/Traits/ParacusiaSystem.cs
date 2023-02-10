@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 using Content.Client.UserInterface.Controls;
 using Robust.Shared.GameStates;
 using Serilog.Debugging;
+using Content.Shared.GameTicking;
 
 namespace Content.Client.Traits;
 
@@ -20,12 +21,18 @@ public sealed class ParacusiaSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(SetupParacusia);
+        SubscribeLocalEvent<ParacusiaComponent, RoundRestartCleanupEvent>(ShutdownParacusia);
     }
 
     private void SetupParacusia(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
     {
         component.NextIncidentTime =
             _random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents);
+    }
+
+    public void ShutdownParacusia(EntityUid uid, ParacusiaComponent component, RoundRestartCleanupEvent ev)
+    {
+        component.Stream?.Stop();
     }
 
     public override void Update(float frameTime)
@@ -57,7 +64,7 @@ public sealed class ParacusiaSystem : EntitySystem
             _camera.KickCamera(paracusia.Owner, randomOffset);
 
             // Play the sound
-            _audio.PlayStatic(paracusia.Sounds, paracusia.Owner, newCoords);
+            paracusia.Stream = _audio.PlayStatic(paracusia.Sounds, paracusia.Owner, newCoords);
         }
     }
 }
