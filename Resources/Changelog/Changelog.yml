@@ -1,11 +1,4 @@
 Entries:
-- author: 25203
-  changes:
-  - {message: Sci can now print seed extractor machine boards after unlocking advanced
-      botany. They can be upgraded with better manipulators (seed output) and capacitors
-      (power efficiency)., type: Add}
-  id: 2510
-  time: '2022-10-22T22:26:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Generators can now be upgraded using machine parts., type: Add}
@@ -2925,3 +2918,8 @@ Entries:
   - {message: APEs are now much lighter and easier to move around., type: Tweak}
   id: 3009
   time: '2023-02-08T02:10:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPC prototype reloading for realsies., type: Fix}
+  id: 3010
+  time: '2023-02-08T14:01:27.0000000+00:00'
