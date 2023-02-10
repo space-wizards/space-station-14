@@ -7,6 +7,7 @@ guide-entry-power = Электроснабжение
 guide-entry-ame = Двигатель антиматерии (ДАМ)
 guide-entry-singularity = Сингулярный двигатель
 guide-entry-science = Наука
+guide-entry-radio = Рация
 guide-entry-machine-upgrading = Улучшение Машин
 guide-entry-controls = Управление
 guide-entry-jobs = Роли
