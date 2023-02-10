@@ -257,6 +257,11 @@
     Telecrystal: 20
   categories:
   - UplinkUtility
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - NukeOpsUplink
 
 - type: listing
   id: UplinkStealthBox

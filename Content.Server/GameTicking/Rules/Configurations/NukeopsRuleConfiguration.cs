@@ -27,16 +27,16 @@ public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
     public int MaxOperatives = 5;
     
     /// <summary>
-    ///     This amount of TC will be distributed. Note that it distributed for all uplinks not each one
+    ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField("warTCAmount")]
-    public int WarTCAmount = 280;
+    public int WarTCAmountPerNukie = 50;
 
     /// <summary>
     ///     Amount of time given to get extra TC for war declare. 
     /// </summary>
     [DataField("warTimeLimit")]
-    public TimeSpan WarTimeLimit = TimeSpan.FromMinutes(2);
+    public TimeSpan WarTimeLimit = TimeSpan.FromMinutes(20);
 
     /// <summary>
     ///     Minimal crew size for war extra TC

@@ -264,12 +264,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             if (_tag.HasTag(uplink.Owner, "NukeOpsUplink")) uplinkList.Add(uplink);
         }
 
-        var tcPerUplink = _nukeopsRuleConfig.WarTCAmount / uplinkList.Count;
-
         _tcDistributed = true;
         foreach (var uplink in uplinkList)
         {
-            // Uplink can't get more TC if it wasn't initialized
+            // Uplink can't get TC if it wasn't initialized
             if (!uplink.Opened)
             {
                 _storeSystem.RefreshAllListings(uplink);
@@ -278,7 +276,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
             }
 
             _storeSystem.TryAddCurrency(
-                new Dictionary<string, FixedPoint2>() { { TelecrystalCurrencyPrototype, tcPerUplink } }, uplink);
+                new Dictionary<string, FixedPoint2>() { { TelecrystalCurrencyPrototype, _nukeopsRuleConfig.WarTCAmountPerNukie} }, uplink);
 
             var owner = uplink.Owner;
             var msg = Loc.GetString("store-currency-war-boost-given", ("target", owner));
