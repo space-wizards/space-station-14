@@ -70,7 +70,7 @@ public sealed class DoorSystem : SharedDoorSystem
         if(!AppearanceSystem.TryGetData<DoorState>(uid, DoorVisuals.State, out var state, args.Component))
             state = DoorState.Closed;
         
-        var animPlayer = Comp<AnimationPlayerComponent>(uid);
+        TryComp<AnimationPlayerComponent>(uid, out var animPlayer);
         if (_animationSystem.HasRunningAnimation(uid, animPlayer, DoorComponent.AnimationKey))
             _animationSystem.Stop(uid, animPlayer, DoorComponent.AnimationKey); // Halt all running anomations.
 
@@ -86,9 +86,11 @@ public sealed class DoorSystem : SharedDoorSystem
             }
         }
 
+        args.Sprite.DrawDepth = comp.ClosedDrawDepth;
         switch(state)
         {
             case DoorState.Open:
+                args.Sprite.DrawDepth = comp.OpenDrawDepth;
                 args.Sprite.LayerSetState(DoorVisualLayers.Base, comp.OpenSpriteState);
                 break;
             case DoorState.Closed:
@@ -97,6 +99,8 @@ public sealed class DoorSystem : SharedDoorSystem
             case DoorState.Opening:
                 if (animPlayer != null)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.OpenAnimation, DoorComponent.AnimationKey);
+                else
+                    goto case DoorState.Open;
                 break;
             case DoorState.Closing:
                 if (comp.CurrentlyCrushing.Count == 0 && animPlayer != null)
@@ -109,27 +113,10 @@ public sealed class DoorSystem : SharedDoorSystem
                 break;
             case DoorState.Emagging:
                 if (animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.EmaggingAnimation, AirlockVisualizerComponent.AnimationKey);
+                    _animationSystem.Play(uid, animPlayer, (Animation)comp.EmaggingAnimation, DoorComponent.AnimationKey);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    // Gotta love it when both the client-side and server-side sprite components both have a draw depth, but for
-    // whatever bloody reason the shared component doesn't.
-    protected override void UpdateAppearance(EntityUid uid, DoorComponent? door = null)
-    {
-        if (!Resolve(uid, ref door))
-            return;
-
-        base.UpdateAppearance(uid, door);
-
-        if (TryComp(uid, out SpriteComponent? sprite))
-        {
-            sprite.DrawDepth = (door.State == DoorState.Open)
-                ? door.OpenDrawDepth
-                : door.ClosedDrawDepth;
         }
     }
 
@@ -139,4 +126,12 @@ public sealed class DoorSystem : SharedDoorSystem
         if (GameTiming.InPrediction && GameTiming.IsFirstTimePredicted)
             Audio.Play(soundSpecifier, Filter.Local(), uid, false, audioParams);
     }
+}
+
+public enum DoorVisualLayers : byte
+{
+    Base,
+    BaseUnlit,
+    BaseBolted,
+    BaseEmergencyAccess,
 }

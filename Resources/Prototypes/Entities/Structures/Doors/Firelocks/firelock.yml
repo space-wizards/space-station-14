@@ -44,6 +44,7 @@
           map: ["enum.DoorVisualLayers.BaseBolted"]
         - state: panel_open
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: AnimationPlayer
     - type: Fixtures
       fixtures:
       - shape:

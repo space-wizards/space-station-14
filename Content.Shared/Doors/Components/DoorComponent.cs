@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Doors.Systems;
 using Content.Shared.Tools;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -13,16 +14,17 @@ namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
-public sealed class DoorComponent : Component, ISerializationHooks
+public sealed class DoorComponent : Component
 {
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
     /// </summary>
     /// <remarks>
-    /// This should never be set directly.
+    /// This should never be set directly, use <see cref="SharedDoorSystem.SetState(EntityUid, DoorState, DoorComponent?)"/> instead.
     /// </remarks>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("state")]
+    [Access(typeof(SharedDoorSystem))]
     public DoorState State = DoorState.Closed;
 
     #region Timing

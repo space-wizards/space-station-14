@@ -22,7 +22,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
     {
         comp.OpenAnimation = new Animation()
         {
-            Length = TimeSpan.FromSeconds(comp.OpenCloseAnimationTime),
+            Length = TimeSpan.FromSeconds(comp.OpeningAnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
@@ -35,7 +35,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
 
         comp.CloseAnimation = new Animation()
         {
-            Length = TimeSpan.FromSeconds(comp.OpenCloseAnimationTime),
+            Length = TimeSpan.FromSeconds(comp.ClosingAnimationTime),
             AnimationTracks =
             {
                 new AnimationTrackSpriteFlick()
@@ -103,6 +103,8 @@ public sealed class AirlockSystem : SharedAirlockSystem
             case DoorState.Opening:
                 if (animPlayer != null)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.OpenAnimation, AirlockComponent.AnimationKey);
+                else
+                    goto case DoorState.Open;
                 break;
             case DoorState.Closing:
                 if (door != null && door.CurrentlyCrushing.Count == 0 && animPlayer != null)
@@ -112,7 +114,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
                 break;
             case DoorState.Denying:
                 if (animPlayer != null)
-                    _animationSystem.Play(uid, animPlayer, (Animation)comp.DenyAnimation, AirlockVisualizerComponent.AnimationKey);
+                    _animationSystem.Play(uid, animPlayer, (Animation)comp.DenyAnimation, AirlockComponent.AnimationKey);
                 break;
             case DoorState.Emagging:
             case DoorState.Welded:
