@@ -8,15 +8,20 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Paper.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class StampWidget : Container
+    public sealed partial class StampWidget : PanelContainer
     {
         private StyleBoxTexture _borderTexture;
+
+        public float Orientation {
+            get { return StampedByLabel.Orientation; }
+            set { StampedByLabel.Orientation = value; }
+        }
 
         public StampInfo StampInfo {
             set {
                 StampedByLabel.Text = Loc.GetString(value.StampName);
                 StampedByLabel.FontColorOverride = value.StampColor;
-                StampBorder.ModulateSelfOverride = value.StampColor;
+                ModulateSelfOverride = value.StampColor;
             }
         }
 
@@ -30,7 +35,13 @@ namespace Content.Client.Paper.UI
                 Texture = borderImage,
             };
             _borderTexture.SetPatchMargin(StyleBoxTexture.Margin.All, 7.0f);
-            StampBorder.PanelOverride = _borderTexture;
+            PanelOverride = _borderTexture;
+        }
+
+        protected override void Draw(DrawingHandleScreen handle)
+        {
+            handle.SetTransform(GlobalPosition, Orientation, Vector2.One);
+            base.Draw(handle);
         }
     }
 }

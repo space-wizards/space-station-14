@@ -12,6 +12,8 @@ namespace Content.Client.Paper.UI
     {
         private Vector2 _textScaling = Vector2.One;
 
+        public float Orientation = 0.0f;
+
         public ScalingLabel()
         {
             RobustXamlLoader.Load(this);
@@ -29,7 +31,9 @@ namespace Content.Client.Paper.UI
 
         protected override void Draw(DrawingHandleScreen handle)
         {
-            handle.SetTransform(GlobalPosition, Angle.Zero, _textScaling);
+            var offset = new Vector2(PixelPosition.X * MathF.Cos(Orientation) - PixelPosition.Y * MathF.Sin(Orientation),
+                    PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
+            handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
             base.Draw(handle);
         }
     }

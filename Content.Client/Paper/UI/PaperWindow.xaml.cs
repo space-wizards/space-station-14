@@ -43,8 +43,9 @@ namespace Content.Client.Paper.UI
         ///     Initialize this UI according to <code>visuals</code> Initializes
         ///     textures, recalculates sizes, and applies some layout rules.
         /// </summary>
-        public void InitVisuals(PaperVisualsComponent visuals)
+        public void InitVisuals(EntityUid entity, PaperVisualsComponent visuals)
         {
+            StampDisplay.PlacementSeed = (int)entity;
             var resCache = IoCManager.Resolve<IResourceCache>();
 
             // Initialize the background:
@@ -197,9 +198,11 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             StampDisplay.RemoveAllChildren();
+            StampDisplay.RemoveStamps();
             foreach(var stamper in state.StampedBy)
             {
-                StampDisplay.AddChild(new StampWidget{ StampInfo = stamper });
+                //StampDisplay.AddChild(new StampWidget{ StampInfo = stamper });
+                StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
         }
 

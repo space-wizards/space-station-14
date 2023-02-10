@@ -33,9 +33,10 @@ namespace Content.Client.Paper.UI
                 }
             };
 
-            if (entityMgr.TryGetComponent<PaperVisualsComponent>(Owner.Owner, out var visuals))
+            var paperEntity = Owner.Owner;
+            if (entityMgr.TryGetComponent<PaperVisualsComponent>(paperEntity, out var visuals))
             {
-                _window.InitVisuals(visuals);
+                _window.InitVisuals(paperEntity, visuals);
             }
 
             _window.OpenCentered();
