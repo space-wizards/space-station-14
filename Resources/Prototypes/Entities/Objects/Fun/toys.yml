@@ -590,6 +590,7 @@
           - SpeedLoaderCap
           - CartridgeMagnum
           - SpeedLoaderMagnum
+      proto: CartridgeMagnum
 
 - type: entity
   parent: BaseItem
