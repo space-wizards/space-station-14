@@ -214,7 +214,7 @@ namespace Content.Client.Paper.UI
         /// </summary>
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
-            var mode = DragMode.Move;
+            var mode = DragMode.None;
 
             // Be quite generous with resize margins:
             if (relativeMousePos.Y < DRAG_MARGIN_SIZE)
@@ -235,6 +235,10 @@ namespace Content.Client.Paper.UI
                 mode |= DragMode.Right;
             }
 
+            if((mode & _allowedResizeModes) == DragMode.None)
+            {
+                return DragMode.Move;
+            }
             return mode & _allowedResizeModes;
         }
     }
