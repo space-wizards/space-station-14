@@ -125,6 +125,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent args)
     {
+        //TODO: Maybe have an event trigger here that's only on this
         /*if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
