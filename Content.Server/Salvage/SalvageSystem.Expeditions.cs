@@ -11,6 +11,7 @@ using Content.Server.Parallax;
 using Content.Server.Procedural;
 using Content.Server.Salvage.Expeditions;
 using Content.Server.Salvage.Expeditions.Structure;
+using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -39,6 +40,7 @@ public sealed partial class SalvageSystem
     private const int MissionLimit = 5;
 
     private readonly JobQueue _salvageQueue = new();
+    private List<(SpawnSalvageMissionJob Job, CancellationTokenSource CancelToken)> _salvageJobs = new();
     private const double SalvageJobTime = 0.005;
 
     private void InitializeExpeditions()
@@ -56,6 +58,15 @@ public sealed partial class SalvageSystem
 
     private void OnExpeditionShutdown(EntityUid uid, SalvageExpeditionComponent component, ComponentShutdown args)
     {
+        foreach (var (job, cancelToken) in _salvageJobs.ToArray())
+        {
+            if (job.Station == component.Station)
+            {
+                cancelToken.Cancel();
+                _salvageJobs.Remove((job, cancelToken));
+            }
+        }
+
         // Finish mission
         if (TryComp<SalvageExpeditionDataComponent>(component.Station, out var data))
         {
@@ -83,10 +94,20 @@ public sealed partial class SalvageSystem
         var currentTime = _timing.CurTime;
         _salvageQueue.Process();
 
+        foreach (var (job, cancelToken) in _salvageJobs.ToArray())
+        {
+            switch (job.Status)
+            {
+                case JobStatus.Finished:
+                    _salvageJobs.Remove((job, cancelToken));
+                    break;
+            }
+        }
+
         foreach (var comp in EntityQuery<SalvageExpeditionDataComponent>())
         {
             // Update offers
-            if (comp.NextOffer >= currentTime)
+            if (comp.Claimed || comp.NextOffer >= currentTime)
                 continue;
 
             comp.NextOffer += MissionCooldown;
@@ -101,8 +122,6 @@ public sealed partial class SalvageSystem
                 QueueDel(comp.Owner);
             }
         }
-
-        _salvageQueue.Process();
     }
 
     private void FinishExpedition(SalvageExpeditionDataComponent component)
@@ -149,6 +168,7 @@ public sealed partial class SalvageSystem
 
     private void SpawnMission(SalvageMission mission, EntityUid station)
     {
+        var cancelToken = new CancellationTokenSource();
         var job = new SpawnSalvageMissionJob(
             SalvageJobTime,
             EntityManager,
@@ -159,8 +179,10 @@ public sealed partial class SalvageSystem
             _dungeon,
             _pathfinding,
             station,
-            mission);
+            mission,
+            cancelToken.Token);
 
+        _salvageJobs.Add((job, cancelToken));
         _salvageQueue.EnqueueJob(job);
     }
 
@@ -174,7 +196,7 @@ public sealed partial class SalvageSystem
         private readonly DungeonSystem _dungeon;
         private readonly PathfindingSystem _pathfinding;
 
-        private readonly EntityUid _station;
+        public readonly EntityUid Station;
         private readonly SalvageMission _mission;
 
         public SpawnSalvageMissionJob(
@@ -197,7 +219,7 @@ public sealed partial class SalvageSystem
             _biome = biome;
             _dungeon = dungeon;
             _pathfinding = pathfinding;
-            this._station = station;
+            this.Station = station;
             this._mission = mission;
         }
 
@@ -238,6 +260,7 @@ public sealed partial class SalvageSystem
             };
 
             _mapManager.DoMapInitialize(mapId);
+            _mapManager.SetMapPaused(mapId, true);
 
             // No point raising an event for this when it's 1-1.
             // TODO: Fix the landingfloor radius shenanigans
@@ -246,7 +269,7 @@ public sealed partial class SalvageSystem
 
             // Setup expedition
             var expedition = _entManager.AddComponent<SalvageExpeditionComponent>(mapUid);
-            expedition.Station = _station;
+            expedition.Station = Station;
             expedition.EndTime = _timing.CurTime + _mission.Duration;
             expedition.Faction = config.Factions[random.Next(config.Factions.Count)];
             expedition.Config = config.ID;
@@ -265,7 +288,7 @@ public sealed partial class SalvageSystem
                     return false;
             }
 
-            var landingPadRadius = 16;
+            var landingPadRadius = 24;
             var radiusThickness = 2;
             var dungeonOffset = config.DungeonPosition;
             var dungeonRadius = config.DungeonRadius;
@@ -325,12 +348,15 @@ public sealed partial class SalvageSystem
 
             // Set the tiles themselves
             var seed = new FastNoiseLite(_mission.Seed);
+            var testBox1 = new Box2();
+            var testBox2 = new Box2();
 
-            foreach (var tile in grid.GetTilesIntersecting(new Box2(-landingPadRadius - radiusThickness + 0.5f, -landingPadRadius - radiusThickness + 0.5f, landingPadRadius + radiusThickness - 0.5f, landingPadRadius + radiusThickness - 0.5f), false))
+            foreach (var tile in grid.GetTilesIntersecting(new Circle(Vector2.Zero, landingPadRadius + radiusThickness), false))
             {
                 if (!_biome.TryGetBiomeTile(mapUid, grid, seed, tile.GridIndices, out var tileRef))
                     continue;
 
+                testBox1 = testBox1.Union(Box2.UnitCentered.Translated((Vector2) tile.GridIndices + 0.5f));
                 // TODO: Force load API or smth
                 tiles.Add((tile.GridIndices, tileRef.Value));
                 landingFloor.Add(tile.GridIndices);
@@ -339,7 +365,7 @@ public sealed partial class SalvageSystem
             grid.SetTiles(tiles);
 
             // Set the outline as enclosed for the landing pad.
-            for (var i = 0f; i < radiusThickness; i += 0.5f)
+            for (var i = 1f; i < radiusThickness + 1f; i += 0.5f)
             {
                 foreach (var tile in grid.GetTilesOutline(new Circle(Vector2.Zero, landingPadRadius + i), false))
                 {
@@ -355,6 +381,7 @@ public sealed partial class SalvageSystem
                     await SuspendIfOutOfTime();
                     _entManager.SpawnEntity("WallRock", grid.GridTileToLocal(tile.GridIndices));
                     landingFloor.Add(tile.GridIndices);
+                    testBox2 = testBox2.Union(Box2.UnitCentered.Translated((Vector2) tile.GridIndices + 0.5f));
                 }
             }
 

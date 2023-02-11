@@ -48,5 +48,5 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     public float DungeonRadius = 50f;
 
     [DataField("dungeonPosition")]
-    public Vector2i DungeonPosition = new Vector2i(50, 50);
+    public Vector2i DungeonPosition = new(80, -25);
 }

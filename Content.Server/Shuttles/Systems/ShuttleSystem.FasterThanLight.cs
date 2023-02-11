@@ -16,6 +16,7 @@ using Content.Server.Shuttles.Events;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Doors.Components;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Shuttles.Systems;
@@ -71,12 +72,6 @@ public sealed partial class ShuttleSystem
     private void InitializeFTL()
     {
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
-        SubscribeLocalEvent<FTLDestinationComponent, EntityPausedEvent>(OnDestinationPause);
-    }
-
-    private void OnDestinationPause(EntityUid uid, FTLDestinationComponent component, ref EntityPausedEvent args)
-    {
-        _console.RefreshShuttleConsoles();
     }
 
     private void OnStationGridAdd(StationGridAddedEvent ev)
@@ -237,6 +232,7 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(uid, out body))
                     {
+                        Enable(uid, body);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -274,6 +270,7 @@ public sealed partial class ShuttleSystem
                     SetDocks(uid, true);
 
                     TryComp(uid, out shuttle);
+                    MapId mapId;
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
@@ -281,10 +278,13 @@ public sealed partial class ShuttleSystem
                             TryFTLDock(shuttle, comp.TargetUid.Value);
                         else
                             TryFTLProximity(shuttle, comp.TargetUid.Value);
+
+                        mapId = Transform(comp.TargetUid.Value).MapID;
                     }
                     else
                     {
                         xform.Coordinates = comp.TargetCoordinates;
+                        mapId = comp.TargetCoordinates.GetMapId(EntityManager);
                     }
 
                     if (TryComp(uid, out body))
@@ -325,7 +325,10 @@ public sealed partial class ShuttleSystem
                     comp.State = FTLState.Cooldown;
                     comp.Accumulator += FTLCooldown;
                     _console.RefreshShuttleConsoles(uid);
-                    RaiseLocalEvent(new HyperspaceJumpCompletedEvent());
+                    var mapUid = _mapManager.GetMapEntityId(mapId);
+                    _mapManager.SetMapPaused(mapId, false);
+                    var ftlEvent = new FTLCompletedEvent();
+                    RaiseLocalEvent(mapUid, ref ftlEvent, true);
                     break;
                 case FTLState.Cooldown:
                     RemComp<FTLComponent>(uid);
@@ -531,21 +534,27 @@ public sealed partial class ShuttleSystem
 
         Vector2 spawnPos;
 
+        if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
+        {
+            _physics.SetLinearVelocity(component.Owner, Vector2.Zero, body: shuttleBody);
+            _physics.SetAngularVelocity(component.Owner, 0f, body: shuttleBody);
+        }
+
         // TODO: This is pretty crude for multiple landings.
         if (nearbyGrids.Count > 1 || !HasComp<MapComponent>(targetXform.GridUid.Value))
         {
             var minRadius = (MathF.Max(targetAABB.Width, targetAABB.Height) + MathF.Max(shuttleAABB.Width, shuttleAABB.Height)) / 2f;
             spawnPos = targetAABB.Center + _random.NextVector2(minRadius, minRadius + 64f);
         }
+        else if (shuttleBody != null)
+        {
+            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var transform = new Transform(targetPos, targetRot);
+            spawnPos = Robust.Shared.Physics.Transform.Mul(transform, -shuttleBody.LocalCenter);
+        }
         else
         {
-            spawnPos = _transform.GetWorldPosition(targetXform);
-        }
-
-        if (TryComp<PhysicsComponent>(component.Owner, out var shuttleBody))
-        {
-            _physics.SetLinearVelocity(component.Owner, Vector2.Zero, body: shuttleBody);
-            _physics.SetAngularVelocity(component.Owner, 0f, body: shuttleBody);
+            spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
         xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);

@@ -53,7 +53,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         base.Update(frameTime);
         var biomeQuery = GetEntityQuery<BiomeComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var biomes = EntityQueryEnumerator<BiomeComponent>();
+        var biomes = AllEntityQuery<BiomeComponent>();
 
         while (biomes.MoveNext(out var biome))
         {

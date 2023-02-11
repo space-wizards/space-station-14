@@ -38,7 +38,7 @@
     - Xenos
   dungeonConfig: LowDesertDungeon
   dungeonRadius: 40
-  dungeonPosition: 60,0
+  dungeonPosition: 70,0
   loot: CaveLoot
 
 # Factions

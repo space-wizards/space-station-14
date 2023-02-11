@@ -259,7 +259,6 @@ namespace Content.Server.Shuttles.Systems
 
                     var canTravel = !locked &&
                                     comp.Enabled &&
-                                    !Paused(comp.Owner, meta) &&
                                     (!TryComp<FTLComponent>(comp.Owner, out var ftl) || ftl.State == FTLState.Cooldown);
 
                     // Can't travel to same map.
