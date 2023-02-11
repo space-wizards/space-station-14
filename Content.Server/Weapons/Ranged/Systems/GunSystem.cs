@@ -190,9 +190,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         var hitEntity = result.HitEntity;                   
 
                         if (user != null && TryReflectHitScan(hitEntity))
-                        {
                             hitEntity = user.Value;
-                        }
 
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
