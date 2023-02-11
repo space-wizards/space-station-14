@@ -71,6 +71,11 @@
       - id: ClothingMaskSterile
 
 - type: entity
+  id: LockerWallMedicalDoctorFilled
+  suffix: Filled
+  parent: ["LockerWallMedical", "LockerMedicalFilled"]
+
+- type: entity
   id: LockerChemistryFilled
   suffix: Filled
   parent: LockerChemistry
