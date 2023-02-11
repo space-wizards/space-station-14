@@ -9,6 +9,7 @@ job-name-rd = Research Director
 job-name-psychologist = Psychologist
 job-name-intern = Medical Intern
 job-name-doctor = Medical Doctor
+job-name-paramedic = Paramedic
 job-name-cmo = Chief Medical Officer
 job-name-chemist = Chemist
 job-name-technical-assistant = Technical Assistant
