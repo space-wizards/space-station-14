@@ -94,6 +94,17 @@
 
 - type: entity
   parent: ClothingOuterStorageBase
+  id: ClothingOuterCoatParamedicWB
+  name: paramedic windbreaker
+  description: A paramedic's trusty windbreaker, for all the space wind.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/windbreaker_paramedic.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
   id: ClothingOuterCoatLabChem
   name: lab coat (chem)
   description: A suit that protects against minor chemical spills. Has an orange stripe on the shoulder.
