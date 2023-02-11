@@ -151,7 +151,7 @@
         - id: BoxSurvival
         - id: WeaponPulsePistol
         - id: WeaponPistolMk58
-        - id: MagazinePistolHighCapacityRubber
+        - id: MagazinePistolRubber
         - id: MagazinePistol
         - id: Handcuffs
 

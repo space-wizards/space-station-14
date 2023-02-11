@@ -141,8 +141,6 @@
     maxAmount: 15
   - id: MagazinePistol
     maxAmount: 15
-  - id: MagazineMagnum
-    maxAmount: 15
   - id: MagazineMagnumSubMachineGun
     maxAmount: 15
   - id: CartridgeRocket
