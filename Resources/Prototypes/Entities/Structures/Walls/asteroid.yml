@@ -115,6 +115,14 @@
   description: An ore vein rich with gold
   suffix: Gold
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OreGold
@@ -137,6 +145,14 @@
   description: An ore vein rich with plasma
   suffix: Plasma
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 250
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OrePlasma
@@ -159,6 +175,14 @@
   description: An ore vein rich with quartz
   suffix: Quartz
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OreSpaceQuartz
@@ -181,6 +205,14 @@
   description: An ore vein rich with silver
   suffix: Silver
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OreSilver
@@ -204,6 +236,14 @@
   description: An ore vein rich with steel
   suffix: Steel
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OreSteel
@@ -226,6 +266,14 @@
   description: An ore vein rich with uranium
   suffix: Uranium
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 250
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: OreVein
       oreChance: 1.0
       currentOre: OreUranium
