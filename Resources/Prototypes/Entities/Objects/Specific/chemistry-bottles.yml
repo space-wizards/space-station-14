@@ -15,6 +15,8 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
     state: bottle-1
+  - type: Item
+    size: 3
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -35,8 +37,6 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
-  - type: Item
-    Size: 3
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
