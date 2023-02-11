@@ -1,23 +1,22 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Ranged.Weapons.Components
+namespace Content.Server.Ranged.Weapons.Components;
+
+/// <summary>
+///     Entities with this component have a chance to reflect hitscan shots
+/// </summary>
+[RegisterComponent]
+public sealed class ReflectHitScanComponent : Component
 {
     /// <summary>
-    ///     Entities with this component have a chance to reflect hitscan shots
+    ///     Can only reflect when enabled
     /// </summary>
-    [RegisterComponent]
-    public sealed class ReflectHitScanComponent : Component 
-    {
-        /// <summary>
-        ///     Can only reflect when enabled
-        /// </summary>
-        [DataField("enabled")]
-        public bool Enabled;
+    [DataField("enabled")]
+    public bool Enabled;
 
-        [DataField("reflectChance")]
-        public float ReflectChance;
+    [DataField("reflectChance")]
+    public float ReflectChance;
 
-        [DataField("onReflect")]
-        public SoundSpecifier? OnReflect { get; set; }
-    }
+    [DataField("onReflect")]
+    public SoundSpecifier? OnReflect { get; set; }
 }
