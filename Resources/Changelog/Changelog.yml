@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Some miscellaneous electronics have been additionally added to the circuit
-      imprinter., type: Add}
-  id: 2521
-  time: '2022-10-25T00:22:12.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Nanotrasen's experimental precrime police program has been defunded
@@ -2916,3 +2910,9 @@ Entries:
   - {message: Added Dame Dane clothing set. EEYIKES!, type: Add}
   id: 3020
   time: '2023-02-11T03:14:04.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Message for nuke codes being sent to station now gives the correct destination.,
+    type: Fix}
+  id: 3021
+  time: '2023-02-11T19:26:33.0000000+00:00'
