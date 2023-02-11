@@ -16,7 +16,6 @@ public sealed class SolarFlare : StationEventSystem
     private bool _onlyJamHeadsets = true;
     private HashSet<string> _affectedChannels = new();
     private float _endAfter = 0.0f;
-    private bool _running = false;
     private float _lightBurnChance = 0.0f;
     private float _lightChangeColorChance = 0.0f;
 
@@ -40,7 +39,6 @@ public sealed class SolarFlare : StationEventSystem
     public override void Started()
     {
         base.Started();
-        _running = true;
         MessLights();
     }
 
@@ -69,15 +67,9 @@ public sealed class SolarFlare : StationEventSystem
         }
     }
 
-    public override void Ended()
-    {
-        base.Ended();
-        _running = false;
-    }
-
     private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
     {
-        if (_running && _affectedChannels.Contains(args.Channel.ID))
+        if (RuleStarted && _affectedChannels.Contains(args.Channel.ID))
             if (!_onlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancel();
     }
