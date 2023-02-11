@@ -122,7 +122,7 @@
           acts: [ "Destruction" ]
     - type: Spreader
       growthResult: FleshKudzu
-      chance: 0.33
+      chance: 0.5
     - type: DamageContacts
       damage:
         types:
