@@ -18,7 +18,6 @@
 
 - type: entity
   id: LockerWallMedicalFilled
-  name: medicine wall locker
   suffix: Filled
   parent: LockerWallMedical
   components:
