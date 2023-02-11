@@ -153,3 +153,14 @@
         Slash: 0.8
         Piercing: 0.4
         Heat: 0.8
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterDameDane
+  name: dame dane coat
+  description: Friday...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/damedanecoat.rsi
