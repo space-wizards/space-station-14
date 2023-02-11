@@ -32,6 +32,7 @@
         Chemist: [ 2, 2 ]
         ResearchDirector: [ 1, 1 ]
         Scientist: [ 3, 3 ]
+        ResearchAssistant: [ 2, 2 ]
         HeadOfSecurity: [ 1, 1 ]
         SecurityOfficer: [ 2, 3 ]
         Chaplain: [ 1, 1 ]
