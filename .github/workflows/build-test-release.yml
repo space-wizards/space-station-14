@@ -13,7 +13,9 @@ on:
       # why not just do both
       - 'RobustToolbox'
       - 'RobustToolbox/**'
+  merge_group:
   pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
     branches: [ master ]
     paths:
       - '**.cs'
@@ -26,7 +28,7 @@ on:
 
 jobs:
   build:
-    if: github.actor != 'PJBot'
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]

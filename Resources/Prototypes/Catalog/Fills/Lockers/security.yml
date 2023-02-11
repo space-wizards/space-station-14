@@ -58,6 +58,7 @@
       - id: BoxForensicPad
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
+      - id: SpeedLoaderMagnum
 
 - type: entity
   id: ClosetBombFilled
