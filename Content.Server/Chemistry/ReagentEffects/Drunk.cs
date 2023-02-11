@@ -9,7 +9,7 @@ public sealed class Drunk : ReagentEffect
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.
     /// </summary>
     [DataField("boozePower")]
-    public float BoozePower = 2f;
+    public float BoozePower = 4f;
 
     /// <summary>
     ///     Whether speech should be slurred.

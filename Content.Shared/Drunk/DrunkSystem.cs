@@ -21,7 +21,7 @@ public abstract class SharedDrunkSystem : EntitySystem
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
 
         if (EntityManager.HasComponent<LightweightComponent>(uid))
-            boozePower = 4f;
+            boozePower = 8f;
 
         if (!_statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
