@@ -69,6 +69,7 @@ namespace Content.Server.Projectiles
                         component.Shooter = otherEntity;
                         _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
                         _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
+                        _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(otherEntity):entity} reflected projectile {ToPrettyString(uid):projectile}");
                         return;
                     }
                 }

@@ -201,6 +201,7 @@ public sealed partial class GunSystem : SharedGunSystem
                                     {
                                         PopupSystem.PopupEntity(Loc.GetString("reflect-projectile"), hitEntity, PopupType.Small);
                                         Audio.PlayPvs(reflect.OnReflect, hitEntity, AudioHelpers.WithVariation(0.05f, Random));
+                                        Logs.Add(LogType.ShotReflected, $"{ToPrettyString(hitEntity):entity} reflected hitscan shot");
                                         hitEntity = user.Value;
                                     }
                                 }
