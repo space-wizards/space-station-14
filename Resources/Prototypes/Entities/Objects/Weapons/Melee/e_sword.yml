@@ -53,7 +53,11 @@
   - type: ReflectProjectile
     reflectChance: 0.25
     onReflect:
-      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+      path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
+  - type: ReflectHitScan
+    reflectChance: 0.5
+    onReflect:
+      path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
 
 - type: entity
   name: pen

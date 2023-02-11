@@ -1,12 +1,12 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.Projectiles
+namespace Content.Server.Ranged.Weapons.Components
 {
     /// <summary>
-    ///     Entities with this component have a chance to reflect projectiles
+    ///     Entities with this component have a chance to reflect hitscan shots
     /// </summary>
     [RegisterComponent]
-    public sealed class ReflectProjectileComponent : Component 
+    public sealed class ReflectHitScanComponent : Component 
     {
         /// <summary>
         ///     Can only reflect when enabled
