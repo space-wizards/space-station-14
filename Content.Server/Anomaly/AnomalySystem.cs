@@ -4,12 +4,15 @@ using Content.Server.Audio;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+
 namespace Content.Server.Anomaly;
 
 /// <summary>
@@ -18,11 +21,13 @@ namespace Content.Server.Anomaly;
 public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private readonly IConfigurationManager _configuration = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
+    [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     public const float MinParticleVariation = 0.8f;
@@ -128,6 +133,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     {
         base.Update(frameTime);
 
+        UpdateGenerator();
         UpdateVessels();
     }
 }
