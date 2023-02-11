@@ -91,7 +91,7 @@
     graph: LightFixture
     node: groundLight
   - type: Appearance
-  - type: PoweredLightVisualizer
+  - type: PoweredLightVisuals
     blinkingSound:
       path: "/Audio/Machines/light_tube_on.ogg"
   - type: SignalReceiver

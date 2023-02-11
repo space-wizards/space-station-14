@@ -1,108 +1,80 @@
 using Content.Shared.Light;
-using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.Audio;
 using Robust.Shared.Random;
 
 namespace Content.Client.Light.Visualizers;
 
-[RegisterComponent]
-public sealed class PoweredLightVisualizerComponent : Component
-{
-    [Access(typeof(PoweredLightVisualizerSystem))]
-    [DataField("minBlinkingTime")] public float MinBlinkingTime = 0.5f;
-    [Access(typeof(PoweredLightVisualizerSystem))]
-    [DataField("maxBlinkingTime")] public float MaxBlinkingTime = 2;
-    [Access(typeof(PoweredLightVisualizerSystem))]
-    [DataField("blinkingSound")] public SoundSpecifier? BlinkingSound = default;
-
-    [Access(typeof(PoweredLightVisualizerSystem))]
-    public bool WasBlinking;
-
-    [Access(typeof(PoweredLightVisualizerSystem))]
-    public Action<string>? BlinkingCallback;
-}
-
-public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualizerComponent>
+public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<PoweredLightVisualizerComponent, AnimationCompletedEvent>(OnAnimationCompleted);
+        SubscribeLocalEvent<PoweredLightVisualsComponent, AnimationCompletedEvent>(OnAnimationCompleted);
     }
 
-    protected override void OnAppearanceChange(EntityUid uid, PoweredLightVisualizerComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, PoweredLightVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;
-        if (!AppearanceSystem.TryGetData(uid, PoweredLightVisuals.BulbState, out PoweredLightState state, args.Component))
+        if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
             return;
 
-        switch (state)
-        {
-            case PoweredLightState.Empty:
-                args.Sprite.LayerSetState(PoweredLightLayers.Base, "empty");
-                ToggleBlinkingAnimation(uid, false, comp, ref args);
-                break;
-            case PoweredLightState.Off:
-                args.Sprite.LayerSetState(PoweredLightLayers.Base, "off");
-                ToggleBlinkingAnimation(uid, false, comp, ref args);
-                break;
-            case PoweredLightState.On:
-                if (AppearanceSystem.TryGetData(uid, PoweredLightVisuals.Blinking, out bool isBlinking, args.Component))
-                    ToggleBlinkingAnimation(uid, isBlinking, comp, ref args);
-                if (!isBlinking)
-                {
-                    args.Sprite!.LayerSetState(PoweredLightLayers.Base, "on");
-                }
-                break;
-            case PoweredLightState.Broken:
-                args.Sprite.LayerSetState(PoweredLightLayers.Base, "broken");
-                ToggleBlinkingAnimation(uid, false, comp, ref args);
-                break;
-            case PoweredLightState.Burned:
-                args.Sprite.LayerSetState(PoweredLightLayers.Base, "burn");
-                ToggleBlinkingAnimation(uid, false, comp, ref args);
-                break;
-        }
+        if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
+            args.Sprite.LayerSetState(PoweredLightLayers.Base, spriteState);
+        
+        _setBlinkingAnimation(
+            uid,
+            state == PoweredLightState.On
+            && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
+            comp
+        );
     }
 
-    private void OnAnimationCompleted(EntityUid uid, PoweredLightVisualizerComponent comp, AnimationCompletedEvent args)
+    /// <summary>
+    /// Loops the blinking animation until the light should stop blinking.
+    /// </summary>
+    private void OnAnimationCompleted(EntityUid uid, PoweredLightVisualsComponent comp, AnimationCompletedEvent args)
     {
-        if(!comp.WasBlinking)
+        if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
-        if (args.Key != "blinking")
+        if(!comp.IsBlinking)
             return;
-        AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), "blinking");
+        AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
-
-    private void ToggleBlinkingAnimation(EntityUid uid, bool isBlinking, PoweredLightVisualizerComponent comp, ref AppearanceChangeEvent args)
+    /// <summary>
+    /// Sets whether or not the given light should be blinking.
+    /// Triggers or clears the blinking animation of the state changes.
+    /// </summary>
+    private void _setBlinkingAnimation(EntityUid uid, bool shouldBeBlinking, PoweredLightVisualsComponent comp)
     {
-        if (isBlinking == comp.WasBlinking)
+        if (shouldBeBlinking == comp.IsBlinking)
             return;
-        comp.WasBlinking = isBlinking;
+        comp.IsBlinking = shouldBeBlinking;
 
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
-        if (isBlinking)
+        if (shouldBeBlinking)
         {
-            AnimationSystem.Play(uid, animationPlayer, BlinkingAnimation(comp), "blinking");
+            AnimationSystem.Play(uid, animationPlayer, BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
         }
-        else if (AnimationSystem.HasRunningAnimation(uid, animationPlayer, "blinking"))
+        else if (AnimationSystem.HasRunningAnimation(uid, animationPlayer, PoweredLightVisualsComponent.BlinkingAnimationKey))
         {
-            AnimationSystem.Stop(uid, animationPlayer, "blinking");
+            AnimationSystem.Stop(uid, animationPlayer, PoweredLightVisualsComponent.BlinkingAnimationKey);
         }
     }
 
-    private Animation BlinkingAnimation(PoweredLightVisualizerComponent comp)
+    /// <summary>
+    /// Generates a blinking animation.
+    /// Essentially just flashes the light off and on over a random time interval.
+    /// The resulting animation is looped indefinitely until the comp is set to stop blinking.
+    /// </summary>
+    private Animation BlinkingAnimation(PoweredLightVisualsComponent comp)
     {
-        var randomTime = _random.NextFloat() *
-            (comp.MaxBlinkingTime - comp.MinBlinkingTime) + comp.MinBlinkingTime;
-
+        var randomTime = MathHelper.Lerp(comp.MinBlinkingAnimationCycleTime, comp.MaxBlinkingAnimationCycleTime, _random.NextFloat());
         var blinkingAnim = new Animation()
         {
             Length = TimeSpan.FromSeconds(randomTime),
@@ -124,8 +96,8 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
                     LayerKey = PoweredLightLayers.Base,
                     KeyFrames =
                     {
-                        new AnimationTrackSpriteFlick.KeyFrame("off", 0),
-                        new AnimationTrackSpriteFlick.KeyFrame("on", 0.5f)
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.SpriteStateMap[PoweredLightState.Off], 0),
+                        new AnimationTrackSpriteFlick.KeyFrame(comp.SpriteStateMap[PoweredLightState.On], 0.5f)
                     }
                 }
             }
