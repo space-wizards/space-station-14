@@ -34,7 +34,6 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
-    state: juicer0
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
