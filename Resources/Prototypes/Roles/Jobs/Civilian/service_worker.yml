@@ -12,6 +12,7 @@
   - Maintenance
   - Bar
   - Kitchen
+  extendedAccess:
   - Hydroponics
 
 - type: startingGear
