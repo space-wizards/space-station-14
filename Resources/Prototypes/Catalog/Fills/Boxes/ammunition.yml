@@ -190,6 +190,51 @@
         amount: 6
 
 - type: entity
+  name: box of machine pistol .35 auto magazines
+  parent: BoxCardboard
+  id: BoxMagazinePistolHighCapacity
+  description: A box full of machine pistol .35 auto magazines.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolHighCapacity
+        amount: 6
+
+- type: entity
+  name: box of machine pistol .35 auto (high-velocity) magazines
+  parent: BoxCardboard
+  id: BoxMagazinePistolHighCapacityHighVelocity
+  description: A box full of machine pistol .35 auto (high-velocity) magazines.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolHighCapacityHighVelocity
+        amount: 6
+
+- type: entity
+  name: box of machine pistol .35 auto (practice) magazines
+  parent: BoxCardboard
+  id: BoxMagazinePistolHighCapacityPractice
+  description: A box full of machine pistol .35 auto (practice) magazines.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolHighCapacityPractice
+        amount: 6
+
+- type: entity
+  name: box of machine pistol .35 auto (rubber) magazines
+  parent: BoxCardboard
+  id: BoxMagazinePistolHighCapacityRubber
+  description: A box full of machine pistol .35 auto (rubber) magazines.
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolHighCapacityRubber
+        amount: 6
+
+
+- type: entity
   name: box of SMG .35 auto magazines
   parent: BoxCardboard
   id: BoxMagazinePistolSubMachineGun
