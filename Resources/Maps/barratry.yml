@@ -98733,7 +98733,7 @@ entities:
     parent: 1
     type: Transform
 - uid: 8359
-  type: MagazinePistolHighCapacity
+  type: MagazinePistol
   components:
   - pos: -42.551014,61.57746
     parent: 1
