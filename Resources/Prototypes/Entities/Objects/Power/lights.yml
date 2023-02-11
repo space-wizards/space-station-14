@@ -64,6 +64,7 @@
   - type: SpaceGarbage
 
 - type: entity
+  parent: BaseLightbulb
   id: BaseLightTube
   abstract: true
   components:
