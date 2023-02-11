@@ -162,7 +162,7 @@ public sealed class AirlockComponent : Component
     /// <summary>
     /// How long the animation played when the airlock opens or closes is in seconds.
     /// </summary>
-    [DataField("openclosingAnimationTime")]
+    [DataField("closingAnimationTime")]
     public float ClosingAnimationTime = 0.8f;
     
     /// <summary>
