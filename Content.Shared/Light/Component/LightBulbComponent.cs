@@ -1,5 +1,5 @@
 using Robust.Shared.Audio;
-using Robust.Shared.Network;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Component;
@@ -9,7 +9,7 @@ namespace Content.Shared.Light.Component;
 /// TODO: Breaking and burning should probably be moved to another component eventually.
 /// </summary>
 [RegisterComponent]
-[NetSerializable]
+[Serializable, NetSerializable, NetworkedComponent]
 public sealed class LightBulbComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
