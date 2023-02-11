@@ -187,26 +187,12 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
-                        var hitEntity = result.HitEntity;
+                        var hitEntity = result.HitEntity;                   
 
-                        if (TryComp<HandsComponent>(hitEntity, out var hands))
+                        if (user != null && TryReflectHitScan(hitEntity))
                         {
-                            foreach (var (_, hand) in hands.Hands)
-                            {
-                                if (TryComp<ReflectHitScanComponent>(hand.HeldEntity, out var reflect) 
-                                    && reflect.Enabled
-                                    && Random.Prob(reflect.ReflectChance))
-                                {
-                                    if (user != null)
-                                    {
-                                        PopupSystem.PopupEntity(Loc.GetString("reflect-projectile"), hitEntity, PopupType.Small);
-                                        Audio.PlayPvs(reflect.OnReflect, hitEntity, AudioHelpers.WithVariation(0.05f, Random));
-                                        Logs.Add(LogType.ShotReflected, $"{ToPrettyString(hitEntity):entity} reflected hitscan shot");
-                                        hitEntity = user.Value;
-                                    }
-                                }
-                            }
-                        }                      
+                            hitEntity = user.Value;
+                        }
 
                         var distance = result.Distance;
                         FireEffects(fromCoordinates, distance, mapDirection.ToAngle(), hitscan, hitEntity);
@@ -263,6 +249,26 @@ public sealed partial class GunSystem : SharedGunSystem
         {
             FiredProjectiles = shotProjectiles,
         }, false);
+    }
+
+    private bool TryReflectHitScan(EntityUid hitEntity) 
+    {
+        if (TryComp<HandsComponent>(hitEntity, out var hands))
+        {
+            foreach (var (_, hand) in hands.Hands)
+            {
+                if (TryComp<ReflectHitScanComponent>(hand.HeldEntity, out var reflect)
+                    && reflect.Enabled
+                    && Random.Prob(reflect.ReflectChance))
+                {
+                    PopupSystem.PopupEntity(Loc.GetString("reflect-projectile"), hitEntity, PopupType.Small);
+                    Audio.PlayPvs(reflect.OnReflect, hitEntity, AudioHelpers.WithVariation(0.05f, Random));
+                    Logs.Add(LogType.ShotReflected, $"{ToPrettyString(hitEntity):entity} reflected hitscan shot");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
