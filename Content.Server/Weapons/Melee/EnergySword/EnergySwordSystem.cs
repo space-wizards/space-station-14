@@ -95,7 +95,10 @@ namespace Content.Server.Weapons.Melee.EnergySword
             if (comp.IsSharp)
                 RemComp<SharpComponent>(uid);
 
-            RemComp<ReflectProjectileComponent>(uid);
+            if (TryComp<ReflectProjectileComponent>(uid, out var reflect))
+            {
+                reflect.Enabled = false;
+            }
 
             _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
 
@@ -128,8 +131,10 @@ namespace Content.Server.Weapons.Melee.EnergySword
                 malus.Malus += comp.LitDisarmMalus;
             }
 
-            var reflectProj = EnsureComp<ReflectProjectileComponent>(uid);
-            reflectProj.ReflectChance = comp.LitProjReflectChance;
+            if (TryComp<ReflectProjectileComponent>(uid, out var reflect))
+            {
+                reflect.Enabled = true;
+            }
 
             comp.Activated = true;
         }

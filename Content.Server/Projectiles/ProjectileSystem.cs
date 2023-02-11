@@ -16,6 +16,7 @@ using Robust.Shared.Random;
 using Content.Server.Popups;
 using Content.Shared.Popups;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Audio;
 
 namespace Content.Server.Projectiles
 {
@@ -29,6 +30,7 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -55,7 +57,9 @@ namespace Content.Server.Projectiles
             {
                 foreach (var (_, hand) in hands.Hands)
                 {
-                    if (TryComp<ReflectProjectileComponent>(hand.HeldEntity, out var reflect) && _random.Prob(reflect.ReflectChance))
+                    if (TryComp<ReflectProjectileComponent>(hand.HeldEntity, out var reflect) 
+                        && reflect.Enabled
+                        && _random.Prob(reflect.ReflectChance))
                     {
                         var vel = _physics.GetMapLinearVelocity(uid);
                         var force = args.OurFixture.Body.Force;
@@ -64,6 +68,7 @@ namespace Content.Server.Projectiles
                         _physics.SetLinearVelocity(uid, -vel);
                         component.Shooter = otherEntity;
                         _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
+                        _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
                         return;
                     }
                 }

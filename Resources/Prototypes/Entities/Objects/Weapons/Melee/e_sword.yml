@@ -11,7 +11,6 @@
             Heat: 9.5
             Blunt: -4.5
     litDisarmMalus: 0.6
-    litProjReflectChance: 0.2
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
     layers:
@@ -51,6 +50,10 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
+  - type: ReflectProjectile
+    reflectChance: 0.25
+    onReflect:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
 
 - type: entity
   name: pen
