@@ -306,10 +306,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!HasComp<ActorComponent>(source))
             return;
 
+        var fromLog = $"Say from {ToPrettyString(source):user}";
+        if (name != Name(source))
+            fromLog += $"as {name}";
         if (originalMessage == message)
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}: {originalMessage}.");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog}: {originalMessage}.");
         else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Say from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog}, original: {originalMessage}, transformed: {message}.");
     }
 
     private void SendEntityWhisper(EntityUid source, string originalMessage, bool hideChat, bool hideGlobalGhostChat, RadioChannelPrototype? channel, string? nameOverride)
@@ -365,10 +368,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         var ev = new EntitySpokeEvent(source, message, channel, obfuscatedMessage);
         RaiseLocalEvent(source, ev, true);
 
+        var fromLog = $"Whisper from {ToPrettyString(source):user}";
+        if (name != Name(source))
+            fromLog += $"as {name}";
         if (originalMessage == message)
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}: {originalMessage}.");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog}: {originalMessage}.");
         else
-            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Whisper from {ToPrettyString(source):user}, original: {originalMessage}, transformed: {message}.");
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog}, original: {originalMessage}, transformed: {message}.");
     }
 
     private void SendEntityEmote(EntityUid source, string action, bool hideChat,
@@ -387,7 +393,11 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (checkEmote)
             TryEmoteChatInput(source, action);
         SendInVoiceRange(ChatChannel.Emotes, action, wrappedMessage, source, hideChat, hideGlobalGhostChat);
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
+
+        var fromLog = $"Emote from {ToPrettyString(source):user}";
+        if (name != Name(source))
+            fromLog += $"as {name}";
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog}: {action}");
     }
 
     // ReSharper disable once InconsistentNaming

@@ -86,7 +86,10 @@ public sealed class RadioSystem : EntitySystem
             RaiseLocalEvent(radio.Owner, ev);
         }
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
+        var fromLog = $"Radio message from {ToPrettyString(source):user}";
+        if (name != Name(source))
+            fromLog += $"as {name}";
+        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{fromLog} on {channel.LocalizedName}: {message}");
 
         _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
