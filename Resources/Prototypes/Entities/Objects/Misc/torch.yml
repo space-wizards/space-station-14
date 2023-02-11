@@ -19,8 +19,10 @@
     - type: Sprite
       sprite: Objects/Misc/torch.rsi
       layers:
-        - state: torch_unlit
-        - state: lit_overlay
+        - map: [ enum.ExpendableLightVisualLayers.Base ]
+          state: torch_unlit
+        - map: [ enum.ExpendableLightVisualLayers.Glow ]
+          state: lit_overlay
           color: "#FFFFFF"
           visible: false
           shader: unshaded
@@ -34,7 +36,6 @@
       graph: LightTorch
       node: torch
     - type: Appearance
-    - type: ExpendableLightVisualizer
     - type: PointLight
       enabled: false
       color: "#E25822"
