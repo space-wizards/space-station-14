@@ -44,22 +44,6 @@ public sealed class DoAfterEvent : HandledEntityEventArgs
     }
 }
 
-public abstract class DoAfterE : HandledEntityEventArgs
-{
-    public bool Cancelled;
-    public DoAfterEventArgs? Args;
-
-}
-
-public sealed class DAE : DoAfterE
-{
-
-    public DAE(DoAfterEventArgs args)
-    {
-        Args = args;
-    }
-}
-
 /// <summary>
 /// Use this event to raise your DoAfter events now.
 /// Check for cancelled, and if it is, then null the token there.
@@ -74,6 +58,22 @@ public sealed class DoAfterEvent<T> : HandledEntityEventArgs
 
     public DoAfterEvent(T additionalData, bool cancelled, DoAfterEventArgs args)
     {
+        AdditionalData = additionalData;
+        Cancelled = cancelled;
+        Args = args;
+    }
+}
+
+public sealed class DoAfterEvent<TEvent, TData> : HandledEntityEventArgs where TEvent : EntityEventArgs where TData : AdditionalData
+{
+    public TEvent DoAfterExtraEvent;
+    public TData AdditionalData;
+    public bool Cancelled;
+    public readonly DoAfterEventArgs Args;
+
+    public DoAfterEvent(TEvent doAfterExtraEvent, TData additionalData, bool cancelled, DoAfterEventArgs args)
+    {
+        DoAfterExtraEvent = doAfterExtraEvent;
         AdditionalData = additionalData;
         Cancelled = cancelled;
         Args = args;
@@ -101,3 +101,21 @@ public enum DoAfterStatus : byte
     Finished,
 }
 
+[Serializable, NetSerializable]
+public sealed class MoreData : AdditionalData
+{
+    public EntityUid UID;
+    public bool BAR;
+
+    public MoreData(EntityUid uid, bool bar)
+    {
+        UID = uid;
+        BAR = bar;
+    }
+}
+
+[Serializable, NetSerializable]
+public abstract class AdditionalData
+{
+
+}

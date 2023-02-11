@@ -211,20 +211,18 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnEntryFinished(EntityUid uid, MechComponent component, MechEntryFinishedEvent args)
     {
-        component.EntryTokenSource = null;
         TryInsert(uid, args.User, component);
         _actionBlocker.UpdateCanMove(uid);
     }
 
     private void OnExitFinished(EntityUid uid, MechComponent component, MechExitFinishedEvent args)
     {
-        component.EntryTokenSource = null;
         TryEject(uid, component);
     }
 
     private void OnEntryExitCancelled(EntityUid uid, MechComponent component, EntityEventArgs args)
     {
-        component.EntryTokenSource = null;
+
     }
 
     private void OnDamageChanged(EntityUid uid, SharedMechComponent component, DamageChangedEvent args)

@@ -156,7 +156,15 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return doAfter.Status;
         }
 
+        public void DoAfter<TEvent, TData>(DoAfterEventArgs eventArgs, TEvent ev, TData data) where TEvent : EntityEventArgs where TData : AdditionalData
+        {
+            var doAfter = CreateDoAfter(eventArgs);
 
+            doAfter.Done = cancelled =>
+            {
+                Send(ev, data, cancelled, eventArgs);
+            };
+        }
 
         /// <summary>
         ///     Creates a DoAfter without waiting for it to finish. You can use events with this.
@@ -358,6 +366,20 @@ public abstract class SharedDoAfterSystem : EntitySystem
         public void Send<T>(T data, bool cancelled, DoAfterEventArgs args)
         {
             var ev = new DoAfterEvent<T>(data, cancelled, args);
+
+            if (EntityManager.EntityExists(args.User))
+                RaiseLocalEvent(args.User, ev, args.Broadcast);
+
+            if (args.Target is {} target && EntityManager.EntityExists(target))
+                RaiseLocalEvent(target, ev, args.Broadcast);
+
+            if (args.Used is {} used && EntityManager.EntityExists(used))
+                RaiseLocalEvent(used, ev, args.Broadcast);
+        }
+
+        public void Send<TEvent, TData>(TEvent msg, TData data, bool cancelled, DoAfterEventArgs args) where TEvent : EntityEventArgs where TData : AdditionalData
+        {
+            var ev = new DoAfterEvent<TEvent, TData>(msg, data, cancelled, args);
 
             if (EntityManager.EntityExists(args.User))
                 RaiseLocalEvent(args.User, ev, args.Broadcast);

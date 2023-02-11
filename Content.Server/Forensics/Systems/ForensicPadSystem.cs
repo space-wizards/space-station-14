@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Forensics
 {
@@ -22,7 +23,8 @@ namespace Content.Server.Forensics
             base.Initialize();
             SubscribeLocalEvent<ForensicPadComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<ForensicPadComponent, AfterInteractEvent>(OnAfterInteract);
-            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicPadData>>(OnDoAfter);
+            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicPadExtraEvent, ForensicPadData>>(OnDoAfter);
+            SubscribeLocalEvent<ForensicPadComponent, DoAfterEvent<ForensicsPadSecondEvent, ForensicPadData>>(SecondDoAfter);
         }
 
         private void OnExamined(EntityUid uid, ForensicPadComponent component, ExaminedEvent args)
@@ -88,10 +90,12 @@ namespace Content.Server.Forensics
                 NeedHand = true
             };
 
-            _doAfterSystem.DoAfter(doAfterEventArgs, padData);
+            var ev = new ForensicPadExtraEvent("First event!");
+
+            _doAfterSystem.DoAfter(doAfterEventArgs, ev, padData);
         }
 
-        private void OnDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicPadData> args)
+        private void OnDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicPadExtraEvent, ForensicPadData> args)
         {
             if (args.Handled
                 || args.Cancelled
@@ -108,13 +112,55 @@ namespace Content.Server.Forensics
                     MetaData(uid).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", args.Args.Target));
             }
 
+            var msg = args.DoAfterExtraEvent.Message;
+
             padComponent.Sample = args.AdditionalData.Sample;
             padComponent.Used = true;
+
+            args.Handled = true;
         }
 
-        private record struct ForensicPadData(string Sample)
+        private void SecondDoAfter(EntityUid uid, ForensicPadComponent component, DoAfterEvent<ForensicsPadSecondEvent, ForensicPadData> args)
+        {
+            if (args.Handled || args.Cancelled)
+                return;
+
+            args.Handled = true;
+        }
+
+        private sealed class ForensicPadData : AdditionalData
+        {
+            public string Sample;
+
+            public ForensicPadData(string sample)
+            {
+                Sample = sample;
+            }
+        }
+
+        private sealed class ForensicPadExtraEvent : EntityEventArgs
+        {
+            public string Message;
+
+            public ForensicPadExtraEvent(string message)
+            {
+                Message = message;
+            }
+        }
+
+        private sealed class ForensicsPadSecondEvent : EntityEventArgs
+        {
+            public string Message;
+
+            public ForensicsPadSecondEvent(string message)
+            {
+                Message = message;
+            }
+        }
+
+        /*private record struct ForensicPadData(string Sample)
         {
             public string Sample = Sample;
-        }
+        }*/
     }
 }
