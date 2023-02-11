@@ -30,8 +30,6 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Old Ian
@@ -85,8 +83,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Runtime
@@ -127,8 +123,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Bandito
@@ -139,8 +133,6 @@
   - type: Grammar
     attributes:
       gender: male
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: bingus
@@ -343,8 +335,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Morty
@@ -358,8 +348,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Morticia
@@ -373,8 +361,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Alexander
@@ -404,8 +390,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Puller
-    needsHands: false
 
 - type: entity
   name: Hamlet
@@ -421,8 +405,6 @@
     description: ghost-role-information-hamlet-description
   - type: InteractionPopup
     successChance: 1
-  - type: Puller
-    needsHands: false
   - type: Butcherable
     spawned:
     - id: FoodMeat
