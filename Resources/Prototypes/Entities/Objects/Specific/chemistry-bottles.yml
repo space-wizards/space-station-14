@@ -15,12 +15,10 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
     state: bottle-1
-  - type: Drink
-    isOpen: true
   - type: SolutionContainerManager
     solutions:
-      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
-        maxVol: 30
+      drink:
+        maxVol: 60
         canMix: true
   - type: RefillableSolution
     solution: drink
@@ -38,6 +36,7 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Item
+    Size: 3
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
     solution: drink
@@ -121,8 +120,8 @@
   components:
   - type: SolutionContainerManager
     solutions:
-      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
-        maxVol: 30
+      drink:
+        maxVol: 60
         reagents:
         - ReagentId: Epinephrine
           Quantity: 30
@@ -139,7 +138,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: RobustHarvest
           Quantity: 30
@@ -156,7 +155,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: UnstableMutagen
           Quantity: 30
@@ -173,7 +172,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: Nocturine
           Quantity: 30
@@ -189,7 +188,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: Ephedrine
           Quantity: 30
@@ -205,7 +204,7 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 30
+        maxVol: 60
         reagents:
         - ReagentId: Omnizine
           Quantity: 30

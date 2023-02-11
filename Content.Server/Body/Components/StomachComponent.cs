@@ -31,7 +31,7 @@ namespace Content.Server.Body.Components
         ///     transferred to <see cref="BloodstreamComponent"/>
         /// </summary>
         [DataField("digestionDelay")]
-        public float DigestionDelay = 20;
+        public float DigestionDelay = 30;
 
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach

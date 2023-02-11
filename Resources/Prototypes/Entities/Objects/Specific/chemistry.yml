@@ -285,7 +285,9 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 15 # We're gonna allow pills to be injected with poison and whatnot, but the chemmaster will only allow dispensing of 10u
+  - type: InjectableSolution
+    solution: food
   - type: SolutionSpiker
     sourceSolution: food
   - type: DeleteOnTrigger

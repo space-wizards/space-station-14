@@ -1,6 +1,8 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
+using Content.Shared.Materials;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.Components
 {
@@ -23,5 +25,14 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+        /// <summary>
+        /// The material that is used to make pills.
+        /// </summary>
+        [DataField("requiredMaterial", customTypeSerializer: typeof(PrototypeIdSerializer<MaterialPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        public string RequiredMaterial = "Plastic";
+        
+        [ViewVariables]
+        public uint MaterialPerPill = 150;
     }
 }

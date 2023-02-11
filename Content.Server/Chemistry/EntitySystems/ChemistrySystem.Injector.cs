@@ -208,6 +208,7 @@ public sealed partial class ChemistrySystem
     {
         if (component.InjectOnly)
         {
+            throw new Exception("Inject is off");
             return;
         }
 
@@ -242,8 +243,8 @@ public sealed partial class ChemistrySystem
 
         var actualDelay = MathF.Max(component.Delay, 1f);
 
-        // Injections take 1 second longer per additional 5u
-        actualDelay += (float) component.TransferAmount / component.Delay - 1;
+        // Injections take 0.5 seconds longer per additional 5u
+        actualDelay += (float) component.TransferAmount / component.Delay - 0.5f;
 
         if (user != target)
         {
@@ -255,7 +256,7 @@ public sealed partial class ChemistrySystem
             // Check if the target is incapacitated or in combat mode and modify time accordingly.
             if (_mobState.IsIncapacitated(target))
             {
-                actualDelay /= 2;
+                actualDelay /= 2.5f;
             }
             else if (_combat.IsInCombatMode(target))
             {
@@ -273,8 +274,8 @@ public sealed partial class ChemistrySystem
         }
         else
         {
-            // Self-injections take half as long.
-            actualDelay /= 2;
+            // Self-injections take twice as long.
+            actualDelay *= 2;
 
             if (component.ToggleState == SharedInjectorComponent.InjectorToggleMode.Inject)
                 _adminLogger.Add(LogType.Ingestion,

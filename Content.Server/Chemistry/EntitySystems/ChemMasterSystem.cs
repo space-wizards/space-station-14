@@ -3,7 +3,9 @@ using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Labels;
 using Content.Server.Labels.Components;
+using Content.Server.Materials;
 using Content.Server.Popups;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
@@ -11,6 +13,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -38,6 +41,8 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly MaterialStorageSystem _material = default!;
+        [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
 
         private const string PillPrototypeId = "Pill";
 
@@ -56,6 +61,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterReagentAmountButtonMessage>(OnReagentButtonMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterCreatePillsMessage>(OnCreatePillsMessage);
             SubscribeLocalEvent<ChemMasterComponent, ChemMasterOutputToBottleMessage>(OnOutputToBottleMessage);
+            SubscribeLocalEvent<ChemMasterComponent, ExaminedEvent>(OnExamined);
         }
 
         private void UpdateUiState(ChemMasterComponent chemMaster, bool updateLabel = false)
@@ -185,6 +191,13 @@ namespace Content.Server.Chemistry.EntitySystems
             if (message.Number == 0 || message.Number > storage.StorageCapacityMax - storage.StorageUsed)
                 return;
 
+            // Ensure enough material for pill casing.
+            var material = _material.GetMaterialAmount(uid, chemMaster.RequiredMaterial);
+            var required = message.Number * chemMaster.MaterialPerPill;
+            if (required > material)
+                //This code should have a popup if there's not enough material
+            return;
+
             // Ensure the amount is valid.
             if (message.Dosage == 0 || message.Dosage > chemMaster.PillDosageLimit)
                 return;
@@ -197,6 +210,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!WithdrawFromBuffer(chemMaster, needed, user, out var withdrawal))
                 return;
 
+            _material.TryChangeMaterialAmount(uid, chemMaster.RequiredMaterial, (int) -required);
             _labelSystem.Label(container, message.Label);
 
             for (var i = 0; i < message.Number; i++)
@@ -361,6 +375,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 .Select(reagent => (reagent.ReagentId, reagent.Quantity)).ToList();
 
             return new ContainerInfo(name, true, solution.Volume, solution.MaxVolume, reagents);
+        }
+
+        private void OnExamined(EntityUid uid, ChemMasterComponent component, ExaminedEvent args)
+        {
+            if (!args.IsInDetailsRange || !_powerReceiverSystem.IsPowered(uid))
+                return;
+
+            var material = Loc.GetString("materials-" + component.RequiredMaterial.ToLower());
+            var amount = _material.GetMaterialAmount(uid, component.RequiredMaterial);
+
+            args.PushMarkup(Loc.GetString("chem-master-material", ("number", amount), ("material", material)));
         }
     }
 }

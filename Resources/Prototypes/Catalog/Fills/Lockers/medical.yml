@@ -5,8 +5,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
         amount: 1
       - id: EpinephrineChemistryBottle
@@ -23,8 +21,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: BoxPillCanister
-        amount: 1
       - id: BoxSyringe
         amount: 1
       - id: EpinephrineChemistryBottle
@@ -83,7 +79,10 @@
   - type: StorageFill
     contents:
       - id: BoxSyringe
+        amount: 1
       - id: BoxBeaker
+        amount: 1
       - id: BoxPillCanister
+        amount: 1
       - id: BoxBottle
-      - id: BoxBottle
+        amount: 2
