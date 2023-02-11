@@ -13,26 +13,18 @@
 - type: weightedRandom
   id: CaveLoot
   weights:
-    OreSteel: 1.0
-    OreSteelRich: 0.1
+    #OrePlasma: 0.1
+    OreTin: 1.0
+    #OreUranium: 0.1
 
 - type: loot
-  id: OreSteel
+  id: OreTin
   loots:
     - !type:ClusterLoot
       proto: WallRockTin
       minCluster: 10
       maxCluster: 13
       points: 3
-
-- type: loot
-  id: OreSteelRich
-  loots:
-    - !type:ClusterLoot
-      proto: WallRockTin
-      minCluster: 10
-      maxCluster: 13
-      points: 5
 
 # Expedition configs
 - type: salvageExpedition
