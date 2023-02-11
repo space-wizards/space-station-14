@@ -59,7 +59,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         Spawn(effectSourceComponent.BehaviorProperties.BluespaceEffectPrototype, effectTargetUid.ToCoordinates());
     }
 
-    private void PreOpen(EntityUid uid, BluespaceLockerComponent component, StorageBeforeOpenEvent args)
+    private void PreOpen(EntityUid uid, BluespaceLockerComponent component, ref StorageBeforeOpenEvent args)
     {
         EntityStorageComponent? entityStorageComponent = null;
         int transportedEntities = 0;
@@ -260,7 +260,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         }
     }
 
-    private void PostClose(EntityUid uid, BluespaceLockerComponent component, StorageAfterCloseEvent args)
+    private void PostClose(EntityUid uid, BluespaceLockerComponent component, ref StorageAfterCloseEvent args)
     {
         PostClose(uid, component);
     }

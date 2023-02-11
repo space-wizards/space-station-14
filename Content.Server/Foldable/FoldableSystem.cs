@@ -26,10 +26,10 @@ namespace Content.Server.Foldable
 
         }
 
-        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
+        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
         {
             if (component.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         public bool TryToggleFold(FoldableComponent comp)
@@ -90,12 +90,12 @@ namespace Content.Server.Foldable
             _buckle.StrapSetEnabled(component.Owner, !component.IsFolded);
         }
 
-        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)
+        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
         {
             args.Handled = true;
 
             if (comp.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         #region Verb

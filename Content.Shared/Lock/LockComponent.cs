@@ -11,16 +11,28 @@ namespace Content.Shared.Lock;
 [Access(typeof(LockSystem))]
 public sealed class LockComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("locked")]
+    /// <summary>
+    /// Whether or not the lock is locked.
+    /// </summary>
+    [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
     public bool Locked  = true;
 
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("lockOnClick")]
+    /// <summary>
+    /// Whether or not the lock is toggled by simply clicking.
+    /// </summary>
+    [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
     public bool LockOnClick;
 
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("unlockingSound")]
+    /// <summary>
+    /// The sound played when unlocked.
+    /// </summary>
+    [DataField("unlockingSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier UnlockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
 
-    [ViewVariables(VVAccess.ReadWrite)] [DataField("lockingSound")]
+    /// <summary>
+    /// The sound played when locked.
+    /// </summary>
+    [DataField("lockingSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg");
 }
 
@@ -39,18 +51,7 @@ public sealed class LockComponentState : ComponentState
 }
 
 [ByRefEvent]
-public struct LockToggleAttemptEvent
-{
-    public bool Silent = false;
-    public bool Cancelled = false;
-    public EntityUid User;
-
-    public LockToggleAttemptEvent(EntityUid user, bool silent = false)
-    {
-        User = user;
-        Silent = silent;
-    }
-}
+public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct LockToggledEvent(bool Locked);

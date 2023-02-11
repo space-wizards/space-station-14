@@ -270,9 +270,9 @@ namespace Content.Server.Ghost
             }
         }
 
-        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, InsertIntoEntityStorageAttemptEvent args)
+        private void OnEntityStorageInsertAttempt(EntityUid uid, GhostComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
         {
-            args.Cancel();
+            args.Cancelled = true;
         }
 
         /// <summary>

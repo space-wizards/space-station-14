@@ -1,34 +1,25 @@
 ﻿namespace Content.Shared.Storage.Components;
 
-public sealed class InsertIntoEntityStorageAttemptEvent : CancellableEntityEventArgs { }
-public sealed class StoreMobInItemContainerAttemptEvent : CancellableEntityEventArgs
-{
-    public bool Handled = false;
-}
-public sealed class StorageOpenAttemptEvent : CancellableEntityEventArgs
-{
-    public bool Silent = false;
+[ByRefEvent]
+public record struct InsertIntoEntityStorageAttemptEvent(bool Cancelled = false);
 
-    public StorageOpenAttemptEvent (bool silent = false)
-    {
-        Silent = silent;
-    }
-}
-public sealed class StorageBeforeOpenEvent : EventArgs { }
-public sealed class StorageAfterOpenEvent : EventArgs { }
-public sealed class StorageCloseAttemptEvent : CancellableEntityEventArgs { }
-public sealed class StorageBeforeCloseEvent : EventArgs
-{
-    public HashSet<EntityUid> Contents;
+[ByRefEvent]
+public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
 
-    /// <summary>
-    ///     Entities that will get inserted, regardless of any insertion or whitelist checks.
-    /// </summary>
-    public HashSet<EntityUid> BypassChecks = new();
+[ByRefEvent]
+public record struct StorageOpenAttemptEvent(bool Silent, bool Cancelled = false);
 
-    public StorageBeforeCloseEvent(HashSet<EntityUid> contents)
-    {
-        Contents = contents;
-    }
-}
-public sealed class StorageAfterCloseEvent : EventArgs { }
+[ByRefEvent]
+public readonly record struct StorageBeforeOpenEvent;
+
+[ByRefEvent]
+public readonly record struct StorageAfterOpenEvent;
+
+[ByRefEvent]
+public record struct StorageCloseAttemptEvent(bool Cancelled = false);
+
+[ByRefEvent]
+public readonly record struct StorageBeforeCloseEvent(HashSet<EntityUid> Contents, HashSet<EntityUid> BypassChecks);
+
+[ByRefEvent]
+public readonly record struct StorageAfterCloseEvent;

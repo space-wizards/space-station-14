@@ -1,6 +1,4 @@
-using Content.Server.Body.Systems;
 using Content.Server.Morgue.Components;
-using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
@@ -18,8 +16,7 @@ public sealed class EntityStorageLayingDownOverrideSystem : EntitySystem
         SubscribeLocalEvent<EntityStorageLayingDownOverrideComponent, StorageBeforeCloseEvent>(OnBeforeClose);
     }
 
-    private void OnBeforeClose(EntityUid uid, EntityStorageLayingDownOverrideComponent component,
-        StorageBeforeCloseEvent args)
+    private void OnBeforeClose(EntityUid uid, EntityStorageLayingDownOverrideComponent component, ref StorageBeforeCloseEvent args)
     {
         foreach (var ent in args.Contents)
         {

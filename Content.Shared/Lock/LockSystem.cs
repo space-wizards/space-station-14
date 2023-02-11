@@ -81,14 +81,14 @@ public sealed class LockSystem : EntitySystem
         }
     }
 
-    private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, StorageOpenAttemptEvent args)
+    private void OnStorageOpenAttempt(EntityUid uid, LockComponent component, ref StorageOpenAttemptEvent args)
     {
         if (!component.Locked)
             return;
         if (!args.Silent)
             _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)
@@ -99,6 +99,13 @@ public sealed class LockSystem : EntitySystem
             ("entityName", Identity.Name(uid, EntityManager))));
     }
 
+    /// <summary>
+    /// Attmempts to lock a given entity
+    /// </summary>
+    /// <param name="uid">The entity with the lock</param>
+    /// <param name="user">The person trying to lock it</param>
+    /// <param name="lockComp"></param>
+    /// <returns>If locking was successful</returns>
     public bool TryLock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
@@ -125,6 +132,12 @@ public sealed class LockSystem : EntitySystem
         return true;
     }
 
+    /// <summary>
+    /// Forces a given entity to be unlocked
+    /// </summary>
+    /// <param name="uid">The entity with the lock</param>
+    /// <param name="user">The person unlocking it. Can be null</param>
+    /// <param name="lockComp"></param>
     public void Unlock(EntityUid uid, EntityUid? user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
@@ -147,6 +160,14 @@ public sealed class LockSystem : EntitySystem
         RaiseLocalEvent(uid, new LockToggledEvent(false), true);
     }
 
+
+    /// <summary>
+    /// Attmempts to unlock a given entity
+    /// </summary>
+    /// <param name="uid">The entity with the lock</param>
+    /// <param name="user">The person trying to unlock it</param>
+    /// <param name="lockComp"></param>
+    /// <returns>If locking was successful</returns>
     public bool TryUnlock(EntityUid uid, EntityUid user, LockComponent? lockComp = null)
     {
         if (!Resolve(uid, ref lockComp))
@@ -163,7 +184,8 @@ public sealed class LockSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
+    /// Raises an event for other components to check whether or not
+    /// the entity can be locked in its current state.
     /// </summary>
     public bool CanToggleLock(EntityUid uid, EntityUid user, bool quiet = true)
     {

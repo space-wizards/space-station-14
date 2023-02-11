@@ -20,7 +20,7 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         SubscribeLocalEvent<CursedEntityStorageComponent, StorageAfterCloseEvent>(OnClose);
     }
 
-    private void OnClose(EntityUid uid, CursedEntityStorageComponent component, StorageAfterCloseEvent args)
+    private void OnClose(EntityUid uid, CursedEntityStorageComponent component, ref StorageAfterCloseEvent args)
     {
         if (!TryComp<EntityStorageComponent>(uid, out var storage))
             return;

@@ -42,17 +42,17 @@ public sealed class CrematoriumSystem : EntitySystem
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
 
-        if (appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
+        if (_appearance.TryGetData(uid, CrematoriumVisuals.Burning, out bool isBurning, appearance) && isBurning)
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", uid)));
-        if (appearance.TryGetData(StorageVisuals.HasContents, out bool hasContents) && hasContents)
+        if (_appearance.TryGetData(uid, StorageVisuals.HasContents, out bool hasContents, appearance) && hasContents)
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-has-contents"));
         else
             args.PushMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-empty"));
     }
 
-    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, StorageOpenAttemptEvent args)
+    private void OnAttemptOpen(EntityUid uid, ActiveCrematoriumComponent component, ref StorageOpenAttemptEvent args)
     {
-        args.Cancel();
+        args.Cancelled = true;
     }
 
     private void AddCremateVerb(EntityUid uid, CrematoriumComponent component, GetVerbsEvent<AlternativeVerb> args)

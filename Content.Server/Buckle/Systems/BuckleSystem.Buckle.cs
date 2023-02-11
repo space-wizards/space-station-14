@@ -98,10 +98,10 @@ public sealed partial class BuckleSystem
         TryUnbuckle(uid, buckle.Owner, true, buckle);
     }
 
-    private void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, InsertIntoEntityStorageAttemptEvent args)
+    private void OnEntityStorageInsertAttempt(EntityUid uid, BuckleComponent comp, ref InsertIntoEntityStorageAttemptEvent args)
     {
         if (comp.Buckled)
-            args.Cancel();
+            args.Cancelled = true;
     }
 
     private void OnBuckleCanDrop(EntityUid uid, BuckleComponent component, CanDropEvent args)
