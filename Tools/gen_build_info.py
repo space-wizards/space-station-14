@@ -21,9 +21,9 @@ SERVER_FILES = [
 
 VERSION = os.environ['GITHUB_SHA']
 FORK_ID = "syndicate"
-BUILD_URL = f"https://builds.station14.ru/syndicate/builds/{{FORK_VERSION}}/{FILE}"
-MANIFEST_URL = f"https://builds.station14.ru/cdn/version/{{FORK_VERSION}}/manifest"
-MANIFEST_DOWNLOAD_URL = f"https://builds.station14.ru/cdn/version/{{FORK_VERSION}}/download"
+BUILD_URL = f"https://builds.station14.ru/{{FORK_ID}}/builds/{{FORK_VERSION}}/{FILE}"
+MANIFEST_URL = f"https://cdn.station14.ru/{{FORK_ID}}/version/{{FORK_VERSION}}/manifest"
+MANIFEST_DOWNLOAD_URL = f"https://cdn.station14.ru/{{FORK_ID}}/version/{{FORK_VERSION}}/download"
 
 def main() -> None:
     client_file = os.path.join("release", FILE)
