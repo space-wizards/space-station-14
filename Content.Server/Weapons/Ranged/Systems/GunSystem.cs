@@ -229,7 +229,7 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!deleted)
                             {
                                 if (dmg.Total > FixedPoint2.Zero)
-                                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {result.HitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                    RaiseNetworkEvent(new DamageEffectEvent(Color.Red, new List<EntityUid> {hitEntity}), Filter.Pvs(hitEntity, entityManager: EntityManager));
 
                                 // TODO get fallback position for playing hit sound.
                                 PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
