@@ -1,16 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
-      and more alive, maint has been spruced up and lots of spaces are bigger, more
-      decorated and more loot sprawled.', type: Tweak}
-  id: 2518
-  time: '2022-10-24T17:30:50.0000000+00:00'
-- author: Morb0
-  changes:
-  - {message: Added two new jester suits in AutoDrobe, type: Add}
-  id: 2519
-  time: '2022-10-24T18:04:55.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix clientside organs being left around., type: Fix}
@@ -2918,3 +2906,13 @@ Entries:
     type: Add}
   id: 3017
   time: '2023-02-11T01:39:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Changed job icons for scientist and research director., type: Tweak}
+  id: 3018
+  time: '2023-02-11T01:51:48.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added missing satchel and duffel virology bags to the ViroDrobe., type: Add}
+  id: 3019
+  time: '2023-02-11T01:52:45.0000000+00:00'
