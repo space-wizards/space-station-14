@@ -1,115 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Added ore veins; ores now drop from rock on destruction., type: Add}
-  - {message: Pickaxes now mine faster., type: Tweak}
-  - {message: 'Increased the amount of ores per rock mined, scaling based on the ore
-      rarity.', type: Tweak}
-  id: 2492
-  time: '2022-10-20T13:16:29.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix wallmount interactions., type: Fix}
-  id: 2493
-  time: '2022-10-20T13:20:53.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Updated some item descriptions in the Syndicate Uplink menu., type: Tweak}
-  - {message: 'Clarified that, should you purchase the Syndicate Pajama Bundle, you
-      will have the ultimate sleepover.', type: Tweak}
-  id: 2494
-  time: '2022-10-21T18:47:09.0000000+00:00'
-- author: moony
-  changes:
-  - {message: 'The floor tiles have been resprited. They should look pretty similar,
-      but are a lot easier to edit for the developers considering they weren''t jpeg
-      compressed at some point in their life.', type: Tweak}
-  - {message: Removed sovl!, type: Remove}
-  id: 2495
-  time: '2022-10-22T01:53:25.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added scarfs to the Clothesmate., type: Add}
-  id: 2496
-  time: '2022-10-22T05:06:46.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fix hands GUI showing icons for items held by other players., type: Fix}
-  - {message: Fix weapon chargers no longer ejecting on left-click., type: Fix}
-  id: 2497
-  time: '2022-10-22T16:13:25.0000000+00:00'
-- author: moony
-  changes:
-  - {message: LED lights no longer burn your eyes out (fixed their overly high brightness/energy),
-    type: Fix}
-  id: 2498
-  time: '2022-10-22T18:16:32.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: You will now see a message at spawn telling you what station you're
-      on., type: Tweak}
-  id: 2499
-  time: '2022-10-22T21:51:51.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Added a proper sprite for all handguns that fit belt slots, type: Add}
-  id: 2500
-  time: '2022-10-22T21:53:43.0000000+00:00'
-- author: Jackrost
-  changes:
-  - {message: biomass reclaimer is don't jitter if power off, type: Add}
-  id: 2501
-  time: '2022-10-22T21:54:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix cargo orders not showing up on shuttle., type: Fix}
-  id: 2502
-  time: '2022-10-22T21:55:13.0000000+00:00'
-- author: Willhelm53
-  changes:
-  - {message: 'Added Nanotransen Oceanic Apex Predator Plush Figure - Available in
-      blue, pink, and grey!', type: Add}
-  id: 2503
-  time: '2022-10-22T21:58:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'The price scanner now reports in spacebucks, not credits.', type: Fix}
-  id: 2504
-  time: '2022-10-22T21:58:27.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Matchbox sprite will now properly show its fill states., type: Fix}
-  id: 2505
-  time: '2022-10-22T21:59:53.0000000+00:00'
-- author: Interrobang01
-  changes:
-  - {message: Added a rare new chemical that makes dumb creatures sentient., type: Add}
-  id: 2506
-  time: '2022-10-22T22:05:06.0000000+00:00'
-- author: Mervill
-  changes:
-  - {message: Slime corpses no longer rot or produce miasma, type: Tweak}
-  id: 2507
-  time: '2022-10-22T22:07:36.0000000+00:00'
-- author: lapatison
-  changes:
-  - {message: Apron pockets were added, type: Add}
-  id: 2508
-  time: '2022-10-22T22:07:51.0000000+00:00'
-- author: Nairod
-  changes:
-  - {message: Made the sec duffle bag sprites more consistent., type: Tweak}
-  id: 2509
-  time: '2022-10-22T22:14:19.0000000+00:00'
-- author: 25203
-  changes:
-  - {message: Sci can now print seed extractor machine boards after unlocking advanced
-      botany. They can be upgraded with better manipulators (seed output) and capacitors
-      (power efficiency)., type: Add}
-  id: 2510
-  time: '2022-10-22T22:26:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Generators can now be upgraded using machine parts., type: Add}
   id: 2511
   time: '2022-10-22T22:38:57.0000000+00:00'
@@ -2923,3 +2814,112 @@ Entries:
     type: Tweak}
   id: 2991
   time: '2023-02-05T15:38:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Ripleys can no longer grab walls, doors, and portals.', type: Fix}
+  id: 2992
+  time: '2023-02-05T19:44:36.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added virology lab coats to the virodrobe, type: Add}
+  id: 2993
+  time: '2023-02-05T19:47:52.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: 'Changed the rat king sprite, boss says!', type: Tweak}
+  id: 2994
+  time: '2023-02-05T19:49:03.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Anomaly vessels now visually change depending on the stability of their
+      linked anomaly., type: Add}
+  - {message: Anomaly vessels have a beep that speeds up as the anomaly destabilizes.
+      Almost sounds like a bomb..., type: Add}
+  id: 2995
+  time: '2023-02-05T19:52:30.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: you can now put explosives with timer in cream pie. Prank your friend!
+      (just imagine their face), type: Add}
+  - {message: cream pie now leaves pie tin after throw, type: Fix}
+  id: 2996
+  time: '2023-02-05T20:07:52.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Unrandomized airlock painter styles, type: Fix}
+  id: 2997
+  time: '2023-02-05T20:22:37.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: Broken shooting targets no longer drop 100 times more steel than they
+      cost., type: Tweak}
+  id: 2998
+  time: '2023-02-06T02:51:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Increased point generation from anomalies., type: Tweak}
+  - {message: Made the pyroclastic anomaly less dangerous and electricity anomaly
+      more dangerous., type: Tweak}
+  - {message: Anomalies should no longer spawn in walls as much., type: Fix}
+  - {message: 'Added two new types of anomalies: flesh and bluespace.', type: Add}
+  id: 2999
+  time: '2023-02-06T05:03:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed red kuzdu., type: Fix}
+  id: 3000
+  time: '2023-02-06T12:27:06.0000000+00:00'
+- author: Chief-Engineer
+  changes:
+  - {message: Automatically called shuttles will take 10 minutes to get to the station
+      instead of 4., type: Tweak}
+  id: 3001
+  time: '2023-02-06T12:49:16.0000000+00:00'
+- author: Furontier
+  changes:
+  - {message: Added singularity guidebook entry, type: Add}
+  id: 3002
+  time: '2023-02-06T13:10:07.0000000+00:00'
+- author: AJCM-git
+  changes:
+  - {message: PDAs no longer disappear when inhand, type: Fix}
+  id: 3003
+  time: '2023-02-06T19:53:24.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The anomaly generator now has an animation while it creates anomalies.,
+    type: Add}
+  - {message: The anomaly generator now broadcasts a message on the science radio
+      alerting scientists that a new anomaly has been made., type: Add}
+  id: 3004
+  time: '2023-02-06T19:54:00.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Bluespace anomalies no longer... crash everything., type: Fix}
+  id: 3005
+  time: '2023-02-06T21:11:20.0000000+00:00'
+- author: checkraze
+  changes:
+  - {message: Added the NCS Aspid, type: Add}
+  id: 3006
+  time: '2023-02-07T14:22:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs breaking on prototype reloads., type: Fix}
+  id: 3007
+  time: '2023-02-07T21:27:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now print tier 3 machine parts at lathes., type: Add}
+  id: 3008
+  time: '2023-02-08T00:39:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: APEs are now much lighter and easier to move around., type: Tweak}
+  id: 3009
+  time: '2023-02-08T02:10:27.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPC prototype reloading for realsies., type: Fix}
+  id: 3010
+  time: '2023-02-08T14:01:27.0000000+00:00'

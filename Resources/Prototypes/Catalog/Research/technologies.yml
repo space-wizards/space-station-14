@@ -576,10 +576,27 @@
   requiredPoints: 15000
   requiredTechnologies:
   - ScientificTechnology
-  - CompactPowerTechnology
   unlockedRecipes:
   - AdvancedCapacitorStockPart
   - AdvancedMatterBinStockPart
   - HighPowerMicroLaserStockPart
   - NanoManipulatorStockPart
   - AdvancedScanningModuleStockPart
+
+- type: technology
+  name: technologies-super-parts-technology
+  id: SuperPartsTechnology
+  description: technologies-super-parts-technology-description
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: super_capacitor
+  requiredPoints: 20000
+  requiredTechnologies:
+  - AdvancedPartsTechnology
+  - CompactPowerTechnology
+  unlockedRecipes:
+  - SuperCapacitorStockPart
+  - SuperMatterBinStockPart
+  - UltraHighPowerMicroLaserStockPart
+  - PicoManipulatorStockPart
+  - PhasicScanningModuleStockPart

@@ -13,7 +13,7 @@ public sealed class PyroclasticAnomalyComponent : Component
     /// I have no clue if this is balanced.
     /// </remarks>
     [DataField("heatPerSecond")]
-    public float HeatPerSecond = 50;
+    public float HeatPerSecond = 25;
 
     /// <summary>
     /// The maximum distance from which you can be ignited by the anomaly.
@@ -50,5 +50,5 @@ public sealed class PyroclasticAnomalyComponent : Component
     /// The amount of gas released when the anomaly goes supercritical
     /// </summary>
     [DataField("supercriticalMoleAmount")]
-    public float SupercriticalMoleAmount = 50f;
+    public float SupercriticalMoleAmount = 75f;
 }
