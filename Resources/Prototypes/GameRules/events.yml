@@ -211,7 +211,7 @@
     earliestStart: 20
     minimumPlayers: 15
     weight: 5
-    endAfter: 60    
+    endAfter: 60
 
 - type: gameRule
   id: ZombieOutbreak

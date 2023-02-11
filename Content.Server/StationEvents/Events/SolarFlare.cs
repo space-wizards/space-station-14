@@ -13,8 +13,7 @@ public sealed class SolarFlare : StationEventSystem
 
     public override string Prototype => "SolarFlare";
 
-    private SolarFlareEventRuleConfiguration ev = default!;
-    private float _endAfter = 0.0f;
+    private SolarFlareEventRuleConfiguration _event = default!;
 
     public override void Initialize()
     {
@@ -24,11 +23,13 @@ public sealed class SolarFlare : StationEventSystem
 
     public override void Added()
     {
+        base.Added();
+
         if (Configuration is not SolarFlareEventRuleConfiguration ev)
             return;
-        base.Added();
-        this.ev = ev;
-        _endAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
+
+        _event = ev;
+        _event.EndAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
     }
 
     public override void Started()
@@ -41,9 +42,10 @@ public sealed class SolarFlare : StationEventSystem
     {
         foreach (var comp in EntityQuery<PoweredLightComponent>())
         {
-            if (RobustRandom.Prob(ev.LightBreakChance))
+            if (RobustRandom.Prob(_event.LightBreakChance))
             {
-                _poweredLight.TryDestroyBulb(comp.Owner, comp);
+                var uid = comp.Owner;
+                _poweredLight.TryDestroyBulb(uid, comp);
             }
         }
     }
@@ -55,7 +57,7 @@ public sealed class SolarFlare : StationEventSystem
         if (!RuleStarted)
             return;
 
-        if (Elapsed > _endAfter)
+        if (Elapsed > _event.EndAfter)
         {
             ForceEndSelf();
             return;
@@ -64,8 +66,8 @@ public sealed class SolarFlare : StationEventSystem
 
     private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
     {
-        if (RuleStarted && ev.AffectedChannels.Contains(args.Channel.ID))
-            if (!ev.OnlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
+        if (RuleStarted && _event.AffectedChannels.Contains(args.Channel.ID))
+            if (!_event.OnlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancel();
     }
 }
