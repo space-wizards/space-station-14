@@ -59,7 +59,7 @@ namespace Content.Server.Tiles
                             return;
                         var wallPos = transform.Coordinates.ToMapPos(EntityManager);
                         var wallBox = fixtures.GetAABB(new Transform(wallPos, 0));
-                        if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75)
+                        if (Box2.Area(floorBox.Intersect(wallBox)) > 0.75 * Box2.Area(floorBox))
                             return;
                     }
             }
