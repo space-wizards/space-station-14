@@ -13,25 +13,27 @@
       fadeOutDuration: 300
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
+      iconStateLit: glowstick_lit
+      iconStateSpent: glowstick_unlit
       litSound:
         path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#00FF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#00FF00"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        color: "#00FF00"
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
+        color: "#00FF00"
     - type: Item
       sprite: Objects/Misc/glowstick.rsi
       heldPrefix: unlit
     - type: Appearance
-    - type: ExpendableLightVisualizer
-      iconStateOn: glowstick_lit
-      iconStateSpent: glowstick_unlit
     - type: PointLight
       enabled: false
       color: "#00FF00"
@@ -73,13 +75,16 @@
       fadeOutDuration: 5
     - type: Sprite
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF0000"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF0000"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        color: "#FF0000"
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
+        color: "#FF0000"
     - type: PointLight
       enabled: false
       color: "#FF0000"
@@ -95,13 +100,16 @@
       spentName: expendable-light-spent-purple-glowstick-name
     - type: Sprite
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FF00FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FF00FF"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        color: "#FF00FF"
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
+        color: "#FF00FF"
     - type: PointLight
       enabled: false
       color: "#FF00FF"
@@ -118,13 +126,16 @@
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#FFFF00"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#FFFF00"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        color: "#FFFF00"
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
+        color: "#FFFF00"
     - type: PointLight
       enabled: false
       color: "#FFFF00"
@@ -141,13 +152,16 @@
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
-        - state: glowstick_base
-        - state: glowstick_glow
-          color: "#0000FF"
-          visible: false
-          shader: unshaded
-        - state: glowstick_unlit
-          color: "#0000FF"
+      - map: [ enum.ExpendableLightVisualLayers.Base ]
+        state: glowstick_base
+      - map: [ enum.ExpendableLightVisualLayers.Glow ]
+        state: glowstick_glow
+        color: "#0000FF"
+        visible: false
+        shader: unshaded
+      - map: [ enum.ExpendableLightVisualLayers.Overlay ]
+        state: glowstick_unlit
+        color: "#0000FF"
       heldPrefix: unlit
     - type: PointLight
       enabled: false
