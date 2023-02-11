@@ -1,15 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Added the Zookeeper. Find them patrolling and caring for Kettle station's
-      various wildlife soon!, type: Add}
-  id: 2516
-  time: '2022-10-23T19:42:25.0000000+00:00'
-- author: Cheackraze
-  changes:
-  - {message: Added a Zoo and a few animals to Kettle!, type: Add}
-  id: 2517
-  time: '2022-10-24T02:30:37.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: 'Pillar map major update. Atmos is now in engi, corridors are now smaller
@@ -2918,3 +2907,14 @@ Entries:
       stations., type: Tweak}
   id: 3015
   time: '2023-02-10T19:32:33.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mops now have an ItemStatus showing how full they are., type: Add}
+  id: 3016
+  time: '2023-02-11T01:39:01.0000000+00:00'
+- author: QuietlyWhisper
+  changes:
+  - {message: Carps now "Fly" and will no longer be harmed by lava or glass shards.,
+    type: Add}
+  id: 3017
+  time: '2023-02-11T01:39:24.0000000+00:00'
