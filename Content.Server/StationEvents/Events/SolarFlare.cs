@@ -13,11 +13,8 @@ public sealed class SolarFlare : StationEventSystem
 
     public override string Prototype => "SolarFlare";
 
-    private bool _onlyJamHeadsets = true;
-    private HashSet<string> _affectedChannels = new();
+    private SolarFlareEventRuleConfiguration ev = default!;
     private float _endAfter = 0.0f;
-    private float _lightBurnChance = 0.0f;
-    private float _lightChangeColorChance = 0.0f;
 
     public override void Initialize()
     {
@@ -30,10 +27,8 @@ public sealed class SolarFlare : StationEventSystem
         if (Configuration is not SolarFlareEventRuleConfiguration ev)
             return;
         base.Added();
-        _onlyJamHeadsets = ev.OnlyJamHeadsets;
+        this.ev = ev;
         _endAfter = RobustRandom.Next(ev.MinEndAfter, ev.MaxEndAfter);
-        _affectedChannels = ev.AffectedChannels;
-        _lightBurnChance = ev.LightBreakChance;
     }
 
     public override void Started()
@@ -46,7 +41,7 @@ public sealed class SolarFlare : StationEventSystem
     {
         foreach (var comp in EntityQuery<PoweredLightComponent>())
         {
-            if (RobustRandom.Prob(_lightBurnChance))
+            if (RobustRandom.Prob(ev.LightBreakChance))
             {
                 _poweredLight.TryDestroyBulb(comp.Owner, comp);
             }
@@ -69,8 +64,8 @@ public sealed class SolarFlare : StationEventSystem
 
     private void OnRadioSendAttempt(EntityUid uid, ActiveRadioComponent component, RadioReceiveAttemptEvent args)
     {
-        if (RuleStarted && _affectedChannels.Contains(args.Channel.ID))
-            if (!_onlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
+        if (RuleStarted && ev.AffectedChannels.Contains(args.Channel.ID))
+            if (!ev.OnlyJamHeadsets || (HasComp<HeadsetComponent>(uid) || HasComp<HeadsetComponent>(args.RadioSource)))
                 args.Cancel();
     }
 }
