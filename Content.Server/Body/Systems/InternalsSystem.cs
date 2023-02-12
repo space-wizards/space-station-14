@@ -10,7 +10,6 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Verbs;
 using Content.Server.Popups;
 using Content.Server.DoAfter;
-using System.Threading;
 using Content.Shared.DoAfter;
 
 namespace Content.Server.Body.Systems;
@@ -85,11 +84,13 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
+        var isUser = uid != user;
+
         if (!force)
         {
             // Is the target not you? If yes, use a do-after to give them time to respond.
             //If no, do a short delay. There's no reason it should be beyond 1 second.
-            var delay = uid != user ? internals.Delay : 1.0f;
+            var delay = isUser ? internals.Delay : 1.0f;
 
             _doAfter.DoAfter(new DoAfterEventArgs(user, delay, target:uid)
             {
@@ -97,7 +98,9 @@ public sealed class InternalsSystem : EntitySystem
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
-                MovementThreshold = 0.1f
+                MovementThreshold = 0.1f,
+                RaiseOnUser = !isUser,
+                RaiseOnTarget = isUser
             });
 
             return;
