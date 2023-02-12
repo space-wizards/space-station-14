@@ -124,7 +124,7 @@
 
 - type: artifactEffect
   id: EffectChemicalPuddle
-  targetDepth: 0
+  targetDepth: 1
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: ChemicalPuddleArtifact
@@ -151,6 +151,7 @@
     - Radium
     - Silicon
     - Sodium
+    - Water
     - Sulfur
 
 - type: artifactEffect
