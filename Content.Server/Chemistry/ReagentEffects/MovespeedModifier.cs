@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Movement.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.ReagentEffects
@@ -28,6 +29,14 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// </summary>
         [DataField("statusLifetime")]
         public float StatusLifetime = 2f;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            return Loc.GetString("reagent-effect-guidebook-movespeed-modifier",
+                ("chance", Probability),
+                ("walkspeed", WalkSpeedModifier),
+                ("time", StatusLifetime));
+        }
 
         /// <summary>
         /// Remove reagent at set rate, changes the movespeed modifiers and adds a MovespeedModifierMetabolismComponent if not already there.

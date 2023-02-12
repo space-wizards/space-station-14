@@ -1,5 +1,6 @@
 using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
@@ -23,6 +24,13 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             }
 
             return false;
+        }
+
+        public override string GuidebookExplanation(IPrototypeManager prototype)
+        {
+            return Loc.GetString("reagent-effect-condition-guidebook-body-temperature",
+                ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
+                ("min", Min));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
@@ -29,6 +30,13 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
                 && metabolizer.MetabolizerTypes.Contains(Type))
                 return ShouldHave;
             return !ShouldHave;
+        }
+
+        public override string GuidebookExplanation(IPrototypeManager prototype)
+        {
+            return Loc.GetString("reagent-effect-condition-guidebook-organ-type",
+                ("name", prototype.Index<MetabolizerTypePrototype>(Type).Name),
+                ("shouldhave", ShouldHave));
         }
     }
 }

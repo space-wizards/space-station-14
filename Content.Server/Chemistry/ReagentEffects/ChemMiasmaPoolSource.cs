@@ -2,6 +2,7 @@ using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Content.Server.Atmos.Miasma;
 using Content.Server.Disease;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -13,6 +14,10 @@ namespace Content.Server.Chemistry.ReagentEffects
     [UsedImplicitly]
     public sealed class ChemMiasmaPoolSource : ReagentEffect
     {
+        // JUSTIFICATION: Only used for miasma.
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => null;
+
         public override void Effect(ReagentEffectArgs args)
         {
             if (args.Scale != 1f)

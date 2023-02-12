@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Server.Disease;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -15,6 +16,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// </summary>
         [DataField("cureChance")]
         public float CureChance = 0.15f;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-cure-disease", ("chance", Probability));
 
         public override void Effect(ReagentEffectArgs args)
         {

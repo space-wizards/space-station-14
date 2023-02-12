@@ -1,5 +1,6 @@
 ﻿using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -11,5 +12,8 @@ namespace Content.Server.Chemistry.ReactionEffects
         {
             return IoCManager.Resolve<IEntityManager>().GetComponentOrNull<SmokeSolutionAreaEffectComponent>(entity);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-foam-area-reaction-effect", ("chance", Probability));
     }
 }

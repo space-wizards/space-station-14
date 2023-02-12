@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {
@@ -41,5 +42,8 @@ namespace Content.Server.Chemistry.ReactionEffects
             entityManager.EntitySysManager.GetEntitySystem<AudioSystem>()
                 .PlayPvs(sound, ent, AudioParams.Default.WithVariation(0.125f));
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-foam-area-reaction-effect", ("chance", Probability));
     }
 }

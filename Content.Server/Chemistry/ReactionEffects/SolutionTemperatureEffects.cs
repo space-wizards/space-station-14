@@ -16,6 +16,10 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("temperature", required: true)] private float _temperature;
 
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-set-solution-temperature-effect",
+                ("chance", Probability), ("temperature", _temperature));
+
         public override void Effect(ReagentEffectArgs args)
         {
             var solution = args.Source;
@@ -51,6 +55,10 @@ namespace Content.Server.Chemistry.ReactionEffects
         ///     If true, then scale ranges by intensity. If not, the ranges are the same regardless of reactant amount.
         /// </summary>
         [DataField("scaled")] private bool _scaled;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-adjust-solution-temperature-effect",
+                ("chance", Probability), ("deltasign", MathF.Sign(_delta)), ("mintemp", _minTemp), ("maxtemp", _maxTemp));
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -101,11 +109,15 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var heatCap = solution.GetHeatCapacity(null);
             var deltaT = _scaled
-                ? _delta / heatCap * (float) args.Quantity 
+                ? _delta / heatCap * (float) args.Quantity
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-adjust-solution-temperature-effect",
+                ("chance", Probability), ("deltasign", MathF.Sign(_delta)), ("mintemp", _minTemp), ("maxtemp", _maxTemp));
     }
 
 }
