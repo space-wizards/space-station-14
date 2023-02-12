@@ -2,26 +2,28 @@ using Content.Server.Decals;
 using Content.Shared.Decals;
 using Content.Shared.Parallax.Biomes;
 using Robust.Server.Player;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Noise;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Parallax;
 
 public sealed class BiomeSystem : SharedBiomeSystem
 {
+    [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly DecalSystem _decals = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<EntityUid> _handledEntities = new();
-    private const float LoadRange = ChunkSize * 2f;
-    private readonly Box2 _loadArea = new(-LoadRange, -LoadRange, LoadRange, LoadRange);
+    private const float DefaultLoadRange = 16f;
+    private float _loadRange = DefaultLoadRange;
+    private Box2 _loadArea = new(-DefaultLoadRange, -DefaultLoadRange, DefaultLoadRange, DefaultLoadRange);
 
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
 
@@ -29,6 +31,20 @@ public sealed class BiomeSystem : SharedBiomeSystem
     {
         base.Initialize();
         SubscribeLocalEvent<BiomeComponent, MapInitEvent>(OnBiomeMapInit);
+        _configManager.OnValueChanged(CVars.NetMaxUpdateRange, SetLoadRange, true);
+    }
+
+    public override void Shutdown()
+    {
+        base.Shutdown();
+        _configManager.UnsubValueChanged(CVars.NetMaxUpdateRange, SetLoadRange);
+    }
+
+    private void SetLoadRange(float obj)
+    {
+        // Round it up
+        _loadRange = MathF.Ceiling(obj / ChunkSize) * ChunkSize;
+        _loadArea = new Box2(-_loadRange, -_loadRange, _loadRange, _loadRange);
     }
 
     private void OnBiomeMapInit(EntityUid uid, BiomeComponent component, MapInitEvent args)
