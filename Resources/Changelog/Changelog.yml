@@ -1,9 +1,4 @@
 Entries:
-- author: exincore
-  changes:
-  - {message: added keybind awareness to chatbox hint, type: Add}
-  id: 2525
-  time: '2022-10-26T14:40:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix the item status for chambered guns flickering., type: Fix}
@@ -2915,3 +2910,8 @@ Entries:
   - {message: You can open cabinets with alt click., type: Tweak}
   id: 3024
   time: '2023-02-12T02:35:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix duplicate trees in biomes., type: Fix}
+  id: 3025
+  time: '2023-02-12T11:49:13.0000000+00:00'
