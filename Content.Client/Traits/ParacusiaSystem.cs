@@ -17,6 +17,29 @@ public sealed class ParacusiaSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly CameraRecoilSystem _camera = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ParacusiaComponent, ComponentStartup>(SetupParacusia);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(ShutdownParacusia);
+    }
+
+    private void SetupParacusia(EntityUid uid, ParacusiaComponent component, ComponentStartup args)
+    {
+        component.NextIncidentTime =
+            _random.NextFloat(component.MinTimeBetweenIncidents, component.MaxTimeBetweenIncidents);
+        Dirty(component);
+    }
+
+    private void ShutdownParacusia(RoundRestartCleanupEvent ev)
+    {
+        foreach (var comp in EntityQuery<ParacusiaComponent>(true))
+        {
+            var ent = comp.Owner;
+            RemComp(ent, comp);
+        }
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
