@@ -1,8 +1,7 @@
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Kitchen.Components;
-using Content.Server.Projectiles;
-using Content.Server.Ranged.Weapons.Components;
 using Content.Server.Weapons.Melee.EnergySword.Components;
+using Content.Server.Reflect;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -96,14 +95,9 @@ namespace Content.Server.Weapons.Melee.EnergySword
             if (comp.IsSharp)
                 RemComp<SharpComponent>(uid);
 
-            if (TryComp<ReflectProjectileComponent>(uid, out var reflectProj))
+            if (TryComp<ReflectComponent>(uid, out var reflect))
             {
-                reflectProj.Enabled = false;
-            }
-
-            if (TryComp<ReflectHitScanComponent>(uid, out var reflectHitScan))
-            {
-                reflectHitScan.Enabled = false;
+                reflect.Enabled = false;
             }
 
             _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
@@ -137,14 +131,9 @@ namespace Content.Server.Weapons.Melee.EnergySword
                 malus.Malus += comp.LitDisarmMalus;
             }
 
-            if (TryComp<ReflectProjectileComponent>(uid, out var reflectProj))
+            if (TryComp<ReflectComponent>(uid, out var reflect))
             {
-                reflectProj.Enabled = true;
-            }
-
-            if (TryComp<ReflectHitScanComponent>(uid, out var reflectHitScan))
-            {
-                reflectHitScan.Enabled = true;
+                reflect.Enabled = true;
             }
 
             comp.Activated = true;
