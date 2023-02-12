@@ -123,6 +123,37 @@
     - id: FoodBanana
 
 - type: artifactEffect
+  id: EffectChemicalPuddle
+  targetDepth: 0
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: ChemicalPuddleArtifact
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    possibleChemicals:
+    - Aluminium
+    - Carbon
+    - Chlorine
+    - Copper
+    - Ethanol
+    - Fluorine
+    - Sugar
+    - Hydrogen
+    - Iodine
+    - Iron
+    - Lithium
+    - Mercury
+    - Nitrogen
+    - Oxygen
+    - Phosphorus
+    - Potassium
+    - Radium
+    - Silicon
+    - Sodium
+    - Sulfur
+
+- type: artifactEffect
   id: EffectCold
   targetDepth: 1
   effectHint: artifact-effect-hint-consumption
@@ -275,11 +306,37 @@
     reagents:
     - Dermaline
     - Arithrazine
-    - Spaceacillin
+    - Bicaridine
     - Inaprovaline
     - Kelotane
     - Dexalin
     - Omnizine
+
+- type: artifactEffect
+  id: EffectChemicalPuddleRare
+  targetDepth: 2
+  effectHint: artifact-effect-hint-biochemical
+  components:
+  - type: ChemicalPuddleArtifact
+    chemicalSolution:
+      maxVol: 500
+      canReact: false
+    possibleChemicals:
+    - Dermaline
+    - Arithrazine
+    - Bicaridine
+    - Inaprovaline
+    - Kelotane
+    - Dexalin
+    - Omnizine
+    - Napalm
+    - Toxin
+    - Epinephrine
+    - Cognazine
+    - Ultravasculine
+    - Desoxyephedrine
+    - Pax
+    - Siderlac
 
 - type: artifactEffect
   id: EffectHealAll
