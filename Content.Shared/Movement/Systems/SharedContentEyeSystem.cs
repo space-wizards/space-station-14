@@ -14,8 +14,11 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public abstract class SharedContentEyeSystem : EntitySystem
 {
-    protected static readonly Vector2 MinZoom = new(MathF.Pow(1.2f, -6), MathF.Pow(1.5f, -6));
-    protected static readonly Vector2 MaxZoom = new(MathF.Pow(1.2f, 6), MathF.Pow(1.5f, 6));
+    private const float ZoomMod = 1.2f;
+    private const byte ZoomMultiple = 10;
+
+    protected static readonly Vector2 MinZoom = new(MathF.Pow(ZoomMod, -ZoomMultiple), MathF.Pow(ZoomMod, -ZoomMultiple));
+    protected static readonly Vector2 MaxZoom = new(MathF.Pow(ZoomMod, ZoomMultiple), MathF.Pow(ZoomMod, ZoomMultiple));
 
     protected ISawmill Sawmill = Logger.GetSawmill("ceye");
 
@@ -108,11 +111,11 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         if (zoomIn)
         {
-            actual /= 1.2f;
+            actual /= ZoomMod;
         }
         else
         {
-            actual *= 1.2f;
+            actual *= ZoomMod;
         }
 
         actual = Vector2.ComponentMax(MinZoom, actual);
