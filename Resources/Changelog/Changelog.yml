@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix entity storage closing and some other erroneous flags., type: Fix}
-  id: 2529
-  time: '2022-10-27T14:09:16.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Ghostly bodies have been limited to one per person., type: Remove}
@@ -2913,3 +2908,9 @@ Entries:
     type: Tweak}
   id: 3028
   time: '2023-02-12T20:18:10.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added laughing, clapping, and snapping sounds for Dionae.', type: Add}
+  - {message: Dionae don't scream like humans anymore., type: Fix}
+  id: 3029
+  time: '2023-02-12T20:51:19.0000000+00:00'
