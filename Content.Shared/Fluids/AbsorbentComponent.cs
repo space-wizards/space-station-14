@@ -1,15 +1,18 @@
-using Content.Server.Fluids.EntitySystems;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Fluids.Components;
+namespace Content.Shared.Fluids;
 
 /// <summary>
 /// For entities that can clean up puddles
 /// </summary>
-[RegisterComponent, Access(typeof(MoppingSystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed class AbsorbentComponent : Component
 {
+    // TODO: Predicted solutions my beloved.
+    public float Progress;
+
     public const string SolutionName = "absorbed";
 
     [DataField("pickupAmount")]
