@@ -9,6 +9,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Toggleable;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -17,6 +18,7 @@ namespace Content.Server.Stunnable.Systems
     public sealed class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -50,7 +52,7 @@ namespace Content.Server.Stunnable.Systems
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
                 SoundSystem.Play(component.SparksSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), uid, AudioHelpers.WithVariation(0.25f));
-                TurnOff(component);
+                TurnOff(uid, component);
             }
         }
 
@@ -58,11 +60,11 @@ namespace Content.Server.Stunnable.Systems
         {
             if (comp.Activated)
             {
-                TurnOff(comp);
+                TurnOff(uid, comp);
             }
             else
             {
-                TurnOn(comp, args.User);
+                TurnOn(uid, comp, args.User);
             }
         }
 
@@ -77,7 +79,7 @@ namespace Content.Server.Stunnable.Systems
                     ("charge", (int)((battery.CurrentCharge/battery.MaxCharge) * 100))));
         }
 
-        private void TurnOff(StunbatonComponent comp)
+        private void TurnOff(EntityUid uid, StunbatonComponent comp)
         {
             if (!comp.Activated)
                 return;
@@ -86,7 +88,7 @@ namespace Content.Server.Stunnable.Systems
                 TryComp<ItemComponent>(comp.Owner, out var item))
             {
                 _item.SetHeldPrefix(comp.Owner, "off", item);
-                appearance.SetData(ToggleVisuals.Toggled, false);
+                _appearance.SetData(uid, ToggleVisuals.Toggled, false, appearance);
             }
 
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
@@ -94,7 +96,7 @@ namespace Content.Server.Stunnable.Systems
             comp.Activated = false;
         }
 
-        private void TurnOn(StunbatonComponent comp, EntityUid user)
+        private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
         {
             if (comp.Activated)
                 return;
@@ -111,7 +113,7 @@ namespace Content.Server.Stunnable.Systems
                 EntityManager.TryGetComponent<ItemComponent>(comp.Owner, out var item))
             {
                 _item.SetHeldPrefix(comp.Owner, "on", item);
-                appearance.SetData(ToggleVisuals.Toggled, true);
+                _appearance.SetData(uid, ToggleVisuals.Toggled, true, appearance);
             }
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));

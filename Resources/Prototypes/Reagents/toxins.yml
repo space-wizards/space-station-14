@@ -134,7 +134,8 @@
         damage:
           groups:
             Caustic: 0.5
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.3
   metabolisms:
     Poison:
@@ -169,7 +170,8 @@
         damage:
           groups:
             Caustic: 0.3
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
   metabolisms:
     Poison:
@@ -211,7 +213,8 @@
         damage:
           groups:
             Caustic: 0.1
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.1
   metabolisms:
     Poison:

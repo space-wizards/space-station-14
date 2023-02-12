@@ -1,5 +1,6 @@
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Chemistry.ReactionEffects;
+using Content.Server.Station.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -23,6 +24,10 @@ public sealed class VentClog : StationEventSystem
     {
         base.Started();
 
+        if (StationSystem.Stations.Count == 0)
+            return;
+        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
+
         // TODO: "safe random" for chems. Right now this includes admin chemicals.
         var allReagents = PrototypeManager.EnumeratePrototypes<ReagentPrototype>()
             .Where(x => !x.Abstract)
@@ -34,6 +39,10 @@ public sealed class VentClog : StationEventSystem
 
         foreach (var (_, transform) in EntityManager.EntityQuery<GasVentPumpComponent, TransformComponent>())
         {
+            if (CompOrNull<StationMemberComponent>(transform.GridUid)?.Station != chosenStation)
+            {
+                continue;
+            }
             var solution = new Solution();
 
             if (!RobustRandom.Prob(Math.Min(0.33f * mod, 1.0f)))

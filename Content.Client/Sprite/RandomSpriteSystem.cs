@@ -41,18 +41,23 @@ public sealed class RandomSpriteSystem : SharedRandomSpriteSystem
 
         foreach (var layer in component.Selected)
         {
-            object key;
+            int index;
             if (_reflection.TryParseEnumReference(layer.Key, out var @enum))
             {
-                key = @enum;
+                if (!sprite.LayerMapTryGet(@enum, out index, logError: true))
+                    return;
             }
-            else
+            else if (!sprite.LayerMapTryGet(layer.Key, out index))
             {
-                key = layer.Key;
+                if (layer.Key is not string strKey || !int.TryParse(strKey, out index))
+                {
+                    Logger.Error($"Invalid key `{layer.Key}` for entity with random sprite {ToPrettyString(uid)}");
+                    return;
+                }
             }
 
-            sprite.LayerSetState(key, layer.Value.State);
-            sprite.LayerSetColor(key, layer.Value.Color ?? Color.White);
+            sprite.LayerSetState(index, layer.Value.State);
+            sprite.LayerSetColor(index, layer.Value.Color ?? Color.White);
         }
     }
 }

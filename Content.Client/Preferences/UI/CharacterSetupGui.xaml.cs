@@ -168,10 +168,10 @@ namespace Content.Client.Preferences.UI
                 }
                 else
                 {
-                    _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
+                    _previewDummy = entityManager.SpawnEntity(prototypeManager.Index<SpeciesPrototype>(SharedHumanoidAppearanceSystem.DefaultSpecies).DollPrototype, MapCoordinates.Nullspace);
                 }
 
-                EntitySystem.Get<HumanoidSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile)profile);
+                EntitySystem.Get<HumanoidAppearanceSystem>().LoadProfile(_previewDummy, (HumanoidCharacterProfile)profile);
 
                 if (humanoid != null)
                 {
