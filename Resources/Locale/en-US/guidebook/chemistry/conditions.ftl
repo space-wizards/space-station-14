@@ -1,18 +1,18 @@
 ﻿reagent-effect-condition-guidebook-total-damage =
     { $max ->
-        [2147483648] it has at least { NATURALFIXED($min, 2) } total damage
+        [2147483648] it has at least {NATURALFIXED($min, 2)} total damage
         *[other] { $min ->
-                    [0] it has at most { NATURALFIXED($max, 2) } total damage
-                    *[other] it has between { NATURALFIXED($min, 2) } and { NATURALFIXED($max, 2) } total damage
+                    [0] it has at most {NATURALFIXED($max, 2)} total damage
+                    *[other] it has between {NATURALFIXED($min, 2)} and {NATURALFIXED($max, 2)} total damage
                  }
     }
 
 reagent-effect-condition-guidebook-reagent-threshold =
     { $max ->
-        [2147483648] there's at least { NATURALFIXED($min, 2) }u of { $reagent }
+        [2147483648] there's at least {NATURALFIXED($min, 2)}u of {$reagent}
         *[other] { $min ->
-                    [0] there's at most { NATURALFIXED($max, 2) }u of { $reagent }
-                    *[other] there's between { NATURALFIXED($min, 2) }u and { NATURALFIXED($max, 2) }u of { $reagent }
+                    [0] there's at most {NATURALFIXED($max, 2)}u of {$reagent}
+                    *[other] there's between {NATURALFIXED($min, 2)}u and {NATURALFIXED($max, 2)}u of {$reagent}
                  }
     }
 
@@ -22,20 +22,20 @@ reagent-effect-condition-guidebook-mob-state-condition =
 reagent-effect-condition-guidebook-solution-temperature =
     the solution's temperature is
         { $max ->
-            [2147483648] at least { NATURALFIXED($min, 2) }k
+            [2147483648] at least {NATURALFIXED($min, 2)}k
             *[other] { $min ->
-                        [0] at most { NATURALFIXED($max, 2) }k
-                        *[other] between { NATURALFIXED($min, 2) }k and { NATURALFIXED($max, 2) }k
+                        [0] at most {NATURALFIXED($max, 2)}k
+                        *[other] between {NATURALFIXED($min, 2)}k and {NATURALFIXED($max, 2)}k
                      }
     }
 
 reagent-effect-condition-guidebook-body-temperature =
     the body's temperature is
         { $max ->
-            [2147483648] at least { NATURALFIXED($min, 2) }k
+            [2147483648] at least {NATURALFIXED($min, 2)}k
             *[other] { $min ->
-                        [0] at most { NATURALFIXED($max, 2) }k
-                        *[other] between { NATURALFIXED($min, 2) }k and { NATURALFIXED($max, 2) }k
+                        [0] at most {NATURALFIXED($max, 2)}k
+                        *[other] between {NATURALFIXED($min, 2)}k and {NATURALFIXED($max, 2)}k
                      }
     }
 
@@ -43,10 +43,10 @@ reagent-effect-condition-guidebook-organ-type =
     the metabolizing organ { $shouldhave ->
                                 [true] is
                                 *[false] is not
-                           } { INDEFINITE($name) } organ
+                           } {INDEFINITE($name)} organ
 
 reagent-effect-condition-guidebook-has-tag =
     the target { $invert ->
                  [true] does not have
                  *[false] has
-                } the tag { $tag }
+                } the tag {$tag}

@@ -34,9 +34,33 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "UNITS", FormatUnits);
             _loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
             _loc.AddFunction(culture, "LOC", FormatLoc);
-            _loc.AddFunction(culture, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
             _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+
+
+            /*
+             * The following language functions are specific to the english localization. When working on your own
+             * localization you should NOT modify these, instead add new functions specific to your language/culture.
+             * This ensures the english translations continue to work as expected when fallbacks are needed.
+             */
+            var cultureEn = new CultureInfo("en-US");
+
+            _loc.AddFunction(cultureEn, "MAKEPLURAL", FormatMakePlural);
+            _loc.AddFunction(cultureEn, "MANY", FormatMany);
+        }
+
+        private ILocValue FormatMany(LocArgs args)
+        {
+            var count = ((LocValueNumber) args.Args[1]).Value;
+
+            if (Math.Abs(count - 1) < 0.0001f)
+            {
+                return args.Args[0];
+            }
+            else
+            {
+                return FormatMakePlural(args);
+            }
         }
 
         private ILocValue FormatNaturalPercent(LocArgs args)

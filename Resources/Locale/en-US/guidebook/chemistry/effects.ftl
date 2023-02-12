@@ -16,14 +16,13 @@
         *[other] satiate
     }
 
-
 reagent-effect-guidebook-create-entity-reaction-effect =
     { $chance ->
         [1] Creates
         *[other] create
     } { $amount ->
-        [1] { INDEFINITE($entname) }
-        *[other] {$amount} { MAKEPLURAL($entname) }
+        [1] {INDEFINITE($entname)}
+        *[other] {$amount} {MAKEPLURAL($entname)}
     }
 
 reagent-effect-guidebook-explosion-reaction-effect =
@@ -50,7 +49,7 @@ reagent-effect-guidebook-satiate-thirst =
         *[other] satiate
     } { $relative ->
         [1.0] thirst averagely
-        *[other] thirst {NATURALFIXED($relative, 3)}x better than average
+        *[other] thirst at {NATURALFIXED($relative, 3)}x the average
     }
 
 reagent-effect-guidebook-satiate-hunger =
@@ -59,7 +58,7 @@ reagent-effect-guidebook-satiate-hunger =
         *[other] satiate
     } { $relative ->
         [1.0] hunger averagely
-        *[other] hunger {NATURALFIXED($relative, 3)}x better than average
+        *[other] hunger at {NATURALFIXED($relative, 3)}x the average
     }
 
 reagent-effect-guidebook-health-change =
@@ -81,24 +80,15 @@ reagent-effect-guidebook-status-effect =
         [add]   { $chance ->
                     [1] Causes
                     *[other] cause
-                } { LOC($key) } for at least { NATURALFIXED($time, 3) } { $time ->
-                                                                            [1] second
-                                                                            *[other] seconds
-                                                                        } with accumulation
-        *[set]   { $chance ->
+                } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY(second, $time)} with accumulation
+        *[set]  { $chance ->
                     [1] Causes
                     *[other] cause
-                } { LOC($key) } for at least { NATURALFIXED($time, 3) } { $time ->
-                                                                            [1] second
-                                                                            *[other] seconds
-                                                                        } without accumulation
+                } {LOC($key)} for at least {NATURALFIXED($time, 3)} {MANY(second, $time)} without accumulation
         [remove]{ $chance ->
                     [1] Removes
                     *[other] remove
-                } { NATURALFIXED($time, 3) } { $time ->
-                                                [1] second
-                                                *[other] seconds
-                                            } of { LOC($key) }
+                } {NATURALFIXED($time, 3)} {MANY(second, $time)} of {LOC($key)}
     }
 
 reagent-effect-guidebook-activate-artifact =
@@ -111,7 +101,7 @@ reagent-effect-guidebook-set-solution-temperature-effect =
     { $chance ->
         [1] Sets
         *[other] set
-    } the solution temperature to exactly { NATURALFIXED($temperature, 2) }k
+    } the solution temperature to exactly {NATURALFIXED($temperature, 2)}k
 
 reagent-effect-guidebook-adjust-solution-temperature-effect =
     { $chance ->
@@ -125,8 +115,8 @@ reagent-effect-guidebook-adjust-solution-temperature-effect =
                 *[-1] remove
             }
     } heat from the solution until it reaches { $deltasign ->
-                [1] at most { NATURALFIXED($maxtemp, 2) }k
-                *[-1] at least { NATURALFIXED($mintemp, 2) }k
+                [1] at most {NATURALFIXED($maxtemp, 2)}k
+                *[-1] at least {NATURALFIXED($mintemp, 2)}k
             }
 
 reagent-effect-guidebook-adjust-reagent-reagent =
@@ -140,7 +130,7 @@ reagent-effect-guidebook-adjust-reagent-reagent =
                 [1] add
                 *[-1] remove
             }
-    } { NATURALFIXED($amount, 2) }u of { $reagent } from the solution
+    } {NATURALFIXED($amount, 2)}u of {$reagent} from the solution
 
 reagent-effect-guidebook-adjust-reagent-group =
     { $chance ->
@@ -153,7 +143,7 @@ reagent-effect-guidebook-adjust-reagent-group =
                 [1] add
                 *[-1] remove
             }
-    } { NATURALFIXED($amount, 2) }u of reagents in the group { $group } from the solution
+    } {NATURALFIXED($amount, 2)}u of reagents in the group {$group} from the solution
 
 reagent-effect-guidebook-adjust-temperature =
     { $chance ->
@@ -166,7 +156,7 @@ reagent-effect-guidebook-adjust-temperature =
                 [1] add
                 *[-1] remove
             }
-    } { POWERJOULES($amount) } of heat from the body it's in
+    } {POWERJOULES($amount)} of heat from the body it's in
 
 reagent-effect-guidebook-chem-cause-disease =
     { $chance ->
@@ -236,10 +226,7 @@ reagent-effect-guidebook-electrocute =
     { $chance ->
         [1] Electrocutes
         *[other] electrocute
-    } the metabolizer for { NATURALFIXED($time, 3) } { $time ->
-                                        [1] second
-                                        *[other] seconds
-                                    }
+    } the metabolizer for {NATURALFIXED($time, 3)} {MANY(second, $time)}
 
 reagent-effect-guidebook-extinguish-reaction =
     { $chance ->
@@ -293,19 +280,13 @@ reagent-effect-guidebook-paralyze =
     { $chance ->
         [1] Paralyzes
         *[other] paralyze
-    } the metabolizer for at least { NATURALFIXED($time, 3) } { $time ->
-                                                [1] second
-                                                *[other] seconds
-                                             }
+    } the metabolizer for at least {NATURALFIXED($time, 3)} {MANY(second, $time)}
 
 reagent-effect-guidebook-movespeed-modifier =
     { $chance ->
         [1] Modifies
         *[other] modify
-    } movement speed by { NATURALFIXED($walkspeed, 3) }x for at least { $time } { $time ->
-                                                                                    [1] second
-                                                                                    *[other] seconds
-                                                                              }
+    } movement speed by {NATURALFIXED($walkspeed, 3)}x for at least {NATURALFIXED($time, 3)} {MANY(second, $time)}
 
 reagent-effect-guidebook-reset-narcolepsy =
     { $chance ->
