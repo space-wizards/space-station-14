@@ -34,8 +34,7 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
-        SubscribeLocalEvent<InternalsComponent, ToggleOtherInternalsCompleteEvent>(OnToggleOtherInternalsComplete);
-        SubscribeLocalEvent<InternalsComponent, ToggleOtherInternalsCancelledEvent>(OnToggleOtherInternalCanceled);
+        SubscribeLocalEvent<InternalsComponent, DoAfterEvent>(OnDoAfter);
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -92,17 +91,13 @@ public sealed class InternalsSystem : EntitySystem
             //If no, do a short delay. There's no reason it should be beyond 1 second.
             var delay = uid != user ? internals.Delay : 1.0f;
 
-            internals.CancelToken?.Cancel();
-            internals.CancelToken = new CancellationTokenSource();
-            _doAfter.DoAfter(new DoAfterEventArgs(user, delay, internals.CancelToken.Token, uid)
+            _doAfter.DoAfter(new DoAfterEventArgs(user, delay, target:uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,
-                MovementThreshold = 0.1f,
-                TargetFinishedEvent = new ToggleOtherInternalsCompleteEvent(user, tank),
-                TargetCancelledEvent = new ToggleOtherInternalsCancelledEvent(),
+                MovementThreshold = 0.1f
             });
 
             return;
@@ -111,15 +106,14 @@ public sealed class InternalsSystem : EntitySystem
         _gasTank.ConnectToInternals(tank);
     }
 
-    private void OnToggleOtherInternalsComplete(EntityUid uid, InternalsComponent component, ToggleOtherInternalsCompleteEvent ev)
+    private void OnDoAfter(EntityUid uid, InternalsComponent component, DoAfterEvent args)
     {
-        component.CancelToken = null;
-        ToggleInternals(uid, ev.User, true, component);
-    }
+        if (args.Cancelled || args.Handled)
+            return;
 
-    private static void OnToggleOtherInternalCanceled(EntityUid uid, InternalsComponent component, ToggleOtherInternalsCancelledEvent ev)
-    {
-        component.CancelToken = null;
+        ToggleInternals(uid, args.Args.User, true, component);
+
+        args.Handled = true;
     }
 
     private void OnInternalsStartup(EntityUid uid, InternalsComponent component, ComponentStartup args)
@@ -274,11 +268,4 @@ public sealed class InternalsSystem : EntitySystem
 
         return null;
     }
-    private readonly record struct ToggleOtherInternalsCompleteEvent(EntityUid User, GasTankComponent Tank)
-    {
-        public readonly EntityUid User = User;
-        public readonly GasTankComponent Tank = Tank;
-    }
-
-    private readonly record struct ToggleOtherInternalsCancelledEvent;
 }
