@@ -122,10 +122,17 @@
           acts: [ "Destruction" ]
     - type: Spreader
       growthResult: FleshKudzu
-      chance: 1
+      chance: 0.5
+    - type: DamageContacts
+      damage:
+        types:
+          Slash: 1.5
+      ignoreWhitelist:
+        tags:
+        - Flesh
     - type: SlowContacts
-      walkSpeedModifier: 0.2
-      sprintSpeedModifier: 0.2
+      walkSpeedModifier: 0.3
+      sprintSpeedModifier: 0.3
       ignoreWhitelist:
         tags:
         - Flesh
