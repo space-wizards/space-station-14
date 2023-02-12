@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Ghostly bodies have been limited to one per person., type: Remove}
-  id: 2530
-  time: '2022-10-27T14:09:36.0000000+00:00'
 - author: moony
   changes:
   - {message: Removed split-station due to map rotation limits., type: Remove}
@@ -2914,3 +2909,9 @@ Entries:
   - {message: Dionae don't scream like humans anymore., type: Fix}
   id: 3029
   time: '2023-02-12T20:51:19.0000000+00:00'
+- author: jick
+  changes:
+  - {message: Unlit welders are ATEX certified again. Lit welders are definitely not.,
+    type: Fix}
+  id: 3030
+  time: '2023-02-12T21:16:51.0000000+00:00'
