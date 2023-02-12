@@ -250,3 +250,6 @@ ent-ClothingUniformJumpsuitERTMedic = ERT medical uniform
 ent-ClothingUniformJumpsuitERTSecurity = ERT security uniform
     .desc = A special suit made for the elite security under CentCom.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitDameDane = dame dane outfit
+    .desc = Baka mitai...
+    .suffix = { "" }

@@ -7,6 +7,10 @@ ent-LockerWallMedicalFilled = { ent-LockerWallMedical }
 ent-LockerMedicalFilled = { ent-LockerMedical }
     .suffix = Filled
     .desc = { ent-LockerMedical.desc }
+ent-LockerWallMedicalDoctorFilled = { ent-['LockerWallMedical', 'LockerMedicalFilled'] }
+
+  .suffix = Filled
+  .desc = { ent-['LockerWallMedical', 'LockerMedicalFilled'].desc }
 ent-LockerChemistryFilled = { ent-LockerChemistry }
     .suffix = Filled
     .desc = { ent-LockerChemistry.desc }
