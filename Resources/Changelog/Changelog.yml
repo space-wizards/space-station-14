@@ -1,10 +1,4 @@
 Entries:
-- author: checkraze
-  changes:
-  - {message: Nanotrasen has updated their Dart ERT shuttle for faster response times!,
-    type: Tweak}
-  id: 2528
-  time: '2022-10-27T11:54:12.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix entity storage closing and some other erroneous flags., type: Fix}
@@ -2913,3 +2907,9 @@ Entries:
       some of the option have been renamed., type: Tweak}
   id: 3027
   time: '2023-02-12T17:09:13.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Flesh Anomaly's tendons now grow slower but deal damage on contact.,
+    type: Tweak}
+  id: 3028
+  time: '2023-02-12T20:18:10.0000000+00:00'
