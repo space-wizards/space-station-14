@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Reflect;
 
 /// <summary>
-///     Entities with this component have a chance to reflect projectiles nad hitscan shots
+///     Entities with this component have a chance to reflect projectiles and hitscan shots
 /// </summary>
 [RegisterComponent]
 public sealed class ReflectComponent : Component
