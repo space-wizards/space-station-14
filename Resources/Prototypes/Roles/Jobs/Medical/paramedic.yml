@@ -12,7 +12,6 @@
   supervisors: job-supervisors-cmo
   access:
   - Medical
-  - Chemistry
   - Maintenance
   - External
   - Service
