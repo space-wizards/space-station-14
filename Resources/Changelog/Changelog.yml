@@ -1,9 +1,4 @@
 Entries:
-- author: moony
-  changes:
-  - {message: Removed split-station due to map rotation limits., type: Remove}
-  id: 2531
-  time: '2022-10-27T14:31:20.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Mice scream properly, type: Tweak}
@@ -2915,3 +2910,8 @@ Entries:
     type: Fix}
   id: 3030
   time: '2023-02-12T21:16:51.0000000+00:00'
+- author: 778b
+  changes:
+  - {message: Minor changes to Omega, type: Tweak}
+  id: 3031
+  time: '2023-02-12T21:29:04.0000000+00:00'
