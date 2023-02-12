@@ -9,6 +9,9 @@
     "states": [
         {
             "name": "state0"
+        },
+        {
+            "name": "state1"
         }
     ]
 }

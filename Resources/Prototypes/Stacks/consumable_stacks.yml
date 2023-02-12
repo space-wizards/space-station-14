@@ -4,7 +4,7 @@
   id: Pancake
   name: pancake
   spawn: FoodBakedPancake
-  maxCount: 30
+  maxCount: 3
 
 # Food Containers
 
@@ -22,14 +22,14 @@
   name: rolling paper
   icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigpaper }
   spawn: PaperRolling
-  maxCount: 30
+  maxCount: 5
 
 - type: stack
   id: CigaretteFilter
   name: cigarette filter
   icon: { sprite: /Textures/Objects/Consumable/Smokeables/Cigarettes/paper.rsi, state: cigfilter }
   spawn: CigaretteFilter
-  maxCount: 30
+  maxCount: 5
 
 - type: stack
   id: GroundTobacco

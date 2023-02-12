@@ -1,4 +1,6 @@
-﻿using Content.Server.Hands.Systems;
+﻿using Content.Server.Administration.Logs;
+using Content.Server.Hands.Systems;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -20,6 +22,7 @@ public sealed class RandomGiftSystem : EntitySystem
     [Dependency] private readonly IComponentFactory _componentFactory = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     private readonly List<string> _possibleGiftsSafe = new();
     private readonly List<string> _possibleGiftsUnsafe = new();
@@ -54,6 +57,7 @@ public sealed class RandomGiftSystem : EntitySystem
 
         var coords = Transform(args.User).Coordinates;
         var handsEnt = Spawn(component.SelectedEntity, coords);
+        _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(component.Owner)} which spawned {ToPrettyString(handsEnt)}");
         EnsureComp<ItemComponent>(handsEnt); // For insane mode.
         if (component.Wrapper is not null)
             Spawn(component.Wrapper, coords);

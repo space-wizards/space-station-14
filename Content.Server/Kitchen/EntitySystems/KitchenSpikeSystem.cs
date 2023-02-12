@@ -1,7 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.MobState;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Administration.Logs;
@@ -9,7 +8,6 @@ using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -17,7 +15,10 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -28,6 +29,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly IAdminLogManager _logger = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -171,7 +173,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
 
-            appearance.SetData(KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
+            _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,

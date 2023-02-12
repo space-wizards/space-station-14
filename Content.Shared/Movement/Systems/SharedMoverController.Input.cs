@@ -158,6 +158,20 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
+            var oldMapId = args.OldMapId;
+            var mapId = args.Transform.MapID;
+
+            // If we change maps then reset eye rotation entirely.
+            if (oldMapId != mapId)
+            {
+                component.RelativeEntity = relative;
+                component.TargetRelativeRotation = Angle.Zero;
+                component.RelativeRotation = Angle.Zero;
+                component.LerpAccumulator = 0f;
+                Dirty(component);
+                return;
+            }
+
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
@@ -178,25 +192,25 @@ namespace Content.Shared.Movement.Systems
         {
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
             // the same as us.
-            TryComp<InputMoverComponent>(entity, out var moverComp);
 
-            // Can't relay inputs if you're dead.
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover) && !_mobState.IsIncapacitated(entity))
+            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
             {
-                // if we swap to relay then stop our existing input if we ever change back.
-                if (moverComp != null)
-                {
-                    SetMoveInput(moverComp, MoveButtons.None);
-                }
-
-                if (relayMover.RelayEntity == null) return;
-
                 DebugTools.Assert(relayMover.RelayEntity != entity);
-                HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+                DebugTools.AssertNotNull(relayMover.RelayEntity);
+
+                if (TryComp<InputMoverComponent>(entity, out var mover))
+                    SetMoveInput(mover, MoveButtons.None);
+
+                DebugTools.Assert(TryComp(relayMover.RelayEntity, out MovementRelayTargetComponent? targetComp) && targetComp.Entities.Count == 1,
+                    "Multiple relayed movers are not supported at the moment");
+
+                if (relayMover.RelayEntity != null && !_mobState.IsIncapacitated(entity))
+                    HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+
                 return;
             }
 
-            if (moverComp == null)
+            if (!TryComp<InputMoverComponent>(entity, out var moverComp))
                 return;
 
             // Relay the fact we had any movement event.

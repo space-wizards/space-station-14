@@ -1,6 +1,5 @@
 <DefaultWindow xmlns="https://spacestation14.io"
             Title="{Loc 'comp-pda-ui-menu-title'}"
-            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             SetSize="400 400"
             MinSize="400 400">
     <TabContainer Name="MasterTabContainer">

@@ -1,7 +1,6 @@
 #Rating 1
 - type: latheRecipe
   id: CapacitorStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: capacitor }
   result: CapacitorStockPart
   completetime: 1
   materials:
@@ -10,7 +9,6 @@
 
 - type: latheRecipe
   id: MatterBinStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: matter_bin }
   result: MatterBinStockPart
   completetime: 1
   materials:
@@ -19,7 +17,6 @@
 
 - type: latheRecipe
   id: MicroLaserStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: micro_laser }
   result: MicroLaserStockPart
   completetime: 1
   materials:
@@ -29,7 +26,6 @@
 
 - type: latheRecipe
   id: MicroManipulatorStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: micro_mani }
   result: MicroManipulatorStockPart
   completetime: 1
   materials:
@@ -38,7 +34,6 @@
 
 - type: latheRecipe
   id: ScanningModuleStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: scan_module_static }
   result: ScanningModuleStockPart
   completetime: 1
   materials:
@@ -49,52 +44,100 @@
 #Rating 2
 - type: latheRecipe
   id: AdvancedCapacitorStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: adv_capacitor }
   result: AdvancedCapacitorStockPart
   completetime: 3
   materials:
     Steel: 150
-    Plastic: 100
-    Gold: 50
+    Plastic: 150
+    Plasma: 75
 
 - type: latheRecipe
   id: AdvancedMatterBinStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: advanced_matter_bin }
   result: AdvancedMatterBinStockPart
   completetime: 3
   materials:
     Steel: 150
     Plastic: 150
-    Plasma: 50
+    Plasma: 75
 
 - type: latheRecipe
   id: HighPowerMicroLaserStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: high_micro_laser }
   result: HighPowerMicroLaserStockPart
   completetime: 3
   materials:
-    Steel: 100
+    Steel: 150
     Glass: 150
     Plastic: 150
-    Gold: 50
+    Plasma: 50
 
 - type: latheRecipe
   id: NanoManipulatorStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: nano_mani }
   result: NanoManipulatorStockPart
   completetime: 3
   materials:
     Steel: 150
-    Plastic: 200
-    Plasma: 50
+    Plastic: 150
+    Plasma: 75
 
 - type: latheRecipe
   id: AdvancedScanningModuleStockPart
-  icon: { sprite: Objects/Misc/stock_parts.rsi, state: adv_scan_module_static }
   result: AdvancedScanningModuleStockPart
   completetime: 3
   materials:
-    Steel: 100
+    Steel: 150
     Glass: 150
     Plastic: 150
     Plasma: 50
+    
+#Rating 3
+- type: latheRecipe
+  id: SuperCapacitorStockPart
+  result: SuperCapacitorStockPart
+  completetime: 3
+  materials:
+    Steel: 250
+    Plastic: 250
+    Plasma: 100
+    Gold: 125
+
+- type: latheRecipe
+  id: SuperMatterBinStockPart
+  result: SuperMatterBinStockPart
+  completetime: 3
+  materials:
+    Steel: 250
+    Plastic: 250
+    Plasma: 100
+    Gold: 125
+
+- type: latheRecipe
+  id: UltraHighPowerMicroLaserStockPart
+  result: UltraHighPowerMicroLaserStockPart
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+    Plasma: 100
+    Gold: 100
+
+- type: latheRecipe
+  id: PicoManipulatorStockPart
+  result: PicoManipulatorStockPart
+  completetime: 3
+  materials:
+    Steel: 250
+    Plastic: 250
+    Plasma: 100
+    Gold: 125
+
+- type: latheRecipe
+  id: PhasicScanningModuleStockPart
+  result: PhasicScanningModuleStockPart
+  completetime: 3
+  materials:
+    Steel: 250
+    Glass: 250
+    Plastic: 250
+    Plasma: 100
+    Gold: 100

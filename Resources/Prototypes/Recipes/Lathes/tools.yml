@@ -1,6 +1,5 @@
 - type: latheRecipe
   id: Wirecutter
-  icon: { sprite: Objects/Tools/wirecutters.rsi, state: cutters-map }
   result: Wirecutter
   completetime: 2
   materials:
@@ -9,9 +8,6 @@
 
 - type: latheRecipe
   id: Screwdriver
-  icon:
-    sprite: Objects/Tools/screwdriver.rsi
-    state: screwdriver-map
   result: Screwdriver
   completetime: 2
   materials:
@@ -20,9 +16,6 @@
 
 - type: latheRecipe
   id: Welder
-  icon:
-    sprite: /Textures/Objects/Tools/welder.rsi
-    state: icon
   result: Welder
   completetime: 2
   materials:
@@ -30,7 +23,6 @@
 
 - type: latheRecipe
   id: Wrench
-  icon: { sprite: Objects/Tools/wrench.rsi, state: icon }
   result: Wrench
   completetime: 2
   materials:
@@ -38,7 +30,6 @@
 
 - type: latheRecipe
   id: CableStack
-  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coillv-30 }
   result: CableApcStack1
   completetime: 2
   materials:
@@ -46,7 +37,6 @@
 
 - type: latheRecipe
   id: CableMVStack
-  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coilmv-30 }
   result: CableMVStack1
   completetime: 2
   materials:
@@ -54,7 +44,6 @@
 
 - type: latheRecipe
   id: CableHVStack
-  icon: { sprite: /Textures/Objects/Tools/cable-coils.rsi, state: coilhv-30 }
   result: CableHVStack1
   completetime: 2
   materials:
@@ -62,7 +51,6 @@
 
 - type: latheRecipe
   id: Crowbar
-  icon: { sprite: Objects/Tools/crowbar.rsi, state: icon }
   result: Crowbar
   completetime: 2
   materials:
@@ -70,7 +58,6 @@
 
 - type: latheRecipe
   id: Pickaxe
-  icon: Objects/Weapons/Melee/pickaxe.rsi
   result: Pickaxe
   completetime: 2
   materials:
@@ -79,9 +66,6 @@
 
 - type: latheRecipe
   id: Shovel
-  icon:
-    sprite: Objects/Tools/shovel.rsi
-    state: icon
   result: Shovel
   completetime: 2
   materials:
@@ -90,9 +74,6 @@
 
 - type: latheRecipe
   id: Multitool
-  icon:
-    sprite: Objects/Tools/multitool.rsi
-    state: icon
   result: Multitool
   completetime: 2
   materials:
@@ -101,9 +82,6 @@
 
 - type: latheRecipe
   id: PowerDrill
-  icon:
-    sprite: Objects/Tools/drill.rsi
-    state: drill_screw
   result: PowerDrill
   completetime: 2
   materials:
@@ -112,9 +90,6 @@
 
 - type: latheRecipe
   id: RCD
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: icon
   result: RCDEmpty
   completetime: 4
   materials:
@@ -123,9 +98,6 @@
 
 - type: latheRecipe
   id: RCDAmmo
-  icon:
-    sprite: Objects/Tools/rcd.rsi
-    state: ammo
   result: RCDAmmo
   completetime: 2.4
   materials:
@@ -134,7 +106,6 @@
 
 - type: latheRecipe
   id: HandheldGPSBasic
-  icon: { sprite: Objects/Devices/gps.rsi, state: icon }
   result: HandheldGPSBasic
   completetime: 2
   materials:
@@ -143,7 +114,6 @@
 
 - type: latheRecipe
   id: TRayScanner
-  icon: { sprite: Objects/Tools/t-ray.rsi, state: tray-off }
   result: trayScanner
   completetime: 2
   materials:
@@ -152,7 +122,6 @@
 
 - type: latheRecipe
   id: GasAnalyzer
-  icon: { sprite: Objects/Specific/Atmos/gasanalyzer.rsi, state: icon }
   result: GasAnalyzer
   completetime: 2
   materials:
@@ -161,7 +130,6 @@
 
 - type: latheRecipe
   id: AirlockPainter
-  icon: { sprite: /Textures/Objects/Tools/airlock_painter.rsi, state: airlock_painter }
   result: AirlockPainter
   completetime: 2
   materials:
@@ -170,7 +138,6 @@
 
 - type: latheRecipe
   id: UtilityBelt
-  icon: { sprite: Clothing/Belt/utility.rsi, state: icon }
   result: ClothingBeltUtility
   completetime: 2
   materials:
@@ -179,9 +146,6 @@
 
 - type: latheRecipe
   id: HolofanProjector
-  icon:
-    sprite: Objects/Devices/Holoprojectors/atmos.rsi
-    state: icon
   result: HolofanProjector
   completetime: 8
   materials: # Inherited materials and time from PowerCellMedium recipe
@@ -192,9 +156,6 @@
 
 - type: latheRecipe
   id: RPED
-  icon:
-    sprite: Objects/Specific/Research/rped.rsi
-    state: icon
   result: RPED
   completetime: 10
   materials:
@@ -204,9 +165,6 @@
 
 - type: latheRecipe
   id: MiningDrill
-  icon:
-    sprite: Objects/Tools/handdrill.rsi
-    state: handdrill
   result: MiningDrill
   completetime: 3
   materials:

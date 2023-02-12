@@ -34,7 +34,7 @@ public sealed partial class MarkingPicker : Control
 
     private List<MarkingCategories> _markingCategories = Enum.GetValues<MarkingCategories>().ToList();
 
-    private string _currentSpecies = SharedHumanoidSystem.DefaultSpecies;
+    private string _currentSpecies = SharedHumanoidAppearanceSystem.DefaultSpecies;
     public Color CurrentSkinColor = Color.White;
 
     private readonly HashSet<MarkingCategories> _ignoreCategories = new();
@@ -282,6 +282,7 @@ public sealed partial class MarkingPicker : Control
                 _currentMarkings.ShiftRankUpFromEnd(_selectedMarkingCategory, src);
                 break;
             // do nothing?
+            // ReSharper disable once RedundantEmptySwitchSection
             default:
                 break;
         }
@@ -360,12 +361,13 @@ public sealed partial class MarkingPicker : Control
             colorContainer.AddChild(new Label { Text = $"{stateNames[i]} color:" });
             colorContainer.AddChild(colorSelector);
 
-            var listing = _currentMarkings[_selectedMarkingCategory];
+            var listing = _currentMarkings.Markings[_selectedMarkingCategory];
 
+            var color = listing[listing.Count - 1 - item.ItemIndex].MarkingColors[i];
             var currentColor = new Color(
-                listing[listing.Count - 1 - item.ItemIndex].MarkingColors[i].RByte,
-                listing[listing.Count - 1 - item.ItemIndex].MarkingColors[i].GByte,
-                listing[listing.Count - 1 - item.ItemIndex].MarkingColors[i].BByte
+                color.RByte,
+                color.GByte,
+                color.BByte
             );
             colorSelector.Color = currentColor;
             _currentMarkingColors.Add(currentColor);
@@ -393,7 +395,7 @@ public sealed partial class MarkingPicker : Control
 
         _selectedMarking.IconModulate = _currentMarkingColors[colorIndex];
 
-        var marking = new Marking(_currentMarkings[_selectedMarkingCategory][markingIndex]);
+        var marking = new Marking(_currentMarkings.Markings[_selectedMarkingCategory][markingIndex]);
         marking.SetColor(colorIndex, _currentMarkingColors[colorIndex]);
         _currentMarkings.Replace(_selectedMarkingCategory, markingIndex, marking);
 

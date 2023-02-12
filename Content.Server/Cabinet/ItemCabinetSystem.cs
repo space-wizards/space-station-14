@@ -3,7 +3,9 @@ using Content.Shared.Audio;
 using Content.Shared.Cabinet;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -12,7 +14,9 @@ namespace Content.Server.Cabinet
 {
     public sealed class ItemCabinetSystem : EntitySystem
     {
+        [Dependency] private readonly IComponentFactory _factory = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -33,7 +37,7 @@ namespace Content.Server.Cabinet
 
         private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
         {
-            _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
+            _itemSlotsSystem.AddItemSlot(uid, _factory.GetComponentName(cabinet.GetType()), cabinet.CabinetSlot);
         }
         private void OnComponentRemove(EntityUid uid, ItemCabinetComponent cabinet, ComponentRemove args)
         {
@@ -53,8 +57,8 @@ namespace Content.Server.Cabinet
             if (!Resolve(uid, ref cabinet, ref appearance, false))
                 return;
 
-            appearance.SetData(ItemCabinetVisuals.IsOpen, cabinet.Opened);
-            appearance.SetData(ItemCabinetVisuals.ContainsItem, cabinet.CabinetSlot.HasItem);
+            _appearance.SetData(uid, ItemCabinetVisuals.IsOpen, cabinet.Opened, appearance);
+            _appearance.SetData(uid, ItemCabinetVisuals.ContainsItem, cabinet.CabinetSlot.HasItem, appearance);
         }
 
         private void OnContainerModified(EntityUid uid, ItemCabinetComponent cabinet, ContainerModifiedMessage args)

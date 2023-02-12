@@ -1,4 +1,6 @@
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Bed.Sleep;
 
@@ -8,9 +10,11 @@ namespace Content.Shared.Bed.Sleep;
 [NetworkedComponent, RegisterComponent]
 public sealed class SleepingComponent : Component
 {
-    // How much damage of any type it takes to wake this entity.
+    /// <summary>
+    /// How much damage of any type it takes to wake this entity.
+    /// </summary>
     [DataField("wakeThreshold")]
-    public float WakeThreshold = 2;
+    public FixedPoint2 WakeThreshold = FixedPoint2.New(2);
 
     /// <summary>
     ///     Cooldown time between users hand interaction.
@@ -19,5 +23,6 @@ public sealed class SleepingComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(1f);
 
+    [DataField("cooldownEnd", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan CoolDownEnd;
 }

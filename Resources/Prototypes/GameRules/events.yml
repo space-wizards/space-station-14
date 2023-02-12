@@ -1,4 +1,13 @@
 ﻿- type: gameRule
+  id: AnomalySpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: AnomalySpawn
+    weight: 10
+    startAfter: 30
+    endAfter: 35
+
+- type: gameRule
   id: BluespaceArtifact
   config:
     !type:StationEventRuleConfiguration
@@ -6,6 +15,16 @@
     weight: 5
     startAfter: 30
     endAfter: 35
+
+- type: gameRule
+  id: BluespaceLockerLink
+  config:
+    !type:StationEventRuleConfiguration
+    id: BluespaceLockerLink
+    weight: 0
+    reoccurrenceDelay: 5
+    earliestStart: 1
+    endAfter: 1
 
 - type: gameRule
   id: BreakerFlip
@@ -144,6 +163,23 @@
       path: /Audio/Announcements/attention.ogg
 
 - type: gameRule
+  id: SolarFlare
+  config: !type:SolarFlareEventRuleConfiguration
+    id: SolarFlare
+    weight: 10
+    startAnnouncement: station-event-solar-flare-start-announcement
+    endAnnouncement: station-event-solar-flare-end-announcement
+    startAudio:
+      path: /Audio/Announcements/attention.ogg
+    minEndAfter: 120
+    maxEndAfter: 240
+    onlyJamHeadsets: true
+    affectedChannels:
+    - Common
+    - Service
+    lightBreakChance: 0.05
+
+- type: gameRule
   id: VentClog
   config:
     !type:StationEventRuleConfiguration
@@ -163,6 +199,16 @@
     !type:StationEventRuleConfiguration
     id: VentCritters
     earliestStart: 15
+    minimumPlayers: 15
+    weight: 5
+    endAfter: 60
+
+- type: gameRule
+  id: SpiderSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: SpiderSpawn
+    earliestStart: 20
     minimumPlayers: 15
     weight: 5
     endAfter: 60

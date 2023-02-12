@@ -1,6 +1,6 @@
 ﻿using Content.Server.Ensnaring;
-using Content.Server.Ensnaring.Components;
 using Content.Shared.Alert;
+using Content.Shared.Ensnaring.Components;
 using JetBrains.Annotations;
 
 namespace Content.Server.Alert.Click;

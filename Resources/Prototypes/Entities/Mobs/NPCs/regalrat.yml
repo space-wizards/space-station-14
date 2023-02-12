@@ -10,6 +10,8 @@
     baseSprintSpeed : 5.00
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
@@ -36,12 +38,15 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh1.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -143,12 +148,15 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: regalrat
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/Xeno/alien_claw_flesh2.ogg
     angle: 0
     attackRate: 0.75
     animation: WeaponArcFist
@@ -210,6 +218,7 @@
       layer:
       - SmallMobLayer
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       40: Critical
@@ -218,6 +227,8 @@
     excess: 60
   - type: MeleeWeapon
     hidden: true
+    soundHit:
+        path: /Audio/Weapons/bladeslice.ogg
     angle: 0
     animation: WeaponArcClaw
     damage:
@@ -267,9 +278,10 @@
     - Plague
     - TongueTwister
   - type: Vocal
-    # mice are gender neutral who cares
-    maleScream: /Audio/Animals/mouse_squeak.ogg
-    femaleScream: /Audio/Animals/mouse_squeak.ogg
+    sounds:
+      Male: Mouse
+      Female: Mouse
+      Unsexed: Mouse
     wilhelmProbability: 0.001
   - type: GhostTakeoverAvailable
     makeSentient: true

@@ -172,7 +172,7 @@ public abstract class SharedStealthSystem : EntitySystem
 
     /// <summary>
     ///     Used to run through any stealth effecting components on the entity.
-    /// <summary>
+    /// </summary>
     private sealed class GetVisibilityModifiersEvent : EntityEventArgs
     {
         public readonly StealthComponent Stealth;

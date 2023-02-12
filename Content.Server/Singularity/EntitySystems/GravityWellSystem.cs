@@ -183,9 +183,11 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
         var minRange2 = MathF.Max(minRange * minRange, MinGravPulseRange); // Cache square value for speed. Also apply a sane minimum value to the minimum value so that div/0s don't happen.
         foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
-            if(!TryComp<PhysicsComponent?>(entity, out var physics)
-            || physics.BodyType == BodyType.Static)
+            if (!TryComp<PhysicsComponent>(entity, out var physics)
+                || physics.BodyType == BodyType.Static)
+            {
                 continue;
+            }
 
             if(!CanGravPulseAffect(entity))
                 continue;
@@ -196,7 +198,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(physics, (displacement * baseMatrixDeltaV) * scaling);
+            _physics.ApplyLinearImpulse(entity, (displacement * baseMatrixDeltaV) * scaling, body: physics);
         }
     }
 

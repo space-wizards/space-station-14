@@ -121,7 +121,7 @@ namespace Content.Server.PDA
 
             foreach (var session in ui.SubscribedSessions)
             {
-                if (session.AttachedEntity is not EntityUid { Valid: true } user)
+                if (session.AttachedEntity is not { Valid: true } user)
                     continue;
 
                 if (storeComponent.AccountOwner == user || (TryComp<MindComponent>(session.AttachedEntity, out var mindcomp) && mindcomp.Mind != null &&
@@ -141,7 +141,7 @@ namespace Content.Server.PDA
                 case PDAToggleFlashlightMessage _:
                     {
                         if (EntityManager.TryGetComponent(pda.Owner, out UnpoweredFlashlightComponent? flashlight))
-                            _unpoweredFlashlight.ToggleLight(flashlight);
+                            _unpoweredFlashlight.ToggleLight(flashlight.Owner, flashlight);
                         break;
                     }
 

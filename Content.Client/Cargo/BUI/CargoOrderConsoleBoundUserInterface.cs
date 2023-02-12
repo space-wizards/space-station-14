@@ -75,8 +75,8 @@ namespace Content.Client.Cargo.BUI
                 description.PushColor(Color.White); // Rich text default color is grey
                 if (row.MainButton.ToolTip != null)
                     description.AddText(row.MainButton.ToolTip);
-                    _orderMenu.Description.SetMessage(description);
 
+                _orderMenu.Description.SetMessage(description);
                 _product = row.Product;
                 _orderMenu.ProductName.Text = row.ProductName.Text;
                 _orderMenu.PointCost.Text = row.PointCost.Text;
@@ -158,7 +158,7 @@ namespace Content.Client.Cargo.BUI
             if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
-            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderIndex));
         }
 
         private void ApproveOrder(ButtonEventArgs args)
@@ -169,7 +169,7 @@ namespace Content.Client.Cargo.BUI
             if (OrderCount >= OrderCapacity)
                 return;
 
-            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderIndex));
             // Most of the UI isn't predicted anyway so.
             // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
         }

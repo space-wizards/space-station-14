@@ -85,6 +85,8 @@
     sprite: Clothing/Head/Hats/cardborg_h.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/cardborg_h.rsi
+  - type: TypingIndicatorClothing
+    proto: robot
 
 - type: entity
   parent: ClothingHeadBase
@@ -512,3 +514,14 @@
       sprite: Clothing/Head/Hats/jester2.rsi
     - type: Clothing
       sprite: Clothing/Head/Hats/jester2.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretCmo
+  name: chief medical officer's beret
+  description: Turquoise beret with a cross on the front. The sight of it calms you down and makes it clear that you will be cured.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_cmo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_cmo.rsi
