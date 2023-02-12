@@ -74,6 +74,7 @@ public sealed class ReflectSystem : EntitySystem
                     _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):entity} reflected hitscan shot");
                     args.Target = args.User.Value;
+                    args.Handled = true;
                     return;
                 }
             }

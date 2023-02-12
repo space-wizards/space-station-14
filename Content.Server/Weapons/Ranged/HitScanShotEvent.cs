@@ -8,7 +8,7 @@ public sealed class HitScanShotEvent : HandledEntityEventArgs
     /// <summary>
     ///     Shot may be redirected
     /// </summary>
-    public EntityUid Target;
+    public EntityUid Target {get; set;}
 
     public HitScanShotEvent(EntityUid? user, EntityUid target)
     {

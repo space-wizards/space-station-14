@@ -185,6 +185,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         var hitEntity = result.HitEntity;                   
 
                         var ev = new HitScanShotEvent(user, hitEntity);
+                        RaiseLocalEvent(ev);
                         hitEntity = ev.Target;
 
                         var distance = result.Distance;
