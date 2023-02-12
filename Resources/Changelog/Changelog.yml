@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Syringes can now set how much solution to transfer., type: Add}
-  id: 2524
-  time: '2022-10-26T06:40:06.0000000+00:00'
 - author: exincore
   changes:
   - {message: added keybind awareness to chatbox hint, type: Add}
@@ -2915,3 +2910,8 @@ Entries:
       ones are desert, snow, grass, and lava.', type: Add}
   id: 3023
   time: '2023-02-12T02:15:26.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can open cabinets with alt click., type: Tweak}
+  id: 3024
+  time: '2023-02-12T02:35:21.0000000+00:00'
