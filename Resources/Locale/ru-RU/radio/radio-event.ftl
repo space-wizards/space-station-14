@@ -1,1 +1,1 @@
-failed-to-send-message = Failed to send message!
+failed-to-send-message = Не удалось отправить сообщение!
