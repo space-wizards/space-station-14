@@ -47,6 +47,10 @@ public sealed class ParacusiaSystem : EntitySystem
 
     private void ShutdownParacusia(RoundRestartCleanupEvent ev)
     {
-        RemComp<ParacusiaComponent>(paracusia.Owner);
+        foreach (var comp in EntityQuery<ParacusiaComponent>(true))
+        {
+            var ent = comp.Owner; 
+            RemComp(ent, comp);
+        }
     }
 }
