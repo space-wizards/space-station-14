@@ -208,10 +208,6 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 {
                     _transform.AnchorEntity(xform, grid, indices);
                 }
-                else
-                {
-                    modified.Add(indices);
-                }
 
                 loadedEntities.Add(ent);
             }
