@@ -156,6 +156,16 @@ public abstract class SharedDoAfterSystem : EntitySystem
             return doAfter.Status;
         }
 
+        public void DoAfter2<TEvent>(DoAfterEventArgs eventArgs, TEvent ev) where TEvent : EntityEventArgs
+        {
+            var doAfter = CreateDoAfter(eventArgs);
+
+            doAfter.Done = cancelled =>
+            {
+                Send2(ev, cancelled, eventArgs);
+            };
+        }
+
         public void DoAfter<TEvent, TData>(DoAfterEventArgs eventArgs, TEvent ev, TData data) where TEvent : EntityEventArgs where TData : AdditionalData
         {
             var doAfter = CreateDoAfter(eventArgs);
@@ -337,23 +347,10 @@ public abstract class SharedDoAfterSystem : EntitySystem
         /// <param name="args"></param>
         public void Send(bool cancelled, DoAfterEventArgs args)
         {
-            //TODO: Raise event arg event here?
-            //Basically have other events inherit DAE and then raise from there?
             var ev = new DoAfterEvent(cancelled, args);
 
             //TODO: Sends three times which works but doesn't in cases where you need it to run only once
-
-            //Add a handled return that breaks?
-            //Issue here is that it could return early when not needed
-            if (args.Target is {} target && EntityManager.EntityExists(target))
-                RaiseLocalEvent(target, ev, args.Broadcast);
-
-            if (args.Used is {} used && EntityManager.EntityExists(used))
-                RaiseLocalEvent(used, ev, args.Broadcast);
-
-            //Maybe set to bottom since there's no return?
-            if (EntityManager.EntityExists(args.User))
-                RaiseLocalEvent(args.User, ev, args.Broadcast);
+            RaiseDoAfterEvent(ev, args);
         }
 
         /// <summary>
@@ -367,27 +364,32 @@ public abstract class SharedDoAfterSystem : EntitySystem
         {
             var ev = new DoAfterEvent<T>(data, cancelled, args);
 
-            if (EntityManager.EntityExists(args.User))
-                RaiseLocalEvent(args.User, ev, args.Broadcast);
+            RaiseDoAfterEvent(ev, args);
+        }
 
-            if (args.Target is {} target && EntityManager.EntityExists(target))
-                RaiseLocalEvent(target, ev, args.Broadcast);
+        public void Send2<TEvent>(TEvent msg, bool cancelled, DoAfterEventArgs args) where TEvent : EntityEventArgs
+        {
+            var ev = new DoAfterEvent<TEvent>(msg, cancelled, args);
 
-            if (args.Used is {} used && EntityManager.EntityExists(used))
-                RaiseLocalEvent(used, ev, args.Broadcast);
+            RaiseDoAfterEvent(ev, args);
         }
 
         public void Send<TEvent, TData>(TEvent msg, TData data, bool cancelled, DoAfterEventArgs args) where TEvent : EntityEventArgs where TData : AdditionalData
         {
             var ev = new DoAfterEvent<TEvent, TData>(msg, data, cancelled, args);
 
-            if (EntityManager.EntityExists(args.User))
+            RaiseDoAfterEvent(ev, args);
+        }
+
+        private void RaiseDoAfterEvent<TEvent>(TEvent ev, DoAfterEventArgs args) where TEvent : notnull
+        {
+            if (EntityManager.EntityExists(args.User) && args.RaiseOnUser)
                 RaiseLocalEvent(args.User, ev, args.Broadcast);
 
-            if (args.Target is {} target && EntityManager.EntityExists(target))
+            if (args.Target is {} target && EntityManager.EntityExists(target) && args.RaiseOnTarget)
                 RaiseLocalEvent(target, ev, args.Broadcast);
 
-            if (args.Used is {} used && EntityManager.EntityExists(used))
+            if (args.Used is {} used && EntityManager.EntityExists(used) && args.RaiseOnUsed)
                 RaiseLocalEvent(used, ev, args.Broadcast);
         }
 }

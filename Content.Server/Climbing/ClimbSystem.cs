@@ -57,7 +57,7 @@ public sealed class ClimbSystem : SharedClimbSystem
         SubscribeLocalEvent<ClimbableComponent, GetVerbsEvent<AlternativeVerb>>(AddClimbableVerb);
         SubscribeLocalEvent<ClimbableComponent, DragDropEvent>(OnClimbableDragDrop);
 
-        SubscribeLocalEvent<ClimbingComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ClimbingComponent, DoAfterEvent<ClimbExtraEvent>>(OnDoAfter);
         SubscribeLocalEvent<ClimbingComponent, EndCollideEvent>(OnClimbEndCollide);
         SubscribeLocalEvent<ClimbingComponent, BuckleChangeEvent>(OnBuckleChange);
         SubscribeLocalEvent<ClimbingComponent, ComponentGetState>(OnClimbingGetState);
@@ -114,27 +114,33 @@ public sealed class ClimbSystem : SharedClimbSystem
         if (_bonkSystem.TryBonk(entityToMove, climbable))
             return;
 
-        _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.ClimbDelay, target:climbable, used:entityToMove)
+        var ev = new ClimbExtraEvent();
+
+        var args = new DoAfterEventArgs(user, component.ClimbDelay, target: climbable, used: entityToMove)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,
             BreakOnDamage = true,
-            BreakOnStun = true
-        });
+            BreakOnStun = true,
+            RaiseOnUser = user == entityToMove,
+            RaiseOnTarget = user != entityToMove
+        };
+
+        _doAfterSystem.DoAfter2(args, ev);
     }
 
-    private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, ClimbingComponent component, DoAfterEvent<ClimbExtraEvent> args)
     {
         //TODO: Maybe have an event trigger here that's only on this
         //Currently will run and eat up a doafter if mobs have other comps on them that handle doafters
         //Might want to do a unique check like seeing if the component matches?
         //That might not prevent it from being run on the user though, assuming a user drags a target
-        /*if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
+        if (args.Handled || args.Cancelled || args.Args.Target == null || args.Args.Used == null)
             return;
 
         Climb(uid, args.Args.User, args.Args.Used.Value, args.Args.Target.Value, climbing: component);
 
-        args.Handled = true;*/
+        args.Handled = true;
     }
 
     private void Climb(EntityUid uid, EntityUid user, EntityUid instigator, EntityUid climbable, bool silent = false, ClimbingComponent? climbing = null,
@@ -432,6 +438,11 @@ public sealed class ClimbSystem : SharedClimbSystem
     private void Reset(RoundRestartCleanupEvent ev)
     {
         _fixtureRemoveQueue.Clear();
+    }
+
+    private sealed class ClimbExtraEvent : EntityEventArgs
+    {
+
     }
 }
 

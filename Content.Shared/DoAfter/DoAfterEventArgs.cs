@@ -27,6 +27,12 @@ public sealed class DoAfterEventArgs
     /// </summary>
     public EntityUid? Used;
 
+    public bool RaiseOnUser { get; set; } = true;
+
+    public bool RaiseOnTarget { get; set; } = true;
+
+    public bool RaiseOnUsed { get; set; } = true;
+
     /// <summary>
     ///     Manually cancel the do_after so it no longer runs
     /// </summary>

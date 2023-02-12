@@ -64,6 +64,20 @@ public sealed class DoAfterEvent<T> : HandledEntityEventArgs
     }
 }
 
+public sealed class DoAfterEvent2<TEvent> : HandledEntityEventArgs where TEvent : EntityEventArgs
+{
+    public TEvent DoAfterExtraEvent;
+    public bool Cancelled;
+    public readonly DoAfterEventArgs Args;
+
+    public DoAfterEvent2(TEvent doAfterExtraEvent, bool cancelled, DoAfterEventArgs args)
+    {
+        DoAfterExtraEvent = doAfterExtraEvent;
+        Cancelled = cancelled;
+        Args = args;
+    }
+}
+
 public sealed class DoAfterEvent<TEvent, TData> : HandledEntityEventArgs where TEvent : EntityEventArgs where TData : AdditionalData
 {
     public TEvent DoAfterExtraEvent;
