@@ -70,7 +70,7 @@ public sealed class ReflectSystem : EntitySystem
                     && reflect.Enabled
                     && _random.Prob(reflect.ReflectChance))
                 {
-                    _popup.PopupEntity(Loc.GetString("reflect-projectile"), args.Target, PopupType.Small);
+                    _popup.PopupEntity(Loc.GetString("reflect-hit-scan"), args.Target, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
                     _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(args.Target):entity} reflected hitscan shot");
                     args.Target = args.User.Value;
