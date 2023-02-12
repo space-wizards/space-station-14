@@ -61,7 +61,6 @@ public sealed class PlanetCommand : IConsoleCommand
         var mapUid = _mapManager.GetMapEntityId(mapId);
         MetaDataComponent? metadata = null;
 
-        // Fake tiles
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
         biome.BiomePrototype = args[1];
         biome.Seed = _random.Next();
@@ -72,7 +71,7 @@ public sealed class PlanetCommand : IConsoleCommand
         _entManager.Dirty(gravity, metadata);
 
         // Day lighting
-        // Daylight: D8B059
+        // Daylight: #D8B059
         // Midday: #E6CB8B
         // Moonlight: #2b3143
         // Lava: #A34931

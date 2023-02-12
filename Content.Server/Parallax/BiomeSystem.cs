@@ -21,7 +21,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
     private readonly HashSet<EntityUid> _handledEntities = new();
     private const float LoadRange = ChunkSize * 2f;
-    private readonly Box2 _loadArea = new Box2(-LoadRange, -LoadRange, LoadRange, LoadRange);
+    private readonly Box2 _loadArea = new(-LoadRange, -LoadRange, LoadRange, LoadRange);
 
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
 
@@ -42,7 +42,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         base.Update(frameTime);
         var biomeQuery = GetEntityQuery<BiomeComponent>();
         var xformQuery = GetEntityQuery<TransformComponent>();
-        var biomes = EntityQueryEnumerator<BiomeComponent>();
+        var biomes = AllEntityQuery<BiomeComponent>();
 
         while (biomes.MoveNext(out var biome))
         {
@@ -74,16 +74,17 @@ public sealed class BiomeSystem : SharedBiomeSystem
             }
         }
 
-        var loadBiomes = EntityQueryEnumerator<BiomeComponent, MapGridComponent>();
+        var loadBiomes = AllEntityQuery<BiomeComponent, MapGridComponent>();
 
         while (loadBiomes.MoveNext(out var biome, out var grid))
         {
             var noise = new FastNoise(biome.Seed);
+            var gridUid = grid.Owner;
 
             // Load new chunks
-            LoadChunks(biome, grid, noise);
+            LoadChunks(biome, gridUid, grid, noise);
             // Unload old chunks
-            UnloadChunks(biome, grid, noise);
+            UnloadChunks(biome, gridUid, grid, noise);
         }
 
         _handledEntities.Clear();
@@ -100,7 +101,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void LoadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
+    private void LoadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoise noise)
     {
         var active = _activeChunks[component];
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
@@ -113,11 +114,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             // Load NOW!
-            LoadChunk(component, grid, chunk * ChunkSize, noise, prototype, tiles);
+            LoadChunk(component, gridUid, grid, chunk * ChunkSize, noise, prototype, tiles);
         }
     }
 
-    private void LoadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
+    private void LoadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= new HashSet<Vector2i>();
@@ -194,7 +195,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
                 foreach (var decal in decals)
                 {
-                    if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(grid.Owner, decal.Position), out var dec))
+                    if (!_decals.TryAddDecal(decal.ID, new EntityCoordinates(gridUid, decal.Position), out var dec))
                         continue;
 
                     loadedDecals.Add(dec, indices);
@@ -212,7 +213,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void UnloadChunks(BiomeComponent component, MapGridComponent grid, FastNoise noise)
+    private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoise noise)
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
@@ -224,11 +225,11 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
             // Unload NOW!
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
-            UnloadChunk(component, grid, chunk * ChunkSize, noise, tiles);
+            UnloadChunk(component, gridUid, grid, chunk * ChunkSize, noise, tiles);
         }
     }
 
-    private void UnloadChunk(BiomeComponent component, MapGridComponent grid, Vector2i chunk, FastNoise noise, List<(Vector2i, Tile)> tiles)
+    private void UnloadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoise noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
@@ -239,7 +240,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         foreach (var (dec, indices) in component.LoadedDecals[chunk])
         {
             // If we couldn't remove it then flag the tile to never be touched.
-            if (!_decals.RemoveDecal(grid.Owner, dec))
+            if (!_decals.RemoveDecal(gridUid, dec))
             {
                 modified.Add(indices);
             }
@@ -252,7 +253,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         // Ideally any entities that aren't modified just get deleted and re-generated later
         // This is because if we want to save the map (e.g. persistent server) it makes the file much smaller
         // and also if the map is enormous will make stuff like physics broadphase much faster
-        // For now we'll just leave them.
+        // For now we'll just leave them because no entity diffs.
 
         component.LoadedEntities.Remove(chunk);
 
