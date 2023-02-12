@@ -8,7 +8,6 @@ using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Nutrition.Components;
-using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.Storage;
 using Robust.Shared.Random;
@@ -28,6 +27,7 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -45,14 +45,15 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnSuicide(EntityUid uid, KitchenSpikeComponent component, SuicideEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
             args.SetHandled(SuicideKind.Piercing);
             var victim = args.Victim;
             var othersMessage = Loc.GetString("comp-kitchen-spike-suicide-other", ("victim", victim));
-            victim.PopupMessageOtherClients(othersMessage);
+            _popupSystem.PopupEntity(othersMessage, victim);
 
             var selfMessage = Loc.GetString("comp-kitchen-spike-suicide-self");
-            victim.PopupMessage(selfMessage);
+            _popupSystem.PopupEntity(selfMessage, victim, victim);
         }
 
         private void OnDoAfter(EntityUid uid, KitchenSpikeComponent component, DoAfterEvent args)
@@ -127,7 +128,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             EntityManager.QueueDeleteEntity(victimUid);
 
-            SoundSystem.Play(component.SpikeSound.GetSound(), Filter.Pvs(uid), uid);
+            _audio.Play(component.SpikeSound, Filter.Pvs(uid), uid, true);
         }
 
         private bool TryGetPiece(EntityUid uid, EntityUid user, EntityUid used,
@@ -149,9 +150,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 Loc.GetString("comp-kitchen-spike-meat-name", ("name", Name(ent)), ("victim", component.Victim));
 
             if (component.PrototypesToSpawn.Count != 0)
-            {
                 _popupSystem.PopupEntity(component.MeatSource1p, uid, user, PopupType.MediumCaution);
-            }
             else
             {
                 UpdateAppearance(uid, null, component);
@@ -240,28 +239,6 @@ namespace Content.Server.Kitchen.EntitySystems
             _doAfter.DoAfter(doAfterArgs);
 
             return true;
-        }
-
-        private sealed class SpikingFinishedEvent : EntityEventArgs
-        {
-            public EntityUid VictimUid;
-            public EntityUid UserUid;
-
-            public SpikingFinishedEvent(EntityUid userUid, EntityUid victimUid)
-            {
-                UserUid = userUid;
-                VictimUid = victimUid;
-            }
-        }
-
-        private sealed class SpikingFailEvent : EntityEventArgs
-        {
-            public EntityUid VictimUid;
-
-            public SpikingFailEvent(EntityUid victimUid)
-            {
-                VictimUid = victimUid;
-            }
         }
     }
 }
