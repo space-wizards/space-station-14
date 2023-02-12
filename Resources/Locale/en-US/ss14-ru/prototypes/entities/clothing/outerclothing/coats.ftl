@@ -34,3 +34,6 @@ ent-ClothingOuterCoatPirate = pirate garb
 ent-ClothingOuterCoatWarden = warden's armored jacket
     .desc = A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
     .suffix = { "" }
+ent-ClothingOuterDameDane = dame dane coat
+    .desc = Friday...
+    .suffix = { "" }

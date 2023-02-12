@@ -58,3 +58,5 @@ technologies-ripley-technology = Экзокостюм: Рипли
 technologies-ripley-technology-description = Новейшая разработка в области механизации погрузочных работ.
 technologies-robotics-technology = Робототехника
 technologies-robotics-technology-description = Запчасти для роботов.
+technologies-super-parts-technology = Super parts technology
+technologies-super-parts-technology-description = New heights of machine performance.
