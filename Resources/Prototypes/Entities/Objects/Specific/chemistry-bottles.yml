@@ -15,6 +15,8 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
     state: bottle-1
+  - type: Drink
+    isOpen: false
   - type: Item
     size: 3
   - type: SolutionContainerManager
