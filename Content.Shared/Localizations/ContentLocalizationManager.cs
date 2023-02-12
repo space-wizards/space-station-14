@@ -36,7 +36,16 @@ namespace Content.Shared.Localizations
             _loc.AddFunction(culture, "LOC", FormatLoc);
             _loc.AddFunction(culture, "MAKEPLURAL", FormatMakePlural);
             _loc.AddFunction(culture, "NATURALFIXED", FormatNaturalFixed);
+            _loc.AddFunction(culture, "NATURALPERCENT", FormatNaturalPercent);
+        }
 
+        private ILocValue FormatNaturalPercent(LocArgs args)
+        {
+            var number = ((LocValueNumber) args.Args[0]).Value * 100;
+            var maxDecimals = (int)Math.Floor(((LocValueNumber) args.Args[1]).Value);
+            var formatter = (NumberFormatInfo)NumberFormatInfo.GetInstance(CultureInfo.GetCultureInfo(Culture)).Clone();
+            formatter.NumberDecimalDigits = maxDecimals;
+            return new LocValueString(string.Format(formatter, "{0:N}", number).TrimEnd('0').TrimEnd('.') + "%");
         }
 
         private ILocValue FormatNaturalFixed(LocArgs args)
