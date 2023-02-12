@@ -14,8 +14,8 @@ namespace Content.Shared.Movement.Systems;
 /// </summary>
 public abstract class SharedContentEyeSystem : EntitySystem
 {
-    protected static readonly Vector2 MinZoom = new(MathF.Pow(1.5f, -6), MathF.Pow(1.5f, -6));
-    protected static readonly Vector2 MaxZoom = new(MathF.Pow(1.5f, 6), MathF.Pow(1.5f, 6));
+    protected static readonly Vector2 MinZoom = new(MathF.Pow(1.2f, -6), MathF.Pow(1.5f, -6));
+    protected static readonly Vector2 MaxZoom = new(MathF.Pow(1.2f, 6), MathF.Pow(1.5f, 6));
 
     protected ISawmill Sawmill = Logger.GetSawmill("ceye");
 
@@ -68,7 +68,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         var diff = content.TargetZoom - eye.Zoom;
 
-        if (diff.LengthSquared < 0.00001f)
+        if (diff.LengthSquared < 0.0000001f)
         {
             eye.Zoom = content.TargetZoom;
             Dirty(eye);
@@ -76,7 +76,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
         }
 
-        var change = diff * 10f * frameTime;
+        var change = diff * 8f * frameTime;
 
         eye.Zoom += change;
         Dirty(eye);
