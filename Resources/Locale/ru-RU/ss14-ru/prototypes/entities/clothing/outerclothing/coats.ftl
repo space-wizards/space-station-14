@@ -34,3 +34,6 @@ ent-ClothingOuterCoatPirate = одежда пирата
 ent-ClothingOuterCoatWarden = бронированная куртка смотрителя
     .desc = Прочная, утилитарная куртка, предназначенная для защиты смотрителя от любых угроз, связанных с бригом.
     .suffix = { "" }
+ent-ClothingOuterDameDane = дамэ да нэ пальто
+    .desc = Пятница...
+    .suffix = { "" }

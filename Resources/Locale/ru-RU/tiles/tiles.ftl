@@ -69,6 +69,7 @@ tiles-green-circuit-floor = зелёный микросхемный пол
 tiles-blue-circuit-floor = синий микросхемный пол
 tiles-snow = снег
 tiles-grass-floor = трава
+tiles-planet-grass-floor = планетная трава
 tiles-jungle-grass-floor = трава джунглей
 tiles-dark-grass-floor = тёмная трава
 tiles-light-grass-floor = светлая трава

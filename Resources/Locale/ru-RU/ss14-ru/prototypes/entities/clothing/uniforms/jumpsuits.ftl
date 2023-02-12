@@ -250,3 +250,6 @@ ent-ClothingUniformJumpsuitERTMedic = медицинская униформа О
 ent-ClothingUniformJumpsuitERTSecurity = униформа службы безопасности ОБР
     .desc = Специальный костюм, созданный для элитной службы безопасности ЦентКома.
     .suffix = { "" }
+ent-ClothingUniformJumpsuitDameDane = dame dane outfit дамэ да нэ костюм
+    .desc = Бака митаи...
+    .suffix = { "" }
