@@ -1,19 +1,15 @@
 using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Examine;
-using Content.Server.Hands.Components;
 using Content.Server.Interaction;
-using Content.Server.Ranged.Weapons.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
-using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction.Components;
-using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -26,7 +22,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
