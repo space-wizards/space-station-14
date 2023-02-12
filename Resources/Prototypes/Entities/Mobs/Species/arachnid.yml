@@ -36,7 +36,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, should be lower than humans.
+        Blunt: 0 # exoskeleton
   # Misc
   - type: Inventory
     templateId: arachnid
@@ -46,6 +46,7 @@
       path: /Audio/Weapons/pierce.ogg
     angle: 30
     animation: WeaponArcPunch
+    attackRate: 2
     damage:
       types:
         Slash: 3
