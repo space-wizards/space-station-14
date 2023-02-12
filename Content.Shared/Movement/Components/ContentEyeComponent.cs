@@ -11,6 +11,6 @@ public sealed class ContentEyeComponent : Component
     /// <summary>
     /// Zoom we're lerping to.
     /// </summary>
-    [ViewVariables]
+    [ViewVariables, DataField("targetZoom")]
     public Vector2 TargetZoom = Vector2.One;
 }
