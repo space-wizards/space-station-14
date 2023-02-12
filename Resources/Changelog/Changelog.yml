@@ -1,12 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that was causing bullets and other physics objects to not
-      work properly., type: Fix}
-  - {message: Fixed a bug that was causing crashes when attempting to follow or teleport
-      to entities., type: Fix}
-  id: 2527
-  time: '2022-10-27T02:35:44.0000000+00:00'
 - author: checkraze
   changes:
   - {message: Nanotrasen has updated their Dart ERT shuttle for faster response times!,
@@ -2915,3 +2907,9 @@ Entries:
   - {message: Added rocks with ore veins., type: Add}
   id: 3026
   time: '2023-02-12T12:41:13.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Players may need to readjust their light related graphics options as
+      some of the option have been renamed., type: Tweak}
+  id: 3027
+  time: '2023-02-12T17:09:13.0000000+00:00'
