@@ -1,9 +1,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -19,7 +17,6 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -41,8 +38,7 @@ namespace Content.Server.Kitchen.EntitySystems
             SubscribeLocalEvent<KitchenSpikeComponent, DragDropEvent>(OnDragDrop);
 
             //DoAfter
-            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFinishedEvent>(OnSpikingFinished);
-            SubscribeLocalEvent<KitchenSpikeComponent, SpikingFailEvent>(OnSpikingFail);
+            SubscribeLocalEvent<KitchenSpikeComponent, DoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<KitchenSpikeComponent, SuicideEvent>(OnSuicide);
         }
@@ -59,25 +55,21 @@ namespace Content.Server.Kitchen.EntitySystems
             victim.PopupMessage(selfMessage);
         }
 
-        private void OnSpikingFail(EntityUid uid, KitchenSpikeComponent component, SpikingFailEvent args)
+        private void OnDoAfter(EntityUid uid, KitchenSpikeComponent component, DoAfterEvent args)
         {
-            component.InUse = false;
+            if (args.Args.Target == null)
+                return;
 
-            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
-                butcherable.BeingButchered = false;
-        }
-
-        private void OnSpikingFinished(EntityUid uid, KitchenSpikeComponent component, SpikingFinishedEvent args)
-        {
-            component.InUse = false;
-
-            if (EntityManager.TryGetComponent<SharedButcherableComponent>(args.VictimUid, out var butcherable))
+            if (TryComp<SharedButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
-            if (Spikeable(uid, args.UserUid, args.VictimUid, component, butcherable))
-            {
-                Spike(uid, args.UserUid, args.VictimUid, component);
-            }
+            if (args.Handled || args.Cancelled)
+                return;
+
+            if (Spikeable(uid, args.Args.User, args.Args.Target.Value, component, butcherable))
+                Spike(uid, args.Args.User, args.Args.Target.Value, component);
+
+            args.Handled = true;
         }
 
         private void OnDragDrop(EntityUid uid, KitchenSpikeComponent component, DragDropEvent args)
@@ -89,8 +81,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (Spikeable(uid, args.User, args.Dragged, component))
                 TrySpike(uid, args.User, args.Dragged, component);
-
         }
+
         private void OnInteractHand(EntityUid uid, KitchenSpikeComponent component, InteractHandEvent args)
         {
             if (args.Handled)
@@ -236,15 +228,13 @@ namespace Content.Server.Kitchen.EntitySystems
             butcherable.BeingButchered = true;
             component.InUse = true;
 
-            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, default, uid)
+            var doAfterArgs = new DoAfterEventArgs(userUid, component.SpikeDelay + butcherable.ButcherDelay, target:victimUid, used:uid)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
                 BreakOnStun = true,
-                NeedHand = true,
-                TargetFinishedEvent = new SpikingFinishedEvent(userUid, victimUid),
-                TargetCancelledEvent = new SpikingFailEvent(victimUid)
+                NeedHand = true
             };
 
             _doAfter.DoAfter(doAfterArgs);
