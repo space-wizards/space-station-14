@@ -25,6 +25,9 @@ public sealed class BiomeSystem : SharedBiomeSystem
     private float _loadRange = DefaultLoadRange;
     private Box2 _loadArea = new(-DefaultLoadRange, -DefaultLoadRange, DefaultLoadRange, DefaultLoadRange);
 
+    /// <summary>
+    /// Stores the chunks active for this tick temporarily.
+    /// </summary>
     private readonly Dictionary<BiomeComponent, HashSet<Vector2i>> _activeChunks = new();
 
     public override void Initialize()
@@ -98,7 +101,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
             var gridUid = grid.Owner;
 
             // Load new chunks
-            LoadChunks(biome, gridUid, grid, noise);
+            LoadChunks(biome, gridUid, grid, noise, xformQuery);
             // Unload old chunks
             UnloadChunks(biome, gridUid, grid, noise);
         }
@@ -113,11 +116,16 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         while (enumerator.MoveNext(out var chunkOrigin))
         {
-            _activeChunks[biome].Add(chunkOrigin.Value);
+            _activeChunks[biome].Add(chunkOrigin.Value * ChunkSize);
         }
     }
 
-    private void LoadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoise noise)
+    private void LoadChunks(
+        BiomeComponent component,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        FastNoise noise,
+        EntityQuery<TransformComponent> xformQuery)
     {
         var active = _activeChunks[component];
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
@@ -130,11 +138,19 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
             // Load NOW!
-            LoadChunk(component, gridUid, grid, chunk * ChunkSize, noise, prototype, tiles);
+            LoadChunk(component, gridUid, grid, chunk, noise, prototype, tiles, xformQuery);
         }
     }
 
-    private void LoadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoise noise, BiomePrototype prototype, List<(Vector2i, Tile)> tiles)
+    private void LoadChunk(
+        BiomeComponent component,
+        EntityUid gridUid,
+        MapGridComponent grid,
+        Vector2i chunk,
+        FastNoise noise,
+        BiomePrototype prototype,
+        List<(Vector2i, Tile)> tiles,
+        EntityQuery<TransformComponent> xformQuery)
     {
         component.ModifiedTiles.TryGetValue(chunk, out var modified);
         modified ??= new HashSet<Vector2i>();
@@ -186,6 +202,13 @@ public sealed class BiomeSystem : SharedBiomeSystem
                 // TODO: Fix non-anchored ents spawning.
                 // Just track loaded chunks for now.
                 var ent = Spawn(entPrototype, grid.GridTileToLocal(indices));
+
+                // At least for now unless we do lookups or smth, only work with anchoring.
+                if (xformQuery.TryGetComponent(ent, out var xform) && !xform.Anchored)
+                {
+                    _transform.AnchorEntity(xform, grid, indices);
+                }
+
                 loadedEntities.Add(ent);
             }
         }
@@ -241,7 +264,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
             // Unload NOW!
             tiles ??= new List<(Vector2i, Tile)>(ChunkSize * ChunkSize);
-            UnloadChunk(component, gridUid, grid, chunk * ChunkSize, noise, tiles);
+            UnloadChunk(component, gridUid, grid, chunk, noise, tiles);
         }
     }
 
@@ -312,6 +335,10 @@ public sealed class BiomeSystem : SharedBiomeSystem
         if (modified.Count == 0)
         {
             component.ModifiedTiles.Remove(chunk);
+        }
+        else
+        {
+            component.ModifiedTiles[chunk] = modified;
         }
     }
 }
