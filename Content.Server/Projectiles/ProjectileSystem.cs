@@ -11,13 +11,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Physics.Events;
-using Content.Server.Hands.Components;
-using Robust.Shared.Random;
-using Content.Server.Popups;
-using Content.Shared.Popups;
-using Robust.Shared.Physics.Systems;
-using Content.Shared.Audio;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Projectiles
 {
@@ -28,10 +21,6 @@ namespace Content.Server.Projectiles
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly GunSystem _guns = default!;
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {
@@ -52,11 +41,13 @@ namespace Content.Server.Projectiles
                 return;
 
             var otherEntity = args.OtherFixture.Body.Owner;
-            var otherName = ToPrettyString(otherEntity);
 
-            if (TryReflect(uid, component, args.OurFixture.Body, otherEntity))
+            var attemptEv = new ProjectileCollideAttemptEvent(otherEntity); 
+            RaiseLocalEvent(uid, attemptEv);
+            if (attemptEv.Cancelled)
                 return;
 
+            var otherName = ToPrettyString(otherEntity);
             var direction = args.OurFixture.Body.LinearVelocity.Normalized;
             var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
             component.DamagedEntity = true;
@@ -89,32 +80,6 @@ namespace Content.Server.Projectiles
                     RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
                 }
             }
-        }
-
-        private bool TryReflect(EntityUid uid, ProjectileComponent projComp, PhysicsComponent physicsComp, EntityUid hitEntity) 
-        {
-            if (TryComp<HandsComponent>(hitEntity, out var hands))
-            {
-                foreach (var (_, hand) in hands.Hands)
-                {
-                    if (TryComp<ReflectProjectileComponent>(hand.HeldEntity, out var reflect) 
-                        && reflect.Enabled
-                        && _random.Prob(reflect.ReflectChance))
-                    {
-                        var vel = _physics.GetMapLinearVelocity(uid);
-                        var force = physicsComp.Force;
-                        _physics.ResetDynamics(physicsComp);
-                        _physics.ApplyForce(uid, -force);
-                        _physics.SetLinearVelocity(uid, -vel);
-                        projComp.Shooter = hitEntity;
-                        _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
-                        _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
-                        _adminLogger.Add(LogType.ShotReflected, $"{ToPrettyString(hitEntity):entity} reflected projectile {ToPrettyString(uid):projectile}");
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
     }
 }

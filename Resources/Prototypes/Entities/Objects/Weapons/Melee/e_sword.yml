@@ -50,11 +50,7 @@
         shader: unshaded
   - type: DisarmMalus
     malus: 0
-  - type: ReflectProjectile
-    reflectChance: 0.25
-    onReflect:
-      path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
-  - type: ReflectHitScan
+  - type: Reflect
     reflectChance: 0.5
     onReflect:
       path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
