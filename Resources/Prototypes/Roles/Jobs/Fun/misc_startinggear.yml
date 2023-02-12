@@ -57,11 +57,16 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitColorBlack
     back: ClothingBackpackFilled
+    mask: ClothingMaskGasSyndicate
     head: ClothingHeadHelmetSpaceNinja
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
     id: PassengerPDA
+    pocket1: EnergySword
+    pocket2: MicroBombImplanter
+    belt: ClothingBeltUtilityFilled
+    suitstorage: YellowOxygenTankFilled
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackSatchelFilled
   duffelbag: ClothingBackpackDuffelFilled

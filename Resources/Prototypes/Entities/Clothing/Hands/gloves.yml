@@ -204,6 +204,7 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  - type: SpaceNinjaGloves
 
 - type: entity
   parent: ClothingHandsBase

@@ -58,3 +58,26 @@
   components:
     - type: NukeOperative
     - type: RandomHumanoidAppearance
+
+# Space Ninja
+# TODO: give microbomb implant built-in instead of in pocket
+- type: entity
+  noSpawn: true
+  name: Space Ninja
+  parent: MobHuman
+  id: MobHumanSpaceNinja
+  components:
+  - type: GhostTakeoverAvailable
+    name: Space ninja
+    description: Use stealth and deception to sabotage the station.
+  - type: Loadout
+    prototype: SpaceNinjaGear
+    prototypes: [SpaceNinjaGear]
+  - type: Faction
+    factions:
+    - Syndicate
+  - type: SpaceNinja
+  - type: RandomMetadata
+    nameSegments:
+    - names_ninja_title
+    - names_ninja

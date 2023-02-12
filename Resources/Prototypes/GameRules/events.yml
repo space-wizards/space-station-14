@@ -70,6 +70,16 @@
     minimumPlayers: 15
 
 - type: gameRule
+  id: SpaceNinjaSpawn
+  config:
+    !type:StationEventRuleConfiguration
+    id: SpaceNinjaSpawn
+    weight: 10
+    endAfter: 1
+    earliestStart: 60
+    minimumPlayers: 15
+
+- type: gameRule
   id: RevenantSpawn
   config:
     !type:StationEventRuleConfiguration
