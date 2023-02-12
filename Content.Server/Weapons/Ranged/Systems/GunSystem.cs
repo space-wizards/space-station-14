@@ -182,7 +182,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (rayCastResults.Count >= 1)
                     {
                         var result = rayCastResults[0];
-                        var hitEntity = result.HitEntity;                   
+                        var hitEntity = result.HitEntity;
 
                         var ev = new HitScanShotEvent(user, hitEntity);
                         RaiseLocalEvent(ev);
