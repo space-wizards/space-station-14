@@ -56,7 +56,7 @@ namespace Content.Server.Strip
                 if (!TryComp<EnsnaringComponent>(entity, out var ensnaring))
                     continue;
 
-                _ensnaring.TryFree(component.Owner, ensnaring, user);
+                _ensnaring.TryFree(uid, entity, ensnaring, user);
                 return;
             }
         }
