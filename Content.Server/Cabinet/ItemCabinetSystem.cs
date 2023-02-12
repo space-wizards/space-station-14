@@ -3,6 +3,7 @@ using Content.Shared.Audio;
 using Content.Shared.Cabinet;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
