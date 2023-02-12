@@ -1,6 +1,5 @@
 ﻿using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Station.Components;
 
@@ -31,10 +30,4 @@ public sealed class StationDataComponent : Component
     /// </summary>
     [ViewVariables, Access(typeof(ShuttleSystem), Friend = AccessPermissions.ReadWrite)]
     public EntityUid? EmergencyShuttle;
-
-    /// <summary>
-    /// Emergency shuttle map path for this station.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), Access(typeof(ShuttleSystem), Other = AccessPermissions.ReadWriteExecute)]
-    public ResourcePath EmergencyShuttlePath = new("/Maps/Shuttles/emergency.yml");
 }

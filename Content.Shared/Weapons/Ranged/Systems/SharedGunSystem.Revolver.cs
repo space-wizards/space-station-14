@@ -6,6 +6,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System;
+using System.Linq;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
@@ -19,7 +21,7 @@ public partial class SharedGunSystem
         SubscribeLocalEvent<RevolverAmmoProviderComponent, ComponentHandleState>(OnRevolverHandleState);
         SubscribeLocalEvent<RevolverAmmoProviderComponent, ComponentInit>(OnRevolverInit);
         SubscribeLocalEvent<RevolverAmmoProviderComponent, TakeAmmoEvent>(OnRevolverTakeAmmo);
-        SubscribeLocalEvent<RevolverAmmoProviderComponent, GetVerbsEvent<Verb>>(OnRevolverVerbs);
+        SubscribeLocalEvent<RevolverAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnRevolverVerbs);
         SubscribeLocalEvent<RevolverAmmoProviderComponent, InteractUsingEvent>(OnRevolverInteractUsing);
         SubscribeLocalEvent<RevolverAmmoProviderComponent, GetAmmoCountEvent>(OnRevolverGetAmmoCount);
     }
@@ -73,8 +75,77 @@ public partial class SharedGunSystem
 
     public bool TryRevolverInsert(RevolverAmmoProviderComponent component, EntityUid uid, EntityUid? user)
     {
-        if (component.Whitelist?.IsValid(uid, EntityManager) == false) return false;
+        if (component.Whitelist?.IsValid(uid, EntityManager) == false)
+            return false;
 
+        // If it's a speedloader try to get ammo from it.
+        if (EntityManager.HasComponent<SpeedLoaderComponent>(uid))
+        {
+            var freeSlots = 0;
+
+            for (var i = 0; i < component.Capacity; i++)
+            {
+                if (component.AmmoSlots[i] != null || component.Chambers[i] != null)
+                    continue;
+
+                freeSlots++;
+            }
+
+            if (freeSlots == 0)
+            {
+                Popup(Loc.GetString("gun-revolver-full"), component.Owner, user);
+                return false;
+            }
+
+            var xformQuery = GetEntityQuery<TransformComponent>();
+            var xform = xformQuery.GetComponent(uid);
+            var ammo = new List<IShootable>(freeSlots);
+            var ev = new TakeAmmoEvent(freeSlots, ammo, xform.Coordinates, user);
+            RaiseLocalEvent(uid, ev);
+
+            if (ev.Ammo.Count == 0)
+            {
+                Popup(Loc.GetString("gun-speedloader-empty"), component.Owner, user);
+                return false;
+            }
+
+            for (var i = Math.Min(ev.Ammo.Count - 1, component.Capacity - 1); i >= 0; i--)
+            {
+                var index = (component.CurrentIndex + i) % component.Capacity;
+
+                if (component.AmmoSlots[index] != null ||
+                    component.Chambers[index] != null)
+                {
+                    continue;
+                }
+
+                var ent = ev.Ammo.Last();
+                ev.Ammo.RemoveAt(ev.Ammo.Count - 1);
+
+                if (ent is not AmmoComponent ammoComp)
+                {
+                    Sawmill.Error($"Tried to load hitscan into a revolver which is unsupported");
+                    continue;
+                }
+
+                component.AmmoSlots[index] = ammoComp.Owner;
+                component.AmmoContainer.Insert(ammoComp.Owner, EntityManager);
+
+                if (ev.Ammo.Count == 0)
+                    break;
+            }
+
+            DebugTools.Assert(ammo.Count == 0);
+            UpdateRevolverAppearance(component);
+            UpdateAmmoCount(uid);
+            Dirty(component);
+
+            Audio.PlayPredicted(component.SoundInsert, component.Owner, user);
+            Popup(Loc.GetString("gun-revolver-insert"), component.Owner, user);
+            return true;
+        }
+
+        // Try to insert the entity directly.
         for (var i = 0; i < component.Capacity; i++)
         {
             var index = (component.CurrentIndex + i) % component.Capacity;
@@ -91,23 +162,23 @@ public partial class SharedGunSystem
             Dirty(component);
             return true;
         }
-
         Popup(Loc.GetString("gun-revolver-full"), component.Owner, user);
         return false;
     }
 
-    private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<Verb> args)
+    private void OnRevolverVerbs(EntityUid uid, RevolverAmmoProviderComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || args.Hands == null) return;
 
-        args.Verbs.Add(new Verb()
+        args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("gun-revolver-empty"),
             Disabled = !AnyRevolverCartridges(component),
-            Act = () => EmptyRevolver(component, args.User)
+            Act = () => EmptyRevolver(component, args.User),
+            Priority = 1
         });
 
-        args.Verbs.Add(new Verb()
+        args.Verbs.Add(new AlternativeVerb()
         {
             Text = Loc.GetString("gun-revolver-spin"),
             // Category = VerbCategory.G,

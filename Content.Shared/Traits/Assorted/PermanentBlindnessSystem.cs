@@ -31,11 +31,11 @@ public sealed class PermanentBlindnessSystem : EntitySystem
 
     private void OnShutdown(EntityUid uid, PermanentBlindnessComponent component, ComponentShutdown args)
     {
-        _blinding.AdjustBlindSources(uid, false);
+        _blinding.AdjustBlindSources(uid, -1);
     }
 
     private void OnStartup(EntityUid uid, PermanentBlindnessComponent component, ComponentStartup args)
     {
-        _blinding.AdjustBlindSources(uid, true);
+        _blinding.AdjustBlindSources(uid, 1);
     }
 }

@@ -1,7 +1,7 @@
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Globalization;
 
 namespace Content.Server.Roles
 {
@@ -39,24 +39,13 @@ namespace Content.Server.Roles
             if (Mind.TryGetSession(out var session))
             {
                 var chatMgr = IoCManager.Resolve<IChatManager>();
-                var chatSys = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ChatSystem>();
-                chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name", ("jobName", Name)));
+                chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-introduce-job-name",
+                    ("jobName", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name))));
 
                 if(Prototype.RequireAdminNotify)
                     chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
 
                 chatMgr.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", Name), ("supervisors", Loc.GetString(Prototype.Supervisors))));
-
-                if(Prototype.JoinNotifyCrew && Mind.CharacterName != null)
-                {
-                    if (Mind.OwnedEntity != null)
-                    {
-                        chatSys.DispatchStationAnnouncement(Mind.OwnedEntity.Value,
-                            Loc.GetString("job-greet-join-notify-crew", ("jobName", Name),
-                                ("characterName", Mind.CharacterName)),
-                            Loc.GetString("job-greet-join-notify-crew-announcer"), false);
-                    }
-                }
             }
         }
     }

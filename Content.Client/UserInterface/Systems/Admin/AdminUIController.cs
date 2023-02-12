@@ -5,6 +5,7 @@ using Content.Client.Administration.UI.Tabs.PlayerTab;
 using Content.Client.Gameplay;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using JetBrains.Annotations;
 using Robust.Client.Console;
@@ -26,18 +27,16 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
     [Dependency] private readonly IClientConGroupController _conGroups = default!;
     [Dependency] private readonly IClientConsoleHost _conHost = default!;
     [Dependency] private readonly IInputManager _input = default!;
-
-    [UISystemDependency] private readonly VerbSystem _verbs = default!;
+    [Dependency] private readonly VerbMenuUIController _verb = default!;
 
     private AdminMenuWindow? _window;
-    private MenuButton? _adminButton;
+    private MenuButton? AdminButton => UIManager.GetActiveUIWidgetOrNull<MenuBar.Widgets.GameTopMenuBar>()?.AdminButton;
 
     public void OnStateEntered(GameplayState state)
     {
         DebugTools.Assert(_window == null);
 
         _window = UIManager.CreateWindow<AdminMenuWindow>();
-        _adminButton = UIManager.GetActiveUIWidget<MenuBar.Widgets.GameTopMenuBar>().AdminButton;
         LayoutContainer.SetAnchorPreset(_window, LayoutContainer.LayoutPreset.Center);
 
         _window.PlayerTabControl.OnEntryPressed += PlayerTabEntryPressed;
@@ -45,7 +44,6 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         _window.OnOpen += OnWindowOpen;
         _window.OnClose += OnWindowClosed;
         _admin.AdminStatusUpdated += AdminStatusUpdated;
-        _adminButton.OnPressed += AdminButtonPressed;
 
         _input.SetInputCommand(ContentKeyFunctions.OpenAdminMenu,
             InputCmdHandler.FromDelegate(_ => Toggle()));
@@ -53,16 +51,36 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         AdminStatusUpdated();
     }
 
+    public void UnloadButton()
+    {
+        if (AdminButton == null)
+        {
+            return;
+        }
+
+        AdminButton.OnPressed -= AdminButtonPressed;
+    }
+
+    public void LoadButton()
+    {
+        if (AdminButton == null)
+        {
+            return;
+        }
+
+        AdminButton.OnPressed += AdminButtonPressed;
+    }
+
     private void OnWindowOpen()
     {
-        if (_adminButton != null)
-            _adminButton.Pressed = true;
+        if (AdminButton != null)
+            AdminButton.Pressed = true;
     }
 
     private void OnWindowClosed()
     {
-        if (_adminButton != null)
-            _adminButton.Pressed = false;
+        if (AdminButton != null)
+            AdminButton.Pressed = false;
     }
 
     public void OnStateExited(GameplayState state)
@@ -80,19 +98,12 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
 
         _admin.AdminStatusUpdated -= AdminStatusUpdated;
 
-        if (_adminButton != null)
-        {
-            _adminButton.Pressed = false;
-            _adminButton.OnPressed -= AdminButtonPressed;
-            _adminButton = null;
-        }
-
         CommandBinds.Unregister<AdminUIController>();
     }
 
     private void AdminStatusUpdated()
     {
-        _adminButton!.Visible = _conGroups.CanAdminMenu();
+        AdminButton!.Visible = _conGroups.CanAdminMenu();
     }
 
     private void AdminButtonPressed(ButtonEventArgs args)
@@ -124,7 +135,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verbs.VerbMenu.OpenVerbMenu(uid, true);
+            _verb.OpenVerbMenu(uid, true);
         else
             return;
 
@@ -142,7 +153,7 @@ public sealed class AdminUIController : UIController, IOnStateEntered<GameplaySt
         if (function == EngineKeyFunctions.UIClick)
             _conHost.ExecuteCommand($"vv {uid}");
         else if (function == EngineKeyFunctions.UseSecondary)
-            _verbs.VerbMenu.OpenVerbMenu(uid, true);
+            _verb.OpenVerbMenu(uid, true);
         else
             return;
 

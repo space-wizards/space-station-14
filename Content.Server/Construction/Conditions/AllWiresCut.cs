@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using Content.Server.Wires;
+﻿using Content.Server.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
-using Robust.Shared.Reflection;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -17,22 +15,13 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
-        [DataField("ignoreTypes")] public HashSet<IWireAction> IgnoreTypes { get; } = new();
-
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
                 return true;
 
-            var ignoreTypes = IgnoreTypes.Select(t => t.GetType()).ToHashSet();
-
             foreach (var wire in wires.WiresList)
             {
-                if (ignoreTypes.Contains(wire.Action.GetType()))
-                {
-                    continue;
-                }
-
                 switch (Value)
                 {
                     case true when !wire.IsCut:
@@ -46,6 +35,9 @@ namespace Content.Server.Construction.Conditions
 
         public bool DoExamine(ExaminedEvent args)
         {
+            if (Condition(args.Examined, IoCManager.Resolve<IEntityManager>()))
+                return false;
+
             args.PushMarkup(Loc.GetString(Value
                 ? "construction-examine-condition-all-wires-cut"
                 : "construction-examine-condition-all-wires-intact"));

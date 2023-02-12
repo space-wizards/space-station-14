@@ -9,7 +9,7 @@
                    StyleClasses="LabelKeyText"/>
             <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-master-volume'}" />
+                    <Label Text="{Loc 'ui-options-master-volume'}" HorizontalExpand="True" />
                     <Control MinSize="8 0" />
                     <Slider Name="MasterVolumeSlider"
                             MinValue="0"
@@ -23,7 +23,7 @@
                 </BoxContainer>
                 <Control MinSize="0 8" />
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-midi-volume'}" />
+                    <Label Text="{Loc 'ui-options-midi-volume'}" HorizontalExpand="True" />
                     <Control MinSize="8 0" />
                     <Slider Name="MidiVolumeSlider"
                             MinValue="0"
@@ -36,7 +36,7 @@
                     <Control MinSize="4 0"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-ambience-volume'}" />
+                    <Label Text="{Loc 'ui-options-ambience-volume'}" HorizontalExpand="True" />
                     <Control MinSize="8 0" />
                     <Slider Name="AmbienceVolumeSlider"
                             MinValue="0"
@@ -49,7 +49,20 @@
                     <Control MinSize="4 0"/>
                 </BoxContainer>
                 <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
-                    <Label Text="{Loc 'ui-options-ambience-max-sounds'}" />
+                    <Label Text="{Loc 'ui-options-lobby-volume'}" HorizontalExpand="True" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="LobbyVolumeSlider"
+                            MinValue="0"
+                            MaxValue="200"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="LobbyVolumeLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-ambience-max-sounds'}" HorizontalExpand="True" />
                     <Control MinSize="8 0" />
                     <Slider Name="AmbienceSoundsSlider"
                             MinValue="0"

@@ -10,9 +10,11 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 using Content.Shared.Administration;
+using Content.Shared.Configurable;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
@@ -26,7 +28,7 @@ using Robust.Shared.Console;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
-using static Content.Shared.Configurable.SharedConfigurationComponent;
+using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Administration.Systems
 {
@@ -45,6 +47,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly PrayerSystem _prayerSystem = default!;
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
@@ -79,6 +82,21 @@ namespace Content.Server.Administration.Systems
                         _console.RemoteExecuteCommand(player, $"openahelp \"{targetActor.PlayerSession.UserId}\"");
                     verb.Impact = LogImpact.Low;
                     args.Verbs.Add(verb);
+
+                    // Subtle Messages
+                    Verb prayerVerb = new();
+                    prayerVerb.Text = Loc.GetString("prayer-verbs-subtle-message");
+                    prayerVerb.Category = VerbCategory.Admin;
+                    prayerVerb.IconTexture = "/Textures/Interface/pray.svg.png";
+                    prayerVerb.Act = () =>
+                    {
+                        _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
+                        {
+                            _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
+                        });
+                    };
+                    prayerVerb.Impact = LogImpact.Low;
+                    args.Verbs.Add(prayerVerb);
 
                     // Freeze
                     var frozen = HasComp<AdminFrozenComponent>(args.Target);

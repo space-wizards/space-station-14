@@ -16,17 +16,17 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("solution", required: true)]
         public string Solution = default!;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (system.SolutionContainerSystem.TryGetSolution(owner, Solution, out var explodingSolution)
                 && system.EntityManager.TryGetComponent(owner, out ExplosiveComponent? explosiveComponent))
             {
                 // Don't explode if there's no solution
-                if (explodingSolution.CurrentVolume == 0)
+                if (explodingSolution.Volume == 0)
                     return;
 
                 // Scale the explosion intensity based on the remaining volume of solution
-                var explosionScaleFactor = (explodingSolution.CurrentVolume.Float() / explodingSolution.MaxVolume.Float());
+                var explosionScaleFactor = explodingSolution.FillFraction;
 
                 // TODO: Perhaps some of the liquid should be discarded as if it's being consumed by the explosion
 
@@ -39,7 +39,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 // Don't delete the object here - let other processes like physical damage from the
                 // explosion clean up the exploding object(s)
                 var explosiveTotalIntensity = explosiveComponent.TotalIntensity * explosionScaleFactor;
-                system.ExplosionSystem.TriggerExplosive(owner, explosiveComponent, false, explosiveTotalIntensity);
+                system.ExplosionSystem.TriggerExplosive(owner, explosiveComponent, false, explosiveTotalIntensity, user:cause);
             }
         }
     }

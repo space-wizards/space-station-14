@@ -148,7 +148,7 @@
               prototype: SheetGlass1
               amount: 2
           steps:
-            - tool: Screwing
+            - tool: Prying
               doAfter: 1
 
 

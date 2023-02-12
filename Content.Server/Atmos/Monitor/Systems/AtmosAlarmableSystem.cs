@@ -243,7 +243,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     /// <param name="alarmable"></param>
     public void Reset(EntityUid uid, AtmosAlarmableComponent? alarmable = null, TagComponent? tags = null)
     {
-        if (!Resolve(uid, ref alarmable, ref tags) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
+        if (!Resolve(uid, ref alarmable, ref tags, false) || alarmable.LastAlarmState == AtmosAlarmType.Normal)
         {
             return;
         }
@@ -285,7 +285,7 @@ public sealed class AtmosAlarmableSystem : EntitySystem
     {
         alarm = null;
 
-        if (!Resolve(uid, ref alarmable))
+        if (!Resolve(uid, ref alarmable, false))
         {
             return false;
         }

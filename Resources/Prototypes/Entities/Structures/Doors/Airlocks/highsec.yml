@@ -35,8 +35,13 @@
       - FullTileMask
       layer:
       - WallLayer
+  - type: ContainerFill
+    containers:
+      board: [ DoorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Door
-    board: DoorElectronics
     crushDamage:
       types:
         Blunt: 50

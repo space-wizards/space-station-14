@@ -23,8 +23,8 @@
     drawdepth: Mobs
     scale: 1, 0.8
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
+    prototype: Human
+    requiredLegs: 2
 
 - type: entity
   save: false

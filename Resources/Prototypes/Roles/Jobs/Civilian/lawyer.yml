@@ -1,6 +1,7 @@
 - type: job
   id: Lawyer
   name: job-name-lawyer
+  description: job-description-lawyer
   playTimeTracker: JobLawyer
   startingGear: LawyerGear
   icon: "Lawyer"
@@ -14,9 +15,13 @@
   id: LawyerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitLawyerBlack  # TODO change jumpsuit to randomiser of the 4 variants
-    back: ClothingBackpackBriefcaseFilled
+    back: ClothingBackpackFilled
     shoes: ClothingShoesBootsLaceup
     id: LawyerPDA
     ears: ClothingHeadsetSecurity
     # TODO add copy of space law
+  inhand:
+    right hand: BriefcaseBrownFilled
   innerclothingskirt: ClothingUniformJumpskirtLawyerBlack
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

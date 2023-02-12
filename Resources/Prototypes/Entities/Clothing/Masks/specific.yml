@@ -15,6 +15,7 @@
     - type: ChameleonClothing
       slot: [mask]
       default: ClothingMaskGas
+    - type: IdentityBlocker # need that for default ClothingMaskGas
     - type: UserInterface
       interfaces:
         - key: enum.ChameleonUiKey.Key

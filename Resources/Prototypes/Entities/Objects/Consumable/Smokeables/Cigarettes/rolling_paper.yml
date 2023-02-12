@@ -48,7 +48,6 @@
   components:
   - type: Stack
     stackType: PaperRolling
-    max: 5
     count: 5
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
@@ -80,7 +79,6 @@
   components:
   - type: Stack
     stackType: CigaretteFilter
-    max: 5
     count: 5
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi

@@ -2,7 +2,7 @@ using Content.Shared.DeviceNetwork;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
+using Robust.Shared.Map;
 
 namespace Content.Client.NetworkConfigurator;
 
@@ -48,6 +48,12 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
             }
 
             var sourceTransform = _entityManager.GetComponent<TransformComponent>(tracker.Owner);
+            if (sourceTransform.MapID == MapId.Nullspace)
+            {
+                // Can happen if the item is outside the client's view. In that case,
+                // we don't have a sensible transform to draw, so we need to skip it.
+                continue;
+            }
 
             foreach (var device in _deviceListSystem.GetAllDevices(tracker.Owner, deviceList))
             {
@@ -57,6 +63,10 @@ public sealed class NetworkConfiguratorLinkOverlay : Overlay
                 }
 
                 var linkTransform = _entityManager.GetComponent<TransformComponent>(device);
+                if (linkTransform.MapID == MapId.Nullspace)
+                {
+                    continue;
+                }
 
                 args.WorldHandle.DrawLine(sourceTransform.WorldPosition, linkTransform.WorldPosition, _colors[tracker.Owner]);
             }

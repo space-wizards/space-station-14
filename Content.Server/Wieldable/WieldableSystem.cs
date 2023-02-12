@@ -11,7 +11,7 @@ using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using Content.Server.Actions.Events;
-using Content.Server.Weapons.Melee.Events;
+using Content.Shared.Weapons.Melee.Events;
 
 
 namespace Content.Server.Wieldable
@@ -37,7 +37,7 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
             SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
-            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, ItemMeleeDamageEvent>(OnMeleeHit);
+            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
         private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
@@ -85,7 +85,7 @@ namespace Content.Server.Wieldable
             if (!EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 if(!quiet)
-                    _popupSystem.PopupEntity(Loc.GetString("wieldable-component-no-hands"), user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(Loc.GetString("wieldable-component-no-hands"), user, user);
                 return false;
             }
 
@@ -93,7 +93,7 @@ namespace Content.Server.Wieldable
             if (!_handsSystem.IsHolding(user, uid, out _, hands))
             {
                 if (!quiet)
-                    _popupSystem.PopupEntity(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(Loc.GetString("wieldable-component-not-in-hands", ("item", uid)), user, user);
                 return false;
             }
 
@@ -103,7 +103,7 @@ namespace Content.Server.Wieldable
                 {
                     var message = Loc.GetString("wieldable-component-not-enough-free-hands",
                         ("number", component.FreeHandsRequired), ("item", uid));
-                    _popupSystem.PopupEntity(message, user, Filter.Entities(user));
+                    _popupSystem.PopupEntity(message, user, user);
                 }
                 return false;
             }
@@ -187,9 +187,9 @@ namespace Content.Server.Wieldable
             }
 
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield",
-                ("item", uid)), args.User.Value, Filter.Entities(args.User.Value));
+                ("item", uid)), args.User.Value, args.User.Value);
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other",
-                ("user", args.User.Value),("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value));
+                ("user", args.User.Value),("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
         }
 
         private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
@@ -212,9 +212,9 @@ namespace Content.Server.Wieldable
                     _audioSystem.PlayPvs(component.UnwieldSound, uid);
 
                 _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield",
-                    ("item", uid)), args.User.Value, Filter.Entities(args.User.Value));
+                    ("item", uid)), args.User.Value, args.User.Value);
                 _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
-                    ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value));
+                    ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
             }
 
             _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);
@@ -233,7 +233,7 @@ namespace Content.Server.Wieldable
                 AttemptUnwield(args.BlockingEntity, component, args.User);
         }
 
-        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, ItemMeleeDamageEvent args)
+        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
         {
             if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
             {

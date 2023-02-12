@@ -5,7 +5,6 @@ namespace Content.Server.PDA.Ringer
     [RegisterComponent]
     public sealed class RingerComponent : Component
     {
-        [ViewVariables]
         [DataField("ringtone")]
         public Note[] Ringtone = new Note[SharedRingerSystem.RingtoneLength];
 

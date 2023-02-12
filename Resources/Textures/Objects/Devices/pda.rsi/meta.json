@@ -158,10 +158,16 @@
       "name": "pda-internmed"
     },
     {
+      "name": "pda-internsci"
+    },
+    {
       "name": "pda-internservice"
     },
     {
       "name": "pda-interntech"
+    },
+    {
+      "name": "pda-zookeeper"
     },
     {
       "name": "pda-ert"

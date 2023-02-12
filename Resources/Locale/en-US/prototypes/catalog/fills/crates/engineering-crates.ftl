@@ -24,3 +24,9 @@ ent-CrateEngineeringElectricalSupplies = Electrical Supplies Crate
 
 ent-CrateEngineeringJetpack = Jetpack crate
     .desc = Two jetpacks for those who don't know how to use fire extinguishers.
+
+ent-CrateEngineeringMiniJetpack = Mini jetpack crate
+    .desc = Two mini jetpacks for those who want an extra challenge.
+
+ent-CrateAirlockKit = Airlock kit
+    .desc = A kit for building 6 airlocks, doesn't include tools.

@@ -27,20 +27,6 @@
     rootTask: RangedCombatCompound
 
 - type: entity
-  parent: MobHuman
-  id: MobCBURNUnit
-  name: CBURN Agent
-  description: A miserable pile of secrets
-  components:
-  - type: RandomHumanoidAppearance
-  - type: Loadout
-    prototypes: [CBURNGear]
-  - type: GhostTakeoverAvailable
-    makeSentient: false
-    name: CBURN Agent
-    description: A highly trained CentCom agent, capable of dealing with various threats.
-
-- type: entity
   parent: BaseMobHuman
   suffix: Dead
   save: false # mobs are currently not saveable.

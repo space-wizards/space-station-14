@@ -18,7 +18,7 @@ namespace Content.Client.Stack
             args.Controls.Add(new StackStatusControl(component));
         }
 
-        public override void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public override void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;

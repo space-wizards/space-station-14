@@ -12,7 +12,6 @@ namespace Content.Server.Strip
         /// <summary>
         /// The strip delay for hands.
         /// </summary>
-        [ViewVariables]
         [DataField("handDelay")]
         public float HandStripDelay = 4f;
 

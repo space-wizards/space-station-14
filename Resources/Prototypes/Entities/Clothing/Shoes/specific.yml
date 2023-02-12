@@ -130,3 +130,14 @@
   description: Stylish black shoes.
   components:
   - type: NoSlip
+
+- type: entity
+  parent: ClothingShoesClown
+  id: ClothingShoesJester
+  name: jester shoes
+  description: A court jester's shoes, updated with modern squeaking technology.
+  components:
+    - type: Sprite
+      sprite: Clothing/Shoes/Specific/jester.rsi
+    - type: Clothing
+      sprite: Clothing/Shoes/Specific/jester.rsi

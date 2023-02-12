@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
@@ -102,7 +102,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             if (MetaData(targetUid.Value).EntityLifeStage == EntityLifeStage.MapInitialized)
             {
                 _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-failed", ("device", targetUid)),
-                    Filter.Entities(userUid));
+                    userUid);
                 return;
             }
 
@@ -111,13 +111,13 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 
         if (configurator.Devices.ContainsValue(targetUid.Value))
         {
-            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", targetUid)), Filter.Entities(userUid));
+            _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-already-saved", ("device", targetUid)), userUid);
             return;
         }
 
         configurator.Devices.Add(address, targetUid.Value);
         _popupSystem.PopupCursor(Loc.GetString("network-configurator-device-saved", ("address", device.Address), ("device", targetUid)),
-            Filter.Entities(userUid), PopupType.Medium);
+            userUid, PopupType.Medium);
 
         UpdateUiState(configurator.Owner, configurator);
     }
@@ -131,7 +131,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return true;
 
         SoundSystem.Play(component.SoundNoAccess.GetSound(), Filter.Pvs(user.Value), target, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));
-        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, Filter.Entities(user.Value));
+        _popupSystem.PopupEntity(Loc.GetString("network-configurator-device-access-denied"), target, user.Value);
 
         return false;
     }
@@ -321,7 +321,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             _ => "error"
         };
 
-        _popupSystem.PopupCursor(Loc.GetString(resultText), Filter.SinglePlayer(args.Session), PopupType.Medium);
+        _popupSystem.PopupCursor(Loc.GetString(resultText), args.Session, PopupType.Medium);
         _uiSystem.TrySetUiState(
             component.Owner,
             NetworkConfiguratorUiKey.Configure,

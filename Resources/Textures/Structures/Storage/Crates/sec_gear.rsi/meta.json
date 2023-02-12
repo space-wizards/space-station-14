@@ -1,54 +1,45 @@
 {
-    "version": 1,
-	"license": "CC-BY-SA-3.0",
-	"copyright": "Taken from Citadelstation at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/85186a971453b0653bacfb3fae88f978dc1be689",
-    "size": {
-        "x": 32,
-        "y": 32
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from Citadelstation at commit https://github.com/Citadel-Station-13/Citadel-Station-13/commit/85186a971453b0653bacfb3fae88f978dc1be689",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "states": [
-        {
-            "name": "secgearcrate",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "secgearcrate_door",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "secgearcrate_icon",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "welded",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "unlocked",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "off",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "locked",
-            "select": [],
-            "flags": {}
-        },
-        {
-            "name": "sparking",            "delays": [[0.1,0.1,0.1,0.1,0.1,0.1]]
-        },
-        {
-            "name": "secgearcrate_open",
-            "select": [],
-            "flags": {}
-        }
-    ]
+    {
+      "name": "base"
+    },
+    {
+      "name": "closed"
+    },
+    {
+      "name": "open"
+    },
+    {
+      "name": "welded"
+    },
+    {
+      "name": "sparking",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "locked"
+    },
+    {
+      "name": "unlocked"
+    }
+  ]
 }

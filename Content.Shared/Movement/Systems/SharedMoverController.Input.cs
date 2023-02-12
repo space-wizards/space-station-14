@@ -2,13 +2,13 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Events;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -52,6 +52,7 @@ namespace Content.Shared.Movement.Systems
             SubscribeLocalEvent<InputMoverComponent, EntParentChangedMessage>(OnInputParentChange);
 
             _configManager.OnValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked, true);
+            _configManager.OnValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement, true);
         }
 
         private void SetCameraRotationLocked(bool obj)
@@ -59,7 +60,7 @@ namespace Content.Shared.Movement.Systems
             CameraRotationLocked = obj;
         }
 
-        private void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
+        protected void SetMoveInput(InputMoverComponent component, MoveButtons buttons)
         {
             if (component.HeldMoveButtons == buttons) return;
             component.HeldMoveButtons = buttons;
@@ -97,9 +98,12 @@ namespace Content.Shared.Movement.Systems
         {
             CommandBinds.Unregister<SharedMoverController>();
             _configManager.UnsubValueChanged(CCVars.CameraRotationLocked, SetCameraRotationLocked);
+            _configManager.UnsubValueChanged(CCVars.GameDiagonalMovement, SetDiagonalMovement);
         }
 
-        public bool DiagonalMovementEnabled => _configManager.GetCVar(CCVars.GameDiagonalMovement);
+        public bool DiagonalMovementEnabled { get; private set; }
+
+        private void SetDiagonalMovement(bool value) => DiagonalMovementEnabled = value;
 
         protected virtual void HandleShuttleInput(EntityUid uid, ShuttleButtons button, ushort subTick, bool state) {}
 
@@ -119,6 +123,16 @@ namespace Content.Shared.Movement.Systems
 
             mover.TargetRelativeRotation = Angle.Zero;
             Dirty(mover);
+        }
+
+        public Angle GetParentGridAngle(InputMoverComponent mover, EntityQuery<TransformComponent> xformQuery)
+        {
+            var rotation = mover.RelativeRotation;
+
+            if (xformQuery.TryGetComponent(mover.RelativeEntity, out var relativeXform))
+                return (_transform.GetWorldRotation(relativeXform, xformQuery) + rotation);
+
+            return rotation;
         }
 
         public Angle GetParentGridAngle(InputMoverComponent mover)
@@ -144,6 +158,20 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
+            var oldMapId = args.OldMapId;
+            var mapId = args.Transform.MapID;
+
+            // If we change maps then reset eye rotation entirely.
+            if (oldMapId != mapId)
+            {
+                component.RelativeEntity = relative;
+                component.TargetRelativeRotation = Angle.Zero;
+                component.RelativeRotation = Angle.Zero;
+                component.LerpAccumulator = 0f;
+                Dirty(component);
+                return;
+            }
+
             // If we go on a grid and back off then just reset the accumulator.
             if (relative == component.RelativeEntity)
             {
@@ -164,24 +192,25 @@ namespace Content.Shared.Movement.Systems
         {
             // Relayed movement just uses the same keybinds given we're moving the relayed entity
             // the same as us.
-            TryComp<InputMoverComponent>(entity, out var moverComp);
 
-            // Can't relay inputs if you're dead.
-            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover) && !_mobState.IsIncapacitated(entity))
+            if (TryComp<RelayInputMoverComponent>(entity, out var relayMover))
             {
-                // if we swap to relay then stop our existing input if we ever change back.
-                if (moverComp != null)
-                {
-                    SetMoveInput(moverComp, MoveButtons.None);
-                }
+                DebugTools.Assert(relayMover.RelayEntity != entity);
+                DebugTools.AssertNotNull(relayMover.RelayEntity);
 
-                if (relayMover.RelayEntity == null) return;
+                if (TryComp<InputMoverComponent>(entity, out var mover))
+                    SetMoveInput(mover, MoveButtons.None);
 
-                HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+                DebugTools.Assert(TryComp(relayMover.RelayEntity, out MovementRelayTargetComponent? targetComp) && targetComp.Entities.Count == 1,
+                    "Multiple relayed movers are not supported at the moment");
+
+                if (relayMover.RelayEntity != null && !_mobState.IsIncapacitated(entity))
+                    HandleDirChange(relayMover.RelayEntity.Value, dir, subTick, state);
+
                 return;
             }
 
-            if (moverComp == null)
+            if (!TryComp<InputMoverComponent>(entity, out var moverComp))
                 return;
 
             // Relay the fact we had any movement event.
@@ -517,28 +546,29 @@ namespace Content.Shared.Movement.Systems
             }
         }
     }
-}
 
-[Flags]
-public enum MoveButtons : byte
-{
-    None = 0,
-    Up = 1,
-    Down = 2,
-    Left = 4,
-    Right = 8,
-    Walk = 16,
-}
+    [Flags]
+    public enum MoveButtons : byte
+    {
+        None = 0,
+        Up = 1,
+        Down = 2,
+        Left = 4,
+        Right = 8,
+        Walk = 16,
+    }
 
-[Flags]
-public enum ShuttleButtons : byte
-{
-    None = 0,
-    StrafeUp = 1 << 0,
-    StrafeDown = 1 << 1,
-    StrafeLeft = 1 << 2,
-    StrafeRight = 1 << 3,
-    RotateLeft = 1 << 4,
-    RotateRight = 1 << 5,
-    Brake = 1 << 6,
+    [Flags]
+    public enum ShuttleButtons : byte
+    {
+        None = 0,
+        StrafeUp = 1 << 0,
+        StrafeDown = 1 << 1,
+        StrafeLeft = 1 << 2,
+        StrafeRight = 1 << 3,
+        RotateLeft = 1 << 4,
+        RotateRight = 1 << 5,
+        Brake = 1 << 6,
+    }
+
 }

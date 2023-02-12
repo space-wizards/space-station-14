@@ -1,0 +1,49 @@
+﻿- type: body
+  id: Vox
+  name: "vox"
+  root: torso
+  slots:
+    head:
+      part: HeadVox
+      connections:
+      - torso
+      organs:
+        brain: OrganHumanBrain
+        eyes: OrganHumanEyes
+    torso:
+      part: TorsoVox
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        heart: OrganHumanHeart
+        lungs: OrganVoxLungs
+        stomach: OrganHumanStomach
+        liver: OrganHumanLiver
+        kidneys: OrganHumanKidneys
+    right arm:
+      part: RightArmVox
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmVox
+      connections:
+      - left hand
+    right hand:
+      part: RightHandVox
+    left hand:
+      part: LeftHandVox
+    right leg:
+      part: RightLegVox
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegVox
+      connections:
+      - left foot
+    right foot:
+      part: RightFootVox
+    left foot:
+      part: LeftFootVox

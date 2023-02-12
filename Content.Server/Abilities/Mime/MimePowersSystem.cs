@@ -6,9 +6,11 @@ using Content.Shared.Alert;
 using Content.Shared.Physics;
 using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
 using Robust.Shared.Player;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -17,6 +19,8 @@ namespace Content.Server.Abilities.Mime
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
+
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         public override void Initialize()
         {
@@ -34,12 +38,11 @@ namespace Content.Server.Abilities.Mime
                 if (!mime.VowBroken || mime.ReadyToRepent)
                     continue;
 
-                mime.Accumulator += frameTime;
-                if (mime.Accumulator < mime.VowCooldown.TotalSeconds)
+                if (_timing.CurTime < mime.VowRepentTime)
                     continue;
 
                 mime.ReadyToRepent = true;
-                _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), mime.Owner, Filter.Entities(mime.Owner));
+                _popupSystem.PopupEntity(Loc.GetString("mime-ready-to-repent"), mime.Owner, mime.Owner);
             }
         }
 
@@ -53,7 +56,7 @@ namespace Content.Server.Abilities.Mime
             if (!component.Enabled)
                 return;
 
-            _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, Filter.Entities(uid));
+            _popupSystem.PopupEntity(Loc.GetString("mime-cant-speak"), uid, uid);
             args.Cancel();
         }
 
@@ -72,16 +75,16 @@ namespace Content.Server.Abilities.Mime
             // Check there are no walls or mobs there
             foreach (var entity in coords.GetEntitiesInTile())
             {
-                IPhysBody? physics = null; // We use this to check if it's impassable
+                PhysicsComponent? physics = null; // We use this to check if it's impassable
                 if ((HasComp<MobStateComponent>(entity) && entity != uid) || // Is it a mob?
                     ((Resolve(entity, ref physics, false) && (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0) // Is it impassable?
                     &&  !(TryComp<DoorComponent>(entity, out var door) && door.State != DoorState.Closed))) // Is it a door that's open and so not actually impassable?
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, Filter.Entities(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-failed"), uid, uid);
                     return;
                 }
             }
-            _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("mime-invisible-wall-popup", ("mime", uid)), uid);
             // Make sure we set the invisible wall to despawn properly
             Spawn(component.WallPrototype, coords);
             // Handle args so cooldown works
@@ -101,6 +104,7 @@ namespace Content.Server.Abilities.Mime
 
             mimePowers.Enabled = false;
             mimePowers.VowBroken = true;
+            mimePowers.VowRepentTime = _timing.CurTime + mimePowers.VowCooldown;
             _alertsSystem.ClearAlert(uid, AlertType.VowOfSilence);
             _alertsSystem.ShowAlert(uid, AlertType.VowBroken);
             _actionsSystem.RemoveAction(uid, mimePowers.InvisibleWallAction);
@@ -116,14 +120,13 @@ namespace Content.Server.Abilities.Mime
 
             if (!mimePowers.ReadyToRepent)
             {
-                _popupSystem.PopupEntity(Loc.GetString("mime-not-ready-repent"), uid, Filter.Entities(uid));
+                _popupSystem.PopupEntity(Loc.GetString("mime-not-ready-repent"), uid, uid);
                 return;
             }
 
             mimePowers.Enabled = true;
             mimePowers.ReadyToRepent = false;
             mimePowers.VowBroken = false;
-            mimePowers.Accumulator = 0f;
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
             _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);

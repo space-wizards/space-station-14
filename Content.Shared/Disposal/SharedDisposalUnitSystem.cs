@@ -2,13 +2,11 @@
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
-using Content.Shared.MobState.Components;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Timing;
 
@@ -18,7 +16,7 @@ namespace Content.Shared.Disposal
     public abstract class SharedDisposalUnitSystem : EntitySystem
     {
         [Dependency] protected readonly IGameTiming GameTiming = default!;
-        [Dependency] private readonly SharedMobStateSystem _mobState = default!;
+        [Dependency] private readonly MobStateSystem _mobState = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 
@@ -65,7 +63,7 @@ namespace Content.Shared.Disposal
 
             // TODO: Probably just need a disposable tag.
             if (!EntityManager.TryGetComponent(entity, out ItemComponent? storable) &&
-                !EntityManager.HasComponent<SharedBodyComponent>(entity))
+                !EntityManager.HasComponent<BodyComponent>(entity))
             {
                 return false;
             }

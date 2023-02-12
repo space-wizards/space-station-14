@@ -5,6 +5,9 @@
   - rmcomp
   - rmcompc
   - vv
+  - vvread
+  - vvwrite
+  - vvinvoke
   - scale
   - spin
 
@@ -75,6 +78,7 @@
   - mapinit
   - savegrid
   - savemap
+  - setambientlight
   - tpgrid
   - gridtc
   - togglespritenetsync

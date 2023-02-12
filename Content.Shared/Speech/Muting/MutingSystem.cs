@@ -14,7 +14,7 @@ namespace Content.Shared.Speech.Muting
 
         private void OnSpeakAttempt(EntityUid uid, MutedComponent component, SpeakAttemptEvent args)
         {
-            _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, Filter.Entities(uid));
+            _popupSystem.PopupEntity(Loc.GetString("speech-muted"), uid, uid);
             args.Cancel();
         }
     }

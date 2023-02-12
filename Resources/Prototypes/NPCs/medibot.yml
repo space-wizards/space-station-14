@@ -17,7 +17,6 @@
         - id: WaitIdleTimePrimitive
         - id: MedibotInjectPrimitive
 
-
 - type: htnPrimitive
   id: MedibotSpeakPrimitive
   operator: !type:SpeakOperator
@@ -33,9 +32,3 @@
   id: MedibotInjectPrimitive
   operator: !type:MedibotInjectOperator
     targetKey: InjectTarget
-
-- type: htnPrimitive
-  id: SetIdleTimePrimitive
-  operator: !type:SetFloatOperator
-    targetKey: IdleTime
-    amount: 3

@@ -6,7 +6,8 @@
     - type: Sprite
       layers:
         - state: red
-        - texture: Objects/Consumable/Food/snacks.rsi/pistachio-trash.png
+        - sprite: Objects/Consumable/Food/snacks.rsi
+          state: pistachio-trash
     - type: RandomSpawner
       rarePrototypes:
         - PuddleVomit

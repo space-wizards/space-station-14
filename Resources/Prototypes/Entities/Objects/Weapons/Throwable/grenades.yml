@@ -1,10 +1,8 @@
 # TODO probably needs a base grenade
-
 - type: entity
-  name: explosive grenade
-  description: Grenade that creates a small but devastating explosion.
+  abstract: true
   parent: BaseItem
-  id: ExGrenade
+  id: GrenadeBase
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/grenade.rsi
@@ -19,13 +17,6 @@
     - Belt
   - type: OnUseTimerTrigger
     delay: 3.5
-  - type: Explosive
-    explosionType: Default
-    maxIntensity: 10
-    intensitySlope: 3
-    totalIntensity: 120 # about a ~4 tile radius
-    canCreateVacuum: false
-  - type: ExplodeOnTrigger
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -42,41 +33,33 @@
     - type: TimerTriggerVisualizer
 
 - type: entity
+  name: explosive grenade
+  description: Grenade that creates a small but devastating explosion.
+  parent: GrenadeBase
+  id: ExGrenade
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 120 # about a ~4 tile radius
+    canCreateVacuum: false
+
+- type: entity
   name: flashbang
   description: Eeeeeeeeeeeeeeeeeeeeee
-  parent: BaseItem
+  parent: GrenadeBase
   id: GrenadeFlashBang
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/flashbang.rsi
-    layers:
-    - state: icon
-      map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
-    size: 5
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - Belt
-  - type: OnUseTimerTrigger
-    delay: 3.5
   - type: FlashOnTrigger
     range: 7
   - type: EmitSoundOnTrigger
     sound:
       path: "/Audio/Effects/flash_bang.ogg"
   - type: DeleteOnTrigger
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -86,35 +69,19 @@
 - type: entity
   name: Syndicate minibomb
   description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
-  parent: BaseItem
+  parent: GrenadeBase
   id: SyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
-    layers:
-    - state: icon
-      map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
-    size: 5
   - type: OnUseTimerTrigger
     delay: 10
+  - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
     totalIntensity: 200
     intensitySlope: 30 #Will destroy the tile under it reliably, space 1-2 more to rods. Only does any significant damage in a 5-tile cross.
     maxIntensity: 60
-  - type: ExplodeOnTrigger
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 10
-      behaviors:
-      - !type:TriggerBehavior
-      - !type:DoActsBehavior
-        acts: ["Destruction"]
   - type: Appearance
     visuals:
     - type: TimerTriggerVisualizer
@@ -124,26 +91,19 @@
 - type: entity
   name: the nuclear option
   description: Please don't throw it, think of the children.
-  parent: BaseItem
+  parent: GrenadeBase
   id: NuclearGrenade
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/nukenade.rsi
-    layers:
-    - state: icon
-      map: ["enum.TriggerVisualLayers.Base"]
-  - type: Item
-    size: 5
   - type: OnUseTimerTrigger
     delay: 5
+  - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
     totalIntensity: 20000 # ~15 tile radius.
     intensitySlope: 5
     maxIntensity: 50
-  - type: ExplodeOnTrigger
-  - type: Damageable
-    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -192,3 +152,5 @@
       states:
         enum.Trigger.TriggerVisualState.Primed: primed
         enum.Trigger.TriggerVisualState.Unprimed: complete
+  - type: StaticPrice
+    price: 25

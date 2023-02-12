@@ -6,6 +6,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Transform
+    anchored: true
   - type: Physics
     bodyType: Static
   - type: Sprite

@@ -26,35 +26,45 @@ public interface IGameMapManager
     IEnumerable<GameMapPrototype> AllMaps();
 
     /// <summary>
-    /// Attempts to select the given map.
+    /// Gets the currently selected map
+    /// </summary>
+    /// <returns>selected map</returns>
+    GameMapPrototype? GetSelectedMap();
+
+    /// <summary>
+    /// Clears the selected map, if any
+    /// </summary>
+    void ClearSelectedMap();
+
+    /// <summary>
+    /// Attempts to select the given map, checking eligibility criteria
     /// </summary>
     /// <param name="gameMap">map prototype</param>
     /// <returns>success or failure</returns>
-    bool TrySelectMap(string gameMap);
+    bool TrySelectMapIfEligible(string gameMap);
 
     /// <summary>
-    /// Forces the given map, making sure the game map manager won't reselect if conditions are no longer met at round restart.
+    /// Select the given map regardless of eligibility
     /// </summary>
     /// <param name="gameMap">map prototype</param>
     /// <returns>success or failure</returns>
-    void ForceSelectMap(string gameMap);
+    void SelectMap(string gameMap);
 
     /// <summary>
-    /// Selects a random map.
+    /// Selects a random map eligible map
     /// </summary>
-    void SelectRandomMap();
+    void SelectMapRandom();
 
     /// <summary>
-    /// Gets the currently selected map, without double-checking if it can be used.
-    /// </summary>
-    /// <returns>selected map</returns>
-    GameMapPrototype GetSelectedMap();
-
-    /// <summary>
-    /// Gets the currently selected map, double-checking if it can be used.
+    /// Selects the map at the front of the rotation queue
     /// </summary>
     /// <returns>selected map</returns>
-    GameMapPrototype GetSelectedMapChecked(bool loud = false, bool markAsPlayed = false);
+    void SelectMapFromRotationQueue(bool markAsPlayed = false);
+
+    /// <summary>
+    /// Selects the map by following rules set in the config
+    /// </summary>
+    public void SelectMapByConfigRules();
 
     /// <summary>
     /// Checks if the given map exists

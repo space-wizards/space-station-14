@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Humanoid.Markings
 {
+    [DataDefinition]
     [Serializable, NetSerializable]
     public sealed class Marking : IEquatable<Marking>, IComparable<Marking>, IComparable<string>
     {
@@ -43,7 +44,6 @@ namespace Content.Shared.Humanoid.Markings
         ///     ID of the marking prototype.
         /// </summary>
         [DataField("markingId")]
-        [ViewVariables]
         public string MarkingId { get; } = default!;
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Content.Shared.Humanoid.Markings
         /// <summary>
         ///     If this marking is currently visible.
         /// </summary>
-        [ViewVariables]
+        [DataField("visible")]
         public bool Visible = true;
 
         /// <summary>
@@ -74,17 +74,15 @@ namespace Content.Shared.Humanoid.Markings
                 return 1;
             }
 
-            return MarkingId.CompareTo(marking.MarkingId);
+            return string.Compare(MarkingId, marking.MarkingId, StringComparison.Ordinal);
         }
 
         public int CompareTo(string? markingId)
         {
             if (markingId == null)
-            {
                 return 1;
-            }
 
-            return MarkingId.CompareTo(markingId);
+            return string.Compare(MarkingId, markingId, StringComparison.Ordinal);
         }
 
         public bool Equals(Marking? other)

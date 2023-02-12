@@ -68,6 +68,9 @@
             "name": "Scientist"
         },
         {
+            "name": "ResearchAssistant"
+        },
+        {
             "name": "Geneticist"
         },
         {
@@ -132,6 +135,9 @@
         },
         {
             "name": "SecurityCadet"
+        },
+        {
+            "name": "Zookeeper"
         }
     ]
 }

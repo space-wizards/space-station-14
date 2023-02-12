@@ -15,6 +15,14 @@ namespace Content.Shared.Humanoid
             };
         }
 
+        public static string GetSexMorph(HumanoidVisualLayers layer, Sex sex, string id)
+        {
+            if (!HasSexMorph(layer) || sex == Sex.Unsexed)
+                return id;
+
+            return $"{id}{sex}";
+        }
+
         /// <summary>
         ///     Sublayers. Any other layers that may visually depend on this layer existing.
         ///     For example, the head has layers such as eyes, hair, etc. depending on it.
@@ -60,7 +68,7 @@ namespace Content.Shared.Humanoid
             }
         }
 
-        public static HumanoidVisualLayers? ToHumanoidLayers(this SharedBodyPartComponent part)
+        public static HumanoidVisualLayers? ToHumanoidLayers(this BodyPartComponent part)
         {
             switch (part.PartType)
             {
@@ -74,7 +82,6 @@ namespace Content.Shared.Humanoid
                     // use the Sublayers method to hide the rest of the parts,
                     // if that's what you're looking for
                     return HumanoidVisualLayers.Head;
-                    break;
                 case BodyPartType.Arm:
                     switch (part.Symmetry)
                     {
@@ -85,6 +92,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RArm;
                     }
+
                     break;
                 case BodyPartType.Hand:
                     switch (part.Symmetry)
@@ -96,6 +104,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RHand;
                     }
+
                     break;
                 case BodyPartType.Leg:
                     switch (part.Symmetry)
@@ -107,6 +116,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RLeg;
                     }
+
                     break;
                 case BodyPartType.Foot:
                     switch (part.Symmetry)
@@ -118,6 +128,7 @@ namespace Content.Shared.Humanoid
                         case BodyPartSymmetry.Right:
                             return HumanoidVisualLayers.RFoot;
                     }
+
                     break;
             }
 

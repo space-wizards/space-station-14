@@ -44,7 +44,7 @@ public enum LogType
     Ingestion = 53, // voluntary
     MeleeHit = 41,
     HitScanHit = 42,
-    Suicide = 43,
+    Mind = 43, // Suicides, ghosting, repossession, objectives, etc.
     Explosion = 44,
     Radiation = 45, // Unused
     Barotrauma = 46,
@@ -77,4 +77,10 @@ public enum LogType
     CableCut = 72,
     StorePurchase = 73,
     LatticeCut = 74,
+    Stripping = 75,
+    Stamina = 76,
+    EntitySpawn = 77,
+    AdminMessage = 78,
+    Anomaly = 79,
+    WireHacking = 80,
 }

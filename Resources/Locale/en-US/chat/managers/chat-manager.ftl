@@ -13,20 +13,20 @@ chat-manager-max-message-length-exceeded-message = Your message exceeded {$limit
 chat-manager-no-headset-on-message = You don't have a headset on!
 chat-manager-no-such-channel = There is no such channel!
 chat-manager-whisper-headset-on-message = You can't whisper on the radio!
-chat-manager-server-wrap-message = SERVER: {"{0}"}
+chat-manager-server-wrap-message = SERVER: {$message}
 chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
-                                                {"{0}"}
-chat-manager-entity-say-wrap-message = {$entityName} says: "{"{0}"}"
-chat-manager-entity-whisper-wrap-message = {$entityName} whispers: "{"{0}"}"
-chat-manager-entity-me-wrap-message = {$entityName} {"{0}"}
-chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {"{0}"}
-chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {"{0}"}
-chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {"{0}"}
-chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: {$playerName}: {"{0}"}
-chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}:({$userName}): {"{0}"}
-chat-manager-send-admin-chat-wrap-message = {$adminChannelName}: {$playerName}: {"{0}"}
-chat-manager-send-admin-announcement-wrap-message = {$adminChannelName}: {"{0}"}
-chat-manager-send-hook-ooc-wrap-message = OOC: (D){$senderName}: {"{0}"}
+                                                {$message}
+chat-manager-entity-say-wrap-message = {$entityName} says: "{$message}"
+chat-manager-entity-whisper-wrap-message = {$entityName} whispers: "{$message}"
+chat-manager-entity-me-wrap-message = {$entityName} {$message}
+chat-manager-entity-looc-wrap-message = LOOC: {$entityName}: {$message}
+chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {$message}
+chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {$message}
+chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: {$playerName}: {$message}
+chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}:({$userName}): {$message}
+chat-manager-send-admin-chat-wrap-message = {$adminChannelName}: {$playerName}: {$message}
+chat-manager-send-admin-announcement-wrap-message = {$adminChannelName}: {$message}
+chat-manager-send-hook-ooc-wrap-message = OOC: (D){$senderName}: {$message}
 
 chat-manager-dead-channel-name = DEAD
 chat-manager-admin-channel-name = ADMIN

@@ -8,9 +8,10 @@
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coat.rsi
-    size: 10
   - type: TemperatureProtection
     coefficient: 0.1
+  - type: Item
+    size: 10
   - type: Armor
     modifiers:
       coefficients:
@@ -76,6 +77,17 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcentcom.rsi
+    
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterChef
+  name: chef's freezer coat
+  description: A coat specifically designed for work inside cold storage, sorely needed by cold-blooded lizard chefs.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatchef.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatchef.rsi
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -295,3 +307,5 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
+
+

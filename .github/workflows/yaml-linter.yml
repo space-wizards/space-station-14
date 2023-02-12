@@ -1,9 +1,14 @@
 name: YAML Linter
 
-on: [pull_request, push]
+on:
+  push:
+  merge_group:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
 
 jobs:
   build:
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,7 +22,7 @@ jobs:
           cd RobustToolbox/
           git submodule update --init --recursive
       - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 6.0.100
       - name: Install dependencies

@@ -45,6 +45,18 @@ namespace Content.Shared.Light
 
         public const int StatusLevels = 6;
 
+        /// <summary>
+        /// Specify the ID of the light behaviour to use when the state of the light is Dying
+        /// </summary>
+        [DataField("blinkingBehaviourId")]
+        public string BlinkingBehaviourId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Specify the ID of the light behaviour to use when the state of the light is LowPower
+        /// </summary>
+        [DataField("radiatingBehaviourId")]
+        public string RadiatingBehaviourId { get; set; } = string.Empty;
+
         [Serializable, NetSerializable]
         public sealed class HandheldLightComponentState : ComponentState
         {

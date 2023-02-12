@@ -26,6 +26,8 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         // TODO: Ideally you'd be able to subscribe to power stuff to get events at certain percentages.. or something?
         // But for now this will be better anyway.
@@ -187,8 +189,12 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOff(HandheldLightComponent component, bool makeNoise = true)
         {
-            if (!component.Activated) return false;
+            if (!component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            {
+                return false;
+            }
 
+            pointLightComponent.Enabled = false;
             SetActivated(component.Owner, false, component, makeNoise);
             component.Level = null;
             _activeLights.Remove(component);
@@ -197,13 +203,16 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOn(EntityUid user, HandheldLightComponent component)
         {
-            if (component.Activated) return false;
+            if (component.Activated || !TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
+            {
+                return false;
+            }
 
             if (!_powerCell.TryGetBatteryFromSlot(component.Owner, out var battery) &&
                 !TryComp(component.Owner, out battery))
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, Filter.Entities(user));
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), component.Owner);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-missing-message"), component.Owner, user);
                 return false;
             }
 
@@ -212,11 +221,12 @@ namespace Content.Server.Light.EntitySystems
             // Simple enough.
             if (component.Wattage > battery.CurrentCharge)
             {
-                SoundSystem.Play(component.TurnOnFailSound.GetSound(), Filter.Pvs(component.Owner, entityManager: EntityManager), component.Owner);
-                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, Filter.Entities(user));
+                _audio.PlayPvs(_audio.GetSound(component.TurnOnFailSound), component.Owner);
+                _popup.PopupEntity(Loc.GetString("handheld-light-component-cell-dead-message"), component.Owner, user);
                 return false;
             }
 
+            pointLightComponent.Enabled = true;
             SetActivated(component.Owner, true, component, true);
             _activeLights.Add(component);
 
@@ -237,15 +247,15 @@ namespace Content.Server.Light.EntitySystems
             var fraction = battery.CurrentCharge / battery.MaxCharge;
             if (fraction >= 0.30)
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower);
+                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.FullPower, appearanceComponent);
             }
             else if (fraction >= 0.10)
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower);
+                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.LowPower, appearanceComponent);
             }
             else
             {
-                appearanceComponent.SetData(HandheldLightVisuals.Power, HandheldLightPowerStates.Dying);
+                _appearance.SetData(component.Owner, HandheldLightVisuals.Power, HandheldLightPowerStates.Dying, appearanceComponent);
             }
 
             if (component.Activated && !battery.TryUseCharge(component.Wattage * frameTime))

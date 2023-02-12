@@ -1,16 +1,16 @@
-using Content.Server.Nutrition.Components;
-using Content.Server.Stunnable;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Body.Components;
-using Content.Server.Fluids.Components;
-using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Popups;
 using Content.Server.Body.Systems;
-using Content.Shared.StatusEffect;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Popups;
+using Content.Server.Stunnable;
 using Content.Shared.Audio;
+using Content.Shared.IdentityManagement;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
-using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Medical
 {
@@ -28,13 +28,13 @@ namespace Content.Server.Medical
         /// </summary>
         public void Vomit(EntityUid uid, float thirstAdded = -40f, float hungerAdded = -40f)
         {
-            /// Main requirement: You have a stomach
-            var stomachList = _bodySystem.GetComponentsOnMechanisms<StomachComponent>(uid);
+            // Main requirement: You have a stomach
+            var stomachList = _bodySystem.GetBodyOrganComponents<StomachComponent>(uid);
             if (stomachList.Count == 0)
             {
                 return;
             }
-            /// Vomiting makes you hungrier and thirstier
+            // Vomiting makes you hungrier and thirstier
             if (TryComp<HungerComponent>(uid, out var hunger))
                 hunger.UpdateFood(hungerAdded);
 
@@ -51,9 +51,9 @@ namespace Content.Server.Medical
 
             var puddleComp = Comp<PuddleComponent>(puddle);
 
-            SoundSystem.Play("/Audio/Effects/Diseases/vomiting.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
+            SoundSystem.Play("/Audio/Effects/Fluids/splat.ogg", Filter.Pvs(uid), uid, AudioHelpers.WithVariation(0.2f).WithVolume(-4f));
 
-            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid, Filter.Pvs(uid));
+            _popupSystem.PopupEntity(Loc.GetString("disease-vomit", ("person", Identity.Entity(uid, EntityManager))), uid);
             // Get the solution of the puddle we spawned
             if (!_solutionSystem.TryGetSolution(puddle, puddleComp.SolutionName, out var puddleSolution))
                 return;

@@ -45,6 +45,17 @@
         burntIcon: match_burnt
 
 - type: entity
+  parent: Matchstick
+  id: MatchstickSpent
+  suffix: spent
+  components:
+  - type: Sprite
+    layers:
+      - state: match_burnt
+  - type: Matchstick
+    state: Burnt
+
+- type: entity
   name: match box
   parent: SmallboxItem
   id: Matchbox
@@ -69,7 +80,7 @@
         amount: 6
   - type: ItemCounter
     count:
-      tags: [Cigar]
+      tags: [Matchstick]
   - type: Appearance
     visuals:
       - type: BagOpenCloseVisualizer

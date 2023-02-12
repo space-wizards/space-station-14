@@ -82,6 +82,7 @@
     contents:
       - id: BriefcaseBrownFilled
         prob: 0.80
+      - id: ClothingOuterRobesJudge
 
 - type: entity
   id: LockerBotanistFilled
@@ -99,6 +100,8 @@
       - id: HydroponicsToolClippers
       - id: ClothingBeltPlant
       - id: PlantBag ##Some maps don't have nutrivend
+      - id: BoxMouthSwab
+      - id: HandLabeler
       - id: TowercapSeeds
       - id: BananaSeeds
         prob: 0.6

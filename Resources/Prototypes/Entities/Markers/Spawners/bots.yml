@@ -6,7 +6,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Mobs/Silicon/Bots/medibot.rsi/medibot.png
+      - sprite: Mobs/Silicon/Bots/medibot.rsi
+        state: medibot
   - type: ConditionalSpawner
     prototypes:
       - MobMedibot
@@ -19,7 +20,8 @@
   - type: Sprite
     layers:
       - state: green
-      - texture: Mobs/Silicon/Bots/cleanbot.rsi/cleanbot.png
+      - sprite: Mobs/Silicon/Bots/cleanbot.rsi
+        state: cleanbot
   - type: ConditionalSpawner
     prototypes:
       - MobCleanBot

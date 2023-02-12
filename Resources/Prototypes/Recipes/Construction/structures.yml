@@ -188,6 +188,12 @@
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+        - UnderPlating
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille
@@ -380,6 +386,23 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: glass firelock
+  id: FirelockGlass
+  graph: Firelock
+  startNode: start
+  targetNode: FirelockGlass
+  category: construction-category-structures
+  description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/firelock.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
   name: shutter
   id: Shutters
   graph: Shutters
@@ -405,6 +428,7 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice
@@ -495,6 +519,23 @@
   description: It opens, it closes, and maybe crushes you.
   icon:
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
+    state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: glass airlock
+  id: AirlockGlass
+  graph: Airlock
+  startNode: start
+  targetNode: glassAirlock
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/glass.rsi
     state: assembly
   objectType: Structure
   placementMode: SnapgridCenter

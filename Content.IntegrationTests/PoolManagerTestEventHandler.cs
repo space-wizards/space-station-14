@@ -9,8 +9,8 @@ namespace Content.IntegrationTests;
 [SetUpFixture]
 public sealed class PoolManagerTestEventHandler
 {
-    // This value is double the usual time for Content Integration tests
-    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(7);
+    // This value is completely arbitrary.
+    private static TimeSpan MaximumTotalTestingTimeLimit => TimeSpan.FromMinutes(15);
     private static TimeSpan HardStopTimeLimit => MaximumTotalTestingTimeLimit.Add(TimeSpan.FromMinutes(1));
     [OneTimeSetUp]
     public void Setup()
@@ -18,6 +18,8 @@ public sealed class PoolManagerTestEventHandler
         // If the tests seem to be stuck, we try to end it semi-nicely
         _ = Task.Delay(MaximumTotalTestingTimeLimit).ContinueWith(_ =>
         {
+            // This can and probably will cause server/client pairs to shut down MID test, and will lead to really confusing test failures.
+            TestContext.Error.WriteLine($"\n\n{nameof(PoolManagerTestEventHandler)}: ERROR: Tests are taking too long. Shutting down all tests. This may lead to weird failures/exceptions.\n\n");
             PoolManager.Shutdown();
         });
 

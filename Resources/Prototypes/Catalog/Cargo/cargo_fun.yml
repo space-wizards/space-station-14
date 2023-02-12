@@ -29,6 +29,16 @@
   group: market
 
 - type: cargoProduct
+  id: FunParty
+  icon:
+    sprite: Objects/Consumable/Food/Baked/cake.rsi
+    state: birthday
+  product: CrateFunParty
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
   id: FunPlushies
   icon:
     sprite: Objects/Fun/toys.rsi
@@ -42,7 +52,7 @@
   id: FunBoardGames
   icon:
     sprite: Objects/Fun/dice.rsi
-    state: d66
+    state: d6_6
   product: CrateFunBoardGames
   cost: 1500
   category: Fun
@@ -55,5 +65,25 @@
     state: vehicle
   product: CrateFunATV
   cost: 1500
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunSadTromboneImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunSadTromboneImplants
+  cost: 1000
+  category: Fun
+  group: market
+
+- type: cargoProduct
+  id: FunLightImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunLightImplants
+  cost: 1000
   category: Fun
   group: market

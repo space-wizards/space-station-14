@@ -5,29 +5,15 @@ namespace Content.Shared.BarSign
     [Prototype("barSign")]
     public sealed class BarSignPrototype : IPrototype
     {
-        private string _description = string.Empty;
-        private string _name = string.Empty;
-
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
 
         [DataField("icon")] public string Icon { get; private set; } = string.Empty;
 
-        [DataField("name")]
-        public string Name
-        {
-            get => _name;
-            private set => _name = Loc.GetString(value);
-        }
-
-        [DataField("description")]
-        public string Description
-        {
-            get => _description;
-            private set => _description = Loc.GetString(value);
-        }
+        [DataField("name")] public string Name { get; set; } = "";
+        [DataField("description")] public string Description { get; set; } = "";
 
         [DataField("renameArea")]
         public bool RenameArea { get; private set; } = true;

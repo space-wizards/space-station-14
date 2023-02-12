@@ -47,7 +47,7 @@ public sealed class GeneralStationRecord
     /// </summary>
     /// <remarks>Sex should be placed in a medical record, not a general record.</remarks>
     [ViewVariables]
-    public Gender Gender = Gender.Neuter;
+    public Gender Gender = Gender.Epicene;
 
     /// <summary>
     ///     The priority to display this record at.

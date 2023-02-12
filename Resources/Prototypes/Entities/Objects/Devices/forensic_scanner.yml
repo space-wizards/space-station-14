@@ -17,6 +17,8 @@
     - Belt
   - type: ActivatableUI
     key: enum.ForensicScannerUiKey.Key
+    inHandsOnly: true
+    closeOnHandDeselect: false
   - type: UserInterface
     interfaces:
     - key: enum.ForensicScannerUiKey.Key

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Tag;
 using Robust.Shared.Prototypes;
@@ -12,6 +13,23 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly ClothingSystem _clothingSystem = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<ChameleonClothingComponent, GotEquippedEvent>(OnGotEquipped);
+        SubscribeLocalEvent<ChameleonClothingComponent, GotUnequippedEvent>(OnGotUnequipped);
+    }
+
+    private void OnGotEquipped(EntityUid uid, ChameleonClothingComponent component, GotEquippedEvent args)
+    {
+        component.User = args.Equipee;
+    }
+
+    private void OnGotUnequipped(EntityUid uid, ChameleonClothingComponent component, GotUnequippedEvent args)
+    {
+        component.User = null;
+    }
 
     // Updates chameleon visuals and meta information.
     // This function is called on a server after user selected new outfit.
@@ -39,8 +57,8 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
         }
 
         // clothing sprite logic
-        if (TryComp(uid, out SharedClothingComponent? clothing) &&
-            proto.TryGetComponent("Clothing", out SharedClothingComponent? otherClothing))
+        if (TryComp(uid, out ClothingComponent? clothing) &&
+            proto.TryGetComponent("Clothing", out ClothingComponent? otherClothing))
         {
             _clothingSystem.CopyVisuals(uid, otherClothing, clothing);
         }
@@ -62,7 +80,7 @@ public abstract class SharedChameleonClothingSystem : EntitySystem
             return false;
 
         // check if it's valid clothing
-        if (!proto.TryGetComponent("Clothing", out SharedClothingComponent? clothing))
+        if (!proto.TryGetComponent("Clothing", out ClothingComponent? clothing))
             return false;
         if (!clothing.Slots.HasFlag(chameleonSlot))
             return false;

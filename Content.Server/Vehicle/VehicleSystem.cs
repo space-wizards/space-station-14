@@ -1,26 +1,21 @@
-using Content.Server.Buckle.Components;
-using Content.Shared.Vehicle.Components;
-using Content.Shared.Vehicle;
+using Content.Server.Buckle.Systems;
+using Content.Server.Hands.Systems;
+using Content.Server.Light.Components;
+using Content.Shared.Actions;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Components;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Actions;
-using Content.Shared.Audio;
-using Content.Server.Light.Components;
-using Content.Server.Hands.Systems;
-using Content.Shared.Tag;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Vehicle;
+using Content.Shared.Vehicle.Components;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
-using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Vehicle
 {
     public sealed partial class VehicleSystem : SharedVehicleSystem
     {
+        [Dependency] private readonly BuckleSystem _buckle = default!;
         [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedJointSystem _joints = default!;

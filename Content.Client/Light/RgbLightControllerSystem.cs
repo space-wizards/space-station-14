@@ -7,6 +7,7 @@ using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using static Robust.Client.GameObjects.SpriteComponent;
 
@@ -14,8 +15,8 @@ namespace Content.Client.Light
 {
     public sealed class RgbLightControllerSystem : SharedRgbLightControllerSystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
-        [Dependency] private ItemSystem _itemSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ItemSystem _itemSystem = default!;
 
         public override void Initialize()
         {
@@ -41,6 +42,9 @@ namespace Content.Client.Light
 
         private void OnComponentShutdown(EntityUid uid, RgbLightControllerComponent rgb, ComponentShutdown args)
         {
+            if (LifeStage(uid) >= EntityLifeStage.Terminating)
+                return;
+
             ResetOriginalColors(uid, rgb);
 
             // and reset any in-hands or clothing sprites
@@ -148,7 +152,7 @@ namespace Content.Client.Light
 
         private void ResetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, PointLightComponent? light = null, SpriteComponent? sprite = null)
         {
-            if (!Resolve(uid, ref rgb, ref sprite, ref light))
+            if (!Resolve(uid, ref rgb, ref sprite, ref light, false))
                 return;
 
             light.Color = rgb.OriginalLightColor;
@@ -186,6 +190,12 @@ namespace Content.Client.Light
                 {
                     holderSprite.LayerSetColor(layer, color);
                 }
+            }
+
+            foreach (var (rgb, map) in EntityQuery<RgbLightControllerComponent, MapLightComponent>())
+            {
+                var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
+                map.AmbientLightColor = color;
             }
         }
 

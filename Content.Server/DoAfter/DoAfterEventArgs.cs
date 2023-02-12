@@ -1,5 +1,6 @@
-﻿using System.Threading;
+using System.Threading;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Utility;
 
 namespace Content.Server.DoAfter
 {
@@ -89,6 +90,16 @@ namespace Content.Server.DoAfter
         public object? UserFinishedEvent { get; set; }
 
         /// <summary>
+        ///     Event to be raised directed to the <see cref="Used"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public object? UsedCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="Used"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public object? UsedFinishedEvent { get; set; }
+
+        /// <summary>
         ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
         /// </summary>
         public object? TargetCancelledEvent { get; set; }
@@ -125,6 +136,7 @@ namespace Content.Server.DoAfter
 
             if (Target == null)
             {
+                DebugTools.Assert(!BreakOnTargetMove);
                 BreakOnTargetMove = false;
             }
         }

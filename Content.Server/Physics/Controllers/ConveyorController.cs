@@ -1,5 +1,5 @@
 using Content.Server.Conveyor;
-using Content.Server.Gravity.EntitySystems;
+using Content.Server.Gravity;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
@@ -7,11 +7,8 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Recycling;
 using Content.Server.Recycling.Components;
 using Content.Shared.Conveyor;
-using Content.Shared.Item;
 using Content.Shared.Maps;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
-using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -31,7 +28,9 @@ namespace Content.Server.Physics.Controllers
         [Dependency] private readonly GravitySystem _gravity = default!;
         [Dependency] private readonly RecyclerSystem _recycler = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly SharedBroadphaseSystem _broadphase = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public const string ConveyorFixture = "conveyor";
 
@@ -62,7 +61,7 @@ namespace Content.Server.Physics.Controllers
         {
             var otherUid = args.OtherFixture.Body.Owner;
 
-            if (args.OtherFixture.Body.BodyType == BodyType.Static)
+            if (args.OtherFixture.Body.BodyType == BodyType.Static || component.State == ConveyorState.Off)
                 return;
 
             component.Intersecting.Add(otherUid);
@@ -78,12 +77,9 @@ namespace Content.Server.Physics.Controllers
                 var shape = new PolygonShape();
                 shape.SetAsBox(0.55f, 0.55f);
 
-                _fixtures.TryCreateFixture(body, new Fixture(body, shape)
-                {
-                    ID = ConveyorFixture,
-                    CollisionLayer = (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable | CollisionGroup.Impassable),
-                    Hard = false,
-                });
+                _fixtures.TryCreateFixture(uid, shape, ConveyorFixture, hard: false,
+                    collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
+                                           CollisionGroup.Impassable), body: body);
             }
         }
 
@@ -94,30 +90,37 @@ namespace Content.Server.Physics.Controllers
 
         private void UpdateAppearance(ConveyorComponent component)
         {
-            if (!EntityManager.TryGetComponent<AppearanceComponent?>(component.Owner, out var appearance)) return;
             var isPowered = this.IsPowered(component.Owner, EntityManager);
-            appearance.SetData(ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
+            _appearance.SetData(component.Owner, ConveyorVisuals.State, isPowered ? component.State : ConveyorState.Off);
         }
 
         private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
         {
             if (args.Port == component.OffPort)
-                SetState(component, ConveyorState.Off);
+                SetState(uid, ConveyorState.Off, component);
             else if (args.Port == component.ForwardPort)
             {
                 AwakenEntities(component);
-                SetState(component, ConveyorState.Forward);
+                SetState(uid, ConveyorState.Forward, component);
             }
             else if (args.Port == component.ReversePort)
             {
                 AwakenEntities(component);
-                SetState(component, ConveyorState.Reverse);
+                SetState(uid, ConveyorState.Reverse, component);
             }
         }
 
-        private void SetState(ConveyorComponent component, ConveyorState state)
+        private void SetState(EntityUid uid, ConveyorState state, ConveyorComponent? component = null)
         {
+            if (!Resolve(uid, ref component))
+                return;
+
             component.State = state;
+
+            if (TryComp<PhysicsComponent>(uid, out var physics))
+            {
+                _broadphase.RegenerateContacts(physics);
+            }
 
             if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
             {
@@ -154,9 +157,7 @@ namespace Content.Server.Physics.Controllers
                         continue;
 
                     if (physics.BodyType != BodyType.Static)
-                    {
-                        _physics.WakeBody(physics);
-                    }
+                        _physics.WakeBody(entity, body: physics);
                 }
             }
         }
@@ -168,12 +169,15 @@ namespace Content.Server.Physics.Controllers
 
         private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)
         {
+            if (MetaData(uid).EntityLifeStage >= EntityLifeStage.Terminating)
+                return;
+
             RemComp<ActiveConveyorComponent>(uid);
 
             if (!TryComp<PhysicsComponent>(uid, out var body))
                 return;
 
-            _fixtures.DestroyFixture(body, ConveyorFixture);
+            _fixtures.DestroyFixture(uid, ConveyorFixture, body: body);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -230,8 +234,9 @@ namespace Content.Server.Physics.Controllers
                 transform.LocalPosition = localPos;
 
                 // Force it awake for collisionwake reasons.
-                body.Awake = true;
-                body.SleepTime = 0f;
+                // TODO: Just use sleepallowed
+                _physics.SetAwake(entity, body, true);
+                _physics.SetSleepTime(body, 0f);
             }
         }
 
@@ -282,7 +287,7 @@ namespace Content.Server.Physics.Controllers
             foreach (var entity in comp.Intersecting)
             {
                 if (!xformQuery.TryGetComponent(entity, out var entityXform) ||
-                    entityXform.ParentUid != grid.GridEntityId)
+                    entityXform.ParentUid != grid.Owner)
                 {
                     continue;
                 }

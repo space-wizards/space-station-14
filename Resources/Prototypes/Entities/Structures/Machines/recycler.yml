@@ -65,3 +65,4 @@
       state_off: grinder-o0
   - type: Recycler
   - type: Conveyor
+  - type: Rotatable

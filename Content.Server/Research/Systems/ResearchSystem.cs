@@ -1,74 +1,74 @@
-using Content.Server.Research.Components;
+using System.Linq;
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
-namespace Content.Server.Research
+namespace Content.Server.Research.Systems
 {
     [UsedImplicitly]
-    public sealed partial class ResearchSystem : EntitySystem
+    public sealed partial class ResearchSystem : SharedResearchSystem
     {
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-
-        private const int ResearchConsoleUIUpdateTime = 5;
-
-        private float _timer = ResearchConsoleUIUpdateTime;
-        private readonly List<ResearchServerComponent> _servers = new();
-        public IReadOnlyList<ResearchServerComponent> Servers => _servers;
 
         public override void Initialize()
         {
             base.Initialize();
             InitializeClient();
             InitializeConsole();
+            InitializeSource();
             InitializeServer();
-            InitializeTechnology();
         }
 
-        public bool RegisterServer(ResearchServerComponent server)
-        {
-            if (_servers.Contains(server)) return false;
-            _servers.Add(server);
-            _servers[^1].Id = _servers.Count - 1;
-            return true;
-        }
-
-        public void UnregisterServer(ResearchServerComponent server)
-        {
-            _servers.Remove(server);
-        }
-
+        /// <summary>
+        /// Gets a server based on it's unique numeric id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ResearchServerComponent? GetServerById(int id)
         {
-            foreach (var server in Servers)
+            foreach (var server in EntityQuery<ResearchServerComponent>())
             {
-                if (server.Id == id) return server;
+                if (server.Id == id)
+                    return server;
             }
 
             return null;
         }
 
+        /// <summary>
+        /// Gets the names of all the servers.
+        /// </summary>
+        /// <returns></returns>
         public string[] GetServerNames()
         {
-            var list = new string[Servers.Count];
+            var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
+            var list = new string[allServers.Length];
 
-            for (var i = 0; i < Servers.Count; i++)
+            for (var i = 0; i < allServers.Length; i++)
             {
-                list[i] = Servers[i].ServerName;
+                list[i] = allServers[i].ServerName;
             }
 
             return list;
         }
 
+        /// <summary>
+        /// Gets the ids of all the servers
+        /// </summary>
+        /// <returns></returns>
         public int[] GetServerIds()
         {
-            var list = new int[Servers.Count];
+            var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
+            var list = new int[allServers.Length];
 
-            for (var i = 0; i < Servers.Count; i++)
+            for (var i = 0; i < allServers.Length; i++)
             {
-                list[i] = Servers[i].Id;
+                list[i] = allServers[i].Id;
             }
 
             return list;
@@ -76,22 +76,13 @@ namespace Content.Server.Research
 
         public override void Update(float frameTime)
         {
-            _timer += frameTime;
-
-            while (_timer > ResearchConsoleUIUpdateTime)
+            foreach (var server in EntityQuery<ResearchServerComponent>())
             {
-                foreach (var server in _servers)
-                {
-                    UpdateServer(server, ResearchConsoleUIUpdateTime);
-                }
+                if (server.NextUpdateTime > _timing.CurTime)
+                    continue;
+                server.NextUpdateTime = _timing.CurTime + server.ResearchConsoleUpdateTime;
 
-                foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
-                {
-                    if (!_uiSystem.IsUiOpen(console.Owner, ResearchConsoleUiKey.Key)) continue;
-                    UpdateConsoleInterface(console);
-                }
-
-                _timer -= ResearchConsoleUIUpdateTime;
+                UpdateServer(server.Owner, (int) server.ResearchConsoleUpdateTime.TotalSeconds, server);
             }
         }
     }

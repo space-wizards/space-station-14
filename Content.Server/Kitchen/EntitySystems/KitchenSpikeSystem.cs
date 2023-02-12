@@ -8,7 +8,6 @@ using Content.Shared.Database;
 using Content.Shared.DragDrop;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -16,7 +15,10 @@ using Content.Shared.Storage;
 using Robust.Shared.Random;
 using static Content.Shared.Kitchen.Components.SharedKitchenSpikeComponent;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
@@ -25,7 +27,9 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly IAdminLogManager _logger = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -92,7 +96,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             if (component.PrototypesToSpawn?.Count > 0) {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-knife-needed"), uid, args.User);
                 args.Handled = true;
             }
         }
@@ -124,8 +128,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             UpdateAppearance(uid, null, component);
 
-            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid,
-                Filter.Pvs(userUid), PopupType.LargeCaution);
+            _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-kill", ("user", Identity.Entity(userUid, EntityManager)), ("victim", victimUid)), uid, PopupType.LargeCaution);
 
             // THE WHAT?
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
@@ -154,12 +157,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (component.PrototypesToSpawn.Count != 0)
             {
-                _popupSystem.PopupEntity(component.MeatSource1p, uid, Filter.Entities(user), PopupType.MediumCaution);
+                _popupSystem.PopupEntity(component.MeatSource1p, uid, user, PopupType.MediumCaution);
             }
             else
             {
                 UpdateAppearance(uid, null, component);
-                _popupSystem.PopupEntity(component.MeatSource0, uid, Filter.Entities(user), PopupType.MediumCaution);
+                _popupSystem.PopupEntity(component.MeatSource0, uid, user, PopupType.MediumCaution);
             }
 
             return true;
@@ -170,7 +173,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!Resolve(uid, ref component, ref appearance, false))
                 return;
 
-            appearance.SetData(KitchenSpikeVisuals.Status, (component.PrototypesToSpawn?.Count > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
+            _appearance.SetData(uid, KitchenSpikeVisuals.Status, component.PrototypesToSpawn?.Count > 0 ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty, appearance);
         }
 
         private bool Spikeable(EntityUid uid, EntityUid userUid, EntityUid victimUid,
@@ -181,13 +184,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
             if (component.PrototypesToSpawn?.Count > 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-collect", ("this", uid)), uid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-collect", ("this", uid)), uid, userUid);
                 return false;
             }
 
             if (!Resolve(victimUid, ref butcherable, false))
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, Filter.Entities(userUid));
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, userUid);
                 return false;
             }
 
@@ -196,10 +199,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 case ButcheringType.Spike:
                     return true;
                 case ButcheringType.Knife:
-                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher-knife", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher-knife", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, userUid);
                     return false;
                 default:
-                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, Filter.Entities(userUid));
+                    _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-butcher", ("victim", Identity.Entity(victimUid, EntityManager)), ("this", uid)), victimUid, userUid);
                     return false;
             }
         }
@@ -214,17 +217,16 @@ namespace Content.Server.Kitchen.EntitySystems
             // THE WHAT? (again)
             // Prevent dead from being spiked TODO: Maybe remove when rounds can be played and DOT is implemented
             if (Resolve(victimUid, ref mobState, false) &&
-                !mobState.IsDead())
+                _mobStateSystem.IsAlive(victimUid, mobState))
             {
                 _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-deny-not-dead", ("victim", Identity.Entity(victimUid, EntityManager))),
-                    victimUid, Filter.Entities(userUid));
+                    victimUid, userUid);
                 return true;
             }
 
             if (userUid != victimUid)
             {
-                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", Identity.Entity(userUid, EntityManager)), ("this", uid)), victimUid,
-                    Filter.Entities(victimUid), PopupType.LargeCaution);
+                _popupSystem.PopupEntity(Loc.GetString("comp-kitchen-spike-begin-hook-victim", ("user", Identity.Entity(userUid, EntityManager)), ("this", uid)), victimUid, victimUid, PopupType.LargeCaution);
             }
             // TODO: make it work when SuicideEvent is implemented
             // else

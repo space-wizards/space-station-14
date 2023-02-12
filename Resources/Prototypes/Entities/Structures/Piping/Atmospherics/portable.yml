@@ -9,6 +9,7 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
+    canCollide: false
   - type: Fixtures
     fixtures:
     - shape:
@@ -89,3 +90,7 @@
             acts: [ "Destruction" ]
   - type: CollideOnAnchor
     enable: true
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container

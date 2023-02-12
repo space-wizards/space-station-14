@@ -132,10 +132,9 @@
     seedId: nettle
   - type: MeleeChemicalInjector
     transferAmount: 6 #To OD someone you would need 2 nettles and about 6-7 hits, the DOT is likely to crit them if they are running away with almost no health
+    solution: food
   - type: Extractable
     grindableSolutionName: food
-  - type: InjectableSolution
-    solution: food
 
 - type: entity
   name: banana
@@ -408,18 +407,13 @@
     sprite: Fluids/tomato_splat.rsi
     state: puddle-0
     netsync: false
-  - type: Puddle
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: JuiceTomato
           Quantity: 10
-  - type: Evaporation
-    lowerLimit: 0 # todo: reimplement stain behaviour, ideally in a way that doesn't use evaporation lowerLimit
-  - type: Appearance
-    visuals:
-    - type: PuddleVisualizer
 
 - type: entity
   name: eggplant

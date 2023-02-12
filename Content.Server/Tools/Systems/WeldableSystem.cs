@@ -1,13 +1,18 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Tools.Components;
+using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Tools.Systems;
 
 public sealed class WeldableSystem : EntitySystem
 {
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -64,6 +69,9 @@ public sealed class WeldableSystem : EntitySystem
             component.WeldingTime.Seconds, component.WeldingQuality,
             new WeldFinishedEvent(user, tool), new WeldCancelledEvent(), uid);
 
+        // Log attempt
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):user} is {(component.IsWelded ? "un" : "")}welding {ToPrettyString(uid):target} at {Transform(uid).Coordinates:targetlocation}");
+
         return true;
     }
 
@@ -79,6 +87,9 @@ public sealed class WeldableSystem : EntitySystem
         RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded), true);
 
         UpdateAppearance(uid, component);
+
+        // Log success
+        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} {(!component.IsWelded ? "un" : "")}welded {ToPrettyString(uid):target}");
     }
 
     private void OnWeldCanceled(EntityUid uid, WeldableComponent component, WeldCancelledEvent args)
@@ -93,7 +104,7 @@ public sealed class WeldableSystem : EntitySystem
 
         if (!TryComp(uid, out AppearanceComponent? appearance))
             return;
-        appearance.SetData(WeldableVisuals.IsWelded, component.IsWelded);
+        _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded, appearance);
     }
 
     public void ForceWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)

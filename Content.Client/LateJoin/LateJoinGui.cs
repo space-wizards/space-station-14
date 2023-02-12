@@ -163,6 +163,21 @@ namespace Content.Client.LateJoin
                     _jobCategories[id] = new Dictionary<string, BoxContainer>();
                     _jobButtons[id] = new Dictionary<string, JobButton>();
                     var stationAvailable = _gameTicker.JobsAvailable[id];
+                    var jobsAvailable = new List<JobPrototype>();
+
+                    foreach (var jobId in department.Roles)
+                    {
+                        if (!stationAvailable.ContainsKey(jobId))
+                            continue;
+
+                        jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
+                    }
+
+                    jobsAvailable.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
+
+                    // Do not display departments with no jobs available.
+                    if (jobsAvailable.Count == 0)
+                        continue;
 
                     var category = new BoxContainer
                     {
@@ -198,17 +213,6 @@ namespace Content.Client.LateJoin
 
                     _jobCategories[id][department.ID] = category;
                     jobList.AddChild(category);
-                    var jobsAvailable = new List<JobPrototype>();
-
-                    foreach (var jobId in department.Roles)
-                    {
-                        if (!stationAvailable.ContainsKey(jobId))
-                            continue;
-
-                        jobsAvailable.Add(_prototypeManager.Index<JobPrototype>(jobId));
-                    }
-
-                    jobsAvailable.Sort((x, y) => -string.Compare(x.LocalizedName, y.LocalizedName, StringComparison.CurrentCultureIgnoreCase));
 
                     foreach (var prototype in jobsAvailable)
                     {

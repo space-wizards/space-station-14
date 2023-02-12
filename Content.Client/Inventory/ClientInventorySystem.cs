@@ -3,6 +3,8 @@ using Content.Client.Examine;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs;
+using Content.Client.Verbs.UI;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -11,6 +13,7 @@ using Content.Shared.Inventory.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Prototypes;
@@ -22,10 +25,10 @@ namespace Content.Client.Inventory
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
-        [Dependency] private readonly ClothingVisualsSystem _clothingVisualsSystem = default!;
+        [Dependency] private readonly ClientClothingSystem _clothingVisualsSystem = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly VerbSystem _verbs = default!;
 
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
@@ -38,11 +41,12 @@ namespace Content.Client.Inventory
 
         public override void Initialize()
         {
+            UpdatesOutsidePrediction = true;
             base.Initialize();
 
             SubscribeLocalEvent<ClientInventoryComponent, PlayerAttachedEvent>(OnPlayerAttached);
+            SubscribeLocalEvent<ClientInventoryComponent, PlayerDetachedEvent>(OnPlayerDetached);
 
-            SubscribeLocalEvent<ClientInventoryComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ClientInventoryComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<ClientInventoryComponent, DidEquipEvent>((_, comp, args) =>
@@ -97,7 +101,7 @@ namespace Content.Client.Inventory
             UpdateSlot(args.Equipee, component, args.Slot);
             if (args.Equipee != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
-            var sprite = EntityManager.GetComponentOrNull<ISpriteComponent>(args.Equipment);
+            var sprite = EntityManager.GetComponentOrNull<SpriteComponent>(args.Equipment);
             var update = new SlotSpriteUpdate(args.SlotGroup, args.Slot, sprite,
                 HasComp<ClientStorageComponent>(args.Equipment));
             OnSpriteUpdate?.Invoke(update);
@@ -108,6 +112,11 @@ namespace Content.Client.Inventory
             if (component.Owner != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
 
+            OnUnlinkInventory?.Invoke();
+        }
+
+        private void OnPlayerDetached(EntityUid uid, ClientInventoryComponent component, PlayerDetachedEvent args)
+        {
             OnUnlinkInventory?.Invoke();
         }
 
@@ -130,8 +139,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
-                OnLinkInventory?.Invoke(component);
+            OnLinkInventory?.Invoke(component);
         }
 
         public override void Shutdown()
@@ -140,17 +148,30 @@ namespace Content.Client.Inventory
             base.Shutdown();
         }
 
-        private void OnInit(EntityUid uid, ClientInventoryComponent component, ComponentInit args)
+        protected override void OnInit(EntityUid uid, InventoryComponent component, ComponentInit args)
         {
-            _clothingVisualsSystem.InitClothing(uid, component);
+            base.OnInit(uid, component, args);
+            _clothingVisualsSystem.InitClothing(uid, (ClientInventoryComponent) component);
 
             if (!_prototypeManager.TryIndex(component.TemplateId, out InventoryTemplatePrototype? invTemplate))
                 return;
 
             foreach (var slot in invTemplate.Slots)
             {
-                TryAddSlotDef(uid, component, slot);
+                TryAddSlotDef(uid, (ClientInventoryComponent)component, slot);
             }
+        }
+
+        public void ReloadInventory(ClientInventoryComponent? component = null)
+        {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null || !Resolve(player.Value, ref component, false))
+            {
+                return;
+            }
+
+            OnUnlinkInventory?.Invoke();
+            OnLinkInventory?.Invoke(component);
         }
 
         public void SetSlotHighlight(EntityUid owner, ClientInventoryComponent component, string slotName, bool state)
@@ -185,7 +206,6 @@ namespace Content.Client.Inventory
             SlotData newSlotData = newSlotDef; //convert to slotData
             if (!component.SlotData.TryAdd(newSlotDef.Name, newSlotData))
                 return false;
-
 
             if (owner == _playerManager.LocalPlayer?.ControlledEntity)
                 OnSlotAdded?.Invoke(newSlotData);
@@ -252,7 +272,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            _verbs.VerbMenu.OpenVerbMenu(item.Value);
+            _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(item.Value);
         }
 
         public void UIInventoryActivateItem(string slot, EntityUid uid)
@@ -278,6 +298,8 @@ namespace Content.Client.Inventory
             public EntityUid? HeldEntity => Container?.ContainedEntity;
             public bool Blocked;
             public bool Highlighted;
+
+            [ViewVariables]
             public ContainerSlot? Container;
             public bool HasSlotGroup => SlotDef.SlotGroup != "Default";
             public Vector2i ButtonOffset => SlotDef.UIWindowPosition;
@@ -318,7 +340,7 @@ namespace Content.Client.Inventory
         public readonly record struct SlotSpriteUpdate(
             string Group,
             string Name,
-            ISpriteComponent? Sprite,
+            SpriteComponent? Sprite,
             bool ShowStorage
         );
     }

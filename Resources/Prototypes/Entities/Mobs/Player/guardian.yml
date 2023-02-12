@@ -6,6 +6,7 @@
   description: guardian
   save: false
   components:
+    - type: LagCompensation
     - type: GhostTakeoverAvailable
       allowMovement: true
       allowSpeech: true
@@ -68,8 +69,8 @@
     - type: Damageable
       damageContainer: Biological
     - type: MobState
-      thresholds:
-        0: Alive
+      allowedStates:
+        - Alive
     - type: HeatResistance
     - type: CombatMode
     - type: Internals

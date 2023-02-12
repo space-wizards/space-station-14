@@ -15,6 +15,7 @@ namespace Content.Shared.Chemistry
         public const string OutputSlotName = "outputSlot";
         public const string PillSolutionName = "food";
         public const string BottleSolutionName = "drink";
+        public const uint LabelMaxLength = 50;
     }
 
     [Serializable, NetSerializable]

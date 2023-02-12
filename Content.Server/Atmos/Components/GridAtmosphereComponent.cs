@@ -1,7 +1,7 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Serialization;
 using Content.Server.NodeContainer.NodeGroups;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Atmos.Components
 {
@@ -10,7 +10,7 @@ namespace Content.Server.Atmos.Components
     /// </summary>
     [RegisterComponent, Serializable,
      Access(typeof(AtmosphereSystem), typeof(GasTileOverlaySystem), typeof(AtmosDebugOverlaySystem))]
-    public sealed class GridAtmosphereComponent : Component, ISerializationHooks
+    public sealed class GridAtmosphereComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Simulated { get; set; } = true;
@@ -24,13 +24,8 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         public int UpdateCounter { get; set; } = 1; // DO NOT SET TO ZERO BY DEFAULT! It will break roundstart atmos...
 
-        [DataField("uniqueMixes")]
-        public List<GasMixture>? UniqueMixes;
-
-        [DataField("tiles")]
-        public Dictionary<Vector2i, int>? TilesUniqueMixes;
-
         [ViewVariables]
+        [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
         public readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
         [ViewVariables]
@@ -95,34 +90,5 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         public AtmosphereProcessingState State { get; set; } = AtmosphereProcessingState.Revalidate;
-
-        void ISerializationHooks.BeforeSerialization()
-        {
-            var uniqueMixes = new List<GasMixture>();
-            var uniqueMixHash = new Dictionary<GasMixture, int>();
-            var tiles = new Dictionary<Vector2i, int>();
-
-            foreach (var (indices, tile) in Tiles)
-            {
-                if (tile.Air == null) continue;
-
-                if (uniqueMixHash.TryGetValue(tile.Air, out var index))
-                {
-                    tiles[indices] = index;
-                    continue;
-                }
-
-                uniqueMixes.Add(tile.Air);
-                var newIndex = uniqueMixes.Count - 1;
-                uniqueMixHash[tile.Air] = newIndex;
-                tiles[indices] = newIndex;
-            }
-
-            if (uniqueMixes.Count == 0) uniqueMixes = null;
-            if (tiles.Count == 0) tiles = null;
-
-            UniqueMixes = uniqueMixes;
-            TilesUniqueMixes = tiles;
-        }
     }
 }

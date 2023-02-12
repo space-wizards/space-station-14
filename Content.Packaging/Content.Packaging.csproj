@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets"/>
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RobustToolbox\Robust.Packaging\Robust.Packaging.csproj" />
+    <ProjectReference Include="..\RobustToolbox\Robust.Packaging\Robust.Packaging.csproj"/>
   </ItemGroup>
 
 </Project>

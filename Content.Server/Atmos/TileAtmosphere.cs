@@ -68,7 +68,8 @@ namespace Content.Server.Atmos
         public AtmosDirection LastPressureDirection;
 
         [ViewVariables]
-        public EntityUid GridIndex { get; }
+        [Access(typeof(AtmosphereSystem))]
+        public EntityUid GridIndex { get; set; }
 
         [ViewVariables]
         public TileRef? Tile => GridIndices.GetTileRef(GridIndex);
@@ -87,7 +88,6 @@ namespace Content.Server.Atmos
         [Access(typeof(AtmosphereSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
         public GasMixture? Air { get; set; }
 
-        [ViewVariables]
         [DataField("lastShare")]
         public float LastShare;
 

@@ -47,7 +47,7 @@ namespace Content.Server.Plants.Systems
             if (!gotItem)
             {
                 var msg = Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message");
-                _popupSystem.PopupEntity(msg, uid, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(msg, uid, args.User);
             }
 
             args.Handled = gotItem;

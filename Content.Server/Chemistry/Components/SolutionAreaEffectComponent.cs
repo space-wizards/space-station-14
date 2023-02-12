@@ -6,6 +6,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -70,11 +71,10 @@ namespace Content.Server.Chemistry.Components
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             var solSys = _systems.GetEntitySystem<SolutionContainerSystem>();
 
-            if (!_entities.TryGetComponent(xform.GridUid, out IMapGridComponent? gridComp))
+            if (!_entities.TryGetComponent(xform.GridUid, out MapGridComponent? gridComp))
                 return;
 
-            var grid = gridComp.Grid;
-            var origin = grid.TileIndicesFor(xform.Coordinates);
+            var origin = gridComp.TileIndicesFor(xform.Coordinates);
 
             DebugTools.Assert(xform.Anchored, "Area effect entity prototypes must be anchored.");
 
@@ -82,10 +82,10 @@ namespace Content.Server.Chemistry.Components
             {
                 // Currently no support for spreading off or across grids.
                 var index = origin + dir.ToIntVec();
-                if (!grid.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
+                if (!gridComp.TryGetTileRef(index, out var tile) || tile.Tile.IsEmpty)
                     return;
 
-                foreach (var neighbor in grid.GetAnchoredEntities(index))
+                foreach (var neighbor in gridComp.GetAnchoredEntities(index))
                 {
                     if (_entities.TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
@@ -100,7 +100,7 @@ namespace Content.Server.Chemistry.Components
 
                 var newEffect = _entities.SpawnEntity(
                     meta.EntityPrototype.ID,
-                    grid.GridTileToLocal(index));
+                    gridComp.GridTileToLocal(index));
 
                 if (!_entities.TryGetComponent(newEffect, out SolutionAreaEffectComponent? effectComponent))
                 {
@@ -145,9 +145,12 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-
-            if (!_entities.EntitySysManager.GetEntitySystem<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!_entities.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                    .TryGetSolution(Owner, SolutionName, out var solution) ||
+                solution.Contents.Count == 0)
+            {
                 return;
+            }
 
             var xform = _entities.GetComponent<TransformComponent>(Owner);
             if (!MapManager.TryGetGrid(xform.GridUid, out var mapGrid))
@@ -158,6 +161,7 @@ namespace Content.Server.Chemistry.Components
             var lookup = _entities.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
+            var ents = lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
 
             foreach (var reagentQuantity in solution.Contents.ToArray())
             {
@@ -173,14 +177,14 @@ namespace Content.Server.Chemistry.Components
                 }
 
                 // Touch every entity on the tile
-                foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
+                foreach (var entity in ents)
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
                         reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
-            foreach (var entity in lookup.GetEntitiesIntersecting(tile).ToArray())
+            foreach (var entity in ents)
             {
                 ReactWithEntity(entity, solutionFraction);
             }
@@ -190,14 +194,14 @@ namespace Content.Server.Chemistry.Components
 
         public void TryAddSolution(Solution solution)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.Volume == 0)
                 return;
 
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
-                solution.SplitSolution(FixedPoint2.Min(solution.TotalVolume, solutionArea.AvailableVolume));
+                solution.SplitSolution(FixedPoint2.Min(solution.Volume, solutionArea.AvailableVolume));
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner, solutionArea, addSolution);
 

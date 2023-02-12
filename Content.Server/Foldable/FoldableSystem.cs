@@ -1,7 +1,9 @@
 using System.Linq;
-using Content.Server.Buckle.Components;
+using Content.Server.Buckle.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Foldable;
+using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -11,7 +13,8 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private readonly BuckleSystem _buckle = default!;
+        [Dependency] private readonly SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {
@@ -23,10 +26,10 @@ namespace Content.Server.Foldable
 
         }
 
-        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, StorageOpenAttemptEvent args)
+        private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
         {
             if (component.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         public bool TryToggleFold(FoldableComponent comp)
@@ -84,16 +87,15 @@ namespace Content.Server.Foldable
             base.SetFolded(component, folded);
 
             // You can't buckle an entity to a folded object
-            if (TryComp(component.Owner, out StrapComponent? strap))
-                strap.Enabled = !component.IsFolded;
+            _buckle.StrapSetEnabled(component.Owner, !component.IsFolded);
         }
 
-        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, StoreMobInItemContainerAttemptEvent args)
+        public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
         {
             args.Handled = true;
 
             if (comp.IsFolded)
-                args.Cancel();
+                args.Cancelled = true;
         }
 
         #region Verb

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
-using Content.Server.Buckle.Components;
+using Content.Server.Body.Systems;
+using Content.Server.Buckle.Systems;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
@@ -9,8 +10,6 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Standing;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests.Buckle
 {
@@ -31,9 +30,7 @@ namespace Content.IntegrationTests.Tests.Buckle
   - type: Buckle
   - type: Hands
   - type: Body
-    template: HumanoidTemplate
-    preset: HumanPreset
-    centerSlot: torso
+    prototype: Human
   - type: StandingState
 
 - type: entity
@@ -48,18 +45,20 @@ namespace Content.IntegrationTests.Tests.Buckle
   components:
   - type: Item
 ";
+
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker =
+                await PoolManager.GetServerClient(new PoolSettings {ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var actionBlocker = entityManager.EntitySysManager.GetEntitySystem<ActionBlockerSystem>();
+            var buckleSystem = entityManager.EntitySysManager.GetEntitySystem<BuckleSystem>();
             var standingState = entityManager.EntitySysManager.GetEntitySystem<StandingStateSystem>();
-
 
             EntityUid human = default;
             EntityUid chair = default;
@@ -88,15 +87,17 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.Zero(strap.OccupiedSize);
 
                 // Side effects of buckling
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
 
-                Assert.True(((BuckleComponentState) buckle.GetComponentState()).Buckled);
                 Assert.False(actionBlocker.CanMove(human));
                 Assert.False(actionBlocker.CanChangeDirection(human));
                 Assert.False(standingState.Down(human));
-                Assert.That((entityManager.GetComponent<TransformComponent>(human).WorldPosition - entityManager.GetComponent<TransformComponent>(chair).WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
+                Assert.That(
+                    (entityManager.GetComponent<TransformComponent>(human).WorldPosition -
+                     entityManager.GetComponent<TransformComponent>(chair).WorldPosition).Length,
+                    Is.LessThanOrEqualTo(0));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
@@ -104,11 +105,12 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.Positive(strap.OccupiedSize);
 
                 // Trying to buckle while already buckled fails
-                Assert.False(buckle.TryBuckle(human, chair));
+                Assert.False(buckleSystem.TryBuckle(human, human, chair, buckle));
 
                 // Trying to unbuckle too quickly fails
-                Assert.False(buckle.TryUnbuckle(human));
-                Assert.False(buckle.ToggleBuckle(human, chair));
+                Assert.False(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
+                Assert.True(buckle.Buckled);
+                Assert.False(buckleSystem.ToggleBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
             });
 
@@ -121,7 +123,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Unbuckle
-                Assert.True(buckle.TryUnbuckle(human));
+                Assert.True(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
                 Assert.Null(buckle.BuckledTo);
                 Assert.False(buckle.Buckled);
                 Assert.True(actionBlocker.CanMove(human));
@@ -133,15 +135,15 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.Zero(strap.OccupiedSize);
 
                 // Re-buckling has no cooldown
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
 
                 // On cooldown
-                Assert.False(buckle.TryUnbuckle(human));
+                Assert.False(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
                 Assert.True(buckle.Buckled);
-                Assert.False(buckle.ToggleBuckle(human, chair));
+                Assert.False(buckleSystem.ToggleBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
-                Assert.False(buckle.ToggleBuckle(human, chair));
+                Assert.False(buckleSystem.ToggleBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
             });
 
@@ -154,37 +156,38 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Unbuckle
-                Assert.True(buckle.TryUnbuckle(human));
+                Assert.True(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
                 Assert.False(buckle.Buckled);
 
                 // Move away from the chair
                 entityManager.GetComponent<TransformComponent>(human).WorldPosition += (1000, 1000);
 
                 // Out of range
-                Assert.False(buckle.TryBuckle(human, chair));
-                Assert.False(buckle.TryUnbuckle(human));
-                Assert.False(buckle.ToggleBuckle(human, chair));
+                Assert.False(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
+                Assert.False(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
+                Assert.False(buckleSystem.ToggleBuckle(human, human, chair, buckle: buckle));
 
                 // Move near the chair
-                entityManager.GetComponent<TransformComponent>(human).WorldPosition = entityManager.GetComponent<TransformComponent>(chair).WorldPosition + (0.5f, 0);
+                entityManager.GetComponent<TransformComponent>(human).WorldPosition =
+                    entityManager.GetComponent<TransformComponent>(chair).WorldPosition + (0.5f, 0);
 
                 // In range
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
-                Assert.False(buckle.TryUnbuckle(human));
+                Assert.False(buckleSystem.TryUnbuckle(human, human, buckle: buckle));
                 Assert.True(buckle.Buckled);
-                Assert.False(buckle.ToggleBuckle(human, chair));
+                Assert.False(buckleSystem.ToggleBuckle(human, human, chair, buckle: buckle));
                 Assert.True(buckle.Buckled);
 
                 // Force unbuckle
-                Assert.True(buckle.TryUnbuckle(human, true));
+                Assert.True(buckleSystem.TryUnbuckle(human, human, true, buckle: buckle));
                 Assert.False(buckle.Buckled);
                 Assert.True(actionBlocker.CanMove(human));
                 Assert.True(actionBlocker.CanChangeDirection(human));
                 Assert.True(standingState.Down(human));
 
                 // Re-buckle
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
 
                 // Move away from the chair
                 entityManager.GetComponent<TransformComponent>(human).WorldPosition += (1, 0);
@@ -206,7 +209,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckledDyingDropItemsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -215,12 +219,13 @@ namespace Content.IntegrationTests.Tests.Buckle
             EntityUid human = default;
             BuckleComponent buckle = null;
             HandsComponent hands = null;
-            SharedBodyComponent body = null;
+            BodyComponent body = null;
 
             await server.WaitIdleAsync();
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var handsSys = entityManager.EntitySysManager.GetEntitySystem<SharedHandsSystem>();
+            var buckleSystem = entityManager.EntitySysManager.GetEntitySystem<BuckleSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -234,7 +239,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(entityManager.TryGetComponent(human, out body));
 
                 // Buckle
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
 
@@ -260,12 +265,13 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.NotNull(hand.HeldEntity);
                 }
 
-                var legs = body.GetPartsOfType(BodyPartType.Leg);
+                var bodySystem = entityManager.System<BodySystem>();
+                var legs = bodySystem.GetBodyChildrenOfType(body.Owner, BodyPartType.Leg, body);
 
                 // Break our guy's kneecaps
                 foreach (var leg in legs)
                 {
-                    body.RemovePart(leg);
+                    bodySystem.DropPart(leg.Id, leg.Component);
                 }
             });
 
@@ -282,7 +288,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                     Assert.Null(hand.HeldEntity);
                 }
 
-                buckle.TryUnbuckle(human, true);
+                buckleSystem.TryUnbuckle(human, human, true, buckle: buckle);
             });
 
             await pairTracker.CleanReturnAsync();
@@ -291,12 +297,14 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task ForceUnbuckleBuckleTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+                {NoClient = true, ExtraPrototypes = Prototypes});
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var buckleSystem = entityManager.System<BuckleSystem>();
 
             EntityUid human = default;
             EntityUid chair = default;
@@ -312,7 +320,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(entityManager.HasComponent<StrapComponent>(chair));
 
                 // Buckle
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
 
@@ -330,7 +338,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 entityManager.GetComponent<TransformComponent>(human).WorldPosition -= (100, 0);
 
                 // Buckle
-                Assert.True(buckle.TryBuckle(human, chair));
+                Assert.True(buckleSystem.TryBuckle(human, human, chair, buckle: buckle));
                 Assert.NotNull(buckle.BuckledTo);
                 Assert.True(buckle.Buckled);
             });

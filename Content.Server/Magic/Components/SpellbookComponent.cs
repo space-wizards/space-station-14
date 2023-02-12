@@ -28,7 +28,6 @@ public sealed class SpellbookComponent : Component
     [DataField("instantSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, InstantActionPrototype>))]
     public readonly Dictionary<string, int> InstantSpells = new();
 
-    [ViewVariables]
     [DataField("learnTime")]
     public float LearnTime = .75f;
 

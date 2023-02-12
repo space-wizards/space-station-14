@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Shared.Serialization;
@@ -27,7 +26,6 @@ namespace Content.Server.Atmos
         private float _temperature = Atmospherics.TCMB;
 
         [DataField("immutable")]
-        [ViewVariables]
         public bool Immutable { get; private set; }
 
         [ViewVariables]

@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: DiseaseSwab
-  name: mouth swab
-  description: Used to take saliva samples to test for diseases.
+  name: sterile swab
+  description: Used for taking and transfering samples. Sterile until open. Single use only.
   components:
   - type: Item
     size: 1
@@ -14,6 +14,7 @@
     tags:
     - Recyclable
   - type: DiseaseSwab
+  - type: BotanySwab
 
 - type: entity
   parent: BaseItem

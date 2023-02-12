@@ -1,4 +1,4 @@
-﻿using Content.Client.Cooldown;
+using Content.Client.Cooldown;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -11,6 +11,8 @@ namespace Content.Client.UserInterface.Controls
     public abstract class SlotControl : Control
     {
         private const string HighlightShader = "SelectionOutlineInrange";
+
+        public static int DefaultButtonSize = 64;
 
         public TextureRect ButtonRect { get; }
         public TextureRect BlockedRect { get; }
@@ -111,7 +113,7 @@ namespace Content.Client.UserInterface.Controls
         {
             IoCManager.InjectDependencies(this);
             Name = "SlotButton_null";
-            MinSize = (64, 64);
+            MinSize = (DefaultButtonSize, DefaultButtonSize);
             AddChild(ButtonRect = new TextureRect
             {
                 TextureScale = (2, 2),

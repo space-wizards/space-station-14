@@ -22,6 +22,10 @@
         conditions:
         - !type:OrganType
           type: Rat
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Plant
       # Convert Oxygen into CO2.
       - !type:ModifyLungGas
         conditions:

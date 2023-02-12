@@ -2,6 +2,7 @@
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -20,9 +21,9 @@ public sealed class MappingSystem : EntitySystem
     [Dependency] private readonly IConsoleHost _conHost = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IMapLoader _mapLoader = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IResourceManager _resMan = default!;
+    [Dependency] private readonly MapLoaderSystem _map = default!;
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>
@@ -86,7 +87,7 @@ public sealed class MappingSystem : EntitySystem
             var path = Path.Combine(saveDir, $"{DateTime.Now.ToString("yyyy-M-dd_HH.mm.ss")}-AUTO.yml");
             _currentlyAutosaving[map] = (CalculateNextTime(), name);
             _sawmill.Info($"Autosaving map {name} ({map}) to {path}. Next save in {ReadableTimeLeft(map)} seconds.");
-            _mapLoader.SaveMap(map, path);
+            _map.SaveMap(map, path);
         }
     }
 

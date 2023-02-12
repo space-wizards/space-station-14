@@ -1,21 +1,22 @@
 using Content.Server.Climbing;
+using Content.Server.Cloning;
 using Content.Server.Medical.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Destructible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.MobState.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
-using Content.Server.Cloning.Systems;
 using Content.Server.Cloning.Components;
-using Content.Server.MobState;
+using Content.Server.Construction;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
-
-using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; /// Hmm...
+using Robust.Server.GameObjects;
+using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent; // Hmm...
 
 namespace Content.Server.Medical
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Medical
         [Dependency] private readonly CloningConsoleSystem _cloningConsoleSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ContainerSystem _containerSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private const float UpdateRate = 1f;
         private float _updateDif;
@@ -43,6 +45,8 @@ namespace Content.Server.Medical
             SubscribeLocalEvent<MedicalScannerComponent, DragDropEvent>(HandleDragDropOn);
             SubscribeLocalEvent<MedicalScannerComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<MedicalScannerComponent, AnchorStateChangedEvent>(OnAnchorChanged);
+            SubscribeLocalEvent<MedicalScannerComponent, RefreshPartsEvent>(OnRefreshParts);
+            SubscribeLocalEvent<MedicalScannerComponent, UpgradeExamineEvent>(OnUpgradeExamine);
         }
 
         private void OnComponentInit(EntityUid uid, MedicalScannerComponent scannerComponent, ComponentInit args)
@@ -178,7 +182,7 @@ namespace Content.Server.Medical
         {
             if (TryComp<AppearanceComponent>(scannerComponent.Owner, out var appearance))
             {
-                appearance.SetData(MedicalScannerVisuals.Status, GetStatus(scannerComponent));
+                _appearance.SetData(uid, MedicalScannerVisuals.Status, GetStatus(scannerComponent), appearance);
             }
         }
 
@@ -223,6 +227,18 @@ namespace Content.Server.Medical
             scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained, uid);
             UpdateAppearance(scannerComponent.Owner, scannerComponent);
+        }
+
+        private void OnRefreshParts(EntityUid uid, MedicalScannerComponent component, RefreshPartsEvent args)
+        {
+            var ratingFail = args.PartRatings[component.MachinePartCloningFailChance];
+
+            component.CloningFailChanceMultiplier = MathF.Pow(component.PartRatingFailMultiplier, ratingFail - 1);
+        }
+
+        private void OnUpgradeExamine(EntityUid uid, MedicalScannerComponent component, UpgradeExamineEvent args)
+        {
+            args.AddPercentageUpgrade("medical-scanner-upgrade-cloning", component.CloningFailChanceMultiplier);
         }
     }
 }

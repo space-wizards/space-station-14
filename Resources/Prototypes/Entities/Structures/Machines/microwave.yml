@@ -59,6 +59,9 @@
         acts: ["Breakage"]
   - type: ApcPowerReceiver
     powerLoad: 400
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
   - type: Machine
     board: MicrowaveMachineCircuitboard
   - type: ContainerContainer

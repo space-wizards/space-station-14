@@ -16,19 +16,22 @@ namespace Content.Server.Chat.Managers
         /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
-        void DispatchServerMessage(IPlayerSession player, string message);
+        void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false);
 
         void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
 
         void SendHookOOC(string sender, string message);
         void SendAdminAnnouncement(string message);
 
-        void ChatMessageToOne(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
-            INetChannel client, Color? colorOverride = null);
-        void ChatMessageToMany(ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat,
-            List<INetChannel> clients, Color? colorOverride = null);
-        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string messageWrap, EntityUid source, bool hideChat, Color? colorOverride);
-        void ChatMessageToAll(ChatChannel channel, string message, string messageWrap, Color? colorOverride = null);
+        void ChatMessageToOne(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat,
+            INetChannel client, Color? colorOverride = null, bool recordReplay = false, string? audioPath = null, float audioVolume = 0);
+
+        void ChatMessageToMany(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay,
+            IEnumerable<INetChannel> clients, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
+
+        void ChatMessageToManyFiltered(Filter filter, ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride, string? audioPath = null, float audioVolume = 0);
+
+        void ChatMessageToAll(ChatChannel channel, string message, string wrappedMessage, EntityUid source, bool hideChat, bool recordReplay, Color? colorOverride = null, string? audioPath = null, float audioVolume = 0);
 
         bool MessageCharacterLimit(IPlayerSession player, string message);
     }

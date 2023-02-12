@@ -60,6 +60,18 @@
 
 - type: entity
   parent: PassengerIDCard
+  id: ResearchAssistantIDCard
+  name: research assistant ID card
+  components:
+  - type: PresetIdCard
+    job: ResearchAssistant
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idintern-sci
+
+- type: entity
+  parent: PassengerIDCard
   id: SecurityCadetIDCard
   name: security cadet ID card
   components:
@@ -525,6 +537,18 @@
   - type: PresetIdCard
     job: Boxer
 
+- type: entity
+  parent: IDCardStandard
+  id: ZookeeperIDCard
+  name: zookeeper ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idzookeeper
+  - type: PresetIdCard
+    job: Zookeeper
+    
 - type: entity
   parent: IDCardStandard
   id: DetectiveIDCard

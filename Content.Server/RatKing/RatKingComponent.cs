@@ -28,7 +28,7 @@ namespace Content.Server.RatKing
         /// <summary>
         ///     The action for the Domain ability
         /// </summary>
-        [ViewVariables, DataField("actionDomain", required: true)]
+        [DataField("actionDomain", required: true)]
         public InstantAction ActionDomain = new();
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Content.Server.RatKing
         /// <summary>
         ///     How many moles of Miasma are released after one us of Domain
         /// </summary>
-        [ViewVariables, DataField("molesMiasmaPerDomain")]
+        [DataField("molesMiasmaPerDomain")]
         public float MolesMiasmaPerDomain = 100f;
     }
 };

@@ -2,16 +2,17 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Access.Systems
 {
-    public class SharedAgentIdCardSystem : EntitySystem
+    public abstract class SharedAgentIdCardSystem : EntitySystem
     {
-        /// Just for friending for now
+        // Just for friending for now
     }
+
     /// <summary>
     /// Key representing which <see cref="BoundUserInterface"/> is currently open.
     /// Useful when there are multiple UI for an object. Here it's future-proofing only.
     /// </summary>
     [Serializable, NetSerializable]
-    public enum AgentIDCardUiKey
+    public enum AgentIDCardUiKey : byte
     {
         Key,
     }

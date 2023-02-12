@@ -72,3 +72,9 @@
   config:
     !type:GenericGameRuleConfiguration
     id: BasicStationEventScheduler
+
+- type: gameRule
+  id: RampingStationEventScheduler
+  config:
+    !type:GenericGameRuleConfiguration
+    id: RampingStationEventScheduler

@@ -12,7 +12,6 @@ namespace Content.Shared.Construction
         [DataField("edges")]
         private ConstructionGraphEdge[] _edges = Array.Empty<ConstructionGraphEdge>();
 
-        [ViewVariables]
         [DataField("node", required: true)]
         public string Name { get; private set; } = default!;
 
@@ -22,7 +21,6 @@ namespace Content.Shared.Construction
         [ViewVariables]
         public IReadOnlyList<IGraphAction> Actions => _actions;
 
-        [ViewVariables]
         [DataField("entity")]
         public string? Entity { get; private set; }
 

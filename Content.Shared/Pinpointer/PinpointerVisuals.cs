@@ -6,7 +6,7 @@ namespace Content.Shared.Pinpointer
     public enum PinpointerVisuals : byte
     {
         IsActive,
-        TargetDirection,
+        ArrowAngle,
         TargetDistance
     }
 

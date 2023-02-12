@@ -1,0 +1,92 @@
+﻿- type: decal
+  id: OriginStationSign1
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin1
+
+- type: decal
+  id: OriginStationSign2
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin2
+
+- type: decal
+  id: OriginStationSign3
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin3
+
+- type: decal
+  id: OriginStationSign4
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin4
+
+- type: decal
+  id: OriginStationSign5
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin5
+
+- type: decal
+  id: OriginStationSign6
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin6
+
+- type: decal
+  id: OriginStationSign7
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin7
+
+
+- type: decal
+  id: OriginStationSign8
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin8
+
+- type: decal
+  id: OriginStationSign9
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin9
+
+- type: decal
+  id: OriginStationSign10
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin10
+
+- type: decal
+  id: OriginStationSign11
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin11
+
+- type: decal
+  id: OriginStationSign12
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin12
+
+- type: decal
+  id: OriginStationSign13
+  tags: ["station"]
+  sprite:
+    sprite: Decals/originsign.rsi
+    state: origin13
+

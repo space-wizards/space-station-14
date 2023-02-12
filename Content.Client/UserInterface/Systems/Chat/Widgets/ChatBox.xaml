@@ -4,15 +4,17 @@
     xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
     xmlns:controls="clr-namespace:Content.Client.UserInterface.Systems.Chat.Controls"
     MouseFilter="Stop"
+    HorizontalExpand="True"
+    VerticalExpand="True"
     MinSize="465 225">
-    <PanelContainer>
+    <PanelContainer HorizontalExpand="True" VerticalExpand="True">
         <PanelContainer.PanelOverride>
             <graphics:StyleBoxFlat BackgroundColor="#25252AAA" />
         </PanelContainer.PanelOverride>
 
-        <BoxContainer Orientation="Vertical" SeparationOverride="4">
-            <OutputPanel Name="Contents" VerticalExpand="True" />
-            <controls:ChatInputBox Name="ChatInput" Access="Public" Margin="2"/>
+        <BoxContainer Orientation="Vertical" SeparationOverride="4" HorizontalExpand="True" VerticalExpand="True">
+            <OutputPanel Name="Contents" HorizontalExpand="True" VerticalExpand="True" />
+            <controls:ChatInputBox HorizontalExpand="True" Name="ChatInput" Access="Public" Margin="2"/>
         </BoxContainer>
     </PanelContainer>
 </widgets:ChatBox>

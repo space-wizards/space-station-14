@@ -1,9 +1,9 @@
 using Content.Server.Morgue.Components;
-using Content.Shared.Morgue;
-using Content.Shared.Examine;
-using Robust.Server.GameObjects;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Examine;
+using Content.Shared.Morgue;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.Morgue;
 
@@ -24,13 +24,10 @@ public sealed class MorgueSystem : EntitySystem
     /// </summary>
     private void OnExamine(EntityUid uid, MorgueComponent component, ExaminedEvent args)
     {
-        if (!TryComp<AppearanceComponent>(uid, out var appearance))
-            return;
-
         if (!args.IsInDetailsRange)
             return;
 
-        appearance.TryGetData(MorgueVisuals.Contents, out MorgueContents contents);
+        _appearance.TryGetData<MorgueContents>(uid, MorgueVisuals.Contents, out var contents);
 
         var text = contents switch
         {
@@ -61,7 +58,7 @@ public sealed class MorgueSystem : EntitySystem
 
         foreach (var ent in storage.Contents.ContainedEntities)
         {
-            if (!hasMob && HasComp<SharedBodyComponent>(ent))
+            if (!hasMob && HasComp<BodyComponent>(ent))
                 hasMob = true;
 
             if (HasComp<ActorComponent?>(ent))
@@ -92,7 +89,7 @@ public sealed class MorgueSystem : EntitySystem
 
             comp.AccumulatedFrameTime -= comp.BeepTime;
 
-            if (comp.DoSoulBeep && appearance.TryGetData(MorgueVisuals.Contents, out MorgueContents contents) && contents == MorgueContents.HasSoul)
+            if (comp.DoSoulBeep && _appearance.TryGetData<MorgueContents>(appearance.Owner, MorgueVisuals.Contents, out var contents, appearance) && contents == MorgueContents.HasSoul)
             {
                 _audio.PlayPvs(comp.OccupantHasSoulAlarmSound, comp.Owner);
             }

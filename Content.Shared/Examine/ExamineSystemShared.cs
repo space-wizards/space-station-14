@@ -1,23 +1,24 @@
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.MobState.Components;
 using Content.Shared.Eye.Blinding;
-using Content.Shared.MobState.EntitySystems;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Utility;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
-    public abstract class ExamineSystemShared : EntitySystem
+    public abstract partial class ExamineSystemShared : EntitySystem
     {
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] protected readonly SharedMobStateSystem MobStateSystem = default!;
+        [Dependency] protected readonly MobStateSystem MobStateSystem = default!;
 
         public const float MaxRaycastRange = 100;
 
@@ -46,6 +47,9 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
+            if (entity.IsClientSide())
+                return true;
+
             // check if the mob is in critical or dead
             if (MobStateSystem.IsIncapacitated(examiner))
                 return false;
@@ -66,6 +70,10 @@ namespace Content.Shared.Examine
         [Pure]
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
+            // special check for client-side entities stored in null-space for some UI guff.
+            if (examined.IsClientSide())
+                return true;
+
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,
                 entity => entity == examiner || entity == examined, examined);
         }
@@ -73,6 +81,9 @@ namespace Content.Shared.Examine
         [Pure]
         public virtual bool CanExamine(EntityUid examiner, MapCoordinates target, Ignored? predicate = null, EntityUid? examined = null, ExaminerComponent? examinerComp = null)
         {
+            // TODO occluded container checks
+            // also requires checking if the examiner has either a storage or stripping UI open, as the item may be accessible via that UI
+
             if (!Resolve(examiner, ref examinerComp, false))
                 return false;
 
@@ -151,7 +162,8 @@ namespace Content.Shared.Examine
             var length = dir.Length;
 
             // If range specified also check it
-            if (range > 0f && length > range) return false;
+            // TODO: This rounding check is here because the API is kinda eh
+            if (range > 0f && length > range + 0.01f) return false;
 
             if (MathHelper.CloseTo(length, 0)) return true;
 
@@ -179,7 +191,8 @@ namespace Content.Shared.Examine
                     continue;
                 }
 
-                var bBox = o.BoundingBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
+                var bBox = o.BoundingBox;
+                bBox = bBox.Translated(entMan.GetComponent<TransformComponent>(o.Owner).WorldPosition);
 
                 if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
                 {

@@ -33,7 +33,7 @@
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
   id: ClothingBackpackDuffelSyndicateFilledMedical
   name: syndicate surgical duffel bag
-  description: "A large duffel bag for holding extra medical supplies - this one seems to be designed for holding surgical tools."
+  description: A large duffel bag containing a full suite of surgical tools.
   components:
   - type: StorageFill
     contents:
@@ -149,8 +149,7 @@
 - type: entity
   parent: ClothingBackpackDuffelClown
   id: ClothingBackpackDuffelSyndicateCostumeClown
-  name: clown costume duffel bag
-  description: "Contains a complete Clown outfit."
+  suffix: syndicate
   components:
   - type: Tag
     tags: [] # ignore "WhitelistChameleon" tag
@@ -167,7 +166,7 @@
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicatePyjamaBundle
   name: syndicate pyjama duffel bag
-  description: "Contains 3 syndicate pyjamas."
+  description: Contains 3 pairs of syndicate pyjamas and 3 plushies for the ultimate sleepover.
   components:
   - type: StorageFill
     contents:
@@ -184,6 +183,7 @@
       - id: PlushieCarp
       - id: PlushieNuke
       - id: PlushieLizard
+      - id: PlushieSharkBlue
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle

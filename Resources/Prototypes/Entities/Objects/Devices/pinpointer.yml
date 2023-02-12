@@ -9,6 +9,7 @@
     noRot: True
   - type: Sprite
     netsync: false
+    noRot: True
     sprite: Objects/Devices/pinpointer.rsi
     layers:
     - state: pinpointer
@@ -19,8 +20,6 @@
     sprite: Objects/Devices/pinpointer.rsi
   - type: Pinpointer
   - type: Appearance
-    visuals:
-    - type: PinpointerVisualizer
 
 - type: entity
   name: pinpointer

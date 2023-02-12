@@ -11,7 +11,6 @@
   - type: Physics
     bodyType: KinematicController
     fixedRotation: true
-    status: OnGround
   - type: Fixtures
     fixtures:
     - shape:
@@ -29,7 +28,8 @@
   - type: Examiner
     skipChecks: true
   - type: Ghost
-  - type: IntrinsicRadio
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
     channels:
     - Common
     - Command

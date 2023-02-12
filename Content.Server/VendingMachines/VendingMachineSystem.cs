@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
+using Content.Server.VendingMachines.Restock;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
@@ -10,11 +11,11 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.Emag.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
@@ -52,6 +53,8 @@ namespace Content.Server.VendingMachines
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineEjectMessage>(OnInventoryEjectMessage);
 
             SubscribeLocalEvent<VendingMachineComponent, VendingMachineSelfDispenseEvent>(OnSelfDispense);
+
+            SubscribeLocalEvent<VendingMachineComponent, VendingMachineRestockEvent>(OnRestock);
         }
 
         private void OnVendingPrice(EntityUid uid, VendingMachineComponent component, ref PriceCalculationEvent args)
@@ -72,11 +75,9 @@ namespace Content.Server.VendingMachines
             args.Price += price;
         }
 
-        protected override void OnComponentInit(EntityUid uid, SharedVendingMachineComponent sharedComponent, ComponentInit args)
+        protected override void OnComponentInit(EntityUid uid, VendingMachineComponent component, ComponentInit args)
         {
-            base.OnComponentInit(uid, sharedComponent, args);
-
-            var component = (VendingMachineComponent) sharedComponent;
+            base.OnComponentInit(uid, component, args);
 
             if (HasComp<ApcPowerReceiverComponent>(component.Owner))
             {
@@ -130,7 +131,7 @@ namespace Content.Server.VendingMachines
             TryUpdateVisualState(uid, vendComponent);
         }
 
-        private void OnEmagged(EntityUid uid, VendingMachineComponent component, GotEmaggedEvent args)
+        private void OnEmagged(EntityUid uid, VendingMachineComponent component, ref GotEmaggedEvent args)
         {
             if (component.Emagged || component.EmaggedInventory.Count == 0 )
                 return;
@@ -163,6 +164,31 @@ namespace Content.Server.VendingMachines
             EjectRandom(uid, throwItem: true, forceEject: false, component);
         }
 
+        private void OnRestock(EntityUid uid, VendingMachineComponent component, VendingMachineRestockEvent args)
+        {
+            if (!TryComp<VendingMachineRestockComponent>(args.RestockBox, out var restockComponent))
+            {
+                _sawmill.Error($"{ToPrettyString(args.User)} tried to restock {ToPrettyString(uid)} with {ToPrettyString(args.RestockBox)} which did not have a VendingMachineRestockComponent.");
+                return;
+            }
+
+            TryRestockInventory(uid, component);
+
+            _popupSystem.PopupEntity(Loc.GetString("vending-machine-restock-done",
+                    ("this", args.RestockBox),
+                    ("user", args.User),
+                    ("target", uid)),
+                args.User,
+                PopupType.Medium);
+
+            _audioSystem.PlayPvs(restockComponent.SoundRestockDone, component.Owner,
+                AudioParams.Default
+                .WithVolume(-2f)
+                .WithVariation(0.2f));
+
+            Del(args.RestockBox);
+        }
+
         /// <summary>
         /// Sets the <see cref="VendingMachineComponent.CanShoot"/> property of the vending machine.
         /// </summary>
@@ -183,7 +209,7 @@ namespace Content.Server.VendingMachines
                 return;
 
             vendComponent.Denying = true;
-            _audioSystem.Play(vendComponent.SoundDeny, Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(vendComponent.SoundDeny, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
             TryUpdateVisualState(uid, vendComponent);
         }
 
@@ -200,7 +226,7 @@ namespace Content.Server.VendingMachines
             {
                 if (!_accessReader.IsAllowed(sender.Value, accessReader) && !vendComponent.Emagged)
                 {
-                    _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid, Filter.Pvs(uid));
+                    _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-access-denied"), uid);
                     Deny(uid, vendComponent);
                     return false;
                 }
@@ -229,14 +255,14 @@ namespace Content.Server.VendingMachines
 
             if (entry == null)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-invalid-item"), uid);
                 Deny(uid, vendComponent);
                 return;
             }
 
             if (entry.Amount <= 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid, Filter.Pvs(uid));
+                _popupSystem.PopupEntity(Loc.GetString("vending-machine-component-try-eject-out-of-stock"), uid);
                 Deny(uid, vendComponent);
                 return;
             }
@@ -254,7 +280,7 @@ namespace Content.Server.VendingMachines
             entry.Amount--;
             UpdateVendingMachineInterfaceState(vendComponent);
             TryUpdateVisualState(uid, vendComponent);
-            _audioSystem.Play(vendComponent.SoundVend, Filter.Pvs(vendComponent.Owner), vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
+            _audioSystem.PlayPvs(vendComponent.SoundVend, vendComponent.Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>
@@ -414,6 +440,30 @@ namespace Content.Server.VendingMachines
                     }
                 }
             }
+        }
+
+        public void TryRestockInventory(EntityUid uid, VendingMachineComponent? vendComponent = null)
+        {
+            if (!Resolve(uid, ref vendComponent))
+                return;
+
+            RestockInventoryFromPrototype(uid, vendComponent);
+
+            UpdateVendingMachineInterfaceState(vendComponent);
+            TryUpdateVisualState(uid, vendComponent);
+        }
+
+    }
+
+    public sealed class VendingMachineRestockEvent : EntityEventArgs
+    {
+        public EntityUid User { get; }
+        public EntityUid RestockBox { get; }
+
+        public VendingMachineRestockEvent(EntityUid user, EntityUid restockBox)
+        {
+            User = user;
+            RestockBox = restockBox;
         }
     }
 }

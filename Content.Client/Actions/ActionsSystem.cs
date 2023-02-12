@@ -87,6 +87,9 @@ namespace Content.Client.Actions
                 added.Add(action);
             }
 
+            if (_playerManager.LocalPlayer?.ControlledEntity != uid)
+                return;
+
             foreach (var action in removed)
             {
                 ActionRemoved?.Invoke(action);
@@ -146,7 +149,7 @@ namespace Content.Client.Actions
         /// <summary>
         ///     Execute convenience functionality for actions (pop-ups, sound, speech)
         /// </summary>
-        protected override bool PerformBasicActions(EntityUid user, ActionType action)
+        protected override bool PerformBasicActions(EntityUid user, ActionType action, bool predicted)
         {
             var performedAction = action.Sound != null
                                   || !string.IsNullOrWhiteSpace(action.UserPopup)
@@ -180,20 +183,30 @@ namespace Content.Client.Actions
 
         private void OnPlayerAttached(EntityUid uid, ActionsComponent component, PlayerAttachedEvent args)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
-
-            LinkActions?.Invoke(component);
-            PlayerActions = component;
+            LinkAllActions(component);
         }
 
         private void OnPlayerDetached(EntityUid uid, ActionsComponent component, PlayerDetachedEvent? args = null)
         {
-            if (uid != _playerManager.LocalPlayer?.ControlledEntity)
-                return;
+            UnlinkAllActions();
+        }
 
-            UnlinkActions?.Invoke();
+        public void UnlinkAllActions()
+        {
             PlayerActions = null;
+            UnlinkActions?.Invoke();
+        }
+
+        public void LinkAllActions(ActionsComponent? actions = null)
+        {
+             var player = _playerManager.LocalPlayer?.ControlledEntity;
+             if (player == null || !Resolve(player.Value, ref actions))
+             {
+                 return;
+             }
+
+             LinkActions?.Invoke(actions);
+             PlayerActions = actions;
         }
 
         public override void Shutdown()
@@ -220,7 +233,7 @@ namespace Content.Client.Actions
                 if (instantAction.Event != null)
                     instantAction.Event.Performer = user;
 
-                PerformAction(PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
+                PerformAction(user, PlayerActions, instantAction, instantAction.Event, GameTiming.CurTime);
             }
             else
             {
@@ -282,7 +295,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("action", out var actionNode))
                     continue;
 
-                var action = _serialization.Read<ActionType>(actionNode);
+                var action = _serialization.Read<ActionType>(actionNode, notNullableOverride: true);
 
                 if (PlayerActions.Actions.TryGetValue(action, out var existingAction))
                 {
@@ -297,7 +310,7 @@ namespace Content.Client.Actions
                 if (!map.TryGet("assignments", out var assignmentNode))
                     continue;
 
-                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode);
+                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode, notNullableOverride: true);
 
                 foreach (var index in nodeAssignments)
                 {

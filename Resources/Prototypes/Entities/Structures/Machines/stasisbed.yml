@@ -5,7 +5,7 @@
   description: A bed that massively slows down the patient's metabolism, allowing more time to administer a proper treatment for stabilization.
   components:
   - type: StasisBed
-    multiplier: 10
+    baseMultiplier: 10
   - type: Sprite
     sprite: Structures/Machines/stasis_bed.rsi
     netsync: false
@@ -19,6 +19,9 @@
   - type: Appearance
   - type: ApcPowerReceiver
     powerLoad: 1000
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
   - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic

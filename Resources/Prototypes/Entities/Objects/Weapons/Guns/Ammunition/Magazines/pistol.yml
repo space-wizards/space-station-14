@@ -8,6 +8,7 @@
     tags:
       - MagazinePistol
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgePistol
@@ -41,6 +42,7 @@
     tags:
       - MagazinePistolHighCapacity
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgePistol
@@ -74,6 +76,7 @@
     tags:
       - MagazinePistolSubMachineGun
   - type: BallisticAmmoProvider
+    mayTransfer: true
     whitelist:
       tags:
         - CartridgePistol
@@ -96,6 +99,7 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+
 - type: entity
   id: MagazinePistolSubMachineGunTopMounted
   name: WT550 magazine (.35 auto top-mounted)
@@ -105,6 +109,7 @@
     tags:
       - MagazinePistolSubMachineGunTopMounted
   - type: BallisticAmmoProvider
+    mayTransfer: true
     proto: CartridgePistol
     whitelist:
       tags:
@@ -123,6 +128,9 @@
     steps: 6
     zeroVisible: false
   - type: Appearance
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
 
 - type: entity
   id: MagazinePistolCalicoTopMounted

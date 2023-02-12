@@ -21,6 +21,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedJointSystem _joints = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private readonly Dictionary<ICommonSession, (EntityUid Entity, EntityUid Tether, Joint Joint)> _tethered = new();
     private readonly HashSet<ICommonSession> _draggers = new();
@@ -110,10 +111,12 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         if (TryComp<PhysicsComponent>(msg.Entity, out var body))
         {
-            body.BodyStatus = BodyStatus.InAir;
+            _physics.SetBodyStatus(body, BodyStatus.InAir);
         }
 
-        var joint = _joints.CreateMouseJoint(bodyA.Owner, bodyB.Owner, id: JointId);
+        _physics.WakeBody(tether, body: bodyA);
+        _physics.WakeBody(msg.Entity, body: bodyB);
+        var joint = _joints.CreateMouseJoint(tether, msg.Entity, id: JointId);
 
         SharedJointSystem.LinearStiffness(5f, 0.7f, bodyA.Mass, bodyB.Mass, out var stiffness, out var damping);
         joint.Stiffness = stiffness;
@@ -144,8 +147,9 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
         {
             Timer.Spawn(1000, () =>
             {
-                if (Deleted(body.Owner)) return;
-                body.BodyStatus = BodyStatus.OnGround;
+                if (Deleted(weh.Entity)) return;
+
+                _physics.SetBodyStatus(body, BodyStatus.OnGround);
             });
         }
 
@@ -183,7 +187,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
             // Force it awake, always
             if (bodyQuery.TryGetComponent(entity.Entity, out var body))
             {
-                body.WakeBody();
+                _physics.WakeBody(entity.Entity, body: body);
             }
         }
 

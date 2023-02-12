@@ -60,8 +60,9 @@
     - type: Machine
       board: SMESMachineCircuitboard
     - type: StationInfiniteBatteryTarget
-    - type: StaticPrice
-      price: 750
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: StrongMetallic
 
 # SMES' in use
 

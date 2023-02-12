@@ -24,3 +24,7 @@
     runningState: running
   - type: Machine
     board: VaccinatorMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container

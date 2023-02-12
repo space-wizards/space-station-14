@@ -1,8 +1,8 @@
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Kitchen.Components;
+using Content.Shared.Kitchen;
+using Content.Server.Kitchen.EntitySystems;
+using Content.Shared.Construction.Prototypes;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Kitchen.Components
 {
@@ -12,32 +12,55 @@ namespace Content.Server.Kitchen.Components
     /// converting something into its single juice form. E.g, grind an apple and get the nutriment and sugar
     /// it contained, juice an apple and get "apple juice".
     /// </summary>
-    [RegisterComponent]
-    public sealed class ReagentGrinderComponent : SharedReagentGrinderComponent
+    [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
+    public sealed class ReagentGrinderComponent : Component
+    {
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int StorageMaxEntities = 6;
+
+        [DataField("baseStorageMaxEntities"), ViewVariables(VVAccess.ReadWrite)]
+        public int BaseStorageMaxEntities = 4;
+
+        [DataField("machinePartStorageMax", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartStorageMax = "MatterBin";
+
+        [DataField("storagePerPartRating")]
+        public int StoragePerPartRating = 4;
+
+        [DataField("workTime"), ViewVariables(VVAccess.ReadWrite)]
+        public TimeSpan WorkTime = TimeSpan.FromSeconds(3.5); // Roughly matches the grind/juice sounds.
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WorkTimeMultiplier = 1;
+
+        [DataField("machinePartWorkTime", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
+        public string MachinePartWorkTime = "Manipulator";
+
+        [DataField("partRatingWorkTimeMultiplier")]
+        public float PartRatingWorkTimerMulitplier = 0.6f;
+
+        [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
+        [DataField("grindSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
+
+        [DataField("juiceSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
+
+        public IPlayingAudioStream? AudioStream;
+    }
+
+    [Access(typeof(ReagentGrinderSystem)), RegisterComponent]
+    public sealed class ActiveReagentGrinderComponent : Component
     {
         /// <summary>
-        /// Can be null since we won't always have a beaker in the grinder.
+        /// Remaining time until the grinder finishes grinding/juicing.
         /// </summary>
-        [ViewVariables] public Solution? BeakerSolution;
+        [ViewVariables]
+        public TimeSpan EndTime;
 
-        /// <summary>
-        /// Contains the things that are going to be ground or juiced.
-        /// </summary>
-        [ViewVariables] public Container Chamber = default!;
-
-        /// <summary>
-        /// Is the machine actively doing something and can't be used right now?
-        /// </summary>
-        public bool Busy;
-
-        //YAML serialization vars
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("chamberCapacity")] public int StorageCap = 16;
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("workTime")] public int WorkTime = 3500; //3.5 seconds, completely arbitrary for now.
-        [DataField("clickSound")] public SoundSpecifier ClickSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
-        [DataField("grindSound")] public SoundSpecifier GrindSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/blender.ogg");
-        [DataField("juiceSound")] public SoundSpecifier JuiceSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/juicer.ogg");
-
-        [DataField("beakerSlot")]
-        public ItemSlot BeakerSlot = new();
+        [ViewVariables]
+        public GrinderProgram Program;
     }
 }

@@ -1,15 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Clothing.Components;
 using Content.Server.DoAfter;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Clothing.Components;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
@@ -18,6 +14,9 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Threading;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -68,11 +67,11 @@ public sealed class SpillableSystem : EntitySystem
 
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
             return;
-        if (solution.TotalVolume == 0)
+        if (solution.Volume == 0)
             return;
 
         // spill all solution on the player
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
         SpillAt(args.Equipee, drainedSolution, "PuddleSmear");
     }
 
@@ -96,7 +95,7 @@ public sealed class SpillableSystem : EntitySystem
             : SpillAt(solution, transformComponent.Coordinates, prototype, sound: sound, combine: combine);
     }
 
-    private void SpillOnLand(EntityUid uid, SpillableComponent component, LandEvent args)
+    private void SpillOnLand(EntityUid uid, SpillableComponent component, ref LandEvent args)
     {
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution)) return;
 
@@ -109,7 +108,7 @@ public sealed class SpillableSystem : EntitySystem
                 $"{ToPrettyString(uid):entity} spilled a solution {SolutionContainerSystem.ToPrettyString(solution):solution} on landing");
         }
 
-        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.DrainAvailable);
+        var drainedSolution = _solutionContainerSystem.Drain(uid, solution, solution.Volume);
         SpillAt(drainedSolution, EntityManager.GetComponent<TransformComponent>(uid).Coordinates, "PuddleSmear");
     }
 
@@ -124,7 +123,7 @@ public sealed class SpillableSystem : EntitySystem
         if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
             return;
 
-        if (solution.DrainAvailable == FixedPoint2.Zero)
+        if (solution.Volume == FixedPoint2.Zero)
             return;
 
         Verb verb = new();
@@ -135,7 +134,7 @@ public sealed class SpillableSystem : EntitySystem
             verb.Act = () =>
             {
                 var puddleSolution = _solutionContainerSystem.SplitSolution(args.Target,
-                    solution, solution.DrainAvailable);
+                    solution, solution.Volume);
                 SpillAt(puddleSolution, Transform(args.Target).Coordinates, "PuddleSmear");
             };
         }
@@ -160,6 +159,7 @@ public sealed class SpillableSystem : EntitySystem
             };
         }
         verb.Impact = LogImpact.Medium; // dangerous reagent reaction are logged separately.
+        verb.DoContactInteraction = true;
         args.Verbs.Add(verb);
     }
 
@@ -176,7 +176,7 @@ public sealed class SpillableSystem : EntitySystem
     public PuddleComponent? SpillAt(Solution solution, EntityCoordinates coordinates, string prototype,
         bool overflow = true, bool sound = true, bool combine = true)
     {
-        if (solution.TotalVolume == 0) return null;
+        if (solution.Volume == 0) return null;
 
 
         if (!_mapManager.TryGetGrid(coordinates.GetGridUid(EntityManager), out var mapGrid))
@@ -204,7 +204,7 @@ public sealed class SpillableSystem : EntitySystem
     public PuddleComponent? SpillAt(TileRef tileRef, Solution solution, string prototype,
         bool overflow = true, bool sound = true, bool noTileReact = false, bool combine = true)
     {
-        if (solution.TotalVolume <= 0) return null;
+        if (solution.Volume <= 0) return null;
 
         // If space return early, let that spill go out into the void
         if (tileRef.Tile.IsEmpty) return null;
@@ -226,7 +226,7 @@ public sealed class SpillableSystem : EntitySystem
         }
 
         // Tile reactions used up everything.
-        if (solution.CurrentVolume == FixedPoint2.Zero)
+        if (solution.Volume == FixedPoint2.Zero)
             return null;
 
         // Get normalized co-ordinate for spill location and spill it in the centre
@@ -268,11 +268,11 @@ public sealed class SpillableSystem : EntitySystem
         component.CancelToken = null;
 
         //solution gone by other means before doafter completes
-        if (ev.Solution == null || ev.Solution.CurrentVolume == 0)
+        if (ev.Solution == null || ev.Solution.Volume == 0)
             return;
 
         var puddleSolution = _solutionContainerSystem.SplitSolution(uid,
-            ev.Solution, ev.Solution.DrainAvailable);
+            ev.Solution, ev.Solution.Volume);
 
         SpillAt(puddleSolution, Transform(component.Owner).Coordinates, "PuddleSmear");
     }

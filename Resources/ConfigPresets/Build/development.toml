@@ -1,0 +1,13 @@
+﻿[game]
+# Straight in-game baby
+lobbyenabled = false
+
+[physics]
+# Makes mapping annoying
+grid_splitting = false
+
+[shuttle]
+# Wastes startup time
+cargo = false
+emergency_enabled = false
+

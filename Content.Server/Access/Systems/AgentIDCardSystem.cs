@@ -27,10 +27,10 @@ namespace Content.Server.Access.Systems
 
         private void OnAfterInteract(EntityUid uid, AgentIDCardComponent component, AfterInteractEvent args)
         {
-            if (!TryComp<AccessComponent>(args.Target, out var targetAccess) || !TryComp<IdCardComponent>(args.Target, out var targetIDCard) || args.Target == null)
+            if (!TryComp<AccessComponent>(args.Target, out var targetAccess) || !HasComp<IdCardComponent>(args.Target) || args.Target == null)
                 return;
 
-            if (!TryComp<AccessComponent>(uid, out var access) || !TryComp<IdCardComponent>(uid, out var idCard))
+            if (!TryComp<AccessComponent>(uid, out var access) || !HasComp<IdCardComponent>(uid))
                 return;
 
             var beforeLength = access.Tags.Count;
@@ -39,15 +39,15 @@ namespace Content.Server.Access.Systems
 
             if (addedLength == 0)
             {
-                _popupSystem.PopupEntity(Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("agent-id-no-new", ("card", args.Target)), args.Target.Value, args.User);
                 return;
             }
             else if (addedLength == 1)
             {
-                _popupSystem.PopupEntity(Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+                _popupSystem.PopupEntity(Loc.GetString("agent-id-new-1", ("card", args.Target)), args.Target.Value, args.User);
                 return;
             }
-            _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, Filter.Entities(args.User));
+            _popupSystem.PopupEntity(Loc.GetString("agent-id-new", ("number", addedLength), ("card", args.Target)), args.Target.Value, args.User);
         }
 
         private void AfterUIOpen(EntityUid uid, AgentIDCardComponent component, AfterActivatableUIOpenEvent args)

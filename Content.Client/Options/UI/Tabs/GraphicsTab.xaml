@@ -32,6 +32,18 @@
                             MinWidth="200" />
                 </BoxContainer>
             </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
+                <Label Name="ViewportWidthSliderDisplay" />
+                <Control MinSize="4 0" />
+                <Slider Name="ViewportWidthSlider"
+                        Rounded="True"
+                        MinWidth="200" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'ui-options-hud-layout'}" />
+                <Control MinSize="4 0" />
+                <OptionButton Name="HudLayoutOption" />
+            </BoxContainer>
             <CheckBox Name="IntegerScalingCheckBox"
                       Text="{Loc 'ui-options-vp-integer-scaling'}"
                       ToolTip="{Loc 'ui-options-vp-integer-scaling-tooltip'}" />

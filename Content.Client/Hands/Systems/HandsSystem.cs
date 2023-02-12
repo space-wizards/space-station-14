@@ -1,6 +1,6 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Client.Animations;
 using Content.Client.Examine;
+using Content.Client.Strip;
 using Content.Client.Verbs;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -13,6 +13,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using System.Diagnostics.CodeAnalysis;
+using Content.Client.Verbs.UI;
+using Robust.Client.UserInterface;
 
 namespace Content.Client.Hands.Systems
 {
@@ -21,10 +24,11 @@ namespace Content.Client.Hands.Systems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly StrippableSystem _stripSys = default!;
         [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly VerbSystem _verbs = default!;
 
         public event Action<string, HandLocation>? OnPlayerAddHand;
         public event Action<string>? OnPlayerRemoveHand;
@@ -92,6 +96,8 @@ namespace Content.Client.Hands.Systems
                 component.SortedHands = new(state.HandNames);
             }
 
+            _stripSys.UpdateUi(uid);
+
             if (component.ActiveHand == null && state.ActiveHand == null)
                 return; //edge case
 
@@ -125,6 +131,16 @@ namespace Content.Client.Hands.Systems
             ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
         }
         #endregion
+
+        public void ReloadHandButtons()
+        {
+            if (!TryGetPlayerHands(out var hands))
+            {
+                return;
+            }
+
+            OnPlayerHandsAdded?.Invoke(hands);
+        }
 
         public override void DoDrop(EntityUid uid, Hand hand, bool doDropInteraction = true, SharedHandsComponent? hands = null)
         {
@@ -226,7 +242,12 @@ namespace Content.Client.Hands.Systems
                 return;
             }
 
-            _verbs.VerbMenu.OpenVerbMenu(entity);
+            _ui.GetUIController<VerbMenuUIController>().OpenVerbMenu(entity);
+        }
+
+        public void UIHandAltActivateItem(string handName)
+        {
+            RaisePredictiveEvent(new RequestHandAltInteractEvent(handName));
         }
 
         #region visuals
@@ -236,6 +257,7 @@ namespace Content.Client.Hands.Systems
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
+            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -251,6 +273,7 @@ namespace Content.Client.Hands.Systems
             if (!handComp.Hands.TryGetValue(args.Container.ID, out var hand))
                 return;
             UpdateHandVisuals(uid, args.Entity, hand);
+            _stripSys.UpdateUi(uid);
 
             if (uid != _playerManager.LocalPlayer?.ControlledEntity)
                 return;
@@ -268,6 +291,10 @@ namespace Content.Client.Hands.Systems
         {
             if (!Resolve(uid, ref handComp, ref sprite, false))
                 return;
+
+            // visual update might involve changes to the entity's effective sprite -> need to update hands GUI.
+            if (uid == _playerManager.LocalPlayer?.ControlledEntity)
+                OnPlayerItemAdded?.Invoke(hand.Name, held);
 
             if (!handComp.ShowInHands)
                 return;
@@ -345,8 +372,7 @@ namespace Content.Client.Hands.Systems
 
         private void HandlePlayerAttached(EntityUid uid, HandsComponent component, PlayerAttachedEvent args)
         {
-            if (_playerManager.LocalPlayer?.ControlledEntity == uid)
-                OnPlayerHandsAdded?.Invoke(component);
+            OnPlayerHandsAdded?.Invoke(component);
         }
 
         private void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)

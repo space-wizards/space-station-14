@@ -389,6 +389,8 @@
     - Trash
   - type: Recyclable
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   noSpawn: true
@@ -530,6 +532,8 @@
   - type: Sprite
     state: fortune
   - type: Item
+  - type: RandomMetadata
+    descriptionSegments: [CookieFortuneDescriptions]
 
 - type: entity
   noSpawn: true

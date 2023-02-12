@@ -22,7 +22,7 @@ namespace Content.Client.Preferences.UI
         private void RandomizeName()
         {
             if (Profile == null) return;
-            var name = Profile.Sex.GetName(Profile.Species, _prototypeManager, _random);
+            var name = HumanoidCharacterProfile.GetName(Profile.Species, Profile.Gender);
             SetName(name);
             UpdateNameEdit();
         }

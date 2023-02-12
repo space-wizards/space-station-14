@@ -47,7 +47,7 @@ namespace Content.Shared.Chemistry
 
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
             var args = new ReagentEffectArgs(uid, null, source, reagent,
-                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method, null);
+                source?.GetReagentQuantity(reagent.ID) ?? reactVolume, EntityManager, method, 1f);
 
             // First, check if the reagent wants to apply any effects.
             if (reagent.ReactiveEffects != null && reactive.ReactiveGroups != null)

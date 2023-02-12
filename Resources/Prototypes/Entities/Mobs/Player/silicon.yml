@@ -51,8 +51,7 @@
   - type: Hands
     showInHands: false
   - type: Body
-    template: DroneTemplate
-    preset: DronePreset
+    prototype: Drone
   - type: DoAfter
   - type: Pullable
   - type: Examiner
@@ -99,6 +98,10 @@
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       60: Dead
@@ -155,7 +158,7 @@
     toggleAction:
       name: action-name-toggle-light
       description: action-description-toggle-light
-      icon: Objects/Tools/flashlight.rsi/flashlight.png
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
       iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
       event: !type:ToggleActionEvent
   - type: PointLight
@@ -193,6 +196,10 @@
     baseWalkSpeed : 3
     baseSprintSpeed : 2
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       1000: Dead

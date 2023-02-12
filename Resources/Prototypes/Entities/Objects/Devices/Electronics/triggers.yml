@@ -43,3 +43,18 @@
     - type: SignalReceiver
     - type: StaticPrice
       price: 40
+
+- type: entity
+  parent: BaseItem
+  id: VoiceTrigger
+  name: voice trigger
+  description: Adds a machine link that is triggered by vocal keywords
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/voice.rsi
+    state: voice
+  - type: PayloadTrigger
+    components:
+    - type: TriggerOnVoice
+    - type: StaticPrice
+      price: 40

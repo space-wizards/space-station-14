@@ -1,17 +1,19 @@
 - type: vendingMachineInventory
   id: NutriMaxInventory
   startingInventory:
-    HydroponicsToolSpade: 2
-    HydroponicsToolMiniHoe: 2
-    HydroponicsToolClippers: 2
-    HydroponicsToolScythe: 2
-    HydroponicsToolHatchet: 2
-    PlantBag: 2
+    HydroponicsToolSpade: 3
+    HydroponicsToolMiniHoe: 3
+    HydroponicsToolClippers: 3
+    HydroponicsToolScythe: 3
+    HydroponicsToolHatchet: 3
+    PlantBag: 3
     PlantBGoneSpray: 20
     WeedSpray: 20
     PestSpray: 20
     Syringe: 5
     RobustHarvestChemistryBottle: 3
+    Bucket: 3
+    DiseaseSwab: 20
     #TO DO:
     #plant analyzer
 

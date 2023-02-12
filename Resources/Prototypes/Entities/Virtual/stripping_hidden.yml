@@ -1,0 +1,13 @@
+﻿# Special entity that indicates that there is something in a player's pockets, without showing the actual entity.
+# This **could** just be done via UI elements, but the existing UI uses sprite-views & the examine-system. So this is easier than special casing this.
+
+- type: entity
+  id: StrippingHiddenEntity
+  name: Hidden Entity
+  description: There is something in this pocket. #Or maybe they ar... nah... too obvious a joke.
+  noSpawn: true
+  components:
+  - type: Sprite
+    texture: Interface/VerbIcons/information.svg.192dpi.png
+    netsync: false
+    scale: 0.3,0.3

@@ -154,6 +154,48 @@
       ]
     },
     {
+      "name": "artifact",
+      "directions": 4,
+      "delays": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    {
       "name": "atmos_key",
       "directions": 4
     },
@@ -354,7 +396,7 @@
       "directions": 4
     },
     {
-      "name": "computer_broken",
+      "name": "screen_broken",
       "directions": 4
     },
     {
@@ -930,11 +972,11 @@
       ]
     },
     {
-      "name": "generic_key",
+      "name": "generic_keys",
       "directions": 4
     },
     {
-      "name": "generic_key_off",
+      "name": "generic_keyboard",
       "directions": 4
     },
     {
@@ -1558,7 +1600,14 @@
       "name": "television"
     },
     {
+      "name": "television_broken"
+    },
+    {
       "name": "telescreen",
+      "directions": 4
+    },
+    {
+      "name": "telescreen_frame",
       "directions": 4
     },
     {

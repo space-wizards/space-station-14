@@ -122,7 +122,7 @@
     Alcohol:
       effects:
       - !type:Drunk
-        boozePower: 3
+        boozePower: 20
 
 - type: reagent
   id: Gin
@@ -143,14 +143,14 @@
         amount: 0.2
 
 - type: reagent
-  id: Kahlua
-  name: reagent-name-kahlua
+  id: CoffeeLiqueur
+  name: reagent-name-coffeeliqueur
   parent: BaseAlcohol
-  desc: reagent-desc-kahlua
+  desc: reagent-desc-coffeeliqueur
   physicalDesc: reagent-physical-desc-cloudy
   flavor: coffeeliquor
   color: "#664300"
-  spritePath: kahluaglass.rsi
+  spritePath: coffeeliqueurglass.rsi
 
 - type: reagent
   id: MelonLiquor
@@ -605,10 +605,10 @@
         amount: 0.15
 
 - type: reagent
-  id: ErikaSuprise
-  name: reagent-name-erika-suprise
+  id: ErikaSurprise
+  name: reagent-name-erika-surprise
   parent: BaseAlcohol
-  desc: reagent-desc-erika-suprise
+  desc: reagent-desc-erika-surprise
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: alcohol
   color: "#2E6671"
