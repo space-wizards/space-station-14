@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug causing some entities not being interactable., type: Fix}
-  id: 2534
-  time: '2022-10-28T03:30:48.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Changed it so lamps now spawn with power cells., type: Tweak}
@@ -2915,3 +2910,8 @@ Entries:
   - {message: Artifact gas triggers can no longer be activated from Frezon., type: Tweak}
   id: 3033
   time: '2023-02-13T13:30:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Ore veins are now destroyed in 1 hit rather than 3., type: Tweak}
+  id: 3034
+  time: '2023-02-13T15:32:27.0000000+00:00'
