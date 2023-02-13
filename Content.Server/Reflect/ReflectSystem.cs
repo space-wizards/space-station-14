@@ -44,7 +44,7 @@ public sealed class ReflectSystem : EntitySystem
                     && reflect.Enabled
                     && _random.Prob(reflect.Chance))
                 {
-                    var vel = -_physics.GetMapLinearVelocity(uid);
+                    var vel = _physics.GetMapLinearVelocity(args.Target) - _physics.GetMapLinearVelocity(uid);
                     var force = -physicsComp.Force;
                     var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
                     vel = spread.RotateVec(vel);
