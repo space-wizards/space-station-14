@@ -64,6 +64,18 @@ public abstract class SharedEntityStorageComponent : Component
     public float EnteringRange = 0.18f;
 
     /// <summary>
+    /// Whether or not to show the contents when the storage is closed
+    /// </summary>
+    [DataField("showContents")]
+    public bool ShowContents;
+
+    /// <summary>
+    /// Whether or not light is occluded by the storage
+    /// </summary>
+    [DataField("occludesLight")]
+    public bool OccludesLight = true;
+
+    /// <summary>
     /// Whether or not all the contents stored should be deleted with the entitystorage
     /// </summary>
     [DataField("deleteContentsOnDestruction"), ViewVariables(VVAccess.ReadWrite)]
