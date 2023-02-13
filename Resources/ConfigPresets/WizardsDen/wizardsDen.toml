@@ -1,0 +1,5 @@
+﻿# Base configuration preset used on all Wizard's Den servers.
+# Loaded before server-specific config presets by configuration.
+
+[game]
+desc = "Official English Space Station 14 servers. Vanilla, low roleplay."
