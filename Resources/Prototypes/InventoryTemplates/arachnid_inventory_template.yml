@@ -15,6 +15,14 @@
       uiWindowPos: 0,2
       strippingWindowPos: 0,2
       displayName: Jumpsuit
+    - name: outerClothing
+      slotTexture: suit
+      slotFlags: OUTERCLOTHING
+      slotGroup: MainHotbar
+      stripTime: 6
+      uiWindowPos: 1,2
+      strippingWindowPos: 1,2
+      displayName: Suit
     - name: gloves
       slotTexture: gloves
       slotFlags: GLOVES
@@ -33,13 +41,6 @@
       uiWindowPos: 1,1
       strippingWindowPos: 1,1
       displayName: Mask
-    - name: eyes
-      slotTexture: glasses
-      slotFlags: EYES
-      stripTime: 3
-      uiWindowPos: 0,0
-      strippingWindowPos: 0,0
-      displayName: Eyes
     - name: ears
       slotTexture: ears
       slotFlags: EARS
@@ -73,22 +74,6 @@
       dependsOn: jumpsuit
       displayName: Pocket 2
       stripHidden: true
-    - name: web1
-      slotTexture: web
-      slotFlags: POCKET
-      slotGroup: MainHotbar
-      stripTime: 3
-      uiWindowPos: 0,3
-      strippingWindowPos: 0,3
-      displayName: Left Web
-    - name: web2
-      slotTexture: web
-      slotFlags: POCKET
-      slotGroup: MainHotbar
-      stripTime: 3
-      uiWindowPos: 6,3
-      strippingWindowPos: 2,3
-      displayName: Right Web
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -114,3 +99,17 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
+    - name: web1
+      slotTexture: web
+      slotFlags: POCKET
+      stripTime: 3
+      uiWindowPos: 0,3
+      strippingWindowPos: 0,3
+      displayName: Left Web
+    - name: web2
+      slotTexture: web
+      slotFlags: POCKET
+      stripTime: 3
+      uiWindowPos: 6,3
+      strippingWindowPos: 2,3
+      displayName: Right Web

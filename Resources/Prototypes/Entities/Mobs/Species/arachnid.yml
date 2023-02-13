@@ -23,20 +23,20 @@
   - type: Thirst
   # Damage and stuff
   - type: Temperature
-    heatDamageThreshold: 337.15
-    coldDamageThreshold: 285.15
+    heatDamageThreshold: 400 # Insects like heat
+    coldDamageThreshold: 285 # Spiders don't tolerate the cold too well
     currentTemperature: 310.15
-    specificHeat: 42
+    specificHeat: 46
     coldDamage:
       types:
-        Cold: 0.125 #Spiders do not like the cold, being cold blooded + all
+        Cold : 0.2 #per second, scales with temperature & other constants
     heatDamage:
       types:
-        Heat: 0.1
+        Heat : 0.1 #per second, scales with temperature & other constants
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0 # exoskeleton
+        Blunt: 0.15 #per second, scales with pressure and other constants.
   # Misc
   - type: Inventory
     templateId: arachnid
