@@ -5,8 +5,6 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Shipyard.Prototypes
 {
-    [NetSerializable, Serializable]
-
     [Prototype("vessel")]
 
     public sealed class VesselPrototype : IPrototype
