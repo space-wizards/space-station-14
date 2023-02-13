@@ -61,8 +61,7 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCompleteEvent>(OnEjectBulbComplete);
-            SubscribeLocalEvent<PoweredLightComponent, EjectBulbCancelledEvent>(OnEjectBulbCancelled);
+            SubscribeLocalEvent<PoweredLightComponent, DoAfterEvent>(OnDoAfter);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -93,9 +92,6 @@ namespace Content.Server.Light.EntitySystems
         private void OnInteractHand(EntityUid uid, PoweredLightComponent light, InteractHandEvent args)
         {
             if (args.Handled)
-                return;
-
-            if (light.CancelToken != null)
                 return;
 
             // check if light has bulb to eject
@@ -141,22 +137,11 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            light.CancelToken = new CancellationTokenSource();
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, light.CancelToken.Token, uid)
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, target:uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true,
-                TargetFinishedEvent = new EjectBulbCompleteEvent()
-                {
-                    Component = light,
-                    User = userUid,
-                    Target = uid,
-                },
-                TargetCancelledEvent = new EjectBulbCancelledEvent()
-                {
-                    Component = light,
-                }
+                BreakOnStun = true
             });
 
             args.Handled = true;
@@ -427,27 +412,14 @@ namespace Content.Server.Light.EntitySystems
             UpdateLight(uid, light);
         }
 
-        private void OnEjectBulbComplete(EntityUid uid, PoweredLightComponent component, EjectBulbCompleteEvent args)
+        private void OnDoAfter(EntityUid uid, PoweredLightComponent component, DoAfterEvent args)
         {
-            args.Component.CancelToken = null;
-            EjectBulb(args.Target, args.User, args.Component);
-        }
+            if (args.Handled || args.Cancelled || args.Args.Target == null)
+                return;
 
-        private static void OnEjectBulbCancelled(EntityUid uid, PoweredLightComponent component, EjectBulbCancelledEvent args)
-        {
-            args.Component.CancelToken = null;
-        }
+            EjectBulb(args.Args.Target.Value, args.Args.User, component);
 
-        private sealed class EjectBulbCompleteEvent : EntityEventArgs
-        {
-            public PoweredLightComponent Component { get; init; } = default!;
-            public EntityUid User { get; init; }
-            public EntityUid Target { get; init; }
-        }
-
-        private sealed class EjectBulbCancelledEvent : EntityEventArgs
-        {
-            public PoweredLightComponent Component { get; init; } = default!;
+            args.Handled = true;
         }
     }
 }
