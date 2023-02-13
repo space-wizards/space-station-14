@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Stunnable;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 
@@ -199,7 +200,7 @@ public abstract class SharedDoAfterSystem : EntitySystem
         ///     Use this if you don't have any extra data to send with the DoAfter
         /// </summary>
         /// <param name="eventArgs">The DoAfterEventArgs</param>
-        public void DoAfter(DoAfterEventArgs eventArgs)
+        public DoAfter DoAfter(DoAfterEventArgs eventArgs)
         {
             var doAfter = CreateDoAfter(eventArgs);
 
@@ -207,6 +208,8 @@ public abstract class SharedDoAfterSystem : EntitySystem
             {
                 Send(cancelled, eventArgs);
             };
+
+            return doAfter;
         }
 
         private DoAfter CreateDoAfter(DoAfterEventArgs eventArgs)
@@ -349,7 +352,6 @@ public abstract class SharedDoAfterSystem : EntitySystem
         {
             var ev = new DoAfterEvent(cancelled, args);
 
-            //TODO: Sends three times which works but doesn't in cases where you need it to run only once
             RaiseDoAfterEvent(ev, args);
         }
 

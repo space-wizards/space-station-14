@@ -1,12 +1,12 @@
 using Content.Server.Storage.Components;
 using Content.Server.DoAfter;
-using Robust.Shared.Containers;
 using Content.Server.Popups;
 using Content.Shared.Movement.Events;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Lock;
 using Content.Shared.Popups;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Resist;
 
@@ -22,7 +22,7 @@ public sealed class ResistLockerSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<ResistLockerComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
         SubscribeLocalEvent<ResistLockerComponent, DoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemovedFromContainer);
+        SubscribeLocalEvent<ResistLockerComponent, EntRemovedFromContainerMessage>(OnRemoved);
     }
 
     private void OnRelayMovement(EntityUid uid, ResistLockerComponent component, ref ContainerRelayMovementEntityEvent args)
@@ -55,7 +55,13 @@ public sealed class ResistLockerSystem : EntitySystem
 
         resistLockerComponent.IsResisting = true;
         _popupSystem.PopupEntity(Loc.GetString("resist-locker-component-start-resisting"), user, user, PopupType.Large);
-        _doAfterSystem.DoAfter(doAfterEventArgs);
+        resistLockerComponent.DoAfter = _doAfterSystem.DoAfter(doAfterEventArgs);
+    }
+
+    private void OnRemoved(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage args)
+    {
+        if (component.DoAfter != null)
+            _doAfterSystem.Cancel(component.DoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, ResistLockerComponent component, DoAfterEvent args)
@@ -84,10 +90,5 @@ public sealed class ResistLockerSystem : EntitySystem
         }
 
         args.Handled = true;
-    }
-
-    private void OnRemovedFromContainer(EntityUid uid, ResistLockerComponent component, EntRemovedFromContainerMessage message)
-    {
-        //TODO: Figure out how to cancel DoAfter from here
     }
 }

@@ -17,4 +17,9 @@ public sealed class ResistLockerComponent : Component
     /// </summary>
     [ViewVariables]
     public bool IsResisting = false;
+
+    /// <summary>
+    /// Used to cancel the DoAfter when a locker is open
+    /// </summary>
+    public Shared.DoAfter.DoAfter? DoAfter;
 }
