@@ -14,6 +14,10 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
     [Dependency] private readonly ArtifactSystem _artifact = default!;
     [Dependency] private readonly SpillableSystem _spillable = default!;
 
+    /// <summary>
+    /// The key for the node data entry containing
+    /// the chemicals that the puddle is made of.
+    /// </summary>
     public const string NodeDataChemicalList = "nodeDataSpawnAmount";
 
     /// <inheritdoc/>
