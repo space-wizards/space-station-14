@@ -221,17 +221,17 @@ namespace Content.Client.Options.UI.Tabs
 
         private int GetConfigLightingQuality()
         {
-            var val = _cfg.GetCVar(CVars.DisplayLightMapDivider);
-            var soft = _cfg.GetCVar(CVars.DisplaySoftShadows);
-            if (val >= 8)
+            var val = _cfg.GetCVar(CVars.LightResolutionScale);
+            var soft = _cfg.GetCVar(CVars.LightSoftShadows);
+            if (val <= 0.125)
             {
                 return 0;
             }
-            else if ((val >= 2) && !soft)
+            else if ((val <= 0.5) && !soft)
             {
                 return 1;
             }
-            else if (val >= 2)
+            else if (val <= 0.5)
             {
                 return 2;
             }
@@ -246,24 +246,24 @@ namespace Content.Client.Options.UI.Tabs
             switch (value)
             {
                 case 0:
-                    _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
-                    _cfg.SetCVar(CVars.DisplaySoftShadows, false);
-                    _cfg.SetCVar(CVars.DisplayBlurLight, false);
+                    _cfg.SetCVar(CVars.LightResolutionScale, 0.125f);
+                    _cfg.SetCVar(CVars.LightSoftShadows, false);
+                    _cfg.SetCVar(CVars.LightBlur, false);
                     break;
                 case 1:
-                    _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
-                    _cfg.SetCVar(CVars.DisplaySoftShadows, false);
-                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
+                    _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
+                    _cfg.SetCVar(CVars.LightSoftShadows, false);
+                    _cfg.SetCVar(CVars.LightBlur, true);
                     break;
                 case 2:
-                    _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
-                    _cfg.SetCVar(CVars.DisplaySoftShadows, true);
-                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
+                    _cfg.SetCVar(CVars.LightResolutionScale, 0.5f);
+                    _cfg.SetCVar(CVars.LightSoftShadows, true);
+                    _cfg.SetCVar(CVars.LightBlur, true);
                     break;
                 case 3:
-                    _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
-                    _cfg.SetCVar(CVars.DisplaySoftShadows, true);
-                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
+                    _cfg.SetCVar(CVars.LightResolutionScale, 1);
+                    _cfg.SetCVar(CVars.LightSoftShadows, true);
+                    _cfg.SetCVar(CVars.LightBlur, true);
                     break;
             }
         }
