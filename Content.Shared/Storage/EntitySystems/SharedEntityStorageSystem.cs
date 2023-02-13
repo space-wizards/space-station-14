@@ -127,10 +127,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.LastInternalOpenAttempt = _timing.CurTime;
         if (component.OpenOnMove)
         {
-            TryOpenStorage(args.Entity, component.Owner);
+            TryOpenStorage(args.Entity, uid);
         }
     }
-
 
     private void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
     {
