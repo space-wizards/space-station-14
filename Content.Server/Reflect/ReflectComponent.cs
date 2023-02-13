@@ -14,8 +14,8 @@ public sealed class ReflectComponent : Component
     [DataField("enabled")]
     public bool Enabled;
 
-    [DataField("reflectChance")]
-    public float ReflectChance;
+    [DataField("chance")]
+    public float Chance;
 
     [DataField("onReflect")]
     public SoundSpecifier? OnReflect { get; set; }

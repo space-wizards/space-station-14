@@ -41,7 +41,7 @@ public sealed class ReflectSystem : EntitySystem
             {
                 if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
                     && reflect.Enabled
-                    && _random.Prob(reflect.ReflectChance))
+                    && _random.Prob(reflect.Chance))
                 {
                     var vel = _physics.GetMapLinearVelocity(uid);
                     var force = physicsComp.Force;
@@ -68,7 +68,7 @@ public sealed class ReflectSystem : EntitySystem
             {
                 if (TryComp<ReflectComponent>(hand.HeldEntity, out var reflect)
                     && reflect.Enabled
-                    && _random.Prob(reflect.ReflectChance))
+                    && _random.Prob(reflect.Chance))
                 {
                     _popup.PopupEntity(Loc.GetString("reflect-hit-scan"), args.Target, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, args.Target, AudioHelpers.WithVariation(0.05f, _random));
