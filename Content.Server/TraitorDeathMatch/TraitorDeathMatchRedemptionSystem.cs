@@ -7,7 +7,6 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
 
 namespace Content.Server.TraitorDeathMatch;
 
@@ -17,8 +16,6 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly StoreSystem _store = default!;
-
-    private const string TcCurrencyPrototype = "Telecrystal";
 
     public override void Initialize()
     {
@@ -99,7 +96,7 @@ public sealed class TraitorDeathMatchRedemptionSystem : EntitySystem
         // 4 is the per-PDA bonus amount
         var transferAmount = _uplink.GetTCBalance(victimUplink) + 4;
         victimUplink.Balance.Clear();
-        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>() { {"Telecrystal", FixedPoint2.New(transferAmount)}}, userUplink);
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>() { {"Telecrystal", FixedPoint2.New(transferAmount)}}, userUplink.Owner, userUplink);
 
         EntityManager.DeleteEntity(victimUplink.Owner);
 

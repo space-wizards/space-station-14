@@ -77,12 +77,11 @@
     Steel: 5
 
 - type: latheRecipe
-  id: CartridgeCaselessRifleRubber
-  result: CartridgeCaselessRifleRubber
+  id: CartridgeRifle
+  result: CartridgeRifle
   completetime: 2
   materials:
-    Plastic: 10
-    Steel: 5
+    Steel: 15
 
 - type: latheRecipe
   id: CartridgeLightRifleRubber
@@ -149,19 +148,82 @@
   id: TargetHuman
   result: TargetHuman
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
-    Steel: 10
+    Steel: 500
 
 - type: latheRecipe
   id: TargetClown
   result: TargetClown
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
-    Steel: 10
+    Steel: 500
 
 - type: latheRecipe
   id: TargetSyndicate
   result: TargetSyndicate
   completetime: 5
+  applyMaterialDiscount: false # ingredients dropped when destroyed
   materials:
-    Steel: 10
+    Steel: 500
+
+- type: latheRecipe
+  id: MagazineBoxPistol
+  result: MagazineBoxPistol
+  completetime: 5
+  materials:
+    Steel: 650
+
+- type: latheRecipe
+  id: MagazineBoxPistolRubber
+  result: MagazineBoxPistolRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineBoxMagnum
+  result: MagazineBoxMagnum
+  completetime: 5
+  materials:
+    Steel: 1250
+
+- type: latheRecipe
+  id: MagazineBoxMagnumRubber
+  result: MagazineBoxMagnumRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 300
+
+- type: latheRecipe
+  id: MagazineBoxRifle
+  result: MagazineBoxRifle
+  completetime: 5
+  materials: 
+    Steel: 950
+
+- type: latheRecipe
+  id: MagazineBoxRifleRubber
+  result: MagazineBoxRifleRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 600
+
+- type: latheRecipe
+  id: MagazineBoxLightRifle
+  result: MagazineBoxLightRifle
+  completetime: 5
+  materials:
+    Steel: 1800
+
+- type: latheRecipe
+  id: MagazineBoxLightRifleRubber
+  result: MagazineBoxLightRifleRubber
+  completetime: 5
+  materials:
+    Steel: 350
+    Plastic: 600

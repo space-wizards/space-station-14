@@ -22,11 +22,6 @@ namespace Content.Client.Fluids
 
         private void OnComponentInit(EntityUid uid, PuddleVisualizerComponent puddleVisuals, ComponentInit args)
         {
-            if (!TryComp(uid, out AppearanceComponent? appearance))
-            {
-                return;
-            }
-
             if (!TryComp(uid, out SpriteComponent? sprite))
             {
                 return;
@@ -45,57 +40,36 @@ namespace Content.Client.Fluids
                 return;
             }
 
-            if  (args.Component.TryGetData(PuddleVisuals.VolumeScale, out float volumeScale)
-                && args.Component.TryGetData(PuddleVisuals.CurrentVolume, out FixedPoint2 currentVolume)
-                && args.Component.TryGetData(PuddleVisuals.SolutionColor, out Color solutionColor)
-                && args.Component.TryGetData(PuddleVisuals.IsEvaporatingVisual, out bool isEvaporating))
+            if (!AppearanceSystem.TryGetData<float>(uid, PuddleVisuals.VolumeScale, out var volumeScale)
+                || !AppearanceSystem.TryGetData<FixedPoint2>(uid, PuddleVisuals.CurrentVolume, out var currentVolume)
+                || !AppearanceSystem.TryGetData<Color>(uid, PuddleVisuals.SolutionColor, out var solutionColor)
+                || !AppearanceSystem.TryGetData<bool>(uid, PuddleVisuals.IsEvaporatingVisual, out var isEvaporating))
             {
-                // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
-                var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
+                return;
+            }
 
-                Color newColor;
-                if (component.Recolor)
-                {
-                    newColor = solutionColor.WithAlpha(cappedScale);
-                }
-                else
-                {
-                    newColor = args.Sprite.Color.WithAlpha(cappedScale);
-                }
+            // volumeScale is our opacity based on level of fullness to overflow. The lower bound is hard-capped for visibility reasons.
+            var cappedScale = Math.Min(1.0f, volumeScale * 0.75f + 0.25f);
 
-                args.Sprite.LayerSetColor(0, newColor);
+            var newColor = component.Recolor ? solutionColor.WithAlpha(cappedScale) : args.Sprite.Color.WithAlpha(cappedScale);
 
-                if (component.CustomPuddleSprite) //Don't consider wet floor effects if we're using a custom sprite.
-                {
-                    return;
-                }
+            args.Sprite.LayerSetColor(0, newColor);
 
-                bool wetFloorEffectNeeded;
+            // Don't consider wet floor effects if we're using a custom sprite.
+            if (component.CustomPuddleSprite)
+                return;
 
-                if (isEvaporating
-                    && currentVolume <= component.WetFloorEffectThreshold)
-                {
-                    wetFloorEffectNeeded = true;
-                }
-                else
-                    wetFloorEffectNeeded = false;
-
-                if (wetFloorEffectNeeded)
-                {
-                    if (args.Sprite.LayerGetState(0) != "sparkles") // If we need the effect but don't already have it - start it
-                    {
-                        StartWetFloorEffect(args.Sprite, component.WetFloorEffectAlpha);
-                    }
-                }
-                else
-                {
-                    if (args.Sprite.LayerGetState(0) == "sparkles") // If we have the effect but don't need it - end it
-                        EndWetFloorEffect(args.Sprite, component.OriginalRsi);
-                }
+            if (isEvaporating && currentVolume <= component.WetFloorEffectThreshold)
+            {
+                // If we need the effect but don't already have it - start it
+                if (args.Sprite.LayerGetState(0) != "sparkles")
+                    StartWetFloorEffect(args.Sprite, component.WetFloorEffectAlpha);
             }
             else
             {
-                return;
+                // If we have the effect but don't need it - end it
+                if (args.Sprite.LayerGetState(0) == "sparkles")
+                    EndWetFloorEffect(args.Sprite, component.OriginalRsi);
             }
         }
 

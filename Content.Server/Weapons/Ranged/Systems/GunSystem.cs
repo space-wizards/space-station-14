@@ -2,7 +2,6 @@ using System.Linq;
 using Content.Server.Cargo.Systems;
 using Content.Server.Examine;
 using Content.Server.Interaction;
-using Content.Server.Interaction.Components;
 using Content.Server.Stunnable;
 using Content.Server.Weapons.Melee;
 using Content.Server.Weapons.Ranged.Components;
@@ -10,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Projectiles;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Ranged;
@@ -243,12 +243,12 @@ public sealed partial class GunSystem : SharedGunSystem
     public void ShootProjectile(EntityUid uid, Vector2 direction, Vector2 gunVelocity, EntityUid? user = null, float speed = 20f)
     {
         var physics = EnsureComp<PhysicsComponent>(uid);
-        physics.BodyStatus = BodyStatus.InAir;
+        Physics.SetBodyStatus(physics, BodyStatus.InAir);
 
         var targetMapVelocity = gunVelocity + direction.Normalized * speed;
         var currentMapVelocity = Physics.GetMapLinearVelocity(uid, physics);
         var finalLinear = physics.LinearVelocity + targetMapVelocity - currentMapVelocity;
-        Physics.SetLinearVelocity(physics, finalLinear);
+        Physics.SetLinearVelocity(uid, finalLinear, body: physics);
 
         if (user != null)
         {

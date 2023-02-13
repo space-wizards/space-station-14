@@ -69,14 +69,17 @@ uplink-agent-id-card-desc = A modified ID card that can copy accesses from other
 uplink-black-jetpack-name = Black Jetpack
 uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Additional fuel not included.
 
-uplink-reinforcement-teleporter-name = Reinforcement Teleporter
-uplink-reinforcement-teleporter-desc =  Teleport in an agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
+uplink-reinforcement-radio-name = Reinforcement Teleporter
+uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
 
 uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 
 uplink-headset-name = Syndicate Over-ear Headset
-uplink-headset-desc = A headset that allows you to listen in on departmental channels, or contact other traitors.
+uplink-headset-desc = A headset that allows you to communicate with other syndicate operatives. Has 4 slots for encryption keys.
+
+uplink-encryption-key-name = Syndicate Encryption Key
+uplink-encryption-key-desc = An encryption key for access to the secret frequency of our special agents. No one will know about your special channel with friends... or rivals.
 
 uplink-hypopen-name = Hypopen
 uplink-hypopen-desc = A chemical hypospray disguised as a pen, capable of instantly injecting up to 15u of reagents. Starts empty.

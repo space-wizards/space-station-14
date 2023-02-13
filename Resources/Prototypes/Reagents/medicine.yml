@@ -227,9 +227,9 @@
       effects:
       - !type:HealthChange
         conditions:
-        - !type:TotalDamage
           # they gotta be in crit first
-          min: 100
+        - !type:MobStateCondition
+          mobstate: Critical
         - !type:ReagentThreshold
           min: 0
           max: 20
@@ -422,7 +422,8 @@
         key: Stutter
         component: StutteringAccent
       - !type:Jitter
-      - !type:Scream
+      - !type:Emote
+        emote: Scream
         probability: 0.2
       - !type:PopupMessage
         type: Local
@@ -710,3 +711,49 @@
         conditions:
         - !type:ReagentThreshold
           min: 5
+
+- type: reagent
+  id: Ethyloxyephedrine
+  name: reagent-name-ethyloxyephedrine
+  desc: reagent-desc-ethyloxyephedrine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: medicine
+  color: "#d5d5e4"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:Jitter
+      - !type:GenericStatusEffect
+        key: Stutter
+        component: StutteringAccent
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentThreshold
+          min: 10
+      - !type:PopupMessage
+        visualType: Medium
+        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        type: Local
+        probability: 0.1
+
+- type: reagent
+  id: Diphenylmethylamine
+  name: reagent-name-diphenylmethylamine
+  desc: reagent-desc-diphenylmethylamine
+  group: Medicine
+  physicalDesc: reagent-physical-desc-glowing
+  flavor: medicine
+  color: "#b0abaa"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:ResetNarcolepsy
+        conditions:
+        - !type:ReagentThreshold
+          min: 5
+      - !type:PopupMessage
+        visualType: Medium
+        messages: ["ethyloxyephedrine-effect-feeling-awake", "ethyloxyephedrine-effect-clear-mind"]
+        type: Local
+        probability: 0.1

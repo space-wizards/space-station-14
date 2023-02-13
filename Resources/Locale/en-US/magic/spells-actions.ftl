@@ -1,6 +1,15 @@
 ﻿action-name-spell-rune-flash = Flash Rune
 action-description-spell-rune-flash = Summons a rune that flashes if used.
 
+action-name-spell-rune-explosion = Explosion Rune
+action-description-spell-rune-explosion = Summons a rune that explodes if used.
+
+action-name-spell-rune-ignite = Ignite Rune
+action-description-spell-rune-ignite = Summons a rune that ignites if used.
+
+action-name-spell-rune-stun = Stun Rune
+action-description-spell-rune-stun = Summons a rune that stuns if used.
+
 action-name-spell-forcewall = Forcewall
 action-description-spell-forcewall = Creates a magical barrier.
 action-speech-spell-forcewall = TARCOL MINTI ZHERI

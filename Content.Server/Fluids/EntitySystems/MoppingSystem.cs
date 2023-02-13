@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
@@ -5,6 +6,7 @@ using Content.Server.Fluids.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
 using JetBrains.Annotations;
@@ -15,7 +17,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Fluids.EntitySystems;
 
 [UsedImplicitly]
-public sealed class MoppingSystem : EntitySystem
+public sealed class MoppingSystem : SharedMoppingSystem
 {
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SpillableSystem _spillableSystem = default!;
@@ -30,9 +32,35 @@ public sealed class MoppingSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<AbsorbentComponent, ComponentInit>(OnAbsorbentInit);
         SubscribeLocalEvent<AbsorbentComponent, AfterInteractEvent>(OnAfterInteract);
+        SubscribeLocalEvent<AbsorbentComponent, SolutionChangedEvent>(OnAbsorbentSolutionChange);
         SubscribeLocalEvent<TransferCancelledEvent>(OnTransferCancelled);
         SubscribeLocalEvent<TransferCompleteEvent>(OnTransferComplete);
+    }
+
+    private void OnAbsorbentInit(EntityUid uid, AbsorbentComponent component, ComponentInit args)
+    {
+        // TODO: I know dirty on init but no prediction moment.
+        UpdateAbsorbent(uid, component);
+    }
+
+    private void OnAbsorbentSolutionChange(EntityUid uid, AbsorbentComponent component, SolutionChangedEvent args)
+    {
+        UpdateAbsorbent(uid, component);
+    }
+
+    private void UpdateAbsorbent(EntityUid uid, AbsorbentComponent component)
+    {
+        if (!_solutionSystem.TryGetSolution(uid, AbsorbentComponent.SolutionName, out var solution))
+            return;
+
+        var oldProgress = component.Progress;
+
+        component.Progress = (float) (solution.Volume / solution.MaxVolume);
+        if (component.Progress.Equals(oldProgress))
+            return;
+        Dirty(component);
     }
 
     private void OnAfterInteract(EntityUid uid, AbsorbentComponent component, AfterInteractEvent args)
@@ -60,13 +88,13 @@ public sealed class MoppingSystem : EntitySystem
     /// </summary>
     private bool TryCreatePuddle(EntityUid user, EntityCoordinates clickLocation, AbsorbentComponent absorbent, Solution absorberSoln)
     {
-        if (absorberSoln.CurrentVolume <= 0)
+        if (absorberSoln.Volume <= 0)
             return false;
 
         if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
             return false;
 
-        var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorberSoln.CurrentVolume);
+        var releaseAmount = FixedPoint2.Min(absorbent.ResidueAmount, absorberSoln.Volume);
         var releasedSolution = _solutionSystem.SplitSolution(absorbent.Owner, absorberSoln, releaseAmount);
         _spillableSystem.SpillAt(mapGrid.GetTileRef(clickLocation), releasedSolution, PuddlePrototypeId);
         _popups.PopupEntity(Loc.GetString("mopping-system-release-to-floor"), user, user);
@@ -84,7 +112,7 @@ public sealed class MoppingSystem : EntitySystem
         if (!_solutionSystem.TryGetDrainableSolution(target, out var drainableSolution))
             return false;
 
-        if (drainableSolution.CurrentVolume <= 0)
+        if (drainableSolution.Volume <= 0)
         {
             var msg = Loc.GetString("mopping-system-target-container-empty", ("target", target));
             _popups.PopupEntity(msg, user, user);
@@ -93,7 +121,7 @@ public sealed class MoppingSystem : EntitySystem
 
         // Let's transfer up to to half the tool's available capacity to the tool.
         var quantity = FixedPoint2.Max(component.PickupAmount, absorberSoln.AvailableVolume / 2);
-        quantity = FixedPoint2.Min(quantity, drainableSolution.CurrentVolume);
+        quantity = FixedPoint2.Min(quantity, drainableSolution.Volume);
 
         DoMopInteraction(user, used, target, component, drainable.Solution, quantity, 1, "mopping-system-drainable-success", component.TransferSound);
         return true;
@@ -104,7 +132,7 @@ public sealed class MoppingSystem : EntitySystem
     /// </summary>
     private bool TryEmptyAbsorber(EntityUid user, EntityUid used, EntityUid target, AbsorbentComponent component, Solution absorberSoln)
     {
-        if (absorberSoln.CurrentVolume <= 0 || !TryComp(target, out RefillableSolutionComponent? refillable))
+        if (absorberSoln.Volume <= 0 || !TryComp(target, out RefillableSolutionComponent? refillable))
             return false;
 
         if (!_solutionSystem.TryGetRefillableSolution(target, out var targetSolution))
@@ -128,7 +156,7 @@ public sealed class MoppingSystem : EntitySystem
         }
 
         float delay;
-        FixedPoint2 quantity = absorberSoln.CurrentVolume;
+        FixedPoint2 quantity = absorberSoln.Volume;
 
         // TODO this really needs cleaning up. Less magic numbers, more data-fields.
 
@@ -171,7 +199,7 @@ public sealed class MoppingSystem : EntitySystem
         if (!TryComp(target, out PuddleComponent? puddle))
             return false;
 
-        if (!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSolution) || puddleSolution.TotalVolume <= 0)
+        if (!_solutionSystem.TryGetSolution(target, puddle.SolutionName, out var puddleSolution) || puddleSolution.Volume <= 0)
             return false;
 
         FixedPoint2 quantity;
@@ -186,12 +214,12 @@ public sealed class MoppingSystem : EntitySystem
         }
 
         // Can our absorber even absorb any liquid?
-        if (puddleSolution.TotalVolume <= lowerLimit)
+        if (puddleSolution.Volume <= lowerLimit)
         {
             // Cannot absorb any more liquid. So clearly the user wants to add liquid to the puddle... right?
             // This is the old behavior and I CBF fixing this, for the record I don't like this.
 
-            quantity = FixedPoint2.Min(absorber.ResidueAmount, absorberSoln.CurrentVolume);
+            quantity = FixedPoint2.Min(absorber.ResidueAmount, absorberSoln.Volume);
             if (quantity <= 0)
                 return false;
 
@@ -208,7 +236,7 @@ public sealed class MoppingSystem : EntitySystem
             return true;
         }
 
-        quantity = FixedPoint2.Min(absorber.PickupAmount, puddleSolution.TotalVolume - lowerLimit, absorberSoln.AvailableVolume);
+        quantity = FixedPoint2.Min(absorber.PickupAmount, puddleSolution.Volume - lowerLimit, absorberSoln.AvailableVolume);
         if (quantity <= 0)
             return false;
 

@@ -29,8 +29,9 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (airtight.FixAirBlockedDirectionInitialize)
             {
-                var moveEvent = new MoveEvent(airtight.Owner, default, default, Angle.Zero, xform.LocalRotation, xform, false);
-                OnAirtightRotated(uid, airtight, ref moveEvent);
+                var moveEvent = new MoveEvent(uid, default, default, Angle.Zero, xform.LocalRotation, xform, false);
+                if (AirtightRotate(uid, airtight, ref moveEvent))
+                    return;
             }
 
             UpdatePosition(airtight);
@@ -46,7 +47,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (MetaData(grid.Owner).EntityLifeStage > EntityLifeStage.MapInitialized) return;
             }
 
-            SetAirblocked(airtight, false, xform);
+            SetAirblocked(uid, airtight, false, xform);
         }
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
@@ -78,15 +79,22 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, ref MoveEvent ev)
         {
+            AirtightRotate(uid, airtight, ref ev);
+        }
+
+        private bool AirtightRotate(EntityUid uid, AirtightComponent airtight, ref MoveEvent ev)
+        {
             if (!airtight.RotateAirBlocked || airtight.InitialAirBlockedDirection == (int)AtmosDirection.Invalid)
-                return;
+                return false;
 
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight, ev.Component);
-            RaiseLocalEvent(uid, new AirtightChanged(airtight), true);
+            var airtightEv = new AirtightChanged(uid, airtight);
+            RaiseLocalEvent(uid, ref airtightEv);
+            return true;
         }
 
-        public void SetAirblocked(AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
+        public void SetAirblocked(EntityUid uid, AirtightComponent airtight, bool airblocked, TransformComponent? xform = null)
         {
             if (airtight.AirBlocked == airblocked)
                 return;
@@ -95,7 +103,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight, xform);
-            RaiseLocalEvent(airtight.Owner, new AirtightChanged(airtight), true);
+            var airtightEv = new AirtightChanged(uid, airtight);
+            RaiseLocalEvent(uid, ref airtightEv);
         }
 
         public void UpdatePosition(AirtightComponent airtight, TransformComponent? xform = null)
@@ -143,13 +152,6 @@ namespace Content.Server.Atmos.EntitySystems
         }
     }
 
-    public sealed class AirtightChanged : EntityEventArgs
-    {
-        public AirtightComponent Airtight;
-
-        public AirtightChanged(AirtightComponent airtight)
-        {
-            Airtight = airtight;
-        }
-    }
+    [ByRefEvent]
+    public readonly record struct AirtightChanged(EntityUid Entity, AirtightComponent Airtight);
 }

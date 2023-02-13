@@ -1,7 +1,11 @@
 using System.Linq;
+using Content.Server.Explosion.Components;
+using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
+using Content.Shared.Database;
 using Content.Shared.Explosion;
+using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Spawners.Components;
@@ -388,10 +392,23 @@ public sealed partial class ExplosionSystem : EntitySystem
             {
                 // no damage-dict multiplication required.
                 _damageableSystem.TryChangeDamage(uid, damage, ignoreResistances: true, damageable: damageable);
+                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
+                {
+                    var damageStr = string.Join(", ", damage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
+                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
+                        $"Explosion caused {{{damageStr}}} to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
+                }
             }
             else
             {
-                _damageableSystem.TryChangeDamage(uid, damage * ev.DamageCoefficient, ignoreResistances: true, damageable: damageable);
+                var appliedDamage = damage * ev.DamageCoefficient;
+                _damageableSystem.TryChangeDamage(uid, appliedDamage, ignoreResistances: true, damageable: damageable);
+                if (HasComp<MindComponent>(uid) || HasComp<ExplosiveComponent>(uid))
+                {
+                    var damageStr = string.Join(", ", appliedDamage.DamageDict.Select(entry => $"{entry.Key}: {entry.Value}"));
+                    _adminLogger.Add(LogType.Explosion, LogImpact.Medium,
+                        $"Explosion caused {{{damageStr}}} to {ToPrettyString(uid):target} at {Transform(uid).Coordinates}");
+                }
             }
         }
 
@@ -634,11 +651,11 @@ sealed class Explosion
 
         foreach (var grid in gridData)
         {
-            _explosionData.Add(new()
+            _explosionData.Add(new ExplosionData
             {
                 TileLists = grid.TileLists,
-                Lookup = entMan.GetComponent<BroadphaseComponent>(((Component) grid.Grid).Owner),
-                MapGrid = grid.Grid
+                Lookup = entMan.GetComponent<BroadphaseComponent>(grid.Grid.Owner),
+                MapGrid = grid.Grid,
             });
         }
 

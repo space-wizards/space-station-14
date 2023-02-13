@@ -17,6 +17,7 @@
   - type: SolutionContainerManager
     solutions:
       puddle:
+        maxVol: 1000
         reagents:
         - ReagentId: Flour
           Quantity: 10
@@ -271,20 +272,21 @@
         - ReagentId: OilOlive
           Quantity: 20
 
-# - type: entity
-#   parent: ReagentContainerBase
-#   id: ReagentContainerMayo
-#   name: mayonnaise
-#   description:
-#   components:
-#   - type: Sprite
-#     state: mayo
-#   - type: SolutionContainerManager
-#     maxVol: 10
-#     contents:
-#       reagents:
-#       - ReagentId: Mayo
-#         Quantity: 10
+- type: entity
+  parent: ReagentContainerBase
+  id: ReagentContainerMayo
+  name: mayonnaise
+  description: Bottle of mayonnaise.
+  components:
+  - type: Sprite
+    state: mayo
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Mayo
+          Quantity: 20
 
 # - type: entity
 #   parent: ReagentContainerBase

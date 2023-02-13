@@ -233,7 +233,6 @@ namespace Content.Server.Salvage
                 return;
             }
 
-            var parentTransform = salvageTransform.Parent!;
             foreach (var player in Filter.Empty().AddInGrid(salvageTransform.GridUid.Value, EntityManager).Recipients)
             {
                 if (player.AttachedEntity.HasValue)
@@ -244,7 +243,7 @@ namespace Content.Server.Salvage
                         // Salvage mobs are NEVER immune (even if they're from a different salvage, they shouldn't be here)
                         continue;
                     }
-                    Transform(playerEntityUid).AttachParent(parentTransform);
+                    Transform(playerEntityUid).AttachParent(salvageTransform.ParentUid);
                 }
             }
 
@@ -272,7 +271,7 @@ namespace Content.Server.Salvage
         {
             TryGetSalvagePlacementLocation(component, out var spl, out var spAngle);
 
-            var forcedSalvage = _configurationManager.GetCVar<string>(CCVars.SalvageForced);
+            var forcedSalvage = _configurationManager.GetCVar(CCVars.SalvageForced);
             List<SalvageMapPrototype> allSalvageMaps;
             if (string.IsNullOrWhiteSpace(forcedSalvage))
             {

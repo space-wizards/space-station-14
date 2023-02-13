@@ -19,6 +19,12 @@ reagent-desc-hotsauce = Burns so good.
 reagent-name-ketchup = ketchup
 reagent-desc-ketchup = Made from pureed tomatoes and flavored with spices.
 
+reagent-name-ketchunaise = ketchunaise
+reagent-desc-ketchunaise = So-called Russian dressing, popular among Space Americans.
+
+reagent-name-mayo = mayonnaise
+reagent-desc-mayo = Creamy sauce, made from oil, egg, and some (edible) acid.
+
 reagent-name-soysauce = soy sauce
 reagent-desc-soysauce = A salty soy-based flavoring.
 

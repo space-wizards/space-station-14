@@ -6,6 +6,8 @@
   components:
   - type: InputMover
   - type: MobMover
+  - type: HTN
+    rootTask: SimpleHostileCompound
   - type: Faction
     factions:
     - SimpleHostile
@@ -31,6 +33,10 @@
       layer:
       - SmallMobLayer
   - type: MobState
+    allowedStates:
+      - Alive
+      - Dead
+  - type: MobThresholds
     thresholds:
       0: Alive
       15: Dead

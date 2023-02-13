@@ -13,7 +13,7 @@ public sealed class EventHorizonComponent : Component
 {
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.
-    /// If < 0.0 this behavior will not be active.
+    /// If &lt; 0.0 this behavior will not be active.
     /// If you want to set this go through <see cref="SharedEventHorizonSystem.SetRadius"/>.
     /// </summary>
     [DataField("radius")]

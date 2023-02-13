@@ -6,6 +6,7 @@
   stations:
     Meta:
       mapNameTemplate: '{0} Meta Station {1}'
+      emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
       nameGenerator:
         !type:NanotrasenNameGenerator
         prefixCreator: 'TG'
@@ -44,3 +45,4 @@
         ServiceWorker: [ 2, 2 ]
         SecurityCadet: [ 2, 2 ]
         Detective: [ 1, 1 ]
+        ResearchAssistant: [ 2, 2 ]

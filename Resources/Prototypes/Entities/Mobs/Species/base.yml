@@ -39,7 +39,7 @@
   - type: Barotrauma
     damage:
       types:
-        Blunt: 0.15 #per second, scales with pressure and other constants.
+        Blunt: 0.35 #per second, scales with pressure and other constants.
   - type: DamageOnHighSpeedImpact
     damage:
       types:
@@ -142,6 +142,10 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
+      - map: [ "clownedon" ] # Dynamically generated
+        sprite: "Effects/creampie.rsi"
+        state: "creampie_human"
+        visible: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
@@ -173,7 +177,7 @@
     heatDamage:
       types:
         Heat: 0.1 #per second, scales with temperature & other constants
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Human
   - type: Body
     prototype: Human
@@ -191,6 +195,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: MobThresholds
     thresholds:
       0: Alive
       100: Critical
@@ -224,10 +229,14 @@
       Burn:
         sprite: Mobs/Effects/burn_damage.rsi
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: CreamPiedVisualizer
-        state: creampie_human
+      enum.CreamPiedVisuals.Creamed:
+        clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
+          True: {visible: true}
+          False: {visible: false}
   - type: RotationVisuals
+  - type: FloatingVisuals
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
@@ -276,7 +285,13 @@
   - type: Speech
     speechSounds: Alto
   - type: Vocal
+    sounds:
+      Male: MaleHuman
+      Female: FemaleHuman
+      Unsexed: MaleHuman
   - type: Emoting
+  - type: BodyEmotes
+    soundsId: GeneralBodyEmotes
   - type: Grammar
     attributes:
       proper: true
@@ -362,7 +377,7 @@
         - MobMask
         layer:
         - MobLayer
-    - type: Humanoid
+    - type: HumanoidAppearance
       species: Human
     - type: Body
       prototype: Human
@@ -371,6 +386,7 @@
     - type: Damageable
       damageContainer: Biological
     - type: MobState
+    - type: MobThresholds
       thresholds:
         0: Alive
         100: Critical

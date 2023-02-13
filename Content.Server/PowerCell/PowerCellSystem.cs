@@ -56,14 +56,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         args.Handled = true;
 
         // What the fuck are you doing???
-        Explode(uid, component);
+        Explode(uid, component, args.User);
     }
 
     private void OnChargeChanged(EntityUid uid, PowerCellComponent component, ChargeChangedEvent args)
     {
         if (component.IsRigged)
         {
-            Explode(uid);
+            Explode(uid, cause: null);
             return;
         }
 
@@ -87,16 +87,14 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
         }
     }
 
-    private void Explode(EntityUid uid, BatteryComponent? battery = null)
+    private void Explode(EntityUid uid, BatteryComponent? battery = null, EntityUid? cause = null)
     {
-        _adminLogger.Add(LogType.Explosion, LogImpact.High, $"Sabotaged power cell {ToPrettyString(uid)} is exploding");
-
         if (!Resolve(uid, ref battery))
             return;
 
-        var radius = MathF.Min(5, MathF.Ceiling(MathF.Sqrt(battery.CurrentCharge) / 30));
+        var radius = MathF.Min(5, MathF.Sqrt(battery.CurrentCharge) / 9);
 
-        _explosionSystem.TriggerExplosive(uid, radius: radius);
+        _explosionSystem.TriggerExplosive(uid, radius: radius, user:cause);
         QueueDel(uid);
     }
 
@@ -120,7 +118,7 @@ public sealed class PowerCellSystem : SharedPowerCellSystem
     private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
     {
         component.IsRigged = _solutionsSystem.TryGetSolution(uid, PowerCellComponent.SolutionName, out var solution)
-                               && solution.ContainsReagent("Plasma", out var plasma)
+                               && solution.TryGetReagent("Plasma", out var plasma)
                                && plasma >= 5;
 
         if (component.IsRigged)

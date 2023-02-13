@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Content.Server.Audio;
 using Content.Server.Construction;
 using Content.Server.Power.Components;
@@ -14,10 +13,8 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
@@ -26,11 +23,12 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed class ThrusterSystem : EntitySystem
     {
-        [Robust.Shared.IoC.Dependency] private readonly IMapManager _mapManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
-        [Robust.Shared.IoC.Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Robust.Shared.IoC.Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-        [Robust.Shared.IoC.Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
+        [Dependency] private readonly AmbientSoundSystem _ambient = default!;
+        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
         // This is done for each direction available.
@@ -262,17 +260,8 @@ namespace Content.Server.Shuttles.Systems
                         component.BurnPoly.Count > 0)
                     {
                         var shape = new PolygonShape();
-
                         shape.SetVertices(component.BurnPoly);
-
-                        var fixture = new Fixture(physicsComponent, shape)
-                        {
-                            ID = BurnFixture,
-                            Hard = false,
-                            CollisionLayer = (int) CollisionGroup.FullTileMask
-                        };
-
-                        _fixtureSystem.TryCreateFixture(physicsComponent, fixture);
+                        _fixtureSystem.TryCreateFixture(uid, shape, BurnFixture, hard: false, collisionLayer: (int) CollisionGroup.FullTileMask);
                     }
 
                     break;
@@ -285,9 +274,9 @@ namespace Content.Server.Shuttles.Systems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                appearanceComponent.SetData(ThrusterVisualState.State, true);
+                _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
             }
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
@@ -338,9 +327,9 @@ namespace Content.Server.Shuttles.Systems
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearanceComponent))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
-                appearanceComponent.SetData(ThrusterVisualState.State, false);
+                _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
             }
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
@@ -352,7 +341,7 @@ namespace Content.Server.Shuttles.Systems
 
             if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _fixtureSystem.DestroyFixture(physicsComponent, BurnFixture);
+                _fixtureSystem.DestroyFixture(uid, BurnFixture, body: physicsComponent);
             }
 
             _activeThrusters.Remove(component);
@@ -448,11 +437,8 @@ namespace Content.Server.Shuttles.Systems
 
             foreach (var comp in component.LinearThrusters[index])
             {
-                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
-                    continue;
-
                 comp.Firing = true;
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                _appearance.SetData(comp.Owner, ThrusterVisualState.Thrusting, true);
             }
         }
 
@@ -469,11 +455,8 @@ namespace Content.Server.Shuttles.Systems
 
             foreach (var comp in component.LinearThrusters[index])
             {
-                if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
-                    continue;
-
                 comp.Firing = false;
-                appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                _appearance.SetData(comp.Owner, ThrusterVisualState.Thrusting, false);
             }
         }
 
@@ -493,22 +476,16 @@ namespace Content.Server.Shuttles.Systems
             {
                 foreach (var comp in component.AngularThrusters)
                 {
-                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
-                        continue;
-
                     comp.Firing = true;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, true);
+                    _appearance.SetData(comp.Owner, ThrusterVisualState.Thrusting, true);
                 }
             }
             else
             {
                 foreach (var comp in component.AngularThrusters)
                 {
-                    if (!EntityManager.TryGetComponent((comp).Owner, out AppearanceComponent? appearanceComponent))
-                        continue;
-
                     comp.Firing = false;
-                    appearanceComponent.SetData(ThrusterVisualState.Thrusting, false);
+                    _appearance.SetData(comp.Owner, ThrusterVisualState.Thrusting, false);
                 }
             }
         }
@@ -527,7 +504,6 @@ namespace Content.Server.Shuttles.Systems
 
         #endregion
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private int GetFlagIndex(DirectionFlag flag)
         {
             return (int) Math.Log2((int) flag);

@@ -1,7 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
 using Content.Server.Labels.Components;
-using Content.Server.MobState;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.UserInterface;
@@ -16,7 +15,8 @@ using Content.Shared.Cargo.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
 using Robust.Shared.Audio;
@@ -228,7 +228,7 @@ public sealed partial class CargoSystem
 
             if (cappedAmount < order.Amount)
             {
-                var reducedOrder = new CargoOrderData(order.OrderNumber, order.ProductId, cappedAmount, order.Requester, order.Reason);
+                var reducedOrder = new CargoOrderData(order.OrderIndex, order.ProductId, cappedAmount, order.Requester, order.Reason);
 
                 orders.Add(reducedOrder);
                 break;
@@ -288,7 +288,7 @@ public sealed partial class CargoSystem
         var possibleNames = _protoMan.Index<DatasetPrototype>(prototype.NameDataset).Values;
         var name = _random.Pick(possibleNames);
 
-        if (!_map.TryLoad(CargoMap.Value, prototype.Path.ToString(), out var gridList) || gridList == null)
+        if (!_map.TryLoad(CargoMap.Value, prototype.Path.ToString(), out var gridList))
         {
             _sawmill.Error($"Could not load the cargo shuttle!");
             return;
@@ -447,11 +447,11 @@ public sealed partial class CargoSystem
             {
                 // Yes this is functioning as a stack, I was too lazy to re-jig the shuttle state event.
                 orders.RemoveSwap(0);
-                orderDatabase.Orders.Remove(order.OrderNumber);
+                orderDatabase.Orders.Remove(order.OrderIndex);
             }
             else
             {
-                orderDatabase.Orders[order.OrderNumber] = order;
+                orderDatabase.Orders[order.OrderIndex] = order;
             }
         }
     }
@@ -465,19 +465,19 @@ public sealed partial class CargoSystem
             return;
 
         // spawn a piece of paper.
-        var printed = EntityManager.SpawnEntity("Paper", coordinates);
+        var printed = EntityManager.SpawnEntity(component.PrinterOutput, coordinates);
 
         if (!TryComp<PaperComponent>(printed, out var paper))
             return;
 
         // fill in the order data
-        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.OrderNumber));
+        var val = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", order.PrintableOrderNumber));
 
         MetaData(printed).EntityName = val;
 
         _paperSystem.SetContent(printed, Loc.GetString(
             "cargo-console-paper-print-text",
-            ("orderNumber", order.OrderNumber),
+            ("orderNumber", order.PrintableOrderNumber),
             ("itemName", prototype.Name),
             ("requester", order.Requester),
             ("reason", order.Reason),
@@ -519,7 +519,7 @@ public sealed partial class CargoSystem
             _popup.PopupEntity(Loc.GetString("cargo-shuttle-console-organics"), player.Value, player.Value);
             _audio.PlayPvs(_audio.GetSound(component.DenySound), uid);
             return;
-        };
+        }
 
         SellPallets(shuttle, bank);
         _console.RefreshShuttleConsoles();

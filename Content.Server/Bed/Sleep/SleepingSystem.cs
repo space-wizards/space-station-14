@@ -8,8 +8,8 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Slippery;
 using Content.Shared.Stunnable;
 using Content.Shared.Verbs;
@@ -112,14 +112,14 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
         {
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.NewMobState == MobState.Dead)
             {
                 RemComp<SpamEmitSoundComponent>(uid);
                 RemComp<SleepingComponent>(uid);
                 return;
             }
             if (TryComp<SpamEmitSoundComponent>(uid, out var spam))
-                spam.Enabled = (args.CurrentMobState == DamageState.Alive) ? true : false;
+                spam.Enabled = args.NewMobState == MobState.Alive;
         }
 
         private void AddWakeVerb(EntityUid uid, SleepingComponent component, GetVerbsEvent<AlternativeVerb> args)
@@ -213,7 +213,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         public bool TryWaking(EntityUid uid, SleepingComponent? component = null, bool force = false, EntityUid? user = null)
         {
-            if (!Resolve(uid, ref component))
+            if (!Resolve(uid, ref component, false))
                 return false;
 
             if (!force && HasComp<ForcedSleepingComponent>(uid))

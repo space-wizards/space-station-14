@@ -105,7 +105,7 @@ public abstract partial class InventorySystem
     /// </summary>
     private void OnUseSlot(UseSlotNetworkMessage ev, EntitySessionEventArgs eventArgs)
     {
-        if (eventArgs.SenderSession.AttachedEntity is not EntityUid { Valid: true } actor)
+        if (eventArgs.SenderSession.AttachedEntity is not { Valid: true } actor)
             return;
 
         if (!TryComp(actor, out InventoryComponent? inventory) || !TryComp<SharedHandsComponent>(actor, out var hands))
