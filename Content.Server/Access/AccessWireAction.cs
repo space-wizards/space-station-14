@@ -9,8 +9,6 @@ namespace Content.Server.Access;
 
 public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent>
 {
-    [Dependency] private readonly EmagSystem _emagSystem = default!;
-
     public override Color Color { get; set; } = Color.Green;
     public override string Name { get; set; } = "wire-name-access";
 
@@ -18,7 +16,10 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
     private int _pulseTimeout = 30;
 
     public override StatusLightState? GetLightState(Wire wire, AccessReaderComponent comp)
-        => _emagSystem.IsEmagged(comp.Owner) ? StatusLightState.On : StatusLightState.Off;
+    {
+        var emagSystem = EntityManager.System<EmagSystem>();
+        return emagSystem.IsEmagged(comp.Owner) ? StatusLightState.On : StatusLightState.Off;
+    }
 
     public override object StatusKey { get; } = AccessWireActionKey.Status;
 
