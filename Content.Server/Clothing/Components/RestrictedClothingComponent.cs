@@ -1,5 +1,4 @@
-﻿using Content.Server.Speech.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Content.Server.Clothing.Systems;
 
 namespace Content.Server.Clothing.Components;
 
@@ -7,6 +6,7 @@ namespace Content.Server.Clothing.Components;
 ///     Does bad things when someone tries to wear something they shouldn't
 /// </summary>
 [RegisterComponent]
+[Access(typeof(RestrictedClothingSystem))]
 public sealed class RestrictedClothingComponent : Component
 {
     /// <summary>
