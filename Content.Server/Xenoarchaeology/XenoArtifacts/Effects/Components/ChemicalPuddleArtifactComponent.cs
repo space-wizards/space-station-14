@@ -28,7 +28,7 @@ public sealed class ChemicalPuddleArtifactComponent : Component
     /// <summary>
     /// The different chemicals that can be spawned by this effect
     /// </summary>
-    [DataField("possibleChemicals", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>)), ViewVariables]
+    [DataField("possibleChemicals", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ReagentPrototype>))]
     public List<string> PossibleChemicals = default!;
 
     /// <summary>
