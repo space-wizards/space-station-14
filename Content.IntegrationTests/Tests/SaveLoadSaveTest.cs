@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests
                 var mapId0 = mapManager.CreateMap();
                 // TODO: Properly find the "main" station grid.
                 var grid0 = mapManager.CreateGrid(mapId0);
-                mapLoader.Save(grid0.GridEntityId, "save load save 1.yml");
+                mapLoader.Save(grid0.Owner, "save load save 1.yml");
                 var mapId1 = mapManager.CreateMap();
                 var grid1 = mapLoader.LoadGrid(mapId1, "save load save 1.yml", new MapLoadOptions() {LoadMap = false});
                 mapLoader.Save(grid1!.Value, "save load save 2.yml");

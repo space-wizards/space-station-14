@@ -6,4 +6,7 @@ namespace Content.Shared.Nuke;
 /// Used for tracking the nuke disk - isn't a tag for pinpointer purposes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class NukeDiskComponent : Component {}
+public sealed class NukeDiskComponent : Component
+{
+
+}

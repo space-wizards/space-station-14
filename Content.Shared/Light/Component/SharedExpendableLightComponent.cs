@@ -46,17 +46,11 @@ namespace Content.Shared.Light.Component
         [DataField("spentName")]
         public string SpentName { get; set; } = string.Empty;
 
-        [DataField("iconStateSpent")]
-        public string IconStateSpent { get; set; } = string.Empty;
-
-        [DataField("iconStateOn")]
-        public string IconStateLit { get; set; } = string.Empty;
-
-        [DataField("litSound", required: true)]
-        public SoundSpecifier LitSound { get; set; } = default!;
+        [DataField("litSound")]
+        public SoundSpecifier? LitSound { get; set; }
 
         [DataField("loopedSound")]
-        public string? LoopedSound { get; set; } = null;
+        public SoundSpecifier? LoopedSound { get; set; }
 
         [DataField("dieSound")]
         public SoundSpecifier? DieSound { get; set; } = null;

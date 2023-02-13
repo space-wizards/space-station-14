@@ -1,5 +1,6 @@
 using Content.Shared.Humanoid.Markings;
 using Robust.Shared.Serialization;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Humanoid;
 
@@ -40,6 +41,7 @@ public sealed class HumanoidMarkingModifierBaseLayersSetMessage : BoundUserInter
 [Serializable, NetSerializable]
 public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
 {
+    // TODO just use the component state, remove the BUI state altogether.
     public HumanoidMarkingModifierState(MarkingSet markingSet, string species, Color skinColor, Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers)
     {
         MarkingSet = markingSet;

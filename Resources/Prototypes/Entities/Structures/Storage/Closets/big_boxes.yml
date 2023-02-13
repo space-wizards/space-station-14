@@ -49,6 +49,7 @@
     - type: Tag
       tags:
         - DoorBumpOpener
+    - type: InteractionOutline
 
 - type: entity
   id: StealthBox
@@ -84,7 +85,7 @@
 - type: entity
   id: GhostBox
   parent: StealthBox
-  suffix:
+  suffix: ""
   name: ghost box
   description: Beware!
   components:

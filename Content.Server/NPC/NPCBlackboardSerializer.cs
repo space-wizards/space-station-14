@@ -1,4 +1,5 @@
 using Robust.Shared.Reflection;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -8,7 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NPC;
 
-public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>
+public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, MappingDataNode>, ITypeCopier<NPCBlackboard>
 {
     public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
         IDependencyCollection dependencies, ISerializationContext? context = null)
@@ -45,10 +46,12 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         return new ValidatedSequenceNode(validated);
     }
 
-    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node, IDependencyCollection dependencies,
-        bool skipHook, ISerializationContext? context = null, NPCBlackboard? value = default)
+    public NPCBlackboard Read(ISerializationManager serializationManager, MappingDataNode node,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx, ISerializationContext? context = null,
+        ISerializationManager.InstantiationDelegate<NPCBlackboard>? instanceProvider = null)
     {
-        value ??= new NPCBlackboard();
+        var value = instanceProvider != null ? instanceProvider() : new NPCBlackboard();
 
         if (node.Count > 0)
         {
@@ -66,7 +69,7 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
                 if (!reflection.TryLooseGetType(typeString, out var type))
                     throw new NullReferenceException($"Found null type for {key}");
 
-                var bbData = serializationManager.Read(type, data.Value, context, skipHook);
+                var bbData = serializationManager.Read(type, data.Value, hookCtx, context);
 
                 if (bbData == null)
                     throw new NullReferenceException($"Found null data for {key}, expected {type}");
@@ -76,5 +79,22 @@ public sealed class NPCBlackboardSerializer : ITypeReader<NPCBlackboard, Mapping
         }
 
         return value;
+    }
+
+    public void CopyTo(
+        ISerializationManager serializationManager,
+        NPCBlackboard source,
+        ref NPCBlackboard target,
+        SerializationHookContext hookCtx,
+        ISerializationContext? context = null)
+    {
+        target.Clear();
+        using var enumerator = source.GetEnumerator();
+
+        while (enumerator.MoveNext())
+        {
+            var current = enumerator.Current;
+            target.SetValue(current.Key, current.Value);
+        }
     }
 }

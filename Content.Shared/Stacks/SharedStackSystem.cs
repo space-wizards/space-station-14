@@ -5,6 +5,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -14,42 +15,44 @@ namespace Content.Shared.Stacks
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
+        [Dependency] private readonly IViewVariablesManager _vvm = default!;
         [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
         [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
         [Dependency] protected readonly SharedTransformSystem Xform = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IViewVariablesManager _vvm = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedStackComponent, ComponentGetState>(OnStackGetState);
-            SubscribeLocalEvent<SharedStackComponent, ComponentHandleState>(OnStackHandleState);
-            SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
-            SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
-            SubscribeLocalEvent<SharedStackComponent, InteractUsingEvent>(OnStackInteractUsing);
+            SubscribeLocalEvent<StackComponent, ComponentGetState>(OnStackGetState);
+            SubscribeLocalEvent<StackComponent, ComponentHandleState>(OnStackHandleState);
+            SubscribeLocalEvent<StackComponent, ComponentStartup>(OnStackStarted);
+            SubscribeLocalEvent<StackComponent, ExaminedEvent>(OnStackExamined);
+            SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
 
-            _vvm.GetTypeHandler<SharedStackComponent>()
-                .AddPath(nameof(SharedStackComponent.Count), (_, comp) => comp.Count, SetCount);
+            _vvm.GetTypeHandler<StackComponent>()
+                .AddPath(nameof(StackComponent.Count), (_, comp) => comp.Count, SetCount);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            _vvm.GetTypeHandler<SharedStackComponent>()
-                .RemovePath(nameof(SharedStackComponent.Count));
+            _vvm.GetTypeHandler<StackComponent>()
+                .RemovePath(nameof(StackComponent.Count));
         }
 
-        private void OnStackInteractUsing(EntityUid uid, SharedStackComponent stack, InteractUsingEvent args)
+        private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
 
-            if (!TryComp(args.Used, out SharedStackComponent? recipientStack))
+            if (!TryComp(args.Used, out StackComponent? recipientStack))
                 return;
 
             if (!TryMergeStacks(uid, args.Used, out var transfered, stack, recipientStack))
@@ -72,18 +75,18 @@ namespace Content.Shared.Stacks
             switch (transfered)
             {
                 case > 0:
-                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local());
+                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
 
                     if (GetAvailableSpace(recipientStack) == 0)
                     {
                         PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
-                            popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local());
+                            popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
                     }
 
                     break;
 
                 case 0 when GetAvailableSpace(recipientStack) == 0:
-                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local());
+                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
                     break;
             }
         }
@@ -92,10 +95,13 @@ namespace Content.Shared.Stacks
             EntityUid donor,
             EntityUid recipient,
             out int transfered,
-            SharedStackComponent? donorStack = null,
-            SharedStackComponent? recipientStack = null)
+            StackComponent? donorStack = null,
+            StackComponent? recipientStack = null)
         {
             transfered = 0;
+            if (donor == recipient)
+                return false;
+
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
@@ -118,7 +124,7 @@ namespace Content.Shared.Stacks
         public void TryMergeToHands(
             EntityUid item,
             EntityUid user,
-            SharedStackComponent? itemStack = null,
+            StackComponent? itemStack = null,
             SharedHandsComponent? hands = null)
         {
             if (!Resolve(user, ref hands, false))
@@ -143,7 +149,7 @@ namespace Content.Shared.Stacks
             HandsSystem.PickupOrDrop(user, item, handsComp: hands);
         }
 
-        public virtual void SetCount(EntityUid uid, int amount, SharedStackComponent? component = null)
+        public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -169,7 +175,7 @@ namespace Content.Shared.Stacks
         /// <summary>
         ///     Try to use an amount of items on this stack. Returns whether this succeeded.
         /// </summary>
-        public bool Use(EntityUid uid, int amount, SharedStackComponent? stack = null)
+        public bool Use(EntityUid uid, int amount, StackComponent? stack = null)
         {
             if (!Resolve(uid, ref stack))
                 return false;
@@ -191,6 +197,35 @@ namespace Content.Shared.Stacks
         }
 
         /// <summary>
+        /// Tries to merge a stack into any of the stacks it is touching.
+        /// </summary>
+        /// <returns>Whether or not it was successfully merged into another stack</returns>
+        public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
+        {
+            if (!Resolve(uid, ref stack, ref xform, false))
+                return false;
+
+            var map = xform.MapID;
+            var bounds = _physics.GetWorldAABB(uid);
+            var intersecting = _entityLookup.GetComponentsIntersecting<StackComponent>(map, bounds,
+                LookupFlags.Dynamic | LookupFlags.Sundries);
+
+            var merged = false;
+            foreach (var otherStack in intersecting)
+            {
+                var otherEnt = otherStack.Owner;
+
+                if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
+                    continue;
+                merged = true;
+
+                if (stack.Count <= 0)
+                    break;
+            }
+            return merged;
+        }
+
+        /// <summary>
         /// Gets the max count for a given entity prototype
         /// </summary>
         /// <param name="entityId"></param>
@@ -199,7 +234,7 @@ namespace Content.Shared.Stacks
         public int GetMaxCount(string entityId)
         {
             var entProto = _prototype.Index<EntityPrototype>(entityId);
-            entProto.TryGetComponent<SharedStackComponent>(out var stackComp);
+            entProto.TryGetComponent<StackComponent>(out var stackComp);
             return GetMaxCount(stackComp);
         }
 
@@ -211,7 +246,7 @@ namespace Content.Shared.Stacks
         [PublicAPI]
         public int GetMaxCount(EntityUid uid)
         {
-            return GetMaxCount(CompOrNull<SharedStackComponent>(uid));
+            return GetMaxCount(CompOrNull<StackComponent>(uid));
         }
 
         /// <summary>
@@ -227,7 +262,7 @@ namespace Content.Shared.Stacks
         /// </remarks>
         /// <param name="component"></param>
         /// <returns></returns>
-        public int GetMaxCount(SharedStackComponent? component)
+        public int GetMaxCount(StackComponent? component)
         {
             if (component == null)
                 return 1;
@@ -249,12 +284,12 @@ namespace Content.Shared.Stacks
         /// <param name="component"></param>
         /// <returns></returns>
         [PublicAPI]
-        public int GetAvailableSpace(SharedStackComponent component)
+        public int GetAvailableSpace(StackComponent component)
         {
             return GetMaxCount(component) - component.Count;
         }
 
-        private void OnStackStarted(EntityUid uid, SharedStackComponent component, ComponentStartup args)
+        private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
@@ -264,12 +299,12 @@ namespace Content.Shared.Stacks
             Appearance.SetData(uid, StackVisuals.Hide, false, appearance);
         }
 
-        private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
+        private void OnStackGetState(EntityUid uid, StackComponent component, ref ComponentGetState args)
         {
             args.State = new StackComponentState(component.Count, GetMaxCount(component));
         }
 
-        private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ref ComponentHandleState args)
+        private void OnStackHandleState(EntityUid uid, StackComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not StackComponentState cast)
                 return;
@@ -279,7 +314,7 @@ namespace Content.Shared.Stacks
             SetCount(uid, cast.Count, component);
         }
 
-        private void OnStackExamined(EntityUid uid, SharedStackComponent component, ExaminedEvent args)
+        private void OnStackExamined(EntityUid uid, StackComponent component, ExaminedEvent args)
         {
             if (!args.IsInDetailsRange)
                 return;

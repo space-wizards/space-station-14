@@ -34,7 +34,7 @@
     sprite: Structures/Wallmounts/signs.rsi
     state: radiation
   product: CrateEmergencyRadiation
-  cost: 900
+  cost: 1000
   category: Emergency
   group: market
 

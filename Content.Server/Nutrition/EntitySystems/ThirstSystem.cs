@@ -30,9 +30,13 @@ namespace Content.Server.Nutrition.EntitySystems
         }
         private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
         {
-            component.CurrentThirst = _random.Next(
-                (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
-                (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+            // Do not change behavior unless starting value is explicitly defined
+            if (component.CurrentThirst < 0)
+            {
+                component.CurrentThirst = _random.Next(
+                    (int) component.ThirstThresholds[ThirstThreshold.Thirsty] + 10,
+                    (int) component.ThirstThresholds[ThirstThreshold.Okay] - 1);
+            }
             component.CurrentThirstThreshold = GetThirstThreshold(component, component.CurrentThirst);
             component.LastThirstThreshold = ThirstThreshold.Okay; // TODO: Potentially change this -> Used Okay because no effects.
             // TODO: Check all thresholds make sense and throw if they don't.

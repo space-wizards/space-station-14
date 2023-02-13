@@ -8,6 +8,15 @@
   - type: Sprite
     sprite: Objects/Specific/Janitorial/mop.rsi
     state: mop
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
   - type: Item
     size: 15
     sprite: Objects/Specific/Janitorial/mop.rsi

@@ -69,7 +69,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         public CancellationTokenSource? CancelToken;
 
-        private InjectorToggleMode _toggleState;
+        [DataField("toggleState")] private InjectorToggleMode _toggleState;
 
         /// <summary>
         /// The state of the injector. Determines it's attack behavior. Containers must have the
@@ -77,7 +77,6 @@ namespace Content.Server.Chemistry.Components
         /// only ever be set to Inject
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("toggleState")]
         public InjectorToggleMode ToggleState
         {
             get => _toggleState;

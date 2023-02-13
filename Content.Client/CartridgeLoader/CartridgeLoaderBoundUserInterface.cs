@@ -1,4 +1,5 @@
-﻿using Content.Shared.CartridgeLoader;
+﻿using Content.Client.UserInterface.Fragments;
+using Content.Shared.CartridgeLoader;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 
@@ -10,7 +11,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     [Dependency] private readonly IEntityManager? _entityManager = default!;
 
     private EntityUid? _activeProgram;
-    private CartridgeUI? _activeCartridgeUI;
+    private UIFragment? _activeCartridgeUI;
     private Control? _activeUiFragment;
 
     protected CartridgeLoaderBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
@@ -127,10 +128,10 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
         SendMessage(message);
     }
 
-    private CartridgeUI? RetrieveCartridgeUI(EntityUid? cartridgeUid)
+    private UIFragment? RetrieveCartridgeUI(EntityUid? cartridgeUid)
     {
-        var component = _entityManager?.GetComponentOrNull<CartridgeUiComponent>(cartridgeUid);
-        component?.Ui?.Setup(this);
+        var component = _entityManager?.GetComponentOrNull<UIFragmentComponent>(cartridgeUid);
+        component?.Ui?.Setup(this, cartridgeUid);
         return component?.Ui;
     }
 }

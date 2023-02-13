@@ -1,6 +1,6 @@
 using Content.Server.Bed.Components;
-using Content.Server.Buckle.Components;
 using Content.Shared.Bed.Sleep;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Disease;
 
 namespace Content.Server.Disease.Cures

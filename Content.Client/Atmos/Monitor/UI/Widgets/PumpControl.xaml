@@ -4,7 +4,7 @@
     <Collapsible Orientation="Vertical">
         <CollapsibleHeading Name="CAddress" />
         <!-- Upper row: toggle, direction, checks -->
-        <CollapsibleBody>
+        <CollapsibleBody Margin="20 0 0 0">
             <BoxContainer Orientation="Vertical">
                 <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
                     <CheckBox Name="CEnableDevice" Text="{Loc 'air-alarm-ui-widget-enable'}" />

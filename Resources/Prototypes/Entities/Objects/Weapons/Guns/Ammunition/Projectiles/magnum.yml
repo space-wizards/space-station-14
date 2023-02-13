@@ -1,6 +1,6 @@
 - type: entity
   id: BulletMagnum
-  name: bullet (.40 magnum)
+  name: bullet (.45 magnum)
   parent: BaseBullet
   noSpawn: true
   components:
@@ -11,7 +11,7 @@
 
 - type: entity
   id: BulletMagnumHighVelocity
-  name: bullet (.40 magnum high-velocity)
+  name: bullet (.45 magnum high-velocity)
   parent: BaseBulletHighVelocity
   noSpawn: true
   components:
@@ -21,30 +21,8 @@
         Piercing: 24
 
 - type: entity
-  id: BulletMagnumHC
-  name: bullet (.45 magnum)
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 34
-
-- type: entity
-  id: BulletMagnumHCHighVelocity
-  name: bullet (.45 magnum high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 36
-
-- type: entity
   id: BulletMagnumPractice
-  name: bullet (.40 magnum practice)
+  name: bullet (.45 magnum practice)
   parent: BaseBulletPractice
   noSpawn: true
   components:
@@ -55,7 +33,7 @@
 
 - type: entity
   id: BulletMagnumRubber
-  name: bullet (.40 magnum rubber)
+  name: bullet (.45 magnum rubber)
   parent: BaseBulletRubber
   noSpawn: true
   components:

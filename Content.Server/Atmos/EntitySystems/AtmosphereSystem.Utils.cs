@@ -1,6 +1,8 @@
 using System.Runtime.CompilerServices;
 using Content.Server.Atmos.Components;
+using Content.Server.Maps;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Components;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -34,9 +36,9 @@ public partial class AtmosphereSystem
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void InvalidateVisuals(EntityUid gridUid, Vector2i tile)
+    public void InvalidateVisuals(EntityUid gridUid, Vector2i tile, GasTileOverlayComponent? comp = null)
     {
-        _gasTileOverlaySystem.Invalidate(gridUid, tile);
+        _gasTileOverlaySystem.Invalidate(gridUid, tile, comp);
     }
 
     public bool NeedsVacuumFixing(MapGridComponent mapGrid, Vector2i indices)
@@ -104,6 +106,6 @@ public partial class AtmosphereSystem
         if (!mapGrid.TryGetTileRef(tile, out var tileRef))
             return;
 
-        tileRef.PryTile(_mapManager, _tileDefinitionManager, EntityManager, _robustRandom);
+        _tile.PryTile(tileRef);
     }
 }

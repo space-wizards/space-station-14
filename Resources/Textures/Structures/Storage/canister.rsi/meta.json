@@ -111,6 +111,12 @@
     },
     {
       "name": "water_vapor-1"
+    },
+    {
+      "name": "scrubber-connector"
+    },
+    {
+      "name": "scrubber-open"
     }
   ]
 }

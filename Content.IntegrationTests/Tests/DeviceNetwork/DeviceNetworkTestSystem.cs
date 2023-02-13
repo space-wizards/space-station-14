@@ -19,6 +19,11 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
             SubscribeLocalEvent<DeviceNetworkComponent, DeviceNetworkPacketEvent>(OnPacketReceived);
         }
 
+        public void SendBaselineTestEvent(EntityUid uid)
+        {
+            RaiseLocalEvent(uid, new DeviceNetworkPacketEvent(0, "", 0, "", uid, new NetworkPayload()));
+        }
+
         private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
         {
             LastPayload = args.Data;

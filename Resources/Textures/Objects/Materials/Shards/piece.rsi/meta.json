@@ -8,13 +8,13 @@
   },
   "states": [
     {
-      "name": "piecelarge",
+      "name": "piecelarge"
     },
     {
-      "name": "piecemedium",
+      "name": "piecemedium"
     },
     {
-      "name": "piecesmall",
+      "name": "piecesmall"
     }
   ]
 }

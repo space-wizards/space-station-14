@@ -139,6 +139,14 @@ namespace Content.Server.NPC.Systems
             }
         }
 
+        public bool IsFriendly(EntityUid uidA, EntityUid uidB, FactionComponent? factionA = null, FactionComponent? factionB = null)
+        {
+            if (!Resolve(uidA, ref factionA, false) || !Resolve(uidB, ref factionB, false))
+                return false;
+
+            return factionA.Factions.Overlaps(factionB.Factions) || factionA.FriendlyFactions.Overlaps(factionB.Factions);
+        }
+
         /// <summary>
         /// Makes the source faction friendly to the target faction, 1-way.
         /// </summary>

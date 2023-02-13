@@ -14,6 +14,16 @@ namespace Content.Shared.Cuffs.Components
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
 
         /// <summary>
+        /// How many of this entity's hands are currently cuffed.
+        /// </summary>
+        [ViewVariables]
+        public int CuffedHandCount => Container.ContainedEntities.Count * 2;
+
+        public EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
+
+        public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
+
+        /// <summary>
         ///     Container of various handcuffs currently applied to the entity.
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]

@@ -870,43 +870,37 @@ entities:
 - uid: 127
   type: LockerChemistry
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 27.5,6.5
+  - pos: 27.5,6.5
     parent: 179
     type: Transform
 - uid: 128
   type: LockerMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 27.5,5.5
+  - pos: 27.5,5.5
     parent: 179
     type: Transform
 - uid: 129
   type: LockerMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,-1.5
+  - pos: 29.5,-1.5
     parent: 179
     type: Transform
 - uid: 130
   type: LockerMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 30.5,-1.5
+  - pos: 30.5,-1.5
     parent: 179
     type: Transform
 - uid: 131
   type: CrateMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,-1.5
+  - pos: 31.5,-1.5
     parent: 179
     type: Transform
 - uid: 132
   type: CrateMedical
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 32.5,-1.5
+  - pos: 32.5,-1.5
     parent: 179
     type: Transform
 - uid: 133
@@ -1783,8 +1777,7 @@ entities:
 - uid: 266
   type: CrateGeneric
   components:
-  - rot: -1.5707963267949 rad
-    pos: 5.5,-6.5
+  - pos: 5.5,-6.5
     parent: 179
     type: Transform
 - uid: 267
@@ -2102,8 +2095,7 @@ entities:
 - uid: 319
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: -1.5707963267949 rad
-    pos: 1.5,-10.5
+  - pos: 1.5,-10.5
     parent: 179
     type: Transform
 - uid: 320
@@ -2121,8 +2113,7 @@ entities:
 - uid: 322
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: -1.5707963267949 rad
-    pos: 0.5,-10.5
+  - pos: 0.5,-10.5
     parent: 179
     type: Transform
 - uid: 323
@@ -2542,8 +2533,7 @@ entities:
 - uid: 389
   type: WardrobeScience
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,21.5
+  - pos: 12.5,21.5
     parent: 179
     type: Transform
 - uid: 390
@@ -2942,8 +2932,7 @@ entities:
 - uid: 453
   type: WardrobeScience
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 13.5,21.5
+  - pos: 13.5,21.5
     parent: 179
     type: Transform
 - uid: 454
@@ -3380,36 +3369,31 @@ entities:
 - uid: 524
   type: ClosetToolFilled
   components:
-  - rot: -1.5707963267949 rad
-    pos: -11.5,-5.5
+  - pos: -11.5,-5.5
     parent: 179
     type: Transform
 - uid: 525
   type: ClosetToolFilled
   components:
-  - rot: -1.5707963267949 rad
-    pos: -11.5,-4.5
+  - pos: -11.5,-4.5
     parent: 179
     type: Transform
 - uid: 526
   type: ClosetToolFilled
   components:
-  - rot: -1.5707963267949 rad
-    pos: -11.5,-3.5
+  - pos: -11.5,-3.5
     parent: 179
     type: Transform
 - uid: 527
   type: ClosetToolFilled
   components:
-  - rot: -1.5707963267949 rad
-    pos: -11.5,-2.5
+  - pos: -11.5,-2.5
     parent: 179
     type: Transform
 - uid: 528
   type: ClosetToolFilled
   components:
-  - rot: -1.5707963267949 rad
-    pos: -11.5,-1.5
+  - pos: -11.5,-1.5
     parent: 179
     type: Transform
 - uid: 529

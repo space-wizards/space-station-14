@@ -28,9 +28,10 @@ namespace Content.Shared.CombatMode.Pacification
             if (combatMode.CanDisarm != null)
                 combatMode.CanDisarm = false;
 
+            combatMode.IsInCombatMode = false;
+
             if (combatMode.CombatToggleAction != null)
             {
-                combatMode.IsInCombatMode = false;
                 _actionsSystem.SetEnabled(combatMode.CombatToggleAction, false);
             }
         }

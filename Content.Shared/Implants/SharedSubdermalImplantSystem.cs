@@ -1,4 +1,5 @@
-﻿using Content.Shared.Actions;
+﻿using System.Linq;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Tag;
@@ -56,10 +57,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
 
     private void OnRemove(EntityUid uid, SubdermalImplantComponent component, EntGotRemovedFromContainerMessage args)
     {
-        if (component.ImplantedEntity == null)
+        if (component.ImplantedEntity == null || Terminating(component.ImplantedEntity.Value))
             return;
-
-        var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
 
         if (component.ImplantAction != null)
             _actionsSystem.RemoveProvidedActions(component.ImplantedEntity.Value, uid);
@@ -67,7 +66,17 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
         if (!_container.TryGetContainer(uid, BaseStorageId, out var storageImplant))
             return;
 
-        _container.EmptyContainer(storageImplant, moveTo: entCoords);
+        var entCoords = Transform(component.ImplantedEntity.Value).Coordinates;
+
+        var containedEntites = storageImplant.ContainedEntities.ToArray();
+
+        foreach (var entity in containedEntites)
+        {
+            if (Terminating(entity))
+                continue;
+
+            _container.RemoveEntity(storageImplant.Owner, entity, force: true, destination: entCoords);
+        }
     }
 
     /// <summary>

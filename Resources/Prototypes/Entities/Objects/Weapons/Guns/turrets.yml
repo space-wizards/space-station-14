@@ -1,8 +1,7 @@
 - type: entity
+  parent: BaseStructure
   id: WeaponTurretSyndicateBroken
   name: ballistic turret (broken)
-  suffix: Syndicate
-  parent: BaseStructure
   description: A ballistic machine gun auto-turret.
   components:
     - type: Clickable
@@ -15,15 +14,21 @@
         - state: syndie_broken
 
 - type: entity
-  id: WeaponTurretSyndicate
+  parent: BaseStructure
+  id: BaseWeaponTurret
   name: ballistic turret
-  parent: WeaponTurretSyndicateBroken
+  abstract: true
   components:
+    - type: Clickable
+    - type: InteractionOutline
     - type: Actions
     - type: ContainerContainer
       containers:
         ballistic-ammo: !type:Container
     - type: Sprite
+      netsync: false
+      sprite: Objects/Weapons/Guns/turrets.rsi
+      drawdepth: WallMountedItems
       layers:
         - state: syndie_lethal
     - type: InteractionPopup
@@ -72,6 +77,30 @@
       blackboard:
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretSyndicate
+  suffix: Syndicate
+  components:
     - type: Faction
       factions:
         - Syndicate
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretNanoTrasen
+  suffix: NanoTrasen
+  components:
+  - type: Faction
+    factions:
+    - NanoTrasen
+
+- type: entity
+  parent: BaseWeaponTurret
+  id: WeaponTurretHostile
+  suffix: Hostile
+  components:
+  - type: Faction
+    factions:
+    - SimpleHostile

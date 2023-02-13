@@ -1,4 +1,4 @@
-﻿using Content.Server.Damage.Components;
+using Content.Server.Damage.Components;
 using Content.Server.Popups;
 using Content.Shared.Damage;
 using Robust.Shared.Player;
@@ -30,7 +30,7 @@ public sealed class DamagePopupSystem : EntitySystem
                 DamagePopupType.Hit => "!",
                 _ => "Invalid type",
             };
-            _popupSystem.PopupEntity(msg, uid, Filter.Pvs(uid, 2F, EntityManager));
+            _popupSystem.PopupEntity(msg, uid);
         }
     }
 }

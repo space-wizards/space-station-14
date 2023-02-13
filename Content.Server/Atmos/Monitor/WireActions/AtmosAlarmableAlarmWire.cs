@@ -6,41 +6,30 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Atmos.Monitor;
 
-[DataDefinition]
-public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
+public sealed class AtmosMonitorDeviceNetWire : ComponentWireAction<AtmosAlarmableComponent>
 {
     // whether or not this wire will send out an alarm upon
     // being pulsed
     [DataField("alarmOnPulse")]
     private bool _alarmOnPulse = false;
 
-    private string _text = "NETW";
-    private Color _color = Color.Orange;
+    public override string Name { get; set; } = "wire-name-device-net";
+    public override Color Color { get; set; } = Color.Orange;
 
     private AtmosAlarmableSystem _atmosAlarmableSystem = default!;
 
     public override object StatusKey { get; } = AtmosMonitorAlarmWireActionKeys.Network;
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
+    public override StatusLightState? GetLightState(Wire wire, AtmosAlarmableComponent comp)
     {
-        var lightState = StatusLightState.Off;
-
-        if (IsPowered(wire.Owner) && EntityManager.TryGetComponent<AtmosMonitorComponent>(wire.Owner, out var monitor))
+        if (!_atmosAlarmableSystem.TryGetHighestAlert(wire.Owner, out var alarm, comp))
         {
-            if (!_atmosAlarmableSystem.TryGetHighestAlert(wire.Owner, out var alarm))
-            {
-                alarm = AtmosAlarmType.Normal;
-            }
-
-            lightState = alarm == AtmosAlarmType.Danger
-                ? StatusLightState.BlinkingFast
-                : StatusLightState.On;
+            alarm = AtmosAlarmType.Normal;
         }
 
-        return new StatusLightData(
-            _color,
-            lightState,
-            _text);
+        return alarm == AtmosAlarmType.Danger
+            ? StatusLightState.BlinkingFast
+            : StatusLightState.On;
     }
 
     public override void Initialize()
@@ -50,33 +39,21 @@ public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
         _atmosAlarmableSystem = EntityManager.System<AtmosAlarmableSystem>();
     }
 
-    public override bool Cut(EntityUid user, Wire wire)
+    public override bool Cut(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
     {
-        if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
-        {
-            monitor.IgnoreAlarms = true;
-        }
-
+        comp.IgnoreAlarms = true;
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire)
+    public override bool Mend(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
     {
-        if (EntityManager.TryGetComponent<AtmosAlarmableComponent>(wire.Owner, out var monitor))
-        {
-            monitor.IgnoreAlarms = false;
-        }
-
+        comp.IgnoreAlarms = false;
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid user, Wire wire, AtmosAlarmableComponent comp)
     {
         if (_alarmOnPulse)
-        {
-            _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger);
-        }
-
-        return true;
+            _atmosAlarmableSystem.ForceAlert(wire.Owner, AtmosAlarmType.Danger, comp);
     }
 }

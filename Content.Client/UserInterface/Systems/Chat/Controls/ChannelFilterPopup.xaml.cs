@@ -20,6 +20,7 @@ public sealed partial class ChannelFilterPopup : Popup
         ChatChannel.OOC,
         ChatChannel.Dead,
         ChatChannel.Admin,
+        ChatChannel.AdminChat,
         ChatChannel.Server
     };
 

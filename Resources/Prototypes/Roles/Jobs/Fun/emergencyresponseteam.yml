@@ -2,6 +2,7 @@
 - type: job
   id: ERTLeader
   name: job-name-ertleader
+  description: job-description-ertleader
   playTimeTracker: JobERTLeader
   setPreference: false
   startingGear: ERTLeaderGearEVA
@@ -14,7 +15,7 @@
 - type: startingGear
   id: ERTLeaderGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -25,12 +26,11 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTLeaderGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTLeader
     back: ClothingBackpackERTLeaderFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -42,12 +42,12 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
     pocket1: Flare
-    pocket2:
 
 # Engineer
 - type: job
   id: ERTEngineer
   name: job-name-ertengineer
+  description: job-description-ertengineer
   playTimeTracker: JobERTEngineer
   setPreference: false
   startingGear: ERTEngineerGearEVA
@@ -60,7 +60,7 @@
 - type: startingGear
   id: ERTEngineerGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsWork
     head: ClothingHeadHelmetHelmet
@@ -71,12 +71,11 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltChiefEngineerFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTEngineerGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTEngineer
     back: ClothingBackpackERTEngineerFilled
     shoes: ClothingShoesBootsMagAdv
     mask: ClothingMaskBreath
@@ -93,6 +92,7 @@
 - type: job
   id: ERTSecurity
   name: job-name-ertsecurity
+  description: job-description-ertsecurity
   playTimeTracker: JobERTSecurity
   setPreference: false
   startingGear: ERTEngineerGearEVA
@@ -105,7 +105,7 @@
 - type: startingGear
   id: ERTSecurityGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -116,12 +116,11 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityWebbing
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTSecurityGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
     back: ClothingBackpackERTSecurityFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -138,6 +137,7 @@
 - type: job
   id: ERTMedical
   name: job-name-ertmedic
+  description: job-description-ertmedic
   playTimeTracker: JobERTMedical
   setPreference: false
   startingGear: ERTMedicalGearEVA
@@ -150,7 +150,7 @@
 - type: startingGear
   id: ERTMedicalGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsJack
     head: ClothingHeadHelmetHelmet
@@ -166,7 +166,7 @@
 - type: startingGear
   id: ERTMedicalGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTMedic
     back: ClothingBackpackERTMedicalFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath
@@ -184,6 +184,7 @@
 - type: job
   id: ERTJanitor
   name: job-name-ertjanitor
+  description: job-description-ertjanitor
   playTimeTracker: JobERTJanitor
   setPreference: false
   startingGear: ERTJanitorGearEVA
@@ -196,7 +197,7 @@
 - type: startingGear
   id: ERTJanitorGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesGaloshes
     head: ClothingHeadHelmetHelmet
@@ -206,12 +207,11 @@
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltJanitorFilled
     pocket1: Flare
-    pocket2:
 
 - type: startingGear
   id: ERTJanitorGearEVA
   equipment:
-    jumpsuit: ClothingUniformJumpsuitColorBlue
+    jumpsuit: ClothingUniformJumpsuitERTJanitor
     back: ClothingBackpackERTJanitorFilled
     shoes: ClothingShoesBootsMag
     mask: ClothingMaskBreath

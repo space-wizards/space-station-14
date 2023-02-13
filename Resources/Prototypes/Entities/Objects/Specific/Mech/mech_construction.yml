@@ -1,0 +1,150 @@
+- type: entity
+  id: BaseMechPart
+  abstract: true
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 0.5
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
+      density: 100
+      mask:
+      - ItemMask
+      restitution: 0.3  # fite me
+      friction: 0.2
+  - type: Pullable
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    netsync: false
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+
+- type: entity
+  id: BaseMechPartItem
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Item
+    size: 50
+
+- type: entity
+  id: BaseMechConstruct
+  parent: BaseMechPart
+  abstract: true
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: ripley
+
+- type: entity
+  parent: BaseMechPart
+  id: RipleyHarness
+  name: ripley harness
+  description: The core of the ripley mech
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      ripley_l_arm+o:
+        whitelist: 
+          tags:
+          - RipleyLArm
+      ripley_r_arm+o:
+        whitelist: 
+          tags:
+          - RipleyRArm
+      ripley_l_leg+o:
+        whitelist: 
+          tags:
+          - RipleyLLeg
+      ripley_r_leg+o:
+        whitelist: 
+          tags:
+          - RipleyRLeg
+    sprite: Objects/Specific/Mech/ripley_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: RipleyChassis
+    requiredParts:
+      RipleyLArm: false
+      RipleyRArm: false
+      RipleyLLeg: false
+      RipleyRLeg: false
+  - type: Sprite
+    state: ripley_harness+o
+    noRot: true
+
+- type: entity
+  parent: BaseMechPartItem
+  id: RipleyLArm
+  name: ripley left arm
+  description: Ripley mech left arm
+  components:
+  - type: Sprite
+    state: ripley_l_arm
+  - type: Tag
+    tags:
+    - RipleyLArm
+
+- type: entity
+  parent: BaseMechPartItem
+  id: RipleyLLeg
+  name: ripley left leg
+  description: Ripley mech left leg
+  components:
+  - type: Sprite
+    state: ripley_l_leg
+  - type: Tag
+    tags:
+    - RipleyLLeg
+
+- type: entity
+  parent: BaseMechPartItem
+  id: RipleyRLeg
+  name: ripley right leg
+  description: Ripley mech right leg
+  components:
+  - type: Sprite
+    state: ripley_r_leg
+  - type: Tag
+    tags:
+    - RipleyRLeg
+
+- type: entity
+  parent: BaseMechPartItem
+  id: RipleyRArm
+  name: ripley right arm
+  description: Ripley mech right arm
+  components:
+  - type: Sprite
+    state: ripley_r_arm
+  - type: Tag
+    tags:
+    - RipleyRArm
+
+- type: entity
+  id: RipleyChassis
+  parent: BaseMechConstruct
+  name: ripley chassis
+  description: An in-progress construction of a ripley mech.
+  components:
+  - type: Sprite
+    noRot: true
+    state: ripley0
+  - type: Construction
+    graph: Ripley
+    node: start
+    defaultTarget: ripley

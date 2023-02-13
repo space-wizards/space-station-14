@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: BaseMechEquipment
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+  - type: Item
+    sprite: Objects/Specific/Mech/mecha_equipment.rsi
+    size: 50
+  - type: MechEquipment
+
+- type: entity
+  id: MechEquipmentGrabber
+  parent: BaseMechEquipment
+  name: hydraulic clamp
+  description: Gives the mech the ability to grab things and drag them around.
+  components:
+  - type: Sprite
+    state: mecha_clamp
+  - type: MechGrabber
+  - type: UIFragment
+    ui: !type:MechGrabberUi
+  - type: ContainerContainer
+    containers:
+      item-container: !type:Container

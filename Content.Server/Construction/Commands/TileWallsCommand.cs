@@ -57,7 +57,7 @@ namespace Content.Server.Construction.Commands
                 return;
             }
 
-            if (!entityManager.EntityExists(grid.GridEntityId))
+            if (!entityManager.EntityExists(grid.Owner))
             {
                 shell.WriteLine($"Grid {gridId} doesn't have an associated grid entity.");
                 return;
@@ -68,7 +68,7 @@ namespace Content.Server.Construction.Commands
             var underplating = tileDefinitionManager[TilePrototypeId];
             var underplatingTile = new Tile(underplating.TileId);
             var changed = 0;
-            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.GridEntityId).ChildEntities)
+            foreach (var child in entityManager.GetComponent<TransformComponent>(grid.Owner).ChildEntities)
             {
                 if (!entityManager.EntityExists(child))
                 {

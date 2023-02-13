@@ -115,16 +115,6 @@
   - type: ArtifactMagnetTrigger
 
 - type: artifactTrigger
-  id: TriggerMicrowave
-  targetDepth: 2
-  triggerHint: artifact-trigger-hint-radiation
-  whitelist:
-    components:
-    - Item
-  components:
-  - type: ArtifactMicrowaveTrigger
-
-- type: artifactTrigger
   id: TriggerLowPressure
   targetDepth: 2
   triggerHint: artifact-trigger-hint-pressure
@@ -145,6 +135,7 @@
   targetDepth: 3
   triggerHint: artifact-trigger-hint-radiation
   components:
+  - type: ArtifactMicrowaveTrigger
   - type: ArtifactDamageTrigger
     damageTypes:
     - Radiation

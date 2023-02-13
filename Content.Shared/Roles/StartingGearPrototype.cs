@@ -30,7 +30,7 @@ namespace Content.Shared.Roles
         private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = string.Empty;
 
         public string GetGear(string slot, HumanoidCharacterProfile? profile)

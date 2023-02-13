@@ -5,7 +5,7 @@
   id: BaseMobDiona
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Diona
   - type: Hunger
   - type: Thirst
@@ -15,6 +15,7 @@
     state: full
   - type: Body
     prototype: Diona
+    requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Diona
@@ -49,6 +50,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
+  - type: Vocal
+    sounds:
+      Male: UnisexDiona
+      Female: UnisexDiona
+      Unsexed: UnisexDiona
+  - type: BodyEmotes
+    soundsId: DionaBodyEmotes
 
 - type: entity
   save: false
@@ -60,5 +68,5 @@
   components:
   - type: Inventory
     templateId: diona
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Diona

@@ -8,6 +8,8 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 [UsedImplicitly]
 public sealed class PickRangedTargetOperator : NPCCombatOperator
 {
+    protected override bool IsRanged => true;
+
     protected override float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, float distance, bool canMove, EntityQuery<TransformComponent> xformQuery)
     {
         // Yeah look I just came up with values that seemed okay but they will need a lot of tweaking.

@@ -63,6 +63,13 @@ public sealed class WiresComponent : Component
     public bool AlwaysRandomize { get; }
 
     /// <summary>
+    ///     Marks if maintenance panel being open/closed by someone with a screwdriver.
+    ///     Prevents do after spam.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IsScrewing;
+
+    /// <summary>
     ///     Per wire status, keyed by an object.
     /// </summary>
     [ViewVariables]

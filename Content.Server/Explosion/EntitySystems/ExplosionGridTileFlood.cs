@@ -64,11 +64,11 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
             }
         }
 
-        if (referenceGrid == Grid.GridEntityId)
+        if (referenceGrid == Grid.Owner)
             return;
 
         _needToTransform = true;
-        var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Grid.GridEntityId);
+        var transform = IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Grid.Owner);
         var size = (float) Grid.TileSize;
 
         _matrix.R0C2 = size / 2;

@@ -1,6 +1,7 @@
 - type: job
   id: Passenger
   name: job-name-passenger
+  description: job-description-passenger
   playTimeTracker: JobPassenger
   startingGear: PassengerGear
   icon: "Passenger"

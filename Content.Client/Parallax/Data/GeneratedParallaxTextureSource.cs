@@ -76,7 +76,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
         catch (Exception ex)
         {
             Logger.ErrorS("parallax", $"Couldn't retrieve parallax cached texture: {ex}");
-            // The show must go on.
+
             try
             {
                 // Also try to at least sort of fix this if we've been fooled by a config backup
@@ -84,6 +84,7 @@ public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
             }
             catch (Exception)
             {
+                // The show must go on.
             }
             return Texture.Transparent;
         }

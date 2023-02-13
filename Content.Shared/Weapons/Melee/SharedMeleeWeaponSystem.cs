@@ -19,7 +19,6 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -74,6 +73,9 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     private void OnMeleeSelected(EntityUid uid, MeleeWeaponComponent component, HandSelectedEvent args)
     {
         if (component.AttackRate.Equals(0f))
+            return;
+
+        if (!component.ResetOnHandSelected)
             return;
 
         // If someone swaps to this weapon then reset its cd.
@@ -227,6 +229,13 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
     {
         MeleeWeaponComponent? melee;
 
+        var ev = new GetMeleeWeaponEvent();
+        RaiseLocalEvent(entity, ev);
+        if (ev.Handled)
+        {
+            return EntityManager.GetComponentOrNull<MeleeWeaponComponent>(ev.Weapon);
+        }
+
         // Use inhands entity if we got one.
         if (EntityManager.TryGetComponent(entity, out SharedHandsComponent? hands) &&
             hands.ActiveHandEntity is { } held)
@@ -253,6 +262,11 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         }
 
         return null;
+    }
+
+    public void AttemptLightAttackMiss(EntityUid user, MeleeWeaponComponent weapon, EntityCoordinates coordinates)
+    {
+        AttemptAttack(user, weapon, new LightAttackEvent(null, weapon.Owner, coordinates), null);
     }
 
     public void AttemptLightAttack(EntityUid user, MeleeWeaponComponent weapon, EntityUid target)
@@ -284,8 +298,21 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (!CombatMode.IsInCombatMode(user))
             return;
 
-        if (!Blocker.CanAttack(user))
-            return;
+        switch (attack)
+        {
+            case LightAttackEvent light:
+                if (!Blocker.CanAttack(user, light.Target))
+                    return;
+                break;
+            case DisarmAttackEvent disarm:
+                if (!Blocker.CanAttack(user, disarm.Target))
+                    return;
+                break;
+            default:
+                if (!Blocker.CanAttack(user))
+                    return;
+                break;
+        }
 
         // Windup time checked elsewhere.
 
@@ -419,7 +446,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
             // If the target has stamina and is taking blunt damage, they should also take stamina damage based on their blunt to stamina factor
             if (damageResult.DamageDict.TryGetValue("Blunt", out var bluntDamage))
             {
-                _stamina.TakeStaminaDamage(ev.Target.Value, (bluntDamage * component.BluntStaminaDamageFactor).Float());
+                _stamina.TakeStaminaDamage(ev.Target.Value, (bluntDamage * component.BluntStaminaDamageFactor).Float(), source:user, with:(component.Owner == user ? null : component.Owner));
             }
 
             if (component.Owner == user)

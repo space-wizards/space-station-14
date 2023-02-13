@@ -9,11 +9,11 @@
    "states":[
       {
          "name":"vent_off",
-         "directions" : 4,
+         "directions" : 4
       },
       {
          "name":"vent_welded",
-         "directions" : 4,
+         "directions" : 4
       },
       {
          "name":"vent_out",

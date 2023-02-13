@@ -113,7 +113,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
             else
             {
-                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), Filter.Entities(args.User));
+                _popupSystem.PopupCursor(Loc.GetString("comp-gas-filter-ui-needs-anchor"), args.User);
             }
 
             args.Handled = true;
@@ -161,6 +161,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
                 if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
                 {
                     filter.FilteredGas = parsedGas;
+                    _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
+                        $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the filter on {ToPrettyString(uid):device} to {parsedGas.ToString()}");
                     DirtyUI(uid, filter);
                 }
                 else
@@ -171,6 +173,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             else
             {
                 filter.FilteredGas = null;
+                _adminLogger.Add(LogType.AtmosFilterChanged, LogImpact.Medium,
+                    $"{ToPrettyString(args.Session.AttachedEntity!.Value):player} set the filter on {ToPrettyString(uid):device} to none");
                 DirtyUI(uid, filter);
             }
         }
