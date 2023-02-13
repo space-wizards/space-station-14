@@ -13,6 +13,7 @@ using Content.Server.PowerCell;
 using Content.Server.Traitor;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Alert;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Damage.Components;
 using Content.Shared.Database;
@@ -24,6 +25,7 @@ using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Roles;
+using Content.Shared.Rounding;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Tag;
@@ -39,6 +41,7 @@ namespace Content.Server.Ninja.Systems;
 public sealed partial class NinjaSystem : GameRuleSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
+    [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
@@ -157,8 +160,8 @@ public sealed partial class NinjaSystem : GameRuleSystem
         var target = args.Target;
         var user = args.Performer;
 
-        // only target things that can be stunned
-        if (!HasComp<StaminaComponent>(target))
+        // only target things that can be stunned, which excludes yourself
+        if (user == target || !HasComp<StaminaComponent>(target))
             return;
 
         // take charge from battery
@@ -186,6 +189,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
             // initialize phase cloak
             AddComp<StealthComponent>(user);
             SetCloaked(user, comp.Cloaked);
+	        SetSuitPowerAlert(user);
         }
     }
 
@@ -225,6 +229,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
         // force uncloak
         comp.Cloaked = false;
         RemComp<StealthComponent>(user);
+        SetSuitPowerAlert(user);
     }
 
     private void OnTogglePhaseCloakAction(EntityUid uid, SpaceNinjaSuitComponent comp, TogglePhaseCloakEvent args)
@@ -302,6 +307,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
         float wattage = SuitWattage(suit);
 
+		SetSuitPowerAlert(ninja.Owner, ninja);
         if (!GetNinjaBattery(ninja.Owner, out var battery) || !battery.TryUseCharge(wattage * frameTime))
         {
             // ran out of power, reveal ninja
@@ -312,6 +318,25 @@ public sealed partial class NinjaSystem : GameRuleSystem
             }
         }
     }
+
+	private void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
+	{
+        if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
+        {
+            _alerts.ClearAlert(uid, AlertType.SuitPower);
+            return;
+        }
+
+		if (GetNinjaBattery(uid, out var battery))
+		{
+ 	        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 7);
+	        _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
+        }
+        else
+        {
+            _alerts.ClearAlert(uid, AlertType.SuitPower);
+        }
+	}
 
     private bool IsNinja(EntityUid user)
     {
