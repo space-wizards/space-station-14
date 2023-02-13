@@ -45,6 +45,8 @@ public sealed class ReflectSystem : EntitySystem
                 {
                     var vel = _physics.GetMapLinearVelocity(uid);
                     var force = physicsComp.Force;
+                    var angle = vel.ToAngle() + _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
+                    vel = angle.ToVec() * vel.Length;
                     _physics.ResetDynamics(physicsComp);
                     _physics.ApplyForce(uid, -force);
                     _physics.SetLinearVelocity(uid, -vel);

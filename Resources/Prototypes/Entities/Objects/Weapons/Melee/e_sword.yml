@@ -52,6 +52,7 @@
     malus: 0
   - type: Reflect
     chance: 0.5
+    spread: 15
     onReflect:
       path: /Audio/Weapons/Guns/Hits/laser_sear_wall.ogg
 

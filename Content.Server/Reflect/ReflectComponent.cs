@@ -17,6 +17,9 @@ public sealed class ReflectComponent : Component
     [DataField("chance")]
     public float Chance;
 
+    [DataField("spread")]
+    public Angle Spread = Angle.FromDegrees(5);
+
     [DataField("onReflect")]
     public SoundSpecifier? OnReflect { get; set; }
 }
