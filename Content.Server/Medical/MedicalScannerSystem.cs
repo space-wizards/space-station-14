@@ -12,6 +12,8 @@ using Content.Server.MachineLinking.System;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Cloning.Components;
 using Content.Server.Construction;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.Body.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
@@ -73,7 +75,7 @@ namespace Content.Server.Medical
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent scannerComponent, ref ContainerRelayMovementEntityEvent args)
         {
-            if (!_blocker.CanInteract(args.Entity, scannerComponent.Owner))
+            if (!_blocker.CanInteract(args.Entity, uid))
                 return;
 
             EjectBody(uid, scannerComponent);
@@ -94,7 +96,7 @@ namespace Content.Server.Medical
 
             InteractionVerb verb = new()
             {
-                Act = () => InsertBody(component.Owner, args.Target, component),
+                Act = () => InsertBody(uid, args.Target, component),
                 Category = VerbCategory.Insert,
                 Text = name
             };
@@ -123,7 +125,7 @@ namespace Content.Server.Medical
                 _blocker.CanMove(args.User))
             {
                 AlternativeVerb verb = new();
-                verb.Act = () => InsertBody(component.Owner, args.User, component);
+                verb.Act = () => InsertBody(uid, args.User, component);
                 verb.Text = Loc.GetString("medical-scanner-verb-enter");
                 args.Verbs.Add(verb);
             }
@@ -156,9 +158,9 @@ namespace Content.Server.Medical
             }
             _cloningConsoleSystem.UpdateUserInterface(console);
         }
-        private MedicalScannerStatus GetStatus(MedicalScannerComponent scannerComponent)
+        private MedicalScannerStatus GetStatus(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
-            if (TryComp<ApcPowerReceiverComponent>(scannerComponent.Owner, out var power) && power.Powered)
+            if (this.IsPowered(uid, EntityManager))
             {
                 var body = scannerComponent.BodyContainer.ContainedEntity;
                 if (body == null)
@@ -195,9 +197,9 @@ namespace Content.Server.Medical
 
         private void UpdateAppearance(EntityUid uid, MedicalScannerComponent scannerComponent)
         {
-            if (TryComp<AppearanceComponent>(scannerComponent.Owner, out var appearance))
+            if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
-                _appearance.SetData(uid, MedicalScannerVisuals.Status, GetStatus(scannerComponent), appearance);
+                _appearance.SetData(uid, MedicalScannerVisuals.Status, GetStatus(uid, scannerComponent), appearance);
             }
         }
 
@@ -225,11 +227,11 @@ namespace Content.Server.Medical
             if (scannerComponent.BodyContainer.ContainedEntity != null)
                 return;
 
-            if (!TryComp<MobStateComponent>(user, out var comp))
+            if (!HasComp<MobStateComponent>(user))
                 return;
 
             scannerComponent.BodyContainer.Insert(user);
-            UpdateAppearance(scannerComponent.Owner, scannerComponent);
+            UpdateAppearance(uid, scannerComponent);
         }
 
         public void EjectBody(EntityUid uid, MedicalScannerComponent? scannerComponent)
@@ -237,11 +239,12 @@ namespace Content.Server.Medical
             if (!Resolve(uid, ref scannerComponent))
                 return;
 
-            if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained) return;
+            if (scannerComponent.BodyContainer.ContainedEntity is not {Valid: true} contained)
+                return;
 
             scannerComponent.BodyContainer.Remove(contained);
             _climbSystem.ForciblySetClimbing(contained, uid);
-            UpdateAppearance(scannerComponent.Owner, scannerComponent);
+            UpdateAppearance(uid, scannerComponent);
         }
 
         private void OnRefreshParts(EntityUid uid, MedicalScannerComponent component, RefreshPartsEvent args)

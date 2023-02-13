@@ -17,6 +17,7 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Ensnaring.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Strip;
 
 namespace Content.Server.Strip
 {

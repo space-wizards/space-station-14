@@ -28,6 +28,11 @@ public sealed class DragDropHelper<T>
     public float Deadzone = 2f;
 
     /// <summary>
+    /// Convenience method, current mouse screen position as provided by inputmanager.
+    /// </summary>
+    public ScreenCoordinates MouseScreenPosition => _inputManager.MouseScreenPosition;
+
+    /// <summary>
     /// True if initiated a drag and currently dragging something.
     /// I.e. this will be false if we've just had a mousedown over something but the mouse
     /// has not moved outside of the drag deadzone.
@@ -43,13 +48,20 @@ public sealed class DragDropHelper<T>
     private ScreenCoordinates _mouseDownScreenPos;
     private DragState _state = DragState.NotDragging;
 
+    private enum DragState : byte
+    {
+        NotDragging,
+        // not dragging yet, waiting to see
+        // if they hold for long enough
+        MouseDown,
+        // currently dragging something
+        Dragging,
+    }
+
     /// <param name="onBeginDrag"><see cref="OnBeginDrag"/></param>
     /// <param name="onContinueDrag"><see cref="OnContinueDrag"/></param>
     /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
-    /// <param name="deadzone">drag will be triggered when mouse leaves
-    ///     this deadzone around the mousedown position</param>
-    public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag,
-        OnEndDrag onEndDrag)
+    public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag, OnEndDrag onEndDrag)
     {
         _inputManager = IoCManager.Resolve<IInputManager>();
         _onBeginDrag = onBeginDrag;
@@ -71,10 +83,24 @@ public sealed class DragDropHelper<T>
             EndDrag();
         }
 
-        /// <param name="onBeginDrag"><see cref="OnBeginDrag"/></param>
-        /// <param name="onContinueDrag"><see cref="OnContinueDrag"/></param>
-        /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
-        public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag, OnEndDrag onEndDrag)
+        Dragged = target;
+        _state = DragState.MouseDown;
+        _mouseDownScreenPos = _inputManager.MouseScreenPosition;
+    }
+
+    /// <summary>
+    /// Stop the current drag / drop operation no matter what state it is in.
+    /// </summary>
+    public void EndDrag()
+    {
+        Dragged = default;
+        _state = DragState.NotDragging;
+        _onEndDrag.Invoke();
+    }
+
+    private void StartDragging()
+    {
+        if (_onBeginDrag.Invoke())
         {
             _state = DragState.Dragging;
         }
