@@ -1,0 +1,233 @@
+- type: loadout
+  id: LoadoutHeadBunny
+  name: Bunny Ears
+  description: "I hope this doesn't awaken anything in me..."
+  category: Accessories
+  cost: 3
+  item: ClothingHeadHatBunny
+
+# - type: loadout # Furry and too many goofy features :P
+#   id: LoadoutHeadCatEars
+#   name: Cat Ears
+#   description: "I hope this doesn't awaken anything in me..."
+#   category: Accessories
+#   cost: 4
+#   item: ClothingHeadHatCatEars
+
+- type: loadout
+  id: LoadoutHeadBeaverHat
+  name: Beaver Hat
+  description: Gentlemen.
+  category: Accessories
+  cost: 2
+  item: ClothingHeadHatBeaverHat
+
+- type: loadout
+  id: LoadoutHeadTophat
+  name: Tophat
+  description: A stylish black tophat.
+  category: Accessories
+  cost: 2
+  item: ClothingHeadHatTophat
+
+# - type: loadout
+#   id: LoadoutHeadPaperSack
+#   name: Paper Sack
+#   description: WE ARE ANNONYMOUS
+#   category: Accessories
+#   cost: 3
+#   jobWhitelist:
+#     - Passenger
+#   item: ClothingHeadPaperSack
+
+- type: loadout
+  id: LoadoutHeadHatBluesoft
+  name: Blue cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatBluesoft
+
+- type: loadout
+  id: LoadoutHeadHatBluesoftFlipped
+  name: Blue cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatBluesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatCorpsoft
+  name: Corporate cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatCorpsoft
+
+- type: loadout
+  id: LoadoutHeadHatCorpsoftFlipped
+  name: Corporate cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatCorpsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatGreensoft
+  name: Green cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatGreensoft
+
+- type: loadout
+  id: LoadoutHeadHatGreensoftFlipped
+  name: Green cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatGreensoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatGreysoft
+  name: Grey cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatGreysoft
+
+- type: loadout
+  id: LoadoutHeadHatGreysoftFlipped
+  name: Grey cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatGreysoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatOrangesoft
+  name: Orange cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatOrangesoft
+
+- type: loadout
+  id: LoadoutHeadHatOrangesoftFlipped
+  name: Orange cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatOrangesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatPurplesoft
+  name: Purple cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatPurplesoft
+
+- type: loadout
+  id: LoadoutHeadHatPurplesoftFlipped
+  name: Purple cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatPurplesoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatRedsoft
+  name: Red cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatRedsoft
+
+- type: loadout
+  id: LoadoutHeadHatRedsoftFlipped
+  name: Red cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatRedsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatYellowsoft
+  name: Yellow cap
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatYellowsoft
+
+- type: loadout
+  id: LoadoutHeadHatYellowsoftFlipped
+  name: Yellow cap flipped
+  description: A cap.
+  category: Accessories
+  cost: 1
+  item: ClothingHeadHatYellowsoftFlipped
+
+- type: loadout
+  id: LoadoutHeadHatBandBlack
+  name: Black bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandBlack
+
+- type: loadout
+  id: LoadoutHeadHatBandBlue
+  name: Blue bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandBlue
+
+- type: loadout
+  id: LoadoutHeadHatBandGold
+  name: Gold bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandGold
+
+- type: loadout
+  id: LoadoutHeadHatBandGreen
+  name: Green bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandGreen
+
+- type: loadout
+  id: LoadoutHeadHatBandGrey
+  name: Grey bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandGrey
+
+- type: loadout
+  id: LoadoutHeadHatBandRed
+  name: Red bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandRed
+
+- type: loadout
+  id: LoadoutHeadHatBandSkull
+  name: Skull bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandSkull
+
+- type: loadout
+  id: LoadoutHeadHatBandLightBlue
+  name: Light blue bandana
+  description: A bandana.
+  category: Accessories
+  cost: 1
+  item: HatBandLightBlue

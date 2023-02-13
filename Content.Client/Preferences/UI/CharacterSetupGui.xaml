@@ -28,16 +28,18 @@
                     <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                 </PanelContainer.PanelOverride>
             </PanelContainer>
-            <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="0">
-                <ScrollContainer MinSize="325 0" Margin="5 5 0 0">
-                    <BoxContainer Name="Characters" Orientation="Vertical" />
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" SeparationOverride="0">
+                <ScrollContainer MinSize="450 64" Margin="5 5 0 0">
+                    <BoxContainer Name="Characters" Orientation="Horizontal" />
                 </ScrollContainer>
-                <PanelContainer MinSize="2 0">
+                <PanelContainer MinSize="0 2">
                     <PanelContainer.PanelOverride>
                         <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.NanoGold}" ContentMarginTopOverride="2" />
                     </PanelContainer.PanelOverride>
                 </PanelContainer>
-                <BoxContainer Name="CharEditor" />
+                <BoxContainer Orientation="Horizontal" VerticalExpand="True" HorizontalExpand="True" SeparationOverride="0">
+                    <BoxContainer Name="CharEditor" VerticalExpand="True" HorizontalExpand="True" />
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
     </Control>

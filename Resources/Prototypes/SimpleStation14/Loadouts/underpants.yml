@@ -1,0 +1,248 @@
+- type: loadout
+  id: LoadoutUnderbee_shorts
+  name: "Bee Shorts"
+  description: "The buzz-worthy choice for a summer day!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbee_shorts
+
+- type: loadout
+  id: LoadoutUnderboxer_briefs
+  name: "Boxer Briefs"
+  description: "The perfect blend of comfort and support!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxer_briefs
+
+- type: loadout
+  id: LoadoutUnderboxers_assblastusa
+  name: "American Flag Boxers"
+  description: "Show your patriotic spirit with these stars and stripes!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers_assblastusa
+
+- type: loadout
+  id: LoadoutUnderboxers_commie
+  name: "Commie Boxers"
+  description: "A political statement in your pants."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers_commie
+
+- type: loadout
+  id: LoadoutUnderboxers_heart
+  name: "Heart Boxers"
+  description: "A love letter to your significant other, written on your underwear."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers_heart
+
+- type: loadout
+  id: LoadoutUnderboxers_striped
+  name: "Striped Boxers"
+  description: "A classic pattern, now in underwear form!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers_striped
+
+- type: loadout
+  id: LoadoutUnderboxers_uk
+  name: "Union Jack Boxers"
+  description: "Represent your British heritage with these stylish undies!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers_uk
+
+- type: loadout
+  id: LoadoutUnderboxers
+  name: "Boxers"
+  description: "Classic and comfy, just like grandpa's!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderboxers
+
+- type: loadout
+  id: LoadoutUnderbriefs
+  name: "Briefs"
+  description: "For those who want a snug fit in all the right places!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbriefs
+
+# - type: loadout
+#   id: LoadoutUnderfishnet_lower
+#   name: "Fishnet Lower Underwear"
+#   description: "A daring choice, for those who want to leave little to the imagination!"
+#   category: Underwear
+#   cost: 0
+#   item: ClothingUnderfishnet_lower
+
+- type: loadout
+  id: LoadoutUnderjockstrap
+  name: "Jockstrap"
+  description: "For the sporty and adventurous type!"
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderjockstrap
+
+- type: loadout
+  id: LoadoutUnderljonb
+  name: "Long John Pants"
+  description: "Stay warm in these classic long underwear!"
+  category: Underwear
+  cost: 1
+  exclusive: true
+  item: ClothingUnderljonb
+
+# seam
+- type: loadout
+  id: LoadoutPantiesUnderpanties_alt
+  name: "Panties"
+  description: "Regular, good old fashioned panties."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_alt
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_assblastusa
+  name: "American Flag Panties"
+  description: "For the patriotic bottom, show your love for the red, white, and blue."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_assblastusa
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_bee-kini
+  name: "Bee-Kini Panties"
+  description: "Get a buzz going with these adorable bee-print panties."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_bee-kini
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_commie
+  name: "Commie Panties"
+  description: "For the rebellious and daring, these commie-themed panties will have you feeling revolutionary."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_commie
+
+# - type: loadout
+#   id: LoadoutUnderpanties_kinky
+#   name: "Kinky Panties"
+#   description: "Get ready for some fun with these kinky and daring panties."
+#   category: Underwear
+#   cost: 0
+#   item: ClothingUnderpanties_kinky
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_neko
+  name: "Neko Panties"
+  description: "For the cat-lover, these cute neko-print panties are purr-fect."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_neko
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_slim
+  name: "Slim Panties"
+  description: "For the minimalist, these slim and comfortable panties are perfect."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_slim
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_swimming
+  name: "Swimming Panties"
+  description: "Hit the pool in style with these cute swimming panties."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_swimming
+
+# - type: loadout
+#   id: LoadoutUnderpanties_thin
+#   name: "Thin Panties"
+#   description: "For the light and airy, these thin panties will have you feeling free."
+#   category: Underwear
+#   cost: 0
+#   item: ClothingUnderpanties_thin
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties_uk
+  name: "Union Jack Panties"
+  description: "For the patriotic bottom, show your love for the UK with these union jack panties."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties_uk
+
+- type: loadout
+  id: LoadoutPantiesUnderpanties
+  name: "Panties"
+  description: "Regular, good old fashioned panties."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpanties
+
+# seam
+# - type: loadout
+#   id: LoadoutUnderpantyhose_ripped
+#   name: "Ripped Pantyhose"
+#   description: "Who needs to be comfortable when you look this good?"
+#   category: Underwear
+#   cost: 0
+#   item: ClothingUnderpantyhose_ripped
+
+- type: loadout
+  id: LoadoutUnderpantyhose
+  name: "Pantyhose"
+  description: "For when you want to look like a human-sized spider."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpantyhose
+
+- type: loadout
+  id: LoadoutPantiesUnderstriped_panties
+  name: "Striped Panties"
+  description: "For when you want to make a fashion statement... down there."
+  category: Underwear
+  cost: 0
+  exclusive: true
+  item: ClothingUnderstriped_panties
+
+# - type: loadout
+#   id: LoadoutUnderthong_babydoll
+#   name: "Thong Babydoll"
+#   description: "For when you want to feel cute and scandalous at the same time."
+#   category: Underwear
+#   cost: 0
+#   exclusive: true
+#   item: ClothingUnderthong_babydoll
+
+# - type: loadout
+#   id: LoadoutUnderthong
+#   name: "Thong"
+#   description: "For when you want to feel comfortable, but still turn heads."
+#   category: Underwear
+#   cost: 0
+#   item: ClothingUnderthong

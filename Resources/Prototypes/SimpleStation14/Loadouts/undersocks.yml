@@ -1,0 +1,335 @@
+- type: loadout
+  id: LoadoutUnderSockKneeAssBlastUSA
+  name: "American flag knee-highs"
+  description: "Wear your patriotism on your legs with these American Flag knee-highs!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderAssBlastUSA_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighAssBlastUSA
+  name: "American flag thigh-highs"
+  description: "Get ready to wave the flag (on your legs) with these American Flag thigh-highs!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderAssBlastUSA_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeBee
+  name: "Bee knee-highs"
+  description: "Bee yourself with these bee knee-highs, perfect for any occasion buzzing with excitement!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderBee_knee
+
+- type: loadout
+  id: LoadoutUnderSockNormBee_Sock
+  name: "Bee socks"
+  description: "Buzz your way into style with these bee socks, just bee-ware of fashion critics!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderBee_norm
+
+- type: loadout
+  id: LoadoutUnderSockThighBee
+  name: "Bee thigh-highs"
+  description: "Bee the center of attention with these bee thigh-highs, because who wouldn't want to bee near such a buzz-worthy fashion statement?"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderBee_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeCandyCaneg
+  name: "Green striped knee-highs"
+  description: "Get ready to spread some holiday cheer with these green striped knee-highs, perfect for any Christmas celebration!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaneg_knee
+
+- type: loadout
+  id: LoadoutUnderSockNormCandyCaneg_Sock
+  name: "Green striped socks"
+  description: "Step into the holiday season with these green striped socks, perfect for spreading holiday cheer one step at a time!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaneg_norm
+
+- type: loadout
+  id: LoadoutUnderSockThighCandyCaneg
+  name: "Green striped thigh-highs"
+  description: "Get ready to jingle all the way with these green striped thigh-highs, perfect for spreading holiday cheer from your knees to your hips!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaneg_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeCandyCaner
+  name: "Red striped knee-highs"
+  description: "Get into the holiday spirit with these red striped knee-highs, perfect for any Christmas celebration!"
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaner_knee
+
+# seam
+- type: loadout
+  id: LoadoutUnderSockNormCandyCaneSock
+  name: "Red striped socks"
+  description: "Add some sweetness to your step with these candy cane socks."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaner_norm
+
+- type: loadout
+  id: LoadoutUnderSockThighCandyCaneSock
+  name: "Red striped thigh-highs"
+  description: "Stride with confidence and a little bit of sass with these red striped thigh-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCandyCaner_thigh
+
+- type: loadout
+  id: LoadoutUnderSockThighChristmas_knee
+  name: "Christmas knee-highs"
+  description: "Spread holiday cheer all year round with these festive knee-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderChristmas_knee
+
+- type: loadout
+  id: LoadoutUnderSockNormChristmasSock
+  name: "Christmas socks"
+  description: "Wrap your feet up in holiday warmth with these cozy Christmas socks."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderChristmas_norm
+
+- type: loadout
+  id: LoadoutUnderSockThighChristmasSock
+  name: "Christmas thigh-highs"
+  description: "Get in the holiday spirit from the toes up with these merry thigh-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderChristmas_thigh
+
+- type: loadout
+  id: LoadoutUnderSockThighCommie_knee
+  name: "Commie knee-highs"
+  description: "Make a political statement with these fun and funky commie knee-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCommie_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighCommieSock
+  name: "Commie thigh-highs"
+  description: "Show your revolutionary spirit from the knees up with these commie thigh-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderCommie_thigh
+
+- type: loadout
+  id: LoadoutUnderSockThighGarter
+  name: "Garter"
+  description: "Get a leg up on style with this versatile garter."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderGarter
+
+# seam
+- type: loadout
+  id: LoadoutUnderSockKneeRainbow
+  name: "Rainbow knee-high socks"
+  description: "Step into a rainbow with these knee-highs. Perfect for brightening up a dull day!"
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderRainbow_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighRainbow
+  name: "Rainbow thigh-high socks"
+  description: "Get legs for days with these rainbow thigh-highs! Perfect for showing off a little bit of color."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderRainbow_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeSocks
+  name: "Knee-high socks"
+  description: "Bring back the knee-highs! Perfect for keeping your legs warm and looking stylish."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderSocks_knee
+
+- type: loadout
+  id: LoadoutUnderSockNormSocks_Sock
+  name: "Socks"
+  description: "Keep your feet toasty with these basic socks. Perfect for when you need to blend in with the crowd."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderSocks_norm
+
+- type: loadout
+  id: LoadoutUnderSockNormShortSocks
+  name: "Short socks"
+  description: "Stay cool with these short socks. Perfect for when you want to show off your footwear."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderSocks_short
+
+- type: loadout
+  id: LoadoutUnderSockThighSocks
+  name: "Thigh-high socks"
+  description: "Make a statement with these thigh-highs. Perfect for when you want to add a pop of color to your outfit."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderSocks_thigh
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_blue
+  name: "Blue thigh-high stockings"
+  description: "Stay cool and classic with these blue thigh-highs. Perfect for a touch of sophistication."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_blue
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_cyan
+  name: "Cyan thigh-high stockings"
+  description: "Make a splash with these cyan thigh-highs. Perfect for when you want to stand out in a sea of black."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_cyan
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_dpink
+  name: "Dark pink thigh-high stockings"
+  description: "Stay sultry with these dark pink thigh-highs. Perfect for a night out on the town."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_dpink
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_green
+  name: "Green thigh-high stock"
+  description: "Make everyone green with envy with these stylish and comfortable green thigh-highs."
+  category: "Socks"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_green
+
+# seam
+- type: loadout
+  id: LoadoutUnderSockThighStockings_lpink
+  name: "Coder socks"
+  description: "For all the geeks out there who need a quick code-fix while they walk."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_lpink
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_orange
+  name: "Orange thigh-highs"
+  description: "For the daring fashionista who's not afraid of a little...well, a lot of color."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_orange
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_purple
+  name: "Purple thigh-highs"
+  description: "For royalty and those who want to feel like it, every step of the way."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_purple
+
+- type: loadout
+  id: LoadoutUnderSockThighStockings_yellow
+  name: "Yellow thigh-highs"
+  description: "For the sunshine on a cloudy day and those who want to bring a little light wherever they go."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStockings_yellow
+
+- type: loadout
+  id: LoadoutUnderSockKneeStriped
+  name: "Striped knee-highs"
+  description: "For the sailor in all of us, or for those who just really love stripes."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStriped_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighStriped
+  name: "Striped thigh-highs"
+  description: "For the fashionista who's feeling a little nautical and a little sassy."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderStriped_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeThin
+  name: "Thin knee-highs"
+  description: "For the minimalist who wants a touch of style without the bulk."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderThin_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighThin
+  name: "Thin thigh-highs"
+  description: "For the minimalist who wants a touch of style without the bulk, up higher."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderThin_thigh
+
+- type: loadout
+  id: LoadoutUnderSockKneeUK
+  name: "Uk knee-highs"
+  description: "For the Anglophile who wants a touch of Britain with every step."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderUK_knee
+
+- type: loadout
+  id: LoadoutUnderSockThighUK
+  name: "Uk thigh-highs"
+  description: "For the Anglophile who wants to show their love for Britain, head to toe."
+  category: Socks
+  cost: 0
+  exclusive: true
+  item: ClothingUnderUK_thigh

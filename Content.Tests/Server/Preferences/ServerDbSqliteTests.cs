@@ -65,6 +65,7 @@ namespace Content.Tests.Server.Preferences
                 },
                 PreferenceUnavailableMode.StayInLobby,
                 new List<string> (),
+                new List<string> (),
                 new List<string>()
             );
         }

@@ -4,9 +4,9 @@
          xmlns:humanoid="clr-namespace:Content.Client.Humanoid">
     <BoxContainer Orientation="Horizontal">
         <!-- Left side -->
-        <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
+        <BoxContainer Orientation="Horizontal" Margin="10 10 10 10">
             <!-- Middle container -->
-            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+            <BoxContainer Orientation="Vertical" SeparationOverride="10">
                 <!-- Name box-->
                 <BoxContainer Orientation="Vertical">
                     <prefUi:HighlightedContainer>
@@ -16,11 +16,15 @@
                                     <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                                         <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
                                         <LineEdit Name="CNameEdit" MinSize="270 0" VerticalAlignment="Center" Margin="5 0 0 0" />
-                                        <Button Name="CNameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
                                     </BoxContainer>
-                                    <Button Name="CRandomizeEverything" HorizontalAlignment="Center"
-                                            HorizontalExpand="False" MaxWidth="256"
-                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
+                                    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+                                        <Button Name="CNameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}"
+                                                HorizontalAlignment="Center"
+                                                HorizontalExpand="False" MaxWidth="256" />
+                                        <Button Name="CRandomizeEverything" HorizontalAlignment="Center"
+                                                HorizontalExpand="False" MaxWidth="256"
+                                                Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
+                                    </BoxContainer>
                                     <RichTextLabel Name="CWarningLabel" HorizontalExpand="False"
                                                    VerticalExpand="True" MaxWidth="425"
                                                    HorizontalAlignment="Left" />
@@ -29,25 +33,31 @@
                         </BoxContainer>
                     </prefUi:HighlightedContainer>
                 </BoxContainer>
-                <!-- Import/Export -->
                 <BoxContainer Orientation="Vertical">
                     <prefUi:HighlightedContainer>
                         <BoxContainer Orientation="Horizontal">
+                            <!-- Import/Export -->
                             <Button Text="{Loc 'humanoid-profile-editor-import-button'}" Disabled="True"
-                                    ToolTip="{Loc 'generic-not-yet-implemented'}" />
+                                    ToolTip="{Loc 'generic-not-yet-implemented'}"
+                                    HorizontalAlignment="Center" />
                             <Button Text="{Loc 'humanoid-profile-editor-export-button'}" Disabled="True"
-                                    ToolTip="{Loc 'generic-not-yet-implemented'}" />
+                                    ToolTip="{Loc 'generic-not-yet-implemented'}"
+                                    HorizontalAlignment="Center" />
+                            <!-- Save -->
+                            <Button Name="CSaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}"
+                                    HorizontalAlignment="Center" />
                         </BoxContainer>
                     </prefUi:HighlightedContainer>
-                    <!-- Save -->
-                    <prefUi:HighlightedContainer>
-                        <Button Name="CSaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" HorizontalAlignment="Center" />
-                    </prefUi:HighlightedContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" Margin="15">
+                    <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+                    <Control MinHeight="40" />
+                    <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
                 </BoxContainer>
             </BoxContainer>
-            <Control MinHeight="10" />
+            <Control MinWidth="10" />
             <!-- tabContainer -->
-            <TabContainer Name="CTabContainer" VerticalExpand="True">
+            <TabContainer Name="CTabContainer" MinWidth="750" VerticalExpand="True" HorizontalExpand="True">
                 <BoxContainer Orientation="Vertical">
                     <ScrollContainer VerticalExpand="True">
                         <!-- appearanceList -->
@@ -143,6 +153,14 @@
                         <BoxContainer Name="CTraitsList" Orientation="Vertical" />
                     </ScrollContainer>
                 </BoxContainer>
+                <BoxContainer Orientation="Vertical" Margin="10" Name="CLoadoutsTab">
+                    <!-- TODO -->
+                    <!-- Keep this value consistent with the Update__Preferences function's default 'points' value or issues will arise. -->
+                    <ProgressBar Name="LoadoutPoints" MaxValue="14" Value="14" />
+                    <ScrollContainer VerticalExpand="True">
+                        <TabContainer Name="CLoadoutsTabs" VerticalExpand="True" />
+                    </ScrollContainer>
+                </BoxContainer>
                 <BoxContainer Name="CMarkingsTab" Orientation="Vertical" Margin="10">
                     <!-- Markings -->
                     <ScrollContainer VerticalExpand="True">
@@ -150,11 +168,6 @@
                     </ScrollContainer>
                 </BoxContainer>
             </TabContainer>
-        </BoxContainer>
-        <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
-            <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
         </BoxContainer>
     </BoxContainer>
 </Control>

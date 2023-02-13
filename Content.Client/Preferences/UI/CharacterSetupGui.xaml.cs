@@ -186,7 +186,7 @@ namespace Content.Client.Preferences.UI
                 var view = new SpriteView
                 {
                     Sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy),
-                    Scale = (2, 2),
+                    Scale = ((float) 1.45, (float) 1.45),
                     OverrideDirection = Direction.South
                 };
 
@@ -203,6 +203,7 @@ namespace Content.Client.Preferences.UI
                 {
                     Text = description,
                     ClipText = true,
+                    MinSize = (100, 0),
                     HorizontalExpand = true
                 };
                 var deleteButton = new Button
@@ -224,16 +225,15 @@ namespace Content.Client.Preferences.UI
                 };
                 deleteButton.OnPressed += _ =>
                 {
-
                     deleteButton.Visible = false;
                     confirmDeleteButton.Visible = true;
-
                 };
 
                 var internalHBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
+                    MinSize = (125, 0),
                     SeparationOverride = 0,
                     Children =
                     {

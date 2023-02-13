@@ -1,0 +1,664 @@
+- type: loadout
+  id: LoadoutUnderShirtBabydollshirt
+  name: "Babydoll shirt"
+  description: "Get ready to feel flirty and fabulous with this babydoll shirt!"
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbabydoll
+
+- type: loadout
+  id: LoadoutUnderShirtBandshirt
+  name: "Band shirt"
+  description: "Rock out with this cool band shirt, perfect for concerts or just jamming out at home."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderband
+
+- type: loadout
+  id: LoadoutUnderShirtBeeshirt
+  name: "Bee shirt"
+  description: "Bzzz your way through the day with this bee-themed shirt, perfect for bee enthusiasts."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbee_shirt
+
+- type: loadout
+  id: LoadoutUnderShirtBlueshirtsport
+  name: "Sporty blue shirt"
+  description: "Get in the game with this sporty blue shirt, perfect for working out or just lounging."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderblueshirtsport
+
+- type: loadout
+  id: LoadoutUnderShirtBowling
+  name: "Red bowling shirt"
+  description: "Knock down those pins in style with this red bowling shirt, perfect for a night out with friends."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbowling
+
+- type: loadout
+  id: LoadoutUnderShirtBowlinga
+  name: "Navy bowling shirt"
+  description: "Make a statement on the lanes with this navy bowling shirt, perfect for a night out with friends."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbowlinga
+
+- type: loadout
+  id: LoadoutUnderShirtBowlingp
+  name: "Pink bowling shirt"
+  description: "Show off your playful side with this pink bowling shirt, perfect for a night out with friends."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbowlingp
+
+- type: loadout
+  id: LoadoutUnderShirtBowlingw
+  name: "White bowling shirt"
+  description: "Keep it simple and stylish with this white bowling shirt, perfect for a night out with friends."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbowlingw
+
+- type: loadout
+  id: LoadoutUnderShirtBra_alt
+  name: "Bra"
+  description: "Stay comfortable and supported with this basic bra, perfect for everyday wear."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_alt
+
+- type: loadout
+  id: LoadoutUnderShirtBra_assblastusa
+  name: "American flag bra"
+  description: "Show off your patriotism with this American flag bra, perfect for 4th of July or any patriotic occasion."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_assblastusa
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtBra_bee-kini
+  name: "Bee-kini bra"
+  description: "Bee-cause everyone needs a little sting-er."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_bee-kini
+
+- type: loadout
+  id: LoadoutUnderShirtBra_binder_strapless
+  name: "Strapless binder bra"
+  description: "For those who like to keep their chest in check."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_binder_strapless
+
+- type: loadout
+  id: LoadoutUnderShirtBra_binder
+  name: "Binder bra"
+  description: "Holding it all in, one strap at a time."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_binder
+
+- type: loadout
+  id: LoadoutUnderShirtBra_commie
+  name: "Commie bra"
+  description: "For the socialist in all of us."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_commie
+
+- type: loadout
+  id: LoadoutUnderShirtBra_neko
+  name: "Neko bra"
+  description: "For the cat-lovers out there."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_neko
+
+- type: loadout
+  id: LoadoutUnderShirtBra_strapless_alt
+  name: "Strapless bra"
+  description: "Going strapless, without a care in the world."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_strapless_alt
+
+- type: loadout
+  id: LoadoutUnderShirtBra_strapless
+  name: "Strapless bra"
+  description: "For the daring and bold."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_strapless
+
+- type: loadout
+  id: LoadoutUnderShirtBra_swimming_alt
+  name: "Swimming bra"
+  description: "Because pool-parties were made for comfortable bras."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_swimming_alt
+
+- type: loadout
+  id: LoadoutUnderShirtBra_swimming
+  name: "Swimming bra"
+  description: "For those who take their swimwear seriously."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_swimming
+
+- type: loadout
+  id: LoadoutUnderShirtBra_uk
+  name: "Union jack bra"
+  description: "For the patriots and royalists alike."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra_uk
+
+- type: loadout
+  id: LoadoutUnderShirtBra
+  name: "Bra"
+  description: "Because everyone needs a little lift."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderbra
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_navy
+  name: "Navy cowboy shirt"
+  description: "Yeehaw! Look like a true cowboy with this navy shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_navy
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_navys
+  name: "Navy cowboy t-shirt"
+  description: "Get ready for a rodeo with this casual navy cowboy t-shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_navys
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_red
+  name: "Red cowboy shirt"
+  description: "Stand out from the crowd with this bold red cowboy shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_red
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_reds
+  name: "Red cowboy t-shirt"
+  description: "Ride off into the sunset in style with this red cowboy t-shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_reds
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_s
+  name: "Spicy cowboy t-shirt"
+  description: "Yeehaw! This spicy cowboy t-shirt will make you feel like you're on the range in no time."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_s
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_white
+  name: "White cowboy shirt"
+  description: "This white cowboy shirt is perfect for when you want to look sharp and professional, or when you just want to show off your moves on the dance floor."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_white
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt_whites
+  name: "White cowboy t-shirt"
+  description: "This white cowboy t-shirt is perfect for a day on the ranch or a night on the town."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt_whites
+
+- type: loadout
+  id: LoadoutUnderShirtCowboyshirt
+  name: "Classic cowboy shirt"
+  description: "This classic cowboy shirt is perfect for rounding up cattle or rounding up your friends for a night out."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndercowboyshirt
+
+- type: loadout
+  id: LoadoutUnderShirtGreenshirtsport
+  name: "Sporty green shirt"
+  description: "Get ready to hit the gym or the trails with this sporty green shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndergreenshirtsport
+
+- type: loadout
+  id: LoadoutUnderShirtHalterneck_bra
+  name: "Halterneck bra"
+  description: "Get ready to party with this daring halterneck bra. Perfect for showing off your neck and shoulders."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderhalterneck_bra
+
+- type: loadout
+  id: LoadoutUnderShirtIan
+  name: "Ian shirt"
+  description: "Get ready to look dapper in this Ian shirt. Perfect for any occasion."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderian
+
+- type: loadout
+  id: LoadoutUnderShirtIlovent
+  name: "Nanotrasen shirt"
+  description: "Get ready to show your love for Nanotrasen with this stylish shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderilovent
+
+- type: loadout
+  id: LoadoutUnderShirtLjont
+  name: "Long john shirt"
+  description: "Get cozy in this Long John shirt. Perfect for those cold winter nights."
+  category: "Shirts/Bras"
+  cost: 1
+  exclusive: true
+  item: ClothingUnderljont
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtShirtlongstripe_blue
+  name: "Blue stripe undershirt"
+  description: "This shirt will make you feel like you're always walking the runway, no matter where you are!"
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderlongstripe_blue
+
+- type: loadout
+  id: LoadoutUnderShirtShirtlongstripe
+  name: "Stripe undershirt"
+  description: "Make a statement with this bold stripe undershirt. Perfect for the daring fashionista."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderlongstripe
+
+- type: loadout
+  id: LoadoutUnderShirtShirtlover
+  name: "Lover undershirt"
+  description: "Wear your heart on your chest with this sweet and sentimental undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderlover
+
+- type: loadout
+  id: LoadoutUnderShirtShirtmatroska
+  name: "Matroska undershirt"
+  description: "Get the Russian doll look with this quirky and unique undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndermatroska
+
+- type: loadout
+  id: LoadoutUnderShirtShirtpeace
+  name: "Peace undershirt"
+  description: "Make a peaceful statement with this eye-catching undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpeace
+
+- type: loadout
+  id: LoadoutUnderShirtShirtpogoman
+  name: "Pogoman undershirt"
+  description: "Get ready to party with this wild and funky undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpogoman
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtPolo
+  name: "Polo shirt"
+  description: "Class up your game with this stylish polo shirt. Perfect for golfing or sitting in the bleachers at a Little League game."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderpolo
+
+- type: loadout
+  id: LoadoutUnderShirtRedshirtsport
+  name: "Sporty red shirt"
+  description: "Get ready to hit the gym or the couch in style with this sporty red shirt. Just be prepared for people to ask you for your autograph."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderredshirtsport
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_alien
+  name: "Alien shirt"
+  description: "This shirt is out of this world! Wear it and show everyone your love for extraterrestrial beings."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_alien
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_assblastusa
+  name: "American flag shirt"
+  description: "This shirt lets everyone know how patriotic you are. Just don't forget to take it off when you go to bed, or you might have nightmares about the pledge of allegiance."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_assblastusa
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_bluejersey
+  name: "Blue jersey"
+  description: "Feel like a sports star with this blue jersey. Just don't forget to bring your helmet, or you might get tackled by an overly enthusiastic fan."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_bluejersey
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_clown
+  name: "Clown shirt"
+  description: "Get ready to paint on a smile and make everyone laugh with this clown shirt. Just be prepared for the occasional balloon animal request."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_clown
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_commie
+  name: "Commie shirt"
+  description: "Make a political statement with this commie shirt. Just don't be surprised if someone mistakes you for a hipster."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_commie
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_meat
+  name: "Meat shirt"
+  description: "This shirt is a real meat and potatoes kind of shirt. Perfect for grilling or just snacking on a steak while lounging at home."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_meat
+
+- type: loadout
+  id: LoadoutUnderShirtShirt_nano
+  name: "Nano shirt"
+  description: "This shirt is the epitome of cool. With its sleek design, it's perfect for hacking or just looking really cool."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_nano
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtShirtquestion
+  name: "Question mark shirt"
+  description: "A shirt with more questions than answers."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_question
+
+- type: loadout
+  id: LoadoutUnderShirtShirtredjersey
+  name: "Red jersey"
+  description: "Score some style points with this red jersey."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_redjersey
+
+- type: loadout
+  id: LoadoutUnderShirtShirtskull
+  name: "Skull shirt"
+  description: "For when you want to make a bold statement about your mortality."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_skull
+
+- type: loadout
+  id: LoadoutUnderShirtShirtss13
+  name: "SS13 shirt"
+  description: "Represent your favorite space-themed game with this shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_ss13
+
+- type: loadout
+  id: LoadoutUnderShirtShirtstripes
+  name: "Striped shirt"
+  description: "Get in touch with your inner sailor with this striped shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_stripes
+
+- type: loadout
+  id: LoadoutUnderShirtShirttiedye
+  name: "Tie-dye shirt"
+  description: "Make a statement with this colorful and bold tie-dye shirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershirt_tiedye
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtShortsleeve
+  name: "T-shirt"
+  description: "A classic, casual look for everyday wear."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndershortsleeve
+
+- type: loadout
+  id: LoadoutUnderShirtSports_bra_alt
+  name: "Sports bra"
+  description: "For all the high-intensity activities you have planned."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndersports_bra_alt
+
+- type: loadout
+  id: LoadoutUnderShirtSports_bra
+  name: "Sports bra"
+  description: "Stay cool and dry during your toughest workout."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndersports_bra
+
+- type: loadout
+  id: LoadoutUnderShirtStriped_bra
+  name: "Striped bra"
+  description: "For a stylish twist on a classic undergarment."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderstriped_bra
+
+- type: loadout
+  id: LoadoutUnderShirtSwimming_black
+  name: "Black swimming shirt"
+  description: "For a sleek and stylish swim. Suitable for any underwater secret agent."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderswimming_black
+
+- type: loadout
+  id: LoadoutUnderShirtSwimming_blue
+  name: "Blue swimming shirt"
+  description: "For a refreshing swim with a pop of color."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderswimming_blue
+
+- type: loadout
+  id: LoadoutUnderShirtSwimming_red
+  name: "Red swimming shirt"
+  description: "For a bold and daring swim."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderswimming_red
+
+- type: loadout
+  id: LoadoutUnderShirtTank_fire
+  name: "Fire tank top"
+  description: "For those who want to bring the heat."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_fire
+
+- type: loadout
+  id: LoadoutUnderShirtTank_midriff_alt
+  name: "Midriff tank top"
+  description: "For showing off that summer tan."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_midriff_alt
+
+- type: loadout
+  id: LoadoutUnderShirtTank_midriff
+  name: "Midriff tank top"
+  description: "For a flirty and fun summer look."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_midriff
+
+- type: loadout
+  id: LoadoutUnderShirtTank_rainbow
+  name: "Rainbow tank top"
+  description: "For spreading positivity and good vibes."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_rainbow
+
+# seam
+- type: loadout
+  id: LoadoutUnderShirtTank_stripes
+  name: "Striped tank top"
+  description: "Turn heads and stripes alike in this fashionable tank top."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_stripes
+
+- type: loadout
+  id: LoadoutUnderShirtTank_sun
+  name: "Sun tank top"
+  description: "Shine bright like a sun in this sunny tank top."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertank_sun
+
+- type: loadout
+  id: LoadoutUnderShirtTanktop_alt
+  name: "Tank top"
+  description: "Keep it simple and stylish in this classic tank top."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertanktop_alt
+
+- type: loadout
+  id: LoadoutUnderShirtTanktop
+  name: "Tank top"
+  description: "Stay cool and comfortable in this classic tank top."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertanktop
+
+- type: loadout
+  id: LoadoutUnderShirtTubetop
+  name: "Tubetop"
+  description: "Make waves in this trendy and flirty tubetop."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUndertubetop
+
+- type: loadout
+  id: LoadoutUnderShirtUk
+  name: "Union jack shirt"
+  description: "Wave the flag of style in this patriotic undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderuk
+
+- type: loadout
+  id: LoadoutUnderShirtUndershirt
+  name: "Undershirt"
+  description: "Stay cozy and covered in this basic undershirt."
+  category: "Shirts/Bras"
+  cost: 0
+  exclusive: true
+  item: ClothingUnderundershirt

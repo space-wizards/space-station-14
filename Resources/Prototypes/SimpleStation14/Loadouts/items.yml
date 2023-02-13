@@ -1,0 +1,71 @@
+- type: loadout
+  id: LoadoutItemCig
+  name: Cigarette
+  description: "Cool guys always have one."
+  category: Items
+  cost: 1
+  item: Cigarette
+
+- type: loadout
+  id: LoadoutItemCigsGreen
+  name: Spessman's Smokes packet
+  description: "A pack a day keeps the doctor well paid!"
+  category: Items
+  cost: 2
+  item: CigPackGreen
+
+- type: loadout
+  id: LoadoutItemCigsRed
+  name: DromedaryCo packet
+  description: "A pack a day keeps the doctor well paid!"
+  category: Items
+  cost: 2
+  item: CigPackRed
+
+- type: loadout
+  id: LoadoutItemCigsBlue
+  name: AcmeCo packet
+  description: "A pack a day keeps the doctor well paid!"
+  category: Items
+  cost: 2
+  item: CigPackBlue
+
+- type: loadout
+  id: LoadoutItemCigsBlack
+  name: Nomads packet
+  description: "A pack a day keeps the doctor well paid!"
+  category: Items
+  cost: 2
+  item: CigPackBlack
+
+- type: loadout
+  id: LoadoutItemPAI
+  name: Personal artificial intelligence
+  description: "A little flakey on booting up, but a more loyal friend you won't find."
+  category: Items
+  cost: 3
+  item: PersonalAI
+
+- type: loadout
+  id: LoadoutItemLighter
+  name: Lighter
+  description: "A basic lighter."
+  category: Items
+  cost: 2
+  item: Lighter
+
+- type: loadout
+  id: LoadoutItemLighterCheap
+  name: Cheap lighter
+  description: "A very basic lighter."
+  category: Items
+  cost: 1
+  item: CheapLighter
+
+- type: loadout
+  id: LoadoutItemMatches
+  name: Box of matches
+  description: "A box of matches."
+  category: Items
+  cost: 1
+  item: Matchbox

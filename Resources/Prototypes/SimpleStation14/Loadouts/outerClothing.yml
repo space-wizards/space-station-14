@@ -1,0 +1,79 @@
+- type: loadout
+  id: LoadoutOuterGhostSheet
+  name: Ghost Sheet
+  description: Spooky..
+  category: Outer
+  cost: 2
+  item: ClothingOuterGhostSheet
+
+- type: loadout
+  id: LoadoutOuterCoatPirateCoat
+  name: Pirate costume
+  description: Yarrrr!
+  category: Outer
+  cost: 3
+  item: ClothingOuterCoatPirateBlack
+
+- type: loadout
+  id: LoadoutOuterCoatBomberjacket
+  name: Bomber jacket
+  description: A sleek bomber jacket.
+  category: Outer
+  cost: 3
+  item: ClothingOuterCoatBomber
+
+- type: loadout
+  id: LoadoutOuterCoatHoodieBlack
+  name: Black hoodie
+  description: A warm hoodie.
+  category: Outer
+  cost: 2
+  item: ClothingOuterHoodieBlack
+
+- type: loadout
+  id: LoadoutOuterCoatHoodieGrey
+  name: Grey hoodie
+  description: A warm hoodie.
+  category: Outer
+  cost: 2
+  item: ClothingOuterHoodieGrey
+
+- type: loadout
+  id: LoadoutOuterCoatHoodiePurple
+  name: Purple hoodie
+  description: With an actual hood! Amazing!
+  category: Outer
+  cost: 4
+  item: ClothingOuterPurpleCoat # :D
+
+- type: loadout
+  id: LoadoutOuterCoatWinterCoat
+  name: Winter coat
+  description: For keeping nice and snug.
+  category: Outer
+  cost: 3
+  item: ClothingOuterWinterCoat
+
+- type: loadout
+  id: LoadoutOuterCoatHyenhSweater
+  name: Comfy sweater
+  description: For keeping nice and snug.
+  category: Outer
+  cost: 3
+  item: ClothingOuterCoatHyenhSweater
+
+- type: loadout
+  id: LoadoutOuterCoatWinterLong
+  name: Long winter coat
+  description: For keeping nice and snug.
+  category: Outer
+  cost: 4
+  item: ClothingOuterWinterCoatLong
+
+- type: loadout
+  id: LoadoutOuterCoatWinterCoatPlaid
+  name: Plaid inter coat
+  description: For keeping nice and snug.
+  category: Outer
+  cost: 3
+  item: ClothingOuterWinterCoatPlaid
