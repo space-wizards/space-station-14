@@ -124,12 +124,12 @@ public sealed partial class AdminLogManager
 
         if (filter.AnyPlayers != null)
         {
-            query = query.Where(log => filter.AnyPlayers.Any(filterPlayer => log.Players.Contains(filterPlayer)));
+            query = query.Where(log => filter.AnyPlayers.Any(filterPlayer => log.Players.Contains(filterPlayer)) || log.Players.Length == 0 && filter.IncludeNonPlayers);
         }
 
         if (filter.AllPlayers != null)
         {
-            query = query.Where(log => filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)));
+            query = query.Where(log => filter.AllPlayers.All(filterPlayer => log.Players.Contains(filterPlayer)) || log.Players.Length == 0 && filter.IncludeNonPlayers);
         }
 
         if (filter.LogsSent != 0)

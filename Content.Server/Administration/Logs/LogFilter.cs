@@ -24,6 +24,8 @@ public sealed class LogFilter
 
     public Guid[]? AllPlayers { get; set; }
 
+    public bool IncludeNonPlayers { get; set; }
+
     public int? LastLogId { get; set; }
 
     public int LogsSent { get; set; }

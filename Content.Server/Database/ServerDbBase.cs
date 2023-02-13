@@ -742,12 +742,12 @@ namespace Content.Server.Database
 
             if (filter.AnyPlayers != null)
             {
-                query = query.Where(log => log.Players.Any(p => filter.AnyPlayers.Contains(p.PlayerUserId)));
+                query = query.Where(log => log.Players.Any(p => filter.AnyPlayers.Contains(p.PlayerUserId)) || log.Players.Count == 0 && filter.IncludeNonPlayers);
             }
 
             if (filter.AllPlayers != null)
             {
-                query = query.Where(log => log.Players.All(p => filter.AllPlayers.Contains(p.PlayerUserId)));
+                query = query.Where(log => log.Players.All(p => filter.AllPlayers.Contains(p.PlayerUserId)) || log.Players.Count == 0 && filter.IncludeNonPlayers);
             }
 
             if (filter.LastLogId != null)
