@@ -1,10 +1,4 @@
 Entries:
-- author: tsp01
-  changes:
-  - {message: The range from which you can hear players has been increased from 7
-      to 10 units., type: Tweak}
-  id: 2533
-  time: '2022-10-28T03:25:48.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug causing some entities not being interactable., type: Fix}
@@ -2916,3 +2910,8 @@ Entries:
   - {message: Deployable barriers now stop being pulled when they are locked., type: Fix}
   id: 3032
   time: '2023-02-13T12:22:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifact gas triggers can no longer be activated from Frezon., type: Tweak}
+  id: 3033
+  time: '2023-02-13T13:30:26.0000000+00:00'
