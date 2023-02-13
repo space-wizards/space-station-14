@@ -23,6 +23,7 @@ public sealed class ReflectSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -43,13 +44,14 @@ public sealed class ReflectSystem : EntitySystem
                     && reflect.Enabled
                     && _random.Prob(reflect.Chance))
                 {
-                    var vel = _physics.GetMapLinearVelocity(uid);
-                    var force = physicsComp.Force;
+                    var vel = -_physics.GetMapLinearVelocity(uid);
+                    var force = -physicsComp.Force;
                     var angle = vel.ToAngle() + _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
                     vel = angle.ToVec() * vel.Length;
                     _physics.ResetDynamics(physicsComp);
-                    _physics.ApplyForce(uid, -force);
-                    _physics.SetLinearVelocity(uid, -vel);
+                    _physics.ApplyForce(uid, force);
+                    _physics.SetLinearVelocity(uid, vel);
+                    _transform.SetWorldRotation(uid, vel.ToWorldAngle());
                     projComp.Shooter = args.Target;
                     _popup.PopupEntity(Loc.GetString("reflect-projectile"), uid, PopupType.Small);
                     _audio.PlayPvs(reflect.OnReflect, uid, AudioHelpers.WithVariation(0.05f, _random));
