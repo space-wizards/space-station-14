@@ -1,4 +1,5 @@
 ﻿using Content.Server.Clothing.Systems;
+using Content.Shared.Administration;
 
 namespace Content.Server.Clothing.Components;
 
@@ -13,7 +14,7 @@ public sealed class RestrictedClothingComponent : Component
     ///     List of permissions required to be allowed to wear the item
     /// </summary>
     [DataField("permissions")] [ViewVariables(VVAccess.ReadWrite)]
-    public HashSet<string> Permissions = new();
+    public AdminFlags Permissions = AdminFlags.None;
 
     /// <summary>
     ///     Uid that won't be affected

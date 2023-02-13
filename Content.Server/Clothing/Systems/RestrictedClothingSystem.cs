@@ -3,8 +3,6 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Clothing.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
-using Content.Server.Speech.Components;
-using Content.Shared.Administration;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
@@ -31,7 +29,7 @@ public sealed class RestrictedClothingSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        if (!clothing.Slots.HasFlag(args.SlotFlags) 
+        if (!clothing.Slots.HasFlag(args.SlotFlags))
         	return;
 
         if (!TryComp(args.Equipee, out MindComponent? mind))
@@ -40,21 +38,8 @@ public sealed class RestrictedClothingSystem : EntitySystem
         if (args.Equipee.GetHashCode() == component.WhitelistedUid)
             return;
 
-        bool applyEffect = !mind.HasMind || mind.Mind!.Session == null || component.RequireWhitelist;
-
-        if (!applyEffect)
-            foreach (var perm in component.Permissions)
-            {
-                if (!Enum.TryParse<AdminFlags>(perm, out var flag))
-                    continue;
-
-                if (_adminManager.HasAdminFlag(mind.Mind!.Session!, flag, true))
-                    continue;
-
-                applyEffect = true;
-            }
-
-        if (!applyEffect)
+        if (!component.RequireWhitelist && mind.HasMind && mind.Mind!.Session != null &&
+            _adminManager.HasAdminFlag(mind.Mind!.Session!, component.Permissions, true))
             return;
 
         _flammableSystem.AdjustFireStacks(args.Equipee, 5);
