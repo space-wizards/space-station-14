@@ -85,7 +85,7 @@ public sealed class LockSystem : EntitySystem
     {
         if (!component.Locked)
             return;
-        if (!args.Silent)
+        if (!args.Silent && _timing.IsFirstTimePredicted && _net.IsClient)
             _sharedPopupSystem.PopupEntity(Loc.GetString("entity-storage-component-locked-message"), uid);
 
         args.Cancelled = true;

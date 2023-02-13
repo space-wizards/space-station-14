@@ -5,9 +5,11 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
+using Content.Shared.Movement.Events;
 using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Storage.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -41,9 +43,11 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[]{typeof(LockSystem)});
         SubscribeLocalEvent<SharedEntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<SharedEntityStorageComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<SharedEntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
 
         SubscribeLocalEvent<SharedEntityStorageComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<SharedEntityStorageComponent, ComponentHandleState>(OnHandleState);
@@ -111,6 +115,46 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             Del(ent);
         }
     }
+
+    private void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
+    {
+        if (!EntityManager.HasComponent<SharedHandsComponent>(args.Entity))
+            return;
+
+        if (_timing.CurTime < component.LastInternalOpenAttempt + SharedEntityStorageComponent.InternalOpenAttemptDelay)
+            return;
+
+        component.LastInternalOpenAttempt = _timing.CurTime;
+        if (component.OpenOnMove)
+        {
+            TryOpenStorage(args.Entity, component.Owner);
+        }
+    }
+
+
+    private void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract)
+            return;
+
+        if (!CanOpen(args.User, args.Target, silent: true, component))
+            return;
+
+        InteractionVerb verb = new();
+        if (component.Open)
+        {
+            verb.Text = Loc.GetString("verb-common-close");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+        }
+        else
+        {
+            verb.Text = Loc.GetString("verb-common-open");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+        }
+        verb.Act = () => ToggleOpen(args.User, args.Target, component);
+        args.Verbs.Add(verb);
+    }
+
 
     public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
     {
@@ -269,7 +313,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (component.IsWeldedShut)
         {
-            if (!silent && !component.Contents.Contains(user) && _timing.IsFirstTimePredicted)
+            if (!silent && !component.Contents.Contains(user) && _timing.IsFirstTimePredicted && _net.IsClient)
                 Popup.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target);
 
             return false;
@@ -281,7 +325,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
-                if (!silent)
+                if (!silent && _timing.IsFirstTimePredicted && _net.IsClient)
                     Popup.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
@@ -392,9 +436,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (TryComp<PlaceableSurfaceComponent>(uid, out var surface))
             _placeableSurface.SetPlaceable(uid, component.Open, surface);
 
-        if (!_timing.IsFirstTimePredicted)
-            return;
-        Logger.Debug($"{component.Open}");
         _appearance.SetData(uid, StorageVisuals.Open, component.Open);
         _appearance.SetData(uid, StorageVisuals.HasContents, component.Contents.ContainedEntities.Count > 0);
     }

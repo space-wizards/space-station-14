@@ -78,9 +78,6 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<ServerStorageComponent, AreaPickupCompleteEvent>(OnAreaPickupComplete);
             SubscribeLocalEvent<ServerStorageComponent, AreaPickupCancelledEvent>(OnAreaPickupCancelled);
 
-            SubscribeLocalEvent<EntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
-            SubscribeLocalEvent<EntityStorageComponent, ContainerRelayMovementEntityEvent>(OnRelayMovement);
-
             SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
         }
 
@@ -144,46 +141,6 @@ namespace Content.Server.Storage.EntitySystems
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
         }
-
-        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
-        {
-            if (!EntityManager.HasComponent<HandsComponent>(args.Entity))
-                return;
-
-            if (_gameTiming.CurTime < component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
-                return;
-
-            component.LastInternalOpenAttempt = _gameTiming.CurTime;
-            if (component.OpenOnMove)
-            {
-                _entityStorage.TryOpenStorage(args.Entity, component.Owner);
-            }
-        }
-
-
-        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            if (!_entityStorage.CanOpen(args.User, args.Target, silent: true, component))
-                return;
-
-            InteractionVerb verb = new();
-            if (component.Open)
-            {
-                verb.Text = Loc.GetString("verb-common-close");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
-            }
-            else
-            {
-                verb.Text = Loc.GetString("verb-common-open");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-            }
-            verb.Act = () => _entityStorage.ToggleOpen(args.User, args.Target, component);
-            args.Verbs.Add(verb);
-        }
-
         private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetVerbsEvent<ActivationVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract)
