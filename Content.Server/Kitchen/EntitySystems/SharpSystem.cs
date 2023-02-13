@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Systems;
+using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Server.Kitchen.Components;
 using Content.Shared.Body.Components;
@@ -33,7 +33,7 @@ public sealed class SharpSystem : EntitySystem
         SubscribeLocalEvent<SharpComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<SharpComponent, DoAfterEvent>(OnDoAfter);
 
-        SubscribeLocalEvent<SharedButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
+        SubscribeLocalEvent<ButcherableComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
     }
 
     private void OnAfterInteract(EntityUid uid, SharpComponent component, AfterInteractEvent args)
@@ -46,7 +46,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void TryStartButcherDoafter(EntityUid knife, EntityUid target, EntityUid user)
     {
-        if (!TryComp<SharedButcherableComponent>(target, out var butcher))
+        if (!TryComp<ButcherableComponent>(target, out var butcher))
             return;
 
         if (!TryComp<SharpComponent>(knife, out var sharp))
@@ -114,7 +114,7 @@ public sealed class SharpSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnGetInteractionVerbs(EntityUid uid, SharedButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
+    private void OnGetInteractionVerbs(EntityUid uid, ButcherableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (component.Type != ButcheringType.Knife || args.Hands == null)
             return;
