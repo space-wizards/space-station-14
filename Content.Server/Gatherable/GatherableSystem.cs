@@ -44,7 +44,7 @@ public sealed class GatherableSystem : EntitySystem
         var damageTime = (damageRequired / tool.Damage.Total).Float();
         damageTime = Math.Max(1f, damageTime);
 
-        var doAfter = new DoAfterEventArgs(args.User, tool.GatheringTime, target: uid, used: args.Used)
+        var doAfter = new DoAfterEventArgs(args.User, damageTime, target: uid, used: args.Used)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
@@ -68,8 +68,7 @@ public sealed class GatherableSystem : EntitySystem
         }
 
         // Complete the gathering process
-        _damageableSystem.TryChangeDamage(args.Args.Target.Value, tool.Damage, origin: args.Args.User);
-        _destructible.DestroyEntity(uid);
+        _destructible.DestroyEntity(args.Args.Target.Value);
         _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
         tool.GatheringEntities.Remove(args.Args.Target.Value);
 
