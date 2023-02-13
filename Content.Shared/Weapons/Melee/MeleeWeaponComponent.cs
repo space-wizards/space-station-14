@@ -29,6 +29,12 @@ public sealed class MeleeWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("nextAttack", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextAttack;
 
+    /// <summary>
+    /// Starts attack cooldown when equipped if true.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("resetOnHandSelected")]
+    public bool ResetOnHandSelected = true;
+
     /*
      * Melee combat works based around 2 types of attacks:
      * 1. Click attacks with left-click. This attacks whatever is under your mnouse

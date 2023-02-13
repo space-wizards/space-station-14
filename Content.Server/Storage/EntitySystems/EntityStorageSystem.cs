@@ -10,8 +10,10 @@ using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Lock;
 using Content.Shared.Placeable;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Wall;
 using Content.Shared.Whitelist;
 using Robust.Server.Containers;
@@ -19,7 +21,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
-using Robust.Shared.Player;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -34,6 +36,7 @@ public sealed class EntityStorageSystem : EntitySystem
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly AtmosphereSystem _atmos = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly IMapManager _map = default!;
 
     public const string ContainerName = "entity_storage";
@@ -165,13 +168,15 @@ public sealed class EntityStorageSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
-        RaiseLocalEvent(uid, new StorageBeforeOpenEvent());
+        var beforeev = new StorageBeforeOpenEvent();
+        RaiseLocalEvent(uid, ref beforeev);
         component.Open = true;
         EmptyContents(uid, component);
         ModifyComponents(uid, component);
-        _audio.PlayPvs(component.OpenSound, component.Owner);
+        _audio.PlayPvs(component.OpenSound, uid);
         ReleaseGas(uid, component);
-        RaiseLocalEvent(uid, new StorageAfterOpenEvent());
+        var afterev = new StorageAfterOpenEvent();
+        RaiseLocalEvent(uid, ref afterev);
     }
 
     public void CloseStorage(EntityUid uid, EntityStorageComponent? component = null)
@@ -184,8 +189,8 @@ public sealed class EntityStorageSystem : EntitySystem
 
         var entities = _lookup.GetEntitiesInRange(targetCoordinates, component.EnteringRange, LookupFlags.Approximate | LookupFlags.Dynamic | LookupFlags.Sundries);
 
-        var ev = new StorageBeforeCloseEvent(entities);
-        RaiseLocalEvent(uid, ev);
+        var ev = new StorageBeforeCloseEvent(entities, new());
+        RaiseLocalEvent(uid, ref ev);
         var count = 0;
         foreach (var entity in ev.Contents)
         {
@@ -205,9 +210,10 @@ public sealed class EntityStorageSystem : EntitySystem
 
         TakeGas(uid, component);
         ModifyComponents(uid, component);
-        _audio.PlayPvs(component.CloseSound, component.Owner);
+        _audio.PlayPvs(component.CloseSound, uid);
         component.LastInternalOpenAttempt = default;
-        RaiseLocalEvent(uid, new StorageAfterCloseEvent());
+        var afterev = new StorageAfterCloseEvent();
+        RaiseLocalEvent(uid, ref afterev);
     }
 
     public bool Insert(EntityUid toInsert, EntityUid container, EntityStorageComponent? component = null)
@@ -300,7 +306,7 @@ public sealed class EntityStorageSystem : EntitySystem
         }
 
         var ev = new StorageOpenAttemptEvent(silent);
-        RaiseLocalEvent(target, ev, true);
+        RaiseLocalEvent(target, ref ev, true);
 
         return !ev.Cancelled;
     }
@@ -308,7 +314,7 @@ public sealed class EntityStorageSystem : EntitySystem
     public bool CanClose(EntityUid target, bool silent = false)
     {
         var ev = new StorageCloseAttemptEvent();
-        RaiseLocalEvent(target, ev, silent);
+        RaiseLocalEvent(target, ref ev, silent);
 
         return !ev.Cancelled;
     }
@@ -323,7 +329,9 @@ public sealed class EntityStorageSystem : EntitySystem
 
         if (TryComp<PhysicsComponent>(toAdd, out var phys))
         {
-            if (component.MaxSize < phys.GetWorldAABB().Size.X || component.MaxSize < phys.GetWorldAABB().Size.Y)
+            var aabb = _physics.GetWorldAABB(toAdd, body: phys);
+
+            if (component.MaxSize < aabb.Size.X || component.MaxSize < aabb.Size.Y)
                 return false;
         }
 
@@ -343,7 +351,7 @@ public sealed class EntityStorageSystem : EntitySystem
         // 6. if this is an item, then mobs must only be eaten if some other component prevents
         // pick-up interactions while a mob is inside (e.g. foldable)
         var attemptEvent = new InsertIntoEntityStorageAttemptEvent();
-        RaiseLocalEvent(toInsert, attemptEvent);
+        RaiseLocalEvent(toInsert, ref attemptEvent);
         if (attemptEvent.Cancelled)
             return false;
 
@@ -363,7 +371,7 @@ public sealed class EntityStorageSystem : EntitySystem
             else
             {
                 var storeEv = new StoreMobInItemContainerAttemptEvent();
-                RaiseLocalEvent(container, storeEv);
+                RaiseLocalEvent(container, ref storeEv);
                 allowedToEat = storeEv.Handled && !storeEv.Cancelled;
             }
         }
@@ -387,11 +395,11 @@ public sealed class EntityStorageSystem : EntitySystem
             if (component.Open)
             {
                 component.RemovedMasks = fixture.CollisionLayer & component.MasksToRemove;
-                fixture.CollisionLayer &= ~component.MasksToRemove;
+                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer & ~component.MasksToRemove, manager: fixtures);
             }
             else
             {
-                fixture.CollisionLayer |= component.RemovedMasks;
+                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer | component.RemovedMasks, manager: fixtures);
                 component.RemovedMasks = 0;
             }
         }

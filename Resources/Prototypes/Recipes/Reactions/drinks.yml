@@ -433,6 +433,18 @@
     Patron: 10
 
 - type: reaction
+  id: Posca
+  reactants:
+    TableSalt:
+      amount: 1
+    Vinegar:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    Posca: 3
+
+- type: reaction
   id: Rewriter
   reactants:
     Coffee:

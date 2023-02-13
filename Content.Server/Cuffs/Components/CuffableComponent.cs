@@ -18,6 +18,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Content.Server.Recycling.Components;
+using Robust.Shared.Map;
 
 namespace Content.Server.Cuffs.Components
 {
@@ -29,16 +30,6 @@ namespace Content.Server.Cuffs.Components
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-
-        /// <summary>
-        /// How many of this entity's hands are currently cuffed.
-        /// </summary>
-        [ViewVariables]
-        public int CuffedHandCount => Container.ContainedEntities.Count * 2;
-
-        public EntityUid LastAddedCuffs => Container.ContainedEntities[^1];
-
-        public IReadOnlyList<EntityUid> StoredEntities => Container.ContainedEntities;
 
         private bool _uncuffing;
 
@@ -81,7 +72,6 @@ namespace Content.Server.Cuffs.Components
         /// <summary>
         /// Add a set of cuffs to an existing CuffedComponent.
         /// </summary>
-        /// <param name="prototype"></param>
         public bool TryAddNewCuffs(EntityUid user, EntityUid handcuff)
         {
             if (!_entMan.HasComponent<HandcuffComponent>(handcuff))
@@ -102,22 +92,8 @@ namespace Content.Server.Cuffs.Components
             sys.TryDrop(user, handcuff);
 
             Container.Insert(handcuff);
-            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? ownerHands) && ownerHands.Hands.Count() > CuffedHandCount;
-            _entMan.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
-
-            var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
-            UpdateAlert();
             UpdateHeldItems(handcuff);
-            Dirty(_entMan);
             return true;
-        }
-
-        public void CuffedStateChanged()
-        {
-            UpdateAlert();
-            var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
         }
 
         /// <summary>
@@ -260,8 +236,6 @@ namespace Content.Server.Cuffs.Components
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-fail-message"));
             }
-
-            return;
         }
 
         //Lord forgive me for putting this here
@@ -271,31 +245,18 @@ namespace Content.Server.Cuffs.Components
             SoundSystem.Play(cuff.EndUncuffSound.GetSound(), Filter.Pvs(Owner), Owner);
 
             _entMan.EntitySysManager.GetEntitySystem<HandVirtualItemSystem>().DeleteInHandsMatching(user, cuffsToRemove);
-            _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove);
+            Container.Remove(cuffsToRemove);
 
             if (cuff.BreakOnRemove)
             {
-                cuff.Broken = true;
-
-                    var meta = _entMan.GetComponent<MetaDataComponent>(cuffsToRemove);
-                    meta.EntityName = Loc.GetString(cuff.BrokenName);
-                    meta.EntityDescription = Loc.GetString(cuff.BrokenDesc);
-
-                if (_entMan.TryGetComponent<SpriteComponent>(cuffsToRemove, out var sprite) && cuff.BrokenState != null)
-                {
-                    sprite.LayerSetState(0, cuff.BrokenState); // TODO: safety check to see if RSI contains the state?
-                }
-
-                _entMan.EnsureComponent<RecyclableComponent>(cuffsToRemove);
+                _entMan.QueueDeleteEntity(cuffsToRemove);
+                var trash = _entMan.SpawnEntity(cuff.BrokenPrototype, MapCoordinates.Nullspace);
+                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, trash);
             }
-
-            CanStillInteract = _entMan.TryGetComponent(Owner, out HandsComponent? handsComponent) && handsComponent.SortedHands.Count() > CuffedHandCount;
-            _entMan.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().UpdateCanMove(Owner);
-
-            var ev = new CuffedStateChangeEvent();
-            _entMan.EventBus.RaiseLocalEvent(Owner, ref ev, true);
-            UpdateAlert();
-            Dirty(_entMan);
+            else
+            {
+                _entMan.EntitySysManager.GetEntitySystem<SharedHandsSystem>().PickupOrDrop(user, cuffsToRemove);
+            }
 
             if (CuffedHandCount == 0)
             {

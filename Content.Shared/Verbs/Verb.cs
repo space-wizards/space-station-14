@@ -1,6 +1,7 @@
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using Content.Shared.Database;
+using Content.Shared.Interaction.Events;
 
 namespace Content.Shared.Verbs
 {
@@ -131,7 +132,9 @@ namespace Content.Shared.Verbs
         ///     Setting this to false may be useful for repeatable actions, like rotating an object or maybe knocking on
         ///     a window.
         /// </remarks>
-        public bool CloseMenu = true;
+        public bool? CloseMenu;
+
+        public virtual bool CloseMenuDefault => true;
 
         /// <summary>
         ///     How important is this verb, for the purposes of admin logging?
@@ -281,7 +284,7 @@ namespace Content.Shared.Verbs
     /// <remarks>
     ///     Add a component to the user's entity and sub to the get verbs event
     ///     and it'll appear in the verbs menu on any target.
-    /// </summary>
+    /// </remarks>
     [Serializable, NetSerializable]
     public sealed class InnateVerb : Verb
     {
@@ -338,6 +341,7 @@ namespace Content.Shared.Verbs
     public sealed class ExamineVerb : Verb
     {
         public override int TypePriority => 0;
+        public override bool CloseMenuDefault => false; // for examine verbs, this will close the examine tooltip.
 
         public bool ShowOnExamineTooltip = true;
     }

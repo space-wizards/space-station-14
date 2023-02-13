@@ -7,11 +7,11 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory.Events;
-using Content.Shared.MobState.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Player;
 using System.Threading;
-using Content.Server.MobState;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Medical
 {
@@ -136,7 +136,7 @@ namespace Content.Server.Medical
         /// </summary>
         public void ExamineWithStethoscope(EntityUid user, EntityUid target)
         {
-            /// The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
+            // The mob check seems a bit redundant but (1) they could conceivably have lost it since when the doafter started and (2) I need it for .IsDead()
             if (!HasComp<RespiratorComponent>(target) || !TryComp<MobStateComponent>(target, out var mobState) || _mobStateSystem.IsDead(target, mobState))
             {
                 _popupSystem.PopupEntity(Loc.GetString("stethoscope-dead"), target, user);

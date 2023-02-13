@@ -20,6 +20,7 @@ namespace Content.Server.Paper
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -40,10 +41,10 @@ namespace Content.Server.Paper
             if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
                 if (paperComp.Content != "")
-                    appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
+                    _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
                 if (paperComp.StampState != null)
-                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
+                    _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
             }
 
         }
@@ -60,7 +61,7 @@ namespace Content.Server.Paper
                 return;
 
             if (paperComp.Content != "")
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-has-words", ("paper", uid)
                     )
@@ -68,9 +69,8 @@ namespace Content.Server.Paper
 
             if (paperComp.StampedBy.Count > 0)
             {
-                args.Message.PushNewline();
                 string commaSeparated = string.Join(", ", paperComp.StampedBy);
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "paper-component-examine-detail-stamped-by", ("paper", uid), ("stamps", commaSeparated))
                 );
@@ -112,7 +112,7 @@ namespace Content.Server.Paper
                 paperComp.Content += text + '\n';
 
             if (TryComp<AppearanceComponent>(uid, out var appearance))
-                appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
+                _appearance.SetData(uid, PaperVisuals.Status, PaperStatus.Written, appearance);
 
             if (TryComp<MetaDataComponent>(uid, out var meta))
                 meta.EntityDescription = "";
@@ -138,7 +138,7 @@ namespace Content.Server.Paper
                 if (paperComp.StampState == null && TryComp<AppearanceComponent>(uid, out var appearance))
                 {
                     paperComp.StampState = stampState;
-                    appearance.SetData(PaperVisuals.Stamp, paperComp.StampState);
+                    _appearance.SetData(uid, PaperVisuals.Stamp, paperComp.StampState, appearance);
                 }
             }
             return true;
@@ -159,7 +159,7 @@ namespace Content.Server.Paper
                 ? PaperStatus.Blank
                 : PaperStatus.Written;
 
-            appearance.SetData(PaperVisuals.Status, status);
+            _appearance.SetData(uid, PaperVisuals.Status, status, appearance);
         }
 
         public void UpdateUserInterface(EntityUid uid, PaperComponent? paperComp = null)
@@ -167,7 +167,7 @@ namespace Content.Server.Paper
             if (!Resolve(uid, ref paperComp))
                 return;
 
-            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.Mode));
+            _uiSystem.GetUiOrNull(uid, PaperUiKey.Key)?.SetState(new PaperBoundUserInterfaceState(paperComp.Content, paperComp.StampedBy, paperComp.Mode));
         }
     }
 }

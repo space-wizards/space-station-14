@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                 .ToList()
                 .AsParallel()
                 .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith("."))
+                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();

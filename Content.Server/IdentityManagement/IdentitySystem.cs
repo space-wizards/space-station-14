@@ -118,7 +118,7 @@ public class IdentitySystem : SharedIdentitySystem
     /// </summary>
     private IdentityRepresentation GetIdentityRepresentation(EntityUid target,
         InventoryComponent? inventory=null,
-        HumanoidComponent? appearance=null)
+        HumanoidAppearanceComponent? appearance=null)
     {
         int age = 18;
         Gender gender = Gender.Epicene;

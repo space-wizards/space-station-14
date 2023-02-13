@@ -3,14 +3,13 @@ using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using System.Threading;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Humanoid;
 using Content.Server.NPC;
 using Content.Shared.Damage;
 using Content.Shared.Dragon;
@@ -22,6 +21,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.NPC.Systems;
 using Content.Shared.Humanoid;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 
 namespace Content.Server.Dragon
 {
@@ -275,7 +276,7 @@ namespace Content.Server.Dragon
         {
             //Empties the stomach upon death
             //TODO: Do this when the dragon gets butchered instead
-            if (args.CurrentMobState == DamageState.Dead)
+            if (args.NewMobState == MobState.Dead)
             {
                 if (component.SoundDeath != null)
                     _audioSystem.PlayPvs(component.SoundDeath, uid, component.SoundDeath.Params);
@@ -302,7 +303,7 @@ namespace Content.Server.Dragon
             var ichorInjection = new Solution(component.DevourChem, component.DevourHealRate);
 
             //Humanoid devours allow dragon to get eggs, corpses included
-            if (!EntityManager.HasComponent<HumanoidComponent>(args.Target))
+            if (!EntityManager.HasComponent<HumanoidAppearanceComponent>(args.Target))
             {
                 ichorInjection.ScaleSolution(0.5f);
             }
@@ -365,8 +366,8 @@ namespace Content.Server.Dragon
             {
                 switch (targetState.CurrentState)
                 {
-                    case DamageState.Critical:
-                    case DamageState.Dead:
+                    case MobState.Critical:
+                    case MobState.Dead:
                         component.CancelToken = new CancellationTokenSource();
 
                         _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.DevourTime, component.CancelToken.Token, target)

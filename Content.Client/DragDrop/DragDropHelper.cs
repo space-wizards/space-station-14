@@ -71,30 +71,10 @@ public sealed class DragDropHelper<T>
             EndDrag();
         }
 
-        Dragged = target;
-        _state = DragState.MouseDown;
-        _mouseDownScreenPos = _inputManager.MouseScreenPosition;
-    }
-
-    /// <summary>
-    /// Stop the current drag / drop operation no matter what state it is in.
-    /// </summary>
-    public void EndDrag()
-    {
-        if (_state == DragState.NotDragging)
-            return;
-
-        Dragged = default;
-        _state = DragState.NotDragging;
-        _onEndDrag.Invoke();
-    }
-
-    private void StartDragging()
-    {
-        if (_state != DragState.NotDragging)
-            return;
-
-        if (_onBeginDrag.Invoke())
+        /// <param name="onBeginDrag"><see cref="OnBeginDrag"/></param>
+        /// <param name="onContinueDrag"><see cref="OnContinueDrag"/></param>
+        /// <param name="onEndDrag"><see cref="OnEndDrag"/></param>
+        public DragDropHelper(OnBeginDrag onBeginDrag, OnContinueDrag onContinueDrag, OnEndDrag onEndDrag)
         {
             _state = DragState.Dragging;
         }

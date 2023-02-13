@@ -1,10 +1,11 @@
+using System.Globalization;
 using System.Linq;
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Disease;
 using Content.Server.Disease.Components;
+using Content.Server.Humanoid;
 using Content.Server.Mind.Components;
-using Content.Server.MobState;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
@@ -14,8 +15,9 @@ using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
-using Content.Shared.MobState;
-using Content.Shared.MobState.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Zombies;
@@ -76,9 +78,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         else if (percent <= 0.25)
             ev.AddLine(Loc.GetString("zombie-round-end-amount-low"));
         else if (percent <= 0.5)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-medium", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
         else if (percent < 1)
-            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString())));
+            ev.AddLine(Loc.GetString("zombie-round-end-amount-high", ("percent", Math.Round((percent * 100), 2).ToString(CultureInfo.InvariantCulture))));
         else
             ev.AddLine(Loc.GetString("zombie-round-end-amount-all"));
 
@@ -129,7 +131,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     {
         if (!RuleAdded)
             return;
-        CheckRoundEnd(ev.Entity);
+        CheckRoundEnd(ev.Target);
     }
 
     private void OnEntityZombified(EntityZombifiedEvent ev)
@@ -146,7 +148,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
     private void CheckRoundEnd(EntityUid target)
     {
         //we only care about players, not monkeys and such.
-        if (!HasComp<HumanoidComponent>(target))
+        if (!HasComp<HumanoidAppearanceComponent>(target))
             return;
 
         var percent = GetInfectedPercentage(out var num);
@@ -173,7 +175,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem
         {
             _chatManager.DispatchServerAnnouncement(Loc.GetString("zombie-no-one-ready"));
             ev.Cancel();
-            return;
         }
     }
 
@@ -195,7 +196,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
 
     private float GetInfectedPercentage(out List<EntityUid> livingHumans)
     {
-        var allPlayers = EntityQuery<HumanoidComponent, MobStateComponent>(true);
+        var allPlayers = EntityQuery<HumanoidAppearanceComponent, MobStateComponent>(true);
         var allZombers = GetEntityQuery<ZombieComponent>();
 
         var totalPlayers = new List<EntityUid>();
@@ -215,7 +216,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem
                     livingHumans.Add(mob.Owner);
             }
         }
-        return ((float) livingZombies.Count) / (float) totalPlayers.Count;
+        return livingZombies.Count / (float) totalPlayers.Count;
     }
 
     /// <summary>

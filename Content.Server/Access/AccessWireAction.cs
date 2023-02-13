@@ -5,68 +5,36 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Access;
 
-[DataDefinition]
-public sealed class AccessWireAction : BaseWireAction
+public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent>
 {
-    [DataField("color")]
-    private Color _statusColor = Color.Green;
-
-    [DataField("name")]
-    private string _text = "ACC";
+    public override Color Color { get; set; } = Color.Green;
+    public override string Name { get; set; } = "wire-name-access";
 
     [DataField("pulseTimeout")]
     private int _pulseTimeout = 30;
 
-    public override StatusLightData? GetStatusLightData(Wire wire)
-    {
-        StatusLightState lightState = StatusLightState.Off;
-        if (IsPowered(wire.Owner)
-            && EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
-        {
-            if (access.Enabled)
-            {
-                lightState = StatusLightState.On;
-            }
-        }
-
-        return new StatusLightData(
-            _statusColor,
-            lightState,
-            _text);
-    }
+    public override StatusLightState? GetLightState(Wire wire, AccessReaderComponent comp)
+        => comp.Enabled ? StatusLightState.On : StatusLightState.Off;
 
     public override object StatusKey { get; } = AccessWireActionKey.Status;
 
-    public override bool Cut(EntityUid user, Wire wire)
+    public override bool Cut(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
-        {
-            WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
-            access.Enabled = false;
-        }
-
+        WiresSystem.TryCancelWireAction(wire.Owner, PulseTimeoutKey.Key);
+        comp.Enabled = false;
         return true;
     }
 
-    public override bool Mend(EntityUid user, Wire wire)
+    public override bool Mend(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
-        {
-            access.Enabled = true;
-        }
-
+        comp.Enabled = true;
         return true;
     }
 
-    public override bool Pulse(EntityUid user, Wire wire)
+    public override void Pulse(EntityUid user, Wire wire, AccessReaderComponent comp)
     {
-        if (EntityManager.TryGetComponent<AccessReaderComponent>(wire.Owner, out var access))
-        {
-            access.Enabled = false;
-            WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
-        }
-
-        return true;
+        comp.Enabled = false;
+        WiresSystem.StartWireAction(wire.Owner, _pulseTimeout, PulseTimeoutKey.Key, new TimedWireEvent(AwaitPulseCancel, wire));
     }
 
     public override void Update(Wire wire)

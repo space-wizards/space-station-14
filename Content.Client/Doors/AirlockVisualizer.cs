@@ -152,7 +152,7 @@ namespace Content.Client.Doors
 
             base.OnChangeData(component);
 
-            var sprite = _entMan.GetComponent<ISpriteComponent>(component.Owner);
+            var sprite = _entMan.GetComponent<SpriteComponent>(component.Owner);
             var animPlayer = _entMan.GetComponent<AnimationPlayerComponent>(component.Owner);
             if (!component.TryGetData(DoorVisuals.State, out DoorState state))
             {

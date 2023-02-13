@@ -12,7 +12,7 @@ namespace Content.Shared.Disease
     public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]

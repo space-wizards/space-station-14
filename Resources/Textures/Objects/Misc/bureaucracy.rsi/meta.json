@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. stamp-syndicate is a modified version of stamp-warden. paper_stamp-syndicate by Veritius.",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432. stamp-syndicate is a modified version of stamp-warden. paper_stamp-syndicate by Veritius. paper_receipt by eoineoineoin",
   "size": {
     "x": 32,
     "y": 32
@@ -95,12 +95,6 @@
     },
     {
       "name": "paper_bin1"
-    },
-    {
-      "name": "paper_bin2"
-    },
-    {
-      "name": "paper_bin3"
     },
     {
       "name": "paper_plane"
@@ -202,6 +196,18 @@
       "name": "paper_words-blood"
     },
     {
+      "name": "paper_receipt"
+    },
+    {
+      "name": "paper_receipt_words"
+    },
+    {
+      "name": "paper_dotmatrix"
+    },
+    {
+      "name": "paper_dotmatrix_words"
+    },
+    {
       "name": "pen"
     },
     {
@@ -209,8 +215,8 @@
     },
     {
       "name": "pen_hop"
-    },      
-	{
+    },
+    {
       "name": "overpriced_pen"
     },
     {
