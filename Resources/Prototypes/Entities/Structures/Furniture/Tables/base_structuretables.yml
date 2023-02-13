@@ -42,6 +42,8 @@
   name: counter
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
   - type: Fixtures
     fixtures:
     - shape:
