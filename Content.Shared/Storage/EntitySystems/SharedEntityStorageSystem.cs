@@ -78,6 +78,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     protected virtual void OnInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
     {
         component.Contents = _container.EnsureContainer<Container>(uid, ContainerName);
+        component.Contents.ShowContents = component.ShowContents;
+        component.Contents.OccludesLight = component.OccludesLight;
     }
 
     private void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
