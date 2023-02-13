@@ -202,7 +202,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     args.User, args.User);
 
                 // log successful force feed
-                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(uid):user} forced {ToPrettyString(args.User):target} to eat {ToPrettyString(args.Food.Owner):food}");
+                _adminLogger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(args.User):user} forced {ToPrettyString(uid):target} to eat {ToPrettyString(args.Food.Owner):food}");
             }
             else
             {

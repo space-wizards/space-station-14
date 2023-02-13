@@ -228,7 +228,7 @@ namespace Content.Server.Medical.BiomassReclaimer
             {
                 component.BloodReagent = stream.BloodReagent;
             }
-            if (TryComp<SharedButcherableComponent>(toProcess, out var butcherableComponent))
+            if (TryComp<ButcherableComponent>(toProcess, out var butcherableComponent))
             {
                 component.SpawnedEntities = butcherableComponent.SpawnedEntities;
             }
