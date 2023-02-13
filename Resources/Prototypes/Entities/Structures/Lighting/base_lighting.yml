@@ -313,7 +313,6 @@
     - state: emergency_light_off
       map: [ "enum.EmergencyLightVisualLayers.LightOff" ]
       color: "#FF4020"
-      shader: "shaded"
     - state: emergency_light_on
       map: [ "enum.EmergencyLightVisualLayers.LightOn" ]
       color: "#FF4020"
