@@ -21,6 +21,7 @@ namespace Content.Server.Bed
     public sealed class BedSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
@@ -115,6 +116,7 @@ namespace Content.Server.Bed
         private void OnEmagged(EntityUid uid, StasisBedComponent component, ref GotEmaggedEvent args)
         {
             // Repeatable
+            args.Emag = false;
             // Reset any metabolisms first so they receive the multiplier correctly
             UpdateMetabolisms(uid, component, false);
             component.Multiplier = 1 / component.Multiplier;
@@ -139,7 +141,7 @@ namespace Content.Server.Bed
         {
             var metabolismRating = args.PartRatings[component.MachinePartMetabolismModifier];
             component.Multiplier = component.BaseMultiplier * metabolismRating; //linear scaling so it's not OP
-            if (component.Emagged)
+            if (_emagSystem.IsEmagged(uid))
                 component.Multiplier = 1f / component.Multiplier;
         }
 
