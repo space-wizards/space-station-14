@@ -503,9 +503,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood
-  - type: IconSmooth
-    key: state
-    base: state_
   - type: Destructible
     thresholds:
     - trigger:
@@ -546,9 +543,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
-  - type: IconSmooth
-    key: state
-    base: state_
   - type: Destructible
     thresholds:
     - trigger:

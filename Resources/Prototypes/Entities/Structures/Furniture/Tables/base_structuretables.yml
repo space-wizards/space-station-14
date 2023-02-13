@@ -52,6 +52,3 @@
       - TableMask
       layer:
       - TableLayer
-  - type: IconSmooth
-    key: state
-    base: state_
