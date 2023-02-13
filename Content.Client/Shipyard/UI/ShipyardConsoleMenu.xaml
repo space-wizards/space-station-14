@@ -1,0 +1,28 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                           xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                           xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                           SetSize="500 360"
+                           MinSize="460 280">
+    <BoxContainer Orientation="Vertical" Margin="5 0 5 0">
+        <Label Name="BankAccountLabel" />
+        <BoxContainer Orientation="Horizontal">
+            <OptionButton Name="Categories"
+                          Prefix="{Loc 'cargo-console-menu-categories-label'}"
+                          HorizontalExpand="True" />
+            <LineEdit Name="SearchBar"
+                      PlaceHolder="{Loc 'cargo-console-menu-search-bar-placeholder'}"
+                      HorizontalExpand="True" />
+        </BoxContainer>
+        <ScrollContainer HorizontalExpand="True"
+                         VerticalExpand="True"
+                         SizeFlagsStretchRatio="6">
+            <BoxContainer Name="Vessels"
+                          Orientation="Vertical"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                <!-- Vessels get added here by code -->
+            </BoxContainer>
+        </ScrollContainer>
+        <TextureButton VerticalExpand="True" />
+    </BoxContainer>
+</controls:FancyWindow>

@@ -304,7 +304,7 @@ namespace Content.Server.Cargo.Systems
             Dirty(component);
         }
 
-        private void DeductFunds(StationBankAccountComponent component, int amount)
+        public void DeductFunds(StationBankAccountComponent component, int amount)
         {
             component.Balance = Math.Max(0, component.Balance - amount);
             Dirty(component);
