@@ -81,7 +81,7 @@ public sealed partial class MarkingPicker : Control
         }
     }
 
-    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor, Color? hairColor, Color? facialHairColor)
+    public void SetData(List<Marking> newMarkings, string species, Color skinColor, Color eyeColor)
     {
         var pointsProto = _prototypeManager
             .Index<SpeciesPrototype>(species).MarkingPoints;
@@ -89,8 +89,18 @@ public sealed partial class MarkingPicker : Control
 
         if (!IgnoreSpecies)
         {
-            _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
+            _currentMarkings.EnsureSpecies(species, skinColor, _markingManager); // should be validated server-side but it can't hurt
         }
+
+        Color? hairColor = null;
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0)
+        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+
+        Color? facialHairColor = null;
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0)
+        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
 
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
@@ -102,14 +112,24 @@ public sealed partial class MarkingPicker : Control
         PopulateUsed();
     }
 
-    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor, Color? hairColor, Color? facialHairColor)
+    public void SetData(MarkingSet set, string species, Color skinColor, Color eyeColor)
     {
         _currentMarkings = set;
 
         if (!IgnoreSpecies)
         {
-            _currentMarkings.FilterSpecies(species); // should be validated server-side but it can't hurt
+            _currentMarkings.EnsureSpecies(species, skinColor, _markingManager); // should be validated server-side but it can't hurt
         }
+
+        Color? hairColor = null;
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0)
+        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+
+        Color? facialHairColor = null;
+        if (_currentMarkings.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0)
+        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
 
         _currentSpecies = species;
         CurrentSkinColor = skinColor;
@@ -217,7 +237,7 @@ public sealed partial class MarkingPicker : Control
 
         if (!IgnoreSpecies)
         {
-            _currentMarkings.FilterSpecies(_currentSpecies, _markingManager);
+            _currentMarkings.EnsureSpecies(_currentSpecies, null, _markingManager); 
         }
 
         // walk backwards through the list for visual purposes
@@ -321,7 +341,7 @@ public sealed partial class MarkingPicker : Control
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(species);
 
         _currentMarkings = new(markingList, speciesPrototype.MarkingPoints, _markingManager, _prototypeManager);
-        _currentMarkings.FilterSpecies(species);
+        _currentMarkings.EnsureSpecies(species, null, _markingManager);
 
         Populate();
         PopulateUsed();

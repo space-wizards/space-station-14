@@ -126,9 +126,10 @@ public sealed class MarkingSet
     ///     Filters markings based on species restrictions in the marking's prototype from this marking set.
     /// </summary>
     /// <param name="species">The species to filter.</param>
+    /// <param name="skinColor">The skin color for recoloring (i.e. slimes). Use null if you want only filter markings</param>
     /// <param name="markingManager">Marking manager.</param>
     /// <param name="prototypeManager">Prototype manager.</param>
-    public void FilterSpecies(string species, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
+    public void EnsureSpecies(string species, Color? skinColor, MarkingManager? markingManager = null, IPrototypeManager? prototypeManager = null)
     {
         IoCManager.Resolve(ref markingManager);
         IoCManager.Resolve(ref prototypeManager);
@@ -163,6 +164,25 @@ public sealed class MarkingSet
         foreach (var remove in toRemove)
         {
             Remove(remove.category, remove.id);
+        }
+
+        // Re-color left markings them into skin color if needed (i.e. for slimes)
+        if (skinColor != null)
+        {
+            foreach (var (category, list) in Markings)
+            {
+                foreach (var marking in list)
+                {
+                    if
+                    (
+                        markingManager.TryGetMarking(marking, out var prototype) &&
+                        markingManager.MustMatchSkin(species, prototype.BodyPart, prototypeManager)
+                    )
+                    {
+                        marking.SetColor(skinColor.Value);
+                    }
+                }
+            }
         }
     }
 
@@ -205,9 +225,19 @@ public sealed class MarkingSet
     /// <param name="eyeColor">Eye color for marking coloring.</param>
     /// <param name="hairColor">Hair color for marking coloring.</param>
     /// <param name="markingManager">Marking manager.</param>
-    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, Color? hairColor = null, Color? facialHairColor = null, MarkingManager? markingManager = null)
+    public void EnsureDefault(Color? skinColor = null, Color? eyeColor = null, MarkingManager? markingManager = null)
     {
         IoCManager.Resolve(ref markingManager);
+
+        Color? hairColor = null;
+        if (TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0)
+        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+
+        Color? facialHairColor = null;
+        if (TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0)
+        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
 
         foreach (var (category, points) in Points)
         {

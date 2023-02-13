@@ -46,18 +46,12 @@ public sealed class HumanoidMarkingModifierState : BoundUserInterfaceState
         MarkingSet markingSet,
         string species,
         Color skinColor,
-        Color eyeColor,
-        Color? hairColor,
-        Color? facialHairColor,
         Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> customBaseLayers
     )
     {
         MarkingSet = markingSet;
         Species = species;
         SkinColor = skinColor;
-        EyeColor = eyeColor;
-        HairColor = hairColor;
-        FacialHairColor = facialHairColor;
         CustomBaseLayers = customBaseLayers;
     }
 

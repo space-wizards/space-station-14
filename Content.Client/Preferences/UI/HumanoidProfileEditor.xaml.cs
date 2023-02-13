@@ -979,10 +979,7 @@ namespace Content.Client.Preferences.UI
             }
 
             CMarkings.SetData(Profile.Appearance.Markings, Profile.Species,
-                Profile.Appearance.SkinColor,
-                Profile.Appearance.EyeColor,
-                hairColor,
-                facialHairColor
+                Profile.Appearance.SkinColor, Profile.Appearance.EyeColor
             );
         }
 

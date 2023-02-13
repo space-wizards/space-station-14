@@ -84,10 +84,39 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         AddMarking(uid, profile.Appearance.HairStyleId, profile.Appearance.HairColor, false);
         AddMarking(uid, profile.Appearance.FacialHairStyleId, profile.Appearance.FacialHairColor, false);
 
+        humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
+
+        Color? hairColor = null;
+        if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0)
+        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+
+        Color? facialHairColor = null;
+        if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0)
+        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+
+        // Adding markings from profile with default coloring if needed
         foreach (var marking in profile.Appearance.Markings)
         {
-            AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+            if (_markingManager.TryGetMarking(marking, out var prototype))
+            {
+                if (!prototype.ForcedColoring) AddMarking(uid, marking.MarkingId, marking.MarkingColors, false);
+                else
+                {
+                    var markingColors = MarkingColoring.GetMarkingLayerColors(
+                        prototype,
+                        profile.Appearance.SkinColor,
+                        profile.Appearance.EyeColor,
+                        hairColor,
+                        facialHairColor
+                    );
+                    AddMarking(uid, marking.MarkingId, markingColors, false);
+                }
+            }
         }
+
+        EnsureDefaultMarkings(uid, humanoid);
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -96,25 +125,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
 
         humanoid.Age = profile.Age;
-
-        // Caching hair and facial hair colors from their markings
-        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
-        {
-            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-                hairMarkings.Count > 0)
-            humanoid.CachedHairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-        }
-        else humanoid.CachedHairColor = profile.Appearance.SkinColor;
-        
-        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
-        {
-            if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-                facialHairMarkings.Count > 0)
-            humanoid.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-        }
-        else humanoid.CachedFacialHairColor = profile.Appearance.SkinColor;
-
-        EnsureDefaultMarkings(uid, humanoid);
 
         Dirty(humanoid);
     }
@@ -138,8 +148,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
 
         targetHumanoid.Species = sourceHumanoid.Species;
         targetHumanoid.SkinColor = sourceHumanoid.SkinColor;
-        targetHumanoid.CachedHairColor = sourceHumanoid.CachedHairColor;
-        targetHumanoid.CachedFacialHairColor = sourceHumanoid.CachedFacialHairColor;
         targetHumanoid.EyeColor = sourceHumanoid.EyeColor;
         SetSex(target, sourceHumanoid.Sex, false, targetHumanoid);
         targetHumanoid.CustomBaseLayers = new(sourceHumanoid.CustomBaseLayers);
@@ -354,6 +362,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         {
             return;
         }
-        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, humanoid.CachedHairColor, humanoid.CachedFacialHairColor, _markingManager);
+        humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, _markingManager);
     }
 }

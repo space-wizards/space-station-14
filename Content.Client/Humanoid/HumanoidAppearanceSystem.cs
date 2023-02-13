@@ -44,23 +44,6 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         component.CustomBaseLayers = state.CustomBaseLayers.ShallowClone();
 
-        // Caching hair and facial hair colors from their markings
-        if(!_markingManager.MustMatchSkin(state.Species, HumanoidVisualLayers.Hair, _prototypeManager))
-        {
-            if (state.Markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-                hairMarkings.Count > 0)
-            component.CachedHairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-        }
-        else component.CachedHairColor = state.SkinColor;
-        
-        if(!_markingManager.MustMatchSkin(state.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
-        {
-            if (state.Markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-                facialHairMarkings.Count > 0)
-            component.CachedFacialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
-        }
-        else component.CachedFacialHairColor = state.SkinColor;
-
         UpdateLayers(component, sprite);
 
         ApplyMarkingSet(uid, state.Markings, component, sprite);
@@ -153,46 +136,55 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
         var customBaseLayers = new Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo>();
 
         var speciesPrototype = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
-        var markings = new MarkingSet(profile.Appearance.Markings, speciesPrototype.MarkingPoints, _markingManager,
-            _prototypeManager);
+        var markings = new MarkingSet();
 
         // legacy: remove in the future?
         markings.RemoveCategory(MarkingCategories.Hair);
         markings.RemoveCategory(MarkingCategories.FacialHair);
 
-        var hair = new Marking(profile.Appearance.HairStyleId, new[] { profile.Appearance.HairColor });
-        markings.AddBack(MarkingCategories.Hair, hair);
-
+        var hair = new Marking(profile.Appearance.HairStyleId,
+            new[] { profile.Appearance.HairColor });
         var facialHair = new Marking(profile.Appearance.FacialHairStyleId,
             new[] { profile.Appearance.FacialHairColor });
+
+        markings.AddBack(MarkingCategories.Hair, hair);
         markings.AddBack(MarkingCategories.FacialHair, facialHair);
-
-        markings.FilterSpecies(profile.Species, _markingManager, _prototypeManager);
-
-        // Caching hair and facial hair colors from their markings
+        
+        markings.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _prototypeManager);
+        
         Color? hairColor = null;
-        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.Hair, _prototypeManager))
-        {
-            if (markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
-                hairMarkings.Count > 0)
-            hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
-        }
-        else hairColor = profile.Appearance.SkinColor;
-        
+        if (markings.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) &&
+            hairMarkings.Count > 0)
+        hairColor = hairMarkings[0].MarkingColors.FirstOrDefault();
+
         Color? facialHairColor = null;
-        if(!_markingManager.MustMatchSkin(profile.Species, HumanoidVisualLayers.FacialHair, _prototypeManager))
+        if (markings.TryGetCategory(MarkingCategories.Hair, out var facialHairMarkings) &&
+            facialHairMarkings.Count > 0)
+        facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+
+        // Adding markings from profile with default coloring if needed
+        foreach (var marking in profile.Appearance.Markings)
         {
-            if (markings.TryGetCategory(MarkingCategories.FacialHair, out var facialHairMarkings) &&
-                facialHairMarkings.Count > 0)
-            facialHairColor = facialHairMarkings[0].MarkingColors.FirstOrDefault();
+            if (_markingManager.TryGetMarking(marking, out var prototype))
+            {
+                if (!prototype.ForcedColoring) markings.AddBack(prototype.MarkingCategory, marking);
+                else
+                {
+                    var markingColors = MarkingColoring.GetMarkingLayerColors(
+                        prototype,
+                        profile.Appearance.SkinColor,
+                        profile.Appearance.EyeColor,
+                        hairColor,
+                        facialHairColor
+                    );
+                    markings.AddBack(prototype.MarkingCategory, new Marking(marking.MarkingId, markingColors));
+                }
+            }
         }
-        else facialHairColor = profile.Appearance.SkinColor;
-        
+
         markings.EnsureDefault(
             profile.Appearance.SkinColor, 
-            profile.Appearance.EyeColor, 
-            hairColor, 
-            facialHairColor, 
+            profile.Appearance.EyeColor,
             _markingManager);
 
         DebugTools.Assert(uid.IsClientSide());
@@ -283,8 +275,6 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
             spriteComp.RemoveLayer(index);
         }
     }
-
-    // TODO: Do marking things on server-side, so client only must apply it.
     private void ApplyMarking(EntityUid uid,
         MarkingPrototype markingPrototype,
         IReadOnlyList<Color>? colors,
@@ -324,29 +314,8 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 continue;
             }
 
-            // Marking coloring
-            var skinColor = humanoid.SkinColor;
-            skinColor.A = setting.LayerAlpha;
-            var markingColors = MarkingColoring.GetMarkingLayerColors(
-                    markingPrototype,
-                    skinColor,
-                    humanoid.EyeColor,
-                    humanoid.CachedHairColor,
-                    humanoid.CachedFacialHairColor
-                );
-
-            if (setting.MarkingsMatchSkin) // Slimes use this for hair
-            {
-                sprite.LayerSetColor(layerId, skinColor);
-            }
-            else if (markingPrototype.ForcedColoring || colors == null)
-            {
-                sprite.LayerSetColor(layerId, markingColors[j]);
-            }
-            else
-            {
-                sprite.LayerSetColor(layerId, colors[j]);
-            }
+            if (colors != null) sprite.LayerSetColor(layerId, colors[j]);
+            else { sprite.LayerSetColor(layerId, Color.White); }
         }
     }
 
