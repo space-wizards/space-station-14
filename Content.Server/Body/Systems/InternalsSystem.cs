@@ -33,7 +33,12 @@ public sealed class InternalsSystem : EntitySystem
         SubscribeLocalEvent<InternalsComponent, ComponentStartup>(OnInternalsStartup);
         SubscribeLocalEvent<InternalsComponent, ComponentShutdown>(OnInternalsShutdown);
         SubscribeLocalEvent<InternalsComponent, GetVerbsEvent<InteractionVerb>>(OnGetInteractionVerbs);
-        SubscribeLocalEvent<InternalsComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<InternalsComponent, DoAfterEvent<AAAAAA>>(OnDoAfter);
+    }
+
+    private record struct AAAAAA
+    {
+
     }
 
     private void OnGetInteractionVerbs(EntityUid uid, InternalsComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -84,6 +89,8 @@ public sealed class InternalsSystem : EntitySystem
 
         var isUser = uid == user;
 
+        var aaa = new AAAAAA();
+
         if (!force)
         {
             // Is the target not you? If yes, use a do-after to give them time to respond.
@@ -99,7 +106,7 @@ public sealed class InternalsSystem : EntitySystem
                 MovementThreshold = 0.1f,
                 RaiseOnUser = isUser,
                 RaiseOnTarget = !isUser
-            });
+            }, aaa);
 
             return;
         }
@@ -107,7 +114,7 @@ public sealed class InternalsSystem : EntitySystem
         _gasTank.ConnectToInternals(tank);
     }
 
-    private void OnDoAfter(EntityUid uid, InternalsComponent component, DoAfterEvent args)
+    private void OnDoAfter(EntityUid uid, InternalsComponent component, DoAfterEvent<AAAAAA> args)
     {
         if (args.Cancelled || args.Handled)
             return;

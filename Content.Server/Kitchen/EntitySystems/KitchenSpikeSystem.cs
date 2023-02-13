@@ -70,7 +70,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (args.Args.Target == null)
                 return;
 
-            if (TryComp<SharedButcherableComponent>(args.Args.Target.Value, out var butcherable))
+            if (TryComp<ButcherableComponent>(args.Args.Target.Value, out var butcherable))
                 butcherable.BeingButchered = false;
 
             if (args.Handled || args.Cancelled)

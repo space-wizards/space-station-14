@@ -76,7 +76,7 @@ public sealed class SharpSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, SharpComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<SharedButcherableComponent>(args.Args.Target, out var butcher))
+        if (args.Handled || args.Cancelled || !TryComp<ButcherableComponent>(args.Args.Target, out var butcher))
             return;
 
         component.Butchering.Remove(args.Args.Target.Value);
