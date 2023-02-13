@@ -18,7 +18,6 @@ using Content.Shared.Tag;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.FixedPoint;
-using Robust.Shared.Player;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Physics;
@@ -80,7 +79,7 @@ public sealed partial class RevenantSystem : EntitySystem
         }
 
         //ghost vision
-        if (TryComp(component.Owner, out EyeComponent? eye))
+        if (TryComp(uid, out EyeComponent? eye))
             eye.VisibilityMask |= (uint) (VisibilityFlags.Ghost);
 
         var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
@@ -131,7 +130,7 @@ public sealed partial class RevenantSystem : EntitySystem
             FixedPoint2.Min(component.Essence, component.EssenceRegenCap);
 
         if (TryComp<StoreComponent>(uid, out var store))
-            _store.UpdateUserInterface(uid, store);
+            _store.UpdateUserInterface(uid, uid, store);
 
         _alerts.ShowAlert(uid, AlertType.Essence, (short) Math.Clamp(Math.Round(component.Essence.Float() / 10f), 0, 16));
 
@@ -172,7 +171,7 @@ public sealed partial class RevenantSystem : EntitySystem
     {
         if (!TryComp<StoreComponent>(uid, out var store))
             return;
-        _store.ToggleUi(uid, store);
+        _store.ToggleUi(uid, uid, store);
     }
 
     public void MakeVisible(bool visible)
