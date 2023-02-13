@@ -189,8 +189,10 @@
     weight: 10
     startAnnouncement: station-event-solar-flare-start-announcement
     endAnnouncement: station-event-solar-flare-end-announcement
-    startAudio:
-      path: /Audio/Announcements/attention.ogg
+    startAudio: # Corvax-Announcements
+      path: /Audio/Corvax/Announcements/ionstorm.ogg
+      params:
+        volume: -4
     minEndAfter: 120
     maxEndAfter: 240
     onlyJamHeadsets: true
