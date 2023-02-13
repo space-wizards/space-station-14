@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Storage.Components;
 
-[RegisterComponent, NetworkedComponent, ComponentReference(typeof(SharedEntityStorageComponent))]
+[RegisterComponent, ComponentReference(typeof(SharedEntityStorageComponent))]
 public sealed class EntityStorageComponent : SharedEntityStorageComponent, IGasMixtureHolder
 {
     /// <summary>

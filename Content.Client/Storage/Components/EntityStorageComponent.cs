@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Storage.Components;
 
-[RegisterComponent, NetworkedComponent, ComponentReference(typeof(SharedEntityStorageComponent))]
+[RegisterComponent, ComponentReference(typeof(SharedEntityStorageComponent))]
 public sealed class EntityStorageComponent : SharedEntityStorageComponent
 {
 

@@ -120,7 +120,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!EntityManager.HasComponent<SharedHandsComponent>(args.Entity))
+        if (!HasComp<SharedHandsComponent>(args.Entity))
             return;
 
         if (_timing.CurTime < component.LastInternalOpenAttempt + SharedEntityStorageComponent.InternalOpenAttemptDelay)
@@ -314,7 +314,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         if (component.IsWeldedShut)
         {
-            if (!silent && !component.Contents.Contains(user) && _timing.IsFirstTimePredicted && _net.IsClient)
+            if (!silent && !component.Contents.Contains(user) && _net.IsServer)
                 Popup.PopupEntity(Loc.GetString("entity-storage-component-welded-shut-message"), target);
 
             return false;
@@ -326,7 +326,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
             {
-                if (!silent && _timing.IsFirstTimePredicted && _net.IsClient)
+                if (!silent && _net.IsServer)
                     Popup.PopupEntity(Loc.GetString("entity-storage-component-cannot-open-no-space"), target);
                 return false;
             }
