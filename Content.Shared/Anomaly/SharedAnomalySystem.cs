@@ -119,6 +119,9 @@ public abstract class SharedAnomalySystem : EntitySystem
         if (!Resolve(uid, ref component))
             return;
 
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
         DebugTools.Assert(component.MinPulseLength > TimeSpan.FromSeconds(3)); // this is just to prevent lagspikes mispredicting pulses
         var variation = Random.NextFloat(-component.PulseVariation, component.PulseVariation) + 1;
         component.NextPulseTime = Timing.CurTime + GetPulseLength(component) * variation;
@@ -173,6 +176,10 @@ public abstract class SharedAnomalySystem : EntitySystem
     {
         if (!Resolve(uid, ref component))
             return;
+
+        if (!Timing.IsFirstTimePredicted)
+            return;
+
         Audio.PlayPvs(component.SupercriticalSound, uid);
 
         var ev = new AnomalySupercriticalEvent();
