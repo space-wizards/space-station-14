@@ -113,7 +113,7 @@ public abstract class SharedConveyorController : VirtualController
             transform.LocalPosition = localPos;
 
             // Force it awake for collisionwake reasons.
-            _physics.SetAwake(body, true);
+            _physics.SetAwake(entity, body, true);
             _physics.SetSleepTime(body, 0f);
         }
         Dirty(comp);

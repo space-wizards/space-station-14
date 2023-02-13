@@ -40,17 +40,15 @@ public sealed class ConveyorController : SharedConveyorController
     {
         _signalSystem.EnsureReceiverPorts(uid, component.ReversePort, component.ForwardPort, component.OffPort);
 
-        if (TryComp<PhysicsComponent>(uid, out var body))
+        if (TryComp<PhysicsComponent>(uid, out var physics))
         {
             var shape = new PolygonShape();
             shape.SetAsBox(0.55f, 0.55f);
 
-            _fixtures.TryCreateFixture(body, new Fixture(body, shape)
-            {
-                ID = ConveyorFixture,
-                CollisionLayer = (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable | CollisionGroup.Impassable),
-                Hard = false,
-            });
+            _fixtures.TryCreateFixture(uid, shape, ConveyorFixture,
+                collisionLayer: (int) (CollisionGroup.LowImpassable | CollisionGroup.MidImpassable |
+                                       CollisionGroup.Impassable), hard: false, body: physics);
+
         }
     }
 
@@ -61,10 +59,10 @@ public sealed class ConveyorController : SharedConveyorController
 
         RemComp<ActiveConveyorComponent>(uid);
 
-        if (!TryComp<PhysicsComponent>(uid, out var body))
+        if (!TryComp<PhysicsComponent>(uid, out var physics))
             return;
 
-        _fixtures.DestroyFixture(body, ConveyorFixture);
+        _fixtures.DestroyFixture(uid, ConveyorFixture, body: physics);
     }
 
     private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
@@ -86,13 +84,13 @@ public sealed class ConveyorController : SharedConveyorController
 
         else if (args.Port == component.ForwardPort)
         {
-            AwakenEntities(component);
+            AwakenEntities(uid, component);
             SetState(uid, ConveyorState.Forward, component);
         }
 
         else if (args.Port == component.ReversePort)
         {
-            AwakenEntities(component);
+            AwakenEntities(uid, component);
             SetState(uid, ConveyorState.Reverse, component);
         }
     }
@@ -123,12 +121,12 @@ public sealed class ConveyorController : SharedConveyorController
     /// Awakens sleeping entities on the conveyor belt's tile when it's turned on.
     /// Fixes an issue where non-hard/sleeping entities refuse to wake up + collide if a belt is turned off and on again.
     /// </summary>
-    private void AwakenEntities(ConveyorComponent component)
+    private void AwakenEntities(EntityUid uid, ConveyorComponent component)
     {
         var xformQuery = GetEntityQuery<TransformComponent>();
         var bodyQuery = GetEntityQuery<PhysicsComponent>();
 
-        if (!xformQuery.TryGetComponent(component.Owner, out var xform))
+        if (!xformQuery.TryGetComponent(uid, out var xform))
             return;
 
         var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
@@ -143,7 +141,7 @@ public sealed class ConveyorController : SharedConveyorController
                     continue;
 
                 if (physics.BodyType != BodyType.Static)
-                    _physics.WakeBody(physics);
+                    _physics.WakeBody(entity, body: physics);
             }
         }
     }
