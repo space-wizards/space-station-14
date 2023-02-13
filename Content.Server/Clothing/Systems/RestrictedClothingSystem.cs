@@ -31,8 +31,8 @@ public sealed class RestrictedClothingSystem : EntitySystem
 
         // check if entity was actually used as clothing
         // not just taken in pockets or something
-        var isCorrectSlot = clothing.Slots.HasFlag(args.SlotFlags);
-        if (!isCorrectSlot) return;
+        if (!clothing.Slots.HasFlag(args.SlotFlags) 
+        	return;
 
         if (!TryComp(args.Equipee, out MindComponent? mind))
             return;
