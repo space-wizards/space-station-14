@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed being unable to interact with construction outlines / ghosts.,
-    type: Fix}
-  id: 2536
-  time: '2022-10-28T06:08:47.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Hopefully fix the server crashing very often., type: Fix}
@@ -2915,3 +2909,9 @@ Entries:
   - {message: APEs can no longer be destroyed by mousetraps., type: Fix}
   id: 3035
   time: '2023-02-13T21:26:30.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Glass shards are destroyed when stepped on, no more infinite death
+      traps. Piep!', type: Tweak}
+  id: 3036
+  time: '2023-02-13T21:28:26.0000000+00:00'
