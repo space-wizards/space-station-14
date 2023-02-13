@@ -10,24 +10,60 @@ namespace Content.Server.Ninja.Components;
 public sealed class SpaceNinjaGlovesComponent : Component
 {
     /// <summary>
-    /// The action for emagging stuff with ninja gloves
+    /// The action for emagging doors with ninja gloves
     /// </summary>
-    [DataField("emagAction")]
-    public EntityTargetAction EmagAction = new()
+    [DataField("doorjackAction")]
+    public EntityTargetAction DoorjackAction = new()
     {
           UseDelay = TimeSpan.FromSeconds(1), // can't spam it ridiclously fast
           Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon"),
           ItemIconStyle = ItemActionIconStyle.BigAction,
-          DisplayName = "action-name-emag",
-          Description = "action-desc-emag",
-          Event = new NinjaEmagEvent()
-      };
+          DisplayName = "action-name-ninja-doorjack",
+          Description = "action-desc-ninja-doorjack",
+          Priority = -11,
+          Event = new NinjaDoorjackEvent()
+    };
 
     /// <summary>
-    /// The tag that marks an entity as immune to emags
+    /// The tag that marks an entity as immune to doorjacking
     /// </summary>
-    [DataField("emagImmuneTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("emagImmuneTag", customTypeSerializer: typeof(PrototypeIdSerializer<TagPrototype>))]
     public string EmagImmuneTag = "EmagImmune";
+
+    /// <summary>
+    /// The action for stunning people with ninja gloves
+    /// </summary>
+    [DataField("stunAction")]
+    public EntityTargetAction StunAction = new()
+    {
+          UseDelay = TimeSpan.FromSeconds(1),
+          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Melee/stunbaton.rsi"), "stunbaton_on"),
+          ItemIconStyle = ItemActionIconStyle.BigAction,
+          DisplayName = "action-name-ninja-stun",
+          Description = "action-desc-ninja-stun",
+          Priority = -12,
+          Event = new NinjaStunEvent()
+    };
+
+    /// <summary>
+    /// Joules required in the suit to stun someone. Defaults to 10 uses on a small battery.
+    /// </summary>
+    [DataField("stunCharge")]
+    public float StunCharge = 36.0f;
+
+    /// <summary>
+    /// Shock damage dealt when stunning someone
+    /// </summary>
+    [DataField("stunDamage")]
+    public int StunDamage = 5;
+
+    /// <summary>
+    /// Time that someone is stunned for, stacks if done multiple times.
+    /// </summary>
+    [DataField("stunTime")]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(3);
 }
 
-public sealed class NinjaEmagEvent : EntityTargetActionEvent { }
+public sealed class NinjaDoorjackEvent : EntityTargetActionEvent { }
+
+public sealed class NinjaStunEvent : EntityTargetActionEvent { }

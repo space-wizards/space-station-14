@@ -205,6 +205,8 @@
     stripTimeReduction: 1
     stealthy: true
   - type: SpaceNinjaGloves
+  # not actually electrified, just used to make stun ability work
+  - type: Electrified
 
 - type: entity
   parent: ClothingHandsBase

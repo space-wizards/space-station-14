@@ -278,6 +278,7 @@ public sealed class DoorSystem : SharedDoorSystem
             {
                 SetState(uid, DoorState.Emagging, door);
                 PlaySound(uid, door.SparkSound, AudioParams.Default.WithVolume(8), args.UserUid, false);
+                RaiseLocalEvent(uid, new DoorEmaggedEvent(args.UserUid));
                 args.Handled = true;
             }
         }
@@ -315,3 +316,4 @@ public sealed class DoorSystem : SharedDoorSystem
 public sealed class PryFinishedEvent : EntityEventArgs { }
 public sealed class PryCancelledEvent : EntityEventArgs { }
 
+public record struct DoorEmaggedEvent(EntityUid UserUid);

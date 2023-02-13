@@ -1,0 +1,7 @@
+- type: objective
+  id: DoorjackObjective
+  issuer: spider clan
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:DoorjackCondition {}

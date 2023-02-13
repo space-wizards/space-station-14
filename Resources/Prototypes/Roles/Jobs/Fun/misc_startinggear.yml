@@ -59,10 +59,13 @@
     back: ClothingBackpackFilled
     mask: ClothingMaskGasSyndicate
     head: ClothingHeadHelmetSpaceNinja
+    # TODO: space ninja mask
+    eyes: ClothingEyesGlassesMeson
     gloves: ClothingHandsGlovesSpaceNinja
     outerClothing: ClothingOuterSuitSpaceninja
     shoes: ClothingShoesSpaceNinja
     id: PassengerPDA
+    ears: ClothingHeadsetGrey
     pocket1: EnergySword
     pocket2: MicroBombImplanter
     belt: ClothingBeltUtilityFilled
