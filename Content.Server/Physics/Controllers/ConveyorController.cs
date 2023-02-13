@@ -68,13 +68,13 @@ public sealed class ConveyorController : SharedConveyorController
     private void OnPowerChanged(EntityUid uid, ConveyorComponent component, ref PowerChangedEvent args)
     {
         component.Powered = args.Powered;
-        UpdateAppearance(component);
-
+        UpdateAppearance(uid, component);
+        Dirty(component);
     }
 
-    private void UpdateAppearance(ConveyorComponent component)
+    private void UpdateAppearance(EntityUid uid, ConveyorComponent component)
     {
-        _appearance.SetData(component.Owner, ConveyorVisuals.State, component.Powered ? component.State : ConveyorState.Off);
+        _appearance.SetData(uid, ConveyorVisuals.State, component.Powered ? component.State : ConveyorState.Off);
     }
 
     private void OnSignalReceived(EntityUid uid, ConveyorComponent component, SignalReceivedEvent args)
@@ -105,7 +105,7 @@ public sealed class ConveyorController : SharedConveyorController
         if (TryComp<PhysicsComponent>(uid, out var physics))
             _broadphase.RegenerateContacts(physics);
 
-        if (TryComp<RecyclerComponent>(component.Owner, out var recycler))
+        if (TryComp<RecyclerComponent>(uid, out var recycler))
         {
             if (component.State != ConveyorState.Off)
                 _recycler.EnableRecycler(recycler);
@@ -113,7 +113,7 @@ public sealed class ConveyorController : SharedConveyorController
                 _recycler.DisableRecycler(recycler);
         }
 
-        UpdateAppearance(component);
+        UpdateAppearance(uid, component);
         Dirty(component);
     }
 

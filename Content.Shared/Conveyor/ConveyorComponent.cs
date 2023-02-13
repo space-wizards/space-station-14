@@ -47,15 +47,17 @@ public sealed class ConveyorComponent : Component
 [Serializable, NetSerializable]
 public sealed class ConveyorComponentState : ComponentState
 {
+    public bool Powered;
     public Angle Angle;
     public float Speed;
     public ConveyorState State;
 
-    public ConveyorComponentState(Angle angle, float speed, ConveyorState state)
+    public ConveyorComponentState(Angle angle, float speed, ConveyorState state, bool powered)
     {
         Angle = angle;
         Speed = speed;
         State = state;
+        Powered = powered;
     }
 }
 

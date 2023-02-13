@@ -33,7 +33,7 @@ public abstract class SharedConveyorController : VirtualController
 
     private void OnConveyorGetState(EntityUid uid, ConveyorComponent component, ref ComponentGetState args)
     {
-        args.State = new ConveyorComponentState(component.Angle, component.Speed, component.State);
+        args.State = new ConveyorComponentState(component.Angle, component.Speed, component.State, component.Powered);
     }
 
     private void OnConveyorHandleState(EntityUid uid, ConveyorComponent component, ref ComponentHandleState args)
@@ -41,6 +41,7 @@ public abstract class SharedConveyorController : VirtualController
         if (args.Current is not ConveyorComponentState state)
             return;
 
+        component.Powered = state.Powered;
         component.Angle = state.Angle;
         component.Speed = state.Speed;
         component.State = state.State;
@@ -76,11 +77,12 @@ public abstract class SharedConveyorController : VirtualController
 
         foreach (var (_, comp) in EntityQuery<ActiveConveyorComponent, ConveyorComponent>())
         {
-            Convey(comp, xformQuery, bodyQuery, conveyed, frameTime, prediction);
+            var uid = comp.Owner;
+            Convey(uid, comp, xformQuery, bodyQuery, conveyed, frameTime, prediction);
         }
     }
 
-    private void Convey(ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime, bool prediction)
+    private void Convey(EntityUid uid, ConveyorComponent comp, EntityQuery<TransformComponent> xformQuery, EntityQuery<PhysicsComponent> bodyQuery, HashSet<EntityUid> conveyed, float frameTime, bool prediction)
     {
         // Use an event for conveyors to know what needs to run
         if (!CanRun(comp))
@@ -88,7 +90,7 @@ public abstract class SharedConveyorController : VirtualController
 
         var speed = comp.Speed;
 
-        if (speed <= 0f || !xformQuery.TryGetComponent(comp.Owner, out var xform) || xform.GridUid == null)
+        if (speed <= 0f || !xformQuery.TryGetComponent(uid, out var xform) || xform.GridUid == null)
             return;
 
         var conveyorPos = xform.LocalPosition;
