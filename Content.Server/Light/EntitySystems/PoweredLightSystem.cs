@@ -20,7 +20,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using System.Threading;
 using Content.Shared.DoAfter;
 
 namespace Content.Server.Light.EntitySystems
@@ -40,6 +39,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
@@ -118,10 +118,9 @@ namespace Content.Server.Light.EntitySystems
                     var damage = _damageableSystem.TryChangeDamage(userUid, light.Damage, origin: userUid);
 
                     if (damage != null)
-                        _adminLogger.Add(LogType.Damaged,
-                            $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
+                        _adminLogger.Add(LogType.Damaged, $"{ToPrettyString(args.User):user} burned their hand on {ToPrettyString(args.Target):target} and received {damage.Total:damage} damage");
 
-                    SoundSystem.Play(light.BurnHandSound.GetSound(), Filter.Pvs(uid), uid);
+                    _audio.Play(light.BurnHandSound, Filter.Pvs(uid), uid, true);
 
                     args.Handled = true;
                     return;
@@ -272,7 +271,7 @@ namespace Content.Server.Light.EntitySystems
                         if (time > light.LastThunk + ThunkDelay)
                         {
                             light.LastThunk = time;
-                            SoundSystem.Play(light.TurnOnSound.GetSound(), Filter.Pvs(uid), uid, AudioParams.Default.WithVolume(-10f));
+                            _audio.Play(light.TurnOnSound, Filter.Pvs(uid), uid, true, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -343,7 +342,7 @@ namespace Content.Server.Light.EntitySystems
 
             light.IsBlinking = isNowBlinking;
 
-            if (!EntityManager.TryGetComponent(light.Owner, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
