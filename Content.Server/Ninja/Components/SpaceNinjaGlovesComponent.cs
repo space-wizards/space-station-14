@@ -16,9 +16,9 @@ public sealed class SpaceNinjaGlovesComponent : Component
     public EntityTargetAction EmagAction = new()
     {
           UseDelay = TimeSpan.FromSeconds(1), // can't spam it ridiclously fast
-          Icon = new SpriteSpecifier.Texture(new ResourcePath("Objects/Tools/emag.rsi/icon.png")),
+          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/emag.rsi"), "icon"),
           ItemIconStyle = ItemActionIconStyle.BigAction,
-        DisplayName = "action-name-emag",
+          DisplayName = "action-name-emag",
           Description = "action-desc-emag",
           Event = new NinjaEmagEvent()
       };

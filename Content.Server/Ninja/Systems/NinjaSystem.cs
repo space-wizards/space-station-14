@@ -2,18 +2,22 @@ using Content.Server.Actions;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ninja.Components;
 using Content.Server.Popups;
+using Content.Server.Power.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.Emag.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
+using Content.Shared.PowerCell.Components;
 using Content.Shared.Stealth;
 using Content.Shared.Stealth.Components;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 
 namespace Content.Server.Ninja.Systems;
@@ -23,6 +27,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly SharedStealthSystem _stealth = default!;
     [Dependency] private readonly TagSystem _tags = default!;
@@ -37,6 +42,9 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
+        SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnCellInsertAttempt);
+        // TODO: enable if it causes trouble
+        // SubscribeLocalEvent<SpaceNinjaSuitComponent, ContainerIsRemovingAttemptEvent>(OnCellRemoveAttempt);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotUnequippedEvent>(OnSuitUnequipped);
         SubscribeLocalEvent<SpaceNinjaSuitComponent, ToggleCloakEvent>(OnToggleCloakAction);
 
@@ -94,6 +102,35 @@ public sealed partial class NinjaSystem : GameRuleSystem
         }
     }
 
+    // TODO: put in shared so client properly predicts insertion
+    private void OnCellInsertAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
+    {
+        if (!TryComp<PowerCellSlotComponent>(uid, out var cellSlot)
+            || args.Container.ID != cellSlot.CellSlotId
+            || !TryComp<ItemSlotsComponent>(uid, out var itemSlots)
+            || !_itemSlots.TryGetSlot(uid, cellSlot.CellSlotId, out var slot, itemSlots))
+        {
+            // something sus is going on...
+            args.Cancel();
+            return;
+        }
+
+        var maxCharge = (slot.HasItem && TryComp<BatteryComponent>(slot.Item, out var battery))
+            ? battery.MaxCharge
+            : 0;
+        // can only upgrade power cell, not swap to recharge instantly otherwise ninja could just swap batteries with flashlights in maints for easy power
+        if (!TryComp<BatteryComponent>(args.EntityUid, out var inserting) || inserting.MaxCharge <= maxCharge)
+        {
+            args.Cancel();
+        }
+    }
+/*
+    private void OnCellRemoveAttempt(EntityUid uid, SpaceNinjaSuitComponent comp, ContainerIsRemovingAttemptEvent args)
+    {
+        // ejecting cell then putting in charger would bypass glove recharging, bad
+        args.Cancel();
+    }
+*/
     private void OnSuitUnequipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotUnequippedEvent args)
     {
         var user = args.Equipee;

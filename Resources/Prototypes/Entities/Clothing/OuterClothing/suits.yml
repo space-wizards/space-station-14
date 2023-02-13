@@ -104,6 +104,18 @@
         Piercing: 0.6
         Heat: 0.6
   - type: SpaceNinjaSuit
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    # throwing in a recharger would bypass glove charging mechanic
+    fitsInCharger: false
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellSmall
 
 - type: entity
   parent: ClothingOuterBase
