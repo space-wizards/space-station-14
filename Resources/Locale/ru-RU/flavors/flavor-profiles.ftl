@@ -8,7 +8,7 @@ flavor-profile-unknown = Вкус неописуем.
 # will go in front so you don't get this like "Tastes like tomatoes, sweet and spicy",
 # instead, you get "Tastes sweet, spicy and like tomatoes".
 
-flavor-base-savory = пикантно
+flavor-base-savory = жгуче
 flavor-base-sweet = сладко
 flavor-base-salty = солено
 flavor-base-sour = кисло
@@ -179,5 +179,5 @@ flavor-complex-pilk = как сладкое молоко
 
 flavor-complex-medicine = как лекарство
 flavor-complex-carpet = как горсть шерсти
-flavor-complex-bee = невероятно
+flavor-complex-bee = беспчеловечно
 flavor-complex-sax = как джаз

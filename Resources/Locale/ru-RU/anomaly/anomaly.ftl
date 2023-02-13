@@ -9,7 +9,7 @@ anomaly-particles-zeta = Зетта частицы
 anomaly-scanner-component-scan-complete = Сканирование завершено!
 anomaly-scanner-ui-title = Сканер аномалий
 anomaly-scanner-no-anomaly = Аномалии не просканированы
-anomaly-scanner-severity-percentage = Текущая серьёзность: [color=gray]{ $percent }[/color]
+anomaly-scanner-severity-percentage = Опасность на: [color=gray]{ $percent }[/color]
 anomaly-scanner-stability-low = Текущая стабильность аномалии: [color=gold]Распадается[/color]
 anomaly-scanner-stability-medium = Текущая стабильность аномалии: [color=forestgreen]Стабильно[/color]
 anomaly-scanner-stability-high = Текущая стабильность аномалии: [color=crimson]Растёт[/color]

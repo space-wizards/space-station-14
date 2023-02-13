@@ -1,7 +1,7 @@
 ent-ClothingHeadset = гарнитура
     .desc = Модифицированный модульный интерком, надеваемый на голову. Принимает ключи шифрования.
     .suffix = { "" }
-ent-ClothingHeadsetCargo = грузовая гарнитура
+ent-ClothingHeadsetCargo = гарнитура карго
     .desc = Гарнитура, используемая работниками карго.
     .suffix = { "" }
 ent-ClothingHeadsetQM = гарнитура КМ
