@@ -31,3 +31,8 @@ anomaly-generator-no-cooldown = Cooldown: [color=gray]Complete[/color]
 anomaly-generator-yes-fire = Status: [color=forestgreen]Ready[/color]
 anomaly-generator-no-fire = Status: [color=crimson]Not ready[/color]
 anomaly-generator-generate = Generate Anomaly
+anomaly-generator-charges = {$charges -> 
+    [one] {$charges} charge
+    *[other] {$charges} charges
+}
+anomaly-generator-announcement = An anomaly has been generated!
