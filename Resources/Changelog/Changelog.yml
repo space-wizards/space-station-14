@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: Mice scream properly, type: Tweak}
-  id: 2532
-  time: '2022-10-28T00:42:36.0000000+00:00'
 - author: tsp01
   changes:
   - {message: The range from which you can hear players has been increased from 7
@@ -2915,3 +2910,9 @@ Entries:
   - {message: Minor changes to Omega, type: Tweak}
   id: 3031
   time: '2023-02-12T21:29:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Deployable barriers and canisters now lock correctly again., type: Fix}
+  - {message: Deployable barriers now stop being pulled when they are locked., type: Fix}
+  id: 3032
+  time: '2023-02-13T12:22:54.0000000+00:00'
