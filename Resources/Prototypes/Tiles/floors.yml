@@ -1238,6 +1238,10 @@
   weather: true
 
 - type: tileAlias
+  id: FloorBasaslt
+  target: FloorBasalt
+
+- type: tileAlias
   id: FloorAsteroidCoarseSand1
   target: FloorAsteroidCoarseSand0
 
