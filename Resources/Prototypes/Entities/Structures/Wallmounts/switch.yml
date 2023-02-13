@@ -11,8 +11,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -41,8 +39,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -86,8 +82,6 @@
     arc: 360
   - type: Clickable
   - type: InteractionOutline
-  - type: Physics
-    canCollide: false
   - type: Transform
     anchored: true
   - type: Sprite
