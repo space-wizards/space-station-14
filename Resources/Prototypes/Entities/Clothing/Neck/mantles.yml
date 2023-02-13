@@ -67,7 +67,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleColonel
-  suffix: DO NOT MAP
+  suffix: Admin
   name: colonel's mantle
   description: Gold alloy reinforced pauldrons signifying the rank of Colonel.
   components:
@@ -81,7 +81,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleCommodore
-  suffix: DO NOT MAP
+  suffix: Admin
   name: commodore's mantle
   description: A gold alloy reinforced pauldron signifying the rank of Commodore.
   components:
@@ -95,7 +95,7 @@
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckMantleMajor
-  suffix: DO NOT MAP
+  suffix: Admin
   name: Major's mantle
   description: A red padded pauldron signifying the rank of Major.
   components:
