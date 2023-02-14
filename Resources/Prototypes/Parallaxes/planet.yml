@@ -18,7 +18,7 @@
   layers:
     - texture:
         !type:ImageParallaxTextureSource
-        path: "/Textures/Tiles/Planet/grass.rsi/grass0.png"
+        path: "/Textures/Tiles/Planet/Grass/grass.png"
       slowness: 0
       scale: "1, 1"
       shader: ""

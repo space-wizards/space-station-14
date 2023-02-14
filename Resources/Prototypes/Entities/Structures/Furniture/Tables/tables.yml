@@ -55,6 +55,7 @@
   - type: SpriteFade
   - type: Sprite
     sprite: Structures/Furniture/Tables/counterwood.rsi
+    netsync: false
   - type: Icon
     sprite: Structures/Furniture/Tables/counterwood.rsi
     state: full
