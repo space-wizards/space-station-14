@@ -97,7 +97,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
 
         while (loadBiomes.MoveNext(out var biome, out var grid))
         {
-            var noise = new FastNoise(biome.Seed);
+            var noise = new FastNoiseLite(biome.Seed);
             var gridUid = grid.Owner;
 
             // Load new chunks
@@ -124,7 +124,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         BiomeComponent component,
         EntityUid gridUid,
         MapGridComponent grid,
-        FastNoise noise,
+        FastNoiseLite noise,
         EntityQuery<TransformComponent> xformQuery)
     {
         var active = _activeChunks[component];
@@ -147,7 +147,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         EntityUid gridUid,
         MapGridComponent grid,
         Vector2i chunk,
-        FastNoise noise,
+        FastNoiseLite noise,
         BiomePrototype prototype,
         List<(Vector2i, Tile)> tiles,
         EntityQuery<TransformComponent> xformQuery)
@@ -252,7 +252,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoise noise)
+    private void UnloadChunks(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, FastNoiseLite noise)
     {
         var active = _activeChunks[component];
         List<(Vector2i, Tile)>? tiles = null;
@@ -268,7 +268,7 @@ public sealed class BiomeSystem : SharedBiomeSystem
         }
     }
 
-    private void UnloadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoise noise, List<(Vector2i, Tile)> tiles)
+    private void UnloadChunk(BiomeComponent component, EntityUid gridUid, MapGridComponent grid, Vector2i chunk, FastNoiseLite noise, List<(Vector2i, Tile)> tiles)
     {
         // Reverse order to loading
         var prototype = ProtoManager.Index<BiomePrototype>(component.BiomePrototype);
