@@ -5,6 +5,7 @@ using Content.Shared.Chat.Prototypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 public sealed class AutoEmoteSystem : EntitySystem
 {
@@ -17,7 +18,7 @@ public sealed class AutoEmoteSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AutoEmoteComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<AutoEmoteComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AutoEmoteComponent, EntityUnpausedEvent>(OnUnpaused);
     }
 
@@ -25,10 +26,10 @@ public sealed class AutoEmoteSystem : EntitySystem
     {
         base.Update(frameTime);
 
+        var curTime = _gameTiming.CurTime;
         foreach (var autoEmote in EntityQuery<AutoEmoteComponent>())
         {
             var uid = autoEmote.Owner;
-            var curTime = _gameTiming.CurTime;
 
             if (autoEmote.NextEmoteTime > curTime)
                 continue;
@@ -38,9 +39,9 @@ public sealed class AutoEmoteSystem : EntitySystem
                 if (time > curTime)
                     continue;
 
-                ResetTimer(uid, key, autoEmote);
-
                 var autoEmotePrototype = _prototypeManager.Index<AutoEmotePrototype>(key);
+                ResetTimer(uid, key, autoEmote, autoEmotePrototype);
+
                 if (!_random.Prob(autoEmotePrototype.Chance))
                     continue;
 
@@ -56,7 +57,7 @@ public sealed class AutoEmoteSystem : EntitySystem
         }
     }
 
-    private void OnComponentInit(EntityUid uid, AutoEmoteComponent autoEmote, ComponentInit args)
+    private void OnMapInit(EntityUid uid, AutoEmoteComponent autoEmote, MapInitEvent args)
     {
         // Start timers
         foreach (var autoEmotePrototypeId in autoEmote.Emotes)
@@ -71,11 +72,11 @@ public sealed class AutoEmoteSystem : EntitySystem
         {
             autoEmote.EmoteTimers[key] += args.PausedTime;
         }
-        autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
+        autoEmote.NextEmoteTime += args.PausedTime;
     }
 
     /// <summary>
-    /// Try to add an emote to the entity, which will be preformed at an interval.
+    /// Try to add an emote to the entity, which will be performed at an interval.
     /// </summary>
     public bool AddEmote(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null)
     {
@@ -99,6 +100,8 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
 
+        DebugTools.Assert(_prototypeManager.HasIndex<AutoEmotePrototype>(autoEmotePrototypeId), "Prototype not found. Did you make a typo?");
+
         if (!autoEmote.EmoteTimers.Remove(autoEmotePrototypeId))
             return false;
 
@@ -109,7 +112,7 @@ public sealed class AutoEmoteSystem : EntitySystem
     /// <summary>
     /// Reset the timer for a specific emote, or return false if it doesn't exist.
     /// </summary>
-    public bool ResetTimer(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null)
+    public bool ResetTimer(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null, AutoEmotePrototype? autoEmotePrototype = null)
     {
         if (!Resolve(uid, ref autoEmote))
             return false;
@@ -117,11 +120,13 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (!autoEmote.Emotes.Contains(autoEmotePrototypeId))
             return false;
 
-        var autoEmotePrototype = _prototypeManager.Index<AutoEmotePrototype>(autoEmotePrototypeId);
-        var time = _gameTiming.CurTime + autoEmotePrototype.Interval;
+        autoEmotePrototype ??= _prototypeManager.Index<AutoEmotePrototype>(autoEmotePrototypeId);
+
+        var curTime = _gameTiming.CurTime;
+        var time = curTime + autoEmotePrototype.Interval;
         autoEmote.EmoteTimers[autoEmotePrototypeId] = time;
 
-        if (autoEmote.NextEmoteTime > time || autoEmote.NextEmoteTime <= _gameTiming.CurTime)
+        if (autoEmote.NextEmoteTime > time || autoEmote.NextEmoteTime <= curTime)
             autoEmote.NextEmoteTime = time;
 
         return true;
