@@ -318,6 +318,26 @@
         amount: 6
 
 - type: entity
+  name: med-sci encryption key box
+  parent: BoxEncryptionKey
+  id: BoxEncryptionKeyMedicalScience
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyMedicalScience
+        amount: 6
+
+- type: entity
+  name: medical encryption key box
+  parent: BoxEncryptionKey
+  id: BoxEncryptionKeyMedical
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyMedical
+        amount: 6
+
+- type: entity
   name: passenger encryption key box
   parent: BoxEncryptionKey
   id: BoxEncryptionKeyPassenger
@@ -325,6 +345,16 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyCommon
+        amount: 6
+
+- type: entity
+  name: robotech encryption key box
+  parent: BoxEncryptionKey
+  id: BoxEncryptionKeyRobo
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyRobo
         amount: 6
 
 - type: entity
@@ -355,24 +385,4 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeyScience
-        amount: 6
-
-- type: entity
-  name: robotech encryption key box
-  parent: BoxEncryptionKey
-  id: BoxEncryptionKeyRobo
-  components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyRobo
-        amount: 6
-
-- type: entity
-  name: med-sci encryption key box
-  parent: BoxEncryptionKey
-  id: BoxEncryptionKeyMedicalScience
-  components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyMedicalScience
         amount: 6
