@@ -107,7 +107,6 @@
   id: ClothingMaskGasVoiceMasker
   name: gas mask
   suffix: Voice Mask
-  description: A face-covering mask that can be connected to an air supply. There are switches and knobs underneath the mask.
   components:
     - type: VoiceMasker
 
