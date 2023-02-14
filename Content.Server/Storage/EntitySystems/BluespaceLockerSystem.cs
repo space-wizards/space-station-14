@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Content.Server.DoAfter;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Mind.Components;
@@ -34,7 +33,7 @@ public sealed class BluespaceLockerSystem : EntitySystem
         SubscribeLocalEvent<BluespaceLockerComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageBeforeOpenEvent>(PreOpen);
         SubscribeLocalEvent<BluespaceLockerComponent, StorageAfterCloseEvent>(PostClose);
-        SubscribeLocalEvent<BluespaceLockerComponent, BluespaceLockerTeleportDelayComplete>(OnBluespaceLockerTeleportDelayComplete);
+        SubscribeLocalEvent<BluespaceLockerComponent, DoAfterEvent>(OnDoAfter);
     }
 
     private void OnStartup(EntityUid uid, BluespaceLockerComponent component, ComponentStartup args)
@@ -67,13 +66,6 @@ public sealed class BluespaceLockerSystem : EntitySystem
 
         if (!Resolve(uid, ref entityStorageComponent))
             return;
-
-        if (component.CancelToken != null)
-        {
-            component.CancelToken.Cancel();
-            component.CancelToken = null;
-            return;
-        }
 
         if (!component.BehaviorProperties.ActOnOpen)
             return;
@@ -266,9 +258,14 @@ public sealed class BluespaceLockerSystem : EntitySystem
         PostClose(uid, component);
     }
 
-    private void OnBluespaceLockerTeleportDelayComplete(EntityUid uid, BluespaceLockerComponent component, BluespaceLockerTeleportDelayComplete args)
+    private void OnDoAfter(EntityUid uid, BluespaceLockerComponent component, DoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+
         PostClose(uid, component, false);
+
+        args.Handled = true;
     }
 
     private void PostClose(EntityUid uid, BluespaceLockerComponent component, bool doDelay = true)
@@ -279,8 +276,6 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (!Resolve(uid, ref entityStorageComponent))
             return;
 
-        component.CancelToken?.Cancel();
-
         if (!component.BehaviorProperties.ActOnClose)
             return;
 
@@ -288,13 +283,8 @@ public sealed class BluespaceLockerSystem : EntitySystem
         if (doDelay && component.BehaviorProperties.Delay > 0)
         {
             EnsureComp<DoAfterComponent>(uid);
-            component.CancelToken = new CancellationTokenSource();
 
-            _doAfterSystem.DoAfter(
-                new DoAfterEventArgs(uid, component.BehaviorProperties.Delay, component.CancelToken.Token)
-                {
-                    UserFinishedEvent = new BluespaceLockerTeleportDelayComplete()
-                });
+            _doAfterSystem.DoAfter(new DoAfterEventArgs(uid, component.BehaviorProperties.Delay));
             return;
         }
 
@@ -400,9 +390,5 @@ public sealed class BluespaceLockerSystem : EntitySystem
                 RemComp<BluespaceLockerComponent>(uid);
                 break;
         }
-    }
-
-    private sealed class BluespaceLockerTeleportDelayComplete : EntityEventArgs
-    {
     }
 }
