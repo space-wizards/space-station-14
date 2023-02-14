@@ -98,6 +98,9 @@
   id: JobReporter
 
 - type: playTimeTracker
+  id: JobResearchAssistant
+
+- type: playTimeTracker
   id: JobResearchDirector
 
 - type: playTimeTracker

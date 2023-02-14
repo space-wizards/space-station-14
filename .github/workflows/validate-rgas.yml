@@ -1,9 +1,13 @@
 name: YAML schema validator
-on: [pull_request, push]
+on:
+  push:
+  merge_group:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
 
 jobs:
   yaml-schema-validation:
-    if: github.actor != 'PJBot'
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2

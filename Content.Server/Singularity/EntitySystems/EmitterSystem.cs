@@ -9,6 +9,7 @@ using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;

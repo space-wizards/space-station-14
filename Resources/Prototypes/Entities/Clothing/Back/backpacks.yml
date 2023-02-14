@@ -130,7 +130,7 @@
 - type: entity
   parent: ClothingBackpack
   id: ClothingBackpackERTLeader
-  name: ERT commander backpack
+  name: ERT leader backpack
   description: A spacious backpack with lots of pockets, worn by the Commander of an Emergency Response Team.
   components:
   - type: Sprite

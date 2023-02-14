@@ -128,9 +128,12 @@ namespace Content.Server.Administration.Commands
             {
                 var durations = new CompletionOption[]
                 {
-                    new("0", "Permanent"),
-                    new("1440", "1 day"),
-                    new("10080", "1 week"),
+                    new("0", Loc.GetString("cmd-ban-hint-duration-1")),
+                    new("1440", Loc.GetString("cmd-ban-hint-duration-2")),
+                    new("4320", Loc.GetString("cmd-ban-hint-duration-3")),
+                    new("10080", Loc.GetString("cmd-ban-hint-duration-4")),
+                    new("20160", Loc.GetString("cmd-ban-hint-duration-5")),
+                    new("43800", Loc.GetString("cmd-ban-hint-duration-6")),
                 };
 
                 return CompletionResult.FromHintOptions(durations, Loc.GetString("cmd-ban-hint-duration"));

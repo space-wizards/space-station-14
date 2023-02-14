@@ -45,3 +45,7 @@ ent-CrateVendingMachineRestockSnacksFilled = Snack restock crate
 
 ent-CrateVendingMachineRestockTankDispenserFilled = Tank dispenser restock crate
     .desc = Contains a restock box for an Engineering or Atmospherics tank dispenser.
+
+ent-CrateVendingMachineRestockHappyHonkFilled = Happy honk restock crate
+    .desc = Contains a restock box for a happy honk dispenser.
+

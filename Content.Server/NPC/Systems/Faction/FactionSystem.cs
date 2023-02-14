@@ -152,6 +152,18 @@ namespace Content.Server.NPC.Systems
             }
         }
 
+
+        /// <summary>
+        /// Whethr this entity is part of the specified faction.
+        /// </summary>
+        public bool ContainsFaction(EntityUid uid, string faction, FactionComponent? factions = null)
+        {
+            if (!Resolve(uid, ref factions, false))
+                return false;
+
+            return factions.Factions.Contains(faction);
+        }
+
         public IEnumerable<EntityUid> GetNearbyHostiles(EntityUid entity, float range, FactionComponent? component = null)
         {
             if (!Resolve(entity, ref component, false))
@@ -279,6 +291,10 @@ namespace Content.Server.NPC.Systems
             RefreshFactions();
         }
 
+        /// <summary>
+        /// Add an entity that this entity will always be friendly to.
+        /// Use to e.g. prevent penguins from attacking their purchaser.
+        /// </summary>
         public void AddFriendlyEntity(EntityUid uid, EntityUid fEntity, FactionComponent? component = null)
         {
             if (!Resolve(uid, ref component, false))

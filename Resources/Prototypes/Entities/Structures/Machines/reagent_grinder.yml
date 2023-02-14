@@ -15,8 +15,12 @@
     - key: enum.ReagentGrinderUiKey.Key
       type: ReagentGrinderBoundUserInterface
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-    - type: ReagentGrinderVisualizer
+      enum.ReagentGrinderVisualState.BeakerAttached:
+        grinder:
+          True: {state: "juicer1"}
+          False: {state: "juicer0"}
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -30,9 +34,11 @@
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/juicer.rsi
-    state: juicer0
     drawdepth: SmallObjects
     snapCardinals: true
+    layers:
+    - map: [ "grinder" ]
+      state: "juicer0"
   - type: ApcPowerReceiver
     powerLoad: 300
   - type: UpgradePowerDraw

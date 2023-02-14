@@ -5,7 +5,6 @@ using Content.Shared.Revenant;
 using Robust.Shared.Random;
 using Robust.Shared.Map;
 using Content.Shared.Tag;
-using Content.Shared.Maps;
 using Content.Server.Storage.Components;
 using Content.Server.Light.Components;
 using Content.Server.Ghost;
@@ -18,12 +17,9 @@ using Content.Server.Disease.Components;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
-using Content.Server.Beam;
-using Content.Server.Emag;
-using Content.Server.Humanoid;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
-using Content.Server.Store.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
@@ -73,7 +69,7 @@ public sealed partial class RevenantSystem
             return;
         }
 
-        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidComponent>(target) || HasComp<RevenantComponent>(target))
+        if (!HasComp<MobStateComponent>(target) || !HasComp<HumanoidAppearanceComponent>(target) || HasComp<RevenantComponent>(target))
             return;
 
         args.Handled = true;
@@ -182,13 +178,10 @@ public sealed partial class RevenantSystem
 
         essence.Harvested = true;
         ChangeEssenceAmount(uid, essence.EssenceAmount, component);
-        if (TryComp<StoreComponent>(uid, out var store))
-        {
-            _store.TryAddCurrency(new Dictionary<string, FixedPoint2>()
-                { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, store);
-        }
+        _store.TryAddCurrency(new Dictionary<string, FixedPoint2>
+            { {component.StolenEssenceCurrencyPrototype, essence.EssenceAmount} }, uid);
 
-        if (!TryComp<MobStateComponent>(args.Target, out var mobstate))
+        if (!HasComp<MobStateComponent>(args.Target))
             return;
 
         if (_mobState.IsAlive(args.Target) || _mobState.IsCritical(args.Target))
@@ -339,7 +332,7 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            _emag.DoEmag(ent, ent); //it emags itself. spooky.
+            _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
         }
     }
 }

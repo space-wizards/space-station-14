@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Audio;
+﻿using Content.Shared.Damage;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -61,7 +62,7 @@ public sealed class AnomalyComponent : Component
     /// The amount of health lost when the stability is below the <see cref="DecayThreshold"/>
     /// </summary>
     [DataField("healthChangePerSecond"), ViewVariables(VVAccess.ReadWrite)]
-    public float HealthChangePerSecond = -0.05f;
+    public float HealthChangePerSecond = -0.01f;
     #endregion
 
     #region Growth
@@ -103,6 +104,13 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("pulseVariation")]
     public float PulseVariation = .1f;
+
+    /// <summary>
+    /// The largest value by which the anomaly will vary in stability for each pulse.
+    /// In simple terms, every pulse, stability changes from a range of -this_value to this_value
+    /// </summary>
+    [DataField("pulseStabilityVariation")]
+    public float PulseStabilityVariation = 0.05f;
 
     /// <summary>
     /// The sound played when an anomaly pulses
@@ -201,6 +209,45 @@ public sealed class AnomalyComponent : Component
     /// </summary>
     [DataField("maxPointsPerSecond")]
     public int MaxPointsPerSecond = 100;
+
+    /// <summary>
+    /// The multiplier applied to the point value for the
+    /// anomaly being above the <see cref="GrowthThreshold"/>
+    /// </summary>
+    [DataField("growingPointMultiplier")]
+    public float GrowingPointMultiplier = 1.5f;
+    #endregion
+
+    /// <summary>
+    /// The amount of damage dealt when either a player touches the anomaly
+    /// directly or by hitting the anomaly.
+    /// </summary>
+    [DataField("anomalyContactDamage", required: true)]
+    public DamageSpecifier AnomalyContactDamage = default!;
+
+    /// <summary>
+    /// The sound effect played when a player
+    /// burns themselves on an anomaly via contact.
+    /// </summary>
+    [DataField("anomalyContactDamageSound")]
+    public SoundSpecifier AnomalyContactDamageSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+    #region Floating Animation
+    /// <summary>
+    /// How long it takes to go from the bottom of the animation to the top.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("animationTime")]
+    public readonly float AnimationTime = 2f;
+
+    /// <summary>
+    /// How far it goes in any direction.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("offset")]
+    public readonly Vector2 FloatingOffset = (0, 0.15f);
+
+    public readonly string AnimationKey = "anomalyfloat";
     #endregion
 }
 
@@ -224,14 +271,10 @@ public sealed class AnomalyComponentState : ComponentState
 /// <summary>
 /// Event raised at regular intervals on an anomaly to do whatever its effect is.
 /// </summary>
-/// <param name="Stabiltiy"></param>
+/// <param name="Stability"></param>
 /// <param name="Severity"></param>
 [ByRefEvent]
-public readonly record struct AnomalyPulseEvent(float Stabiltiy, float Severity)
-{
-    public readonly float Stabiltiy = Stabiltiy;
-    public readonly float Severity = Severity;
-}
+public readonly record struct AnomalyPulseEvent(float Stability, float Severity);
 
 /// <summary>
 /// Event raised on an anomaly when it reaches a supercritical point.
