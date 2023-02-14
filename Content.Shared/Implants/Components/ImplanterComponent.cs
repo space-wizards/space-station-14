@@ -70,8 +70,6 @@ public sealed class ImplanterComponent : Component
     public ItemSlot ImplanterSlot = new();
 
     public bool UiUpdateNeeded;
-
-    public CancellationTokenSource? CancelToken;
 }
 
 [Serializable, NetSerializable]
