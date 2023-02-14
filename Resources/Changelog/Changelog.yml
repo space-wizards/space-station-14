@@ -1,10 +1,4 @@
 Entries:
-- author: Nairod
-  changes:
-  - {message: Added the mass scanner and power monitoring computer boards to the circuit
-      imprinter., type: Add}
-  id: 2540
-  time: '2022-10-30T06:00:00.0000000+00:00'
 - author: Mervill
   changes:
   - {message: Fixed Vending Machines not showing their damage sprite in most cases.,
@@ -2914,3 +2908,8 @@ Entries:
       to cover installation costs., type: Tweak}
   id: 3039
   time: '2023-02-14T18:30:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can now climb on counters., type: Fix}
+  id: 3040
+  time: '2023-02-14T23:08:02.0000000+00:00'
