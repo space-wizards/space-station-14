@@ -79,7 +79,9 @@ namespace Content.Server.NPC.Systems
             if (factionComponent.Factions.Contains(component.Faction))
                 return;
 
-            component.IsActive = true;
+            if (!component.Persist)
+                component.IsActive = true;
+
             AddFaction(args.Equipee, component.Faction);
         }
 
@@ -154,7 +156,7 @@ namespace Content.Server.NPC.Systems
 
 
         /// <summary>
-        /// Whethr this entity is part of the specified faction.
+        /// Returns whether this entity is part of the specified faction.
         /// </summary>
         public bool ContainsFaction(EntityUid uid, string faction, FactionComponent? factions = null)
         {
@@ -293,7 +295,7 @@ namespace Content.Server.NPC.Systems
 
         /// <summary>
         /// Add an entity that this entity will always be friendly to.
-        /// Use to e.g. prevent penguins from attacking their purchaser.
+        /// Use to e.g. prevent penguins from attacking their purchaser or rat servants from attacking their king.
         /// </summary>
         public void AddFriendlyEntity(EntityUid uid, EntityUid fEntity, FactionComponent? component = null)
         {

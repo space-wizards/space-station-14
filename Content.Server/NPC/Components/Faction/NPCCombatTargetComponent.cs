@@ -1,9 +1,12 @@
-namespace Content.Server.NPC.Components;
+using Content.Server.NPC.Systems.Faction;
+
+namespace Content.Server.NPC.Components.Faction;
 
 /// <summary>
 /// Lets an NPC track what is (attempting to) damage it.
 /// </summary>
 [RegisterComponent]
+[Access(typeof(NPCCombatTargetSystem))]
 public sealed class NPCCombatTargetComponent : Component
 {
     /// <summary>
