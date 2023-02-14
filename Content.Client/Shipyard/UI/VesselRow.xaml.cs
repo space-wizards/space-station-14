@@ -15,4 +15,3 @@ public sealed partial class VesselRow : PanelContainer
         RobustXamlLoader.Load(this);
     }
 }
-
