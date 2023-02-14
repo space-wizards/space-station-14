@@ -36,9 +36,8 @@
     closeSound:
       path: /Audio/Effects/curtain_openclose.ogg
   - type: Appearance
-    visuals:
-      - type: AirlockVisualizer
-        simpleVisuals: true
+  - type: AirlockVisuals
+    simpleVisuals: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Wood

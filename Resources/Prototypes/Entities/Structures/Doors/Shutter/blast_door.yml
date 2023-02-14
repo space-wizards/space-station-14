@@ -21,10 +21,9 @@
         Blunt: 25 # yowch
   - type: Occluder
   - type: Appearance
-    visuals:
-    - type: AirlockVisualizer
-      simpleVisuals: true
-      animationTime: 1.0
+  - type: AirlockVisuals
+    simpleVisuals: true
+    animationTime: 1.0
   - type: RadiationBlocker
     resistance: 8
 

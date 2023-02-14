@@ -62,8 +62,7 @@
     time: 3
   - type: Airlock
   - type: Appearance
-    visuals:
-    - type: AirlockVisualizer
+  - type: AirlockVisuals
   - type: WiresVisuals
   - type: ApcPowerReceiver
     powerLoad: 20
