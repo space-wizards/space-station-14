@@ -38,49 +38,23 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
         for (var i = 0; i < state.Missions.Count; i++)
         {
+            // TODO: Make this XAML
             var mission = state.Missions[i];
             var config = _prototype.Index<SalvageExpeditionPrototype>(mission.Config);
 
-            var claimButton = new Button()
+            // Mission
+            var missionStripe = new StripeBack();
+            missionStripe.AddChild(new Label()
             {
-                Text = "Claim",
-                HorizontalAlignment = HAlignment.Right,
-                Pressed = state.ActiveMission == mission.Index,
-                ToggleMode = true,
-                Disabled = state.Claimed,
-            };
-
-            claimButton.OnPressed += args =>
-            {
-                ClaimMission?.Invoke(mission.Index);
-            };
+                Text = config.ID,
+                HorizontalAlignment = HAlignment.Center,
+                Margin = new Thickness(0f, 5f),
+            });
 
             var lBox = new BoxContainer()
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical
             };
-
-            if (state.ActiveMission == mission.Index)
-            {
-                lBox.AddChild(new Label()
-                {
-                    Text = "Active",
-                    FontColorOverride = StyleNano.ConcerningOrangeFore,
-                });
-            }
-
-            // Mission
-            lBox.AddChild(new Label()
-            {
-                Text = $"Mission:"
-            });
-
-            lBox.AddChild(new Label()
-            {
-                Text = config.ID,
-                FontColorOverride = Color.Gold,
-                HorizontalAlignment = HAlignment.Left,
-            });
 
             lBox.AddChild(new Label()
             {
@@ -90,8 +64,9 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             lBox.AddChild(new Label()
             {
                 Text = mission.Duration.ToString(),
-                FontColorOverride = Color.Gold,
+                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
             // Environment
@@ -103,52 +78,96 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             lBox.AddChild(new Label()
             {
                 Text = config.Biome,
-                FontColorOverride = Color.Gold,
+                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
-            var claimBox = new BoxContainer()
+            // Modifiers
+            lBox.AddChild(new Label()
+            {
+                Text = "Modifiers:"
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = "A",
+                FontColorOverride = StyleNano.NanoGold,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
+            });
+
+            // Claim
+            var claimButton = new Button()
+            {
+                HorizontalExpand = true,
+                Pressed = state.ActiveMission == mission.Index,
+                ToggleMode = true,
+                Disabled = state.Claimed,
+            };
+
+            claimButton.Label.Margin = new Thickness(0f, 5f);
+
+            claimButton.OnPressed += args =>
+            {
+                ClaimMission?.Invoke(mission.Index);
+            };
+
+            if (state.ActiveMission == mission.Index)
+            {
+                claimButton.Text = "Claimed";
+                claimButton.AddStyleClass(StyleBase.ButtonCaution);
+            }
+            else
+            {
+                claimButton.Text = "Claim";
+            }
+
+            // Rewards
+            lBox.AddChild(new Label()
+            {
+                Text = $"Rewards:"
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = config.Biome,
+                FontColorOverride = StyleNano.GoodGreenFore,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = $"Secondary Rewards:"
+            });
+
+            lBox.AddChild(new Label()
+            {
+                Text = config.Biome,
+                FontColorOverride = StyleNano.ConcerningOrangeFore,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
+            });
+
+            // TODO: Fix this copypaste bullshit
+
+            var box = new BoxContainer()
             {
                 Orientation = BoxContainer.LayoutOrientation.Vertical,
                 Children =
                 {
-                    claimButton,
-                    new Control(),
-                }
-            };
-
-            var box = new BoxContainer()
-            {
-                Orientation = BoxContainer.LayoutOrientation.Horizontal,
-                Children =
-                {
+                    missionStripe,
                     lBox,
-                    new Control()
-                    {
-                        HorizontalExpand = true,
-                    },
-                    claimBox,
+                    claimButton,
                 },
                 HorizontalExpand = true,
+                Margin = new Thickness(5f, 0f),
             };
 
             LayoutContainer.SetAnchorPreset(box, LayoutContainer.LayoutPreset.Wide);
 
             Container.AddChild(box);
-
-            if (i == state.Missions.Count - 1)
-                continue;
-
-            Container.AddChild(new HLine()
-            {
-                Color = StyleNano.NanoGold,
-                Thickness = 2,
-                Margin = new Thickness()
-                {
-                    Top = 10f,
-                    Bottom = 10f,
-                }
-            });
         }
     }
 
