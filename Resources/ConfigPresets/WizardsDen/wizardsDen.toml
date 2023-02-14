@@ -20,3 +20,6 @@ max_connections = 1024
 
 [vote]
 restart_required_ratio = 0.7
+
+[netres]
+limit = 10
