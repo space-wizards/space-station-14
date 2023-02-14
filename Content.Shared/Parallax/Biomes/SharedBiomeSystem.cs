@@ -20,6 +20,8 @@ public abstract class SharedBiomeSystem : EntitySystem
 
     protected const byte ChunkSize = 8;
 
+    // TODO: After I wrote all of this FastNoiseLite got ported so this needs updating for that don't @ me
+
     public override void Initialize()
     {
         base.Initialize();

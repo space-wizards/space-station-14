@@ -12,12 +12,12 @@ namespace Content.Client.Parallax;
 
 public sealed class ParallaxOverlay : Overlay
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly ParallaxSystem _parallax;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowWorld;
@@ -39,6 +39,9 @@ public sealed class ParallaxOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
+        if (args.MapId == MapId.Nullspace)
+            return;
+
         if (!_configurationManager.GetCVar(CCVars.ParallaxEnabled))
             return;
 

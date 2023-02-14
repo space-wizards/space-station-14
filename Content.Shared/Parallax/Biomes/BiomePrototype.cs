@@ -11,7 +11,7 @@ namespace Content.Shared.Parallax.Biomes;
 [Prototype("biome")]
 public sealed class BiomePrototype : IPrototype
 {
-    [IdDataFieldAttribute] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; } = default!;
 
     [DataField("layers")]
     public List<IBiomeLayer> Layers = new();
@@ -27,6 +27,7 @@ public interface IBiomeLayer
 
     /// <summary>
     /// Offset the seed by the specified amount for this layer.
+    /// Useful if you have 2 similar layers but don't want them to match exactly.
     /// </summary>
     int SeedOffset { get; }
 
@@ -43,6 +44,7 @@ public sealed class BiomeTileLayer : IBiomeLayer
     public float Threshold { get; } = 0.5f;
 
     /// <inheritdoc/>
+    [DataField("seedOffset")]
     public int SeedOffset { get; } = 0;
 
     /// <inheritdoc/>
