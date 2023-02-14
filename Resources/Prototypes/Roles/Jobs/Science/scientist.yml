@@ -5,6 +5,7 @@
   playTimeTracker: JobScientist
   requirements:
     - !type:DepartmentTimeRequirement
+      department: Science
       time: 1800
   startingGear: ScientistGear
   icon: "Scientist"
