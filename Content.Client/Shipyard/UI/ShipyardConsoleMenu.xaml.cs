@@ -10,110 +10,113 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
 
-namespace Content.Client.Shipyard.UI
+namespace Content.Client.Shipyard.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class ShipyardConsoleMenu : FancyWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class ShipyardConsoleMenu : FancyWindow
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
+    public event Action<ButtonEventArgs>? OnOrderApproved;
+    private readonly ShipyardConsoleBoundUserInterface _menu;
+    private readonly List<string> _categoryStrings = new();
+    private string? _category;
+
+    public ShipyardConsoleMenu(ShipyardConsoleBoundUserInterface owner)
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        _menu = owner;
+        Title = Loc.GetString("shipyard-console-menu-title");
+        SearchBar.OnTextChanged += OnSearchBarTextChanged;
+        Categories.OnItemSelected += OnCategoryItemSelected;
+    }
 
-        public event Action<ButtonEventArgs>? OnOrderApproved;
-        private readonly ShipyardConsoleBoundUserInterface _menu;
-        private readonly List<string> _categoryStrings = new();
-        private string? _category;
+    private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
+    {
+        SetCategoryText(args.Id);
+        PopulateProducts();
+    }
 
-        public ShipyardConsoleMenu(ShipyardConsoleBoundUserInterface owner)
+    private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
+    {
+        PopulateProducts();
+    }
+
+    private void SetCategoryText(int id)
+    {
+        _category = id == 0 ? null : _categoryStrings[id];
+        Categories.SelectId(id);
+    }
+
+    private void GetPrototypes(out IEnumerable<VesselPrototype> vessels)
+    {
+        vessels = _protoManager.EnumeratePrototypes<VesselPrototype>();
+    }
+
+    /// <summary>
+    ///     Populates the list of products that will actually be shown, using the current filters.
+    /// </summary>
+    public void PopulateProducts()
+    {
+        Vessels.RemoveAllChildren();
+        GetPrototypes(out var vessels);
+        var vesselList = vessels.ToList();
+        vesselList.Sort((x, y) =>
+            string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
+
+        var search = SearchBar.Text.Trim().ToLowerInvariant();
+        foreach (var prototype in vesselList)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            _menu = owner;
-            Title = Loc.GetString("shipyard-console-menu-title");
-            SearchBar.OnTextChanged += OnSearchBarTextChanged;
-            Categories.OnItemSelected += OnCategoryItemSelected;
-        }
-
-        private void OnCategoryItemSelected(OptionButton.ItemSelectedEventArgs args)
-        {
-            SetCategoryText(args.Id);
-            PopulateProducts();
-        }
-
-        private void OnSearchBarTextChanged(LineEdit.LineEditEventArgs args)
-        {
-            PopulateProducts();
-        }
-
-        private void SetCategoryText(int id)
-        {
-            _category = id == 0 ? null : _categoryStrings[id];
-            Categories.SelectId(id);
-        }
-
-        public IEnumerable<VesselPrototype> VesselPrototypes => _protoManager.EnumeratePrototypes<VesselPrototype>();
-
-        /// <summary>
-        ///     Populates the list of products that will actually be shown, using the current filters.
-        /// </summary>
-        public void PopulateProducts()
-        {
-            Vessels.RemoveAllChildren();
-            var vessels = VesselPrototypes.ToList();
-            vessels.Sort((x, y) =>
-                string.Compare(x.Name, y.Name, StringComparison.CurrentCultureIgnoreCase));
-
-            var search = SearchBar.Text.Trim().ToLowerInvariant();
-            foreach (var prototype in vessels)
+            // if no search or category
+            // else if search
+            // else if category and not search
+            if (search.Length == 0 && _category == null ||
+                search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
+                search.Length == 0 && _category != null && prototype.Category.Equals(_category))
             {
-                // if no search or category
-                // else if search
-                // else if category and not search
-                if (search.Length == 0 && _category == null ||
-                    search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
-                    search.Length == 0 && _category != null && prototype.Category.Equals(_category))
+                var vesselEntry = new VesselRow
                 {
-                    var vesselEntry = new VesselRow
-                    {
-                        Vessel = prototype,
-                        VesselName = { Text = prototype.Name },
-                        Purchase = { ToolTip = prototype.Description },
-                        Price = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.Price.ToString())) },
-                    };
-                    vesselEntry.Purchase.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
-                    Vessels.AddChild(vesselEntry);
-                }
+                    Vessel = prototype,
+                    VesselName = { Text = prototype.Name },
+                    Purchase = { ToolTip = prototype.Description },
+                    Price = { Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", prototype.Price.ToString())) },
+                };
+                vesselEntry.Purchase.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
+                Vessels.AddChild(vesselEntry);
             }
         }
+    }
 
-        /// <summary>
-        ///     Populates the list categories that will actually be shown, using the current filters.
-        /// </summary>
-        public void PopulateCategories()
+    /// <summary>
+    ///     Populates the list categories that will actually be shown, using the current filters.
+    /// </summary>
+    public void PopulateCategories()
+    {
+        _categoryStrings.Clear();
+        Categories.Clear();
+        GetPrototypes(out var vessels);
+        foreach (var prototype in vessels)
         {
-            _categoryStrings.Clear();
-            Categories.Clear();
-
-            foreach (var prototype in VesselPrototypes)
+            if (!_categoryStrings.Contains(prototype.Category))
             {
-                if (!_categoryStrings.Contains(prototype.Category))
-                {
-                    _categoryStrings.Add(Loc.GetString(prototype.Category));
-                }
-            }
-
-            _categoryStrings.Sort();
-
-            // Add "All" category at the top of the list
-            _categoryStrings.Insert(0, Loc.GetString("cargo-console-menu-populate-categories-all-text"));
-
-            foreach (var str in _categoryStrings)
-            {
-                Categories.AddItem(str);
+                _categoryStrings.Add(Loc.GetString(prototype.Category));
             }
         }
 
-        public void UpdateState(ShipyardConsoleInterfaceState state)
+        _categoryStrings.Sort();
+
+        // Add "All" category at the top of the list
+        _categoryStrings.Insert(0, Loc.GetString("cargo-console-menu-populate-categories-all-text"));
+
+        foreach (var str in _categoryStrings)
         {
-            BankAccountLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", state.Balance.ToString()));
+            Categories.AddItem(str);
         }
+    }
+
+    public void UpdateState(ShipyardConsoleInterfaceState state)
+    {
+        BankAccountLabel.Text = Loc.GetString("cargo-console-menu-points-amount", ("amount", state.Balance.ToString()));
     }
 }

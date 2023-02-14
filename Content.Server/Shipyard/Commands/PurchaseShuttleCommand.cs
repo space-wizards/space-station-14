@@ -14,7 +14,7 @@ public sealed class PurchaseShuttleCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntitySystemManager _entityManager = default!;
     public string Command => "purchaseshuttle";
-    public string Description => "Spawns and docks a specified shuttle from a grid file";
+    public string Description => Loc.GetString("shipyard-commands-purchase-desc");
     public string Help => $"{Command} <station ID> <gridfile path>";
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -27,7 +27,7 @@ public sealed class PurchaseShuttleCommand : IConsoleCommand
         var shuttlePath = args[1];
         var system = _entityManager.GetEntitySystem<ShipyardSystem>();
         var station = new EntityUid(stationId);
-        system.PurchaseShuttle(station, shuttlePath, out _);
+        system.TryPurchaseShuttle(station, shuttlePath, out _);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
@@ -37,8 +37,7 @@ public sealed class PurchaseShuttleCommand : IConsoleCommand
             case 1:
                 return CompletionResult.FromHint(Loc.GetString("station-id"));
             case 2:
-                var opts = CompletionHelper.PrototypeIDs<GameMapPrototype>();
-                return CompletionResult.FromHintOptions(opts, Loc.GetString("cmd-hint-savemap-path"));
+                return CompletionResult.FromHint(Loc.GetString("cmd-hint-savemap-path"));
         }
 
         return CompletionResult.Empty;
