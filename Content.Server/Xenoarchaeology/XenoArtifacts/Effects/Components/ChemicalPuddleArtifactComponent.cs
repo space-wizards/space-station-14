@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -10,7 +11,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// This is used for an artifact that creates a puddle of
 /// random chemicals upon being triggered.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(ChemicalPuddleArtifactSystem))]
 public sealed class ChemicalPuddleArtifactComponent : Component
 {
     /// <summary>
@@ -32,7 +33,7 @@ public sealed class ChemicalPuddleArtifactComponent : Component
     public List<string> PossibleChemicals = default!;
 
     /// <summary>
-    /// The number of different chemicals that will be mixed.
+    /// The number of chemicals in the puddle
     /// </summary>
     [DataField("chemAmount")]
     public int ChemAmount = 3;

@@ -31,7 +31,7 @@ public sealed class ChemicalPuddleArtifactSystem : EntitySystem
         if (!TryComp<ArtifactComponent>(uid, out var artifact))
             return;
 
-        if (!_artifact.TryGetNodeData(uid, NodeDataChemicalList, out List<string> chemicalList, artifact))
+        if (!_artifact.TryGetNodeData(uid, NodeDataChemicalList, out List<string>? chemicalList, artifact))
         {
             chemicalList = new();
             for (var i = 0; i < component.ChemAmount; i++)
