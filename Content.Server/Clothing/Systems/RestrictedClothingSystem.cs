@@ -38,8 +38,8 @@ public sealed class RestrictedClothingSystem : EntitySystem
         if (args.Equipee.GetHashCode() == component.WhitelistedUid)
             return;
 
-        if (!component.RequireWhitelist && mind.HasMind && mind.Mind!.Session != null &&
-            _adminManager.HasAdminFlag(mind.Mind!.Session!, component.Permissions, true))
+        if (!component.RequireWhitelist && mind.HasMind && mind.Mind!.TryGetSession(out var playerSession) &&
+            _adminManager.HasAdminFlag(playerSession, component.Permissions, true))
             return;
 
         _flammableSystem.AdjustFireStacks(args.Equipee, 5);
