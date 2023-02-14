@@ -1,18 +1,4 @@
 Entries:
-- author: Scribbles0
-  changes:
-  - {message: A mini jetpack crate can now be found in cargo's ordering catalog.,
-    type: Add}
-  - {message: Mini jetpacks now have slightly more air capacity., type: Tweak}
-  - {message: Fixed certain mini jetpacks having the capacity of a normal jetpack.,
-    type: Fix}
-  id: 2538
-  time: '2022-10-30T05:54:03.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Chairs are drawn correctly when rotated., type: Fix}
-  id: 2539
-  time: '2022-10-30T05:58:24.0000000+00:00'
 - author: Nairod
   changes:
   - {message: Added the mass scanner and power monitoring computer boards to the circuit
@@ -2916,3 +2902,15 @@ Entries:
     type: Tweak}
   id: 3037
   time: '2023-02-13T21:45:13.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: CBURN exosuit helmet now has the right name., type: Fix}
+  id: 3038
+  time: '2023-02-14T18:29:49.0000000+00:00'
+- author: ZoldorfTheWizard
+  changes:
+  - {message: Nanotrasen finally installed more ram for adminbus mainframes after
+      several years of requests. Nanotrasen will dock the pay of all heads of staff
+      to cover installation costs., type: Tweak}
+  id: 3039
+  time: '2023-02-14T18:30:23.0000000+00:00'
