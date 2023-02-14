@@ -1,1 +1,1 @@
-marking-ArachnidSpikesDefault = Spikes
+marking-ArachnidAppendagesDefault = Appendages

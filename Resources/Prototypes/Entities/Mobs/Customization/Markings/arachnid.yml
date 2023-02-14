@@ -1,6 +1,6 @@
-# Spikes
+# Appendages
 - type: marking
-  id: ArachnidSpikesDefault # Probably not spikes, but I don't know what else to call them so they're spikes
+  id: ArachnidAppendagesDefault
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Arachnid]

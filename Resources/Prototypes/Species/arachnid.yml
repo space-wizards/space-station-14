@@ -52,7 +52,7 @@
     Tail:
       points: 1
       required: true
-      defaultMarkings: [ ArachnidSpikesDefault ]
+      defaultMarkings: [ ArachnidAppendagesDefault ]
     Snout:
       points: 0
       required: false
