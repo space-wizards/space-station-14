@@ -10,7 +10,6 @@ namespace Content.Client.Shipyard.UI;
 public sealed partial class VesselRow : PanelContainer
 {
     public VesselPrototype? Vessel;
-
     public VesselRow()
     {
         RobustXamlLoader.Load(this);

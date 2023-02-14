@@ -2,8 +2,6 @@ using Content.Server.Popups;
 using Content.Server.Cargo.Systems;
 using Content.Server.Cargo.Components;
 using Content.Server.Radio.EntitySystems;
-using Content.Server.Shuttles.Components;
-using Content.Server.Station.Systems;
 using Content.Shared.Shipyard.Events;
 using Content.Shared.Shipyard.BUI;
 using Content.Shared.Shipyard.Prototypes;
@@ -19,14 +17,12 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Shipyard.Systems;
 
-public sealed class ShipyardConsoleSystem : EntitySystem
+public sealed partial class ShipyardSystem
 {
     [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ShipyardSystem _shipyard = default!;
-    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly CargoSystem _cargo = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -76,7 +72,7 @@ public sealed class ShipyardConsoleSystem : EntitySystem
             return;
         }
 
-        if (!_shipyard.TryPurchaseShuttle((EntityUid) station, vessel.ShuttlePath.ToString(), out var shuttle))
+        if (!TryPurchaseShuttle((EntityUid) station, vessel.ShuttlePath.ToString(), out var shuttle))
         {
             PlayDenySound(uid, component);
             return;

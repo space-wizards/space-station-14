@@ -23,7 +23,6 @@ public sealed partial class ShipyardSystem : EntitySystem
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly ShipyardConsoleSystem _shipyardConsole = default!;
 
     public MapId? ShipyardMap { get; private set; }
     private float _shuttleIndex;
@@ -35,7 +34,7 @@ public sealed partial class ShipyardSystem : EntitySystem
     {
         _configManager.OnValueChanged(CCVars.Shipyard, SetShipyardEnabled, true);
         _sawmill = Logger.GetSawmill("shipyard");
-        _shipyardConsole.InitializeConsole();
+        InitializeConsole();
         SubscribeLocalEvent<ShipyardConsoleComponent, ComponentInit>(OnShipyardStartup);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
     }
