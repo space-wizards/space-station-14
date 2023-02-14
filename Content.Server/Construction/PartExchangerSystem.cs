@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Threading;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
 using Content.Server.Storage.Components;
@@ -10,7 +9,6 @@ using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
-using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
@@ -28,16 +26,20 @@ public sealed class PartExchangerSystem : EntitySystem
     public override void Initialize()
     {
         SubscribeLocalEvent<PartExchangerComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<PartExchangerComponent, RpedExchangeFinishedEvent>(OnFinished);
-        SubscribeLocalEvent<PartExchangerComponent, RpedExchangeCancelledEvent>(OnCancelled);
+        SubscribeLocalEvent<PartExchangerComponent, DoAfterEvent>(OnDoAfter);
     }
 
-    private void OnFinished(EntityUid uid, PartExchangerComponent component, RpedExchangeFinishedEvent args)
+    private void OnDoAfter(EntityUid uid, PartExchangerComponent component, DoAfterEvent args)
     {
-        component.Token = null;
+        if (args.Cancelled || args.Handled || args.Args.Target == null)
+        {
+            component.AudioStream?.Stop();
+            return;
+        }
+
         component.AudioStream?.Stop();
 
-        if (!TryComp<MachineComponent>(args.Target, out var machine))
+        if (!TryComp<MachineComponent>(args.Args.Target.Value, out var machine))
             return;
 
         if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.Storage == null)
@@ -60,7 +62,7 @@ public sealed class PartExchangerSystem : EntitySystem
             if (TryComp<MachinePartComponent>(ent, out var part))
             {
                 machineParts.Add(part);
-                _container.RemoveEntity(machine.Owner, ent);
+                _container.RemoveEntity(args.Args.Target.Value, ent);
             }
         }
 
@@ -86,19 +88,12 @@ public sealed class PartExchangerSystem : EntitySystem
             _storage.Insert(uid, unused.Owner, null, false);
         }
         _construction.RefreshParts(machine);
-    }
 
-    private void OnCancelled(EntityUid uid, PartExchangerComponent component, RpedExchangeCancelledEvent args)
-    {
-        component.Token = null;
-        component.AudioStream?.Stop();
+        args.Handled = true;
     }
 
     private void OnAfterInteract(EntityUid uid, PartExchangerComponent component, AfterInteractEvent args)
     {
-        if (component.Token != null)
-            return;
-
         if (component.DoDistanceCheck && !args.CanReach)
             return;
 
@@ -117,28 +112,11 @@ public sealed class PartExchangerSystem : EntitySystem
 
         component.AudioStream = _audio.PlayPvs(component.ExchangeSound, uid);
 
-        component.Token = new CancellationTokenSource();
-        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExchangeDuration, component.Token.Token, args.Target, args.Used)
+        _doAfter.DoAfter(new DoAfterEventArgs(args.User, component.ExchangeDuration, target:args.Target, used:args.Used)
         {
             BreakOnDamage = true,
             BreakOnStun = true,
-            BreakOnUserMove = true,
-            UsedFinishedEvent = new RpedExchangeFinishedEvent(args.Target.Value),
-            UsedCancelledEvent = new RpedExchangeCancelledEvent()
+            BreakOnUserMove = true
         });
     }
-}
-
-public sealed class RpedExchangeFinishedEvent : EntityEventArgs
-{
-    public readonly EntityUid Target;
-
-    public RpedExchangeFinishedEvent(EntityUid target)
-    {
-        Target = target;
-    }
-}
-
-public readonly struct RpedExchangeCancelledEvent
-{
 }
