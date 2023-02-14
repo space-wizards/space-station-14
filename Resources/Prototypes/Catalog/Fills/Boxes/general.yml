@@ -278,6 +278,7 @@
       - DroneUsable
 
 - type: entity
+  abstract: true
   name: encryption key box
   parent: BoxCardboard
   id: BoxEncryptionKey
@@ -290,7 +291,7 @@
   - type: Sprite
     layers:
       - state: box
-      - state: headset
+      - state: encryptokey
   - type: Storage
     capacity: 60
     whitelist:
@@ -358,16 +359,6 @@
         amount: 6
 
 - type: entity
-  name: service encryption key box
-  parent: BoxEncryptionKey
-  id: BoxEncryptionKeyService
-  components:
-  - type: StorageFill
-    contents:
-      - id: EncryptionKeyService
-        amount: 6
-
-- type: entity
   name: security encryption key box
   parent: BoxEncryptionKey
   id: BoxEncryptionKeySecurity
@@ -375,6 +366,16 @@
   - type: StorageFill
     contents:
       - id: EncryptionKeySecurity
+        amount: 6
+
+- type: entity
+  name: service encryption key box
+  parent: BoxEncryptionKey
+  id: BoxEncryptionKeyService
+  components:
+  - type: StorageFill
+    contents:
+      - id: EncryptionKeyService
         amount: 6
 
 - type: entity
