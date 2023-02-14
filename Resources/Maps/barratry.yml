@@ -93603,6 +93603,8 @@ entities:
   - pos: -25.461504,57.4935
     parent: 1
     type: Transform
+  - color: '#B70000FF'
+    type: Sprite
   - nextAttack: 72.9873008
     type: MeleeWeapon
 - uid: 7518
