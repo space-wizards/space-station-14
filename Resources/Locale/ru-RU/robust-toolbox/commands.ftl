@@ -448,18 +448,15 @@ cmd-vvwrite-desc = Modify a path's value using VV (View Variables).
 cmd-vvwrite-help = Usage: vvwrite <path>
 cmd-vvinvoke-desc = Invoke/Call a path with arguments using VV.
 cmd-vvinvoke-help = Usage: vvinvoke <path> [arguments...]
-
 cmd-replaystart-desc = Starts a replay recording, optionally with some time limit.
 cmd-replaystart-help = Usage: replaystart [minutes] [directory] [overwrite bool]
 cmd-replaystart-success = Started recording a replay.
 cmd-replaystart-already-recording = Already recording a replay.
 cmd-replaystart-error = An error occurred while trying to start the recording.
-
 cmd-replaystop-desc = Stops a replay recording.
 cmd-replaystop-help = Usage: replaystop
 cmd-replaystop-success = Stopped recording a replay.
 cmd-replaystop-not-recording = Not currently recording a replay.
-
 cmd-replaystats-desc = Displays information about the current replay recording.
 cmd-replaystats-help = Usage: replaystats
-cmd-replaystats-result = Duration: {$time} min, Ticks: {$ticks}, Size: {$size} mb, rate: {$rate} mb/min.
+cmd-replaystats-result = Duration: { $time } min, Ticks: { $ticks }, Size: { $size } mb, rate: { $rate } mb/min.
