@@ -6,6 +6,9 @@ namespace Content.Shared.Salvage.Expeditions.Structure;
 [DataDefinition]
 public sealed class SalvageStructure : ISalvageMission
 {
+    [DataField("desc")]
+    public string Description = string.Empty;
+
     [ViewVariables(VVAccess.ReadWrite), DataField("minStructures")]
     public int MinStructures = 3;
 

@@ -3,6 +3,7 @@
 # TODO: Water in desert / grass?
 - type: biome
   id: LowDesert
+  desc: Desert
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.99

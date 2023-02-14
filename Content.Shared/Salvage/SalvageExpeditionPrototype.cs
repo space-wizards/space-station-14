@@ -15,6 +15,9 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomePrototype>))]
     public string Biome = string.Empty;
 
+    [DataField("desc")]
+    public string Description = string.Empty;
+
     [DataField("light")]
     public Color Light = Color.Black;
 

@@ -29,6 +29,7 @@
 # Expedition configs
 - type: salvageExpedition
   id: CaveStructures
+  desc: Caves
   biome: LowDesert
   light: "#E6CB8B"
   expedition: !type:SalvageStructure

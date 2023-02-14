@@ -219,8 +219,8 @@ public sealed partial class SalvageSystem
             _biome = biome;
             _dungeon = dungeon;
             _pathfinding = pathfinding;
-            this.Station = station;
-            this._mission = mission;
+            Station = station;
+            _mission = mission;
         }
 
         protected override async Task<bool> Process()

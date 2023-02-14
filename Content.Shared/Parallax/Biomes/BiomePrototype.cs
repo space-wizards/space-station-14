@@ -13,6 +13,9 @@ public sealed class BiomePrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
+    [DataField("desc")]
+    public string Description = string.Empty;
+
     [DataField("layers")]
     public List<IBiomeLayer> Layers = new();
 }
