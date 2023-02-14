@@ -91,14 +91,14 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         if (user == null)
-            PopupSystem.PopupEntity(message, uid.Value); 
+            PopupSystem.PopupEntity(message, uid.Value);
         else
             PopupSystem.PopupEntity(message, uid.Value, Filter.PvsExcept(user.Value, entityManager: EntityManager), true);
     }
 
-    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, MeleeWeaponComponent component, ICommonSession? session)
+    protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
-        if (!base.DoDisarm(user, ev, component, session))
+        if (!base.DoDisarm(user, ev, meleeUid, component, session))
             return false;
 
         if (!TryComp<CombatModeComponent>(user, out var combatMode) ||
@@ -228,11 +228,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
     private void OnChemicalInjectorHit(EntityUid owner, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
     {
-        if (!args.IsHit)
+        if (!args.IsHit ||
+            !args.HitEntities.Any() ||
+            !_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
+        {
             return;
-
-        if (!_solutions.TryGetSolution(owner, comp.Solution, out var solutionContainer))
-            return;
+        }
 
         var hitBloodstreams = new List<BloodstreamComponent>();
         var bloodQuery = GetEntityQuery<BloodstreamComponent>();

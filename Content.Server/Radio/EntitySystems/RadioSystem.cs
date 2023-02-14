@@ -2,6 +2,7 @@ using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
+using Content.Server.Popups;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
@@ -9,6 +10,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared.Popups;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -20,6 +22,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly INetManager _netMan = default!;
     [Dependency] private readonly IReplayRecordingManager _replay = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -46,7 +49,7 @@ public sealed class RadioSystem : EntitySystem
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
     }
 
-    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel)
+    public void SendRadioMessage(EntityUid source, string message, RadioChannelPrototype channel, EntityUid? radioSource = null)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -66,8 +69,9 @@ public sealed class RadioSystem : EntitySystem
             EntityUid.Invalid);
         var chatMsg = new MsgChatMessage { Message = chat };
 
-        var ev = new RadioReceiveEvent(message, source, channel, chatMsg);
-        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel);
+        var ev = new RadioReceiveEvent(message, source, channel, chatMsg, radioSource);
+        var attemptEv = new RadioReceiveAttemptEvent(message, source, channel, radioSource);
+        bool sentAtLeastOnce = false;
 
         foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
@@ -82,11 +86,16 @@ public sealed class RadioSystem : EntitySystem
                 attemptEv.Uncancel();
                 continue;
             }
-
+            sentAtLeastOnce = true;
             RaiseLocalEvent(radio.Owner, ev);
         }
+        if (!sentAtLeastOnce)
+            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, PopupType.MediumCaution);
 
-        _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):sender} on {channel.LocalizedName}: {message}");
+        if (name != Name(source))
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):user} as {name} on {channel.LocalizedName}: {message}");
+        else
+            _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):user} on {channel.LocalizedName}: {message}");
 
         _replay.QueueReplayMessage(chat);
         _messages.Remove(message);
