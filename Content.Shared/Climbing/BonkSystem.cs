@@ -22,7 +22,7 @@ public sealed class BonkSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BonkableComponent, DragDropEvent>(OnDragDrop);
+        SubscribeLocalEvent<BonkableComponent, DragDropTargetEvent>(OnDragDrop);
     }
 
     public bool TryBonk(EntityUid user, EntityUid bonkableUid, BonkableComponent? bonkableComponent = null)
@@ -56,8 +56,8 @@ public sealed class BonkSystem : EntitySystem
         return false;
     }
 
-    private void OnDragDrop(EntityUid user, BonkableComponent bonkableComponent, DragDropEvent args)
+    private void OnDragDrop(EntityUid uid, BonkableComponent bonkableComponent, ref DragDropTargetEvent args)
     {
-        TryBonk(args.Dragged, args.Target);
+        TryBonk(args.Dragged, uid);
     }
 }

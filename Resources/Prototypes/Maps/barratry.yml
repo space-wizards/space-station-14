@@ -3,6 +3,7 @@
   mapName: 'Barratry'
   mapPath: /Maps/barratry.yml
   minPlayers: 35
+  maxPlayers: 70
   stations:
     Barratry:
       mapNameTemplate: '{0} Barratry {1}'
@@ -44,3 +45,4 @@
         ServiceWorker: [ 1, 2 ]
         SecurityCadet: [ 1, 2 ]
         Detective: [ 1, 1 ]
+        ResearchAssistant: [1, 2]

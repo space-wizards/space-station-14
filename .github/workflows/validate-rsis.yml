@@ -1,6 +1,7 @@
 name: RSI Validator
 
 on:
+  merge_group:
   pull_request:
     paths:
       - '**.rsi/**'
