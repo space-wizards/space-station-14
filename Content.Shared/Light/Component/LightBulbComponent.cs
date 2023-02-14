@@ -9,7 +9,7 @@ namespace Content.Shared.Light.Component;
 /// TODO: Breaking and burning should probably be moved to another component eventually.
 /// </summary>
 [RegisterComponent]
-[Serializable, NetSerializable, NetworkedComponent]
+[NetworkedComponent]
 public sealed class LightBulbComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
@@ -66,7 +66,7 @@ public sealed class LightBulbComponent : Robust.Shared.GameObjects.Component
     [DataField("PowerUse")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int PowerUse = 60;
-    
+
     /// <summary>
     /// The sound produced when the lightbulb breaks.
     /// </summary>
