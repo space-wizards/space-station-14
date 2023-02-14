@@ -89,6 +89,9 @@
   id: JobPassenger
 
 - type: playTimeTracker
+  id: JobPrisoner
+
+- type: playTimeTracker
   id: JobPsychologist
 
 - type: playTimeTracker

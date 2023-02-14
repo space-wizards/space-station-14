@@ -120,6 +120,19 @@
     - type: PresetIdCard
       job: Warden
 
+
+- type: entity
+  parent: IDCardStandard
+  id: PrisonerIdCard
+  name: prisoner ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idprisoner
+  - type: PresetIdCard
+    job: Prisoner
+
 - type: entity
   parent: IDCardStandard
   id: EngineeringIDCard

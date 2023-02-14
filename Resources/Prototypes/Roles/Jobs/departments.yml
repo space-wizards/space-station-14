@@ -76,6 +76,7 @@
   - SecurityOfficer
   - Detective
   - Warden
+  - Prisoner
 
 - type: department
   id: Science

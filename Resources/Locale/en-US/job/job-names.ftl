@@ -1,6 +1,7 @@
 ﻿job-name-warden = Warden
 job-name-security = Security Officer
 job-name-cadet = Security Cadet
+job-name-prisoner = Prisoner
 job-name-hos = Head of Security
 job-name-detective = Detective
 job-name-scientist = Scientist

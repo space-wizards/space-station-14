@@ -1,0 +1,21 @@
+- type: job
+  id: Prisoner
+  name: job-name-prisoner
+  description: job-description-prisoner
+  playTimeTracker: JobPrisoner
+  startingGear: PrisonerGear
+  icon: "Prisoner"
+  supervisors: job-supervisors-warden
+
+- type: startingGear
+  id: PrisonerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitPrisoner
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorOrange
+    # Prisoners just have clear PDA's because I cannot for the life of me, find a commit that has prisoner PDA's
+    id: ClearPDA
+    ears: ClothingHeadsetGrey
+  innerclothingskirt: ClothingUniformJumpskirtPrisoner
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
