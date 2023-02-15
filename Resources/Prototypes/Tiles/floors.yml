@@ -1103,26 +1103,12 @@
   friction: 0.30
   thermalConductivity: 0.04
   heatCapacity: 10000
-
-- type: tile
-  id: FloorSnow
-  name: tiles-snow
-  sprite: /Textures/Tiles/snow.png
-  baseTurfs:
-  - FloorDirt
-  isSubfloor: true
-  canCrowbar: false
-  footstepSounds:
-    collection: FootstepSnow
-  friction: 0.20
-  itemDrop: FloorTileItemSnow
-  thermalConductivity: 0.04
-  heatCapacity: 10000
   weather: true
+
 
 - type: tile
   id: FloorGrass
-  name: tiles-grass-floor
+  name: tiles-planet-grass-floor
   sprite: /Textures/Tiles/grass.png
   baseTurfs:
   - FloorDirt

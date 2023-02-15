@@ -81,7 +81,7 @@ namespace Content.Client.Administration.Managers
             var host = IoCManager.Resolve<IClientConsoleHost>();
 
             // Anything marked as Any we'll just add even if the server doesn't know about it.
-            foreach (var (command, instance) in host.RegisteredCommands)
+            foreach (var (command, instance) in host.AvailableCommands)
             {
                 if (Attribute.GetCustomAttribute(instance.GetType(), typeof(AnyCommandAttribute)) == null) continue;
                 _availableCommands.Add(command);
