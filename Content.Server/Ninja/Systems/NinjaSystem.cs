@@ -25,6 +25,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Popups;
 using Content.Shared.PowerCell.Components;
+using Content.Shared.Research.Components;
 using Content.Shared.Roles;
 using Content.Shared.Rounding;
 using Content.Shared.Stealth;
@@ -71,6 +72,9 @@ public sealed partial class NinjaSystem : GameRuleSystem
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDrainEvent>(OnDrainAction);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainCancelledEvent>(OnDrainCancel);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDownloadEvent>(OnDownloadAction);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadSuccessEvent>(OnDownloadSuccess);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadCancelledEvent>(OnDownloadCancel);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
@@ -121,10 +125,11 @@ public sealed partial class NinjaSystem : GameRuleSystem
         var user = args.Equipee;
         if (IsNinja(user) && TryComp<ActionsComponent>(user, out var actions))
         {
+            // TODO: add glove action / glove toggle for using with left click (ideally right click but yeah)
             _actions.AddAction(user, comp.DoorjackAction, uid, actions);
             _actions.AddAction(user, comp.StunAction, uid, actions);
             _actions.AddAction(user, comp.DrainAction, uid, actions);
-            // TODO: power drain ability
+            _actions.AddAction(user, comp.DownloadAction, uid, actions);
         }
     }
 
@@ -218,7 +223,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
     private void OnDrainSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainSuccessEvent args)
     {
         var user = args.User;
-        var target = args.Draining;
+        var target = args.Battery;
 
         comp.DrainCancelToken = null;
         if (!GetNinjaBattery(user, out var suitBattery))
@@ -247,9 +252,9 @@ public sealed partial class NinjaSystem : GameRuleSystem
             var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
             if (battery.TryUseCharge(input))
             {
-	            var output = input * comp.DrainEfficiency;
-            	suitBattery.CurrentCharge += output;
-	            _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
+                var output = input * comp.DrainEfficiency;
+                suitBattery.CurrentCharge += output;
+                _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
             }
         }
     }
@@ -257,6 +262,73 @@ public sealed partial class NinjaSystem : GameRuleSystem
     private void OnDrainCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainCancelledEvent args)
     {
         comp.DrainCancelToken = null;
+    }
+
+    private void OnDownloadAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaDownloadEvent args)
+    {
+        var target = args.Target;
+        var user = args.Performer;
+
+        // only target research servers that have unlocks
+        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
+        {
+            if (comp.DownloadCancelToken != null)
+            {
+                comp.DownloadCancelToken.Cancel();
+                return;
+            }
+
+            // fail fast if theres no tech right now
+            if (database.TechnologyIds.Count == 0)
+            {
+                _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
+                return;
+            }
+
+            comp.DownloadCancelToken = new CancellationTokenSource();
+            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.DownloadCancelToken.Token, used: uid)
+            {
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                BreakOnUserMove = true,
+                MovementThreshold = 0.5f,
+                UsedCancelledEvent = new DownloadCancelledEvent(),
+                UsedFinishedEvent = new DownloadSuccessEvent(user, target)
+            };
+
+            _doafter.DoAfter(doafterArgs);
+            args.Handled = true;
+        }
+    }
+
+    private void OnDownloadSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadSuccessEvent args)
+    {
+        var user = args.User;
+        var target = args.Server;
+
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
+            return;
+
+        comp.DownloadCancelToken = null;
+
+        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
+        {
+            var oldCount = ninja.DownloadedNodes.Count;
+            ninja.DownloadedNodes.UnionWith(database.TechnologyIds);
+            var newCount = ninja.DownloadedNodes.Count;
+
+            var gained = newCount - oldCount;
+            var str = gained == 0
+                ? Loc.GetString("ninja-download-fail")
+                : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
+
+            _popups.PopupEntity(str, user, user, PopupType.Medium);
+        }
+    }
+
+    private void OnDownloadCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadCancelledEvent args)
+    {
+        comp.DownloadCancelToken = null;
     }
 
     private void OnSuitEquipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotEquippedEvent args)
@@ -359,8 +431,8 @@ public sealed partial class NinjaSystem : GameRuleSystem
         if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null && mind.Mind.TryGetSession(out var session))
         {
             mind.Mind.AddRole(new TraitorRole(mind.Mind, _proto.Index<AntagPrototype>(comp.SpaceNinjaRoleId)));
-            if (_proto.TryIndex<ObjectivePrototype>("DoorjackObjective", out var objective))
-                mind.Mind.TryAddObjective(objective);
+            AddObjective(mind.Mind, "DoorjackObjective");
+            AddObjective(mind.Mind, "DownloadObjective");
 
             _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
         }
@@ -446,5 +518,11 @@ public sealed partial class NinjaSystem : GameRuleSystem
         if (suit.Cloaked)
             wattage += suit.CloakWattage;
         return wattage;
+    }
+
+    private void AddObjective(Mind.Mind mind, string name)
+    {
+        if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
+            mind.TryAddObjective(objective);
     }
 }

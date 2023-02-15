@@ -9,8 +9,13 @@ action-desc-toggle-phase-cloak = Toggles your suit's phase cloak. Beware that if
 
 action-name-ninja-drain = Drain
 action-desc-ninja-drain = Sap power from a power storage to recharge your suit's battery. It creates very noticable sparks, confirming ninja activity.
-
-ninja-no-power = Not enough charge in suit battery!
 ninja-full-power = Suit battery is already full
 ninja-drain-fail = {CAPITALIZE(THE($battery))} does not have enough power to drain
 ninja-drain-success = You drain power from {THE($battery)}!
+
+action-name-ninja-download = Download Research
+action-desc-ninja-download = Hack into a research server and copy over its precious research nodes.
+ninja-download-fail = No new research nodes were copied...
+ninja-download-success = Copied {$count} new nodes from {THE($server)}.
+
+ninja-no-power = Not enough charge in suit battery!

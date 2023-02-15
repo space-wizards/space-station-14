@@ -92,6 +92,31 @@ public sealed class SpaceNinjaGlovesComponent : Component
     public float DrainTime = 1f;
 
     public CancellationTokenSource? DrainCancelToken = null;
+
+    // ResearchDownloaderComponent
+
+    /// <summary>
+    /// The action for downloading research from a server
+    /// </summary>
+    [DataField("downloadAction")]
+    public EntityTargetAction DownloadAction = new()
+    {
+        UseDelay = TimeSpan.FromSeconds(1),
+        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server"),
+        ItemIconStyle = ItemActionIconStyle.BigAction,
+        DisplayName = "action-name-ninja-download",
+        Description = "action-desc-ninja-download",
+        Priority = -14,
+        Event = new NinjaDownloadEvent()
+    };
+
+    /// <summary>
+    /// Time taken to download research from a server
+    /// </summary>
+    [DataField("downloadTime")]
+    public float DownloadTime = 30f;
+
+    public CancellationTokenSource? DownloadCancelToken = null;
 }
 
 public sealed class NinjaDoorjackEvent : EntityTargetActionEvent { }
@@ -100,6 +125,12 @@ public sealed class NinjaStunEvent : EntityTargetActionEvent { }
 
 public sealed class NinjaDrainEvent : EntityTargetActionEvent { }
 
-public record DrainSuccessEvent(EntityUid User, EntityUid Draining);
+public record DrainSuccessEvent(EntityUid User, EntityUid Battery);
 
 public record DrainCancelledEvent;
+
+public sealed class NinjaDownloadEvent : EntityTargetActionEvent { }
+
+public record DownloadSuccessEvent(EntityUid User, EntityUid Server);
+
+public record DownloadCancelledEvent;

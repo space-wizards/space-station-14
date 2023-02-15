@@ -5,3 +5,11 @@
     - !type:TraitorRequirement {}
   conditions:
     - !type:DoorjackCondition {}
+
+- type: objective
+  id: DownloadObjective
+  issuer: spider clan
+  requirements:
+    - !type:TraitorRequirement {}
+  conditions:
+    - !type:DownloadCondition {}

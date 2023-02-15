@@ -17,6 +17,10 @@ public sealed class SpaceNinjaComponent : Component
     public EntityUid? Suit = null;
 
     /// Number of doors that have been doorjacked, used for objective
-    [DataField("doorsJacked")]
+    [ViewVariables]
     public int DoorsJacked = 0;
+
+    /// Research nodes that have been downloaded, used for objective
+    [ViewVariables]
+    public HashSet<string> DownloadedNodes = new();
 }
