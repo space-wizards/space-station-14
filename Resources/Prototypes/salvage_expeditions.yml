@@ -13,18 +13,66 @@
 - type: weightedRandom
   id: CaveLoot
   weights:
-    #OrePlasma: 0.1
+    OreGold: 0.5
+    OrePlasma: 0.25
+    OreSilver: 0.5
     OreTin: 1.0
-    #OreUranium: 0.1
+    OreUranium: 0.25
 
+# Ore droprates already affect these so you should keep the vein counts consistent between them.
+# Just vary points / cluster size.
+# - High yield
 - type: loot
   id: OreTin
+  desc: Veins of steel
   loots:
     - !type:ClusterLoot
       proto: WallRockTin
       minCluster: 10
-      maxCluster: 13
-      points: 3
+      maxCluster: 15
+      points: 1
+
+# - Medium yield
+- type: loot
+  id: OreGold
+  desc: Veins of gold ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockGold
+      minCluster: 5
+      maxCluster: 8
+      points: 6
+
+- type: loot
+  id: OreSilver
+  desc: Veins of silver ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockSilver
+      minCluster: 5
+      maxCluster: 8
+      points: 6
+
+# - Low yield
+- type: loot
+  id: OrePlasma
+  desc: Veins of plasma ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockPlasma
+      minCluster: 3
+      maxCluster: 5
+      points: 10
+
+- type: loot
+  id: OreUranium
+  desc: Veins of uranium ore
+  loots:
+    - !type:ClusterLoot
+      proto: WallRockUranium
+      minCluster: 3
+      maxCluster: 5
+      points: 10
 
 # Expedition configs
 - type: salvageExpedition
