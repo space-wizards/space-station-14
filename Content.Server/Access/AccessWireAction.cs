@@ -2,7 +2,6 @@ using Content.Server.Wires;
 using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Emag.Components;
-using Content.Shared.Emag.Systems;
 using Content.Shared.Wires;
 
 namespace Content.Server.Access;
@@ -17,8 +16,7 @@ public sealed class AccessWireAction : ComponentWireAction<AccessReaderComponent
 
     public override StatusLightState? GetLightState(Wire wire, AccessReaderComponent comp)
     {
-        var emagSystem = EntityManager.System<EmagSystem>();
-        return emagSystem.IsEmagged(comp.Owner) ? StatusLightState.On : StatusLightState.Off;
+        return EntityManager.HasComponent<EmaggedComponent>(comp.Owner) ? StatusLightState.On : StatusLightState.Off;
     }
 
     public override object StatusKey { get; } = AccessWireActionKey.Status;

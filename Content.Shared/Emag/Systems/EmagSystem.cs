@@ -157,7 +157,7 @@ namespace Content.Shared.Emag.Systems
         public bool DoEmagEffect(EntityUid user, EntityUid target)
         {
             // prevent emagging twice
-            if (IsEmagged(target))
+            if (HasComp<EmaggedComponent>(target))
                 return false;
 
             var emaggedEvent = new GotEmaggedEvent(user);
@@ -165,16 +165,8 @@ namespace Content.Shared.Emag.Systems
 
             // add marker component unless the handler wants repeatable emagging
             if (emaggedEvent.Emag)
-                EntityManager.AddComponent<EmaggedComponent>(target);
+                AddComp<EmaggedComponent>(target);
             return emaggedEvent.Handled;
-        }
-
-        /// <summary>
-        /// Returns whether an entity has the emagged marker component
-        /// </summary>
-        public bool IsEmagged(EntityUid uid)
-        {
-            return EntityManager.HasComponent<EmaggedComponent>(uid);
         }
     }
 

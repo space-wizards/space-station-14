@@ -5,6 +5,7 @@ using Content.Server.Wires;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.APC;
+using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -23,7 +24,6 @@ namespace Content.Server.Power.EntitySystems
     internal sealed class ApcSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -145,7 +145,7 @@ namespace Content.Server.Power.EntitySystems
             ApcComponent? apc=null,
             BatteryComponent? battery=null)
         {
-            if (apc != null && _emagSystem.IsEmagged(uid))
+            if (apc != null && HasComp<EmaggedComponent>(uid))
                 return ApcChargeState.Emag;
 
             if (!Resolve(uid, ref apc, ref battery))

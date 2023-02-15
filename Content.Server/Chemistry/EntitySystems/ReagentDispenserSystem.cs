@@ -24,7 +24,6 @@ namespace Content.Server.Chemistry.EntitySystems
     public sealed class ReagentDispenserSystem : EntitySystem
     {
         [Dependency] private readonly AudioSystem _audioSystem = default!;
-        [Dependency] private readonly EmagSystem _emagSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -81,7 +80,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 inventory.AddRange(packPrototype.Inventory);
             }
 
-            if (_emagSystem.IsEmagged(reagentDispenser.Owner)
+            if (HasComp<EmaggedComponent>(reagentDispenser.Owner)
                 && reagentDispenser.EmagPackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {

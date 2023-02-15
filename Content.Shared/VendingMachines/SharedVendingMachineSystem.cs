@@ -1,4 +1,4 @@
-using Content.Shared.Emag.Systems;
+using Content.Shared.Emag.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
@@ -6,7 +6,6 @@ namespace Content.Shared.VendingMachines;
 
 public abstract class SharedVendingMachineSystem : EntitySystem
 {
-    [Dependency] protected readonly EmagSystem _emagSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
@@ -51,7 +50,7 @@ public abstract class SharedVendingMachineSystem : EntitySystem
 
         var inventory = new List<VendingMachineInventoryEntry>(component.Inventory.Values);
 
-        if (_emagSystem.IsEmagged(uid))
+        if (HasComp<EmaggedComponent>(uid))
             inventory.AddRange(component.EmaggedInventory.Values);
 
         if (component.Contraband)
