@@ -1,11 +1,11 @@
 ent-BaseVehicle = Транспорт
     .desc = { "" }
     .suffix = { "" }
-ent-VehiclePussyWagon = уборочная машина
+ent-VehicleJanicart = уборочная машина
     .desc = Верный скакун уборщика.
     .suffix = { "" }
-ent-VehiclePussyWagonDestroyed = уничтоженная уборочная машина
-    .desc = Покойся с миром.
+ent-VehicleJanicartDestroyed = уничтоженная уборочная машина
+    .desc = { ent-MachineFrameDestroyed.desc }
     .suffix = { "" }
 ent-VehicleSecway = секвей
     .desc = Будущее перемещения. Популяризирован святым Иаковом, покровителем сотрудников службы безопасности и модераторов интернет-форумов.

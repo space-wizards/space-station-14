@@ -11,7 +11,10 @@ cmd-roleban-hint-3 = <reason>
 cmd-roleban-hint-4 = [продолжительность в минутах, не указывать или 0 для навсегда]
 cmd-roleban-hint-duration-1 = Навсегда
 cmd-roleban-hint-duration-2 = 1 день
-cmd-roleban-hint-duration-3 = 1 неделя
+cmd-roleban-hint-duration-3 = 3 дня
+cmd-roleban-hint-duration-4 = 1 неделя
+cmd-roleban-hint-duration-5 = 2 недели
+cmd-roleban-hint-duration-6 = 1 месяц
 
 ### Localization for role unban command
 
