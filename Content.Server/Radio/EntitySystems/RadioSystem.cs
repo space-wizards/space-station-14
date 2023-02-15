@@ -71,26 +71,27 @@ public sealed class RadioSystem : EntitySystem
 
         var ev = new RadioReceiveEvent(message, source, channel, chatMsg, radioSource);
         var attemptEv = new RadioReceiveAttemptEvent(message, source, channel, radioSource);
-        bool sentAtLeastOnce = false;
+        var sentAtLeastOnce = false;
 
         foreach (var radio in EntityQuery<ActiveRadioComponent>())
         {
+            var ent = radio.Owner;
             // TODO map/station/range checks?
 
             if (!radio.Channels.Contains(channel.ID))
                 continue;
 
-            RaiseLocalEvent(radio.Owner, attemptEv);
+            RaiseLocalEvent(ent, attemptEv);
             if (attemptEv.Cancelled)
             {
                 attemptEv.Uncancel();
                 continue;
             }
             sentAtLeastOnce = true;
-            RaiseLocalEvent(radio.Owner, ev);
+            RaiseLocalEvent(ent, ev);
         }
         if (!sentAtLeastOnce)
-            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, PopupType.MediumCaution);
+            _popupSystem.PopupEntity(Loc.GetString("failed-to-send-message"), source, source, PopupType.MediumCaution);
 
         if (name != Name(source))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(source):user} as {name} on {channel.LocalizedName}: {message}");

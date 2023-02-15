@@ -1,0 +1,7 @@
+﻿# Configuration preset used on Wizard's Den Lizard
+
+# Nothing specific yet
+
+[game]
+hostname = "[EN] Wizard's Den Lizard [US West]"
+soft_max_players = 100
