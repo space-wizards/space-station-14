@@ -12,13 +12,19 @@
     - tasks:
         - id: PickNearbyInjectablePrimitive
         - id: MoveToAccessiblePrimitive
-        - id: MedibotSpeakPrimitive
+        # - id: MedibotSpeakPrimitive // TODO: some sort of CD?
         - id: MedibotInjectPrimitive
+        # - id: MedibotSpeakFinishPrimitive
 
 - type: htnPrimitive
   id: MedibotSpeakPrimitive
   operator: !type:SpeakOperator
     speech: medibot-start-inject
+
+- type: htnPrimitive
+  id: MedibotSpeakFinishPrimitive
+  operator: !type:SpeakOperator
+    speech: medibot-finish-inject
 
 - type: htnPrimitive
   id: PickNearbyInjectablePrimitive

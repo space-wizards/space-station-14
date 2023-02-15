@@ -4,6 +4,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Verbs;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
@@ -30,33 +31,23 @@ namespace Content.Server.Silicons.Bots
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<MedibotComponent, GetVerbsEvent<InnateVerb>>(AddInjectVerb);
+            SubscribeLocalEvent<MedibotComponent, InteractNoHandEvent>(PlayerInject);
             SubscribeLocalEvent<TargetInjectSuccessfulEvent>(OnInjectSuccessful);
             SubscribeLocalEvent<InjectCancelledEvent>(OnInjectCancelled);
         }
 
-        private void AddInjectVerb(EntityUid uid, MedibotComponent component, GetVerbsEvent<InnateVerb> args)
+        private void PlayerInject(EntityUid uid, MedibotComponent component, InteractNoHandEvent args)
         {
             if (args.Target == null)
                 return;
 
-            if (!args.CanInteract)
+            if (args.Target == uid)
                 return;
 
-            if (!SharedInjectChecks(uid, args.Target, out var injectable))
+            if (!SharedInjectChecks(uid, args.Target.Value, out var injectable))
                 return;
 
-            InnateVerb verb = new()
-            {
-                Act = () =>
-                {
-                    TryStartInject(uid, component, args.Target, injectable);
-                },
-                Text = Loc.GetString("medibot-inject-verb"),
-                IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png",
-                Priority = 2
-            };
-            args.Verbs.Add(verb);
+            TryStartInject(uid, component, args.Target.Value, injectable);
         }
 
         public bool NPCStartInject(EntityUid uid, EntityUid target, MedibotComponent? component = null)
@@ -72,6 +63,9 @@ namespace Content.Server.Silicons.Bots
 
         private bool TryStartInject(EntityUid performer, MedibotComponent component, EntityUid target, Solution injectable)
         {
+            if (component.CancelToken != null)
+                return false;
+
             if (!_blocker.CanInteract(performer, target))
                 return false;
 
@@ -80,13 +74,11 @@ namespace Content.Server.Silicons.Bots
 
             // Hold still, please
             if (TryComp<PhysicsComponent>(target, out var physics) && physics.LinearVelocity.Length != 0f)
-            {
                 return false;
-            }
 
             if (!ChooseDrug(target, component, out var drug, out var injectAmount))
             {
-                _popups.PopupEntity(Loc.GetString("medibot-cannot-inject"), performer, PopupType.SmallCaution);
+                _popups.PopupEntity(Loc.GetString("medibot-cannot-inject"), performer, performer, PopupType.SmallCaution);
                 return false;
             }
 
@@ -156,6 +148,9 @@ namespace Content.Server.Silicons.Bots
             drug = "None";
             injectAmount = 0;
             if (!Resolve(target, ref damage))
+                return false;
+
+            if (damage.TotalDamage == 0)
                 return false;
 
             if (_mobs.IsCritical(target))

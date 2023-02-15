@@ -97,6 +97,8 @@
   - type: Body
     prototype: Bot
   - type: Examiner
+  - type: Actions
+  - type: Alerts
 
 - type: entity
   parent: MobSiliconBase
@@ -206,3 +208,10 @@
       path: /Audio/Ambience/Objects/periodic_beep.ogg
   - type: ShowHealthBars
     damageContainer: Biological
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    allowSpeech: true
+    allowMovement: true
+    whitelistRequired: false
+    name: ghost-role-information-medibot-name
+    description: ghost-role-information-medibot-description

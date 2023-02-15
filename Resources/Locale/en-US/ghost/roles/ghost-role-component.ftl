@@ -15,4 +15,7 @@ ghost-role-information-hamster-name = Hamster
 ghost-role-information-hamster-description = A grumpy little ball of fluff.
 
 ghost-role-information-hamlet-name = Hamlet the hamster.
-ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry.
+ghost-role-information-hamlet-description = Lives in the station bridge, has a bit of a temper and is always hungry..
+
+ghost-role-information-medibot-name = Medibot
+ghost-role-information-medibot-description = Click people to heal them. Heal anyone your autoinjector lets you.
