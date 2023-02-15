@@ -7,7 +7,22 @@
   sprites:
   - sprite: Mobs/Customization/arachnid.rsi
     state: spikes
-  - sprite: Mobs/Customization/arachnid.rsi
-    state: web
 
-# Other markings
+- type: marking
+  id: ArachnidAppendagesSharp
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: sharp
+
+# Face
+- type: marking
+  id: ArachnidTorsoStripes
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Arachnid]
+  sprites:
+  - sprite: Mobs/Customization/arachnid.rsi
+    state: torso_stripes
