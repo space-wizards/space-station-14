@@ -235,8 +235,8 @@ public sealed partial class SalvageSystem
 
             // Setup mission configs
             var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-            biome.BiomePrototype = config.Biome;
-            _prototypeManager.Index<BiomePrototype>(config.Biome);
+            biome.BiomePrototype = GetBiome(config.Biomes, _mission.Seed);
+            _prototypeManager.Index<BiomePrototype>(biome.BiomePrototype);
             _entManager.Dirty(biome);
 
             var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
@@ -414,7 +414,7 @@ public sealed partial class SalvageSystem
                 }
             }
 
-            await SetupMission(config.Expedition, dungeonOffset, dungeon, grid, random);
+            await SetupMission(config.Expedition, dungeonOffset, dungeon, grid, random, seed.GetSeed());
             return true;
         }
 
@@ -518,24 +518,24 @@ public sealed partial class SalvageSystem
 
         #region Mission Specific
 
-        private async Task SetupMission(ISalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random)
+        private async Task SetupMission(ISalvageMission mission, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             // TODO: Move this to the main method
             switch (mission)
             {
                 case SalvageStructure structure:
-                    await SetupMission(structure, dungeonOffset, dungeon, grid, random);
+                    await SetupMission(structure, dungeonOffset, dungeon, grid, random, seed);
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
 
-        private async Task SetupMission(SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random)
+        private async Task SetupMission(SalvageStructure structure, Vector2i dungeonOffset, Dungeon dungeon, MapGridComponent grid, Random random, int seed)
         {
             // TODO: Uhh difficulty selection
             // TODO: Hardcoding
-            var structureCount = random.Next(structure.MinStructures, structure.MaxStructures);
+            var structureCount = GetStructureCount(structure, seed);
             var availableRooms = dungeon.Rooms.ToList();
             var faction = _prototypeManager.Index<SalvageFactionPrototype>("Xenos");
             // TODO: DETERMINE DEEZ NUTS

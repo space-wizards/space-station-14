@@ -3,7 +3,9 @@ using Content.Shared.Procedural;
 using Content.Shared.Procedural.Rooms;
 using Content.Shared.Random;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Salvage;
 
@@ -12,11 +14,14 @@ public sealed class SalvageExpeditionPrototype : IPrototype
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("biome", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomePrototype>))]
-    public string Biome = string.Empty;
+    [DataField("biomes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<BiomePrototype>))]
+    public List<string> Biomes = new();
 
     [DataField("desc")]
     public string Description = string.Empty;
+
+    [DataField("difficultyRating")]
+    public DifficultyRating DifficultyRating = DifficultyRating.Minor;
 
     [DataField("light")]
     public Color Light = Color.Black;
@@ -53,3 +58,14 @@ public sealed class SalvageExpeditionPrototype : IPrototype
     [DataField("dungeonPosition")]
     public Vector2i DungeonPosition = new(80, -25);
 }
+
+[Serializable, NetSerializable]
+public enum DifficultyRating : byte
+{
+    None,
+    Minor,
+    Moderate,
+    Hazardous,
+    Extreme,
+}
+

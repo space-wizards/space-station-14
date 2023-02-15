@@ -22,6 +22,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 {
     private readonly IGameTiming _timing;
     private readonly IPrototypeManager _prototype;
+    private readonly SharedSalvageSystem _salvage;
 
     public event Action<ushort>? ClaimMission;
     private bool _claimed;
@@ -32,6 +33,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         RobustXamlLoader.Load(this);
         _timing = IoCManager.Resolve<IGameTiming>();
         _prototype = IoCManager.Resolve<IPrototypeManager>();
+        _salvage = IoCManager.Resolve<IEntityManager>().EntitySysManager.GetEntitySystem<SharedSalvageSystem>();
     }
 
     public void UpdateState(SalvageExpeditionConsoleState state)
@@ -56,7 +58,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 case SalvageStructure structure:
                     missionDesc = "Demolition";
                     // TODO:
-                    missionDetails = $"Destroy {structure.MaxStructures} XYZ structures.";
+                    missionDetails = $"Destroy {SharedSalvageSystem.GetStructureCount(structure, mission.Seed)} XYZ structures.";
                     break;
                 default:
                     throw new NotImplementedException();
@@ -112,12 +114,12 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Details
             lBox.AddChild(new Label()
             {
-                Text = $"Enemy details:"
+                Text = $"Hostiles:"
             });
 
             lBox.AddChild(new Label()
             {
-                Text = "Xenos",
+                Text = SharedSalvageSystem.GetFaction(config.Factions, mission.Seed),
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
@@ -145,7 +147,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label()
             {
-                Text = _prototype.Index<BiomePrototype>(config.Biome).Description,
+                Text = _prototype.Index<BiomePrototype>(SharedSalvageSystem.GetBiome(config.Biomes, mission.Seed)).Description,
                 FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),

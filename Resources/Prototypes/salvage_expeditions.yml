@@ -30,7 +30,9 @@
 - type: salvageExpedition
   id: CaveStructures
   desc: Caves
-  biome: LowDesert
+  biomes:
+  - LowDesert
+  - Lava
   light: "#E6CB8B"
   expedition: !type:SalvageStructure
   minDuration: 540

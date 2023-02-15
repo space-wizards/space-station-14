@@ -35,6 +35,7 @@
 # Grass
 - type: biome
   id: Grasslands
+  desc: Grasslands
   layers:
     - !type:BiomeDecalLayer
       allowedTiles:
@@ -106,6 +107,7 @@
 # Lava
 - type: biome
   id: Lava
+  desc: Lava
   layers:
     - !type:BiomeEntityLayer
       threshold: 0.9
@@ -162,6 +164,7 @@
 # Snow
 - type: biome
   id: Snow
+  desc: Snow
   layers:
     - !type:BiomeDecalLayer
       allowedTiles:
