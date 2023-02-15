@@ -21,7 +21,7 @@
   - type: Hunger
     baseDecayRate: 0.1 # Probably faster than humans?
   - type: Thirst
-  # Damage and stuff
+  # Damage and speed
   - type: Temperature
     heatDamageThreshold: 400 # Insects like heat
     coldDamageThreshold: 285 # Spiders don't tolerate the cold too well
@@ -37,6 +37,10 @@
     damage:
       types:
         Blunt: 0.15 #per second, scales with pressure and other constants.
+  - type: SlowOnDamage
+    speedModifierThresholds: # This is an ouch, but it does make up for their extra speed
+      50: 0.6
+      70: 0.4
   # Misc
   - type: Inventory
     templateId: arachnid
