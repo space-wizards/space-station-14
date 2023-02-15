@@ -6,10 +6,6 @@ namespace Content.Server.Ninja.Components;
 [RegisterComponent]
 public sealed class SpaceNinjaSuitComponent : Component
 {
-    /// <summary>
-    /// True if the user is currently phase cloaked. Resets when taking suit off or taking damage.
-    /// </summary>
-    [DataField("cloaked")]
     public bool Cloaked = false;
 
     /// <summary>

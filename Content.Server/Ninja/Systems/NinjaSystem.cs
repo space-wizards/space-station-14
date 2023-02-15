@@ -1,5 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
+using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.Electrocution;
 using Content.Server.GameTicking.Rules;
@@ -35,6 +36,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 
 namespace Content.Server.Ninja.Systems;
 
@@ -42,6 +44,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly DoAfterSystem _doafter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
@@ -65,6 +68,9 @@ public sealed partial class NinjaSystem : GameRuleSystem
         // for doorjack counting
         SubscribeLocalEvent<DoorComponent, DoorEmaggedEvent>(OnDoorEmagged);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaStunEvent>(OnStunAction);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDrainEvent>(OnDrainAction);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainSuccessEvent>(OnDrainSuccess);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, DrainCancelledEvent>(OnDrainCancel);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
@@ -117,6 +123,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
         {
             _actions.AddAction(user, comp.DoorjackAction, uid, actions);
             _actions.AddAction(user, comp.StunAction, uid, actions);
+            _actions.AddAction(user, comp.DrainAction, uid, actions);
             // TODO: power drain ability
         }
     }
@@ -175,6 +182,83 @@ public sealed partial class NinjaSystem : GameRuleSystem
         args.Handled = _electrocution.TryDoElectrocution(target, comp.Owner, comp.StunDamage, comp.StunTime, false, ignoreInsulation: true);
     }
 
+    private void OnDrainAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaDrainEvent args)
+    {
+        var target = args.Target;
+        var user = args.Performer;
+
+        // only target devices that store power
+        if (HasComp<PowerNetworkBatteryComponent>(target))
+        {
+            if (HasComp<BatteryComponent>(target))
+            {
+                if (comp.DrainCancelToken != null)
+                {
+                    comp.DrainCancelToken.Cancel();
+                    return;
+                }
+
+                comp.DrainCancelToken = new CancellationTokenSource();
+                var doafterArgs = new DoAfterEventArgs(user, comp.DrainTime, comp.DrainCancelToken.Token, used: uid)
+                {
+                    BreakOnDamage = true,
+                    BreakOnStun = true,
+                    BreakOnUserMove = true,
+                    MovementThreshold = 0.5f,
+                    UsedCancelledEvent = new DrainCancelledEvent(),
+                    UsedFinishedEvent = new DrainSuccessEvent(user, target)
+                };
+
+                _doafter.DoAfter(doafterArgs);
+                args.Handled = true;
+            }
+        }
+    }
+
+    private void OnDrainSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainSuccessEvent args)
+    {
+        var user = args.User;
+        var target = args.Draining;
+
+        comp.DrainCancelToken = null;
+        if (!GetNinjaBattery(user, out var suitBattery))
+            // took suit off or something, ignore draining
+            return;
+
+        if (suitBattery.IsFullyCharged)
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-drain-full"), user, user, PopupType.Medium);
+            return;
+        }
+
+        if (TryComp<BatteryComponent>(target, out var battery) && TryComp<PowerNetworkBatteryComponent>(target, out var pnb))
+        {
+            if (MathHelper.CloseToPercent(battery.CurrentCharge, 0))
+            {
+                _popups.PopupEntity(Loc.GetString("ninja-drain-empty", ("battery", target)), user, user, PopupType.Medium);
+                return;
+            }
+
+            // TODO: sparks, sound
+            // higher tier storages can charge more
+            var available = battery.CurrentCharge;
+            var required = suitBattery.MaxCharge - suitBattery.CurrentCharge;
+            var maxDrained = pnb.MaxSupply * comp.DrainTime;
+            var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
+            if (battery.TryUseCharge(input))
+            {
+	            var output = input * comp.DrainEfficiency;
+            	suitBattery.CurrentCharge += output;
+	            _popups.PopupEntity(Loc.GetString("ninja-drain-success", ("battery", target)), user, user);
+            }
+        }
+    }
+
+    private void OnDrainCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DrainCancelledEvent args)
+    {
+        comp.DrainCancelToken = null;
+    }
+
     private void OnSuitEquipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotEquippedEvent args)
     {
         var user = args.Equipee;
@@ -189,7 +273,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
             // initialize phase cloak
             AddComp<StealthComponent>(user);
             SetCloaked(user, comp.Cloaked);
-	        SetSuitPowerAlert(user);
+            SetSuitPowerAlert(user);
         }
     }
 
@@ -307,7 +391,7 @@ public sealed partial class NinjaSystem : GameRuleSystem
 
         float wattage = SuitWattage(suit);
 
-		SetSuitPowerAlert(ninja.Owner, ninja);
+        SetSuitPowerAlert(ninja.Owner, ninja);
         if (!GetNinjaBattery(ninja.Owner, out var battery) || !battery.TryUseCharge(wattage * frameTime))
         {
             // ran out of power, reveal ninja
@@ -319,24 +403,24 @@ public sealed partial class NinjaSystem : GameRuleSystem
         }
     }
 
-	private void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
-	{
+    private void SetSuitPowerAlert(EntityUid uid, SpaceNinjaComponent? comp = null)
+    {
         if (!Resolve(uid, ref comp, false) || comp.Deleted || comp.Suit == null)
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
             return;
         }
 
-		if (GetNinjaBattery(uid, out var battery))
-		{
- 	        var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 7);
-	        _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
+        if (GetNinjaBattery(uid, out var battery))
+        {
+             var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, battery.CurrentCharge), battery.MaxCharge, 7);
+            _alerts.ShowAlert(uid, AlertType.SuitPower, (short) severity);
         }
         else
         {
             _alerts.ClearAlert(uid, AlertType.SuitPower);
         }
-	}
+    }
 
     private bool IsNinja(EntityUid user)
     {

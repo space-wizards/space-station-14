@@ -7,4 +7,10 @@ action-desc-ninja-stun = Sneak up to an enemy and use this to shock them, keeps 
 action-name-toggle-phase-cloak = Phase cloak
 action-desc-toggle-phase-cloak = Toggles your suit's phase cloak. Beware that if you are hit, all abilities are disabled for 5 seconds, including your cloak!
 
+action-name-ninja-drain = Drain
+action-desc-ninja-drain = Sap power from a power storage to recharge your suit's battery. It creates very noticable sparks, confirming ninja activity.
+
 ninja-no-power = Not enough charge in suit battery!
+ninja-full-power = Suit battery is already full
+ninja-drain-fail = {CAPITALIZE(THE($battery))} does not have enough power to drain
+ninja-drain-success = You drain power from {THE($battery)}!

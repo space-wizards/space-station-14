@@ -3,6 +3,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
+using System.Threading;
 
 namespace Content.Server.Ninja.Components;
 
@@ -62,8 +63,43 @@ public sealed class SpaceNinjaGlovesComponent : Component
     /// </summary>
     [DataField("stunTime")]
     public TimeSpan StunTime = TimeSpan.FromSeconds(3);
+
+    /// <summary>
+    /// The action for emagging doors with ninja gloves
+    /// </summary>
+    [DataField("drainAction")]
+    public EntityTargetAction DrainAction = new()
+    {
+          UseDelay = TimeSpan.FromSeconds(5), // can't visit every apc in rapid succession, gives incentive to drain substations and smeses
+          Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Power/apc.rsi"), "apc0"),
+          ItemIconStyle = ItemActionIconStyle.BigAction,
+          DisplayName = "action-name-ninja-drain",
+          Description = "action-desc-ninja-drain",
+          Priority = -13,
+          Event = new NinjaDrainEvent()
+    };
+
+    /// <summary>
+    /// Conversion rate between joules in a device and joules added to suit
+    /// </summary>
+    [DataField("drainEfficiency")]
+    public float DrainEfficiency = 0.001f;
+
+    /// <summary>
+    /// Time that the do after takes to drain charge from a battery, in seconds
+    /// </summary>
+    [DataField("drainTime")]
+    public float DrainTime = 1f;
+
+    public CancellationTokenSource? DrainCancelToken = null;
 }
 
 public sealed class NinjaDoorjackEvent : EntityTargetActionEvent { }
 
 public sealed class NinjaStunEvent : EntityTargetActionEvent { }
+
+public sealed class NinjaDrainEvent : EntityTargetActionEvent { }
+
+public record DrainSuccessEvent(EntityUid User, EntityUid Draining);
+
+public record DrainCancelledEvent;
