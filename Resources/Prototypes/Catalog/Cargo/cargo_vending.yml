@@ -157,6 +157,16 @@
   group: market
 
 - type: cargoProduct
+  id: CrateVendingMachineRestockVendomat
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockVendomatFilled
+  cost: 1200
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: CrateVendingMachineRestockTankDispenser
   icon:
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
