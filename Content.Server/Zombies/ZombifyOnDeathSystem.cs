@@ -46,7 +46,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
         [Dependency] private readonly ServerInventorySystem _serverInventory = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly HumanoidSystem _sharedHuApp = default!;
+        [Dependency] private readonly HumanoidAppearanceSystem _sharedHuApp = default!;
         [Dependency] private readonly IdentitySystem _identity = default!;
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
@@ -111,11 +111,6 @@ namespace Content.Server.Zombies
             var combat = AddComp<CombatModeComponent>(target);
             combat.IsInCombatMode = true;
 
-            var vocal = EnsureComp<VocalComponent>(target);
-            var scream = new SoundCollectionSpecifier ("ZombieScreams");
-            vocal.FemaleScream = scream;
-            vocal.MaleScream = scream;
-
             //This is the actual damage of the zombie. We assign the visual appearance
             //and range here because of stuff we'll find out later
             var melee = EnsureComp<MeleeWeaponComponent>(target);
@@ -125,7 +120,7 @@ namespace Content.Server.Zombies
             Dirty(melee);
 
             //We have specific stuff for humanoid zombies because they matter more
-            if (TryComp<HumanoidComponent>(target, out var huApComp)) //huapcomp
+            if (TryComp<HumanoidAppearanceComponent>(target, out var huApComp)) //huapcomp
             {
                 //store some values before changing them in case the humanoid get cloned later
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;

@@ -102,9 +102,12 @@ public sealed class MindSystem : EntitySystem
                     }
 
                     // TODO refactor observer spawning.
+                    // please.
                     if (!spawnPosition.IsValid(EntityManager))
                     {
-                        Logger.ErrorS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
+                        // This should be an error, if it didn't cause tests to start erroring when they delete a player.
+                        Logger.WarningS("mind", $"Entity \"{ToPrettyString(uid)}\" for {mind.Mind?.CharacterName} was deleted, and no applicable spawn location is available.");
+                        mind.Mind?.TransferTo(null);
                         return;
                     }
 
