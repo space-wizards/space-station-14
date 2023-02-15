@@ -1,24 +1,17 @@
-using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Strip.Components
 {
-    public abstract class SharedStrippableComponent : Component, IDraggable
+    [RegisterComponent, NetworkedComponent]
+    public sealed class StrippableComponent : Component
     {
-        bool IDraggable.CanDrop(CanDropEvent args)
-        {
-            var ent = IoCManager.Resolve<IEntityManager>();
-            return args.Target != args.Dragged &&
-                args.Target == args.User &&
-                ent.HasComponent<SharedStrippingComponent>(args.User) &&
-                ent.HasComponent<SharedHandsComponent>(args.User) &&
-                ent.EntitySysManager.GetEntitySystem<ActionBlockerSystem>().CanInteract(args.User, args.Dragged);
-        }
-
-        public abstract bool Drop(DragDropEvent args);
+        /// <summary>
+        /// The strip delay for hands.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite), DataField("handDelay")]
+        public float HandStripDelay = 4f;
     }
 
     [NetSerializable, Serializable]
