@@ -1,11 +1,20 @@
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.Threading;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Silicons.Bots
 {
     [RegisterComponent]
     public sealed class MedibotComponent : Component
     {
+        public CancellationTokenSource? CancelToken;
+
+        /// <summary>
+        /// Used in NPC logic.
+        /// </summary>
+        public EntityUid? InjectTarget;
+
         /// <summary>
         /// Med the bot will inject when UNDER the standard med damage threshold.
         /// </summary>
@@ -25,7 +34,11 @@ namespace Content.Server.Silicons.Bots
         [DataField("emergencyMedInjectAmount")]
         public float EmergencyMedInjectAmount = 15f;
 
-        public const float EmergencyMedDamageThreshold = 100f;
+        [DataField("injectDelay")]
+        public float InjectDelay = 3f;
+
+        [DataField("injectFinishSound")]
+        public SoundSpecifier InjectFinishSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
     }
 }

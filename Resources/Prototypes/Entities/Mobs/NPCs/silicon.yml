@@ -96,6 +96,7 @@
   - type: MobMover
   - type: Body
     prototype: Bot
+  - type: Examiner
 
 - type: entity
   parent: MobSiliconBase
@@ -186,6 +187,7 @@
   name: medibot
   description: No substitute for a doctor, but better than nothing.
   components:
+  - type: DoAfter
   - type: Medibot
   - type: Sprite
     drawdepth: Mobs
@@ -202,3 +204,5 @@
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: ShowHealthBars
+    damageContainer: Biological

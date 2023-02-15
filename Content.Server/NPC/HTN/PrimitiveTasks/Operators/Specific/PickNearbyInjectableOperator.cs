@@ -9,6 +9,9 @@ using Content.Shared.Mobs.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
+/// <summary>
+/// Find an appropriate target for the drugs tricordrazine OR inaprovaline.
+/// </summary>
 public sealed class PickNearbyInjectableOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
@@ -51,12 +54,20 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
 
         foreach (var entity in _lookup.GetEntitiesInRange(owner, range))
         {
-            if (mobState.HasComponent(entity) &&
+            if (mobState.TryGetComponent(entity, out var mobStateComponent) &&
                 injectQuery.HasComponent(entity) &&
                 damageQuery.TryGetComponent(entity, out var damage) &&
                 damage.TotalDamage > 0 &&
                 !recentlyInjected.HasComponent(entity))
             {
+                // Dead mobs are beyond help. Some mobs have under 50 health, so we need this.
+                if (mobStateComponent.CurrentState == Shared.Mobs.MobState.Dead)
+                    continue;
+
+                // Tricordrazine does nothing above 50 damage. Inaprovaline requires them to be crit.
+                if (damage.TotalDamage > 50 && mobStateComponent.CurrentState != Shared.Mobs.MobState.Critical)
+                    continue;
+
                 var path = await _pathfinding.GetPath(owner, entity, SharedInteractionSystem.InteractionRange, cancelToken);
 
                 if (path.Result == PathResult.NoPath)
