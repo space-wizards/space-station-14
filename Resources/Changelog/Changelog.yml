@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Lathes can now be upgraded to print faster and to consume fewer materials
-      per print., type: Add}
-  id: 2544
-  time: '2022-10-30T07:12:11.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Added machine upgrades for microwaves., type: Add}
   id: 2545
   time: '2022-10-30T07:14:20.0000000+00:00'
@@ -2913,3 +2907,9 @@ Entries:
   - {message: Fix NPC steering crashing in some instances., type: Fix}
   id: 3043
   time: '2023-02-15T05:54:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added a new artifact effect which creates a puddle of random chemicals.
+      Let's hope they don't react., type: Add}
+  id: 3044
+  time: '2023-02-15T19:06:46.0000000+00:00'
