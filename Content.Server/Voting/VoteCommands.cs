@@ -1,8 +1,10 @@
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Managers;
 using Content.Server.Voting.Managers;
 using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -12,6 +14,8 @@ namespace Content.Server.Voting
     [AnyCommand]
     public sealed class CreateVoteCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         public string Command => "createvote";
         public string Description => Loc.GetString("cmd-createvote-desc");
         public string Help => Loc.GetString("cmd-createvote-help");
@@ -34,6 +38,7 @@ namespace Content.Server.Voting
 
             if (shell.Player != null && !mgr.CanCallVote((IPlayerSession) shell.Player, type))
             {
+                _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "F" : shell.Player.Name + "f")}ailed to start {type.ToString()} vote");
                 shell.WriteError(Loc.GetString("cmd-createvote-cannot-call-vote-now"));
                 return;
             }
@@ -56,6 +61,8 @@ namespace Content.Server.Voting
     [AdminCommand(AdminFlags.Admin)]
     public sealed class CreateCustomCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         private const int MaxArgCount = 10;
 
         public string Command => "customvote";
@@ -87,6 +94,8 @@ namespace Content.Server.Voting
 
             options.SetInitiatorOrServer((IPlayerSession?) shell.Player);
 
+            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "I" : shell.Player.Name + " i")}nitiated a custom vote: {options.Title} - {string.Join("; ", options.Options.Select(x => x.text))}");
+
             var vote = mgr.CreateVote(options);
 
             vote.OnFinished += (_, eventArgs) =>
@@ -95,10 +104,12 @@ namespace Content.Server.Voting
                 if (eventArgs.Winner == null)
                 {
                     var ties = string.Join(", ", eventArgs.Winners.Select(c => args[(int) c]));
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished as tie: {ties}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-tie",("ties", ties)));
                 }
                 else
                 {
+                    _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Custom vote {options.Title} finished: {args[(int) eventArgs.Winner]}");
                     chatMgr.DispatchServerAnnouncement(Loc.GetString("cmd-customvote-on-finished-win",("winner", args[(int) eventArgs.Winner])));
                 }
             };
@@ -198,6 +209,8 @@ namespace Content.Server.Voting
     [AdminCommand(AdminFlags.Admin)]
     public sealed class CancelVoteCommand : IConsoleCommand
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+
         public string Command => "cancelvote";
         public string Description => Loc.GetString("cmd-cancelvote-desc");
         public string Help => Loc.GetString("cmd-cancelvote-help");
@@ -218,6 +231,7 @@ namespace Content.Server.Voting
                 return;
             }
 
+            _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"{(shell.Player == null ? "C" : shell.Player.Name + " c")}anceled vote: {vote.Title}");
             vote.Cancel();
         }
 
