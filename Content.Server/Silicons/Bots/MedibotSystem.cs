@@ -5,12 +5,14 @@ using Content.Shared.Damage;
 using Content.Shared.Verbs;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Popups;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.NPC.Components;
 using Content.Server.Chemistry.EntitySystems;
+using Robust.Shared.Physics.Components;
 using Robust.Server.GameObjects;
-
 
 namespace Content.Server.Silicons.Bots
 {
@@ -21,6 +23,9 @@ namespace Content.Server.Silicons.Bots
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly DoAfterSystem _doAfter = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly PhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
@@ -67,6 +72,18 @@ namespace Content.Server.Silicons.Bots
 
         private bool TryStartInject(EntityUid performer, MedibotComponent component, EntityUid target, Solution injectable)
         {
+            if (!_blocker.CanInteract(performer, target))
+                return false;
+
+            if (!_interactionSystem.InRangeUnobstructed(performer, target, 2f))
+                return false;
+
+            // Hold still, please
+            if (TryComp<PhysicsComponent>(target, out var physics) && physics.LinearVelocity.Length != 0f)
+            {
+                return false;
+            }
+
             if (!ChooseDrug(target, component, out var drug, out var injectAmount))
             {
                 _popups.PopupEntity(Loc.GetString("medibot-cannot-inject"), performer, PopupType.SmallCaution);
