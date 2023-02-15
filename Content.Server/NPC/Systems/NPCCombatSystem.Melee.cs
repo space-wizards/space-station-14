@@ -36,7 +36,7 @@ public sealed partial class NPCCombatSystem
                 return;
 
             var idealDistance = weapon.Range * 1.5f;
-            var obstacleDirection = pointB - pointA;
+            var obstacleDirection = pointB - args.WorldPosition;
             var obstacleDistance = obstacleDirection.Length;
 
             if (obstacleDistance > idealDistance || obstacleDistance == 0f)
