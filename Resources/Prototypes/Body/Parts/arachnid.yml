@@ -136,7 +136,7 @@
     symmetry: Left
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.0
-    baseSprintSpeed: 5.5
+    baseSprintSpeed: 5.0
 
 - type: entity
   id: RightLegArachnid
@@ -155,7 +155,7 @@
     symmetry: Right
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.0
-    baseSprintSpeed: 5.5
+    baseSprintSpeed: 5.0
 
 - type: entity
   id: LeftFootArachnid

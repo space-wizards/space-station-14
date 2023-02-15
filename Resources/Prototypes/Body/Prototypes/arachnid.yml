@@ -13,11 +13,11 @@
     torso:
       part: TorsoArachnid
       organs:
-        heart: OrganAnimalHeart
+        heart: OrganArachnidHeart
         lungs: OrganAnimalLungs
         stomach: OrganArachnidStomach
-        liver: OrganAnimalLiver
-        kidneys: OrganAnimalKidneys
+        liver: OrganArachnidLiver
+        kidneys: OrganArachnidKidneys
       connections:
       - left arm
       - right arm
