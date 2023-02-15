@@ -1,0 +1,9 @@
+- type: entity
+  parent: BaseSign
+  id: ScpSign
+  name: Лого SCP
+  description: Secure. Contain. Protect.
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/scp_sign.rsi
+    state: scp_logo

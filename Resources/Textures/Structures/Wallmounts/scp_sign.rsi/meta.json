@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "copyright": "Discord <@410474801350574080>",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "scp_logo"
+        }
+    ]
+}
