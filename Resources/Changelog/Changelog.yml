@@ -1,10 +1,4 @@
 Entries:
-- author: Mervill
-  changes:
-  - {message: Fixed Vending Machines not showing their damage sprite in most cases.,
-    type: Fix}
-  id: 2541
-  time: '2022-10-30T06:12:05.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added machine part upgrades for emitters. Have fun blasting holes into
@@ -2913,3 +2907,9 @@ Entries:
   - {message: You can now climb on counters., type: Fix}
   id: 3040
   time: '2023-02-14T23:08:02.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed chat/radio and various commands not working after reconnecting
+      to a server, type: Fix}
+  id: 3041
+  time: '2023-02-15T04:55:23.0000000+00:00'
