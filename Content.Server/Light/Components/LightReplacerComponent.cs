@@ -1,4 +1,4 @@
-using Content.Shared.Light;
+using Content.Shared.Light.Component;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;

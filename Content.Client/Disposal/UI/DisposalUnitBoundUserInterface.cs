@@ -1,12 +1,9 @@
-﻿using Content.Client.Disposal.Components;
+using Content.Client.Disposal.Components;
 using Content.Client.Disposal.Systems;
 using Content.Shared.Disposal;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.UI
@@ -17,11 +14,14 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         public MailingUnitWindow? MailingUnitWindow;
         public DisposalUnitWindow? DisposalUnitWindow;
 
         public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
         {
+            IoCManager.InjectDependencies(this);
         }
 
         private void ButtonPressed(UiButton button)
@@ -76,7 +76,9 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            if (!IoCManager.Resolve<IEntityManager>().TryGetComponent(Owner.Owner, out DisposalUnitComponent? component)) return;
+            var entityId = Owner.Owner;
+            if (!_entityManager.TryGetComponent(entityId, out DisposalUnitComponent? component))
+                return;
 
             switch (state)
             {
@@ -91,7 +93,7 @@ namespace Content.Client.Disposal.UI
                     break;
             }
 
-            EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);
+            _entityManager.System<DisposalUnitSystem>().UpdateActive(entityId, true);
         }
 
         protected override void Dispose(bool disposing)
