@@ -32,11 +32,11 @@ public sealed partial class NPCCombatSystem
             if (cdRemaining < TimeSpan.FromSeconds(1f / weapon.AttackRate) * 0.5f)
                 return;
 
-            if (!_physics.TryGetNearestPoints(uid, component.Target, out _, out var pointB))
+            if (!_physics.TryGetNearestPoints(uid, component.Target, out var pointA, out var pointB))
                 return;
 
-            var idealDistance = weapon.Range * 1.25f;
-            var obstacleDirection = pointB - args.WorldPosition;
+            var idealDistance = weapon.Range * 1.5f;
+            var obstacleDirection = pointB - pointA;
             var obstacleDistance = obstacleDirection.Length;
 
             if (obstacleDistance > idealDistance || obstacleDistance == 0f)
