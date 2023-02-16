@@ -1,4 +1,4 @@
-ent-BaseVendingMachineRestock = набор пополнения Торгомат
+ent-BaseVendingMachineRestock = набор пополнения торгоматов
     .desc = Набор для пополнения торговых автоматов фирменными товарами.
     .suffix = { "" }
 ent-VendingMachineRestockBooze = набор пополнения АлкоМат
@@ -61,8 +61,8 @@ ent-VendingMachineRestockSmokes = набор пополнения ШейдиСи
 ent-VendingMachineRestockTankDispenser = набор пополнения газовых баллонов
     .desc = Способен пополнить баллоны в раздатчике газовых баллонов. Не кантовать.
     .suffix = { "" }
-ent-VendingMachineRestockVendomat = vendomat restock box
-    .desc = A box full of parts for various machinery. Load it into a Vendomat to begin.
+ent-VendingMachineRestockVendomat = набор пополнения Вендомат
+    .desc = Коробка полная различных запчастей. Загрузите её в Вендомат.
     .suffix = { "" }
 ent-VendingMachineRestockHappyHonk = набор пополнения Хэппи Хонк
     .desc = Поместите эту коробку, полную веселья, в отсек для пополнения торгомата Хэппи Хонк.
