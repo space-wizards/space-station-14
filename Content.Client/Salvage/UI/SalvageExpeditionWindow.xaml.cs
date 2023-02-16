@@ -198,7 +198,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             // Rewards
             lBox.AddChild(new Label()
             {
-                Text = $"Rewards:"
+                Text = $"Reward:"
             });
 
             var salvageReward = SharedSalvageSystem.GetReward(_prototype.Index<WeightedRandomPrototype>(config.Reward), mission.Seed, _prototype);
@@ -224,7 +224,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label()
             {
-                Text = $"Secondary Rewards:"
+                Text = $"Materials:"
             });
 
             if (config.Loots.Count == 0)

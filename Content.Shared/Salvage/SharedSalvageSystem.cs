@@ -13,25 +13,27 @@ public abstract class SharedSalvageSystem : EntitySystem
 
     public static string GetFaction(List<string> factions, int seed)
     {
-        var adjustedSeed = seed % 1;
-        return factions[adjustedSeed % factions.Count];
+        var adjustedSeed = new System.Random(seed + 1);
+        return factions[adjustedSeed.Next(factions.Count)];
     }
 
     public static IEnumerable<SalvageLootPrototype> GetLoot(List<string> loots, int seed, IPrototypeManager protoManager)
     {
+        var adjustedSeed = new System.Random(seed + 2);
+
         for (var i = 0; i < loots.Count; i++)
         {
             var loot = loots[i];
             var a = protoManager.Index<WeightedRandomPrototype>(loot);
-            var random = new System.Random(seed % 2 + i);
-            var lootConfig = a.Pick(random);
+            var lootConfig = a.Pick(adjustedSeed);
             yield return protoManager.Index<SalvageLootPrototype>(lootConfig);
         }
     }
 
     public static ISalvageReward GetReward(WeightedRandomPrototype proto, int seed, IPrototypeManager protoManager)
     {
-        var rewardProto = proto.Pick(new System.Random(seed % 3));
+        var adjustedSeed = new System.Random(seed + 3);
+        var rewardProto = proto.Pick(adjustedSeed);
         return protoManager.Index<SalvageRewardPrototype>(rewardProto).Reward;
     }
 
@@ -39,8 +41,8 @@ public abstract class SharedSalvageSystem : EntitySystem
 
     public static int GetStructureCount(SalvageStructure structure, int seed)
     {
-        var adjustedSeed = seed % 4;
-        return adjustedSeed % (structure.MaxStructures - structure.MinStructures + 1) + structure.MinStructures;
+        var adjustedSeed = new System.Random(seed + 4);
+        return adjustedSeed.Next(structure.MinStructures, structure.MaxStructures + 1);
     }
 
     #endregion
