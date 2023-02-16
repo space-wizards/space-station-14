@@ -14,15 +14,6 @@ public sealed class SalvageExpeditionComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("endTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan EndTime;
 
-    [ViewVariables]
-    public readonly List<EntityUid> SpawnMarkers = new();
-
-    [ViewVariables]
-    public string Faction = string.Empty;
-
-    [ViewVariables]
-    public string Config = string.Empty;
-
     /// <summary>
     /// Station whose mission this is.
     /// </summary>

@@ -1,4 +1,5 @@
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Salvage.Expeditions;
 
@@ -13,6 +14,6 @@ public sealed class SalvageFactionPrototype : IPrototype
     /// <summary>
     /// Per expedition type data for this faction.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("configs", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<IFactionExpeditionConfig, SalvageExpeditionPrototype>))]
+    [ViewVariables(VVAccess.ReadWrite), DataField("configs", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<IFactionExpeditionConfig, SalvageExpeditionPrototype>))]
     public Dictionary<string, IFactionExpeditionConfig> Configs = new();
 }
