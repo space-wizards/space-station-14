@@ -1,9 +1,4 @@
 Entries:
-- author: JustinTrotter
-  changes:
-  - {message: added minor delay to curtain open/close time, type: Tweak}
-  id: 2547
-  time: '2022-10-30T07:34:01.0000000+00:00'
 - author: Carbonhell
   changes:
   - {message: Examining a humanoid with an age between 30 and 60 years old now properly
@@ -2915,3 +2910,9 @@ Entries:
       disconnected and reconnected., type: Fix}
   id: 3046
   time: '2023-02-16T04:16:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: NPCs will take straightline paths in more instances. This makes them
+      less likely to get outrun in open areas., type: Fix}
+  id: 3047
+  time: '2023-02-16T14:24:58.0000000+00:00'
