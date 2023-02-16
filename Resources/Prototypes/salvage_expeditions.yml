@@ -138,8 +138,9 @@
   groups:
     - entries:
         - id: MobXenoRunner
-          amount: 10
-          maxAmount: 15
+          amount: 5
+          maxAmount: 8
+    - entries:
         - id: MobXenoDrone
           amount: 1
   configs:

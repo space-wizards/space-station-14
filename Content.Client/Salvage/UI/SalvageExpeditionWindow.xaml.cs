@@ -202,12 +202,13 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             });
 
             var salvageReward = SharedSalvageSystem.GetReward(_prototype.Index<WeightedRandomPrototype>(config.Reward), mission.Seed, _prototype);
+            var difficulty = config.DifficultyRating;
             var rewardDesc = string.Empty;
 
             switch (salvageReward)
             {
                 case BankReward bank:
-                    rewardDesc = $"Bank payment of {bank.Amount}";
+                    rewardDesc = $"Bank payment of {(int) (bank.Amount * SharedSalvageSystem.GetDifficultyModifier(difficulty))}";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

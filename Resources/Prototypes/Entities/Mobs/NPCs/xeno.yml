@@ -175,11 +175,11 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      200: Dead
+      150: Dead
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 8
+        Brute: 5
   - type: Stamina
     excess: 200
   - type: MovementSpeedModifier

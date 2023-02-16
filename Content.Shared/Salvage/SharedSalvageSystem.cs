@@ -13,6 +13,26 @@ public abstract class SharedSalvageSystem : EntitySystem
     public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
     public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(10);
 
+    public static float GetDifficultyModifier(DifficultyRating difficulty)
+    {
+        // These should reflect how many salvage staff are expected to be required for the mission.
+        switch (difficulty)
+        {
+            case DifficultyRating.None:
+                return 1f;
+            case DifficultyRating.Minor:
+                return 1.5f;
+            case DifficultyRating.Moderate:
+                return 3f;
+            case DifficultyRating.Hazardous:
+                return 6f;
+            case DifficultyRating.Extreme:
+                return 10f;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null);
+        }
+    }
+
     public static string GetFTLName(DatasetPrototype dataset, int seed)
     {
         var random = new System.Random(seed);

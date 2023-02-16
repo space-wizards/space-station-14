@@ -38,12 +38,12 @@ public sealed partial class SalvageSystem
                 var mission = comp.Mission;
                 _sawmill.Debug($"Paying out salvage mission completion for {mission.Config} seed {mission.Seed}");
                 comp.Completed = true;
-                PayoutReward(comp, mission);
+                PayoutReward(comp, mission, GetDifficultyModifier(_prototypeManager.Index<SalvageExpeditionPrototype>(mission.Config).DifficultyRating));
             }
         }
     }
 
-    private void PayoutReward(SalvageExpeditionComponent component, SalvageMission mission)
+    private void PayoutReward(SalvageExpeditionComponent component, SalvageMission mission, float modifier)
     {
         var station = component.Station;
 
@@ -57,7 +57,7 @@ public sealed partial class SalvageSystem
             case BankReward bank:
                 if (TryComp<StationBankAccountComponent>(station, out var sBank))
                 {
-                    _cargo.UpdateBankAccount(sBank, bank.Amount);
+                    _cargo.UpdateBankAccount(sBank, (int) (bank.Amount * modifier));
                 }
                 break;
             default:
