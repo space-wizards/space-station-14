@@ -1,3 +1,4 @@
+using Content.Shared.Dataset;
 using Content.Shared.Procedural.Loot;
 using Content.Shared.Procedural.Rewards;
 using Content.Shared.Random;
@@ -11,6 +12,12 @@ public abstract class SharedSalvageSystem : EntitySystem
 {
     public static readonly TimeSpan MissionCooldown = TimeSpan.FromMinutes(5);
     public static readonly TimeSpan MissionFailedCooldown = TimeSpan.FromMinutes(10);
+
+    public static string GetFTLName(DatasetPrototype dataset, int seed)
+    {
+        var random = new System.Random(seed);
+        return $"{dataset.Values[random.Next(dataset.Values.Count)]}-{random.Next(10, 100)}-{(char) (65 + random.Next(26))}";
+    }
 
     public static string GetFaction(List<string> factions, int seed)
     {

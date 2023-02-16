@@ -14,6 +14,7 @@ using Content.Server.Salvage.Expeditions.Structure;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Systems;
 using Content.Shared.Atmos;
+using Content.Shared.Dataset;
 using Content.Shared.Gravity;
 using Content.Shared.Parallax.Biomes;
 using Content.Shared.Procedural;
@@ -289,7 +290,7 @@ public sealed partial class SalvageSystem
             expedition.Mission = _mission;
 
             var ftlUid = _entManager.SpawnEntity("FTLPoint", new EntityCoordinates(mapUid, Vector2.Zero));
-            _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = "Salvage XYZ";
+            _entManager.GetComponent<MetaDataComponent>(ftlUid).EntityName = GetFTLName(_prototypeManager.Index<DatasetPrototype>(config.NameProto), missionSeed);
 
             switch (config.Mission)
             {
