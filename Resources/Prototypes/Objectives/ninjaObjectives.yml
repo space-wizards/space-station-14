@@ -2,22 +2,30 @@
   id: DownloadObjective
   issuer: spider clan
   requirements:
-    - !type:TraitorRequirement {}
+  - !type:TraitorRequirement {}
   conditions:
-    - !type:DownloadCondition {}
+  - !type:DownloadCondition {}
 
 - type: objective
   id: DoorjackObjective
   issuer: spider clan
   requirements:
-    - !type:TraitorRequirement {}
+  - !type:TraitorRequirement {}
   conditions:
-    - !type:DoorjackCondition {}
+  - !type:DoorjackCondition {}
 
 - type: objective
   id: SpiderChargeObjective
   issuer: spider clan
   requirements:
-    - !type:TraitorRequirement {}
+  - !type:TraitorRequirement {}
   conditions:
-    - !type:SpiderChargeCondition {}
+  - !type:SpiderChargeCondition {}
+
+- type: objective
+  id: SurviveObjective
+  issuer: spider clan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:SurviveCondition {}

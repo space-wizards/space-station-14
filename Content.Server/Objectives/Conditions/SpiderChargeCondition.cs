@@ -30,7 +30,8 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
                 || ninja.SpiderChargeTarget == null
                 || !entMan.TryGetComponent<WarpPointComponent>(ninja.SpiderChargeTarget, out var warp)
                 || warp.Location == null)
-                return "sus";
+                // if you are funny and microbomb then press c, you get this
+                return Log.GetString("objective-condition-spider-charge-no-target");
 
             return Loc.GetString("objective-condition-spider-charge-description", ("location", warp.Location));
         }

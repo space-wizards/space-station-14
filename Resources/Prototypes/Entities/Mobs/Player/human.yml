@@ -81,8 +81,8 @@
     - DownloadObjective
     - DoorjackObjective
     - SpiderChargeObjective
-    #- CallInThreatObjective
-    #- SurviveObjective
+    - CallInThreatObjective
+    - SurviveObjective
     # TODO: remove when job works
     implants: [ MicroBombImplant ]
   - type: RandomMetadata
