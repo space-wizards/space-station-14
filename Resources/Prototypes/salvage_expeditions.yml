@@ -109,7 +109,7 @@
   id: HighBank
   reward:
     !type:BankReward
-      amount: 10000
+      amount: 7500
 
 
 # Expedition configs
@@ -153,11 +153,13 @@
   id: Xenos
   groups:
     - entries:
-        - id: MobXenoRunner
+        - id: MobXenoBurrower
           amount: 5
           maxAmount: 8
-    - entries:
         - id: MobXenoDrone
+          amount: 1
+    - entries:
+        - id: MobXenoRavager
           amount: 1
   configs:
     StructuresDesertCave: !type:SalvageStructureFaction
