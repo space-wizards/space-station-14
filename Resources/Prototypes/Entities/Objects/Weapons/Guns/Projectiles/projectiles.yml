@@ -130,6 +130,47 @@
 
 # Energy projectiles
 - type: entity
+  name: taser bolt
+  id: BulletTaser
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: FlyBySound
+    sound:
+      collection: EnergyMiss
+      params:
+        volume: 5
+  - type: Sprite
+    noRot: true
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    color: "#ffff33"
+    layers:
+    - state: spark
+      shader: unshaded
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      hard: false
+      id: projectile
+      mask:
+      - Impassable
+      - BulletImpassable
+  - type: Ammo
+  - type: Projectile
+    damage:
+      types:
+        Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundForce: true
+  - type: StunOnCollide
+    stunAmount: 5
+    knockdownAmount: 5
+
+- type: entity
   name : disabler bolt
   id: BulletDisabler
   parent: BaseBullet
