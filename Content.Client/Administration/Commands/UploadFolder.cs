@@ -1,5 +1,7 @@
+using Content.Client.Popups;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Popups;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
@@ -12,7 +14,7 @@ public sealed class UploadFolder : IConsoleCommand
 {
     public string Command => "uploadfolder";
     public string Description => "Uploads a folder recursively to the server.";
-    public string Help => $"{Command} [relative path for the resources] ";
+    public string Help => $"{Command} [relative path for the resources] [level of recursion] ";
 
     public async void Execute(IConsoleShell shell, string argStr, string[] args)
     {
@@ -24,13 +26,14 @@ public sealed class UploadFolder : IConsoleCommand
             return;
         }
 
-        if (args.Length != 1)
+        if (args.Length != 2)
         {
             shell.WriteError("Wrong number of arguments!");
             return;
         }
 
-
+        if (shell.Player == null)
+            return;
 
         var dialog = IoCManager.Resolve<IFileDialogManager>();
         var uploadPath = new ResourcePath(args[0]).ToRelativePath();
@@ -44,6 +47,8 @@ public sealed class UploadFolder : IConsoleCommand
             }
 
             var filepath = new ResourcePath(uploadPath +"/"+ file.filename);
+
+
             var sizeLimit = cfgMan.GetCVar(CCVars.ResourceUploadingLimitMb);
             if (sizeLimit > 0f && file.Stream.Length * SharedNetworkResourceManager.BytesToMegabytes > sizeLimit)
             {
