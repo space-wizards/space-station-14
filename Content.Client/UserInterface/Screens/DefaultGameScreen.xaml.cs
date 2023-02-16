@@ -24,13 +24,13 @@ public sealed partial class DefaultGameScreen : BaseGameScreen
         SetAnchorAndMarginPreset(Alerts, LayoutPreset.TopRight, margin: 10);
 
         Chat.OnResized += ChatOnResized;
-        Chat.OnResizeComplete += OnChatResized;
     }
 
     private void ChatOnResized()
     {
         var marginBottom = Chat.GetValue<float>(MarginBottomProperty);
         SetMarginTop(Alerts, marginBottom);
+        OnChatResized!(Chat.Size);
     }
 
     public override ChatBox ChatBox => Chat;
@@ -38,6 +38,6 @@ public sealed partial class DefaultGameScreen : BaseGameScreen
 
     public override void SetChatSize(Vector2 size)
     {
-        Chat.SetSize = size;
+        Chat.Measure(size);
     }
 }
