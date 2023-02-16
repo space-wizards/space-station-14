@@ -13,7 +13,7 @@
     VerticalExpand="False"
     VerticalAlignment="Bottom"
     HorizontalAlignment="Center">
-    <SplitContainer Name="ScreenContainer" HorizontalExpand="True" VerticalExpand="True">
+    <controls:RecordedSplitContainer Name="ScreenContainer" HorizontalExpand="True" VerticalExpand="True">
         <LayoutContainer Name="ViewportContainer" HorizontalExpand="True" VerticalExpand="True">
             <controls:MainViewport Name="MainViewport"/>
             <widgets:GhostGui Name="Ghost" Access="Protected" />
@@ -31,5 +31,5 @@
                 <chat:ChatBox VerticalExpand="True" HorizontalExpand="True" Name="Chat" Access="Protected" />
             </BoxContainer>
         </PanelContainer>
-    </SplitContainer>
+    </controls:RecordedSplitContainer>
 </screens:SeparatedChatGameScreen>

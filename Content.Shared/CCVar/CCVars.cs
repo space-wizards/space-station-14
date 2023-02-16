@@ -1199,6 +1199,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> UILayout =
             CVarDef.Create("ui.layout", "Default", CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<Vector2> DefaultScreenChatSize =
+            CVarDef.Create("ui.default_chat_size", new Vector2(), CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        public static readonly CVarDef<Vector2> SeparatedScreenChatSize =
+            CVarDef.Create("ui.separated_chat_size", new Vector2(), CVar.CLIENTONLY | CVar.ARCHIVE);
 
 
         /*

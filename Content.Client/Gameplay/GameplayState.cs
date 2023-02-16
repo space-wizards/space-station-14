@@ -5,6 +5,7 @@ using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Actions;
 using Content.Client.UserInterface.Systems.Alerts;
 using Content.Client.UserInterface.Systems.Chat;
+using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Ghost;
 using Content.Client.UserInterface.Systems.Hands;
 using Content.Client.UserInterface.Systems.Hotbar;
@@ -123,17 +124,31 @@ namespace Content.Client.Gameplay
                 screenType = default;
             }
 
+            var chatSize = new Vector2();
+            ChatBox chatBox;
+            Action<Vector2> OnChatResize;
             switch (screenType)
             {
                 case ScreenType.Default:
                     _uiManager.LoadScreen<DefaultGameScreen>();
+                    chatBox = _uiManager.ActiveScreen!.GetWidget<ResizableChatBox>()!;
+                    chatSize = _configurationManager.GetCVar(CCVars.DefaultScreenChatSize);
+
                     break;
                 case ScreenType.Separated:
                     _uiManager.LoadScreen<SeparatedChatGameScreen>();
+                    chatBox = _uiManager.ActiveScreen!.GetWidget<ChatBox>()!;
+                    chatSize = _configurationManager.GetCVar(CCVars.SeparatedScreenChatSize);
+                    // Approaching this:
+                    // - We need to find the correct size of the chat to store in cvars
+                    //   - ?: How to get this? Maybe leverage OnResized for chat size?
+                    //   - Chat size in general would be a 'good idea' to store anyways, so maybe leverage
+                    //     this for doing chat size?
+                    // - When loading the separated screen, we need to apply the chat size from the cvar to the chat
                     break;
             }
 
-            _chatController.SetMainChat(true);
+            _chatController.SetMainChat( true);
             _viewportController.ReloadViewport();
             _menuController.LoadButtons();
 
