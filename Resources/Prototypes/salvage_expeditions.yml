@@ -77,7 +77,7 @@
       points: 10
 
 # Expedition rewards
-- type: salvageReward
+- type: weightedRandom
   id: SimpleSalvage
   weights:
     BasicBank: 1.0
