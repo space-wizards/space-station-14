@@ -81,10 +81,15 @@
     - DownloadObjective
     - DoorjackObjective
     - SpiderChargeObjective
-    - CallInThreatObjective
+    - TerrorObjective
     - SurviveObjective
     # TODO: remove when job works
     implants: [ MicroBombImplant ]
+    threats:
+    - announcement: terror-dragon
+      rule: Dragon
+    - announcement: terror-revenant
+      rule: RevenantSpawn
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

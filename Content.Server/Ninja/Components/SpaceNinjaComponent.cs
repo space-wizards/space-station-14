@@ -1,8 +1,10 @@
 using Content.Server.Objectives;
+using Content.Shared.Ninja;
 using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Ninja.Components;
 
@@ -18,14 +20,20 @@ public sealed class SpaceNinjaComponent : Component
     /// <summary>
     /// List of objective prototype ids to add
     /// </summary>
-    [DataField("objectives", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ObjectivePrototype>))]
-    public readonly HashSet<string> Objectives = new();
+    [DataField("objectives", customTypeSerializer: typeof(PrototypeIdListSerializer<ObjectivePrototype>))]
+    public readonly List<string> Objectives = new();
 
     /// <summary>
     /// List of implants to inject on spawn
     /// </summary>
-    [DataField("implants", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<EntityPrototype>))]
-    public readonly HashSet<string> Implants = new();
+    [DataField("implants", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public readonly List<string> Implants = new();
+
+    /// <summary>
+    /// List of threats that can be called in
+    /// </summary>
+    [DataField("threats")]
+    public readonly List<Threat> Threats = new();
 
     /// Currently worn suit
     [DataField("suit")]
@@ -45,5 +53,20 @@ public sealed class SpaceNinjaComponent : Component
 
     /// Whether the spider charge has been detonated on the target, used for objective
     [ViewVariables]
-    public bool SpiderChargeDetonated = false;
+    public bool SpiderChargeDetonated;
+
+    /// Whether the comms console has been hacked, used for objective
+    [ViewVariables]
+    public bool CalledInThreat;
+}
+
+//[Serializable]
+[DataDefinition]
+public class Threat
+{
+    [DataField("announcement")]
+    public readonly string Announcement = default!;
+
+    [DataField("rule")]
+    public readonly string Rule = default!;
 }

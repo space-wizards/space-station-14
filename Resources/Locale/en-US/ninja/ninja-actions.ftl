@@ -13,9 +13,13 @@ ninja-full-power = Suit battery is already full
 ninja-drain-fail = {CAPITALIZE(THE($battery))} does not have enough power to drain
 ninja-drain-success = You drain power from {THE($battery)}!
 
-action-name-ninja-download = Download Research
+action-name-ninja-download = Download research
 action-desc-ninja-download = Hack into a research server and copy over its precious research nodes.
 ninja-download-fail = No new research nodes were copied...
 ninja-download-success = Copied {$count} new nodes from {THE($server)}.
+
+action-name-ninja-terror = Call in a threat
+action-desc-ninja-terror = Hack a communications console to bring even more chaos to the station!
+ninja-terror-already-called = You already called in a threat!
 
 ninja-no-power = Not enough charge in suit battery!

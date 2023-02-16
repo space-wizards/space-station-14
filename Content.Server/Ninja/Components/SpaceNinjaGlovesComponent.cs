@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Tag;
+using Content.Shared.Whitelist;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using System.Threading;
@@ -93,30 +94,52 @@ public sealed class SpaceNinjaGlovesComponent : Component
 
     public CancellationTokenSource? DrainCancelToken = null;
 
-    // ResearchDownloaderComponent
-
     /// <summary>
     /// The action for downloading research from a server
     /// </summary>
     [DataField("downloadAction")]
     public EntityTargetAction DownloadAction = new()
     {
-        UseDelay = TimeSpan.FromSeconds(1),
         Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/server.rsi"), "server"),
         ItemIconStyle = ItemActionIconStyle.BigAction,
         DisplayName = "action-name-ninja-download",
         Description = "action-desc-ninja-download",
         Priority = -14,
-        Event = new NinjaDownloadEvent()
+        Event = new NinjaDownloadEvent(),
+        Whitelist = new EntityWhitelist {
+            Components = new string[] { "TechnologyDatabase" }
+        }
     };
 
     /// <summary>
     /// Time taken to download research from a server
     /// </summary>
     [DataField("downloadTime")]
-    public float DownloadTime = 30f;
+    public float DownloadTime = 20f;
 
     public CancellationTokenSource? DownloadCancelToken = null;
+
+    /// <summary>
+    /// The action for calling in a threat
+    /// </summary>
+    [DataField("terrorAction")]
+    public EntityTargetAction TerrorAction = new()
+    {
+        Icon = new SpriteSpecifier.Rsi(new ResourcePath("Structures/Machines/computers.rsi"), "comm_icon"),
+        ItemIconStyle = ItemActionIconStyle.BigAction,
+        DisplayName = "action-name-ninja-terror",
+        Description = "action-desc-ninja-terror",
+        Priority = -15,
+        Event = new NinjaTerrorEvent()
+    };
+
+    /// <summary>
+    /// Time taken to call in a threat
+    /// </summary>
+    [DataField("terrorTime")]
+    public float TerrorTime = 20f;
+
+    public CancellationTokenSource? TerrorCancelToken = null;
 }
 
 public sealed class NinjaDoorjackEvent : EntityTargetActionEvent { }
@@ -134,3 +157,9 @@ public sealed class NinjaDownloadEvent : EntityTargetActionEvent { }
 public record DownloadSuccessEvent(EntityUid User, EntityUid Server);
 
 public record DownloadCancelledEvent;
+
+public sealed class NinjaTerrorEvent : EntityTargetActionEvent { }
+
+public record TerrorSuccessEvent(EntityUid User);
+
+public record TerrorCancelledEvent;

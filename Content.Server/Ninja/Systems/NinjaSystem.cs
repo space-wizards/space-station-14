@@ -1,8 +1,11 @@
 using Content.Server.Actions;
 using Content.Server.Chat.Managers;
+using Content.Server.Chat.Systems;
+using Content.Server.Communications;
 using Content.Server.DoAfter;
 using Content.Server.Doors.Systems;
 using Content.Server.Electrocution;
+using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
@@ -50,9 +53,11 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DoAfterSystem _doafter = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocution = default!;
     [Dependency] private readonly EmagSystem _emag = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
@@ -81,6 +86,9 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaDownloadEvent>(OnDownloadAction);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadSuccessEvent>(OnDownloadSuccess);
         SubscribeLocalEvent<SpaceNinjaGlovesComponent, DownloadCancelledEvent>(OnDownloadCancel);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, NinjaTerrorEvent>(OnTerrorAction);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, TerrorSuccessEvent>(OnTerrorSuccess);
+        SubscribeLocalEvent<SpaceNinjaGlovesComponent, TerrorCancelledEvent>(OnTerrorCancel);
 
         // TODO: maybe have suit activation stuff
         SubscribeLocalEvent<SpaceNinjaSuitComponent, GotEquippedEvent>(OnSuitEquipped);
@@ -136,6 +144,7 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
             _actions.AddAction(user, comp.StunAction, uid, actions);
             _actions.AddAction(user, comp.DrainAction, uid, actions);
             _actions.AddAction(user, comp.DownloadAction, uid, actions);
+            _actions.AddAction(user, comp.TerrorAction, uid, actions);
         }
     }
 
@@ -275,36 +284,36 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var target = args.Target;
         var user = args.Performer;
 
-        // only target research servers that have unlocks
-        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
+        if (comp.DownloadCancelToken != null)
         {
-            if (comp.DownloadCancelToken != null)
-            {
-                comp.DownloadCancelToken.Cancel();
-                return;
-            }
-
-            // fail fast if theres no tech right now
-            if (database.TechnologyIds.Count == 0)
-            {
-                _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
-                return;
-            }
-
-            comp.DownloadCancelToken = new CancellationTokenSource();
-            var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.DownloadCancelToken.Token, used: uid)
-            {
-                BreakOnDamage = true,
-                BreakOnStun = true,
-                BreakOnUserMove = true,
-                MovementThreshold = 0.5f,
-                UsedCancelledEvent = new DownloadCancelledEvent(),
-                UsedFinishedEvent = new DownloadSuccessEvent(user, target)
-            };
-
-            _doafter.DoAfter(doafterArgs);
-            args.Handled = true;
+            comp.DownloadCancelToken.Cancel();
+            return;
         }
+
+        // only target research servers that have unlocks
+        if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
+            return;
+
+        // fail fast if theres no tech right now
+        if (database.TechnologyIds.Count == 0)
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-download-fail"), user, user);
+            return;
+        }
+
+        comp.DownloadCancelToken = new CancellationTokenSource();
+        var doafterArgs = new DoAfterEventArgs(user, comp.DownloadTime, comp.DownloadCancelToken.Token, used: uid)
+        {
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            BreakOnUserMove = true,
+            MovementThreshold = 0.5f,
+            UsedCancelledEvent = new DownloadCancelledEvent(),
+            UsedFinishedEvent = new DownloadSuccessEvent(user, target)
+        };
+
+        _doafter.DoAfter(doafterArgs);
+        args.Handled = true;
     }
 
     private void OnDownloadSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadSuccessEvent args)
@@ -312,29 +321,92 @@ public sealed partial class NinjaSystem : SharedNinjaSystem
         var user = args.User;
         var target = args.Server;
 
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
-            return;
-
         comp.DownloadCancelToken = null;
 
-        if (TryComp<TechnologyDatabaseComponent>(target, out var database))
-        {
-            var oldCount = ninja.DownloadedNodes.Count;
-            ninja.DownloadedNodes.UnionWith(database.TechnologyIds);
-            var newCount = ninja.DownloadedNodes.Count;
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || !TryComp<TechnologyDatabaseComponent>(target, out var database))
+            return;
 
-            var gained = newCount - oldCount;
-            var str = gained == 0
-                ? Loc.GetString("ninja-download-fail")
-                : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
+        var oldCount = ninja.DownloadedNodes.Count;
+        ninja.DownloadedNodes.UnionWith(database.TechnologyIds);
+        var newCount = ninja.DownloadedNodes.Count;
 
-            _popups.PopupEntity(str, user, user, PopupType.Medium);
-        }
+        var gained = newCount - oldCount;
+        var str = gained == 0
+            ? Loc.GetString("ninja-download-fail")
+            : Loc.GetString("ninja-download-success", ("count", gained), ("server", target));
+
+        _popups.PopupEntity(str, user, user, PopupType.Medium);
     }
 
     private void OnDownloadCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, DownloadCancelledEvent args)
     {
         comp.DownloadCancelToken = null;
+    }
+
+    private void OnTerrorAction(EntityUid uid, SpaceNinjaGlovesComponent comp, NinjaTerrorEvent args)
+    {
+        var target = args.Target;
+        var user = args.Performer;
+
+        if (comp.TerrorCancelToken != null)
+        {
+            comp.TerrorCancelToken.Cancel();
+            return;
+        }
+
+        // can only do it once, on a comms console
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja)
+            || !HasComp<CommunicationsConsoleComponent>(target))
+            return;
+
+        if (ninja.CalledInThreat)
+        {
+            _popups.PopupEntity(Loc.GetString("ninja-terror-already-called"), user, user);
+            return;
+        }
+
+        comp.TerrorCancelToken = new CancellationTokenSource();
+        var doafterArgs = new DoAfterEventArgs(user, comp.TerrorTime, comp.TerrorCancelToken.Token, used: uid)
+        {
+            BreakOnDamage = true,
+            BreakOnStun = true,
+            BreakOnUserMove = true,
+            MovementThreshold = 0.5f,
+            UsedCancelledEvent = new TerrorCancelledEvent(),
+            UsedFinishedEvent = new TerrorSuccessEvent(user)
+        };
+
+        _doafter.DoAfter(doafterArgs);
+        args.Handled = true;
+    }
+
+    private void OnTerrorSuccess(EntityUid uid, SpaceNinjaGlovesComponent comp, TerrorSuccessEvent args)
+    {
+        var user = args.User;
+
+        comp.TerrorCancelToken = null;
+
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.CalledInThreat)
+            return;
+
+        ninja.CalledInThreat = true;
+
+        if (ninja.Threats.Count == 0)
+            return;
+
+        var threat = _random.Pick(ninja.Threats);
+        if (_proto.TryIndex<GameRulePrototype>(threat.Rule, out var rule))
+        {
+            _gameTicker.AddGameRule(rule);
+            _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
+            return;
+        }
+    }
+
+    private void OnTerrorCancel(EntityUid uid, SpaceNinjaGlovesComponent comp, TerrorCancelledEvent args)
+    {
+        comp.TerrorCancelToken = null;
     }
 
     private void OnSuitEquipped(EntityUid uid, SpaceNinjaSuitComponent comp, GotEquippedEvent args)

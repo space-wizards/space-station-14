@@ -23,6 +23,14 @@
   - !type:SpiderChargeCondition {}
 
 - type: objective
+  id: TerrorObjective
+  issuer: spider clan
+  requirements:
+  - !type:TraitorRequirement {}
+  conditions:
+  - !type:TerrorCondition {}
+
+- type: objective
   id: SurviveObjective
   issuer: spider clan
   requirements:
