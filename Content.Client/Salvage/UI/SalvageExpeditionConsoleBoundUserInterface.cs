@@ -25,7 +25,7 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
             });
         };
         _window.OnClose += Close;
-        _window?.OpenCentered();
+        _window?.OpenCenteredLeft();
     }
 
     protected override void Dispose(bool disposing)

@@ -334,10 +334,9 @@ public sealed partial class SalvageSystem
             _dungeon.SpawnDungeonTiles(dungeonOffset, dungeon, grid, random, reservedTiles);
 
             // Handle loot
-            foreach (var loot in config.Loots)
+            foreach (var loot in GetLoot(config.Loots, missionSeed, _prototypeManager))
             {
-                var lootTable = _prototypeManager.Index<WeightedRandomPrototype>(loot);
-                await SpawnDungeonLoot(dungeonOffset, dungeon, _prototypeManager.Index<SalvageLootPrototype>(lootTable.Pick(random)), grid, random, reservedTiles);
+                await SpawnDungeonLoot(dungeonOffset, dungeon, loot, grid, random, reservedTiles);
             }
 
             await SpawnDungeonWalls(dungeonOffset, dungeon, grid, reservedTiles);
