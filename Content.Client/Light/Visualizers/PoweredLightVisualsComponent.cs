@@ -11,6 +11,7 @@ public sealed class PoweredLightVisualsComponent : Component
     /// A map of the sprite states used by this visualizer indexed by the light state they correspond to.
     /// </summary>
     [DataField("spriteStateMap")]
+    [ViewVariables(VVAccess.ReadOnly)]
     public readonly Dictionary<PoweredLightState, string> SpriteStateMap = new()
     {
         [PoweredLightState.Empty] = "empty",
@@ -34,14 +35,14 @@ public sealed class PoweredLightVisualsComponent : Component
     [DataField("minBlinkingTime")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float MinBlinkingAnimationCycleTime = 0.5f;
-    
+
     /// <summary>
     /// The maximum length of the base blinking animation (one on-off-on cycle) in seconds.
     /// </summary>
     [DataField("maxBlinkingTime")]
     [ViewVariables(VVAccess.ReadWrite)]
     public float MaxBlinkingAnimationCycleTime = 2;
-    
+
     /// <summary>
     /// The sound that plays when the blinking animation cycles.
     /// </summary>
@@ -52,6 +53,7 @@ public sealed class PoweredLightVisualsComponent : Component
     /// <summary>
     /// Whether or not this light is currently blinking.
     /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
     public bool IsBlinking;
 
     #endregion Blinking

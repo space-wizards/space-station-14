@@ -9,6 +9,7 @@ namespace Content.Client.Light.Visualizers;
 public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -20,13 +21,14 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     {
         if (args.Sprite == null)
             return;
+
         if (!AppearanceSystem.TryGetData<PoweredLightState>(uid, PoweredLightVisuals.BulbState, out var state, args.Component))
             return;
 
         if (comp.SpriteStateMap.TryGetValue(state, out var spriteState))
             args.Sprite.LayerSetState(PoweredLightLayers.Base, spriteState);
-        
-        _setBlinkingAnimation(
+
+        SetBlinkingAnimation(
             uid,
             state == PoweredLightState.On
             && (AppearanceSystem.TryGetData<bool>(uid, PoweredLightVisuals.Blinking, out var isBlinking, args.Component) && isBlinking),
@@ -41,8 +43,10 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     {
         if (args.Key != PoweredLightVisualsComponent.BlinkingAnimationKey)
             return;
+
         if(!comp.IsBlinking)
             return;
+
         AnimationSystem.Play(uid, Comp<AnimationPlayerComponent>(uid), BlinkingAnimation(comp), PoweredLightVisualsComponent.BlinkingAnimationKey);
     }
 
@@ -50,10 +54,11 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
     /// Sets whether or not the given light should be blinking.
     /// Triggers or clears the blinking animation of the state changes.
     /// </summary>
-    private void _setBlinkingAnimation(EntityUid uid, bool shouldBeBlinking, PoweredLightVisualsComponent comp)
+    private void SetBlinkingAnimation(EntityUid uid, bool shouldBeBlinking, PoweredLightVisualsComponent comp)
     {
         if (shouldBeBlinking == comp.IsBlinking)
             return;
+
         comp.IsBlinking = shouldBeBlinking;
 
         var animationPlayer = EnsureComp<AnimationPlayerComponent>(uid);
@@ -105,12 +110,13 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
 
         if (comp.BlinkingSound != null)
         {
+            var sound = _audio.GetSound(comp.BlinkingSound);
             blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
             {
                 KeyFrames =
-            {
-                new AnimationTrackPlaySound.KeyFrame(comp.BlinkingSound.GetSound(), 0.5f)
-            }
+                {
+                    new AnimationTrackPlaySound.KeyFrame(sound, 0.5f)
+                }
             });
         }
 
