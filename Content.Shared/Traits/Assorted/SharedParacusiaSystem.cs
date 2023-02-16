@@ -6,10 +6,9 @@ using System;
 
 
 namespace Content.Shared.Traits.Assorted;
-public sealed class ParacusiaSystem : EntitySystem
-{
-    [Dependency] private readonly IRobustRandom _random = default!;
 
+public abstract class SharedParacusiaSystem : EntitySystem
+{
     public override void Initialize()
     {
         base.Initialize();
@@ -41,6 +40,8 @@ public sealed class ParacusiaSystem : EntitySystem
     {
         foreach (var comp in EntityQuery<ParacusiaComponent>(true))
         {
+            comp.Stream?.Stop();
+            comp.Stream = null;
             var ent = comp.Owner;
             RemComp(ent, comp);
         }

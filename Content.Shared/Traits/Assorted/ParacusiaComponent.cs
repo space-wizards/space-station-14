@@ -15,24 +15,24 @@ public sealed class ParacusiaComponent : Component
     /// The random time between incidents, (min, max).
     /// </summary>
     [DataField("maxTimeBetweenIncidents", required: true)]
-    public float MaxTimeBetweenIncidents { get; set; }
+    public float MaxTimeBetweenIncidents = 30f;
 
     [DataField("minTimeBetweenIncidents", required: true)]
-    public float MinTimeBetweenIncidents { get; set; }
+    public float MinTimeBetweenIncidents = 60f;
 
     /// <summary>
     /// How far away at most can the sound be?
     /// </summary>
     [DataField("maxSoundDistance", required: true)]
-    public float MaxSoundDistance { get; set; }
+    public float MaxSoundDistance;
 
     /// <summary>
     /// The sounds to choose from
-    /// </summary
+    /// </summary>
     [DataField("sounds", required: true)]
-    public SoundSpecifier Sounds { get; set; } = default!;
+    public SoundSpecifier Sounds = default!;
 
-    public float NextIncidentTime;
+    public TimeSpan NextIncidentTime;
 
     public IPlayingAudioStream? Stream;
 }
