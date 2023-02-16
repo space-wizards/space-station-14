@@ -1,13 +1,6 @@
-using Content.Shared.Audio;
 using Content.Shared.Traits.Assorted;
 using Content.Client.Camera;
 using Robust.Shared.Random;
-using Robust.Shared.Player;
-using Robust.Shared.Map;
-using Content.Client.UserInterface.Controls;
-using Robust.Shared.GameStates;
-using Serilog.Debugging;
-using Content.Shared.GameTicking;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Shared.Timing;
