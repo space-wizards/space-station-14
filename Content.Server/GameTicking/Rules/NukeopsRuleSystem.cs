@@ -42,6 +42,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Server.NukeOps;
+using Content.Shared.NukeOps;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -145,6 +146,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
     public override string Prototype => "Nukeops";
 
     private NukeopsRuleConfiguration _nukeopsRuleConfig = new();
+    public ref readonly NukeopsRuleConfiguration NukeopsRuleConfig => ref _nukeopsRuleConfig;
 
     /// <summary>
     ///     Cached starting gear prototypes.
@@ -186,6 +188,20 @@ public sealed class NukeopsRuleSystem : GameRuleSystem
         SubscribeLocalEvent<NukeOperativeComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
+    }
+
+    public WarConditionStatus GetWarCondition()
+    {
+        if (!RuleAdded) return WarConditionStatus.NO_WAR_UNKNOWN;
+
+        if (_tcDistributed) return WarConditionStatus.TC_DISTRIBUTED;
+        if (_operativePlayers.Count < _nukeopsRuleConfig.WarMinCrewSize) return WarConditionStatus.NO_WAR_SMALL_CREW;
+        if (_leftOutpost) return WarConditionStatus.NO_WAR_SHUTTLE_DEPARTED;
+
+        var roundTime = _gameTicker.RoundDuration();
+        if (roundTime > _nukeopsRuleConfig.WarTimeLimit) return WarConditionStatus.NO_WAR_TIMEOUT;
+
+        return WarConditionStatus.YES_WAR;
     }
 
     private void OnInfoItemExamined(EntityUid uid, WarConditionOnExamineComponent component, ExaminedEvent args)

@@ -1,4 +1,4 @@
-nukeops-war-conditions-small-crew = Operative amount is less than [color=yellow]{ $min_size }[/color]
+nukeops-war-conditions-small-crew = Less than [color=yellow]{ $min_size }[/color] operatives
 nukeops-war-conditions-left-outpost = Shuttle left the syndicate outpost
 nukeops-war-conditions-time-out = War announcement window passed
 

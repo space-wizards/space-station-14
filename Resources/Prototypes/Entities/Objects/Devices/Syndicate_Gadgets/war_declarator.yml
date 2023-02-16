@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: NukeOpsWarDeclarator
+  name: war declarator
+  description: I use war as a business!
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/door_remote.rsi
+      layers:
+      - state: door_remotebase
+      - state: door_remotelightscolour
+        color: "#cb0000"
+      - state: door_remotescreencolour
+        color: "#830000"
+      netsync: false
+    - type: Item
+    - type: UseDelay
+      delay: 0.5
+    - type: UserInterface
+      interfaces:
+        - key: enum.WarDeclaratorUiKey.Key
+          type: WarDeclaratorBoundUserInterface
+    - type: WarDeclarator
