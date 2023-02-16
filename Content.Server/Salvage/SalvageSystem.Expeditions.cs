@@ -388,17 +388,21 @@ public sealed partial class SalvageSystem
             // Alright now we'll enclose the reserved tiles
             foreach (var tile in reservedTiles)
             {
-                // We hit the dungeon so exit out.
-                if (adjustedDungeonAllTiles.Contains(tile))
-                    break;
+                var isValid = true;
 
                 for (var i = 0; i < 4; i++)
                 {
                     var direction = (DirectionFlag) Math.Pow(2, i);
                     var neighbor = tile + direction.AsDir().ToIntVec();
 
+                    // We hit the dungeon so exit out.
+                    if (adjustedDungeonAllTiles.Contains(neighbor))
+                    {
+                        isValid = false;
+                        break;
+                    }
+
                     if (reservedTiles.Contains(neighbor) ||
-                        adjustedDungeonAllTiles.Contains(neighbor) ||
                         landingFloor.Contains(neighbor))
                     {
                         continue;
@@ -412,6 +416,9 @@ public sealed partial class SalvageSystem
                     grid.SetTile(neighbor, tileRef.Value);
                     _entManager.SpawnEntity("WallRock", grid.GridTileToLocal(neighbor));
                 }
+
+                if (!isValid)
+                    break;
             }
 
             await SetupMission(config, dungeonOffset, dungeon, grid, random, seed.GetSeed());
