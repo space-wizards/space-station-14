@@ -1,18 +1,18 @@
 ### Gas tank entity prototype data.
 
-ent-gas-tank-base = gas tank
-    .desc = It's a gas tank. It contains gas.
-ent-oxygen-tank = oxygen tank
-    .desc = A tank of oxygen.
+ent-gas-tank-base = газовый баллон
+    .desc = Это газовый баллон. Он содержит газ.
+ent-oxygen-tank = кислородный баллон
+    .desc = Баллон с кислородом.
 ent-yellow-oxygen-tank = { ent-oxygen-tank }
-    .desc = A tank of oxygen. This one is in yellow.
+    .desc = Жёлтый баллон с кислородом.
 ent-red-oxygen-tank = { ent-oxygen-tank }
-    .desc = A tank of oxygen. This one is in red.
-ent-emergency-oxygen-tank = emergency oxygen tank
-    .desc = Used for emergencies. Contains very little oxygen, so try to conserve it until you actually need it.
-ent-extended-emergency-oxygen-tank = extended-capacity emergency oxygen tank
-ent-double-emergency-oxygen-tank = double emergency oxygen tank
-ent-air-tank = air tank
-    .desc = Mixed anyone?
-ent-plasma-tank = plasma tank
-    .desc = Contains dangerous plasma. Do not inhale. Warning: extremely flammable.
+    .desc = Красный баллон с кислородом.
+ent-emergency-oxygen-tank = аварийный кислородный баллон
+    .desc = Используется в чрезвычайных ситуациях. Содержит очень мало кислорода, поэтому постарайтесь сохранить его до тех пор, пока он вам действительно не понадобится.
+ent-extended-emergency-oxygen-tank = аварийный кислородный баллон увеличенной ёмкости
+ent-double-emergency-oxygen-tank = двойной аварийный кислородный баллон
+ent-air-tank = баллон с воздухом
+    .desc = Какая-то смесь?
+ent-plasma-tank = баллон плазмы
+    .desc = Содержит опасную плазму. Не вдыхать. Чрезвычайно огнеопасен.
